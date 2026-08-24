@@ -120,6 +120,7 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 
 ## 论文主线全量不确定性审计
 
+- 中性 retrospective 数据底座入口：`tools/thesis_main/analysis/full_uncertainty/materialize_uncertainty_substrate.py`；冻结输出：`analysis_results/uncertainty_substrate_20260823_v1/`。该并行底座纳入全部 2,501 条 canonical 记录，旧 eligibility 仅保留为历史字段，不修改方法合同、SAP 或 C2-B/C2-A-RP closeout。
 - 工具入口：`tools/thesis_main/analysis/full_uncertainty/materialize_full_uncertainty_data_mining_v5.py`（复用 v4 计算引擎）
 - 当前生成目录：`analysis_results/full_uncertainty_data_mining_20260821_v5/`；v4 交付只保留在 Git 历史中。
 - 该审计保留 Active time 与 Label Studio Lead time 的边界，不修改规范方法合同或已冻结阶段结果。

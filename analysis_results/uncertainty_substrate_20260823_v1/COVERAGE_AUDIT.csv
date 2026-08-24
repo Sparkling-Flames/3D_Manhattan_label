@@ -1,0 +1,27 @@
+schema_version,check_name,observed,expected,status,scope,note
+uncertainty_substrate_v1,raw_annotation_versions,2513,2513,pass,hard,raw export versions
+uncertainty_substrate_v1,canonical_annotations,2501,2501,pass,hard,selected worker-task records
+uncertainty_substrate_v1,raw_only_versions,12,12,pass,hard,not independent analysis units
+uncertainty_substrate_v1,P1_canonical,1481,1481,pass,hard,stage coverage
+uncertainty_substrate_v1,C1_canonical,780,780,pass,hard,stage coverage
+uncertainty_substrate_v1,C2B_canonical,160,160,pass,hard,stage coverage
+uncertainty_substrate_v1,C2A_RP_block1_canonical,40,40,pass,hard,stage coverage
+uncertainty_substrate_v1,C2A_RP_block2_canonical,40,40,pass,hard,stage coverage
+uncertainty_substrate_v1,worker_count,26,26,pass,hard,all observed workers retained
+uncertainty_substrate_v1,image_count,214,214,pass,hard,raw base-task/image identity
+uncertainty_substrate_v1,building_count,22,22,pass,hard,image prefix building identity
+uncertainty_substrate_v1,task_context_count,270,270,pass,hard,stage x block x condition x task
+uncertainty_substrate_v1,proposal_count,43,43,pass,hard,unique initialization artifacts
+uncertainty_substrate_v1,proposal_response_count,574,574,pass,hard,canonical Semi responses
+uncertainty_substrate_v1,raw_geometry_computable,2438,2438,pass,hard,raw even point rings
+uncertainty_substrate_v1,formal_active_time_available,2069,2069,pass,hard,frozen task-worker active time
+uncertainty_substrate_v1,lead_time_traceable,2501,2501,pass,hard,kept separate from active time
+uncertainty_substrate_v1,active_event_count,34417,34417,pass,hard,raw event facts
+uncertainty_substrate_v1,active_session_count,3735,3735,pass,hard,raw session contexts
+uncertainty_substrate_v1,canonical_id_unique,2501,2501,pass,hard,primary key
+uncertainty_substrate_v1,stage_block_task_worker_unique,2501,2501,pass,hard,runtime task-worker acquisition key
+uncertainty_substrate_v1,P1_runtime_identity_recovered,1481,1481,pass,hard,raw export runtime task ID
+uncertainty_substrate_v1,manual_model_issue_structural_na,1927,1927,pass,hard,Manual is not acceptable
+uncertainty_substrate_v1,bad_gt_reference_values_suppressed,4,4,pass,hard,geometry-only peer use remains allowed
+uncertainty_substrate_v1,planned_import_identity_matches,2501,2501,pass,provenance,unmatched rows retain raw runtime task-data identity
+uncertainty_substrate_v1,legacy_precision_plan_sha,90613aabb780d3f0427d8e3bd11980936cc3be3feb6fbe100e113969756e2724,a98ba1cce4c63f7b5688d38cffb5cc991b97bb0138322d5affc0398cb4723bdf,known_gap,historical_provenance_only,not consumed by the uncertainty substrate

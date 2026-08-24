@@ -1,0 +1,364 @@
+schema_version,table_name,field_name,data_type,description_zh,missing_semantics_zh,source_role
+uncertainty_substrate_v1,annotation_spine.csv,schema_version,string,annotation_spine.csv 的稳定机器字段 `schema_version`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,annotation_identity,string,annotation_spine.csv 的稳定机器字段 `annotation_identity`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,canonical_annotation_id,string,规范选中的标注记录身份；字符串。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,canonical_annotation_id_legacy_alias,string,annotation_spine.csv 的稳定机器字段 `canonical_annotation_id_legacy_alias`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,raw_annotation_id,string,Label Studio 原始 annotation ID；字符串。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,annotation_unique_id,string,annotation_spine.csv 的稳定机器字段 `annotation_unique_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,raw_stage,string,annotation_spine.csv 的稳定机器字段 `raw_stage`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,stage,string,统一阶段：P1、C1、C2-B 或 C2-A-RP。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,block_index,integer_or_blank,C2-A-RP 独立 block 编号；其他阶段为 0。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,raw_project_id,string,annotation_spine.csv 的稳定机器字段 `raw_project_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,project_id,string,annotation_spine.csv 的稳定机器字段 `project_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,raw_runtime_task_id,string,annotation_spine.csv 的稳定机器字段 `raw_runtime_task_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,runtime_task_id,string,annotation_spine.csv 的稳定机器字段 `runtime_task_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,raw_task_data_task_id,string,annotation_spine.csv 的稳定机器字段 `raw_task_data_task_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,raw_task_data_planned_task_id,string,annotation_spine.csv 的稳定机器字段 `raw_task_data_planned_task_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,planned_task_id,string,annotation_spine.csv 的稳定机器字段 `planned_task_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,base_task_id,string,annotation_spine.csv 的稳定机器字段 `base_task_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,image_id,string,annotation_spine.csv 的稳定机器字段 `image_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,building_id,string,annotation_spine.csv 的稳定机器字段 `building_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,raw_worker_id,string,annotation_spine.csv 的稳定机器字段 `raw_worker_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,worker_id,string,annotation_spine.csv 的稳定机器字段 `worker_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,raw_condition,string,原始条件码，不承担 task lane 或 scope 的复合语义。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,assistance_exposure,string,是否暴露模型预标注；与 task lane 正交。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,task_lane,string,任务 lane，如 outside、ordinary、stress、anchor、core。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,scope_status,string,研究者/计划层 scope 状态；不由 worker 多数票替代。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,dataset_group,string,annotation_spine.csv 的稳定机器字段 `dataset_group`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,task_stratum,string,annotation_spine.csv 的稳定机器字段 `task_stratum`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,language_group,string,annotation_spine.csv 的稳定机器字段 `language_group`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,assignment_provenance,string,annotation_spine.csv 的稳定机器字段 `assignment_provenance`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,canonical_selection_status,string,annotation_spine.csv 的稳定机器字段 `canonical_selection_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,historical_primary_eligibility_status,string,annotation_spine.csv 的稳定机器字段 `historical_primary_eligibility_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,historical_primary_eligibility_source_field,string,annotation_spine.csv 的稳定机器字段 `historical_primary_eligibility_source_field`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,historical_formal_assignment_status,string,annotation_spine.csv 的稳定机器字段 `historical_formal_assignment_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,legacy_exclusion_reason,string,annotation_spine.csv 的稳定机器字段 `legacy_exclusion_reason`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,raw_geometry_point_count,integer_or_blank,annotation_spine.csv 的稳定机器字段 `raw_geometry_point_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,raw_geometry_computable,string,annotation_spine.csv 的稳定机器字段 `raw_geometry_computable`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,lead_time_seconds,number_or_blank,Label Studio lead time；始终与 active time 分列。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,lead_time_status,string,annotation_spine.csv 的稳定机器字段 `lead_time_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,planned_import_match_status,string,annotation_spine.csv 的稳定机器字段 `planned_import_match_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,planned_import_source_paths_json,json_string,annotation_spine.csv 的稳定机器字段 `planned_import_source_paths_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,raw_export_path,string,annotation_spine.csv 的稳定机器字段 `raw_export_path`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,raw_export_sha256,string,annotation_spine.csv 的稳定机器字段 `raw_export_sha256`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,canonical_reconciliation_path,string,annotation_spine.csv 的稳定机器字段 `canonical_reconciliation_path`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_spine.csv,canonical_reconciliation_sha256,string,annotation_spine.csv 的稳定机器字段 `canonical_reconciliation_sha256`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,schema_version,string,annotation_version_lineage.csv 的稳定机器字段 `schema_version`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,raw_annotation_version_id,string,annotation_version_lineage.csv 的稳定机器字段 `raw_annotation_version_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,revision_group_id,string,annotation_version_lineage.csv 的稳定机器字段 `revision_group_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,raw_stage,string,annotation_version_lineage.csv 的稳定机器字段 `raw_stage`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,stage,string,统一阶段：P1、C1、C2-B 或 C2-A-RP。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,block_index,integer_or_blank,C2-A-RP 独立 block 编号；其他阶段为 0。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,project_id,string,annotation_version_lineage.csv 的稳定机器字段 `project_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,runtime_task_id,string,annotation_version_lineage.csv 的稳定机器字段 `runtime_task_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,base_task_id,string,annotation_version_lineage.csv 的稳定机器字段 `base_task_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,raw_condition,string,原始条件码，不承担 task lane 或 scope 的复合语义。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,raw_worker_id,string,annotation_version_lineage.csv 的稳定机器字段 `raw_worker_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,worker_id,string,annotation_version_lineage.csv 的稳定机器字段 `worker_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,raw_annotation_id,string,Label Studio 原始 annotation ID；字符串。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,canonical_annotation_id,string,规范选中的标注记录身份；字符串。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,canonical_annotation_id_legacy_alias,string,annotation_version_lineage.csv 的稳定机器字段 `canonical_annotation_id_legacy_alias`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,canonical_join_status,string,annotation_version_lineage.csv 的稳定机器字段 `canonical_join_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,selected_canonical_version,string,annotation_version_lineage.csv 的稳定机器字段 `selected_canonical_version`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,independent_analysis_unit,string,annotation_version_lineage.csv 的稳定机器字段 `independent_analysis_unit`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,raw_only_reason,string,annotation_version_lineage.csv 的稳定机器字段 `raw_only_reason`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,version_index_within_task_worker,string,annotation_version_lineage.csv 的稳定机器字段 `version_index_within_task_worker`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,previous_raw_annotation_id_chronological,string,annotation_version_lineage.csv 的稳定机器字段 `previous_raw_annotation_id_chronological`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,parent_annotation,string,annotation_version_lineage.csv 的稳定机器字段 `parent_annotation`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,created_at,string,annotation_version_lineage.csv 的稳定机器字段 `created_at`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,updated_at,string,annotation_version_lineage.csv 的稳定机器字段 `updated_at`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,lead_time_seconds,number_or_blank,Label Studio lead time；始终与 active time 分列。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,result_count,integer_or_blank,annotation_version_lineage.csv 的稳定机器字段 `result_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,result_sha256,string,annotation_version_lineage.csv 的稳定机器字段 `result_sha256`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,source_path,string,annotation_version_lineage.csv 的稳定机器字段 `source_path`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,annotation_version_lineage.csv,source_sha256,string,annotation_version_lineage.csv 的稳定机器字段 `source_sha256`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,image_registry.csv,schema_version,string,image_registry.csv 的稳定机器字段 `schema_version`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,image_registry.csv,image_id,string,image_registry.csv 的稳定机器字段 `image_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,image_registry.csv,base_task_id,string,image_registry.csv 的稳定机器字段 `base_task_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,image_registry.csv,building_id,string,image_registry.csv 的稳定机器字段 `building_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,image_registry.csv,image_reference,string,image_registry.csv 的稳定机器字段 `image_reference`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,image_registry.csv,image_reference_sha256,string,image_registry.csv 的稳定机器字段 `image_reference_sha256`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,image_registry.csv,stage_set_json,json_string,image_registry.csv 的稳定机器字段 `stage_set_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,image_registry.csv,block_index_set_json,json_string,image_registry.csv 的稳定机器字段 `block_index_set_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,image_registry.csv,raw_condition_set_json,json_string,image_registry.csv 的稳定机器字段 `raw_condition_set_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,image_registry.csv,task_context_count,integer_or_blank,image_registry.csv 的稳定机器字段 `task_context_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,image_registry.csv,canonical_annotation_count,integer_or_blank,image_registry.csv 的稳定机器字段 `canonical_annotation_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,image_registry.csv,worker_count,integer_or_blank,image_registry.csv 的稳定机器字段 `worker_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,image_registry.csv,planned_import_source_paths_json,json_string,image_registry.csv 的稳定机器字段 `planned_import_source_paths_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,image_registry.csv,raw_export_source_paths_json,json_string,image_registry.csv 的稳定机器字段 `raw_export_source_paths_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,task_context_master.csv,schema_version,string,task_context_master.csv 的稳定机器字段 `schema_version`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,task_context_master.csv,task_context_id,string,task_context_master.csv 的稳定机器字段 `task_context_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,task_context_master.csv,stage,string,统一阶段：P1、C1、C2-B 或 C2-A-RP。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,task_context_master.csv,block_index,integer_or_blank,C2-A-RP 独立 block 编号；其他阶段为 0。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,task_context_master.csv,raw_stage_set_json,json_string,task_context_master.csv 的稳定机器字段 `raw_stage_set_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,task_context_master.csv,base_task_id,string,task_context_master.csv 的稳定机器字段 `base_task_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,task_context_master.csv,image_id,string,task_context_master.csv 的稳定机器字段 `image_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,task_context_master.csv,building_id,string,task_context_master.csv 的稳定机器字段 `building_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,task_context_master.csv,raw_condition,string,原始条件码，不承担 task lane 或 scope 的复合语义。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,task_context_master.csv,assistance_exposure,string,是否暴露模型预标注；与 task lane 正交。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,task_context_master.csv,task_lane,string,任务 lane，如 outside、ordinary、stress、anchor、core。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,task_context_master.csv,scope_status_set_json,json_string,task_context_master.csv 的稳定机器字段 `scope_status_set_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,task_context_master.csv,dataset_group_set_json,json_string,task_context_master.csv 的稳定机器字段 `dataset_group_set_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,task_context_master.csv,task_stratum_set_json,json_string,task_context_master.csv 的稳定机器字段 `task_stratum_set_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,task_context_master.csv,canonical_annotation_count,integer_or_blank,task_context_master.csv 的稳定机器字段 `canonical_annotation_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,task_context_master.csv,worker_count,integer_or_blank,task_context_master.csv 的稳定机器字段 `worker_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,task_context_master.csv,worker_ids_json,json_string,task_context_master.csv 的稳定机器字段 `worker_ids_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,task_context_master.csv,raw_geometry_computable_count,integer_or_blank,task_context_master.csv 的稳定机器字段 `raw_geometry_computable_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,task_context_master.csv,lead_time_available_count,integer_or_blank,task_context_master.csv 的稳定机器字段 `lead_time_available_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,task_context_master.csv,formal_active_time_available_count,integer_or_blank,task_context_master.csv 的稳定机器字段 `formal_active_time_available_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,task_context_master.csv,reference_measurement_available_count,integer_or_blank,task_context_master.csv 的稳定机器字段 `reference_measurement_available_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,schema_version,string,geometry_variants.csv 的稳定机器字段 `schema_version`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,geometry_variant_id,string,geometry_variants.csv 的稳定机器字段 `geometry_variant_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,canonical_annotation_id,string,规范选中的标注记录身份；字符串。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,stage,string,统一阶段：P1、C1、C2-B 或 C2-A-RP。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,block_index,integer_or_blank,C2-A-RP 独立 block 编号；其他阶段为 0。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,base_task_id,string,geometry_variants.csv 的稳定机器字段 `base_task_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,raw_condition,string,原始条件码，不承担 task lane 或 scope 的复合语义。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,worker_id,string,geometry_variants.csv 的稳定机器字段 `worker_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,variant,string,几何版本：raw、strict_normalized 或 repaired。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,points_json,json_string,geometry_variants.csv 的稳定机器字段 `points_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,point_count,integer_or_blank,geometry_variants.csv 的稳定机器字段 `point_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,vertical_boundary_count,integer_or_blank,geometry_variants.csv 的稳定机器字段 `vertical_boundary_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,geometry_sha256,string,geometry_variants.csv 的稳定机器字段 `geometry_sha256`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,parse_status,string,geometry_variants.csv 的稳定机器字段 `parse_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,geometry_computable,string,该版本是否满足本表计算口径；不是历史 eligibility。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,strict_valid,boolean,geometry_variants.csv 的稳定机器字段 `strict_valid`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,strict_reason,string,geometry_variants.csv 的稳定机器字段 `strict_reason`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,pairing_method,string,geometry_variants.csv 的稳定机器字段 `pairing_method`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,seam_crossing_detected,string,geometry_variants.csv 的稳定机器字段 `seam_crossing_detected`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,topology_valid,boolean,geometry_variants.csv 的稳定机器字段 `topology_valid`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,repair_application_status,string,geometry_variants.csv 的稳定机器字段 `repair_application_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,repair_status,string,geometry_variants.csv 的稳定机器字段 `repair_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,algorithm_version,string,geometry_variants.csv 的稳定机器字段 `algorithm_version`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,algorithm_sha256,string,geometry_variants.csv 的稳定机器字段 `algorithm_sha256`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,source_role,string,geometry_variants.csv 的稳定机器字段 `source_role`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,source_path,string,geometry_variants.csv 的稳定机器字段 `source_path`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_variants.csv,source_sha256,string,geometry_variants.csv 的稳定机器字段 `source_sha256`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,schema_version,string,geometry_pairwise.csv 的稳定机器字段 `schema_version`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,geometry_pair_id,string,geometry_pairwise.csv 的稳定机器字段 `geometry_pair_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,stage,string,统一阶段：P1、C1、C2-B 或 C2-A-RP。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,block_index,integer_or_blank,C2-A-RP 独立 block 编号；其他阶段为 0。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,base_task_id,string,geometry_pairwise.csv 的稳定机器字段 `base_task_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,raw_condition,string,原始条件码，不承担 task lane 或 scope 的复合语义。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,variant,string,几何版本：raw、strict_normalized 或 repaired。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,left_canonical_annotation_id,string,geometry_pairwise.csv 的稳定机器字段 `left_canonical_annotation_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,right_canonical_annotation_id,string,geometry_pairwise.csv 的稳定机器字段 `right_canonical_annotation_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,left_worker_id,string,geometry_pairwise.csv 的稳定机器字段 `left_worker_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,right_worker_id,string,geometry_pairwise.csv 的稳定机器字段 `right_worker_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,left_point_count,integer_or_blank,geometry_pairwise.csv 的稳定机器字段 `left_point_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,right_point_count,integer_or_blank,geometry_pairwise.csv 的稳定机器字段 `right_point_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,cyclic_rmse_diagonal_normalized,number_or_blank,geometry_pairwise.csv 的稳定机器字段 `cyclic_rmse_diagonal_normalized`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,cyclic_rmse_status,number_or_blank,geometry_pairwise.csv 的稳定机器字段 `cyclic_rmse_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,boundary_similarity,number_or_blank,geometry_pairwise.csv 的稳定机器字段 `boundary_similarity`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,wallwall_similarity,number_or_blank,geometry_pairwise.csv 的稳定机器字段 `wallwall_similarity`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,metric_compatible,boolean,geometry_pairwise.csv 的稳定机器字段 `metric_compatible`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,pointwise_correspondence_compatible,boolean,geometry_pairwise.csv 的稳定机器字段 `pointwise_correspondence_compatible`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,correspondence_status,string,geometry_pairwise.csv 的稳定机器字段 `correspondence_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,cyclic_correspondence_json,json_string,geometry_pairwise.csv 的稳定机器字段 `cyclic_correspondence_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,alignment_direction,string,geometry_pairwise.csv 的稳定机器字段 `alignment_direction`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,alignment_rotation,string,geometry_pairwise.csv 的稳定机器字段 `alignment_rotation`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,alignment_insertion_count,integer_or_blank,geometry_pairwise.csv 的稳定机器字段 `alignment_insertion_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,alignment_deletion_count,integer_or_blank,geometry_pairwise.csv 的稳定机器字段 `alignment_deletion_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,alignment_ambiguous,string,geometry_pairwise.csv 的稳定机器字段 `alignment_ambiguous`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,pairwise_algorithm_version,string,geometry_pairwise.csv 的稳定机器字段 `pairwise_algorithm_version`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,geometry_pairwise.csv,pairwise_algorithm_sha256,string,geometry_pairwise.csv 的稳定机器字段 `pairwise_algorithm_sha256`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_long.csv,schema_version,string,meta_response_long.csv 的稳定机器字段 `schema_version`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_long.csv,meta_response_long_id,string,meta_response_long.csv 的稳定机器字段 `meta_response_long_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_long.csv,canonical_annotation_id,string,规范选中的标注记录身份；字符串。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_long.csv,stage,string,统一阶段：P1、C1、C2-B 或 C2-A-RP。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_long.csv,block_index,integer_or_blank,C2-A-RP 独立 block 编号；其他阶段为 0。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_long.csv,base_task_id,string,meta_response_long.csv 的稳定机器字段 `base_task_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_long.csv,raw_condition,string,原始条件码，不承担 task lane 或 scope 的复合语义。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_long.csv,worker_id,string,meta_response_long.csv 的稳定机器字段 `worker_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_long.csv,field_name,string,meta_response_long.csv 的稳定机器字段 `field_name`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_long.csv,choice_index,string,meta_response_long.csv 的稳定机器字段 `choice_index`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_long.csv,choice_raw,string,meta_response_long.csv 的稳定机器字段 `choice_raw`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_long.csv,choice_code,string,meta_response_long.csv 的稳定机器字段 `choice_code`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_long.csv,response_state,string,positive、explicit_negative、unasserted 或 not_evaluable。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_long.csv,field_applicability,string,meta_response_long.csv 的稳定机器字段 `field_applicability`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_long.csv,response_timing_status,string,meta_response_long.csv 的稳定机器字段 `response_timing_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_long.csv,structural_na_reason,string,meta_response_long.csv 的稳定机器字段 `structural_na_reason`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_long.csv,response_conflict,string,meta_response_long.csv 的稳定机器字段 `response_conflict`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_long.csv,source_path,string,meta_response_long.csv 的稳定机器字段 `source_path`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_long.csv,source_sha256,string,meta_response_long.csv 的稳定机器字段 `source_sha256`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_set.csv,schema_version,string,meta_response_set.csv 的稳定机器字段 `schema_version`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_set.csv,meta_response_set_id,string,meta_response_set.csv 的稳定机器字段 `meta_response_set_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_set.csv,canonical_annotation_id,string,规范选中的标注记录身份；字符串。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_set.csv,stage,string,统一阶段：P1、C1、C2-B 或 C2-A-RP。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_set.csv,block_index,integer_or_blank,C2-A-RP 独立 block 编号；其他阶段为 0。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_set.csv,base_task_id,string,meta_response_set.csv 的稳定机器字段 `base_task_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_set.csv,raw_condition,string,原始条件码，不承担 task lane 或 scope 的复合语义。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_set.csv,worker_id,string,meta_response_set.csv 的稳定机器字段 `worker_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_set.csv,field_name,string,meta_response_set.csv 的稳定机器字段 `field_name`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_set.csv,choice_set_json,json_string,meta_response_set.csv 的稳定机器字段 `choice_set_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_set.csv,choice_code_set_json,json_string,meta_response_set.csv 的稳定机器字段 `choice_code_set_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_set.csv,response_state,string,positive、explicit_negative、unasserted 或 not_evaluable。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_set.csv,field_applicability,string,meta_response_set.csv 的稳定机器字段 `field_applicability`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_set.csv,contains_positive,string,meta_response_set.csv 的稳定机器字段 `contains_positive`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_set.csv,contains_explicit_negative,string,meta_response_set.csv 的稳定机器字段 `contains_explicit_negative`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_set.csv,response_conflict,string,meta_response_set.csv 的稳定机器字段 `response_conflict`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_set.csv,response_timing_status,string,meta_response_set.csv 的稳定机器字段 `response_timing_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_set.csv,structural_na_reason,string,meta_response_set.csv 的稳定机器字段 `structural_na_reason`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_set.csv,source_path,string,meta_response_set.csv 的稳定机器字段 `source_path`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,meta_response_set.csv,source_sha256,string,meta_response_set.csv 的稳定机器字段 `source_sha256`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,schema_version,string,proposal_fact.csv 的稳定机器字段 `schema_version`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,proposal_id,string,proposal_fact.csv 的稳定机器字段 `proposal_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,stage,string,统一阶段：P1、C1、C2-B 或 C2-A-RP。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,block_index,integer_or_blank,C2-A-RP 独立 block 编号；其他阶段为 0。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,base_task_id,string,proposal_fact.csv 的稳定机器字段 `base_task_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,image_id,string,proposal_fact.csv 的稳定机器字段 `image_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,building_id,string,proposal_fact.csv 的稳定机器字段 `building_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,initialization_source_kind,string,proposal_fact.csv 的稳定机器字段 `initialization_source_kind`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,initialization_import_sha256_set_json,json_string,proposal_fact.csv 的稳定机器字段 `initialization_import_sha256_set_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,initialization_prediction_sha256,string,proposal_fact.csv 的稳定机器字段 `initialization_prediction_sha256`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,initial_geometry_hash,string,proposal_fact.csv 的稳定机器字段 `initial_geometry_hash`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,initial_points_json,json_string,proposal_fact.csv 的稳定机器字段 `initial_points_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,initial_point_count,integer_or_blank,proposal_fact.csv 的稳定机器字段 `initial_point_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,initial_geometry_computable,string,proposal_fact.csv 的稳定机器字段 `initial_geometry_computable`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,initial_geometry_consistency_status,string,proposal_fact.csv 的稳定机器字段 `initial_geometry_consistency_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,planned_trap_family_set_json,json_string,proposal_fact.csv 的稳定机器字段 `planned_trap_family_set_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,trap_family_set_json,json_string,proposal_fact.csv 的稳定机器字段 `trap_family_set_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,reference_identity_set_json,json_string,proposal_fact.csv 的稳定机器字段 `reference_identity_set_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,reference_sha256_set_json,json_string,proposal_fact.csv 的稳定机器字段 `reference_sha256_set_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,reference_type_set_json,json_string,proposal_fact.csv 的稳定机器字段 `reference_type_set_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,reference_availability_status,string,proposal_fact.csv 的稳定机器字段 `reference_availability_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,response_count,integer_or_blank,proposal_fact.csv 的稳定机器字段 `response_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,worker_count,integer_or_blank,proposal_fact.csv 的稳定机器字段 `worker_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,source_path,string,proposal_fact.csv 的稳定机器字段 `source_path`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_fact.csv,source_sha256,string,proposal_fact.csv 的稳定机器字段 `source_sha256`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,schema_version,string,proposal_response.csv 的稳定机器字段 `schema_version`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,proposal_response_id,string,proposal_response.csv 的稳定机器字段 `proposal_response_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,proposal_id,string,proposal_response.csv 的稳定机器字段 `proposal_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,canonical_annotation_id,string,规范选中的标注记录身份；字符串。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,stage,string,统一阶段：P1、C1、C2-B 或 C2-A-RP。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,block_index,integer_or_blank,C2-A-RP 独立 block 编号；其他阶段为 0。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,base_task_id,string,proposal_response.csv 的稳定机器字段 `base_task_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,image_id,string,proposal_response.csv 的稳定机器字段 `image_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,building_id,string,proposal_response.csv 的稳定机器字段 `building_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,worker_id,string,proposal_response.csv 的稳定机器字段 `worker_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,raw_condition,string,原始条件码，不承担 task lane 或 scope 的复合语义。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,initial_points_json,json_string,proposal_response.csv 的稳定机器字段 `initial_points_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,final_points_json,json_string,proposal_response.csv 的稳定机器字段 `final_points_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,initial_point_count,integer_or_blank,proposal_response.csv 的稳定机器字段 `initial_point_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,final_point_count,integer_or_blank,proposal_response.csv 的稳定机器字段 `final_point_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,initial_geometry_hash,string,proposal_response.csv 的稳定机器字段 `initial_geometry_hash`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,final_geometry_hash,string,proposal_response.csv 的稳定机器字段 `final_geometry_hash`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,initial_to_final_rmse_diagonal_normalized,number_or_blank,proposal_response.csv 的稳定机器字段 `initial_to_final_rmse_diagonal_normalized`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,topology_changed,string,proposal_response.csv 的稳定机器字段 `topology_changed`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,exact_geometry_equal,string,proposal_response.csv 的稳定机器字段 `exact_geometry_equal`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,model_issue_choice_raw,string,proposal_response.csv 的稳定机器字段 `model_issue_choice_raw`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,model_issue_choice_set_json,json_string,proposal_response.csv 的稳定机器字段 `model_issue_choice_set_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,model_issue_response_status,string,proposal_response.csv 的稳定机器字段 `model_issue_response_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,model_issue_timing_status,string,proposal_response.csv 的稳定机器字段 `model_issue_timing_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,U_initial,number_or_blank,proposal_response.csv 的稳定机器字段 `U_initial`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,U_final,number_or_blank,proposal_response.csv 的稳定机器字段 `U_final`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,delta_U,number_or_blank,proposal_response.csv 的稳定机器字段 `delta_U`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,initial_structurally_valid,boolean,proposal_response.csv 的稳定机器字段 `initial_structurally_valid`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,final_structurally_valid,boolean,proposal_response.csv 的稳定机器字段 `final_structurally_valid`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,reference_identity,string,proposal_response.csv 的稳定机器字段 `reference_identity`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,reference_sha256,string,proposal_response.csv 的稳定机器字段 `reference_sha256`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,reference_type,string,proposal_response.csv 的稳定机器字段 `reference_type`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,reference_availability_status,string,proposal_response.csv 的稳定机器字段 `reference_availability_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,historical_formal_assignment_status,string,proposal_response.csv 的稳定机器字段 `historical_formal_assignment_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,historical_analysis_eligibility_status,string,proposal_response.csv 的稳定机器字段 `historical_analysis_eligibility_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,source_path,string,proposal_response.csv 的稳定机器字段 `source_path`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,proposal_response.csv,source_sha256,string,proposal_response.csv 的稳定机器字段 `source_sha256`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,reference_measurement.csv,schema_version,string,reference_measurement.csv 的稳定机器字段 `schema_version`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,reference_measurement.csv,reference_measurement_id,string,reference_measurement.csv 的稳定机器字段 `reference_measurement_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,reference_measurement.csv,canonical_annotation_id,string,规范选中的标注记录身份；字符串。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,reference_measurement.csv,proposal_id,string,reference_measurement.csv 的稳定机器字段 `proposal_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,reference_measurement.csv,stage,string,统一阶段：P1、C1、C2-B 或 C2-A-RP。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,reference_measurement.csv,block_index,integer_or_blank,C2-A-RP 独立 block 编号；其他阶段为 0。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,reference_measurement.csv,base_task_id,string,reference_measurement.csv 的稳定机器字段 `base_task_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,reference_measurement.csv,worker_id,string,reference_measurement.csv 的稳定机器字段 `worker_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,reference_measurement.csv,measurement_role,string,reference_measurement.csv 的稳定机器字段 `measurement_role`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,reference_measurement.csv,metric_name,string,reference_measurement.csv 的稳定机器字段 `metric_name`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,reference_measurement.csv,raw_metric_value,number_or_blank,历史来源中的原始连续值；reference 不可用时仅作 provenance。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,reference_measurement.csv,measurement_value,number_or_blank,仅在 reference 可用时提供的连续测量值。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,reference_measurement.csv,measurement_status,string,reference_measurement.csv 的稳定机器字段 `measurement_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,reference_measurement.csv,reference_identity,string,reference_measurement.csv 的稳定机器字段 `reference_identity`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,reference_measurement.csv,reference_sha256,string,reference_measurement.csv 的稳定机器字段 `reference_sha256`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,reference_measurement.csv,reference_type,string,reference_measurement.csv 的稳定机器字段 `reference_type`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,reference_measurement.csv,reference_quality_status,string,reference_measurement.csv 的稳定机器字段 `reference_quality_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,reference_measurement.csv,historical_eligibility_status,string,reference_measurement.csv 的稳定机器字段 `historical_eligibility_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,reference_measurement.csv,source_path,string,reference_measurement.csv 的稳定机器字段 `source_path`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,reference_measurement.csv,source_sha256,string,reference_measurement.csv 的稳定机器字段 `source_sha256`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_time_context.csv,schema_version,string,active_time_context.csv 的稳定机器字段 `schema_version`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_time_context.csv,canonical_annotation_id,string,规范选中的标注记录身份；字符串。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_time_context.csv,stage,string,统一阶段：P1、C1、C2-B 或 C2-A-RP。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_time_context.csv,block_index,integer_or_blank,C2-A-RP 独立 block 编号；其他阶段为 0。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_time_context.csv,project_id,string,active_time_context.csv 的稳定机器字段 `project_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_time_context.csv,runtime_task_id,string,active_time_context.csv 的稳定机器字段 `runtime_task_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_time_context.csv,base_task_id,string,active_time_context.csv 的稳定机器字段 `base_task_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_time_context.csv,raw_condition,string,原始条件码，不承担 task lane 或 scope 的复合语义。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_time_context.csv,worker_id,string,active_time_context.csv 的稳定机器字段 `worker_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_time_context.csv,active_time_seconds,number_or_blank,冻结 task-worker active time；缺失不补零。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_time_context.csv,active_time_formal_available,boolean,active_time_context.csv 的稳定机器字段 `active_time_formal_available`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_time_context.csv,historical_active_time_eligibility_status,string,active_time_context.csv 的稳定机器字段 `historical_active_time_eligibility_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_time_context.csv,timing_status,string,active_time_context.csv 的稳定机器字段 `timing_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_time_context.csv,timing_rule_version,string,active_time_context.csv 的稳定机器字段 `timing_rule_version`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_time_context.csv,active_time_source,string,active_time_context.csv 的稳定机器字段 `active_time_source`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_time_context.csv,active_time_source_file,string,active_time_context.csv 的稳定机器字段 `active_time_source_file`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_time_context.csv,active_time_event_count,integer_or_blank,active_time_context.csv 的稳定机器字段 `active_time_event_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_time_context.csv,active_time_session_count,integer_or_blank,active_time_context.csv 的稳定机器字段 `active_time_session_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_time_context.csv,lead_time_seconds,number_or_blank,Label Studio lead time；始终与 active time 分列。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_time_context.csv,lead_time_status,string,active_time_context.csv 的稳定机器字段 `lead_time_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_time_context.csv,lead_time_is_active_time,string,active_time_context.csv 的稳定机器字段 `lead_time_is_active_time`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_time_context.csv,event_fragment_role,string,active_time_context.csv 的稳定机器字段 `event_fragment_role`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,schema_version,string,active_event_fact.csv 的稳定机器字段 `schema_version`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,raw_event_id,string,active_event_fact.csv 的稳定机器字段 `raw_event_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,raw_source_collection,string,active_event_fact.csv 的稳定机器字段 `raw_source_collection`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,raw_event_stage,string,active_event_fact.csv 的稳定机器字段 `raw_event_stage`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,stage,string,统一阶段：P1、C1、C2-B 或 C2-A-RP。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,block_index,integer_or_blank,C2-A-RP 独立 block 编号；其他阶段为 0。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,in_formal_stage_scope,string,active_event_fact.csv 的稳定机器字段 `in_formal_stage_scope`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,source_path,string,active_event_fact.csv 的稳定机器字段 `source_path`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,source_sha256,string,active_event_fact.csv 的稳定机器字段 `source_sha256`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,source_line,string,active_event_fact.csv 的稳定机器字段 `source_line`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,project_id,string,active_event_fact.csv 的稳定机器字段 `project_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,runtime_task_id,string,active_event_fact.csv 的稳定机器字段 `runtime_task_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,annotator_id,string,active_event_fact.csv 的稳定机器字段 `annotator_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,annotation_id,string,active_event_fact.csv 的稳定机器字段 `annotation_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,session_id,string,active_event_fact.csv 的稳定机器字段 `session_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,timestamp,string,active_event_fact.csv 的稳定机器字段 `timestamp`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,server_received_at,string,active_event_fact.csv 的稳定机器字段 `server_received_at`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,page_type,string,active_event_fact.csv 的稳定机器字段 `page_type`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,page_gate_eligible,string,active_event_fact.csv 的稳定机器字段 `page_gate_eligible`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,page_gate_reason,string,active_event_fact.csv 的稳定机器字段 `page_gate_reason`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,store_mismatch_present,string,active_event_fact.csv 的稳定机器字段 `store_mismatch_present`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,active_seconds_fragment,number_or_blank,active_event_fact.csv 的稳定机器字段 `active_seconds_fragment`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,active_seconds_fragment_role,number_or_blank,active_event_fact.csv 的稳定机器字段 `active_seconds_fragment_role`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_event_fact.csv,raw_event_json,json_string,active_event_fact.csv 的稳定机器字段 `raw_event_json`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_session_fact.csv,schema_version,string,active_session_fact.csv 的稳定机器字段 `schema_version`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_session_fact.csv,active_session_id,string,active_session_fact.csv 的稳定机器字段 `active_session_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_session_fact.csv,raw_source_collections,string,active_session_fact.csv 的稳定机器字段 `raw_source_collections`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_session_fact.csv,raw_event_stages,string,active_session_fact.csv 的稳定机器字段 `raw_event_stages`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_session_fact.csv,stage,string,统一阶段：P1、C1、C2-B 或 C2-A-RP。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_session_fact.csv,block_index,integer_or_blank,C2-A-RP 独立 block 编号；其他阶段为 0。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_session_fact.csv,project_id,string,active_session_fact.csv 的稳定机器字段 `project_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_session_fact.csv,runtime_task_id,string,active_session_fact.csv 的稳定机器字段 `runtime_task_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_session_fact.csv,annotator_id,string,active_session_fact.csv 的稳定机器字段 `annotator_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_session_fact.csv,session_id,string,active_session_fact.csv 的稳定机器字段 `session_id`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_session_fact.csv,event_count,integer_or_blank,active_session_fact.csv 的稳定机器字段 `event_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_session_fact.csv,event_fragment_sum_audit_seconds,number_or_blank,active_session_fact.csv 的稳定机器字段 `event_fragment_sum_audit_seconds`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_session_fact.csv,session_grouping,string,active_session_fact.csv 的稳定机器字段 `session_grouping`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,active_session_fact.csv,primary_active_time_status,string,active_session_fact.csv 的稳定机器字段 `primary_active_time_status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,COVERAGE_AUDIT.csv,schema_version,string,COVERAGE_AUDIT.csv 的稳定机器字段 `schema_version`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,COVERAGE_AUDIT.csv,check_name,string,COVERAGE_AUDIT.csv 的稳定机器字段 `check_name`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,COVERAGE_AUDIT.csv,observed,string,COVERAGE_AUDIT.csv 的稳定机器字段 `observed`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,COVERAGE_AUDIT.csv,expected,string,COVERAGE_AUDIT.csv 的稳定机器字段 `expected`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,COVERAGE_AUDIT.csv,status,string,COVERAGE_AUDIT.csv 的稳定机器字段 `status`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,COVERAGE_AUDIT.csv,scope,string,COVERAGE_AUDIT.csv 的稳定机器字段 `scope`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,COVERAGE_AUDIT.csv,note,string,COVERAGE_AUDIT.csv 的稳定机器字段 `note`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,DATA_DICTIONARY.csv,schema_version,string,DATA_DICTIONARY.csv 的稳定机器字段 `schema_version`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,DATA_DICTIONARY.csv,table_name,string,DATA_DICTIONARY.csv 的稳定机器字段 `table_name`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,DATA_DICTIONARY.csv,field_name,string,DATA_DICTIONARY.csv 的稳定机器字段 `field_name`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,DATA_DICTIONARY.csv,data_type,string,DATA_DICTIONARY.csv 的稳定机器字段 `data_type`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,DATA_DICTIONARY.csv,description_zh,string,DATA_DICTIONARY.csv 的稳定机器字段 `description_zh`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,DATA_DICTIONARY.csv,missing_semantics_zh,string,DATA_DICTIONARY.csv 的稳定机器字段 `missing_semantics_zh`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,DATA_DICTIONARY.csv,source_role,string,DATA_DICTIONARY.csv 的稳定机器字段 `source_role`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,OUTPUT_MANIFEST.csv,schema_version,string,OUTPUT_MANIFEST.csv 的稳定机器字段 `schema_version`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,OUTPUT_MANIFEST.csv,path,string,OUTPUT_MANIFEST.csv 的稳定机器字段 `path`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,OUTPUT_MANIFEST.csv,size_bytes,integer_or_blank,OUTPUT_MANIFEST.csv 的稳定机器字段 `size_bytes`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,OUTPUT_MANIFEST.csv,record_count,integer_or_blank,OUTPUT_MANIFEST.csv 的稳定机器字段 `record_count`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema
+uncertainty_substrate_v1,OUTPUT_MANIFEST.csv,sha256,string,OUTPUT_MANIFEST.csv 的稳定机器字段 `sha256`。,空值表示源未提供、结构不适用或不可评价；绝不自动解释为 0/false。,machine_output_schema

@@ -1,0 +1,40 @@
+{
+  "coverage_check_count": 26,
+  "frozen_boundaries": [
+    "C2-B remains closed through normative historical-evidence acceptance",
+    "C2-A-RP remains closed after Block 2",
+    "no threshold, cluster, mode, entropy, worker type, proposal correctness, or causal effect is frozen"
+  ],
+  "hard_check_failures": [],
+  "hard_check_pass_count": 25,
+  "known_gaps": [
+    "legacy_c2a_precision_plan_sha_mismatch_not_consumed",
+    "historical_model_issue_not_time_locked",
+    "bad_gt_reference_quality_not_evaluable",
+    "missing_geometry_and_active_time_remain_missing"
+  ],
+  "legacy_precision_dependency_integrity": {
+    "actual_sha256": "90613aabb780d3f0427d8e3bd11980936cc3be3feb6fbe100e113969756e2724",
+    "expected_sha256": "a98ba1cce4c63f7b5688d38cffb5cc991b97bb0138322d5affc0398cb4723bdf",
+    "path": "analysis_results/c2a_rp_block2_distribution_20260810_v1/c2a_rp/precision_plan_C2A_RP.csv",
+    "status": "known_sha_mismatch_not_consumed"
+  },
+  "schema_version": "uncertainty_substrate_v1",
+  "status": "pass_with_known_gaps",
+  "workbook": {
+    "builder_stdout": "Inspect result written to file: D:\\Work\\HOHONET\\analysis_results\\.uncertainty_substrate_20260823_v1_wg80m3p9\\delivery\\.v5_xlsx_parts_6PGQOo\\part_001.xlsx.inspect.ndjson\n{\"outputPath\":\"D:\\\\Work\\\\HOHONET\\\\analysis_results\\\\.uncertainty_substrate_20260823_v1_wg80m3p9\\\\delivery\\\\不确定性数据底座审阅工作簿.xlsx\",\"batches\":1,\"rowCount\":829,\"tableCount\":6,\"merged\":{\"sheetCount\":6,\"tableCount\":6}}",
+    "formula_error_tokens": [],
+    "formula_inspection": "pass_no_formulas",
+    "preview_count": 6,
+    "sheet_names": [
+      "说明与边界",
+      "覆盖总览",
+      "已知缺口",
+      "任务上下文",
+      "字段字典",
+      "来源SHA"
+    ],
+    "status": "pass",
+    "workbook_sha256": "742c3229daea06ea9cda4478620023c35c19edc73054fc31a9d3b85052a03d42"
+  }
+}
