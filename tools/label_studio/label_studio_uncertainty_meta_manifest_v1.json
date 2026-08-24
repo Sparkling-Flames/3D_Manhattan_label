@@ -1,0 +1,57 @@
+{
+  "schema_version": "label_studio_uncertainty_meta_manifest_v1",
+  "manifest_id": "label_studio_uncertainty_meta_v1",
+  "status": "forward_local_configuration",
+  "deployment_status": "local_artifacts_ready_not_deployed",
+  "timing_basis": "worker_instruction_only_not_system_locked",
+  "proposal_missing_not_collected": true,
+  "edit_operation_count_not_collected": true,
+  "historical_data_reclassified": false,
+  "paper_a_method_contract_changed": false,
+  "script_version": "uncertainty_meta_20260824_v1",
+  "prechange_snapshot_root": "tools/label_studio/config_history/uncertainty_meta_v1_prechange_20260824",
+  "applicable_arms": [
+    "Manual",
+    "Correct-Semi",
+    "Wrong-Semi"
+  ],
+  "image_fields": [
+    "scope_status",
+    "multiple_plausible_layouts",
+    "perceived_difficulty",
+    "difficulty_reason_status",
+    "difficulty_reason"
+  ],
+  "proposal_fields": [
+    "material_issue",
+    "primary_issue_family",
+    "secondary_issue_families",
+    "required_correction",
+    "issue_confidence"
+  ],
+  "files": {
+    "xml": [
+      "tools/label_studio/label_studio_view_config.xml",
+      "tools/label_studio/label_studio_view_config_manual.xml",
+      "tools/label_studio/label_studio_view_config_c2_future.xml",
+      "tools/label_studio/localized/en/label_studio_view_config_en.xml",
+      "tools/label_studio/localized/en/label_studio_view_config_manual_en.xml",
+      "tools/label_studio/localized/en/label_studio_view_config_c2_future_en.xml"
+    ],
+    "userscript": [
+      "tools/label_studio/official/ls_userscript_annotator.js",
+      "tools/label_studio/official/ls_userscript_debug.js",
+      "tools/label_studio/localized/en/ls_userscript_annotator_https_en.user.js",
+      "tools/label_studio/localized/en/ls_userscript_annotator_https_en_debug.user.js"
+    ]
+  },
+  "boundaries": {
+    "manual_proposal_fields": "structural_not_applicable",
+    "proposal_truth_worker_visible": false,
+    "technical_time_lock": false,
+    "live_label_studio_deployed": false,
+    "active_time_behavior_changed": false,
+    "task_distribution_changed": false,
+    "gt_isolation_changed": false
+  }
+}

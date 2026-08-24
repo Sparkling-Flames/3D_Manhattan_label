@@ -89,3 +89,8 @@
 - `tools/thesis_main/analysis/materialize_model_initialization_audit.py`：以 Test 的“30 张确认人工 GT + 428 张官方原始 GT”和 Validation 的 190 张官方原始 GT（均排除 no-occ）评估 HoHoNet ep300 最终布局；角点对数量是拓扑硬门槛，ZInD-inspired 1% 图宽角点匹配与项目几何联合门共同定义初始化正确性。
 - `docs/thesis_main/TEST_MANUAL_GT_CORRECTIONS_20260823.md`：记录 `export_label/groudTruth.json` 相对官方 Test GT 的 30 张用户确认人工修订；不改写运行时导出，也不替代本次官方 GT 主分析。
 - `analysis_results/model_initialization_audit_hybrid_gt_20260823_v4/`：当前 648 张共享逐图 CSV、旧版 post-hoc v1 阈值保留报告、角点数量主分析报告与运行清单；GPU 重跑证据继续绑定 v3 清单。v3 修复了官方式 2D/3D 指标前错误按 x 重排全景角点的问题，v4 不改逐图数据，只拆分解释口径。`model_initialization_audit_hybrid_gt_20260823_v2/` 与 `model_initialization_audit_official_gt_20260823_v1/` 仅保留为已知旧口径对照。以上均属于派生审计输出，不改变 Paper A 正式协议或 T1/V1 estimand。
+
+## 2026-08-24 Label Studio 不确定性元标签 v1
+
+- `tools/label_studio/label_studio_uncertainty_meta_manifest_v1.json`：中英文 Manual/Semi/future XML 与四份 userscript 的本地待部署配置入口。
+- `tools/label_studio/config_history/uncertainty_meta_v1_prechange_20260824/`：上述十份文件的修改前备份；旧元标签消费者固定读取该历史 XML，不回写或重分类旧数据。

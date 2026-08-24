@@ -6,7 +6,7 @@
 
 - **单实例**
 - **不新增公开端口**
-- **不修改 userscript / Nginx / 导入脚本**
+- **不为权限或任务分发修改 userscript / Nginx / 导入脚本**
 - **项目切分优先于复杂 tabs/filter**
 
 这套方案的核心边界是：
@@ -201,7 +201,7 @@ GT 项目允许继续存在于同一实例，但只按**管理员维护项目**�
 当前方案明确不做：
 
 - 不做双实例
-- 不改 userscript
+- 不为权限、任务分发或 GT 隔离改 userscript
 - 不改 Nginx 路由
 - 不改导入生成脚本
 - 不把 LS 变成真正的任务分发器
@@ -218,7 +218,7 @@ GT 项目允许继续存在于同一实例，但只按**管理员维护项目**�
 
 ---
 
-## 9. Paper A Annotation v2 文案切换
+## 9. Paper A Annotation v2 文案切换（历史口径，未部署即被取代）
 
 - C2-A-RP Block 1 保留原始 UI 语义，不追溯修改或重分类。
 - C2-A-RP Block 1--5 全程沿用 `scope_instruction_v1`，避免在同一 risk-slope estimand 的顺序补精度过程中改变 measurement protocol。
@@ -230,3 +230,10 @@ GT 项目允许继续存在于同一实例，但只按**管理员维护项目**�
 - Scope、Difficulty、Model Issue 的字段名与 alias 不变；真实 Label Studio 导出继续保存 alias。
 - instruction version 只作审计 provenance，不进入主要模型、worker routing 或自适应选择。
 - 本地 XML、历史 SHA 和部署状态以 `tools/label_studio/label_studio_xml_instruction_manifest_v2.json` 为准；只有 Block 1 关闭后才可人工更新 Project 76/77 的 Labeling Config。
+
+## 10. 不确定性元标签 v1 本地配置
+
+- 现行 XML 与中英文正式/debug userscript 已改为不确定性元标签 v1，但状态仅为本地待部署；未修改线上项目。
+- 修改前十份文件保存在 `tools/label_studio/config_history/uncertainty_meta_v1_prechange_20260824/`，旧导出解析继续固定读取该快照。
+- 填写顺序只由培训要求保证，没有技术时间锁；不采集 proposal 缺失或编辑操作次数。
+- 详细字段、文件入口和边界以 `tools/label_studio/label_studio_uncertainty_meta_manifest_v1.json` 为准。

@@ -1,28 +1,98 @@
 <View>
-  <Image name="img" value="$image" zoom="true" zoomControl="true"/>
-  <KeyPointLabels name="kp" toName="img"><Label value="Corner" background="#FF4D4F"/></KeyPointLabels>
-  <BrushLabels name="wall_brush" toName="img"><Label value="Wall" background="#52C41A"/></BrushLabels>
-  <Choices name="scope" toName="img" choice="single" required="true">
-    <Choice value="In-scope: current space containing the camera" alias="normal"/>
-    <Choice value="OOS: geometric assumption invalid / non-Manhattan" alias="oos_geometry"/>
-    <Choice value="OOS: open or ambiguous boundary of the current space" alias="oos_open_boundary"/>
-    <Choice value="OOS: split-level or multi-level layout" alias="oos_split_level"/>
-    <Choice value="OOS: insufficient geometric evidence" alias="oos_insufficient"/>
-  </Choices>
-  <Text name="scope_rule_text" value="Annotate the current space containing the camera. Follow its enclosing walls through corners that belong to the current space. When an opening leads to an adjacent space, close at a clear structural boundary such as a door frame, paired wall returns or jambs, or an arch. Local occlusion, openings, stairs, or ceiling recesses are not automatically OOS. Scope remains the authoritative OOS field."/>
-  <Choices name="difficulty" toName="img" choice="multiple" required="true">
-  <Choice value="Trivial / very easy" alias="trivial" hint="Choose only when no other factor materially increases layout or corner annotation difficulty. This label is mutually exclusive with every other difficulty label."/>
-  <Choice value="Occlusion" alias="occlusion" hint="A foreground object or structure blocks wall, corner, or boundary evidence that would otherwise need to be judged."/><Choice value="Low texture or plain walls" alias="low_texture" hint="The image is complete, but local texture, color, or contrast is too weak to locate structural boundaries reliably."/>
-  <Choice value="Panorama seam or stretch distortion" alias="seam" hint="Panorama stitching, reprojection, or stretching breaks or shifts lines, bends walls, or displaces corners."/><Choice value="Reflection or glass interference" alias="reflection" hint="Mirrors or glass create false boundaries, duplicated structure, or depth confusion that materially increases annotation difficulty."/>
-  <Choice value="Blur, mask, or low image quality" alias="low_quality" hint="Blur, noise, compression, masks, black borders, or missing pixels make key structural evidence unreliable."/>
-  </Choices>
-  <Text name="difficulty_rule_text" value="Select the factors that materially made layout or corner annotation harder in this task. Difficulty does not determine Scope or indicate whether the model is wrong. Select distinct independent factors, but do not apply multiple labels to the same underlying cause. Trivial is mutually exclusive with all concrete factors."/>
-  <Choices name="model_issue" toName="img" choice="multiple" required="true">
-    <Choice value="Model quality acceptable" alias="acceptable" hint="The initial model geometry needs no adjustment and can be submitted unchanged. This label is mutually exclusive with every concrete issue."/>
-    <Choice value="Over-extend to adjacent room" alias="overextend_adjacent" hint="The model crosses a clear structural boundary and includes an adjacent space."/><Choice value="Under-extend / missing room parts" alias="underextend" hint="The model misses walls, corners, or boundaries that belong to the current space."/>
-    <Choice value="Over-parsing / ghost geometry" alias="over_parsing" hint="The model treats non-layout details as real structure."/><Choice value="Corner drift" alias="corner_drift" hint="A corner or local-boundary position needs adjustment while the point count and topology are otherwise correct."/>
-    <Choice value="Duplicate corner points" alias="corner_duplicate" hint="Multiple redundant points represent the same physical corner."/><Choice value="Topological failure" alias="topology_failure" hint="Corner correspondence, order, closure, or another structural configuration is invalid."/><Choice value="Prediction failure" alias="fail" hint="Choose only when the initial prediction is missing, unusable, or cannot be adequately described by a concrete issue. Do not additionally select fail when concrete issues already describe the error."/>
-  </Choices>
-  <Text name="model_issue_rule_text" value="Judge the initial model proposal before editing. Acceptable means the initial geometry needs no adjustment and can be submitted unchanged; it is mutually exclusive with every concrete issue. If any corner, boundary, or topology needs correction, choose the corresponding issue. Never replace the worker's explicit answer with a geometry-based inference."/>
-  <HyperText name="vis_3d" value="$vis_3d" valueType="url" inline="false"/>
+  <View style="display:flex; height:100vh; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+    <View style="flex:60%; margin-right:12px; display:flex; flex-direction:column; height:100%;">
+      <View style="flex:0 0 40%; min-height:330px; padding:8px; background:#fff;">
+        <Image name="img" value="$image" zoom="true" zoomControl="true" style="height:100%; border:1px solid #eee;"/>
+      </View>
+      <View style="display:flex; gap:8px; padding:6px 12px; background:#fff;">
+        <KeyPointLabels name="kp" toName="img" strokeWidth="2"><Label value="Corner" background="#FF4D4F"/></KeyPointLabels>
+        <BrushLabels name="wall_brush" toName="img"><Label value="Wall" background="#52C41A"/></BrushLabels>
+      </View>
+      <View style="flex:1; overflow-y:auto; padding:12px 16px; background:#fff;">
+        <Header value="A. Image and task judgement (complete before editing, as instructed in training)"/>
+        <Text name="scope_status_rule_text" value="First decide only whether the current space containing the camera is suitable for the specified layout annotation protocol. This is the worker's judgement, not researcher truth."/>
+        <Choices name="scope_status" toName="img" choice="single" showInLine="true" required="true" requiredMessage="You must decide whether the task is in scope">
+          <Choice value="in_scope" alias="in_scope" html="In-scope"/>
+          <Choice value="out_of_scope" alias="out_of_scope" html="Out-of-scope"/>
+        </Choices>
+
+        <Text name="multiple_plausible_layouts_rule_text" value="Independently decide whether the image supports two or more equally reasonable annotation results. No means only that you did not identify two or more reasonable results; it does not establish a unique researcher truth."/>
+        <Choices name="multiple_plausible_layouts" toName="img" choice="single" showInLine="true" required="true" requiredMessage="You must answer whether multiple plausible annotations exist">
+          <Choice value="no" alias="no" html="No"/>
+          <Choice value="yes" alias="yes" html="Yes"/>
+        </Choices>
+
+        <Text name="perceived_difficulty_rule_text" value="Rate the overall difficulty you experienced when completing the layout annotation: 1=very easy, 5=very difficult."/>
+        <Choices name="perceived_difficulty" toName="img" choice="single" showInLine="true" required="true" requiredMessage="You must select a difficulty from 1 to 5">
+          <Choice value="1" alias="1"/><Choice value="2" alias="2"/><Choice value="3" alias="3"/><Choice value="4" alias="4"/><Choice value="5" alias="5"/>
+        </Choices>
+
+        <Text name="difficulty_reason_status_rule_text" value="First state whether you observed a specific reason for the difficulty. This distinguishes no specific reason from a missing response."/>
+        <Choices name="difficulty_reason_status" toName="img" choice="single" showInLine="true" required="true" requiredMessage="You must state whether a specific difficulty reason exists">
+          <Choice value="no_specific_reason" alias="no_specific_reason" html="No specific reason observed"/>
+          <Choice value="one_or_more_specific_reasons" alias="one_or_more_specific_reasons" html="One or more specific reasons observed"/>
+        </Choices>
+        <View visibleWhen="choice-selected" whenTagName="difficulty_reason_status" whenChoiceValue="one_or_more_specific_reasons">
+          <Text name="difficulty_reason_rule_text" value="Select every reason that materially increased annotation difficulty. Do not classify the same underlying cause twice."/>
+          <Choices name="difficulty_reason" toName="img" choice="multiple" required="true" requiredMessage="You reported a reason, so select at least one">
+            <Choice value="occlusion" alias="occlusion" html="Occlusion"/>
+            <Choice value="low_texture" alias="low_texture" html="Low texture or plain walls"/>
+            <Choice value="seam_or_distortion" alias="seam_or_distortion" html="Panorama seam or geometric distortion"/>
+            <Choice value="reflection_or_transparency" alias="reflection_or_transparency" html="Reflection, glass, or transparency"/>
+            <Choice value="opening_or_adjacent_space" alias="opening_or_adjacent_space" html="Opening or adjacent-space interference"/>
+            <Choice value="image_quality" alias="image_quality" html="Blur, masks, exposure, or other image-quality problem"/>
+            <Choice value="other" alias="other" html="Other"/>
+          </Choices>
+        </View>
+
+        <Header value="B. Model proposal judgement (complete before editing, as instructed in training)"/>
+        <Text name="material_issue_rule_text" value="Judge whether the initial proposal has a material issue. This is worker perception, not proposal truth; Correct/Wrong condition is never shown to workers."/>
+        <Choices name="material_issue" toName="img" choice="single" showInLine="true" required="true" requiredMessage="You must judge whether the proposal has a material issue">
+          <Choice value="no" alias="no" html="No"/>
+          <Choice value="yes" alias="yes" html="Yes"/>
+          <Choice value="unsure" alias="unsure" html="Unsure"/>
+        </Choices>
+        <View visibleWhen="choice-selected" whenTagName="material_issue" whenChoiceValue="yes,unsure">
+          <Text name="primary_issue_family_rule_text" value="Choose one primary issue. Choose unsure if you cannot determine the family."/>
+          <Choices name="primary_issue_family" toName="img" choice="single" required="true" requiredMessage="You must choose one primary issue family">
+            <Choice value="boundary_or_corner_localization" alias="boundary_or_corner_localization" html="Boundary or corner localization"/>
+            <Choice value="underextension" alias="underextension" html="Underextension or missing current-space structure"/>
+            <Choice value="adjacent_space_overextension" alias="adjacent_space_overextension" html="Overextension into an adjacent space"/>
+            <Choice value="overparsing_or_ghost_structure" alias="overparsing_or_ghost_structure" html="Overparsing or ghost structure"/>
+            <Choice value="duplicate_corner" alias="duplicate_corner" html="Duplicate corner"/>
+            <Choice value="topology_order_or_closure" alias="topology_order_or_closure" html="Topology, order, or closure"/>
+            <Choice value="other" alias="other" html="Other"/>
+            <Choice value="unsure" alias="unsure" html="Unsure of family"/>
+          </Choices>
+          <Text name="secondary_issue_families_rule_text" value="Optionally select other clear secondary issues. Do not repeat the primary issue."/>
+          <Choices name="secondary_issue_families" toName="img" choice="multiple">
+            <Choice value="boundary_or_corner_localization" alias="boundary_or_corner_localization" html="Boundary or corner localization"/>
+            <Choice value="underextension" alias="underextension" html="Underextension or missing current-space structure"/>
+            <Choice value="adjacent_space_overextension" alias="adjacent_space_overextension" html="Overextension into an adjacent space"/>
+            <Choice value="overparsing_or_ghost_structure" alias="overparsing_or_ghost_structure" html="Overparsing or ghost structure"/>
+            <Choice value="duplicate_corner" alias="duplicate_corner" html="Duplicate corner"/>
+            <Choice value="topology_order_or_closure" alias="topology_order_or_closure" html="Topology, order, or closure"/>
+            <Choice value="other" alias="other" html="Other"/>
+          </Choices>
+        </View>
+
+        <Text name="required_correction_rule_text" value="Choose the correction requirement that best matches your judgement. The system does not reinterpret or overwrite combinations with material_issue."/>
+        <Choices name="required_correction" toName="img" choice="single" required="true" requiredMessage="You must select a correction requirement">
+          <Choice value="no_edit_needed" alias="no_edit_needed" html="No edit needed"/>
+          <Choice value="optional_visual_micro_refinement" alias="optional_visual_micro_refinement" html="Optional visual micro-refinement"/>
+          <Choice value="minor_mandatory_coordinate_correction" alias="minor_mandatory_coordinate_correction" html="Minor mandatory coordinate correction"/>
+          <Choice value="major_geometry_correction" alias="major_geometry_correction" html="Major geometry correction"/>
+          <Choice value="topology_change_or_redraw" alias="topology_change_or_redraw" html="Topology change or redraw"/>
+        </Choices>
+
+        <Text name="issue_confidence_rule_text" value="Rate your confidence in the proposal judgement above: 1=very uncertain, 5=very confident."/>
+        <Choices name="issue_confidence" toName="img" choice="single" showInLine="true" required="true" requiredMessage="You must select confidence from 1 to 5">
+          <Choice value="1" alias="1"/><Choice value="2" alias="2"/><Choice value="3" alias="3"/><Choice value="4" alias="4"/><Choice value="5" alias="5"/>
+        </Choices>
+      </View>
+    </View>
+    <View style="flex:40%; border-left:1px solid #ccc; padding-left:10px;">
+      <HyperText name="vis_3d" value="$vis_3d" valueType="url" inline="false"/>
+    </View>
+  </View>
 </View>

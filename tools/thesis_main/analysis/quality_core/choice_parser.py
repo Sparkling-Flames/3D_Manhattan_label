@@ -7,7 +7,16 @@ import xml.etree.ElementTree as ET
 import numpy as np
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[4]
-_LABEL_STUDIO_CONFIG_PATH = _PROJECT_ROOT / "tools" / "label_studio" / "label_studio_view_config.xml"
+_LABEL_STUDIO_CONFIG_PATH = (
+    _PROJECT_ROOT
+    / "tools"
+    / "label_studio"
+    / "config_history"
+    / "uncertainty_meta_v1_prechange_20260824"
+    / "zh"
+    / "xml"
+    / "label_studio_view_config.xml"
+)
 
 
 def _load_label_studio_choice_alias_map(xml_path: Path) -> dict[str, dict[str, str]]:

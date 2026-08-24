@@ -14,7 +14,16 @@ PROJECT_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_EXPORT_JSON = PROJECT_ROOT / "analysis_results" / "rerun_20260308" / "export_filtered_from_20260101.json"
 DEFAULT_ACTIVE_LOG_DIR = PROJECT_ROOT / "active_logs" / "active_logs"
 DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "analysis_results" / "registry_20260308"
-LABEL_STUDIO_CONFIG = PROJECT_ROOT / "tools" / "label_studio" / "label_studio_view_config.xml"
+LABEL_STUDIO_CONFIG = (
+    PROJECT_ROOT
+    / "tools"
+    / "label_studio"
+    / "config_history"
+    / "uncertainty_meta_v1_prechange_20260824"
+    / "zh"
+    / "xml"
+    / "label_studio_view_config.xml"
+)
 COMPAT_RULE_VERSION = "registry_suite_v1"
 
 

@@ -5,28 +5,64 @@ import json
 
 ROOT = Path(__file__).resolve().parents[1]
 OFFICIAL = ROOT / "tools" / "label_studio" / "official" / "ls_userscript_annotator.js"
+OFFICIAL_DEBUG = ROOT / "tools" / "label_studio" / "official" / "ls_userscript_debug.js"
 FOREIGN = ROOT / "tools" / "label_studio" / "localized" / "en" / "ls_userscript_annotator_https_en.user.js"
 FOREIGN_DEBUG = ROOT / "tools" / "label_studio" / "localized" / "en" / "ls_userscript_annotator_https_en_debug.user.js"
+PRECHANGE = ROOT / "tools" / "label_studio" / "config_history" / "uncertainty_meta_v1_prechange_20260824"
+PRECHANGE_OFFICIAL = PRECHANGE / "zh" / "userscript" / "ls_userscript_annotator.js"
+PRECHANGE_OFFICIAL_DEBUG = PRECHANGE / "zh" / "userscript" / "ls_userscript_debug.js"
+PRECHANGE_FOREIGN = PRECHANGE / "en" / "userscript" / "ls_userscript_annotator_https_en.user.js"
+PRECHANGE_FOREIGN_DEBUG = PRECHANGE / "en" / "userscript" / "ls_userscript_annotator_https_en_debug.user.js"
 INSTRUCTION_MANIFEST = ROOT / "tools" / "label_studio" / "label_studio_xml_instruction_manifest_v2.json"
-VERSION = "c2plus_task_worker_active_time_20260802_v2"
+VERSION = "uncertainty_meta_20260824_v1"
 
 
 def _script(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
-def test_english_userscript_relocation_preserves_frozen_sha() -> None:
+def test_prechange_english_userscripts_preserve_the_v2_frozen_sha() -> None:
     manifest = json.loads(INSTRUCTION_MANIFEST.read_text(encoding="utf-8"))["userscript_relocation"]
-    assert hashlib.sha256(FOREIGN.read_bytes()).hexdigest() == manifest["formal_en_sha256"]
-    assert hashlib.sha256(FOREIGN_DEBUG.read_bytes()).hexdigest() == manifest["debug_en_sha256"]
+    assert hashlib.sha256(PRECHANGE_FOREIGN.read_bytes()).hexdigest() == manifest["formal_en_sha256"]
+    assert hashlib.sha256(PRECHANGE_FOREIGN_DEBUG.read_bytes()).hexdigest() == manifest["debug_en_sha256"]
     assert manifest["content_changed"] is False
 
 
-def test_formal_userscripts_use_the_c2plus_task_worker_version():
+def test_prechange_snapshot_contains_all_four_userscripts() -> None:
+    for path in (PRECHANGE_OFFICIAL, PRECHANGE_OFFICIAL_DEBUG, PRECHANGE_FOREIGN, PRECHANGE_FOREIGN_DEBUG):
+        assert path.is_file()
+        assert VERSION not in _script(path)
+
+
+def test_formal_userscripts_use_the_uncertainty_meta_version():
     for path in (OFFICIAL, FOREIGN):
         source = _script(path)
         assert f"// @version      {VERSION}" in source
         assert f'const SCRIPT_VERSION = "{VERSION}";' in source
+
+
+def test_all_current_userscripts_enforce_the_uncertainty_meta_structure() -> None:
+    for path in (OFFICIAL, OFFICIAL_DEBUG, FOREIGN, FOREIGN_DEBUG):
+        source = _script(path)
+        start = source.index("function validateMetaChoices(store)")
+        end = source.index("function shouldGuardAction(target)", start)
+        guard = source[start:end]
+        for field in (
+            "difficulty_reason_status",
+            "difficulty_reason",
+            "material_issue",
+            "primary_issue_family",
+            "secondary_issue_families",
+        ):
+            assert field in guard
+        assert "one_or_more_specific_reasons" in guard
+        assert "no_specific_reason" in guard
+        assert "secondaryIssue.includes(primaryIssue[0])" in guard
+        assert 'const exactLocalizedAliases = { 否: "no", 是: "yes", 不确定: "unsure" };' in source
+        assert "trivial" not in guard.lower()
+        assert "acceptable" not in guard.lower()
+        assert "META_GUARD_REJECT_LOG_KEY" not in source
+        assert "META_GUARD_REJECT_STATS_KEY" not in source
 
 
 def test_page_gate_requires_route_labeling_editor_main_view_and_task_identity():

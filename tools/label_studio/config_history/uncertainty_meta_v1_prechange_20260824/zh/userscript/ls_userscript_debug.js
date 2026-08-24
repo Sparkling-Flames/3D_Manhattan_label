@@ -1,11 +1,15 @@
 // ==UserScript==
-// @name         HoHoNet Helper Official Annotator HTTPS EN DEBUG
-// @namespace    https://label.sparkle0825.top/
-// @version      uncertainty_meta_20260824_v1
-// @description  Self-contained HTTPS helper for foreign HoHoNet Stage 1 annotators. Based on the official annotator helper; adds same-origin HTTPS defaults and optional CloudResearch worker-id metadata.
+// @name         HoHoNet Helper Debug Staff
+// @namespace    http://tampermonkey.net/
+// @version      stage1_helper_ordercache_hotfix_20260617_v1
+// @description  调试/巡检版：连接 Label Studio 与 HoHoNet 3D 查看器，可本地禁用 active_time
 // @author       HoHoNet
-// @match        https://label.sparkle0825.top/*
-// @grant        none
+// @match        http://175.178.71.217:8080/*
+// @match        https://175.178.71.217:8080/*
+// @match        http://localhost:8080/*
+// @match        https://localhost:8080/*
+// @match        http://127.0.0.1:8080/*
+// @match        https://127.0.0.1:8080/*
 // ==/UserScript==
 
 (function () {
@@ -17,7 +21,7 @@
   // 防止同一页面同时运行多个 HoHoNet userscript（例如旧版+新版同时启用）
   // 这会导致重复热键注册、重复观察器与状态树报错。
   if (window.__HOHONET_HELPER_ACTIVE__) {
-    console.warn("HoHoNet Helper: another instance is already active; skipping this script.");
+    console.warn("HoHoNet Helper: 检测到已存在运行实例，当前脚本跳过初始化。");
     return;
   }
   window.__HOHONET_HELPER_ACTIVE__ = true;
@@ -92,16 +96,17 @@
 
   // ---- 部署配置（中文）----
   // 推荐在浏览器控制台设置（一次即可）：
-  //   localStorage.setItem('HOHONET_HELPER_BASE_URL', location.origin);
+  //   localStorage.setItem('HOHONET_HELPER_BASE_URL', 'http://175.178.71.217:8000');
   // 如果你把 /tools 和 /log_time 反代到 LS 同源，也可设置为：
   //   localStorage.setItem('HOHONET_HELPER_BASE_URL', location.origin);
   function getHelperBaseUrl() {
     try {
       return (
-        window.localStorage.getItem("HOHONET_HELPER_BASE_URL") || window.location.origin
+        window.localStorage.getItem("HOHONET_HELPER_BASE_URL") ||
+        "http://175.178.71.217:8000"
       );
     } catch (e) {
-      return window.location.origin;
+      return "http://175.178.71.217:8000";
     }
   }
 
@@ -128,87 +133,23 @@
     }
   }
 
-
-  // Foreign HTTPS / CloudResearch metadata. These fields are optional audit aids;
-  // they do not replace Label Studio user_id/task_id/session_id.
-  const FOREIGN_WORKER_ID_KEYS = [
-    "participantId",
-    "workerId",
-    "worker_id",
-    "hohonet_worker_id",
-    "wid",
-  ];
-
-  function getQueryValueByKeys(keys) {
+  // debug/staff 脚本默认不计时。
+  // 若确实需要在调试脚本下临时开启计时：
+  //   localStorage.setItem('HOHONET_ENABLE_DEBUG_ACTIVE_TIME', '1')
+  // 如需强制关闭：
+  //   localStorage.setItem('HOHONET_DISABLE_ACTIVE_TIME', '1')
+  function isActiveTimeLoggingDisabled() {
     try {
-      const params = new URLSearchParams(window.location.search);
-      for (const key of keys) {
-        const value = params.get(key);
-        if (value && String(value).trim()) return String(value).trim();
-      }
-    } catch (e) {}
-    return "";
-  }
-
-  function rememberForeignRecruitmentMetadata() {
-    try {
-      const participantId = getQueryValueByKeys(["participantId"]);
-      const externalWorkerId =
-        getQueryValueByKeys(FOREIGN_WORKER_ID_KEYS) ||
-        window.localStorage.getItem("HOHONET_RECRUIT_WORKER_ID") ||
-        "";
-      const assignmentId = getQueryValueByKeys(["assignmentId"]);
-      const connectProjectId = getQueryValueByKeys(["projectId"]);
-      if (externalWorkerId) {
-        window.localStorage.setItem("HOHONET_RECRUIT_WORKER_ID", externalWorkerId);
-      }
-      if (participantId) {
-        window.localStorage.setItem("HOHONET_CONNECT_PARTICIPANT_ID", participantId);
-      }
-      if (assignmentId) {
-        window.localStorage.setItem("HOHONET_CONNECT_ASSIGNMENT_ID", assignmentId);
-      }
-      if (connectProjectId) {
-        window.localStorage.setItem("HOHONET_CONNECT_PROJECT_ID", connectProjectId);
-      }
-    } catch (e) {}
-  }
-
-  function getForeignRecruitmentMetadataForPayload() {
-    try {
-      const participantId =
-        getQueryValueByKeys(["participantId"]) ||
-        window.localStorage.getItem("HOHONET_CONNECT_PARTICIPANT_ID") ||
-        "";
-      const externalWorkerId =
-        getQueryValueByKeys(FOREIGN_WORKER_ID_KEYS) ||
-        window.localStorage.getItem("HOHONET_RECRUIT_WORKER_ID") ||
-        participantId ||
-        "";
-      const assignmentId =
-        getQueryValueByKeys(["assignmentId"]) ||
-        window.localStorage.getItem("HOHONET_CONNECT_ASSIGNMENT_ID") ||
-        "";
-      const connectProjectId =
-        getQueryValueByKeys(["projectId"]) ||
-        window.localStorage.getItem("HOHONET_CONNECT_PROJECT_ID") ||
-        "";
-      const entries = {
-        external_worker_id: externalWorkerId,
-        connect_participant_id: participantId,
-        connect_assignment_id: assignmentId,
-        connect_project_id: connectProjectId,
-        foreign_https_script_version: SCRIPT_VERSION,
-      };
-      return Object.fromEntries(
-        Object.entries(entries).filter(([, value]) => value !== ""),
-      );
+      const forcedDisable =
+        window.localStorage.getItem("HOHONET_DISABLE_ACTIVE_TIME") === "1";
+      const explicitEnable =
+        window.localStorage.getItem("HOHONET_ENABLE_DEBUG_ACTIVE_TIME") === "1";
+      return forcedDisable || !explicitEnable;
     } catch (e) {
-      return { foreign_https_script_version: SCRIPT_VERSION };
+      return true;
     }
   }
 
-  rememberForeignRecruitmentMetadata();
   function maskToken(t) {
     if (!t) return "";
     const s = String(t);
@@ -229,7 +170,7 @@
   //   localStorage.removeItem('HOHONET_DEBUG_PANEL')
   function isDebugPanelEnabled() {
     try {
-      return window.localStorage.getItem("HOHONET_DEBUG_PANEL") !== "0";
+      return window.localStorage.getItem("HOHONET_DEBUG_PANEL") === "1";
     } catch (e) {
       return false;
     }
@@ -247,38 +188,15 @@
   const existingPreviewPanelStyle = document.getElementById(PREVIEW_PANEL_STYLE_ID);
   if (existingPreviewPanelStyle) existingPreviewPanelStyle.remove();
 
-  const SCRIPT_VERSION = "uncertainty_meta_20260824_v1";
-  window.__HOHONET_HELPER_SCRIPT_VERSION__ = SCRIPT_VERSION;
-  window.__HOHONET_HELPER_SCRIPT_FLAVOR__ = "foreign_https_en_debug";
-  console.log(`HoHoNet Helper: loaded (v${SCRIPT_VERSION})`);
+  const SCRIPT_VERSION = "stage1_helper_ordercache_hotfix_20260617_v1";
+  console.log(`HoHoNet Helper: 已加载 (v${SCRIPT_VERSION})`);
+  console.log(
+    "HoHoNet debug active_time: disabled by default; enable with localStorage.HOHONET_ENABLE_DEBUG_ACTIVE_TIME=1",
+  );
   console.log(
     "HoHoNet viewer base: set localStorage.HOHONET_VIEWER_BASE_URL = location.origin when /tools is reverse-proxied on LS origin",
   );
-  const DEFAULT_PREVIEW_STATUS_TEXT = "Click Refresh 3D View first";
-
-  function translatePreviewStatusText(statusText) {
-    let text = String(statusText || DEFAULT_PREVIEW_STATUS_TEXT);
-    const replacements = [
-      ["本地缓存：有", "Local saved order: yes"],
-      ["本地缓存：无", "Local saved order: no"],
-      ["当前预览：已保存顺序", "Current preview: saved order"],
-      ["当前预览：默认顺序", "Current preview: default order"],
-      ["当前预览：临时调整", "Current preview: temporary order"],
-      ["已保存到本地缓存", "Saved to local cache"],
-      ["保存成功：本地缓存已更新", "Save successful: local cache updated"],
-      ["已恢复当前预览到默认顺序", "Restored current preview to default order"],
-      ["已删除当前缓存并恢复默认顺序", "Deleted saved order and restored default order"],
-      ["删除成功：已恢复默认顺序", "Delete successful: default order restored"],
-      ["本地缓存操作失败", "Local cache operation failed"],
-      ["已载入已保存顺序", "Loaded saved order"],
-      ["已载入默认顺序", "Loaded default order"],
-    ];
-    for (const [zh, en] of replacements) {
-      text = text.split(zh).join(en);
-    }
-    text = text.replace(/已将第\s*(\d+)\s*对与第\s*(\d+)\s*对交换/g, "Swapped pair $1 with pair $2");
-    return text;
-  }
+  const DEFAULT_PREVIEW_STATUS_TEXT = "请先刷新 3D 视图";
 
   function createPreviewInputDraft() {
     return {
@@ -304,7 +222,7 @@
       pairCount: Number(data?.pairCount) || 0,
       selectedPairIndex: Number(data?.selectedPairIndex) || 0,
       savedOverrideActive: !!data?.savedOverrideActive,
-      statusText: translatePreviewStatusText(data?.statusText),
+      statusText: String(data?.statusText || DEFAULT_PREVIEW_STATUS_TEXT),
     };
   }
 
@@ -340,7 +258,7 @@
     return {
       hasData,
       savedOverrideActive: !!uiState?.savedOverrideActive,
-      statusText: translatePreviewStatusText(uiState?.statusText),
+      statusText: String(uiState?.statusText || DEFAULT_PREVIEW_STATUS_TEXT),
       safeCount,
       safeIndex,
       currentPairNumber: safeCount > 0 ? safeIndex + 1 : 1,
@@ -403,7 +321,7 @@
         "position: fixed; bottom: 10px; right: 10px; background: rgba(0,0,0,0.8); color: #0f0; padding: 10px; z-index: 9999; font-family: monospace; font-size: 12px; pointer-events: none; white-space: pre-wrap;";
       document.body.appendChild(panel);
     }
-    panel.innerText = `HoHoNet Debug (v${SCRIPT_VERSION}):\n` + msg;
+    panel.innerText = `HoHoNet 调试 (v${SCRIPT_VERSION}):\n` + msg;
   }
 
   function getLabelsVisible() {
@@ -425,10 +343,10 @@
   function applyToggleBtnState(toggleBtn, visible) {
     if (!toggleBtn) return;
     if (visible) {
-      toggleBtn.innerText = "🏷️ Hide Labels";
+      toggleBtn.innerText = "🏷️ 隐藏标签";
       toggleBtn.style.background = "#6c757d";
     } else {
-      toggleBtn.innerText = "🏷️ Show Labels";
+      toggleBtn.innerText = "🏷️ 显示标签";
       toggleBtn.style.background = "#28a745";
     }
   }
@@ -643,30 +561,16 @@
     const s = String(raw || "").trim();
     const l = s.toLowerCase();
     if (!s) return "";
-    const exactLocalizedAliases = { 否: "no", 是: "yes", 不确定: "unsure" };
-    if (exactLocalizedAliases[l]) return exactLocalizedAliases[l];
-    const localizedAliases = [
-      ["没有明确的困难原因", "no_specific_reason"],
-      ["no specific reason", "no_specific_reason"],
-      ["有一个或多个明确原因", "one_or_more_specific_reasons"],
-      ["one or more specific reasons", "one_or_more_specific_reasons"],
-      ["边界或角点定位", "boundary_or_corner_localization"],
-      ["boundary or corner localization", "boundary_or_corner_localization"],
-      ["欠延伸", "underextension"],
-      ["underextension", "underextension"],
-      ["过度延伸到相邻空间", "adjacent_space_overextension"],
-      ["overextension into an adjacent space", "adjacent_space_overextension"],
-      ["过度解析", "overparsing_or_ghost_structure"],
-      ["overparsing", "overparsing_or_ghost_structure"],
-      ["重复角点", "duplicate_corner"],
-      ["duplicate corner", "duplicate_corner"],
-      ["拓扑、顺序或闭合", "topology_order_or_closure"],
-      ["topology, order, or closure", "topology_order_or_closure"],
-      ["无法判断类别", "unsure"],
-      ["unsure of family", "unsure"],
-    ];
-    const localized = localizedAliases.find(([label]) => l.includes(label));
-    if (localized) return localized[1];
+
+    if (l === "trivial" || l.includes("(trivial)") || s.includes("非常简单"))
+      return "trivial";
+    if (
+      l === "acceptable" ||
+      l.includes("acceptable") ||
+      s.includes("模型标注质量好")
+    )
+      return "acceptable";
+
     return l;
   }
 
@@ -683,6 +587,24 @@
       return true;
     if (a.includes(e)) return true;
     return false;
+  }
+
+  function isTrivialToken(token) {
+    const t = String(token || "")
+      .trim()
+      .toLowerCase();
+    return t === "trivial" || t.includes("trivial") || t.includes("非常简单");
+  }
+
+  function isAcceptableToken(token) {
+    const t = String(token || "")
+      .trim()
+      .toLowerCase();
+    return (
+      t === "acceptable" ||
+      t.includes("acceptable") ||
+      t.includes("模型标注质量好")
+    );
   }
 
   function isMetaGuardDebugEnabled() {
@@ -828,14 +750,10 @@
     const probes = Array.from(
       document.querySelectorAll("h1,h2,h3,h4,h5,h6,div,span,label"),
     );
-    const patternsByField = {
-      difficulty_reason_status: [/是否观察到明确的困难原因/, /whether you observed a specific reason/i],
-      difficulty_reason: [/选择所有确实增加标注难度的原因/, /select every reason that materially increased/i],
-      material_issue: [/是否存在实质问题/, /has a material issue/i],
-      primary_issue_family: [/最主要的问题/, /one primary issue/i],
-      secondary_issue_families: [/次要问题/, /secondary issues/i],
-    };
-    const patterns = patternsByField[fieldName] || [];
+    const patterns =
+      fieldName === "difficulty"
+        ? [/困难因素/, /difficulty/i]
+        : [/模型初始化问题/, /model\s*issue/i];
 
     for (const el of probes) {
       const txt = String(el?.innerText || "").trim();
@@ -906,6 +824,10 @@
     return "";
   }
 
+  const META_GUARD_REJECT_LOG_KEY = "HOHONET_META_GUARD_REJECTIONS";
+  const META_GUARD_REJECT_STATS_KEY = "HOHONET_META_GUARD_REJECT_STATS";
+  const META_GUARD_REJECT_LOG_MAX = 200;
+
   function loadJsonFromLocalStorage(key, fallback) {
     try {
       const raw = window.localStorage.getItem(key);
@@ -933,6 +855,10 @@
     return "unknown_annotation";
   }
 
+  function getLegacyPreviewOverrideTaskKey() {
+    return `${getProjectId()}::${getTaskId()}::${getAnnotatorId()}`;
+  }
+
   function getCornerOrderCacheContext() {
     return {
       project_id: String(getProjectId() || "unknown_project"),
@@ -943,10 +869,6 @@
 
   function getCornerOrderCacheKey(context = getCornerOrderCacheContext()) {
     return `project:${context.project_id}::task:${context.task_id}::user:${context.user_id}`;
-  }
-
-  function getLegacyPreviewOverrideTaskKey() {
-    return `${getProjectId()}::${getTaskId()}::${getAnnotatorId()}`;
   }
 
   function getPreviewOverrideTaskKey() {
@@ -1340,7 +1262,7 @@
   margin-top: 7px;
 }
 #${PREVIEW_PANEL_ID} .hp-label {
-  margin-bottom: 4px;
+  margin-bottom: 5px;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -1461,7 +1383,7 @@
     const toggleBtn = document.getElementById(PREVIEW_PANEL_TOGGLE_ID);
     if (!panel || !toggleBtn) return;
     panel.dataset.collapsed = collapsed ? "1" : "0";
-    toggleBtn.innerText = collapsed ? "Expand" : "Collapse";
+    toggleBtn.innerText = collapsed ? "展开" : "收起";
     if (persist) {
       try {
         window.localStorage.setItem(
@@ -1535,12 +1457,12 @@
 
     if (controls.slotNode) {
       controls.slotNode.innerText = hasData
-        ? `Current pair ${currentPairNumber} / ${safeCount}`
-        : "Current pair -- / --";
+        ? `当前第 ${currentPairNumber} / ${safeCount} 对`
+        : "当前第 -- / -- 对";
     }
     if (controls.statusNode) {
       controls.statusNode.innerText =
-        statusText || (savedOverrideActive ? "Local saved order: yes" : "Local saved order: no");
+        statusText || (savedOverrideActive ? "本地缓存：有" : "本地缓存：无");
     }
     if (
       controls.pairInput &&
@@ -1643,7 +1565,7 @@
   function postPreviewOrderCommand(action, extra = {}) {
     const iframe = document.getElementById(IFRAME_ID);
     if (!iframe || !iframe.contentWindow) {
-      alert("3D view is not ready. Click Refresh 3D View first.");
+      alert("3D 视图未就绪，请先点击“刷新 3D 视图”。");
       return;
     }
     iframe.contentWindow.postMessage(
@@ -1669,47 +1591,49 @@
     panel.innerHTML = `
       <div id="${PREVIEW_PANEL_HEADER_ID}">
         <div>
-          <div class="hp-title">Preview Order</div>
-          <div id="${PREVIEW_PANEL_SLOT_ID}" class="hp-slot">Current pair -- / --</div>
+          <div class="hp-title">预览顺序</div>
+          <div id="${PREVIEW_PANEL_SLOT_ID}" class="hp-slot">当前第 -- / -- 对</div>
         </div>
-        <button id="${PREVIEW_PANEL_TOGGLE_ID}" class="hp-toggle" type="button">Expand</button>
+        <button id="${PREVIEW_PANEL_TOGGLE_ID}" class="hp-toggle" type="button">展开</button>
       </div>
       <div id="${PREVIEW_PANEL_BODY_ID}">
-        <div class="hp-note">Affects only the 3D preview. It does not edit the annotation data.</div>
+        <div class="hp-note">只影响 3D 预览，不改主标注数据。</div>
         <div id="${PREVIEW_PANEL_STATUS_ID}" class="hp-status">${DEFAULT_PREVIEW_STATUS_TEXT}</div>
         <div class="hp-section">
-          <div class="hp-label">Go to Pair</div>
+          <div class="hp-label">定位当前对</div>
           <div class="hp-row">
-            <span>Pair</span>
+            <span>跳到第</span>
             <input id="${PREVIEW_PANEL_PAIR_INPUT_ID}" type="number" min="1" step="1" value="1" />
+            <span>对</span>
           </div>
           <div class="hp-row">
-            <button id="${PREVIEW_PANEL_PAIR_PREV_ID}" type="button">Previous Pair</button>
-            <button id="${PREVIEW_PANEL_PAIR_NEXT_ID}" type="button">Next Pair</button>
+            <button id="${PREVIEW_PANEL_PAIR_PREV_ID}" type="button">上一对</button>
+            <button id="${PREVIEW_PANEL_PAIR_NEXT_ID}" type="button">下一对</button>
           </div>
         </div>
         <div class="hp-section">
-          <div class="hp-label">Swap Current Pair</div>
+          <div class="hp-label">交换当前对</div>
           <div class="hp-row">
-            <button id="${PREVIEW_PANEL_SWAP_PREV_ID}" type="button">Swap with Previous</button>
-            <button id="${PREVIEW_PANEL_SWAP_NEXT_ID}" type="button">Swap with Next</button>
+            <button id="${PREVIEW_PANEL_SWAP_PREV_ID}" type="button">与前对交换</button>
+            <button id="${PREVIEW_PANEL_SWAP_NEXT_ID}" type="button">与后对交换</button>
           </div>
           <div class="hp-row">
-            <span>Swap with pair</span>
+            <span>与第</span>
             <input id="${PREVIEW_PANEL_SWAP_INPUT_ID}" type="number" min="1" step="1" value="1" />
-            <button id="${PREVIEW_PANEL_SWAP_RUN_ID}" type="button">Apply</button>
+            <span>对交换</span>
+            <button id="${PREVIEW_PANEL_SWAP_RUN_ID}" type="button">执行</button>
           </div>
         </div>
         <div class="hp-section">
-          <div class="hp-label">Save and Reset</div>
+          <div class="hp-label">保存与重置</div>
           <div class="hp-row">
-            <button id="${PREVIEW_PANEL_SAVE_ID}" type="button" class="hp-primary">Save</button>
-            <button id="${PREVIEW_PANEL_RESET_ID}" type="button">Restore Default</button>
+            <button id="${PREVIEW_PANEL_SAVE_ID}" type="button" class="hp-primary">保存</button>
+            <button id="${PREVIEW_PANEL_RESET_ID}" type="button">恢复默认</button>
           </div>
           <div class="hp-row">
-            <button id="${PREVIEW_PANEL_DELETE_ID}" type="button" class="hp-warn">Delete Saved Order</button>
+            <button id="${PREVIEW_PANEL_DELETE_ID}" type="button" class="hp-warn">删除当前缓存</button>
           </div>
-          <div class="hp-subnote">Restore Default affects the current preview only; Delete Saved Order removes the saved order for this task.</div>
+          <div class="hp-subnote">“恢复默认”只改当前预览；“删除当前缓存”会删这一条并恢复默认顺序。</div>
         </div>
       </div>
     `;
@@ -1817,28 +1741,98 @@
     return panel;
   }
 
+  function recordMetaGuardRejection({ store, errs, difficulty, modelIssue }) {
+    try {
+      const now = Date.now();
+      const taskId = getTaskId?.() || "unknown";
+      const projectId = getProjectId?.() || "unknown";
+      const projectName = getProjectName?.() || "unknown";
+      const annotatorId = getAnnotatorId?.() || "unknown";
+      const condition = getTaskCondition(store);
+
+      const event = {
+        timestamp: now,
+        task_id: taskId,
+        project_id: projectId,
+        project_name: projectName,
+        annotator_id: annotatorId,
+        session_id: sessionId,
+        script_version: SCRIPT_VERSION,
+        condition,
+        reject_reasons: Array.isArray(errs) ? errs.slice(0, 20) : [],
+        difficulty: Array.isArray(difficulty) ? difficulty.slice(0, 50) : [],
+        model_issue: Array.isArray(modelIssue) ? modelIssue.slice(0, 50) : [],
+      };
+
+      const log = loadJsonFromLocalStorage(META_GUARD_REJECT_LOG_KEY, []);
+      const nextLog = Array.isArray(log) ? log : [];
+      nextLog.push(event);
+      if (nextLog.length > META_GUARD_REJECT_LOG_MAX) {
+        nextLog.splice(0, nextLog.length - META_GUARD_REJECT_LOG_MAX);
+      }
+      saveJsonToLocalStorage(META_GUARD_REJECT_LOG_KEY, nextLog);
+
+      const stats = loadJsonFromLocalStorage(META_GUARD_REJECT_STATS_KEY, {
+        total_rejected: 0,
+        by_reason: {},
+        last_reject_ts: 0,
+      });
+      const nextStats =
+        stats && typeof stats === "object" && !Array.isArray(stats)
+          ? stats
+          : { total_rejected: 0, by_reason: {}, last_reject_ts: 0 };
+      nextStats.total_rejected = (nextStats.total_rejected || 0) + 1;
+      nextStats.last_reject_ts = now;
+      if (!nextStats.by_reason || typeof nextStats.by_reason !== "object") {
+        nextStats.by_reason = {};
+      }
+      for (const r of Array.isArray(errs) ? errs : []) {
+        const k = String(r || "").trim();
+        if (!k) continue;
+        nextStats.by_reason[k] = (nextStats.by_reason[k] || 0) + 1;
+      }
+      saveJsonToLocalStorage(META_GUARD_REJECT_STATS_KEY, nextStats);
+    } catch (e) {
+      metaGuardDebug("recordMetaGuardRejection error", e);
+    }
+  }
+
   function validateMetaChoices(store) {
     const errors = [];
-    const difficultyStatus = getSelectedChoicesByField(store, "difficulty_reason_status");
-    const difficultyReason = getSelectedChoicesByField(store, "difficulty_reason");
-    const materialIssue = getSelectedChoicesByField(store, "material_issue");
-    const primaryIssue = getSelectedChoicesByField(store, "primary_issue_family");
-    const secondaryIssue = getSelectedChoicesByField(store, "secondary_issue_families");
+    const hasDifficultyField = isFieldPresent(store, "difficulty");
+    const hasModelIssueField = isFieldPresent(store, "model_issue");
+    const difficulty = getSelectedChoicesByField(store, "difficulty");
+    const modelIssue = hasModelIssueField
+      ? getSelectedChoicesByField(store, "model_issue")
+      : [];
+    const condition = getTaskCondition(store).toLowerCase();
+    metaGuardDebug("validateMetaChoices", {
+      hasDifficultyField,
+      hasModelIssueField,
+      difficulty,
+      modelIssue,
+      condition,
+    });
 
-    if (difficultyStatus.includes("one_or_more_specific_reasons") && !difficultyReason.length) {
-      errors.push("已声明存在困难原因，请至少选择一项 / Select at least one difficulty reason");
+    const hasTrivial = difficulty.some((x) => isTrivialToken(x));
+    const hasNonTrivial = difficulty.some((x) => !isTrivialToken(x));
+    const hasAcceptable = modelIssue.some((x) => isAcceptableToken(x));
+    const hasNonAcceptable = modelIssue.some((x) => !isAcceptableToken(x));
+    metaGuardDebug("meta-eval", {
+      difficulty,
+      hasTrivial,
+      hasNonTrivial,
+      modelIssue,
+      hasAcceptable,
+      hasNonAcceptable,
+      condition,
+    });
+
+    if (hasDifficultyField && hasTrivial && hasNonTrivial) {
+      errors.push("Difficulty 冲突：trivial 不能与其他困难标签共存");
     }
-    if (difficultyStatus.includes("no_specific_reason") && difficultyReason.length) {
-      errors.push("已声明没有明确困难原因，请清除原因选择 / Clear stale difficulty reasons");
-    }
-    if ((materialIssue.includes("yes") || materialIssue.includes("unsure")) && primaryIssue.length !== 1) {
-      errors.push("请选择一个主要问题类别 / Select exactly one primary issue family");
-    }
-    if (materialIssue.includes("no") && (primaryIssue.length || secondaryIssue.length)) {
-      errors.push("已选择无实质问题，请清除问题类别 / Clear stale issue families");
-    }
-    if (primaryIssue.length === 1 && secondaryIssue.includes(primaryIssue[0])) {
-      errors.push("Primary 不得在 Secondary 中重复 / Do not repeat the primary issue");
+    if (hasModelIssueField && hasAcceptable && hasNonAcceptable) {
+      errors.push("Model Issue 冲突：acceptable 不能与其他 issue 共存");
     }
 
     return errors;
@@ -1880,10 +1874,18 @@
       const errs = validateMetaChoices(store);
       if (!errs.length) return true;
 
+      // 过程性证据：记录每次被硬阻断的原因/次数（不影响交互）
+      try {
+        const difficulty = getSelectedChoicesByField(store, "difficulty");
+        const hasModelIssueField = isFieldPresent(store, "model_issue");
+        const modelIssue = hasModelIssueField
+          ? getSelectedChoicesByField(store, "model_issue")
+          : [];
+        recordMetaGuardRejection({ store, errs, difficulty, modelIssue });
+      } catch (e) {}
+
       const msg = [
-        "Submission blocked: inconsistent meta labels were detected.",
         "提交被拦截：检测到元标签不合规。",
-        "Please fix the following issue(s), then submit again.",
         "请修正后再提交：",
         ...errs.map((x) => `- ${x}`),
       ].join("\n");
@@ -1926,6 +1928,9 @@
     );
     console.log(
       "HoHoNet Meta Guard debug keys: HOHONET_META_GUARD_DEBUG=1 or HOHONET_DEBUG_META_GUARD=1",
+    );
+    console.log(
+      "HoHoNet Meta Guard audit: localStorage.HOHONET_META_GUARD_REJECTIONS (capped) and HOHONET_META_GUARD_REJECT_STATS",
     );
   }
 
@@ -2082,7 +2087,7 @@
   function clearOverlay() {
     const overlay = document.getElementById(OVERLAY_ID);
     if (overlay) {
-      console.log("HoHoNet: task/annotation state changed; clearing stale labels");
+      console.log("HoHoNet: 状态变化 (Task/Annotation)，清理残留标签");
       overlay.remove();
     }
   }
@@ -2113,7 +2118,7 @@
       if (wrapper) wrapper.style.display = "none";
       const panel = document.getElementById(PREVIEW_PANEL_ID);
       if (panel) panel.style.display = "none";
-      status += "Page type: not an annotation page\n";
+      status += "页面类型: 非标注页面\n";
       updateDebug(status);
       return;
     }
@@ -2141,12 +2146,12 @@
       lastTaskIdForOverlay = stateNow.taskId;
       lastAnnotationIdForOverlay = stateNow.annId;
       clearOverlay();
-      resetPreviewControlPanelState("Task changed. Click Refresh 3D View again.");
+      resetPreviewControlPanelState("任务已切换，请重新刷新 3D 视图");
     }
 
     const img = findMainImage();
     if (img) {
-      status += "Image: found\n";
+      status += "图像: 已找到\n";
       // v0.17 修复: 添加缓存破坏参数
       url = HOHONET_VIS_3D_URL(SESSION_ID);
       if (img.naturalWidth) {
@@ -2162,19 +2167,19 @@
         positionOverlayBadges(overlay, rect);
       }
     } else {
-      status += "Image: not found\n";
+      status += "图像: 未找到\n";
     }
 
     if (url) {
-      status += "Target URL: ready\n";
+      status += "目标 URL: 就绪\n";
     } else {
-      status += "Target URL: missing\n";
+      status += "目标 URL: 缺失\n";
     }
 
     // --- 注入 ---
     const container = findSectionContainer();
     if (!container) {
-      updateDebug(status + "Container: not found");
+      updateDebug(status + "容器: 未找到");
       return;
     }
 
@@ -2225,7 +2230,7 @@
       if (!btn) {
         btn = document.createElement("button");
         btn.id = BUTTON_ID;
-        btn.innerText = "🔄 Refresh 3D View";
+        btn.innerText = "🔄 刷新 3D 视图";
         btn.style.cssText =
           "margin-top: 10px; padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;";
 
@@ -2233,11 +2238,11 @@
           // v0.11 修复: 仅在点击时查找 store
           const store = getStore();
           if (!store) {
-            alert("Cannot connect to the Label Studio store. Wait until the editor finishes loading.");
+            alert("无法连接到 Label Studio Store。请等待编辑器完全加载。");
             return;
           }
           if (!store.annotationStore || !store.annotationStore.selected) {
-            alert("Select an annotation first.");
+            alert("请先选择一个标注。");
             return;
           }
 
@@ -2256,7 +2261,7 @@
             if (!isNaN(pH)) H = pH;
           } catch (e) {}
 
-          console.log("HoHoNet: parsed results:", results);
+          console.log("HoHoNet: 处理结果:", results);
 
           // v0.9 修复: 彻底解包
           const clean = (obj) => {
@@ -2278,7 +2283,7 @@
             let val = clean(source);
             if (!val) val = source.toJSON ? source.toJSON() : source;
 
-            console.log(`HoHoNet: result ${idx} (cleaned):`, val);
+            console.log(`HoHoNet: 结果 ${idx} (已清理):`, val);
 
             // 确定类型 (检查 r 和 val)
             const type = r.type || val.type;
@@ -2305,14 +2310,14 @@
 
           // 决策: 优先使用关键点
           if (keypoints.length > 0) {
-            console.log("HoHoNet: building 3D geometry from corner keypoints");
+            console.log("HoHoNet: 使用关键点进行 3D 几何构建");
             points.push(...keypoints);
           } else {
-            alert("No Corner points found. Please draw the corner keypoints first.");
+            alert("未找到 Corner 点！请绘制关键点。");
             return;
           }
 
-          console.log("HoHoNet: raw points:", points);
+          console.log("HoHoNet: 原始点:", points);
 
           points.sort((a, b) => a.x - b.x);
           const pairedDefault = [];
@@ -2385,14 +2390,14 @@
           });
           const paired = pairedForPreview;
 
-          console.log("HoHoNet: paired corners:", paired);
+          console.log("HoHoNet: 配对角点:", paired);
 
           // --- 2D 覆盖层逻辑：按当前预览顺序重绘标签 ---
           renderPreviewOverlayPairs(pairedForPreview);
 
           if (pairedDefault.length === 0) {
             alert(
-              `Found ${points.length} points, but no vertical wall pairs could be formed. Try drawing straighter vertical lines.`,
+              `找到 ${points.length} 个点，但无法配对任何垂直边！请尝试绘制更直的垂直线。`,
             );
             return;
           }
@@ -2449,13 +2454,13 @@
             overlay.style.display = nowVisible ? "block" : "none";
             applyToggleBtnState(toggleBtn, nowVisible);
           } else {
-            alert("Click Refresh 3D View first to generate labels.");
+            alert("请先点击 '刷新 3D 视图' 以生成标签。");
           }
         };
         wrapper.appendChild(toggleBtn);
       }
     } catch (e) {
-      status += "Error: " + e.message;
+      status += "错误: " + e.message;
     }
 
     updateDebug(status);
@@ -2470,7 +2475,6 @@
 
   // v0.21: cumulative seconds per task within same session (fix A->B->A undercount)
   const taskCumulativeSeconds = new Map();
-  const lastPostedSecondsByTask = new Map();
   const ACTIVE_TIME_METADATA_KEYS = [
     "taskId",
     "projectId",
@@ -2486,7 +2490,6 @@
   };
 
   let isPageVisible = true;
-  let isWindowFocused = document.hasFocus();
   let pageHiddenTime = null;
   const PAGE_HIDDEN_THRESHOLD = 6 * 1000; // 页面被切出超过6秒后才停止计时（可调整此参数）
   let wasOnAnnotationPageForActiveTime = false;
@@ -2607,17 +2610,7 @@
   ) {
     if (!report) return null;
 
-    const lastPostedSeconds = lastPostedSecondsByTask.get(report.reportTaskId) || 0;
-    if (report.reportSeconds <= lastPostedSeconds) {
-      return null;
-    }
-
     const tokenNow = getLogToken();
-    if (!tokenNow) {
-      console.warn(
-        `[${logPrefix}] Missing HOHONET_LOG_TOKEN. Set localStorage.HOHONET_LOG_TOKEN before annotation. Active-time upload may be rejected with 403.`,
-      );
-    }
     try {
       const response = await fetch(HOHONET_LOG_TIME_URL(), {
         method: "POST",
@@ -2638,29 +2631,25 @@
           is_manual_flush: manualFlush,
           script_version: SCRIPT_VERSION,
           page_type: report.pageType,
-          ...getForeignRecruitmentMetadataForPayload(),
         }),
       });
       if (!response.ok) {
         console.warn(
-          `[${logPrefix}] upload error: ${response.status} ${response.statusText}`,
+          `[${logPrefix}] 上报异常: ${response.status} ${response.statusText}`,
         );
         if (response.status === 403) {
           console.warn(
             `[${logPrefix}] 403 Forbidden. helperBase=${getHelperBaseUrl()} token=${maskToken(tokenNow)} (len=${String(tokenNow || "").length})`,
           );
         }
-      } else {
-        lastPostedSecondsByTask.set(report.reportTaskId, report.reportSeconds);
-      }
-      if (response.ok && manualFlush) {
-          console.log(
-            `[${logPrefix}] uploaded ${report.reportSeconds}s active time for task ${report.reportTaskId}`,
-          );
+      } else if (manualFlush) {
+        console.log(
+          `[${logPrefix}] 已上报任务 ${report.reportTaskId} 的 ${report.reportSeconds}s 活动时间`,
+        );
       }
       return response;
     } catch (e) {
-      console.warn(`[${logPrefix}] upload failed:`, e);
+      console.warn(`[${logPrefix}] 上报失败:`, e);
       return null;
     }
   }
@@ -2669,6 +2658,13 @@
     reason = "PAGE_EXIT",
     { keepalive = false } = {},
   ) {
+    if (isActiveTimeLoggingDisabled()) {
+      resetCurrentActiveTimeSegment();
+      currentTaskId = null;
+      wasOnAnnotationPageForActiveTime = false;
+      return;
+    }
+
     const report = buildActiveTimeReport(currentTaskId || getTaskId(), activeSeconds);
     resetCurrentActiveTimeSegment();
     currentTaskId = null;
@@ -2690,9 +2686,6 @@
       // 页面被隐藏，记录隐藏开始时间
       pageHiddenTime = Date.now();
       isPageVisible = false;
-      if (wasOnAnnotationPageForActiveTime && activeSeconds > 0) {
-        closeActiveTimeSegment("VISIBILITY_HIDDEN", { keepalive: true });
-      }
     } else {
       // 页面重新显示
       if (pageHiddenTime !== null) {
@@ -2711,19 +2704,11 @@
   });
 
   // 监听用户活动（只在页面可见时更新）
-  function isActiveTimeCountingPage() {
-    return isPageVisible && isWindowFocused && isLikelyAnnotationPage();
-  }
-
-  function shouldFlushActiveTimeOnCountingStop() {
-    return !isPageVisible || !isLikelyAnnotationPage();
-  }
-
   ["mousemove", "keydown", "click", "scroll", "wheel"].forEach((evt) => {
     window.addEventListener(
       evt,
       () => {
-        if (isActiveTimeCountingPage()) {
+        if (isPageVisible) {
           lastActivityTime = Date.now();
         }
       },
@@ -2734,25 +2719,18 @@
   // 累积活动时间的计时器
   // v0.21 修复: 仅在「页面可见 + 标注任务页面 + 有近期交互」时累积
   setInterval(() => {
-    const onCountingPage = isActiveTimeCountingPage();
-    if (!onCountingPage) {
-      const shouldFlush = shouldFlushActiveTimeOnCountingStop();
-      if (shouldFlush && wasOnAnnotationPageForActiveTime && activeSeconds > 0) {
-        closeActiveTimeSegment("LEAVE_ANNOTATION_PAGE");
-      }
-      lastActivityTime = 0;
-      if (shouldFlush) {
-        wasOnAnnotationPageForActiveTime = false;
-      }
+    if (isActiveTimeLoggingDisabled()) {
+      resetCurrentActiveTimeSegment();
     }
 
     if (
-      onCountingPage &&
+      !isActiveTimeLoggingDisabled() &&
+      isPageVisible &&
+      isLikelyAnnotationPage() &&
       lastActivityTime > 0 &&
       Date.now() - lastActivityTime < IDLE_THRESHOLD
     ) {
       activeSeconds += 1;
-      wasOnAnnotationPageForActiveTime = true;
     }
 
     // 更新 UI
@@ -2763,7 +2741,10 @@
     if (isDebugPanelEnabled()) {
       const debugPanel = document.getElementById(DEBUG_ID);
       if (debugPanel) {
-        debugPanel.innerText = `Active time: ${totalForTask}s (current segment ${activeSeconds}s) | updated ${new Date().toLocaleTimeString()}`;
+        const activeTimeStatus = isActiveTimeLoggingDisabled()
+          ? "活动时间: 已禁用"
+          : `活动时间: ${totalForTask}s (本段${activeSeconds}s)`;
+        debugPanel.innerText = `${activeTimeStatus} | 更新于 ${new Date().toLocaleTimeString()}`;
       }
     }
   }, 1000);
@@ -2849,25 +2830,12 @@
 
   // 【关键修复】立即上报（flush）当前任务的累积时间
   // v0.21: 支持累积秒数 (taskCumulativeSeconds + 当前片段)
-  function isPreviewOrderMessage(data) {
-    return (
-      data &&
-      typeof data === "object" &&
-      [
-        "hohonet_preview_order_state",
-        "hohonet_preview_order_save",
-        "hohonet_preview_order_delete_saved",
-        "hohonet_preview_order_clear",
-      ].includes(data.type)
-    );
-  }
-
   window.addEventListener("message", (event) => {
-    const data = event.data;
-    if (!isPreviewOrderMessage(data)) return;
-
     const iframe = document.getElementById(IFRAME_ID);
-    if (!iframe || !iframe.contentWindow) return;
+    if (!iframe || event.source !== iframe.contentWindow) return;
+
+    const data = event.data;
+    if (!data || typeof data !== "object") return;
 
     if (data.type === "hohonet_preview_order_state") {
       handlePreviewOrderStateMessage(data);
@@ -2890,19 +2858,6 @@
     }
   });
 
-
-  window.addEventListener("blur", () => {
-    isWindowFocused = false;
-    // Window blur can abort fetches in some browsers. Pause counting here and
-    // keep the current segment for the next successful in-page upload.
-    lastActivityTime = 0;
-  });
-
-  window.addEventListener("focus", () => {
-    isWindowFocused = document.hasFocus();
-    lastActivityTime = 0;
-  });
-
   window.addEventListener("pagehide", () => {
     closeActiveTimeSegment("PAGEHIDE", { keepalive: true });
   });
@@ -2911,6 +2866,11 @@
     forceTaskId = null,
     forcedActiveSeconds = null,
   ) {
+    if (isActiveTimeLoggingDisabled()) {
+      resetCurrentActiveTimeSegment();
+      return;
+    }
+
     if (!isLikelyAnnotationPage()) {
       return;
     }
@@ -2949,7 +2909,12 @@
   // 【独立的任务切换检测器】每秒检测一次任务ID变化，立即上报
   // 这是一个独立的机制，不依赖30秒周期，保证任务切换时立即上报
   setInterval(() => {
-    if (!isActiveTimeCountingPage()) {
+    if (!isLikelyAnnotationPage()) {
+      return;
+    }
+
+    if (isActiveTimeLoggingDisabled()) {
+      resetCurrentActiveTimeSegment();
       return;
     }
 
@@ -2981,7 +2946,7 @@
 
     // 初始化或更新任务ID
     if (currentTaskId === null && taskId !== "unknown") {
-      console.log(`[TASK_INIT] initialized task ID: ${taskId}`);
+      console.log(`[TASK_INIT] 初始化任务ID: ${taskId}`);
     }
     currentTaskId = taskId;
   }, 1000); // 每秒检测一次，保证任务切换时立即响应
@@ -2989,7 +2954,7 @@
   // 每 30 秒发送一次日志 (从 10 秒修改以减少流量)
   setInterval(() => {
     // 只在“标注页面”尝试记日志，避免在项目列表/首页等页面误计时/误上报。
-    if (!isActiveTimeCountingPage()) {
+    if (!isLikelyAnnotationPage()) {
       return;
     }
 
@@ -3010,6 +2975,11 @@
 
     if (!ENABLE_LOGGING) {
       return; // 全局禁用日志
+    }
+
+    if (isActiveTimeLoggingDisabled()) {
+      resetCurrentActiveTimeSegment();
+      return;
     }
 
     if (TARGET_PROJECTS.length > 0 && !TARGET_PROJECTS.includes(projectId)) {
@@ -3046,7 +3016,7 @@
                 node.classList.contains("ls-main-view") ||
                 (node.querySelector && node.querySelector('img[src*="pano"]')))
             ) {
-              console.log("HoHoNet: page change detected; reactivating");
+              console.log("HoHoNet: 检测到页面变化，重新激活");
               setTimeout(tick, 500);
               return;
             }
@@ -3077,16 +3047,15 @@
   setInterval(() => {
     const currentUrl = location.href;
     if (currentUrl !== lastUrl) {
-      console.log("HoHoNet: URL changed; reactivating");
+      console.log("HoHoNet: URL 变化，重新激活");
       lastUrl = currentUrl;
       // 清理可能残留的状态
       lastTaskIdForOverlay = null;
       lastAnnotationIdForOverlay = null;
       clearOverlay();
-      resetPreviewControlPanelState("URL changed. Click Refresh 3D View again.");
+      resetPreviewControlPanelState("URL 已变化，请重新刷新 3D 视图");
       // 延迟执行以确保新页面DOM已加载
       setTimeout(tick, 500);
     }
   }, 1000);
 })();
-

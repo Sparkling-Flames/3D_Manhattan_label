@@ -1,0 +1,28 @@
+<View>
+  <Image name="img" value="$image" zoom="true" zoomControl="true"/>
+  <KeyPointLabels name="kp" toName="img"><Label value="Corner" background="#FF4D4F"/></KeyPointLabels>
+  <BrushLabels name="wall_brush" toName="img"><Label value="Wall" background="#52C41A"/></BrushLabels>
+  <Choices name="scope" toName="img" choice="single" required="true">
+    <Choice value="In-scope: current space containing the camera" alias="normal"/>
+    <Choice value="OOS: geometric assumption invalid / non-Manhattan" alias="oos_geometry"/>
+    <Choice value="OOS: open or ambiguous boundary of the current space" alias="oos_open_boundary"/>
+    <Choice value="OOS: split-level or multi-level layout" alias="oos_split_level"/>
+    <Choice value="OOS: insufficient geometric evidence" alias="oos_insufficient"/>
+  </Choices>
+  <Text name="scope_rule_text" value="Annotate the current space containing the camera. Follow its enclosing walls through corners that belong to the current space. When an opening leads to an adjacent space, close at a clear structural boundary such as a door frame, paired wall returns or jambs, or an arch. Local occlusion, openings, stairs, or ceiling recesses are not automatically OOS. Scope remains the authoritative OOS field."/>
+  <Choices name="difficulty" toName="img" choice="multiple" required="true">
+  <Choice value="Trivial / very easy" alias="trivial" hint="Choose only when no other factor materially increases layout or corner annotation difficulty. This label is mutually exclusive with every other difficulty label."/>
+  <Choice value="Occlusion" alias="occlusion" hint="A foreground object or structure blocks wall, corner, or boundary evidence that would otherwise need to be judged."/><Choice value="Low texture or plain walls" alias="low_texture" hint="The image is complete, but local texture, color, or contrast is too weak to locate structural boundaries reliably."/>
+  <Choice value="Panorama seam or stretch distortion" alias="seam" hint="Panorama stitching, reprojection, or stretching breaks or shifts lines, bends walls, or displaces corners."/><Choice value="Reflection or glass interference" alias="reflection" hint="Mirrors or glass create false boundaries, duplicated structure, or depth confusion that materially increases annotation difficulty."/>
+  <Choice value="Blur, mask, or low image quality" alias="low_quality" hint="Blur, noise, compression, masks, black borders, or missing pixels make key structural evidence unreliable."/>
+  </Choices>
+  <Text name="difficulty_rule_text" value="Select the factors that materially made layout or corner annotation harder in this task. Difficulty does not determine Scope or indicate whether the model is wrong. Select distinct independent factors, but do not apply multiple labels to the same underlying cause. Trivial is mutually exclusive with all concrete factors."/>
+  <Choices name="model_issue" toName="img" choice="multiple" required="true">
+    <Choice value="Model quality acceptable" alias="acceptable" hint="The initial model geometry needs no adjustment and can be submitted unchanged. This label is mutually exclusive with every concrete issue."/>
+    <Choice value="Over-extend to adjacent room" alias="overextend_adjacent" hint="The model crosses a clear structural boundary and includes an adjacent space."/><Choice value="Under-extend / missing room parts" alias="underextend" hint="The model misses walls, corners, or boundaries that belong to the current space."/>
+    <Choice value="Over-parsing / ghost geometry" alias="over_parsing" hint="The model treats non-layout details as real structure."/><Choice value="Corner drift" alias="corner_drift" hint="A corner or local-boundary position needs adjustment while the point count and topology are otherwise correct."/>
+    <Choice value="Duplicate corner points" alias="corner_duplicate" hint="Multiple redundant points represent the same physical corner."/><Choice value="Topological failure" alias="topology_failure" hint="Corner correspondence, order, closure, or another structural configuration is invalid."/><Choice value="Prediction failure" alias="fail" hint="Choose only when the initial prediction is missing, unusable, or cannot be adequately described by a concrete issue. Do not additionally select fail when concrete issues already describe the error."/>
+  </Choices>
+  <Text name="model_issue_rule_text" value="Judge the initial model proposal before editing. Acceptable means the initial geometry needs no adjustment and can be submitted unchanged; it is mutually exclusive with every concrete issue. If any corner, boundary, or topology needs correction, choose the corresponding issue. Never replace the worker's explicit answer with a geometry-based inference."/>
+  <HyperText name="vis_3d" value="$vis_3d" valueType="url" inline="false"/>
+</View>

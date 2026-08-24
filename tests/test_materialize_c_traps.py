@@ -182,7 +182,11 @@ def test_consistency_audit_appendix_notes_and_manual_queue_are_machine_readable(
 
 
 def test_xml_model_issue_crosswalk_matches_xml_aliases_and_operator_families():
-    xml_rows = load_xml_model_issue_choices(Path(__file__).parent.parent / "tools" / "label_studio" / "label_studio_view_config.xml")
+    xml_rows = load_xml_model_issue_choices(
+        Path(__file__).parent.parent
+        / "tools/label_studio/config_history/uncertainty_meta_v1_prechange_20260824/zh/xml"
+        / "label_studio_view_config.xml"
+    )
     family_rows = build_family_coverage_rows([])
 
     crosswalk = build_xml_model_issue_operator_crosswalk(

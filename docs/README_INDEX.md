@@ -71,7 +71,8 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 - [COS_涓婁紶涓庡鍏ヤ腑鏂囪鏄?md](label_studio/COS_%E4%B8%8A%E4%BC%A0%E4%B8%8E%E5%AF%BC%E5%85%A5%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E.md)
 - [README_ANNOTATOR.md](label_studio/README_ANNOTATOR.md)
 - [README_DEVELOPER.md](label_studio/README_DEVELOPER.md)
-- `tools/label_studio/label_studio_xml_instruction_manifest_v2.json`：Paper A 历史 UI 快照与 Annotation v2 活配置的 SHA、路径、语义版本和生效边界。
+- `tools/label_studio/label_studio_xml_instruction_manifest_v2.json`：未部署即被取代的 Paper A Annotation v2 冻结快照及其历史边界。
+- `tools/label_studio/label_studio_uncertainty_meta_manifest_v1.json`：不确定性元标签 v1 的本地待部署入口；修改前配置位于 `tools/label_studio/config_history/uncertainty_meta_v1_prechange_20260824/`。
 - [SOP_labelstudio_experiment.md](label_studio/SOP_labelstudio_experiment.md)
 
 瀵瑰簲宸ュ叿锛歚tools/label_studio/`

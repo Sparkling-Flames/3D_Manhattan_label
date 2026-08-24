@@ -1003,7 +1003,11 @@ def main() -> int:
         source_import_json=source_import_json,
     )
     (output_dir / "materialization_summary_v2.json").write_text(json.dumps(materialization_summary_v2, ensure_ascii=False, indent=2), encoding="utf-8")
-    xml_model_issue_choices = load_xml_model_issue_choices(root / "tools/label_studio/label_studio_view_config.xml")
+    xml_model_issue_choices = load_xml_model_issue_choices(
+        root
+        / "tools/label_studio/config_history/uncertainty_meta_v1_prechange_20260824/zh/xml"
+        / "label_studio_view_config.xml"
+    )
     xml_model_issue_operator_crosswalk = build_xml_model_issue_operator_crosswalk(
         xml_model_issue_choices=xml_model_issue_choices,
         family_coverage_rows=family_coverage_rows,

@@ -8,7 +8,16 @@ import xml.etree.ElementTree as ET
 
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[3]
-_DEFAULT_XML = _PROJECT_ROOT / "tools" / "label_studio" / "label_studio_view_config.xml"
+_DEFAULT_XML = (
+    _PROJECT_ROOT
+    / "tools"
+    / "label_studio"
+    / "config_history"
+    / "uncertainty_meta_v1_prechange_20260824"
+    / "zh"
+    / "xml"
+    / "label_studio_view_config.xml"
+)
 
 
 def load_alias_mapping(xml_path: Path) -> dict[str, dict[str, str]]:

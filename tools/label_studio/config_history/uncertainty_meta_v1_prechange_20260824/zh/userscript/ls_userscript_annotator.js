@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HoHoNet Helper Official Annotator
 // @namespace    http://tampermonkey.net/
-// @version      uncertainty_meta_20260824_v1
+// @version      c2plus_task_worker_active_time_20260802_v2
 // @description  正式标注版：连接 Label Studio 与 HoHoNet 3D 查看器，并强制记录 active_time
 // @author       HoHoNet
 // @match        http://175.178.71.217:8080/*
@@ -269,7 +269,7 @@
   const existingPreviewPanelStyle = document.getElementById(PREVIEW_PANEL_STYLE_ID);
   if (existingPreviewPanelStyle) existingPreviewPanelStyle.remove();
 
-  const SCRIPT_VERSION = "uncertainty_meta_20260824_v1";
+  const SCRIPT_VERSION = "c2plus_task_worker_active_time_20260802_v2";
   console.log(`HoHoNet Helper: 已加载 (v${SCRIPT_VERSION})`);
   console.log(
     "HoHoNet viewer base: set localStorage.HOHONET_VIEWER_BASE_URL = location.origin when /tools is reverse-proxied on LS origin",
@@ -886,30 +886,16 @@
     const s = String(raw || "").trim();
     const l = s.toLowerCase();
     if (!s) return "";
-    const exactLocalizedAliases = { 否: "no", 是: "yes", 不确定: "unsure" };
-    if (exactLocalizedAliases[l]) return exactLocalizedAliases[l];
-    const localizedAliases = [
-      ["没有明确的困难原因", "no_specific_reason"],
-      ["no specific reason", "no_specific_reason"],
-      ["有一个或多个明确原因", "one_or_more_specific_reasons"],
-      ["one or more specific reasons", "one_or_more_specific_reasons"],
-      ["边界或角点定位", "boundary_or_corner_localization"],
-      ["boundary or corner localization", "boundary_or_corner_localization"],
-      ["欠延伸", "underextension"],
-      ["underextension", "underextension"],
-      ["过度延伸到相邻空间", "adjacent_space_overextension"],
-      ["overextension into an adjacent space", "adjacent_space_overextension"],
-      ["过度解析", "overparsing_or_ghost_structure"],
-      ["overparsing", "overparsing_or_ghost_structure"],
-      ["重复角点", "duplicate_corner"],
-      ["duplicate corner", "duplicate_corner"],
-      ["拓扑、顺序或闭合", "topology_order_or_closure"],
-      ["topology, order, or closure", "topology_order_or_closure"],
-      ["无法判断类别", "unsure"],
-      ["unsure of family", "unsure"],
-    ];
-    const localized = localizedAliases.find(([label]) => l.includes(label));
-    if (localized) return localized[1];
+
+    if (l === "trivial" || l.includes("(trivial)") || s.includes("非常简单"))
+      return "trivial";
+    if (
+      l === "acceptable" ||
+      l.includes("acceptable") ||
+      s.includes("模型标注质量好")
+    )
+      return "acceptable";
+
     return l;
   }
 
@@ -926,6 +912,24 @@
       return true;
     if (a.includes(e)) return true;
     return false;
+  }
+
+  function isTrivialToken(token) {
+    const t = String(token || "")
+      .trim()
+      .toLowerCase();
+    return t === "trivial" || t.includes("trivial") || t.includes("非常简单");
+  }
+
+  function isAcceptableToken(token) {
+    const t = String(token || "")
+      .trim()
+      .toLowerCase();
+    return (
+      t === "acceptable" ||
+      t.includes("acceptable") ||
+      t.includes("模型标注质量好")
+    );
   }
 
   function isMetaGuardDebugEnabled() {
@@ -1071,14 +1075,10 @@
     const probes = Array.from(
       document.querySelectorAll("h1,h2,h3,h4,h5,h6,div,span,label"),
     );
-    const patternsByField = {
-      difficulty_reason_status: [/是否观察到明确的困难原因/, /whether you observed a specific reason/i],
-      difficulty_reason: [/选择所有确实增加标注难度的原因/, /select every reason that materially increased/i],
-      material_issue: [/是否存在实质问题/, /has a material issue/i],
-      primary_issue_family: [/最主要的问题/, /one primary issue/i],
-      secondary_issue_families: [/次要问题/, /secondary issues/i],
-    };
-    const patterns = patternsByField[fieldName] || [];
+    const patterns =
+      fieldName === "difficulty"
+        ? [/困难因素/, /difficulty/i]
+        : [/模型初始化问题/, /model\s*issue/i];
 
     for (const el of probes) {
       const txt = String(el?.innerText || "").trim();
@@ -1148,6 +1148,10 @@
     }
     return "";
   }
+
+  const META_GUARD_REJECT_LOG_KEY = "HOHONET_META_GUARD_REJECTIONS";
+  const META_GUARD_REJECT_STATS_KEY = "HOHONET_META_GUARD_REJECT_STATS";
+  const META_GUARD_REJECT_LOG_MAX = 200;
 
   function loadJsonFromLocalStorage(key, fallback) {
     try {
@@ -2114,28 +2118,98 @@
     return panel;
   }
 
+  function recordMetaGuardRejection({ store, errs, difficulty, modelIssue }) {
+    try {
+      const now = Date.now();
+      const taskId = getTaskId?.() || "unknown";
+      const projectId = getProjectId?.() || "unknown";
+      const projectName = getProjectName?.() || "unknown";
+      const annotatorId = getAnnotatorId?.() || "unknown";
+      const condition = getTaskCondition(store);
+
+      const event = {
+        timestamp: now,
+        task_id: taskId,
+        project_id: projectId,
+        project_name: projectName,
+        annotator_id: annotatorId,
+        session_id: sessionId,
+        script_version: SCRIPT_VERSION,
+        condition,
+        reject_reasons: Array.isArray(errs) ? errs.slice(0, 20) : [],
+        difficulty: Array.isArray(difficulty) ? difficulty.slice(0, 50) : [],
+        model_issue: Array.isArray(modelIssue) ? modelIssue.slice(0, 50) : [],
+      };
+
+      const log = loadJsonFromLocalStorage(META_GUARD_REJECT_LOG_KEY, []);
+      const nextLog = Array.isArray(log) ? log : [];
+      nextLog.push(event);
+      if (nextLog.length > META_GUARD_REJECT_LOG_MAX) {
+        nextLog.splice(0, nextLog.length - META_GUARD_REJECT_LOG_MAX);
+      }
+      saveJsonToLocalStorage(META_GUARD_REJECT_LOG_KEY, nextLog);
+
+      const stats = loadJsonFromLocalStorage(META_GUARD_REJECT_STATS_KEY, {
+        total_rejected: 0,
+        by_reason: {},
+        last_reject_ts: 0,
+      });
+      const nextStats =
+        stats && typeof stats === "object" && !Array.isArray(stats)
+          ? stats
+          : { total_rejected: 0, by_reason: {}, last_reject_ts: 0 };
+      nextStats.total_rejected = (nextStats.total_rejected || 0) + 1;
+      nextStats.last_reject_ts = now;
+      if (!nextStats.by_reason || typeof nextStats.by_reason !== "object") {
+        nextStats.by_reason = {};
+      }
+      for (const r of Array.isArray(errs) ? errs : []) {
+        const k = String(r || "").trim();
+        if (!k) continue;
+        nextStats.by_reason[k] = (nextStats.by_reason[k] || 0) + 1;
+      }
+      saveJsonToLocalStorage(META_GUARD_REJECT_STATS_KEY, nextStats);
+    } catch (e) {
+      metaGuardDebug("recordMetaGuardRejection error", e);
+    }
+  }
+
   function validateMetaChoices(store) {
     const errors = [];
-    const difficultyStatus = getSelectedChoicesByField(store, "difficulty_reason_status");
-    const difficultyReason = getSelectedChoicesByField(store, "difficulty_reason");
-    const materialIssue = getSelectedChoicesByField(store, "material_issue");
-    const primaryIssue = getSelectedChoicesByField(store, "primary_issue_family");
-    const secondaryIssue = getSelectedChoicesByField(store, "secondary_issue_families");
+    const hasDifficultyField = isFieldPresent(store, "difficulty");
+    const hasModelIssueField = isFieldPresent(store, "model_issue");
+    const difficulty = getSelectedChoicesByField(store, "difficulty");
+    const modelIssue = hasModelIssueField
+      ? getSelectedChoicesByField(store, "model_issue")
+      : [];
+    const condition = getTaskCondition(store).toLowerCase();
+    metaGuardDebug("validateMetaChoices", {
+      hasDifficultyField,
+      hasModelIssueField,
+      difficulty,
+      modelIssue,
+      condition,
+    });
 
-    if (difficultyStatus.includes("one_or_more_specific_reasons") && !difficultyReason.length) {
-      errors.push("已声明存在困难原因，请至少选择一项 / Select at least one difficulty reason");
+    const hasTrivial = difficulty.some((x) => isTrivialToken(x));
+    const hasNonTrivial = difficulty.some((x) => !isTrivialToken(x));
+    const hasAcceptable = modelIssue.some((x) => isAcceptableToken(x));
+    const hasNonAcceptable = modelIssue.some((x) => !isAcceptableToken(x));
+    metaGuardDebug("meta-eval", {
+      difficulty,
+      hasTrivial,
+      hasNonTrivial,
+      modelIssue,
+      hasAcceptable,
+      hasNonAcceptable,
+      condition,
+    });
+
+    if (hasDifficultyField && hasTrivial && hasNonTrivial) {
+      errors.push("Difficulty 冲突：trivial 不能与其他困难标签共存");
     }
-    if (difficultyStatus.includes("no_specific_reason") && difficultyReason.length) {
-      errors.push("已声明没有明确困难原因，请清除原因选择 / Clear stale difficulty reasons");
-    }
-    if ((materialIssue.includes("yes") || materialIssue.includes("unsure")) && primaryIssue.length !== 1) {
-      errors.push("请选择一个主要问题类别 / Select exactly one primary issue family");
-    }
-    if (materialIssue.includes("no") && (primaryIssue.length || secondaryIssue.length)) {
-      errors.push("已选择无实质问题，请清除问题类别 / Clear stale issue families");
-    }
-    if (primaryIssue.length === 1 && secondaryIssue.includes(primaryIssue[0])) {
-      errors.push("Primary 不得在 Secondary 中重复 / Do not repeat the primary issue");
+    if (hasModelIssueField && hasAcceptable && hasNonAcceptable) {
+      errors.push("Model Issue 冲突：acceptable 不能与其他 issue 共存");
     }
 
     return errors;
@@ -2176,6 +2250,16 @@
       if (!store) return true;
       const errs = validateMetaChoices(store);
       if (!errs.length) return true;
+
+      // 过程性证据：记录每次被硬阻断的原因/次数（不影响交互）
+      try {
+        const difficulty = getSelectedChoicesByField(store, "difficulty");
+        const hasModelIssueField = isFieldPresent(store, "model_issue");
+        const modelIssue = hasModelIssueField
+          ? getSelectedChoicesByField(store, "model_issue")
+          : [];
+        recordMetaGuardRejection({ store, errs, difficulty, modelIssue });
+      } catch (e) {}
 
       const msg = [
         "提交被拦截：检测到元标签不合规。",
@@ -2221,6 +2305,9 @@
     );
     console.log(
       "HoHoNet Meta Guard debug keys: HOHONET_META_GUARD_DEBUG=1 or HOHONET_DEBUG_META_GUARD=1",
+    );
+    console.log(
+      "HoHoNet Meta Guard audit: localStorage.HOHONET_META_GUARD_REJECTIONS (capped) and HOHONET_META_GUARD_REJECT_STATS",
     );
   }
 

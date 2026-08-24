@@ -2,8 +2,9 @@
   "schema_version": "label_studio_xml_instruction_manifest_v2",
   "manifest_id": "paper_a_annotation_instruction_v2_20260809",
   "instruction_semantic_version": "paper_a_annotation_instruction_v2",
-  "status": "frozen_local_artifacts",
-  "deployment_status": "local_artifacts_ready_not_deployed",
+  "status": "superseded_frozen_snapshot",
+  "deployment_status": "superseded_without_deployment",
+  "superseded_by": "label_studio_uncertainty_meta_v1",
   "historical_snapshot": {
     "instruction_version": "scope_instruction_v1",
     "effective_through": "C2-A-RP Block 5",
@@ -65,32 +66,32 @@
     "files": [
       {
         "artifact_id": "zh_semi",
-        "path": "tools/label_studio/label_studio_view_config.xml",
+        "path": "tools/label_studio/config_history/uncertainty_meta_v1_prechange_20260824/zh/xml/label_studio_view_config.xml",
         "sha256": "2ba3605c90723bee05252736e47d805f48ae2e01bea024bc452bcb6362fb1baf"
       },
       {
         "artifact_id": "zh_manual",
-        "path": "tools/label_studio/label_studio_view_config_manual.xml",
+        "path": "tools/label_studio/config_history/uncertainty_meta_v1_prechange_20260824/zh/xml/label_studio_view_config_manual.xml",
         "sha256": "94f88108534e53153ced3a02b555045905cb8ec887b0cf5f5adba11b3132585c"
       },
       {
         "artifact_id": "zh_future",
-        "path": "tools/label_studio/label_studio_view_config_c2_future.xml",
+        "path": "tools/label_studio/config_history/uncertainty_meta_v1_prechange_20260824/zh/xml/label_studio_view_config_c2_future.xml",
         "sha256": "d2ddb0bcc5409ad2e0dc4e1f4f45e9f69ee1d4d360ebb4a279175df159162d8f"
       },
       {
         "artifact_id": "en_semi",
-        "path": "tools/label_studio/localized/en/label_studio_view_config_en.xml",
+        "path": "tools/label_studio/config_history/uncertainty_meta_v1_prechange_20260824/en/xml/label_studio_view_config_en.xml",
         "sha256": "4567d9b9d04522cb4b97466d29d0c90295e299d30710f894abbc0582b4fb1826"
       },
       {
         "artifact_id": "en_manual",
-        "path": "tools/label_studio/localized/en/label_studio_view_config_manual_en.xml",
+        "path": "tools/label_studio/config_history/uncertainty_meta_v1_prechange_20260824/en/xml/label_studio_view_config_manual_en.xml",
         "sha256": "9f25ce8add6b8ebb5ccf4ac7b5dbd344b2a1e45cb1358aaf28dfcf3e6ad1e234"
       },
       {
         "artifact_id": "en_future",
-        "path": "tools/label_studio/localized/en/label_studio_view_config_c2_future_en.xml",
+        "path": "tools/label_studio/config_history/uncertainty_meta_v1_prechange_20260824/en/xml/label_studio_view_config_c2_future_en.xml",
         "sha256": "5a006ebd66071a26aeb832c976c61ab865eab2dbf17b571a2757ebb7eefdd380"
       }
     ]

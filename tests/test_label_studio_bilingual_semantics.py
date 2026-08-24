@@ -7,8 +7,10 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 LS = ROOT / "tools" / "label_studio"
 EN = LS / "localized" / "en"
-HISTORY = LS / "config_history" / "scope_instruction_v1_pre_block2"
-MANIFEST = LS / "label_studio_xml_instruction_manifest_v2.json"
+PRECHANGE = LS / "config_history" / "uncertainty_meta_v1_prechange_20260824"
+V1_HISTORY = LS / "config_history" / "scope_instruction_v1_pre_block2"
+V2_MANIFEST = LS / "label_studio_xml_instruction_manifest_v2.json"
+UNCERTAINTY_MANIFEST = LS / "label_studio_uncertainty_meta_manifest_v1.json"
 
 ACTIVE = {
     "zh_semi": LS / "label_studio_view_config.xml",
@@ -18,143 +20,153 @@ ACTIVE = {
     "en_manual": EN / "label_studio_view_config_manual_en.xml",
     "en_future": EN / "label_studio_view_config_c2_future_en.xml",
 }
-SNAPSHOT = {
-    "zh_semi": HISTORY / "zh" / "label_studio_view_config.xml",
-    "zh_manual": HISTORY / "zh" / "label_studio_view_config_manual.xml",
-    "zh_future": HISTORY / "zh" / "label_studio_view_config_c2_future.xml",
-    "en_semi": HISTORY / "en" / "label_studio_view_config_en.xml",
-    "en_manual": HISTORY / "en" / "label_studio_view_config_manual_en.xml",
-    "en_future": HISTORY / "en" / "label_studio_view_config_c2_future_en.xml",
+PRECHANGE_XML = {
+    "zh_semi": PRECHANGE / "zh" / "xml" / "label_studio_view_config.xml",
+    "zh_manual": PRECHANGE / "zh" / "xml" / "label_studio_view_config_manual.xml",
+    "zh_future": PRECHANGE / "zh" / "xml" / "label_studio_view_config_c2_future.xml",
+    "en_semi": PRECHANGE / "en" / "xml" / "label_studio_view_config_en.xml",
+    "en_manual": PRECHANGE / "en" / "xml" / "label_studio_view_config_manual_en.xml",
+    "en_future": PRECHANGE / "en" / "xml" / "label_studio_view_config_c2_future_en.xml",
 }
 
-
-def _choices(path: Path) -> dict[str, list[str]]:
-    tree = ElementTree.parse(path)
-    return {
-        node.attrib["name"]: [choice.attrib["alias"] for choice in node.findall("Choice")]
-        for node in tree.findall(".//Choices")
-        if node.attrib.get("name") in {"scope", "difficulty", "model_issue"}
-    }
+IMAGE_FIELDS = {
+    "scope_status",
+    "multiple_plausible_layouts",
+    "perceived_difficulty",
+    "difficulty_reason_status",
+    "difficulty_reason",
+}
+PROPOSAL_FIELDS = {
+    "material_issue",
+    "primary_issue_family",
+    "secondary_issue_families",
+    "required_correction",
+    "issue_confidence",
+}
 
 
 def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def _control_signature(path: Path) -> list[tuple[str, str, str, str, str]]:
+def _choice_aliases(path: Path) -> dict[str, list[str]]:
     root = ElementTree.parse(path).getroot()
-    return [
-        (
-            node.tag,
-            node.attrib.get("name", ""),
-            node.attrib.get("toName", ""),
-            node.attrib.get("choice", ""),
-            node.attrib.get("required", ""),
-        )
-        for node in root.iter()
-        if node.tag in {"Image", "KeyPointLabels", "BrushLabels", "Choices", "HyperText"}
-    ]
+    return {
+        node.attrib["name"]: [choice.attrib["alias"] for choice in node.findall("Choice")]
+        for node in root.iter("Choices")
+    }
 
 
-def _rule_text(path: Path, name: str) -> str:
-    node = ElementTree.parse(path).find(f".//Text[@name='{name}']")
-    assert node is not None
-    return node.attrib["value"]
+def _visible_views(path: Path) -> list[dict[str, str]]:
+    root = ElementTree.parse(path).getroot()
+    return [node.attrib for node in root.iter("View") if node.attrib.get("visibleWhen")]
 
 
-def _choice_semantics(path: Path, name: str) -> list[tuple[str, str, str]]:
-    node = ElementTree.parse(path).find(f".//Choices[@name='{name}']")
-    assert node is not None
-    return [
-        (choice.attrib["alias"], choice.attrib.get("value", ""), choice.attrib.get("hint", ""))
-        for choice in node.findall("Choice")
-    ]
+def test_uncertainty_xml_uses_the_expected_fields_by_role() -> None:
+    for language in ("zh", "en"):
+        manual = set(_choice_aliases(ACTIVE[f"{language}_manual"]))
+        semi = set(_choice_aliases(ACTIVE[f"{language}_semi"]))
+        future = set(_choice_aliases(ACTIVE[f"{language}_future"]))
+        assert manual == IMAGE_FIELDS
+        assert semi == IMAGE_FIELDS | PROPOSAL_FIELDS
+        assert future == IMAGE_FIELDS | PROPOSAL_FIELDS
 
 
-def test_active_bilingual_xml_keeps_the_same_annotation_schema() -> None:
+def test_uncertainty_bilingual_aliases_match() -> None:
     for role in ("semi", "manual", "future"):
-        assert _choices(ACTIVE[f"zh_{role}"]) == _choices(ACTIVE[f"en_{role}"])
+        assert _choice_aliases(ACTIVE[f"zh_{role}"]) == _choice_aliases(ACTIVE[f"en_{role}"])
 
 
-def test_scope_v2_keeps_every_v1_alias() -> None:
-    for key, active_path in ACTIVE.items():
-        assert _choices(active_path) == _choices(SNAPSHOT[key])
-        assert _control_signature(active_path) == _control_signature(SNAPSHOT[key])
+def test_uncertainty_choice_values_are_frozen() -> None:
+    semi = _choice_aliases(ACTIVE["zh_semi"])
+    assert semi["scope_status"] == ["in_scope", "out_of_scope"]
+    assert semi["multiple_plausible_layouts"] == ["no", "yes"]
+    assert semi["perceived_difficulty"] == ["1", "2", "3", "4", "5"]
+    assert semi["difficulty_reason_status"] == [
+        "no_specific_reason",
+        "one_or_more_specific_reasons",
+    ]
+    assert semi["difficulty_reason"] == [
+        "occlusion",
+        "low_texture",
+        "seam_or_distortion",
+        "reflection_or_transparency",
+        "opening_or_adjacent_space",
+        "image_quality",
+        "other",
+    ]
+    assert semi["material_issue"] == ["no", "yes", "unsure"]
+    assert semi["primary_issue_family"] == [
+        "boundary_or_corner_localization",
+        "underextension",
+        "adjacent_space_overextension",
+        "overparsing_or_ghost_structure",
+        "duplicate_corner",
+        "topology_order_or_closure",
+        "other",
+        "unsure",
+    ]
+    assert semi["secondary_issue_families"] == semi["primary_issue_family"][:-1]
+    assert semi["required_correction"] == [
+        "no_edit_needed",
+        "optional_visual_micro_refinement",
+        "minor_mandatory_coordinate_correction",
+        "major_geometry_correction",
+        "topology_change_or_redraw",
+    ]
+    assert semi["issue_confidence"] == ["1", "2", "3", "4", "5"]
 
 
-def test_annotation_v2_uses_current_space_wording_without_room_ambiguity() -> None:
-    active_text = "\n".join(path.read_text(encoding="utf-8") for path in ACTIVE.values())
-    assert "相机所在的当前空间" in active_text
-    assert "current space containing the camera" in active_text
-    assert "沿属于当前空间的围护墙连续标注" in active_text
-    assert "Follow its enclosing walls through corners" in active_text
-    for obsolete in (
-        "主房间",
-        "相机房间",
-        "main room",
-        "camera room",
-        "camera-room",
-        "明确转角",
-        "clear turn",
-        "主指标纳入",
-        "主指标剔除",
-    ):
-        assert obsolete not in active_text.lower()
+def test_conditional_display_is_branching_not_time_locking() -> None:
+    for path in ACTIVE.values():
+        views = _visible_views(path)
+        assert {
+            (row.get("whenTagName"), row.get("whenChoiceValue")) for row in views
+        } >= {("difficulty_reason_status", "one_or_more_specific_reasons")}
+        text = path.read_text(encoding="utf-8").lower()
+        for forbidden in ("phase_lock", "time_lock", "edit_operation_count", "proposal_missing"):
+            assert forbidden not in text
+
+    for role in ("semi", "future"):
+        for language in ("zh", "en"):
+            views = _visible_views(ACTIVE[f"{language}_{role}"])
+            assert {
+                (row.get("whenTagName"), row.get("whenChoiceValue")) for row in views
+            } >= {("material_issue", "yes,unsure")}
 
 
-def test_manual_and_semi_share_scope_and_difficulty_semantics() -> None:
-    for language in ("zh", "en"):
-        semi, manual = ACTIVE[f"{language}_semi"], ACTIVE[f"{language}_manual"]
-        for field in ("scope", "difficulty"):
-            assert _rule_text(semi, f"{field}_rule_text") == _rule_text(manual, f"{field}_rule_text")
-            assert _choice_semantics(semi, field) == _choice_semantics(manual, field)
+def test_old_taxonomy_is_absent_from_current_xml() -> None:
+    for path in ACTIVE.values():
+        aliases = {alias for values in _choice_aliases(path).values() for alias in values}
+        assert aliases.isdisjoint({"trivial", "acceptable", "fail", "missing_or_unusable_proposal"})
 
 
-def test_difficulty_and_model_issue_v2_boundaries_are_explicit() -> None:
-    active_text = "\n".join(path.read_text(encoding="utf-8") for path in ACTIVE.values())
-    assert "同一个底层原因" in active_text
-    assert "same underlying cause" in active_text
-    assert "初始模型几何无需调整，可以原样提交" in active_text
-    assert "needs no adjustment and can be submitted unchanged" in active_text
-    assert "无论调整幅度大小" in active_text
-    assert "regardless of its size" in active_text
-    assert "不要额外选择 fail" in active_text
-    assert "Do not additionally select fail" in active_text
-    for obsolete in ("无需显著修改", "仅需微调", "no major correction", "minor adjustment"):
-        assert obsolete not in active_text.lower()
-
-
-def test_model_issue_is_absent_from_manual_and_present_in_semi_and_future() -> None:
-    for language in ("zh", "en"):
-        assert "model_issue" not in _choices(ACTIVE[f"{language}_manual"])
-        assert "model_issue" in _choices(ACTIVE[f"{language}_semi"])
-        assert "model_issue" in _choices(ACTIVE[f"{language}_future"])
-
-
-def test_historical_and_active_xml_sha_are_frozen_in_v2_manifest() -> None:
-    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
-    assert manifest["instruction_semantic_version"] == "paper_a_annotation_instruction_v2"
-    assert manifest["historical_snapshot"]["instruction_version"] == "scope_instruction_v1"
-    assert manifest["active_scope_v2"]["instruction_version"] == "scope_instruction_v2"
-    assert manifest["active_scope_v2"]["annotation_instruction_version"] == "paper_a_annotation_instruction_v2"
-    assert manifest["historical_snapshot"]["effective_through"] == "C2-A-RP Block 5"
-    assert manifest["active_scope_v2"]["effective_from"] == "T1"
-    assert manifest["active_scope_v2"]["applies_to"] == ["T1", "V1"]
-    assert manifest["method_boundaries"]["c2a_instruction_version_changed"] is False
-    assert manifest["active_scope_v2"]["alias_schema_unchanged"] is True
-    assert manifest["deployment_status"] == "local_artifacts_ready_not_deployed"
-
-    historical = {row["artifact_id"]: row for row in manifest["historical_snapshot"]["files"]}
+def test_v2_manifest_is_superseded_and_points_to_the_prechange_snapshot() -> None:
+    manifest = json.loads(V2_MANIFEST.read_text(encoding="utf-8"))
+    assert manifest["status"] == "superseded_frozen_snapshot"
+    assert manifest["deployment_status"] == "superseded_without_deployment"
+    assert manifest["superseded_by"] == "label_studio_uncertainty_meta_v1"
     active = {row["artifact_id"]: row for row in manifest["active_scope_v2"]["files"]}
-    for key in ACTIVE:
-        assert _sha256(SNAPSHOT[key]) == historical[key]["sha256"]
-        assert _sha256(ACTIVE[key]) == active[key]["sha256"]
+    for key, snapshot in PRECHANGE_XML.items():
+        assert (ROOT / active[key]["path"]).resolve() == snapshot.resolve()
+        assert _sha256(snapshot) == active[key]["sha256"]
 
 
-def test_original_c1_freeze_manifest_is_preserved_with_snapshot() -> None:
-    freeze = HISTORY / "label_studio_c1_xml_freeze_manifest_v1.json"
-    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+def test_uncertainty_manifest_records_the_frozen_boundaries() -> None:
+    manifest = json.loads(UNCERTAINTY_MANIFEST.read_text(encoding="utf-8"))
+    assert manifest["schema_version"] == "label_studio_uncertainty_meta_manifest_v1"
+    assert manifest["manifest_id"] == "label_studio_uncertainty_meta_v1"
+    assert manifest["deployment_status"] == "local_artifacts_ready_not_deployed"
+    assert manifest["timing_basis"] == "worker_instruction_only_not_system_locked"
+    assert manifest["proposal_missing_not_collected"] is True
+    assert manifest["edit_operation_count_not_collected"] is True
+    assert manifest["historical_data_reclassified"] is False
+    assert manifest["paper_a_method_contract_changed"] is False
+    assert set(manifest["image_fields"]) == IMAGE_FIELDS
+    assert set(manifest["proposal_fields"]) == PROPOSAL_FIELDS
+
+
+def test_original_c1_freeze_manifest_is_still_preserved() -> None:
+    freeze = V1_HISTORY / "label_studio_c1_xml_freeze_manifest_v1.json"
+    manifest = json.loads(V2_MANIFEST.read_text(encoding="utf-8"))
     assert _sha256(freeze) == manifest["historical_snapshot"]["legacy_freeze_manifest_sha256"]
-    historical = json.loads(freeze.read_text(encoding="utf-8"))["historical_c1"]
-    assert historical["chinese_source_git_blob_sha"] == "fa083fbdbaecede42fc6c92486496a2b69441537"
-    assert historical["english_source_git_blob_sha"] == "cd7cfeff16d5ec59c14758b8b9c5d825598d6282"

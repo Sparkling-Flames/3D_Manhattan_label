@@ -1,0 +1,69 @@
+<View>
+  <View style="display: flex; height: 100vh; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+    <View style="flex: 60%; margin-right: 12px; display: flex; flex-direction: column; background: #fafafa; border-right: 1px solid #ddd; height: 100%;">
+      <View style="flex: 0 0 40%; min-height: 330px; max-height: 42vh; display: flex; flex-direction: column; padding: 8px; background: #fff; overflow: visible; position: relative; z-index: 2;">
+        <Header value="2D Panorama Annotation" size="6" style="margin-top: 0; margin-bottom: 2px; font-weight: 600; color: #333;"/>
+        <Image name="img" value="$image" zoom="true" zoomControl="true" style="flex: 1; border-radius: 4px; border: 1px solid #eee;"/>
+      </View>
+
+      <View style="flex: 0 0 auto; display: flex; gap: 8px; margin-top: 8px; padding: 6px 12px; background: #fff; border-top: 1px solid #f0f0f0; align-items: center;">
+        <View style="flex: 0 0 auto; color: #666; font-size: 11px;">Tools:</View>
+        <KeyPointLabels name="kp" toName="img" strokeWidth="2">
+          <Label value="Corner" background="#FF4D4F"/>
+        </KeyPointLabels>
+        <BrushLabels name="wall_brush" toName="img">
+          <Label value="Wall" background="#52C41A"/>
+        </BrushLabels>
+      </View>
+
+      <View style="flex: 1; overflow-y: auto; padding: 12px 16px; background: #fff; border-top: 1px solid #eee; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);">
+        <Header value="Annotation Feedback and Stratification" size="5" style="margin-bottom: 12px; padding-bottom: 4px; border-bottom: 2px solid #1890ff; display: inline-block;"/>
+
+        <View style="margin-bottom: 16px; padding: 12px; background: #fdfdfd; border: 1px solid #f0f0f0; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+          <Header value="1. Scope" size="6" style="color: #1890ff; margin-bottom: 8px;"/>
+          <Text name="scope_rule_text" value="Annotate the current space containing the camera. Follow its enclosing walls through corners that belong to the current space. When an opening leads to an adjacent space, close the layout at a clear structural boundary—such as a door frame, paired wall returns or jambs, or an arch—and do not continue into the adjacent space. Choose In-scope whenever this space has one reproducible single-level Manhattan wall–ceiling–floor enclosure. Local occlusion, an opening, stairs, or a ceiling recess is not automatically OOS. Choose OOS only when a specific reason below applies." style="display:block; margin: 0 0 6px 0; color:#666; font-size:12px;"/>
+          <Choices name="scope" toName="img" showInLine="true" choice="single" required="true" requiredMessage="Scope is required. Select exactly one option.">
+            <Choice value="In-scope: current space containing the camera" alias="normal" hint="Follow the enclosing walls through ordinary L/T-shaped corners that belong to the current space. When an opening leads to an adjacent space, close at a clear structural boundary such as a door frame, paired wall returns or jambs, or an arch. Choose this whenever the current space has one reproducible single-level Manhattan wall–ceiling–floor enclosure. Local occlusion, openings, or stairs and ceiling recesses that can be excluded at a clear boundary remain in-scope."/>
+            <Choice value="OOS: geometric assumption invalid / non-Manhattan" alias="oos_geometry" hint="Use when the dominant structure of the current space cannot be stably represented by one Manhattan/cuboid-style enclosure. Typical cases include curved walls, continuous curved surfaces, obvious slanted walls, or another dominant non-Manhattan structure. An L/T-shaped Manhattan space is not OOS for this reason."/>
+            <Choice value="OOS: open or ambiguous boundary of the current space" alias="oos_open_boundary" hint="Use when an opening to an adjacent space has no reproducible structural boundary, or when multiple closures are equally plausible. Merely seeing an adjacent space through an opening is not OOS if you can close at a door frame, paired wall returns or jambs, or an arch. If key evidence is missing or invisible, prefer insufficient evidence."/>
+            <Choice value="OOS: split-level or multi-level layout" alias="oos_split_level" hint="Use when one enclosure for the current space must include competing floor or ceiling levels and cannot satisfy a single-floor and single-ceiling assumption. If stairs or a sunken area can be cleanly excluded at a visible boundary and the current space still closes uniquely, choose in-scope."/>
+            <Choice value="OOS: insufficient geometric evidence" alias="oos_insufficient" hint="Use when key structural evidence is genuinely missing and a reproducible enclosure cannot be determined. Typical causes include severe occlusion, overexposure, blur, missing panorama regions, black borders, or large masks. Do not use this for a local occlusion, one uncertain corner, or an abstract image when the current space still closes stably."/>
+          </Choices>
+        </View>
+
+        <View style="margin-bottom: 16px; padding: 12px; background: #fdfdfd; border: 1px solid #f0f0f0; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+          <Header value="2. Difficulty" size="6" style="color: #1890ff; margin-bottom: 8px;"/>
+          <Text name="difficulty_rule_text" value="Select the factors that materially made the layout or corner annotation harder in this task. Difficulty describes annotation difficulty; it does not determine Scope or indicate whether the model is wrong. Select multiple labels when distinct factors independently increase difficulty, but do not apply multiple labels to the same underlying cause. Select at least one option. Choose trivial only when no other factor materially increases difficulty, and do not combine it with another label." style="display:block; margin: 0 0 6px 0; color:#666; font-size:12px;"/>
+          <Choices name="difficulty" toName="img" showInLine="true" choice="multiple" required="true" requiredMessage="Difficulty is required. Select at least one option.">
+            <Choice value="Trivial / very easy" alias="trivial" hint="Choose only when no other factor materially increases layout or corner annotation difficulty. This label is mutually exclusive with every other difficulty label."/>
+            <Choice value="Occlusion" alias="occlusion" hint="A foreground object or structure blocks wall, corner, or boundary evidence that would otherwise need to be judged. An enclosing wall is not an occluder merely because it is visible. If the enclosure can no longer be closed reproducibly, consider insufficient evidence."/>
+            <Choice value="Low texture or plain walls" alias="low_texture" hint="The image is complete, but local texture, color, or contrast is too weak, so boundaries or corners rely on subtle geometric cues. Do not apply this label again when the same difficulty already has a clearer occlusion, seam, reflection, or low-quality cause."/>
+            <Choice value="Panorama seam or stretch distortion" alias="seam" hint="Panorama stitching, reprojection, stretching, or local geometric distortion makes true corners hard to locate. This may appear as broken lines, shifted walls, or corner drift; the root cause is seam/stretch distortion."/>
+            <Choice value="Reflection or glass interference" alias="reflection" hint="Mirrors or glass create false boundaries, duplicated structure, or depth confusion that materially increases layout or corner annotation difficulty. Do not select this merely because glass or a mirror is present."/>
+            <Choice value="Blur, mask, or low image quality" alias="low_quality" hint="Blur, noise, compression artifacts, large masks, black borders, or missing pixels make key wall–floor–ceiling or opening-boundary evidence unreliable. Do not apply this label again when the same difficulty has a clearer local occlusion or seam cause."/>
+          </Choices>
+        </View>
+
+        <View style="margin-bottom: 16px; padding: 12px; background: #fdfdfd; border: 1px solid #f0f0f0; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+          <Header value="3. Model Initialization Issue" size="6" style="color: #1890ff; margin-bottom: 8px;"/>
+          <Text name="model_issue_rule_text" value="Judge the initial model proposal before editing. Select only issues that are actually present in the initial proposal, regardless of the final result or how easy they are to fix. Choose acceptable only when the initial geometry needs no adjustment and can be submitted unchanged. If any corner, boundary, or topology needs correction, choose the corresponding issue instead. Select at least one option." style="display:block; margin: 0 0 6px 0; color:#666; font-size:12px;"/>
+          <Choices name="model_issue" toName="img" showInLine="true" choice="multiple" required="true" requiredMessage="Model Issue is required. Select at least one option.">
+            <Choice value="Model quality acceptable" alias="acceptable" hint="The initial model geometry needs no adjustment and can be submitted unchanged. This label is mutually exclusive with every concrete issue."/>
+            <Choice value="Over-extend to adjacent room" alias="overextend_adjacent" hint="The model crosses a door frame, paired wall returns or jambs, an arch, or another structural boundary and includes an adjacent space as part of the current space containing the camera."/>
+            <Choice value="Under-extend / missing room parts" alias="underextend" hint="The model covers only part of the current space containing the camera and misses visible walls, corners, or boundaries."/>
+            <Choice value="Over-parsing / ghost geometry" alias="over_parsing" hint="The model treats cabinets, wall bumps, furniture edges, decorative protrusions, or other non-layout details as real layout corners or boundaries. If the main issue is multiple points around the same physical corner, prefer duplicate corner points."/>
+            <Choice value="Corner drift" alias="corner_drift" hint="One or a few corner or local-boundary positions need adjustment while the corner count and topology are otherwise correct. Select this whenever a real positional correction is needed, regardless of its size."/>
+            <Choice value="Duplicate corner points" alias="corner_duplicate" hint="The same physical corner is represented by multiple nearby points. Delete redundant points and keep the one best supported by geometry."/>
+            <Choice value="Topological failure" alias="topology_failure" hint="Ceiling and floor points have incorrect correspondence or order, the layout does not close, self-intersections appear, or another invalid structural configuration occurs. Use corner drift for position-only errors and duplicate points for redundant points near one physical corner."/>
+            <Choice value="Prediction failure" alias="fail" hint="Choose this only when the initial prediction is missing, unusable, or cannot be adequately described by the specific issues above. Do not additionally select fail when those issues already describe the error."/>
+          </Choices>
+        </View>
+      </View>
+    </View>
+
+    <View style="flex: 40%; border-left: 1px solid #ccc; padding-left: 10px;">
+      <Header value="3D Layout Preview"/>
+      <HyperText name="vis_3d" value="$vis_3d" valueType="url" inline="false"/>
+    </View>
+  </View>
+</View>
