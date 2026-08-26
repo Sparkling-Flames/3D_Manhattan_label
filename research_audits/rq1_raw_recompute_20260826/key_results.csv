@@ -1,37 +1,43 @@
 category,metric,value,unit_or_scope,interpretation,source
-raw_selection,raw_annotation_versions,2273,non-cancelled P1+C1 versions,audit inventory,analysis_results/rq1_raw_recompute_20260826/SUMMARY.json
-raw_selection,independent_acquisition_keys,2261,project×runtime_task×worker,latest-version analysis units,analysis_results/rq1_raw_recompute_20260826/SUMMARY.json
-raw_selection,duplicate_version_groups,9,groups,version duplication exists,analysis_results/rq1_raw_recompute_20260826/SUMMARY.json
-raw_selection,duplicate_version_excess,12,annotations,extra versions beyond one per acquisition key,analysis_results/rq1_raw_recompute_20260826/SUMMARY.json
-high_density,task_context_count,42,P1 Manual 30 + C1 anchor 12,measurement calibration set,analysis_results/rq1_raw_recompute_20260826/SUMMARY.json
-high_density,strict_support_range,23-26,workers per task,all 42 contexts have k≥20,analysis_results/rq1_raw_recompute_20260826/SUMMARY.json
-c1_core,unique_task_contexts,75,Manual contexts,assigned operational task sample,analysis_results/rq1_raw_recompute_20260826/SUMMARY.json
-c1_core,strict_k_ge5,70,Manual contexts,not 71,analysis_results/rq1_raw_recompute_20260826/SUMMARY.json
-c1_core,k_distribution,"3:1;4:4;5:49;6:20;7:1",contexts,strict computable support,analysis_results/rq1_raw_recompute_20260826/SUMMARY.json
-c1_core,boundary_distance_mean,0.020813916648211556,image-equal-weight,descriptive mean,analysis_results/rq1_raw_recompute_20260826/SUMMARY.json
-c1_core,boundary_distance_median,0.013971335661786717,image-equal-weight,descriptive median,analysis_results/rq1_raw_recompute_20260826/SUMMARY.json
-subsampling_boundary,k5_spearman_median,0.85560327364071,42 high-density tasks,coarse task ranking recovery,analysis_results/rq1_raw_recompute_20260826/support_calibration_summary.csv
-subsampling_boundary,k8_spearman_median,0.9160521837776519,42 high-density tasks,better high-uncertainty screening,analysis_results/rq1_raw_recompute_20260826/support_calibration_summary.csv
-subsampling_boundary,k10_spearman_median,0.9367150149906815,42 high-density tasks,continuous ranking increasingly stable,analysis_results/rq1_raw_recompute_20260826/support_calibration_summary.csv
-subsampling_boundary,k15_spearman_median,0.9695324527996111,42 high-density tasks,high ranking stability in this historical set,analysis_results/rq1_raw_recompute_20260826/support_calibration_summary.csv
-subsampling_wall,k5_spearman_median,0.8116035977635525,42 high-density tasks,less stable than boundary,analysis_results/rq1_raw_recompute_20260826/support_calibration_summary.csv
-subsampling_wall,k8_spearman_median,0.8703508629770683,42 high-density tasks,less stable than boundary,analysis_results/rq1_raw_recompute_20260826/support_calibration_summary.csv
-subsampling_wall,k15_spearman_median,0.9471679766631554,42 high-density tasks,channels must remain separate,analysis_results/rq1_raw_recompute_20260826/support_calibration_summary.csv
-cardinality,full_count_diverse_tasks,37,of 42 high-density tasks,more than one vertical-boundary count observed at full support,analysis_results/rq1_raw_recompute_20260826/boundary_count_detection_summary.csv
-cardinality,k5_detection_given_diverse,0.6305675675675676,probability,absence at k=5 is weak negative evidence,analysis_results/rq1_raw_recompute_20260826/boundary_count_detection_summary.csv
-cardinality,k8_detection_given_diverse,0.7298378378378377,probability,still incomplete,analysis_results/rq1_raw_recompute_20260826/boundary_count_detection_summary.csv
-cardinality,k15_detection_given_diverse,0.8844324324324325,probability,substantially improved,analysis_results/rq1_raw_recompute_20260826/boundary_count_detection_summary.csv
-cluster_threshold,q090_supported_multimodal,21,of 42,algorithmic classification only,analysis_results/rq2_null_replay_20260826/cluster_threshold_count_summary.csv
-cluster_threshold,q095_supported_multimodal,21,of 42,algorithmic classification only,analysis_results/rq2_null_replay_20260826/cluster_threshold_count_summary.csv
-cluster_threshold,q098_supported_multimodal,14,of 42,strong threshold sensitivity,analysis_results/rq2_null_replay_20260826/cluster_threshold_count_summary.csv
-cluster_threshold,q098_not_evaluable,19,of 42,not suitable as frozen prevalence measure,analysis_results/rq2_null_replay_20260826/cluster_threshold_count_summary.csv
-null_replay,boundary_60_image_mde_lower_bound,0.00563-0.00570,80% conditional MDE,sampling-noise lower bound not formal power,analysis_results/rq2_null_replay_20260826/null_replay_sample_size_scenarios.csv
-null_replay,boundary_72_image_mde_lower_bound,0.00514-0.00520,80% conditional MDE,sampling-noise lower bound not formal power,analysis_results/rq2_null_replay_20260826/null_replay_sample_size_scenarios.csv
-null_replay,wall_60_image_mde_lower_bound,0.00873-0.00881,80% conditional MDE,sampling-noise lower bound not formal power,analysis_results/rq2_null_replay_20260826/null_replay_sample_size_scenarios.csv
-null_replay,wall_72_image_mde_lower_bound,0.00797-0.00804,80% conditional MDE,sampling-noise lower bound not formal power,analysis_results/rq2_null_replay_20260826/null_replay_sample_size_scenarios.csv
-difficulty,manual_c1_tasks_k_ge5,82,tasks,anchor plus core,analysis_results/rq1_difficulty_time_raw_20260826/SUMMARY.json
-difficulty,worker_task_rows,648,responses,post-response labels,analysis_results/rq1_difficulty_time_raw_20260826/SUMMARY.json
-difficulty,seam_rate_spearman,0.38401517658618467,task level,building-bootstrap CI approximately 0.1016 to 0.5530,analysis_results/rq1_difficulty_time_raw_20260826/associations.csv
-difficulty,nontrivial_rate_spearman,-0.02682298985790774,task level,no stable general difficulty relation,analysis_results/rq1_difficulty_time_raw_20260826/associations.csv
-difficulty,occlusion_rate_spearman,-0.062237965090359434,task level,no stable occlusion relation,analysis_results/rq1_difficulty_time_raw_20260826/associations.csv
-active_time,formal_active_time_observed_rows,0,of 648,raw identity connection not established; do not substitute lead_time,analysis_results/rq1_difficulty_time_raw_20260826/SUMMARY.json
+raw_selection,raw_annotation_versions,2273,P1+C1 non-cancelled versions,audit inventory,analysis_results/rq1_corrections_20260826/SUMMARY.json
+raw_selection,independent_acquisition_keys,2261,project×runtime_task×worker,latest-version analysis units,analysis_results/rq1_corrections_20260826/SUMMARY.json
+raw_selection,frozen_selection_matches,2260,of 2261,only mismatch is an exact-result duplicate,analysis_results/rq1_corrections_20260826/SUMMARY.json
+raw_selection,duplicate_version_excess,12,annotations,extra versions beyond one per acquisition key,analysis_results/rq1_corrections_20260826/SUMMARY.json
+high_density,task_context_count,42,P1 Manual 30 + C1 anchor 12,measurement calibration set,analysis_results/rq1_corrections_20260826/SUMMARY.json
+high_density,amendment_support_range,23-26,workers per task,all 42 contexts have k≥20,analysis_results/rq1_corrections_20260826/SUMMARY.json
+c1_core,unique_task_contexts,75,Manual contexts,assigned operational task sample,analysis_results/rq1_corrections_20260826/SUMMARY.json
+c1_core,raw_strict_k_ge5,70,Manual contexts,not final C1 calculation contract,analysis_results/rq1_corrections_20260826/SUMMARY.json
+c1_core,amendment_k_ge5,72,Manual contexts,formal derived-geometry calculation support,analysis_results/rq1_corrections_20260826/SUMMARY.json
+c1_core,raw_strict_k_distribution,"3:1;4:4;5:49;6:20;7:1",contexts,generic parser,analysis_results/rq1_corrections_20260826/SUMMARY.json
+c1_core,amendment_k_distribution,"3:1;4:2;5:51;6:20;7:1",contexts,C1 orphan-point amendment applied,analysis_results/rq1_corrections_20260826/SUMMARY.json
+c1_geometry,repair_applied_count,3,C1 records,2 Manual core and 1 Semi,analysis_results/rq1_corrections_20260826/SUMMARY.json
+subsampling_mask,k5_spearman_median,0.8819382545984928,42 high-density tasks,usable for average cross-image effects not stable single-image truth,analysis_results/rq1_corrections_20260826/support_calibration_summary.csv
+subsampling_mask,k5_mae_median,0.031281808243815476,wall-region 1-IoU scale,substantial per-image measurement noise,analysis_results/rq1_corrections_20260826/support_calibration_summary.csv
+subsampling_mask,k5_top20_recall_median,0.7777777777777778,42 high-density tasks,high-uncertainty screening remains imperfect,analysis_results/rq1_corrections_20260826/support_calibration_summary.csv
+subsampling_mask,k8_spearman_median,0.9272344218458797,42 high-density tasks,ranking improves with support,analysis_results/rq1_corrections_20260826/support_calibration_summary.csv
+subsampling_mask,k15_spearman_median,0.9747184182805283,42 high-density tasks,high ranking stability in this historical set,analysis_results/rq1_corrections_20260826/support_calibration_summary.csv
+subsampling_boundary,k5_spearman_median,0.8579531642492505,42 high-density tasks,separate candidate channel,analysis_results/rq1_corrections_20260826/support_calibration_summary.csv
+subsampling_wall,k5_spearman_median,0.8093347378656511,42 high-density tasks,separate candidate channel,analysis_results/rq1_corrections_20260826/support_calibration_summary.csv
+roster_sensitivity,roster20_full_support_spearman_median,0.9860139860139862,12 C1 anchors versus 23-worker full support,roster reduction itself is small,analysis_results/rq1_corrections_20260826/c1_anchor_roster20_sensitivity.csv
+roster_sensitivity,roster20_k5_spearman_median,0.8671328671328673,12 C1 anchors,per-arm k5 is the larger limitation,analysis_results/rq1_corrections_20260826/c1_anchor_roster20_sensitivity.csv
+roster_sensitivity,roster20_k5_spearman_q05,0.5171328671328672,12 C1 anchors,large lower-tail instability,analysis_results/rq1_corrections_20260826/c1_anchor_roster20_sensitivity.csv
+cardinality,full_count_diverse_tasks,37,of 42 high-density tasks,more than one vertical-boundary count observed at full support,analysis_results/rq1_corrections_20260826/boundary_count_detection_summary.csv
+cardinality,k5_detection_given_diverse,0.6354594594594595,probability,absence at k5 is weak negative evidence,analysis_results/rq1_corrections_20260826/boundary_count_detection_summary.csv
+cardinality,k8_detection_given_diverse,0.7271081081081081,probability,still incomplete,analysis_results/rq1_corrections_20260826/boundary_count_detection_summary.csv
+cardinality,k15_detection_given_diverse,0.8812432432432431,probability,substantially improved,analysis_results/rq1_corrections_20260826/boundary_count_detection_summary.csv
+cluster_threshold,q090_supported_multimodal,21,of 42,algorithmic classification only,analysis_results/rq1_corrections_20260826/cluster_threshold_count_summary.csv
+cluster_threshold,q095_supported_multimodal,21,of 42,algorithmic classification only,analysis_results/rq1_corrections_20260826/cluster_threshold_count_summary.csv
+cluster_threshold,q098_supported_multimodal,14,of 42,strong threshold sensitivity,analysis_results/rq1_corrections_20260826/cluster_threshold_count_summary.csv
+cluster_threshold,q098_not_evaluable,19,of 42,not suitable as frozen prevalence measure,analysis_results/rq1_corrections_20260826/cluster_threshold_count_summary.csv
+null_replay,mask_60_image_mde_lower_bound,0.02686-0.02715,80% conditional MDE,sampling-noise lower bound not formal power,analysis_results/rq1_corrections_20260826/null_replay_sample_size_scenarios.csv
+null_replay,mask_72_image_mde_lower_bound,0.02452-0.02478,80% conditional MDE,sampling-noise lower bound not formal power,analysis_results/rq1_corrections_20260826/null_replay_sample_size_scenarios.csv
+null_replay,boundary_60_image_mde_lower_bound,0.00569-0.00571,80% conditional MDE,metric-dependent lower bound,analysis_results/rq1_corrections_20260826/null_replay_sample_size_scenarios.csv
+null_replay,wall_60_image_mde_lower_bound,0.00872-0.00879,80% conditional MDE,metric-dependent lower bound,analysis_results/rq1_corrections_20260826/null_replay_sample_size_scenarios.csv
+active_time,frozen_context_count,780,C1 task-worker contexts,SHA verified,analysis_results/rq1_corrections_20260826/SUMMARY.json
+active_time,frozen_eligible_context_count,701,C1 task-worker contexts,formal freeze,analysis_results/rq1_corrections_20260826/SUMMARY.json
+active_time,observed_manual_rows,594,of 658 amendment-compliant k≥5 rows,22 workers and 84 tasks,analysis_results/rq1_corrections_20260826/SUMMARY.json
+active_time,task_mask_dispersion_spearman,0.2438794728930414,84 tasks,building-bootstrap CI 0.0309 to 0.3720,analysis_results/rq1_corrections_20260826/formal_time_difficulty_associations.csv
+active_time,worker_fixed_within_group_correlation,0.19789448301464468,594 worker-task rows,descriptive not causal,analysis_results/rq1_corrections_20260826/formal_time_difficulty_associations.csv
+difficulty,nontrivial_rate_spearman,0.017483397696403346,84 tasks,no stable general difficulty relation,analysis_results/rq1_corrections_20260826/formal_time_difficulty_associations.csv
+difficulty,occlusion_rate_spearman,-0.06376217412569428,84 tasks,no stable occlusion relation,analysis_results/rq1_corrections_20260826/formal_time_difficulty_associations.csv
+difficulty,seam_rate_spearman,0.4438340026334862,84 tasks,building-bootstrap CI 0.2038 to 0.6083,analysis_results/rq1_corrections_20260826/formal_time_difficulty_associations.csv
