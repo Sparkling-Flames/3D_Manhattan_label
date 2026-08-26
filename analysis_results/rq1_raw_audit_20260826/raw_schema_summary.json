@@ -1,0 +1,344 @@
+{
+  "all_data_keys": {
+    "artifact_status": 266,
+    "base_task_id": 447,
+    "block_index": 67,
+    "c2a_assignment_manifest_sha256": 67,
+    "c2a_block_assignment_sha256": 67,
+    "c2a_precision_plan_sha256": 67,
+    "c2a_task_pool_sha256": 67,
+    "c2b_batch_id": 50,
+    "c2b_summary_sha256": 67,
+    "calibration_version": 266,
+    "condition": 447,
+    "dataset_group": 447,
+    "deployment_id": 67,
+    "design_manifest_sha256": 67,
+    "family_dir": 18,
+    "final_role": 78,
+    "gap_reason": 67,
+    "has_expert_ref": 60,
+    "image": 447,
+    "image_id": 333,
+    "init_type": 36,
+    "is_anchor": 60,
+    "language_group": 67,
+    "launch_allowed": 266,
+    "method_contract_sha256": 67,
+    "method_contract_version": 67,
+    "model_layout_sha256": 67,
+    "planned_project_name": 32,
+    "planned_task_id": 117,
+    "post_c2b_worker_profile_sha256": 67,
+    "project_binding_status": 32,
+    "project_id": 67,
+    "proposal_coord_contract": 36,
+    "proposal_source_kind": 36,
+    "proposal_source_path": 24,
+    "round_id": 67,
+    "scope_gold": 60,
+    "scope_target": 18,
+    "scope_target_source": 18,
+    "selected_design_sha": 50,
+    "semi_role": 36,
+    "server_instance_id": 67,
+    "server_url": 67,
+    "source_draft": 266,
+    "source_type": 36,
+    "synthetic_candidate_id": 12,
+    "synthetic_rebind_status": 12,
+    "target_component": 67,
+    "task_id": 447,
+    "task_stratum": 67,
+    "threshold_manifest_sha256": 67,
+    "title": 447,
+    "trap_family": 36,
+    "vis_3d": 447
+  },
+  "file_count": 18,
+  "low_cardinality_data_values": {
+    "artifact_status": {
+      "formal_c1_import_json": 216,
+      "formal_c2b_import_json": 50
+    },
+    "block_index": {
+      "1": 35,
+      "2": 32
+    },
+    "c2a_assignment_manifest_sha256": {
+      "4ac63b351aba1e4a11187daf1e975255593eb3bbb02ee484bddd6b99ee8028ec": 35,
+      "5da997a97a68a272d44c171873f055b1c3e85dcb25dfd258c28dbe0474878d66": 32
+    },
+    "c2a_block_assignment_sha256": {
+      "438f2ae05355a04469dc246361e807d1f4ab0e6db34fc6a31ab2fb20dd059eef": 32,
+      "4ac63b351aba1e4a11187daf1e975255593eb3bbb02ee484bddd6b99ee8028ec": 35
+    },
+    "c2a_precision_plan_sha256": {
+      "90613aabb780d3f0427d8e3bd11980936cc3be3feb6fbe100e113969756e2724": 32,
+      "b4aa54ddfd22494c2d72fe89ce94fed1957403de71f9704cdffb62de869a9cc1": 35
+    },
+    "c2a_task_pool_sha256": {
+      "173e807bb2f3797a7dc6c072316d392b4597921cc1bd3ec10ec3c3074e9b5cd3": 35,
+      "6181202ec56dc8262c655fbd83ecc33a9092977486871ca1ee1c3110a915d981": 32
+    },
+    "c2b_batch_id": {
+      "C2B_BATCH_A": 50
+    },
+    "c2b_summary_sha256": {
+      "5e44a28e5e632a4c3dd7ecd999fdf6443c150e21520e55812431f3a080d4785d": 67
+    },
+    "calibration_version": {
+      "C1_v3_1": 216,
+      "C2-B_v17": 50
+    },
+    "condition": {
+      "manual": 344,
+      "oos": 18,
+      "semi": 85
+    },
+    "dataset_group": {
+      "C1_anchor_all": 24,
+      "C1_core_all": 143,
+      "C1_semi": 49,
+      "C2-A-RP": 67,
+      "C2-B": 50,
+      "PreScreen_manual": 60,
+      "PreScreen_oos": 18,
+      "PreScreen_semi": 36
+    },
+    "deployment_id": {
+      "c2b_en": 32,
+      "c2b_zh": 35
+    },
+    "design_manifest_sha256": {
+      "7d81fb746f476d9143e88c174b4f6002a8887d486ff7571879e67f690f7b8c1b": 32,
+      "af1a842d9770099e78ade184375f5c8108a46d257ebb848b9a378aeab5715d56": 35
+    },
+    "family_dir": {
+      "几何假设不成立(弧形墙)": 2,
+      "证据不足": 2,
+      "边界不可判定": 4,
+      "错层,天花板下凸": 10
+    },
+    "final_role": {
+      "expert_anchor": 44,
+      "non_anchor": 16,
+      "oos_gate": 18
+    },
+    "gap_reason": {
+      "target_not_met": 67
+    },
+    "has_expert_ref": {
+      "False": 16,
+      "True": 44
+    },
+    "init_type": {
+      "clean": 12,
+      "misleading": 24
+    },
+    "is_anchor": {
+      "False": 16,
+      "True": 44
+    },
+    "language_group": {
+      "Chinese": 35,
+      "English": 32
+    },
+    "launch_allowed": {
+      "True": 266
+    },
+    "method_contract_sha256": {
+      "60e60f01d762ee89d788979ad9ef243db1887f6ef81f4d5bb8ae2e6f29b5af38": 35,
+      "f3c1ea58d0857a40aa2240b4680b674c76fe2cec8f048f61a643d9e4b74b0588": 32
+    },
+    "method_contract_version": {
+      "paper_a_method_20260807_v19": 35,
+      "paper_a_method_20260811_v23": 32
+    },
+    "model_layout_sha256": {
+      "009f212819d6d4392cfe28ba1e7073ca51c2bdaa94980753cd9bcff7c3005245": 2,
+      "0805b0f49a8209426e7537ce69accc7dc006cef66263fd77b6214603bad8c62a": 3,
+      "08364c9ed79646cee0f0569c088da11e83b5e731dcf593270f5c786b61268b67": 1,
+      "1d4d5a01e5066fd2a1dfe54e11e808089833e4861546a03b8ec75ab18b5963cf": 3,
+      "1edc86280403642624a7d05cfa6a914284f801f5760b57125927c94e7fae63c4": 1,
+      "2de45c986c606a5928f1a21872cc9ccdbf9d604c8e12a9a8672327bf1ee3adbf": 2,
+      "32be0cf776c204965f1e69f886eb950a9f0b47e2ad00fe117116c79303226643": 2,
+      "34eebf8c57352852242126a30aed82bb12f48bfa2bd5e92d5eef73927066ab49": 2,
+      "4a1d944094ee26899cbc889587985a5d8f9cd0299722b10762c3770f66d5e09b": 3,
+      "4bdcafdca22d97de6a5e4fcb64c644beb100d7b98899ba6690e8f5fa57687fb6": 2,
+      "4c1a483d62feb9aa65253f251aa2721d213a44782f946c3c4ed4b8718daa846c": 1,
+      "4c439d5831b46a95928e50f62bf9e46aa45e13e66d7fb68ffaada9a4cf13b120": 1,
+      "52209f10298a85f790b2e0873394d5e8be29aad0974f7cb9b757ff92d82b07a3": 1,
+      "543bab5b887036be9bc215325e7ab1567d82e875b92d2572ceeaf2bde329d9d5": 1,
+      "5c3b8ce52b40057db801d03c9b4e3c5e992ddd4ec68405a87e3b39a5c4e764a8": 1,
+      "620b62d87784a8c488682cd7548f1efd64e253df2a3e4a0f737c2b27c6e808e7": 2,
+      "64ccc1f5de96c69380f39656e7415520c551e0345804f0bf5c001f383b3c6879": 1,
+      "66cfc081d2051c73645e9af9ba3dfa44ee3622da7d494e3f9a169033bb1305e2": 1,
+      "6dd5569c9d4201a04635ccbafe8520149487341b172be8b55d834df904c85e55": 2,
+      "708e31cfb38661ee26fd58d8e04d286070a455c572ce35951b66d70dfd8ff2c3": 1,
+      "776c3d5d4568542f237bc2ed213516197d942ac9da150cd30626060814cc01e6": 1,
+      "788b3fdf43848074ca87907f26a22a527274e1142fdceff947943985b1e1cb0b": 2,
+      "7e79880eb3d1645a11462d63067ce6f1660178359268c2f2e407dabc7290225a": 2,
+      "855944665adf107ed65bac21ec0fb5aa8be6276d9aec170dd37626c01576d12d": 1,
+      "97e2d9ea41a4c8301c842d83a0d4b5876908056ce8fb1cdb42ca5f9cb7ba5fe3": 1,
+      "9fc204041e40b8fa3938fa46fdcd50419fef84095e925a0b5d55e4156e8e9974": 1,
+      "abf00623277bbb80360dd8c7e5c9bdcf538f59fb5b15a145fbe7e99337cf3848": 1,
+      "aca9330bf2bd2333d0cc0b0e812c92b8a77049dde648a1d2c1af893b49968d8e": 1,
+      "b787212077ae1137543a08e7bc9b18c60e359bbbc168d43dbf852cddcc106213": 2,
+      "b828d5c6a4a450a393f65425dad44df72208d4a2881148db112be16991107614": 1,
+      "b8e034319abd8a915389c56ffa98d0c5d00d70166aa6476f86a7eefeb3748c27": 1,
+      "bbe1d2c351df28a7cfcc423c0c151a51657c005256da86fae3336bc0c5065bb5": 4,
+      "be1704954c250efc39d1011f37ad3e6c0cfcfd762797af68bff4b4f941f9102f": 3,
+      "bfd9922981dd3bfa418507b0b30e7d7f382645083beb92cc7110991507374320": 1,
+      "c9eec902100a32c059fb54562759e8f9ce711e93068fd76a01e2cca7f3f599a6": 3,
+      "cd30412e4c4a3918e956ca7d5283a60ca4acce80d06c8ed8f8730334749ca6e1": 1,
+      "d8aacf7dc14da19e8f10e2b87a22a535ed086d4d8295ff92c3428318f0142e87": 1,
+      "e11deb12fa83291adf77acf88cc9fe0234a54604efa7f476218f39066827a1f3": 1,
+      "e6e244570d56220421489eb014d808d25ab6570614a755d7259869e6974b4400": 1,
+      "eec7c5e5c6f8078ac88ac0913886a8beb4281af214535003028a7ad8ffca8bb9": 2,
+      "f3c881bed9ad5824e16f3f47f3f882f9ce9514e4122912bcd80f33b76d908ef8": 1,
+      "ff161c312bab08da0b2ea64161bf1466afcf2925265892ce8789ea328d1e4fb7": 2
+    },
+    "planned_project_name": {
+      "Project F": 15,
+      "任务6": 17
+    },
+    "post_c2b_worker_profile_sha256": {
+      "66f2b0e72d9d75e6ecfce4d8e7d1b89eac85cb61875769b7c31261d4042c4c79": 32,
+      "97bba6492b6e09316186f7f339d6a711ed83fa64294aec1e92d1d7964f7122a4": 35
+    },
+    "project_binding_status": {
+      "pending_post_import": 32
+    },
+    "project_id": {
+      "76": 17,
+      "77": 18
+    },
+    "proposal_coord_contract": {
+      "canonical_corners_norm_to_prediction_payload": 12,
+      "hohonet_model_output_layout_txt@1024x512": 24
+    },
+    "proposal_source_kind": {
+      "frozen_synthetic_asset": 12,
+      "model_output_txt": 24
+    },
+    "proposal_source_path": {
+      "output\\mp3d_layout\\HOHO_layout_aug_efficienthc_Transen1_resnet34\\B6ByNegPMKs_48ee619d38b142f88914e7e2582bc1d8.txt": 2,
+      "output\\mp3d_layout\\HOHO_layout_aug_efficienthc_Transen1_resnet34\\X7HyMhZNoso_28ada927582d4d6ea7cf44cabf31527a.txt": 2,
+      "output\\mp3d_layout\\HOHO_layout_aug_efficienthc_Transen1_resnet34\\b8cTxDM8gDG_51c90ec9afc4495ab3788c6badc303df.txt": 2,
+      "output\\mp3d_layout\\HOHO_layout_aug_efficienthc_Transen1_resnet34\\e9zR4mvMWw7_1daae4b7becc43949516096170ce2a76.txt": 2,
+      "output\\mp3d_layout\\HOHO_layout_aug_efficienthc_Transen1_resnet34\\e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45.txt": 2,
+      "output\\mp3d_layout\\HOHO_layout_aug_efficienthc_Transen1_resnet34\\e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814.txt": 2,
+      "output\\mp3d_layout\\HOHO_layout_aug_efficienthc_Transen1_resnet34\\rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a.txt": 2,
+      "output\\mp3d_layout\\HOHO_layout_aug_efficienthc_Transen1_resnet34\\uNb9QFRL6hY_aed830f085ee4ad88ef6bed7f66f1359.txt": 2,
+      "output\\mp3d_layout\\HOHO_layout_aug_efficienthc_Transen1_resnet34\\wc2JMjhGNzB_3504ff17bcae4d6c85bdc61fc3a5bf0c.txt": 2,
+      "output\\mp3d_layout\\HOHO_layout_aug_efficienthc_Transen1_resnet34\\wc2JMjhGNzB_3848b1ba65fa49308c3d0a79f63782b3.txt": 2,
+      "output\\mp3d_layout\\HOHO_layout_aug_efficienthc_Transen1_resnet34\\wc2JMjhGNzB_77962388887942148ee65c2892600e02.txt": 2,
+      "output\\mp3d_layout\\HOHO_layout_aug_efficienthc_Transen1_resnet34\\wc2JMjhGNzB_cae8fb3d40314ecea16654062030571b.txt": 2
+    },
+    "round_id": {
+      "C2-A-RP": 67
+    },
+    "scope_gold": {
+      "normal": 60
+    },
+    "scope_target": {
+      "oos_geometry": 2,
+      "oos_insufficient": 2,
+      "oos_open_boundary": 4,
+      "oos_split_level": 10
+    },
+    "scope_target_source": {
+      "final_gold_scope": 18
+    },
+    "selected_design_sha": {
+      "f2b7cde8aadf29fb35a965ec49b434587feaa1c09863f74cf0e95e02e3462822": 50
+    },
+    "semi_role": {
+      "control": 12,
+      "trap": 24
+    },
+    "server_instance_id": {
+      "labelstudio_http_175_178_71_217": 35,
+      "labelstudio_https_sparkle0825": 32
+    },
+    "server_url": {
+      "http://175.178.71.217:8000": 35,
+      "https://label.sparkle0825.top": 32
+    },
+    "source_draft": {
+      "anchor": 24,
+      "approved_D8": 50,
+      "core": 143,
+      "semi": 49
+    },
+    "source_type": {
+      "control_natural": 12,
+      "trap_natural": 12,
+      "trap_synthetic": 12
+    },
+    "synthetic_candidate_id": {
+      "legacy_disjoint_source_003_corner_drift": 2,
+      "legacy_disjoint_source_004_over_parsing": 2,
+      "legacy_disjoint_source_006_corner_duplicate": 2,
+      "legacy_disjoint_source_007_over_parsing": 2,
+      "legacy_disjoint_source_008_corner_duplicate": 2,
+      "legacy_disjoint_source_011_corner_drift": 2
+    },
+    "synthetic_rebind_status": {
+      "carry_forward_frozen_synthetic_asset": 12
+    },
+    "target_component": {
+      "risk_slope": 67
+    },
+    "task_stratum": {
+      "ordinary": 38,
+      "stress": 29
+    },
+    "threshold_manifest_sha256": {
+      "2f85e69d7f96ab63f71373329f2fefc818ddebe9557af726724ea493691d9a0f": 67
+    },
+    "trap_family": {
+      "acceptable": 12,
+      "corner_drift": 6,
+      "corner_duplicate": 6,
+      "over_parsing": 6,
+      "overextend_adjacent": 6
+    }
+  },
+  "row_count": 2513,
+  "source_groups": {
+    "C1": [
+      "export_label/stage2_English/*.json",
+      "export_label/stage2_Chinese/*.json"
+    ],
+    "C2-A-RP-B1": [
+      "export_label/c2arp_block1/*.json"
+    ],
+    "C2-A-RP-B2": [
+      "export_label/c2arp_block2/*.json"
+    ],
+    "C2-B": [
+      "export_label/c2B_English/*.json",
+      "export_label/c2B_Chinese/*.json"
+    ],
+    "P1": [
+      "export_label/stage1_English/*.json",
+      "export_label/stage1_chinese/*.json"
+    ]
+  },
+  "stage_counts": {
+    "C1": 788,
+    "C2-A-RP-B1": 40,
+    "C2-A-RP-B2": 40,
+    "C2-B": 160,
+    "P1": 1485
+  },
+  "stage_geometry_candidate_counts": {
+    "C1": 780,
+    "C2-A-RP-B1": 40,
+    "C2-A-RP-B2": 39,
+    "C2-B": 160,
+    "P1": 1430
+  }
+}
