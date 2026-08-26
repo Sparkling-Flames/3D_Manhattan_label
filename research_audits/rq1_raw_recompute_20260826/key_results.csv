@@ -1,0 +1,37 @@
+category,metric,value,unit_or_scope,interpretation,source
+raw_selection,raw_annotation_versions,2273,non-cancelled P1+C1 versions,audit inventory,analysis_results/rq1_raw_recompute_20260826/SUMMARY.json
+raw_selection,independent_acquisition_keys,2261,project×runtime_task×worker,latest-version analysis units,analysis_results/rq1_raw_recompute_20260826/SUMMARY.json
+raw_selection,duplicate_version_groups,9,groups,version duplication exists,analysis_results/rq1_raw_recompute_20260826/SUMMARY.json
+raw_selection,duplicate_version_excess,12,annotations,extra versions beyond one per acquisition key,analysis_results/rq1_raw_recompute_20260826/SUMMARY.json
+high_density,task_context_count,42,P1 Manual 30 + C1 anchor 12,measurement calibration set,analysis_results/rq1_raw_recompute_20260826/SUMMARY.json
+high_density,strict_support_range,23-26,workers per task,all 42 contexts have k≥20,analysis_results/rq1_raw_recompute_20260826/SUMMARY.json
+c1_core,unique_task_contexts,75,Manual contexts,assigned operational task sample,analysis_results/rq1_raw_recompute_20260826/SUMMARY.json
+c1_core,strict_k_ge5,70,Manual contexts,not 71,analysis_results/rq1_raw_recompute_20260826/SUMMARY.json
+c1_core,k_distribution,"3:1;4:4;5:49;6:20;7:1",contexts,strict computable support,analysis_results/rq1_raw_recompute_20260826/SUMMARY.json
+c1_core,boundary_distance_mean,0.020813916648211556,image-equal-weight,descriptive mean,analysis_results/rq1_raw_recompute_20260826/SUMMARY.json
+c1_core,boundary_distance_median,0.013971335661786717,image-equal-weight,descriptive median,analysis_results/rq1_raw_recompute_20260826/SUMMARY.json
+subsampling_boundary,k5_spearman_median,0.85560327364071,42 high-density tasks,coarse task ranking recovery,analysis_results/rq1_raw_recompute_20260826/support_calibration_summary.csv
+subsampling_boundary,k8_spearman_median,0.9160521837776519,42 high-density tasks,better high-uncertainty screening,analysis_results/rq1_raw_recompute_20260826/support_calibration_summary.csv
+subsampling_boundary,k10_spearman_median,0.9367150149906815,42 high-density tasks,continuous ranking increasingly stable,analysis_results/rq1_raw_recompute_20260826/support_calibration_summary.csv
+subsampling_boundary,k15_spearman_median,0.9695324527996111,42 high-density tasks,high ranking stability in this historical set,analysis_results/rq1_raw_recompute_20260826/support_calibration_summary.csv
+subsampling_wall,k5_spearman_median,0.8116035977635525,42 high-density tasks,less stable than boundary,analysis_results/rq1_raw_recompute_20260826/support_calibration_summary.csv
+subsampling_wall,k8_spearman_median,0.8703508629770683,42 high-density tasks,less stable than boundary,analysis_results/rq1_raw_recompute_20260826/support_calibration_summary.csv
+subsampling_wall,k15_spearman_median,0.9471679766631554,42 high-density tasks,channels must remain separate,analysis_results/rq1_raw_recompute_20260826/support_calibration_summary.csv
+cardinality,full_count_diverse_tasks,37,of 42 high-density tasks,more than one vertical-boundary count observed at full support,analysis_results/rq1_raw_recompute_20260826/boundary_count_detection_summary.csv
+cardinality,k5_detection_given_diverse,0.6305675675675676,probability,absence at k=5 is weak negative evidence,analysis_results/rq1_raw_recompute_20260826/boundary_count_detection_summary.csv
+cardinality,k8_detection_given_diverse,0.7298378378378377,probability,still incomplete,analysis_results/rq1_raw_recompute_20260826/boundary_count_detection_summary.csv
+cardinality,k15_detection_given_diverse,0.8844324324324325,probability,substantially improved,analysis_results/rq1_raw_recompute_20260826/boundary_count_detection_summary.csv
+cluster_threshold,q090_supported_multimodal,21,of 42,algorithmic classification only,analysis_results/rq2_null_replay_20260826/cluster_threshold_count_summary.csv
+cluster_threshold,q095_supported_multimodal,21,of 42,algorithmic classification only,analysis_results/rq2_null_replay_20260826/cluster_threshold_count_summary.csv
+cluster_threshold,q098_supported_multimodal,14,of 42,strong threshold sensitivity,analysis_results/rq2_null_replay_20260826/cluster_threshold_count_summary.csv
+cluster_threshold,q098_not_evaluable,19,of 42,not suitable as frozen prevalence measure,analysis_results/rq2_null_replay_20260826/cluster_threshold_count_summary.csv
+null_replay,boundary_60_image_mde_lower_bound,0.00563-0.00570,80% conditional MDE,sampling-noise lower bound not formal power,analysis_results/rq2_null_replay_20260826/null_replay_sample_size_scenarios.csv
+null_replay,boundary_72_image_mde_lower_bound,0.00514-0.00520,80% conditional MDE,sampling-noise lower bound not formal power,analysis_results/rq2_null_replay_20260826/null_replay_sample_size_scenarios.csv
+null_replay,wall_60_image_mde_lower_bound,0.00873-0.00881,80% conditional MDE,sampling-noise lower bound not formal power,analysis_results/rq2_null_replay_20260826/null_replay_sample_size_scenarios.csv
+null_replay,wall_72_image_mde_lower_bound,0.00797-0.00804,80% conditional MDE,sampling-noise lower bound not formal power,analysis_results/rq2_null_replay_20260826/null_replay_sample_size_scenarios.csv
+difficulty,manual_c1_tasks_k_ge5,82,tasks,anchor plus core,analysis_results/rq1_difficulty_time_raw_20260826/SUMMARY.json
+difficulty,worker_task_rows,648,responses,post-response labels,analysis_results/rq1_difficulty_time_raw_20260826/SUMMARY.json
+difficulty,seam_rate_spearman,0.38401517658618467,task level,building-bootstrap CI approximately 0.1016 to 0.5530,analysis_results/rq1_difficulty_time_raw_20260826/associations.csv
+difficulty,nontrivial_rate_spearman,-0.02682298985790774,task level,no stable general difficulty relation,analysis_results/rq1_difficulty_time_raw_20260826/associations.csv
+difficulty,occlusion_rate_spearman,-0.062237965090359434,task level,no stable occlusion relation,analysis_results/rq1_difficulty_time_raw_20260826/associations.csv
+active_time,formal_active_time_observed_rows,0,of 648,raw identity connection not established; do not substitute lead_time,analysis_results/rq1_difficulty_time_raw_20260826/SUMMARY.json
