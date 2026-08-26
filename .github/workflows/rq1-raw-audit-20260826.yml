@@ -7,6 +7,7 @@ on:
       - analysis/rq1-raw-audit-20260826
     paths:
       - "tools/thesis_main/analysis/raw_rq1_audit_20260826.py"
+      - "tools/thesis_main/analysis/raw_rq1_recompute_20260826.py"
       - ".github/workflows/rq1-raw-audit-20260826.yml"
 
 permissions:
@@ -15,7 +16,7 @@ permissions:
 jobs:
   audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     steps:
       - name: Check out audit branch
         uses: actions/checkout@v4
@@ -23,16 +24,29 @@ jobs:
           ref: analysis/rq1-raw-audit-20260826
           fetch-depth: 0
 
-      - name: Run standard-library raw audit
-        run: python3 tools/thesis_main/analysis/raw_rq1_audit_20260826.py
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-      - name: Commit compact audit outputs
+      - name: Install geometry dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy scipy shapely
+
+      - name: Run raw schema audit
+        run: python tools/thesis_main/analysis/raw_rq1_audit_20260826.py
+
+      - name: Run independent raw RQ1 recomputation
+        run: python tools/thesis_main/analysis/raw_rq1_recompute_20260826.py
+
+      - name: Commit audit outputs
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- analysis_results/rq1_raw_audit_20260826
+          git add -- analysis_results/rq1_raw_audit_20260826 analysis_results/rq1_raw_recompute_20260826
           if ! git diff --cached --quiet; then
-            git commit -m "Materialize independent raw RQ1 audit"
+            git commit -m "Materialize independent raw RQ1 recomputation"
             git push origin HEAD:analysis/rq1-raw-audit-20260826
           fi
 
@@ -40,6 +54,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: rq1-raw-audit-20260826
-          path: analysis_results/rq1_raw_audit_20260826
+          path: |
+            analysis_results/rq1_raw_audit_20260826
+            analysis_results/rq1_raw_recompute_20260826
           if-no-files-found: error
           retention-days: 30
