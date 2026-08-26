@@ -9,17 +9,26 @@
         <BrushLabels name="wall_brush" toName="img"><Label value="Wall" background="#52C41A"/></BrushLabels>
       </View>
       <View style="flex:1; overflow-y:auto; padding:12px 16px; background:#fff;">
-        <Header value="A. 图像与任务判断（按培训要求，请在编辑前填写）"/>
-        <Text name="scope_status_rule_text" value="第一步只判断相机所在的当前空间是否适用于既定布局标注协议。该回答是标注者判断，不是研究者真值。"/>
-        <Choices name="scope_status" toName="img" choice="single" showInLine="true" required="true" requiredMessage="必须选择是否 In-scope">
-          <Choice value="in_scope" alias="in_scope" html="In-scope：适用"/>
-          <Choice value="out_of_scope" alias="out_of_scope" html="Out-of-scope：不适用"/>
+        <Header value="完成布局标注后填写"/>
+        <Collapse bordered="true" open="true">
+          <Panel value="Manhattan 布局说明">
+            <View>
+              <Text name="manhattan_layout_definition_text" value="本题判断的是相机所在的当前空间能否用 Manhattan 布局表示，而不是判断空间是否为长方体。Manhattan 布局是指：当前空间的主要围护墙体可以近似归入两组相互垂直的水平方向；墙体近似竖直；地面和天花分别可以用单一平面表示。最终布局应形成完整、闭合、单层的墙面—地面—天花结构。"/>
+              <Text name="manhattan_layout_examples_text" value="L 形、T 形、凹形空间以及多于四个角点的空间均可能适用。应判断真实三维结构，不要根据全景图中的线条是否水平或竖直来判断。家具、装饰和局部非正交物体不影响判断，主要考虑构成当前空间外包络的墙体结构。"/>
+              <Text name="opening_closure_rule_text" value="当前空间通向相邻空间时，应在门框、成对墙垛、墙端、拱口等清晰结构分界处闭合，不要继续沿相邻空间向内标注。如果没有可重复判断的结构边界用于闭合，才选择“不适用”。"/>
+            </View>
+          </Panel>
+        </Collapse>
+        <Text name="worker_scope_response_rule_text" value="相机所在的当前空间是否至少能够形成一个完整、闭合、单层的 Manhattan 布局？"/>
+        <Choices name="worker_scope_response" toName="img" choice="single" showInLine="true" required="true" requiredMessage="必须判断当前空间是否适用">
+          <Choice value="in_scope" alias="in_scope" html="适用" hint="图像证据至少支持一个完整、闭合的单层 Manhattan 布局。L 形、T 形、凹形、多于四个角点、局部遮挡，以及能够在门框、墙垛、墙端或拱口等清晰结构边界处闭合的开口，均可以属于适用。存在多个合理结果也不自动表示不适用。"/>
+          <Choice value="out_of_scope" alias="out_of_scope" html="不适用" hint="图像证据无法支持任何一个完整、闭合的单层 Manhattan 布局。典型情况包括主要围护墙为曲面、斜墙或明显非正交结构；无法分开的多层地面或天花；开放区域没有可重复判断的闭合边界；或者关键结构证据不足以形成完整布局。不要仅因标注困难、局部遮挡或存在多个合理结果选择本项。"/>
         </Choices>
 
-        <Text name="multiple_plausible_layouts_rule_text" value="第二步独立判断：是否存在两个或以上同样合理、都能由当前图像证据支持的标注结果。选择“否”只表示没有观察到两个以上合理结果，不等于研究者已确认唯一真值。"/>
+        <Text name="multiple_plausible_layouts_rule_text" value="是否存在两个或以上同样合理、都能由当前图像证据支持的完整布局？"/>
         <Choices name="multiple_plausible_layouts" toName="img" choice="single" showInLine="true" required="true" requiredMessage="必须回答是否存在多个合理标注">
-          <Choice value="no" alias="no" html="否"/>
-          <Choice value="yes" alias="yes" html="是"/>
+          <Choice value="no" alias="no" html="否" hint="没有发现两个或以上实质不同且同样合理的完整布局。轻微坐标差异不计入。"/>
+          <Choice value="yes" alias="yes" html="是" hint="至少存在两个由图像证据支持的完整布局，其差异涉及边界选择、空间范围、角点结构或拓扑，而不只是轻微坐标偏差。"/>
         </Choices>
 
         <Text name="perceived_difficulty_rule_text" value="请评价你完成本图布局标注时主观感受到的总体难度：1=很容易，5=很困难。"/>
@@ -33,15 +42,15 @@
           <Choice value="one_or_more_specific_reasons" alias="one_or_more_specific_reasons" html="有一个或多个明确原因"/>
         </Choices>
         <View visibleWhen="choice-selected" whenTagName="difficulty_reason_status" whenChoiceValue="one_or_more_specific_reasons">
-          <Text name="difficulty_reason_rule_text" value="选择所有确实增加标注难度的原因；同一底层原因不要重复归类。"/>
+          <Text name="difficulty_reason_rule_text" value="请选择所有确实增加标注难度的原因；同一原因不要重复选择。"/>
           <Choices name="difficulty_reason" toName="img" choice="multiple" required="true" requiredMessage="已声明存在原因，必须至少选择一项">
-            <Choice value="occlusion" alias="occlusion" html="遮挡"/>
-            <Choice value="low_texture" alias="low_texture" html="低纹理或纯色墙"/>
-            <Choice value="seam_or_distortion" alias="seam_or_distortion" html="全景拼接缝或几何畸变"/>
-            <Choice value="reflection_or_transparency" alias="reflection_or_transparency" html="反射、玻璃或透明材质干扰"/>
-            <Choice value="opening_or_adjacent_space" alias="opening_or_adjacent_space" html="开口或相邻空间干扰"/>
-            <Choice value="image_quality" alias="image_quality" html="模糊、遮罩、曝光或其他画质问题"/>
-            <Choice value="other" alias="other" html="其他"/>
+            <Choice value="occlusion" alias="occlusion" html="遮挡" hint="前景物体或结构遮住了需要判断的墙角、墙线或边界证据。"/>
+            <Choice value="low_texture" alias="low_texture" html="低纹理或纯色墙" hint="墙面纹理、颜色或对比度不足，使边界或角点难以定位。"/>
+            <Choice value="seam_or_distortion" alias="seam_or_distortion" html="全景拼接缝或几何畸变" hint="全景拼接或投影造成直线断裂、错位、弯曲或拉伸。"/>
+            <Choice value="reflection_or_transparency" alias="reflection_or_transparency" html="反射、玻璃或透明材质干扰" hint="反射或透明材质造成伪边界、重复结构或深度混淆。仅出现玻璃或镜面但不影响标注时不要选择。"/>
+            <Choice value="opening_or_adjacent_space" alias="opening_or_adjacent_space" html="开口或相邻空间干扰" hint="门洞或开放区域使当前空间边界更难判断。选择本项不代表当前空间一定不适用。"/>
+            <Choice value="image_quality" alias="image_quality" html="模糊、遮罩、曝光或其他画质问题" hint="模糊、噪声、压缩、遮罩、曝光、黑边或缺失像素使关键结构证据不可靠。"/>
+            <Choice value="other" alias="other" html="其他" hint="仅当以上原因均不适用时选择。"/>
           </Choices>
         </View>
 

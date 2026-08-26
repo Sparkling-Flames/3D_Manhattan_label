@@ -9,17 +9,26 @@
         <BrushLabels name="wall_brush" toName="img"><Label value="Wall" background="#52C41A"/></BrushLabels>
       </View>
       <View style="flex:1; overflow-y:auto; padding:12px 16px; background:#fff;">
-        <Header value="A. Image and task judgement (complete before editing, as instructed in training)"/>
-        <Text name="scope_status_rule_text" value="First decide only whether the current space containing the camera is suitable for the specified layout annotation protocol. This is the worker's judgement, not researcher truth."/>
-        <Choices name="scope_status" toName="img" choice="single" showInLine="true" required="true" requiredMessage="You must decide whether the task is in scope">
-          <Choice value="in_scope" alias="in_scope" html="In-scope"/>
-          <Choice value="out_of_scope" alias="out_of_scope" html="Out-of-scope"/>
+        <Header value="Complete after layout annotation"/>
+        <Collapse bordered="true" open="true">
+          <Panel value="Manhattan Layout Guide">
+            <View>
+              <Text name="manhattan_layout_definition_text" value="This question asks whether the current space containing the camera can be represented by a Manhattan layout, not whether the space is a rectangular box. In a Manhattan layout, the main enclosing walls can be approximated by two mutually perpendicular horizontal direction families, the walls are approximately vertical, and the floor and ceiling can each be represented by a single plane. The final layout must form a complete, closed, single-level wall-floor-ceiling structure."/>
+              <Text name="manhattan_layout_examples_text" value="L-shaped, T-shaped, concave spaces and spaces with more than four corners may still be suitable. Judge the real three-dimensional structure rather than whether lines appear horizontal or vertical in the panorama. Furniture, decoration, and local non-orthogonal objects do not determine suitability; focus on the walls that form the enclosure of the current space."/>
+              <Text name="opening_closure_rule_text" value="When the current space opens into an adjacent space, close the layout at a clear structural boundary such as a door frame, paired wall returns, a wall end, or an arch. Do not continue into the adjacent space. Choose out-of-scope only when no reproducible structural boundary can be used for closure."/>
+            </View>
+          </Panel>
+        </Collapse>
+        <Text name="worker_scope_response_rule_text" value="Can the current space containing the camera form at least one complete, closed, single-level Manhattan layout?"/>
+        <Choices name="worker_scope_response" toName="img" choice="single" showInLine="true" required="true" requiredMessage="You must decide whether the task is in scope">
+          <Choice value="in_scope" alias="in_scope" html="In-scope" hint="The image evidence supports at least one complete, closed, single-level Manhattan layout. L-shaped, T-shaped, concave spaces, spaces with more than four corners, local occlusion, and openings that can be closed at a clear structural boundary may all be in scope. Multiple plausible layouts do not automatically make the task out of scope."/>
+          <Choice value="out_of_scope" alias="out_of_scope" html="Out-of-scope" hint="The image evidence supports no complete, closed, single-level Manhattan layout. Examples include curved, slanted, or clearly non-orthogonal enclosing walls; inseparable multiple floor or ceiling levels; open areas without a reproducible closure boundary; or insufficient structural evidence. Do not choose this only because the task is difficult, locally occluded, or has multiple plausible layouts."/>
         </Choices>
 
-        <Text name="multiple_plausible_layouts_rule_text" value="Independently decide whether the image supports two or more equally reasonable annotation results. No means only that you did not identify two or more reasonable results; it does not establish a unique researcher truth."/>
+        <Text name="multiple_plausible_layouts_rule_text" value="Does the image support two or more equally reasonable complete layouts?"/>
         <Choices name="multiple_plausible_layouts" toName="img" choice="single" showInLine="true" required="true" requiredMessage="You must answer whether multiple plausible annotations exist">
-          <Choice value="no" alias="no" html="No"/>
-          <Choice value="yes" alias="yes" html="Yes"/>
+          <Choice value="no" alias="no" html="No" hint="You did not identify two or more materially different, equally reasonable complete layouts. Minor coordinate differences do not count."/>
+          <Choice value="yes" alias="yes" html="Yes" hint="At least two complete layouts are supported by the image, with a material difference in boundary choice, spatial extent, corner structure, or topology rather than a minor coordinate difference."/>
         </Choices>
 
         <Text name="perceived_difficulty_rule_text" value="Rate the overall difficulty you experienced when completing the layout annotation: 1=very easy, 5=very difficult."/>
@@ -35,13 +44,13 @@
         <View visibleWhen="choice-selected" whenTagName="difficulty_reason_status" whenChoiceValue="one_or_more_specific_reasons">
           <Text name="difficulty_reason_rule_text" value="Select every reason that materially increased annotation difficulty. Do not classify the same underlying cause twice."/>
           <Choices name="difficulty_reason" toName="img" choice="multiple" required="true" requiredMessage="You reported a reason, so select at least one">
-            <Choice value="occlusion" alias="occlusion" html="Occlusion"/>
-            <Choice value="low_texture" alias="low_texture" html="Low texture or plain walls"/>
-            <Choice value="seam_or_distortion" alias="seam_or_distortion" html="Panorama seam or geometric distortion"/>
-            <Choice value="reflection_or_transparency" alias="reflection_or_transparency" html="Reflection, glass, or transparency"/>
-            <Choice value="opening_or_adjacent_space" alias="opening_or_adjacent_space" html="Opening or adjacent-space interference"/>
-            <Choice value="image_quality" alias="image_quality" html="Blur, masks, exposure, or other image-quality problem"/>
-            <Choice value="other" alias="other" html="Other"/>
+            <Choice value="occlusion" alias="occlusion" html="Occlusion" hint="A foreground object or structure blocks wall, corner, or boundary evidence that must be judged."/>
+            <Choice value="low_texture" alias="low_texture" html="Low texture or plain walls" hint="Weak wall texture, color, or contrast makes boundaries or corners difficult to locate."/>
+            <Choice value="seam_or_distortion" alias="seam_or_distortion" html="Panorama seam or geometric distortion" hint="Panorama stitching or projection causes broken, shifted, curved, or stretched lines."/>
+            <Choice value="reflection_or_transparency" alias="reflection_or_transparency" html="Reflection, glass, or transparency" hint="Reflection or transparency creates false boundaries, repeated structure, or depth confusion. Do not select this merely because glass or a mirror is present."/>
+            <Choice value="opening_or_adjacent_space" alias="opening_or_adjacent_space" html="Opening or adjacent-space interference" hint="A doorway or open area makes the boundary of the current space harder to judge. This does not by itself make the task out of scope."/>
+            <Choice value="image_quality" alias="image_quality" html="Blur, masks, exposure, or other image-quality problem" hint="Blur, noise, compression, masks, exposure, black borders, or missing pixels make key structural evidence unreliable."/>
+            <Choice value="other" alias="other" html="Other" hint="Choose this only when none of the listed reasons applies."/>
           </Choices>
         </View>
 

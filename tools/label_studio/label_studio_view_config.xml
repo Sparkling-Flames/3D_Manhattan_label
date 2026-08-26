@@ -9,17 +9,62 @@
         <BrushLabels name="wall_brush" toName="img"><Label value="Wall" background="#52C41A"/></BrushLabels>
       </View>
       <View style="flex:1; overflow-y:auto; padding:12px 16px; background:#fff;">
-        <Header value="A. 图像与任务判断（按培训要求，请在编辑前填写）"/>
-        <Text name="scope_status_rule_text" value="第一步只判断相机所在的当前空间是否适用于既定布局标注协议。该回答是标注者判断，不是研究者真值。"/>
-        <Choices name="scope_status" toName="img" choice="single" showInLine="true" required="true" requiredMessage="必须选择是否 In-scope">
-          <Choice value="in_scope" alias="in_scope" html="In-scope：适用"/>
-          <Choice value="out_of_scope" alias="out_of_scope" html="Out-of-scope：不适用"/>
+        <Header value="A. 编辑前评估模型初始标注"/>
+        <Text name="material_issue_rule_text" value="页面打开时的初始标注是否存在至少一项必须修正的实质性问题？"/>
+        <Choices name="material_issue" toName="img" choice="single" showInLine="true" required="true" requiredMessage="必须判断模型初始标注是否存在实质性问题">
+          <Choice value="no" alias="no" html="否：不存在必须修正的问题" hint="页面打开时的初始标注已经可以接受；即使不进行任何修改，空间范围、主要边界、角点关系和拓扑仍然成立。可以自愿进行轻微视觉调整，但这种调整不属于必须修正。"/>
+          <Choice value="yes" alias="yes" html="是：至少存在一个必须修正的问题" hint="页面打开时的初始标注至少存在一处必须修改的空间范围、边界、角点或拓扑问题；如果不修改，最终布局不能接受。"/>
+        </Choices>
+        <Text name="issue_confidence_rule_text" value="请评估你对上述判断的把握程度：1=把握很低，5=把握很高。"/>
+        <Choices name="issue_confidence" toName="img" choice="single" showInLine="true" required="true" requiredMessage="必须选择 1–5 的把握程度">
+          <Choice value="1" alias="1"/><Choice value="2" alias="2"/><Choice value="3" alias="3"/><Choice value="4" alias="4"/><Choice value="5" alias="5"/>
+        </Choices>
+        <View visibleWhen="choice-selected" whenTagName="material_issue" whenChoiceValue="yes">
+          <Text name="primary_issue_family_rule_text" value="请选择一个最主要的问题类型。"/>
+          <Choices name="primary_issue_family" toName="img" choice="single" required="true" requiredMessage="必须选择一个主要问题类型">
+            <Choice value="boundary_or_corner_localization" alias="boundary_or_corner_localization" html="边界或角点定位" hint="空间范围、角点数量和拓扑基本正确，主要问题是一个或多个角点或边界的位置不准确。"/>
+            <Choice value="underextension" alias="underextension" html="标注范围不足或遗漏当前空间" hint="初始标注没有完整覆盖相机所在空间，遗漏了部分墙面、边界或角点。"/>
+            <Choice value="adjacent_space_overextension" alias="adjacent_space_overextension" html="过度延伸到相邻空间" hint="初始标注越过门框、墙垛、墙端或拱口等结构分界，将相邻空间错误纳入当前空间。"/>
+            <Choice value="topology_or_overparsing" alias="topology_or_overparsing" html="拓扑结构错误或误标非布局结构" hint="角点数量、顺序、上下对应或闭合关系错误，或者将家具、装饰凸起等非布局结构误标为真实边界。仅有位置偏差时不要选择本项。"/>
+            <Choice value="other" alias="other" html="其他" hint="仅当上述类型均不能描述最主要的问题时选择。"/>
+          </Choices>
+        </View>
+        <View visibleWhen="choice-selected" whenTagName="material_issue" whenChoiceValue="no">
+          <Text name="no_issue_handling_rule_text" value="你认为该初始标注应如何处理？"/>
+          <Choices name="no_issue_handling" toName="img" choice="single" required="true" requiredMessage="必须选择处理方式">
+            <Choice value="no_edit_needed" alias="no_edit_needed" html="无需修改" hint="初始标注可以原样提交，不需要进行任何修正。"/>
+            <Choice value="optional_visual_micro_refinement" alias="optional_visual_micro_refinement" html="可选择进行轻微视觉调整" hint="初始标注即使不修改也可以接受；调整仅用于改善视觉对齐，不改变空间范围、角点数量或拓扑结构。"/>
+          </Choices>
+        </View>
+        <View visibleWhen="choice-selected" whenTagName="material_issue" whenChoiceValue="yes">
+          <Text name="required_correction_rule_text" value="该实质性问题需要什么程度的修正？"/>
+          <Choices name="required_correction" toName="img" choice="single" required="true" requiredMessage="必须选择修正程度">
+            <Choice value="minor_mandatory_coordinate_correction" alias="minor_mandatory_coordinate_correction" html="小幅坐标修正" hint="保持空间范围、角点数量和拓扑不变，只需调整少量角点或边界的位置。"/>
+            <Choice value="major_geometry_correction" alias="major_geometry_correction" html="大幅几何修正" hint="需要移动多处边界或进行较大幅度调整，但仍可在现有结构基础上完成修正。"/>
+            <Choice value="topology_change_or_redraw" alias="topology_change_or_redraw" html="改变拓扑结构或重新标注" hint="需要增删角点、改变角点顺序或对应关系、修复闭合结构，或者现有标注无法仅通过移动坐标修正。"/>
+          </Choices>
+        </View>
+
+        <Header value="B. 完成布局标注后填写"/>
+        <Collapse bordered="true" open="true">
+          <Panel value="Manhattan 布局说明">
+            <View>
+              <Text name="manhattan_layout_definition_text" value="本题判断的是相机所在的当前空间能否用 Manhattan 布局表示，而不是判断空间是否为长方体。Manhattan 布局是指：当前空间的主要围护墙体可以近似归入两组相互垂直的水平方向；墙体近似竖直；地面和天花分别可以用单一平面表示。最终布局应形成完整、闭合、单层的墙面—地面—天花结构。"/>
+              <Text name="manhattan_layout_examples_text" value="L 形、T 形、凹形空间以及多于四个角点的空间均可能适用。应判断真实三维结构，不要根据全景图中的线条是否水平或竖直来判断。家具、装饰和局部非正交物体不影响判断，主要考虑构成当前空间外包络的墙体结构。"/>
+              <Text name="opening_closure_rule_text" value="当前空间通向相邻空间时，应在门框、成对墙垛、墙端、拱口等清晰结构分界处闭合，不要继续沿相邻空间向内标注。如果没有可重复判断的结构边界用于闭合，才选择“不适用”。"/>
+            </View>
+          </Panel>
+        </Collapse>
+        <Text name="worker_scope_response_rule_text" value="相机所在的当前空间是否至少能够形成一个完整、闭合、单层的 Manhattan 布局？"/>
+        <Choices name="worker_scope_response" toName="img" choice="single" showInLine="true" required="true" requiredMessage="必须判断当前空间是否适用">
+          <Choice value="in_scope" alias="in_scope" html="适用" hint="图像证据至少支持一个完整、闭合的单层 Manhattan 布局。L 形、T 形、凹形、多于四个角点、局部遮挡，以及能够在门框、墙垛、墙端或拱口等清晰结构边界处闭合的开口，均可以属于适用。存在多个合理结果也不自动表示不适用。"/>
+          <Choice value="out_of_scope" alias="out_of_scope" html="不适用" hint="图像证据无法支持任何一个完整、闭合的单层 Manhattan 布局。典型情况包括主要围护墙为曲面、斜墙或明显非正交结构；无法分开的多层地面或天花；开放区域没有可重复判断的闭合边界；或者关键结构证据不足以形成完整布局。不要仅因标注困难、局部遮挡或存在多个合理结果选择本项。"/>
         </Choices>
 
-        <Text name="multiple_plausible_layouts_rule_text" value="第二步独立判断：是否存在两个或以上同样合理、都能由当前图像证据支持的标注结果。选择“否”只表示没有观察到两个以上合理结果，不等于研究者已确认唯一真值。"/>
+        <Text name="multiple_plausible_layouts_rule_text" value="是否存在两个或以上同样合理、都能由当前图像证据支持的完整布局？"/>
         <Choices name="multiple_plausible_layouts" toName="img" choice="single" showInLine="true" required="true" requiredMessage="必须回答是否存在多个合理标注">
-          <Choice value="no" alias="no" html="否"/>
-          <Choice value="yes" alias="yes" html="是"/>
+          <Choice value="no" alias="no" html="否" hint="没有发现两个或以上实质不同且同样合理的完整布局。轻微坐标差异不计入。"/>
+          <Choice value="yes" alias="yes" html="是" hint="至少存在两个由图像证据支持的完整布局，其差异涉及边界选择、空间范围、角点结构或拓扑，而不只是轻微坐标偏差。"/>
         </Choices>
 
         <Text name="perceived_difficulty_rule_text" value="请评价你完成本图布局标注时主观感受到的总体难度：1=很容易，5=很困难。"/>
@@ -33,62 +78,18 @@
           <Choice value="one_or_more_specific_reasons" alias="one_or_more_specific_reasons" html="有一个或多个明确原因"/>
         </Choices>
         <View visibleWhen="choice-selected" whenTagName="difficulty_reason_status" whenChoiceValue="one_or_more_specific_reasons">
-          <Text name="difficulty_reason_rule_text" value="选择所有确实增加标注难度的原因；同一底层原因不要重复归类。"/>
+          <Text name="difficulty_reason_rule_text" value="请选择所有确实增加标注难度的原因；同一原因不要重复选择。"/>
           <Choices name="difficulty_reason" toName="img" choice="multiple" required="true" requiredMessage="已声明存在原因，必须至少选择一项">
-            <Choice value="occlusion" alias="occlusion" html="遮挡"/>
-            <Choice value="low_texture" alias="low_texture" html="低纹理或纯色墙"/>
-            <Choice value="seam_or_distortion" alias="seam_or_distortion" html="全景拼接缝或几何畸变"/>
-            <Choice value="reflection_or_transparency" alias="reflection_or_transparency" html="反射、玻璃或透明材质干扰"/>
-            <Choice value="opening_or_adjacent_space" alias="opening_or_adjacent_space" html="开口或相邻空间干扰"/>
-            <Choice value="image_quality" alias="image_quality" html="模糊、遮罩、曝光或其他画质问题"/>
-            <Choice value="other" alias="other" html="其他"/>
+            <Choice value="occlusion" alias="occlusion" html="遮挡" hint="前景物体或结构遮住了需要判断的墙角、墙线或边界证据。"/>
+            <Choice value="low_texture" alias="low_texture" html="低纹理或纯色墙" hint="墙面纹理、颜色或对比度不足，使边界或角点难以定位。"/>
+            <Choice value="seam_or_distortion" alias="seam_or_distortion" html="全景拼接缝或几何畸变" hint="全景拼接或投影造成直线断裂、错位、弯曲或拉伸。"/>
+            <Choice value="reflection_or_transparency" alias="reflection_or_transparency" html="反射、玻璃或透明材质干扰" hint="反射或透明材质造成伪边界、重复结构或深度混淆。仅出现玻璃或镜面但不影响标注时不要选择。"/>
+            <Choice value="opening_or_adjacent_space" alias="opening_or_adjacent_space" html="开口或相邻空间干扰" hint="门洞或开放区域使当前空间边界更难判断。选择本项不代表当前空间一定不适用。"/>
+            <Choice value="image_quality" alias="image_quality" html="模糊、遮罩、曝光或其他画质问题" hint="模糊、噪声、压缩、遮罩、曝光、黑边或缺失像素使关键结构证据不可靠。"/>
+            <Choice value="other" alias="other" html="其他" hint="仅当以上原因均不适用时选择。"/>
           </Choices>
         </View>
 
-        <Header value="B. 模型 proposal 判断（按培训要求，请在编辑前填写）"/>
-        <Text name="material_issue_rule_text" value="判断初始 proposal 是否存在实质问题。该回答是标注者感知，不是 proposal truth；Correct/Wrong 条件不会显示给标注者。"/>
-        <Choices name="material_issue" toName="img" choice="single" showInLine="true" required="true" requiredMessage="必须判断 proposal 是否存在实质问题">
-          <Choice value="no" alias="no" html="否"/>
-          <Choice value="yes" alias="yes" html="是"/>
-          <Choice value="unsure" alias="unsure" html="不确定"/>
-        </Choices>
-        <View visibleWhen="choice-selected" whenTagName="material_issue" whenChoiceValue="yes,unsure">
-          <Text name="primary_issue_family_rule_text" value="选择一个最主要的问题；如果无法判断类别，选择 unsure。"/>
-          <Choices name="primary_issue_family" toName="img" choice="single" required="true" requiredMessage="必须选择一个主要问题类别">
-            <Choice value="boundary_or_corner_localization" alias="boundary_or_corner_localization" html="边界或角点定位"/>
-            <Choice value="underextension" alias="underextension" html="欠延伸或漏掉当前空间"/>
-            <Choice value="adjacent_space_overextension" alias="adjacent_space_overextension" html="过度延伸到相邻空间"/>
-            <Choice value="overparsing_or_ghost_structure" alias="overparsing_or_ghost_structure" html="过度解析或虚假结构"/>
-            <Choice value="duplicate_corner" alias="duplicate_corner" html="重复角点"/>
-            <Choice value="topology_order_or_closure" alias="topology_order_or_closure" html="拓扑、顺序或闭合问题"/>
-            <Choice value="other" alias="other" html="其他"/>
-            <Choice value="unsure" alias="unsure" html="无法判断类别"/>
-          </Choices>
-          <Text name="secondary_issue_families_rule_text" value="如还有其他明确的次要问题可多选；不要重复选择 primary。"/>
-          <Choices name="secondary_issue_families" toName="img" choice="multiple">
-            <Choice value="boundary_or_corner_localization" alias="boundary_or_corner_localization" html="边界或角点定位"/>
-            <Choice value="underextension" alias="underextension" html="欠延伸或漏掉当前空间"/>
-            <Choice value="adjacent_space_overextension" alias="adjacent_space_overextension" html="过度延伸到相邻空间"/>
-            <Choice value="overparsing_or_ghost_structure" alias="overparsing_or_ghost_structure" html="过度解析或虚假结构"/>
-            <Choice value="duplicate_corner" alias="duplicate_corner" html="重复角点"/>
-            <Choice value="topology_order_or_closure" alias="topology_order_or_closure" html="拓扑、顺序或闭合问题"/>
-            <Choice value="other" alias="other" html="其他"/>
-          </Choices>
-        </View>
-
-        <Text name="required_correction_rule_text" value="选择你认为最合适的修正要求。该字段与 material_issue 的组合不会被系统强行解释或改写。"/>
-        <Choices name="required_correction" toName="img" choice="single" required="true" requiredMessage="必须选择修正要求">
-          <Choice value="no_edit_needed" alias="no_edit_needed" html="无需编辑"/>
-          <Choice value="optional_visual_micro_refinement" alias="optional_visual_micro_refinement" html="可选的视觉微调"/>
-          <Choice value="minor_mandatory_coordinate_correction" alias="minor_mandatory_coordinate_correction" html="必须做小幅坐标修正"/>
-          <Choice value="major_geometry_correction" alias="major_geometry_correction" html="必须做较大几何修正"/>
-          <Choice value="topology_change_or_redraw" alias="topology_change_or_redraw" html="需要改变拓扑或重画"/>
-        </Choices>
-
-        <Text name="issue_confidence_rule_text" value="你对上述 proposal 判断有多大信心：1=很没把握，5=很有把握。"/>
-        <Choices name="issue_confidence" toName="img" choice="single" showInLine="true" required="true" requiredMessage="必须选择 1–5 信心">
-          <Choice value="1" alias="1"/><Choice value="2" alias="2"/><Choice value="3" alias="3"/><Choice value="4" alias="4"/><Choice value="5" alias="5"/>
-        </Choices>
       </View>
     </View>
     <View style="flex:40%; border-left:1px solid #ccc; padding-left:10px;">

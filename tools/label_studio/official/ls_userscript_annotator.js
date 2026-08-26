@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HoHoNet Helper Official Annotator
 // @namespace    http://tampermonkey.net/
-// @version      uncertainty_meta_20260824_v1
+// @version      uncertainty_meta_supervisor_draft_20260825_v4
 // @description  正式标注版：连接 Label Studio 与 HoHoNet 3D 查看器，并强制记录 active_time
 // @author       HoHoNet
 // @match        http://175.178.71.217:8080/*
@@ -269,7 +269,7 @@
   const existingPreviewPanelStyle = document.getElementById(PREVIEW_PANEL_STYLE_ID);
   if (existingPreviewPanelStyle) existingPreviewPanelStyle.remove();
 
-  const SCRIPT_VERSION = "uncertainty_meta_20260824_v1";
+  const SCRIPT_VERSION = "uncertainty_meta_supervisor_draft_20260825_v4";
   console.log(`HoHoNet Helper: 已加载 (v${SCRIPT_VERSION})`);
   console.log(
     "HoHoNet viewer base: set localStorage.HOHONET_VIEWER_BASE_URL = location.origin when /tools is reverse-proxied on LS origin",
@@ -886,9 +886,13 @@
     const s = String(raw || "").trim();
     const l = s.toLowerCase();
     if (!s) return "";
-    const exactLocalizedAliases = { 否: "no", 是: "yes", 不确定: "unsure" };
+    const exactLocalizedAliases = { 否: "no", 是: "yes" };
     if (exactLocalizedAliases[l]) return exactLocalizedAliases[l];
     const localizedAliases = [
+      ["否：不存在必须修正的问题", "no"],
+      ["no: no mandatory correction", "no"],
+      ["是：至少存在一个必须修正的问题", "yes"],
+      ["yes: at least one mandatory correction", "yes"],
       ["没有明确的困难原因", "no_specific_reason"],
       ["no specific reason", "no_specific_reason"],
       ["有一个或多个明确原因", "one_or_more_specific_reasons"],
@@ -899,14 +903,8 @@
       ["underextension", "underextension"],
       ["过度延伸到相邻空间", "adjacent_space_overextension"],
       ["overextension into an adjacent space", "adjacent_space_overextension"],
-      ["过度解析", "overparsing_or_ghost_structure"],
-      ["overparsing", "overparsing_or_ghost_structure"],
-      ["重复角点", "duplicate_corner"],
-      ["duplicate corner", "duplicate_corner"],
-      ["拓扑、顺序或闭合", "topology_order_or_closure"],
-      ["topology, order, or closure", "topology_order_or_closure"],
-      ["无法判断类别", "unsure"],
-      ["unsure of family", "unsure"],
+      ["拓扑或过度解析", "topology_or_overparsing"],
+      ["topology or overparsing", "topology_or_overparsing"],
     ];
     const localized = localizedAliases.find(([label]) => l.includes(label));
     if (localized) return localized[1];
@@ -924,7 +922,6 @@
     if (a === e) return true;
     if (a.endsWith(`.${e}`) || a.endsWith(`:${e}`) || a.endsWith(`/${e}`))
       return true;
-    if (a.includes(e)) return true;
     return false;
   }
 
@@ -1072,11 +1069,16 @@
       document.querySelectorAll("h1,h2,h3,h4,h5,h6,div,span,label"),
     );
     const patternsByField = {
+      worker_scope_response: [/相机所在的当前空间是否至少能够形成/, /current space containing the camera form at least one/i],
+      multiple_plausible_layouts: [/是否存在两个或以上同样合理/, /two or more equally reasonable/i],
+      perceived_difficulty: [/总体难度/, /overall difficulty/i],
       difficulty_reason_status: [/是否观察到明确的困难原因/, /whether you observed a specific reason/i],
       difficulty_reason: [/选择所有确实增加标注难度的原因/, /select every reason that materially increased/i],
-      material_issue: [/是否存在实质问题/, /has a material issue/i],
-      primary_issue_family: [/最主要的问题/, /one primary issue/i],
-      secondary_issue_families: [/次要问题/, /secondary issues/i],
+      material_issue: [/必须修正的实质问题/, /material issue that must be corrected/i],
+      primary_issue_family: [/最主要的问题类型/, /one primary issue family/i],
+      no_issue_handling: [/初始标注应如何处理/, /initial annotation be handled/i],
+      required_correction: [/需要什么程度的修正/, /level of correction/i],
+      issue_confidence: [/有多大信心/, /rate confidence/i],
     };
     const patterns = patternsByField[fieldName] || [];
 
@@ -2116,26 +2118,44 @@
 
   function validateMetaChoices(store) {
     const errors = [];
+    const workerScope = getSelectedChoicesByField(store, "worker_scope_response");
+    const multipleLayouts = getSelectedChoicesByField(store, "multiple_plausible_layouts");
+    const difficulty = getSelectedChoicesByField(store, "perceived_difficulty");
     const difficultyStatus = getSelectedChoicesByField(store, "difficulty_reason_status");
     const difficultyReason = getSelectedChoicesByField(store, "difficulty_reason");
+    const hasModelAssessmentFields = isFieldPresent(store, "material_issue");
     const materialIssue = getSelectedChoicesByField(store, "material_issue");
     const primaryIssue = getSelectedChoicesByField(store, "primary_issue_family");
-    const secondaryIssue = getSelectedChoicesByField(store, "secondary_issue_families");
+    const noIssueHandling = getSelectedChoicesByField(store, "no_issue_handling");
+    const requiredCorrection = getSelectedChoicesByField(store, "required_correction");
+    const issueConfidence = getSelectedChoicesByField(store, "issue_confidence");
 
+    if (workerScope.length !== 1) errors.push("请选择当前空间是否适用");
+    if (multipleLayouts.length !== 1) errors.push("请回答是否存在多个合理标注结果");
+    if (difficulty.length !== 1) errors.push("请选择 1–5 的标注难度");
+    if (difficultyStatus.length !== 1) errors.push("请选择是否存在明确的困难原因");
     if (difficultyStatus.includes("one_or_more_specific_reasons") && !difficultyReason.length) {
-      errors.push("已声明存在困难原因，请至少选择一项 / Select at least one difficulty reason");
+      errors.push("已选择存在明确的困难原因，请至少选择一项原因");
     }
     if (difficultyStatus.includes("no_specific_reason") && difficultyReason.length) {
-      errors.push("已声明没有明确困难原因，请清除原因选择 / Clear stale difficulty reasons");
+      errors.push("已选择没有明确的困难原因，请清除已选原因");
     }
-    if ((materialIssue.includes("yes") || materialIssue.includes("unsure")) && primaryIssue.length !== 1) {
-      errors.push("请选择一个主要问题类别 / Select exactly one primary issue family");
-    }
-    if (materialIssue.includes("no") && (primaryIssue.length || secondaryIssue.length)) {
-      errors.push("已选择无实质问题，请清除问题类别 / Clear stale issue families");
-    }
-    if (primaryIssue.length === 1 && secondaryIssue.includes(primaryIssue[0])) {
-      errors.push("Primary 不得在 Secondary 中重复 / Do not repeat the primary issue");
+    if (hasModelAssessmentFields) {
+      if (materialIssue.length !== 1) errors.push("请选择模型初始标注是否存在实质性问题");
+      if (issueConfidence.length !== 1) errors.push("请选择 1–5 的判断把握程度");
+      if (materialIssue.includes("no")) {
+        if (noIssueHandling.length !== 1) errors.push("请选择模型初始标注的处理方式");
+        if (primaryIssue.length || requiredCorrection.length) {
+          errors.push("已选择不存在实质性问题，请清除实质问题对应的选项");
+        }
+      }
+      if (materialIssue.includes("yes")) {
+        if (primaryIssue.length !== 1) errors.push("请选择一个主要问题类型");
+        if (requiredCorrection.length !== 1) errors.push("请选择实质性问题所需的修正程度");
+        if (noIssueHandling.length) {
+          errors.push("已选择存在实质性问题，请清除无实质问题时的处理方式");
+        }
+      }
     }
 
     return errors;

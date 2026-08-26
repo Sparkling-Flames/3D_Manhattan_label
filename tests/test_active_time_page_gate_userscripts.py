@@ -14,7 +14,7 @@ PRECHANGE_OFFICIAL_DEBUG = PRECHANGE / "zh" / "userscript" / "ls_userscript_debu
 PRECHANGE_FOREIGN = PRECHANGE / "en" / "userscript" / "ls_userscript_annotator_https_en.user.js"
 PRECHANGE_FOREIGN_DEBUG = PRECHANGE / "en" / "userscript" / "ls_userscript_annotator_https_en_debug.user.js"
 INSTRUCTION_MANIFEST = ROOT / "tools" / "label_studio" / "label_studio_xml_instruction_manifest_v2.json"
-VERSION = "uncertainty_meta_20260824_v1"
+VERSION = "uncertainty_meta_supervisor_draft_20260825_v4"
 
 
 def _script(path: Path) -> str:
@@ -48,21 +48,55 @@ def test_all_current_userscripts_enforce_the_uncertainty_meta_structure() -> Non
         end = source.index("function shouldGuardAction(target)", start)
         guard = source[start:end]
         for field in (
+            "worker_scope_response",
+            "multiple_plausible_layouts",
+            "perceived_difficulty",
             "difficulty_reason_status",
             "difficulty_reason",
             "material_issue",
             "primary_issue_family",
-            "secondary_issue_families",
+            "no_issue_handling",
+            "required_correction",
+            "issue_confidence",
         ):
             assert field in guard
         assert "one_or_more_specific_reasons" in guard
         assert "no_specific_reason" in guard
-        assert "secondaryIssue.includes(primaryIssue[0])" in guard
-        assert 'const exactLocalizedAliases = { 否: "no", 是: "yes", 不确定: "unsure" };' in source
+        assert "secondary_issue_families" not in guard
+        assert 'const exactLocalizedAliases = { 否: "no", 是: "yes" };' in source
+        assert '["no: no mandatory correction", "no"]' in source
+        assert '["yes: at least one mandatory correction", "yes"]' in source
+        assert 'materialIssue.includes("unsure")' not in guard
+        assert "current space containing the camera form at least one" in source
         assert "trivial" not in guard.lower()
         assert "acceptable" not in guard.lower()
         assert "META_GUARD_REJECT_LOG_KEY" not in source
         assert "META_GUARD_REJECT_STATS_KEY" not in source
+
+
+def test_meta_field_matching_does_not_confuse_overlapping_field_names() -> None:
+    for path in (OFFICIAL, OFFICIAL_DEBUG, FOREIGN, FOREIGN_DEBUG):
+        source = _script(path)
+        start = source.index("function matchesFieldName(actual, expected)")
+        end = source.index("function isMetaGuardDebugEnabled()", start)
+        matcher = source[start:end]
+        assert "a === e" in matcher
+        assert "a.endsWith" in matcher
+        assert "a.includes(e)" not in matcher
+
+
+def test_all_current_userscripts_do_not_implement_phase_lock_or_phase_reporting() -> None:
+    for path in (OFFICIAL, OFFICIAL_DEBUG, FOREIGN, FOREIGN_DEBUG):
+        source = _script(path)
+        for token in (
+            "META_PHASE_STORAGE_PREFIX",
+            "function applyUncertaintyPhaseUi(",
+            "function installUncertaintyPhaseLock(",
+            "pre_edit_locked_at",
+            "geometry_locked_at",
+            "uncertainty_meta_phase_event_v1",
+        ):
+            assert token not in source
 
 
 def test_page_gate_requires_route_labeling_editor_main_view_and_task_identity():

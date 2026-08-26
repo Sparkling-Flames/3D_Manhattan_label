@@ -75,6 +75,13 @@
 - `tools/label_studio/label_studio_xml_instruction_manifest_v2.json`：v1/v2 路径、SHA、生效边界与“本地就绪/尚未部署”状态真源。
 - `tools/thesis_main/foreign_recruitment/`：仅保留海外招募、安装、legacy 与私有运营说明，不再保存 Label Studio 活运行资产。
 
+## 2026-08-24 标注不确定性候选实验讨论稿
+
+- `docs/thesis_main/ANNOTATION_UNCERTAINTY_EXPERIMENT_SUPERVISOR_DRAFT_v1.md`：标注不确定性候选研究的导师讨论稿；非规范、未批准、不得直接启动，不修改当前方法合同、SAP、T1或 Label Studio 分发工件。
+- `docs/thesis_main/ANNOTATION_UNCERTAINTY_EXTERNAL_REVIEW_PROPOSAL_NOTE_v1.md`：外部审稿方案的独立简要记录；非规范、未采纳，不覆盖导师讨论稿或任何方法真源。
+- `import_json/uncertainty_meta_feasibility_20260824/`：现有中文 LS 不确定性标签的开发测试导入包；仅使用 5 张已有 P1 Semi 标注图片，8 人同图复测，共 40 条本地分配，不进入正式分析。
+- `analysis_results/uncertainty_meta_feasibility_20260824_v1/`：上述开发测试的本地中文任务表、外部分配真源与内部样本清单；含真实姓名的运营文件按 `.gitignore` 保持本地。
+
 ## 2026-08-21 Paper A 全量不确定性审计工具归位
 
 - `tools/thesis_main/analysis/full_uncertainty/materialize_uncertainty_substrate.py`：P1–C2-A-RP 中性 retrospective 数据底座 v1 入口；从 raw export/active log/planned import 事实层出发，以阶段 canonical freeze 仅作身份与 provenance 对账。

@@ -121,6 +121,9 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 
 ## 论文主线全量不确定性审计
 
+- [ANNOTATION_UNCERTAINTY_EXPERIMENT_SUPERVISOR_DRAFT_v1.md](thesis_main/ANNOTATION_UNCERTAINTY_EXPERIMENT_SUPERVISOR_DRAFT_v1.md)：360°布局标注不确定性研究的导师讨论稿；当前为 `DRAFT / NON-NORMATIVE / NOT APPROVED`，提出历史高密度 Study 1 与72图三臂 Study 2，不改变当前方法合同、SAP、T1或任何分发工件。
+- [ANNOTATION_UNCERTAINTY_EXTERNAL_REVIEW_PROPOSAL_NOTE_v1.md](thesis_main/ANNOTATION_UNCERTAINTY_EXTERNAL_REVIEW_PROPOSAL_NOTE_v1.md)：单独记录外部审稿方案及其与导师讨论稿的差异；状态为 `EXTERNAL PROPOSAL / NON-NORMATIVE / NOT ADOPTED`，不代表本项目采纳。
+- 现有 LS 标签开发测试：`import_json/uncertainty_meta_feasibility_20260824/`；仅含 5 张历史已标注 P1 Semi 图片，8 名中文标注者同图复测，共 40 条分配，不进入正式实验或论文分析。
 - 中性 retrospective 数据底座入口：`tools/thesis_main/analysis/full_uncertainty/materialize_uncertainty_substrate.py`；冻结输出：`analysis_results/uncertainty_substrate_20260823_v1/`。该并行底座纳入全部 2,501 条 canonical 记录，旧 eligibility 仅保留为历史字段，不修改方法合同、SAP 或 C2-B/C2-A-RP closeout。
 - 工具入口：`tools/thesis_main/analysis/full_uncertainty/materialize_full_uncertainty_data_mining_v5.py`（复用 v4 计算引擎）
 - 当前生成目录：`analysis_results/full_uncertainty_data_mining_20260821_v5/`；v4 交付只保留在 Git 历史中。

@@ -8,7 +8,7 @@
   "edit_operation_count_not_collected": true,
   "historical_data_reclassified": false,
   "paper_a_method_contract_changed": false,
-  "script_version": "uncertainty_meta_20260824_v1",
+  "script_version": "uncertainty_meta_supervisor_draft_20260825_v4",
   "prechange_snapshot_root": "tools/label_studio/config_history/uncertainty_meta_v1_prechange_20260824",
   "applicable_arms": [
     "Manual",
@@ -16,7 +16,7 @@
     "Wrong-Semi"
   ],
   "image_fields": [
-    "scope_status",
+    "worker_scope_response",
     "multiple_plausible_layouts",
     "perceived_difficulty",
     "difficulty_reason_status",
@@ -25,10 +25,15 @@
   "proposal_fields": [
     "material_issue",
     "primary_issue_family",
-    "secondary_issue_families",
+    "no_issue_handling",
     "required_correction",
     "issue_confidence"
   ],
+  "required_correction_normalization": {
+    "canonical_field": "required_correction",
+    "material_issue_no_source": "no_issue_handling",
+    "material_issue_yes_source": "required_correction"
+  },
   "files": {
     "xml": [
       "tools/label_studio/label_studio_view_config.xml",
@@ -49,6 +54,8 @@
     "manual_proposal_fields": "structural_not_applicable",
     "proposal_truth_worker_visible": false,
     "technical_time_lock": false,
+    "phase_event_persistence": "not_collected",
+    "strict_server_auditable_timing": false,
     "live_label_studio_deployed": false,
     "active_time_behavior_changed": false,
     "task_distribution_changed": false,

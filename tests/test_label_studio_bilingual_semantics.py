@@ -30,7 +30,7 @@ PRECHANGE_XML = {
 }
 
 IMAGE_FIELDS = {
-    "scope_status",
+    "worker_scope_response",
     "multiple_plausible_layouts",
     "perceived_difficulty",
     "difficulty_reason_status",
@@ -39,7 +39,7 @@ IMAGE_FIELDS = {
 PROPOSAL_FIELDS = {
     "material_issue",
     "primary_issue_family",
-    "secondary_issue_families",
+    "no_issue_handling",
     "required_correction",
     "issue_confidence",
 }
@@ -77,9 +77,25 @@ def test_uncertainty_bilingual_aliases_match() -> None:
         assert _choice_aliases(ACTIVE[f"zh_{role}"]) == _choice_aliases(ACTIVE[f"en_{role}"])
 
 
+def test_chinese_uncertainty_xml_has_no_english_research_terms_in_visible_text() -> None:
+    visible_attributes = {"value", "html", "hint", "requiredMessage"}
+    for role in ("semi", "manual", "future"):
+        root = ElementTree.parse(ACTIVE[f"zh_{role}"]).getroot()
+        visible_text = " ".join(
+            value
+            for node in root.iter()
+            for key, value in node.attrib.items()
+            if key in visible_attributes and node.tag not in {"Image", "HyperText"}
+        ).lower()
+        assert not any(
+            term in visible_text
+            for term in ("proposal", "truth", "in-scope", "out-of-scope")
+        )
+
+
 def test_uncertainty_choice_values_are_frozen() -> None:
     semi = _choice_aliases(ACTIVE["zh_semi"])
-    assert semi["scope_status"] == ["in_scope", "out_of_scope"]
+    assert semi["worker_scope_response"] == ["in_scope", "out_of_scope"]
     assert semi["multiple_plausible_layouts"] == ["no", "yes"]
     assert semi["perceived_difficulty"] == ["1", "2", "3", "4", "5"]
     assert semi["difficulty_reason_status"] == [
@@ -95,21 +111,19 @@ def test_uncertainty_choice_values_are_frozen() -> None:
         "image_quality",
         "other",
     ]
-    assert semi["material_issue"] == ["no", "yes", "unsure"]
+    assert semi["material_issue"] == ["no", "yes"]
     assert semi["primary_issue_family"] == [
         "boundary_or_corner_localization",
         "underextension",
         "adjacent_space_overextension",
-        "overparsing_or_ghost_structure",
-        "duplicate_corner",
-        "topology_order_or_closure",
+        "topology_or_overparsing",
         "other",
-        "unsure",
     ]
-    assert semi["secondary_issue_families"] == semi["primary_issue_family"][:-1]
-    assert semi["required_correction"] == [
+    assert semi["no_issue_handling"] == [
         "no_edit_needed",
         "optional_visual_micro_refinement",
+    ]
+    assert semi["required_correction"] == [
         "minor_mandatory_coordinate_correction",
         "major_geometry_correction",
         "topology_change_or_redraw",
@@ -117,14 +131,14 @@ def test_uncertainty_choice_values_are_frozen() -> None:
     assert semi["issue_confidence"] == ["1", "2", "3", "4", "5"]
 
 
-def test_conditional_display_is_branching_not_time_locking() -> None:
+def test_conditional_display_matches_the_supervisor_draft() -> None:
     for path in ACTIVE.values():
         views = _visible_views(path)
         assert {
             (row.get("whenTagName"), row.get("whenChoiceValue")) for row in views
         } >= {("difficulty_reason_status", "one_or_more_specific_reasons")}
         text = path.read_text(encoding="utf-8").lower()
-        for forbidden in ("phase_lock", "time_lock", "edit_operation_count", "proposal_missing"):
+        for forbidden in ("edit_operation_count", "proposal_missing", "phase_lock", "time_lock"):
             assert forbidden not in text
 
     for role in ("semi", "future"):
@@ -132,7 +146,75 @@ def test_conditional_display_is_branching_not_time_locking() -> None:
             views = _visible_views(ACTIVE[f"{language}_{role}"])
             assert {
                 (row.get("whenTagName"), row.get("whenChoiceValue")) for row in views
-            } >= {("material_issue", "yes,unsure")}
+            } >= {("material_issue", "no"), ("material_issue", "yes")}
+
+
+def test_required_correction_options_are_split_by_material_issue() -> None:
+    for role in ("semi", "future"):
+        for language in ("zh", "en"):
+            aliases = _choice_aliases(ACTIVE[f"{language}_{role}"])
+            assert set(aliases["no_issue_handling"]).isdisjoint(aliases["required_correction"])
+            assert len(aliases["no_issue_handling"]) == 2
+            assert len(aliases["required_correction"]) == 3
+
+
+def test_manhattan_scope_wording_and_choice_hints_are_complete() -> None:
+    hinted_fields = {
+        "worker_scope_response",
+        "multiple_plausible_layouts",
+        "difficulty_reason",
+    }
+    proposal_hinted_fields = {
+        "material_issue",
+        "primary_issue_family",
+        "no_issue_handling",
+        "required_correction",
+    }
+    for key, path in ACTIVE.items():
+        root = ElementTree.parse(path).getroot()
+        texts = {node.attrib["name"]: node.attrib["value"] for node in root.iter("Text")}
+        assert set(texts) >= {
+            "manhattan_layout_definition_text",
+            "manhattan_layout_examples_text",
+            "opening_closure_rule_text",
+            "worker_scope_response_rule_text",
+        }
+        collapse = root.find(".//Collapse")
+        assert collapse is not None
+        assert collapse.attrib == {"bordered": "true", "open": "true"}
+        panel = collapse.find("Panel")
+        assert panel is not None
+        assert panel.attrib["value"] in {"Manhattan 布局说明", "Manhattan Layout Guide"}
+        collapsed_texts = {node.attrib.get("name") for node in panel.iter("Text")}
+        assert collapsed_texts == {
+            "manhattan_layout_definition_text",
+            "manhattan_layout_examples_text",
+            "opening_closure_rule_text",
+        }
+        assert "worker_scope_response_rule_text" not in collapsed_texts
+        scope_text = texts["worker_scope_response_rule_text"]
+        assert "Manhattan" in scope_text
+        assert ("至少能够形成一个" in scope_text) if key.startswith("zh_") else ("at least one" in scope_text)
+
+        required_hints = set(hinted_fields)
+        if not key.endswith("_manual"):
+            required_hints |= proposal_hinted_fields
+        for choices in root.iter("Choices"):
+            if choices.attrib["name"] in required_hints:
+                assert all(choice.attrib.get("hint", "").strip() for choice in choices.findall("Choice"))
+
+        if key.startswith("zh_"):
+            visible = " ".join(node.attrib.get("value", "") for node in root.iter("Text"))
+            assert "曼哈顿世界" not in visible
+            assert "研究者真值" not in visible
+            assert "本题仅记录" not in visible
+
+
+def test_semi_xml_places_pre_edit_fields_before_post_task_fields() -> None:
+    for role in ("semi", "future"):
+        for language in ("zh", "en"):
+            text = ACTIVE[f"{language}_{role}"].read_text(encoding="utf-8")
+            assert text.index('name="material_issue"') < text.index('name="worker_scope_response"')
 
 
 def test_old_taxonomy_is_absent_from_current_xml() -> None:
@@ -162,6 +244,9 @@ def test_uncertainty_manifest_records_the_frozen_boundaries() -> None:
     assert manifest["edit_operation_count_not_collected"] is True
     assert manifest["historical_data_reclassified"] is False
     assert manifest["paper_a_method_contract_changed"] is False
+    assert manifest["boundaries"]["technical_time_lock"] is False
+    assert manifest["boundaries"]["phase_event_persistence"] == "not_collected"
+    assert manifest["boundaries"]["strict_server_auditable_timing"] is False
     assert set(manifest["image_fields"]) == IMAGE_FIELDS
     assert set(manifest["proposal_fields"]) == PROPOSAL_FIELDS
 
