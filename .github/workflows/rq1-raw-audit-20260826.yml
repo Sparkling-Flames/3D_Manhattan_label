@@ -10,6 +10,7 @@ on:
       - "tools/thesis_main/analysis/raw_rq1_recompute_20260826.py"
       - "tools/thesis_main/analysis/raw_rq2_null_replay_20260826.py"
       - "tools/thesis_main/analysis/raw_difficulty_time_recompute_20260826.py"
+      - "tools/thesis_main/analysis/raw_difficulty_time_recompute_v2_20260826.py"
       - ".github/workflows/rq1-raw-audit-20260826.yml"
 
 permissions:
@@ -45,8 +46,8 @@ jobs:
       - name: Run empirical 5-5-5 null replay
         run: python -m tools.thesis_main.analysis.raw_rq2_null_replay_20260826
 
-      - name: Run raw difficulty and active-time recomputation
-        run: python -m tools.thesis_main.analysis.raw_difficulty_time_recompute_20260826
+      - name: Run raw difficulty and formal active-time recomputation
+        run: python -m tools.thesis_main.analysis.raw_difficulty_time_recompute_v2_20260826
 
       - name: Commit audit outputs
         run: |
@@ -54,7 +55,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- analysis_results/rq1_raw_audit_20260826 analysis_results/rq1_raw_recompute_20260826 analysis_results/rq2_null_replay_20260826 analysis_results/rq1_difficulty_time_raw_20260826
           if ! git diff --cached --quiet; then
-            git commit -m "Materialize raw uncertainty and difficulty-time audits"
+            git commit -m "Materialize raw uncertainty and formal difficulty-time audits"
             git push origin HEAD:analysis/rq1-raw-audit-20260826
           fi
 
