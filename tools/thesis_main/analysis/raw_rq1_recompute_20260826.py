@@ -122,9 +122,11 @@ def extract_annotation(annotation: dict[str, Any]) -> tuple[tuple[tuple[float, f
     return tuple(points), width, height, json.dumps(dict(choices), ensure_ascii=False, sort_keys=True)
 
 
-def load_raw() -> list[RawRecord]:
+def load_raw(
+    source_files: tuple[tuple[str, str, str, str], ...] = SOURCE_FILES,
+) -> list[RawRecord]:
     out: list[RawRecord] = []
-    for stage, fallback_condition, fallback_group, relative in SOURCE_FILES:
+    for stage, fallback_condition, fallback_group, relative in source_files:
         path = ROOT / relative
         payload = json.loads(path.read_text(encoding="utf-8-sig"))
         if not isinstance(payload, list):

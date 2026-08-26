@@ -1,0 +1,195 @@
+{
+  "analysis_contract": {
+    "cardinality_axis": "vertical boundary count only; not full topology",
+    "cluster_role": "threshold sensitivity and candidate triage only",
+    "continuous_primary": "mean pairwise (1 - wall-region mask IoU)",
+    "difficulty_parser": "exact low_texture/low_quality codes recognized; legacy space-separated aliases retained",
+    "eligibility_role": "historical provenance only; not a new exclusion filter",
+    "invalid_lane": "separate_not_max_distance",
+    "manual_primary": true,
+    "rarefaction_target": "finite historical strict-valid roster full-sample value",
+    "support_definition": "calculation-valid geometry; C1 uses amendment calculation repair, other stages strict",
+    "unit": "base_image × stage_or_batch × condition"
+  },
+  "c1_repair_status_counts": {
+    "ambiguous_extra_or_missing_pair": 1,
+    "not_eligible": 6,
+    "not_needed": 770,
+    "recoverable_orphan_point_removed": 3
+  },
+  "formal_c1_time": {
+    "active_time_context_count": 780,
+    "active_time_eligible_context_count_frozen": 701,
+    "active_time_observed_rows": 594,
+    "active_time_observed_tasks": 84,
+    "active_time_summary_sha256_expected": "4292a464f879423efc82c3ab213d0e77594bf7a0e4bdda3320416f7195d5cb99",
+    "active_time_table_sha256": "4292a464f879423efc82c3ab213d0e77594bf7a0e4bdda3320416f7195d5cb99",
+    "manual_tasks_k_ge5": 84,
+    "manual_worker_task_rows": 658
+  },
+  "generator_provenance": {
+    "cluster_thresholds": [
+      0.9,
+      0.925,
+      0.95,
+      0.97,
+      0.98
+    ],
+    "code_sha256": {
+      "tools/thesis_main/analysis/analyze_rq1_stratified_uncertainty_20260827.py": "2408f96a303d6a0a7ec45fae59af9cbd76a7aa7844d270bc386252af6fa9cc89",
+      "tools/thesis_main/analysis/audit_rq1_corrections_20260826.py": "db773edcc8ad29a76b0815bd4960c52746ed5d6c177aee5807532cb47ea68433",
+      "tools/thesis_main/analysis/geometry_cluster_v2.py": "c4f423d8bee1db72d2e0c6b4ded424b8ffaed01c1d3181dea22ccbee93e31792",
+      "tools/thesis_main/analysis/raw_difficulty_time_recompute_20260826.py": "c4ae5b1fead61e19cd1cd631ab7641c6ecc6d0f7740b2833cc9ce7a43ee3862a",
+      "tools/thesis_main/analysis/raw_rq1_recompute_20260826.py": "21f09ffc4198a91d11bfd6f223e275197d315cc68a287ac003073d24b27d7c61"
+    },
+    "git_head": "53fed5d57bd5c3092d54b7070f88a85ebcb436b0",
+    "git_status_short": [
+      " M docs/PROJECT_MAP_CLEAN_20260308.md",
+      " M docs/README_INDEX.md",
+      " M tools/thesis_main/analysis/raw_difficulty_time_recompute_20260826.py",
+      " M tools/thesis_main/analysis/raw_rq1_recompute_20260826.py",
+      "?? analysis_results/rq1_stratified_uncertainty_20260827_v1/",
+      "?? tests/test_analyze_rq1_stratified_uncertainty.py",
+      "?? tools/thesis_main/analysis/analyze_rq1_stratified_uncertainty_20260827.py"
+    ],
+    "git_worktree_dirty": true,
+    "rarefaction_k_grid": [
+      3,
+      5,
+      8,
+      10,
+      12,
+      15,
+      20
+    ],
+    "seed": 20260827
+  },
+  "organized_crosscheck": {
+    "annotation_identity_match_count": 2500,
+    "annotation_identity_mismatch_count": 1,
+    "annotation_identity_mismatches": [
+      {
+        "analyzer_annotation_id": "6053",
+        "project_id": "66",
+        "result_content_equal": true,
+        "runtime_task_id": "3192",
+        "spine_annotation_id": "6052",
+        "stage": "C1",
+        "worker_id": "34"
+      }
+    ],
+    "annotation_spine_path": "analysis_results/uncertainty_substrate_20260823_v1/annotation_spine.csv",
+    "annotation_spine_rows": 2501,
+    "annotation_spine_sha256": "c9d40fdc5641ff90b078f9374344a123ec94a85edf3ae861a8db54fcb84a4748",
+    "qa_summary_path": "analysis_results/uncertainty_substrate_20260823_v1/QA_SUMMARY.json",
+    "qa_summary_sha256": "6a5e375270f75f4679aca57d4b79ad7e73ee9a06c4451a7cf397999565028ffc",
+    "role": "identity and coverage cross-check only; not geometry metric input"
+  },
+  "rarefaction_replicates": 1000,
+  "raw_annotation_version_count": 2513,
+  "raw_sources": [
+    {
+      "annotation_record_count": 362,
+      "path": "export_label/stage1_English/project-39-at-2026-06-28-05-14-65ca3316.json",
+      "sha256": "f79fb49ae72195c4fbea4934f17ac6235d75da513fa8fbfc11c993ad726a84ae"
+    },
+    {
+      "annotation_record_count": 420,
+      "path": "export_label/stage1_chinese/project-28-at-2026-07-01-07-14-56a198ba.json",
+      "sha256": "a40ea344c04cc6259c5841f40a427cc82fa44258916dee672b4a7599d2cf8c69"
+    },
+    {
+      "annotation_record_count": 216,
+      "path": "export_label/stage1_English/project-40-at-2026-06-28-05-14-bb74a057.json",
+      "sha256": "1ce8a32e5708aa87c11f4e9957efebccd183b60e6d12066ceee69ce87d763305"
+    },
+    {
+      "annotation_record_count": 253,
+      "path": "export_label/stage1_chinese/project-29-at-2026-06-30-09-00-e7ea6931.json",
+      "sha256": "63b34e8adce3790c76f41f1e77302ea926dfdcbb0bc2950f6258a8d90d8ccdd1"
+    },
+    {
+      "annotation_record_count": 108,
+      "path": "export_label/stage1_English/project-41-at-2026-06-28-05-13-8641854f.json",
+      "sha256": "307f6e6974a836a21193af64e93e72a0a907d7193be3bff6729f386aeac12fe2"
+    },
+    {
+      "annotation_record_count": 126,
+      "path": "export_label/stage1_chinese/project-30-at-2026-06-30-09-00-69d8051b.json",
+      "sha256": "2f274f31c2ac9dd48128593357f1d0f4cae98dfc8fc62cf77a40e7df2641c4d7"
+    },
+    {
+      "annotation_record_count": 135,
+      "path": "export_label/stage2_English/project-66-at-2026-07-30-13-01-cdb9fe80.json",
+      "sha256": "04b95b86ef77099f47ebe4189abf233b0399b5dc57d77bf740e6dec265967557"
+    },
+    {
+      "annotation_record_count": 144,
+      "path": "export_label/stage2_Chinese/project-69-at-2026-07-30-13-02-cb472115.json",
+      "sha256": "818b27e8ae07388126c0a3bcb38394946c02058feece13ca8b289b5e25e39a17"
+    },
+    {
+      "annotation_record_count": 203,
+      "path": "export_label/stage2_English/project-67-at-2026-07-30-13-01-f5126135.json",
+      "sha256": "f20c24a83f2288c15bedb7042dd3061186dfe073e1cb3573854df5de5c080a31"
+    },
+    {
+      "annotation_record_count": 198,
+      "path": "export_label/stage2_Chinese/project-71-at-2026-07-30-14-18-54a73158.json",
+      "sha256": "9caa6d1ffad1f6496e45883708437e4e230c87ed6d1a594716beedfcbdd57ece"
+    },
+    {
+      "annotation_record_count": 54,
+      "path": "export_label/stage2_English/project-68-at-2026-07-30-13-02-cf7d8306.json",
+      "sha256": "455a0f2e543d9534f2e7d46c4572776fa334e455d8f60f9b1f0283d7224e9280"
+    },
+    {
+      "annotation_record_count": 54,
+      "path": "export_label/stage2_Chinese/project-72-at-2026-07-30-13-02-f69c5ac4.json",
+      "sha256": "40f9dd7d1efbea185323b938e8e21a9700ae5e2040979a1c7506aa4a88952ce7"
+    },
+    {
+      "annotation_record_count": 80,
+      "path": "export_label/c2B_Chinese/project-77-at-2026-08-06-14-39-a247e8c0.json",
+      "sha256": "faca85af24fd27dbcebf01d99d1f12fa4dd85c369f733895bce6583b91a2e208"
+    },
+    {
+      "annotation_record_count": 80,
+      "path": "export_label/c2B_English/project-76-at-2026-08-06-14-41-45400e98.json",
+      "sha256": "1f0bd8f88e82c6c65de2a585c9e99a2d4f8bf1e1a42376fbb2d0471597c1c93e"
+    },
+    {
+      "annotation_record_count": 20,
+      "path": "export_label/c2arp_block1/project-78-at-2026-08-10-07-22-d878a022.json",
+      "sha256": "1138c36c3f72c234011d1d35366218bf3330c8ed7af8d6ede9ca5710da4c999a"
+    },
+    {
+      "annotation_record_count": 20,
+      "path": "export_label/c2arp_block1/project-79-at-2026-08-10-07-21-c5055ba6.json",
+      "sha256": "87d6e7ccbb7fa4532f171d60838ffe30b3a94fbe0a0ecb83c2eec17227445155"
+    },
+    {
+      "annotation_record_count": 20,
+      "path": "export_label/c2arp_block2/project-84-at-2026-08-14-08-36-31615637.json",
+      "sha256": "ed8c8652c7e6c7a2fc35fbd40c085dbcefa68b75f2803c82f7b265be7de98970"
+    },
+    {
+      "annotation_record_count": 20,
+      "path": "export_label/c2arp_block2/project-85-at-2026-08-14-08-36-71fffb37.json",
+      "sha256": "711fd7192849a4c466f661026a39e158848b9b2a3420499ff719efa9166b49a1"
+    }
+  ],
+  "scope_adjusted_bootstrap_replicates": 4000,
+  "selected_annotation_count": 2501,
+  "selection_summary": {
+    "acquisition_keys_all": 2501,
+    "acquisition_keys_with_non_cancelled_version": 2501,
+    "cancelled_only_acquisition_keys": 0,
+    "duplicate_version_excess_non_cancelled": 12,
+    "raw_versions_all": 2513,
+    "raw_versions_cancelled": 0,
+    "raw_versions_non_cancelled": 2513,
+    "selected_latest_non_cancelled": 2501
+  },
+  "source_commit": "53fed5d57bd5c3092d54b7070f88a85ebcb436b0"
+}

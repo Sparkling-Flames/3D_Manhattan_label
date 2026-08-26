@@ -28,10 +28,10 @@ BOOTSTRAPS = 4000
 TAG_PATTERNS = {
     "trivial": ("trivial", "非常简单"),
     "occlusion": ("occlusion", "遮挡"),
-    "low_texture": ("low texture", "纹理"),
+    "low_texture": ("low_texture", "low texture", "纹理"),
     "seam": ("seam", "拼接"),
     "reflection": ("reflection", "反光", "玻璃"),
-    "low_quality": ("blur", "low quality", "画质", "遮罩"),
+    "low_quality": ("low_quality", "blur", "low quality", "画质", "遮罩"),
 }
 
 
