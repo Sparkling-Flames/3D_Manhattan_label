@@ -1,0 +1,42 @@
+{
+  "c1_core_boundary_distance_mean_across_images": 0.020813916648211556,
+  "c1_core_boundary_distance_median_across_images": 0.013971335661786717,
+  "c1_core_boundary_distance_q10_across_images": 0.006945002013569809,
+  "c1_core_boundary_distance_q90_across_images": 0.046004181171067464,
+  "c1_core_strict_k_distribution": {
+    "3": 1,
+    "4": 4,
+    "5": 49,
+    "6": 20,
+    "7": 1
+  },
+  "c1_core_tasks_strict_k_ge5": 70,
+  "c1_core_unique_task_count": 75,
+  "duplicate_groups": 9,
+  "duplicate_version_excess": 12,
+  "high_density_full_count_diverse_tasks": 37,
+  "high_density_max_strict_support": 26,
+  "high_density_min_strict_support": 23,
+  "high_density_task_count": 42,
+  "high_density_tasks_with_strict_support_ge20": 42,
+  "independent_acquisition_keys": 2261,
+  "latest_vs_max_id_disagreements": 0,
+  "notes": [
+    "Raw selection is independent of historical canonical authority tables.",
+    "Strict validity is the current image-plane serialization contract, not physical floor-plan topology validity.",
+    "Boundary and wall-wall channels are reported separately and are never merged.",
+    "Cluster outputs are algorithmic partitions under current complete-link/maximum-clique rules; they are not claims of true alternative layouts."
+  ],
+  "raw_annotation_versions": 2273,
+  "selected_canonical_records": 2261,
+  "selection_rule": "latest updated_at, then created_at, then numeric annotation_id",
+  "source_commit": "runtime_branch_parent_main_f3c7b713c6cff6c08dc1fe231c7e84b8db1774ee",
+  "stage_selected_counts": {
+    "C1": 780,
+    "P1": 1481
+  },
+  "stage_strict_valid_counts": {
+    "C1": 770,
+    "P1": 1422
+  }
+}
