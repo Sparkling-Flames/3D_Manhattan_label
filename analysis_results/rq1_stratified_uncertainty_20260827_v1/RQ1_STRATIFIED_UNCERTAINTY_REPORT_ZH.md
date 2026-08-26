@@ -10,6 +10,7 @@
 3. **增加人数主要改善当前历史有效标注 roster 的均值估计和稀有 cardinality 检出，不表示标注者“随着人数增加而收敛”。** `D_mask` 是同图两两距离均值的 U-statistic；随机抽取 k 人时其期望近似不随 k 系统改变，变化的是估计误差和类别检出率。
 4. **当前只能讨论标注后的困难线索与行为负担，不能称为客观图像难度。** 未校正关联在 P1/C1 间不同，但 scope 分歧与 `D_mask` 本身高度相关；控制 scope 后，困难和 seam 关联均明显减弱，所以不能把 seam 写成已证实的独立机制。
 5. **现有数据能筛出有限 roster 下的高输出差异候选，但尚未证明稳定的 1–2 个几何模式或多个正确答案。** cluster 目前只做阈值状态诊断，没有验证同一分区、成员或原型随人数稳定。
+6. **人的成分存在，但当前不支持稳定工人画像。** geometry 的跨任务 worker 主效应约2.75%，图片/任务约65.25%，残差约31.99%；后者混合图片×标注者反应、测量误差和未建模因素。部分 worker tendency 可检测，但随机 split-half 稳定性偏弱，不能把“人的不确定性”等同于质量或固定类型。
 
 ## 1. 数据分层，而不是只看高密度图
 
@@ -26,7 +27,7 @@
 
 Manual 的 218 个单元对应 187 张唯一图片，原因是 C2-B 与 C2-A-RP、以及两个 RP block 中存在同图重复。分析单位始终是 `base image × stage/batch × condition`；同图跨批次可做重复测量，但不是新的独立图片。
 
-P1 另有 18 个 Semi 与 9 个 OOS 高密度单元，C1 有 25 个 Semi 单元。它们全部保留在表中，但 RQ1 的自然人际分歧主分析只使用 Manual；Semi 是 RQ2 的观察性桥接层，因为共享模型初值可能同时降低方差并引入共同偏差。
+P1 另有 18 个 Semi 与 9 个 OOS 高密度单元，C1 有 25 个 Semi 单元。它们全部保留在表中，但 RQ1 的自然人际分歧主分析只使用 Manual；Semi 是 RQ2 的观察性桥接层，因为共享模型初值可能同时降低方差并引入共同偏差。这里的 Manual 独立性是 protocol assumption；当前没有逐条阶段事件去技术证明工人未受他人输出影响。
 
 详见 `support_strata_summary.csv`、`task_cell_metrics.csv` 和 `manual_support_strata.png`。
 
@@ -53,6 +54,30 @@ scope-adjusted partial-rank 敏感性进一步显示：P1 的非平凡困难/ se
 因此不能写成“越难就越不一致”或“seam 已被证实为机制”。更准确的草稿是：**标注者报告的困难、scope 判断和几何输出差异共同变化；scope 是当前最强的描述性伴随量，耗时仅呈弱到中等关联。**所有标签比较均未做 multiplicity 调整，阶段差异也未做正式 interaction test。
 
 本次还修正了旧 C1 difficulty parser：原实现没有识别原始 vocabulary 中带下划线的 `low_texture`/`low_quality`，导致旧表中 C1 nontrivial ρ=0.017；修正后为 0.153。旧值由本报告 supersede，几何分歧本身未改变。
+
+### 2.1 人的不确定性、质量与 active time
+
+“图片不确定性”和“人的不确定性”不能从观测数据中完全解绑。更准确的数据生成表述是：在给定图片、协议、界面和工人 cohort 下观察到输出。人的成分至少包含：
+
+- **worker 主效应**：跨图片相对稳定的坐标/复杂度倾向；
+- **图片×worker 反应**：不同人面对同一证据作出不同解释；
+- **同一人内部波动**：需要盲重复图才能直接估计，当前数据没有。
+
+现有全数据交叉方差输出显示（这是既有辅助模型，不是对本轮RQ1 Manual子集重新拟合；各 outcome 的可用人群也不同）：
+
+| outcome | task/image | worker | residual | 支持 |
+|---|---:|---:|---:|---|
+| geometry mean pairwise RMSE | 65.25% | 2.75% | 31.99% | 2168行、205任务、26人 |
+| quality IoU to GT | 55.99% | 2.91% | 41.10% | 717行、79任务、23人 |
+| `log1p(active_time)` | 11.56% | 51.72% | 36.73% | 2069行、214任务、24人 |
+
+这不表示 geometry 只有2.75%与人有关：worker 主效应只捕获跨任务稳定平移，图片×worker 反应进入残差。另一方面，也不能把31.99%全部命名为“人的内部不确定性”。任务分层置换检测到 largest-mode participation 与任务中心化结构数量的 worker heterogeneity，但 supported-minority tendency 未检出；Manual 随机 split-half 的 worker largest-mode rate 中位 Spearman 仅0.257（IQR 0.149–0.360）。因此本研究可报告 worker random effect/tendency，不应建立固定工人类型。
+
+人的差异与质量有联系，但不是同义词。若 reference 本身不唯一或图像支持替代解释，与 GT 较远不自动等于错误；需把分歧、结构有效性、reference质量和盲审并列。全新工人可以用于后续三臂实验，因为 RQ2/RQ3 估计的是统一流程下新 cohort 的平均响应；只要统一培训、跨条件平衡、保留匿名 worker ID并在模型中控制 worker。只有研究历史画像的纵向预测时才必须使用原工人。
+
+active time 更像个人节奏、工作投入、熟悉度和编辑量的混合指标。22名有完整时间画像的工人，其 task-adjusted active time 中位数为123.0秒（IQR 65.4–165.1，范围11.0–401.8）；与 `Q_GT_EB`、`R_peer_stable`、`F_struct_EB` 的 Spearman 分别为 -0.287、-0.159、-0.012。结合上面的51.72% worker时间方差，active time 只能作效率/努力和人—任务反应的辅助分析，不能作为不确定性分数、质量代理或工人筛选轴。
+
+对应复核表见 `human_component_summary.csv`。
 
 ## 3. 人数增加后，哪些东西稳定
 
@@ -142,17 +167,17 @@ cluster 结果必须与连续 `D_mask`、cardinality、scope 分歧分轴阅读�
 
 ## 5. 可用于论文的 RQ1 草稿
 
-> **RQ1：在曼哈顿全景布局标注协议下，独立标注输出在连续几何、垂直边界数量与可计算性方面呈现多大、何种形式的差异；这些差异的估计随每图标注者支持数增加如何稳定，并与标注者报告的困难线索及行为负担有何关联？**
+> **RQ1：在曼哈顿全景布局标注协议下，默认独立的 Manual 输出在连续几何、垂直边界数量与可计算性方面呈现多大、何种形式的差异；其中图片/任务、标注者主效应与未分解的人—图反应各占什么角色；这些差异的估计随每图支持数增加如何稳定，并与主观困难及行为负担有何关联？**
 
 建议主术语使用 **inter-annotator output variability / operational annotation reproducibility**。在没有专家确认多个模式都与图像证据相容前，不用 ground-truth uncertainty 或 multiple correct layouts。
 
 ### 方法段草稿
 
-我们将分析单元定义为 `base image × stage/batch × condition`，同一 worker 在单元内保留分析器所选的最新未取消版本。历史 formal eligibility 不作为新的探索性排除规则；几何不可计算记录独立计数，不赋为最大距离。连续主指标为同图 calculation-valid 标注之间 `1 − wall-region mask IoU` 的平均值，并以 boundary 与 vertical-wall-event 距离作同源敏感性；结构轴仅统计垂直边界 cardinality，不将角点数误称为完整拓扑。所有总体汇总按图片单元而非 pair 加权。对高密度 P1/C1 子集从有限有效 roster 随机无放回 rarefaction，估计不同 k 下连续分歧误差与 cardinality 检出概率。困难标签与 active time 仅作 post-response 描述性关联，并按 building bootstrap；scope-adjusted partial rank 只作混杂敏感性。
+我们将分析单元定义为 `base image × stage/batch × condition`，同一 worker 在单元内保留分析器所选的最新未取消版本。Manual 独立性按协议假定，历史 formal eligibility 不作为新的探索性排除规则；几何不可计算记录独立计数，不赋为最大距离。连续主指标为同图 calculation-valid 标注之间 `1 − wall-region mask IoU` 的平均值，并以 boundary 与 vertical-wall-event 距离作同源敏感性；结构轴仅统计垂直边界 cardinality，不将角点数误称为完整拓扑。所有总体汇总按图片单元而非 pair 加权。对高密度 P1/C1 子集从有限有效 roster 随机无放回 rarefaction，估计不同 k 下连续分歧误差与 cardinality 检出概率。交叉方差与任务分层 worker 稳定性用于区分图片、worker主效应和未分解残差；困难标签与 active time 仅作 post-response 描述性关联。
 
 ### 结果段草稿
 
-现有 Manual 数据覆盖 218 个批次内图片单元，其中按当前 C1 repair/calculation 口径有 118 个达到 `k≥5`，46 个达到 `k≥15`；`k≥5` 层 `D_mask` 中位数为 0.097（IQR 0.059–0.164）。高密度有限-roster 重抽样表明，较少标注者可粗略估计平均连续分歧，但稀有 cardinality 检出需要更高支持，且 k* 对容差选择敏感。困难与 seam 的 raw 关联受到 scope 明显混杂；active time 仅呈弱到中等关联。固定阈值筛查能找到对单人 LOO 和 k=15 子样本较不敏感的高差异候选，但 cluster 尚未验证相同几何分区或模式稳定，故候选只能进入盲法专家审查，不能视为已经证明的多个合理真值。
+现有 Manual 数据覆盖 218 个批次内图片单元，其中按当前 C1 repair/calculation 口径有 118 个达到 `k≥5`，46 个达到 `k≥15`；`k≥5` 层 `D_mask` 中位数为 0.097（IQR 0.059–0.164）。geometry 方差中图片/任务、worker主效应、残差约占65.25%、2.75%、31.99%；部分worker tendency可检测但split-half稳定性弱，故不建立工人类型。高密度有限-roster重抽样表明，较少标注者可粗略估计平均连续分歧，但稀有cardinality检出需要更高支持，且k*对容差选择敏感。困难与seam的raw关联受到scope明显混杂；active time仅呈弱到中等关联且主要具有worker-specific成分。固定阈值候选只能进入盲法专家审查，不能视为已经证明的多个合理真值。
 
 ## 6. 与 Semi / 曼哈顿约束的边界
 
@@ -217,3 +242,11 @@ Semi 的模型初始 proposal 被强制满足曼哈顿结构，但仍可能偏�
 原始版本数 2513；按 `stage/project/runtime task/worker` 取最新未取消版本后 2501。该数量与中性整理底座 `annotation_spine.csv` 的 2501 行一致，但逐 acquisition key 比较只有 2500/2501 个 annotation identity 相同。唯一差异是 C1 project 66 / task 3192 / worker 34：分析器按时间选 6053，正式 spine 选 6052；两版本 result content 完全相同，因此本次几何与 difficulty 数值不变，但它是 provenance gap，不能写成 canonical 身份完全一致。
 
 整理底座仅用于覆盖/身份交叉核验，没有被提升为本次几何重算的输入真源。P1/C1 的整理层与原始重算已有既有审计；C2-B 作为历史证据保留，C2-A-RP 已 terminal closeout。`SOURCE_AND_METHOD_SUMMARY.json` 记录生成器及直接依赖脚本 SHA、dirty worktree 状态、seed 和参数；所有生成表的 SHA 写入 `OUTPUT_MANIFEST.csv`。
+
+## 10. 本轮方向审计附件
+
+- `human_component_summary.csv`：从现有方差、worker viewpoint、时间画像和RQ1时间结果中抽取的可复核长表；没有重估正式工人画像。
+- `meta_label_research_mapping.csv`：当前 forward-local 元标签的构念、RQ、分析角色、保留/删除候选与 legacy 兼容边界；不改变 XML。
+- `literature_claim_audit.csv`：对最相关原始论文逐条记录“能支持什么/不能推出什么”，并修正 Zhou 文献出处与 Schroeder 元数据冲突。
+
+三张表都是本探索性草稿的审计附件，不是正式 schema、方法合同或启动授权；原始导出、active logs、旧元标签和已关闭 C2 工件均未改动。

@@ -2,8 +2,10 @@
 
 > **状态：DRAFT / NON-NORMATIVE / NOT APPROVED**  
 > **用途：仅供与导师讨论、修改和确认，不是正式协议，不得据此直接生成任务或启动实验。**  
-> **日期：2026-08-24**  
+> **日期：2026-08-27（讨论稿修订）**
 > **建议方案：20名标注者、72张拟纳入实验图片、每图5 Manual + 5 Correct-Semi + 5 Wrong-Semi、24图×3批次。**
+
+本轮修订发生在导师尚未正式沟通或批准之前。全文中的 RQ、样本量、字段和分析方法都只是候选；`Manual` 默认按协议假定为独立标注，但不声称平台事件能够逐条证明独立性。20人是候选实验 cohort 的规模，不绑定历史工人，可以全部招募新工人。
 
 ## 0. 文档边界
 
@@ -27,7 +29,7 @@
 已有数据和文献共同提示：标注者之间的差异不能全部视为随机错误；共享模型预标注也可能同时带来有益信息和共同锚定。因此，本研究不把“标注越一致越好”作为前提，而是研究以下机制链：
 
 ```text
-无预标注时的自然拓扑—几何分歧
+无预标注时的自然布局输出分歧
             ↓
 正确或错误的共享预标注改变最终标注分布
             ↓
@@ -50,10 +52,10 @@
 
 在没有共享模型预标注的条件下，独立标注者对同一张 360°布局图片的最终结果有多不一致？这种不一致由以下哪些部分组成：
 
-- 拓扑/结构选择不同；
-- 同一拓扑下的连续几何位置差异；
-- 两个或更多受支持模式；
-- 有限、任务调整后的标注者差异。
+- 连续几何/空间范围不同；
+- 当前数据可可靠恢复的离散结构代理（如垂直边界数量）不同；
+- 在有限工人池中是否出现受支持的候选模式；
+- 图片/任务、标注者主效应以及图片×标注者/残差成分。
 
 ### RQ2：预标注如何改变这种不一致？
 
@@ -79,7 +81,7 @@
 
 ### Study 1：历史数据中的自然标注不确定性
 
-主要回答 RQ1。使用现有 P1–C2-A-RP 中性数据底座，不增加新的高密度重复标注。
+主要回答 RQ1。使用现有 P1–C2-A-RP 数据中按协议默认独立的 Manual 输出，不增加新的高密度重复标注。这里的“独立”是 protocol assumption，不是由阶段锁或事件日志逐条证明的事实。
 
 ### Study 2：Correct/Wrong proposal 三臂随机实验
 
@@ -115,42 +117,31 @@ Study 1 提供单图“深度”，Study 2 的 Manual 臂提供跨图片“广�
 
 ### 4.2 当前高密度 Manual 数据
 
-可用于高密度自然分布分析的核心数据为：
+当前 Manual 数据不能只分成“42张可用、其余不可用”。最新去重与可计算性审计得到：
 
-| 来源 | 图片数 | 每图可计算 Manual 数 | 主要用途 |
-|---|---:|---:|---|
-| P1 Manual | 30 | 24–26 | 单图拓扑分布、多峰、少数模式 |
-| C1 高支持 Manual | 12 | 23 | 独立高支持复核 |
-| 合计 | 42 | 约1,017条几何标注 | RQ1 深度证据 |
+| 支持层 | 批次×图片单元数 | 当前可回答内容 |
+|---|---:|---|
+| `k≥5` | 118 | 图片级连续分歧分布、困难/时间辅助关联 |
+| `k=2–4` | 60 | 成对或小样本描述、分层敏感性 |
+| `k=1` | 39 | 有效性、元标签和时长；不能估计同图人际分歧 |
+| `k=0` | 1 | 显式记为不可评估 |
 
-这42张图足以估计本研究任务样本中的平均不一致程度、拓扑与连续几何组成，并识别占比较高的主要模式；但图片级独立样本量仍是42，不是1,017，也不是成千上万个标注对。
+218个 Manual 单元对应187张唯一图片；同图跨批次重复不算新的独立图片。42张 P1/C1 高密度图（每图23–26个可计算结果）仍是有限工人池人数校准的主层，另有4张 C2-B `k=19–20` 任务作为不同批次复核，不能无条件混成同一总体。
 
-因此，当前数据不适合声称精确估计“所有360°布局图片的多峰发生率”，也不支持大量细分亚组。以图片比例估计为例，`N=42` 在最坏情况下的95%抽样误差约为±15个百分点，且任务选择偏差可能比该抽样误差更大。
+42张高密度图足以描述当前任务样本和当前历史有效工人池中的平均连续分歧，并评估人数下采样后统计量的恢复；它尚不足以证明完整几何模式、多个正确答案或总体多峰发生率。图片级独立样本量不是标注条数或标注对数。
 
 ### 4.3 少数模式检出能力
 
-若某少数模式真实占比为 `p`，每图有 `k` 个独立标注，至少观察到2次该模式的概率为：
+最新下采样直接以42张 P1/C1 高密度图的有限历史有效工人池为目标。在每图23–26个 strict-valid 结果中无放回抽取 `k={3,5,8,10,12,15,20}`，每个节点重复1000次：
 
-\[
-P(X\ge2)=1-(1-p)^k-kp(1-p)^{k-1}.
-\]
+- `k=5` 时，`P(|D_mask(k)-D_mask(full)|≤0.03)=0.648`；`k=8` 为0.751；`k=15` 为0.909。
+- 在 full roster 确有多个垂直边界数量的任务中，`k=5` 检出多个 count 的平均概率为0.634；`k=8` 为0.731；`k=15` 为0.882；`k=20` 为0.954。
 
-| 少数模式占比 | k=5 | k=12 | k=20 | k≈24–26 |
-|---:|---:|---:|---:|---:|
-| 10% | 8.15% | 34.10% | 60.83% | 约71%–75% |
-| 20% | 26.27% | 72.51% | 93.08% | 约97% |
-
-仓库对12个高支持C1任务的prefix replay也显示：其中在 `q=0.95`、全量 `k=22` 时被判为受支持多峰的6张图，降采样后在 `k=5` 时重新识别率约18%，`k=12` 约73%，`k=20` 约92%。这是富集样本中的条件检出率，不是自然图片总体的多峰率。
-
-因此：
-
-- RQ1 的多峰和少数模式使用历史高密度数据；
-- Study 2 每臂 `k=5` 不用于估计单图完整模式 prevalence；
-- Study 2 主要估计跨图片的平均两两不一致变化。
+这些概率只衡量有限历史 roster 的统计量恢复，不外推到全新工人总体，也没有验证完整几何模式。Study 2 每臂 `k=5` 的职责仍是估计跨图片平均分歧干预；它不承担单图低频模式 prevalence 的精确恢复。
 
 ### 4.4 方差证据
 
-当前交叉方差分解约为：
+当前既有全数据交叉方差分解约为（不是为本轮RQ1 Manual子集重新拟合；不同 outcome 的可用行和任务集合不同，比例不可相互当作同一量纲比较）：
 
 | 结果 | 图片/任务方差 | worker方差 | 残差 |
 |---|---:|---:|---:|
@@ -158,7 +149,21 @@ P(X\ge2)=1-(1-p)^k-kp(1-p)^{k-1}.
 | quality IoU | 55.99% | 2.91% | 41.10% |
 | log active time | 11.56% | 51.72% | 36.73% |
 
-因此，研究平均分布干预时应优先增加独立图片，而不是把少量图片从每臂5人提高到6–7人。时间分析则必须控制 worker 差异。
+geometry 的 worker 主效应较小不表示“人的成分可以忽略”：31.99%的残差还混合了图片×标注者反应、测量误差与未建模因素。它只说明在现有交叉数据中，稳定的跨任务 worker 平移远小于图片差异。研究平均分布干预时应优先增加独立图片；时间分析则必须控制 worker 差异。
+
+### 4.5 文献再核验边界
+
+早期调研可作为研究背景，但以下结论必须按原始论文降级：
+
+| 文献 | 可支持 | 不能推出 |
+|---|---|---|
+| [Zhou et al., CCL 2021](https://aclanthology.org/2021.ccl-1.48/) | 机标人校与人机独立流程的一致性和成本不同，作者讨论认同倾向 | 不是“2022《清华大学学报》”；也不是同图随机 Correct/Wrong proposal 因果实验 |
+| [Sensakovic et al., Medical Physics 2010](https://pmc.ncbi.nlm.nih.gov/articles/PMC2874038/) | 共同初始轮廓使三名观察者的平均两两 Jaccard 从0.371升到0.796，74.5%仅轻微修改，直接证明初始化会压缩输出差异 | 没有独立真值和时间记录，不能说一致性提高等于质量提高，也没有检验“正确帮助、错误伤害” |
+| [Mikulová et al., LREC 2022](https://aclanthology.org/2022.lrec-1.312/) | 高精度 parser 预标注约提速1.7倍，提高一致性且未观察到质量损失 | 不能外推到错误 proposal 或全景布局 |
+| [Kiani et al., npj Digital Medicine 2020](https://www.nature.com/articles/s41746-020-0232-8) | 临床诊断中正确建议帮助、错误建议伤害，支持 proposal correctness 是重要调节因素 | 任务是诊断而非几何标注，只能作为邻近机制证据 |
+| [Schroeder et al., Findings ACL 2025](https://aclanthology.org/2025.findings-acl.1323/) | LLM 建议提高主观信心、改变标签分布，却没有加快标注 | 网页与正式PDF的参与人数元数据不一致，引用时不应无说明地写精确N；主观NLP也不等于布局标注 |
+
+因此，本项目可以把“共享 proposal 改变人类输出分布”作为有文献动机的问题，但 Correct/Wrong 对分歧、墙体残差和最终质量的方向都必须由本实验检验，不能预写成结论。
 
 ---
 
@@ -166,7 +171,7 @@ P(X\ge2)=1-(1-p)^k-kp(1-p)^{k-1}.
 
 ### 5.1 分析层
 
-#### A. Independent Manual population
+#### A. Protocol-assumed independent Manual outputs
 
 用于估计无共享 proposal 时的自然标注分布：
 
@@ -219,74 +224,37 @@ D_{\text{layout},i}
 
 若正式实现不采用 pairwise layout IoU，替代距离必须在查看 Study 2 条件结果前冻结，并明确量纲、有效范围、拓扑不兼容处理和数值稳定性。
 
-#### 5.2.2 拓扑不一致
+#### 5.2.2 可可靠恢复的离散结构代理
 
-先冻结 topology signature。候选组成至少包括：
+当前原始数据没有冻结且经验证的角点循环顺序，完整 topology signature（转向序列、闭合、简单环和 seam/cyclic invariance）不作为确认性指标。次要结果只使用可以从当前输出稳定计算并审计的代理：
 
 - point/corner count；
-- vertical boundary count；
-- topology validity；
-- cyclic ordering/closure；
-- 可审计的结构签名或hash。
+- vertical boundary cardinality；
+- geometry computability / structural validity。
 
-图级拓扑不一致率：
+cardinality disagreement 只能写成“离散结构代理差异”，不能改称完整房间拓扑差异。
 
-\[
-D_{\text{top},i}
-=\frac{2}{k_i(k_i-1)}
-\sum_{a<b}I(g_{ia}\ne g_{ib}).
-\]
+#### 5.2.3 连续几何敏感性
 
-#### 5.2.3 同拓扑连续几何离散
+`D_layout=1−IoU` 已经对范围和部分结构差异敏感。boundary/wall 指标可作为同源几何敏感性；当前不强行实现需要唯一 cyclic correspondence 的 same-topology RMSE。若未来确实收集并验证顺序信息，再另行增加，不在本稿中预留复杂签名。
 
-只在 topology signature 相同、度量兼容且 cyclic correspondence 唯一的标注对中计算：
+#### 5.2.4 候选模式
 
-- cyclic RMSE；
-- median/mean/q90；
-- boundary similarity；
-- wall-wall similarity。
+聚类目前只作 threshold-status 和候选抽样诊断，报告阈值、可计算性与下采样敏感性。算法分组不自动等于多个合理布局；只有在盲审和重采样都支持同一分区、成员与原型时，才可升级为稳定模式证据。本稿不把 cluster 数、entropy 或“多峰率”列为确认性结果。
 
-没有合格同拓扑标注对时写 `not_evaluable`，不得补零。
+### 5.3 “人的不确定性”如何进入 RQ1
 
-#### 5.2.4 多峰与模式
+人的成分不等于工人质量，也不只等于 worker 主效应。当前数据可区分三个描述层：
 
-模式分析只在高支持数据中进行，并报告多个阈值，例如：
+1. **task/item 成分**：某些图片在当前协议和工人池下普遍更易产生分歧；
+2. **worker 主效应**：有人跨图系统性使用更多/更少结构或更靠近多数结果；
+3. **item×worker/残差**：不同人对同一图片证据作出不同反应，加上测量误差和未建模因素。
 
-```text
-q = 0.90 / 0.925 / 0.95 / 0.97 / 0.98
-```
+现有 geometry 方差分解为 task 65.25%、worker 2.75%、残差31.99%。这支持“图片是主要稳定来源，人的条件反应仍占有实质部分”，但不能把残差全部命名为人的内部不确定性。当前没有同一工人的盲重复图，无法估计同一个人的 test–retest 波动。
 
-至少报告：
+worker tendency 的确有部分证据：任务分层置换显示 largest-mode participation 和任务中心化结构数量存在工人异质性；但 supported-minority tendency 没有证据，Manual 随机 split-half 的 worker largest-mode rate 中位 Spearman 仅0.257（IQR 0.149–0.360）。因此不建立“锚定型/探索型”等工人画像，只报告连续 worker/random-effect 与稳定性边界。
 
-- supported multimodal rate；
-- largest mode share；
-- mode count；
-- Shannon entropy / Gini–Simpson；
-- partition not-evaluable/non-identifiable rate；
-- 阈值与下采样敏感性。
-
-模式算法识别出的分组不自动等于“多个合理布局”。对稳定模式抽样进行 outcome-blind 审查，区分：
-
-- 合理替代拓扑；
-- 协议诱导差异；
-- 同拓扑连续偏差；
-- 清晰标注错误；
-- 表示或对应关系错误；
-- 聚类伪影；
-- reference 问题。
-
-### 5.3 标注者异质性
-
-不先对标注者聚类，也不预先命名“锚定型”“探索型”等类别。先估计任务调整后的连续倾向：
-
-- quality residual；
-- geometry disagreement residual；
-- topology complexity residual；
-- largest/minority mode participation；
-- active-time residual；
-- 历史 proposal retention/correction tendency。
-
-只有 split-half、held-out task 或 bootstrap 显示足够稳定时，才讨论可复现的 worker tendency；否则只报告总体 worker variance 有限。
+质量是另一条轴：与 reference 偏离可能是错误，也可能是可见图像支持的替代解释。人的差异只有在独立 reference、结构有效性或盲审支持后才能被解释为质量差异；不得用“与多数人不同”直接定义低质量。
 
 ---
 
@@ -303,6 +271,8 @@ q = 0.90 / 0.925 / 0.95 / 0.97 / 0.98
 每图15份结果，5名标注者对该图不暴露
 24张图 × 3个批次
 ```
+
+这里的20人可以全部是新工人。新 cohort 需统一 onboarding、中文说明、练习图和界面版本，并让每人跨多个图片与三个条件重复贡献，以便在模型中估计 worker 效应。历史工人画像不是 RQ2/RQ3 主效应估计的前提；只有研究“历史行为能否预测未来 reliance”时才必须继续使用原工人。若混合新旧工人，应预先记录 cohort，并分层或加入 cohort interaction，不能无条件合并。
 
 总任务量：
 
@@ -330,7 +300,7 @@ q = 0.90 / 0.925 / 0.95 / 0.97 / 0.98
 
 每图 `5/5/5` 的目标是估计跨图片的平均分布干预，不是重建每个条件下的完整少数模式分布。
 
-`15人/条件` 需要45名独立标注者。当前只有20人；让同一人重复看同一图的不同条件会产生记忆、学习和锚定污染，不能视为45份独立证据。
+`15人/条件` 需要45名独立标注者。候选设计规模为20人；让同一人重复看同一图的不同条件会产生记忆、学习和锚定污染，不能视为45份独立证据。
 
 ### 6.3 Worker–image 分配
 
@@ -574,6 +544,27 @@ Label Studio 要求控制字段名称唯一，因此本地采集配置使用两�
 
 这些是 worker response 或post-treatment机制结果，不是 researcher-side图片资格真值，也不用于该图首次分配。
 
+### 7.5 元标签的最小研究映射与历史兼容
+
+不要求“每个选项独立对应一个 RQ”。科学要求是：每个字段有预先说明的构念、分析用途和不解释边界；分支/QA 字段可以没有独立假设。当前候选映射为：
+
+| 字段 | 研究作用 | 当前裁决 |
+|---|---|---|
+| `worker_scope_response` | RQ1：标注者对任务适用性/scope 的响应 | 保留；不是 researcher truth |
+| `multiple_plausible_layouts` | RQ1：主观多解判断，与几何候选模式交叉检查 | 保留；单独不能证明客观多解 |
+| `perceived_difficulty` | 主观负担及处理后反应 | 辅助保留；不等于不确定性或质量 |
+| `difficulty_reason_status` | 区分“无原因”和漏填 | 仅QA，无独立研究结论 |
+| `difficulty_reason` | 遮挡、低纹理、拼接、反射、开口、图像质量等探索性机制 | 可选探索；`other`本身不可解释 |
+| `material_issue` | RQ3：Correct/Wrong proposal 的二元识别响应 | 核心保留 |
+| `issue_confidence` | RQ3：对 Model Issue 判断的主观信心/校准 | 核心保留；不是最终布局信心 |
+| `primary_issue_family` | RQ3：错误家族识别 | 仅在 Wrong truth family 预先冻结时保留；`topology_or_overparsing`是双重类别，正式算family accuracy前应拆分或降为宽泛类 |
+| `required_correction` | 预期修正程度与实际 geometry delta 的关联 | 仅在明确研究识别—行动链时保留；`major`目前缺少统一数值阈值 |
+| `no_issue_handling` | `material_issue=no` 后的处理意图 | 与二元判断和最终几何变化高度冗余，列为删除候选，不作为独立结果 |
+
+如果导师明确把“个体对最终答案的主观不确定”设为核心，才考虑为三个臂共同增加一个 `layout_confidence=1–5`；当前不因理论完整性先加字段。当前本地 XML 尚未部署，本轮不改 XML。
+
+旧元标签不追溯作废、不删除、不自动重编码：旧 `scope=normal` 含“唯一可复现”语义，旧 difficulty 和旧多选 `model_issue` 也与新字段构念不同。旧数据按 legacy schema 原样分析；新实验若获批，才冻结 forward schema。`historical_data_reclassified=false` 保持不变。
+
 ---
 
 ## 8. RQ2 结果定义
@@ -624,18 +615,20 @@ Wrong-Semi − Correct-Semi
 
 关键次要指标：
 
-- `D_top`：拓扑不一致率；
-- `D_geo`：同拓扑 pair 的连续几何离散；
-- topology change rate；
-- largest topology share；
+- vertical-boundary cardinality disagreement；
+- point/corner count disagreement；
+- geometry computability / structurally valid rate；
+- proposal-to-final edit magnitude；
 - 同图/同臂可评价覆盖率。
 
 以下只作探索性：
 
-- 单图 mode count；
-- rare-mode prevalence；
+- 单图候选 mode count；
+- rare-cardinality prevalence；
 - supported multimodality；
 - partition identifiability。
+
+除非未来补充并验证顺序数据，Study 2 同样不使用完整 topology signature 作为确认性指标。
 
 ### 8.4 质量与安全结局
 
@@ -734,7 +727,7 @@ Model Issue 是处理后的response/mediator，不得作为普通协变量加入
 
 ## 10. Active time
 
-Active time 是次要效率结局，不是标注不确定性的替代指标。
+Active time 是次要效率/努力结局，不是标注不确定性的替代指标。它混合个人速度、熟悉度、投入、疲劳、实际编辑量、图片证据和界面行为；时间变长不能单独解释为更不确定、质量更差或更认真。
 
 规则：
 
@@ -752,7 +745,9 @@ Active time 是次要效率结局，不是标注不确定性的替代指标。
 \sim condition+batch+(1|worker)+(1|image).
 \]
 
-当前数据中active time的worker方差远高于task方差，因此不得直接比较三臂原始时间均值作为唯一检验。
+当前2069条正式时间记录的 `log1p(active_time)` 方差分解约为 task 11.56%、worker 51.72%、残差36.73%。22名有完整时间画像的工人中，task-adjusted active time 中位数为123.0秒（IQR 65.4–165.1，范围11.0–401.8）；它与 `Q_GT_EB`、`R_peer_stable`、`F_struct_EB` 的 Spearman 分别为 -0.287、-0.159、-0.012。样本小且是描述性关联，但足以否定把“快/慢”直接当作能力或质量代理。
+
+因此 active time 可辅助回答：条件是否改变成本、同一工人在不同图片上的额外耗时是否伴随更多分歧/修改、worker 之间节奏差异有多大。它不能单独定义“人的不确定性”，也不得改变现行 worker rank、eligibility、routing 或正式画像合同。
 
 ---
 
@@ -941,15 +936,7 @@ design-effect sensitivity = 1.4
 
 这些是假设条件，不是显著结果保证。
 
-现有25个C1 Manual/Semi配对图的拓扑不一致差值SD约0.473。以此作为粗略规划参考，80% MDE约为：
-
-| 图片数 | 不加DE | DE=1.4敏感性 |
-|---:|---:|---:|
-| 60 | 0.171 | 0.202 |
-| 72 | 0.156 | 0.185 |
-| 80 | 0.148 | 0.175 |
-
-因此，72图能够检验中等偏大的平均拓扑分歧变化，但不能保证检出0.05–0.10的小效应。正式启动前应使用与最终 `D_layout` 完全一致的距离、受限随机分配和缺失机制进行重抽样功效模拟。
+旧的25个C1 Manual/Semi配对图“拓扑差值SD/MDE”依赖未验证的结构签名，又来自非随机历史 Semi，不再作为本方案的规划证据。72图只是符合当前人均容量且优先图片覆盖的候选折中，不能保证显著性。正式启动前应使用与最终 `D_layout` 完全一致的距离、受限随机分配、worker/image交叉依赖和缺失机制进行重抽样功效模拟；若该模拟显示目标效应不可识别，应调整声明或方案，而不是事后寻找显著指标。
 
 ### 14.3 允许的结论
 
@@ -969,6 +956,22 @@ design-effect sensitivity = 1.4
 - 把历史自然Semi数据当作随机Correct/Wrong实验；
 - 把building、语言或error family事后提升为主要研究问题。
 
+### 14.4 从最初方案到当前最小方案
+
+三条 RQ 的机制链没有改变；变化主要是把不可验证或不必要的实现降级：
+
+| 最初/中间版本内容 | 当前处理 |
+|---|---|
+| RQ1 人际分歧、RQ2 proposal 改变分歧、RQ3 Model Issue–结果 | 保留 |
+| 只看42张高密度图 | 改为全部 Manual 按支持数分层；42张只承担人数校准 |
+| 完整 topology signature、same-topology cyclic RMSE | 当前数据缺少可靠顺序，删除确认性地位；只保留 cardinality/validity 代理 |
+| 稳定多峰、worker 类型 | 降为候选/稳定性审计；不命名工人画像 |
+| active time 作为一种不确定性 | 改为效率、努力和人—任务反应的辅助指标 |
+| RQ3 独立 Study 3、完整编辑轨迹 | 保持为 Study 2 内次级关联；不做阶段锁、不声称完整轨迹 |
+| 80图、24–30新工人、自适应人数、模型uncertainty对齐、概率布局、下游任务 | 不纳入当前默认方案；80图仅是容量硬上限参考 |
+
+这次删减不是改变研究方向，而是让每个主结论都落在现有或计划采集的数据上。剩余明显的过度设计候选是四类 Wrong 的细分、`primary_issue_family`、`required_correction` 和全部困难原因；是否保留由导师决定，不应同时作为主要假设。
+
 ---
 
 ## 15. 最低交付与审计工件（导师批准后才生成）
@@ -983,7 +986,7 @@ design-effect sensitivity = 1.4
 6. 三批Label Studio导入包与项目命名；
 7. runtime task mapping；
 8. 中文培训和界面测试记录；
-9. Model Issue技术锁验证；
+9. Model Issue字段顺序、条件分支和提交校验（明确无技术阶段锁）；
 10. active-time来源验证；
 11. 字段合同、missing/failure disposition；
 12. 与最终primary metric一致的功效模拟；
@@ -1003,11 +1006,13 @@ design-effect sensitivity = 1.4
 - [ ] 是否同意72图、20人、5/5/5、24×3；
 - [ ] 是否同意每人最终Manual 18、Semi 36；
 - [ ] 是否同意总体pairwise layout dissimilarity作为RQ2 primary；
-- [ ] topology和same-topology geometry分解是否充分；
+- [ ] 是否同意当前只使用cardinality/validity代理，不把完整topology signature列为确认性指标；
 - [ ] Correct/Wrong operational truth及盲审要求；
 - [ ] 四类Wrong family和中等severity；
 - [ ] `material_issue=yes/no + confidence 1–5`，不提供unsure；
-- [ ] 是否要求Model Issue技术锁作为RQ3启动前提；
+- [ ] 是否删去冗余的`no_issue_handling`，以及是否确有必要保留`primary_issue_family`和`required_correction`；
+- [ ] 是否把三个臂通用的`layout_confidence`纳入核心；若不是核心则不新增；
+- [ ] 是否接受只按界面顺序要求编辑前自报、不实现或声称Model Issue技术锁；
 - [ ] 三批之间的运营门和manipulation诊断；
 - [ ] 缺失、结构无效、technical replacement规则；
 - [ ] permutation/bootstrap、multiplicity和功效方案；
@@ -1031,6 +1036,10 @@ design-effect sensitivity = 1.4
 - `analysis_results/manual_semi_correctness_oos_20260823/CURRENT_TASK_EFFECT_VARIATION_REFERENCE.csv`
 - `analysis_results/manual_semi_correctness_oos_20260823/DESIGN_OPTIONS_RESOURCE_ACCOUNTING.csv`
 - `analysis_results/manual_semi_correctness_oos_20260823/CONDITIONAL_INTERACTION_POWER.csv`
+- `analysis_results/rq1_stratified_uncertainty_20260827_v1/RQ1_STRATIFIED_UNCERTAINTY_REPORT_ZH.md`
+- `analysis_results/rq1_stratified_uncertainty_20260827_v1/human_component_summary.csv`
+- `analysis_results/rq1_stratified_uncertainty_20260827_v1/meta_label_research_mapping.csv`
+- `analysis_results/rq1_stratified_uncertainty_20260827_v1/literature_claim_audit.csv`
 
 当前配置与边界：
 
@@ -1049,6 +1058,6 @@ design-effect sensitivity = 1.4
 
 在导师确认前，本研究最简洁、可执行且相对严谨的候选版本为：
 
-> 使用现有42张高密度Manual图片回答自然标注分歧的深度问题，并以新的72张未暴露图片开展三臂同图随机实验。每张图由5名Manual、5名Correct-Semi和5名Wrong-Semi标注，20名标注者通过受限轮换实现每人18个Manual和36个Semi任务。正式发放分为3批，每批24图。RQ2以图像等权的平均两两布局不相似度为主结果，拓扑和同拓扑几何离散负责分解；质量与时间用于判断收敛是否有益。Semi任务按界面顺序先填写二元Model Issue判断、1–5信心及对应处理分支，再完成布局编辑；本研究不实施阶段锁或阶段事件上报。多人yes/no投票分布定义Model Issue层面的结果不确定性。所有Correct/Wrong truth、随机分配、字段、失败处理和推断方法须在结果可见前冻结。
+> 使用全部历史Manual输出按支持数分层描述自然标注分歧，并以42张P1/C1高密度图校准有限工人池下的人数稳定性；后续候选实验使用72张未暴露图片开展三臂同图随机实验。每张图由5名Manual、5名Correct-Semi和5名Wrong-Semi标注，20名标注者（可以全部为统一培训的新工人）通过受限轮换实现每人18个Manual和36个Semi任务，分3批、每批24图。RQ2以图像等权的平均两两布局不相似度为主结果，以cardinality、结构有效性、proposal-to-final变化和独立reference质量作分解与安全解释；不强行实现完整topology signature。RQ3保留为Study 2内的Model Issue识别—行动关联。本研究不实施阶段锁或阶段事件上报。所有内容仍待导师确认，Correct/Wrong truth、随机分配、字段、失败处理和推断方法只有在批准后才冻结。
 
 该建议仍是导师讨论稿，不得直接作为启动授权。
