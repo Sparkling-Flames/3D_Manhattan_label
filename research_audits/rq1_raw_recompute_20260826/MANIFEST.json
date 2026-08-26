@@ -1,0 +1,57 @@
+{
+  "manifest_id": "rq1_raw_recompute_20260826_visible_publication_v1",
+  "status": "audit_non_normative",
+  "published_on_branch": "main",
+  "raw_data_baseline_commit": "f3c7b713c6cff6c08dc1fe231c7e84b8db1774ee",
+  "first_complete_materialization_commit": "c8344d84e0e548c88f88eae14164f5d9389b9696",
+  "canonical_selection_rule": "latest non-cancelled version within project_id x runtime_task_id x worker_id, ordered by updated_at then created_at then numeric annotation_id",
+  "visible_entrypoints": [
+    "research_audits/rq1_raw_recompute_20260826/README.md",
+    "research_audits/rq1_raw_recompute_20260826/key_results.csv"
+  ],
+  "recompute_scripts": [
+    "tools/thesis_main/analysis/raw_rq1_audit_20260826.py",
+    "tools/thesis_main/analysis/raw_rq1_recompute_20260826.py",
+    "tools/thesis_main/analysis/raw_rq2_null_replay_20260826.py",
+    "tools/thesis_main/analysis/raw_difficulty_time_recompute_20260826.py",
+    "tools/thesis_main/analysis/raw_difficulty_time_recompute_v2_20260826.py"
+  ],
+  "workflow": ".github/workflows/rq1-raw-audit-20260826.yml",
+  "key_machine_readable_outputs": [
+    "analysis_results/rq1_raw_audit_20260826/raw_schema_summary.json",
+    "analysis_results/rq1_raw_audit_20260826/raw_export_file_summary.csv",
+    "analysis_results/rq1_raw_recompute_20260826/SUMMARY.json",
+    "analysis_results/rq1_raw_recompute_20260826/raw_source_selection_summary.csv",
+    "analysis_results/rq1_raw_recompute_20260826/task_support_and_geometry_metrics.csv",
+    "analysis_results/rq1_raw_recompute_20260826/high_density_task_metrics.csv",
+    "analysis_results/rq1_raw_recompute_20260826/c1_core_k_ge5_task_metrics.csv",
+    "analysis_results/rq1_raw_recompute_20260826/support_calibration_summary.csv",
+    "analysis_results/rq1_raw_recompute_20260826/boundary_count_detection_summary.csv",
+    "analysis_results/rq1_raw_recompute_20260826/high_density_cluster_prefix_summary.csv",
+    "analysis_results/rq1_raw_recompute_20260826/high_density_cluster_threshold_sensitivity.csv",
+    "analysis_results/rq2_null_replay_20260826/SUMMARY.json",
+    "analysis_results/rq2_null_replay_20260826/cluster_threshold_count_summary.csv",
+    "analysis_results/rq2_null_replay_20260826/null_replay_sample_size_scenarios.csv",
+    "analysis_results/rq1_difficulty_time_raw_20260826/SUMMARY.json",
+    "analysis_results/rq1_difficulty_time_raw_20260826/choice_vocabulary.csv",
+    "analysis_results/rq1_difficulty_time_raw_20260826/associations.csv"
+  ],
+  "bulky_reproducibility_outputs": [
+    "analysis_results/rq1_raw_audit_20260826/raw_annotation_index.csv",
+    "analysis_results/rq1_raw_recompute_20260826/independent_canonical_records.csv",
+    "analysis_results/rq1_raw_recompute_20260826/duplicate_version_audit.csv",
+    "analysis_results/rq1_raw_recompute_20260826/support_calibration_replicates.csv",
+    "analysis_results/rq1_raw_recompute_20260826/high_density_cluster_prefix_replay.csv",
+    "analysis_results/rq2_null_replay_20260826/null_replay_replicate_summary.csv",
+    "analysis_results/rq2_null_replay_20260826/null_replay_task_rows.csv",
+    "analysis_results/rq1_difficulty_time_raw_20260826/worker_task_loo_dispersion_time_difficulty.csv",
+    "analysis_results/rq1_difficulty_time_raw_20260826/task_dispersion_time_difficulty.csv"
+  ],
+  "known_unresolved_items": [
+    "primary geometry distance not frozen",
+    "C1 core scope not re-adjudicated image by image",
+    "strict image-plane validity is not physical topology validity",
+    "formal active-time raw identity connection not established",
+    "prospective Correct/Wrong proposal treatment-effect distribution unavailable"
+  ]
+}
