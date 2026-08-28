@@ -131,7 +131,7 @@ crosswalk 必须作为 sidecar 保存，永远保留 raw field、raw value、sta
 
 ### RQ2：强制自审工作流下，Correct 与 Wrong proposal 的因果效应是什么？
 
-主要因果比较只在 Semi 内进行：同一批图片、同一界面和同一强制自审流程中，随机呈现 Correct 或 Wrong proposal，比较 initial→final 的修改、target-error retention、外部错误和复核需求。
+主要因果比较只在 Semi 内进行：同一批图片、同一界面和同一强制自审流程中，随机呈现 Correct 或 Wrong proposal，跨臂比较 initial→final 修改和两臂同义定义的最终外部错误/复核需求；target-error retention 仅在 Wrong 内作为机制结果。
 
 Manual 与 Semi 的比较是次要的**整套工作流对比**。即使实现了编辑前锁定，Semi 仍同时包含 proposal、proposal 检查题和不同初始状态；因此 Semi vs Manual 不能被窄化解释为“只提供几何预标注”的纯效应。
 
@@ -162,7 +162,7 @@ RQ3 问的是第 3 层是否在严格 held-out 评估中带来可复现的增量
 
 ### 4.1 Primary：一个主要因果效应族
 
-**H2-primary：** 在 Semi 强制自审工作流内，Wrong 与 Correct proposal 对预先冻结的主要外部结果产生不同的意向处理总效应。推荐 primary 为两臂都能同义定义的 task-level residual material error/review-needed；也可在 launch 前改选一个两臂共同的连续外部误差，但只能冻结一个 primary，不能看结果后切换。target-error retention 只在 Wrong 内有自然定义，因此属于机制性 secondary，不作为 Wrong vs Correct 的跨臂 primary。
+**H2-primary：** 在 Semi 强制自审工作流内，Wrong 与 Correct proposal 对预先冻结的主要外部结果产生不同的意向处理总效应。推荐 primary 为两臂都能同义定义的 task-level **remaining material error（最终仍存在的实质错误）/review-needed**；也可在 launch 前改选一个两臂共同的连续外部误差，但只能冻结一个 primary，不能看结果后切换。target-error retention 只在 Wrong 内有自然定义，因此属于机制性 secondary，不作为 Wrong vs Correct 的跨臂 primary。
 
 - 零假设：Wrong−Correct 的主要结果差异为 0；
 - 方向性预期可登记为 Wrong 更差，但必须同时报告双侧 95% CI；
@@ -213,8 +213,13 @@ Exploratory：
 - worker 不知道 proposal truth，界面、文件名、任务编号和说明不得泄露 Correct/Wrong；
 - Correct/Wrong 在 Semi 内按预先生成的随机 assignment 分配，分析按 assignment；
 - 图片顺序、臂顺序与 worker workload 分块平衡；同一 worker 可做多图，但不能由单一 worker 承担某一臂或某类图片；
+- worker 资格必须在看到本实验 outcome 前按既有批准规则或独立 prescreen 冻结；历史表现最多作为预先定义的描述/precision covariate，不据本实验结果删除“修得太好/太差”的 worker，也不把 meta/active-time 变成新的 roster gate；
 - worker 间不得共享 proposal truth 或讨论具体图片；历史暴露按 same-worker × same-image 在正式分发前核查；
 - 独立 stimulus reviewers 不参与对应图片的工人标注，结果评估尽可能对 condition 和工人元标签盲。
+
+候选分配算法采用最小的受约束随机化：先生成 `image × arm × replicate_slot` 空位，再用冻结 seed 在 eligible workers 中随机填充，同时硬约束 same-worker×same-image 不重复、每臂每图达到目标重复数、worker workload cap；软约束每位 worker 的臂数量和任务顺序尽量平衡。若某 seed 不满足硬约束，可在不查看任何 outcome 的前提下重抽，并在 manifest 记录所有失败 seed/理由；满足后一次性冻结 assignment manifest，运行中不手工换臂。
+
+同一 worker 连续看到多种 proposal 后，可能学会“这些 proposal 有时会错”，从而提高后续任务的审查强度；这属于跨任务学习/干扰，而不是 same-image 重复。短平快方案不为此改成纯 between-worker 三臂，因为那会把 worker 差异与 arm 强绑定并显著增加招募需求。正式 estimand 应明确为**混合任务序列下的 pragmatic assignment effect**，用平衡随机顺序限制偏差，并预先报告首个 Semi 任务的低功效敏感性、condition × 任务序号以及累计既往 Wrong 暴露的探索性异质性；若顺序效应很强，结论不得外推到单次首次使用场景。
 
 ### 5.2 24×3×4 只是计划锚点
 
@@ -249,29 +254,58 @@ instrument pilot 与正式实验必须使用不同 assignment；建议使用不�
 
 若 pilot 后修改任何科学字段、truth 定义、主要结果、随机化、残差算法或问法，pilot 永久标为 development，不并入正式分析。
 
+### 5.4 当前刺激池 readiness（截至 2026-08-29，仅作运营快照）
+
+现有审核口径为 36 张：原始决定 18 PASS、6 REVISE、12 REJECT；但按当前字段合同机械检查，暂只有 14 张可直接进入候选池。以下 4 张虽标 PASS，仍需复核后才能决定是否恢复资格：
+
+- `B1-004`、`B1-022`：同时标记结构无效；
+- `B1W-040`：`wrong_material=no`，却保留缺陷和修复字段；
+- `B1W-110`：结构有效性仍为 uncertain。
+
+所以当前距离 24 张的机械缺口是 10 张，而不是 6 张；上述 4 张经独立复核可能缩小缺口，但不得为凑数自动改为 eligible。14 张干净候选的主错误家族暂为 boundary shift 7、current-space undercoverage 5、spurious non-layout structure 2；尚无确认可用的 adjacent-space inclusion 或 duplicate/redundant corner。
+
+这意味着当前池能够支持“proposal correctness 的总体效应”候选设计，但还不能自动支持对所有错误家族的平衡比较或交互结论。正式刺激冻结前应：
+
+1. 先完成上述 4 张的一致性复核；
+2. 从剩余 broad pool 定向补充，但不降低 truth/结构/可修复性门槛；
+3. 若某错误家族仍缺失，就把该家族从正式泛化范围排除，而不是人工制造弱 truth；
+4. 24 张全部通过双 reviewer + adjudication 后，才进入功效仿真和 assignment freeze。
+
+### 5.5 Correct/Wrong proposal pair 的候选合同
+
+每张正式图片必须同时冻结一个 Correct 与一个 Wrong proposal；二者都能被同一 viewer/编辑工具正常加载，不能把“技术损坏”当作 Wrong。
+
+- **Correct**：两名独立 reviewer 按同一 materiality rubric 判断，即使 worker 不修改也可接受；允许亚像素/非实质视觉差异，但不得含已知必须修正的问题。
+- **Wrong**：包含至少一个预先命名、可定位、可修复且达到 material threshold 的目标错误；同时保持整体外观足够合理，避免一眼可见的崩坏/自交成为纯注意力测试。
+- 优先使用同一模型/流程的自然 proposal 与其最小必要专家修正版形成 pair；若人工注入错误，注入规则、操作者、坐标 delta、版本和理由必须冻结，且另报 natural/injected 来源。
+- severity 在 worker 结果不可见前，由独立外部 metric + 盲 reviewer 共同分级。不能以 pilot 中“骗倒多少 worker”反向定义 severity。
+- 若 Correct 与 Wrong 除目标错误外还存在多处差异，本研究估计的是整个 proposal package 的效果；只有满足预先冻结的单一差异合同，才能把效应归因到某个 defect family。
+- Wrong 的 target-error retention 使用 proposal-specific target mask/segment/corner set 与容许修复区间定义；Correct 没有同义 target，因此该指标不得用于跨臂 primary。
+
 ---
 
 ## 6. 最小元标注与时点设计
 
 ### 6.1 三臂共同的 post-edit 核心
 
-所有条件在几何完成后使用相同措辞收集：
+所有条件在几何完成后使用相同措辞和顺序收集。先回答 scope，再决定布局相关题是否适用：
 
-1. **final_layout_confidence（1–5，有序等级，必答）**
+1. **worker_scope_response（运营/可评估性字段，必答）**
+   - 保持“当前相机空间是否至少支持一个完整、闭合、单层 Manhattan 布局”的现行语义；
+   - 不把“难”“多解”自动视为 out of scope。
+2. **final_layout_confidence（1–5，有序等级；仅 in-scope 时必答）**
    - 1：把握很低，认为最终布局很可能仍有需要复核的实质性问题；
-   - 2：把握较低；
-   - 3：把握一般；
-   - 4：把握较高；
+   - 2：把握较低，更倾向于认为仍需实质复核；
+   - 3：无法可靠判断最终布局是否仍需实质复核；
+   - 4：把握较高，更倾向于认为可以接受，但仍有有限疑虑；
    - 5：把握很高，未发现需要复核的实质性问题。
-2. **multiple_plausible_layouts（yes / uncertain / no，原则上必答）**
+3. **multiple_plausible_layouts（yes / uncertain / no；仅 in-scope 时必答）**
    - yes：至少两个实质不同的完整布局同样受到图像证据支持；
    - uncertain：无法可靠判断是否存在第二个同样合理的完整布局；
    - no：未发现第二个同样合理的完整布局；
    - 轻微坐标差异不算“多个布局”。
-3. **worker_scope_response（运营/可评估性字段）**
-   - 保持“当前相机空间是否至少支持一个完整、闭合、单层 Manhattan 布局”的现行语义；
-   - 不把“难”“多解”自动视为 out of scope；
-   - 若 out of scope，则 multiple plausible 记为 structural_not_applicable，而不是强迫回答 no。
+
+若 worker 回答 out of scope，则 final layout confidence 与 multiple plausible 均记为 structural_not_applicable，而不是强迫回答低信心/no。若未来需要“对 OOS 判断的信心”，必须新增独立 `scope_confidence` 构念，不能借用 final layout confidence；本轮最小方案不新增。
 
 final confidence 是对**最终提交布局**的把握，不是对图像清晰度、3D preview 美观程度或初始 proposal 的评价。它是 ordinal report，不应暗示 1–5 等于 0%–100% 概率。
 
@@ -296,12 +330,16 @@ issue confidence 的 1–5 指“对自己所选 yes/uncertain/no 分类的把�
 5. 锁定后显示 observed defects 并开放几何编辑；
 6. 工人完成几何，再回答三臂共同的 post-edit 核心。
 
+该 pre-edit 提问本身是一种 cognitive forcing/self-audit，不是无害测量：它可能提高错误察觉并改变后续编辑。Correct 与 Wrong 都接受完全相同的提问，因此二者仍可识别 proposal truth/package 的随机化差异；但任何 Semi vs Manual 结果只能解释为“proposal + 强制自审 + 不同起点”的联合工作流效应。本轮短平快方案不再增加“有 proposal 但无提问”的第四臂；若导师要分离提问效应，必须另立实验而不是事后声称已经分离。
+
 分支规则：
 
 - material issue=yes：observed defects 至少选一项；
 - material issue=uncertain：显示 observed defects，但允许空集合；空集合表示无法定位具体类型，不等于 no issue；
 - material issue=no：observed defects 必须隐藏并在前端 state、提交 payload 和服务端校验三处清空；
 - 工人可以在锁定后看到自己的首次判断，但不能覆盖它；若需要收集事后修正意见，应写入单独字段，不能改写首次判断。
+
+yes 分支比 no 分支更长，存在“为了省步骤选 no”的预期成本偏差。最低缓解是先原子锁定 material issue + issue confidence，再展示任何 checklist；pilot 还必须检查 material_issue=no 是否随任务序号上升、yes 分支额外耗时和缺失是否系统性增加。若出现明显分支成本效应，正式方案应把 observed defects 降为非必答 exploratory，或在锁定后向三个状态统一展示同长度 checklist（含 none/unclear），而不是用结果后加权补救。选择哪一种必须在 launch 前冻结。
 
 ### 6.3 不再要求工人自报 repair actions/extent
 
@@ -355,36 +393,97 @@ perceived difficulty 和 difficulty reason 不是三个 RQ 的必要核心。为
 
 localStorage 可被覆盖、跨任务残留、缺少 annotation/attempt 身份，且不保证与当前 iframe 内 preview 状态同步。可靠采集必须从正在显示该任务的 viewer/bridge 取得显式状态，并同时写入身份、版本、尺寸和签名。localStorage 最多作为调试线索，不能作为正式真源。
 
-### 7.3 preview_orders JSONL 最小记录
+截至本稿日期，正式 userscript 仅在显式“保存顺序”时把 override 写入标注者浏览器；iframe 虽会返回当前 `previewOrder/previewSignature`，父脚本尚未把它们持久化到研究服务器，现有 manifest 也明确 `phase_event_persistence=not_collected`。因此下述合同是待实现、待 pilot 的候选，不描述已存在能力。
 
-独立日志建议命名为 preview_orders JSONL，每行至少包含：
+### 7.3 三层记录合同：raw event、离线富化、export binding
+
+不得把浏览器当时可知的原始事件、冻结 manifest 才知道的实验真值和最终导出才能确定的绑定结论混成一层。
+
+1. **runtime raw event（`preview_orders_*.jsonl`）**
+   - 只发送盲化 assignment key、project/runtime task、worker registry key、session、viewer 状态和几何状态；
+   - 不发送真实 `arm_code=Correct/Wrong`、proposal truth、GT 或其他可能破坏网络层盲法的字段；
+   - `annotation_id` 在创建前允许缺失，不能为满足 schema 伪造占位值。
+2. **server/offline enrichment（派生 sidecar）**
+   - 由冻结 assignment/stimulus manifest 补充 planned task、image/building、batch/block、真实 arm、blinded proposal 与 proposal truth；
+   - enrichment 必须保存 manifest 版本、SHA 和 join status，不能回写 raw event。
+3. **export-binding ledger（派生 binding ledger）**
+   - 由 Label Studio 最终导出补充 annotation/version、最终 geometry signature 和绑定结论；
+   - `export_bound` 是研究侧派生状态，不伪装成浏览器产生的 preview event。
+
+worker identity 只使用批准的伪名/registry key，不在研究日志复制真实姓名。三个层次的字段适用性如下：
+
+| 记录/事件 | 当时必须存在 | 允许缺失或结构性不适用 |
+|---|---|---|
+| `base_visible` raw event | event/session identity、blind assignment key、project/runtime task、worker key、有效 viewer state、preview base corners、当前可见 order、preview W/H 与来源、runtime signature、版本 | annotation_id、真实 arm、proposal truth、submit geometry、binding disposition |
+| `submit_attempt` raw event | event_id、attempt_id、attempt_stage、上述 runtime identity、最后有效 preview snapshot、当下 submit geometry、两套签名、W/H、版本 | annotation_id 若尚未创建；真实 arm/truth 始终不在 raw payload |
+| offline enrichment | raw event key、冻结 manifest key/version/SHA、planned/image/building/batch/block/arm/proposal truth、join status | manifest 无匹配时保留 unresolved，不猜值 |
+| export-binding ledger | event/attempt key、export annotation/version、全精度 binding signature、binding disposition、candidate count、理由、source SHA | 无唯一匹配时为 unbound/ambiguous，不选最近一条代替 |
+
+runtime raw event 的最小字段族为：
 
 | 类别 | 必需字段 |
 |---|---|
-| 身份 | project_id、runtime_task_id、planned_task_id、image_id、assignment_id、worker_pseudonym、annotation_id（若当时已知）、attempt_id |
-| 实验 | arm_code、blinded_proposal_id、batch/block、instrument_version |
-| 事件 | event_type（base_visible / submit_attempt / export_bound）、client_timestamp、server_received_at、sequence_no |
-| 图像坐标 | image_width、image_height、coordinate_system、seam_convention、normalization_version |
-| 几何 | current_visible_order_raw、preview/base corners、submit geometry、corner_count、orientation_if_known |
-| 签名 | signature_algorithm_version、preview_signature、submit_signature、signature_match_status、mismatch_reason |
-| 软件 | viewer_version、userscript_version、Label Studio project/config version、browser bridge version |
-| 溯源 | source_file/source_endpoint、payload_sha、record_created_at |
+| 盲化身份 | blind_assignment_key、project_id、runtime_task_id、worker_registry_key、session_id |
+| 事件 | event_id、event_type、attempt_id（submit lifecycle 才适用）、attempt_stage、client_timestamp、server_received_at、sequence_no |
+| 图像坐标 | preview_image_width/height、submit_image_width/height、各自 source、dimension_status、coordinate_system、seam_convention |
+| 几何 | preview_base_corners、current_visible_order_raw、order_source、submit_base_corners、corner_count、pairing_algorithm_version |
+| 签名 | runtime_preview_signature/version、export_binding_geometry_signature/version（客户端可计算候选，但正式值由离线层复算）、match components/status、mismatch_reason |
+| 软件 | viewer_runtime_version、userscript_version、Label Studio project/config version、browser bridge version |
+| 溯源 | source_endpoint、record_type、record_created_at；server 对实际收到的原始 body 计算 payload hash |
 
-worker identity 只使用批准的伪名/registry key，不在研究日志复制真实姓名。
+`base_visible` 只在当前 iframe 已 ready、收到本任务的 `update_layout`，随后又从可信 `event.source === iframe.contentWindow` 返回通过校验的 state 后成立。仅父 DOM ready、仅点击“刷新”或 iframe 尚未回传有效 state，都不能记为 `base_visible`。父脚本必须保留 iframe 当前可见的 `previewOrder/previewSignature`；标注者换序但未点“保存”时，也必须记录实际可见顺序。
 
-### 7.4 submit attempt 不等于成功提交
+### 7.4 raw order 的精确定义与校验
 
-点击提交、弹出确认框或触发 submit hook 只证明发生了 attempt。正式绑定流程应为：
+当前实现中的 order 不是 Label Studio 原始 `results` 数组下标，而是 viewer bridge 生成的 `pairedDefault/base_corners` 的排列。候选 v1 合同冻结为：
 
-1. 记录 submit attempt 的几何、环序和签名；
-2. Label Studio 成功创建/更新 annotation 后，以导出记录为事实真源；
-3. 使用 project/task/worker、时间窗口、instrument version、corner count 和 geometry signature 离线绑定；
-4. 绑定成功生成 export_bound 记录；
-5. 多个候选或签名不一致时保留全部候选与 mismatch 原因，不静默选最近一条。
+- 先从当前 LS keypoints 生成点集，按 x 排序，并按 `5% × image_width` 阈值配成 vertical pairs；完整过程写入 `pairing_algorithm_version`；
+- `base_corners` 保存配对后的默认数组及其每个元素的来源点身份/坐标；
+- `order_index_base=0`；`order_applies_to=base_corners`；
+- `current_visible_order_raw` 必须是长度等于 `corner_count`、元素不重复、全部位于 `[0, corner_count-1]` 的完整排列；
+- 墙边按相邻 order 元素连接，最后一个元素显式闭环连接到第一个；
+- 任一排列、corner count、来源点或算法版本不合法时，顺序状态为 invalid，不得自动修补后进入正式分析。
+
+默认 x 排序、5% 配对阈值只是当前候选实现，不因写入本文而升格为最终规范；pilot 后必须随 engine/bridge 版本冻结并测试 seam、重复 x、增删 corner 和无法配对情形。
+
+### 7.5 submit attempt、确认框与最终导出的生命周期
+
+点击提交、弹出确认框或触发 submit hook 只证明发生了 attempt。每条 raw event 使用全局唯一 `event_id`；同一次提交意图共享 `attempt_id`，并使用：
+
+- `attempt_stage=intent`：用户触发 submit/update/Ctrl+Enter；
+- `attempt_stage=confirm_accepted`：确认框明确接受；
+- `attempt_stage=confirm_cancelled`：确认框取消；
+- `attempt_stage=client_unknown`：浏览器无法观察最终确认结果。
+
+网络重试必须复用同一 `event_id`，服务器按 `event_id + payload hash` 幂等去重；相同 event_id 出现不同 body 时拒绝并进入 quarantine。最终研究侧 binding ledger 再写：
+
+- `attempt_disposition=export_bound`；
+- `attempt_disposition=unbound`；
+- `attempt_disposition=ambiguous`；
+- `attempt_disposition=cancelled_or_validation_blocked`（有充分证据时）；
+- `attempt_disposition=unresolved`。
+
+正式绑定流程为：
+
+1. 在 intent 时重新读取当前 LS keypoints，保存 submit geometry；同时保存最后一个由 iframe 确认的 preview state；
+2. Label Studio 成功创建/更新 annotation 后，以最终导出记录为事实真源；
+3. 使用 blind assignment/project/task/worker、时间窗口、instrument/bridge version、corner count 和全精度 geometry signature 离线生成候选绑定；
+4. 唯一且所有必要组件一致时，在独立 binding ledger 写 `export_bound`；
+5. 多个候选或任一关键组件不一致时保留全部候选与 mismatch 原因，不静默选最近一条。
+
+签名必须拆分：
+
+- `runtime_preview_signature`：保持现有 viewer/cache guard 的舍入与排序语义，用于判定缓存/可见状态是否陈旧；
+- `export_binding_geometry_signature`：由冻结算法对全精度坐标、固定 base 排序、W/H、坐标系、corner count 和 pairing/version 计算，用于正式 export binding；
+- 完整 `preview_base_corners` 与 `submit_base_corners`：签名冲突时的最终仲裁证据。
+
+“精确复现”要求几何签名、pairing/signature 算法版本、W/H、坐标系、corner count 和当前 raw order 均一致。现有 0.1 px 舍入的 cache signature 单独不足以证明精确绑定。
+
+W/H 必须分别保存 preview 与 submit 值、`image_width_source/image_height_source`，并标记 `dimension_status=observed/default_fallback/mismatch`。使用 1024×512 等默认回退、来源未知或 preview/submit 尺寸不一致时，不得标为精确复现。
 
 signature mismatch 不应阻断工人提交，以免研究日志破坏正式标注任务；但 mismatch 记录不能声称精确复现了工人提交时的 preview。
 
-### 7.5 原始顺序与规范化顺序同时保存
+### 7.6 原始顺序与规范化顺序同时保存
 
 正式分析不得覆盖 current_visible_order_raw。另行派生：
 
@@ -396,11 +495,13 @@ signature mismatch 不应阻断工人提交，以免研究日志破坏正式标�
 
 历史记录按来源标记：
 
-- observed：日志或导出直接保存了当时顺序；
+- observed：只有冻结的 viewer/bridge 事件明确保存了当时可见的 base corners、raw order、版本和身份，且可与导出绑定；
 - canonical：只能证明某个冻结算法的规范序，不能声称是当时可见顺序；
 - unknown：无法恢复；仍可用顺序不敏感的 mask/边界指标，但不能进入精确 preview-order 分析。
 
-### 7.6 与 active time 严格分流
+Label Studio export 中 `results` 的数组顺序不等于 observed preview order；历史浏览器 localStorage 若没有在当时冻结导出并完成身份/签名绑定，也不能事后升级为 observed。缺少 viewer/bridge 原始事件的历史数据原则上只能标 canonical 或 unknown。
+
+### 7.7 与 active time 严格分流
 
 preview_orders JSONL 只记录几何状态事件；active_times 日志只记录批准的 task-worker active-time 事件。两者可以通过不可变身份离线连接，但：
 
@@ -408,6 +509,13 @@ preview_orders JSONL 只记录几何状态事件；active_times 日志只记录�
 - 不用角点事件间隔重建 lead time；
 - 不因 preview_orders 缺失改写正式 active-time；
 - 不因 active-time 缺失丢弃外部质量结果，除非独立的 eligibility 规则另有规定。
+
+即使复用现有 `/log_time` 的 nginx 路由和 token，服务器也必须先按严格白名单 `record_type` 分流：active-time 记录只能进入 `active_times_*.jsonl`，preview/order 记录只能进入 `preview_orders_*.jsonl`；未知类型拒绝或进入 quarantine。pilot 必须做负向断言：
+
+- 所有 `active_times_*.jsonl` 中 preview record 数为 0；
+- 所有 `preview_orders_*.jsonl` 中 active-time record 数为 0；
+- 未知/非法 record type 不进入任一正式真源；
+- 重试不会生成重复科学事件；同 event_id 的冲突 body 被隔离。
 
 ---
 
@@ -428,20 +536,22 @@ preview_orders JSONL 只记录几何状态事件；active_times 日志只记录�
    - 相对于一组互相正交的全局 Manhattan 轴，计算到最近轴的周期角距离；
    - 同时报 wall-length-weighted mean、unweighted mean 和 max；
    - 使用角度的周期距离，不能把 179° 与 −179° 当作相差 358°。
-2. **R_corner：相邻墙交点/重投影角点残差**
-   - 在给定 camera/frame 与相邻墙平面下重建理论交点；
-   - 计算理论交点重投影与 submitted corner 的周期像素距离或球面角距离；
-   - 报 mean、max 和按相邻墙长度加权的 mean；
-   - 明确 corner 是原始可见顺序还是 canonical 顺序。
+2. **R_turn：相邻墙转角残差**
+   - 使用现有 engine 已实现的相邻墙夹角，计算其到最近允许 Manhattan 转角（90°，必要时按冻结合同处理 180°）的角距离；
+   - 报 unweighted mean、max 和按相邻墙长度加权的 mean；
+   - 明确使用原始可见顺序还是 canonical 顺序；
+   - 不把它称为“角点重投影误差”，因为现有 engine 尚未实现理论交点到 submitted corner 的独立重投影残差。
 3. **R_height：单一地面/天花高度一致性**
    - 由各墙段/角点推断的 floor/ceiling height 对统一高度的偏差；
    - 报稳健中心、MAD/绝对残差 mean 和 max；
    - 对无法稳定推断的布局记 not_evaluable，不填 0。
 4. **结构事件**
    - self-intersection count/rate；
-   - short-wall count/rate（阈值按图像尺度或角宽归一化并预先冻结）；
+   - short-wall count/rate（短平快主方案沿用并冻结现有 engine 的绝对 3D 长度与相对中位墙长双阈值及版本）；
    - duplicate/redundant corner flag；
    - non-closure/topology invalid flag。
+
+真正的 **R_corner_reprojection**（理论墙交点重投影到 submitted corner 的像素/球面角残差）只列为未来可选扩展。只有完成实现、独立数值验证、单位/周期/seam 测试并冻结版本后，才能进入正式候选指标；本轮主方案不为它新增算法。
 
 不能只报告 residual sum。角点/墙面更多的布局天然有更多求和项；每个残差族至少报告 mean、max 和 length-weighted summary，并把元素数作为描述量。
 
@@ -472,9 +582,11 @@ proposal→final 的主要残差变化必须使用固定 frame；self-fit 只作
 - target-error retention：Wrong proposal 中预定义目标错误保留多少；
 - topology correctness/结构有效性；
 - scope correctness 与相邻空间纳入/当前空间漏标；
-- independent review-needed / residual material error。
+- independent review-needed / remaining material error（不要与内部几何 residual 混称）。
 
 外部 reference/truth 必须在工人结果不可见时冻结或由对 condition 盲的独立复核产生，并记录多解允许集。存在多个合理布局时，不能强迫所有 worker 向单一 reference 收缩；应采用允许集最小距离、盲审可接受性或预先定义的 set-valued scoring。
+
+若把 binary remaining material error/review-needed 选为 primary，最终 annotation 必须以随机顺序呈现给不知道 condition、proposal、worker meta 和其他 worker 结果的两名独立 reviewer；分歧按冻结 rubric adjudicate，并保留两名原始判断、adjudication 与版本。IAA 只描述 reviewer 一致性，不能替代 outcome 定义。若资源无法支持对全部正式结果的双盲复核，就应在 launch 前改选经过验证的共同连续外部 metric 为 primary，而不是正式运行后用未经验证的单 reviewer 判断补救。
 
 ---
 
@@ -488,7 +600,9 @@ proposal→final 的主要残差变化必须使用固定 frame；self-fit 只作
 | stimulus truth | proposal/image | 独立审核 manifest + proposal SHA | 否 |
 | LS annotation | 成功 annotation/version | export_label 原始导出 | 否 |
 | pre/post 元标签 | annotation response | 同一成功导出及锁定事件 | 否；更正另记版本 |
-| preview order | viewer state event | preview_orders JSONL | 否，append-only |
+| preview runtime state | viewer raw event | preview_orders JSONL（只含盲化 runtime 字段） | 否，append-only |
+| preview offline enrichment | raw event × frozen manifest | 可重算 enrichment sidecar | 可重算，不回写 raw event |
+| preview export binding | attempt × export annotation/version | 可重算 binding ledger | 可重算，保留全部候选与 disposition |
 | active time | task-worker event | active_logs | 否，按现行聚合规则派生 |
 | derived geometry | annotation × algorithm version | analysis_results | 可重算，不是输入真源 |
 | analysis table | analysis unit | 上述真源的显式 join | 可重算，保留 manifest/SHA |
@@ -518,6 +632,8 @@ annotation/response 层至少包含：
 - residual algorithm/frame/reference version；
 - external truth/reference version；
 - raw order state（observed/canonical/unknown）；
+- pairing algorithm、order index base/order target、runtime signature 与全精度 export-binding signature 的版本和值；
+- preview/submit W/H、来源、dimension status、event/attempt/binding disposition；
 - LOO target 的成员集合、明确排除当前 annotation；
 - not-evaluable 原因、QA flag、任何 adjudication 的 reviewer/version。
 
@@ -576,7 +692,7 @@ schema drift、身份冲突、source mismatch 或 active-time owner mismatch 不
 | RQ | 分析单位 | 目标 estimand | 首要结果/比较 |
 |---|---|---|---|
 | RQ1 | 新 Manual annotation，嵌套于 image 与 worker | final confidence 与独立外部错误的条件关联/有序趋势 | confidence 每升一级对应的外部错误变化；同时报告非线性等级差异 |
-| RQ2 | 所有随机分配的 Semi assignment | Wrong vs Correct 的 assignment-level ITT 总效应 | 两臂共同定义的 residual material error/review-needed 或预冻结连续外部误差；同图配对结构由模型保留 |
+| RQ2 | 所有随机分配的 Semi assignment | Wrong vs Correct 的 assignment-level ITT 总效应 | 两臂共同定义的 remaining material error/review-needed 或预冻结连续外部误差；同图配对结构由模型保留 |
 | RQ3 | annotation，预测目标按独立外部复核定义 | 在未见 building/image 上加入 meta 后的增量诊断效用 | ΔAUPRC、固定 review budget 下 Δrecall |
 
 Manual vs Semi 只作为 secondary workflow estimand。识别成功者、编辑者或最终修好者的条件分析是 post-treatment 机制描述，不取代 ITT。
@@ -598,7 +714,7 @@ RQ2 primary 不应依赖由三臂参与者共同构造的 contemporaneous consen
 根据 primary outcome 类型，在 launch 前择一：
 
 - 连续结果：cross-classified linear mixed model；
-- 二分类 review-needed/target retained：logistic mixed model，并额外报告可解释的 marginal risk difference；
+- 二分类 review-needed/remaining material error：logistic mixed model，并额外报告可解释的 marginal risk difference；Wrong 内 target retained 使用同类模型作机制 secondary；
 - 有明显边界/零膨胀的距离：预先指定变换、两部分模型或 randomization inference，不在看结果后挑最显著模型。
 
 最小固定项：
@@ -623,9 +739,13 @@ proposal severity 是刺激层的预先属性，但 Correct 与 Wrong 的定义�
 
 ### 10.4 RQ1：主观—行为—外部对齐
 
+先回答最基础的“到底有多不一致”。对历史和新 Manual 分别计算 image 内所有有效 worker pair 的 periodic boundary distance、mask/region overlap 与拓扑/scope 是否一致，并报告 image-level 中位数、IQR、上分位数、达到预定实质差异阈值的比例，以及 image/worker/剩余方差分量。连续几何、类别状态和外部正确性不能硬压成一个通用 IAA；同一 image 产生的多个 pair 也不是独立样本，区间估计应按 image（必要时再按 worker）重采样。历史结果按 stage/instrument 分层，不用新问卷值回填旧记录。LOO/peer disagreement 描述 roster 内分歧，不充当真值。
+
 final confidence 为 1–5 有序等级：
 
-- 首选 cumulative-link mixed model，外部错误/review-needed 为 outcome 或反向建模时必须清楚说明方向；
+- 主分析只包含按冻结合同可回答 final confidence 的 in-scope records；out-of-scope 的结构性 NA 不填低分，也不进入该模型，scope correctness 另行报告；
+- 首要效度模型令独立外部错误/review-needed 为 outcome，使用 mixed logistic（或外部连续误差对应的 mixed model），把 confidence 作为预先指定的有序趋势项并用等级 factor 作非线性敏感性；
+- 反向的 cumulative-link mixed model（confidence 为 ordinal outcome，外部正确性/误差为 predictor）只作互补的响应模型，不能与首要效度模型混写；
 - 同时报告每个等级的样本数、外部错误率/误差分布和 bootstrap CI；
 - Spearman/有序趋势可作直观补充；
 - 使用内部 residual 和 image/worker 随机效应检验信心是否不仅反映内部方正度；
@@ -639,12 +759,12 @@ final confidence 为 1–5 有序等级：
 
 #### 目标
 
-优先使用“独立复核判定存在 residual material error / 需要人工复核”的二分类 target；定义必须在模型训练前冻结。若正类太少，先报告基率与可估计性，不临时换成更容易显著的 target。
+优先使用“独立复核判定最终仍存在实质错误 / 需要人工复核”的二分类 target；定义必须在模型训练前冻结。若正类太少，先报告基率与可估计性，不临时换成更容易显著的 target。
 
 #### 特征阶梯
 
 - M0 常规层：condition、训练折内可得的 worker/image 特征、proposal severity、owner-valid active time；
-- M1 几何层：M0 + R_heading/R_corner/R_height、结构事件、initial→final edit summaries；
+- M1 几何层：M0 + R_heading/R_turn/R_height、结构事件、initial→final edit summaries；
 - M2 元认知层：M1 + material issue、issue confidence、final confidence、multiple plausible。
 
 Manual 的 proposal 字段保持 structural NA。实现模型时使用显式 applicability/arm interaction，不能把 Manual 的 NA 填成 no。
@@ -700,7 +820,7 @@ AUROC 只作补充。残余错误可能是少数类，AUPRC 与 review-budget �
 
 | 观察模式 | 科学解释 | 可支持的贡献 | 不可声称 |
 |---|---|---|---|
-| Wrong 比 Correct 有更多 residual error/target retention，CI 排除最小有害效应 | 错误 proposal 在强制自审下仍产生因果伤害 | proposal correctness 会改变最终质量；机制与风险诊断可继续解释 | 所有预标注都会伤害 |
+| Wrong 比 Correct 有更多 remaining material error；Wrong 内 target retention 也较高，且 CI 排除最小有害效应 | 错误 proposal 在强制自审下仍产生因果伤害 | proposal correctness 会改变最终质量；机制与风险诊断可继续解释 | 所有预标注都会伤害 |
 | Wrong 引发明显更多修改，但高质量 worker 几乎全部修复，最终差异接近 0 且 CI 足够窄 | 自审工作流成功吸收测试严重度的错误 | 识别—修复链、鲁棒纠错边界；“最终无害”仅限测试 worker/错误/流程 | 实验失败；或一般性证明错误 proposal 无害 |
 | Wrong 常被识别但仍保留错误 | 主要瓶颈是修复，不是识别 | 识别失败 vs 修复失败分解有价值 | 提高问题识别题就一定能解决质量 |
 | Wrong 很少被识别且错误保留 | 主要瓶颈是错误察觉 | issue 判断的敏感度不足、需要更好提示/复核 | 工人整体低质量，除非有独立证据 |
@@ -749,12 +869,14 @@ AUROC 只作补充。残余错误可能是少数类，AUPRC 与 review-budget �
 | stimulus truth | Correct/Wrong 的 truth、目标错误、严重度和允许多解经两名独立 reviewer + adjudication 100% 解析；SHA 冻结 | 修正或替换刺激；对应 pilot 永不入正式 |
 | assignment | 100% 满足一 worker 同图一次、arm/proposal 对应、历史暴露检查、truth 不在工人可见 payload | 停止分发，重建 manifest |
 | proposal blind | 文件名、URL、UI、网络 payload 的工人可见层不泄露 Correct/Wrong | 阻断 launch |
-| 3D preview | 支持浏览器中三臂每个 pilot task 均能显示并随几何正确更新；无整块空白/消失 | 修复后用新 pilot 重测 |
+| 3D preview | 当前候选实现按“显式刷新”更新：三臂每个 pilot task 在每次刷新后均准确反映当时 geometry，无整块空白/消失；记录最后有效 preview 与 submit geometry 是否一致 | 修复后用新 pilot 重测；若未来改自动更新，另冻 debounce/version/tests |
 | pre-edit lock | 若主张编辑前识别，首次判断/信心 100% 持久化、不可覆盖，且开放编辑时间在锁定后 | 做不到则按 6.5 降级，不声称时间顺序 |
 | form branch | exhaustive state-transition 测试 100% 清除 inactive values；Manual proposal 字段始终 structural NA | 阻断 launch |
-| common post fields | 每个成功 pilot submit 都有合法 final confidence、scope 和适用的 multiple plausible | 阻断 launch 或修复表单 |
-| submit semantics | submit attempt、确认框取消/确认、二次点击、刷新恢复与最终 export 均可区分 | 未解决前不依赖 attempt 解释成功 |
-| order capture | base/submit state 均有 W/H、raw order、version/signature；建议 ≥95% 成功 export 可唯一绑定且 signature match | 低于门槛则放弃精确 order/residual 相关分析，不阻断外部主结果 |
+| branch burden | 首次 issue+confidence 在 checklist 前原子锁定；检查 no 比例随任务序号、yes/no 缺失与额外耗时，无明显“省步骤选 no”模式 | 改为统一 post-lock checklist 或把 defects 降为非必答后重测 |
+| common post fields | 每个成功 pilot submit 都有合法 scope；in-scope 时有 final confidence 与 multiple plausible，out-of-scope 时二者均为 structural NA | 阻断 launch 或修复表单 |
+| submit semantics | event_id/attempt_id 幂等；intent、确认框取消/确认、二次点击、表单校验拦截、刷新恢复与最终 export disposition 均可区分 | 未解决前不依赖 attempt 解释成功 |
+| order capture | 覆盖 identity、换序后不保存直接提交、保存后提交、删缓存、换序后再改 geometry、跨任务/刷新恢复、无 viewer state、非法排列和 W/H fallback；建议 ≥95% 成功 export 可唯一绑定且所有精确匹配组件通过 | 低于门槛则放弃精确 order/residual 相关分析，不阻断外部主结果 |
+| log segregation | 所有 active-time 文件中 preview record=0，所有 preview-order 文件中 active-time record=0；未知类型隔离；重试无重复/冲突科学事件 | 阻断 launch，修复 server dispatch/loader 后重测 |
 | geometry export | 每个成功 annotation 均可从 export 还原顺序不敏感的 final geometry，身份一对一或冲突显式 | 阻断 launch |
 | active time | owner-valid context、项目/任务/worker 映射通过；建议 ≥95% 正式可用 | 不改写主结果；active time 从 RQ3 基线移除或按 missing 报告 |
 | UI 可用性 | active-time 小框不遮挡问题/preview，建议右下角紧凑且可拖动；所有必答题和提交按钮可达 | 调整 UI 后重测 |
@@ -777,6 +899,7 @@ AUROC 只作补充。残余错误可能是少数类，AUPRC 与 review-budget �
 | 图片本身多解 | 单一 reference 错罚合理答案 | multiple plausible 审核、允许集/set scoring | 无法形成稳定允许集则降为 exploratory 或替换 |
 | worker 看到 truth | demand characteristic、失盲 | 工人可见 payload 审计 | 立即停 block；受影响记录不得作盲实验 |
 | same worker 重见同图 | 记忆/迁移污染 | 外部 manifest 暴露检查 | 受影响 assignment 标 contamination，不静默换臂 |
+| 跨任务学习/干扰 | 后期更警惕，效应依赖任务序列 | 臂顺序平衡、记录 prior-arm history、检查 condition×任务序号 | 限定为 mixed-sequence pragmatic effect；首个 Semi 任务作敏感性，不事后改 between-worker 解释 |
 | pre-edit lock 失败 | 识别时间顺序不可证 | 持久化事件与测试 | 降为 task-time self-report |
 | signature/order 绑定失败 | 精确残差/拓扑复现失真 | JSONL + export-bound + mismatch ledger | 丢弃精确 order 分析，不丢外部质量 |
 | 内部残差实时反馈 | 新 treatment、worker gaming | 仅离线计算 | 发现反馈立即停 block；受影响批次单列 |
@@ -806,7 +929,7 @@ AUROC 只作补充。残余错误可能是少数类，AUPRC 与 review-budget �
 - active time owner-valid 率低：删除时间特征或按 missing 建模；
 - pre-edit lock 不成立：降级时间顺序措辞；
 - frozen frame 不稳定：删除 fixed-frame residual，保留外部 boundary/IoU/盲审；
-- residual error 正类太少：RQ3 降为描述/探索；
+- remaining material error 正类太少：RQ3 降为描述/探索；
 - mixed model 不收敛：使用预先仿真验证的简化模型或 randomization inference；
 - 24 图功效不足：在看正式 outcome 前增图/重复或缩窄结论；若正式 outcome 已可见，不得数据驱动扩样，除非事前 sequential rule 已冻结。
 
@@ -818,7 +941,7 @@ AUROC 只作补充。残余错误可能是少数类，AUPRC 与 review-budget �
 2. **历史 freeze**：冻结本次使用的 substrate、RQ1 报告、Model Issue audit 和 crosswalk sidecar；不重编码旧数据。
 3. **刺激审核**：从候选池确定图片、Correct proposal、Wrong proposal、目标错误、severity、多解允许集和 scope；两名独立 reviewer + adjudication。
 4. **instrument contract**：冻结字段、choice、applicability、分支清理、time-lock/降级语义、版本和数据字典。
-5. **几何/日志 contract**：冻结 preview_orders JSONL、signature、order normalization、fixed frame、residual 算法和外部 metric 版本。
+5. **几何/日志 contract**：冻结 runtime raw event、offline enrichment、export-binding ledger，pairing/order 语义，两套 signature，W/H 来源状态，server record-type 分流，fixed frame、residual 算法和外部 metric 版本。
 6. **测试与独立 pilot**：穷举表单组合、三臂提交、确认框、刷新、preview、order/signature、active time 和 export binding；pilot 不入主分析。
 7. **功效仿真**：使用历史 variance/ICC/base rate 与实际 assignment 算法决定 image 数、重复数和可支持 RQ 层级。
 8. **正式冻结**：研究合同、SAP、stimulus truth manifest、assignment manifest、instrument manifest、分析代码版本、launch approval。
@@ -851,7 +974,7 @@ AUROC 只作补充。残余错误可能是少数类，AUPRC 与 review-budget �
 
 1. 是否接受“主观—行为—外部结果对齐”而非“附加问卷”作为创新核心；
 2. RQ1/RQ2/RQ3 哪一个是论文主轴；是否同意只有 Wrong vs Correct 为主要因果比较；
-3. primary outcome 是两臂共同定义的 residual material error/review-needed，还是一个连续外部误差；只能冻结一个主要结果；Wrong-specific target-error retention 仅作机制 secondary；
+3. primary outcome 是两臂共同定义的 remaining material error/review-needed，还是一个连续外部误差；只能冻结一个主要结果；Wrong-specific target-error retention 仅作机制 secondary；
 4. 最小有意义的 Wrong−Correct 效应、ΔAUPRC、Δrecall 和 review budget；
 5. 24×3×4 是否仅作仿真锚点；最大可承受 image/worker 标注预算；
 6. worker 是全新 cohort、历史 cohort 还是混合；任何经验门槛如何在 outcome 不可见时定义；
@@ -879,7 +1002,8 @@ AUROC 只作补充。残余错误可能是少数类，AUPRC 与 review-budget �
 这些研究用于定位问题，不直接证明本任务会得到相同结果：
 
 - Mikulová 等在依存句法标注实验中直接比较人工标注与高准确率预标注，观察到效率/一致性收益且未见质量下降，说明“预标注效应”取决于 proposal 正确性与任务，而不能先验假定一定有害：[Quality and Efficiency of Manual Annotation: Pre-annotation Bias（LREC 2022）](https://aclanthology.org/2022.lrec-1.312/)。
-- Green 与 Chen 通过 algorithm-in-the-loop 实验强调，评价模型辅助不能只看模型本身，还要看人如何接收并修改建议；这支持把 Correct/Wrong proposal 与实际人工结果作为一个社会技术工作流研究：[The Principles and Limits of Algorithm-in-the-Loop Decision Making（CSCW 2019）](https://doi.org/10.1145/3359152)。
+- Berzak 等在“人工编辑 parser 输出”的句法标注中观察到锚定、解析器性能高估和相对人工起点更低的标注质量；它与上述无明显伤害的结果形成关键对照，进一步说明不能把 proposal 是否正确、任务类型和人工纠错过程混为一个平均“预标注效应”：[Anchoring and Agreement in Syntactic Annotations（EMNLP 2016）](https://aclanthology.org/D16-1239/)。
+- Green 与 Chen 通过 algorithm-in-the-loop 实验强调，评价模型辅助不能只看模型本身，还要研究人如何接收和使用模型信息；这支持把 Correct/Wrong proposal 与实际人工结果作为一个社会技术工作流研究：[The Principles and Limits of Algorithm-in-the-Loop Decision Making（CSCW 2019）](https://doi.org/10.1145/3359152)。
 - Maniscalco 与 Lau 用 trial-level confidence 区分正确/错误反应来研究 metacognitive sensitivity，说明平均信心高低与“信心能否诊断自己的错误”是不同问题。本研究只借用这种效度思路；当前结构化几何和 1–5 等级不直接满足 meta-d′ 的原任务假设：[A signal detection theoretic approach for estimating metacognitive sensitivity from confidence ratings（2012）](https://pubmed.ncbi.nlm.nih.gov/22071269/)。
 - Jiang 与 de Marneffe 对 NLI 分歧进行原因分类，显示分歧可来自语义不确定、annotator bias 与 task artifact。这支持把“多解/证据不确定”与“工人错误”分开，但其 NLP taxonomy 不能直接移植为本项目 truth：[Investigating Reasons for Disagreement in Natural Language Inference（TACL 2022）](https://aclanthology.org/2022.tacl-1.78/)。
 - Saito 与 Rehmsmeier 的模拟和重分析说明，在正类稀少场景中 PR 表达更直接对应正例检出表现；因此 RQ3 以 AUPRC 与 review-budget recall 为主，AUROC 只作补充：[The Precision-Recall Plot Is More Informative than the ROC Plot When Evaluating Binary Classifiers on Imbalanced Datasets（PLOS ONE 2015）](https://doi.org/10.1371/journal.pone.0118432)。
@@ -903,7 +1027,9 @@ AUROC 只作补充。残余错误可能是少数类，AUPRC 与 review-budget �
 - stimulus reviewer/adjudicator 与 blind 规则 = ______；
 - fixed frame/reference version = ______；
 - primary external metric implementation/SHA = ______；
-- order signature algorithm/version 与 match gate = ______；
+- pairing/order algorithm、runtime signature、export-binding signature 版本与精确 match gate = ______；
+- preview/submit W/H 来源与 dimension fallback policy = ______；
+- preview-order/active-time server dispatch 与 idempotency version = ______；
 - owner-valid active-time 可用门槛 = ______；
 - multiplicity rule = ______；
 - missing/administrative incident rule = ______；
