@@ -33,30 +33,25 @@
 
         <Text name="perceived_difficulty_rule_text" value="请评价你完成本图布局标注时主观感受到的总体难度：1=很容易，5=很困难。"/>
         <Choices name="perceived_difficulty" toName="img" choice="single" showInLine="true" required="true" requiredMessage="必须选择 1–5 难度">
-          <Choice value="1" alias="1"/><Choice value="2" alias="2"/><Choice value="3" alias="3"/><Choice value="4" alias="4"/><Choice value="5" alias="5"/>
+          <Choice value="1" alias="1" hint="很容易"/><Choice value="2" alias="2" hint="比较容易"/><Choice value="3" alias="3" hint="难度一般"/><Choice value="4" alias="4" hint="比较困难"/><Choice value="5" alias="5" hint="很困难"/>
         </Choices>
 
-        <Text name="difficulty_reason_status_rule_text" value="请先说明是否观察到明确的困难原因，用于区分“确实没有明确原因”和“漏填原因”。"/>
-        <Choices name="difficulty_reason_status" toName="img" choice="single" showInLine="true" required="true" requiredMessage="必须说明是否存在明确困难原因">
-          <Choice value="no_specific_reason" alias="no_specific_reason" html="没有明确的困难原因"/>
-          <Choice value="one_or_more_specific_reasons" alias="one_or_more_specific_reasons" html="有一个或多个明确原因"/>
-        </Choices>
-        <View visibleWhen="choice-selected" whenTagName="difficulty_reason_status" whenChoiceValue="one_or_more_specific_reasons">
-          <Text name="difficulty_reason_rule_text" value="请选择所有确实增加标注难度的原因；同一原因不要重复选择。"/>
-          <Choices name="difficulty_reason" toName="img" choice="multiple" required="true" requiredMessage="已声明存在原因，必须至少选择一项">
+        <Text name="difficulty_reason_rule_text" value="请选择所有确实增加标注难度的原因；如果没有明确原因，只选择“没有明确的困难原因”。"/>
+        <Choices name="difficulty_reason" toName="img" choice="multiple" required="true" requiredMessage="必须选择至少一项困难原因或选择没有明确原因">
+            <Choice value="no_specific_reason" alias="no_specific_reason" html="没有明确的困难原因" hint="没有观察到可明确归因的困难。此项只能单独选择，不能与其他原因同时选择。"/>
             <Choice value="occlusion" alias="occlusion" html="遮挡" hint="前景物体或结构遮住了需要判断的墙角、墙线或边界证据。"/>
             <Choice value="low_texture" alias="low_texture" html="低纹理或纯色墙" hint="墙面纹理、颜色或对比度不足，使边界或角点难以定位。"/>
             <Choice value="seam_or_distortion" alias="seam_or_distortion" html="全景拼接缝或几何畸变" hint="全景拼接或投影造成直线断裂、错位、弯曲或拉伸。"/>
             <Choice value="reflection_or_transparency" alias="reflection_or_transparency" html="反射、玻璃或透明材质干扰" hint="反射或透明材质造成伪边界、重复结构或深度混淆。仅出现玻璃或镜面但不影响标注时不要选择。"/>
             <Choice value="opening_or_adjacent_space" alias="opening_or_adjacent_space" html="开口或相邻空间干扰" hint="门洞或开放区域使当前空间边界更难判断。选择本项不代表当前空间一定不适用。"/>
             <Choice value="image_quality" alias="image_quality" html="模糊、遮罩、曝光或其他画质问题" hint="模糊、噪声、压缩、遮罩、曝光、黑边或缺失像素使关键结构证据不可靠。"/>
-            <Choice value="other" alias="other" html="其他" hint="仅当以上原因均不适用时选择。"/>
-          </Choices>
-        </View>
+            <Choice value="other" alias="other" html="其他" hint="存在以上选项未覆盖的额外困难原因时选择；如同时存在已列原因，可以组合选择。"/>
+        </Choices>
 
       </View>
     </View>
     <View style="flex:40%; border-left:1px solid #ccc; padding-left:10px;">
+      <Header value="3D Layout Preview"/>
       <HyperText name="vis_3d" value="$vis_3d" valueType="url" inline="false"/>
     </View>
   </View>

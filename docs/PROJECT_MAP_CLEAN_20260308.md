@@ -77,8 +77,11 @@
 
 ## 2026-08-24 标注不确定性候选实验讨论稿
 
-- `docs/thesis_main/ANNOTATION_UNCERTAINTY_EXPERIMENT_SUPERVISOR_DRAFT_v1.md`：标注不确定性候选研究的导师讨论稿；非规范、未批准、不得直接启动。当前以全部Manual分层RQ1与72图三臂候选实验为主，20人可为全新cohort，active time仅作辅助，不采用完整topology signature或技术阶段锁；不修改当前方法合同、SAP、T1或 Label Studio 分发工件。
+- `docs/thesis_main/ANNOTATION_UNCERTAINTY_EXPERIMENT_SUPERVISOR_DRAFT_v2.md`：基于历史失败审计重新定位的导师讨论稿 v2；非规范、未批准，仅提出候选 RQ、24×3×4 三臂设计、最小元标注、离线几何环序/残差与统计成功判据，不改变正式合同、SAP、T1/V1、已关闭阶段、Label Studio 分发或历史真源。
+- `docs/thesis_main/ANNOTATION_UNCERTAINTY_EXPERIMENT_SUPERVISOR_DRAFT_v1.md`：标注不确定性候选研究的导师讨论稿；非规范、未批准、不得直接启动。当前以全部Manual分层RQ1与72图三臂候选实验为主；v2 元标签将工人侧问题与修复改为多选集合比较，研究者侧仍保留主要缺陷与刺激纯度。候选连续主指标为periodic equirectangular `D_mask`，20人可为全新cohort，active time仅作辅助，`R_vis`须先独立验证，不采用完整topology signature或技术阶段锁；不修改当前方法合同、SAP、T1或 Label Studio 分发工件。
 - `docs/thesis_main/ANNOTATION_UNCERTAINTY_EXTERNAL_REVIEW_PROPOSAL_NOTE_v1.md`：外部审稿方案的独立简要记录；非规范、未采纳，不覆盖导师讨论稿或任何方法真源。
+- `tools/thesis_main/analysis/analyze_historical_model_issue_construct.py` 与 `analysis_results/historical_model_issue_construct_validation_20260827_v1/`：回放18张历史 P1 Semi proposal，以历史冻结 reference 和每图26名工人的旧 Model Issue 分布压力测试新分类；保留逐图预览、分布表与研究者新分类。属于开发审计，不重编码旧数据或冻结新 truth。
+- `tools/thesis_main/data_prep/build_annotation_uncertainty_batch1_review.py`、`analysis_results/annotation_uncertainty_batch1_broad_review_20260828_v1/` 与 `analysis_results/annotation_uncertainty_batch1_supplement_review_20260828_v1/`：从混合GT v4的Test 458+Validation 190共同总体中，仅按manifest所列中等连续几何带形成139张宽候选（Test 124、Validation 15），并在此前28张已有14张PASS的基础上先生成8张无重合补充预审小批。自动量只形成机械覆盖层，AI意见只作优先核实提示；人工审核记录缺陷多选、主要缺陷、修复动作、修正范围、刺激纯度和结构QC。候选阶段不做图级历史排除，正式分发才执行same-worker×same-image去重；输出未冻结、未分发、不是LS import或正式刺激truth。此前审核包均保留作开发审计。
 - `import_json/uncertainty_meta_feasibility_20260824/`：现有中文 LS 不确定性标签的开发测试导入包；仅使用 5 张已有 P1 Semi 标注图片，8 人同图复测，共 40 条本地分配，不进入正式分析。
 - `analysis_results/uncertainty_meta_feasibility_20260824_v1/`：上述开发测试的本地中文任务表、外部分配真源与内部样本清单；含真实姓名的运营文件按 `.gitignore` 保持本地。
 
@@ -98,7 +101,8 @@
 - `docs/thesis_main/TEST_MANUAL_GT_CORRECTIONS_20260823.md`：记录 `export_label/groudTruth.json` 相对官方 Test GT 的 30 张用户确认人工修订；不改写运行时导出，也不替代本次官方 GT 主分析。
 - `analysis_results/model_initialization_audit_hybrid_gt_20260823_v4/`：当前 648 张共享逐图 CSV、旧版 post-hoc v1 阈值保留报告、角点数量主分析报告与运行清单；GPU 重跑证据继续绑定 v3 清单。v3 修复了官方式 2D/3D 指标前错误按 x 重排全景角点的问题，v4 不改逐图数据，只拆分解释口径。`model_initialization_audit_hybrid_gt_20260823_v2/` 与 `model_initialization_audit_official_gt_20260823_v1/` 仅保留为已知旧口径对照。以上均属于派生审计输出，不改变 Paper A 正式协议或 T1/V1 estimand。
 
-## 2026-08-24 Label Studio 不确定性元标签 v1
+## 2026-08-28 Label Studio 不确定性元标签 v2
 
-- `tools/label_studio/label_studio_uncertainty_meta_manifest_v1.json`：中英文 Manual/Semi/future XML 与四份 userscript 的本地待部署配置入口。
-- `tools/label_studio/config_history/uncertainty_meta_v1_prechange_20260824/`：上述十份文件的修改前备份；旧元标签消费者固定读取该历史 XML，不回写或重分类旧数据。
+- `tools/label_studio/label_studio_uncertainty_meta_manifest_v2.json`：中英文 Manual/Semi/future XML 与四份 Userscript 的当前本地待部署入口；原生 XML 负责必填与条件分支，Userscript 仅补 `difficulty_reason` 的互斥规则，active time 不变。
+- `tools/label_studio/label_studio_uncertainty_meta_manifest_v1.json`：Project 86 开发测试使用的 v1 清单，配置由 Git 修订 `e1038a9` 保留；非正式合同，旧响应不追溯重编码。
+- `tools/label_studio/config_history/uncertainty_meta_v1_prechange_20260824/`：更早的十份修改前基线；旧元标签消费者固定读取历史 XML，不回写或重分类旧数据。

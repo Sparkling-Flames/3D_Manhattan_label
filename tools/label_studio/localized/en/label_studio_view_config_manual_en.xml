@@ -33,30 +33,25 @@
 
         <Text name="perceived_difficulty_rule_text" value="Rate the overall difficulty you experienced when completing the layout annotation: 1=very easy, 5=very difficult."/>
         <Choices name="perceived_difficulty" toName="img" choice="single" showInLine="true" required="true" requiredMessage="You must select a difficulty from 1 to 5">
-          <Choice value="1" alias="1"/><Choice value="2" alias="2"/><Choice value="3" alias="3"/><Choice value="4" alias="4"/><Choice value="5" alias="5"/>
+          <Choice value="1" alias="1" hint="Very easy"/><Choice value="2" alias="2" hint="Easy"/><Choice value="3" alias="3" hint="Moderate difficulty"/><Choice value="4" alias="4" hint="Difficult"/><Choice value="5" alias="5" hint="Very difficult"/>
         </Choices>
 
-        <Text name="difficulty_reason_status_rule_text" value="First state whether you observed a specific reason for the difficulty. This distinguishes no specific reason from a missing response."/>
-        <Choices name="difficulty_reason_status" toName="img" choice="single" showInLine="true" required="true" requiredMessage="You must state whether a specific difficulty reason exists">
-          <Choice value="no_specific_reason" alias="no_specific_reason" html="No specific reason observed"/>
-          <Choice value="one_or_more_specific_reasons" alias="one_or_more_specific_reasons" html="One or more specific reasons observed"/>
-        </Choices>
-        <View visibleWhen="choice-selected" whenTagName="difficulty_reason_status" whenChoiceValue="one_or_more_specific_reasons">
-          <Text name="difficulty_reason_rule_text" value="Select every reason that materially increased annotation difficulty. Do not classify the same underlying cause twice."/>
-          <Choices name="difficulty_reason" toName="img" choice="multiple" required="true" requiredMessage="You reported a reason, so select at least one">
+        <Text name="difficulty_reason_rule_text" value="Select every reason that materially increased annotation difficulty. If there was no specific reason, select only 'No specific reason observed'."/>
+        <Choices name="difficulty_reason" toName="img" choice="multiple" required="true" requiredMessage="Select at least one difficulty reason or no specific reason">
+            <Choice value="no_specific_reason" alias="no_specific_reason" html="No specific reason observed" hint="No clearly attributable difficulty was observed. This option must be selected alone and cannot be combined with another reason."/>
             <Choice value="occlusion" alias="occlusion" html="Occlusion" hint="A foreground object or structure blocks wall, corner, or boundary evidence that must be judged."/>
             <Choice value="low_texture" alias="low_texture" html="Low texture or plain walls" hint="Weak wall texture, color, or contrast makes boundaries or corners difficult to locate."/>
             <Choice value="seam_or_distortion" alias="seam_or_distortion" html="Panorama seam or geometric distortion" hint="Panorama stitching or projection causes broken, shifted, curved, or stretched lines."/>
             <Choice value="reflection_or_transparency" alias="reflection_or_transparency" html="Reflection, glass, or transparency" hint="Reflection or transparency creates false boundaries, repeated structure, or depth confusion. Do not select this merely because glass or a mirror is present."/>
             <Choice value="opening_or_adjacent_space" alias="opening_or_adjacent_space" html="Opening or adjacent-space interference" hint="A doorway or open area makes the boundary of the current space harder to judge. This does not by itself make the task out of scope."/>
             <Choice value="image_quality" alias="image_quality" html="Blur, masks, exposure, or other image-quality problem" hint="Blur, noise, compression, masks, exposure, black borders, or missing pixels make key structural evidence unreliable."/>
-            <Choice value="other" alias="other" html="Other" hint="Choose this only when none of the listed reasons applies."/>
-          </Choices>
-        </View>
+            <Choice value="other" alias="other" html="Other" hint="Select this for an additional difficulty reason not covered above. It may be combined with listed reasons when both genuinely apply."/>
+        </Choices>
 
       </View>
     </View>
     <View style="flex:40%; border-left:1px solid #ccc; padding-left:10px;">
+      <Header value="3D Layout Preview"/>
       <HyperText name="vis_3d" value="$vis_3d" valueType="url" inline="false"/>
     </View>
   </View>

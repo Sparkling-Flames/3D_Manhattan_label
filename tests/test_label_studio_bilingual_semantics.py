@@ -10,7 +10,8 @@ EN = LS / "localized" / "en"
 PRECHANGE = LS / "config_history" / "uncertainty_meta_v1_prechange_20260824"
 V1_HISTORY = LS / "config_history" / "scope_instruction_v1_pre_block2"
 V2_MANIFEST = LS / "label_studio_xml_instruction_manifest_v2.json"
-UNCERTAINTY_MANIFEST = LS / "label_studio_uncertainty_meta_manifest_v1.json"
+UNCERTAINTY_MANIFEST_V1 = LS / "label_studio_uncertainty_meta_manifest_v1.json"
+UNCERTAINTY_MANIFEST_V2 = LS / "label_studio_uncertainty_meta_manifest_v2.json"
 
 ACTIVE = {
     "zh_semi": LS / "label_studio_view_config.xml",
@@ -33,14 +34,13 @@ IMAGE_FIELDS = {
     "worker_scope_response",
     "multiple_plausible_layouts",
     "perceived_difficulty",
-    "difficulty_reason_status",
     "difficulty_reason",
 }
 PROPOSAL_FIELDS = {
     "material_issue",
-    "primary_issue_family",
-    "no_issue_handling",
-    "required_correction",
+    "observed_defects",
+    "repair_actions",
+    "repair_extent",
     "issue_confidence",
 }
 
@@ -77,6 +77,22 @@ def test_uncertainty_bilingual_aliases_match() -> None:
         assert _choice_aliases(ACTIVE[f"zh_{role}"]) == _choice_aliases(ACTIVE[f"en_{role}"])
 
 
+def test_active_xml_keeps_the_3d_preview_anchor_next_to_vis_3d() -> None:
+    for path in ACTIVE.values():
+        root = ElementTree.parse(path).getroot()
+        parents = [
+            list(parent)
+            for parent in root.iter()
+            if any(child.tag == "HyperText" and child.attrib.get("name") == "vis_3d" for child in parent)
+        ]
+        assert len(parents) == 1
+        children = parents[0]
+        index = next(i for i, child in enumerate(children) if child.attrib.get("name") == "vis_3d")
+        assert index > 0
+        assert children[index - 1].tag == "Header"
+        assert children[index - 1].attrib.get("value") == "3D Layout Preview"
+
+
 def test_chinese_uncertainty_xml_has_no_english_research_terms_in_visible_text() -> None:
     visible_attributes = {"value", "html", "hint", "requiredMessage"}
     for role in ("semi", "manual", "future"):
@@ -98,11 +114,8 @@ def test_uncertainty_choice_values_are_frozen() -> None:
     assert semi["worker_scope_response"] == ["in_scope", "out_of_scope"]
     assert semi["multiple_plausible_layouts"] == ["no", "yes"]
     assert semi["perceived_difficulty"] == ["1", "2", "3", "4", "5"]
-    assert semi["difficulty_reason_status"] == [
-        "no_specific_reason",
-        "one_or_more_specific_reasons",
-    ]
     assert semi["difficulty_reason"] == [
+        "no_specific_reason",
         "occlusion",
         "low_texture",
         "seam_or_distortion",
@@ -112,64 +125,57 @@ def test_uncertainty_choice_values_are_frozen() -> None:
         "other",
     ]
     assert semi["material_issue"] == ["no", "yes"]
-    assert semi["primary_issue_family"] == [
-        "boundary_or_corner_localization",
-        "underextension",
-        "adjacent_space_overextension",
-        "topology_or_overparsing",
-        "other",
+    assert semi["observed_defects"] == [
+        "boundary_misalignment",
+        "current_space_undercoverage",
+        "adjacent_space_inclusion",
+        "spurious_nonlayout_structure",
+        "duplicate_redundant_corner",
     ]
-    assert semi["no_issue_handling"] == [
-        "no_edit_needed",
-        "optional_visual_micro_refinement",
+    assert semi["repair_actions"] == [
+        "move_boundary_or_corner",
+        "add_missing_boundary_or_corner",
+        "remove_adjacent_space_segment",
+        "remove_spurious_structure",
+        "merge_or_delete_duplicate_corner",
     ]
-    assert semi["required_correction"] == [
-        "minor_mandatory_coordinate_correction",
-        "major_geometry_correction",
-        "topology_change_or_redraw",
-    ]
+    assert semi["repair_extent"] == ["local", "multi_region", "redraw"]
     assert semi["issue_confidence"] == ["1", "2", "3", "4", "5"]
 
 
 def test_conditional_display_matches_the_supervisor_draft() -> None:
     for path in ACTIVE.values():
         views = _visible_views(path)
-        assert {
-            (row.get("whenTagName"), row.get("whenChoiceValue")) for row in views
-        } >= {("difficulty_reason_status", "one_or_more_specific_reasons")}
         text = path.read_text(encoding="utf-8").lower()
         for forbidden in ("edit_operation_count", "proposal_missing", "phase_lock", "time_lock"):
             assert forbidden not in text
+        assert all(row.get("whenTagName") != "difficulty_reason_status" for row in views)
 
     for role in ("semi", "future"):
         for language in ("zh", "en"):
             views = _visible_views(ACTIVE[f"{language}_{role}"])
             assert {
                 (row.get("whenTagName"), row.get("whenChoiceValue")) for row in views
-            } >= {("material_issue", "no"), ("material_issue", "yes")}
+            } == {("material_issue", "yes")}
 
 
-def test_required_correction_options_are_split_by_material_issue() -> None:
+def test_worker_defects_and_repairs_are_multi_select_without_worker_primary() -> None:
     for role in ("semi", "future"):
         for language in ("zh", "en"):
-            aliases = _choice_aliases(ACTIVE[f"{language}_{role}"])
-            assert set(aliases["no_issue_handling"]).isdisjoint(aliases["required_correction"])
-            assert len(aliases["no_issue_handling"]) == 2
-            assert len(aliases["required_correction"]) == 3
+            root = ElementTree.parse(ACTIVE[f"{language}_{role}"]).getroot()
+            choices = {node.attrib["name"]: node.attrib for node in root.iter("Choices")}
+            assert choices["observed_defects"]["choice"] == "multiple"
+            assert choices["repair_actions"]["choice"] == "multiple"
+            assert choices["repair_extent"]["choice"] == "single"
+            assert "primary_defect" not in choices
+            assert "redraw_layout" not in {
+                choice.attrib.get("alias")
+                for node in root.iter("Choices")
+                for choice in node.findall("Choice")
+            }
 
 
 def test_manhattan_scope_wording_and_choice_hints_are_complete() -> None:
-    hinted_fields = {
-        "worker_scope_response",
-        "multiple_plausible_layouts",
-        "difficulty_reason",
-    }
-    proposal_hinted_fields = {
-        "material_issue",
-        "primary_issue_family",
-        "no_issue_handling",
-        "required_correction",
-    }
     for key, path in ACTIVE.items():
         root = ElementTree.parse(path).getroot()
         texts = {node.attrib["name"]: node.attrib["value"] for node in root.iter("Text")}
@@ -196,12 +202,9 @@ def test_manhattan_scope_wording_and_choice_hints_are_complete() -> None:
         assert "Manhattan" in scope_text
         assert ("至少能够形成一个" in scope_text) if key.startswith("zh_") else ("at least one" in scope_text)
 
-        required_hints = set(hinted_fields)
-        if not key.endswith("_manual"):
-            required_hints |= proposal_hinted_fields
         for choices in root.iter("Choices"):
-            if choices.attrib["name"] in required_hints:
-                assert all(choice.attrib.get("hint", "").strip() for choice in choices.findall("Choice"))
+            assert choices.attrib.get("required") == "true"
+            assert all(choice.attrib.get("hint", "").strip() for choice in choices.findall("Choice"))
 
         if key.startswith("zh_"):
             visible = " ".join(node.attrib.get("value", "") for node in root.iter("Text"))
@@ -234,10 +237,23 @@ def test_v2_manifest_is_superseded_and_points_to_the_prechange_snapshot() -> Non
         assert _sha256(snapshot) == active[key]["sha256"]
 
 
-def test_uncertainty_manifest_records_the_frozen_boundaries() -> None:
-    manifest = json.loads(UNCERTAINTY_MANIFEST.read_text(encoding="utf-8"))
-    assert manifest["schema_version"] == "label_studio_uncertainty_meta_manifest_v1"
-    assert manifest["manifest_id"] == "label_studio_uncertainty_meta_v1"
+def test_v1_manifest_is_the_project86_development_snapshot() -> None:
+    manifest = json.loads(UNCERTAINTY_MANIFEST_V1.read_text(encoding="utf-8"))
+    assert manifest["status"] == "superseded_development_test_snapshot"
+    assert manifest["deployment_status"] == "development_test_project_86_only_not_formal"
+    assert manifest["superseded_by"] == "label_studio_uncertainty_meta_v2"
+    assert manifest["snapshot_storage"] == "git_history"
+    assert manifest["snapshot_git_revision"] == "e1038a9"
+    assert "snapshot_root" not in manifest
+    for paths in manifest["files"].values():
+        for path in paths:
+            assert (ROOT / path).is_file()
+
+
+def test_uncertainty_v2_manifest_records_the_frozen_boundaries() -> None:
+    manifest = json.loads(UNCERTAINTY_MANIFEST_V2.read_text(encoding="utf-8"))
+    assert manifest["schema_version"] == "label_studio_uncertainty_meta_manifest_v2"
+    assert manifest["manifest_id"] == "label_studio_uncertainty_meta_v2"
     assert manifest["deployment_status"] == "local_artifacts_ready_not_deployed"
     assert manifest["timing_basis"] == "worker_instruction_only_not_system_locked"
     assert manifest["proposal_missing_not_collected"] is True
@@ -249,6 +265,9 @@ def test_uncertainty_manifest_records_the_frozen_boundaries() -> None:
     assert manifest["boundaries"]["strict_server_auditable_timing"] is False
     assert set(manifest["image_fields"]) == IMAGE_FIELDS
     assert set(manifest["proposal_fields"]) == PROPOSAL_FIELDS
+    assert manifest["worker_primary_defect_collected"] is False
+    assert manifest["inactive_branch_policy"]["material_issue_no"] == "clear_on_selection_and_fail_closed_before_submit"
+    assert manifest["inactive_branch_policy"]["qa_flag"] == "inactive_branch_residual_blocked"
 
 
 def test_original_c1_freeze_manifest_is_still_preserved() -> None:

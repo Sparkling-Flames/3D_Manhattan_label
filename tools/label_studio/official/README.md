@@ -4,7 +4,7 @@
 
 ## 当前入口
 
-- ls_userscript_annotator.js：不确定性元标签 v1 的正式标注员脚本。保留 task-worker active_time，并执行新字段的最小结构校验；当前仅为本地待部署工件。
+- ls_userscript_annotator.js：不确定性元标签 v2 的正式标注员脚本。保留 task-worker active_time；字段必填与条件显示由 XML 原生能力负责，脚本只校验 `difficulty_reason` 中“无明确原因”与具体原因的互斥；当前仅为本地待部署工件。
 - ls_userscript_debug.js：对应的调试/巡检脚本。仅供开发者或管理员使用，保留 HOHONET_DISABLE_ACTIVE_TIME 开关。
 - analyze_quality_formal.py：正式分析入口。先调用上游 analyze_quality.py，再剔除兼容字段并输出 formal CSV。
 - start_log_server.sh：正式日志服务启动脚本，已改为按仓库相对路径启动 cors_server.py。
@@ -16,7 +16,7 @@
 3. 正式实验主分析优先使用 analyze_quality_formal.py，而不是直接把兼容字段暴露给下游。
 4. 旧版/分叉/不再推荐的脚本放入 tools/legacy/。
 5. 若 export JSON 内的 data.dataset_group 唯一，analyze_quality_formal.py 会自动推断 dataset_group；只有混合导出或缺失该字段时才需要手动传 --dataset_group。
-6. 修改前脚本保存在 `tools/label_studio/config_history/uncertainty_meta_v1_prechange_20260824/`；新配置边界见 `tools/label_studio/label_studio_uncertainty_meta_manifest_v1.json`。
+6. Project 86 开发测试使用的 v1 配置由 Git 修订 `e1038a9` 保留，边界见 `tools/label_studio/label_studio_uncertainty_meta_manifest_v1.json`；当前本地待部署边界见 v2 manifest。更早的修改前基线仍保存在 `tools/label_studio/config_history/uncertainty_meta_v1_prechange_20260824/`。
 
 ## 最小命令示例
 

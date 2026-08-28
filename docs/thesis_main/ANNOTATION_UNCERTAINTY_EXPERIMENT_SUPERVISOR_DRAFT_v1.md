@@ -2,7 +2,7 @@
 
 > **状态：DRAFT / NON-NORMATIVE / NOT APPROVED**  
 > **用途：仅供与导师讨论、修改和确认，不是正式协议，不得据此直接生成任务或启动实验。**  
-> **日期：2026-08-27（讨论稿修订）**
+> **日期：2026-08-28（讨论稿修订）**
 > **建议方案：20名标注者、72张拟纳入实验图片、每图5 Manual + 5 Correct-Semi + 5 Wrong-Semi、24图×3批次。**
 
 本轮修订发生在导师尚未正式沟通或批准之前。全文中的 RQ、样本量、字段和分析方法都只是候选；`Manual` 默认按协议假定为独立标注，但不声称平台事件能够逐条证明独立性。20人是候选实验 cohort 的规模，不绑定历史工人，可以全部招募新工人。
@@ -85,7 +85,7 @@
 
 ### Study 2：Correct/Wrong proposal 三臂随机实验
 
-主要回答 RQ2 和 RQ3。使用新的、正式标注者此前未见过的图片，比较：
+主要回答 RQ2 和 RQ3。使用对相应被分配标注者而言此前未见过的图片；不要求该图从未被其他历史工人标注，比较：
 
 ```text
 Manual
@@ -167,7 +167,7 @@ geometry 的 worker 主效应较小不表示“人的成分可以忽略”：31.
 
 ---
 
-## 5. Study 1：历史数据中的 RQ1 分析
+## 5. Study 1：历史无辅助标注输出差异与操作性可复现性
 
 ### 5.1 分析层
 
@@ -214,15 +214,17 @@ geometry 的 worker 主效应较小不表示“人的成分可以忽略”：31.
 
 #### 5.2.1 总体连续不一致
 
-建议主指标为每图平均两两布局不相似度：
+候选主指标为每图平均两两布局不相似度：
 
 \[
-D_{\text{layout},i}
+D_{\text{mask},i}
 =\frac{2}{k_i(k_i-1)}
-\sum_{a<b}\left[1-\operatorname{IoU}(Y_{ia},Y_{ib})\right].
+\sum_{a<b}\left[1-\operatorname{IoU}\{M(Y_{ia}),M(Y_{ib})\}\right].
 \]
 
-若正式实现不采用 pairwise layout IoU，替代距离必须在查看 Study 2 条件结果前冻结，并明确量纲、有效范围、拓扑不兼容处理和数值稳定性。
+其中 `M(Y)` 是当前仓库已实现的 `1024×512` equirectangular wall-region mask：对 ceiling/floor pairs 在水平轴做 panorama-periodic 插值，在每列填充 ceiling 与 floor 之间的布局区域；seam 两侧连续处理。`D_mask=0` 表示两个 mask 相同，越大表示图像平面布局区域差异越大。角点对数量可以不同，但两份 geometry 均须通过 pairing、coverage 与数值有效性检查；不可计算结果不赋为最大距离，另进入结构有效率、原因与support统计。
+
+正式启动前必须冻结 raster 分辨率、pair normalization、periodic interpolation、round/clip、invalid处理、实现路径、测试版本与代码 SHA。若计划使用的 Wrong 刺激敏感性检查显示 `D_mask` 对某类实质错误不敏感，应在任何 worker outcome 可见前修改主指标或收缩声明，而不是事后换指标。
 
 #### 5.2.2 可可靠恢复的离散结构代理
 
@@ -236,7 +238,7 @@ cardinality disagreement 只能写成“离散结构代理差异”，不能改�
 
 #### 5.2.3 连续几何敏感性
 
-`D_layout=1−IoU` 已经对范围和部分结构差异敏感。boundary/wall 指标可作为同源几何敏感性；当前不强行实现需要唯一 cyclic correspondence 的 same-topology RMSE。若未来确实收集并验证顺序信息，再另行增加，不在本稿中预留复杂签名。
+`D_mask` 对范围和部分结构差异敏感，但不是完整拓扑距离，也不直接测量相对可见墙体的残差。boundary/wall pairwise 指标可作为同源几何敏感性；当前不强行实现需要唯一 cyclic correspondence 的 same-topology RMSE。若未来确实收集并验证顺序信息，再另行增加，不在本稿中预留复杂签名。
 
 #### 5.2.4 候选模式
 
@@ -340,7 +342,7 @@ Label Studio CE 不是分发真源。正式分发必须来自外部冻结 manife
 - reference ready 或经独立流程修订；
 - operational target 明确；
 - 图片、任务、reference identity 完整；
-- 20名正式标注者此前未见过该图片；若不能满足，使用 worker-specific exposure blacklist；
+- 每个实际的 worker–image 配对均无历史暴露；图片可以曾被其他工人标注。复用历史工人时使用 worker-specific exposure blacklist，全部招募新工人时该黑名单为空；
 - Correct/Wrong 均可从同一基础表示生成；
 - 图片不因预期效应大小被挑选。
 
@@ -380,23 +382,28 @@ Wrong proposal 从同一图的 acceptable base proposal 确定性施加一个受
 
 - 视觉上可信而非明显荒谬；
 - severity 为中等且可修正；
-- 只有一个 dominant error family；
+- 正式作为单类刺激时，只有一个主要缺陷；稳定混合刺激须排除或明确只进入总体 Wrong 分析；
 - 除非错误本身是 topology 类，否则保持结构有效；
 - 文件格式、显示方式、来源外观与 Correct 相同；
 - 标注者不知道 proposal 是 Correct 还是 Wrong。
 
-### 6.6 Wrong error family
+`plausible / moderate / editable` 不能只靠文字判断。每张 Wrong 候选还须记录 `D_mask(Correct,Wrong)`、角点对数量差、boundary差异和人工严重度审核；自动数值仅用于严重度辅助，不能代替“是否属于当前空间、是否只有一个主要错误、是否视觉可信”的人工判断。当前默认不要求同时匹配 `D_mask`、operational-reference quality 与尚未验证的 `R_vis` 三个带宽，以免生成不自然刺激。
 
-四个主要家族：
+### 6.6 Wrong 缺陷分类：先经历史数据压力测试
 
-1. `boundary_or_corner_localization`；
-2. `underextension`；
-3. `adjacent_space_overextension`；
-4. `topology_or_overparsing`。
+不能继续使用“四个互斥家族 + `topology_or_overparsing`”。P1 历史回放包含18个 Semi proposal、每图26名工人、共468条响应；在至少选择一个具体问题的246条响应中，74条（30.1%）同时选择两个或以上具体问题，且6个 synthetic proposal 中有3个在专家复核后改变了最初计划类别。逐图红线初始标注、冻结绿线参考与工人选择分布的并列复核进一步发现：3/18张为稳定混合，4/18张过轻或边界不清。完整证据见6.8所列开发审计。
 
-duplicate corner、ghost structure、ordering/closure 可作为第四类的 subtype，不单独成为确认性家族。
+因此工人侧前向候选分类改为“二元问题门 + 缺陷多选”，当前五个缺陷定义为：
 
-每批24图中四类各6图；最终72图中四类各18图。family-specific结果仅作次级/探索性估计，主检验将所有Wrong合并。
+1. `boundary_misalignment`：目标物理墙、角和空间范围不变，主要是边界或角点位置不准确；
+2. `current_space_undercoverage`：遗漏相机所在当前空间的一部分真实围护边界；角点数变化只是可能表现，不是定义；
+3. `adjacent_space_inclusion`：越过门框、墙垛、墙端或拱口等分界，把相邻空间纳入当前空间；
+4. `spurious_nonlayout_structure`：把家具、装饰、柱体凸起或其他非目标结构解释为独立真实墙段或转折；
+5. `duplicate_redundant_corner`：同一物理角被两个或更多近邻顶点重复表示，点之间不存在独立真实墙面。
+
+`duplicate_redundant_corner`必须独立保留：历史上它比`over_parsing`更稳定，且两者可被工人区分。`topology_failure`改为结构有效性 QC，`fail`改为重画/排除状态，`acceptable`只表示`material_issue=no`，均不作为语义缺陷。若观察到多个缺陷，工人保存全部缺陷，不再被迫指定一个主要缺陷；研究者侧仍在 stimulus truth manifest 中记录`wrong_primary_defect`，用于描述刺激设计与纯度，不作为工人响应字段。“错误是什么”“怎样修”“修多大”不得放在同一标签中。
+
+历史 P1 中没有清楚的`current_space_undercoverage`真值样本，因此该项只是基于任务定义保留的待验证扩展类，不能写成已验证类别。每类固定6图的配额也暂不成立：先完成人工审核，再根据自然 HoHoNet 输出中可形成的单一/主要缺陷刺激数量决定是否平衡、允许不平衡，或另行生成受控刺激。family-specific结果只作次级/探索性估计，RQ2主检验仍将所有合格 Wrong 合并。
 
 ### 6.7 Stimulus truth manifest
 
@@ -414,11 +421,13 @@ correct_review_status
 
 wrong_proposal_id
 wrong_proposal_sha256
-wrong_error_family
-wrong_error_subtype
+wrong_observed_defects
+wrong_primary_defect
 wrong_severity
-mandatory_edit_expected
-expected_edit_type
+required_repair_actions
+wrong_repair_extent
+structural_validity
+stimulus_purity
 
 proposal_source
 model_version
@@ -435,7 +444,41 @@ reviewer_id_or_role
 review_timestamp
 ```
 
-worker 不得看到 Correct/Wrong truth、错误家族真值、严重度、expected edit 或 reference score。
+worker 不得看到 Correct/Wrong truth、缺陷真值、严重度、expected repair 或 reference score。
+
+### 6.8 启动前研究者人工审核
+
+候选图片和 proposal 在任何正式分发前执行逐图审核：
+
+1. 图片/Manhattan资格与 operational target 是否明确；
+2. Correct候选是否无需 mandatory material correction；
+3. Wrong候选是否存在实质问题；逐项记录全部观察缺陷、主要缺陷、修复动作、修正范围、刺激纯度和结构有效性；
+4. Correct/Wrong是否存在来源、显示、格式或附加错误不对称；
+5. 最终写入 `PASS / REVISE / REJECT` 和备注。
+
+历史构念回放与逐图复核位于：
+
+```text
+analysis_results/historical_model_issue_construct_validation_20260827_v1/review.html
+analysis_results/historical_model_issue_construct_validation_20260827_v1/REPORT_ZH.md
+analysis_results/historical_model_issue_construct_validation_20260827_v1/researcher_visual_reclassification.csv
+```
+
+该回放使用18张历史 P1 Semi 初始标注、与历史hash一致的冻结参考及每图26名工人的实际旧标签。它是知晓旧标签分布的开发审计，不是新的正式真值冻结，也不替代未来独立双人盲审。
+
+按修订字段生成的当前宽口径候选审核包位于：
+
+```text
+analysis_results/annotation_uncertainty_batch1_broad_review_20260828_v1/review.html
+```
+
+它以混合GT v4的 Test 458张与 Validation 190张为共同总体，在排除研究者已经审过的28张后，仅按预先写入manifest的连续几何带宽形成139张宽候选（Test 124、Validation 15）。这里的排除只是避免研究者重复审核，不是图级历史暴露门槛；候选阶段不因图片曾被其他工人标注而删除。此前28张中已有14张PASS；为避免一次继续审核过多图片，当前先从139张中提取8张无重合补充候选（Test 5、Validation 3）：
+
+```text
+analysis_results/annotation_uncertainty_batch1_supplement_review_20260828_v1/review.html
+```
+
+这8张只是研究者补充预审，不保证全部PASS，也不是把Batch 1改成8张。绿色布局来自对应的已核验人工/official reference，只是Correct候选；红色布局来自已审计的HoHoNet ep300最终布局代理，只是Wrong候选。四个自动层仅描述mask缺失/额外方向或角点对数量变化，用于组织人工查看，不是错误家族或刺激真值。AI视觉意见最多作为“优先核实”提示，不能自动产生PASS/REJECT，也不能据此从候选总体删图。审核页要求研究者记录缺陷多选、主要缺陷、修复动作、修正范围、刺激纯度和结构QC。只有研究者审核、必要的独立复核、导师批准且truth manifest冻结后，选出的24张才可称为Batch 1。当前审核包均未分发、未冻结、不是Label Studio import，也不进入论文分析；旧24+4包仅保留作开发审计。
 
 ---
 
@@ -445,17 +488,19 @@ worker 不得看到 Correct/Wrong truth、错误家族真值、严重度、expec
 
 在正式批次前，使用专用练习图片进行中文界面测试：
 
-- 测试图永久排除正式实验；
+- 界面测试记录不进入正式分析；图片本身不作全局永久排除，正式分发仅禁止同一标注者再次处理其已测试过的同一图片；
 - 测试理解、填写路径、刷新/返回、状态保存、浏览器兼容和术语歧义；
 - 不把测试结果作为研究 outcome；
 - 测试后若修改科学字段含义，重新冻结版本。
+
+当前 `project-86` 小测共5图、3名标注者、15条完成记录。`material_issue`在5图上均达到三人一致，但4张问题图的单选问题家族只有2张一致，修正程度只有3张一致；这支持保留二元问题门，同时停止使用旧的“单选家族 + 单选修正程度”结构。任务003中，W10将错误语义判断为相邻空间纳入，并通过删除多对角点把结果修正到接近参考布局；这直接说明“错误为什么发生”和“需要怎样改变几何结构”是两个维度，角点数量变化不能自动定义为拓扑语义错误。其余两名测试者按研究者要求主要测试元标签、未完成geometry，因此10条无关键点记录是测试设计导致的结构性缺失，不能据此判定Label Studio导出故障，也不能用于识别—行动分析。正式启动前仍需另做受控的未编辑/移动/删除/恢复四情形导出检查，以冻结canonicalization规则，但这是独立的低成本技术核验。
 
 ### 7.2 Semi 条件的编辑前步骤
 
 RQ3要求标注者先完成 Model Issue 判断，再编辑模型初始标注。界面按以下顺序排列：
 
 1. 填写 `material_issue` 和 `issue_confidence`；
-2. 按 `material_issue` 的条件分支填写处理方式或修正程度；
+2. 若有实质问题，填写全部观察缺陷、所需修复动作和修正范围；
 3. 完成布局编辑并提交最终 geometry；
 4. 填写 post-task 字段。
 
@@ -491,37 +536,18 @@ yes
 
 它保留个体判断信心，但不替代 yes/no 决策。
 
-#### `primary_issue_family`
+#### `observed_defects`
 
-仅当 `material_issue=yes` 时必填：
+仅当`material_issue=yes`时显示6.6的五个具体缺陷，`observed_defects`可多选且至少选一项。不再先问“是否有第二类错误”：多选结果本身记录第二类及更多缺陷。工人不填写`primary_defect`，避免把真实的多问题初始标注强行压缩为单一主类；研究者侧仍保留`wrong_primary_defect`、`stimulus_purity`和全部缺陷真值。当前不提供含义不清的`other`或`unsure family`；界面测试若发现稳定的未覆盖概念，应在正式冻结前扩充定义，而不是让`other`吸收异质信息。
 
-```text
-boundary_or_corner_localization
-underextension
-adjacent_space_overextension
-topology_or_overparsing
-other
-```
+#### `repair_actions` 与 `repair_extent`
 
-不提供 `unsure` family。
+“需要怎样修”与“要修多大”分开采集：
 
-#### `required_correction`
+- `repair_actions`可多选：移动现有边界/角点、补充遗漏边界/角点、删除相邻空间段、删除误标非布局结构、合并/删除重复角点；
+- `repair_extent`单选：`local / multi_region / redraw`。
 
-`required_correction` 必须由 `material_issue` 决定可选范围，界面不得同时展示全部五项：
-
-| `material_issue` | 界面问题 | 可选值 |
-|---|---|---|
-| `no` | 你认为该初始标注应如何处理？ | `no_edit_needed` / `optional_visual_micro_refinement` |
-| `yes` | 该实质性问题需要什么程度的修正？ | `minor_mandatory_coordinate_correction` / `major_geometry_correction` / `topology_change_or_redraw` |
-
-Label Studio 要求控制字段名称唯一，因此本地采集配置使用两个互斥的原始字段：
-
-- `material_issue=no`：写入 `no_issue_handling`；
-- `material_issue=yes`：写入 `required_correction`。
-
-分析时依据 `material_issue` 将二者合并为统一的规范字段 `required_correction`。跨分支残留值属于无效响应，提交校验必须阻止，不得将其解释为标注不确定性。
-
-“识别—行动不一致”只比较编辑前判断与后续实际几何行为，不通过允许两个编辑前回答互相矛盾来构造。
+整体重标已由`repair_extent=redraw`表达，不再重复设置`redraw_layout`动作。上述三个字段仅在`material_issue=yes`时显示。`material_issue=no`时不再要求选择修正程度；是否实际进行了可选微调由proposal-to-final几何变化计算，不另加一个与结果高度冗余的意图标签。若界面分支往返导致隐藏字段保留历史值，规范化层把这些值记为“不适用并忽略”，同时记录`inactive_branch_residual` QA标记；不因此拦截或丢弃整条响应。“识别—行动不一致”只比较编辑前判断与后续实际几何行为。
 
 ### 7.4 Post-task 字段
 
@@ -540,7 +566,7 @@ Label Studio 要求控制字段名称唯一，因此本地采集配置使用两�
 - `worker_scope_response`；
 - `multiple_plausible_layouts = no/yes`；
 - `perceived_difficulty = 1–5`；
-- difficulty reason status/reasons。
+- `difficulty_reason`：必填多选，包含`no_specific_reason`及各具体原因；`no_specific_reason`只能单独选择。
 
 这些是 worker response 或post-treatment机制结果，不是 researcher-side图片资格真值，也不用于该图首次分配。
 
@@ -553,15 +579,15 @@ Label Studio 要求控制字段名称唯一，因此本地采集配置使用两�
 | `worker_scope_response` | RQ1：标注者对任务适用性/scope 的响应 | 保留；不是 researcher truth |
 | `multiple_plausible_layouts` | RQ1：主观多解判断，与几何候选模式交叉检查 | 保留；单独不能证明客观多解 |
 | `perceived_difficulty` | 主观负担及处理后反应 | 辅助保留；不等于不确定性或质量 |
-| `difficulty_reason_status` | 区分“无原因”和漏填 | 仅QA，无独立研究结论 |
-| `difficulty_reason` | 遮挡、低纹理、拼接、反射、开口、图像质量等探索性机制 | 可选探索；`other`本身不可解释 |
+| `difficulty_reason` | 必填多选；区分无明确原因及遮挡、低纹理、拼接、反射、开口、图像质量等探索性机制 | `no_specific_reason`只能单独选择；`other`本身不可解释 |
 | `material_issue` | RQ3：Correct/Wrong proposal 的二元识别响应 | 核心保留 |
 | `issue_confidence` | RQ3：对 Model Issue 判断的主观信心/校准 | 核心保留；不是最终布局信心 |
-| `primary_issue_family` | RQ3：错误家族识别 | 仅在 Wrong truth family 预先冻结时保留；`topology_or_overparsing`是双重类别，正式算family accuracy前应拆分或降为宽泛类 |
-| `required_correction` | 预期修正程度与实际 geometry delta 的关联 | 仅在明确研究识别—行动链时保留；`major`目前缺少统一数值阈值 |
-| `no_issue_handling` | `material_issue=no` 后的处理意图 | 与二元判断和最终几何变化高度冗余，列为删除候选，不作为独立结果 |
+| `observed_defects` | RQ3：具体缺陷识别及多问题共现 | 候选核心；多选，五类定义见6.6；undercoverage尚未由历史truth验证 |
+| `repair_actions` | RQ3：预期修复动作与实际几何变化的关联 | 候选核心；可多选，与缺陷类型分开 |
+| `repair_extent` | RQ3：预期修正范围与实际geometry delta的关联 | 辅助；仅分local/multi-region/redraw，不充当错误类型 |
+| `structural_validity`、`stimulus_purity` | researcher-side刺激QC | 不向worker展示，不作为worker不确定性 |
 
-如果导师明确把“个体对最终答案的主观不确定”设为核心，才考虑为三个臂共同增加一个 `layout_confidence=1–5`；当前不因理论完整性先加字段。当前本地 XML 尚未部署，本轮不改 XML。
+如果导师明确把“个体对最终答案的主观不确定”设为核心，才考虑为三个臂共同增加一个 `layout_confidence=1–5`；当前不因理论完整性先加字段。当前六份 XML v2 与四份 Userscript v5 只是本地待部署草稿，未部署到 Project 86；正式合同、active time、分发与三臂样本量均未改变。
 
 旧元标签不追溯作废、不删除、不自动重编码：旧 `scope=normal` 含“唯一可复现”语义，旧 difficulty 和旧多选 `model_issue` 也与新字段构念不同。旧数据按 legacy schema 原样分析；新实验若获批，才冻结 forward schema。`historical_data_reclassified=false` 保持不变。
 
@@ -579,13 +605,13 @@ D_{ic}
 \sum_{a<b}d(Y_{iac},Y_{ibc}),\quad k=5.
 \]
 
-建议主距离：
+候选主距离：
 
 \[
-d(Y_a,Y_b)=1-\operatorname{IoU}(Y_a,Y_b).
+d(Y_a,Y_b)=1-\operatorname{IoU}\{M(Y_a),M(Y_b)\}=D_{\text{mask}}(Y_a,Y_b).
 \]
 
-每臂有10个标注对，但这些pair共享标注者，不能作为10个独立样本。图像是主要推断单位。
+`M` 的表示、seam、raster与invalid规则同5.2.1，并须在正式结果可见前冻结。每臂有10个标注对，但这些pair共享标注者，不能作为10个独立样本。图像是主要推断单位。
 
 ### 8.2 Planned contrasts
 
@@ -650,9 +676,9 @@ U=I(\text{structurally valid})\times\operatorname{IoU}(Y_{final},G);
 - wrong proposal correction；
 - residual wrong retention；
 - correct proposal retention；
-- correct proposal unnecessary/harmful edit。
+- correct proposal edit、无明显收益的edit，以及经双轴证据支持的harmful edit候选。
 
-reference quality 与可见图像合理性不是同一个对象。若出现“人工修改后reference指标下降”的关键候选，应进行不看条件与行为标签的视觉边界审查；不得仅凭 `delta_U<0` 宣称人工修改更差或更好。
+reference quality 与可见图像合理性不是同一个对象。当前默认方案不把尚未验证的 `R_vis` 纳入72图正式结果。若论文要正式声称“人工修正降低可见墙体残差”，应先在不进入Main的图片上，由至少两名结果盲审者验证可见证据定义、重复性和响应性；通过后必须在任何正式condition outcome可见前冻结并升级为key secondary。若不通过，则只允许对预先抽取、非按 `delta_U` 选择的样本做盲法视觉贴合审查，不得从 `wall_distance_mean` 或 `delta_U` 推断真实墙残差。也不得仅凭 `delta_U<0` 宣称人工修改更差或更好。
 
 ### 8.5 联合解释
 
@@ -703,9 +729,11 @@ P(issue=yes | Correct)
 两者差值
 Correct false-positive rate
 Wrong miss rate
-primary-family recognition rate
+Wrong 条件下缺陷集合的 exact-set match、Jaccard 与逐缺陷召回/误报
 confidence calibration
 ```
+
+缺陷识别不再计算强制单一主类准确率。对 Wrong 图`i`，以研究者冻结的全部缺陷真值集合`T_i`和工人选择集合`S_ij`比较，报告exact-set match、Jaccard以及逐缺陷的召回与误报；五类频数不足时只作描述性结果。研究者侧的`wrong_primary_defect`仅用于刺激描述、纯度审核或预先声明的分层，不反推工人“应当选择的唯一主类”。
 
 Correct/Wrong truth 是随机处理，因此 `Wrong vs Correct → material_issue` 可以解释为proposal truth对识别反应的处理效应。
 
@@ -765,12 +793,14 @@ RQ1以估计为主，不强行检验“是否存在分歧”：
 
 ### 11.2 RQ2
 
-主要估计为 image-equal contrasts。推荐：
+主要估计为 image-equal contrasts，不设置三条件omnibus门。当前讨论稿把问题拆成：
 
-1. 先进行三条件总体随机化检验；
-2. 对 `Correct−Manual` 与 `Wrong−Manual` 两个预设比较进行Holm控制；
-3. `Wrong−Correct` 作为proposal correctness依赖的直接次级比较；
+1. RQ2a：`Correct−Manual` 与 `Wrong−Manual`，回答预标注相对独立Manual如何改变不一致；
+2. RQ2b：`Wrong−Correct`，回答这种改变是否依赖proposal correctness；
+3. 三个contrast均在结果可见前预设，并在同一确认性家族中用受限随机化maxT（若实现和模拟验证通过）或Holm控制；
 4. 同时报告估计值、95% CI和标准化效应，不只报告p值。
+
+如果导师要求只有一个primary contrast，必须在condition outcome可见前按论文主问题选择：只有当主故事明确改为proposal correctness机制时，才把`Wrong−Correct`设为唯一primary；不得事后根据显著性调整层级。
 
 主要推断应尊重受限随机分配：
 
@@ -845,20 +875,22 @@ outcome
 
 ### 13.1 非正式界面测试
 
-不计入正式批次。确认字段、条件分支、保存、刷新和说明材料可用。
+不计入正式批次。当前5图小测已经发现旧字段结构重叠；由于两名测试者被要求主要测试元标签，它不能用于判断geometry完整率。修订字段后只做1--2图、2--3人的受控技术冒烟测试，覆盖未编辑、移动、删除及恢复原位，确认分支、保存、刷新、导出和canonicalization规则；通过后直接进入24图Batch 1，不再反复拆成多个难以运营的小块。
 
 ### 13.2 Batch 1：24图
 
+- 启动前先完成6.8的研究者审核；此前28张已有14张PASS，当前先审核8张补充候选，不足部分再从139张宽范围中补充；AI建议不作排除，最终由研究者选择并复核24张；
+- 24张主候选必须全部达到PASS；REVISE须修订后重审，REJECT从备用池或重新筛选中替换；
 - 360次worker-action；
 - 每人6 Manual、6 Correct、6 Wrong；
-- 每个Wrong family 6图；
+- 当前不承诺每个语义缺陷固定6图；现有6/6/6/6只平衡机械候选筛选层，不进入truth或family效应解释；
 - 重点检查技术完整性和manipulation是否明显失败。
 
 ### 13.3 Batch 2：24图
 
 累计48图、720次worker-action；每人累计12 Manual、24 Semi。
 
-若科学合同未改变，继续使用同一协议版本；不得根据Batch 1的效应方向选择更有利图片或错误家族。
+若科学合同未改变，继续使用同一协议版本；不得根据Batch 1的效应方向选择更有利图片或缺陷构成。
 
 ### 13.4 Batch 3：24图
 
@@ -885,7 +917,7 @@ outcome
 - 10–25个百分点为Yellow，检查培训、刺激严重度和taxonomy；
 - 小于10个百分点为Red，说明Correct/Wrong在worker感知层面可能没有形成有效对比；
 - Correct的material-issue false-positive明显过高时，重新审查Correct刺激物；
-- overall primary-family recognition低于约50%时，重新审查taxonomy和培训。
+- 对已冻结缺陷truth逐项报告选择率和误选率；不得把多标签truth压成一个含义不明的overall family accuracy。若定义理解测试或逐项识别明显失败，重新审查taxonomy和培训。
 
 这些是设计诊断，不是论文主假设。不得以中途RQ2质量或分歧p值决定是否继续，也不得在结果可见后选择性追加到某个condition。
 
@@ -969,8 +1001,9 @@ design-effect sensitivity = 1.4
 | active time 作为一种不确定性 | 改为效率、努力和人—任务反应的辅助指标 |
 | RQ3 独立 Study 3、完整编辑轨迹 | 保持为 Study 2 内次级关联；不做阶段锁、不声称完整轨迹 |
 | 80图、24–30新工人、自适应人数、模型uncertainty对齐、概率布局、下游任务 | 不纳入当前默认方案；80图仅是容量硬上限参考 |
+| 四个互斥Wrong family、角点数自动定类、每类固定6图 | 被历史18图×26人回放否决；改为工人侧缺陷多选与独立修复动作，研究者侧保留主要缺陷真值，自动几何量只作候选筛选 |
 
-这次删减不是改变研究方向，而是让每个主结论都落在现有或计划采集的数据上。剩余明显的过度设计候选是四类 Wrong 的细分、`primary_issue_family`、`required_correction` 和全部困难原因；是否保留由导师决定，不应同时作为主要假设。
+这次删减不是改变研究方向，而是让每个主结论都落在现有或计划采集的数据上。新的五类缺陷不是五个确认性假设；其主要用途是解释RQ3的识别—行动链并防止一个标签混杂多种信息。剩余明显的过度设计候选是全部困难原因、精细family-specific效应及未验证的undercoverage刺激配额；是否保留由导师决定。
 
 ---
 
@@ -1008,9 +1041,10 @@ design-effect sensitivity = 1.4
 - [ ] 是否同意总体pairwise layout dissimilarity作为RQ2 primary；
 - [ ] 是否同意当前只使用cardinality/validity代理，不把完整topology signature列为确认性指标；
 - [ ] Correct/Wrong operational truth及盲审要求；
-- [ ] 四类Wrong family和中等severity；
+- [ ] 是否同意经历史数据压力测试后的五类工人侧缺陷多选、研究者侧`wrong_primary_defect`和中等severity；
 - [ ] `material_issue=yes/no + confidence 1–5`，不提供unsure；
-- [ ] 是否删去冗余的`no_issue_handling`，以及是否确有必要保留`primary_issue_family`和`required_correction`；
+- [ ] 是否同意不再采集冗余的`no_issue_handling`，并将缺陷、修复动作和修正范围拆开；
+- [ ] `current_space_undercoverage`尚无历史truth样本：是否在非正式界面测试中先验证定义和样例，再决定正式配额；
 - [ ] 是否把三个臂通用的`layout_confidence`纳入核心；若不是核心则不新增；
 - [ ] 是否接受只按界面顺序要求编辑前自报、不实现或声称Model Issue技术锁；
 - [ ] 三批之间的运营门和manipulation诊断；
@@ -1040,10 +1074,21 @@ design-effect sensitivity = 1.4
 - `analysis_results/rq1_stratified_uncertainty_20260827_v1/human_component_summary.csv`
 - `analysis_results/rq1_stratified_uncertainty_20260827_v1/meta_label_research_mapping.csv`
 - `analysis_results/rq1_stratified_uncertainty_20260827_v1/literature_claim_audit.csv`
+- `analysis_results/historical_model_issue_construct_validation_20260827_v1/REPORT_ZH.md`
+- `analysis_results/historical_model_issue_construct_validation_20260827_v1/researcher_visual_reclassification.csv`
+- `analysis_results/historical_model_issue_construct_validation_20260827_v1/review.html`
+- `analysis_results/annotation_uncertainty_batch1_broad_review_20260828_v1/review.html`
+- `analysis_results/annotation_uncertainty_batch1_broad_review_20260828_v1/candidate_manifest.json`
+- `analysis_results/annotation_uncertainty_batch1_broad_review_20260828_v1/AI_INITIAL_SUGGESTIONS.md`
+- `analysis_results/annotation_uncertainty_batch1_supplement_review_20260828_v1/review.html`
+- `analysis_results/annotation_uncertainty_batch1_supplement_review_20260828_v1/candidate_manifest.json`
+- `analysis_results/annotation_uncertainty_batch1_candidate_review_20260827_v2/review.html`
+- `analysis_results/annotation_uncertainty_batch1_candidate_review_20260827_v2/candidate_manifest.json`
 
 当前配置与边界：
 
 - `tools/label_studio/label_studio_uncertainty_meta_manifest_v1.json`
+- `tools/label_studio/label_studio_uncertainty_meta_manifest_v2.json`
 - `docs/label_studio/LS_CE_ONLY_OPERATION_SOP_v1.md`
 - `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`
 - `docs/thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md`
@@ -1058,6 +1103,6 @@ design-effect sensitivity = 1.4
 
 在导师确认前，本研究最简洁、可执行且相对严谨的候选版本为：
 
-> 使用全部历史Manual输出按支持数分层描述自然标注分歧，并以42张P1/C1高密度图校准有限工人池下的人数稳定性；后续候选实验使用72张未暴露图片开展三臂同图随机实验。每张图由5名Manual、5名Correct-Semi和5名Wrong-Semi标注，20名标注者（可以全部为统一培训的新工人）通过受限轮换实现每人18个Manual和36个Semi任务，分3批、每批24图。RQ2以图像等权的平均两两布局不相似度为主结果，以cardinality、结构有效性、proposal-to-final变化和独立reference质量作分解与安全解释；不强行实现完整topology signature。RQ3保留为Study 2内的Model Issue识别—行动关联。本研究不实施阶段锁或阶段事件上报。所有内容仍待导师确认，Correct/Wrong truth、随机分配、字段、失败处理和推断方法只有在批准后才冻结。
+> 使用全部历史Manual输出按支持数分层描述历史无辅助标注输出差异与操作性可复现性，并以42张P1/C1高密度图校准有限工人池下的人数稳定性；后续候选实验使用72张对其实际被分配标注者未暴露的图片开展三臂同图随机实验（图片可以曾被其他人标注）。每张图由5名Manual、5名Correct-Semi和5名Wrong-Semi标注，20名标注者（可以全部为统一培训的新工人）通过受限轮换实现每人18个Manual和36个Semi任务，分3批、每批24图。RQ2以拟在启动前冻结的periodic equirectangular `D_mask`和图像等权的三个预设contrast为核心，不设置omnibus门，并以cardinality、结构有效性、proposal-to-final变化和独立reference质量作分解与安全解释；不强行实现完整topology signature。`R_vis`只在独立小规模验证通过后才考虑升级，否则不声明真实墙残差改善。RQ3保留为Study 2内的Model Issue识别—行动关联；其分类经P1历史18图×26人压力测试后改为工人侧缺陷多选、修复动作和修正范围分离，缺陷识别按集合比较，不强迫工人指定唯一主类；研究者侧仍记录刺激的全部缺陷真值、`wrong_primary_defect`和`stimulus_purity`。自动几何差异只作候选筛选。本研究不实施阶段锁或阶段事件上报。当前从Test与Validation共同总体生成的139张宽审核包只是候选范围；AI视觉意见只作优先核实提示，最终纳入由研究者裁决。所有内容仍待导师确认，Correct/Wrong truth、随机分配、字段、失败处理和推断方法只有在批准后才冻结。
 
 该建议仍是导师讨论稿，不得直接作为启动授权。

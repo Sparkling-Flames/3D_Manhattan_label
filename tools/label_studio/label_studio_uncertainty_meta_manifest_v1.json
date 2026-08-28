@@ -1,39 +1,15 @@
 {
   "schema_version": "label_studio_uncertainty_meta_manifest_v1",
   "manifest_id": "label_studio_uncertainty_meta_v1",
-  "status": "forward_local_configuration",
-  "deployment_status": "local_artifacts_ready_not_deployed",
+  "status": "superseded_development_test_snapshot",
+  "deployment_status": "development_test_project_86_only_not_formal",
+  "superseded_by": "label_studio_uncertainty_meta_v2",
+  "snapshot_storage": "git_history",
+  "snapshot_git_revision": "e1038a9",
   "timing_basis": "worker_instruction_only_not_system_locked",
-  "proposal_missing_not_collected": true,
-  "edit_operation_count_not_collected": true,
   "historical_data_reclassified": false,
   "paper_a_method_contract_changed": false,
   "script_version": "uncertainty_meta_supervisor_draft_20260825_v4",
-  "prechange_snapshot_root": "tools/label_studio/config_history/uncertainty_meta_v1_prechange_20260824",
-  "applicable_arms": [
-    "Manual",
-    "Correct-Semi",
-    "Wrong-Semi"
-  ],
-  "image_fields": [
-    "worker_scope_response",
-    "multiple_plausible_layouts",
-    "perceived_difficulty",
-    "difficulty_reason_status",
-    "difficulty_reason"
-  ],
-  "proposal_fields": [
-    "material_issue",
-    "primary_issue_family",
-    "no_issue_handling",
-    "required_correction",
-    "issue_confidence"
-  ],
-  "required_correction_normalization": {
-    "canonical_field": "required_correction",
-    "material_issue_no_source": "no_issue_handling",
-    "material_issue_yes_source": "required_correction"
-  },
   "files": {
     "xml": [
       "tools/label_studio/label_studio_view_config.xml",
@@ -51,12 +27,9 @@
     ]
   },
   "boundaries": {
-    "manual_proposal_fields": "structural_not_applicable",
-    "proposal_truth_worker_visible": false,
-    "technical_time_lock": false,
-    "phase_event_persistence": "not_collected",
-    "strict_server_auditable_timing": false,
-    "live_label_studio_deployed": false,
+    "formal_contract": false,
+    "project86_test_only": true,
+    "historical_responses_reencoded": false,
     "active_time_behavior_changed": false,
     "task_distribution_changed": false,
     "gt_isolation_changed": false

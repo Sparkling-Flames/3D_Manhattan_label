@@ -17,31 +17,30 @@
         </Choices>
         <Text name="issue_confidence_rule_text" value="请评估你对上述判断的把握程度：1=把握很低，5=把握很高。"/>
         <Choices name="issue_confidence" toName="img" choice="single" showInLine="true" required="true" requiredMessage="必须选择 1–5 的把握程度">
-          <Choice value="1" alias="1"/><Choice value="2" alias="2"/><Choice value="3" alias="3"/><Choice value="4" alias="4"/><Choice value="5" alias="5"/>
+          <Choice value="1" alias="1" hint="把握很低"/><Choice value="2" alias="2" hint="把握较低"/><Choice value="3" alias="3" hint="把握一般"/><Choice value="4" alias="4" hint="把握较高"/><Choice value="5" alias="5" hint="把握很高"/>
         </Choices>
         <View visibleWhen="choice-selected" whenTagName="material_issue" whenChoiceValue="yes">
-          <Text name="primary_issue_family_rule_text" value="请选择一个最主要的问题类型。"/>
-          <Choices name="primary_issue_family" toName="img" choice="single" required="true" requiredMessage="必须选择一个主要问题类型">
-            <Choice value="boundary_or_corner_localization" alias="boundary_or_corner_localization" html="边界或角点定位" hint="空间范围、角点数量和拓扑基本正确，主要问题是一个或多个角点或边界的位置不准确。"/>
-            <Choice value="underextension" alias="underextension" html="标注范围不足或遗漏当前空间" hint="初始标注没有完整覆盖相机所在空间，遗漏了部分墙面、边界或角点。"/>
-            <Choice value="adjacent_space_overextension" alias="adjacent_space_overextension" html="过度延伸到相邻空间" hint="初始标注越过门框、墙垛、墙端或拱口等结构分界，将相邻空间错误纳入当前空间。"/>
-            <Choice value="topology_or_overparsing" alias="topology_or_overparsing" html="拓扑结构错误或误标非布局结构" hint="角点数量、顺序、上下对应或闭合关系错误，或者将家具、装饰凸起等非布局结构误标为真实边界。仅有位置偏差时不要选择本项。"/>
-            <Choice value="other" alias="other" html="其他" hint="仅当上述类型均不能描述最主要的问题时选择。"/>
+          <Text name="observed_defects_rule_text" value="请选择你观察到的所有实质性问题；同一初始标注可以同时存在多种问题。"/>
+          <Choices name="observed_defects" toName="img" choice="multiple" required="true" requiredMessage="必须至少选择一项实质性问题">
+            <Choice value="boundary_misalignment" alias="boundary_misalignment" html="边界或角点位置偏移" hint="初始标注对应的真实墙面、角点和空间范围基本正确，但一个或多个现有边界或角点位置不准确。存在遗漏、跨入相邻空间、误标非布局结构或重复角点时，应同时选择相应问题。"/>
+            <Choice value="current_space_undercoverage" alias="current_space_undercoverage" html="当前空间覆盖不足" hint="初始标注遗漏了相机所在空间真实外包络中的墙面、边界或角点，导致当前空间没有被完整覆盖。"/>
+            <Choice value="adjacent_space_inclusion" alias="adjacent_space_inclusion" html="错误纳入相邻空间" hint="初始标注越过门框、成对墙垛、墙端或拱口等结构分界，把相邻空间错误纳入当前空间。"/>
+            <Choice value="spurious_nonlayout_structure" alias="spurious_nonlayout_structure" html="误标非布局结构" hint="初始标注把家具、柜体、装饰凸起或其他不属于当前空间主要围护结构的物体当成独立墙面或转角；重复角点本身不属于本项。"/>
+            <Choice value="duplicate_redundant_corner" alias="duplicate_redundant_corner" html="重复或冗余角点" hint="同一个真实墙角附近出现多个没有对应真实墙段的角点，或存在不改变真实空间结构的冗余角点。"/>
           </Choices>
-        </View>
-        <View visibleWhen="choice-selected" whenTagName="material_issue" whenChoiceValue="no">
-          <Text name="no_issue_handling_rule_text" value="你认为该初始标注应如何处理？"/>
-          <Choices name="no_issue_handling" toName="img" choice="single" required="true" requiredMessage="必须选择处理方式">
-            <Choice value="no_edit_needed" alias="no_edit_needed" html="无需修改" hint="初始标注可以原样提交，不需要进行任何修正。"/>
-            <Choice value="optional_visual_micro_refinement" alias="optional_visual_micro_refinement" html="可选择进行轻微视觉调整" hint="初始标注即使不修改也可以接受；调整仅用于改善视觉对齐，不改变空间范围、角点数量或拓扑结构。"/>
+          <Text name="repair_actions_rule_text" value="请选择完成修复所需要的所有操作；不同操作可以组合选择。"/>
+          <Choices name="repair_actions" toName="img" choice="multiple" required="true" requiredMessage="必须至少选择一项修复操作">
+            <Choice value="move_boundary_or_corner" alias="move_boundary_or_corner" html="移动现有边界或角点" hint="移动已经存在的边界或角点以对齐真实墙面或墙角；即使还需要增删角点，也可以与其他操作同时选择。"/>
+            <Choice value="add_missing_boundary_or_corner" alias="add_missing_boundary_or_corner" html="补充遗漏边界或角点" hint="新增初始标注遗漏的真实墙面、边界或角点，使当前空间外包络完整。"/>
+            <Choice value="remove_adjacent_space_segment" alias="remove_adjacent_space_segment" html="删除相邻空间段" hint="删除越过结构分界并错误进入相邻空间的墙段或角点。"/>
+            <Choice value="remove_spurious_structure" alias="remove_spurious_structure" html="删除误标非布局结构" hint="删除由家具、柜体、装饰凸起或其他非主要围护结构造成的错误墙段或角点。"/>
+            <Choice value="merge_or_delete_duplicate_corner" alias="merge_or_delete_duplicate_corner" html="合并或删除重复角点" hint="把对应同一真实墙角的重复角点合并，或删除没有对应真实墙段的冗余角点。"/>
           </Choices>
-        </View>
-        <View visibleWhen="choice-selected" whenTagName="material_issue" whenChoiceValue="yes">
-          <Text name="required_correction_rule_text" value="该实质性问题需要什么程度的修正？"/>
-          <Choices name="required_correction" toName="img" choice="single" required="true" requiredMessage="必须选择修正程度">
-            <Choice value="minor_mandatory_coordinate_correction" alias="minor_mandatory_coordinate_correction" html="小幅坐标修正" hint="保持空间范围、角点数量和拓扑不变，只需调整少量角点或边界的位置。"/>
-            <Choice value="major_geometry_correction" alias="major_geometry_correction" html="大幅几何修正" hint="需要移动多处边界或进行较大幅度调整，但仍可在现有结构基础上完成修正。"/>
-            <Choice value="topology_change_or_redraw" alias="topology_change_or_redraw" html="改变拓扑结构或重新标注" hint="需要增删角点、改变角点顺序或对应关系、修复闭合结构，或者现有标注无法仅通过移动坐标修正。"/>
+          <Text name="repair_extent_rule_text" value="综合上述操作，这次修复影响多大范围？"/>
+          <Choices name="repair_extent" toName="img" choice="single" required="true" requiredMessage="必须选择修复范围">
+            <Choice value="local" alias="local" html="局部修复" hint="问题集中在一个局部区域，初始布局的其他部分可以直接保留。"/>
+            <Choice value="multi_region" alias="multi_region" html="多区域修复" hint="需要修复两个或以上彼此分开的区域，但初始布局的主体结构仍可继续使用。"/>
+            <Choice value="redraw" alias="redraw" html="整体重标" hint="初始布局整体不可靠，不能通过若干局部操作得到可接受结果，需要重新完成完整布局；仍应选择实际涉及的具体修复操作。"/>
           </Choices>
         </View>
 
@@ -69,30 +68,25 @@
 
         <Text name="perceived_difficulty_rule_text" value="请评价你完成本图布局标注时主观感受到的总体难度：1=很容易，5=很困难。"/>
         <Choices name="perceived_difficulty" toName="img" choice="single" showInLine="true" required="true" requiredMessage="必须选择 1–5 难度">
-          <Choice value="1" alias="1"/><Choice value="2" alias="2"/><Choice value="3" alias="3"/><Choice value="4" alias="4"/><Choice value="5" alias="5"/>
+          <Choice value="1" alias="1" hint="很容易"/><Choice value="2" alias="2" hint="比较容易"/><Choice value="3" alias="3" hint="难度一般"/><Choice value="4" alias="4" hint="比较困难"/><Choice value="5" alias="5" hint="很困难"/>
         </Choices>
 
-        <Text name="difficulty_reason_status_rule_text" value="请先说明是否观察到明确的困难原因，用于区分“确实没有明确原因”和“漏填原因”。"/>
-        <Choices name="difficulty_reason_status" toName="img" choice="single" showInLine="true" required="true" requiredMessage="必须说明是否存在明确困难原因">
-          <Choice value="no_specific_reason" alias="no_specific_reason" html="没有明确的困难原因"/>
-          <Choice value="one_or_more_specific_reasons" alias="one_or_more_specific_reasons" html="有一个或多个明确原因"/>
-        </Choices>
-        <View visibleWhen="choice-selected" whenTagName="difficulty_reason_status" whenChoiceValue="one_or_more_specific_reasons">
-          <Text name="difficulty_reason_rule_text" value="请选择所有确实增加标注难度的原因；同一原因不要重复选择。"/>
-          <Choices name="difficulty_reason" toName="img" choice="multiple" required="true" requiredMessage="已声明存在原因，必须至少选择一项">
+        <Text name="difficulty_reason_rule_text" value="请选择所有确实增加标注难度的原因；如果没有明确原因，只选择“没有明确的困难原因”。"/>
+        <Choices name="difficulty_reason" toName="img" choice="multiple" required="true" requiredMessage="必须选择至少一项困难原因或选择没有明确原因">
+            <Choice value="no_specific_reason" alias="no_specific_reason" html="没有明确的困难原因" hint="没有观察到可明确归因的困难。此项只能单独选择，不能与其他原因同时选择。"/>
             <Choice value="occlusion" alias="occlusion" html="遮挡" hint="前景物体或结构遮住了需要判断的墙角、墙线或边界证据。"/>
             <Choice value="low_texture" alias="low_texture" html="低纹理或纯色墙" hint="墙面纹理、颜色或对比度不足，使边界或角点难以定位。"/>
             <Choice value="seam_or_distortion" alias="seam_or_distortion" html="全景拼接缝或几何畸变" hint="全景拼接或投影造成直线断裂、错位、弯曲或拉伸。"/>
             <Choice value="reflection_or_transparency" alias="reflection_or_transparency" html="反射、玻璃或透明材质干扰" hint="反射或透明材质造成伪边界、重复结构或深度混淆。仅出现玻璃或镜面但不影响标注时不要选择。"/>
             <Choice value="opening_or_adjacent_space" alias="opening_or_adjacent_space" html="开口或相邻空间干扰" hint="门洞或开放区域使当前空间边界更难判断。选择本项不代表当前空间一定不适用。"/>
             <Choice value="image_quality" alias="image_quality" html="模糊、遮罩、曝光或其他画质问题" hint="模糊、噪声、压缩、遮罩、曝光、黑边或缺失像素使关键结构证据不可靠。"/>
-            <Choice value="other" alias="other" html="其他" hint="仅当以上原因均不适用时选择。"/>
-          </Choices>
-        </View>
+            <Choice value="other" alias="other" html="其他" hint="存在以上选项未覆盖的额外困难原因时选择；如同时存在已列原因，可以组合选择。"/>
+        </Choices>
 
       </View>
     </View>
     <View style="flex:40%; border-left:1px solid #ccc; padding-left:10px;">
+      <Header value="3D Layout Preview"/>
       <HyperText name="vis_3d" value="$vis_3d" valueType="url" inline="false"/>
     </View>
   </View>

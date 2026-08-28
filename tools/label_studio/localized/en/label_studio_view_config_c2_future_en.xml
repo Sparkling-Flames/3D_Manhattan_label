@@ -17,31 +17,30 @@
         </Choices>
         <Text name="issue_confidence_rule_text" value="Rate confidence in that judgement: 1=very low, 5=very high."/>
         <Choices name="issue_confidence" toName="img" choice="single" showInLine="true" required="true" requiredMessage="You must select confidence from 1 to 5">
-          <Choice value="1" alias="1"/><Choice value="2" alias="2"/><Choice value="3" alias="3"/><Choice value="4" alias="4"/><Choice value="5" alias="5"/>
+          <Choice value="1" alias="1" hint="Very low confidence"/><Choice value="2" alias="2" hint="Low confidence"/><Choice value="3" alias="3" hint="Moderate confidence"/><Choice value="4" alias="4" hint="High confidence"/><Choice value="5" alias="5" hint="Very high confidence"/>
         </Choices>
         <View visibleWhen="choice-selected" whenTagName="material_issue" whenChoiceValue="yes">
-          <Text name="primary_issue_family_rule_text" value="Choose one primary issue family."/>
-          <Choices name="primary_issue_family" toName="img" choice="single" required="true" requiredMessage="You must choose one primary issue family">
-            <Choice value="boundary_or_corner_localization" alias="boundary_or_corner_localization" html="Boundary or corner localization" hint="The spatial extent, corner count, and topology are basically correct; the main problem is the position of one or more corners or boundaries."/>
-            <Choice value="underextension" alias="underextension" html="Underextension or missing current-space structure" hint="The initial annotation does not fully cover the current space containing the camera and omits part of its walls, boundaries, or corners."/>
-            <Choice value="adjacent_space_overextension" alias="adjacent_space_overextension" html="Overextension into an adjacent space" hint="The initial annotation crosses a door frame, wall return, wall end, arch, or another structural boundary and incorrectly includes an adjacent space."/>
-            <Choice value="topology_or_overparsing" alias="topology_or_overparsing" html="Topology error or non-layout structure" hint="The corner count, order, ceiling-floor correspondence, or closure is wrong, or furniture and decorative protrusions are treated as layout structure. Do not choose this for a position-only error."/>
-            <Choice value="other" alias="other" html="Other" hint="Choose this only when none of the listed categories describes the primary issue."/>
+          <Text name="observed_defects_rule_text" value="Select every material issue you observe. One initial annotation may contain more than one issue."/>
+          <Choices name="observed_defects" toName="img" choice="multiple" required="true" requiredMessage="You must select at least one material issue">
+            <Choice value="boundary_misalignment" alias="boundary_misalignment" html="Boundary or corner misalignment" hint="The proposed physical walls, corners, and spatial extent are basically correct, but one or more existing boundaries or corners are misplaced. Also select any applicable omission, adjacent-space inclusion, non-layout structure, or duplicate-corner issue."/>
+            <Choice value="current_space_undercoverage" alias="current_space_undercoverage" html="Current-space undercoverage" hint="The initial annotation omits a real wall, boundary, or corner in the enclosure of the camera's current space, so the current space is not fully covered."/>
+            <Choice value="adjacent_space_inclusion" alias="adjacent_space_inclusion" html="Adjacent-space inclusion" hint="The initial annotation crosses a door frame, paired wall returns, a wall end, an arch, or another structural divider and incorrectly includes an adjacent space."/>
+            <Choice value="spurious_nonlayout_structure" alias="spurious_nonlayout_structure" html="Spurious non-layout structure" hint="The initial annotation treats furniture, cabinetry, a decorative protrusion, or another object outside the main enclosure as a separate wall or turn. A duplicate corner alone does not belong here."/>
+            <Choice value="duplicate_redundant_corner" alias="duplicate_redundant_corner" html="Duplicate or redundant corner" hint="Several corners near the same physical corner have no corresponding real wall segment, or a corner is redundant without changing the real spatial structure."/>
           </Choices>
-        </View>
-        <View visibleWhen="choice-selected" whenTagName="material_issue" whenChoiceValue="no">
-          <Text name="no_issue_handling_rule_text" value="How should the initial annotation be handled?"/>
-          <Choices name="no_issue_handling" toName="img" choice="single" required="true" requiredMessage="You must select how the initial annotation should be handled">
-            <Choice value="no_edit_needed" alias="no_edit_needed" html="No edit needed" hint="The initial annotation can be submitted unchanged and requires no correction."/>
-            <Choice value="optional_visual_micro_refinement" alias="optional_visual_micro_refinement" html="Optional visual micro-refinement" hint="The initial annotation is acceptable without any edit. Refinement may improve visual alignment but must not change the spatial extent, corner count, or topology."/>
+          <Text name="repair_actions_rule_text" value="Select every operation needed to complete the repair. Different operations may be combined."/>
+          <Choices name="repair_actions" toName="img" choice="multiple" required="true" requiredMessage="You must select at least one repair action">
+            <Choice value="move_boundary_or_corner" alias="move_boundary_or_corner" html="Move an existing boundary or corner" hint="Move an existing boundary or corner to align it with the real wall or corner. Select this together with an add or delete action when both are needed."/>
+            <Choice value="add_missing_boundary_or_corner" alias="add_missing_boundary_or_corner" html="Add a missing boundary or corner" hint="Add a real wall, boundary, or corner omitted from the initial annotation so that the current-space enclosure is complete."/>
+            <Choice value="remove_adjacent_space_segment" alias="remove_adjacent_space_segment" html="Remove an adjacent-space segment" hint="Delete a wall segment or corner that crosses a structural divider and incorrectly enters an adjacent space."/>
+            <Choice value="remove_spurious_structure" alias="remove_spurious_structure" html="Remove spurious non-layout structure" hint="Delete a wall segment or corner caused by furniture, cabinetry, a decorative protrusion, or another structure outside the main enclosure."/>
+            <Choice value="merge_or_delete_duplicate_corner" alias="merge_or_delete_duplicate_corner" html="Merge or delete a duplicate corner" hint="Merge corners that represent the same physical corner, or delete a redundant corner with no corresponding real wall segment."/>
           </Choices>
-        </View>
-        <View visibleWhen="choice-selected" whenTagName="material_issue" whenChoiceValue="yes">
-          <Text name="required_correction_rule_text" value="What level of correction does the material issue require?"/>
-          <Choices name="required_correction" toName="img" choice="single" required="true" requiredMessage="You must select the required correction level">
-            <Choice value="minor_mandatory_coordinate_correction" alias="minor_mandatory_coordinate_correction" html="Minor coordinate correction" hint="Keep the spatial extent, corner count, and topology unchanged and adjust only a small number of corner or boundary positions."/>
-            <Choice value="major_geometry_correction" alias="major_geometry_correction" html="Major geometry correction" hint="Move several boundaries or make a substantial geometric adjustment while retaining the existing structural basis."/>
-            <Choice value="topology_change_or_redraw" alias="topology_change_or_redraw" html="Topology change or redraw" hint="Add or remove corners, change corner order or correspondence, repair closure, or redraw when coordinate movement alone cannot fix the annotation."/>
+          <Text name="repair_extent_rule_text" value="Considering all selected operations, how much of the annotation must be repaired?"/>
+          <Choices name="repair_extent" toName="img" choice="single" required="true" requiredMessage="You must select the repair extent">
+            <Choice value="local" alias="local" html="Local repair" hint="The issue is confined to one local region and the rest of the initial layout can be retained directly."/>
+            <Choice value="multi_region" alias="multi_region" html="Multi-region repair" hint="Two or more separate regions need repair, but the main structure of the initial layout remains reusable."/>
+            <Choice value="redraw" alias="redraw" html="Full redraw" hint="The initial layout is unreliable overall and cannot be made acceptable through a few local operations; complete the layout again and still select the concrete repair actions involved."/>
           </Choices>
         </View>
 
@@ -69,30 +68,25 @@
 
         <Text name="perceived_difficulty_rule_text" value="Rate the overall difficulty you experienced when completing the layout annotation: 1=very easy, 5=very difficult."/>
         <Choices name="perceived_difficulty" toName="img" choice="single" showInLine="true" required="true" requiredMessage="You must select a difficulty from 1 to 5">
-          <Choice value="1" alias="1"/><Choice value="2" alias="2"/><Choice value="3" alias="3"/><Choice value="4" alias="4"/><Choice value="5" alias="5"/>
+          <Choice value="1" alias="1" hint="Very easy"/><Choice value="2" alias="2" hint="Easy"/><Choice value="3" alias="3" hint="Moderate difficulty"/><Choice value="4" alias="4" hint="Difficult"/><Choice value="5" alias="5" hint="Very difficult"/>
         </Choices>
 
-        <Text name="difficulty_reason_status_rule_text" value="First state whether you observed a specific reason for the difficulty. This distinguishes no specific reason from a missing response."/>
-        <Choices name="difficulty_reason_status" toName="img" choice="single" showInLine="true" required="true" requiredMessage="You must state whether a specific difficulty reason exists">
-          <Choice value="no_specific_reason" alias="no_specific_reason" html="No specific reason observed"/>
-          <Choice value="one_or_more_specific_reasons" alias="one_or_more_specific_reasons" html="One or more specific reasons observed"/>
-        </Choices>
-        <View visibleWhen="choice-selected" whenTagName="difficulty_reason_status" whenChoiceValue="one_or_more_specific_reasons">
-          <Text name="difficulty_reason_rule_text" value="Select every reason that materially increased annotation difficulty. Do not classify the same underlying cause twice."/>
-          <Choices name="difficulty_reason" toName="img" choice="multiple" required="true" requiredMessage="You reported a reason, so select at least one">
+        <Text name="difficulty_reason_rule_text" value="Select every reason that materially increased annotation difficulty. If there was no specific reason, select only 'No specific reason observed'."/>
+        <Choices name="difficulty_reason" toName="img" choice="multiple" required="true" requiredMessage="Select at least one difficulty reason or no specific reason">
+            <Choice value="no_specific_reason" alias="no_specific_reason" html="No specific reason observed" hint="No clearly attributable difficulty was observed. This option must be selected alone and cannot be combined with another reason."/>
             <Choice value="occlusion" alias="occlusion" html="Occlusion" hint="A foreground object or structure blocks wall, corner, or boundary evidence that must be judged."/>
             <Choice value="low_texture" alias="low_texture" html="Low texture or plain walls" hint="Weak wall texture, color, or contrast makes boundaries or corners difficult to locate."/>
             <Choice value="seam_or_distortion" alias="seam_or_distortion" html="Panorama seam or geometric distortion" hint="Panorama stitching or projection causes broken, shifted, curved, or stretched lines."/>
             <Choice value="reflection_or_transparency" alias="reflection_or_transparency" html="Reflection, glass, or transparency" hint="Reflection or transparency creates false boundaries, repeated structure, or depth confusion. Do not select this merely because glass or a mirror is present."/>
             <Choice value="opening_or_adjacent_space" alias="opening_or_adjacent_space" html="Opening or adjacent-space interference" hint="A doorway or open area makes the boundary of the current space harder to judge. This does not by itself make the task out of scope."/>
             <Choice value="image_quality" alias="image_quality" html="Blur, masks, exposure, or other image-quality problem" hint="Blur, noise, compression, masks, exposure, black borders, or missing pixels make key structural evidence unreliable."/>
-            <Choice value="other" alias="other" html="Other" hint="Choose this only when none of the listed reasons applies."/>
-          </Choices>
-        </View>
+            <Choice value="other" alias="other" html="Other" hint="Select this for an additional difficulty reason not covered above. It may be combined with listed reasons when both genuinely apply."/>
+        </Choices>
 
       </View>
     </View>
     <View style="flex:40%; border-left:1px solid #ccc; padding-left:10px;">
+      <Header value="3D Layout Preview"/>
       <HyperText name="vis_3d" value="$vis_3d" valueType="url" inline="false"/>
     </View>
   </View>

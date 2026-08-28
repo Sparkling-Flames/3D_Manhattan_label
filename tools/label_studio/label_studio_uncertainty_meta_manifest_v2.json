@@ -1,0 +1,50 @@
+{
+  "schema_version": "label_studio_uncertainty_meta_manifest_v2",
+  "manifest_id": "label_studio_uncertainty_meta_v2",
+  "status": "forward_local_configuration",
+  "deployment_status": "local_artifacts_ready_not_deployed",
+  "previous_manifest": "tools/label_studio/label_studio_uncertainty_meta_manifest_v1.json",
+  "script_version": "uncertainty_meta_supervisor_draft_20260828_v9",
+  "timing_basis": "worker_instruction_only_not_system_locked",
+  "proposal_missing_not_collected": true,
+  "edit_operation_count_not_collected": true,
+  "historical_data_reclassified": false,
+  "paper_a_method_contract_changed": false,
+  "worker_primary_defect_collected": false,
+  "researcher_primary_defect_retained": true,
+  "image_fields": ["worker_scope_response", "multiple_plausible_layouts", "perceived_difficulty", "difficulty_reason"],
+  "proposal_fields": ["material_issue", "observed_defects", "repair_actions", "repair_extent", "issue_confidence"],
+  "inactive_branch_policy": {
+    "material_issue_no": "clear_on_selection_and_fail_closed_before_submit",
+    "ignored_fields": ["observed_defects", "repair_actions", "repair_extent"],
+    "qa_flag": "inactive_branch_residual_blocked"
+  },
+  "files": {
+    "xml": [
+      "tools/label_studio/label_studio_view_config.xml",
+      "tools/label_studio/label_studio_view_config_manual.xml",
+      "tools/label_studio/label_studio_view_config_c2_future.xml",
+      "tools/label_studio/localized/en/label_studio_view_config_en.xml",
+      "tools/label_studio/localized/en/label_studio_view_config_manual_en.xml",
+      "tools/label_studio/localized/en/label_studio_view_config_c2_future_en.xml"
+    ],
+    "userscript": [
+      "tools/label_studio/official/ls_userscript_annotator.js",
+      "tools/label_studio/official/ls_userscript_debug.js",
+      "tools/label_studio/localized/en/ls_userscript_annotator_https_en.user.js",
+      "tools/label_studio/localized/en/ls_userscript_annotator_https_en_debug.user.js"
+    ]
+  },
+  "boundaries": {
+    "manual_proposal_fields": "structural_not_applicable",
+    "proposal_truth_worker_visible": false,
+    "technical_time_lock": false,
+    "phase_event_persistence": "not_collected",
+    "strict_server_auditable_timing": false,
+    "live_label_studio_deployed": false,
+    "active_time_behavior_changed": false,
+    "task_distribution_changed": false,
+    "gt_isolation_changed": false,
+    "three_arm_sample_size_changed": false
+  }
+}

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HoHoNet Helper Official Annotator HTTPS EN
 // @namespace    https://label.sparkle0825.top/
-// @version      uncertainty_meta_supervisor_draft_20260825_v4
+// @version      uncertainty_meta_supervisor_draft_20260828_v9
 // @description  Self-contained HTTPS helper for foreign HoHoNet Stage 1 annotators. Based on the official annotator helper; adds same-origin HTTPS defaults and optional CloudResearch worker-id metadata.
 // @author       HoHoNet
 // @match        https://label.sparkle0825.top/*
@@ -345,7 +345,7 @@
   const existingPreviewPanelStyle = document.getElementById(PREVIEW_PANEL_STYLE_ID);
   if (existingPreviewPanelStyle) existingPreviewPanelStyle.remove();
 
-  const SCRIPT_VERSION = "uncertainty_meta_supervisor_draft_20260825_v4";
+  const SCRIPT_VERSION = "uncertainty_meta_supervisor_draft_20260828_v9";
   window.__HOHONET_HELPER_SCRIPT_VERSION__ = SCRIPT_VERSION;
   window.__HOHONET_HELPER_SCRIPT_FLAVOR__ = "foreign_https_en";
   console.log(`HoHoNet Helper: loaded (v${SCRIPT_VERSION})`);
@@ -511,10 +511,45 @@
     if (!panel) {
       panel = document.createElement("div");
       panel.id = id;
-      panel.style.cssText = `position: fixed; right: 12px; bottom: ${bottomPx}px; max-width: 360px; background: rgba(24,24,27,0.94); color: #f4f4f5; padding: 8px 10px; z-index: 10000; font-family: Arial, sans-serif; font-size: 12px; line-height: 1.35; border-radius: 6px; box-shadow: 0 2px 10px rgba(0,0,0,0.25);`;
+      panel.style.cssText = `position: fixed; right: 12px; bottom: ${bottomPx}px; max-width: 360px; background: rgba(24,24,27,0.94); color: #f4f4f5; padding: 8px 10px; z-index: 10000; font-family: Arial, sans-serif; font-size: 12px; line-height: 1.35; border-radius: 6px; box-shadow: 0 2px 10px rgba(0,0,0,0.25); cursor: grab; user-select: none; touch-action: none;`;
       document.body.appendChild(panel);
     }
+    enableActiveTimePanelDrag(panel);
     return panel;
+  }
+
+  function enableActiveTimePanelDrag(panel) {
+    if (panel.dataset.activeTimeDragReady === "1") return;
+    panel.dataset.activeTimeDragReady = "1";
+    panel.addEventListener("pointerdown", (startEvent) => {
+      if (startEvent.button !== 0 || startEvent.target.closest?.("button")) return;
+      const startRect = panel.getBoundingClientRect();
+      const offsetX = startEvent.clientX - startRect.left;
+      const offsetY = startEvent.clientY - startRect.top;
+      panel.setPointerCapture?.(startEvent.pointerId);
+      panel.style.cursor = "grabbing";
+      const move = (event) => {
+        if (event.pointerId !== startEvent.pointerId) return;
+        const left = Math.max(0, Math.min(window.innerWidth - panel.offsetWidth, event.clientX - offsetX));
+        const top = Math.max(0, Math.min(window.innerHeight - panel.offsetHeight, event.clientY - offsetY));
+        panel.style.left = `${left}px`;
+        panel.style.top = `${top}px`;
+        panel.style.right = "auto";
+        panel.style.bottom = "auto";
+        panel.dataset.activeTimeDragged = "1";
+      };
+      const stop = (event) => {
+        if (event.pointerId !== startEvent.pointerId) return;
+        panel.style.cursor = "grab";
+        panel.removeEventListener("pointermove", move);
+        panel.removeEventListener("pointerup", stop);
+        panel.removeEventListener("pointercancel", stop);
+      };
+      panel.addEventListener("pointermove", move);
+      panel.addEventListener("pointerup", stop);
+      panel.addEventListener("pointercancel", stop);
+      startEvent.preventDefault();
+    });
   }
 
   function getActiveTimePanelMode() {
@@ -652,8 +687,8 @@
 
   function updateActiveTimePanels(report = null, uploadStatus = lastActiveTimeUploadStatus, explicitPageGate = null) {
     lastActiveTimeUploadStatus = uploadStatus || lastActiveTimeUploadStatus;
-    const tokenPanel = ensureActiveTimePanel(ACTIVE_TIME_TOKEN_PANEL_ID, 12);
-    const statusPanel = ensureActiveTimePanel(ACTIVE_TIME_STATUS_PANEL_ID, 92);
+    const tokenPanel = ensureActiveTimePanel(ACTIVE_TIME_TOKEN_PANEL_ID, 64);
+    const statusPanel = ensureActiveTimePanel(ACTIVE_TIME_STATUS_PANEL_ID, 144);
     const token = getLogToken();
     const tokenOk = Boolean(token);
     const pageGate = explicitPageGate || report?.pageGate || resolveAnnotationPageGate();
@@ -668,7 +703,7 @@
     statusPanel.style.display = showDetails && !hidden ? "block" : "none";
     tokenPanel.textContent = "";
     tokenPanel.onclick = null;
-    tokenPanel.style.cursor = "default";
+    tokenPanel.style.cursor = "grab";
     tokenPanel.style.background = "#fff";
     tokenPanel.style.color = "#111827";
     tokenPanel.style.padding = "10px 12px";
@@ -698,9 +733,9 @@
       tokenPanel.style.boxShadow = "0 4px 14px rgba(15,23,42,0.14)";
       const compactStatus = document.createElement("span");
       compactStatus.textContent = pageGate.eligible && identityReady
-        ? `Active-Time: Counting · Task ${pageGate.routeTaskId || "?"} · ${Math.round(seconds)}s · Upload ${lastActiveTimeUploadStatus}`
-        : `Active-Time: Not counting · ${identityReady ? pageGate.reason || "page not ready" : "identity_not_ready"}`;
-      compactStatus.style.cssText = "font-size: 12px; color: #475569; margin: 0 8px;";
+        ? `⋮⋮ Active-Time · ${Math.round(seconds)}s · ${lastActiveTimeUploadStatus}`
+        : `⋮⋮ Active-Time · Not counting`;
+      compactStatus.style.cssText = "font-size: 11px; color: #475569; margin: 0 6px;";
       tokenPanel.appendChild(compactStatus);
       appendActiveTimePanelButton(tokenPanel, "Details", () => {
         setActiveTimePanelMode("details");
@@ -737,7 +772,9 @@
     statusPanel.style.maxWidth = "420px";
     statusPanel.style.width = "min(420px, calc(100vw - 24px))";
     statusPanel.style.boxShadow = "0 10px 28px rgba(15,23,42,0.22)";
-    statusPanel.style.bottom = `${24 + (tokenPanel.offsetHeight || 96)}px`;
+    if (statusPanel.dataset.activeTimeDragged !== "1") {
+      statusPanel.style.bottom = `${76 + (tokenPanel.offsetHeight || 96)}px`;
+    }
     const detailTitle = document.createElement("div");
     detailTitle.textContent = "Technical Active-Time Details";
     detailTitle.style.cssText = "font-size: 15px; font-weight: 800; margin-bottom: 10px;";
@@ -982,261 +1019,6 @@
     }
 
     return null;
-  }
-
-  function normalizeChoiceToken(raw) {
-    const s = String(raw || "").trim();
-    const l = s.toLowerCase();
-    if (!s) return "";
-    const exactLocalizedAliases = { 否: "no", 是: "yes" };
-    if (exactLocalizedAliases[l]) return exactLocalizedAliases[l];
-    const localizedAliases = [
-      ["否：不存在必须修正的问题", "no"],
-      ["no: no mandatory correction", "no"],
-      ["是：至少存在一个必须修正的问题", "yes"],
-      ["yes: at least one mandatory correction", "yes"],
-      ["没有明确的困难原因", "no_specific_reason"],
-      ["no specific reason", "no_specific_reason"],
-      ["有一个或多个明确原因", "one_or_more_specific_reasons"],
-      ["one or more specific reasons", "one_or_more_specific_reasons"],
-      ["边界或角点定位", "boundary_or_corner_localization"],
-      ["boundary or corner localization", "boundary_or_corner_localization"],
-      ["欠延伸", "underextension"],
-      ["underextension", "underextension"],
-      ["过度延伸到相邻空间", "adjacent_space_overextension"],
-      ["overextension into an adjacent space", "adjacent_space_overextension"],
-      ["拓扑或过度解析", "topology_or_overparsing"],
-      ["topology or overparsing", "topology_or_overparsing"],
-    ];
-    const localized = localizedAliases.find(([label]) => l.includes(label));
-    if (localized) return localized[1];
-    return l;
-  }
-
-  function matchesFieldName(actual, expected) {
-    const a = String(actual || "")
-      .trim()
-      .toLowerCase();
-    const e = String(expected || "")
-      .trim()
-      .toLowerCase();
-    if (!a || !e) return false;
-    if (a === e) return true;
-    if (a.endsWith(`.${e}`) || a.endsWith(`:${e}`) || a.endsWith(`/${e}`))
-      return true;
-    return false;
-  }
-
-  function isMetaGuardDebugEnabled() {
-    try {
-      return (
-        window.localStorage.getItem("HOHONET_META_GUARD_DEBUG") === "1" ||
-        window.localStorage.getItem("HOHONET_DEBUG_META_GUARD") === "1" ||
-        window.localStorage.getItem("HOHONET_META_DEBUG") === "1"
-      );
-    } catch (e) {
-      return false;
-    }
-  }
-
-  function metaGuardDebug(...args) {
-    if (!isMetaGuardDebugEnabled()) return;
-    console.log("[HoHoNet MetaGuard]", ...args);
-  }
-
-  function toArrayFromMaybeObservable(value) {
-    try {
-      if (!value) return [];
-      if (Array.isArray(value)) return value;
-      if (typeof value.toJSON === "function") {
-        const j = value.toJSON();
-        if (Array.isArray(j)) return j;
-      }
-      if (typeof value[Symbol.iterator] === "function") {
-        return Array.from(value);
-      }
-    } catch (e) {}
-    return [];
-  }
-
-  function collectSelectedResults(store) {
-    const out = [];
-    try {
-      const selected = store?.annotationStore?.selected;
-      if (!selected) return out;
-
-      if (typeof selected?.serializeCompletion === "function") {
-        const ser = selected.serializeCompletion();
-        const serRes = toArrayFromMaybeObservable(ser?.result);
-        if (serRes.length) out.push(...serRes);
-      }
-
-      if (typeof selected?.toJSON === "function") {
-        const j = selected.toJSON();
-        const jRes = toArrayFromMaybeObservable(j?.result || j?.results);
-        if (jRes.length) out.push(...jRes);
-      }
-
-      const direct = toArrayFromMaybeObservable(selected?.results);
-      if (direct.length) out.push(...direct);
-    } catch (e) {
-      metaGuardDebug("collectSelectedResults error", e);
-    }
-    return out;
-  }
-
-  function extractChoicesFromResult(result) {
-    try {
-      if (!result || typeof result !== "object") return [];
-      const candidates = [
-        result?.value,
-        result?.area?.value,
-        result?.origin?.value,
-        result,
-        result?.area,
-        result?.origin,
-      ];
-
-      const out = [];
-      for (const source of candidates) {
-        if (!source || typeof source !== "object") continue;
-        const choices = Array.isArray(source.choices) ? source.choices : [];
-        if (!choices.length) continue;
-        const normalized = choices
-          .map((x) => normalizeChoiceToken(x))
-          .filter(Boolean);
-        for (const v of normalized) {
-          if (!out.includes(v)) out.push(v);
-        }
-      }
-      return out;
-    } catch (e) {
-      return [];
-    }
-  }
-
-  function getResultFromName(result) {
-    try {
-      return String(
-        result?.from_name ||
-          result?.value?.from_name ||
-          result?.area?.from_name ||
-          result?.area?.value?.from_name ||
-          result?.origin?.from_name ||
-          result?.origin?.value?.from_name ||
-          "",
-      ).trim();
-    } catch (e) {
-      return "";
-    }
-  }
-
-  function collectFromDomContainer(container) {
-    const out = [];
-    if (!container) return out;
-
-    const checkedInputs = container.querySelectorAll(
-      "input[type='checkbox']:checked, input[type='radio']:checked",
-    );
-    checkedInputs.forEach((input) => {
-      let text = "";
-      const id = input.getAttribute("id");
-      if (id) {
-        const label = container.querySelector(`label[for='${id}']`);
-        if (label && label.innerText) text = label.innerText;
-      }
-      if (!text) {
-        const near = input.closest("label,li,div,span");
-        text = near?.innerText || input?.value || "";
-      }
-      const token = normalizeChoiceToken(text);
-      if (token && !out.includes(token)) out.push(token);
-    });
-
-    const ariaChecked = container.querySelectorAll(
-      "[role='checkbox'][aria-checked='true'], [role='radio'][aria-checked='true']",
-    );
-    ariaChecked.forEach((node) => {
-      const token = normalizeChoiceToken(
-        node?.innerText || node?.textContent || "",
-      );
-      if (token && !out.includes(token)) out.push(token);
-    });
-
-    return out;
-  }
-
-  function findMetaSectionContainer(fieldName) {
-    const probes = Array.from(
-      document.querySelectorAll("h1,h2,h3,h4,h5,h6,div,span,label"),
-    );
-    const patternsByField = {
-      worker_scope_response: [/相机所在的当前空间是否至少能够形成/, /current space containing the camera form at least one/i],
-      multiple_plausible_layouts: [/是否存在两个或以上同样合理/, /two or more equally reasonable/i],
-      perceived_difficulty: [/总体难度/, /overall difficulty/i],
-      difficulty_reason_status: [/是否观察到明确的困难原因/, /whether you observed a specific reason/i],
-      difficulty_reason: [/选择所有确实增加标注难度的原因/, /select every reason that materially increased/i],
-      material_issue: [/必须修正的实质问题/, /material issue that must be corrected/i],
-      primary_issue_family: [/最主要的问题家族/, /one primary issue family/i],
-      no_issue_handling: [/初始标注应如何处理/, /initial annotation be handled/i],
-      required_correction: [/需要什么程度的修正/, /level of correction/i],
-      issue_confidence: [/有多大信心/, /rate confidence/i],
-    };
-    const patterns = patternsByField[fieldName] || [];
-
-    for (const el of probes) {
-      const txt = String(el?.innerText || "").trim();
-      if (!txt || txt.length > 180) continue;
-      if (!patterns.some((re) => re.test(txt))) continue;
-      const container = el.closest("section,fieldset,div");
-      if (container) return container;
-    }
-    return null;
-  }
-
-  function getSelectedChoicesByFieldFromDom(fieldName) {
-    const container = findMetaSectionContainer(fieldName);
-    return collectFromDomContainer(container);
-  }
-
-  function isFieldPresent(store, fieldName) {
-    try {
-      const results = collectSelectedResults(store);
-      for (const r of results) {
-        const fromName = getResultFromName(r);
-        if (matchesFieldName(fromName, fieldName)) return true;
-      }
-      return !!findMetaSectionContainer(fieldName);
-    } catch (e) {
-      return !!findMetaSectionContainer(fieldName);
-    }
-  }
-
-  function getSelectedChoicesByField(store, fieldName) {
-    try {
-      const results = collectSelectedResults(store);
-      const out = [];
-      for (const r of results) {
-        const fromName = getResultFromName(r);
-        if (!matchesFieldName(fromName, fieldName)) continue;
-        const vals = extractChoicesFromResult(r);
-        for (const v of vals) {
-          if (v && !out.includes(v)) out.push(v);
-        }
-      }
-
-      if (out.length > 0) {
-        metaGuardDebug(`${fieldName} from store`, out);
-        return out;
-      }
-
-      const domVals = getSelectedChoicesByFieldFromDom(fieldName);
-      metaGuardDebug(`${fieldName} from DOM fallback`, domVals);
-      return domVals;
-    } catch (e) {
-      metaGuardDebug(`getSelectedChoicesByField error for ${fieldName}`, e);
-      return [];
-    }
   }
 
   function getTaskCondition(store) {
@@ -1645,18 +1427,6 @@
     return order.every((value, idx) => Number(value) === idx);
   }
 
-  function persistAdjustedPreviewOrder(order, cornerCount, signature, source) {
-    const normalized = normalizePreviewOrder(order, cornerCount);
-    if (!normalized || isIdentityPreviewOrder(normalized)) return false;
-    const taskKey = getCurrentPreviewStorageTaskKey();
-    return savePreviewOrderOverride(taskKey, {
-      signature,
-      order: normalized,
-      corner_count: cornerCount,
-      source,
-    });
-  }
-
   window.__HOHONET_CLEAR_CORNER_ORDER_CACHE_FOR_CURRENT_TASK__ = () => {
     const taskKey = getCurrentPreviewStorageTaskKey();
     return {
@@ -1997,12 +1767,6 @@
     const previewSignature = String(data.previewSignature || "");
     if (previewOrder) {
       syncPreviewOverlayWithOrder(previewOrder, previewSignature);
-      persistAdjustedPreviewOrder(
-        previewOrder,
-        orderLength,
-        previewSignature,
-        "preview_order_state",
-      );
     }
     updatePreviewControlPanelUi();
   }
@@ -2216,67 +1980,73 @@
     return panel;
   }
 
-  function validateMetaChoices(store) {
-    const errors = [];
-    const workerScope = getSelectedChoicesByField(store, "worker_scope_response");
-    const multipleLayouts = getSelectedChoicesByField(store, "multiple_plausible_layouts");
-    const difficulty = getSelectedChoicesByField(store, "perceived_difficulty");
-    const difficultyStatus = getSelectedChoicesByField(store, "difficulty_reason_status");
-    const difficultyReason = getSelectedChoicesByField(store, "difficulty_reason");
-    const hasProposalFields = isFieldPresent(store, "material_issue");
-    const materialIssue = getSelectedChoicesByField(store, "material_issue");
-    const primaryIssue = getSelectedChoicesByField(store, "primary_issue_family");
-    const noIssueHandling = getSelectedChoicesByField(store, "no_issue_handling");
-    const requiredCorrection = getSelectedChoicesByField(store, "required_correction");
-    const issueConfidence = getSelectedChoicesByField(store, "issue_confidence");
-
-    if (workerScope.length !== 1) errors.push("请选择 Scope / Select one scope response");
-    if (multipleLayouts.length !== 1) errors.push("请回答是否存在多个合理布局 / Answer the multiple-layout question");
-    if (difficulty.length !== 1) errors.push("请选择 1–5 难度 / Select difficulty 1–5");
-    if (difficultyStatus.length !== 1) errors.push("请选择困难原因状态 / Select one difficulty-reason status");
-    if (difficultyStatus.includes("one_or_more_specific_reasons") && !difficultyReason.length) {
-      errors.push("已声明存在困难原因，请至少选择一项 / Select at least one difficulty reason");
-    }
-    if (difficultyStatus.includes("no_specific_reason") && difficultyReason.length) {
-      errors.push("已声明没有明确困难原因，请清除原因选择 / Clear stale difficulty reasons");
-    }
-    if (hasProposalFields) {
-      if (materialIssue.length !== 1) errors.push("请选择 proposal 是否有实质问题 / Select material issue yes or no");
-      if (issueConfidence.length !== 1) errors.push("请选择 1–5 判断信心 / Select confidence 1–5");
-      if (materialIssue.includes("no")) {
-        if (noIssueHandling.length !== 1) errors.push("Select how the initial annotation should be handled");
-        if (primaryIssue.length || requiredCorrection.length) {
-          errors.push("Clear the material-issue options after selecting no material issue");
-        }
-      }
-      if (materialIssue.includes("yes")) {
-        if (primaryIssue.length !== 1) errors.push("Select exactly one primary issue family");
-        if (requiredCorrection.length !== 1) errors.push("Select the required correction level");
-        if (noIssueHandling.length) {
-          errors.push("Clear the no-issue handling option after selecting a material issue");
-        }
-      }
-    }
-
-    return errors;
+  function getDifficultyReasonConflict() {
+    const root = document.querySelector(".lsf-main-view");
+    const noReason = root?.querySelector('input[name="no_specific_reason"]');
+    const group = noReason?.closest(".lsf-choices");
+    if (!group || !noReason.checked) return false;
+    return group.querySelectorAll("input:checked").length > 1;
   }
 
-  function shouldGuardAction(target) {
-    if (!target) return false;
-    const text = String(
-      target.innerText || target.textContent || "",
-    ).toLowerCase();
-    const aria = String(
-      target.getAttribute?.("aria-label") || "",
-    ).toLowerCase();
-    const title = String(target.getAttribute?.("title") || "").toLowerCase();
-    const testid = String(
-      target.getAttribute?.("data-testid") || "",
-    ).toLowerCase();
-    const merged = `${text} ${aria} ${title} ${testid}`;
-    if (!merged.trim()) return false;
-    const keys = ["submit", "update", "完成", "提交", "更新"];
-    return keys.some((k) => merged.includes(k));
+  function enforceDifficultyReasonExclusivity(choiceName) {
+    const root = document.querySelector(".lsf-main-view");
+    const noReason = root?.querySelector('input[name="no_specific_reason"]');
+    const group = noReason?.closest(".lsf-choices");
+    const choice = group?.querySelector(`input[name="${choiceName}"]`);
+    if (!choice?.checked) return 0;
+    const toClear = choice === noReason
+      ? Array.from(group.querySelectorAll("input:checked")).filter((input) => input !== noReason)
+      : noReason.checked ? [noReason] : [];
+    toClear.forEach((input) => input.click());
+    return toClear.length;
+  }
+
+  const CONDITIONAL_ISSUE_DETAIL_NAMES = [
+    "boundary_misalignment",
+    "current_space_undercoverage",
+    "adjacent_space_inclusion",
+    "spurious_nonlayout_structure",
+    "duplicate_redundant_corner",
+    "move_boundary_or_corner",
+    "add_missing_boundary_or_corner",
+    "remove_adjacent_space_segment",
+    "remove_spurious_structure",
+    "merge_or_delete_duplicate_corner",
+    "local",
+    "multi_region",
+    "redraw",
+  ];
+
+  function getMaterialIssueChoiceGroup() {
+    const root = document.querySelector(".lsf-main-view");
+    const detailAnchor = root?.querySelector('input[name="boundary_misalignment"]');
+    if (!root || !detailAnchor) return null;
+    return Array.from(root.querySelectorAll(".lsf-choices")).find((group) => {
+      const precedesDetails = Boolean(
+        group.compareDocumentPosition(detailAnchor) & Node.DOCUMENT_POSITION_FOLLOWING,
+      );
+      return precedesDetails &&
+        group.querySelector('input[name="no"]') &&
+        group.querySelector('input[name="yes"]');
+    }) || null;
+  }
+
+  function clearConditionalIssueDetailsIfNoSelected() {
+    const root = document.querySelector(".lsf-main-view");
+    const materialIssueGroup = getMaterialIssueChoiceGroup();
+    const noIssue = materialIssueGroup?.querySelector('input[name="no"]');
+    if (!root || !noIssue?.checked) return 0;
+    const checked = CONDITIONAL_ISSUE_DETAIL_NAMES
+      .map((name) => root.querySelector(`input[name="${name}"]:checked`))
+      .filter(Boolean);
+    checked.forEach((input) => input.click());
+    return checked.length;
+  }
+
+  function isMetaSubmitButton(target) {
+    const button = target?.closest?.("button");
+    if (!button?.closest?.(".lsf-controls")) return false;
+    return button.name === "submit" || button.name === "update";
   }
 
   function installMetaSubmitGuard() {
@@ -2292,20 +2062,15 @@
     };
 
     const runCheck = () => {
-      const store = getStore();
-      if (!store) return true;
-      const errs = validateMetaChoices(store);
-      if (!errs.length) return true;
-
-      const msg = [
-        "Submission blocked: inconsistent meta labels were detected.",
-        "提交被拦截：检测到元标签不合规。",
-        "Please fix the following issue(s), then submit again.",
-        "请修正后再提交：",
-        ...errs.map((x) => `- ${x}`),
-      ].join("\n");
-      alert(msg);
-      console.warn("HoHoNet Meta Guard blocked submit:", errs);
+      const clearedIssueDetails = clearConditionalIssueDetailsIfNoSelected();
+      if (clearedIssueDetails > 0) {
+        alert("Hidden issue types, repair actions, and repair extent were cleared because 'No material issue' is selected. Submit again.");
+        console.warn("HoHoNet Meta Guard cleared hidden material-issue details and blocked this submit.");
+        return false;
+      }
+      if (!getDifficultyReasonConflict()) return true;
+      alert("'No specific reason observed' cannot be selected with another difficulty reason. Update the selection and submit again.");
+      console.warn("HoHoNet Meta Guard blocked conflicting difficulty reasons.");
       return false;
     };
 
@@ -2313,8 +2078,33 @@
       "click",
       (event) => {
         if (!isGuardEnabled() || !isLikelyAnnotationPage()) return;
-        const node = event.target?.closest?.("button,[role='button']");
-        if (!shouldGuardAction(node)) return;
+        const choice = event.target?.closest?.("label")?.querySelector("input");
+        const noReason = choice?.closest(".lsf-choices")?.querySelector('input[name="no_specific_reason"]');
+        if (!choice || !noReason) return;
+        window.setTimeout(() => enforceDifficultyReasonExclusivity(choice.name), 0);
+      },
+      true,
+    );
+
+    document.addEventListener(
+      "click",
+      (event) => {
+        if (!isGuardEnabled() || !isLikelyAnnotationPage()) return;
+        const materialIssueGroup = getMaterialIssueChoiceGroup();
+        const noIssue = materialIssueGroup?.querySelector('input[name="no"]');
+        const noIssueLabel = noIssue?.closest("label");
+        if (!noIssue || !(event.target === noIssue || noIssueLabel?.contains(event.target))) return;
+        window.setTimeout(clearConditionalIssueDetailsIfNoSelected, 0);
+      },
+      true,
+    );
+
+    document.addEventListener(
+      "click",
+      (event) => {
+        if (!isGuardEnabled() || !isLikelyAnnotationPage()) return;
+        const node = event.target?.closest?.("button");
+        if (!isMetaSubmitButton(node)) return;
         if (!runCheck()) {
           event.preventDefault();
           event.stopImmediatePropagation();
@@ -2341,11 +2131,7 @@
     console.log(
       "HoHoNet Meta Guard: enabled (disable: localStorage.HOHONET_STRICT_META_GUARD=0)",
     );
-    console.log(
-      "HoHoNet Meta Guard debug keys: HOHONET_META_GUARD_DEBUG=1 or HOHONET_DEBUG_META_GUARD=1",
-    );
   }
-
   function findSectionContainer() {
     const headers = Array.from(document.querySelectorAll("h3"));
     const header = headers.find(
@@ -3485,6 +3271,7 @@
 
     const iframe = document.getElementById(IFRAME_ID);
     if (!iframe || !iframe.contentWindow) return;
+    if (event.source !== iframe.contentWindow) return;
 
     if (data.type === "hohonet_preview_order_state") {
       handlePreviewOrderStateMessage(data);

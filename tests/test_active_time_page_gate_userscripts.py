@@ -14,7 +14,7 @@ PRECHANGE_OFFICIAL_DEBUG = PRECHANGE / "zh" / "userscript" / "ls_userscript_debu
 PRECHANGE_FOREIGN = PRECHANGE / "en" / "userscript" / "ls_userscript_annotator_https_en.user.js"
 PRECHANGE_FOREIGN_DEBUG = PRECHANGE / "en" / "userscript" / "ls_userscript_annotator_https_en_debug.user.js"
 INSTRUCTION_MANIFEST = ROOT / "tools" / "label_studio" / "label_studio_xml_instruction_manifest_v2.json"
-VERSION = "uncertainty_meta_supervisor_draft_20260825_v4"
+VERSION = "uncertainty_meta_supervisor_draft_20260828_v9"
 
 
 def _script(path: Path) -> str:
@@ -41,48 +41,118 @@ def test_formal_userscripts_use_the_uncertainty_meta_version():
         assert f'const SCRIPT_VERSION = "{VERSION}";' in source
 
 
-def test_all_current_userscripts_enforce_the_uncertainty_meta_structure() -> None:
+def test_all_current_userscripts_keep_native_validation_and_small_cross_field_guards() -> None:
     for path in (OFFICIAL, OFFICIAL_DEBUG, FOREIGN, FOREIGN_DEBUG):
         source = _script(path)
-        start = source.index("function validateMetaChoices(store)")
-        end = source.index("function shouldGuardAction(target)", start)
-        guard = source[start:end]
-        for field in (
-            "worker_scope_response",
-            "multiple_plausible_layouts",
-            "perceived_difficulty",
+        guard = source[source.index("function getDifficultyReasonConflict()"):source.index("function installMetaSubmitGuard()")]
+        assert 'input[name="no_specific_reason"]' in guard
+        assert '.closest(".lsf-choices")' in guard
+        assert "if (!group || !noReason.checked) return false;" in guard
+        assert 'querySelectorAll("input:checked").length > 1' in guard
+        assert "getSelectedChoicesByField" not in source
+        assert "collectSelectedResults" not in source
+        assert "findMetaSectionContainer" not in source
+        assert "normalizeChoiceToken" not in source
+        for removed in (
             "difficulty_reason_status",
-            "difficulty_reason",
-            "material_issue",
             "primary_issue_family",
             "no_issue_handling",
             "required_correction",
-            "issue_confidence",
         ):
-            assert field in guard
-        assert "one_or_more_specific_reasons" in guard
-        assert "no_specific_reason" in guard
-        assert "secondary_issue_families" not in guard
-        assert 'const exactLocalizedAliases = { 否: "no", 是: "yes" };' in source
-        assert '["no: no mandatory correction", "no"]' in source
-        assert '["yes: at least one mandatory correction", "yes"]' in source
-        assert 'materialIssue.includes("unsure")' not in guard
-        assert "current space containing the camera form at least one" in source
-        assert "trivial" not in guard.lower()
-        assert "acceptable" not in guard.lower()
+            assert removed not in guard
         assert "META_GUARD_REJECT_LOG_KEY" not in source
         assert "META_GUARD_REJECT_STATS_KEY" not in source
 
 
-def test_meta_field_matching_does_not_confuse_overlapping_field_names() -> None:
+def test_material_issue_no_clears_and_fail_closes_stale_hidden_details() -> None:
+    detail_names = (
+        "boundary_misalignment",
+        "current_space_undercoverage",
+        "adjacent_space_inclusion",
+        "spurious_nonlayout_structure",
+        "duplicate_redundant_corner",
+        "move_boundary_or_corner",
+        "add_missing_boundary_or_corner",
+        "remove_adjacent_space_segment",
+        "remove_spurious_structure",
+        "merge_or_delete_duplicate_corner",
+        "local",
+        "multi_region",
+        "redraw",
+    )
     for path in (OFFICIAL, OFFICIAL_DEBUG, FOREIGN, FOREIGN_DEBUG):
         source = _script(path)
-        start = source.index("function matchesFieldName(actual, expected)")
-        end = source.index("function isMetaGuardDebugEnabled()", start)
+        clear = source[source.index("const CONDITIONAL_ISSUE_DETAIL_NAMES"):source.index("function isMetaSubmitButton(")]
+        install = source[source.index("function installMetaSubmitGuard()"):source.index("function findSectionContainer()")]
+
+        for name in detail_names:
+            assert f'"{name}"' in clear
+        assert 'input[name="boundary_misalignment"]' in clear
+        assert 'input[name="no"]' in clear
+        assert 'input[name="yes"]' in clear
+        assert "checked.forEach((input) => input.click())" in clear
+        assert 'document.addEventListener(\n      "click"' in install
+        assert 'const noIssueLabel = noIssue?.closest("label")' in install
+        assert "window.setTimeout(clearConditionalIssueDetailsIfNoSelected, 0)" in install
+        assert "clearConditionalIssueDetailsIfNoSelected()" in install
+        assert "blocked this submit" in install
+
+
+def test_preview_order_messages_are_accepted_only_from_the_bound_iframe() -> None:
+    for path in (OFFICIAL, OFFICIAL_DEBUG, FOREIGN, FOREIGN_DEBUG):
+        source = _script(path)
+        listener = source[source.rindex('window.addEventListener("message"'):]
+
+        assert "event.source !== iframe.contentWindow" in listener
+
+
+def test_no_specific_difficulty_reason_is_mutually_exclusive_at_click_time() -> None:
+    for path in (OFFICIAL, OFFICIAL_DEBUG, FOREIGN, FOREIGN_DEBUG):
+        source = _script(path)
+        helper = source[source.index("function enforceDifficultyReasonExclusivity("):source.index("const CONDITIONAL_ISSUE_DETAIL_NAMES")]
+
+        assert "choice === noReason" in helper
+        assert 'group.querySelectorAll("input:checked")' in helper
+        assert "toClear.forEach((input) => input.click())" in helper
+        assert "window.setTimeout(() => enforceDifficultyReasonExclusivity(choice.name), 0)" in source
+
+
+def test_meta_guard_only_targets_real_label_studio_submit_controls() -> None:
+    for path in (OFFICIAL, OFFICIAL_DEBUG, FOREIGN, FOREIGN_DEBUG):
+        source = _script(path)
+        start = source.index("function isMetaSubmitButton(target)")
+        end = source.index("function installMetaSubmitGuard()", start)
         matcher = source[start:end]
-        assert "a === e" in matcher
-        assert "a.endsWith" in matcher
-        assert "a.includes(e)" not in matcher
+        assert 'button?.closest?.(".lsf-controls")' in matcher
+        assert 'button.name === "submit"' in matcher
+        assert 'button.name === "update"' in matcher
+        assert ".includes(" not in matcher
+        assert 'const node = event.target?.closest?.("button")' in source
+
+
+def test_active_time_panel_is_compact_draggable_and_defaults_above_submit_controls() -> None:
+    for path in (OFFICIAL, FOREIGN):
+        source = _script(path)
+        panel = source[source.index("function ensureActiveTimePanel("):source.index("function getActiveTimePanelMode(")]
+        update = source[source.index("function updateActiveTimePanels("):source.index("function getLabelsVisible()")]
+
+        assert "position: fixed; right: 12px;" in panel
+        assert "function enableActiveTimePanelDrag(panel)" in panel
+        assert 'panel.style.cursor = "grabbing"' in panel
+        assert "ensureActiveTimePanel(ACTIVE_TIME_TOKEN_PANEL_ID, 64)" in update
+        assert "⋮⋮ Active-Time" in update
+        assert "routeTaskId" not in update[update.index("if (minimized)"):update.index("return;", update.index("if (minimized)"))]
+
+
+def test_preview_order_is_persisted_only_by_the_explicit_save_action() -> None:
+    for path in (OFFICIAL, OFFICIAL_DEBUG, FOREIGN, FOREIGN_DEBUG):
+        source = _script(path)
+        state_handler = source[source.index("function handlePreviewOrderStateMessage("):source.index("function handlePreviewOrderSaveMessage(")]
+        save_handler = source[source.index("function handlePreviewOrderSaveMessage("):source.index("function handlePreviewOrderDeleteMessage(")]
+
+        assert "persistAdjustedPreviewOrder" not in source
+        assert "savePreviewOrderOverride" not in state_handler
+        assert "savePreviewOrderOverride(taskKey" in save_handler
 
 
 def test_all_current_userscripts_do_not_implement_phase_lock_or_phase_reporting() -> None:
@@ -211,8 +281,8 @@ def test_v3_uses_task_worker_identity_without_annotation_ids():
         assert "lastActiveTimeUploadStatus" in source
         assert 'const ACTIVE_TIME_RETRY_QUEUE_KEY = "HOHONET_ACTIVE_TIME_RETRY_QUEUE_V2_TASK_WORKER";' in source
 
-    assert "Active-Time：计时中" in official
-    assert "Active-Time: Counting" in foreign
+    assert "⋮⋮ Active-Time · ${Math.round(seconds)} 秒" in official
+    assert "⋮⋮ Active-Time · ${Math.round(seconds)}s" in foreign
 
 
 def test_active_time_session_id_is_fresh_for_every_page_load():

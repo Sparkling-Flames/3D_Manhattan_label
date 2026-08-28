@@ -72,7 +72,8 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 - [README_ANNOTATOR.md](label_studio/README_ANNOTATOR.md)
 - [README_DEVELOPER.md](label_studio/README_DEVELOPER.md)
 - `tools/label_studio/label_studio_xml_instruction_manifest_v2.json`：未部署即被取代的 Paper A Annotation v2 冻结快照及其历史边界。
-- `tools/label_studio/label_studio_uncertainty_meta_manifest_v1.json`：不确定性元标签 v1 的本地待部署入口；修改前配置位于 `tools/label_studio/config_history/uncertainty_meta_v1_prechange_20260824/`。
+- `tools/label_studio/label_studio_uncertainty_meta_manifest_v2.json`：不确定性元标签 v2 的本地待部署入口；使用原生 XML 必填/条件分支，Userscript 只补困难原因互斥，不改变 active time、分发或三臂样本量。
+- `tools/label_studio/label_studio_uncertainty_meta_manifest_v1.json`：Project 86 开发测试 v1 的冻结清单，配置由 Git 修订 `e1038a9` 保留；非正式合同，既有响应不追溯重编码。更早基线仍位于 `tools/label_studio/config_history/uncertainty_meta_v1_prechange_20260824/`。
 - [SOP_labelstudio_experiment.md](label_studio/SOP_labelstudio_experiment.md)
 
 瀵瑰簲宸ュ叿锛歚tools/label_studio/`
@@ -121,8 +122,11 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 
 ## 论文主线全量不确定性审计
 
-- [ANNOTATION_UNCERTAINTY_EXPERIMENT_SUPERVISOR_DRAFT_v1.md](thesis_main/ANNOTATION_UNCERTAINTY_EXPERIMENT_SUPERVISOR_DRAFT_v1.md)：360°布局标注不确定性研究的导师讨论稿；当前为 `DRAFT / NON-NORMATIVE / NOT APPROVED`，提出全部Manual按支持数分层的Study 1与72图三臂候选Study 2，明确20人可为全新cohort、active time仅作辅助、完整topology signature与技术阶段锁不进入默认方案；不改变当前方法合同、SAP、T1或任何分发工件。
+- [ANNOTATION_UNCERTAINTY_EXPERIMENT_SUPERVISOR_DRAFT_v2.md](thesis_main/ANNOTATION_UNCERTAINTY_EXPERIMENT_SUPERVISOR_DRAFT_v2.md)：基于历史失败审计重新定位的导师讨论稿 v2；状态为 DRAFT / NON-NORMATIVE / NOT APPROVED，提出候选 RQ、24×3×4 三臂设计、最小元标注、离线几何环序/残差与统计成功判据，不修改正式方法合同、SAP、T1/V1、已关闭阶段、Label Studio 分发或历史数据。
+- [ANNOTATION_UNCERTAINTY_EXPERIMENT_SUPERVISOR_DRAFT_v1.md](thesis_main/ANNOTATION_UNCERTAINTY_EXPERIMENT_SUPERVISOR_DRAFT_v1.md)：360°布局标注不确定性研究的导师讨论稿；当前为 `DRAFT / NON-NORMATIVE / NOT APPROVED`，提出全部Manual按支持数分层的Study 1与72图三臂候选Study 2。v2 元标签使用工人侧缺陷/修复多选并按集合分析，研究者侧保留主要缺陷与刺激纯度；20人可为全新cohort、active time仅作辅助，`R_vis`须先独立验证，完整topology signature与技术阶段锁不进入默认方案；不改变当前方法合同、SAP、T1或任何分发工件。
 - [ANNOTATION_UNCERTAINTY_EXTERNAL_REVIEW_PROPOSAL_NOTE_v1.md](thesis_main/ANNOTATION_UNCERTAINTY_EXTERNAL_REVIEW_PROPOSAL_NOTE_v1.md)：单独记录外部审稿方案及其与导师讨论稿的差异；状态为 `EXTERNAL PROPOSAL / NON-NORMATIVE / NOT ADOPTED`，不代表本项目采纳。
+- 历史 Model Issue 构念回放：`tools/thesis_main/analysis/analyze_historical_model_issue_construct.py`；输出 `analysis_results/historical_model_issue_construct_validation_20260827_v1/`。逐图并列历史 P1 初始标注、冻结参考、每图26名工人的实际旧标签和研究者新分类；结论为开发审计，不重编码历史数据或冻结新 truth。
+- 候选Batch 1研究者审核：`tools/thesis_main/data_prep/build_annotation_uncertainty_batch1_review.py`；宽审核范围为 `analysis_results/annotation_uncertainty_batch1_broad_review_20260828_v1/review.html`，从混合GT v4的Test+Validation共同总体按客观中等差异带筛139张（Test 124、Validation 15），只排除研究者已经审过的28图以免重复操作。此前28张已有14张PASS，当前先使用 `analysis_results/annotation_uncertainty_batch1_supplement_review_20260828_v1/review.html` 审核8张无重合补充候选；非约束视觉意见不作自动排除，正式分发才执行same-worker×same-image历史暴露去重。所有审核包均未冻结、未分发且不是LS import。
 - 现有 LS 标签开发测试：`import_json/uncertainty_meta_feasibility_20260824/`；仅含 5 张历史已标注 P1 Semi 图片，8 名中文标注者同图复测，共 40 条分配，不进入正式实验或论文分析。
 - 中性 retrospective 数据底座入口：`tools/thesis_main/analysis/full_uncertainty/materialize_uncertainty_substrate.py`；冻结输出：`analysis_results/uncertainty_substrate_20260823_v1/`。该并行底座纳入全部 2,501 条 canonical 记录，旧 eligibility 仅保留为历史字段，不修改方法合同、SAP 或 C2-B/C2-A-RP closeout。
 - RQ1 分层探索复算：`tools/thesis_main/analysis/analyze_rq1_stratified_uncertainty_20260827.py`；结果：`analysis_results/rq1_stratified_uncertainty_20260827_v1/`。主分析按 stage/batch/condition 分层，42 个 P1/C1 高密度单元用于支持数校准，C2-B 高支持单元只作独立复核。
