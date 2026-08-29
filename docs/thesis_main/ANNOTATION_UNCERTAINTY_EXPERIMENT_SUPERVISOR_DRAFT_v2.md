@@ -37,11 +37,28 @@ Correct/Wrong proposal 的随机化提供可识别的干预；initial→final �
 
 - 不新增盲重复作为默认设计，不以招募低质量工人制造效应；
 - 用一个最清晰的主要因果比较：Semi 内 Wrong vs Correct；
+- 默认把**连续 delivery-adjusted quality** 作为唯一 primary；二元 remaining error/review-needed 降为安全结果，避免让全部 288 条结果依赖额外双人盲审；
+- 把识别失败/修复失败作为机制性 key secondary，把 owner-valid active time 与编辑负担作为效率性 key secondary；
 - 把 Semi vs Manual 明确降为“整套 proposal + 强制自审工作流”的次要比较；
+- RQ1 主要由历史高密度 Manual 支撑，新 Manual 的 confidence validity 只作估计性补充；RQ3 held-out 增量诊断降为 exploratory，不作为本轮论文成败门；
 - 三臂共同只增加两个核心 post-edit 元标签：最终布局信心、多个合理布局判断；scope 保留为运营/可评估性字段；
 - Semi 只增加 proposal 问题判断及其信心，并尽可能在编辑前锁定；
-- 环向角点顺序和残差只在研究者侧离线记录/计算，不实时反馈给工人；
+- initial/final geometry、proposal SHA 和**提交时最终可见角点顺序**必须绑定；不要求恢复每次拖动轨迹，残差只在研究者侧离线计算且不实时反馈；
 - 24×3×4 只作为仿真起点。若功效不够，应增加图片或每图重复数，或降低结论层级，而不是降低工人质量。
+
+### 0.4 当前建议执行层：V2-lite
+
+V2 全文继续保留为方法边界和失败模式清单，但当前执行建议只冻结下表。后文与本表冲突时，V2-lite 代表本轮推荐的优先级；它仍须导师批准和独立 pilot，不能直接启动。
+
+| 层级 | 当前保留 | 当前不承担 |
+|---|---|---|
+| Confirmatory primary | Wrong-Semi vs Correct-Semi 的连续 delivery-adjusted quality ITT | defect-family 交互、稳定 worker 类型、多峰 prevalence |
+| Key mechanism | Wrong 内识别失败、识别后修复失败、target retention；Correct 的无必要退化 | 完整因果中介 |
+| Key efficiency | owner-valid `log1p(active_time)`、是否编辑、编辑幅度/角点数变化 | 把时间当质量分数或筛人规则 |
+| Supporting | 历史 Manual 分歧基线；新 Manual 的质量/信心与 workflow 对照 | 用每臂 k=4 恢复单图真实分布 |
+| Exploratory | 元标签增量诊断、内部残差、连续 worker profile | held-out AUPRC 作为成功门、离散 worker taxonomy |
+
+当前实际启动瓶颈有两个，而不是一个：其一是 24 个经双 reviewer/adjudication 的 matched Correct/Wrong stimulus pairs 尚未齐备；其二是最小 instrument 尚须证明 pre-edit 首次回答不可覆盖、proposal/initial/final geometry 与提交时最终可见 corner order 能唯一绑定。完整 preview event stream、每次拖点轨迹和高级 residual 不属于 primary launch blocker。
 
 ---
 
@@ -162,37 +179,45 @@ RQ3 问的是第 3 层是否在严格 held-out 评估中带来可复现的增量
 
 ### 4.1 Primary：一个主要因果效应族
 
-**H2-primary：** 在 Semi 强制自审工作流内，Wrong 与 Correct proposal 对预先冻结的主要外部结果产生不同的意向处理总效应。推荐 primary 为两臂都能同义定义的 task-level **remaining material error（最终仍存在的实质错误）/review-needed**；也可在 launch 前改选一个两臂共同的连续外部误差，但只能冻结一个 primary，不能看结果后切换。target-error retention 只在 Wrong 内有自然定义，因此属于机制性 secondary，不作为 Wrong vs Correct 的跨臂 primary。
+**H2-primary：** 在 Semi 强制自审工作流内，Wrong 与 Correct proposal 对连续 **delivery-adjusted quality** 产生不同的 assignment-level ITT 总效应。V2-lite 默认使用与现行合同同构、但须为本研究另行冻结版本的候选定义：
+
+```text
+Q_DA(final) = IoU(final, frozen eligible reference)   if structurally valid
+              0                                       if worker-caused structural failure
+              not_evaluable                           if external/technical/reference failure
+```
+
+这不是把所有 `structurally_valid=false` 机械乘成 0：只有可归因于 worker submission 的结构失败进入原 condition 并计 0；外部加载、绑定、reference 或行政失败保持 not_evaluable。若一张图存在多个经 reviewer 确认的合理完整布局，必须在 outcome 不可见前冻结 allowed-reference set 及 scoring；为保持 V2-lite 简单，优先排除无法形成稳定单 reference/有限允许集的图片。二元 remaining material error/review-needed、target-error retention 和新引入错误降为安全/机制结果。
 
 - 零假设：Wrong−Correct 的主要结果差异为 0；
 - 方向性预期可登记为 Wrong 更差，但必须同时报告双侧 95% CI；
 - condition 按随机分配分析，不因工人识别、是否编辑或最后修好而改组；
 - 最终残差、active time、编辑幅度和 material issue 都可能受 treatment 影响，不作为估计总效应的普通调整协变量。
 
-### 4.2 Key secondary：测量效度与增量诊断
+### 4.2 Key secondary：机制与效率成本
 
-**H1-validity：** 在新 Manual 中，final confidence 等级越高，独立外部错误/复核需求越低；这种单调关系不是仅由内部残差解释。若关系方向相反、接近零且 CI 排除预定最小效应，主观信心不具备本任务的风险诊断效度。
+**H2-mechanism：** Wrong 的失败分解为未识别、识别后未修复和修复时引入新错误；Correct 单列无必要编辑或质量退化。即使 primary 最终质量差接近 0，也可检验错误是否被主动识别和修复。
 
-**H3-incremental：** 在 held-out building/image 中，加入元标签后，AUPRC 和固定 review budget 下 recall 相对于“常规变量 + 内部残差”提高至少一个事前冻结的最小有意义幅度 Δ诊断。Δ诊断 必须由实际复核预算与误漏成本在 launch 前确定，不能由观察结果倒推。
+**H2-efficiency：** Wrong 相对于 Correct 是否增加 owner-valid active time、发生编辑的概率和编辑幅度。时间是 treatment 后的效率/纠错成本 outcome，不是 worker 能力分数，也不进入 primary 总效应的普通调整项。
 
-### 4.3 Secondary 与 exploratory
+### 4.3 Supporting 与 exploratory
 
-Secondary：
+Supporting / estimative：
 
+- 历史 Manual 的连续几何分歧、结构数量差异与方差分量；
+- 新 Manual 中 final confidence 与外部质量的有序关系；
 - Correct-Semi、Wrong-Semi 各自相对于 Manual 的工作流差异；
-- Wrong 内的识别失败率、修复失败率及二者分解；
-- final confidence 与外部连续误差的有序趋势；
 - multiple plausible 与 LOO 分歧、独立复核多解状态的关联；
-- Correct proposal 上的无必要修改和新引入错误。
 
 Exploratory：
 
+- held-out building/image 中元标签相对常规信号的增量 AUPRC/固定预算 recall；样本或正类不足时只报告可估计性；
 - 缺陷类型、proposal severity、图片证据类型与 condition 的交互；
-- perceived difficulty/difficulty reason、active time 与行为/结果的关系；
+- perceived difficulty/difficulty reason 与行为/结果的关系；
 - per-layout self-fit 残差、canonical order 方向和局部修改模式；
 - worker 随机斜率或潜在策略差异，仅在数据支持时报告，不据此建立稳定 worker 类型学。
 
-只有 primary 家族可以承载主因果结论。Key secondary 支持测量和诊断贡献；exploratory 只生成下一步假设。
+只有 primary 家族可以承载最终质量的确认性因果结论。机制和效率 key secondary 解释该结果如何产生、付出何种成本；RQ1 新测量关系与 RQ3 预测只提供支持或生成下一步假设，不再决定本轮研究是否成功。
 
 ---
 
@@ -231,6 +256,10 @@ Exploratory：
 
 这不是 288 个独立统计单元。图像和 worker 是交叉聚类来源，Correct/Wrong 又共享 image。正式启动前必须使用历史 Manual 方差、image ICC、worker ICC、连续结果分布、二分类残余错误基率、预期缺失率和实际分块算法做仿真。
 
+V2-lite 的一个可行运营排程是 16 名 active worker + 4 名预注册 reserve：把 16 人在每个四图循环分配到 Manual / Correct / Wrong / Unexposed 四个 4 人组，循环内轮换，6 个循环后每名 active worker 各完成 6 个 Manual、6 个 Correct、6 个 Wrong，共 18 题。它只是待程序校验的候选 Latin-square 式排程；reserve 只能按 outcome 不可见时冻结的替补规则进入，不能在看到表现后手工换人。最终仍以 assignment manifest 的约束验证为准，而不是以这段文字为准。
+
+每个 image-arm 的 `k=4` 只支持平均质量、平均 dispersion 和粗粒度 topology disagreement。它不支持单图低频模式 prevalence、稳定多峰数量、“恢复真实 annotation distribution”或客观 multiple-plausible 判定；`2/4` 或 `3/4` 工人回答 multiple plausible=yes 仍只是主观响应比例。历史高密度重抽样也只表明 k=5 对有限 roster 平均连续分歧的 ±0.03 恢复率约 0.648、对既有多种 cardinality 的检出率约 0.634，并未验证完整几何模式恢复。
+
 仿真至少报告：
 
 - primary estimand 的 bias、SE、95% CI 覆盖率和功效；
@@ -248,9 +277,11 @@ Exploratory：
 
 不得通过故意招募低质量 worker、选择极端容易失败的 Wrong proposal、删除“修得太好”的工人或查看 pilot 显著性来放大效应。
 
+用假定 `SD=0.10` 和任意 design effect 推出的 0.057/0.068 一类 MDE 只能作数量级 sanity check，不能冻结为本设计的功效结论；它忽略 bounded `Q_DA`、same-image pairing、交叉 worker、实际缺失和随机化约束。正式决定仍须用实际 assignment 算法仿真。
+
 ### 5.3 Pilot 不进入主分析
 
-instrument pilot 与正式实验必须使用不同 assignment；建议使用不进入正式 24 图的 6–9 张图片，覆盖三臂、yes/no/uncertain、scope 分支、不同角点数和至少一种 signature mismatch。Pilot 只验证操纵与数据链，不进行 outcome-driven 显著性筛选。
+instrument pilot 与正式实验必须使用不同 assignment。V2-lite 默认使用 6 张不进入正式 Main 的图片 × 3 臂 × 每臂 2 人 = 36 次 pilot action，覆盖 yes/no/uncertain、scope 分支、不同角点数和至少一种 binding mismatch。Pilot 只验证操纵、可修复性与数据链，不估计 Wrong−Correct 效应，也不根据 p 值或方向选择 Main 图片。
 
 若 pilot 后修改任何科学字段、truth 定义、主要结果、随机化、残差算法或问法，pilot 永久标为 development，不并入正式分析。
 
@@ -281,6 +312,17 @@ instrument pilot 与正式实验必须使用不同 assignment；建议使用不�
 - severity 在 worker 结果不可见前，由独立外部 metric + 盲 reviewer 共同分级。不能以 pilot 中“骗倒多少 worker”反向定义 severity。
 - 若 Correct 与 Wrong 除目标错误外还存在多处差异，本研究估计的是整个 proposal package 的效果；只有满足预先冻结的单一差异合同，才能把效应归因到某个 defect family。
 - Wrong 的 target-error retention 使用 proposal-specific target mask/segment/corner set 与容许修复区间定义；Correct 没有同义 target，因此该指标不得用于跨臂 primary。
+
+### 5.6 Worker 进入设计的方式
+
+历史证据支持“控制交叉 worker 差异”，不支持建立离散工人类型：geometry 的 task/worker/residual 方差份额约为 65.25%/2.75%/31.99%，quality IoU 约为 55.99%/2.91%/41.10%；另一个探索性聚类的最高 silhouette 仅 0.201，task split-half median ARI 仅 0.120（IQR 0.011–0.266）。因此：
+
+- primary 模型保留 worker random intercept/blocking；
+- 只有实验前冻结、与本实验 outcome 无关的连续历史指标可作可选 precision covariate；没有它们也不损害随机化识别；
+- Wrong correction、Correct degradation 和 confidence validity 是本实验结果，只能事后描述或 cross-fit，不能先用它们定义类型再在同一数据上检验类型；
+- 速度—质量或质量—干预安全图可以作为带支持量和区间的 descriptive profile，不切四象限、不命名 reliable/sloppy/spammer 类型。
+
+active time 的历史 task/worker/residual 方差份额约为 11.56%/51.72%/36.73%，说明其 worker-specific pace 成分很强；这正是把它作为随机化条件下效率成本 outcome、而不是能力或不确定性分数的理由。
 
 ---
 
@@ -379,11 +421,13 @@ perceived difficulty 和 difficulty reason 不是三个 RQ 的必要核心。为
 
 ## 7. 环向角点顺序：必要运行时状态，不是完整编辑轨迹
 
+**V2-lite 最小边界：** primary 不要求鼠标轨迹或持续 preview stream。每个成功提交只必须绑定 blind assignment/task/worker、proposal JSON+SHA、initial geometry+order、final exported geometry、确认提交时 iframe 的 final visible order、W/H/版本以及唯一 binding disposition。若预先验证并冻结的 canonical reconstruction 能保证与工人可见连接完全等价，可用它替代 final visible order；否则 order 缺失会使依赖 polygon/topology 的 `Q_DA` not_evaluable，不能仅称为“少了一个探索性 residual”。下述完整 raw-event 合同只在需要精确时点审计、preview 复现或 order/residual 扩展时启用。
+
 ### 7.1 为什么必须记录
 
 全景布局的同一无序点集可对应不同的环向连接、起点和方向。3D preview 依据某个具体顺序构造墙段；如果分析只拿最终点坐标后自行猜序，就可能计算出与工人当时看到的 preview 不同的拓扑和残差。
 
-因此，当前可见的环向顺序是**解释提交几何所需的运行时状态**。它不是鼠标级完整轨迹，也不需要记录每次拖动。默认只记录：
+因此，当前可见的环向顺序是**解释提交几何所需的运行时状态**。它不是鼠标级完整轨迹，也不需要记录每次拖动。V2-lite 最低只记录最终成功 submit 对应的可见状态；若启用完整审计层，再记录：
 
 - proposal/preview 首次稳定可见时的 base state；
 - 每次 submit attempt 当下的 visible state；
@@ -691,9 +735,10 @@ schema drift、身份冲突、source mismatch 或 active-time owner mismatch 不
 
 | RQ | 分析单位 | 目标 estimand | 首要结果/比较 |
 |---|---|---|---|
-| RQ1 | 新 Manual annotation，嵌套于 image 与 worker | final confidence 与独立外部错误的条件关联/有序趋势 | confidence 每升一级对应的外部错误变化；同时报告非线性等级差异 |
-| RQ2 | 所有随机分配的 Semi assignment | Wrong vs Correct 的 assignment-level ITT 总效应 | 两臂共同定义的 remaining material error/review-needed 或预冻结连续外部误差；同图配对结构由模型保留 |
-| RQ3 | annotation，预测目标按独立外部复核定义 | 在未见 building/image 上加入 meta 后的增量诊断效用 | ΔAUPRC、固定 review budget 下 Δrecall |
+| RQ1 supporting | 历史与新 Manual，嵌套于 image 与 worker | 输出分歧基线；新数据的 final confidence 与独立外部质量关系 | image-level dispersion/方差分量；confidence 有序趋势及 CI |
+| RQ2 primary | 所有随机分配的 Semi assignment | Wrong vs Correct 的 assignment-level ITT 总效应 | 连续 `Q_DA`；同图配对与交叉 worker 结构由模型保留 |
+| RQ2 mechanism/cost | Wrong/Correct assignment，按字段适用性 | 识别、修复、过度干预与效率成本 | failure proportions/target retention；`log1p(active_time)`、编辑概率/幅度 |
+| RQ3 exploratory | annotation，预测 target 若可稳定定义 | 在未见 building/image 上加入 meta 后的探索性增量诊断效用 | ΔAUPRC、固定 review budget 下 Δrecall；不作成功门 |
 
 Manual vs Semi 只作为 secondary workflow estimand。识别成功者、编辑者或最终修好者的条件分析是 post-treatment 机制描述，不取代 ITT。
 
@@ -711,11 +756,7 @@ RQ2 primary 不应依赖由三臂参与者共同构造的 contemporaneous consen
 
 ### 10.3 RQ2：Wrong vs Correct 主要因果模型
 
-根据 primary outcome 类型，在 launch 前择一：
-
-- 连续结果：cross-classified linear mixed model；
-- 二分类 review-needed/remaining material error：logistic mixed model，并额外报告可解释的 marginal risk difference；Wrong 内 target retained 使用同类模型作机制 secondary；
-- 有明显边界/零膨胀的距离：预先指定变换、两部分模型或 randomization inference，不在看结果后挑最显著模型。
+V2-lite 默认以连续 `Q_DA` 为唯一 primary，使用 cross-classified linear mixed model，并以实际随机化的 image-level paired permutation/randomization inference 作为稳健性分析。若 pilot 表明 `Q_DA` 的 reference、边界质量或分布无法通过冻结 gate，必须在 Main outcome 不可见前替换 primary 并重做功效仿真；不能保留多个备选 primary 等结果后挑选。二分类 review-needed/remaining material error 仅为安全 secondary，Wrong 内 target retention 为机制 secondary。
 
 最小固定项：
 
@@ -737,6 +778,16 @@ RQ2 primary 不应依赖由三臂参与者共同构造的 contemporaneous consen
 
 proposal severity 是刺激层的预先属性，但 Correct 与 Wrong 的定义方式不同。只有在 severity 对两臂有共同且事前可解释的量纲时才能作为 precision covariate；否则将 condition 定义为整个 proposal package，并在 Wrong 内按 severity 作 secondary 分层。
 
+机制结果先报告 Wrong 的识别失败、识别后修复失败、target retention 和修复引入新错误的分母、比例与 image-clustered CI；Correct 报告无必要编辑和 quality degradation。样本支持时再用 mixed logistic/连续模型，不能为每个 defect family 拆一套确认性检验。
+
+效率结果使用：
+
+```text
+log1p(owner_valid_active_time) ~ condition + task_order + block + (1|image) + (1|worker)
+```
+
+同时报告 Wrong−Correct 的几何均值比/中位数差、编辑概率、edit magnitude 和 corner-count change。worker 内中心化时间可作描述性敏感性。active time 缺失不删除对应 `Q_DA`；时间、编辑和识别变量均不进入 primary 总效应模型作普通协变量。
+
 ### 10.4 RQ1：主观—行为—外部对齐
 
 先回答最基础的“到底有多不一致”。对历史和新 Manual 分别计算 image 内所有有效 worker pair 的 periodic boundary distance、mask/region overlap 与拓扑/scope 是否一致，并报告 image-level 中位数、IQR、上分位数、达到预定实质差异阈值的比例，以及 image/worker/剩余方差分量。连续几何、类别状态和外部正确性不能硬压成一个通用 IAA；同一 image 产生的多个 pair 也不是独立样本，区间估计应按 image（必要时再按 worker）重采样。历史结果按 stage/instrument 分层，不用新问卷值回填旧记录。LOO/peer disagreement 描述 roster 内分歧，不充当真值。
@@ -755,11 +806,11 @@ final confidence 为 1–5 有序等级：
 
 历史 Manual 与新 Manual 不合并估计 confidence 关系，因为历史没有同构 final confidence；历史只提供 geometry baseline、支持度和方差先验。新旧行为分歧可以分 stage/instrument 并列，不能假装完全同一总体。
 
-### 10.5 RQ3：增量风险诊断
+### 10.5 RQ3：探索性增量风险诊断
 
 #### 目标
 
-优先使用“独立复核判定最终仍存在实质错误 / 需要人工复核”的二分类 target；定义必须在模型训练前冻结。若正类太少，先报告基率与可估计性，不临时换成更容易显著的 target。
+RQ3 不再是 V2-lite 的成功门，也不为它扩大问卷或标注预算。只有在独立复核能稳定定义二分类 target、正类数与 held-out building/image 数达到事前可估计门槛时才运行；否则只报告基率、缺失和“当前不可估计”，不临时换 target。
 
 #### 特征阶梯
 
@@ -793,10 +844,11 @@ AUROC 只作补充。残余错误可能是少数类，AUPRC 与 review-budget �
 ### 10.6 多重检验、CI 与最小有意义效应
 
 - 一个 primary contrast + 一个 primary outcome；所有备选结果在冻结时明确 secondary；
-- H1-validity 与 H3-incremental 作为 key-secondary family，建议用 Holm 控制 family-wise error，或由导师选择并冻结另一种方法；
+- 识别/修复与效率成本组成两个预先冻结的 key-secondary family；若对同一 family 内多个指标作确认性声明，使用 Holm 或事前层级检验；
+- RQ1 新 confidence validity 与 RQ3 incremental diagnosis 均按 supporting/exploratory 报告，不以其 p 值挽救 primary；
 - exploratory 结果报告 effect、CI 和未校正状态，不用星号堆叠形成结论；
 - 所有主要结果同时报告绝对效应、标准化效应（若有意义）、95% CI、样本/图片/worker 数和缺失；
-- 在仿真前冻结最小有意义效应：Δ因果、Δ诊断、review budget 和允许的 precision/recall trade-off；
+- 在仿真前冻结 `Q_DA` 的最小有意义 Wrong−Correct 效应、机制差异与可接受效率成本；只有实际运行 RQ3 时才另冻 Δ诊断、review budget 和 precision/recall trade-off；
 - p<0.05 但效应低于最小有意义幅度不算强科学成功；
 - p≥0.05 且 CI 很宽是“不确定”，不是“无效应”；
 - p≥0.05 且 CI 排除最小有害/有益效应，可形成有界的 informative null。
@@ -820,11 +872,12 @@ AUROC 只作补充。残余错误可能是少数类，AUPRC 与 review-budget �
 
 | 观察模式 | 科学解释 | 可支持的贡献 | 不可声称 |
 |---|---|---|---|
-| Wrong 比 Correct 有更多 remaining material error；Wrong 内 target retention 也较高，且 CI 排除最小有害效应 | 错误 proposal 在强制自审下仍产生因果伤害 | proposal correctness 会改变最终质量；机制与风险诊断可继续解释 | 所有预标注都会伤害 |
-| Wrong 引发明显更多修改，但高质量 worker 几乎全部修复，最终差异接近 0 且 CI 足够窄 | 自审工作流成功吸收测试严重度的错误 | 识别—修复链、鲁棒纠错边界；“最终无害”仅限测试 worker/错误/流程 | 实验失败；或一般性证明错误 proposal 无害 |
+| Wrong 的 `Q_DA` 低于 Correct，CI 排除预冻最小有害效应；安全结果方向一致 | 错误 proposal 在强制自审下仍产生因果伤害 | proposal correctness 会改变最终质量；机制结果解释伤害来自哪里 | 所有预标注都会伤害 |
+| Wrong 引发明显更多修改/时间，但多数被修复，`Q_DA` 差异接近 0 且 CI 足够窄 | 自审工作流以额外成本吸收测试严重度的错误 | 识别—修复链、鲁棒纠错边界与纠错成本；“最终无害”仅限测试 worker/错误/流程 | 实验失败；或一般性证明错误 proposal 无害 |
 | Wrong 常被识别但仍保留错误 | 主要瓶颈是修复，不是识别 | 识别失败 vs 修复失败分解有价值 | 提高问题识别题就一定能解决质量 |
 | Wrong 很少被识别且错误保留 | 主要瓶颈是错误察觉 | issue 判断的敏感度不足、需要更好提示/复核 | 工人整体低质量，除非有独立证据 |
 | Correct 产生大量无必要修改或新错误 | 强制自审/编辑可能诱发 commission error | 正确 proposal 也有工作流代价 | Wrong 与 Correct 等价 |
+| Wrong 与 Correct 的 `Q_DA` 接近，但 Wrong active time 明显更长 | 最终质量相近不是“零成本无害”，而是人工吸收了 proposal 错误 | 同质量下的效率代价 | active time 证明了更高或更低能力 |
 | final confidence 对外部错误有清楚的有序区分，并超越内部 residual | 主观元认知在本任务有测量效度 | RQ1 的主观—外部对齐 | 信心就是客观概率 |
 | M2 在 held-out group 的 ΔAUPRC/Δrecall 达到预定幅度且 CI 支持 | 元标签提供常规信号之外的可迁移诊断信息 | RQ3 增量风险诊断 | 元标签有因果改善作用 |
 | 元标签相关但 held-out 增量接近 0 | 元标签可能重复现有 residual/time 信息 | 有限的构念描述；RQ3 强诊断主张不支持 | “多收问卷提高复核效率” |
@@ -838,15 +891,15 @@ AUROC 只作补充。残余错误可能是少数类，AUPRC 与 review-budget �
 
 **强支持**
 
-- primary ITT effect 或预先定义的鲁棒修复边界具有足够精度；
-- 至少一个 key secondary（测量效度或增量诊断）达到预定最小有意义幅度；
+- primary `Q_DA` ITT effect，或预先定义的鲁棒修复边界，具有足够精度；
+- 识别/修复和效率成本至少能够区分“未发现”“发现但未修”“修复且付出成本”“无须修复”中的关键路径；
 - 技术 gates 全部满足，结果对预先指定敏感性稳健；
 - 结论严格限定于测试 worker、图片、proposal severity 和自审流程。
 
 **部分支持**
 
-- RQ2、RQ1、RQ3 中只有一部分得到精确支持；其他结果明确报告 null/inconclusive；
-- 仍可形成一篇围绕“干预机制”或“元认知诊断”的窄论文，但不能把三个 RQ 都写成成功。
+- primary、机制或效率中只有一部分得到精确支持；其他结果明确报告 null/inconclusive；
+- 仍可形成围绕 proposal correctness、纠错机制或效率成本的窄结论；RQ1/RQ3 的探索结果不能被写成确认性成功。
 
 **有信息的否定结果**
 
@@ -875,9 +928,10 @@ AUROC 只作补充。残余错误可能是少数类，AUPRC 与 review-budget �
 | branch burden | 首次 issue+confidence 在 checklist 前原子锁定；检查 no 比例随任务序号、yes/no 缺失与额外耗时，无明显“省步骤选 no”模式 | 改为统一 post-lock checklist 或把 defects 降为非必答后重测 |
 | common post fields | 每个成功 pilot submit 都有合法 scope；in-scope 时有 final confidence 与 multiple plausible，out-of-scope 时二者均为 structural NA | 阻断 launch 或修复表单 |
 | submit semantics | event_id/attempt_id 幂等；intent、确认框取消/确认、二次点击、表单校验拦截、刷新恢复与最终 export disposition 均可区分 | 未解决前不依赖 attempt 解释成功 |
-| order capture | 覆盖 identity、换序后不保存直接提交、保存后提交、删缓存、换序后再改 geometry、跨任务/刷新恢复、无 viewer state、非法排列和 W/H fallback；建议 ≥95% 成功 export 可唯一绑定且所有精确匹配组件通过 | 低于门槛则放弃精确 order/residual 相关分析，不阻断外部主结果 |
+| final submit geometry/order binding | 36 个 pilot action 中，所有成功提交都能把 proposal SHA、initial geometry/order、final export geometry 和确认提交时 final visible order 唯一绑定；换序未点“保存”、保存后再改 geometry、刷新、非法排列和 W/H fallback 均覆盖 | 若 `Q_DA` 依赖该顺序且无已验证等价 reconstruction，则阻断 launch；单条正式失败记 not_evaluable，不猜序 |
+| extended preview/order audit | 若启用 base-visible/多 submit attempt/residual 扩展，建议 ≥95% 成功 export 可唯一匹配完整事件与签名 | 未达门槛则删除完整 event-stream、精确时点/residual 扩展，不影响已通过的最小 final binding |
 | log segregation | 所有 active-time 文件中 preview record=0，所有 preview-order 文件中 active-time record=0；未知类型隔离；重试无重复/冲突科学事件 | 阻断 launch，修复 server dispatch/loader 后重测 |
-| geometry export | 每个成功 annotation 均可从 export 还原顺序不敏感的 final geometry，身份一对一或冲突显式 | 阻断 launch |
+| geometry export | 每个成功 annotation 均可从 export + final-order binding 还原实际提交 polygon/topology；身份一对一或冲突显式 | 阻断 launch |
 | active time | owner-valid context、项目/任务/worker 映射通过；建议 ≥95% 正式可用 | 不改写主结果；active time 从 RQ3 基线移除或按 missing 报告 |
 | UI 可用性 | active-time 小框不遮挡问题/preview，建议右下角紧凑且可拖动；所有必答题和提交按钮可达 | 调整 UI 后重测 |
 | manipulation | reviewer truth 成立；worker 对 Wrong 的实际识别率只作 pilot 描述，不以“必须显著”作为 gate | truth 不成立则换刺激；工人识别低本身不是技术失败 |
@@ -901,7 +955,8 @@ AUROC 只作补充。残余错误可能是少数类，AUPRC 与 review-budget �
 | same worker 重见同图 | 记忆/迁移污染 | 外部 manifest 暴露检查 | 受影响 assignment 标 contamination，不静默换臂 |
 | 跨任务学习/干扰 | 后期更警惕，效应依赖任务序列 | 臂顺序平衡、记录 prior-arm history、检查 condition×任务序号 | 限定为 mixed-sequence pragmatic effect；首个 Semi 任务作敏感性，不事后改 between-worker 解释 |
 | pre-edit lock 失败 | 识别时间顺序不可证 | 持久化事件与测试 | 降为 task-time self-report |
-| signature/order 绑定失败 | 精确残差/拓扑复现失真 | JSONL + export-bound + mismatch ledger | 丢弃精确 order 分析，不丢外部质量 |
+| final geometry/order 绑定失败 | 提交 polygon、拓扑和 `Q_DA` 可能复现错误 | final submit snapshot + export binding + mismatch ledger | 单条记 not_evaluable；系统性发生则停 block，不猜序 |
+| 扩展 preview event/signature 失败 | 精确时点或 residual 复现不足 | 独立 JSONL 与 binding ledger | 删除 event-stream/residual 扩展，保留已验证的 final binding 与 primary |
 | 内部残差实时反馈 | 新 treatment、worker gaming | 仅离线计算 | 发现反馈立即停 block；受影响批次单列 |
 | 表单疲劳/分支残留 | missing、矛盾响应 | 最小必答、exhaustive branch test | 系统性发生则暂停修复；不事后猜值 |
 | active-time source mismatch | 时间模型偏差 | owner-valid join audit | 时间设 missing，不改外部 outcome |
@@ -937,17 +992,17 @@ AUROC 只作补充。残余错误可能是少数类，AUPRC 与 review-budget �
 
 ## 14. 执行 SOP
 
-1. **导师裁决**：确认核心贡献、三个 RQ 的层级、primary outcome、最小有意义效应和本研究与 Paper A/T1 的关系。
+1. **导师裁决**：确认 V2-lite 的一主两副层级、`Q_DA` primary、最小有意义效应和本研究与 Paper A/T1 的关系。
 2. **历史 freeze**：冻结本次使用的 substrate、RQ1 报告、Model Issue audit 和 crosswalk sidecar；不重编码旧数据。
 3. **刺激审核**：从候选池确定图片、Correct proposal、Wrong proposal、目标错误、severity、多解允许集和 scope；两名独立 reviewer + adjudication。
 4. **instrument contract**：冻结字段、choice、applicability、分支清理、time-lock/降级语义、版本和数据字典。
-5. **几何/日志 contract**：冻结 runtime raw event、offline enrichment、export-binding ledger，pairing/order 语义，两套 signature，W/H 来源状态，server record-type 分流，fixed frame、residual 算法和外部 metric 版本。
-6. **测试与独立 pilot**：穷举表单组合、三臂提交、确认框、刷新、preview、order/signature、active time 和 export binding；pilot 不入主分析。
-7. **功效仿真**：使用历史 variance/ICC/base rate 与实际 assignment 算法决定 image 数、重复数和可支持 RQ 层级。
+5. **最小几何/日志 contract**：冻结 proposal/initial/final geometry、提交时 final visible order、W/H、pre-lock、post fields、owner-valid active time、reference version 和 export binding；只有启用 residual/精确时点扩展时才冻结完整 preview event stream、两套 signature 与 fixed frame。
+6. **36-action 独立 pilot**：6 张非 Main 图片 × 3 臂 × 2 人，穷举表单分支、三臂提交、确认框、刷新、preview、final order、active time 和 export binding；pilot 不入主分析。
+7. **功效仿真**：使用历史 variance/ICC、`Q_DA` 分布、缺失与实际 assignment 算法决定 image 数和重复数；不为 exploratory RQ3 扩大当前设计。
 8. **正式冻结**：研究合同、SAP、stimulus truth manifest、assignment manifest、instrument manifest、分析代码版本、launch approval。
 9. **CE-only 分发**：以外部 manifest 为唯一分发合同；项目/批次仅作运营分区；运行映射与 worker sheet 双人核查。
 10. **分 block 执行**：只做盲的技术 QA、完成率与安全检查；不查看 outcome significance 调整设计。
-11. **原始 closeout**：冻结 export、active logs、preview orders、incident/deviation ledger 和所有 source SHA。
+11. **原始 closeout**：冻结 export、active logs、final-order bindings、incident/deviation ledger 和所有 source SHA；完整 preview events 若启用则另冻。
 12. **盲分析**：先完成 join/QA 与 arm-blind 派生；锁定 analysis dataset 后才解盲 primary。
 13. **完整报告**：按 planned、submitted、evaluable、missing、incident 分层；同时报告支持、null、inconclusive 和 deviations。
 
@@ -959,8 +1014,8 @@ AUROC 只作补充。残余错误可能是少数类，AUPRC 与 review-budget �
 - image/proposal stimulus truth manifest、review/adjudication ledger；
 - frozen assignment manifest、worker/runtime mapping、LS import package；
 - instrument/XML/userscript/viewer/bridge manifest 与测试证据；
-- 原始 export、active_logs、preview_orders JSONL；
-- order/signature binding ledger、incident/deviation ledger；
+- 原始 export、active_logs、final-order binding raw records；完整 preview_orders JSONL 仅在扩展启用时产生；
+- geometry/order binding ledger、incident/deviation ledger；
 - derived residual/external outcome tables及版本；
 - analysis-ready long table、field contract、schema tests；
 - simulation/power report、pilot gate report；
@@ -973,9 +1028,9 @@ AUROC 只作补充。残余错误可能是少数类，AUPRC 与 review-budget �
 在任何正式实现或分发前，至少逐项确认：
 
 1. 是否接受“主观—行为—外部结果对齐”而非“附加问卷”作为创新核心；
-2. RQ1/RQ2/RQ3 哪一个是论文主轴；是否同意只有 Wrong vs Correct 为主要因果比较；
-3. primary outcome 是两臂共同定义的 remaining material error/review-needed，还是一个连续外部误差；只能冻结一个主要结果；Wrong-specific target-error retention 仅作机制 secondary；
-4. 最小有意义的 Wrong−Correct 效应、ΔAUPRC、Δrecall 和 review budget；
+2. 是否同意 RQ2 Wrong vs Correct 为唯一确认性主轴，RQ1 为 supporting、RQ3 为 exploratory；
+3. 是否批准连续 `Q_DA` 为唯一 primary，并接受 worker-caused structural failure=0、external/technical/reference failure=not_evaluable 的归因边界；
+4. 最小有意义的 Wrong−Correct `Q_DA` 效应、机制差异和效率成本；RQ3 指标不再是 launch 决策；
 5. 24×3×4 是否仅作仿真锚点；最大可承受 image/worker 标注预算；
 6. worker 是全新 cohort、历史 cohort 还是混合；任何经验门槛如何在 outcome 不可见时定义；
 7. Wrong proposal 的错误家族与 severity 范围；是否需要每类最低图片数；
@@ -986,14 +1041,14 @@ AUROC 只作补充。残余错误可能是少数类，AUPRC 与 review-budget �
 12. scope 使用现行二值运营语义还是新加 uncertain；out-of-scope 后哪些题 structural NA；
 13. perceived difficulty/reasons 是否完全删除、可选收集或保留必答；
 14. repair actions/extent 是否按建议改为研究者几何派生；
-15. 是否批准 preview_orders 独立日志、signature match 不阻断提交和 raw/canonical 双版本；
-16. image-level frozen frame 如何产生；哪些外部 metrics 为 primary/secondary；
-17. RQ3 的 held-out 单元是 building 还是 image；24 图能否支持；
+15. 是否批准“final visible order 必须绑定、完整 preview event stream 可选”的 V2-lite 边界；
+16. `Q_DA` 的 prospective reference/允许集如何产生；哪些二元安全 outcomes 为 secondary；
+17. 是否接受 RQ3 在 24 图下仅探索，若正类/building 不足则不建模；
 18. pilot gate 数值、正式 block 大小和技术停止规则；
 19. 本研究是 Paper A 的独立补救研究、附加 study，还是未来另稿；不得静默并入正式 T1；
 20. 论文允许的最窄成功结论是什么，以及 informative null 是否可接受。
 
-建议导师会后最小动作是：先冻结 1–4、9–11、15–17，再做 instrument pilot 和功效仿真；在此之前不继续扩大候选审核或招募。
+建议导师会后最小动作是：先冻结 1–5、9–12、15–16，同时继续完成刺激物复核与补足；达到 24 个 eligible pairs 后再做 36-action instrument pilot 和功效仿真，在此之前不招募正式 Main。
 
 ---
 
@@ -1016,24 +1071,23 @@ AUROC 只作补充。残余错误可能是少数类，AUPRC 与 review-budget �
 
 以下项目只要仍为空，本研究就不能启动：
 
-- primary outcome = ______；
-- Wrong−Correct 的最小有意义效应 Δ因果 = ______；
-- RQ3 positive target = ______；
-- review budget b = ______；
-- ΔAUPRC / Δrecall 最小有意义幅度 = ______；
+- primary `Q_DA` 定义、方向和实现版本 = ______；
+- Wrong−Correct 的最小有意义 `Q_DA` 效应 Δ因果 = ______；
+- 识别/修复与效率成本的 key-secondary family/阈值 = ______；
 - image 数 / 每图每臂重复数 / worker 数 = ______ / ______ / ______；
 - randomization/block algorithm 与 seed manifest = ______；
 - technical time lock = yes / no；若 no，降级文本已确认 = ______；
 - stimulus reviewer/adjudicator 与 blind 规则 = ______；
-- fixed frame/reference version = ______；
+- prospective reference/allowed-set version 与 eligibility = ______；
 - primary external metric implementation/SHA = ______；
-- pairing/order algorithm、runtime signature、export-binding signature 版本与精确 match gate = ______；
+- final geometry/order binding algorithm、版本与 match gate = ______；
 - preview/submit W/H 来源与 dimension fallback policy = ______；
-- preview-order/active-time server dispatch 与 idempotency version = ______；
+- pre-lock/final-order/active-time dispatch 与 idempotency version = ______；
 - owner-valid active-time 可用门槛 = ______；
 - multiplicity rule = ______；
 - missing/administrative incident rule = ______；
-- grouped validation unit 与 folds = ______；
 - supervisor approval 与日期 = ______。
+
+以下只在决定实际运行 exploratory RQ3 或完整 residual/event-stream 扩展时填写，不阻断 V2-lite primary launch：RQ3 target、review budget、ΔAUPRC/Δrecall、grouped folds、fixed frame、runtime preview signature 与完整 event-stream gate。
 
 本表不是授权入口；全部填满后仍需独立的正式合同、SAP 和 launch approval。

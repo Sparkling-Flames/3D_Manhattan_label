@@ -1,0 +1,116 @@
+{
+  "schema_version": "annotation_uncertainty_evidence_audit_v1",
+  "audit_date": "2026-08-29",
+  "auditor_role": "root_agent_crosscheck_of_subagent_machine_outputs",
+  "scope": "Structural, provenance, denominator, and arithmetic checks only; this audit does not approve an experiment plan.",
+  "checks": [
+    {
+      "check_id": "inventory_json_csv",
+      "status": "pass",
+      "details": {
+        "json_records": 17,
+        "csv_records": 17,
+        "unique_dataset_ids": true,
+        "count_field_mismatches": 0,
+        "source_path_references": 22,
+        "unique_source_files": 18,
+        "missing_source_files": 0
+      }
+    },
+    {
+      "check_id": "high_density_42_direct_recount",
+      "status": "pass",
+      "source_path": "analysis_results/rq1_raw_recompute_20260826/high_density_task_metrics.csv",
+      "details": {
+        "rows": 42,
+        "unique_base_task_ids": 42,
+        "p1_rows": 30,
+        "c1_rows": 12,
+        "selected_support_sum": 1055,
+        "selected_k_min": 23,
+        "selected_k_median": 26,
+        "selected_k_max": 26,
+        "strict_valid_support_sum": 1013,
+        "strict_valid_k_median": 24
+      }
+    },
+    {
+      "check_id": "historical_evidence_json_csv",
+      "status": "pass",
+      "details": {
+        "json_records": 35,
+        "csv_records": 35,
+        "unique_evidence_ids": true,
+        "id_set_equal": true,
+        "red_conflict_count": 0,
+        "variance_group_sums": {
+          "geometry": 100,
+          "quality_iou": 100,
+          "log1p_active_time": 100
+        },
+        "continuous_rarefaction_monotone_on_reported_k_grid": true,
+        "cardinality_rarefaction_monotone_on_reported_k_grid": true,
+        "source_files_checked": 5,
+        "source_sha256_mismatches": 0
+      }
+    },
+    {
+      "check_id": "stage_rarefaction_weighting",
+      "status": "pass",
+      "details": {
+        "json_rows": 21,
+        "csv_rows": 21,
+        "p1_tasks": 30,
+        "c1_tasks": 12,
+        "pooled_tasks": 42,
+        "p1_cardinality_diverse_tasks": 26,
+        "c1_cardinality_diverse_tasks": 11,
+        "pooled_cardinality_diverse_tasks": 37,
+        "max_absolute_difference_between_reweighted_stage_values_and_pooled": 1.11022302462516e-16,
+        "source_sha256_match": true
+      }
+    },
+    {
+      "check_id": "reference_feasibility_json_csv",
+      "status": "pass",
+      "details": {
+        "json_items": 12,
+        "csv_items": 12,
+        "unique_claim_ids": true,
+        "id_set_equal": true,
+        "status_counts": {
+          "verified": 4,
+          "partial": 2,
+          "unresolved": 3,
+          "not_available": 3
+        },
+        "missing_source_files": 0,
+        "source_sha256_mismatches": 0
+      }
+    },
+    {
+      "check_id": "candidate_36_direct_recount",
+      "status": "pass",
+      "source_paths": [
+        "analysis_results/annotation_uncertainty_batch1_candidate_review_20260827_v2/candidate_manifest.json",
+        "analysis_results/annotation_uncertainty_batch1_supplement_review_20260828_v1/candidate_manifest.json"
+      ],
+      "details": {
+        "original_items": 28,
+        "supplement_items": 8,
+        "union_items": 36,
+        "unique_image_ids": 36,
+        "cross_manifest_overlap": 0,
+        "official_label_cor_paths": 36,
+        "items_with_machine_review_decision_or_structural_material_fields": 0
+      }
+    }
+  ],
+  "open_limitations": [
+    "The historical rarefaction curves recover finite-roster statistics and are not external-reference quality Q(k).",
+    "P1 and C1 reference regimes are not equally independent in machine-auditable fields.",
+    "The 18/6/12 and 14+4 review counts are not reproducible from the two candidate manifests.",
+    "No prospective allowed-set freeze or roleplay-specific machine exclusion label is currently available."
+  ],
+  "overall_status": "pass_with_explicit_scientific_limitations"
+}

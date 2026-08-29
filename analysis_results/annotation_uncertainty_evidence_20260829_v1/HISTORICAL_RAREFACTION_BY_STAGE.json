@@ -1,0 +1,51 @@
+{
+  "schema_version": "annotation_uncertainty_rarefaction_by_stage_v1",
+  "generated_date": "2026-08-29",
+  "status": "historical_finite_roster_recovery_only_non_normative",
+  "source_path": "analysis_results/rq1_stratified_uncertainty_20260827_v1/dense_rarefaction_by_task_k.csv",
+  "source_sha256": "48dd39afce5129798d48d9c2dcf8522ce0ee018c1e41203199aa5fe3c3cac058",
+  "generator_path": "tools/thesis_main/analysis/analyze_rq1_stratified_uncertainty_20260827.py",
+  "filter": "dense_role=main_p1_c1_dense42",
+  "stage_composition": {
+    "P1": 30,
+    "C1": 12,
+    "pooled": 42
+  },
+  "pooled_weighting": "The pooled row is the task-level mean over all 42 tasks, not an unweighted mean of the two stage means.",
+  "metric_definitions": {
+    "continuous_abs_error_le_0_03_recovery_mean": "Arithmetic mean across task cells of probability_abs_error_le_0_03, where each source value is the rarefaction probability that the k-label mean pairwise one-wall-region mask-IoU disagreement is within 0.03 of that task cell's full strict-valid roster value.",
+    "cardinality_diverse_task_count": "Number of task cells with full_cardinality_diverse=True.",
+    "cardinality_diversity_detection_mean": "Arithmetic mean, only across full_cardinality_diverse=True task cells, of probability_detect_cardinality_diversity, the rarefaction probability that the k-label sample contains more than one vertical-boundary cardinality."
+  },
+  "interpretation_boundary": "Finite historical strict-valid roster recovery/detection only; NOT external-reference quality Q(k).",
+  "limitations": [
+    "The target is each task cell's finite historical strict-valid full roster, not external ground truth or an external-reference quality Q(k).",
+    "Invalid-submission risk is excluded.",
+    "P1 and C1 contain different task compositions, so between-stage differences are descriptive and not causal stage effects.",
+    "Cardinality diversity concerns vertical-boundary counts only, not full topology."
+  ],
+  "verification_level": "recomputed",
+  "rows": [
+    {"scope": "stage", "stage": "P1", "k": 3, "task_count": 30, "continuous_abs_error_le_0_03_recovery_mean": 0.5057333333333334, "cardinality_diverse_task_count": 26, "cardinality_diversity_detection_mean": 0.4981153846153846},
+    {"scope": "stage", "stage": "P1", "k": 5, "task_count": 30, "continuous_abs_error_le_0_03_recovery_mean": 0.6221666666666666, "cardinality_diverse_task_count": 26, "cardinality_diversity_detection_mean": 0.6079615384615384},
+    {"scope": "stage", "stage": "P1", "k": 8, "task_count": 30, "continuous_abs_error_le_0_03_recovery_mean": 0.7140333333333333, "cardinality_diverse_task_count": 26, "cardinality_diversity_detection_mean": 0.7127307692307692},
+    {"scope": "stage", "stage": "P1", "k": 10, "task_count": 30, "continuous_abs_error_le_0_03_recovery_mean": 0.7667333333333333, "cardinality_diverse_task_count": 26, "cardinality_diversity_detection_mean": 0.7701923076923076},
+    {"scope": "stage", "stage": "P1", "k": 12, "task_count": 30, "continuous_abs_error_le_0_03_recovery_mean": 0.8089, "cardinality_diverse_task_count": 26, "cardinality_diversity_detection_mean": 0.8191923076923077},
+    {"scope": "stage", "stage": "P1", "k": 15, "task_count": 30, "continuous_abs_error_le_0_03_recovery_mean": 0.8929666666666667, "cardinality_diverse_task_count": 26, "cardinality_diversity_detection_mean": 0.8775000000000001},
+    {"scope": "stage", "stage": "P1", "k": 20, "task_count": 30, "continuous_abs_error_le_0_03_recovery_mean": 0.9717666666666667, "cardinality_diverse_task_count": 26, "cardinality_diversity_detection_mean": 0.9498846153846153},
+    {"scope": "stage", "stage": "C1", "k": 3, "task_count": 12, "continuous_abs_error_le_0_03_recovery_mean": 0.5610833333333334, "cardinality_diverse_task_count": 11, "cardinality_diversity_detection_mean": 0.6023636363636364},
+    {"scope": "stage", "stage": "C1", "k": 5, "task_count": 12, "continuous_abs_error_le_0_03_recovery_mean": 0.711, "cardinality_diverse_task_count": 11, "cardinality_diversity_detection_mean": 0.695},
+    {"scope": "stage", "stage": "C1", "k": 8, "task_count": 12, "continuous_abs_error_le_0_03_recovery_mean": 0.8422499999999999, "cardinality_diverse_task_count": 11, "cardinality_diversity_detection_mean": 0.7728181818181817},
+    {"scope": "stage", "stage": "C1", "k": 10, "task_count": 12, "continuous_abs_error_le_0_03_recovery_mean": 0.8971666666666667, "cardinality_diverse_task_count": 11, "cardinality_diversity_detection_mean": 0.8106363636363636},
+    {"scope": "stage", "stage": "C1", "k": 12, "task_count": 12, "continuous_abs_error_le_0_03_recovery_mean": 0.9285833333333334, "cardinality_diverse_task_count": 11, "cardinality_diversity_detection_mean": 0.8440909090909091},
+    {"scope": "stage", "stage": "C1", "k": 15, "task_count": 12, "continuous_abs_error_le_0_03_recovery_mean": 0.9495833333333333, "cardinality_diverse_task_count": 11, "cardinality_diversity_detection_mean": 0.8911818181818183},
+    {"scope": "stage", "stage": "C1", "k": 20, "task_count": 12, "continuous_abs_error_le_0_03_recovery_mean": 0.99375, "cardinality_diverse_task_count": 11, "cardinality_diversity_detection_mean": 0.9649090909090909},
+    {"scope": "pooled_control", "stage": "pooled", "k": 3, "task_count": 42, "continuous_abs_error_le_0_03_recovery_mean": 0.521547619047619, "cardinality_diverse_task_count": 37, "cardinality_diversity_detection_mean": 0.529108108108108},
+    {"scope": "pooled_control", "stage": "pooled", "k": 5, "task_count": 42, "continuous_abs_error_le_0_03_recovery_mean": 0.647547619047619, "cardinality_diverse_task_count": 37, "cardinality_diversity_detection_mean": 0.6338378378378378},
+    {"scope": "pooled_control", "stage": "pooled", "k": 8, "task_count": 42, "continuous_abs_error_le_0_03_recovery_mean": 0.7506666666666666, "cardinality_diverse_task_count": 37, "cardinality_diversity_detection_mean": 0.7305945945945946},
+    {"scope": "pooled_control", "stage": "pooled", "k": 10, "task_count": 42, "continuous_abs_error_le_0_03_recovery_mean": 0.804, "cardinality_diverse_task_count": 37, "cardinality_diversity_detection_mean": 0.7822162162162162},
+    {"scope": "pooled_control", "stage": "pooled", "k": 12, "task_count": 42, "continuous_abs_error_le_0_03_recovery_mean": 0.843095238095238, "cardinality_diverse_task_count": 37, "cardinality_diversity_detection_mean": 0.8265945945945946},
+    {"scope": "pooled_control", "stage": "pooled", "k": 15, "task_count": 42, "continuous_abs_error_le_0_03_recovery_mean": 0.909142857142857, "cardinality_diverse_task_count": 37, "cardinality_diversity_detection_mean": 0.8815675675675676},
+    {"scope": "pooled_control", "stage": "pooled", "k": 20, "task_count": 42, "continuous_abs_error_le_0_03_recovery_mean": 0.9780476190476192, "cardinality_diverse_task_count": 37, "cardinality_diversity_detection_mean": 0.9543513513513513}
+  ]
+}

@@ -1,0 +1,293 @@
+{
+  "schema_version": "reference_feasibility_audit_v1",
+  "audit_date": "2026-08-29",
+  "scope": "reference/GT/allowed-set、36图候选池及Label Studio执行边界的只读审计；不决定最终实验方案",
+  "status_vocabulary": ["verified", "partial", "unresolved", "not_available"],
+  "method_contract": {
+    "path": "docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json",
+    "contract_version": "paper_a_method_20260811_v23",
+    "sha256": "F3C1EA58D0857A40AA2240B4680B674C76FE2CEC8F048F61A643D9E4B74B0588"
+  },
+  "status_summary": {
+    "verified": 4,
+    "partial": 2,
+    "unresolved": 3,
+    "not_available": 3,
+    "total": 12
+  },
+  "items": [
+    {
+      "claim_id": "REF_C1_PUBLIC_GT_INDEPENDENCE",
+      "claim": "C1正式数据具有在评分前冻结、且未由被分析提交触发修订的public GT reference。",
+      "status": "verified",
+      "machine_source_path": [
+        "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_task_outcome_reference.csv",
+        "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_operational_reference_audit.json",
+        "docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json"
+      ],
+      "source_sha256": {
+        "c1_task_outcome_reference.csv": "03CC8C97FEF855682E7B5909A52F9ED62763616B26983E302DA7613AB8BA666B",
+        "c1_operational_reference_audit.json": "545DF464CECA9344A5531D2A619C6951C39954569548DB055F59AC9D34FE30F8",
+        "PAPER_A_METHOD_CONTRACT_CURRENT.json": "F3C1EA58D0857A40AA2240B4680B674C76FE2CEC8F048F61A643D9E4B74B0588"
+      },
+      "counts": {
+        "task_contexts": 216,
+        "unique_base_tasks": 87,
+        "primary_geometry_eligible_contexts": 196,
+        "oos_geometry_not_applicable_contexts": 20,
+        "submission_informed_reference_revision_true": 0,
+        "gt_quality_evaluable_rows": 717,
+        "declared_gt_corrections": 0
+      },
+      "supports": "对196个eligible context，可报告相对于冻结public GT的质量；reference对当前被分析提交具有程序性独立性。",
+      "does_not_support": "不证明public GT在认识论上唯一正确，也不等同于新的独立专家复标。",
+      "next_minimum_data_action": "闭合C1无需重开；若复用，逐任务绑定reference_identity/reference_sha256并继续执行submission-triggered revision排除。"
+    },
+    {
+      "claim_id": "REF_DENSE42_STAGE_BINDING",
+      "claim": "42个P1/C1高密度Manual任务可关联到阶段特定reference，但reference独立性强度不一致。",
+      "status": "partial",
+      "machine_source_path": [
+        "analysis_results/rq1_stratified_uncertainty_20260827_v1/task_cell_metrics.csv",
+        "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_task_outcome_reference.csv",
+        "analysis_results/prescreen_closeout_final_gold_v2_20260701/final_gold_records_v2_p1_closeout_corrected.jsonl"
+      ],
+      "source_sha256": {
+        "task_cell_metrics.csv": "D4320E97F6C8A43CE3E088EC423354BE35675C54AF729910615BB27D318734D6",
+        "c1_task_outcome_reference.csv": "03CC8C97FEF855682E7B5909A52F9ED62763616B26983E302DA7613AB8BA666B",
+        "final_gold_records_v2_p1_closeout_corrected.jsonl": "82DBCB1D08754476E4F2A447B70550BD297689C2C50DF9F96AEB270B37F163D6"
+      },
+      "counts": {
+        "dense_manual_tasks_k23_to_k26": 42,
+        "c1_public_frozen_gt_ready": 12,
+        "p1_user_verified_project20_geometry_ready": 29,
+        "p1_reference_found_but_geometry_not_ready": 1,
+        "reference_ready_total": 41,
+        "not_ready_base_task_id": "b8cTxDM8gDG_298a2386166a43c8a04e1c24433f7d15"
+      },
+      "supports": "42任务可用于多人几何reproducibility；其中41任务可在显式区分reference regime后做reference-relative质量分析。",
+      "does_not_support": "不能把P1与C1无差别合并为单一独立GT；P1记录未机器编码submission_informed_revision字段，且1个P1任务geometry_gold_ready=false。",
+      "next_minimum_data_action": "冻结42行task-reference映射，增加reference_regime、reference_sha256、independence_basis、geometry_ready；未ready的1行排除或先独立裁决。"
+    },
+    {
+      "claim_id": "POOL36_IDENTITY_AND_GT_PROVENANCE",
+      "claim": "当前两份候选manifest可机器重建一个无重复的36图候选并集，其correct_path均指向官方MP3D layout label_cor。",
+      "status": "verified",
+      "machine_source_path": [
+        "analysis_results/annotation_uncertainty_batch1_candidate_review_20260827_v2/candidate_manifest.json",
+        "analysis_results/annotation_uncertainty_batch1_supplement_review_20260828_v1/candidate_manifest.json"
+      ],
+      "source_sha256": {
+        "candidate_review_manifest": "5F74FD82B3015B70FAA03A6BF81FA9D894521874BEC25F600582B599FD7178CC",
+        "supplement_review_manifest": "1EDA10DA5CCA0E6B40239074AD69B6C186DA388985C711F68EB427D627635BBE"
+      },
+      "counts": {
+        "original_manifest_rows": 28,
+        "original_main": 24,
+        "original_reserve": 4,
+        "supplement_rows": 8,
+        "union_rows": 36,
+        "unique_image_ids": 36,
+        "cross_manifest_overlap": 0,
+        "official_label_cor_correct_paths": 36,
+        "test_paths": 33,
+        "validation_paths": 3
+      },
+      "supports": "支持36图身份、来源和未来worker之外的官方GT路径可追溯；可作为候选reference provenance。",
+      "does_not_support": "两份manifest状态分别为not_frozen与review_only；不能据此宣称36图已审核通过、已冻结或可正式发放。",
+      "next_minimum_data_action": "保留这36个review_id/image_id/reference SHA，待研究方案确定后输出单一冻结review/allowed-set表。"
+    },
+    {
+      "claim_id": "POOL36_REVIEW_DECISIONS_18_6_12",
+      "claim": "36图已形成18 PASS、6 REVISE、12 REJECT的机器可重放审核结果。",
+      "status": "unresolved",
+      "machine_source_path": [
+        "analysis_results/annotation_uncertainty_batch1_candidate_review_20260827_v2/candidate_manifest.json",
+        "analysis_results/annotation_uncertainty_batch1_supplement_review_20260828_v1/candidate_manifest.json"
+      ],
+      "non_machine_context_path": "docs/thesis_main/ANNOTATION_UNCERTAINTY_EXPERIMENT_SUPERVISOR_DRAFT_v2.md:290",
+      "counts": {
+        "candidate_rows": 36,
+        "items_with_machine_review_decision_field": 0,
+        "prose_claim_pass": 18,
+        "prose_claim_revise": 6,
+        "prose_claim_reject": 12,
+        "machine_reconstructible_decision_counts": null
+      },
+      "supports": "只支持36个候选身份存在。",
+      "does_not_support": "不支持把18/6/12作为机器冻结的审核统计，也不能重放逐图决定、理由、审核者或时间。",
+      "next_minimum_data_action": "从实际审核界面/记录导出36行表，至少含review_id、decision、reason、reviewer、reviewed_at、source_manifest_sha256。"
+    },
+    {
+      "claim_id": "POOL14_CLEAN_4_PENDING",
+      "claim": "36图中已有14张clean，另有4张PASS但pending复核的机器可执行口径。",
+      "status": "unresolved",
+      "machine_source_path": [
+        "analysis_results/annotation_uncertainty_batch1_candidate_review_20260827_v2/candidate_manifest.json",
+        "analysis_results/annotation_uncertainty_batch1_supplement_review_20260828_v1/candidate_manifest.json"
+      ],
+      "non_machine_context_path": "docs/thesis_main/ANNOTATION_UNCERTAINTY_EXPERIMENT_SUPERVISOR_DRAFT_v2.md:290",
+      "counts": {
+        "machine_clean_count": null,
+        "machine_pending_count": null,
+        "items_with_machine_structural_or_material_review_fields": 0,
+        "prose_claim_clean": 14,
+        "prose_claim_pending": 4,
+        "pending_ids_named_in_prose": ["B1-004", "B1-022", "B1W-040", "B1W-110"],
+        "named_pending_ids_present_in_36_union": 4
+      },
+      "supports": "四个命名ID确实属于36图并集。",
+      "does_not_support": "不支持14张clean的成员表，也不支持四张的pending原因/恢复资格已被机器冻结。",
+      "next_minimum_data_action": "补36行字段化审核导出并机械重算clean/pending；在此之前14+4只能作为待核口径。"
+    },
+    {
+      "claim_id": "PROSPECTIVE_ALLOWED_SET_FREEZE",
+      "claim": "仓库已有面向本次36图实验、带版本与SHA的机器可读allowed-set冻结文件。",
+      "status": "not_available",
+      "machine_source_path": [],
+      "counts": {
+        "allowed_set_filename_matches": 0,
+        "allowed_set_machine_content_matches": 0
+      },
+      "supports": "无。",
+      "does_not_support": "不能宣称候选池已获准正式执行，也不能锁定哪些reference/图片可进入分析。",
+      "next_minimum_data_action": "研究方案确定后生成一份逐图allowed-set，含review_id/image_id、decision、eligibility_reason、reference_path/reference_sha256、版本、审核者和冻结时间。"
+    },
+    {
+      "claim_id": "LS_MULTIPERSON_MANUAL_HISTORICAL",
+      "claim": "现有数据证明Label Studio多人Manual采集与几何reproducibility计算在历史上可用。",
+      "status": "verified",
+      "machine_source_path": [
+        "analysis_results/rq1_stratified_uncertainty_20260827_v1/task_cell_metrics.csv",
+        "analysis_results/rq1_stratified_uncertainty_20260827_v1/SOURCE_AND_METHOD_SUMMARY.json",
+        "docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json"
+      ],
+      "source_sha256": {
+        "task_cell_metrics.csv": "D4320E97F6C8A43CE3E088EC423354BE35675C54AF729910615BB27D318734D6",
+        "SOURCE_AND_METHOD_SUMMARY.json": "2B325DCF4CF155EA576AD4628DAED0BF7121CDB5E6E785C25FF1DB93BC973275",
+        "PAPER_A_METHOD_CONTRACT_CURRENT.json": "F3C1EA58D0857A40AA2240B4680B674C76FE2CEC8F048F61A643D9E4B74B0588"
+      },
+      "counts": {
+        "manual_stage_batch_image_units": 218,
+        "manual_unique_images": 187,
+        "manual_units_strict_valid_k_ge_5": 118,
+        "manual_units_strict_valid_k_ge_15": 46,
+        "dense_p1_c1_units_k23_to_k26": 42
+      },
+      "supports": "可做同图多人几何分歧、rarefaction和reproducibility分析。",
+      "does_not_support": "合同把independence默认基础写为protocol_assumption；这些汇总不证明行为独立、未看他人答案或不存在同人重复暴露。LS CE也不能单独承担分发真源。",
+      "next_minimum_data_action": "新批次用外部assignment/runtime binding冻结每图worker roster，并在分析前审计同人重复、越权提交与历史精确图片暴露。"
+    },
+    {
+      "claim_id": "ACTIVE_TIME_CURRENT_AVAILABILITY",
+      "claim": "active_time历史C1数据可用且SHA一致，但本次前向配置尚无部署后的观测覆盖。",
+      "status": "partial",
+      "machine_source_path": [
+        "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_task_worker_active_time.csv",
+        "analysis_results/rq1_stratified_uncertainty_20260827_v1/SOURCE_AND_METHOD_SUMMARY.json",
+        "tools/label_studio/label_studio_uncertainty_meta_manifest_v2.json"
+      ],
+      "source_sha256": {
+        "c1_task_worker_active_time.csv": "4292A464F879423EFC82C3AB213D0E77594BF7A0E4BDDA3320416F7195D5CB99",
+        "SOURCE_AND_METHOD_SUMMARY.json": "2B325DCF4CF155EA576AD4628DAED0BF7121CDB5E6E785C25FF1DB93BC973275",
+        "label_studio_uncertainty_meta_manifest_v2.json": "905DC3C5624C24B4C6D15E93B46CEE930A4AA2188A96659AF273738AF339F287"
+      },
+      "counts": {
+        "historical_task_worker_contexts": 780,
+        "frozen_eligible_contexts": 701,
+        "observed_rows": 594,
+        "observed_tasks": 84,
+        "expected_sha_equals_actual": true,
+        "forward_live_deployed": false,
+        "forward_active_time_behavior_changed": false
+      },
+      "supports": "支持历史task-worker cumulative active_time作为辅助运营指标，并证明现有解析链曾运行。",
+      "does_not_support": "不支持新36图/新项目一定能采到完整active_time，也不支持把active_time当作pre-edit阶段锁。",
+      "next_minimum_data_action": "仅做最小新项目pilot：核对project/runtime_task/worker绑定、跨session累计、缺失率和提交桥接，再冻结新批次日志SHA。"
+    },
+    {
+      "claim_id": "FINAL_CORNER_ORDER_SERVER_BINDING",
+      "claim": "最终可见corner order已被服务器持久化并可与Label Studio最终export逐条绑定。",
+      "status": "not_available",
+      "machine_source_path": [
+        "tools/label_studio/official/ls_userscript_annotator.js",
+        "tools/label_studio/vis_3d.html",
+        "tools/label_studio/label_studio_uncertainty_meta_manifest_v2.json"
+      ],
+      "source_sha256": {
+        "ls_userscript_annotator.js": "3F6F635E3A5567321537CC9FE91C969D13E7A6302FE1989AD639E574913A86B5",
+        "vis_3d.html": "03270E880525E8F7B831B08024DA7E0504A94E316588BF585D1D0047B5CFF032",
+        "label_studio_uncertainty_meta_manifest_v2.json": "905DC3C5624C24B4C6D15E93B46CEE930A4AA2188A96659AF273738AF339F287"
+      },
+      "counts": {
+        "client_preview_order_code_present": true,
+        "storage_mode": "browser_localStorage",
+        "phase_event_persistence": "not_collected",
+        "strict_server_auditable_timing": false,
+        "live_deployed": false
+      },
+      "supports": "支持本地viewer具备order/signature交互与客户端缓存代码。",
+      "does_not_support": "不支持最终顺序的服务器审计、跨浏览器恢复、与最终标注export的一一绑定，因而不能作为正式结果字段。",
+      "next_minimum_data_action": "做save/no-save、reorder、refresh、resubmit的最小集成测试，并把最终order+signature持久化到可导出的任务/事件记录后再冻结。"
+    },
+    {
+      "claim_id": "PRE_EDIT_TECHNICAL_LOCK",
+      "claim": "当前前向配置已技术强制worker在首次编辑前完成并锁定预编辑回答。",
+      "status": "not_available",
+      "machine_source_path": [
+        "tools/label_studio/label_studio_uncertainty_meta_manifest_v2.json"
+      ],
+      "source_sha256": {
+        "label_studio_uncertainty_meta_manifest_v2.json": "905DC3C5624C24B4C6D15E93B46CEE930A4AA2188A96659AF273738AF339F287"
+      },
+      "counts": {
+        "technical_time_lock": false,
+        "timing_basis": "worker_instruction_only_not_system_locked",
+        "phase_event_persistence": "not_collected",
+        "live_deployed": false
+      },
+      "supports": "只支持存在worker instruction口径。",
+      "does_not_support": "不支持pre-edit回答确实先于编辑、回答未被事后修改或阶段耗时可审计。",
+      "next_minimum_data_action": "先在小样本pilot记录server-auditable first-edit与pre-edit-save事件并验证阻断；未完成前将其表述为自报时序，不作锁定因果解释。"
+    },
+    {
+      "claim_id": "DEVELOPMENT_EXCLUSION_BOUNDARY",
+      "claim": "uncertainty_meta_feasibility开发包在机器字段上已被排除出未来正式科学分析。",
+      "status": "verified",
+      "machine_source_path": [
+        "analysis_results/uncertainty_meta_feasibility_20260824_v1/assignment_manifest.csv",
+        "analysis_results/uncertainty_meta_feasibility_20260824_v1/sample_manifest.csv"
+      ],
+      "source_sha256": {
+        "assignment_manifest.csv": "7A275E40F9C4685B17DD8FD9D8F1919E075D773AA668E41802294FE519A3637E",
+        "sample_manifest.csv": "61D95C888BA207FF065CB99003BDF042C219B4331E8AD927F63A11730668275B"
+      },
+      "counts": {
+        "assignment_rows": 40,
+        "workers": 8,
+        "tasks": 5,
+        "development_only_rows": 40,
+        "future_formal_analysis_eligible_false_rows": 40,
+        "source_already_annotated_true_rows": 40,
+        "samples_previously_seen_by_all_test_workers": 5,
+        "prior_annotation_count_per_sample": 26
+      },
+      "supports": "只可用于UI、字段和流程reproducibility/可行性检查。",
+      "does_not_support": "不能把40个计划分配当作已观测标注、独立标注或科学样本；不得与未来正式批次合并。",
+      "next_minimum_data_action": "所有开发导出继续保留protocol_status与future_formal_analysis_eligible=false，并在分析入口fail-closed排除。"
+    },
+    {
+      "claim_id": "ROLEPLAY_EXCLUSION_BOUNDARY",
+      "claim": "roleplay数据存在独立机器标签，可与正式数据自动分离。",
+      "status": "unresolved",
+      "machine_source_path": [],
+      "counts": {
+        "roleplay_machine_records_found": 0,
+        "roleplay_specific_eligibility_field_found": 0
+      },
+      "supports": "现有development包可按development字段排除，但不能据此推断另有roleplay记录。",
+      "does_not_support": "若roleplay记录以普通worker/task身份进入export，当前证据不能保证自动识别和排除。",
+      "next_minimum_data_action": "若实际执行roleplay，新增显式protocol_status=roleplay_only_not_for_scientific_analysis与future_formal_analysis_eligible=false，并单独保存名单/项目ID。"
+    }
+  ]
+}
