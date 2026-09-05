@@ -1,0 +1,68 @@
+name: Publish verified bottleneck results 20260906
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/publish-bottleneck-results-20260906.yml]
+permissions:
+  contents: write
+  actions: read
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            tools/thesis_main/analysis
+            analysis_results/bottleneck_reanalysis_20260906_v1
+      - name: Obtain completed analysis artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          RUN=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/bottleneck-analysis-20260906.yml/runs?per_page=1" --jq '.workflow_runs[0].id')
+          test -n "$RUN" && test "$RUN" != null
+          echo "ANALYSIS_RUN=$RUN" >> "$GITHUB_ENV"
+          found=0
+          for i in $(seq 1 48); do
+            N=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN/artifacts" --jq '[.artifacts[] | select(.name=="bottleneck-models-20260906" and .expired==false)] | length')
+            if [ "$N" -gt 0 ]; then found=1; break; fi
+            sleep 10
+          done
+          test "$found" = 1
+          gh run download "$RUN" --repo "$GITHUB_REPOSITORY" --name bottleneck-models-20260906 --dir /tmp/bottleneck-artifact
+      - name: Validate and stage only analysis products
+        run: |
+          python - <<'PY'
+          import pathlib,json,hashlib,shutil,os,csv,subprocess
+          root=pathlib.Path('/tmp/bottleneck-artifact')
+          qs=[p for p in root.rglob('QA.json') if p.parent.name=='bottleneck_reanalysis_20260906_v1']
+          ss=list(root.rglob('bottleneck_models_20260906.py'))
+          assert len(qs)==1 and len(ss)==1,(qs,ss)
+          qa=json.loads(qs[0].read_text())
+          assert qa['input_records']==2501 and qa['strict_geometry']==2427
+          assert qa['dense20_contexts']==70 and qa['heldout_k20_contexts']==69
+          code=ss[0].read_bytes()
+          assert hashlib.sha256(code).hexdigest()=='1ba39e656c32cf9cb4ed3e584e2c40723d55b401c22549eff653a45a28b2dc08'
+          for row in csv.DictReader((qs[0].parent/'mathematical_checks.csv').open()):
+              assert abs(float(row['enumeration_sd'])-float(row['analytic_sd']))<1e-9
+          destination=pathlib.Path('analysis_results/bottleneck_reanalysis_20260906_v1')
+          destination.mkdir(parents=True,exist_ok=True)
+          shutil.copytree(qs[0].parent,destination,dirs_exist_ok=True)
+          target=pathlib.Path('tools/thesis_main/analysis/bottleneck_models_20260906.py')
+          target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(code)
+          receipt={'analysis_run_id':int(os.environ['ANALYSIS_RUN']),'artifact':'bottleneck-models-20260906','code_sha256':hashlib.sha256(code).hexdigest(),'validated_raw_records':2501,'validated_strict_records':2427,'validated_dense_contexts':70,'validated_heldout_contexts':69,'mathematical_checks_passed':True,'source_parent_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'raw_data_changed':False}
+          (destination/'PUBLISH_RECEIPT.json').write_text(json.dumps(receipt,indent=2))
+          print(json.dumps(receipt,indent=2))
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f -- tools/thesis_main/analysis/bottleneck_models_20260906.py analysis_results/bottleneck_reanalysis_20260906_v1
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Publish verified bottleneck code, complete outputs and execution receipt [skip ci]'
+          git pull --rebase origin main
+          git push origin HEAD:main
