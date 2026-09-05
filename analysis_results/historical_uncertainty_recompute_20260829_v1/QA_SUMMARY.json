@@ -1,0 +1,43 @@
+{
+  "assertions": {
+    "annotation_eligibility_rows": 1055,
+    "formal_12_to_15_quality_plateau_claimed": false,
+    "full_roster_disagreement_task_count": 42,
+    "harmful_error_rate_computed": false,
+    "historical_split_counts": {
+      "test": 42
+    },
+    "image_reference_contract_rows": 42,
+    "language_primary_strata_created": false,
+    "minimum_common_quality_k": 13,
+    "minority_replay": {
+      "full_evaluable_nonmultimodal_task_count": 16,
+      "full_not_evaluable_task_count": 5,
+      "full_supported_multimodal_task_count": 21,
+      "full_task_count": 42,
+      "generic_multimodality_is_same_mode_claim": false,
+      "maximum_task_level_mc_minus_exact_support_visibility": 0.04948616600790512,
+      "second_rank_tie_sensitive_task_count": 3,
+      "simultaneous_hoeffding_tolerance_alpha_0_001": 0.11070168386117533,
+      "task_k_rows": 210,
+      "unique_second_rank_multimodal_task_count": 18
+    },
+    "oracle_best_of_k_computed": false,
+    "quality_curve_tasks": 41,
+    "reference_quality_eligible_annotations": 770,
+    "reference_ready_images": 41,
+    "same_mode_recovery_distinguished_from_generic_multimodality": true,
+    "stage_retained_as_sensitivity": true
+  },
+  "schema_version": "historical_uncertainty_recompute_v2",
+  "scientific_boundaries": [
+    "Finite historical roster; not a new-worker population guarantee.",
+    "C1 reference is primary; P1 and pooled reference results are sensitivity only.",
+    "P1 historical worker scope answer-set version is not machine materialized.",
+    "P1 peer_analysis_eligible is not inferred from quality eligibility.",
+    "Building-clustered intervals do not repair reference non-equivalence.",
+    "Full-roster difficulty and recovery are derived from the same answers; their association is descriptive, not causal.",
+    "The deterministic second-ranked cluster may be support-tied with the first or third cluster and is not external ground truth."
+  ],
+  "status": "pass"
+}

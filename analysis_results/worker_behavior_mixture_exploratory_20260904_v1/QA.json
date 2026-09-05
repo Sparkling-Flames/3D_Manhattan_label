@@ -1,0 +1,207 @@
+{
+  "building_bootstrap_replicates": 4000,
+  "classification": {
+    "class_counts": {
+      "A_selective_corrector_u095": 9,
+      "C_overmodifier_u095_sensitivity": 5,
+      "U_unclassified": 6
+    },
+    "classification_building_count": 10,
+    "classification_building_ids": [
+      "7y3sRwLe3Va",
+      "B6ByNegPMKs",
+      "X7HyMhZNoso",
+      "Z6MFQCViBuw",
+      "b8cTxDM8gDG",
+      "e9zR4mvMWw7",
+      "q9vSo1VnCiC",
+      "rPc6DW4iMge",
+      "uNb9QFRL6hY",
+      "wc2JMjhGNzB"
+    ],
+    "classification_row_count": 360,
+    "classification_task_count": 18,
+    "classification_task_ids": [
+      "7y3sRwLe3Va_92fb09a83f8949619b9dc5bda2855456",
+      "B6ByNegPMKs_48ee619d38b142f88914e7e2582bc1d8",
+      "B6ByNegPMKs_75327de9719945aa8b893a6404667884",
+      "X7HyMhZNoso_28ada927582d4d6ea7cf44cabf31527a",
+      "Z6MFQCViBuw_fbef2c9afec642c88d01cf09c90aec12",
+      "b8cTxDM8gDG_51c90ec9afc4495ab3788c6badc303df",
+      "e9zR4mvMWw7_12c84e77f6564013a032220e8f9037e8",
+      "e9zR4mvMWw7_1daae4b7becc43949516096170ce2a76",
+      "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45",
+      "e9zR4mvMWw7_ac03b99e3f3642be80b4d24fde0af03a",
+      "e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814",
+      "q9vSo1VnCiC_a412536ff52747d3b078f66e764cf103",
+      "rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a",
+      "uNb9QFRL6hY_aed830f085ee4ad88ef6bed7f66f1359",
+      "wc2JMjhGNzB_3504ff17bcae4d6c85bdc61fc3a5bf0c",
+      "wc2JMjhGNzB_3848b1ba65fa49308c3d0a79f63782b3",
+      "wc2JMjhGNzB_77962388887942148ee65c2892600e02",
+      "wc2JMjhGNzB_cae8fb3d40314ecea16654062030571b"
+    ],
+    "cutoff_sensitivity": [
+      {
+        "A_count": 5,
+        "A_worker_ids": [
+          "2",
+          "8",
+          "28",
+          "33",
+          "36"
+        ],
+        "C_count": 4,
+        "C_worker_ids": [
+          "1",
+          "12",
+          "35",
+          "37"
+        ],
+        "U_count": 11,
+        "U_worker_ids": [
+          "6",
+          "10",
+          "11",
+          "13",
+          "15",
+          "17",
+          "29",
+          "30",
+          "31",
+          "32",
+          "34"
+        ],
+        "u_threshold": 0.925
+      },
+      {
+        "A_count": 5,
+        "A_worker_ids": [
+          "2",
+          "8",
+          "28",
+          "33",
+          "36"
+        ],
+        "C_count": 4,
+        "C_worker_ids": [
+          "1",
+          "12",
+          "35",
+          "37"
+        ],
+        "U_count": 11,
+        "U_worker_ids": [
+          "6",
+          "10",
+          "11",
+          "13",
+          "15",
+          "17",
+          "29",
+          "30",
+          "31",
+          "32",
+          "34"
+        ],
+        "u_threshold": 0.93
+      },
+      {
+        "A_count": 9,
+        "A_worker_ids": [
+          "2",
+          "8",
+          "10",
+          "13",
+          "15",
+          "17",
+          "28",
+          "33",
+          "36"
+        ],
+        "C_count": 5,
+        "C_worker_ids": [
+          "1",
+          "12",
+          "34",
+          "35",
+          "37"
+        ],
+        "U_count": 6,
+        "U_worker_ids": [
+          "6",
+          "11",
+          "29",
+          "30",
+          "31",
+          "32"
+        ],
+        "u_threshold": 0.95
+      },
+      {
+        "A_count": 1,
+        "A_worker_ids": [
+          "33"
+        ],
+        "C_count": 8,
+        "C_worker_ids": [
+          "1",
+          "12",
+          "28",
+          "31",
+          "32",
+          "34",
+          "35",
+          "37"
+        ],
+        "U_count": 11,
+        "U_worker_ids": [
+          "2",
+          "6",
+          "8",
+          "10",
+          "11",
+          "13",
+          "15",
+          "17",
+          "29",
+          "30",
+          "36"
+        ],
+        "u_threshold": 0.97
+      }
+    ]
+  },
+  "classification_evaluation_base_task_overlap_count": 0,
+  "classification_evaluation_building_overlap_count": 8,
+  "evaluation_building_count": 11,
+  "evaluation_stage_counts": {
+    "C1": 12,
+    "P1": 29
+  },
+  "evaluation_task_count": 41,
+  "input_files": {
+    "analysis_results/uncertainty_threshold_anchoring_worker_types_20260823/PROPOSAL_RESPONSE_ROWS_FOR_WORKER_ANALYSIS.csv": "775606be5f88a0d7943282f56eb0367c41a2380c98ed44504aa2a274e51da956",
+    "docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json": "f3c1ea58d0857a40aa2240b4680b674c76fe2cec8f048f61a643d9e4b74b0588"
+  },
+  "invariants": {
+    "aggregator_gt_blind": true,
+    "building_cluster_bootstrap": true,
+    "classification_and_evaluation_base_tasks_disjoint": true,
+    "classification_uses_p1_only": true,
+    "formal_worker_contract_changed": false,
+    "same_worker_max_one_vote_per_image": true,
+    "sampling_without_replacement": true,
+    "task_equal_summary": true,
+    "unresolved_delivery_adjusted_quality_zero": true
+  },
+  "mixture_sampling": "exact_all_worker_compositions_without_replacement",
+  "mixture_task_scenario_row_count": 246,
+  "paired_contrast_task_row_count": 354,
+  "posterior_draws_per_worker": 200000,
+  "schema_version": "worker_behavior_mixture_exploratory_v1",
+  "seed": 20260904,
+  "status": "exploratory_replay_not_formal_taxonomy",
+  "subgroup_task_k_row_count": 437,
+  "summary_row_count": 390
+}

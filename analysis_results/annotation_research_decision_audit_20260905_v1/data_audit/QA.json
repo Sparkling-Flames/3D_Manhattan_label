@@ -1,0 +1,277 @@
+{
+  "assertions": {
+    "all_214_have_bilayout_both_files": true,
+    "all_214_have_hohonet_file": true,
+    "all_reproductions_exact": true,
+    "c1_manual_semi_overlap_exact": true,
+    "current20_k20_full_roster_mechanical_rows": 48,
+    "dense42_full_status_and_worker_partition_exact": true,
+    "dense42_labels_exact": true,
+    "full_canonical_annotation_count": 2501,
+    "full_high_support_pairwise_correspondence_applied": true,
+    "full_raw_version_count": 2513,
+    "full_roster_is_constructive_not_quality_ceiling": true,
+    "full_support_stage_condition_counts_match_independent_check": true,
+    "gt_assumed_correct": false,
+    "image_plane_proxy_equivalent_to_pixel_mask": true,
+    "new_primary_uses_old_eligibility": false,
+    "observed_worker_k20_image_unit_count": 73,
+    "overall_manual_coverage_exact": true,
+    "overall_semi_coverage_exact": true,
+    "population_plateau_claimed": false,
+    "same_worker_repeat_within_stage_condition_image_count": 0,
+    "stable_any_label_count": 6,
+    "stable_substantive_h_or_l_count": 3,
+    "stable_u_is_not_subtype": true,
+    "strict_k20_image_unit_count": 70,
+    "unknown_not_imputed": true
+  },
+  "counts": {
+    "annotation_snapshots": 10956,
+    "comparison_summary_rows": 261,
+    "full_high_support_task_k_rows": 438,
+    "geometry_comparisons": 32497,
+    "sensitivity_summary_rows": 90,
+    "sensitivity_task_k_rows": 1890,
+    "source_files": 395,
+    "support_census_image_units": 257,
+    "unresolved_records": 120
+  },
+  "coverage": {
+    "bilayout_both_count": 212,
+    "bilayout_both_files_count": 214,
+    "building_count": 22,
+    "gt_geometry_available_count": 180,
+    "hohonet_count": 214,
+    "hohonet_file_count": 214,
+    "human_image_count": 214,
+    "human_strict_annotation_count": 2427,
+    "split": "audited_214"
+  },
+  "dense42": {
+    "independence_counts": {
+      "independent": 840,
+      "non_independent_confirmed": 88,
+      "non_independent_suspected": 115,
+      "unknown": 12
+    },
+    "old_reference_quality_eligible_count": 770,
+    "row_count": 1055,
+    "strict_geometry_valid_count": 1013
+  },
+  "dense42_full_cluster_regression": {
+    "checked_task_count": 42,
+    "mismatch_base_task_ids": [],
+    "mismatch_count": 0,
+    "support_status_cluster_second_and_worker_partition_exact": true
+  },
+  "frozen_reproduction": {
+    "historical_execution": "frozen_package_reused_after_successful_full_rerun_in_prior_atomic_attempt",
+    "historical_qa_exact": true,
+    "manual_execution": "frozen_package_reused_after_successful_full_rerun_in_prior_atomic_attempt",
+    "manual_qa_exact": true,
+    "substrate_execution": "full_rerun_this_invocation",
+    "substrate_semantic_equivalence": {
+      "all_core_csv_byte_equal": false,
+      "all_core_csv_semantic_equal_at_1e_12": true,
+      "core_csv_checks": {
+        "COVERAGE_AUDIT.csv": {
+          "boolean_case_format_differences": 0,
+          "byte_equal": true,
+          "max_numeric_absolute_difference": 0.0,
+          "numeric_representation_differences_within_1e_12": 0,
+          "other_differences": 0,
+          "row_count_new": 26,
+          "row_count_old": 26,
+          "semantic_equal_at_1e_12": true
+        },
+        "DATA_DICTIONARY.csv": {
+          "boolean_case_format_differences": 0,
+          "byte_equal": true,
+          "max_numeric_absolute_difference": 0.0,
+          "numeric_representation_differences_within_1e_12": 0,
+          "other_differences": 0,
+          "row_count_new": 363,
+          "row_count_old": 363,
+          "semantic_equal_at_1e_12": true
+        },
+        "active_event_fact.csv": {
+          "boolean_case_format_differences": 0,
+          "byte_equal": true,
+          "max_numeric_absolute_difference": 0.0,
+          "numeric_representation_differences_within_1e_12": 0,
+          "other_differences": 0,
+          "row_count_new": 34417,
+          "row_count_old": 34417,
+          "semantic_equal_at_1e_12": true
+        },
+        "active_session_fact.csv": {
+          "boolean_case_format_differences": 0,
+          "byte_equal": true,
+          "max_numeric_absolute_difference": 0.0,
+          "numeric_representation_differences_within_1e_12": 0,
+          "other_differences": 0,
+          "row_count_new": 3735,
+          "row_count_old": 3735,
+          "semantic_equal_at_1e_12": true
+        },
+        "active_time_context.csv": {
+          "boolean_case_format_differences": 0,
+          "byte_equal": true,
+          "max_numeric_absolute_difference": 0.0,
+          "numeric_representation_differences_within_1e_12": 0,
+          "other_differences": 0,
+          "row_count_new": 2501,
+          "row_count_old": 2501,
+          "semantic_equal_at_1e_12": true
+        },
+        "annotation_spine.csv": {
+          "boolean_case_format_differences": 2438,
+          "byte_equal": false,
+          "max_numeric_absolute_difference": 0.0,
+          "numeric_representation_differences_within_1e_12": 0,
+          "other_differences": 0,
+          "row_count_new": 2501,
+          "row_count_old": 2501,
+          "semantic_equal_at_1e_12": true
+        },
+        "annotation_version_lineage.csv": {
+          "boolean_case_format_differences": 0,
+          "byte_equal": true,
+          "max_numeric_absolute_difference": 0.0,
+          "numeric_representation_differences_within_1e_12": 0,
+          "other_differences": 0,
+          "row_count_new": 2513,
+          "row_count_old": 2513,
+          "semantic_equal_at_1e_12": true
+        },
+        "geometry_pairwise.csv": {
+          "boolean_case_format_differences": 0,
+          "byte_equal": false,
+          "max_numeric_absolute_difference": 9.992007221626409e-16,
+          "numeric_representation_differences_within_1e_12": 8,
+          "other_differences": 0,
+          "row_count_new": 70218,
+          "row_count_old": 70218,
+          "semantic_equal_at_1e_12": true
+        },
+        "geometry_variants.csv": {
+          "boolean_case_format_differences": 2438,
+          "byte_equal": false,
+          "max_numeric_absolute_difference": 0.0,
+          "numeric_representation_differences_within_1e_12": 0,
+          "other_differences": 0,
+          "row_count_new": 7503,
+          "row_count_old": 7503,
+          "semantic_equal_at_1e_12": true
+        },
+        "image_registry.csv": {
+          "boolean_case_format_differences": 0,
+          "byte_equal": true,
+          "max_numeric_absolute_difference": 0.0,
+          "numeric_representation_differences_within_1e_12": 0,
+          "other_differences": 0,
+          "row_count_new": 214,
+          "row_count_old": 214,
+          "semantic_equal_at_1e_12": true
+        },
+        "meta_response_long.csv": {
+          "boolean_case_format_differences": 0,
+          "byte_equal": true,
+          "max_numeric_absolute_difference": 0.0,
+          "numeric_representation_differences_within_1e_12": 0,
+          "other_differences": 0,
+          "row_count_new": 8252,
+          "row_count_old": 8252,
+          "semantic_equal_at_1e_12": true
+        },
+        "meta_response_set.csv": {
+          "boolean_case_format_differences": 0,
+          "byte_equal": true,
+          "max_numeric_absolute_difference": 0.0,
+          "numeric_representation_differences_within_1e_12": 0,
+          "other_differences": 0,
+          "row_count_new": 7503,
+          "row_count_old": 7503,
+          "semantic_equal_at_1e_12": true
+        },
+        "proposal_fact.csv": {
+          "boolean_case_format_differences": 43,
+          "byte_equal": false,
+          "max_numeric_absolute_difference": 0.0,
+          "numeric_representation_differences_within_1e_12": 0,
+          "other_differences": 0,
+          "row_count_new": 43,
+          "row_count_old": 43,
+          "semantic_equal_at_1e_12": true
+        },
+        "proposal_response.csv": {
+          "boolean_case_format_differences": 0,
+          "byte_equal": true,
+          "max_numeric_absolute_difference": 0.0,
+          "numeric_representation_differences_within_1e_12": 0,
+          "other_differences": 0,
+          "row_count_new": 574,
+          "row_count_old": 574,
+          "semantic_equal_at_1e_12": true
+        },
+        "reference_measurement.csv": {
+          "boolean_case_format_differences": 0,
+          "byte_equal": true,
+          "max_numeric_absolute_difference": 0.0,
+          "numeric_representation_differences_within_1e_12": 0,
+          "other_differences": 0,
+          "row_count_new": 2742,
+          "row_count_old": 2742,
+          "semantic_equal_at_1e_12": true
+        },
+        "task_context_master.csv": {
+          "boolean_case_format_differences": 0,
+          "byte_equal": true,
+          "max_numeric_absolute_difference": 0.0,
+          "numeric_representation_differences_within_1e_12": 0,
+          "other_differences": 0,
+          "row_count_new": 270,
+          "row_count_old": 270,
+          "semantic_equal_at_1e_12": true
+        }
+      },
+      "excluded_workbook_metadata": {
+        "new": {
+          "status": "not_requested"
+        },
+        "old": {
+          "builder_stdout": "Inspect result written to file: D:\\Work\\HOHONET\\analysis_results\\.uncertainty_substrate_20260823_v1_wg80m3p9\\delivery\\.v5_xlsx_parts_6PGQOo\\part_001.xlsx.inspect.ndjson\n{\"outputPath\":\"D:\\\\Work\\\\HOHONET\\\\analysis_results\\\\.uncertainty_substrate_20260823_v1_wg80m3p9\\\\delivery\\\\不确定性数据底座审阅工作簿.xlsx\",\"batches\":1,\"rowCount\":829,\"tableCount\":6,\"merged\":{\"sheetCount\":6,\"tableCount\":6}}",
+          "formula_error_tokens": [],
+          "formula_inspection": "pass_no_formulas",
+          "preview_count": 6,
+          "sheet_names": [
+            "说明与边界",
+            "覆盖总览",
+            "已知缺口",
+            "任务上下文",
+            "字段字典",
+            "来源SHA"
+          ],
+          "status": "pass",
+          "workbook_sha256": "742c3229daea06ea9cda4478620023c35c19edc73054fc31a9d3b85052a03d42"
+        }
+      },
+      "substantive_qa_equal_excluding_workbook": true
+    }
+  },
+  "full_high_support_refresh": "corrected_pairwise_correspondence_contract; all-record replay rerun",
+  "metric_checks": {
+    "absolute_difference": 0.0,
+    "official_pixel_mask_d_mask": 0.0549913367986139,
+    "periodic_linear_proxy_d_mask": 0.0549913367986139
+  },
+  "schema_version": "annotation_research_data_audit_20260905_v1",
+  "scientific_boundaries": [
+    "D_mask is a periodic linear image-plane proxy, not spherical geometry.",
+    "Finite-roster recovery is descriptive and not a new-worker population guarantee.",
+    "Reference readiness, scope, independence, and missingness remain separate.",
+    "Minority modes are not automatically correct."
+  ],
+  "status": "pass"
+}

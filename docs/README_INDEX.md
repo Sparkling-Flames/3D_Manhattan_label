@@ -122,6 +122,11 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 
 ## 论文主线全量不确定性审计
 
+- [ANNOTATION_UNCERTAINTY_CURRENT_STATUS_HANDOFF_20260830.md](thesis_main/ANNOTATION_UNCERTAINTY_CURRENT_STATUS_HANDOFF_20260830.md)：当前标注不确定性研究的非规范交接入口；汇总42图历史复算、后续多人多轮候选实验、沟通歧义和 analysis_results 的 current/supporting/superseded 状态，不授权实验启动。
+- 历史多人标注复算：`tools/thesis_main/analysis/materialize_historical_uncertainty_k_curves_20260829.py`；结果 `analysis_results/historical_uncertainty_recompute_20260829_v1/`。当前讨论交付为42图/1,055条规范标注，包含无reference恢复、reference-relative质量、整体分歧、少数结构和阈值敏感性；属于历史有限roster审计，不声称普适质量上限。
+- Worker 行为分层与混合重放：`tools/thesis_main/analysis/analyze_worker_behavior_mixture_exploratory.py`；结果 `analysis_results/worker_behavior_mixture_exploratory_20260904_v1/`。仅以 P1 proposal-response 定义 `U=0.95` 下的操作性候选子群，并在零重叠 Manual 图片上精确重组；属于探索性 replay，不建立 good/sloppy 自然分类，也不修改正式 worker 三轴或 routing。
+- Manual-only worker 分层审计：`tools/thesis_main/analysis/audit_worker_manual_strata_exploratory.py`；结果 `analysis_results/worker_manual_strata_audit_20260904_v1/`。仅用 C1 Calibration_core Manual 的 task-adjusted Q_GT 建立逐 building 的 H/L/U 证据状态，再于零任务重叠的 dense41 Manual 数据检验；当前裁决为不支持冻结稳定 good/sloppy 类型，不修改正式 worker 三轴或 routing。
+- 导师定稿前图片初筛：`tools/thesis_main/data_prep/build_annotation_uncertainty_prescreen_review.py`；结果 `analysis_results/annotation_uncertainty_prescreen_20260903_v1/`。覆盖314张机器提示并生成来自166张无现有annotation记录池的30张极简人工审阅包；状态为非规范、未冻结、未分发。
 - [ANNOTATION_UNCERTAINTY_EXPERIMENT_SUPERVISOR_DRAFT_v2.md](thesis_main/ANNOTATION_UNCERTAINTY_EXPERIMENT_SUPERVISOR_DRAFT_v2.md)：基于历史失败审计重新定位的导师讨论稿 v2；状态为 DRAFT / NON-NORMATIVE / NOT APPROVED，提出候选 RQ、24×3×4 三臂设计、最小元标注、离线几何环序/残差与统计成功判据，不修改正式方法合同、SAP、T1/V1、已关闭阶段、Label Studio 分发或历史数据。
 - [ANNOTATION_UNCERTAINTY_EXPERIMENT_SUPERVISOR_DRAFT_v1.md](thesis_main/ANNOTATION_UNCERTAINTY_EXPERIMENT_SUPERVISOR_DRAFT_v1.md)：360°布局标注不确定性研究的导师讨论稿；当前为 `DRAFT / NON-NORMATIVE / NOT APPROVED`，提出全部Manual按支持数分层的Study 1与72图三臂候选Study 2。v2 元标签使用工人侧缺陷/修复多选并按集合分析，研究者侧保留主要缺陷与刺激纯度；20人可为全新cohort、active time仅作辅助，`R_vis`须先独立验证，完整topology signature与技术阶段锁不进入默认方案；不改变当前方法合同、SAP、T1或任何分发工件。
 - [ANNOTATION_UNCERTAINTY_EXTERNAL_REVIEW_PROPOSAL_NOTE_v1.md](thesis_main/ANNOTATION_UNCERTAINTY_EXTERNAL_REVIEW_PROPOSAL_NOTE_v1.md)：单独记录外部审稿方案及其与导师讨论稿的差异；状态为 `EXTERNAL PROPOSAL / NON-NORMATIVE / NOT ADOPTED`，不代表本项目采纳。
@@ -134,6 +139,12 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 - 当前生成目录：`analysis_results/full_uncertainty_data_mining_20260821_v5/`；v4 交付只保留在 Git 历史中。
 - 该审计保留 Active time 与 Label Studio Lead time 的边界，不修改规范方法合同或已冻结阶段结果。
 - Manual–Semi correctness/OOS 补充审计入口：`tools/thesis_main/analysis/full_uncertainty/analyze_manual_semi_correctness_oos_20260823_v3.py`；结果目录：`analysis_results/manual_semi_correctness_oos_20260823/`。其中资源方案仅为未生成 assignment manifest 的探索性资源算术，不改变正式 T1 的 2×2 设计。
+
+## 2026-09-05 研究数据与候选视觉审计
+
+- [研究方向与数据决策说明](../analysis_results/annotation_research_decision_audit_20260905_v1/研究方向与数据决策说明.md)：导师讨论证据、历史数据口径、building 覆盖及候选研究建议；不定稿论文、实验、GT 或标注者类别。
+- [50 张候选审查页](../analysis_results/annotation_research_decision_audit_20260905_v1/review50/review.html)：从剩余 136 图选取 50 图，排除已人工审核的 30 图；GT、HoHoNet、Bi-Layout 双输出并列，AI 建议与人工记录分开保存。
+- `analysis_results/annotation_research_decision_audit_20260905_v1/`：资产索引、来源复算、building/独立性诊断与汇总工作簿。派生审计不覆盖原始导出、历史人工判断或正式协议。
 
 ## HoHoNet 初始化代理审计
 

@@ -1,0 +1,269 @@
+{
+  "schema_version": "annotation_research_decision_audit_inventory_v1",
+  "status": "pass_with_known_gaps",
+  "scope": {
+    "requested_packages": [
+      "uncertainty_substrate_20260823_v1",
+      "full_uncertainty_data_mining_20260821_v5",
+      "historical_uncertainty_recompute_20260829_v1",
+      "rq1_corrections_20260826",
+      "rq1_raw_recompute_20260826",
+      "rq1_stratified_uncertainty_20260827_v1",
+      "worker_manual_strata_audit_20260904_v1",
+      "worker_behavior_mixture_exploratory_20260904_v1",
+      "manual_semi_correctness_oos_20260823",
+      "annotation_uncertainty_prescreen_20260903_v1"
+    ],
+    "old_review_packages": [
+      "annotation_uncertainty_batch1_broad_review_20260828_v1",
+      "annotation_uncertainty_batch1_candidate_review_20260827_v2",
+      "annotation_uncertainty_batch1_supplement_review_20260828_v1"
+    ],
+    "sha_check": "not_run_by_user_request"
+  },
+  "count_checks": {
+    "machine_manifest_items": 314,
+    "machine_manifest_unique_image_ids": 314,
+    "history_existing_148": 148,
+    "no_existing_annotation_166": 166,
+    "human_review_30": 30,
+    "remaining_candidate_136": 136,
+    "old_registry_214": 214,
+    "dense42": 42,
+    "selected50": 50,
+    "dense42_is_subset_of_old_registry": true,
+    "dense42_equals_old_registry_membership": false,
+    "review_ids_subset_machine": true,
+    "review_ids_subset_no_history": true,
+    "bi_target_rows": 314
+  },
+  "human_scope_counts": {
+    "in_scope": 26,
+    "out_of_scope": 4
+  },
+  "bi_manifest": {
+    "test": {
+      "path": "D:/Work/Manhattan_3D/Bi_layout/exports/mp3d_dual_predictions/test/manifest.csv",
+      "expected_rows": 458,
+      "rows": 458,
+      "unique_pano_id": 458,
+      "status_counts": {
+        "ok": 456,
+        "degenerate": 2
+      }
+    },
+    "val": {
+      "path": "D:/Work/Manhattan_3D/Bi_layout/exports/mp3d_dual_predictions/val/manifest.csv",
+      "expected_rows": 190,
+      "rows": 190,
+      "unique_pano_id": 190,
+      "status_counts": {
+        "ok": 190
+      }
+    }
+  },
+  "asset_checks": {
+    "prescreen_rows": 314,
+    "prescreen_asset_issue_rows": 0,
+    "high_density_rows": 42,
+    "high_density_asset_issue_rows": 1,
+    "high_density_issue_examples": [
+      {
+        "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+        "issues": "bi_extended:degenerate;bi_enclosed:degenerate"
+      }
+    ]
+  },
+  "format_checks": {
+    "checked": 786,
+    "errors": []
+  },
+  "reference_checks": {
+    "total_links": 43733,
+    "exists": 40801,
+    "remote_url_not_local_checked": 2930,
+    "missing": 2,
+    "missing_examples": [
+      {
+        "consumer_package": "uncertainty_substrate_20260823_v1",
+        "consumer_file": "analysis_results/uncertainty_substrate_20260823_v1/QA_SUMMARY.json",
+        "consumer_context": "workbook.builder_stdout",
+        "reference_kind": "absolute_path",
+        "reference_text": "D:\\Work\\HOHONET\\analysis_results\\.uncertainty_substrate_20260823_v1_wg80m3p9\\delivery\\.v5_xlsx_parts_6PGQOo\\part_001.xlsx.inspect.ndjson",
+        "physical_reference_path": "D:\\Work\\HOHONET\\analysis_results\\.uncertainty_substrate_20260823_v1_wg80m3p9\\delivery\\.v5_xlsx_parts_6PGQOo\\part_001.xlsx.inspect.ndjson",
+        "reference_field": "",
+        "resolved_path": "analysis_results/.uncertainty_substrate_20260823_v1_wg80m3p9/delivery/.v5_xlsx_parts_6PGQOo/part_001.xlsx.inspect.ndjson",
+        "resolved_package": ".uncertainty_substrate_20260823_v1_wg80m3p9",
+        "existence_status": "missing_historical_or_temp_path",
+        "consumer_role": "manifest/QA/来源声明"
+      },
+      {
+        "consumer_package": "uncertainty_substrate_20260823_v1",
+        "consumer_file": "analysis_results/uncertainty_substrate_20260823_v1/QA_SUMMARY.json",
+        "consumer_context": "workbook.builder_stdout",
+        "reference_kind": "absolute_path",
+        "reference_text": "D:\\\\Work\\\\HOHONET\\\\analysis_results\\\\.uncertainty_substrate_20260823_v1_wg80m3p9\\\\delivery\\\\不确定性数据底座审阅工作簿.xlsx",
+        "physical_reference_path": "D:\\\\Work\\\\HOHONET\\\\analysis_results\\\\.uncertainty_substrate_20260823_v1_wg80m3p9\\\\delivery\\\\不确定性数据底座审阅工作簿.xlsx",
+        "reference_field": "",
+        "resolved_path": "analysis_results/.uncertainty_substrate_20260823_v1_wg80m3p9/delivery/不确定性数据底座审阅工作簿.xlsx",
+        "resolved_package": ".uncertainty_substrate_20260823_v1_wg80m3p9",
+        "existence_status": "missing_historical_or_temp_path",
+        "consumer_role": "manifest/QA/来源声明"
+      }
+    ],
+    "consumer_file_count": 62
+  },
+  "old_review_overlap": {
+    "rows": 55,
+    "unique_remaining_image_ids": 53,
+    "packages": [
+      "annotation_uncertainty_batch1_broad_review_20260828_v1",
+      "annotation_uncertainty_batch1_candidate_review_20260827_v2",
+      "annotation_uncertainty_batch1_supplement_review_20260828_v1"
+    ]
+  },
+  "room_region_mapping": {
+    "mapping_status": "found_region_class_only",
+    "checked_path_count": 16,
+    "missing_candidate_path_count": 0,
+    "mapping_record_count": 1539,
+    "mapping_image_count": 1539,
+    "detail_rows": 123,
+    "mapping_kind_counts": {
+      "region_class_only": 1539
+    },
+    "mapping_source_paths": [
+      "D:/Work/Manhattan_3D/mp3d_layout_gt_sources/Matterport_official/tasks/region_classification/data/test_room_pano_image.txt;D:/Work/Manhattan_3D/mp3d_layout_gt_sources/Matterport_official/tasks/region_classification/data/test_room_pano_label.txt"
+    ],
+    "file_status": [
+      {
+        "path": "analysis_results/uncertainty_substrate_20260823_v1/image_registry.csv",
+        "status": "no_explicit_image_room_region_columns",
+        "record_count": "0"
+      },
+      {
+        "path": "analysis_results/uncertainty_substrate_20260823_v1/task_context_master.csv",
+        "status": "no_explicit_image_room_region_columns",
+        "record_count": "0"
+      },
+      {
+        "path": "analysis_results/uncertainty_substrate_20260823_v1/annotation_spine.csv",
+        "status": "no_explicit_image_room_region_columns",
+        "record_count": "0"
+      },
+      {
+        "path": "analysis_results/annotation_uncertainty_prescreen_20260903_v1/machine_manifest.json",
+        "status": "no_structured_image_room_region_records",
+        "record_count": "0"
+      },
+      {
+        "path": "analysis_results/annotation_uncertainty_prescreen_20260903_v1/human_review_export_20260905.json",
+        "status": "no_structured_image_room_region_records",
+        "record_count": "0"
+      },
+      {
+        "path": "analysis_results/annotation_research_decision_audit_20260905_v1/review50/selected50_manifest.json",
+        "status": "no_structured_image_room_region_records",
+        "record_count": "0"
+      },
+      {
+        "path": "D:/Work/Manhattan_3D/Bi_layout/exports/mp3d_dual_predictions/test/manifest.csv",
+        "status": "no_explicit_image_room_region_columns",
+        "record_count": "0"
+      },
+      {
+        "path": "D:/Work/Manhattan_3D/Bi_layout/exports/mp3d_dual_predictions/val/manifest.csv",
+        "status": "no_explicit_image_room_region_columns",
+        "record_count": "0"
+      },
+      {
+        "path": "D:/Work/Manhattan_3D/mp3d_layout_gt_sources/Matterport_official/tasks/region_classification/data/train_room_single_label.txt",
+        "status": "filename_candidate_only",
+        "record_count": "0"
+      },
+      {
+        "path": "D:/Work/Manhattan_3D/mp3d_layout_gt_sources/Matterport_official/tasks/region_classification/data/train_room_single_image.txt",
+        "status": "filename_candidate_only",
+        "record_count": "0"
+      },
+      {
+        "path": "D:/Work/Manhattan_3D/mp3d_layout_gt_sources/Matterport_official/tasks/region_classification/data/train_room_pano_label.txt",
+        "status": "filename_candidate_only",
+        "record_count": "0"
+      },
+      {
+        "path": "D:/Work/Manhattan_3D/mp3d_layout_gt_sources/Matterport_official/tasks/region_classification/data/train_room_pano_image.txt",
+        "status": "filename_candidate_only",
+        "record_count": "0"
+      },
+      {
+        "path": "D:/Work/Manhattan_3D/mp3d_layout_gt_sources/Matterport_official/tasks/region_classification/data/test_room_single_label.txt",
+        "status": "filename_candidate_only",
+        "record_count": "0"
+      },
+      {
+        "path": "D:/Work/Manhattan_3D/mp3d_layout_gt_sources/Matterport_official/tasks/region_classification/data/test_room_single_image.txt",
+        "status": "filename_candidate_only",
+        "record_count": "0"
+      },
+      {
+        "path": "D:/Work/Manhattan_3D/mp3d_layout_gt_sources/Matterport_official/tasks/region_classification/data/test_room_pano_label.txt",
+        "status": "filename_candidate_only",
+        "record_count": "0"
+      },
+      {
+        "path": "D:/Work/Manhattan_3D/mp3d_layout_gt_sources/Matterport_official/tasks/region_classification/data/test_room_pano_image.txt",
+        "status": "filename_candidate_only",
+        "record_count": "0"
+      },
+      {
+        "path": "D:/Work/Manhattan_3D/mp3d_layout_gt_sources/Matterport_official/tasks/region_classification/data/test_room_pano_image.txt;D:/Work/Manhattan_3D/mp3d_layout_gt_sources/Matterport_official/tasks/region_classification/data/test_room_pano_label.txt",
+        "status": "aligned_pano_region_class",
+        "record_count": "1539"
+      }
+    ],
+    "policy": "仅接受结构化 image/pano 与 room/region 字段或明确行对齐的 pano→region_class；不从同楼栋或视觉相似性推断房间。",
+    "search_scope": {
+      "roots": [
+        "data",
+        "D:/Work/Manhattan_3D/Bi_layout/dataset",
+        "D:/Work/Manhattan_3D/Bi_layout/exports",
+        "D:/Work/Manhattan_3D/mp3d_layout_gt_sources",
+        "D:/Work/Manhattan_3D/data_hoho"
+      ],
+      "patterns": [
+        "*.house",
+        "*house_segmentations*",
+        "*panorama_to_region*",
+        "*region*",
+        "*room*"
+      ],
+      "candidate_paths": [
+        "D:/Work/Manhattan_3D/mp3d_layout_gt_sources/Matterport_official/tasks/region_classification/data/train_room_single_label.txt",
+        "D:/Work/Manhattan_3D/mp3d_layout_gt_sources/Matterport_official/tasks/region_classification/data/train_room_single_image.txt",
+        "D:/Work/Manhattan_3D/mp3d_layout_gt_sources/Matterport_official/tasks/region_classification/data/train_room_pano_label.txt",
+        "D:/Work/Manhattan_3D/mp3d_layout_gt_sources/Matterport_official/tasks/region_classification/data/train_room_pano_image.txt",
+        "D:/Work/Manhattan_3D/mp3d_layout_gt_sources/Matterport_official/tasks/region_classification/data/test_room_single_label.txt",
+        "D:/Work/Manhattan_3D/mp3d_layout_gt_sources/Matterport_official/tasks/region_classification/data/test_room_single_image.txt",
+        "D:/Work/Manhattan_3D/mp3d_layout_gt_sources/Matterport_official/tasks/region_classification/data/test_room_pano_label.txt",
+        "D:/Work/Manhattan_3D/mp3d_layout_gt_sources/Matterport_official/tasks/region_classification/data/test_room_pano_image.txt"
+      ],
+      "interpretation": "这些有界检查来源未提供 room-instance/空间拓扑映射；其中 test_room_pano_* 提供数值 region class 对齐，不能替代 room-instance ID。"
+    }
+  },
+  "model_assets": {
+    "rows": 12,
+    "families": [
+      "Bi-Layout",
+      "HoHoNet",
+      "HorizonNet"
+    ]
+  },
+  "known_gaps": [
+    "未运行 SHA-256 核查；只保留声明字段。",
+    "Bi test manifest 有 2 条 degenerate；保留并标记，不从既定池删除。",
+    "缺失历史/临时引用未修复，见 reference_link_audit.csv。",
+    "人工审阅缺少 reference_verdict 的记录未自动补值。",
+    "HorizonNet 仅在有界搜索中找到依赖实现/配置；未确认独立权重或推理覆盖。"
+  ]
+}

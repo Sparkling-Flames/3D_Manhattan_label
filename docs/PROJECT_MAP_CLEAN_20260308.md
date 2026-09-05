@@ -77,6 +77,10 @@
 
 ## 2026-08-24 标注不确定性候选实验讨论稿
 
+- `docs/thesis_main/ANNOTATION_UNCERTAINTY_CURRENT_STATUS_HANDOFF_20260830.md`：当前标注不确定性研究的非规范交接入口；分开记录已确认历史证据、多人多轮候选路径、沟通反馈的可能解释和待确认歧义，并登记 uncertainty analysis 的 current/supporting/superseded 状态。本文件不修改方法合同、SAP、T1/V1 或授权实验启动。
+- `tools/thesis_main/analysis/materialize_historical_uncertainty_k_curves_20260829.py`、`tools/thesis_main/analysis/build_historical_uncertainty_workbook_20260829.mjs` 与 `analysis_results/historical_uncertainty_recompute_20260829_v1/`：42图/1,055条规范历史标注的当前复算链；包含无reference恢复、reference-relative质量、整体分歧、少数结构和阈值敏感性，结果只适用于有限历史roster。其上游 `rq1_raw_recompute_20260826/` 与 `rq1_stratified_uncertainty_20260827_v1/` 保留原路径以维持manifest复现。
+- `tools/thesis_main/analysis/audit_worker_manual_strata_exploratory.py` 与 `analysis_results/worker_manual_strata_audit_20260904_v1/`：仅用 C1 Calibration_core Manual 的 task-adjusted Q_GT 做逐 building 的 H/L/U 证据分层，并在 dense41 Manual 上作零任务重叠的混合重放；当前不支持冻结稳定 worker 类型，且不改变正式 worker profile、routing 或方法合同。
+- `tools/thesis_main/data_prep/build_annotation_uncertainty_prescreen_review.py` 与 `analysis_results/annotation_uncertainty_prescreen_20260903_v1/`：导师定稿前的非规范图片准备链；审计314张正式链未提交Test图，并从166张无现有annotation记录池生成24张核心图+6张边界图的可撤回研究者审阅包。机器结论仅为提示，不冻结样本、不导入Label Studio、不修改方法合同或SAP。
 - `docs/thesis_main/ANNOTATION_UNCERTAINTY_EXPERIMENT_SUPERVISOR_DRAFT_v2.md`：基于历史失败审计重新定位的导师讨论稿 v2；非规范、未批准，仅提出候选 RQ、24×3×4 三臂设计、最小元标注、离线几何环序/残差与统计成功判据，不改变正式合同、SAP、T1/V1、已关闭阶段、Label Studio 分发或历史真源。
 - `docs/thesis_main/ANNOTATION_UNCERTAINTY_EXPERIMENT_SUPERVISOR_DRAFT_v1.md`：标注不确定性候选研究的导师讨论稿；非规范、未批准、不得直接启动。当前以全部Manual分层RQ1与72图三臂候选实验为主；v2 元标签将工人侧问题与修复改为多选集合比较，研究者侧仍保留主要缺陷与刺激纯度。候选连续主指标为periodic equirectangular `D_mask`，20人可为全新cohort，active time仅作辅助，`R_vis`须先独立验证，不采用完整topology signature或技术阶段锁；不修改当前方法合同、SAP、T1或 Label Studio 分发工件。
 - `docs/thesis_main/ANNOTATION_UNCERTAINTY_EXTERNAL_REVIEW_PROPOSAL_NOTE_v1.md`：外部审稿方案的独立简要记录；非规范、未采纳，不覆盖导师讨论稿或任何方法真源。
@@ -106,3 +110,13 @@
 - `tools/label_studio/label_studio_uncertainty_meta_manifest_v2.json`：中英文 Manual/Semi/future XML 与四份 Userscript 的当前本地待部署入口；原生 XML 负责必填与条件分支，Userscript 仅补 `difficulty_reason` 的互斥规则，active time 不变。
 - `tools/label_studio/label_studio_uncertainty_meta_manifest_v1.json`：Project 86 开发测试使用的 v1 清单，配置由 Git 修订 `e1038a9` 保留；非正式合同，旧响应不追溯重编码。
 - `tools/label_studio/config_history/uncertainty_meta_v1_prechange_20260824/`：更早的十份修改前基线；旧元标签消费者固定读取历史 XML，不回写或重分类旧数据。
+
+## 2026-09-05 研究数据与候选视觉审计
+
+- Git 保留代码、报告、清单、人工记录和分析表；预筛/AI50 的批量预览、审计目录内 `recomputed_*` 副本及工作簿 inspect 日志留在本地，可由对应工具重建。新 checkout 查看审查页前需生成图片资产。
+- `analysis_results/annotation_research_decision_audit_20260905_v1/`：研究方向与数据决策说明、资产/来源审计、building 与独立性诊断、50 张新候选 AI 初查和汇总工作簿；保留原始记录，不形成正式实验或最终人工判断。
+- `tools/thesis_main/data_prep/build_annotation_research_review50_20260905.py`：从现有剩余 136 候选中按 building 覆盖与差异选取 50 图，排除人工已审 30 图；保留角点环序并用球面投影生成预览。
+- `tools/thesis_main/data_prep/inventory_annotation_research_assets_20260905.py`：研究资产依赖、历史候选身份及 building/room 来源索引。
+- `tools/thesis_main/analysis/audit_annotation_research_data_20260905.py`：原始来源分类、历史结果复算、独立性敏感性及同图人类/模型差异诊断。
+- `tools/thesis_main/analysis/build_annotation_research_decision_workbook_20260905.mjs`：以上派生审计的中文汇总工作簿入口；不替代 CSV/JSON 和原始数据真源。
+- `tools/thesis_main/analysis/plot_annotation_research_k15_20_20260905.py`：按阶段/条件固定 k20 图像支持的 15–20 人描述性恢复曲线，分别展示图像与建筑等权结果。

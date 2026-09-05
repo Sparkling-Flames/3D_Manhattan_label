@@ -1,0 +1,1018 @@
+{
+  "schema_version": "review50_ai_advisory_v1",
+  "advisory_only": true,
+  "reviewed_at": "2026-09-05",
+  "review_method": "先原图，后GT/HoHoNet/Bi-Layout enclosed/extended四路球面投影；分5张一组，全部50张逐图视觉阅读。",
+  "limitations": [
+    "AI初查意见，全部需研究者最终判断；没有写入或推断人工裁决。",
+    "max_mask_difference仅为线性图像mask筛图诊断，非球面面积、错误率或人类不确定性。",
+    "按building覆盖和差异优先抽样，不估计总体问题比例；疑似同房间只做待核线索。"
+  ],
+  "items": [
+    {
+      "review_id": "R50-001",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-001_original.jpg",
+        "previews/R50-001_comparison.jpg"
+      ],
+      "scene": "洗衣凹间与入口连通，前景成对墙端/折叠门框和柜体遮挡明显；局部收边不能直接等同围护墙。",
+      "scope_hint": "需核对当前空间闭合",
+      "reference": "GT在左侧墙端保留凹凸，右侧门框附近较简化；是否漏掉真实墙厚待核。",
+      "hohonet": "整体接近GT，右侧狭窄墙端未明显分出。",
+      "bi": "两头都在右侧门框增加窄折返/角点，顶底位置与GT有明显差异；须判断墙厚还是门框装饰。",
+      "question": "门框两侧哪一对结构边界用于闭合；窄折返是否属于当前空间外包络？",
+      "tags": [
+        "opening",
+        "local_structure",
+        "model_structure_difference"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-002",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-002_original.jpg",
+        "previews/R50-002_comparison.jpg"
+      ],
+      "scene": "过道连接衣帽间与正前方门洞；门扇、架子及墙端遮挡外包络。",
+      "scope_hint": "需核对当前空间闭合",
+      "reference": "GT包含衣帽间侧窄折返，范围选择需由门框规则确认。",
+      "hohonet": "衣帽间入口侧的窄折返较简化，天花/地面位置与GT不同。",
+      "bi": "两头近似，右侧墙端均有多角点；架子边缘不应自动当作墙。",
+      "question": "当前站位属于哪一空间，衣帽间开口闭合位置以及窄墙段是否需要保留？",
+      "tags": [
+        "opening",
+        "occlusion",
+        "local_structure"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-003",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-003_original.jpg",
+        "previews/R50-003_comparison.jpg"
+      ],
+      "scene": "玻璃办公室之间的长走廊，圆柱与顶棚设备局部遮挡；左右远端闭合位置需要明确。",
+      "scope_hint": "需核对闭合及柱体处理",
+      "reference": "GT按走廊主围护简化中央柱体；是否符合忽略局部非正交物体规则待核。",
+      "hohonet": "中央柱缘附近多出窄竖向折点，可能把局部柱体并入墙包络。",
+      "bi": "两头主要差在远端截断及顶边位置；不能直接称为两种合理真值。",
+      "question": "柱体属于局部障碍还是主要围护；走廊左右端应在何处闭合？",
+      "tags": [
+        "corridor",
+        "glass",
+        "column",
+        "ceiling_detail"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-004",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-004_original.jpg",
+        "previews/R50-004_comparison.jpg"
+      ],
+      "scene": "长玻璃走廊，两端延伸很远，近景门洞与玻璃边框可辨。",
+      "scope_hint": "需核对走廊闭合",
+      "reference": "GT的左右远端位置与模型不一致；需检查是否到达了可重复定义的结构分界。",
+      "hohonet": "远端截断更近，天花边缘与GT存在系统偏移。",
+      "bi": "enclosed与extended远端深度差别明显，玻璃主墙大体一致。",
+      "question": "左右远端何处存在明确结构界线；若不存在，是否足以形成当前空间完整闭合？",
+      "tags": [
+        "corridor",
+        "glass",
+        "closure_depth"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-005",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-005_original.jpg",
+        "previews/R50-005_comparison.jpg"
+      ],
+      "scene": "小型办公室，中央玻璃隔墙、门洞、桌椅和外窗；围护主方向相对清晰，顶棚管线需与主平面区分。",
+      "scope_hint": "可能适用，仍待人工",
+      "reference": "可见主要围护和开口位置与投影边界大体相符，遮挡区域仍不可确认。",
+      "hohonet": "与GT接近，主要是顶边及角点轻微偏移。",
+      "bi": "两头近似且接近GT/HoHoNet；未见清晰的双结构解释。",
+      "question": "确认顶棚主平面与玻璃门口闭合，不把管线和家具纳入外包络。",
+      "tags": [
+        "glass",
+        "occlusion",
+        "low_model_difference"
+      ],
+      "priority": "低"
+    },
+    {
+      "review_id": "R50-006",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-006_original.jpg",
+        "previews/R50-006_comparison.jpg"
+      ],
+      "scene": "服务走廊，红门端、玻璃端可见，顶面有梁与大量管线，左侧柱体与墙相邻。",
+      "scope_hint": "需核对走廊闭合和主顶面",
+      "reference": "主围护大体吻合，右端闭合及梁下/板下选择待核。",
+      "hohonet": "左侧柱缘附近额外竖线；主要外包络与GT近似。",
+      "bi": "两头近似，远端高度和顶边有小幅偏移。",
+      "question": "左侧柱体是否并入包络，右端玻璃处闭合是否符合当前空间规则？",
+      "tags": [
+        "corridor",
+        "column",
+        "ceiling_detail"
+      ],
+      "priority": "中"
+    },
+    {
+      "review_id": "R50-007",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-007_original.jpg",
+        "previews/R50-007_comparison.jpg"
+      ],
+      "scene": "相机靠近办公室门框，左侧小房间与右侧长玻璃走廊同时可见，前景窄墙端非常近。",
+      "scope_hint": "优先核对当前空间边界",
+      "reference": "同时包含房间和远走廊；是否超出应闭合的门口范围须先确认。",
+      "hohonet": "右半部边界伸至图像上下极端并在门扇/墙端出现复杂折返，与可见结构明显不协调。",
+      "bi": "两头比HoHoNet接近可见墙端，但走廊两端截断不同；GT和Bi接近不代表闭合规则已满足。",
+      "question": "门框位置如何界定当前空间；是否应排除相邻办公室或走廊？",
+      "tags": [
+        "opening",
+        "closure_depth",
+        "model_structure_difference"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-008",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-008_original.jpg",
+        "previews/R50-008_comparison.jpg"
+      ],
+      "scene": "衣帽间围护较清楚，挂架遮挡墙脚，右侧门洞通向浴室。",
+      "scope_hint": "可能适用，仍待人工",
+      "reference": "简化架子、在浴室入口侧保持当前房间包络，视觉上大体一致。",
+      "hohonet": "与GT接近，地面边缘略有偏移。",
+      "bi": "两头近似且接近其余边界，未见明显结构分歧。",
+      "question": "确认挂架后墙脚与浴室门口闭合位置。",
+      "tags": [
+        "occlusion",
+        "opening",
+        "low_model_difference"
+      ],
+      "priority": "低"
+    },
+    {
+      "review_id": "R50-009",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-009_original.jpg",
+        "previews/R50-009_comparison.jpg"
+      ],
+      "scene": "衣帽间内窄隔板、挂架与打开的门扇并存，局部结构和可移动物体容易混淆。",
+      "scope_hint": "需核对隔板及门扇处理",
+      "reference": "保留左侧窄隔板折返，中央打开门扇处较简化。",
+      "hohonet": "中央打开门扇附近增加窄折返，疑似将门扇作为围护。",
+      "bi": "两头近似，左侧隔板被合并，中央门扇附近均形成凸出包络。",
+      "question": "确认哪些窄隔板属于主围护；打开门扇不能仅凭边缘充当墙。",
+      "tags": [
+        "occlusion",
+        "door_leaf",
+        "local_structure"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-010",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-010_original.jpg",
+        "previews/R50-010_comparison.jpg"
+      ],
+      "scene": "卧室右半幅为大面积镜面衣柜，反射床、门口与相机，不是额外房间。",
+      "scope_hint": "可能适用，镜面需明确排除",
+      "reference": "围护沿镜面所在边界闭合，和可见房间大体协调。",
+      "hohonet": "与GT结构接近，主要为位置偏移。",
+      "bi": "enclosed接近GT；extended在镜面中部新增明显窄折返，疑似把反射/镜框纳入几何。",
+      "question": "核实镜面实际平面，extended多出的角点是否有真实结构依据？",
+      "tags": [
+        "mirror",
+        "model_structure_difference"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-011",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-011_original.jpg",
+        "previews/R50-011_comparison.jpg"
+      ],
+      "scene": "楼梯、电梯前厅与挑空区相连，木墙有高低变化，台阶直接进入可见围护。",
+      "scope_hint": "疑似与单层闭合约束冲突，待人工",
+      "reference": "在楼梯侧给出统一高度包络，未表达台阶和挑空的实际多层关系。",
+      "hohonet": "楼梯侧增加折返且范围更大，顶边跨越不同高度。",
+      "bi": "两头近似，但把半高/阶梯状木墙作为连续围护，局部顶边选择不同。",
+      "question": "能否在明确墙端/门口截出完整单层空间；若不能，需由您决定范围适用性。",
+      "tags": [
+        "stairs",
+        "multi_level",
+        "closure_depth"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-012",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-012_original.jpg",
+        "previews/R50-012_comparison.jpg"
+      ],
+      "scene": "卧室镜面衣柜与外部玻璃门并存，床遮挡右侧墙脚；镜面侧有窄墙端。",
+      "scope_hint": "可能适用，局部墙端待核",
+      "reference": "镜柜右缘保留一处窄折返，不将镜中房间扩展为真实空间。",
+      "hohonet": "简化镜柜右缘窄折返，其他主边界与GT接近。",
+      "bi": "两头近似并保留该折返，位置与GT略异。",
+      "question": "镜柜右侧折返是否是真实墙厚，还是边框/柜体应简化？",
+      "tags": [
+        "mirror",
+        "local_structure",
+        "occlusion"
+      ],
+      "priority": "中"
+    },
+    {
+      "review_id": "R50-013",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-013_original.jpg",
+        "previews/R50-013_comparison.jpg"
+      ],
+      "scene": "开放式厨房餐厅与客厅连通，橱柜遮挡墙脚，左侧通口两边有墙端。",
+      "scope_hint": "需核对连通区闭合",
+      "reference": "中央通口向后包含一小段空间；右側橱柜与主墙关系较简化。",
+      "hohonet": "中央通口较简化，右侧柜端新增窄折返，可能受柜体影响。",
+      "bi": "两头近似，中央通口结构接近GT；范围正确性仍依赖闭合规则。",
+      "question": "通往客厅的开口是否应在近端墙端闭合；橱柜后方主墙如何推断？",
+      "tags": [
+        "opening",
+        "occlusion",
+        "furniture_boundary"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-014",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-014_original.jpg",
+        "previews/R50-014_comparison.jpg"
+      ],
+      "scene": "卧室两处门口较清楚，床椅遮挡部分墙脚，顶面与主墙方向容易辨认。",
+      "scope_hint": "可能适用，仍待人工",
+      "reference": "在门口所在墙面闭合，主结构大体匹配。",
+      "hohonet": "与GT接近，床旁墙脚和顶边有轻微偏移。",
+      "bi": "两头近似，未见清晰的结构差异。",
+      "question": "确认两处门口闭合与遮挡墙脚；可作本building较清楚样本。",
+      "tags": [
+        "opening",
+        "occlusion",
+        "low_model_difference"
+      ],
+      "priority": "低"
+    },
+    {
+      "review_id": "R50-015",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-015_original.jpg",
+        "previews/R50-015_comparison.jpg"
+      ],
+      "scene": "装饰繁复的展厅，多处通向邻室的门洞，顶棚有密集凹凸装饰，座椅遮挡墙脚。",
+      "scope_hint": "需核对主顶面与装饰简化",
+      "reference": "主围护结构与模型接近，顶边选在装饰线附近，墙脚多靠推断。",
+      "hohonet": "总体结构接近GT，部分墙脚与顶边位置偏移。",
+      "bi": "两头近似，主顶边较高、中央墙脚较低，主要体现平面位置差异。",
+      "question": "顶棚装饰可否按单主平面简化；开门处是否已按近端闭合？",
+      "tags": [
+        "ceiling_detail",
+        "opening",
+        "occlusion"
+      ],
+      "priority": "中"
+    },
+    {
+      "review_id": "R50-016",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-016_original.jpg",
+        "previews/R50-016_comparison.jpg"
+      ],
+      "scene": "同一building的华丽展厅，窗帘凹部、家具和装饰线很多，主要墙面可辨。",
+      "scope_hint": "需核对主顶面简化",
+      "reference": "主结构与模型相似，右远墙脚被餐桌遮挡。",
+      "hohonet": "结构接近GT，远侧顶边及地面边界有位置差。",
+      "bi": "两头近似，左侧顶边略高，未出现明显额外结构解释。",
+      "question": "顶棚装饰按哪个主平面处理；与R50-015可能同房间，需用room标识核实后再谈独立样本。",
+      "tags": [
+        "ceiling_detail",
+        "occlusion",
+        "possible_same_room"
+      ],
+      "priority": "中"
+    },
+    {
+      "review_id": "R50-017",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-017_original.jpg",
+        "previews/R50-017_comparison.jpg"
+      ],
+      "scene": "开放厨房，两侧连接生活区，大片橱柜遮住真实墙面；弧形台面不代表主墙弯曲。",
+      "scope_hint": "需核对柜体后围护和闭合",
+      "reference": "包络围绕中央柜组与两侧连通空间，右窄折返结构待核。",
+      "hohonet": "大体接近GT，左侧通道截断更细分。",
+      "bi": "两头在左侧通道给出不同截断深度和角点，其他柜组侧结构相似。",
+      "question": "当前空间能否由真实墙端闭合；左侧模型分歧对应实际开口还是橱柜遮挡推断？",
+      "tags": [
+        "opening",
+        "furniture_boundary",
+        "closure_depth"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-018",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-018_original.jpg",
+        "previews/R50-018_comparison.jpg"
+      ],
+      "scene": "白色长走廊，左端壁龛和卧室门、右远端连通；主墙低纹理，少量可见转角。",
+      "scope_hint": "需核对走廊端部与墙方向",
+      "reference": "壁龛按统一顶面简化，右远端给出闭合。",
+      "hohonet": "与GT结构相似，壁龛宽度和远端位置不同。",
+      "bi": "两头近似，远端深度及顶边稍异；图中曲线本身不能证明墙是弧形。",
+      "question": "远端是否存在明确闭合界线，壁龛是否可按主平面简化？",
+      "tags": [
+        "corridor",
+        "low_texture",
+        "local_structure"
+      ],
+      "priority": "中"
+    },
+    {
+      "review_id": "R50-019",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-019_original.jpg",
+        "previews/R50-019_comparison.jpg"
+      ],
+      "scene": "厨房与餐厅、客厅连通，橱柜包围相机；门洞、墙端与顶棚梁有多处层次。",
+      "scope_hint": "优先核对当前空间闭合",
+      "reference": "包含左侧客厅开口和右侧远空间的窄折返，可能涉及跨房间范围。",
+      "hohonet": "左开口被简化，餐区增加局部折点，右柜端较平滑。",
+      "bi": "两头近似，左开口与右柜端较GT简化，区别主要为范围/结构处理。",
+      "question": "能否在近端墙端将厨房与相邻区域分开；顶棚是否仍有统一主平面？",
+      "tags": [
+        "opening",
+        "closure_depth",
+        "ceiling_detail"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-020",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-020_original.jpg",
+        "previews/R50-020_comparison.jpg"
+      ],
+      "scene": "双床卧室，镜柜及打开门扇并存，主要围护清楚，床后墙脚受遮挡。",
+      "scope_hint": "可能适用，仍待人工",
+      "reference": "沿真实镜柜平面和门口闭合，未纳入反射空间或门扇。",
+      "hohonet": "与GT接近，部分边缘仅轻微偏移。",
+      "bi": "两头近似且接近其余边界，可作低差异参照。",
+      "question": "确认床后墙脚推断以及镜面所在围护平面。",
+      "tags": [
+        "mirror",
+        "occlusion",
+        "low_model_difference"
+      ],
+      "priority": "低"
+    },
+    {
+      "review_id": "R50-021",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-021_original.jpg",
+        "previews/R50-021_comparison.jpg"
+      ],
+      "scene": "门厅两侧连通木梁顶的生活区，中央墙端与开口清楚，但不同区域顶面层次不同。",
+      "scope_hint": "需先确定当前空间闭合",
+      "reference": "中央右开口向内折返，包含局部内侧墙；其余模型在该处直接跨过。",
+      "hohonet": "简化中央右开口，左通口与GT稍有位置差。",
+      "bi": "两头近似且与HoHoNet结构相近，不能以三路一致判GT错。",
+      "question": "中央右开口应在近端封闭还是纳入内侧墙；两侧生活区是否属于当前标注范围？",
+      "tags": [
+        "opening",
+        "closure_depth",
+        "ceiling_detail"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-022",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-022_original.jpg",
+        "previews/R50-022_comparison.jpg"
+      ],
+      "scene": "小衣帽间，整面木柜遮挡后墙和地面，门口及对面白墙较清楚。",
+      "scope_hint": "可能适用，遮挡推断待核",
+      "reference": "柜后主墙脚与顶边主要靠推断，结构与模型相似。",
+      "hohonet": "柜体侧顶边更低、底边更高，可能贴合柜体内部而非围护面。",
+      "bi": "两头近似，介于GT与HoHoNet之间，柜内横板处出现底边。",
+      "question": "柜后墙脚如何从邻接墙与统一地面推断，避免柜内底板作为地板？",
+      "tags": [
+        "furniture_boundary",
+        "occlusion"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-023",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-023_original.jpg",
+        "previews/R50-023_comparison.jpg"
+      ],
+      "scene": "狭窄门厅与厨房/客厅相连，近景门框墙厚明显，右方客厅顶棚结构不同。",
+      "scope_hint": "需核对邻室隔离",
+      "reference": "右侧延伸到客厅远窗，可能超过近端结构开口。",
+      "hohonet": "主结构接近GT，近门框宽度与右侧深度略异。",
+      "bi": "两头近似，同样包含右方客厅；相互一致不能证明范围合规。",
+      "question": "右侧是否应在最近的一对墙端闭合，避免把客厅纳入门厅？",
+      "tags": [
+        "opening",
+        "closure_depth",
+        "ceiling_detail"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-024",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-024_original.jpg",
+        "previews/R50-024_comparison.jpg"
+      ],
+      "scene": "带木梁顶的卧室，左侧小凹间、浴室门与露台开口清楚，床和柜挡住墙脚。",
+      "scope_hint": "需核对凹间与主顶面",
+      "reference": "左侧凹间保留折返，主顶面沿梁/墙交界估计。",
+      "hohonet": "左凹间被简化为连续墙面，其余边界接近。",
+      "bi": "两头近似，左凹间同样简化；主要差异是保留范围和角点数。",
+      "question": "左凹间属于当前房间还是应就近闭合；木梁可否统一按主顶面处理？",
+      "tags": [
+        "local_structure",
+        "opening",
+        "ceiling_detail"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-025",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-025_original.jpg",
+        "previews/R50-025_comparison.jpg"
+      ],
+      "scene": "卧室旁梳妆凹区，正面门通向衣帽间，左侧墙端连卧室，桌椅遮挡墙脚。",
+      "scope_hint": "需核对局部闭合，整体较清楚",
+      "reference": "在衣帽门口近端闭合，左墙端较简化。",
+      "hohonet": "左墙端增加一处很窄折返，其余接近GT。",
+      "bi": "enclosed保留左侧窄折返，extended将其简化；差别局限于墙厚处理。",
+      "question": "左墙端窄折返是否保留；这些图可能属于同一套房/房间群，需核对room关联。",
+      "tags": [
+        "opening",
+        "local_structure",
+        "possible_same_room"
+      ],
+      "priority": "中"
+    },
+    {
+      "review_id": "R50-026",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-026_original.jpg",
+        "previews/R50-026_comparison.jpg"
+      ],
+      "scene": "木梁卧室靠近浴室移门和梳妆凹间，疑似与R50-024为同房间不同机位。",
+      "scope_hint": "需核对凹间闭合",
+      "reference": "将正面梳妆区纳入凹入结构，顶/地边延伸到凹间后壁。",
+      "hohonet": "在凹间开口侧直接跨过，形成更简化包络。",
+      "bi": "两头近似且简化凹间，与GT差异集中在范围选择。",
+      "question": "凹间是否在开口墙端闭合；需与R50-024采用同一规则，而非随视角改范围。",
+      "tags": [
+        "opening",
+        "closure_depth",
+        "possible_same_room"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-027",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-027_original.jpg",
+        "previews/R50-027_comparison.jpg"
+      ],
+      "scene": "开放厨房客厅，密集格梁顶面，中央门口通走廊，家具遮挡多数墙脚。",
+      "scope_hint": "需核对主顶面与遮挡外包络",
+      "reference": "简化为连续主围护并在中央门口闭合，整体范围较一致。",
+      "hohonet": "结构接近GT，左右远端和厨房后墙的位置略异。",
+      "bi": "两头近似，与GT主要为顶边及被遮挡墙脚的位置差。",
+      "question": "格梁顶按何主平面处理，厨房柜后和沙发后墙脚是否有足够约束？",
+      "tags": [
+        "ceiling_detail",
+        "occlusion"
+      ],
+      "priority": "中"
+    },
+    {
+      "review_id": "R50-028",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-028_original.jpg",
+        "previews/R50-028_comparison.jpg"
+      ],
+      "scene": "浴室门口近景，门扇贴近墙、镜面反射卧室，浴柜和浴缸遮挡底边。",
+      "scope_hint": "可能适用，仍待人工",
+      "reference": "沿浴室近端门口闭合，不延伸入卧室。",
+      "hohonet": "主结构接近，浴柜/浴缸侧墙脚略有偏移。",
+      "bi": "两头近似，与GT结构大体一致，部分顶边略高。",
+      "question": "确认门扇后真实墙平面及浴缸后墙脚；不把镜中房间纳入几何。",
+      "tags": [
+        "mirror",
+        "occlusion",
+        "opening"
+      ],
+      "priority": "中"
+    },
+    {
+      "review_id": "R50-029",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-029_original.jpg",
+        "previews/R50-029_comparison.jpg"
+      ],
+      "scene": "浴室内部，浴缸、玻璃屏和浴柜占据墙脚；疑似R50-028同房间另一机位。",
+      "scope_hint": "可能适用，仍待人工",
+      "reference": "按围护墙而非玻璃屏闭合，遮挡区域需要推断。",
+      "hohonet": "与GT结构一致，浴缸侧地面线略有偏移。",
+      "bi": "两头近似，整体差异较小。",
+      "question": "浴缸台沿不能代替地板；核实与R50-028的room关联和一致规则。",
+      "tags": [
+        "glass",
+        "occlusion",
+        "possible_same_room",
+        "low_model_difference"
+      ],
+      "priority": "中"
+    },
+    {
+      "review_id": "R50-030",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-030_original.jpg",
+        "previews/R50-030_comparison.jpg"
+      ],
+      "scene": "狭窄走廊正对敞开的卧室门，门框近端清楚，卧室内部和远侧门可见。",
+      "scope_hint": "需按近端门框闭合",
+      "reference": "在卧室近端门框处封闭当前走廊。",
+      "hohonet": "向门内延伸至卧室，形成额外凹入结构。",
+      "bi": "enclosed在近端封闭，extended明显进入卧室；双头差异对应范围扩张。",
+      "question": "按您当前规则，进入相邻卧室的输出应如何记录为范围偏离；不能仅因Manhattan就视为另一合理答案。",
+      "tags": [
+        "opening",
+        "closure_depth",
+        "model_structure_difference"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-031",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-031_original.jpg",
+        "previews/R50-031_comparison.jpg"
+      ],
+      "scene": "客厅有格梁顶，门口内可见上行台阶；右侧主墙有凸出窄墙端，家具与镜面遮挡部分边界。",
+      "scope_hint": "需核对顶面与门口闭合",
+      "reference": "在台阶门口近端闭合，但右侧凸出墙端被简化。",
+      "hohonet": "右侧增加窄折返，较接近可见墙端，顶边有偏移。",
+      "bi": "两头近似并保留右侧折返，主结构与HoHoNet相近。",
+      "question": "右侧凸出是否属于主围护；台阶若已被门口隔离，不能仅因可见台阶便排除整图。",
+      "tags": [
+        "local_structure",
+        "ceiling_detail",
+        "stairs_beyond_opening"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-032",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-032_original.jpg",
+        "previews/R50-032_comparison.jpg"
+      ],
+      "scene": "相机在多个门口交汇处，木门扇、近景墙厚和两侧走廊同时可见。",
+      "scope_hint": "优先明确当前空间",
+      "reference": "保留近门框两侧窄折返，右侧向走廊延伸。",
+      "hohonet": "简化右门框结构，右走廊范围与GT不同。",
+      "bi": "两头在右侧走廊截断深度显著不同，近门框位置相似。",
+      "question": "当前瓷砖区域在每个门口何处闭合；排除门扇后真实墙角是否可确定？",
+      "tags": [
+        "opening",
+        "door_leaf",
+        "closure_depth"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-033",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-033_original.jpg",
+        "previews/R50-033_comparison.jpg"
+      ],
+      "scene": "小卫生间，左侧拱形便器凹区、右侧敞门、中央镜面；外包络多数可推断。",
+      "scope_hint": "需核对便器凹区闭合",
+      "reference": "在左拱口侧统一封闭，不深入后壁；门口和镜面侧结构简洁。",
+      "hohonet": "与GT非常接近，主要为顶边微小偏移。",
+      "bi": "两头近似且接近其余结构；共同简化需由规则支持。",
+      "question": "左拱口属于内部凹位还是应截断开口；镜面仍取实际墙面。",
+      "tags": [
+        "opening",
+        "mirror",
+        "low_model_difference"
+      ],
+      "priority": "中"
+    },
+    {
+      "review_id": "R50-034",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-034_original.jpg",
+        "previews/R50-034_comparison.jpg"
+      ],
+      "scene": "疑似与R50-033同卫生间另一机位，门口、便器凹区及镜面均可见。",
+      "scope_hint": "需与同房间统一规则",
+      "reference": "左凹区和右开门处均在近端闭合。",
+      "hohonet": "与GT结构相似，洗手台侧地面推断略异。",
+      "bi": "两头近似，几何差异较小。",
+      "question": "核实room关联并检查与R50-033是否使用同一闭合规则。",
+      "tags": [
+        "opening",
+        "mirror",
+        "possible_same_room",
+        "low_model_difference"
+      ],
+      "priority": "中"
+    },
+    {
+      "review_id": "R50-035",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-035_original.jpg",
+        "previews/R50-035_comparison.jpg"
+      ],
+      "scene": "大浴室，中央玻璃淋浴隔断，外门前有台阶，顶部局部凹顶，镜柜和浴缸遮挡墙脚。",
+      "scope_hint": "优先核对玻璃隔断和层次",
+      "reference": "中央玻璃隔断附近形成很近的凸出包络，疑似把屏风边缘并入围护，须人工核实。",
+      "hohonet": "跨过玻璃屏按后方围护简化，右门口窄结构仍保留。",
+      "bi": "两头近似，同样沿后方主墙，区别主要是GT对玻璃屏的处理。",
+      "question": "玻璃屏是否属于内部障碍；台阶/凹顶能否在当前闭合范围外或按允许规则简化？",
+      "tags": [
+        "glass",
+        "local_structure",
+        "multi_level",
+        "reference_question"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-036",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-036_original.jpg",
+        "previews/R50-036_comparison.jpg"
+      ],
+      "scene": "长走廊靠近卫生间门口，两侧近墙端有明显转折，右侧门内可见台阶。",
+      "scope_hint": "需核对墙端与端部闭合",
+      "reference": "简化了左右近门墙端，整体形状比可见轮廓平滑。",
+      "hohonet": "左右近墙端均增加折点，右门口保持近端闭合。",
+      "bi": "两头近似，保留近墙端，左远端截断与GT不同。",
+      "question": "GT是否漏掉真实墙端；远处台阶在门口外，不应自动决定整图范围。",
+      "tags": [
+        "corridor",
+        "local_structure",
+        "reference_question",
+        "stairs_beyond_opening"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-037",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-037_original.jpg",
+        "previews/R50-037_comparison.jpg"
+      ],
+      "scene": "卧室带圆形顶棚凹饰，右侧明确开口通向小过厅和更远大厅。",
+      "scope_hint": "需按近端开口闭合",
+      "reference": "右开口按卧室近端墙面闭合。",
+      "hohonet": "与GT闭合方式近似，主要边缘位置略异。",
+      "bi": "两头均延伸到过厅后方门框，和GT/HoHoNet形成明显范围差异。",
+      "question": "您规则下是否必须在卧室近端开口闭合；两Bi头相同也可能共同超范围。",
+      "tags": [
+        "opening",
+        "closure_depth",
+        "ceiling_detail"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-038",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-038_original.jpg",
+        "previews/R50-038_comparison.jpg"
+      ],
+      "scene": "相机贴近卧室墙与床，远侧开门附近有窄墙端，顶面总体清晰。",
+      "scope_hint": "可能适用，远端结构待核",
+      "reference": "远门口保留几处窄折返，局部像素范围较小。",
+      "hohonet": "远门口被合并，主包络大体一致。",
+      "bi": "两头近似，同样简化远端结构；总体低差异不能排除局部规则问题。",
+      "question": "远门口折返是真实主墙厚还是门框装饰；贴墙视角是否足够看清？",
+      "tags": [
+        "local_structure",
+        "occlusion",
+        "opening"
+      ],
+      "priority": "中"
+    },
+    {
+      "review_id": "R50-039",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-039_original.jpg",
+        "previews/R50-039_comparison.jpg"
+      ],
+      "scene": "儿童活动区，中央开口后可见台阶，左玻璃门与前景墙端相邻，远侧有顶梁。",
+      "scope_hint": "需核对主墙与开口隔离",
+      "reference": "左前景额外窄折返，与其他三路较大区别；开口处未进入楼梯空间。",
+      "hohonet": "左墙端更简化，其他结构接近GT。",
+      "bi": "两头近似，均简化左前景折返。",
+      "question": "左前景是否存在应保留的实际转角；楼梯可见但已在开口外，需分开判断。",
+      "tags": [
+        "local_structure",
+        "reference_question",
+        "stairs_beyond_opening"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-040",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-040_original.jpg",
+        "previews/R50-040_comparison.jpg"
+      ],
+      "scene": "洗衣/家务间，两侧橱柜挡住墙脚，右门通设备间，顶棚边缘有下凸层次。",
+      "scope_hint": "需核对主顶面，围护较清楚",
+      "reference": "在设备门口侧闭合，柜后墙脚主要靠统一地面推断。",
+      "hohonet": "与GT接近，右侧底边略有偏移。",
+      "bi": "两头近似，未见明显额外结构，顶面位置略异。",
+      "question": "下凸顶边按哪个主平面处理；柜体底板/台面不能作为地面。",
+      "tags": [
+        "ceiling_detail",
+        "occlusion",
+        "furniture_boundary",
+        "low_model_difference"
+      ],
+      "priority": "中"
+    },
+    {
+      "review_id": "R50-041",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-041_original.jpg",
+        "previews/R50-041_comparison.jpg"
+      ],
+      "scene": "餐厅入口与外门相邻，宽拱梁、墙端、壁龛与大柜体分层明显，植物遮挡墙脚。",
+      "scope_hint": "需核对拱梁与入口闭合",
+      "reference": "将入口和餐厅统一为包络，近壁龛/墙端较简化。",
+      "hohonet": "最右侧近墙端增加窄折返，主围护接近GT。",
+      "bi": "两头近似，在入口与餐厅之间保留另一段窄墙结构，顶边位置也不同。",
+      "question": "入口和餐厅能否共享单一主顶面；壁龛及墙端哪部分保留？",
+      "tags": [
+        "opening",
+        "local_structure",
+        "ceiling_detail"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-042",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-042_original.jpg",
+        "previews/R50-042_comparison.jpg"
+      ],
+      "scene": "连接厨房、餐厅与长廊的过渡区，每个开口的近端墙厚和地面门槛清楚。",
+      "scope_hint": "可能适用，闭合示例候选",
+      "reference": "各开口均在近端封闭，没有沿邻室继续延伸。",
+      "hohonet": "与GT近似，主要边界位置差很小。",
+      "bi": "两头近似，也在近端封闭，可与R50-030/037比较规则一致性。",
+      "question": "确认近端封闭与您的规则一致；若确认，可用来说明‘可见邻室但不纳入’。",
+      "tags": [
+        "opening",
+        "low_model_difference"
+      ],
+      "priority": "低"
+    },
+    {
+      "review_id": "R50-043",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-043_original.jpg",
+        "previews/R50-043_comparison.jpg"
+      ],
+      "scene": "瓷砖理疗/洗浴房，床遮挡中部墙脚，镜面与开门并存，右侧近墙有局部窄结构。",
+      "scope_hint": "可能适用，局部结构待核",
+      "reference": "右近墙/镜边保留窄折返，其他三路多数省略。",
+      "hohonet": "右侧结构更简化，远墙底边位置略异。",
+      "bi": "两头近似，左近墙角有细小差别，右侧折返被简化。",
+      "question": "右近墙折返是真实墙体还是镜框/饰面；核实遮挡墙脚。",
+      "tags": [
+        "mirror",
+        "local_structure",
+        "occlusion"
+      ],
+      "priority": "中"
+    },
+    {
+      "review_id": "R50-044",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-044_original.jpg",
+        "previews/R50-044_comparison.jpg"
+      ],
+      "scene": "理疗床房间另一机位，左侧打开门扇贴近视线，右侧开门通邻区；疑似与R50-043同房间。",
+      "scope_hint": "可能适用，门扇处理待核",
+      "reference": "左侧门扇基本按后方围护简化，右门近端封闭。",
+      "hohonet": "左门扇边缘形成额外窄凸出，疑似门扇污染几何。",
+      "bi": "两头近似且接近GT主结构，没有同样的左门扇凸出。",
+      "question": "左门扇后实际墙角在哪里；核对与R50-043的room关联。",
+      "tags": [
+        "door_leaf",
+        "opening",
+        "possible_same_room"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-045",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-045_original.jpg",
+        "previews/R50-045_comparison.jpg"
+      ],
+      "scene": "相机位于卧室门框附近，左卧室、右走廊及另一卧室同时可见，近墙厚占画面中央。",
+      "scope_hint": "优先明确当前空间归属",
+      "reference": "同时包含左卧室与右走廊，近门框处有窄折返。",
+      "hohonet": "近门框结构更简化，但同样跨过两侧空间。",
+      "bi": "两头在近墙厚的角点数量/位置不同，并都包含左卧室。",
+      "question": "相机当前空间应按哪侧定义；先确定门框闭合，才能解释模型结构差异。",
+      "tags": [
+        "opening",
+        "closure_depth",
+        "local_structure"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-046",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-046_original.jpg",
+        "previews/R50-046_comparison.jpg"
+      ],
+      "scene": "浴室入口旁砖墙突出，左侧小过渡区通洗衣房，右侧玻璃淋浴屏与打开门扇可见。",
+      "scope_hint": "需核对入口闭合与主墙",
+      "reference": "左入口侧直接闭合，砖墙凸出保留，淋浴屏未单独纳入围护。",
+      "hohonet": "左入口向内延伸并增加窄折返，右门扇侧也出现局部凸出。",
+      "bi": "enclosed较接近GT入口范围；extended在左入口多出延伸/窄墙段；两头右门扇附近均有折点。",
+      "question": "入口应在哪对墙端封闭；区分砖墙、玻璃屏和活动门扇。",
+      "tags": [
+        "opening",
+        "door_leaf",
+        "local_structure"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-047",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-047_original.jpg",
+        "previews/R50-047_comparison.jpg"
+      ],
+      "scene": "卧室门口极近，打开门扇占中央，右走廊与对面房间可见；与R50-050可能同卧室。",
+      "scope_hint": "优先核对近门口闭合",
+      "reference": "卧室门口近端边界投影靠近画面上下缘，可能由贴近门框的视点造成，不仅凭形状判错。",
+      "hohonet": "向右走廊延伸，近框结构与GT不同。",
+      "bi": "enclosed接近近端封闭；extended明显包含走廊对面墙，新增近框折返。",
+      "question": "相机是否仍在卧室内，近门框闭合位置在哪里；验证GT深度而不因投影弯曲直接否定。",
+      "tags": [
+        "opening",
+        "closure_depth",
+        "door_leaf",
+        "possible_same_room"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-048",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-048_original.jpg",
+        "previews/R50-048_comparison.jpg"
+      ],
+      "scene": "衣帽间门口连接楼梯平台，衣柜遮挡左围护，右侧镜面反射走廊，栏杆旁为楼梯空间。",
+      "scope_hint": "优先核对单层闭合与当前空间",
+      "reference": "包含衣帽间与平台一侧，镜面侧简化，近门框有多折返。",
+      "hohonet": "整体接近，但镜面右缘角点与GT不同。",
+      "bi": "两头近似，在镜面侧更简化，左衣柜后墙位置有偏移。",
+      "question": "是否能在衣帽门框闭合排除楼梯平台；镜中走廊与实际开口须分辨。",
+      "tags": [
+        "opening",
+        "mirror",
+        "stairs",
+        "closure_depth"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-049",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-049_original.jpg",
+        "previews/R50-049_comparison.jpg"
+      ],
+      "scene": "相机贴近浴室门框，一侧为淋浴房，一侧为带楼梯栏杆的平台；近墙遮挡明显。",
+      "scope_hint": "优先核对当前空间与楼梯边界",
+      "reference": "同时包含浴室和平台，淋浴屏旁保留窄折返，平台右墙端也有窄段。",
+      "hohonet": "简化淋浴屏侧，平台右墙端增加更深折返。",
+      "bi": "两头近似，淋浴与平台侧更简化，但是否跨空间仍未解决。",
+      "question": "在门口处是否应分开浴室与平台；栏杆后的非单层部分能否被明确排除？",
+      "tags": [
+        "opening",
+        "stairs",
+        "glass",
+        "closure_depth"
+      ],
+      "priority": "高"
+    },
+    {
+      "review_id": "R50-050",
+      "advisory_only": true,
+      "viewed_assets": [
+        "previews/R50-050_original.jpg",
+        "previews/R50-050_comparison.jpg"
+      ],
+      "scene": "卧室内部，窗、主墙与门口较清楚，床柜桌和堆物遮挡墙脚；疑似R50-047同房间。",
+      "scope_hint": "可能适用，仍待人工",
+      "reference": "主结构较清楚，窗下地面位置主要由统一地面约束推断。",
+      "hohonet": "结构接近GT，窗下底边和顶边有小幅差。",
+      "bi": "两头近似，窗下与门口位置略异，没有明显额外房间结构。",
+      "question": "核实与R50-047的room关联；可比较同房间内部视点与门口视点导致的范围分歧。",
+      "tags": [
+        "occlusion",
+        "possible_same_room",
+        "low_model_difference"
+      ],
+      "priority": "低"
+    }
+  ]
+}

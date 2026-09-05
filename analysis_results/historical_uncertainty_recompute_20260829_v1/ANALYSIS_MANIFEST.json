@@ -1,0 +1,106 @@
+{
+  "building_bootstrap_replicates": 20000,
+  "k_values": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+  ],
+  "language_policy": "pooled_primary; project-language sensitivity only",
+  "minority_replay_replicates_per_task": 500,
+  "output_dir": "analysis_results/historical_uncertainty_recompute_20260829_v1",
+  "outputs": [
+    "image_reference_contract.csv",
+    "annotation_eligibility.csv",
+    "reference_free_curves.csv",
+    "structural_valid_support_by_task_k.csv",
+    "disagreement_task_distribution.csv",
+    "disagreement_distribution_summary.csv",
+    "disagreement_task_ecdf.csv",
+    "disagreement_recovery_associations.csv",
+    "full_roster_structure_tasks.csv",
+    "minority_mode_replay_task_k.csv",
+    "minority_mode_replay_summary.csv",
+    "structure_threshold_sensitivity.csv",
+    "plateau_check_summary.csv",
+    "aggregate_quality_task_k.csv",
+    "aggregate_quality_curves.csv",
+    "marginal_quality_gain_task_k.csv",
+    "marginal_quality_gain.csv",
+    "individual_quality_by_task.csv",
+    "individual_quality_summary.csv",
+    "language_project_sensitivity.csv",
+    "README_ZH.md",
+    "QA_SUMMARY.json"
+  ],
+  "prefix_replicates_per_task": 200,
+  "schema_version": "historical_uncertainty_recompute_manifest_v2",
+  "seed": 20260829,
+  "source_files": [
+    {
+      "path": "import_json/stage1_prescreen_final_20260325/stage1_prescreen_manual_import_v2.json",
+      "sha256": "470ba9d49e92f9bc62b32bea518cc05512cd1aa9fbd1df9668fe661555e92f54"
+    },
+    {
+      "path": "analysis_results/prescreen_closeout_final_gold_v2_20260701/final_gold_records_v2_p1_closeout_corrected.jsonl",
+      "sha256": "82dbcb1d08754476e4f2a447b70550bd297689c2c50df9f96aeb270b37f163d6"
+    },
+    {
+      "path": "analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_geometry_gold_alignment_audit.csv",
+      "sha256": "52f245ceaafcf98bf638c45684cbaea1f3c93d5bacae27df59abae197bb55fbe"
+    },
+    {
+      "path": "analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_canonical_annotations.csv",
+      "sha256": "ac216312875fd79a72efe0141a4a5dc88c3b0618e9720efdffe4b30331f8776d"
+    },
+    {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/raw_snapshots/p1_integrity/1a1aa064f653_p1_task_evidence_correction_v1.csv",
+      "sha256": "1a1aa064f65347ec61971e6931a535b5b59f3527db36b1a394938d450f792ab6"
+    },
+    {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/raw_snapshots/p1_integrity/e7952955161b_p1_geometry_task_scores_v1.csv",
+      "sha256": "e7952955161b2b5c80dc5b5876571dc734e7e04caf603e3e818510840016ddb2"
+    },
+    {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_gt_quality_analysis.csv",
+      "sha256": "68c6d64cad77e09a21e5689d5bc20b26ad6484ba1fd63e1fbf00466ab9b23e5e"
+    },
+    {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_task_outcome_reference.csv",
+      "sha256": "03cc8c97fef855682e7b5909a52f9ed62763616b26983e302da7613ab8ba666b"
+    },
+    {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/geometry_pairwise_similarity_C1.csv",
+      "sha256": "997860626fdf50ea5667986a8f04df0183c8f78f617c49fd5682394c7092f1a7"
+    },
+    {
+      "path": "analysis_results/rq1_stratified_uncertainty_20260827_v1/dense_rarefaction_by_task_k.csv",
+      "sha256": "48dd39afce5129798d48d9c2dcf8522ce0ee018c1e41203199aa5fe3c3cac058"
+    },
+    {
+      "path": "analysis_results/rq1_raw_recompute_20260826/high_density_task_metrics.csv",
+      "sha256": "ec3083325261788d796dbf16a935b5ac680445416d681dbca1752619069f1c07"
+    },
+    {
+      "path": "analysis_results/rq1_raw_recompute_20260826/independent_canonical_records.csv",
+      "sha256": "140216b420390e2633066027d15c3bac2b9ee9fcb864cc0adfe5087a42757c52"
+    },
+    {
+      "path": "analysis_results/rq1_raw_recompute_20260826/high_density_cluster_threshold_sensitivity.csv",
+      "sha256": "2ace0ee6cfa86678e574266cc45a480850811066f88fabd9b3906f8797b24a99"
+    },
+    {
+      "path": "docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json",
+      "sha256": "f3c1ea58d0857a40aa2240b4680b674c76fe2cec8f048f61a643d9e4b74b0588"
+    }
+  ],
+  "split_policy": "not stratified; all historical dense42 images are test",
+  "stage_policy": "not a target effect; retained for reference/protocol sensitivity"
+}

@@ -1,0 +1,86 @@
+{
+  "status": "pass_with_documented_limits",
+  "date": "2026-09-05",
+  "checks": {
+    "review50": {
+      "unique_images": 50,
+      "human30_overlap": 0,
+      "buildings": 13,
+      "ai_advisories": 50,
+      "human30_raw_byte_equal": true
+    },
+    "workbook": {
+      "sheet_count": 8,
+      "bytes": 109759,
+      "strict_geometry_denominator": 2427,
+      "human30_scope_prelabel_notes_preserved": true,
+      "ai50_ids_match": true,
+      "human_decision_cells_blank": true,
+      "key_previews_visually_checked": true
+    },
+    "plot": {
+      "checked_metric_group_k_points": 54,
+      "fixed_support_denominators_match": true,
+      "image_and_building_weights_match_source": true,
+      "status_curve_matches_independent_summary": true
+    },
+    "source_audit": {
+      "source_files": 395,
+      "unresolved_import_files": 23,
+      "unresolved_active_log_files": 97,
+      "missing_historical_temporary_links": 2,
+      "dense42_cluster_regression_mismatches": 0,
+      "core_csv_semantic_equivalence": true
+    },
+    "documentation": {
+      "local_report_links_checked": 15,
+      "missing_local_links": [],
+      "readme_and_project_map_checked": true
+    }
+  },
+  "test_evidence": [
+    {
+      "owner": "primary",
+      "command": "python -B -m pytest tests/test_build_annotation_research_review50_20260905.py tests/test_plot_annotation_research_k15_20_20260905.py tests/test_audit_annotation_research_data_20260905.py tests/test_inventory_annotation_research_assets_20260905.py -k \"not full_inventory_contract\" -q -p no:cacheprovider",
+      "result": "17 passed, 1 deselected in 121.09s"
+    },
+    {
+      "owner": "inventory task",
+      "command": "pytest tests/test_inventory_annotation_research_assets_20260905.py -q -p no:cacheprovider",
+      "result": "7 passed in 461.44s",
+      "evidence": "workbook_qa/HANDOFF.md"
+    },
+    {
+      "owner": "audit task",
+      "command": "pytest tests/test_audit_annotation_research_data_20260905.py -q -p no:cacheprovider",
+      "result": "6 passed",
+      "evidence": "data_audit/HANDOFF.md"
+    }
+  ],
+  "unique_test_count": 18,
+  "browser_checks": {
+    "browser": "Edge headless ephemeral profile",
+    "cards": 50,
+    "human_selects": 250,
+    "filter_count_q9": 6,
+    "local_persistence_pass": true,
+    "local_test_data_cleared": true,
+    "ai_collapsed_by_default": true,
+    "page_errors": [],
+    "export_empty_50_records_pass": true,
+    "export_retains_synthetic_scope_and_notes_pass": true,
+    "export_includes_filtered_out_cards_pass": true,
+    "export_omits_ai_advisory_pass": true,
+    "export_test_data_cleared": true
+  },
+  "limits": [
+    "Historical/main counts refer to the identified 2501-record substrate; other source roles were inventoried, not assumed extra independent responses.",
+    "Old historical/manual packages are reused copies and checked, not falsely described as freshly independently recomputed.",
+    "50 images provide advisory review only; human decisions remain open.",
+    "All 13 candidate buildings occur in historical material; room-instance identities remain unresolved.",
+    "214 model files do not imply 214 valid dual-head outputs; Bi both-head usable count is 212.",
+    "GT comparison count 180 is selected-reference/readiness scope, not physical GT availability or new admission.",
+    "No population plateau, final worker taxonomy, thesis outline or final experiment has been declared.",
+    "HoHoNet versions used for visual review and numerical audit have separate provenance."
+  ]
+}

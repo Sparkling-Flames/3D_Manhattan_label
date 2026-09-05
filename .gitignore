@@ -131,6 +131,7 @@ docs/thesis_main/*
 !docs/thesis_main/ANNOTATION_UNCERTAINTY_EXPERIMENT_SUPERVISOR_DRAFT_v1.md
 !docs/thesis_main/ANNOTATION_UNCERTAINTY_EXPERIMENT_SUPERVISOR_DRAFT_v2.md
 !docs/thesis_main/ANNOTATION_UNCERTAINTY_EXTERNAL_REVIEW_PROPOSAL_NOTE_v1.md
+!docs/thesis_main/ANNOTATION_UNCERTAINTY_CURRENT_STATUS_HANDOFF_20260830.md
 !docs/thesis_main/PAPER_A_VFINAL_ANALYSIS_ARTIFACT_AMENDMENT_v1.md
 !docs/thesis_main/PAPER_A_VFINAL_EXECUTION_CONTRACT.json
 !docs/thesis_main/meta_label_three_state_rule_manifest_v1.json
@@ -220,7 +221,6 @@ active_logs/**
 /analysis_results/_archive_superseded_20260818/
 /analysis_results/_local_conflict_backup_main_before_259e96f_20260820/
 /analysis_results/a4_image_evidence_substrate_20260817_v1/
-/analysis_results/annotation-uncertainty-preflight/
 /analysis_results/calibration_decision_readiness_20260815_v1/
 /analysis_results/calibration_dual_track_processing_20260814_v1/
 /analysis_results/calibration_dual_track_processing_20260815_v2/
@@ -229,8 +229,6 @@ active_logs/**
 /analysis_results/persistent_disagreement_diagnostic_20260819_v1/PERSISTENT_DISAGREEMENT_THRESHOLD_ROBUSTNESS_SUMMARY.csv
 /analysis_results/persistent_disagreement_diagnostic_20260819_v1/analysis_manifest.json
 /analysis_results/reviewer_profile_dual_stage_processing_20260819_v1/
-/analysis_results/uncertainty_data_inventory_20260820_v1/
-/analysis_results/最新分析/
 
 # Local visual-review assets and non-formal timing preflight output.
 # Keep the three machine-readable building-registry audit artifacts tracked.
@@ -255,6 +253,15 @@ tests/**/legacy/**
 tools/**/legacy/**
 
 # Local generated preview artifacts under analysis_results
+# Research review images, copied recomputations and workbook inspection logs stay local.
+# Keep reports, manifests, human review records and analysis tables trackable.
+/analysis_results/annotation_uncertainty_prescreen_20260903_v1/contact_sheets/
+/analysis_results/annotation_uncertainty_prescreen_20260903_v1/previews/
+/analysis_results/annotation_research_decision_audit_20260905_v1/review50/previews/
+/analysis_results/annotation_research_decision_audit_20260905_v1/data_audit/recomputed_uncertainty_substrate/
+/analysis_results/annotation_research_decision_audit_20260905_v1/data_audit/recomputed_historical_uncertainty/
+/analysis_results/annotation_research_decision_audit_20260905_v1/data_audit/recomputed_manual_strata/
+/analysis_results/annotation_research_decision_audit_20260905_v1/**/*.inspect.ndjson
 analysis_results/*.ply
 analysis_results/item*_layout_preview*.png
 analysis_results/item*_layout_sorted.txt

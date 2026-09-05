@@ -1,0 +1,91 @@
+{
+  "schema_version": "annotation_uncertainty_prescreen_machine_visual_review_v1",
+  "reviewed_all_contact_sheets": true,
+  "reviewed_image_ids_sha256": "3cc7ad5538c2eedd652921546726e7b66b5ab1ec89a733bca269e831efc297fe",
+  "review_method": "current_task_visual_check_of_all_40_contact_sheets_covering_314_images",
+  "default": {
+    "scope_hint": "core",
+    "scope_reason": "接触表初查未记录明显 scope 边界信号；仍待人工最终判断。",
+    "risk_families": [],
+    "reference_flags": [],
+    "prelabel_flags": []
+  },
+  "groups": [
+    {
+      "machine_ids": [
+        "M001", "M005", "M007", "M009", "M019", "M021", "M023", "M030",
+        "M060", "M062", "M063", "M067", "M070", "M071", "M077", "M078",
+        "M085", "M098", "M101", "M104", "M105", "M107", "M109", "M112",
+        "M115", "M117", "M121", "M125", "M133", "M134", "M137", "M138",
+        "M140", "M147", "M149", "M150", "M151", "M155", "M162", "M170",
+        "M172", "M173", "M174", "M175", "M176", "M177", "M180", "M183",
+        "M188", "M191", "M199", "M200", "M205", "M207", "M211", "M213",
+        "M214", "M215", "M219", "M230", "M243", "M246", "M247", "M257",
+        "M266", "M271", "M277", "M281", "M282", "M283", "M292", "M294",
+        "M295", "M299", "M301", "M305", "M308", "M313", "M314"
+      ],
+      "scope_hint": "boundary",
+      "scope_reason": "画面包含开放连通或多房间结构，主空间边界需人工确认。",
+      "risk_families": ["open_or_multiroom"]
+    },
+    {
+      "machine_ids": [
+        "M002", "M015", "M016", "M017", "M018", "M021", "M022", "M024",
+        "M025", "M026", "M027", "M028", "M029", "M031", "M032", "M033",
+        "M035", "M036", "M037", "M038", "M041", "M049", "M052", "M053",
+        "M054", "M056", "M061", "M063", "M065", "M073", "M098", "M104",
+        "M107", "M109", "M132", "M155", "M165", "M166", "M174", "M180",
+        "M195", "M201", "M203", "M204", "M208", "M210", "M217", "M218",
+        "M223", "M231", "M232", "M235", "M238", "M243", "M253", "M254",
+        "M260", "M265", "M273", "M275", "M276", "M279", "M282", "M292"
+      ],
+      "scope_hint": "boundary",
+      "scope_reason": "镜面、玻璃或大面积反射使真实墙面与开口边界较难直接判读。",
+      "risk_families": ["mirror_or_glass"]
+    },
+    {
+      "machine_ids": [
+        "M026", "M027", "M028", "M032", "M035", "M037", "M038", "M052",
+        "M053", "M089", "M090", "M091", "M092", "M093", "M094"
+      ],
+      "scope_hint": "boundary",
+      "scope_reason": "可见曲面或明显非典型 Manhattan 结构，适合作为边界候选。",
+      "risk_families": ["curved_or_non_manhattan"]
+    },
+    {
+      "machine_ids": ["M007", "M019", "M030", "M046", "M057", "M059", "M105", "M295", "M310"],
+      "scope_hint": "boundary",
+      "scope_reason": "立柱、家具、窗帘或近景物体对关键边界有明显遮挡。",
+      "risk_families": ["severe_occlusion"]
+    },
+    {
+      "machine_ids": ["M004", "M007", "M049", "M174", "M215", "M255", "M299", "M301", "M307", "M310"],
+      "risk_families": ["seam"]
+    },
+    {
+      "machine_ids": ["M007", "M048", "M049"],
+      "prelabel_flags": [
+        {
+          "code": "visible_geometry_question",
+          "reason": "模型预标注在立柱、连续门洞或 seam 附近出现密集折返，是否对应真实墙角需人工确认。"
+        }
+      ]
+    }
+  ],
+  "overrides": {
+    "M151": {
+      "reference_flags": [
+        {
+          "code": "visible_geometry_question",
+          "reason": "参考标注候选在多重门洞处含密集角点，是否都属于房间边界需人工确认。"
+        }
+      ],
+      "prelabel_flags": [
+        {
+          "code": "visible_geometry_question",
+          "reason": "模型预标注在多重门洞处的角点取舍需与可见主空间边界对照。"
+        }
+      ]
+    }
+  }
+}

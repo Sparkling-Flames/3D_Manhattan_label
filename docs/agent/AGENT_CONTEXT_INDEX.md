@@ -61,6 +61,17 @@
 - `active_time` 是 primary estimand；`lead_time` 是 fallback / sensitivity。
 - 云端日志仍写入仓库根下 `active_logs/` 或 `active_logs/new_server/`，不是 `tools/active_logs/`。
 
+## 标注不确定性历史复算 / 后续候选实验
+
+关键上下文：
+
+- `docs/thesis_main/ANNOTATION_UNCERTAINTY_CURRENT_STATUS_HANDOFF_20260830.md`
+- `analysis_results/historical_uncertainty_recompute_20260829_v1/`
+- `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`
+- `docs/thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md`
+
+注意事项：历史复算、多人多轮方案和三臂元标签方案均不得静默改写正式 T1/V1；`rq1_raw_recompute_20260826/` 与 `rq1_stratified_uncertainty_20260827_v1/` 是当前复算上游，整理仓库时保留原路径。
+
 ## RQ2 / consensus / meta-label
 
 关键上下文：

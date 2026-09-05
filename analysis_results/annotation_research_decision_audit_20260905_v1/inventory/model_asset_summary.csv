@@ -1,0 +1,13 @@
+﻿model_family,asset_kind,split,source_path,observed_count,coverage_count_against_known_split,status,notes,dual_head_is_one_model
+HoHoNet,model_initialization_replay,test,analysis_results/model_initialization_test_ep300_replay_20260823_v1/prediction_txt,458,458,present,known Bi test denominator=458; split/训练数据仅按路径与现有 manifest 记录，不扩展解释,
+HoHoNet,model_initialization_replay,val,analysis_results/model_initialization_validation_ep300_replay_20260823_v1/prediction_txt,190,190,present,known Bi val denominator=190; split/训练数据仅按路径与现有 manifest 记录，不扩展解释,
+HoHoNet,legacy_inference_txt,test,output/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34,458,458,present,历史 output 版本；JSON sibling count=458,
+HoHoNet,legacy_inference_json,test,output/layout_json,458,458,present,历史 output 版本，不与 replay 版本合并,
+HoHoNet,inference_outputs,train,output/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34,0,0,not_found,未找到独立 train 推理输出；不补推理,
+HoHoNet,checkpoint,mp3d,ckpt/mp3d_layout_HOHO_layout_aug_efficienthc_Transen1_resnet34/ep300.pth,1,,present,已找到 ep300 checkpoint；未加载、未训练,
+Bi-Layout,dual_head_prediction_manifest,test,D:/Work/Manhattan_3D/Bi_layout/exports/mp3d_dual_predictions/test/manifest.csv,458,458,present,"status_counts={""ok"": 456, ""degenerate"": 2}; extended/enclosed 是同一模型的两个分支",true
+Bi-Layout,dual_head_prediction_manifest,val,D:/Work/Manhattan_3D/Bi_layout/exports/mp3d_dual_predictions/val/manifest.csv,190,190,present,"status_counts={""ok"": 190}; extended/enclosed 是同一模型的两个分支",true
+Bi-Layout,dual_head_prediction_manifest,train,D:/Work/Manhattan_3D/Bi_layout/exports/mp3d_dual_predictions/train/manifest.csv,0,0,not_found,未找到 train manifest；不从文件名推断训练数据覆盖,true
+Bi-Layout,weights,mp3d,D:/Work/Manhattan_3D/Bi_layout/checkpoints/Bi_Layout_Net/mp3d/mp3d_best_model.pkl,1,,present,已找到 checkpoint；未加载、未训练,true
+Bi-Layout,training_or_runtime_config,mp3d,D:/Work/Manhattan_3D/Bi_layout/src/config/other/horizon_net_mp3d.yaml;D:/Work/Manhattan_3D/Bi_layout/config/defaults.py,2,,present,仅确认配置文件存在；训练数据/split 未由文件名推断；不把 dual head 拆成两个独立模型,true
+HorizonNet,bounded_search,all,D:/Work/Manhattan_3D/Bi_layout/models/modules/horizon_net_feature_extractor.py;D:/Work/Manhattan_3D/Bi_layout/src/config/other/horizon_net_mp3d.yaml;D:/Work/Manhattan_3D/mp3d_layout_gt_sources/uLayout/lsun_pred_horizon.py,3,,dependency_only,仅找到实现/配置依赖；未找到独立推理输出或权重，覆盖未知，不下载不训练,

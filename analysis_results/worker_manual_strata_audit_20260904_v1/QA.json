@@ -1,0 +1,197 @@
+{
+  "augmented_training": {
+    "eligible_building_count": 13,
+    "eligible_row_count": 303,
+    "eligible_task_count": 67,
+    "full_fit": {
+      "bootstrap_attempts": 1000,
+      "bootstrap_cluster": "building_then_task_conditioned_on_two_outer_clusters_complete_worker_support_and_connected_graph",
+      "bootstrap_replicates": 1000,
+      "class_counts": {
+        "H_higher_manual_quality_evidence": 3,
+        "L_lower_manual_quality_evidence": 2,
+        "U_unclassified": 15
+      },
+      "training_building_count": 13,
+      "training_row_count": 303,
+      "training_task_count": 67,
+      "worker_task_graph_connected": true
+    },
+    "raw_current20_row_count": 350,
+    "sha256": "68c6d64cad77e09a21e5689d5bc20b26ad6484ba1fd63e1fbf00466ab9b23e5e",
+    "source": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_gt_quality_analysis.csv"
+  },
+  "classification_bootstrap_method": "building_then_task_conditioned_on_two_outer_clusters_complete_worker_support_and_connected_graph",
+  "classification_bootstraps_per_fit": 1000,
+  "classification_evaluation_base_task_overlap_count": 0,
+  "classification_probability_threshold": 0.8,
+  "classification_source": "C1_Calibration_core_Manual_only",
+  "crossfit_stability": {
+    "assignments_required_per_worker": 22,
+    "evaluation_building_count": 11,
+    "stable_H_count": 1,
+    "stable_H_workers": [
+      "1"
+    ],
+    "stable_L_count": 2,
+    "stable_L_workers": [
+      "34",
+      "37"
+    ],
+    "stable_U_count": 3,
+    "stable_U_workers": [
+      "11",
+      "30",
+      "33"
+    ],
+    "training_variant_count": 2
+  },
+  "current_worker_count": 20,
+  "evaluation_building_count": 11,
+  "evaluation_eligibility_audit": {
+    "C1": {
+      "current20_rows": 240,
+      "quality_pool_eligible_rows": 239,
+      "quality_pool_excluded_rows": 1
+    },
+    "P1": {
+      "current20_rows": 580,
+      "excluded_for_non_independence_rows": 116,
+      "excluded_while_independent_rows": 11,
+      "quality_pool_eligible_rows": 453,
+      "quality_pool_excluded_rows": 127
+    }
+  },
+  "evaluation_source": "dense41_Manual_reference_ready",
+  "evaluation_task_count": 41,
+  "formal_contract_changed": false,
+  "replay": {
+    "aggregator_is_gt_blind": true,
+    "building_bootstrap_replicates": 4000,
+    "building_bootstrap_seed_base": 20260904,
+    "k": 3,
+    "quality_pool_absence_interpretation": "eligibility_adjusted_not_actual_non_delivery",
+    "sampling": "exact_assigned_worker_compositions_without_replacement",
+    "scenarios": [
+      "2H+1L",
+      "1H+2L"
+    ],
+    "summary_row_count": 144,
+    "supported_multimodal_at_k3_interpretation": "mechanically_zero_under_two_vote_secondary_support_rule",
+    "task_result_row_count": 246,
+    "unusable_selected_worker_is_not_replaced": true
+  },
+  "schema_version": "worker_manual_strata_audit_v1",
+  "source_files": [
+    {
+      "path": "import_json/stage1_prescreen_final_20260325/stage1_prescreen_manual_import_v2.json",
+      "sha256": "470ba9d49e92f9bc62b32bea518cc05512cd1aa9fbd1df9668fe661555e92f54"
+    },
+    {
+      "path": "analysis_results/prescreen_closeout_final_gold_v2_20260701/final_gold_records_v2_p1_closeout_corrected.jsonl",
+      "sha256": "82dbcb1d08754476e4f2a447b70550bd297689c2c50df9f96aeb270b37f163d6"
+    },
+    {
+      "path": "analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_canonical_annotations.csv",
+      "sha256": "ac216312875fd79a72efe0141a4a5dc88c3b0618e9720efdffe4b30331f8776d"
+    },
+    {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/raw_snapshots/p1_integrity/e7952955161b_p1_geometry_task_scores_v1.csv",
+      "sha256": "e7952955161b2b5c80dc5b5876571dc734e7e04caf603e3e818510840016ddb2"
+    },
+    {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_gt_quality_analysis.csv",
+      "sha256": "68c6d64cad77e09a21e5689d5bc20b26ad6484ba1fd63e1fbf00466ab9b23e5e"
+    },
+    {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_task_outcome_reference.csv",
+      "sha256": "03cc8c97fef855682e7b5909a52f9ed62763616b26983e302da7613ab8ba666b"
+    },
+    {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/geometry_pairwise_similarity_C1.csv",
+      "sha256": "997860626fdf50ea5667986a8f04df0183c8f78f617c49fd5682394c7092f1a7"
+    },
+    {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/structural_validation_analysis.csv",
+      "sha256": "c35edf087be6c1440aac9504de9dca43222ef12bf4b4f4d4774c5d32b04d2f41"
+    },
+    {
+      "path": "analysis_results/rq1_raw_recompute_20260826/high_density_task_metrics.csv",
+      "sha256": "ec3083325261788d796dbf16a935b5ac680445416d681dbca1752619069f1c07"
+    },
+    {
+      "path": "docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json",
+      "sha256": "f3c1ea58d0857a40aa2240b4680b674c76fe2cec8f048f61a643d9e4b74b0588"
+    }
+  ],
+  "status": "discrete_worker_taxonomy_not_supported",
+  "structural_audit": {
+    "opportunity_count": 307,
+    "sha256": "c35edf087be6c1440aac9504de9dca43222ef12bf4b4f4d4774c5d32b04d2f41",
+    "source": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/structural_validation_analysis.csv",
+    "worker_caused_failure_count": 2,
+    "worker_with_recurrent_failures_count": 0
+  },
+  "task_disjoint_descriptive_rank_check": {
+    "augmented_authorized": {
+      "building_disjoint": false,
+      "naive_unclustered_p_value_not_inferential": 0.4659400851924169,
+      "spearman_rho": 0.17293233082706763,
+      "task_disjoint": true,
+      "worker_count": 20
+    },
+    "w034_original_only": {
+      "building_disjoint": false,
+      "naive_unclustered_p_value_not_inferential": 0.27666444989581596,
+      "spearman_rho": 0.2556390977443609,
+      "task_disjoint": true,
+      "worker_count": 20
+    }
+  },
+  "training_variants": {
+    "augmented_authorized": {
+      "eligible_building_count": 13,
+      "eligible_row_count": 303,
+      "eligible_task_count": 67,
+      "full_fit": {
+        "bootstrap_attempts": 1000,
+        "bootstrap_cluster": "building_then_task_conditioned_on_two_outer_clusters_complete_worker_support_and_connected_graph",
+        "bootstrap_replicates": 1000,
+        "class_counts": {
+          "H_higher_manual_quality_evidence": 3,
+          "L_lower_manual_quality_evidence": 2,
+          "U_unclassified": 15
+        },
+        "training_building_count": 13,
+        "training_row_count": 303,
+        "training_task_count": 67,
+        "worker_task_graph_connected": true
+      },
+      "raw_current20_row_count": 350,
+      "sha256": "68c6d64cad77e09a21e5689d5bc20b26ad6484ba1fd63e1fbf00466ab9b23e5e",
+      "source": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_gt_quality_analysis.csv"
+    },
+    "w034_original_only": {
+      "eligible_building_count": 13,
+      "eligible_row_count": 289,
+      "eligible_task_count": 67,
+      "full_fit": {
+        "bootstrap_attempts": 1000,
+        "bootstrap_cluster": "building_then_task_conditioned_on_two_outer_clusters_complete_worker_support_and_connected_graph",
+        "bootstrap_replicates": 1000,
+        "class_counts": {
+          "H_higher_manual_quality_evidence": 5,
+          "L_lower_manual_quality_evidence": 3,
+          "U_unclassified": 12
+        },
+        "training_building_count": 13,
+        "training_row_count": 289,
+        "training_task_count": 67,
+        "worker_task_graph_connected": true
+      },
+      "raw_current20_row_count": 335,
+      "sha256": "d41d0314db6f66807398fee7129b121812b70051840a604464839bd835c528f6",
+      "source": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/w034_original_only_branch/c1_gt_quality_original_only.csv"
+    }
+  }
+}
