@@ -1,0 +1,56 @@
+{
+  "active_time_lead_time_mixed": false,
+  "assertions": {
+    "exact_1000_per_estimable_component": true,
+    "holdout_nonoverlap": true,
+    "old42_exact": true,
+    "strict_replay_contract": true,
+    "structure_fixed_support": true
+  },
+  "bootstrap_diagnostic_row_count": 69000,
+  "bootstrap_rejection_or_redraw": false,
+  "bootstrap_status_counts": {
+    "disconnected_graph": 3763,
+    "missing_workers": 18409,
+    "usable": 46828
+  },
+  "component_count": 108,
+  "evidence_contract": {
+    "canonical_annotation_id_unique": true,
+    "missing_fields": [],
+    "path": "analysis_results\\annotation_research_prework_20260905_v2\\evidence\\record_evidence.csv",
+    "row_count": 2501,
+    "status": "validated"
+  },
+  "feature_row_count": 12023,
+  "holdout_row_count": 25977,
+  "holdout_status_counts_after_peer_support_check": {
+    "evaluated": 23973,
+    "not_evaluable_no_same_component_peer": 615,
+    "not_evaluable_unseen_worker": 1389
+  },
+  "holdout_task_overlap_max": 0,
+  "independent_final_checks": {
+    "feature_identity_unique": true,
+    "holdout_no_task_overlap": true,
+    "one_worker_one_vote_and_nested": true,
+    "selected_medoid_in_selected": true,
+    "strict_replicates_82800": true,
+    "time_complete_only": true
+  },
+  "old42_regression": {
+    "checked_task_count": 42,
+    "mismatch_base_task_ids": [],
+    "mismatch_count": 0,
+    "support_status_cluster_second_and_worker_partition_exact": true
+  },
+  "old_eligibility_used_as_new_primary_filter": false,
+  "profile_row_count": 4197,
+  "raw_sources_modified": false,
+  "schema_version": "annotation_research_prework_statistics_v2",
+  "selected_only_medoid_contract": true,
+  "spine_count": 2501,
+  "strict_replay_nested_prefix_contract": true,
+  "strict_support_gt20_image_count": 69,
+  "structure_fixed_support_across_cutoffs": true
+}

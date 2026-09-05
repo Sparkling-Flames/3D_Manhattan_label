@@ -1,0 +1,274 @@
+{
+  "role": "exploratory_historical_research_prework_not_formal_protocol",
+  "date": "2026-09-05",
+  "cwd": "D:\\Work\\HOHONET",
+  "output": "D:\\Work\\HOHONET\\analysis_results\\annotation_research_prework_20260905_v2",
+  "commands_in_order": [
+    ".venv/Scripts/python.exe -B tools/thesis_main/data_prep/materialize_annotation_research_prework_evidence_20260905.py",
+    "$env:OPENBLAS_NUM_THREADS=1; $env:OMP_NUM_THREADS=1; .venv/Scripts/python.exe -B tools/thesis_main/analysis/materialize_annotation_research_prework_statistics_20260905.py",
+    ".venv/Scripts/python.exe -B tools/thesis_main/analysis/materialize_annotation_research_prework_statistics_20260905.py --summarize-existing",
+    "C:/Users/ASUS/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe tools/thesis_main/analysis/build_annotation_research_prework_workbook_20260905.mjs",
+    ".venv/Scripts/python.exe -B -m pytest tests/test_materialize_annotation_research_prework_statistics_20260905.py tests/test_audit_annotation_research_data_20260905.py tests/test_materialize_historical_uncertainty_k_curves.py -q -p no:cacheprovider"
+  ],
+  "reuse": "v1 verified substrate and geometry comparisons; raw export/import identity and initialization rechecked; old recovery curves retained in v1",
+  "seed": 20260905,
+  "bootstrap_per_component": 1000,
+  "replay_per_image": 200,
+  "k": [
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+  ],
+  "classification_thresholds": [
+    0.7,
+    0.8,
+    0.9
+  ],
+  "structure_thresholds": [
+    0.93,
+    0.95,
+    0.97
+  ],
+  "cache_note": "bootstrap_diagnostics.csv, strict_medoid_replay_replicates.csv, holdout_evaluation.csv and inspect.ndjson locally retained and git-ignored; scripts regenerate them",
+  "files": [
+    {
+      "path": "DELIVERY_QA.json",
+      "bytes": 1850
+    },
+    {
+      "path": "evidence/additional_response_candidates.csv",
+      "bytes": 354470
+    },
+    {
+      "path": "evidence/building_split_room_mapping.csv",
+      "bytes": 4380
+    },
+    {
+      "path": "evidence/FIELD_CONTRACT.json",
+      "bytes": 3089
+    },
+    {
+      "path": "evidence/historical_exposure.csv",
+      "bytes": 645
+    },
+    {
+      "path": "evidence/initialization_condition_summary.csv",
+      "bytes": 658
+    },
+    {
+      "path": "evidence/initialization_trace.csv",
+      "bytes": 330329
+    },
+    {
+      "path": "evidence/matched25_comparison_details.csv",
+      "bytes": 394517
+    },
+    {
+      "path": "evidence/matched25_image_summary.csv",
+      "bytes": 17089
+    },
+    {
+      "path": "evidence/model_provenance.csv",
+      "bytes": 2149
+    },
+    {
+      "path": "evidence/QA.json",
+      "bytes": 2210
+    },
+    {
+      "path": "evidence/record_evidence.csv",
+      "bytes": 5037427
+    },
+    {
+      "path": "evidence/semi_initial_final_changes.csv",
+      "bytes": 717399
+    },
+    {
+      "path": "evidence/source_conflicts.csv",
+      "bytes": 10
+    },
+    {
+      "path": "evidence/SOURCE_MANIFEST.json",
+      "bytes": 3505
+    },
+    {
+      "path": "evidence/version_lineage.csv",
+      "bytes": 1220569
+    },
+    {
+      "path": "evidence/worker_building_condition_coverage.csv",
+      "bytes": 39616
+    },
+    {
+      "path": "ROOT_CROSSCHECK.json",
+      "bytes": 1104
+    },
+    {
+      "path": "statistics/bootstrap_diagnostics.csv",
+      "bytes": 18170728
+    },
+    {
+      "path": "statistics/classification_count_summary.csv",
+      "bytes": 53868
+    },
+    {
+      "path": "statistics/classification_membership_changes.csv",
+      "bytes": 7925939
+    },
+    {
+      "path": "statistics/continuous_volatility.csv",
+      "bytes": 416531
+    },
+    {
+      "path": "statistics/continuous_vs_classified_summary.csv",
+      "bytes": 65796
+    },
+    {
+      "path": "statistics/directional_group_replay.csv",
+      "bytes": 2217547
+    },
+    {
+      "path": "statistics/directional_worker_profiles.csv",
+      "bytes": 1640556
+    },
+    {
+      "path": "statistics/feature_records.csv",
+      "bytes": 7165578
+    },
+    {
+      "path": "statistics/FIELD_CONTRACT.json",
+      "bytes": 1265
+    },
+    {
+      "path": "statistics/FINAL_CHECKS.json",
+      "bytes": 423
+    },
+    {
+      "path": "statistics/group_common_support_summary.csv",
+      "bytes": 199
+    },
+    {
+      "path": "statistics/HANDOFF.md",
+      "bytes": 1099
+    },
+    {
+      "path": "statistics/holdout_evaluation.csv",
+      "bytes": 46059720
+    },
+    {
+      "path": "statistics/OUTPUT_MANIFEST.csv",
+      "bytes": 799
+    },
+    {
+      "path": "statistics/QA.json",
+      "bytes": 1882
+    },
+    {
+      "path": "statistics/quality_time_coexisting_axes.csv",
+      "bytes": 99250
+    },
+    {
+      "path": "statistics/REPORT_ZH.md",
+      "bytes": 3567
+    },
+    {
+      "path": "statistics/strict_medoid_condition_summary.csv",
+      "bytes": 2868
+    },
+    {
+      "path": "statistics/strict_medoid_replay_replicates.csv",
+      "bytes": 31844549
+    },
+    {
+      "path": "statistics/strict_medoid_replay_summary.csv",
+      "bytes": 59557
+    },
+    {
+      "path": "statistics/structure_sensitivity_summary.csv",
+      "bytes": 952
+    },
+    {
+      "path": "statistics/structure_sensitivity_tasks.csv",
+      "bytes": 184282
+    },
+    {
+      "path": "statistics/worker_building_feature_descriptions.csv",
+      "bytes": 2129217
+    },
+    {
+      "path": "statistics/worker_task_components.csv",
+      "bytes": 108229
+    },
+    {
+      "path": "workbook_qa/VALIDATION.json",
+      "bytes": 1186
+    },
+    {
+      "path": "workbook_qa/三轴与文献.png",
+      "bytes": 80466
+    },
+    {
+      "path": "workbook_qa/人数诊断.png",
+      "bytes": 44519
+    },
+    {
+      "path": "workbook_qa/候选人员描述.png",
+      "bytes": 151525
+    },
+    {
+      "path": "workbook_qa/同图25.png",
+      "bytes": 117939
+    },
+    {
+      "path": "workbook_qa/建筑人员覆盖.png",
+      "bytes": 58920
+    },
+    {
+      "path": "workbook_qa/校验.png",
+      "bytes": 30772
+    },
+    {
+      "path": "workbook_qa/留出诊断.png",
+      "bytes": 146187
+    },
+    {
+      "path": "workbook_qa/结构阈值.png",
+      "bytes": 57417
+    },
+    {
+      "path": "workbook_qa/记录索引.png",
+      "bytes": 215107
+    },
+    {
+      "path": "workbook_qa/质量与时间.png",
+      "bytes": 152585
+    },
+    {
+      "path": "workbook_qa/阅读入口.png",
+      "bytes": 106917
+    },
+    {
+      "path": "三轴建模与文献对照.md",
+      "bytes": 11126
+    },
+    {
+      "path": "历史剩余人员诊断.png",
+      "bytes": 120526
+    },
+    {
+      "path": "研究前置工作报告.md",
+      "bytes": 15770
+    },
+    {
+      "path": "研究前置证据与分类探索.xlsx",
+      "bytes": 267435
+    },
+    {
+      "path": "质量与时间连续描述.png",
+      "bytes": 87932
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "status": "pass_with_explicit_research_gaps",
+  "tests": {
+    "passed": 24,
+    "failed": 0,
+    "scope": [
+      "new_evidence_and_statistics",
+      "existing_v1_audit",
+      "historical_uncertainty_regression"
+    ]
+  },
+  "record_identity_and_source_checks": true,
+  "initialization_payload_checks": true,
+  "old42_exact": true,
+  "bootstrap_and_nested_replay": {
+    "all_passed": true,
+    "assertions": {
+      "feature_identity_unique": true,
+      "holdout_no_task_overlap": true,
+      "one_worker_one_vote_and_nested": true,
+      "selected_medoid_in_selected": true,
+      "strict_replicates_82800": true,
+      "time_complete_only": true
+    },
+    "feature_rows": 12023,
+    "holdout_rows_are_worker_fold_descriptions_not_independent_people": true,
+    "no_fitted_scene_model": true
+  },
+  "workbook": {
+    "sheets": 11,
+    "native_charts": 1,
+    "formula_errors": 0,
+    "reconciliations_zero": true,
+    "all_2501_ids_preserved": true,
+    "matched25_ids_preserved": true,
+    "rendered_all_sheets": true,
+    "visual_review": "all_11_top_ranges_and_native_chart; 2_standalone_plots; XML_checked_full_record_index"
+  },
+  "formal_protocol_and_raw_tracked_inputs_unchanged": true,
+  "ai50_and_human30_not_modified": true,
+  "known_gaps": [
+    "room_instance_mapping",
+    "exact_checkpoint_training_lineage",
+    "historical_initialization_reference_independence",
+    "development_person_and_condition_identity",
+    "no_common_15_to_20_group_comparison_support",
+    "future_new_recruit_external_validation"
+  ],
+  "concurrent_workspace_directory_not_modified": "analysis_results/annotation_reanalysis_20260905",
+  "checks_not_run": "full_repository_suite_not_needed_for_isolated_analysis; no_training_inference_or_new_image_review",
+  "local_report_links_valid": true
+}

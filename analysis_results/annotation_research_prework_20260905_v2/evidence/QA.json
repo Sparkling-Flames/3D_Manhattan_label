@@ -1,0 +1,74 @@
+{
+  "added_responses": 0,
+  "additional_response_audit": {
+    "added_to_canonical": 0,
+    "condition_missing_rows": 674,
+    "condition_present_rows": 105,
+    "development_snapshot_rows": 779,
+    "development_unique_runtime_identities": 379,
+    "reason": "identity_and_condition_process_verification_pending_not_old_eligibility_exclusion"
+  },
+  "building_model_audit": {
+    "actual_checkpoint_training_overlap": "unknown_not_inferred_from_benchmark_splits",
+    "building_count": 22,
+    "layout_training_file_checks": {
+      "Bi_local_train_count": 1647,
+      "Bi_local_training_split_file": {
+        "overlap_ids": [],
+        "status": "no_overlap_in_supplied_sets"
+      },
+      "HoHoNet_local_train_count": 1647,
+      "HoHoNet_local_training_image_directory": {
+        "overlap_ids": [],
+        "status": "no_overlap_in_supplied_sets"
+      },
+      "local_files_are_not_checkpoint_training_lineage": true,
+      "local_train_building_overlap": {
+        "overlap_ids": [],
+        "status": "no_overlap_in_supplied_sets"
+      }
+    },
+    "official_train_vs_historical_building_overlap": {
+      "overlap_ids": [
+        "7y3sRwLe3Va",
+        "B6ByNegPMKs",
+        "S9hNv5qa7GM",
+        "VFuaQ6m2Qom",
+        "VLzqgDo317F",
+        "b8cTxDM8gDG",
+        "e9zR4mvMWw7",
+        "jh4fc5c5qoQ",
+        "pRbA3pwrgk9",
+        "rPc6DW4iMge",
+        "uNb9QFRL6hY"
+      ],
+      "status": "overlap_detected"
+    },
+    "room_instance_verified_count": 0,
+    "unknown_building_split_count": 0
+  },
+  "buildings": 22,
+  "conflict_count": 0,
+  "images": 214,
+  "initialization_trace_counts": {
+    "all_matching": 574
+  },
+  "matched25": {
+    "manual_records": 135,
+    "matched_images": 25,
+    "semi_records": 106
+  },
+  "prediction_representation_counts": {
+    "prediction_ids_only": 574
+  },
+  "raw_records_overwritten": false,
+  "record_count": 2501,
+  "time_status_counts": {
+    "active_time_missing": 79,
+    "lead_time_only_not_active": 353,
+    "owner_valid_complete": 2032,
+    "owner_valid_complete_with_deviation": 17,
+    "partial_session_coverage_excluded_from_speed": 20
+  },
+  "unique_workers": 26
+}

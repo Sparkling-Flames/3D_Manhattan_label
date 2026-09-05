@@ -262,6 +262,11 @@ tools/**/legacy/**
 /analysis_results/annotation_research_decision_audit_20260905_v1/data_audit/recomputed_historical_uncertainty/
 /analysis_results/annotation_research_decision_audit_20260905_v1/data_audit/recomputed_manual_strata/
 /analysis_results/annotation_research_decision_audit_20260905_v1/**/*.inspect.ndjson
+# Reproducible v2 draw-level tables and spreadsheet renderer caches stay local; reports and summaries remain visible.
+/analysis_results/annotation_research_prework_20260905_v2/**/*.inspect.ndjson
+/analysis_results/annotation_research_prework_20260905_v2/statistics/bootstrap_diagnostics.csv
+/analysis_results/annotation_research_prework_20260905_v2/statistics/strict_medoid_replay_replicates.csv
+/analysis_results/annotation_research_prework_20260905_v2/statistics/holdout_evaluation.csv
 analysis_results/*.ply
 analysis_results/item*_layout_preview*.png
 analysis_results/item*_layout_sorted.txt

@@ -115,6 +115,9 @@
 
 - Git 保留代码、报告、清单、人工记录和分析表；预筛/AI50 的批量预览、审计目录内 `recomputed_*` 副本及工作簿 inspect 日志留在本地，可由对应工具重建。新 checkout 查看审查页前需生成图片资产。
 - `analysis_results/annotation_research_decision_audit_20260905_v1/`：研究方向与数据决策说明、资产/来源审计、building 与独立性诊断、50 张新候选 AI 初查和汇总工作簿；保留原始记录，不形成正式实验或最终人工判断。
+- `analysis_results/annotation_research_prework_20260905_v2/`：独立第二轮证据链、同图比较、人员连续特征与候选分类留出诊断、历史人数/结构敏感性及三轴文献解释；复用第一轮审图，不修改运行时真源、人工判断或正式协议。
+- 第二轮入口：`tools/thesis_main/data_prep/materialize_annotation_research_prework_evidence_20260905.py`（来源连接）；`tools/thesis_main/analysis/materialize_annotation_research_prework_statistics_20260905.py`（探索统计与验证）；`tools/thesis_main/analysis/build_annotation_research_prework_workbook_20260905.mjs`（中文工作簿）。字段合同随独立结果包保留，不升格为正式协议。
+- `analysis_results/annotation_reanalysis_independent_audit_20260905_v1/`：外部分析及第二轮材料的独立审查、C1统计复算与口径敏感性、分类参照诊断；入口为`tools/thesis_main/analysis/audit_annotation_reanalysis_claims_20260905.py`，最小检查为`tests/test_audit_annotation_reanalysis_claims_20260905.py`。2026-09-06完成，保留启动日目录；不回写被审查包或正式协议。
 - `tools/thesis_main/data_prep/build_annotation_research_review50_20260905.py`：从现有剩余 136 候选中按 building 覆盖与差异选取 50 图，排除人工已审 30 图；保留角点环序并用球面投影生成预览。
 - `tools/thesis_main/data_prep/inventory_annotation_research_assets_20260905.py`：研究资产依赖、历史候选身份及 building/room 来源索引。
 - `tools/thesis_main/analysis/audit_annotation_research_data_20260905.py`：原始来源分类、历史结果复算、独立性敏感性及同图人类/模型差异诊断。

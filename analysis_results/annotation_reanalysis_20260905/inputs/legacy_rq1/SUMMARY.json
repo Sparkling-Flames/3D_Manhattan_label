@@ -1,0 +1,66 @@
+{
+  "c1_core_amendment_k_distribution": {
+    "3": 1,
+    "4": 2,
+    "5": 51,
+    "6": 20,
+    "7": 1
+  },
+  "c1_core_amendment_k_ge5": 72,
+  "c1_core_raw_strict_k_distribution": {
+    "3": 1,
+    "4": 4,
+    "5": 49,
+    "6": 20,
+    "7": 1
+  },
+  "c1_core_raw_strict_k_ge5": 70,
+  "c1_core_unique_task_count": 75,
+  "c1_repair_applied_count": 3,
+  "c1_repair_status_counts": {
+    "ambiguous_extra_or_missing_pair": 1,
+    "not_eligible": 6,
+    "not_needed": 770,
+    "recoverable_orphan_point_removed": 3
+  },
+  "cautions": [
+    "The wall-region mask distance is a candidate overall image-plane layout distance, not a frozen Primary metric.",
+    "Cardinality/topology disagreement remains a separate axis because mask IoU can be high for different event counts.",
+    "The 20-of-23 replay samples random historical rosters and does not substitute for the final named Main roster.",
+    "Null replay MDE values are sampling-noise lower bounds, not power guarantees.",
+    "Difficulty responses are post-response appraisals and cannot define inherent task difficulty causally."
+  ],
+  "formal_active_time": {
+    "active_time_context_count": 780,
+    "active_time_eligible_context_count_frozen": 701,
+    "active_time_observed_rows": 594,
+    "active_time_observed_tasks": 84,
+    "active_time_summary_sha256_expected": "4292a464f879423efc82c3ab213d0e77594bf7a0e4bdda3320416f7195d5cb99",
+    "active_time_table_sha256": "4292a464f879423efc82c3ab213d0e77594bf7a0e4bdda3320416f7195d5cb99",
+    "manual_tasks_k_ge5": 84,
+    "manual_worker_task_rows": 658
+  },
+  "frozen_selection_comparison": {
+    "match": 2260,
+    "mismatch": 1
+  },
+  "high_density_max_amendment_support": 26,
+  "high_density_min_amendment_support": 23,
+  "high_density_task_count": 42,
+  "metric_contract": {
+    "boundary": "1 - mean periodic ceiling/floor boundary similarity",
+    "mask": "1 - IoU of the periodic panorama wall-region band between ceiling and floor boundaries",
+    "wall": "1 - symmetric circular Chamfer similarity of vertical wall-event x positions"
+  },
+  "selection": {
+    "acquisition_keys_all": 2261,
+    "acquisition_keys_with_non_cancelled_version": 2261,
+    "cancelled_only_acquisition_keys": 0,
+    "duplicate_version_excess_non_cancelled": 12,
+    "raw_versions_all": 2273,
+    "raw_versions_cancelled": 0,
+    "raw_versions_non_cancelled": 2273,
+    "selected_latest_non_cancelled": 2261
+  },
+  "source_commit": "3caffb9d0213f11059f2eda9407da97a899095ae"
+}

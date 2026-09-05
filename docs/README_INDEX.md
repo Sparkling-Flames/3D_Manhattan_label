@@ -145,6 +145,8 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 - [研究方向与数据决策说明](../analysis_results/annotation_research_decision_audit_20260905_v1/研究方向与数据决策说明.md)：导师讨论证据、历史数据口径、building 覆盖及候选研究建议；不定稿论文、实验、GT 或标注者类别。
 - [50 张候选审查页](../analysis_results/annotation_research_decision_audit_20260905_v1/review50/review.html)：从剩余 136 图选取 50 图，排除已人工审核的 30 图；GT、HoHoNet、Bi-Layout 双输出并列，AI 建议与人工记录分开保存。
 - `analysis_results/annotation_research_decision_audit_20260905_v1/`：资产索引、来源复算、building/独立性诊断与汇总工作簿。派生审计不覆盖原始导出、历史人工判断或正式协议。
+- [第二轮研究前置材料](../analysis_results/annotation_research_prework_20260905_v2/)：补齐来源与同图证据，探索质量、时间与习惯的候选描述并进行留出诊断；[三轴与六篇文献对照](../analysis_results/annotation_research_prework_20260905_v2/三轴建模与文献对照.md)仅作解释和可行性讨论，不定义正式人员资格或新实验。
+- [外部分析与第二轮材料的独立审查](../analysis_results/annotation_reanalysis_independent_audit_20260905_v1/独立审查报告.md)：2026-09-06完成；独立复算C1人员特征、版本/时间敏感性，诊断分类验证参照变化；不改写原包或最终人工判断。
 
 ## HoHoNet 初始化代理审计
 

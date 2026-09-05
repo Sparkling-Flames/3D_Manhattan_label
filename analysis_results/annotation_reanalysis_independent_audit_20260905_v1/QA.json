@@ -1,0 +1,139 @@
+{
+  "schema_version": "independent_reanalysis_claim_audit_v1",
+  "status": "pass_with_interpretation_findings",
+  "source_scope": "bundled C1 rows and v2 evidence; not a rerun of all raw geometry",
+  "c1_rows": 658,
+  "c1_images": 84,
+  "c1_workers": 23,
+  "c1_time_source_counts": {
+    "owner_valid_complete": 559,
+    "active_time_missing": 63,
+    "partial_session_coverage_excluded_from_speed": 20,
+    "owner_valid_complete_with_deviation": 15,
+    "no_exact_canonical_version_match": 1
+  },
+  "unmatched_canonical_versions": [
+    {
+      "project_id": 66,
+      "runtime_task_id": 3192,
+      "worker_id": 34,
+      "annotation_id": 6053,
+      "base_task_id": "rPc6DW4iMge_9d3eb9f5d38844bfb4e5fb2cd05fd3fd",
+      "dataset_group": "C1_anchor_all"
+    }
+  ],
+  "time_value_mismatch_count": 0,
+  "six_original_lobo_values_reproduced": true,
+  "three_original_time_sensitivities_reproduced": true,
+  "building_split_fits_recomputed": 3600,
+  "split_median_comparisons": [
+    {
+      "variant": "all_calculation_valid",
+      "metric": "corner_pair_count",
+      "new_median": 0.6388339920948616,
+      "old_median": 0.6388339920948616,
+      "absolute_difference": 0.0
+    },
+    {
+      "variant": "all_calculation_valid",
+      "metric": "log_active_time",
+      "new_median": 0.9424054206662904,
+      "old_median": 0.9424054206662904,
+      "absolute_difference": 0.0
+    },
+    {
+      "variant": "all_calculation_valid",
+      "metric": "peer_distance_mean",
+      "new_median": 0.21047430830039524,
+      "old_median": 0.2104743083003952,
+      "absolute_difference": 2.7755575615628914e-17
+    },
+    {
+      "variant": "strict_clean_tasks",
+      "metric": "corner_pair_count",
+      "new_median": 0.6383399209486166,
+      "old_median": 0.6393280632411067,
+      "absolute_difference": 0.0009881422924901129
+    },
+    {
+      "variant": "strict_clean_tasks",
+      "metric": "log_active_time",
+      "new_median": 0.940711462450593,
+      "old_median": 0.940711462450593,
+      "absolute_difference": 0.0
+    },
+    {
+      "variant": "strict_clean_tasks",
+      "metric": "peer_distance_mean",
+      "new_median": 0.2005928853754941,
+      "old_median": 0.2005928853754941,
+      "absolute_difference": 0.0
+    }
+  ],
+  "three_cross_condition_values_reproduced": true,
+  "v2_evaluable_rows_at_threshold_080": 7991,
+  "v2_legacy_counterexample_flags": 682,
+  "v2_legacy_flags_with_same_center_prediction_agreement": 35,
+  "new_time_complete_only_result": {
+    "variant": "latest_owner_valid_complete",
+    "metric": "log_active_time",
+    "rows": 574,
+    "images": 84,
+    "workers": 22,
+    "buildings": 13,
+    "sse": 205.46496287992548,
+    "baseline_sse": 517.078459384735,
+    "r2": 0.602642579378755,
+    "building_equal_r2": 0.5904933921152604
+  },
+  "clustering_scope": "source reviewed; stored split summaries checked separately; Ward/GMM not rerun",
+  "canonical_corner_sensitivity": [
+    {
+      "variant": "latest_canonical_manual",
+      "rows": 667,
+      "images": 87,
+      "workers": 23,
+      "buildings": 13,
+      "sse": 822.042408563872,
+      "baseline_sse": 916.1490683229813,
+      "r2": 0.10271981166926514,
+      "building_equal_r2": 0.07605078335367566
+    },
+    {
+      "variant": "latest_canonical_manual_to_semi",
+      "rows": 103,
+      "images": 25,
+      "workers": 23,
+      "buildings": 9,
+      "sse": 78.92207772004826,
+      "baseline_sse": 89.5,
+      "r2": 0.11818907575365067,
+      "building_equal_r2": 0.16555355799292482
+    }
+  ],
+  "human_decisions_written": 0,
+  "old_packages_modified": false,
+  "stored_clustering_summary_checks": [
+    {
+      "summary": "cluster",
+      "split_rows": 3600,
+      "groups": 12,
+      "max_difference": 9.71445146547012e-17
+    },
+    {
+      "summary": "grouping_method",
+      "split_rows": 1200,
+      "groups": 6,
+      "max_difference": 5.551115123125783e-17
+    }
+  ],
+  "matched25_summary_checks": {
+    "images": 25,
+    "buildings": 9,
+    "manual_rows": 135,
+    "semi_rows": 106,
+    "initial_reference_d_mask_zero_images": 24,
+    "exact_retention_rows": 33,
+    "scope": "independent aggregation of v2 evidence; source generator also inspected; no new rasterization"
+  }
+}

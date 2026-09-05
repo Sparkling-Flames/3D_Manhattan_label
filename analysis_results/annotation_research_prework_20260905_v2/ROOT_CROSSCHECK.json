@@ -1,0 +1,35 @@
+{
+  "role": "root_independent_crosschecks_in_progress",
+  "baseline": "annotation_research_decision_audit_20260905_v1/data_audit/recomputed_uncertainty_substrate",
+  "expected_canonical_records": 2501,
+  "strict_gt20_units": 69,
+  "strict_gt20_stage_condition": {
+    "C1/manual": 12,
+    "P1/manual": 30,
+    "P1/oos": 9,
+    "P1/semi": 18
+  },
+  "expected_heldout_replicate_rows_if_no_added_responses": 82800,
+  "k_values": [
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+  ],
+  "replicates_per_image": 200,
+  "k20_remaining_min": 3,
+  "k20_remaining_max": 6,
+  "literature_checks": {
+    "Sensakovic_target": "pleural_mesothelioma_not_effusion",
+    "Sensakovic_initial_sections": 150,
+    "Sensakovic_analysis_sections": 118,
+    "Kiani_overall_improvement_p": 0.184,
+    "Gaube_advice_generated_by": "human_experts_with_manipulated_source_label",
+    "GLAD_outcome_domain": "binary_labels_not_continuous_layout"
+  },
+  "final_integration_status": "complete_with_explicit_research_gaps",
+  "actual_strict_replay_rows": 82800,
+  "delivery_qa": "DELIVERY_QA.json"
+}

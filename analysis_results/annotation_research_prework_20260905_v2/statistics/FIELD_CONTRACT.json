@@ -1,0 +1,35 @@
+{
+  "active_time_rule": "positive_owner_valid_task_worker_cumulative_only; lead_time_excluded",
+  "bootstrap_rule": "exactly_1000_building_then_task_draws; no_rejection_or_redraw",
+  "classification_rule": "all_requested_draw_probability_bounds_at_0.7_0.8_0.9; near_zero_1e-10_ties_half_mass; single_building_descriptive_only",
+  "holdout_rule": "classification_training_tasks_are_disjoint_from_evaluation_tasks",
+  "missing_rule": "missing_or_not_evaluable_is_never_zero",
+  "record_key": [
+    "canonical_annotation_id"
+  ],
+  "replay_rule": "one_worker_one_vote; selected_only_medoid; remaining_workers_evaluation",
+  "required_evidence_fields": [
+    "canonical_annotation_id",
+    "stage",
+    "condition",
+    "base_task_id",
+    "building_id",
+    "worker_id",
+    "reference_version",
+    "geometry_status",
+    "quality_reference_status",
+    "active_time_owner_valid_status",
+    "habit_feature_status",
+    "source_role",
+    "source_path",
+    "evidence_note"
+  ],
+  "role": "audit_and_sensitivity_only_not_formal_worker_taxonomy_or_stage3_gate",
+  "schema_version": "annotation_research_prework_statistics_v2",
+  "stratum_key": [
+    "stage",
+    "condition",
+    "reference_source_version",
+    "feature_name"
+  ]
+}
