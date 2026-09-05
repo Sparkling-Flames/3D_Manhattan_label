@@ -1,0 +1,56 @@
+name: Research bottleneck source snapshot 20260906
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/research-bottleneck-snapshot-20260906.yml']
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          lfs: false
+          filter: blob:none
+          sparse-checkout: |
+            export_label
+            import_json
+            active_logs
+            analysis_results
+            tools
+            tests
+            config
+            docs
+      - name: Package tracked research text and source files without changing data
+        run: |
+          python - <<'PY'
+          import hashlib, json, pathlib, subprocess, zipfile
+          root = pathlib.Path('.')
+          paths = subprocess.check_output(['git', 'ls-files', '-z']).decode().split('\0')
+          selected = []
+          allowed = {'.py', '.csv', '.json', '.jsonl', '.md', '.txt', '.xml', '.yaml', '.yml', '.toml', '.npz'}
+          with zipfile.ZipFile('/tmp/research-source-20260906.zip', 'w', zipfile.ZIP_DEFLATED) as z:
+              for name in paths:
+                  p = root / name
+                  if not name or not p.is_file() or p.suffix.lower() not in allowed:
+                      continue
+                  if name.split('/')[0] not in {'export_label','import_json','active_logs','analysis_results','tools','tests','config','docs'} and '/' in name:
+                      continue
+                  data = p.read_bytes()
+                  z.writestr(name, data)
+                  selected.append({'path': name, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()})
+              manifest = {'source_commit': subprocess.check_output(['git','rev-parse','HEAD']).decode().strip(), 'files': selected, 'note':'Tracked repository source bytes only; media and spreadsheets omitted. No new human data, no data alterations.'}
+              z.writestr('SNAPSHOT_MANIFEST.json', json.dumps(manifest, ensure_ascii=False, indent=2))
+          print('Files', len(selected), 'uncompressed bytes', sum(r['bytes'] for r in selected))
+          print('Zip bytes', pathlib.Path('/tmp/research-source-20260906.zip').stat().st_size)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: research-source-20260906
+          path: /tmp/research-source-20260906.zip
+          retention-days: 7
+          if-no-files-found: error
