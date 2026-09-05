@@ -1,0 +1,81 @@
+name: Bottleneck models 20260906
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/bottleneck-analysis-20260906.yml]
+permissions:
+  contents: write
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /tools/
+            /lib/
+            /config/
+            /docs/
+            /export_label/
+            /import_json/
+            /active_logs/
+            /analysis_results/**/*.csv
+            /analysis_results/**/*.json
+            /analysis_results/**/*.jsonl
+            /analysis_results/**/*.txt
+            /analysis_results/**/*.md
+            /.github/workflows/bottleneck-analysis-20260906.yml
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install numpy pandas scipy scikit-learn shapely
+      - name: Materialize audited analysis source
+        env:
+          SOURCE_ZLIB_BASE64: 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
+        run: |
+          python - <<'PY'
+          import os,zlib,base64,hashlib,pathlib
+          source=zlib.decompress(base64.b64decode(os.environ['SOURCE_ZLIB_BASE64']))
+          assert hashlib.sha256(source).hexdigest()=='1ba39e656c32cf9cb4ed3e584e2c40723d55b401c22549eff653a45a28b2dc08'
+          p=pathlib.Path('tools/thesis_main/analysis/bottleneck_models_20260906.py')
+          p.write_bytes(source)
+          compile(source,str(p),'exec')
+          PY
+      - name: Run analysis
+        run: |
+          python -u tools/thesis_main/analysis/bottleneck_models_20260906.py
+          python - <<'PY'
+          import json,platform,subprocess,importlib.metadata,pathlib
+          out=pathlib.Path('analysis_results/bottleneck_reanalysis_20260906_v1')
+          (out/'EXECUTION.json').write_text(json.dumps({'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'python':platform.python_version(),'packages':{p:importlib.metadata.version(p) for p in ['numpy','pandas','scipy','scikit-learn','shapely']}},indent=2))
+          PY
+      - name: Publish only requested code and results
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('.github/workflows/bottleneck-analysis-20260906.yml')
+          s=p.read_text(); a=s.index('      - name: Materialize audited analysis source\n'); b=s.index('      - name: Run analysis\n',a)
+          p.write_text(s[:a]+s[b:])
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f -- tools/thesis_main/analysis/bottleneck_models_20260906.py analysis_results/bottleneck_reanalysis_20260906_v1 .github/workflows/bottleneck-analysis-20260906.yml
+          git commit -m 'Publish raw bottleneck reanalysis, models and exact finite-roster checks [skip ci]'
+          git push origin HEAD:main
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bottleneck-models-20260906
+          path: |
+            tools/thesis_main/analysis/bottleneck_models_20260906.py
+            analysis_results/bottleneck_reanalysis_20260906_v1
+          retention-days: 30
