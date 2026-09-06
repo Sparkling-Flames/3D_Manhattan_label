@@ -1,0 +1,110 @@
+name: Complete visual takeover evidence 20260906
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/visual-takeover-publish-20260906.yml]
+permissions:
+  contents: write
+  actions: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            tools/thesis_main/analysis/visual_takeover_20260906
+            RESEARCH_ANALYSIS_INDEX.md
+            analysis_results/visual_takeover_20260906_v1
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned numerical and rendering dependencies
+        run: |
+          python -m pip install numpy==2.4.6 pandas==3.0.3 scipy==1.17.1 shapely==2.1.2 Pillow==12.3.0 opencv-python-headless==4.13.0.92
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-dejavu-core
+      - name: Isolate pinned inputs from the writable publication tree
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/visual_work/tools/thesis_main/analysis
+          git fetch --depth=1 origin 29f628fd5a9c4d3e2064ffffec32bbffb324776c
+          git archive FETCH_HEAD analysis_results/uncertainty_cloud_inputs_20260906_v1 tools/label_studio/panorama_studio/geometry.py | tar -x -C /tmp/visual_work
+          cp -a tools/thesis_main/analysis/visual_takeover_20260906 /tmp/visual_work/tools/thesis_main/analysis/
+          python -m compileall -q /tmp/visual_work/tools/thesis_main/analysis/visual_takeover_20260906
+          python -I -S /tmp/visual_work/analysis_results/uncertainty_cloud_inputs_20260906_v1/cloud_inputs.py validate --package /tmp/visual_work/analysis_results/uncertainty_cloud_inputs_20260906_v1
+      - name: Retrieve immutable full-resolution image evidence
+        run: |
+          set -euo pipefail
+          gh run download 34031912077 --repo "$GITHUB_REPOSITORY" --name visual-selected-originals-20260906 --dir /tmp/source-images
+          python - <<'PY'
+          from pathlib import Path
+          import json,hashlib,shutil
+          source=Path('/tmp/source-images');out=Path('/tmp/visual_work/analysis_results/visual_takeover_20260906_v1/originals');out.mkdir(parents=True,exist_ok=True)
+          manifests=list(source.rglob('download_manifest.json'));assert len(manifests)==1
+          rows=json.loads(manifests[0].read_text());assert len(rows)==12
+          for r in rows:
+              paths=list(source.rglob(r['case_id']+'_original.jpg'));assert len(paths)==1
+              assert hashlib.sha256(paths[0].read_bytes()).hexdigest()==r['sha256']
+              shutil.copyfile(paths[0],out/paths[0].name)
+          shutil.copyfile(manifests[0],out/'download_manifest.json')
+          PY
+      - name: Run full analysis, calibration and evidence rendering
+        run: |
+          set -euo pipefail
+          cd /tmp/visual_work
+          S=tools/thesis_main/analysis/visual_takeover_20260906
+          python "$S/review_data.py"
+          python "$S/measure.py"
+          python "$S/footprint.py"
+          python "$S/extra_checks.py"
+          python "$S/render.py" --phase calibration
+          python "$S/render.py" --phase expansion
+          python "$S/deliver.py"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: visual-takeover-complete-20260906
+          path: |
+            /tmp/visual_work/analysis_results/visual_takeover_20260906_v1
+            /tmp/visual_work/tools/thesis_main/analysis/visual_takeover_20260906
+          retention-days: 90
+          if-no-files-found: error
+      - name: Publish complete ordinary code and evidence without overwriting concurrent changes
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import shutil,json
+          source=Path('/tmp/visual_work/analysis_results/visual_takeover_20260906_v1');q=json.loads((source/'DELIVERY_QA.json').read_text());assert q['census_images']==380 and q['selected_images']==12 and q['selected_source_variants']==70
+          dst=Path('analysis_results/visual_takeover_20260906_v1');dst.parent.mkdir(parents=True,exist_ok=True);shutil.copytree(source,dst,dirs_exist_ok=True)
+          idx=Path('RESEARCH_ANALYSIS_INDEX.md');text=idx.read_text(encoding='utf-8') if idx.exists() else '# 研究分析交付入口\n'
+          section='\n## 2026-09-06：最新接手分析与全景辅助视觉检查\n\n[完整中文报告](analysis_results/visual_takeover_20260906_v1/REPORT_ZH.md) · [380图普查](analysis_results/visual_takeover_20260906_v1/census/images_380_review_status.csv) · [12张案例卡](analysis_results/visual_takeover_20260906_v1/cases/CASE_CARDS.md) · [完整离线ZIP](analysis_results/visual_takeover_20260906_v1/visual_takeover_20260906_v1.zip) · [SHA清单](analysis_results/visual_takeover_20260906_v1/DELIVERY_MANIFEST.json) · [可读源码](tools/thesis_main/analysis/visual_takeover_20260906/)\n\n12张为实际辅助样本，不代表380张均已视觉审查；最终人工裁定仍为空。HTML解压后本地打开。\n'
+          if '最新接手分析与全景辅助视觉检查' not in text:idx.write_text(text+section,encoding='utf-8')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f -- analysis_results/visual_takeover_20260906_v1 tools/thesis_main/analysis/visual_takeover_20260906 RESEARCH_ANALYSIS_INDEX.md
+          git commit -m 'Publish complete takeover analysis, original panoramas, numbered multi-view evidence, code and ZIP [skip ci]'
+          git pull --rebase origin main
+          git push origin HEAD:main
+          git fetch --depth=1 origin main
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json,subprocess,zipfile
+          out=Path('analysis_results/visual_takeover_20260906_v1');manifest=json.loads((out/'DELIVERY_MANIFEST.json').read_text())
+          for r in manifest['files']:
+              path=(out/r['path']).as_posix();data=subprocess.check_output(['git','show','origin/main:'+path]);assert hashlib.sha256(data).hexdigest()==r['sha256'],path
+          z=out/'visual_takeover_20260906_v1.zip';remote=subprocess.check_output(['git','show','origin/main:'+z.as_posix()]);assert hashlib.sha256(remote).hexdigest()==hashlib.sha256(z.read_bytes()).hexdigest()
+          with zipfile.ZipFile(z) as a:assert a.testzip() is None
+          print('REMOTE_MAIN_VERIFIED',subprocess.check_output(['git','rev-parse','origin/main'],text=True).strip(),'ordinary_files',len(manifest['files']),'zip_sha256',hashlib.sha256(remote).hexdigest())
+          PY
