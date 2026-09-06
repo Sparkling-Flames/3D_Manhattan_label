@@ -1,0 +1,101 @@
+name: Full uncertainty data mining v3
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - analysis/full-uncertainty-data-mining-20260821
+    paths:
+      - "tools/thesis_main/analysis/materialize_full_uncertainty_data_mining_v3.py"
+      - ".github/workflows/full-uncertainty-data-mining-v3.yml"
+
+concurrency:
+  group: full-uncertainty-v3-analysis
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  materialize-v3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Check out analysis branch
+        uses: actions/checkout@v4
+        with:
+          ref: analysis/full-uncertainty-data-mining-20260821
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install analysis and document dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy pandas scipy statsmodels matplotlib shapely tabulate pillow python-docx openpyxl
+
+      - name: Compile v3 materializer
+        run: |
+          python -m py_compile tools/thesis_main/analysis/materialize_full_uncertainty_data_mining_v3.py
+
+      - name: Run complete v3 analysis
+        run: |
+          rm -rf analysis_results/full_uncertainty_data_mining_20260821_v3
+          python -m tools.thesis_main.analysis.materialize_full_uncertainty_data_mining_v3 \
+            --output-dir analysis_results/full_uncertainty_data_mining_20260821_v3
+
+      - name: Validate required branch deliverables
+        run: |
+          test -s analysis_results/full_uncertainty_data_mining_20260821_v3/FULL_UNCERTAINTY_DATA_REPORT_ZH_V3.md
+          test -s analysis_results/full_uncertainty_data_mining_20260821_v3/Paper_A_完整数据整理与不确定性分析报告_20260821_v3.docx
+          test -s analysis_results/full_uncertainty_data_mining_20260821_v3/Paper_A_完整数据整理与分析工作簿_20260821_v3.xlsx
+          test -s analysis_results/full_uncertainty_data_mining_20260821_v3/Paper_A_完整数据整理报告与全部分析结果_20260821_v3.zip
+          python - <<'PY'
+          import json, zipfile
+          from pathlib import Path
+          from docx import Document
+          from openpyxl import load_workbook
+          root = Path('analysis_results/full_uncertainty_data_mining_20260821_v3')
+          summary = json.loads((root / 'VALIDATION_SUMMARY.json').read_text(encoding='utf-8'))
+          assert summary['paired_manual_semi_task_count'] == 25
+          assert summary['crowd_gt_task_condition_count'] == 101
+          assert summary['dual_annotator_task_count'] >= 1
+          Document(root / 'Paper_A_完整数据整理与不确定性分析报告_20260821_v3.docx')
+          wb = load_workbook(root / 'Paper_A_完整数据整理与分析工作簿_20260821_v3.xlsx', read_only=True)
+          assert len(wb.sheetnames) >= 20
+          wb.close()
+          with zipfile.ZipFile(root / 'Paper_A_完整数据整理报告与全部分析结果_20260821_v3.zip') as zf:
+              assert zf.testzip() is None
+          PY
+
+      - name: Commit every v3 analysis file and binary deliverable
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- analysis_results/full_uncertainty_data_mining_20260821_v3
+          if git diff --cached --quiet; then
+            echo "No materialized changes"
+            exit 0
+          fi
+          git commit -m "Materialize complete v3 uncertainty analysis and advisor files"
+          for attempt in 1 2 3 4; do
+            git fetch origin analysis/full-uncertainty-data-mining-20260821
+            git rebase origin/analysis/full-uncertainty-data-mining-20260821
+            if git push origin HEAD:analysis/full-uncertainty-data-mining-20260821; then
+              exit 0
+            fi
+            sleep 3
+          done
+          exit 1
+
+      - name: Upload redundant workflow artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-uncertainty-data-mining-20260821-v3
+          path: analysis_results/full_uncertainty_data_mining_20260821_v3
+          if-no-files-found: warn
+          retention-days: 30

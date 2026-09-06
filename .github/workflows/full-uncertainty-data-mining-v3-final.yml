@@ -1,0 +1,99 @@
+name: Full uncertainty data mining v3 final
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - analysis/full-uncertainty-data-mining-20260821
+    paths:
+      - "tools/thesis_main/analysis/run_full_uncertainty_data_mining_v3_final.py"
+      - ".github/workflows/full-uncertainty-data-mining-v3-final.yml"
+
+concurrency:
+  group: full-uncertainty-v3-final
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  publish-final-v3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: analysis/full-uncertainty-data-mining-20260821
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy pandas scipy statsmodels matplotlib shapely tabulate pillow python-docx openpyxl
+
+      - name: Compile final v3 analysis
+        run: |
+          python -m py_compile \
+            tools/thesis_main/analysis/materialize_full_uncertainty_data_mining_v3.py \
+            tools/thesis_main/analysis/run_full_uncertainty_data_mining_v3_final.py
+
+      - name: Rebuild final v3 directory
+        run: |
+          rm -rf analysis_results/full_uncertainty_data_mining_20260821_v3
+          python -m tools.thesis_main.analysis.run_full_uncertainty_data_mining_v3_final \
+            --output-dir analysis_results/full_uncertainty_data_mining_20260821_v3
+
+      - name: Validate exact expected coverage and binary files
+        run: |
+          python - <<'PY'
+          import json, zipfile
+          from pathlib import Path
+          from docx import Document
+          from openpyxl import load_workbook
+          root = Path('analysis_results/full_uncertainty_data_mining_20260821_v3')
+          v = json.loads((root/'VALIDATION_SUMMARY.json').read_text(encoding='utf-8'))
+          assert v['paired_manual_semi_task_count'] == 25
+          assert v['crowd_gt_task_condition_count'] == 101
+          assert v['dual_annotator_task_count'] == 54
+          assert v['tag_behavior_case_row_count'] >= 1
+          assert (root/'V3_PACKAGE_SHA256.txt').is_file()
+          Document(root/'Paper_A_完整数据整理与不确定性分析报告_20260821_v3.docx')
+          wb = load_workbook(root/'Paper_A_完整数据整理与分析工作簿_20260821_v3.xlsx', read_only=True)
+          assert len(wb.sheetnames) >= 20
+          wb.close()
+          with zipfile.ZipFile(root/'Paper_A_完整数据整理报告与全部分析结果_20260821_v3.zip') as zf:
+              assert zf.testzip() is None
+          PY
+
+      - name: Commit all final reports, workbooks, ZIPs, CSVs and galleries
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- analysis_results/full_uncertainty_data_mining_20260821_v3
+          if git diff --cached --quiet; then
+            echo "No generated changes"
+            exit 0
+          fi
+          git commit -m "Publish final comprehensive v3 uncertainty report and all files"
+          for attempt in 1 2 3 4 5; do
+            git fetch origin analysis/full-uncertainty-data-mining-20260821
+            git rebase origin/analysis/full-uncertainty-data-mining-20260821
+            if git push origin HEAD:analysis/full-uncertainty-data-mining-20260821; then
+              exit 0
+            fi
+            sleep 3
+          done
+          exit 1
+
+      - name: Upload redundant artifact copy
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-uncertainty-data-mining-20260821-v3-final
+          path: analysis_results/full_uncertainty_data_mining_20260821_v3
+          if-no-files-found: warn
+          retention-days: 30

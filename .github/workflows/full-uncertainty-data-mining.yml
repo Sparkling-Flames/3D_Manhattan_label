@@ -1,0 +1,149 @@
+name: Full uncertainty data mining
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - analysis/full-uncertainty-data-mining-20260821
+    paths:
+      - "tools/thesis_main/analysis/full_uncertainty_*.py"
+      - "tools/thesis_main/analysis/materialize_full_uncertainty_data_mining*.py"
+      - "tools/thesis_main/analysis/run_full_uncertainty_reviewed.py"
+      - ".github/workflows/full-uncertainty-data-mining.yml"
+      - ".github/full-uncertainty-data-mining-trigger.txt"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "tools/thesis_main/analysis/full_uncertainty_*.py"
+      - "tools/thesis_main/analysis/materialize_full_uncertainty_data_mining*.py"
+      - "tools/thesis_main/analysis/run_full_uncertainty_reviewed.py"
+      - ".github/workflows/full-uncertainty-data-mining.yml"
+      - ".github/full-uncertainty-data-mining-trigger.txt"
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out analysis branch
+        uses: actions/checkout@v4
+        with:
+          ref: analysis/full-uncertainty-data-mining-20260821
+          fetch-depth: 1
+
+      - name: Package analysis-relevant repository snapshot
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess
+          import zipfile
+
+          metadata = Path("_snapshot_metadata")
+          metadata.mkdir(exist_ok=True)
+          metadata.joinpath("HEAD.txt").write_text(
+              subprocess.check_output(["git", "rev-parse", "HEAD"], text=True), encoding="utf-8"
+          )
+          metadata.joinpath("GIT_STATUS.txt").write_text(
+              subprocess.check_output(["git", "status", "--porcelain=v1"], text=True), encoding="utf-8"
+          )
+
+          include_roots = [
+              Path("analysis_results"),
+              Path("tools/thesis_main/analysis"),
+              Path("tests"),
+              Path("active_logs"),
+              Path("exports"),
+              Path("data"),
+              metadata,
+          ]
+          output = Path("analysis_branch_snapshot_20260821.zip")
+          with zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
+              for root in include_roots:
+                  if not root.exists():
+                      continue
+                  for path in sorted(item for item in root.rglob("*") if item.is_file()):
+                      archive.write(path, path.as_posix())
+          print(output, output.stat().st_size)
+          PY
+
+      - name: Upload full analysis snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-analysis-branch-snapshot-20260821
+          path: analysis_branch_snapshot_20260821.zip
+          if-no-files-found: error
+          retention-days: 30
+
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Check out analysis branch
+        uses: actions/checkout@v4
+        with:
+          ref: analysis/full-uncertainty-data-mining-20260821
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install analysis dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy pandas scipy statsmodels matplotlib shapely tabulate pytest
+
+      - name: Compile analysis modules
+        run: |
+          python -m py_compile \
+            tools/thesis_main/analysis/full_uncertainty_common.py \
+            tools/thesis_main/analysis/full_uncertainty_geometry.py \
+            tools/thesis_main/analysis/full_uncertainty_reviewed.py \
+            tools/thesis_main/analysis/materialize_full_uncertainty_data_mining.py \
+            tools/thesis_main/analysis/materialize_full_uncertainty_data_mining_v2.py \
+            tools/thesis_main/analysis/run_full_uncertainty_reviewed.py
+
+      - name: Run reviewed full uncertainty data mining
+        run: |
+          rm -rf analysis_results/full_uncertainty_data_mining_20260821_v2
+          python -m tools.thesis_main.analysis.run_full_uncertainty_reviewed \
+            --output-dir analysis_results/full_uncertainty_data_mining_20260821_v2
+
+      - name: Commit reproducible outputs
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- analysis_results/full_uncertainty_data_mining_20260821_v2
+          if ! git diff --cached --quiet; then
+            git commit -m "Materialize reviewed full uncertainty outputs"
+            git push origin HEAD:analysis/full-uncertainty-data-mining-20260821
+          fi
+
+      - name: Package advisor evidence
+        if: always()
+        run: |
+          if [ -d analysis_results/full_uncertainty_data_mining_20260821_v2 ]; then
+            python - <<'PY'
+          from pathlib import Path
+          import shutil
+          root = Path("analysis_results/full_uncertainty_data_mining_20260821_v2")
+          shutil.make_archive("full_uncertainty_data_mining_20260821_v2", "zip", root.parent, root.name)
+          PY
+          fi
+
+      - name: Upload analysis artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-uncertainty-data-mining-20260821-v2
+          path: |
+            analysis_results/full_uncertainty_data_mining_20260821_v2
+            full_uncertainty_data_mining_20260821_v2.zip
+          if-no-files-found: warn
+          retention-days: 30
