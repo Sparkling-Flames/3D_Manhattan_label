@@ -1,0 +1,11 @@
+component,audit_status,issue,required_action
+Manual/Semi overall uncertainty,usable,primary building-level sign-flip summary has no identified arithmetic error,"retain continuous effect, building support, CI and exact sign-flip p"
+image-feature association scan,exploratory_only,about 72 tests; no global multiplicity adjustment; task bootstrap/permutation ignores building clusters,add global and within-outcome Holm/BH; building-cluster sensitivity; pre-specify feature families
+vertical_edge_mean,alias_not_independent,x-gradient vertical-edge response belongs to horizontal-gradient family; name can be misread as y-gradient,rename or exclude as independent predictor
+quality-risk population slopes,descriptive_slope_only,"row-level linregress SE/CI/p ignore repeated task, worker and building dependence",aggregate by task; cluster uncertainty by building; do not use row-level p formally
+edit RMSE versus delta_U,joint_geometry_derived_association,both derive from initial/final geometry; worker/task means remain assignment-composition sensitive,do not call independent behavioral mechanism; use centered or experimental design
+client_server_lag_seconds,clock_offset_indicator,"median approximately 28800 seconds, consistent with an 8-hour clock/time-zone offset",do not interpret as latency before clock normalization
+missingness probability model,not_materialized,coverage audit explicitly reports absent,materialize descriptive/model-based missingness only from available pre-outcome fields
+reference version trajectory,not_materialized,reference statuses exist but task-level version trajectory is not materialized,requires versioned reference registry and timestamps
+expert reclustering,not_computable_from_current_outputs,no new independent blind expert mode labels,collect expert labels before validating algorithmic clusters
+event behavior phenotype,not_materialized,event/session integrity exists; no frozen phenotype definition,define phenotype prospectively or keep event data audit-only
