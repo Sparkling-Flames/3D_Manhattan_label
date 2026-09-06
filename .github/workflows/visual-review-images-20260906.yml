@@ -1,0 +1,45 @@
+name: Visual review selected images 20260906
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/visual-review-images-20260906.yml]
+permissions:
+  contents: read
+jobs:
+  images:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 29f628fd5a9c4d3e2064ffffec32bbffb324776c
+          sparse-checkout: analysis_results/uncertainty_cloud_inputs_20260906_v1
+      - run: python -m pip install Pillow
+      - name: Download original files with explicit failure records
+        run: |
+          python - <<'PY'
+          import csv,json,hashlib,urllib.request,io
+          from pathlib import Path
+          from PIL import Image
+          ids=['wc2JMjhGNzB_77962388887942148ee65c2892600e02','B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624','rPc6DW4iMge_bad24c9d90de493eb70e9af8383ee598','Z6MFQCViBuw_543e6efcc1e24215b18c4060255a9719','pRbA3pwrgk9_8b07a4b08cf447abb246769d8dce8494','UwV83HsGsw3_528d342bf5494b3b94983545d6a1a282','S9hNv5qa7GM_0c2a97f049db4a429776940850fedf2e','e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814','7y3sRwLe3Va_1410b021e1c14f529188eb026fbb369a','b8cTxDM8gDG_afc1807e6a1946b79137c1a158526913','X7HyMhZNoso_2fa0da1a66e04428b315cb93b72143d5','uNb9QFRL6hY_4d422e01951e4c4a9fa3c2d10666a004']
+          root=Path('visual_image_evidence');root.mkdir(exist_ok=True)
+          index={r['image_id']:r for r in csv.DictReader(open('analysis_results/uncertainty_cloud_inputs_20260906_v1/images.csv',encoding='utf-8-sig'))}
+          results=[]
+          for j,image_id in enumerate(ids,1):
+              row={'case_id':f'V{j:02}','image_id':image_id,'url':index[image_id]['image_url'],'visual_review_completed':False}
+              try:
+                  with urllib.request.urlopen(row['url'],timeout=45) as r: data=r.read();row['http_status']=r.status
+                  im=Image.open(io.BytesIO(data));im.load();row.update(width=im.width,height=im.height,format=im.format,sha256=hashlib.sha256(data).hexdigest(),bytes=len(data),status='downloaded_not_yet_visually_reviewed')
+                  (root/(row['case_id']+'_original.jpg')).write_bytes(data)
+              except Exception as e:row.update(status='download_failed',error=type(e).__name__+': '+str(e))
+              results.append(row)
+          (root/'download_manifest.json').write_text(json.dumps(results,indent=2),encoding='utf-8')
+          print(json.dumps(results,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: visual-selected-originals-20260906
+          path: visual_image_evidence
+          retention-days: 90
+          if-no-files-found: error
