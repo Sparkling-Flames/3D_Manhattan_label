@@ -1,0 +1,88 @@
+name: Reproducible preflight analysis 20260906
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/preflight-analysis-20260906.yml]
+permissions:
+  contents: write
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /tools/
+            /lib/
+            /config/
+            /docs/
+            /export_label/
+            /import_json/
+            /active_logs/
+            /analysis_results/**/*.csv
+            /analysis_results/**/*.json
+            /analysis_results/**/*.jsonl
+            /analysis_results/**/*.txt
+            /analysis_results/**/*.md
+            /analysis_results/preflight_20260906_v2/
+            /.github/
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install reproducible dependencies
+        run: python -m pip install numpy==2.3.5 pandas==2.2.3 scipy==1.17.0 scikit-learn==1.8.0 shapely==2.1.2
+      - name: Compile plain source and calculate
+        run: |
+          set -euo pipefail
+          python -m py_compile tools/thesis_main/analysis/preflight_data_20260906.py tools/thesis_main/analysis/preflight_statistics_20260906.py tools/thesis_main/analysis/preflight_panels_20260906.py
+          python -m tools.thesis_main.analysis.preflight_statistics_20260906
+          python -m tools.thesis_main.analysis.preflight_panels_20260906
+      - name: Validate and index outputs
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json,hashlib,subprocess,os
+          root=Path('analysis_results/preflight_20260906_v2')
+          qa=json.loads((root/'RAW_QA.json').read_text())
+          assert qa['input_rows']==2501 and qa['strict_rows']==2427 and qa['dense20']==70
+          required=['denominator_tolerance_summary.csv','early_prediction_baselines.csv','early_prediction_by_building.csv','early_prediction_worst_cases.csv','early_prediction_all_draws.csv.gz','current20_support_gaps.csv','fixed_panel_vs_independent.csv','strata_vs_random_partition.csv']
+          assert all((root/x).is_file() and (root/x).stat().st_size>0 for x in required)
+          rows=[{'path':str(p.relative_to(root)),'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in sorted(root.rglob('*')) if p.is_file() and p.name!='EXECUTION_RECEIPT.json']
+          assert len(rows)>=30
+          receipt={'analysis_complete':True,'run_id':int(os.environ['GITHUB_RUN_ID']),'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'file_count':len(rows),'files':rows,'raw_data_modified':False,'interpretation':'retrospective preflight, not final paper direction; all repeats computational not new observations'}
+          (root/'EXECUTION_RECEIPT.json').write_text(json.dumps(receipt,indent=2))
+          print(json.dumps({k:v for k,v in receipt.items() if k!='files'},indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: preflight-results-20260906
+          path: |
+            analysis_results/preflight_20260906_v2
+            tools/thesis_main/analysis/preflight_data_20260906.py
+            tools/thesis_main/analysis/preflight_statistics_20260906.py
+            tools/thesis_main/analysis/preflight_panels_20260906.py
+          if-no-files-found: error
+          retention-days: 90
+      - name: Publish only validated analysis outputs
+        if: success()
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f -- analysis_results/preflight_20260906_v2
+          test "$(git ls-files analysis_results/preflight_20260906_v2 | wc -l)" -ge 30
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish complete preflight result tables, draw-level evidence and verified manifest [skip ci]'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+          git ls-tree -r HEAD analysis_results/preflight_20260906_v2
