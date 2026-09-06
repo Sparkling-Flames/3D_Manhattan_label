@@ -1,0 +1,130 @@
+name: Complete verified preflight delivery 20260906
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/preflight-package-20260906.yml]
+permissions:
+  contents: write
+jobs:
+  package_and_publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MPLCONFIGDIR: /tmp/preflight-matplotlib
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /tools/
+            /lib/
+            /config/
+            /docs/
+            /export_label/
+            /import_json/
+            /active_logs/
+            /analysis_results/**/*.csv
+            /analysis_results/**/*.json
+            /analysis_results/**/*.jsonl
+            /analysis_results/**/*.txt
+            /analysis_results/**/*.md
+            /analysis_results/preflight_20260906_v2/
+            /RESEARCH_ANALYSIS_INDEX.md
+            /.github/
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install pinned dependencies
+        run: python -m pip install numpy==2.3.5 pandas==2.2.3 scipy==1.17.0 scikit-learn==1.8.0 shapely==2.1.2 pillow==12.3.0 matplotlib==3.10.8
+      - name: Retrieve exactly the visually reviewed source images
+        run: |
+          python - <<'PY'
+          import csv,hashlib,json,urllib.request
+          from pathlib import Path
+          expected={
+            'B6ByNegPMKs_75327de9719945aa8b893a6404667884':'064b5b61bedbaa3f0d190f0f41377722024b89223b065066860e973a4528250c',
+            'yqstnuAEVhm_26b2e92ccd314a2da1a4fc8dfc6e6f56':'5982648f9f77400aed5b9f698610cb4c1776c7619149764d7dd2344eaa98c2b6',
+            'B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b':'ec6bf0ef00092b7876ac46ccd0ec83b615559266d53be87385810c5a4aa47de7',
+            'yqstnuAEVhm_9de98503fd994452b627cdcc7a7d47b2':'b0c84bcd4cd22610aeec51d518e53929355db135f96874b3e569013e7d6e227a',
+            'wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f':'2d77e1b5e0fc5797ca6434f988201383a8718686234f35c4fe149d79875f6307',
+            'q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2':'c1fbd0bb28164154f39d632c760010292e7f6959a4c838fdcd0f9279db2bbfe5',
+            'UwV83HsGsw3_bc29294428a647038f70e0ea31ea8972':'091cf91d7b471c25a68a02533ee1cddde5416b33475c07844cc6a28ff9d69ef4'}
+          registry={r['image_id']:r for r in csv.DictReader(open('analysis_results/uncertainty_substrate_20260823_v1/image_registry.csv',encoding='utf-8-sig'))}
+          Path('images').mkdir(exist_ok=True)
+          for image,digest in expected.items():
+            with urllib.request.urlopen(registry[image]['image_reference'],timeout=30) as r:data=r.read()
+            assert hashlib.sha256(data).hexdigest()==digest, 'Image changed since visual review: '+image
+            Path('images',image+'.jpg').write_bytes(data)
+          Path('analysis_results/preflight_20260906_v2/case_image_expected_sha256.json').write_text(json.dumps(expected,indent=2))
+          print('Verified all 7 visually reviewed originals')
+          PY
+      - name: Rebuild summaries, bounded simulation, real case cards and plots
+        run: |
+          set -euo pipefail
+          python -m py_compile tools/thesis_main/analysis/preflight_deliver_20260906.py tools/thesis_main/analysis/preflight_plots_20260906.py tools/thesis_main/analysis/verify_analysis_delivery.py
+          python -m tools.thesis_main.analysis.preflight_deliver_20260906
+          python -m tools.thesis_main.analysis.preflight_plots_20260906
+      - name: Prepare source copies and self-contained offline cases
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import base64,shutil,json
+          out=Path('analysis_results/preflight_20260906_v2');(out/'code').mkdir(exist_ok=True)
+          for name in ['preflight_data_20260906.py','preflight_statistics_20260906.py','preflight_panels_20260906.py','preflight_deliver_20260906.py','preflight_plots_20260906.py','verify_analysis_delivery.py']:
+            shutil.copy2(Path('tools/thesis_main/analysis')/name,out/'code'/name)
+          source=out/'cases/index.html';text=source.read_text()
+          for p in sorted((out/'cases').glob('*.jpg')):
+            text=text.replace('src="'+p.name+'"','src="data:image/jpeg;base64,'+base64.b64encode(p.read_bytes()).decode()+'"')
+          (out/'cases_self_contained.html').write_text(text)
+          qa=json.loads((out/'cases/CASE_QA.json').read_text());assert qa['case_count']==7 and qa['prior_human30_overlap']==0
+          assert len(list((out/'figures').glob('*.png')))==6
+          assert json.loads((out/'RAW_QA.json').read_text())['strict_rows']==2427
+          PY
+      - name: Seal manifest and verify ZIP contents
+        run: |
+          python -m tools.thesis_main.analysis.verify_analysis_delivery \
+            --root analysis_results/preflight_20260906_v2 \
+            --archive analysis_results/preflight_20260906_v2/preflight_analysis_20260906.zip \
+            --seal --minimum-files 100 \
+            --require REPORT_ZH.md --require DISCUSSION_ONE_PAGE.html --require REFERENCES_AND_SIMULATION.md \
+            --require cases/case_cards.json --require sensitivity_one_table.csv \
+            --require early_prediction_all_draws.csv.gz --require current20_support_gaps.csv
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: preflight-analysis-complete-20260906
+          path: |
+            analysis_results/preflight_20260906_v2/preflight_analysis_20260906.zip
+            analysis_results/preflight_20260906_v2/preflight_analysis_20260906.zip.sha256
+            analysis_results/preflight_20260906_v2/DELIVERY_MANIFEST.json
+          if-no-files-found: error
+          retention-days: 90
+      - name: Commit ordinary files and ZIP, without overwriting concurrent main changes
+        if: success()
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f -- analysis_results/preflight_20260906_v2
+          test "$(git ls-files analysis_results/preflight_20260906_v2 | wc -l)" -ge 100
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish complete verified analysis package with figures, real case cards, report and source [skip ci]'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Read every file and archive back from remote main
+        if: success()
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          python -m tools.thesis_main.analysis.verify_analysis_delivery \
+            --root analysis_results/preflight_20260906_v2 \
+            --archive analysis_results/preflight_20260906_v2/preflight_analysis_20260906.zip \
+            --git-ref origin/main
+          git rev-parse origin/main
+          git ls-tree -r --name-only origin/main analysis_results/preflight_20260906_v2
