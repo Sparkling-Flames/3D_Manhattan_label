@@ -1,0 +1,46 @@
+name: Visual handoff source 20260906
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/visual-handoff-source-20260906.yml]
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 29f628fd5a9c4d3e2064ffffec32bbffb324776c
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            analysis_results/uncertainty_cloud_inputs_20260906_v1
+            analysis_results/preflight_independent_audit_20260906_v1
+            analysis_results/panorama_studio_20260906_v2
+            tools/label_studio/panorama_studio
+            tools/thesis_main/analysis
+            docs/label_studio
+            tests
+      - name: Verify portable inputs and inventory snapshot
+        run: |
+          python -I -S analysis_results/uncertainty_cloud_inputs_20260906_v1/cloud_inputs.py validate --package analysis_results/uncertainty_cloud_inputs_20260906_v1
+          git rev-parse HEAD > SOURCE_COMMIT.txt
+          git ls-tree -r HEAD > SOURCE_TREE.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: visual-handoff-inputs-20260906
+          retention-days: 30
+          if-no-files-found: error
+          path: |
+            SOURCE_COMMIT.txt
+            SOURCE_TREE.txt
+            analysis_results/uncertainty_cloud_inputs_20260906_v1
+            analysis_results/preflight_independent_audit_20260906_v1
+            analysis_results/panorama_studio_20260906_v2
+            tools/label_studio/panorama_studio
+            tools/thesis_main/analysis
+            docs/label_studio/PANORAMA_STUDIO_v1.md
+            tests/test_panorama_studio.py
