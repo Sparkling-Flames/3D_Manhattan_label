@@ -147,6 +147,8 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 - `analysis_results/annotation_research_decision_audit_20260905_v1/`：资产索引、来源复算、building/独立性诊断与汇总工作簿。派生审计不覆盖原始导出、历史人工判断或正式协议。
 - [第二轮研究前置材料](../analysis_results/annotation_research_prework_20260905_v2/)：补齐来源与同图证据，探索质量、时间与习惯的候选描述并进行留出诊断；[三轴与六篇文献对照](../analysis_results/annotation_research_prework_20260905_v2/三轴建模与文献对照.md)仅作解释和可行性讨论，不定义正式人员资格或新实验。
 - [外部分析与第二轮材料的独立审查](../analysis_results/annotation_reanalysis_independent_audit_20260905_v1/独立审查报告.md)：2026-09-06完成；独立复算C1人员特征、版本/时间敏感性，诊断分类验证参照变化；不改写原包或最终人工判断。
+- [前置分析包独立审查](../analysis_results/preflight_independent_audit_20260906_v1/独立审查报告.md)：原始坐标与建筑留出预测复现、固定15人面板穷举、去除合成初始化后的重拟合及几何指标解释；附[轨迹保存范围勘误](../analysis_results/preflight_20260906_v2/说明勘误_20260906.md)。只作研究决策支持。
+- [不确定性研究云端输入包](../analysis_results/uncertainty_cloud_inputs_20260906_v1/README_ZH.md)：214图历史响应、166图候选、模型原始坐标、已有分簇及版本连接；附[云端接手说明](../analysis_results/uncertainty_cloud_inputs_20260906_v1/CLOUD_HANDOFF_ZH.md)。不重新分簇或定义歧义标签。
 
 ## HoHoNet 初始化代理审计
 

@@ -1,0 +1,26 @@
+{
+  "branch_mapping": {
+    "enclosed": "new_depth",
+    "extended": "depth"
+  },
+  "checkpoint": "D:/Work/Manhattan_3D/Bi_layout/checkpoints/Bi_Layout_Net/mp3d/mp3d_best_model.pkl",
+  "checkpoint_load": "strict",
+  "config": "D:/Work/Manhattan_3D/Bi_layout/src/config/mp3d.yaml",
+  "corner_format": "alternating ceiling/floor integer pixels at 1024x512",
+  "cuda_device_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "device": "cuda:0",
+  "image_shape": [
+    512,
+    1024
+  ],
+  "numpy": "1.26.4",
+  "opencv": "4.10.0",
+  "post_processing": "manhattan",
+  "python": "3.11.7",
+  "sample_count": 190,
+  "split": "val",
+  "torch": "2.10.0+cu130",
+  "torch_cuda": "13.0",
+  "torchvision": "0.25.0+cu130",
+  "valid_polygon_min_corners": 3
+}

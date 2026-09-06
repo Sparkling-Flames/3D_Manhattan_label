@@ -118,6 +118,8 @@
 - `analysis_results/annotation_research_prework_20260905_v2/`：独立第二轮证据链、同图比较、人员连续特征与候选分类留出诊断、历史人数/结构敏感性及三轴文献解释；复用第一轮审图，不修改运行时真源、人工判断或正式协议。
 - 第二轮入口：`tools/thesis_main/data_prep/materialize_annotation_research_prework_evidence_20260905.py`（来源连接）；`tools/thesis_main/analysis/materialize_annotation_research_prework_statistics_20260905.py`（探索统计与验证）；`tools/thesis_main/analysis/build_annotation_research_prework_workbook_20260905.mjs`（中文工作簿）。字段合同随独立结果包保留，不升格为正式协议。
 - `analysis_results/annotation_reanalysis_independent_audit_20260905_v1/`：外部分析及第二轮材料的独立审查、C1统计复算与口径敏感性、分类参照诊断；入口为`tools/thesis_main/analysis/audit_annotation_reanalysis_claims_20260905.py`，最小检查为`tests/test_audit_annotation_reanalysis_claims_20260905.py`。2026-09-06完成，保留启动日目录；不回写被审查包或正式协议。
+- `analysis_results/preflight_independent_audit_20260906_v1/`：前置分析包独立审查、方差/固定面板核验、来源敏感性重拟合及几何表示反例；入口 `tools/thesis_main/analysis/audit_preflight_claims_20260906.py`，检查 `tests/test_audit_preflight_claims_20260906.py`。原包 `analysis_results/preflight_20260906_v2/` 保留，其 `说明勘误_20260906.md` 更正轨迹保存范围；不定义正式实验或替代人工裁决。
+- `analysis_results/uncertainty_cloud_inputs_20260906_v1/`：云端可离线读取的不确定性研究输入，保留214历史图、166候选图、原始版本、模型坐标和已有分簇；生成入口 `tools/thesis_main/data_prep/build_uncertainty_cloud_inputs.py`，检查 `tests/test_build_uncertainty_cloud_inputs.py`。图片通过来源URL读取，疲劳与两倾向模拟分开留待研究，不修改原始资料或人工裁决。
 - `tools/thesis_main/data_prep/build_annotation_research_review50_20260905.py`：从现有剩余 136 候选中按 building 覆盖与差异选取 50 图，排除人工已审 30 图；保留角点环序并用球面投影生成预览。
 - `tools/thesis_main/data_prep/inventory_annotation_research_assets_20260905.py`：研究资产依赖、历史候选身份及 building/room 来源索引。
 - `tools/thesis_main/analysis/audit_annotation_research_data_20260905.py`：原始来源分类、历史结果复算、独立性敏感性及同图人类/模型差异诊断。
