@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>空间标本 · 全景布局审查</title>
+  <link rel="stylesheet" href="studio.css">
+  <script defer src="three.min.js"></script><script defer src="OrbitControls.js"></script>
+  <script defer src="data.js"></script><script defer src="studio.js"></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="brand"><span class="brand-icon">◈</span><div><span class="eyebrow">PANORAMA / SPATIAL STUDY</span><h1>空间标本<span>全景布局审查</span></h1></div></div>
+    <div class="case-nav"><button id="previous" aria-label="上一案例">←</button><label><span class="sr-only">选择案例</span><select id="case-select"></select></label><button id="next" aria-label="下一案例">→</button><span id="case-count"></span></div>
+    <span class="read-only"><i></i>本地 · 只读</span>
+  </header>
+  <main>
+    <div class="study-heading"><div><span class="eyebrow" id="category">布局观察</span><h2 id="case-title">载入空间…</h2><p id="image-id"></p></div>
+      <label class="source-label">标注来源<select id="variant-select"></select></label>
+    </div>
+    <div class="workspace">
+      <section class="visuals">
+        <details id="panorama-panel" open>
+          <summary><span>全景证据 <small>点击端点，检查对应位置</small></span><span class="legend"><i class="raw-dot"></i>原始 <i class="fit-dot"></i>拟合</span></summary>
+          <div class="panorama-wrap"><canvas id="panorama" aria-label="原始全景及标注边界"></canvas><span class="pano-caption">原始图像 · 等距柱状投影</span></div>
+        </details>
+        <div class="toolbar">
+          <div class="segmented" aria-label="显示材质"><button data-material="clay" class="active">白模审查</button><button data-material="texture">真实纹理</button><button data-material="wire">线框</button></div>
+          <div class="view-buttons"><button data-view="iso" title="轴测观察">轴测</button><button data-view="top">俯视</button><button data-view="inside">室内</button><button data-view="reset" title="重置观察视角">↺</button></div>
+          <div class="toggles"><label><input id="ceiling" type="checkbox">天花板</label><label><input id="cutaway" type="checkbox" checked>隐藏前墙</label><label><input id="labels" type="checkbox">编号</label><label><input id="decor" type="checkbox" checked>展台</label></div>
+        </div>
+        <div class="compare-grid" id="compare-grid">
+          <article class="model-card" id="card-raw">
+            <div class="model-header"><div><span class="eyebrow">01 / OBSERVATION</span><h3>原始重建</h3></div><button class="expand" data-expand="raw" aria-label="放大原始模型">⛶</button></div>
+            <div class="viewport" id="viewport-raw"><div class="labels-layer"></div></div>
+            <div class="model-footer"><span id="raw-caption">水平地面 · 保留原始角点</span><span>相对尺度</span></div>
+          </article>
+          <article class="model-card" id="card-fit">
+            <div class="model-header"><div><span class="eyebrow">02 / CONSTRAINED</span><h3>曼哈顿约束</h3></div><button class="expand" data-expand="fit" aria-label="放大约束模型">⛶</button></div>
+            <div class="viewport" id="viewport-fit"><div class="labels-layer"></div><div id="fit-empty" class="empty-state" hidden></div></div>
+            <div class="model-footer"><span id="fit-caption">共面天花板 · 正交墙向</span><span>同一观察视角</span></div>
+          </article>
+        </div>
+        <p class="canvas-hint">拖动旋转 · 滚轮缩放 · 右键平移 · 两窗同步　<span id="texture-state" role="status"></span></p>
+      </section>
+      <aside class="inspector">
+        <div class="inspector-title"><span class="eyebrow">INSPECTION NOTES</span><h3>观察与偏差</h3></div>
+        <div class="metric-hero"><span>平均重投影偏差</span><strong id="mean-error">—</strong><small>原始观测 → 约束结果 · 球面角距离</small></div>
+        <div id="metrics" class="metric-list"></div>
+        <div class="selection-block"><div class="section-label">局部对应 <span id="selection-kind">选择角点或墙面</span></div>
+          <canvas id="crop" width="560" height="300" aria-label="所选角点的原始图像局部"></canvas>
+          <div id="selection-details">在全景图或模型上选择一个端点；也可使用下方按钮。</div>
+          <div id="pair-buttons" class="pair-buttons" aria-label="按编号选择角点"></div>
+          <div class="endpoint-buttons"><button data-endpoint="top" class="active">上端点</button><button data-endpoint="bottom">下端点</button></div>
+        </div>
+        <div class="note" id="issues" role="status"></div>
+        <details class="source-details"><summary>来源与重建假设</summary><div id="provenance"></div><p>相机离地高度为 1 个相对单位。原始上端点采用对应地面角点的水平距离，并保留自身射线；这不是观测到的天花板深度。</p><p>约束拟合只用于对照。更规整不代表更正确，全部结果均不回写标注。</p></details>
+      </aside>
+    </div>
+    <footer>空间标本 <span>几何重建与展示层独立 · 不补造家具或隐藏结构</span><span id="bundle-stats"></span></footer>
+  </main>
+  <div id="fatal" role="alert" hidden></div>
+</body>
+</html>

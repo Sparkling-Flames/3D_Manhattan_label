@@ -125,3 +125,4 @@
 - `tools/thesis_main/analysis/audit_annotation_research_data_20260905.py`：原始来源分类、历史结果复算、独立性敏感性及同图人类/模型差异诊断。
 - `tools/thesis_main/analysis/build_annotation_research_decision_workbook_20260905.mjs`：以上派生审计的中文汇总工作簿入口；不替代 CSV/JSON 和原始数据真源。
 - `tools/thesis_main/analysis/plot_annotation_research_k15_20_20260905.py`：按阶段/条件固定 k20 图像支持的 15–20 人描述性恢复曲线，分别展示图像与建筑等权结果。
+- `tools/label_studio/panorama_studio/`：独立只读全景布局重建与建筑展台预览；说明 `docs/label_studio/PANORAMA_STUDIO_v1.md`，当前示例 `analysis_results/panorama_studio_20260906_v2/index.html`（v1 保留），检查 `tests/test_panorama_studio.py` 与 `tests/panorama_studio_browser.cjs`。不替代现有预览或 A line 流程。

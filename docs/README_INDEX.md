@@ -155,3 +155,7 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 - 生成工具：`tools/thesis_main/analysis/materialize_model_initialization_audit.py`
 - 当前结果：`analysis_results/model_initialization_audit_hybrid_gt_20260823_v4/`（共享逐图 CSV；分别提供旧版 v1 阈值保留报告与角点数量主分析报告）
 - v3 保留全景角点原始环序并与仓库 `eval_layout.py` 对齐；GPU 重跑、旧/新预测对照和完整解释见结果目录中的报告与 manifest。
+
+## 独立全景 3D 预览
+
+- [空间标本使用与验证说明](label_studio/PANORAMA_STUDIO_v1.md)：独立建筑展台预览、原始／曼哈顿约束对照；2026-09-06 v2 修正正交相机、剖切、遮挡和视觉布局，只读，不替代原预览。
