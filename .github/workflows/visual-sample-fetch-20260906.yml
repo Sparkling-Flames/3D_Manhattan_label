@@ -1,0 +1,61 @@
+name: Visual sample fetch 20260906
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/visual-sample-fetch-20260906.yml]
+permissions:
+  contents: read
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 29f628fd5a9c4d3e2064ffffec32bbffb324776c
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: analysis_results/uncertainty_cloud_inputs_20260906_v1
+      - run: python -m pip install pillow
+      - name: Fetch actual panoramas, never mark as viewed
+        run: |
+          python - <<'PY'
+          import csv,json,hashlib,urllib.request,time,io
+          from pathlib import Path
+          from PIL import Image
+          from datetime import datetime,timezone
+          ids='''7y3sRwLe3Va_1410b021e1c14f529188eb026fbb369a
+          S9hNv5qa7GM_0c2a97f049db4a429776940850fedf2e
+          UwV83HsGsw3_528d342bf5494b3b94983545d6a1a282
+          X7HyMhZNoso_f03d055128104fd486151e54c9e4a32a
+          B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624
+          e9zR4mvMWw7_12c84e77f6564013a032220e8f9037e8
+          uNb9QFRL6hY_ba24e5a57ef34c6dbc0458ed4c1e701d
+          Z6MFQCViBuw_fbef2c9afec642c88d01cf09c90aec12
+          kEZ7cmS4wCh_6811d52593b740cb9047202ce1e8a1e4
+          UwV83HsGsw3_a7ae0b7c2c574b4a843af1be0c808f77
+          b8cTxDM8gDG_bd2d16e81707455eacd72cda7eb5d3d5
+          yqstnuAEVhm_559e923d612748dd8dce2557c3b4b675'''.split()
+          src=Path('analysis_results/uncertainty_cloud_inputs_20260906_v1/images.csv')
+          rows={r['image_id']:r for r in csv.DictReader(src.open(encoding='utf-8-sig'))}
+          out=Path('visual_sample');out.mkdir();log=[]
+          for i,key in enumerate(ids,1):
+              url=rows[key]['image_url'];entry={'case_id':f'V{i:02}','image_id':key,'url':url,'viewed':False,'utc':datetime.now(timezone.utc).isoformat()}
+              for attempt in range(3):
+                  try:
+                      with urllib.request.urlopen(url,timeout=45) as h: body=h.read();entry.update(http_status=h.status,content_type=h.headers.get('Content-Type'),etag=h.headers.get('ETag'))
+                      im=Image.open(io.BytesIO(body));im.load();entry.update(status='downloaded_decoded_not_viewed',width=im.width,height=im.height,sha256=hashlib.sha256(body).hexdigest(),bytes=len(body))
+                      (out/(key+'.jpg')).write_bytes(body);break
+                  except Exception as e:entry.update(status='failed',error=str(e));time.sleep(1)
+              log.append(entry)
+          (out/'DOWNLOAD_LOG.json').write_text(json.dumps(log,ensure_ascii=False,indent=2))
+          print(json.dumps(log,ensure_ascii=False,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: visual-sample-20260906
+          path: visual_sample
+          if-no-files-found: error
+          retention-days: 30
