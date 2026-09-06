@@ -1,0 +1,56 @@
+name: Preflight source recovery 20260906
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/preflight-source-recovery-20260906.yml]
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            .github
+            lib/misc
+            analysis_results/uncertainty_substrate_20260823_v1
+      - name: Collect source and image evidence
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import csv,hashlib,json,subprocess,urllib.request,concurrent.futures,zipfile
+          out=Path('/tmp/preflight_sources');out.mkdir()
+          rows=list(csv.DictReader(open('analysis_results/uncertainty_substrate_20260823_v1/image_registry.csv',encoding='utf-8-sig')))
+          def fetch(row):
+              result={'image_id':row['image_id'],'source_url':row['image_reference']}
+              try:
+                  with urllib.request.urlopen(result['source_url'],timeout=25) as r: data=r.read()
+                  assert data[:3]==b'\xff\xd8\xff' or data[:8]==b'\x89PNG\r\n\x1a\n', 'not an image'
+                  p=out/'images'/(row['image_id']+'.jpg');p.parent.mkdir(exist_ok=True);p.write_bytes(data)
+                  result.update(status='downloaded',bytes=len(data),sha256=hashlib.sha256(data).hexdigest())
+              except Exception as e: result.update(status='unavailable',error=str(e))
+              return result
+          with concurrent.futures.ThreadPoolExecutor(max_workers=10) as pool: result=list(pool.map(fetch,rows))
+          (out/'image_fetch_manifest.json').write_text(json.dumps(result,indent=2))
+          tree=subprocess.check_output(['git','ls-tree','-r','--name-only','HEAD'],text=True)
+          (out/'repository_paths.txt').write_text(tree)
+          with zipfile.ZipFile('/tmp/preflight_source_evidence.zip','w',zipfile.ZIP_DEFLATED) as z:
+              for d in [Path('lib/misc'),Path('.github')]:
+                  for p in sorted(d.rglob('*')):
+                      if p.is_file():z.write(p,p.as_posix())
+              for p in sorted(out.rglob('*')):
+                  if p.is_file():z.write(p,p.relative_to(out).as_posix())
+          print('images',sum(r['status']=='downloaded' for r in result),'/',len(result))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: preflight-source-evidence-20260906
+          path: /tmp/preflight_source_evidence.zip
+          if-no-files-found: error
+          retention-days: 30
