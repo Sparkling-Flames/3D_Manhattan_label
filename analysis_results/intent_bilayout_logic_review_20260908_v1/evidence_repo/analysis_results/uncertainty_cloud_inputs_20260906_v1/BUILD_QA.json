@@ -1,0 +1,46 @@
+{
+  "status": "materialized_pending_offline_validation",
+  "historical_images": 214,
+  "candidate_images": 166,
+  "workers": 26,
+  "canonical_annotations": 2501,
+  "raw_versions": 2513,
+  "noncanonical_versions": 12,
+  "raw_coordinate_matches": 2501,
+  "model_layout_rows": 1306,
+  "reference_variants": 603,
+  "extended_partitions": 73,
+  "historical_partitions": 42,
+  "stage_condition_counts": {
+    "P1|0|manual": 779,
+    "P1|0|oos": 234,
+    "P1|0|semi": 468,
+    "C1|0|manual": 674,
+    "C1|0|semi": 106,
+    "C2-B|0|manual": 160,
+    "C2-A-RP|1|manual": 40,
+    "C2-A-RP|2|manual": 40
+  },
+  "historical_dual_raw_equal": 47,
+  "historical_dual_legacy_gap_zero": 47,
+  "legacy_representative_status_counts": {
+    "matched": 224,
+    "not_saved": 112,
+    "source_not_identifiable": 90
+  },
+  "legacy_metric_identity_status_counts": {
+    "matched": 64994
+  },
+  "legacy_human_pair_context_counts": {
+    "same_context": 21856,
+    "different_context": 112,
+    "not_two_human_responses": 10529
+  },
+  "unresolved_counts": {
+    "cluster_member_raw_version_only": 1
+  },
+  "human_decisions_modified": false,
+  "new_clustering_performed": false,
+  "image_downloads_included": false,
+  "raw_sources_modified": false
+}

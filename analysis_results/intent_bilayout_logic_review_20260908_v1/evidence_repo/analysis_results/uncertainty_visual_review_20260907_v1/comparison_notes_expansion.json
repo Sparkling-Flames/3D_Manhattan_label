@@ -1,0 +1,400 @@
+{
+  "V06": {
+    "comparison": "Bi两头近同，参考同样以两端门洞截断；HoHo在左端加入小凹转折。所示两个人类原始相邻点对不能跨地平线，属于端点序列读取阻断，不能当作空间歧义。",
+    "question": "原始点是否按上环/下环保存；走廊两端采用何种截断面？",
+    "tags": [
+      "door_scope",
+      "order_issue"
+    ]
+  },
+  "V07": {
+    "comparison": "enclosed只有退化输出，不能给双头差异。extended与HoHo纳入客厅；两个人类簇显示复杂客厅范围与简化连接区的明显差别，另一参考原序自交。",
+    "question": "先明确当前连接区与客厅的范围；退化头不能参与双头趋同判断。",
+    "tags": [
+      "door_scope",
+      "model_degenerate",
+      "order_issue",
+      "human_modes"
+    ]
+  },
+  "V08": {
+    "comparison": "双头、两参考、HoHo及展示的人类主簇均近四边形，局部点位略异；墙脚可见支持较稳定的房间外轮廓。开门外景仍不能说明应延伸。",
+    "question": "可作为边界较清楚的候选对照，但同意不等于已证正确。",
+    "tags": [
+      "clear_boundary_candidate",
+      "door_scope"
+    ]
+  },
+  "V09": {
+    "comparison": "enclosed保留近处梳妆区及小转折，extended和参考沿卧室方向延伸；两个人类响应更接近近处范围且细节不同。",
+    "question": "门洞虚拟闭合面应位于何处；中央凹墙转折是否真实角点？",
+    "tags": [
+      "door_scope",
+      "occlusion",
+      "structural_detail"
+    ]
+  },
+  "V10": {
+    "comparison": "双头近同且与参考/HoHo大体一致，所示W8俯视轮廓倾斜且角点与可见墙缘偏移；W15端点序列无法读取。不能把这些都归为范围的双模式。",
+    "question": "窗帘后的边界估计与人员点位/序列问题应分别标记。",
+    "tags": [
+      "occlusion",
+      "mirror",
+      "order_issue",
+      "local_placement"
+    ]
+  },
+  "V11": {
+    "comparison": "Bi两头细节数量略异，参考包含更多餐厨方向转折；人类W27更简化、W12原序自交。此处更像结构复杂度/局部转折取舍，不能概括成仅enclosed对extended。",
+    "question": "电视墙突出与远端餐厨转折中哪些是目标布局墙面？",
+    "tags": [
+      "open_plan",
+      "structural_detail",
+      "order_issue"
+    ]
+  },
+  "V12": {
+    "comparison": "模型、参考、所示主簇均呈细长矩形；3D长宽比使细节难看，原图仍可定位玻璃底框。双头一致没有证明透射后景不存在范围解释问题。",
+    "question": "玻璃走廊两端如何闭合；顶部梁管不应当作额外地面角点。",
+    "tags": [
+      "glass",
+      "corridor",
+      "ceiling_detail"
+    ]
+  },
+  "V13": {
+    "comparison": "Bi extended进入门内小房间，enclosed只保留门口凹进，HoHo/参考和W29主要取近侧外区。W32显示camera_outside，不可把计算失败归为双模式。",
+    "question": "门口局部凹进与跨门进入邻室应分开编码。",
+    "tags": [
+      "door_scope",
+      "order_issue",
+      "occlusion"
+    ]
+  },
+  "V14": {
+    "comparison": "双头、参考、HoHo和主簇接近，均不穿过镜面。床头装饰吊顶转折没有对应增加地面角点，是区分结构/装饰的对照。",
+    "question": "遮挡处局部定位仍待人确认，但未看到强范围分歧证据。",
+    "tags": [
+      "mirror",
+      "ceiling_detail",
+      "clear_boundary_candidate"
+    ]
+  },
+  "V15": {
+    "comparison": "模型保留狭长走廊，参考0和所示W1将近门处闭合成简轮廓；楼梯井被代理网格纹理填实不是实测地面。参考1缺坐标，W10原序自交。",
+    "question": "楼梯平台与楼梯井的scope及单地面假设应先确认。",
+    "tags": [
+      "stairs",
+      "door_scope",
+      "reference_issue",
+      "order_issue"
+    ]
+  },
+  "V16": {
+    "comparison": "Bi两头、HoHo和参考都保留床区边界凹进；两份人类原始序列分别自交和配对阻断。需先恢复可解释的显示顺序再讨论人类范围差异。",
+    "question": "电视柜/床遮挡处的角点及两个人类点的配对如何对应？",
+    "tags": [
+      "occlusion",
+      "order_issue",
+      "structural_detail"
+    ]
+  },
+  "V17": {
+    "comparison": "enclosed与参考围住卫生间，extended和HoHo伸入白色走道；两个人类簇代表也显示门洞外延伸不同，这是可追踪的真人范围分歧候选。",
+    "question": "同一context各簇是否稳定在门框截断与过道外扩之间；必须回到全体成员确认。",
+    "tags": [
+      "door_scope",
+      "mirror",
+      "human_modes"
+    ]
+  },
+  "V18": {
+    "comparison": "双头视觉相近，原始坐标并不相同；两个人类簇显示代表主要差在局部额外共线/转折点，未见明确跨门外扩。簇数大于一不等于两个空间范围解释。",
+    "question": "第二簇新增点究竟是冗余共线点还是微小结构转折？",
+    "tags": [
+      "local_placement",
+      "structural_detail",
+      "mirror"
+    ]
+  },
+  "V19": {
+    "comparison": "双头近同且保留门口小凹进，HoHo/参考为矩形；两个人类原始预览明显斜长，上下端点偏离竖直。此处需隔离点位/竖直对齐问题与范围问题。",
+    "question": "玻璃门反射是否干扰角点；人类四边形未满足Manhattan的部分不能只靠重排序修复。",
+    "tags": [
+      "glass",
+      "door_scope",
+      "pair_mismatch"
+    ]
+  },
+  "V20": {
+    "comparison": "模型与参考近矩形，W1/W12增加门口细节且原始俯视有斜边；大墙转折与门框凹进是局部结构，不支持仅两倾向解释。",
+    "question": "门洞厚度是否属于标注角点；斜边源于点位、配对还是实际墙向？",
+    "tags": [
+      "structural_detail",
+      "local_placement",
+      "occlusion"
+    ]
+  },
+  "V21": {
+    "comparison": "双头差异涉及厨房/洗衣入口的多个转折，参考更细，W11较简但也保留厨房延伸。不能仅以角点数量认定另一种房间范围；W12原序camera_outside。",
+    "question": "厨房家具与实墙是否混淆，入口柱边应如何标？",
+    "tags": [
+      "open_plan",
+      "structural_detail",
+      "order_issue"
+    ]
+  },
+  "V22": {
+    "comparison": "enclosed、HoHo、参考近矩形，extended多出右侧局部小转折，W8呈同一房间轮廓但点位偏斜，W15自交。模型差别较局部，不等于两个合法大范围。",
+    "question": "装饰壁柱/窗帘后凹进是否纳入Manhattan布局？",
+    "tags": [
+      "structural_detail",
+      "occlusion",
+      "order_issue"
+    ]
+  },
+  "V23": {
+    "comparison": "双头视觉相近，原始坐标并不相同；参考及HoHo将可见套间门洞截断，两个真人原序均自交；透明/反射材料和门内远景不能借模型相近而忽略。",
+    "question": "人类点序先恢复后再看是否包含邻厅；门槛位置是否统一？",
+    "tags": [
+      "door_scope",
+      "mirror",
+      "order_issue"
+    ]
+  },
+  "V24": {
+    "comparison": "模型、参考、W11均近矩形，未延伸进帘后或开门外；局部墙顶起伏与被遮挡地脚不能仅看平滑预览判定。",
+    "question": "帘后真实围护不可见，是否按最近可见墙平面闭合需人工确认。",
+    "tags": [
+      "occlusion",
+      "ceiling_detail"
+    ]
+  },
+  "V25": {
+    "comparison": "enclosed在主卧入口附近截断，extended和参考纳入主卧形成T/L形范围；两人原序均有读取问题。挑高天花还会改变上端点重建，不能全归点序。",
+    "question": "无门扇宽开口的enclosed规则如何落地；屋顶形态是否超出单平顶假设？",
+    "tags": [
+      "open_plan",
+      "door_scope",
+      "ceiling_detail",
+      "order_issue"
+    ]
+  },
+  "V26": {
+    "comparison": "两头保留相近的卧室六角轮廓；真人第二簇在门口增加走廊延伸，第一簇较接近近侧范围。reference_0 原序自交，reference_1 可显示。",
+    "question": "真人门外范围差异能否在完整簇成员中重复出现？",
+    "tags": [
+      "human_modes",
+      "bi_near_human_scope_diff",
+      "reference_sequence"
+    ]
+  },
+  "V27": {
+    "comparison": "E 在近门口结束，X、HoHo和参考延至右侧走廊；两个人工响应对走廊范围和局部点位处理不同，预览还有斜墙。",
+    "question": "门扇遮挡与楼梯附近的范围选择分别贡献多少？",
+    "tags": [
+      "scope",
+      "occlusion",
+      "stairs"
+    ]
+  },
+  "V28": {
+    "comparison": "Bi 两头均为长条走廊，参考与所示真人簇相近；HoHo更短且有局部折角。玻璃顶框及远端点位对预览比例影响明显。",
+    "question": "玻璃与横梁交界是否造成高度点位差异？",
+    "tags": [
+      "glass",
+      "depth_sensitivity"
+    ]
+  },
+  "V29": {
+    "comparison": "E、参考和所示两个人工簇均在玻璃门附近封闭；X、HoHo延伸到楼梯平台。真人两簇主要是末端点位变化。",
+    "question": "是否属于双头分开但真人主要范围一致的反例？",
+    "tags": [
+      "bi_diff_human_near",
+      "scope",
+      "stairs"
+    ]
+  },
+  "V30": {
+    "comparison": "电梯轿厢边界在两头、HoHo、参考及两个人工响应中均为矩形，主要差别是端点位置及高度代理。",
+    "question": "底部暗区和模糊区的点位误差需另行核实。",
+    "tags": [
+      "clear_boundary_candidate",
+      "local_point_variation"
+    ]
+  },
+  "V31": {
+    "comparison": "两头均包含浴室外的长廊，HoHo与参考增加局部细节。reference_0 自交，两个人工原始相邻对处于同一半球，不能直接解释其三维形状。",
+    "question": "先核对真人点序，再判断其是否包含长廊；两头名称本身不决定实际范围。",
+    "tags": [
+      "bi_near",
+      "sequence",
+      "scope"
+    ]
+  },
+  "V32": {
+    "comparison": "E、HoHo与两份参考取走廊矩形；X仅在左侧客厅入口增加折角范围，右侧开门长廊仍被封闭。",
+    "question": "为何只在一侧宽开口延伸，门扇和门框是否影响模型？",
+    "tags": [
+      "scope",
+      "asymmetric_openings"
+    ]
+  },
+  "V33": {
+    "comparison": "两头和参考均保留卫生间马桶壁龛的六角形，HoHo在门口多加局部点；镜面未导致明显向镜后扩展。",
+    "question": "局部角点取舍和镜面误导应分别检查。",
+    "tags": [
+      "bi_near",
+      "local_structure",
+      "mirror"
+    ]
+  },
+  "V34": {
+    "comparison": "两头都延入影音室，X多保留左侧局部转折；参考范围更宽且顶点更细，HoHo顶部点位明显更低。",
+    "question": "顶部边界选取与地面范围差异分别有多大？",
+    "tags": [
+      "local_structure",
+      "height_proxy",
+      "open_plan"
+    ]
+  },
+  "V35": {
+    "comparison": "两头和HoHo将餐厅至厨房简化为矩形，参考包含更多厨房转折及深部范围。",
+    "question": "双头相同却遗漏共同结构的候选反例，需人工检查参考范围是否符合规则。",
+    "tags": [
+      "bi_near_reference_diff",
+      "scope",
+      "occlusion"
+    ]
+  },
+  "V36": {
+    "comparison": "E及参考取马桶近区矩形，X仅在拱口加小凹口；HoHo真正延入洗手台区。",
+    "question": "双头差异主要是门洞厚度还是更大空间范围？",
+    "tags": [
+      "local_structure",
+      "scope"
+    ]
+  },
+  "V37": {
+    "comparison": "两头、HoHo及参考均为同一长矩形客厅，左侧镜面被留在实际墙面上，没有向镜后扩展；局部窄开口被简化。",
+    "question": "模型共识与镜面正确识别应由原图证据支持，不能由一致性单独证明。",
+    "tags": [
+      "bi_near",
+      "mirror",
+      "clear_boundary_candidate"
+    ]
+  },
+  "V38": {
+    "comparison": "两头均在卧室门口封闭，差异集中于浴缸侧和淋浴侧细角；HoHo与参考角点数量也不同。",
+    "question": "这些转折是房间墙体、柜体还是浴缸边缘？需要逐角核实。",
+    "tags": [
+      "local_structure",
+      "occlusion",
+      "mirror"
+    ]
+  },
+  "V39": {
+    "comparison": "两头、HoHo、参考均为矩形并关闭通廊开口，主边界相近；可见家具仍使地面角点需要推断。",
+    "question": "保留为较明确范围的对照候选，但不能填入无歧义标签。",
+    "tags": [
+      "clear_boundary_candidate",
+      "bi_near"
+    ]
+  },
+  "V40": {
+    "comparison": "E、参考保留走廊与右侧近门入口，X延入卧室并加入更多远端细角；HoHo也较深入右侧卧室。",
+    "question": "门扇遮挡与跨房间范围应在局部透视中明确分开；斜屋顶限制高度代理。",
+    "tags": [
+      "scope",
+      "occlusion",
+      "height_proxy"
+    ]
+  },
+  "V41": {
+    "comparison": "两头与参考都是卧室矩形，HoHo在窗帘一侧增添很小折角；阳台外景被各布局截在玻璃处。",
+    "question": "窗帘遮挡下是真转角还是局部点位差异？",
+    "tags": [
+      "bi_near",
+      "local_structure",
+      "glass"
+    ]
+  },
+  "V42": {
+    "comparison": "Bi两头都出现许多细角并穿过远侧玻璃分隔延向外部，E点数甚至更多；HoHo与参考是近侧房间矩形。",
+    "question": "玻璃透视造成共同范围偏离的可能性需重点人工核实；extended名称不代表点数必多。",
+    "tags": [
+      "glass",
+      "bi_common_scope",
+      "local_structure"
+    ]
+  },
+  "V43": {
+    "comparison": "两头、HoHo、参考四角主轮廓接近，参考含少量近共线点；门口没有被扩展。",
+    "question": "近共线附加点是否只是标注习惯而非多模式？",
+    "tags": [
+      "clear_boundary_candidate",
+      "local_point_variation"
+    ]
+  },
+  "V44": {
+    "comparison": "E、HoHo为矩形，X与参考加入右侧入口小凹口；主要是入口厚度细节，不是完整门外房间。",
+    "question": "将小门洞凹口与跨房间范围分为不同观察字段。",
+    "tags": [
+      "local_structure",
+      "scope"
+    ]
+  },
+  "V45": {
+    "comparison": "两头和HoHo及参考均为洗衣房矩形，在开门处截断，墙顶高度有小差别；柜体图像被投影到代理墙上。",
+    "question": "被柜体遮挡的真实墙脚不能由贴图好看与否裁定。",
+    "tags": [
+      "bi_near",
+      "occlusion",
+      "height_proxy"
+    ]
+  },
+  "V46": {
+    "comparison": "两头同样保留壁炉凸出形成的八角轮廓，HoHo部分保留，参考仅矩形。",
+    "question": "壁炉/烟道是结构边界还是可忽略设施，需按规则人工界定。",
+    "tags": [
+      "bi_near_reference_diff",
+      "local_structure",
+      "occlusion"
+    ]
+  },
+  "V47": {
+    "comparison": "两头、HoHo、参考均为衣帽间近侧矩形，搁架隔板没有变成墙角；通卧室的门口被封闭。",
+    "question": "门框清楚的近侧小空间可作为范围较明确的对照候选。",
+    "tags": [
+      "clear_boundary_candidate",
+      "occlusion"
+    ]
+  },
+  "V48": {
+    "comparison": "两头、HoHo与参考均为长矩形，玻璃处封闭，屋顶曲面/坡度被矩形墙顶代理简化。",
+    "question": "双头相近与曼哈顿/水平天花假设适用性必须分开判断。",
+    "tags": [
+      "bi_near",
+      "height_proxy",
+      "assumption_mismatch"
+    ]
+  },
+  "V49": {
+    "comparison": "两头、HoHo、参考矩形轮廓相近，差别集中端点位置，未穿过衣柜镜面或敞开门口。",
+    "question": "床遮挡下的底角仍需推断，不能据共同矩形证明正确。",
+    "tags": [
+      "clear_boundary_candidate",
+      "bi_near",
+      "occlusion"
+    ]
+  },
+  "V50": {
+    "comparison": "两头、HoHo、参考均为近侧办公室矩形，玻璃分隔没有被扩展；上边界受裸顶与梁影响，桌椅在3D地面贴图中拉伸。",
+    "question": "桌椅拉伸是单图回投影代理的局限，不能据此改点或判标注错误。",
+    "tags": [
+      "glass",
+      "occlusion",
+      "height_proxy"
+    ]
+  }
+}

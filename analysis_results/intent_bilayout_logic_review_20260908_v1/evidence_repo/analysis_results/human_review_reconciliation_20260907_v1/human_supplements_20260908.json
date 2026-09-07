@@ -1,0 +1,46 @@
+[
+  {
+    "case_id": "V15",
+    "image_id": "b8cTxDM8gDG_298a2386166a43c8a04e1c24433f7d15",
+    "source": "用户在当前对话直接补充",
+    "recorded_date": "2026-09-08",
+    "original_text": "v15歧义很大,正中间的墙因为全景图拼接而扭曲,我没法判断门这里是不是墙的拐角,还是说这是一整片墙连到门里. 因为我无论怎么尝试,3d 的都没法做到正交.",
+    "assistant_interpretation": "中央门边可能是墙拐角，也可能是同一片墙连续延入门内；用户明确无法判断，且尝试的3D不能正交。",
+    "interpretation_limits": "保留结构不确定。拼接导致扭曲是用户的原因判断，尚未独立验证；3D尝试失败不等于证明真实房间非曼哈顿。",
+    "clarification_received": true,
+    "final_geometry_adjudicated": false
+  },
+  {
+    "case_id": "V27",
+    "image_id": "uNb9QFRL6hY_f7944295a76541b186e6a557ebdbba14",
+    "source": "用户在当前对话直接补充",
+    "recorded_date": "2026-09-08",
+    "original_text": "v27 意思是右边的里面空间,如果纳入标注的话,天花板就分层.之后说句实话,我也不知道怎么标合适,怎么标都不是特别完美",
+    "assistant_interpretation": "纳入右侧内部空间会涉及分层天花；用户仍不确定如何标合适。",
+    "interpretation_limits": "OOS疑点有了具体范围和结构依据；不自动排除整图，也不替用户确定唯一范围。",
+    "clarification_received": true,
+    "final_geometry_adjudicated": false
+  },
+  {
+    "case_id": "V48",
+    "image_id": "b8cTxDM8gDG_bd2d16e81707455eacd72cda7eb5d3d5",
+    "source": "用户在当前对话直接补充",
+    "recorded_date": "2026-09-08",
+    "original_text": "v48是左边和右边拼接处不是有个玻璃门嘛,我以为bi 的extended会跨过这个门. 但是说实话,正确的曼哈顿世界约束下,就是不跨过(可能是我对bi 的期待有点高)",
+    "assistant_interpretation": "预想跨过全景左右接缝处的玻璃门；用户现已明确按本任务曼哈顿约束应不跨门。",
+    "interpretation_limits": "跨门是对模型输出的期待，不再作为用户认可的另一合规答案。此为本图、本任务规则下的判断，不推广为曼哈顿世界普遍禁止跨门。",
+    "clarification_received": true,
+    "final_geometry_adjudicated": false
+  },
+  {
+    "case_id": "V04",
+    "image_id": "wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f",
+    "source": "用户在当前对话直接补充",
+    "recorded_date": "2026-09-08",
+    "original_text": "v04 左上和右上的天花板有个下凸,如果标extended就得忽略这里,如果标enclose,就得在这里截止(比如gt和两位工人)",
+    "assistant_interpretation": "左右上方天花下凸：extended解释需要忽略该处，enclosed在此截止；GT和两位工人属于后者。",
+    "interpretation_limits": "补全了原截断条件；明确真人范围解释，未将忽略下凸的extended自动认定为合规。旧human_difference选项保留，分析优先引用此明确说明。",
+    "clarification_received": true,
+    "final_geometry_adjudicated": false
+  }
+]

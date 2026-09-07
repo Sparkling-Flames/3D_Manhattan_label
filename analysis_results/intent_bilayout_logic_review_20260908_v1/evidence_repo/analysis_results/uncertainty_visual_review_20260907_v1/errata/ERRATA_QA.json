@@ -1,0 +1,22 @@
+{
+  "schema_version": "uncertainty_handoff_errata_v1",
+  "context_count": 270,
+  "initialization_changed_context_count": 25,
+  "initialization_changed_response_count": 135,
+  "changed_stage_condition_counts": [
+    {
+      "stage": "C1",
+      "condition": "manual",
+      "count": 25
+    }
+  ],
+  "proposal_condition_verification": "proposal_fact_has_no_condition; all_proposal_ids_covered_by_proposal_response_and_uniquely_semi",
+  "association_count": 88,
+  "association_not_evaluable_count": 9,
+  "bootstrap_requested_total": 39500,
+  "bootstrap_evaluable_total": 38704,
+  "bootstrap_invalid_total": 796,
+  "bootstrap_draw_row_count": 39500,
+  "old_ci_reproduced_within_1e_12_count": 88,
+  "raw_sources_modified": false
+}
