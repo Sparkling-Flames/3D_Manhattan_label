@@ -1,0 +1,49 @@
+{
+  "V01": {
+    "comparison": "Bi两头在本图相同，但餐厨范围内细分角点与参考、W17有差别；W17用较简矩形，W31原邻接自交无法成面。玻璃门作为边界与左侧开放餐厨范围需分开审查。",
+    "question": "餐厨内部墙面转折是否应保留；W31点序是否为序列问题？",
+    "tags": [
+      "open_plan",
+      "glass",
+      "occlusion",
+      "structural_detail",
+      "order_issue"
+    ]
+  },
+  "V02": {
+    "comparison": "Bi enclosed在卧室入口附近截断，extended沿卧室进一步延伸；参考也含多个门洞转折。所展示两个人类簇代表都很简化，其中一份上/下投影不对应同一竖直边，不能仅按离哪一头近命名。",
+    "question": "相机所在连接区的enclosed截断面如何定义；简化响应是否省略范围还是角点？",
+    "tags": [
+      "door_scope",
+      "mirror",
+      "structural_detail",
+      "pair_mismatch"
+    ]
+  },
+  "V03": {
+    "comparison": "双头相同，模型和参考均为近四边形；可见吊顶/墙顶的细小折线不全等于地面墙角。W8原点连接交叉，无3D网格，不能据此判定房间多解。",
+    "question": "地面四边形近似是否符合Manhattan规则；W8序列应如何对应？",
+    "tags": [
+      "occlusion",
+      "ceiling_detail",
+      "order_issue"
+    ]
+  },
+  "V04": {
+    "comparison": "enclosed、参考及所示两人响应围住过渡区；extended延伸进卧室/浴室方向形成多个凹转折。W15序列的上下端点在角色读取后呈同样简轮廓，原始交叉2D连线不能直接当成邻接错误。",
+    "question": "各门洞的虚拟闭合面是否按同一范围规则；不能把extended的新增范围自动算合法。",
+    "tags": [
+      "door_scope",
+      "within_pair_roles"
+    ]
+  },
+  "V05": {
+    "comparison": "Bi两头视觉轮廓相近，地面1-IoU为零但原始坐标不相同；参考和HoHo亦为近四边形。门02附近玻璃透明/反射与开门后景仍需阅读；本图无历史真人响应，不能推断人类一致。",
+    "question": "玻璃隔断和开门处的闭合面位置；当前双头相近能否仅作为模型对照？",
+    "tags": [
+      "glass",
+      "door_scope",
+      "no_human_responses"
+    ]
+  }
+}

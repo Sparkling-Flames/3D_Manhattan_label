@@ -149,6 +149,9 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 - [外部分析与第二轮材料的独立审查](../analysis_results/annotation_reanalysis_independent_audit_20260905_v1/独立审查报告.md)：2026-09-06完成；独立复算C1人员特征、版本/时间敏感性，诊断分类验证参照变化；不改写原包或最终人工判断。
 - [前置分析包独立审查](../analysis_results/preflight_independent_audit_20260906_v1/独立审查报告.md)：原始坐标与建筑留出预测复现、固定15人面板穷举、去除合成初始化后的重拟合及几何指标解释；附[轨迹保存范围勘误](../analysis_results/preflight_20260906_v2/说明勘误_20260906.md)。只作研究决策支持。
 - [不确定性研究云端输入包](../analysis_results/uncertainty_cloud_inputs_20260906_v1/README_ZH.md)：214图历史响应、166图候选、模型原始坐标、已有分簇及版本连接；附[云端接手说明](../analysis_results/uncertainty_cloud_inputs_20260906_v1/CLOUD_HANDOFF_ZH.md)。不重新分簇或定义歧义标签。
+- [不确定性接手独立复核（2026-09-08）](../analysis_results/uncertainty_followup_analysis_20260908_v1/README_ZH.md)：读取敏感性及本地导出追溯；新增[用户点序确认后的深度分析](../analysis_results/uncertainty_followup_analysis_20260908_v1/深度分析_用户点序确认后.md)，包括非星形度量限制、经验分布恢复、building与人员组合诊断，不改原始标注或人工裁决。
+- [移交包独立审查与50图辅助视觉检查](../analysis_results/uncertainty_visual_review_20260907_v1/README_ZH.md)：30历史＋20候选、22个building；原始/3D对照、初始化与bootstrap勘误、预览点序建议及反例。[三步问卷与保存说明](../analysis_results/uncertainty_visual_review_20260907_v1/QUESTIONNAIRE_ZH.md)提供独立人工填写入口，包含3D角点组顺序调整、OOS意见／理由及分别保存说明。[50图高清复看与点序勘误](../analysis_results/uncertainty_visual_review_20260907_v1/ORDER_REVIEW_ZH.md)说明W31连接假设及逐图保留意见。附[不完整原包归档记录](../analysis_results/uncertainty_handoff_received_20260907_v1/README_ZH.md)；不替代人工裁决。
+- 上述50图入口已接入2048原始PNG、矢量标注叠图及新版交互3D；升级说明和复现命令随包保存。
 
 ## HoHoNet 初始化代理审计
 
@@ -158,4 +161,5 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 
 ## 独立全景 3D 预览
 
-- [空间标本使用与验证说明](label_studio/PANORAMA_STUDIO_v1.md)：独立建筑展台预览、原始／曼哈顿约束对照；2026-09-06 v2 修正正交相机、剖切、遮挡和视觉布局，只读，不替代原预览。
+- [空间标本使用与验证说明](label_studio/PANORAMA_STUDIO_v1.md)：独立建筑展台预览、原始／曼哈顿约束对照；2026-09-07 v3 加入手动角点组预览排序、恢复与独立记录导出，不写回标注。
+- [人工问卷与视觉观察核对](../analysis_results/human_review_reconciliation_20260907_v1/README_ZH.md)：50条人工评语与选项核对、点序读取勘误及逐图待确认单；记录完成不代表确定，不填最终裁决。 补充原文enclosed／extended、潜在范围、质量与规则分离的逐条提取；旧候选题仅归档。

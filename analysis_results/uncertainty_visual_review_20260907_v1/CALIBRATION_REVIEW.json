@@ -1,0 +1,30 @@
+{
+  "display_calibration_passed": true,
+  "actual_cases_viewed": 5,
+  "case_ids": [
+    "V01",
+    "V02",
+    "V03",
+    "V04",
+    "V05"
+  ],
+  "reviewer": "root_assistant_visual_advisory",
+  "human_approval": null,
+  "checks": {
+    "raw_then_perspective_then_overlay_3d": true,
+    "yaw_landmarks_consistent": true,
+    "seam_wrap_checked": true,
+    "texture_landmarks_consistent": true,
+    "single_point_projection_bug_fixed": true,
+    "asymmetric_camera_crop_fixed": true
+  },
+  "limits": [
+    "Upper vertices are ray-depth proxies; camera height relative 1, not metres.",
+    "Noncoplanar walls use two triangles.",
+    "Furniture and neighbouring rooms are reprojected textures, not actual mesh geometry.",
+    "Each view fits its own projected bounds; displayed size is not area evidence.",
+    "Invalid original human layouts remain blocked; no automatic repair."
+  ],
+  "completed_visual_reviews": 5,
+  "original_annotation_values_changed": false
+}

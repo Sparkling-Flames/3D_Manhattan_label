@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/mnt/data/visual_work/review_code/prepare_calibration.py", line 108, in <module>
+    if __name__=='__main__':run()
+                            ~~~^^
+  File "/mnt/data/visual_work/review_code/prepare_calibration.py", line 65, in run
+    census=pd.read_csv(census_path);assets=ROOT/'available_images';assets.mkdir(exist_ok=True);studio=ROOT/'analysis_results/panorama_studio_20260906_v2';s=(studio/'data.js').read_text();d=json.loads(s[s.index('=')+1:].strip().rstrip(';'));sources=[]
+                                                                                                                                                                                             ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/usr/lib/python3.13/json/decoder.py", line 348, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 1 column 3 (char 2)

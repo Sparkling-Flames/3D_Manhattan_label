@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>全景图审查问卷 · 50张</title>
+<style>
+*{box-sizing:border-box}body{font:17px/1.65 system-ui,sans-serif;background:#f2f5f7;color:#233746;margin:0}main{max-width:1250px;margin:auto;padding:24px}h1{font-size:28px;margin:0}h2{font-size:22px}p{margin:10px 0}a{color:#086594}button,select,input,textarea{font:inherit}button,select,.button{padding:9px 15px;border:1px solid #9aabb6;border-radius:7px;background:white;color:#233746;cursor:pointer}button:hover,.button:hover{background:#e9f3f8}button:disabled{opacity:.45;cursor:default}.primary,[aria-current=step]{background:#145d78!important;color:white!important;border-color:#145d78}.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:15px 0}.steps{position:sticky;top:0;background:#f2f5f7;padding:10px 0;z-index:2}.steps button{flex:1}section,.card{background:white;border:1px solid #dae2e7;border-radius:12px;padding:24px;margin:16px 0}fieldset{border:0;border-top:1px solid #e0e6eb;margin:22px 0;padding:20px 0 0}legend{font-weight:700;padding-right:12px}fieldset label{display:block;padding:10px 12px;margin:7px 0;border:1px solid #dae2e7;border-radius:7px;cursor:pointer}fieldset label:has(input:checked){border-color:#145d78;background:#eaf4f7}input{margin-right:10px}img{display:block;width:100%;height:auto;border-radius:5px}textarea{display:block;width:100%;min-height:120px;padding:12px;border:1px solid #9aabb6;border-radius:7px}.hint,small{color:#566c7a;font-size:15px}#image-id,#variant-info{overflow-wrap:anywhere}#error{color:#9f2621;background:#ffeded;padding:12px}details{padding:12px 0}summary{cursor:pointer;color:#086594;font-weight:600}[hidden]{display:none!important}#case-select{max-width:100%}#save-state{color:#365d48}#old-panel{border:1px solid #dae2e7}footer{padding-bottom:35px}@media(max-width:600px){main{padding:12px}section,.card{padding:14px}.steps button{padding:8px 4px;font-size:14px}h1{font-size:23px}}
+</style>
+<main>
+<h1>全景图审查问卷</h1>
+<p>一次看一张，按三步填写。看不清或暂时无法判断都可以如实记录。</p>
+<div class="bar"><button id="previous">← 上一张</button><select id="case-select" aria-label="选择审查图片"></select><button id="next">下一张 →</button><span id="progress"></span></div>
+<p id="image-id" class="hint"></p><p id="save-state" role="status" aria-live="polite"></p><p id="error" role="alert" hidden></p>
+<nav class="bar steps" aria-label="问卷步骤"><button data-step="1">① 看原图</button><button data-step="2">② 看布局与3D</button><button data-step="3">③ 记录与保存</button></nav>
+<form id="review-form" autocomplete="off">
+<details id="ai-advice" class="card"><summary>随时参考：AI观察、疑点与待判断问题（可边看图边展开）</summary><p class="hint">可以结合这些意见审查，也可以先独立看图。意见可能有误，不会预填你的答案；打开过此栏单独记入备份。认同或反对的理由都可写入备注。</p><p id="ai-observation" style="white-space:pre-line"></p><p id="ai-question"></p></details>
+<section data-panel="1">
+<h2>① 看原图，判断证据是否足够</h2>
+<p class="hint">沿水平方向看一圈，再检查地面、顶面、门洞与遮挡。全景两端在同一接缝相连；弯曲的投影线不等于真实墙面弯曲。</p>
+<a id="original-link" target="_blank"><img id="original" alt="无标注高清全景，点击打开原尺寸图片"></a>
+<p class="hint">原始2048×1024图片。点击可打开原尺寸；仍看不清时请选“证据不足”，不要勉强判断。</p>
+<fieldset><legend>1. 这张图的关键边界能看清吗？</legend>
+<label><input type="radio" name="visibility" value="clear">基本看清，足以继续对照</label><label><input type="radio" name="visibility" value="partial">部分看清，有遮挡或模糊区域</label><label><input type="radio" name="visibility" value="insufficient">证据不足，难以判断关键边界</label></fieldset>
+<fieldset><legend>场景适用性：你认为这张图是 OOS（超出当前标注规则适用范围）吗？</legend>
+<p class="hint">这是你本轮的独立意见，不自动排除图片或改写正式OOS结论。看不清、标注都有问题、Bi两头不同或3D生成失败，本身都不足以证明OOS。请结合原图和当前规则判断。</p>
+<label><input type="radio" name="oos_assessment" value="in_scope">目前认为适用当前规则（非OOS）</label>
+<label><input type="radio" name="oos_assessment" value="suspected">疑似OOS，还需核对证据或规则</label>
+<label><input type="radio" name="oos_assessment" value="reviewer_oos">我认为是OOS（本轮审查意见）</label>
+<label><input type="radio" name="oos_assessment" value="uncertain">暂时无法判断是否OOS</label>
+<label for="oos-reason">OOS依据／待核对问题</label>
+<p class="hint">请写具体区域、可见结构，以及与哪条规则不符。例如“左侧墙体疑似连续弧面，是否允许近似为直墙需核对”；示例不是预设排除条件。疑似／认为OOS时，标记本轮完成前须写理由，其余情况选填。</p>
+<textarea id="oos-reason" name="oos_reason" maxlength="100000" placeholder="哪处结构？与当前哪条规则冲突？还有什么不确定？"></textarea>
+<p id="oos-guidance" class="hint" hidden>可以继续对照布局，也可以直接记录与保存。后续范围／真人差异题可留空，留空表示未回答，不等于无分歧；已有答案仍保留。</p>
+<button type="button" id="oos-save-step" data-step="3" hidden>先记录OOS意见，前往保存 →</button>
+</fieldset>
+<fieldset><legend>2. 按目前的曼哈顿／enclosed规则，标注范围容易确定吗？</legend>
+<label><input type="radio" name="scope" value="one_clear">目前能指出一个较明确的范围</label><label><input type="radio" name="scope" value="multiple_candidates">能想到不同范围，需进一步核对规则或证据</label><label><input type="radio" name="scope" value="rule_unclear">主要是规则如何适用还不清楚</label><label><input type="radio" name="scope" value="uncertain">暂时无法判断</label></fieldset>
+<button type="button" class="primary" data-step="2">继续：看布局与3D →</button>
+</section>
+<section data-panel="2" hidden>
+<h2>② 对照标注和3D，定位差异</h2>
+<p>下面恢复了旧版展示：<strong>左侧标注全景，中间俯视，右侧斜视3D</strong>。切换来源逐一比较。</p>
+<div class="bar"><select id="variant-select" aria-label="选择布局来源"></select><a id="points-link" target="_blank">仅原始点（不推测连线）↗</a><a id="overlay-link" target="_blank">高清叠图（连接假设）↗</a><a id="studio-link" target="_blank">交互3D／调整角点顺序 ↗</a></div>
+<details id="order-help"><summary>怎样交换角点顺序并记录？</summary><ol><li>打开交互3D，在“标注来源”里选择你要核对的同一份布局；新窗口不会自动跟随这里的来源选择。</li><li>右侧“角点组预览顺序”：点选一组后前移／后移；也可在完整排列中输入原始组编号，点击“应用预览”。例如四组中交换第2、3组，输入 <code>1,3,2,4</code>。移动的是完整上下端点组，组编号从1开始，原始点ID另列。</li><li>对照全景点位与3D，再用“恢复原序”比较。重排后右侧拟合暂停，不代表调整失败或新顺序正确；上下配对无法读取时不能用整组换序补救。</li><li>切换来源或刷新前，点击“导出独立预览顺序记录”。回到本问卷，勾选“3D异常，怀疑点序／点对读取有问题”，在备注写布局名称、尝试顺序、观察理由及导出文件名。</li></ol><p class="hint">预览顺序JSON与问卷JSON分别保存；问卷备份不包含预览调整，预览JSON目前也不能直接导入工具恢复。可依据其中的组序手动重放。调整不覆盖原标注，也不自动更新本页静态图片。</p></details>
+<img id="old-panel" alt="旧版标注全景、俯视和斜视3D对照"><p id="variant-info" class="hint"></p>
+<p id="order-warning" role="note" hidden></p>
+<p class="hint">旧版是概览。独立关键点的导出排列未必是作者墙边顺序；旧失败图红色直线是脚本诊断线。新版左窗按输入点对顺序构建几何，右窗是拟合诊断，均不能证明作者意图；NO MESH也不能证明标注错误。<a href="ORDER_REVIEW_ZH.md" target="_blank">50图点序核查与勘误 ↗</a></p>
+<details><summary>同时展开全部旧版3D对照</summary><img id="all-panels" loading="lazy" alt="所有来源的旧版3D对照"></details>
+<details id="adjustments" hidden><summary>查看已有点序预览建议及保留意见（不修改原标注）</summary><div id="adjustment-content"></div></details>
+<fieldset><legend>对当前展示的标注，本身是否有疑问？（选填，与相互差异分开）</legend>
+<p class="hint">模型、参考和真人都可能有问题，不必从中选出一个正确答案。标注彼此一致，也可能一起出错；下题只针对本页所示版本。</p>
+<label><input type="radio" name="annotation_assessment" value="some_plausible">至少有一份目前看起来可作为候选，仍需核查</label><label><input type="radio" name="annotation_assessment" value="all_questionable">所示标注都有疑问，目前没有一份可直接接受</label><label><input type="radio" name="annotation_assessment" value="not_all_checked">尚未逐份看完，不能评价整体</label><label><input type="radio" name="annotation_assessment" value="uncertain">证据或规则不足，无法判断任何一份是否可靠</label></fieldset>
+<fieldset><legend>3. 值得记录哪些问题？（可多选，也可留空）</legend>
+<label><input type="checkbox" name="factors" value="scope">不同布局圈定的范围不同</label><label><input type="checkbox" name="factors" value="occlusion">门洞、遮挡或边界证据不足</label><label><input type="checkbox" name="factors" value="local">局部点位或角点数量不同</label><label><input type="checkbox" name="factors" value="rule">边界较清楚，但规则执行可能不同</label><label><input type="checkbox" name="factors" value="sequence">3D异常，怀疑点序／点对读取有问题</label><label><input type="checkbox" name="factors" value="reference">参考布局本身值得核查</label><label><input type="checkbox" name="factors" value="assumptions">预览假设可能不适合这张图</label></fieldset>
+<fieldset id="human-question"><legend>4. 页面展示的真人响应之间，差异主要是什么？</legend>
+<p class="hint">这里仅展示部分真人响应／簇代表，不能据此断言所有人的分歧。“较接近”不代表正确；即使所有标注有问题，也可以描述它们相互之间的差异。</p>
+<label><input type="radio" name="human_difference" value="similar">所示响应看起来较接近</label><label><input type="radio" name="human_difference" value="local">主要是局部点位或角点数量差异</label><label><input type="radio" name="human_difference" value="scope">主要是范围差异</label><label><input type="radio" name="human_difference" value="mixed">有多种差异，难以单独归类</label><label><input type="radio" name="human_difference" value="uncertain">展示不足或暂时无法判断</label></fieldset>
+<p id="no-humans" class="hint" hidden>这张候选图没有历史真人响应，第4题不适用。模型差异不能代替真人分歧。</p>
+<button type="button" class="primary" data-step="3">继续：记录与保存 →</button>
+</section>
+<section data-panel="3" hidden>
+<h2>③ 留下你的观察</h2>
+<label for="notes"><strong>5. 具体在哪，为什么不确定？（选填）</strong></label>
+<p class="hint">可写：哪份布局／哪号点有问题；是否每份都需修改；你认同或反对哪条AI意见；还缺什么证据。无需写成论文结论。</p>
+<textarea id="notes" name="notes" maxlength="100000" placeholder="例如：右侧门洞后是否属于本次范围不确定；Bi两头在这里不同，需要结合规则确认。"></textarea>
+<fieldset><legend>6. 这张图目前处于什么状态？</legend>
+<label><input type="radio" name="status" value="draft">草稿，还想继续看</label><label><input type="radio" name="status" value="deferred">暂缓，需更清楚的证据或进一步讨论</label><label><input type="radio" name="status" value="reviewed">本轮记录完成（允许仍不确定，不代表最终裁决）</label></fieldset>
+<button type="button" class="primary" id="save-next">保存本张，进入下一张 →</button>
+</section>
+</form>
+<footer class="card"><strong>保存与备份</strong><p>填写时自动暂存在<strong>当前浏览器</strong>。换浏览器、清除缓存或移动入口后可能无法找到暂存；每次结束请导出JSON备份。CSV用于汇总阅读。</p><div class="bar"><button id="export-json">导出JSON备份</button><button id="export-csv">导出CSV汇总</button><label class="button">导入JSON继续填写<input id="import-json" type="file" accept=".json,application/json" hidden></label></div><p id="footer-count"></p><p class="hint">问卷答案不会自动改写仓库文件、原坐标或人工最终裁决。<a href="QUESTIONNAIRE_ZH.md">填写与字段说明</a> · <a href="case_index.html">旧版资料目录</a></p></footer>
+</main><script src="questionnaire_data.js"></script><script src="questionnaire.js"></script></html>

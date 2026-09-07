@@ -1,0 +1,1557 @@
+{
+  "schema_version": "panorama_studio_bundle_v1",
+  "cases": [
+    {
+      "image_id": "B6ByNegPMKs_d7ade8d217fe4d068fc3629dd2510898",
+      "title": "V05 · 高清辅助检查",
+      "image_source": "D:\\Work\\HOHONET\\analysis_results\\uncertainty_visual_review_20260907_v1\\cases\\V05\\hd\\panorama.png",
+      "missing_sources": [],
+      "image_size": [
+        2048,
+        1024
+      ],
+      "variants": [
+        {
+          "name": "Bi-Layout_enclosed · 原始点组",
+          "source": {
+            "name": "Bi-Layout_enclosed · 原始点组",
+            "path": "D:\\Work\\HOHONET\\analysis_results\\uncertainty_visual_review_20260907_v1\\cases\\V05\\hd\\00_Bi-Layout_enclosed.json",
+            "role": "raw_review",
+            "source_id": "B6ByNegPMKs_d7ade8d217fe4d068fc3629dd2510898|Bi-Layout|enclosed|offline_dual_prediction",
+            "original_source": "D:\\Work\\HOHONET\\analysis_results\\uncertainty_visual_review_20260907_v1\\cases\\V05\\00_Bi-Layout_enclosed_source.json",
+            "parse_error": ""
+          },
+          "geometry": {
+            "schema_version": "panorama_studio_v1",
+            "width": 1024.0,
+            "height": 512.0,
+            "pairs": [
+              {
+                "source_pair_id": "raw:0/1",
+                "display_index": 1,
+                "top": [
+                  711.0,
+                  151.0
+                ],
+                "bottom": [
+                  711.0,
+                  375.0
+                ]
+              },
+              {
+                "source_pair_id": "raw:2/3",
+                "display_index": 2,
+                "top": [
+                  935.0,
+                  192.0
+                ],
+                "bottom": [
+                  935.0,
+                  330.0
+                ]
+              },
+              {
+                "source_pair_id": "raw:4/5",
+                "display_index": 3,
+                "top": [
+                  141.0,
+                  207.0
+                ],
+                "bottom": [
+                  141.0,
+                  314.0
+                ]
+              },
+              {
+                "source_pair_id": "raw:6/7",
+                "display_index": 4,
+                "top": [
+                  285.0,
+                  194.0
+                ],
+                "bottom": [
+                  285.0,
+                  328.0
+                ]
+              }
+            ],
+            "raw": {
+              "floor": [
+                [
+                  1.0494025340095448,
+                  -1.0,
+                  -0.38276171654790375
+                ],
+                [
+                  1.0641009747431374,
+                  -1.0,
+                  1.750891499497729
+                ],
+                [
+                  -2.0478370774050108,
+                  -1.0,
+                  1.7446763974594006
+                ],
+                [
+                  -2.080937402858697,
+                  -1.0,
+                  -0.37424398059787384
+                ]
+              ],
+              "ceiling": [
+                [
+                  1.049402534009545,
+                  0.8391173586971573,
+                  -0.38276171654790386
+                ],
+                [
+                  1.0641009747431374,
+                  0.8486761755313647,
+                  1.7508914994977287
+                ],
+                [
+                  -2.0478370774050108,
+                  0.8341434357765346,
+                  1.7446763974594004
+                ],
+                [
+                  -2.080937402858697,
+                  0.845534845086286,
+                  -0.3742439805978738
+                ]
+              ],
+              "floor_triangles": [
+                [
+                  3,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2,
+                  3
+                ]
+              ],
+              "ceiling_triangles": [
+                [
+                  3,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2,
+                  3
+                ]
+              ],
+              "metrics": {
+                "heading_frame_deg": 89.72647602750772,
+                "heading_mean_deg": 0.3120465189863024,
+                "heading_max_deg": 0.6214387291254932,
+                "height_relative_spread": 0.007888255906436915
+              },
+              "issues": [],
+              "surface_valid": true
+            },
+            "fit": {
+              "status": "ok",
+              "floor": [
+                [
+                  1.0507887972270833,
+                  -1.0,
+                  -0.3846462206348222
+                ],
+                [
+                  1.0609481668039562,
+                  -1.0,
+                  1.7434472404595704
+                ],
+                [
+                  -2.0628073335270063,
+                  -1.0,
+                  1.7583598310839181
+                ],
+                [
+                  -2.0729667031038805,
+                  -1.0,
+                  -0.36973363001047393
+                ]
+              ],
+              "ceiling": [
+                [
+                  1.0507887972270833,
+                  0.8419519401543283,
+                  -0.3846462206348222
+                ],
+                [
+                  1.0609481668039562,
+                  0.8419519401543283,
+                  1.7434472404595704
+                ],
+                [
+                  -2.0628073335270063,
+                  0.8419519401543283,
+                  1.7583598310839181
+                ],
+                [
+                  -2.0729667031038805,
+                  0.8419519401543283,
+                  -0.36973363001047393
+                ]
+              ],
+              "floor_triangles": [
+                [
+                  3,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2,
+                  3
+                ]
+              ],
+              "ceiling_triangles": [
+                [
+                  3,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2,
+                  3
+                ]
+              ],
+              "reprojected_pairs": [
+                {
+                  "source_pair_id": "raw:0/1",
+                  "top": [
+                    710.8113304580246,
+                    150.87246360890248
+                  ],
+                  "bottom": [
+                    710.8113304580246,
+                    374.8588354029458
+                  ]
+                },
+                {
+                  "source_pair_id": "raw:2/3",
+                  "top": [
+                    934.9064130716238,
+                    192.23263831357826
+                  ],
+                  "bottom": [
+                    934.9064130716238,
+                    330.2515804934334
+                  ]
+                },
+                {
+                  "source_pair_id": "raw:4/5",
+                  "top": [
+                    140.95746446446174,
+                    206.916429395457
+                  ],
+                  "bottom": [
+                    140.95746446446174,
+                    313.60162016055125
+                  ]
+                },
+                {
+                  "source_pair_id": "raw:6/7",
+                  "top": [
+                    284.76561795188184,
+                    194.00849386744574
+                  ],
+                  "bottom": [
+                    284.76561795188184,
+                    328.2582983428427
+                  ]
+                }
+              ],
+              "residual_mean_deg": 0.08592746251461492,
+              "residual_max_deg": 0.14075570814563385,
+              "per_pair_residual_deg": [
+                {
+                  "top": 0.06943458828319338,
+                  "bottom": 0.07005062875621873
+                },
+                {
+                  "top": 0.08725612598281707,
+                  "bottom": 0.09325418026317076
+                },
+                {
+                  "top": 0.032667652746754317,
+                  "bottom": 0.14075570814563385
+                },
+                {
+                  "top": 0.07656789172318451,
+                  "bottom": 0.11743292421594675
+                }
+              ],
+              "metrics": {
+                "heading_frame_deg": 89.72647602750772,
+                "heading_mean_deg": 1.90833280887811e-14,
+                "heading_max_deg": 5.088887490341627e-14,
+                "height_relative_spread": 0.0
+              },
+              "solver_message": "Optimization terminated successfully",
+              "axis_assignment": [
+                0,
+                1,
+                0,
+                1
+              ],
+              "iterations": 23
+            },
+            "camera_height": 1,
+            "scale_unit": "relative",
+            "assumptions": [
+              "horizontal_floor",
+              "ceiling_range_from_paired_floor",
+              "no_annotation_writeback"
+            ],
+            "numerical_guards": {
+              "horizon_degrees": 0.5,
+              "axis_ambiguity_degrees": 40
+            }
+          }
+        },
+        {
+          "name": "Bi-Layout_extended · 原始点组",
+          "source": {
+            "name": "Bi-Layout_extended · 原始点组",
+            "path": "D:\\Work\\HOHONET\\analysis_results\\uncertainty_visual_review_20260907_v1\\cases\\V05\\hd\\01_Bi-Layout_extended.json",
+            "role": "raw_review",
+            "source_id": "B6ByNegPMKs_d7ade8d217fe4d068fc3629dd2510898|Bi-Layout|extended|offline_dual_prediction",
+            "original_source": "D:\\Work\\HOHONET\\analysis_results\\uncertainty_visual_review_20260907_v1\\cases\\V05\\01_Bi-Layout_extended_source.json",
+            "parse_error": ""
+          },
+          "geometry": {
+            "schema_version": "panorama_studio_v1",
+            "width": 1024.0,
+            "height": 512.0,
+            "pairs": [
+              {
+                "source_pair_id": "raw:0/1",
+                "display_index": 1,
+                "top": [
+                  711.0,
+                  150.0
+                ],
+                "bottom": [
+                  711.0,
+                  375.0
+                ]
+              },
+              {
+                "source_pair_id": "raw:2/3",
+                "display_index": 2,
+                "top": [
+                  935.0,
+                  192.0
+                ],
+                "bottom": [
+                  935.0,
+                  330.0
+                ]
+              },
+              {
+                "source_pair_id": "raw:4/5",
+                "display_index": 3,
+                "top": [
+                  141.0,
+                  207.0
+                ],
+                "bottom": [
+                  141.0,
+                  314.0
+                ]
+              },
+              {
+                "source_pair_id": "raw:6/7",
+                "display_index": 4,
+                "top": [
+                  285.0,
+                  194.0
+                ],
+                "bottom": [
+                  285.0,
+                  328.0
+                ]
+              }
+            ],
+            "raw": {
+              "floor": [
+                [
+                  1.0494025340095448,
+                  -1.0,
+                  -0.38276171654790375
+                ],
+                [
+                  1.0641009747431374,
+                  -1.0,
+                  1.750891499497729
+                ],
+                [
+                  -2.0478370774050108,
+                  -1.0,
+                  1.7446763974594006
+                ],
+                [
+                  -2.080937402858697,
+                  -1.0,
+                  -0.37424398059787384
+                ]
+              ],
+              "ceiling": [
+                [
+                  1.0494025340095448,
+                  0.8498889179193432,
+                  -0.3827617165479038
+                ],
+                [
+                  1.0641009747431374,
+                  0.8486761755313647,
+                  1.7508914994977287
+                ],
+                [
+                  -2.0478370774050108,
+                  0.8341434357765346,
+                  1.7446763974594004
+                ],
+                [
+                  -2.080937402858697,
+                  0.845534845086286,
+                  -0.3742439805978738
+                ]
+              ],
+              "floor_triangles": [
+                [
+                  3,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2,
+                  3
+                ]
+              ],
+              "ceiling_triangles": [
+                [
+                  3,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2,
+                  3
+                ]
+              ],
+              "metrics": {
+                "heading_frame_deg": 89.72647602750772,
+                "heading_mean_deg": 0.3120465189863024,
+                "heading_max_deg": 0.6214387291254932,
+                "height_relative_spread": 0.008524408624700672
+              },
+              "issues": [],
+              "surface_valid": true
+            },
+            "fit": {
+              "status": "ok",
+              "floor": [
+                [
+                  1.0492412283663344,
+                  -1.0,
+                  -0.3841645331496921
+                ],
+                [
+                  1.0594054335049519,
+                  -1.0,
+                  1.744941837973328
+                ],
+                [
+                  -2.065702698326818,
+                  -1.0,
+                  1.759860885966005
+                ],
+                [
+                  -2.0758669034654367,
+                  -1.0,
+                  -0.3692454851570142
+                ]
+              ],
+              "ceiling": [
+                [
+                  1.0492412283663344,
+                  0.8463510484320883,
+                  -0.3841645331496921
+                ],
+                [
+                  1.0594054335049519,
+                  0.8463510484320883,
+                  1.744941837973328
+                ],
+                [
+                  -2.065702698326818,
+                  0.8463510484320883,
+                  1.759860885966005
+                ],
+                [
+                  -2.0758669034654367,
+                  0.8463510484320883,
+                  -0.3692454851570142
+                ]
+              ],
+              "floor_triangles": [
+                [
+                  3,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2,
+                  3
+                ]
+              ],
+              "ceiling_triangles": [
+                [
+                  3,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2,
+                  3
+                ]
+              ],
+              "reprojected_pairs": [
+                {
+                  "source_pair_id": "raw:0/1",
+                  "top": [
+                    710.7997144801657,
+                    150.35059331258117
+                  ],
+                  "bottom": [
+                    710.7997144801657,
+                    374.976077516636
+                  ]
+                },
+                {
+                  "source_pair_id": "raw:2/3",
+                  "top": [
+                    935.0736584787153,
+                    191.94611122332535
+                  ],
+                  "bottom": [
+                    935.0736584787153,
+                    330.23656868730865
+                  ]
+                },
+                {
+                  "source_pair_id": "raw:4/5",
+                  "top": [
+                    141.00166016183726,
+                    206.72960744894743
+                  ],
+                  "bottom": [
+                    141.00166016183726,
+                    313.53964711203713
+                  ]
+                },
+                {
+                  "source_pair_id": "raw:6/7",
+                  "top": [
+                    284.6891102174483,
+                    193.7892507689774
+                  ],
+                  "bottom": [
+                    284.6891102174483,
+                    328.1753190524263
+                  ]
+                }
+              ],
+              "residual_mean_deg": 0.10054915822245969,
+              "residual_max_deg": 0.16184373778708433,
+              "per_pair_residual_deg": [
+                {
+                  "top": 0.13541494570594045,
+                  "bottom": 0.053134921170848476
+                },
+                {
+                  "top": 0.030515910000929295,
+                  "bottom": 0.0863609639751939
+                },
+                {
+                  "top": 0.09506151498170529,
+                  "bottom": 0.16184373778708433
+                },
+                {
+                  "top": 0.12563058054695586,
+                  "bottom": 0.1164306916110199
+                }
+              ],
+              "metrics": {
+                "heading_frame_deg": 89.72647602750772,
+                "heading_mean_deg": 1.5902773407317584e-14,
+                "heading_max_deg": 5.088887490341627e-14,
+                "height_relative_spread": 0.0
+              },
+              "solver_message": "Optimization terminated successfully",
+              "axis_assignment": [
+                0,
+                1,
+                0,
+                1
+              ],
+              "iterations": 22
+            },
+            "camera_height": 1,
+            "scale_unit": "relative",
+            "assumptions": [
+              "horizontal_floor",
+              "ceiling_range_from_paired_floor",
+              "no_annotation_writeback"
+            ],
+            "numerical_guards": {
+              "horizon_degrees": 0.5,
+              "axis_ambiguity_degrees": 40
+            }
+          }
+        },
+        {
+          "name": "HoHoNet_single · 原始点组",
+          "source": {
+            "name": "HoHoNet_single · 原始点组",
+            "path": "D:\\Work\\HOHONET\\analysis_results\\uncertainty_visual_review_20260907_v1\\cases\\V05\\hd\\02_HoHoNet_single.json",
+            "role": "raw_review",
+            "source_id": "B6ByNegPMKs_d7ade8d217fe4d068fc3629dd2510898|HoHoNet|single|offline_ep300_replay",
+            "original_source": "D:\\Work\\HOHONET\\analysis_results\\uncertainty_visual_review_20260907_v1\\cases\\V05\\02_HoHoNet_single_source.json",
+            "parse_error": ""
+          },
+          "geometry": {
+            "schema_version": "panorama_studio_v1",
+            "width": 1024.0,
+            "height": 512.0,
+            "pairs": [
+              {
+                "source_pair_id": "raw:0/1",
+                "display_index": 1,
+                "top": [
+                  154.60000610351562,
+                  209.1999969482422
+                ],
+                "bottom": [
+                  154.60000610351562,
+                  310.3999938964844
+                ]
+              },
+              {
+                "source_pair_id": "raw:2/3",
+                "display_index": 2,
+                "top": [
+                  282.20001220703125,
+                  200.10000610351562
+                ],
+                "bottom": [
+                  282.20001220703125,
+                  320.79998779296875
+                ]
+              },
+              {
+                "source_pair_id": "raw:4/5",
+                "display_index": 3,
+                "top": [
+                  710.2999877929688,
+                  151.10000610351562
+                ],
+                "bottom": [
+                  710.2999877929688,
+                  374.29998779296875
+                ]
+              },
+              {
+                "source_pair_id": "raw:6/7",
+                "display_index": 4,
+                "top": [
+                  931.4000244140625,
+                  190.0
+                ],
+                "bottom": [
+                  931.4000244140625,
+                  332.20001220703125
+                ]
+              }
+            ],
+            "raw": {
+              "floor": [
+                [
+                  -2.343365908893644,
+                  -1.0,
+                  1.6806833685933595
+                ],
+                [
+                  -2.350384987260737,
+                  -1.0,
+                  -0.38113994344500013
+                ],
+                [
+                  1.056848329994407,
+                  -1.0,
+                  -0.3906289225131631
+                ],
+                [
+                  1.0657706099770947,
+                  -1.0,
+                  1.669406899377211
+                ]
+              ],
+              "ceiling": [
+                [
+                  -2.343365908893644,
+                  0.8516424471909392,
+                  1.6806833685933598
+                ],
+                [
+                  -2.3503849872607376,
+                  0.8503188950174152,
+                  -0.3811399434450002
+                ],
+                [
+                  1.0568483299944071,
+                  0.8453238909585352,
+                  -0.39062892251316317
+                ],
+                [
+                  1.0657706099770947,
+                  0.8490152015442257,
+                  1.669406899377211
+                ]
+              ],
+              "floor_triangles": [
+                [
+                  3,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2,
+                  3
+                ]
+              ],
+              "ceiling_triangles": [
+                [
+                  3,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2,
+                  3
+                ]
+              ],
+              "metrics": {
+                "heading_frame_deg": 89.80772600169229,
+                "heading_mean_deg": 0.023530554627186468,
+                "heading_max_deg": 0.0558798370341315,
+                "height_relative_spread": 0.003416050601256461
+              },
+              "issues": [],
+              "surface_valid": true
+            },
+            "fit": {
+              "status": "ok",
+              "floor": [
+                [
+                  -2.3407069274127297,
+                  -1.0,
+                  1.6793921225229844
+                ],
+                [
+                  -2.3476179540518727,
+                  -1.0,
+                  -0.3800187993661173
+                ],
+                [
+                  1.0583705507775099,
+                  -1.0,
+                  -0.3914487073263486
+                ],
+                [
+                  1.0652815774166526,
+                  -1.0,
+                  1.6679622145627522
+                ]
+              ],
+              "ceiling": [
+                [
+                  -2.3407069274127297,
+                  0.8481135562546372,
+                  1.6793921225229844
+                ],
+                [
+                  -2.3476179540518727,
+                  0.8481135562546372,
+                  -0.3800187993661173
+                ],
+                [
+                  1.0583705507775099,
+                  0.8481135562546372,
+                  -0.3914487073263486
+                ],
+                [
+                  1.0652815774166526,
+                  0.8481135562546372,
+                  1.6679622145627522
+                ]
+              ],
+              "floor_triangles": [
+                [
+                  3,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2,
+                  3
+                ]
+              ],
+              "ceiling_triangles": [
+                [
+                  3,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2,
+                  3
+                ]
+              ],
+              "reprojected_pairs": [
+                {
+                  "source_pair_id": "raw:0/1",
+                  "top": [
+                    154.5716973359368,
+                    209.33888617171937
+                  ],
+                  "bottom": [
+                    154.5716973359368,
+                    310.4510035815025
+                  ]
+                },
+                {
+                  "source_pair_id": "raw:2/3",
+                  "top": [
+                    282.1545245774222,
+                    200.17087717262092
+                  ],
+                  "bottom": [
+                    282.1545245774222,
+                    320.87118683352264
+                  ]
+                },
+                {
+                  "source_pair_id": "raw:4/5",
+                  "top": [
+                    710.2651528998031,
+                    150.960999068616
+                  ],
+                  "bottom": [
+                    710.2651528998031,
+                    374.1771495561376
+                  ]
+                },
+                {
+                  "source_pair_id": "raw:6/7",
+                  "top": [
+                    931.3699516258682,
+                    190.01856577167143
+                  ],
+                  "bottom": [
+                    931.3699516258682,
+                    332.24906540502445
+                  ]
+                }
+              ],
+              "residual_mean_deg": 0.03168970546498407,
+              "residual_max_deg": 0.04984121815602424,
+              "per_pair_residual_deg": [
+                {
+                  "top": 0.04975261658147805,
+                  "bottom": 0.020248518629230154
+                },
+                {
+                  "top": 0.029114146619242963,
+                  "bottom": 0.029049938837586164
+                },
+                {
+                  "top": 0.04984121815602424,
+                  "bottom": 0.04414661282701136
+                },
+                {
+                  "top": 0.01170609297700483,
+                  "bottom": 0.019658499092294796
+                }
+              ],
+              "metrics": {
+                "heading_frame_deg": 89.80772600169229,
+                "heading_mean_deg": 9.54166404439055e-15,
+                "heading_max_deg": 2.5444437451708134e-14,
+                "height_relative_spread": 0.0
+              },
+              "solver_message": "Optimization terminated successfully",
+              "axis_assignment": [
+                0,
+                1,
+                0,
+                1
+              ],
+              "iterations": 23
+            },
+            "camera_height": 1,
+            "scale_unit": "relative",
+            "assumptions": [
+              "horizontal_floor",
+              "ceiling_range_from_paired_floor",
+              "no_annotation_writeback"
+            ],
+            "numerical_guards": {
+              "horizon_degrees": 0.5,
+              "axis_ambiguity_degrees": 40
+            }
+          }
+        },
+        {
+          "name": "reference_0 · 原始点组",
+          "source": {
+            "name": "reference_0 · 原始点组",
+            "path": "D:\\Work\\HOHONET\\analysis_results\\uncertainty_visual_review_20260907_v1\\cases\\V05\\hd\\03_reference_0.json",
+            "role": "raw_review",
+            "source_id": "B6ByNegPMKs_d7ade8d217fe4d068fc3629dd2510898|reference|dataset_label|candidate_dataset_reference",
+            "original_source": "D:\\Work\\HOHONET\\analysis_results\\uncertainty_visual_review_20260907_v1\\cases\\V05\\03_reference_0_source.json",
+            "parse_error": ""
+          },
+          "geometry": {
+            "schema_version": "panorama_studio_v1",
+            "width": 1024.0,
+            "height": 512.0,
+            "pairs": [
+              {
+                "source_pair_id": "raw:0/1",
+                "display_index": 1,
+                "top": [
+                  719.1300048828125,
+                  139.75
+                ],
+                "bottom": [
+                  719.1300048828125,
+                  374.6400146484375
+                ]
+              },
+              {
+                "source_pair_id": "raw:2/3",
+                "display_index": 2,
+                "top": [
+                  930.1900024414062,
+                  181.35000610351562
+                ],
+                "bottom": [
+                  930.1900024414062,
+                  332.5799865722656
+                ]
+              },
+              {
+                "source_pair_id": "raw:4/5",
+                "display_index": 3,
+                "top": [
+                  145.72999572753906,
+                  198.52999877929688
+                ],
+                "bottom": [
+                  145.72999572753906,
+                  315.04998779296875
+                ]
+              },
+              {
+                "source_pair_id": "raw:6/7",
+                "display_index": 4,
+                "top": [
+                  282.0400085449219,
+                  184.92999267578125
+                ],
+                "bottom": [
+                  282.0400085449219,
+                  328.92999267578125
+                ]
+              }
+            ],
+            "raw": {
+              "floor": [
+                [
+                  1.071938377895378,
+                  -1.0,
+                  -0.3314279497008776
+                ],
+                [
+                  1.0719167923993218,
+                  -1.0,
+                  1.6518643071804129
+                ],
+                [
+                  -2.056927655227397,
+                  -1.0,
+                  1.651850734282732
+                ],
+                [
+                  -2.0569397683716932,
+                  -1.0,
+                  -0.33148246146275484
+                ]
+              ],
+              "ceiling": [
+                [
+                  1.071938377895378,
+                  0.970854403910533,
+                  -0.3314279497008775
+                ],
+                [
+                  1.0719167923993218,
+                  0.9708406049688235,
+                  1.651864307180413
+                ],
+                [
+                  -2.056927655227397,
+                  0.970855807038862,
+                  1.6518507342827322
+                ],
+                [
+                  -2.0569397683716932,
+                  0.9709022290074287,
+                  -0.3314824614627549
+                ]
+              ],
+              "floor_triangles": [
+                [
+                  3,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2,
+                  3
+                ]
+              ],
+              "ceiling_triangles": [
+                [
+                  3,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2,
+                  3
+                ]
+              ],
+              "metrics": {
+                "heading_frame_deg": 0.0004346183639133125,
+                "heading_mean_deg": 0.0004307967843356911,
+                "heading_max_deg": 0.0007845505116079236,
+                "height_relative_spread": 3.126766571228016e-05
+              },
+              "issues": [],
+              "surface_valid": true
+            },
+            "fit": {
+              "status": "ok",
+              "floor": [
+                [
+                  1.0719459925233485,
+                  -1.0,
+                  -0.33143529695109725
+                ],
+                [
+                  1.0719309480475738,
+                  -1.0,
+                  1.6518793497288493
+                ],
+                [
+                  -2.0569263045471677,
+                  -1.0,
+                  1.6518556157150766
+                ],
+                [
+                  -2.056911260071392,
+                  -1.0,
+                  -0.3314590309648697
+                ]
+              ],
+              "ceiling": [
+                [
+                  1.0719459925233485,
+                  0.9708645182358504,
+                  -0.33143529695109725
+                ],
+                [
+                  1.0719309480475738,
+                  0.9708645182358504,
+                  1.6518793497288493
+                ],
+                [
+                  -2.0569263045471677,
+                  0.9708645182358504,
+                  1.6518556157150766
+                ],
+                [
+                  -2.056911260071392,
+                  0.9708645182358504,
+                  -0.3314590309648697
+                ]
+              ],
+              "floor_triangles": [
+                [
+                  3,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2,
+                  3
+                ]
+              ],
+              "ceiling_triangles": [
+                [
+                  3,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2,
+                  3
+                ]
+              ],
+              "reprojected_pairs": [
+                {
+                  "source_pair_id": "raw:0/1",
+                  "top": [
+                    719.1293120146844,
+                    139.74983872870376
+                  ],
+                  "bottom": [
+                    719.1293120146844,
+                    374.6393332039529
+                  ]
+                },
+                {
+                  "source_pair_id": "raw:2/3",
+                  "top": [
+                    930.1896973615416,
+                    181.3490811215903
+                  ],
+                  "bottom": [
+                    930.1896973615416,
+                    332.57930749685295
+                  ]
+                },
+                {
+                  "source_pair_id": "raw:4/5",
+                  "top": [
+                    145.7297083526807,
+                    198.5295649305283
+                  ],
+                  "bottom": [
+                    145.7297083526807,
+                    315.04994677279063
+                  ]
+                },
+                {
+                  "source_pair_id": "raw:6/7",
+                  "top": [
+                    282.0385538705294,
+                    184.9314617069573
+                  ],
+                  "bottom": [
+                    282.0385538705294,
+                    328.9309652752224
+                  ]
+                }
+              ],
+              "residual_mean_deg": 0.0003291173649128849,
+              "residual_max_deg": 0.0006939777558350559,
+              "per_pair_residual_deg": [
+                {
+                  "top": 0.00019272965508380528,
+                  "bottom": 0.0003007681094058567
+                },
+                {
+                  "top": 0.0003391194571318461,
+                  "bottom": 0.0002571784018605994
+                },
+                {
+                  "top": 0.00017959248841112395,
+                  "bottom": 9.556519453351535e-05
+                },
+                {
+                  "top": 0.0006939777558350559,
+                  "bottom": 0.0005740078570412763
+                }
+              ],
+              "metrics": {
+                "heading_frame_deg": 0.0004346183639133125,
+                "heading_mean_deg": 6.3611093629270335e-15,
+                "heading_max_deg": 2.5444437451708134e-14,
+                "height_relative_spread": 0.0
+              },
+              "solver_message": "Optimization terminated successfully",
+              "axis_assignment": [
+                1,
+                0,
+                1,
+                0
+              ],
+              "iterations": 7
+            },
+            "camera_height": 1,
+            "scale_unit": "relative",
+            "assumptions": [
+              "horizontal_floor",
+              "ceiling_range_from_paired_floor",
+              "no_annotation_writeback"
+            ],
+            "numerical_guards": {
+              "horizon_degrees": 0.5,
+              "axis_ambiguity_degrees": 40
+            }
+          }
+        },
+        {
+          "name": "reference_1 · 原始点组",
+          "source": {
+            "name": "reference_1 · 原始点组",
+            "path": "D:\\Work\\HOHONET\\analysis_results\\uncertainty_visual_review_20260907_v1\\cases\\V05\\hd\\04_reference_1.json",
+            "role": "raw_review",
+            "source_id": "B6ByNegPMKs_d7ade8d217fe4d068fc3629dd2510898|public_import|test|0",
+            "original_source": "D:\\Work\\HOHONET\\analysis_results\\uncertainty_visual_review_20260907_v1\\cases\\V05\\04_reference_1_source.json",
+            "parse_error": ""
+          },
+          "geometry": {
+            "schema_version": "panorama_studio_v1",
+            "width": 1024.0,
+            "height": 512.0,
+            "pairs": [
+              {
+                "source_pair_id": "raw:0/1",
+                "display_index": 1,
+                "top": [
+                  719.13,
+                  139.75
+                ],
+                "bottom": [
+                  719.13,
+                  374.64
+                ]
+              },
+              {
+                "source_pair_id": "raw:2/3",
+                "display_index": 2,
+                "top": [
+                  930.19,
+                  181.35
+                ],
+                "bottom": [
+                  930.19,
+                  332.58
+                ]
+              },
+              {
+                "source_pair_id": "raw:4/5",
+                "display_index": 3,
+                "top": [
+                  145.73,
+                  198.53
+                ],
+                "bottom": [
+                  145.73,
+                  315.05
+                ]
+              },
+              {
+                "source_pair_id": "raw:6/7",
+                "display_index": 4,
+                "top": [
+                  282.04,
+                  184.93
+                ],
+                "bottom": [
+                  282.04,
+                  328.93
+                ]
+              }
+            ],
+            "raw": {
+              "floor": [
+                [
+                  1.0719385619391046,
+                  -1.0,
+                  -0.3314280417905788
+                ],
+                [
+                  1.0719165983834762,
+                  -1.0,
+                  1.651863954003471
+                ],
+                [
+                  -2.056927233687582,
+                  -1.0,
+                  1.6518503070585868
+                ],
+                [
+                  -2.0569395487852566,
+                  -1.0,
+                  -0.3314823154274957
+                ]
+              ],
+              "ceiling": [
+                [
+                  1.0719385619391046,
+                  0.9708545795922955,
+                  -0.3314280417905788
+                ],
+                [
+                  1.0719165983834762,
+                  0.9708404985082006,
+                  1.651863954003471
+                ],
+                [
+                  -2.0569272336875826,
+                  0.9708555651998642,
+                  1.651850307058587
+                ],
+                [
+                  -2.0569395487852566,
+                  0.9709020031898852,
+                  -0.33148231542749573
+                ]
+              ],
+              "floor_triangles": [
+                [
+                  3,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2,
+                  3
+                ]
+              ],
+              "ceiling_triangles": [
+                [
+                  3,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2,
+                  3
+                ]
+              ],
+              "metrics": {
+                "heading_frame_deg": 0.0004346858326955526,
+                "heading_mean_deg": 0.00043355670085647125,
+                "heading_max_deg": 0.0007904522397309329,
+                "height_relative_spread": 3.120710525394312e-05
+              },
+              "issues": [],
+              "surface_valid": true
+            },
+            "fit": {
+              "status": "ok",
+              "floor": [
+                [
+                  1.07194589116362,
+                  -1.0,
+                  -0.33143526667916884
+                ],
+                [
+                  1.0719308443546278,
+                  -1.0,
+                  1.6518790848060327
+                ],
+                [
+                  -2.0569260463329777,
+                  -1.0,
+                  1.6518553471106125
+                ],
+                [
+                  -2.0569109995239847,
+                  -1.0,
+                  -0.331459004374589
+                ]
+              ],
+              "ceiling": [
+                [
+                  1.07194589116362,
+                  0.9708643773658617,
+                  -0.33143526667916884
+                ],
+                [
+                  1.0719308443546278,
+                  0.9708643773658617,
+                  1.6518790848060327
+                ],
+                [
+                  -2.0569260463329777,
+                  0.9708643773658617,
+                  1.6518553471106125
+                ],
+                [
+                  -2.0569109995239847,
+                  0.9708643773658617,
+                  -0.331459004374589
+                ]
+              ],
+              "floor_triangles": [
+                [
+                  3,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2,
+                  3
+                ]
+              ],
+              "ceiling_triangles": [
+                [
+                  3,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2,
+                  3
+                ]
+              ],
+              "reprojected_pairs": [
+                {
+                  "source_pair_id": "raw:0/1",
+                  "top": [
+                    719.1293118665451,
+                    139.74984282705708
+                  ],
+                  "bottom": [
+                    719.1293118665451,
+                    374.639340835598
+                  ]
+                },
+                {
+                  "source_pair_id": "raw:2/3",
+                  "top": [
+                    930.1896926253473,
+                    181.34908135292926
+                  ],
+                  "bottom": [
+                    930.1896926253473,
+                    332.5793168080187
+                  ]
+                },
+                {
+                  "source_pair_id": "raw:4/5",
+                  "top": [
+                    145.7297113024935,
+                    198.52956519612601
+                  ],
+                  "bottom": [
+                    145.7297113024935,
+                    315.04995433876763
+                  ]
+                },
+                {
+                  "source_pair_id": "raw:6/7",
+                  "top": [
+                    282.038555059474,
+                    184.93146293014797
+                  ],
+                  "bottom": [
+                    282.038555059474,
+                    328.9309732537378
+                  ]
+                }
+              ],
+              "residual_mean_deg": 0.0003274038234255259,
+              "residual_max_deg": 0.0006903102048735427,
+              "per_pair_residual_deg": [
+                {
+                  "top": 0.0001911054168657726,
+                  "bottom": 0.0002938016198295445
+                },
+                {
+                  "top": 0.0003371917150541324,
+                  "bottom": 0.0002587893672507071
+                },
+                {
+                  "top": 0.00018010814564411987,
+                  "bottom": 9.62536725670691e-05
+                },
+                {
+                  "top": 0.0006903102048735427,
+                  "bottom": 0.0005716704453193187
+                }
+              ],
+              "metrics": {
+                "heading_frame_deg": 0.0004346858326955526,
+                "heading_mean_deg": 3.1805546814635168e-15,
+                "heading_max_deg": 1.2722218725854067e-14,
+                "height_relative_spread": 0.0
+              },
+              "solver_message": "Optimization terminated successfully",
+              "axis_assignment": [
+                1,
+                0,
+                1,
+                0
+              ],
+              "iterations": 7
+            },
+            "camera_height": 1,
+            "scale_unit": "relative",
+            "assumptions": [
+              "horizontal_floor",
+              "ceiling_range_from_paired_floor",
+              "no_annotation_writeback"
+            ],
+            "numerical_guards": {
+              "horizon_degrees": 0.5,
+              "axis_ambiguity_degrees": 40
+            }
+          }
+        }
+      ],
+      "image_script": "image_00.js"
+    }
+  ],
+  "counts": {
+    "cases": 1,
+    "variants": 5,
+    "fit_ok": 5,
+    "fit_blocked": 0,
+    "input_failed": 0
+  },
+  "annotation_writeback": false,
+  "selection": "Existing 50 review images; display upgrade only; fitted geometry is a diagnostic, never adjudication"
+}

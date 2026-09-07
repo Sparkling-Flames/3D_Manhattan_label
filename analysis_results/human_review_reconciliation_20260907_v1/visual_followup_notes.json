@@ -1,0 +1,966 @@
+[
+  {
+    "case_id": "V01",
+    "priority": "优先确认",
+    "issue_type": "跨视角范围解释待连接",
+    "visual_observation": "左右范围及门洞需跨视角核查；双头显示近似，W31红线为读取诊断，不能视为工人画的墙。",
+    "proposed_question": "不再据旧候选选项提出冲突。你说其他视角看可能全不对，需定位那些图并明确左右哪段边界受影响；范围解释和现有标注质量分别保留，不要求挑出一份。",
+    "evidence_viewed": [
+      "03_comparison.jpg",
+      "hd/panorama.png"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "assistant",
+      "state": "我先处理证据／显示",
+      "required_now": false,
+      "task": "先查找你提到的其他视角，并列出与左右边界有关的证据；找不到时再询问定位线索，不要求现在重判。",
+      "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V02",
+    "priority": "优先确认",
+    "issue_type": "规则适用待裁决",
+    "visual_observation": "原图中门洞上方、柱间与房间顶面存在层次；足以记录天花层次疑点，不能仅凭此确认整图OOS。",
+    "proposed_question": "多层天花是排除整个场景，还是允许按约定底面近似？保持你的OOS意见，等待规则依据。",
+    "evidence_viewed": [
+      "03_comparison.jpg",
+      "02_blind_perspectives.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "rule",
+      "state": "条件判断已记录",
+      "required_now": false,
+      "task": "已保留“多层天花→你认为OOS”的人工意见，不要求重新证明。只有正式规则规定不同近似方式时才重开。",
+      "how_to_answer": "现阶段保留条件或不确定，不需要补填。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V03",
+    "priority": "保留或补充",
+    "issue_type": "点序读取纠错",
+    "visual_observation": "四个墙角点位与房间外圈相容；列表直连的交叉不能证明W8连接错误。",
+    "proposed_question": "已核对：旧查看器默认配对顺序与这份建议相同；因此不应称为修正W8的错误，也不要对已排序预览再套同一组排列。保留你的原评语，邻接最终确认仍由你决定。",
+    "evidence_viewed": [
+      "03_comparison.jpg",
+      "hd/panorama.png"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "assistant",
+      "state": "我先处理证据／显示",
+      "required_now": false,
+      "task": "点序错误归因已撤回；保证显示不再把导出数组等同作者邻接。这是工具解释处理，不需要你再确认W8顺序。",
+      "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V04",
+    "priority": "优先确认",
+    "issue_type": "真人与模型对象混用",
+    "visual_observation": "W11与W15均圈定门厅，显示差异较小；Bi扩展头跨入左右相邻空间。",
+    "proposed_question": "human_difference选scope是否本想描述Bi？建议核为真人similar或local；OOS评语末句截断需补全。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "人工补充已收到，无需重审",
+      "required_now": false,
+      "task": "左右上方天花下凸：extended解释需要忽略该处，enclosed在此截止；GT和两位工人属于后者。",
+      "how_to_answer": "不需要重复回答。补全了原截断条件；明确真人范围解释，未将忽略下凸的extended自动认定为合规。旧human_difference选项保留，分析优先引用此明确说明。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V05",
+    "priority": "保留或补充",
+    "issue_type": "局部质量与范围分开",
+    "visual_observation": "各版主范围接近，HoHo在玻璃隔断上缘附近的顶边有偏差；对错须结合原尺寸角点核查。",
+    "proposed_question": "保持范围较明确；若需汇总模型局部问题，可补local因素，候选图不产生真人结论。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V06",
+    "priority": "优先确认",
+    "issue_type": "点对读取纠错／OOS理由缺失",
+    "visual_observation": "两份真人坐标相同。高清原图中端部很远；数值核查为2个上半球端点、6个下半球端点，其中两个点仅略低于地平线。失败红线是读取诊断；仅换顺序不能解决这组端点角色问题。Bi两头主范围近似。",
+    "proposed_question": "你的“顺序无需调整”意见应保留；另请判断远端顶点是否落到了地平线下，或场景/相机条件不满足当前重建假设。疑似OOS需补具体依据，不能根据红线或渲染失败排除。",
+    "evidence_viewed": [
+      "03_comparison.jpg",
+      "hd/panorama.png"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "assistant",
+      "state": "我先处理证据／显示",
+      "required_now": false,
+      "task": "先准备带原点编号的远端顶点放大图、正确读取与投影假设说明；区分点位问题和读取问题后再决定是否需要你判断。",
+      "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V07",
+    "priority": "保留或补充",
+    "issue_type": "参考版本待连接",
+    "visual_observation": "簇2显示代表截取较小范围；另一代表跨向左侧空间。当前Bi enclosed退化，不能拿来判断其范围含义。",
+    "proposed_question": "已提取你对簇2的enclosed解释，同时保留漏掉部分房间的问题。需定位worker002和你改过的GT，确认显示簇编号对应谁；不要求从当前展示中选一份正确标注。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "assistant",
+      "state": "我先处理证据／显示",
+      "required_now": false,
+      "task": "先连接显示簇2、worker002和你改过的GT；保留你已写明的enclosed及漏房间判断。",
+      "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V08",
+    "priority": "保留或补充",
+    "issue_type": "未见明显文本冲突",
+    "visual_observation": "各版均显示同一外圈，右侧窗门与两侧开口位置整体接近；只展示一份真人代表。",
+    "proposed_question": "保持初步记录；similar仅限展示范围，不扩展为所有响应一致。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V09",
+    "priority": "保留或补充",
+    "issue_type": "范围与局部细节可并存",
+    "visual_observation": "Bi两头在左右开口外扩范围有差别；W1/W2在门边凹凸取舍也不同。",
+    "proposed_question": "保留范围差异判断；柱体遗漏与enclosed范围选择分别记录，不能仅凭模型名称认定语义。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V10",
+    "priority": "优先确认",
+    "issue_type": "点对读取纠错／参考版本待连接",
+    "visual_observation": "W15在导出列表中有相邻两上点／两下点；旧查看器按横向位置配对后地面可计算。高清原图的床侧、窗侧点位可与其核对，旧红线不能证明工人自交。",
+    "proposed_question": "先按有来源记录的配对方式核对W15，再确认真人scope还是local；你提及的改后GT尚需定位，不能默认现有reference就是最新版。",
+    "evidence_viewed": [
+      "03_comparison.jpg",
+      "hd/panorama.png"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "assistant",
+      "state": "我先处理证据／显示",
+      "required_now": false,
+      "task": "先核配对、显示版本与改后GT，不让你在存在读取误导时重判真人差异。",
+      "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V11",
+    "priority": "优先确认",
+    "issue_type": "OOS与范围条件相关",
+    "visual_observation": "电视木隔断、远端开敞区有不同取舍，参考点数较多；弧形判断不能只依据展开曲线。",
+    "proposed_question": "reviewed与不确定不冲突；请区分小范围可标、扩展范围是否触及非曼哈顿结构，保留suspected。",
+    "evidence_viewed": [
+      "03_comparison.jpg",
+      "02_blind_perspectives.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "rule",
+      "state": "条件判断已记录",
+      "required_now": false,
+      "task": "已保留最小空间可标、扩展可能触及弧墙、范围仍不确定的条件意见；不要求现在定唯一答案。",
+      "how_to_answer": "现阶段保留条件或不确定，不需要补填。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V12",
+    "priority": "保留或补充",
+    "issue_type": "非矛盾：已显示一致与潜在分歧",
+    "visual_observation": "走廊两端远离相机，玻璃反射与遮挡使终止位置难辨；当前轮廓总体接近。",
+    "proposed_question": "similar描述现有展示；评语描述可能的其他判断，可同时成立，不把潜在分歧当实测真人分歧。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V13",
+    "priority": "保留或补充",
+    "issue_type": "显示受阻限制真人比较",
+    "visual_observation": "中央开口是否跨入房间有模型差别；W32显示受相机外判定阻断，不能据其红线评价几何。",
+    "proposed_question": "similar暂限可比点位，不能认定W29/W32完整布局一致；保留局部与范围分开。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "assistant",
+      "state": "我先处理证据／显示",
+      "required_now": false,
+      "task": "先排查W32读取／相机外判定对预览的影响；保留已写明的模型范围意见。",
+      "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V14",
+    "priority": "保留或补充",
+    "issue_type": "未见明显文本冲突",
+    "visual_observation": "卧室外圈与门口位置在各版整体接近，天花装饰线不直接当真实墙顶边。",
+    "proposed_question": "只有一份显示真人代表，不能由similar推到全部真人。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V15",
+    "priority": "优先确认",
+    "issue_type": "点序纠错／OOS原因分栏",
+    "visual_observation": "近处门扇、门柱及走廊凹处显著，W10红线跨区域属于列表连接诊断。",
+    "proposed_question": "撤回工人顺序错误归因；notes已有OOS理由而oos_reason为空，可建议复制原文但须你确认。墙面扭曲要区分投影/遮挡与真实非曼哈顿。",
+    "evidence_viewed": [
+      "03_comparison.jpg",
+      "02_blind_perspectives.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "rule",
+      "state": "人工补充已收到，保留不确定",
+      "required_now": false,
+      "task": "中央门边可能是墙拐角，也可能是同一片墙连续延入门内；用户明确无法判断，且尝试的3D不能正交。",
+      "how_to_answer": "不需要重复回答。保留结构不确定。拼接导致扭曲是用户的原因判断，尚未独立验证；3D尝试失败不等于证明真实房间非曼哈顿。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V16",
+    "priority": "保留或补充",
+    "issue_type": "点序读取纠错／错误类型待分",
+    "visual_observation": "W36点位含凹处细节；W37点位较简化。两份均显示失败，失败类型不同。",
+    "proposed_question": "保留你对W37的质量意见，不能把点位或漏角错误改称顺序错误；similar需待可比连接后确认。",
+    "evidence_viewed": [
+      "03_comparison.jpg",
+      "hd/panorama.png"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "assistant",
+      "state": "我先处理证据／显示",
+      "required_now": false,
+      "task": "先排查两份真人的读取，保留你对W37的质量意见和顺序意见；有具体反证才提出重看。",
+      "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V17",
+    "priority": "保留或补充",
+    "issue_type": "已有支持／局部与范围并存",
+    "visual_observation": "Bi扩展头与HoHo跨入右侧门后；两个真人代表在该处确有不同延伸。",
+    "proposed_question": "human_difference=scope在当前展示有支持，无需因评语主要谈模型而强改。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V18",
+    "priority": "保留或补充",
+    "issue_type": "未见明显文本冲突",
+    "visual_observation": "主卧室范围一致，第二真人代表在入口附近增添局部角点。",
+    "proposed_question": "similar可保留为整体描述；必要时补local，不把差一点视为范围多解。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V19",
+    "priority": "保留或补充",
+    "issue_type": "遮挡证据／完成不等于确定",
+    "visual_observation": "右侧玻璃门／反射构件使后方墙面难辨，模型与真人对凹凸深度和位置解释不同。反射内容不能当作另一个真实空间。",
+    "proposed_question": "reviewed与uncertain可并存；真人更合理是候选判断，不能由其3D外观就确定真实遮挡后边界。",
+    "evidence_viewed": [
+      "03_comparison.jpg",
+      "hd/panorama.png"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V20",
+    "priority": "保留或补充",
+    "issue_type": "局部结构／参考版本待连接",
+    "visual_observation": "左侧门旁窄突出结构，两个人工版本加了角点，模型/当前参考作简化外圈。",
+    "proposed_question": "local与评语相符；你提到的改后GT需定位来源，不自动把当前reference称为最终GT。",
+    "evidence_viewed": [
+      "03_comparison.jpg",
+      "hd/panorama.png"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "assistant",
+      "state": "我先处理证据／显示",
+      "required_now": false,
+      "task": "保留漏柱判断；改后GT的来源定位由我先处理，不要求你重看柱子。",
+      "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V21",
+    "priority": "保留或补充",
+    "issue_type": "范围差异／真人显示受阻",
+    "visual_observation": "门厅远端两侧空间的纳入量不同，Bi扩展头和参考增添细部；W12显示阻断，不能据红线解释mixed。",
+    "proposed_question": "保留Bi范围差异的观察；真人mixed应待恢复历史读取或看原点后再确认。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "assistant",
+      "state": "我先处理证据／显示",
+      "required_now": false,
+      "task": "保留GT的extended解释；先解决W12预览读取，不能把显示受阻变成你的复核任务。",
+      "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V22",
+    "priority": "保留或补充",
+    "issue_type": "点序纠错／模型解释须克制",
+    "visual_observation": "餐厅大外圈近似一致；Bi扩展头在远端门/壁炉附近增加凹凸，未明显跨入另一大房间。",
+    "proposed_question": "可以写多出局部结构待核实，不能推断模型心理动机；撤回W15顺序修正归因。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "assistant",
+      "state": "我先处理证据／显示",
+      "required_now": false,
+      "task": "保留局部过度解析的观察，撤回工人顺序错误归因；对模型动机仅作假设标记，不需你再确认。",
+      "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V23",
+    "priority": "保留或补充",
+    "issue_type": "点序读取纠错",
+    "visual_observation": "两份真人关键点分布相似，旧页面均画出大对角线；模型同一房间轮廓相近。",
+    "proposed_question": "先恢复读取语义再谈真人形状；不能将共同的脚本红线记为共同标错。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "assistant",
+      "state": "我先处理证据／显示",
+      "required_now": false,
+      "task": "先处理错误诊断连线；你已指出工人顺序被误读，无需重判来证明这一点。",
+      "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V24",
+    "priority": "保留或补充",
+    "issue_type": "未见明显文本冲突",
+    "visual_observation": "寝室外圈各版接近，床和窗帘遮挡下边界；显示一份真人。",
+    "proposed_question": "保留当前意见，不将空评语解释为额外确认。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V25",
+    "priority": "优先确认",
+    "issue_type": "规则取舍／点序纠错",
+    "visual_observation": "门厅和卧室之间有顶面高度变化，Bi两头跨入卧室程度不同，人工红线不能视为墙边。",
+    "proposed_question": "你认为取低顶平面仍可标与suspected不冲突；需确认允许近似的规则。reference目前可渲染不等于已验证最终正确。",
+    "evidence_viewed": [
+      "03_comparison.jpg",
+      "02_blind_perspectives.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "rule",
+      "state": "条件判断已记录",
+      "required_now": false,
+      "task": "已保留按低顶平面可标的条件判断与疑似OOS；若后续必须形成统一纳入标准，再集中讨论规则。",
+      "how_to_answer": "现阶段保留条件或不确定，不需要补填。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V26",
+    "priority": "优先确认",
+    "issue_type": "真人差异选项待确认",
+    "visual_observation": "Bi两头主范围接近；真人第二代表在右侧入口明显多纳入一小段，reference0则受列表连接影响。",
+    "proposed_question": "similar是否仅指总体房间？右侧入口扩展可记录local/scope，需你决定程度，不自动重分类。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V27",
+    "priority": "优先确认",
+    "issue_type": "歧义与OOS不能互推",
+    "visual_observation": "近处双开门/门柱占据两侧视野，相机在空间交界附近；不同版本向两端延伸不同。",
+    "proposed_question": "门框下难界定支持scope疑问，不独立证明OOS；suspected是否要保留、依据是什么？",
+    "evidence_viewed": [
+      "03_comparison.jpg",
+      "02_blind_perspectives.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "rule",
+      "state": "人工补充已收到，保留不确定",
+      "required_now": false,
+      "task": "纳入右侧内部空间会涉及分层天花；用户仍不确定如何标合适。",
+      "how_to_answer": "不需要重复回答。OOS疑点有了具体范围和结构依据；不自动排除整图，也不替用户确定唯一范围。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V28",
+    "priority": "保留或补充",
+    "issue_type": "右侧截断争议与局部质量分开",
+    "visual_observation": "长走廊终点细小，HoHo在右端切断位置明显更近；其他版本较接近但终点仍难细判。",
+    "proposed_question": "保留你偏向人工且认为所有版本不完美的意见，无需修改旧候选选项。若要进一步分析，需要指出右侧有争议的截断位置；它不必然是enclosed/extended二分。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V29",
+    "priority": "保留或补充",
+    "issue_type": "截断位置与跨门范围并存",
+    "visual_observation": "Bi扩展头/HoHo跨向右侧平台，两个真人均较短但截断面不完全一致。",
+    "proposed_question": "scope选项可保留；请明确两个真人的差异是门口截断位置，而非完整enclosed/extended二分。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V30",
+    "priority": "保留或补充",
+    "issue_type": "双头未覆盖预想分支",
+    "visual_observation": "两头都停在电梯/小空间外圈，没有跨到开门后的相邻区域；真人外圈近似。",
+    "proposed_question": "保留双头近似的观察，不等于不存在可想象的跨门范围。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V31",
+    "priority": "优先确认",
+    "issue_type": "参考版本待连接／两份真人可比性",
+    "visual_observation": "浴室与长走廊之间的取舍是主要问题；两个人工点位图很接近且均受点对读取阻断。",
+    "proposed_question": "你提到改后GT应单独定位；human_difference=mixed是否主要指人与参考/模型，而非两份真人？待确认。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "assistant",
+      "state": "我先处理证据／显示",
+      "required_now": false,
+      "task": "先找改后GT及真人版本，连接你说的enclosed／其余extended；旧mixed选项保留，不要求现在改。",
+      "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V32",
+    "priority": "保留或补充",
+    "issue_type": "多视角证据待核实",
+    "visual_observation": "Bi扩展头在左侧门厅增加范围，仍未覆盖你预想的更大空间。与V25建筑相同，图中陈设有对应线索。",
+    "proposed_question": "保留同房间为用户提供线索，未核实前不填正式room_id；扩展程度不足与确实扩大并不矛盾。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "assistant",
+      "state": "我先处理证据／显示",
+      "required_now": false,
+      "task": "先核V25及本图的多视角对应和空间范围；你已说明实际有扩展但不够，不需要重述。",
+      "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V33",
+    "priority": "保留或补充",
+    "issue_type": "一致输出与遗漏解释并存",
+    "visual_observation": "马桶左侧暗开口/凹处，在两头与参考中均被近似封住；Bi主轮廓近似。",
+    "proposed_question": "multiple_candidates有评语依据，factors为空只是选填遗漏；建议确认是否补scope，并定位你提到的另一视角。",
+    "evidence_viewed": [
+      "03_comparison.jpg",
+      "hd/panorama.png"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "assistant",
+      "state": "我先处理证据／显示",
+      "required_now": false,
+      "task": "先查你提到的另一视角和参考，保留纳入暗凹处的开放问题；没有新证据前不逼你二选一。",
+      "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V34",
+    "priority": "优先确认",
+    "issue_type": "范围疑问与局部好坏分开",
+    "visual_observation": "长廊左端延伸及两侧凹处各版取舍不同。两份参考均20点，分别来自dataset_label与public_import；坐标并非完全相等，但单向最大最近点差仅约0.000030像素（1024×512坐标尺度），视觉上近乎同一份。",
+    "proposed_question": "你写“只有gt0较好”是否也包括几乎同坐标的gt1？保留来源区别，但不能把两者当作独立质量支持。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "assistant",
+      "state": "我先处理证据／显示",
+      "required_now": false,
+      "task": "两份参考近乎同坐标属于来源／重复支持整理；保留你对gt0的意见，不要求你再给gt1打分。",
+      "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V35",
+    "priority": "保留或补充",
+    "issue_type": "双头相近但参考范围更大",
+    "visual_observation": "Bi/HoHo停在餐区较近边界，两份参考向左后方扩展。",
+    "proposed_question": "评语与multiple_candidates相容；参考扩展并不自动代表enclosed规则下正确。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V36",
+    "priority": "保留或补充",
+    "issue_type": "模型名称不等于实际范围",
+    "visual_observation": "Bi扩展头只在拱门附近增添狭小凹凸，HoHo实际纳入门后更大区域。",
+    "proposed_question": "评语有视觉支持；不能把Bi两个名称直接编码成两种已经验证的范围。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V37",
+    "priority": "保留或补充",
+    "issue_type": "未见明显文本冲突",
+    "visual_observation": "各版取相同主空间外圈，局部顶边略不同，候选无人类。",
+    "proposed_question": "保留大致相似，不等于参考或模型已验证正确。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V38",
+    "priority": "保留或补充",
+    "issue_type": "同范围局部差异／因果待证",
+    "visual_observation": "浴室镜面、玻璃隔断密集，两头在附近增加不同角点，均未明显跨入右侧卧室。",
+    "proposed_question": "可写玻璃附近局部差异；被玻璃干扰是原因假设，不是已证明模型机制。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V39",
+    "priority": "保留或补充",
+    "issue_type": "未见明显文本冲突",
+    "visual_observation": "电视墙、两侧窗和客厅外圈在各版近似。",
+    "proposed_question": "保留空间一致的观察，不能推断全部候选无歧义。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V40",
+    "priority": "保留或补充",
+    "issue_type": "评语有问题但factors空",
+    "visual_observation": "门扇近相机，跨向右侧房间的范围在Bi两头间不同；HoHo左侧近端墙边与参考有差异。",
+    "proposed_question": "建议你确认是否补scope/local因素；annotation_assessment留空不是认定都错，也不强行替你选。",
+    "evidence_viewed": [
+      "03_comparison.jpg",
+      "02_blind_perspectives.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V41",
+    "priority": "保留或补充",
+    "issue_type": "局部问题漏选非硬冲突",
+    "visual_observation": "HoHo在窗帘附近增添额外角点，Bi与参考较接近。",
+    "proposed_question": "你说HoHo错了但factors空；可补具体哪处错误与local，不自动替你下完整质量结论。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V42",
+    "priority": "保留或补充",
+    "issue_type": "局部复杂度不等于范围扩展",
+    "visual_observation": "Bi两头在玻璃走廊远端产生较多折线，参考主外圈简洁，HoHo高度/角位略偏。",
+    "proposed_question": "保留你的质量意见作为人工意见；双头不同不自动编码为两种范围解释。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V43",
+    "priority": "保留或补充",
+    "issue_type": "未见明显文本冲突",
+    "visual_observation": "卧室外圈与入口位置整体接近，床窗遮挡下边界。",
+    "proposed_question": "保持相似观察，不把reviewed当确定性标签。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V44",
+    "priority": "保留或补充",
+    "issue_type": "规则下明确范围与模型多输出并存",
+    "visual_observation": "Bi扩展头和参考在右侧入口增加小段空间，另一头不纳入。",
+    "proposed_question": "one_clear指你按规则有偏好，scope因素指模型取舍不同，两者可以同时成立，无需强改为multiple_candidates。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V45",
+    "priority": "保留或补充",
+    "issue_type": "双头未覆盖预想分支",
+    "visual_observation": "两头均停在洗衣房主范围，没有跨入中央开门后的走廊；总体近似。",
+    "proposed_question": "模型没给出预想跨门分支与主范围明确并不矛盾，适合保留为覆盖能力反例。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V46",
+    "priority": "保留或补充",
+    "issue_type": "范围无明显分支但局部有差异",
+    "visual_observation": "Bi两头都保留右侧壁炉/墙突出附近凹凸，HoHo与参考更简化，主空间相同。",
+    "proposed_question": "局部错误不等于范围歧义；保留你对无歧义的初步判断，但只限本图/当前规则，不作确定真值。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V47",
+    "priority": "保留或补充",
+    "issue_type": "未见明显文本冲突",
+    "visual_observation": "衣帽间主外圈一致，均未跨门延入卧室。",
+    "proposed_question": "保留近似观察，候选不推断真人一致。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V48",
+    "priority": "优先确认",
+    "issue_type": "预想扩展的具体边界待说明",
+    "visual_observation": "各版均圈定当前室内外圈，Bi双头近似；玻璃外是可见露台，是否纳入需规则约定。",
+    "proposed_question": "保留你认为存在其他潜在范围的意见，不要求改multiple_candidates。需补充预想extended具体应跨过哪条边界；模型没输出它、你能想象它、你认为它符合规则，是三件事。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "人工补充已收到，无需重审",
+      "required_now": false,
+      "task": "预想跨过全景左右接缝处的玻璃门；用户现已明确按本任务曼哈顿约束应不跨门。",
+      "how_to_answer": "不需要重复回答。跨门是对模型输出的期待，不再作为用户认可的另一合规答案。此为本图、本任务规则下的判断，不推广为曼哈顿世界普遍禁止跨门。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V49",
+    "priority": "保留或补充",
+    "issue_type": "未见明显文本冲突",
+    "visual_observation": "寝室外圈较清楚，各版整体接近，窗和衣柜附近局部有差别。",
+    "proposed_question": "保留你认为无歧义的观察，不将模型相近当证明。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  },
+  {
+    "case_id": "V50",
+    "priority": "保留或补充",
+    "issue_type": "未见明显文本冲突",
+    "visual_observation": "办公区玻璃墙和实体墙外圈相近，HoHo与参考顶边高度略不同。",
+    "proposed_question": "大差不差可作总体描述，局部顶边仍不是完全相同。",
+    "evidence_viewed": [
+      "03_comparison.jpg"
+    ],
+    "final_user_decision": null,
+    "next_action": {
+      "actor": "none",
+      "state": "当前无需重审",
+      "required_now": false,
+      "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+      "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+      "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+    }
+  }
+]

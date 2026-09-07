@@ -1,0 +1,856 @@
+{
+  "schema": "uncertainty_followup_analysis_v1",
+  "files": [
+    {
+      "path": "association_domains.png",
+      "bytes": 134686,
+      "columns": null
+    },
+    {
+      "path": "associations.csv",
+      "bytes": 116914,
+      "columns": [
+        "method",
+        "pool",
+        "cohort",
+        "metric",
+        "scope",
+        "stratum",
+        "contexts",
+        "images",
+        "buildings",
+        "rho",
+        "image_mean_rho",
+        "building_mean_rho",
+        "building_centered_rank_correlation",
+        "leave_building_min",
+        "leave_building_max",
+        "leave_building_evaluable",
+        "interval"
+      ]
+    },
+    {
+      "path": "cluster_count_validity_sensitivity.csv",
+      "bytes": 329,
+      "columns": [
+        "method",
+        "invalid_partition_placeholders_excluded",
+        "contexts",
+        "buildings",
+        "rho",
+        "zero_placeholder_rows"
+      ]
+    },
+    {
+      "path": "cluster_reading_sensitivity.csv",
+      "bytes": 194753,
+      "columns": [
+        "partition_id",
+        "context_key",
+        "cluster_id",
+        "method",
+        "rank",
+        "original_support",
+        "calculable_support",
+        "representative_id",
+        "medoid_enclosed",
+        "medoid_extended",
+        "semantic_label",
+        "representative_role"
+      ]
+    },
+    {
+      "path": "confirmed_20260908/building_distribution_fixed51.csv",
+      "bytes": 4303,
+      "columns": [
+        "building_id",
+        "pool",
+        "k",
+        "partitions",
+        "expected_tv",
+        "expected_missing_mass",
+        "expected_cluster_fraction"
+      ]
+    },
+    {
+      "path": "confirmed_20260908/building_leave_image_out.csv",
+      "bytes": 96154,
+      "columns": [
+        "partition_id",
+        "building_id",
+        "pool",
+        "k",
+        "metric",
+        "conditioning",
+        "observed",
+        "same_building_prediction",
+        "global_prediction",
+        "same_building_training_images",
+        "global_training_images"
+      ]
+    },
+    {
+      "path": "confirmed_20260908/building_prediction_summary.csv",
+      "bytes": 2512,
+      "columns": [
+        "pool",
+        "k",
+        "metric",
+        "conditioning",
+        "images",
+        "buildings",
+        "same_building_MAE",
+        "global_MAE",
+        "validation"
+      ]
+    },
+    {
+      "path": "confirmed_20260908/confirmed_geometry.csv",
+      "bytes": 1424,
+      "columns": [
+        "case_id",
+        "method",
+        "point_count",
+        "floor_status",
+        "band_status",
+        "preview",
+        "floor_area",
+        "axis_residual_degrees",
+        "ceiling_height_range",
+        "multi_hit_ray_fraction_720"
+      ]
+    },
+    {
+      "path": "confirmed_20260908/confirmed_model_distances.csv",
+      "bytes": 538,
+      "columns": [
+        "case_id",
+        "model",
+        "head",
+        "distance",
+        "status"
+      ]
+    },
+    {
+      "path": "confirmed_20260908/CONFIRMED_QA.json",
+      "bytes": 345,
+      "columns": null
+    },
+    {
+      "path": "confirmed_20260908/confirmed_reference_comparison.csv",
+      "bytes": 306,
+      "columns": [
+        "case_id",
+        "confirmed_annotation",
+        "reference_annotation",
+        "confirmed_area",
+        "reference_area",
+        "added_area",
+        "removed_area",
+        "iou",
+        "units",
+        "reference_not_overwritten"
+      ]
+    },
+    {
+      "path": "confirmed_20260908/distribution_recovery.csv",
+      "bytes": 678240,
+      "columns": [
+        "partition_id",
+        "context_key",
+        "image_id",
+        "stage",
+        "condition",
+        "building_id",
+        "current20_complete",
+        "pool",
+        "k",
+        "N",
+        "expected_tv",
+        "expected_missing_mass",
+        "expected_cluster_fraction"
+      ]
+    },
+    {
+      "path": "confirmed_20260908/distribution_recovery.png",
+      "bytes": 145751,
+      "columns": null
+    },
+    {
+      "path": "confirmed_20260908/distribution_summary_fixed51.csv",
+      "bytes": 3159,
+      "columns": [
+        "pool",
+        "k",
+        "partitions",
+        "expected_tv",
+        "expected_missing_mass",
+        "expected_cluster_fraction"
+      ]
+    },
+    {
+      "path": "confirmed_20260908/manual_semi_same_image_support.csv",
+      "bytes": 1675,
+      "columns": [
+        "stage",
+        "image_id",
+        "building_id",
+        "manual_rows",
+        "semi_rows"
+      ]
+    },
+    {
+      "path": "confirmed_20260908/repeated_image_worker_records.csv",
+      "bytes": 434,
+      "columns": [
+        "annotation_identity",
+        "image_id",
+        "worker_id",
+        "stage",
+        "block_index",
+        "raw_condition",
+        "raw_annotation_id"
+      ]
+    },
+    {
+      "path": "confirmed_20260908/REPEATED_MEASURES_QA.json",
+      "bytes": 269,
+      "columns": null
+    },
+    {
+      "path": "confirmed_20260908/roster_mixture.csv",
+      "bytes": 67323,
+      "columns": [
+        "partition_id",
+        "context_key",
+        "image_id",
+        "stage",
+        "condition",
+        "building_id",
+        "current20_complete",
+        "total_k",
+        "outside_current20_draws",
+        "outside_available",
+        "expected_tv",
+        "expected_missing_mass",
+        "expected_cluster_fraction"
+      ]
+    },
+    {
+      "path": "confirmed_20260908/roster_mixture_fixed_cohort.csv",
+      "bytes": 488,
+      "columns": [
+        "outside_current20_draws",
+        "partitions",
+        "expected_tv",
+        "expected_missing_mass",
+        "expected_cluster_fraction"
+      ]
+    },
+    {
+      "path": "confirmed_20260908/single_response_context_sensitivity.csv",
+      "bytes": 490,
+      "columns": [
+        "context_key",
+        "pool",
+        "user_order_applied",
+        "raw_support",
+        "computable_support",
+        "human_mean_distance"
+      ]
+    },
+    {
+      "path": "confirmed_20260908/user_confirmations.json",
+      "bytes": 10182,
+      "columns": null
+    },
+    {
+      "path": "confirmed_20260908/V07_adjacency_comparison.png",
+      "bytes": 71049,
+      "columns": null
+    },
+    {
+      "path": "confirmed_20260908/V07_model_comparison.png",
+      "bytes": 57020,
+      "columns": null
+    },
+    {
+      "path": "confirmed_20260908/V07_user_order_overlay.png",
+      "bytes": 567751,
+      "columns": null
+    },
+    {
+      "path": "confirmed_20260908/V07_user_order_preview.png",
+      "bytes": 497374,
+      "columns": null
+    },
+    {
+      "path": "confirmed_20260908/V31_adjacency_comparison.png",
+      "bytes": 61684,
+      "columns": null
+    },
+    {
+      "path": "confirmed_20260908/V31_model_comparison.png",
+      "bytes": 66447,
+      "columns": null
+    },
+    {
+      "path": "confirmed_20260908/V31_user_order_overlay.png",
+      "bytes": 628794,
+      "columns": null
+    },
+    {
+      "path": "confirmed_20260908/V31_user_order_preview.png",
+      "bytes": 516284,
+      "columns": null
+    },
+    {
+      "path": "confirmed_20260908/V33_other_view_adjacency_comparison.png",
+      "bytes": 62897,
+      "columns": null
+    },
+    {
+      "path": "confirmed_20260908/V33_other_view_model_comparison.png",
+      "bytes": 80587,
+      "columns": null
+    },
+    {
+      "path": "confirmed_20260908/V33_other_view_user_order_overlay.png",
+      "bytes": 496861,
+      "columns": null
+    },
+    {
+      "path": "confirmed_20260908/V33_other_view_user_order_preview.png",
+      "bytes": 519897,
+      "columns": null
+    },
+    {
+      "path": "context_distances.csv",
+      "bytes": 2188005,
+      "columns": [
+        "context_key",
+        "image_id",
+        "building_id",
+        "stage",
+        "condition",
+        "initialization",
+        "extended73",
+        "method",
+        "pool",
+        "cohort",
+        "metric",
+        "raw_support",
+        "calculable_support",
+        "pair_count",
+        "human_distance",
+        "bi_distance"
+      ]
+    },
+    {
+      "path": "display_identity_links.csv",
+      "bytes": 85367,
+      "columns": [
+        "case_id",
+        "image_id",
+        "variant",
+        "source_id",
+        "geometry_role",
+        "source_file",
+        "cluster_id",
+        "worker_id",
+        "raw_annotation_id",
+        "context_key",
+        "raw_export_path",
+        "annotation_identity"
+      ]
+    },
+    {
+      "path": "evidence/reading_previews_1.jpg",
+      "bytes": 353473,
+      "columns": null
+    },
+    {
+      "path": "evidence/reading_previews_2.jpg",
+      "bytes": 383691,
+      "columns": null
+    },
+    {
+      "path": "evidence/reading_previews_3.jpg",
+      "bytes": 430985,
+      "columns": null
+    },
+    {
+      "path": "evidence/V03_human_individual_W8_historical_reading.jpg",
+      "bytes": 65079,
+      "columns": null
+    },
+    {
+      "path": "evidence/V06_far_end_point_crop.png",
+      "bytes": 244564,
+      "columns": null
+    },
+    {
+      "path": "evidence/V06_original_point_ids.png",
+      "bytes": 1579237,
+      "columns": null
+    },
+    {
+      "path": "evidence/V07_current_GT_raw_point_ids.png",
+      "bytes": 1901165,
+      "columns": null
+    },
+    {
+      "path": "evidence/V07_human_rank2_historical_reading.jpg",
+      "bytes": 32724,
+      "columns": null
+    },
+    {
+      "path": "evidence/V07_reference_0_historical_reading.jpg",
+      "bytes": 56485,
+      "columns": null
+    },
+    {
+      "path": "evidence/V07_reference_1_historical_reading.jpg",
+      "bytes": 55045,
+      "columns": null
+    },
+    {
+      "path": "evidence/V10_ann6676_points.png",
+      "bytes": 1792657,
+      "columns": null
+    },
+    {
+      "path": "evidence/V10_human_individual_W15_historical_reading.jpg",
+      "bytes": 50298,
+      "columns": null
+    },
+    {
+      "path": "evidence/V10_human_individual_W8_historical_reading.jpg",
+      "bytes": 49740,
+      "columns": null
+    },
+    {
+      "path": "evidence/V13_human_individual_W29_historical_reading.jpg",
+      "bytes": 45724,
+      "columns": null
+    },
+    {
+      "path": "evidence/V16_human_individual_W36_historical_reading.jpg",
+      "bytes": 54861,
+      "columns": null
+    },
+    {
+      "path": "evidence/V16_human_individual_W37_historical_reading.jpg",
+      "bytes": 51469,
+      "columns": null
+    },
+    {
+      "path": "evidence/V20_ann6329_points.png",
+      "bytes": 1725641,
+      "columns": null
+    },
+    {
+      "path": "evidence/V21_human_individual_W11_historical_reading.jpg",
+      "bytes": 52766,
+      "columns": null
+    },
+    {
+      "path": "evidence/V21_human_individual_W12_historical_reading.jpg",
+      "bytes": 55221,
+      "columns": null
+    },
+    {
+      "path": "evidence/V22_human_individual_W11_historical_reading.jpg",
+      "bytes": 72979,
+      "columns": null
+    },
+    {
+      "path": "evidence/V22_human_individual_W15_historical_reading.jpg",
+      "bytes": 71540,
+      "columns": null
+    },
+    {
+      "path": "evidence/V23_human_individual_W13_historical_reading.jpg",
+      "bytes": 72925,
+      "columns": null
+    },
+    {
+      "path": "evidence/V23_human_individual_W15_historical_reading.jpg",
+      "bytes": 72913,
+      "columns": null
+    },
+    {
+      "path": "evidence/V31_current_GT_raw_point_ids.png",
+      "bytes": 2146414,
+      "columns": null
+    },
+    {
+      "path": "evidence/V31_human_individual_W13_historical_reading.jpg",
+      "bytes": 53008,
+      "columns": null
+    },
+    {
+      "path": "evidence/V31_human_individual_W14_historical_reading.jpg",
+      "bytes": 52997,
+      "columns": null
+    },
+    {
+      "path": "evidence/V31_reference_0_historical_reading.jpg",
+      "bytes": 56819,
+      "columns": null
+    },
+    {
+      "path": "evidence/V33_other_view_ann4856_points.png",
+      "bytes": 1632562,
+      "columns": null
+    },
+    {
+      "path": "evidence/V33_other_view_ann6154_points.png",
+      "bytes": 1640929,
+      "columns": null
+    },
+    {
+      "path": "evidence/X7_contact_1.jpg",
+      "bytes": 432699,
+      "columns": null
+    },
+    {
+      "path": "evidence/X7_contact_2.jpg",
+      "bytes": 418913,
+      "columns": null
+    },
+    {
+      "path": "evidence/X7_contact_3.jpg",
+      "bytes": 235722,
+      "columns": null
+    },
+    {
+      "path": "fixed_partition_capture.csv",
+      "bytes": 572193,
+      "columns": [
+        "partition_id",
+        "context_key",
+        "pool",
+        "k",
+        "N",
+        "original_cluster_count",
+        "expected_observed_clusters",
+        "expected_fraction_of_original_clusters",
+        "fixed_partition",
+        "quality_estimate",
+        "subset_reclustering"
+      ]
+    },
+    {
+      "path": "fixed_partition_capture.png",
+      "bytes": 83580,
+      "columns": null
+    },
+    {
+      "path": "fixed_partition_capture_summary.csv",
+      "bytes": 9707,
+      "columns": [
+        "cohort",
+        "pool",
+        "k",
+        "partitions",
+        "expected_clusters_mean",
+        "expected_fraction_mean",
+        "weighting"
+      ]
+    },
+    {
+      "path": "gt_source_snapshots.json",
+      "bytes": 363927,
+      "columns": null
+    },
+    {
+      "path": "human_scope_identity_bindings.json",
+      "bytes": 25551,
+      "columns": null
+    },
+    {
+      "path": "initialization_join_changes.csv",
+      "bytes": 4428,
+      "columns": [
+        "context_key",
+        "stage",
+        "block_index",
+        "image_id",
+        "condition",
+        "raw_count",
+        "old_initialization_source_kind",
+        "initialization_source_kind_corrected"
+      ]
+    },
+    {
+      "path": "local_export_annotation_matches.csv",
+      "bytes": 45933,
+      "columns": [
+        "case_id",
+        "image_id",
+        "source",
+        "project",
+        "task_id",
+        "annotation_id",
+        "completed_by",
+        "ground_truth",
+        "was_cancelled",
+        "created_at",
+        "updated_at",
+        "parent_annotation",
+        "parent_prediction",
+        "point_count",
+        "canonical_annotation_id",
+        "annotation_identity",
+        "condition",
+        "canonical_link_status"
+      ]
+    },
+    {
+      "path": "local_export_annotation_matches.json",
+      "bytes": 375657,
+      "columns": null
+    },
+    {
+      "path": "local_export_candidate_point_ids.csv",
+      "bytes": 2559,
+      "columns": [
+        "case_id",
+        "annotation_id",
+        "raw_point_index",
+        "raw_keypoint_id",
+        "x",
+        "y"
+      ]
+    },
+    {
+      "path": "local_export_search_inventory.csv",
+      "bytes": 4126,
+      "columns": [
+        "path",
+        "task_list",
+        "matched_tasks",
+        "matched_annotations"
+      ]
+    },
+    {
+      "path": "LOCAL_EXPORT_SEARCH_QA.json",
+      "bytes": 285,
+      "columns": null
+    },
+    {
+      "path": "model_distances.csv",
+      "bytes": 36257,
+      "columns": [
+        "image_id",
+        "floor",
+        "band",
+        "linear",
+        "solid"
+      ]
+    },
+    {
+      "path": "multiview_search_index.csv",
+      "bytes": 4030,
+      "columns": [
+        "contact_number",
+        "image_id",
+        "source",
+        "sheet",
+        "room_identity_verified"
+      ]
+    },
+    {
+      "path": "NUMERICAL_QA.json",
+      "bytes": 648,
+      "columns": null
+    },
+    {
+      "path": "pair_distances.csv.gz",
+      "bytes": 1090406,
+      "columns": [
+        "context_key",
+        "method",
+        "left",
+        "right",
+        "floor",
+        "band",
+        "linear",
+        "solid"
+      ]
+    },
+    {
+      "path": "partition_support.csv",
+      "bytes": 13067,
+      "columns": [
+        "partition_id",
+        "context_key",
+        "building_id",
+        "stage",
+        "condition",
+        "partition_status",
+        "top_support_tie",
+        "second_support_tie",
+        "raw_context_N",
+        "archived_member_N",
+        "current20_archived_N",
+        "original_clusters",
+        "current20_represented_clusters"
+      ]
+    },
+    {
+      "path": "reading_coverage_by_condition.csv",
+      "bytes": 739,
+      "columns": [
+        "method",
+        "stage",
+        "raw_condition",
+        "responses",
+        "floor_computable",
+        "band_computable"
+      ]
+    },
+    {
+      "path": "reading_status.csv.gz",
+      "bytes": 92422,
+      "columns": [
+        "layout_id",
+        "human",
+        "method",
+        "raw_point_ids_json",
+        "mapping_failure",
+        "coordinate_values_changed",
+        "author_adjacency_verified",
+        "floor_status",
+        "band_status",
+        "context_key",
+        "worker_id",
+        "stage",
+        "raw_condition",
+        "building_id"
+      ]
+    },
+    {
+      "path": "READING_TRANSITIONS.json",
+      "bytes": 185,
+      "columns": null
+    },
+    {
+      "path": "README_ZH.md",
+      "bytes": 15231,
+      "columns": null
+    },
+    {
+      "path": "reference_source_links.csv",
+      "bytes": 141835,
+      "columns": [
+        "case_id",
+        "image_id",
+        "displayed_variant",
+        "displayed_source_id",
+        "gt_source",
+        "gt_task_id",
+        "gt_annotation_id",
+        "current_gt_file",
+        "displayed_points",
+        "source_points",
+        "raw_coordinate_sequence_equal",
+        "max_distance_in_min_sum_point_assignment_px",
+        "source_identity_does_not_establish_geometric_correctness"
+      ]
+    },
+    {
+      "path": "reviewed_case_context_metrics.csv",
+      "bytes": 344143,
+      "columns": [
+        "context_key",
+        "image_id",
+        "building_id",
+        "stage",
+        "condition",
+        "initialization",
+        "extended73",
+        "method",
+        "pool",
+        "cohort",
+        "metric",
+        "raw_support",
+        "calculable_support",
+        "pair_count",
+        "human_distance",
+        "bi_distance",
+        "case_id"
+      ]
+    },
+    {
+      "path": "searched_gt_sources.csv",
+      "bytes": 954,
+      "columns": [
+        "path",
+        "tasks",
+        "role"
+      ]
+    },
+    {
+      "path": "targeted_order_review.json",
+      "bytes": 4855,
+      "columns": null
+    },
+    {
+      "path": "targeted_render_log.csv",
+      "bytes": 4078,
+      "columns": [
+        "case_id",
+        "variant",
+        "source_id",
+        "reading",
+        "artifact",
+        "status",
+        "author_intent_verified",
+        "raw_point_ids_json"
+      ]
+    },
+    {
+      "path": "V06_point_roles.csv",
+      "bytes": 743,
+      "columns": [
+        "case_id",
+        "source_id",
+        "raw_point_id",
+        "x_1024",
+        "y_512",
+        "signed_vertical_degrees"
+      ]
+    },
+    {
+      "path": "V33_other_view_point_ids.csv",
+      "bytes": 1378,
+      "columns": [
+        "case_id",
+        "annotation_id",
+        "raw_point_index",
+        "raw_keypoint_id",
+        "x",
+        "y"
+      ]
+    },
+    {
+      "path": "深度分析_用户点序确认后.md",
+      "bytes": 22750,
+      "columns": null
+    },
+    {
+      "path": "点序与来源复核.md",
+      "bytes": 8468,
+      "columns": null
+    },
+    {
+      "path": "验证记录.md",
+      "bytes": 3661,
+      "columns": null
+    }
+  ],
+  "published": false,
+  "original_annotations_modified": false
+}

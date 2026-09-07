@@ -1,0 +1,49 @@
+{
+  "schema": "studio_order_integration_v1",
+  "date": "2026-09-07",
+  "questionnaire_entry": "index.html",
+  "updated_cases": 50,
+  "synced_static_files": 150,
+  "static_source": "tools/label_studio/panorama_studio/",
+  "static_filenames": [
+    "index.html",
+    "studio.css",
+    "studio.js"
+  ],
+  "source_layouts_checked": 280,
+  "human_raw_exports_checked": 54,
+  "display_coordinate_checks_passed": true,
+  "default_group_order_changes": 0,
+  "geometry_and_image_assets_rebuilt": false,
+  "human_final_judgments_changed": 0,
+  "manual_controls": [
+    "move_pair_previous",
+    "move_pair_next",
+    "complete_permutation",
+    "restore_original",
+    "export_preview_json"
+  ],
+  "preview_validity": "按新邻接检查地面和顶面多边形并重新三角化；有效时显示白模和纹理，未验证标注语义正确性。",
+  "manhattan_fit_after_reorder": "disabled_not_recomputed",
+  "backup_boundary": "问卷JSON和预览JSON独立导出；预览JSON无直接导入，按记录的排列手动重放。",
+  "python_tests": {
+    "passed": 18,
+    "command": "python -m pytest tests/test_prepare_uncertainty_visual_review.py tests/test_panorama_studio.py -q"
+  },
+  "browser_tests": {
+    "questionnaire": "passed",
+    "manual_order_real_webgl": "passed"
+  },
+  "visual_ui_check": [
+    "questionnaire_qa/04_order_preview.png",
+    "questionnaire_qa/05_order_help.png"
+  ],
+  "new_research_visual_reviews": 0,
+  "github_published": false,
+  "docs_sync": [
+    "docs/PROJECT_MAP_CLEAN_20260308.md",
+    "docs/README_INDEX.md"
+  ],
+  "protocol_boundary": "未修改原始响应、人员规则、分簇、协议或人工裁决。",
+  "not_run": "未重跑模型推理、研究统计或无关Label Studio运营测试；本次仅预览与记录入口。"
+}

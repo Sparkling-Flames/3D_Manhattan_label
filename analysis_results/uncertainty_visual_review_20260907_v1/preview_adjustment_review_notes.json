@@ -1,0 +1,94 @@
+{
+  "V01|05_human_individual_W31": {
+    "decision": "visual_candidate_pending_human",
+    "previous_decision": "display_usable_pending_human",
+    "previous_observation": "保留四组上下点后调整环序，得到近侧餐厨的简单四边形，玻璃边界位置可读；上下点略有偏移，尚非严格曼哈顿拟合。",
+    "observation": "高清图中玻璃门框把近侧餐厨与外侧有顶露台分开，左侧厨房还有遮挡。W31的四组点位可保留；按导出顺序作墙边会自交，重排四组能构成近侧四边形，但会省略左侧凹角，不能由网格规整证明这是W31意图。保留重排为可比较候选，原序和纯点图并列；不确认任何一份为正确答案。",
+    "order_interpretation_status": "visual_hypothesis_author_intent_unverified",
+    "before_hd_recheck_observation": "勘误：旧表述过于肯定。原导出是8个独立关键点，未保存显式墙边关系；将列表顺序当邻接后，地面代理自交。保留点对，按水平位置重排为(6,7)→(4,5)→(0,1)→(2,3)后可显示，但这既不证明W31连错，也不证明重排符合其本意。只能保留为待核查的点序假设，不能据此确定其标注范围或正确性。"
+  },
+  "V03|04_human_individual_W8": {
+    "decision": "visual_candidate_pending_human",
+    "observation": "卧室外圈四角与顶部墙线可辨，床和窗帘遮住部分下角。W8四组点的重排预览与这个外圈大体相容，可作为辅助候选；原序直连自交不能证明原点标错。无需移动坐标，仍需核对床边与门口的下角位置。",
+    "order_interpretation_status": "visual_hypothesis_author_intent_unverified",
+    "previous_decision": "display_usable_pending_human",
+    "previous_observation": "四组点重排后对应卧室主墙角，原始交叉消失，家具遮挡下的点位仍需人工确认。",
+    "before_hd_recheck_observation": "四组点重排后对应卧室主墙角，原始交叉消失，家具遮挡下的点位仍需人工确认。"
+  },
+  "V07|03_reference_0": {
+    "decision": "reject_as_interpretive_preview",
+    "observation": "中央门扇遮住墙体，左侧客厅与右侧走廊形成复杂连通。参考0旧重排仍在左侧产生高尖刺和斜接，不能据此解释范围，维持拒绝该候选；enclosed输出退化也无法靠排序补点。真人不同形状不能自动归为两种有效答案。",
+    "order_interpretation_status": "visual_hypothesis_author_intent_unverified",
+    "before_hd_recheck_observation": "虽可成地面多边形，重排后仍有尖刺、斜接竖边和跨越柱体的异常连线；不能据此读取参考范围。需要回查原版序列/配对，未继续自动配对。"
+  },
+  "V11|04_human_individual_W12": {
+    "decision": "candidate_with_strong_reservations",
+    "observation": "电视壁炉隔墙与细窄玻璃之间存在真实转折，后部餐厨与近侧客厅连通。W12重排后的前侧细楔形和斜墙仍难与可见墙面对应，不能只凭能成网格认可；建议在交互预览逐点定位，不追加自动重排。其他版本的转折数差异也不能靠统一排序消除。",
+    "order_interpretation_status": "visual_hypothesis_author_intent_unverified",
+    "previous_decision": "display_usable_with_geometry_reservations",
+    "previous_observation": "环序调整后可见对开放起居区的细分，但存在很尖细角与斜墙；只能帮助定位点，不能说明该几何符合曼哈顿规则。",
+    "before_hd_recheck_observation": "环序调整后可见对开放起居区的细分，但存在很尖细角与斜墙；只能帮助定位点，不能说明该几何符合曼哈顿规则。"
+  },
+  "V15|06_human_individual_W10": {
+    "decision": "visual_candidate_pending_human",
+    "observation": "楼梯口与前方窄走廊并存，地面有高差，门扇遮住近墙。W10重排可作为近侧短范围的连接候选，但平地代理会填平楼梯，不能证明该范围合法或替代长走廊版本。参考1没有足够点，排序无法补救。",
+    "order_interpretation_status": "visual_hypothesis_author_intent_unverified",
+    "previous_decision": "display_usable_with_geometry_reservations",
+    "previous_observation": "重排显示其在走廊近口截断，区别于长廊模型；楼梯区被填平是水平地面代理的局限，上下点偏位还会使墙面倾斜。",
+    "before_hd_recheck_observation": "重排显示其在走廊近口截断，区别于长廊模型；楼梯区被填平是水平地面代理的局限，上下点偏位还会使墙面倾斜。"
+  },
+  "V16|04_human_individual_W36": {
+    "decision": "visual_candidate_pending_human",
+    "observation": "卧室在门口有细小墙垛，床后下角不可见。W36重排后大体沿卧室外圈，可作为带保留意见的候选；门边密集点需逐个确认墙垛而非门扇。W37首先是点对读取失败，整组换序不能补救，未自动配对。",
+    "order_interpretation_status": "visual_hypothesis_author_intent_unverified",
+    "previous_decision": "display_usable_pending_human",
+    "previous_observation": "重排后可辨卧室主体与两个细小门口/凹角，交叉消失；与模型的差别更像局部细节，尚不能命名为另一范围模式。",
+    "before_hd_recheck_observation": "重排后可辨卧室主体与两个细小门口/凹角，交叉消失；与模型的差别更像局部细节，尚不能命名为另一范围模式。"
+  },
+  "V22|05_human_individual_W15": {
+    "decision": "visual_candidate_pending_human",
+    "observation": "宴会厅主体墙线可辨，左门后另有房间，桌椅遮住下角。W15四组重排与大厅外圈大体相容，保留为预览候选；遮挡处点位及非正交斜边仍需判断，W11四边形也不能作为真值。",
+    "order_interpretation_status": "visual_hypothesis_author_intent_unverified",
+    "previous_decision": "display_usable_pending_human",
+    "previous_observation": "重排后取红色大厅四边形，开口近侧截断。轮廓有斜边，保留原点，不能把可显示当作严格曼哈顿有效。",
+    "before_hd_recheck_observation": "重排后取红色大厅四边形，开口近侧截断。轮廓有斜边，保留原点，不能把可显示当作严格曼哈顿有效。"
+  },
+  "V23|04_human_individual_W13": {
+    "decision": "visual_candidate_pending_human",
+    "observation": "会客室左右有连通开口，隔离绳不是墙。W13与W15四组重排可形成近侧外圈候选，但不能表达所有开口后范围；两者近似不是独立正确性证据。保留候选并请人工确认范围与被家具遮挡的下角。",
+    "order_interpretation_status": "visual_hypothesis_author_intent_unverified",
+    "previous_decision": "display_usable_with_geometry_reservations",
+    "previous_observation": "可读为当前厅室四角、关闭两侧门洞；上端点在装饰线脚附近且与下点方位有偏差，墙面扭曲未通过重排消除。",
+    "before_hd_recheck_observation": "可读为当前厅室四角、关闭两侧门洞；上端点在装饰线脚附近且与下点方位有偏差，墙面扭曲未通过重排消除。"
+  },
+  "V23|05_human_individual_W15": {
+    "decision": "visual_candidate_pending_human",
+    "observation": "会客室左右有连通开口，隔离绳不是墙。W13与W15四组重排可形成近侧外圈候选，但不能表达所有开口后范围；两者近似不是独立正确性证据。保留候选并请人工确认范围与被家具遮挡的下角。",
+    "order_interpretation_status": "visual_hypothesis_author_intent_unverified",
+    "previous_decision": "display_usable_with_geometry_reservations",
+    "previous_observation": "与W13相近的当前厅室四边形，重排消除自交；上下点的方位差仍形成扭曲墙面，不能据两者图形接近断言正确。",
+    "before_hd_recheck_observation": "与W13相近的当前厅室四边形，重排消除自交；上下点的方位差仍形成扭曲墙面，不能据两者图形接近断言正确。"
+  },
+  "V25|04_human_individual_W1": {
+    "decision": "candidate_with_strong_reservations",
+    "observation": "近侧门厅向左连通卧室，门梁与门框产生密集点位。W1旧重排有细窄斜凹口，暂存作候选但保留较强疑问，需逐点辨认梁、门扇与墙角；W2上下点对读取失败，整组重排不能补救。Bi两头纳入卧室与否的差别属于范围问题。",
+    "order_interpretation_status": "visual_hypothesis_author_intent_unverified",
+    "previous_decision": "display_usable_with_geometry_reservations",
+    "previous_observation": "重排后可定位其延入卧室的范围及左侧多细角；顶面有坡度/层次且代理斜墙明显，不据三维外观选择边界。",
+    "before_hd_recheck_observation": "重排后可定位其延入卧室的范围及左侧多细角；顶面有坡度/层次且代理斜墙明显，不据三维外观选择边界。"
+  },
+  "V26|03_reference_0": {
+    "decision": "visual_candidate_pending_human",
+    "observation": "空卧室外圈及衣柜外墙较清楚，门口有短凹位。参考0重排与这个带凹位的轮廓大体相容，可保留为候选；真人rank2进一步纳入门后范围，不能通过排序抹掉该区别。镜面衣柜中的窗口反射不是额外开口。",
+    "order_interpretation_status": "visual_hypothesis_author_intent_unverified",
+    "previous_decision": "display_usable_pending_human",
+    "previous_observation": "保留原组点的环序调整后得到卧室带入口凹口的轮廓，与另一参考的可见范围接近；未修改官方参考。",
+    "before_hd_recheck_observation": "保留原组点的环序调整后得到卧室带入口凹口的轮廓，与另一参考的可见范围接近；未修改官方参考。"
+  },
+  "V31|03_reference_0": {
+    "decision": "reject_as_interpretive_preview",
+    "observation": "浴室与长走廊呈转折连通，镜面反射与浴缸遮挡增加点位识别困难。参考0旧重排仍有不合理尖细部分，维持不推荐；W13和W14首先是上下配对读取失败，不能用同一排序自动修复。Bi两头近似也不能解除范围和镜面疑点。",
+    "order_interpretation_status": "visual_hypothesis_author_intent_unverified",
+    "before_hd_recheck_observation": "重排虽可成面，却仍有不合理尖刺和跨方位的上/下连线；不能用该预览解释浴室/走廊范围，需要追溯参考的端点配对。"
+  }
+}

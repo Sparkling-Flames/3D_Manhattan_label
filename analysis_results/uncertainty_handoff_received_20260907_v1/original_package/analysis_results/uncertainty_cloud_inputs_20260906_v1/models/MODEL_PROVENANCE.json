@@ -1,0 +1,20 @@
+{
+  "Bi_Layout": {
+    "shared_model": true,
+    "raw_predictions_in_package": true,
+    "checkpoint_locator": "D:\\Work\\Manhattan_3D\\Bi_layout\\checkpoints\\Bi_Layout_Net\\mp3d\\mp3d_best_model.pkl",
+    "training_overlap_status": "not_independently_verified_do_not_infer_from_split_name",
+    "definition_source": "https://liagm.github.io/Bi_Layout/"
+  },
+  "HoHoNet": {
+    "offline_replay_and_candidate_legacy_roles_separate": true,
+    "historical_exposure_source": "facts/proposal_fact.csv.gz",
+    "checkpoint_label": "ep300",
+    "training_overlap_status": "not_independently_verified"
+  },
+  "HorizonNet": {
+    "role": "inventory_only_no_inference",
+    "available_output_status": "not_located_in_current_asset_inventory"
+  },
+  "no_model_weights_required": true
+}

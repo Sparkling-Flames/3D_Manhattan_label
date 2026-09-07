@@ -1,0 +1,3342 @@
+[
+  {
+    "case_id": "V01",
+    "image_id": "X7HyMhZNoso_2b16acff0dc042a1a75816a1fbd0a302",
+    "human_record": {
+      "case_id": "V01",
+      "image_id": "X7HyMhZNoso_2b16acff0dc042a1a75816a1fbd0a302",
+      "answers": {
+        "visibility": "clear",
+        "scope": "multiple_candidates",
+        "human_difference": "scope",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "",
+        "status": "reviewed",
+        "factors": [
+          "scope",
+          "reference"
+        ],
+        "notes": "主要是左边和右边的边界,因为我是记得这个房间的(其他全景图标注),好像从别的视角来看的话,好像全都不太对",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:45:04.363Z",
+      "ai_advice_opened": true
+    },
+    "ai_followup": {
+      "case_id": "V01",
+      "priority": "优先确认",
+      "issue_type": "跨视角范围解释待连接",
+      "visual_observation": "左右范围及门洞需跨视角核查；双头显示近似，W31红线为读取诊断，不能视为工人画的墙。",
+      "proposed_question": "不再据旧候选选项提出冲突。你说其他视角看可能全不对，需定位那些图并明确左右哪段边界受影响；范围解释和现有标注质量分别保留，不要求挑出一份。",
+      "evidence_viewed": [
+        "03_comparison.jpg",
+        "hd/panorama.png"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "assistant",
+        "state": "我先处理证据／显示",
+        "required_now": false,
+        "task": "先查找你提到的其他视角，并列出与左右边界有关的证据；找不到时再询问定位线索，不要求现在重判。",
+        "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V01",
+      "scope_statements": [
+        {
+          "statement_id": "V01-S1",
+          "kind": "potential_scope",
+          "target": "左右边界／其他视角",
+          "source_field": "notes",
+          "quote": "主要是左边和右边的边界",
+          "interpretation": "边界与跨视角解释待核；未明确命名enclosed或extended",
+          "scope_label": null,
+          "qualification": "其他视角尚未定位",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V02",
+    "image_id": "pRbA3pwrgk9_8b07a4b08cf447abb246769d8dce8494",
+    "human_record": {
+      "case_id": "V02",
+      "image_id": "pRbA3pwrgk9_8b07a4b08cf447abb246769d8dce8494",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "",
+        "annotation_assessment": "",
+        "oos_assessment": "reviewer_oos",
+        "status": "reviewed",
+        "factors": [],
+        "notes": "",
+        "oos_reason": "多层天花"
+      },
+      "updated_at": "2026-09-07T06:16:36.064Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V02",
+      "priority": "优先确认",
+      "issue_type": "规则适用待裁决",
+      "visual_observation": "原图中门洞上方、柱间与房间顶面存在层次；足以记录天花层次疑点，不能仅凭此确认整图OOS。",
+      "proposed_question": "多层天花是排除整个场景，还是允许按约定底面近似？保持你的OOS意见，等待规则依据。",
+      "evidence_viewed": [
+        "03_comparison.jpg",
+        "02_blind_perspectives.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "rule",
+        "state": "条件判断已记录",
+        "required_now": false,
+        "task": "已保留“多层天花→你认为OOS”的人工意见，不要求重新证明。只有正式规则规定不同近似方式时才重开。",
+        "how_to_answer": "现阶段保留条件或不确定，不需要补填。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V02",
+      "scope_statements": [],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V03",
+    "image_id": "2t7WUuJeko7_7b017f053981438a9c075e599f2c5866",
+    "human_record": {
+      "case_id": "V03",
+      "image_id": "2t7WUuJeko7_7b017f053981438a9c075e599f2c5866",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "similar",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [],
+        "notes": "w08没问题吧,它角点顺序完全不用调整",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T06:24:19.666Z",
+      "ai_advice_opened": true
+    },
+    "ai_followup": {
+      "case_id": "V03",
+      "priority": "保留或补充",
+      "issue_type": "点序读取纠错",
+      "visual_observation": "四个墙角点位与房间外圈相容；列表直连的交叉不能证明W8连接错误。",
+      "proposed_question": "已核对：旧查看器默认配对顺序与这份建议相同；因此不应称为修正W8的错误，也不要对已排序预览再套同一组排列。保留你的原评语，邻接最终确认仍由你决定。",
+      "evidence_viewed": [
+        "03_comparison.jpg",
+        "hd/panorama.png"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "assistant",
+        "state": "我先处理证据／显示",
+        "required_now": false,
+        "task": "点序错误归因已撤回；保证显示不再把导出数组等同作者邻接。这是工具解释处理，不需要你再确认W8顺序。",
+        "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V03",
+      "scope_statements": [],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V04",
+    "image_id": "wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f",
+    "human_record": {
+      "case_id": "V04",
+      "image_id": "wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "scope",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "scope"
+        ],
+        "notes": "工人的标注都是和 gt相似.\n不过这图是 bi layout 明显的 两种标注模式的差异",
+        "oos_reason": "如果标extended,可能天花板有一块装饰性的下凸,可能会导致oos.但是 你标"
+      },
+      "updated_at": "2026-09-07T06:50:26.427Z",
+      "ai_advice_opened": true
+    },
+    "ai_followup": {
+      "case_id": "V04",
+      "priority": "优先确认",
+      "issue_type": "真人与模型对象混用",
+      "visual_observation": "W11与W15均圈定门厅，显示差异较小；Bi扩展头跨入左右相邻空间。",
+      "proposed_question": "human_difference选scope是否本想描述Bi？建议核为真人similar或local；OOS评语末句截断需补全。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "人工补充已收到，无需重审",
+        "required_now": false,
+        "task": "左右上方天花下凸：extended解释需要忽略该处，enclosed在此截止；GT和两位工人属于后者。",
+        "how_to_answer": "不需要重复回答。补全了原截断条件；明确真人范围解释，未将忽略下凸的extended自动认定为合规。旧human_difference选项保留，分析优先引用此明确说明。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V04",
+      "scope_statements": [
+        {
+          "statement_id": "V04-S1",
+          "kind": "output_comparison",
+          "target": "Bi两头",
+          "source_field": "notes",
+          "quote": "这图是 bi layout 明显的 两种标注模式的差异",
+          "interpretation": "用户认为双头有明显差异；原文没有逐头给语义定类",
+          "scope_label": null,
+          "qualification": "输出不同不等于两种都合规",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        },
+        {
+          "statement_id": "V04-S2",
+          "kind": "rule_condition",
+          "target": "潜在extended范围",
+          "source_field": "oos_reason",
+          "quote": "如果标extended,可能天花板有一块装饰性的下凸,可能会导致oos.",
+          "interpretation": "扩大范围可能改变OOS判断",
+          "scope_label": null,
+          "qualification": "条件判断；原理由末句截断",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    },
+    "human_supplement": {
+      "case_id": "V04",
+      "image_id": "wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f",
+      "source": "用户在当前对话直接补充",
+      "recorded_date": "2026-09-08",
+      "original_text": "v04 左上和右上的天花板有个下凸,如果标extended就得忽略这里,如果标enclose,就得在这里截止(比如gt和两位工人)",
+      "assistant_interpretation": "左右上方天花下凸：extended解释需要忽略该处，enclosed在此截止；GT和两位工人属于后者。",
+      "interpretation_limits": "补全了原截断条件；明确真人范围解释，未将忽略下凸的extended自动认定为合规。旧human_difference选项保留，分析优先引用此明确说明。",
+      "clarification_received": true,
+      "final_geometry_adjudicated": false
+    }
+  },
+  {
+    "case_id": "V05",
+    "image_id": "B6ByNegPMKs_d7ade8d217fe4d068fc3629dd2510898",
+    "human_record": {
+      "case_id": "V05",
+      "image_id": "B6ByNegPMKs_d7ade8d217fe4d068fc3629dd2510898",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "not_applicable",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [],
+        "notes": "HOHOENT的天花板标矮了",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T07:20:05.471Z",
+      "ai_advice_opened": true
+    },
+    "ai_followup": {
+      "case_id": "V05",
+      "priority": "保留或补充",
+      "issue_type": "局部质量与范围分开",
+      "visual_observation": "各版主范围接近，HoHo在玻璃隔断上缘附近的顶边有偏差；对错须结合原尺寸角点核查。",
+      "proposed_question": "保持范围较明确；若需汇总模型局部问题，可补local因素，候选图不产生真人结论。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V05",
+      "scope_statements": [],
+      "quality_excerpts": [
+        {
+          "source_field": "notes",
+          "quote": "HOHOENT的天花板标矮了"
+        }
+      ],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V06",
+    "image_id": "uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d",
+    "human_record": {
+      "case_id": "V06",
+      "image_id": "uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d",
+      "answers": {
+        "visibility": "clear",
+        "scope": "multiple_candidates",
+        "human_difference": "scope",
+        "annotation_assessment": "uncertain",
+        "oos_assessment": "suspected",
+        "status": "deferred",
+        "factors": [
+          "scope"
+        ],
+        "notes": "这个两个工人的角点顺序你又搞错了,完全不用动 顺序,就是正常的",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T07:21:34.364Z",
+      "ai_advice_opened": true
+    },
+    "ai_followup": {
+      "case_id": "V06",
+      "priority": "优先确认",
+      "issue_type": "点对读取纠错／OOS理由缺失",
+      "visual_observation": "两份真人坐标相同。高清原图中端部很远；数值核查为2个上半球端点、6个下半球端点，其中两个点仅略低于地平线。失败红线是读取诊断；仅换顺序不能解决这组端点角色问题。Bi两头主范围近似。",
+      "proposed_question": "你的“顺序无需调整”意见应保留；另请判断远端顶点是否落到了地平线下，或场景/相机条件不满足当前重建假设。疑似OOS需补具体依据，不能根据红线或渲染失败排除。",
+      "evidence_viewed": [
+        "03_comparison.jpg",
+        "hd/panorama.png"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "assistant",
+        "state": "我先处理证据／显示",
+        "required_now": false,
+        "task": "先准备带原点编号的远端顶点放大图、正确读取与投影假设说明；区分点位问题和读取问题后再决定是否需要你判断。",
+        "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V06",
+      "scope_statements": [],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V07",
+    "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+    "human_record": {
+      "case_id": "V07",
+      "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+      "answers": {
+        "visibility": "partial",
+        "scope": "one_clear",
+        "human_difference": "mixed",
+        "annotation_assessment": "all_questionable",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "scope"
+        ],
+        "notes": "这属于高难图,我记得我改了一份 gt的标注.真人簇2属于enclosed(但是缺失了一部分房间),你可以看看worker002 的或者我修改的gt标注",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T08:26:00.824Z",
+      "ai_advice_opened": true
+    },
+    "ai_followup": {
+      "case_id": "V07",
+      "priority": "保留或补充",
+      "issue_type": "参考版本待连接",
+      "visual_observation": "簇2显示代表截取较小范围；另一代表跨向左侧空间。当前Bi enclosed退化，不能拿来判断其范围含义。",
+      "proposed_question": "已提取你对簇2的enclosed解释，同时保留漏掉部分房间的问题。需定位worker002和你改过的GT，确认显示簇编号对应谁；不要求从当前展示中选一份正确标注。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "assistant",
+        "state": "我先处理证据／显示",
+        "required_now": false,
+        "task": "先连接显示簇2、worker002和你改过的GT；保留你已写明的enclosed及漏房间判断。",
+        "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V07",
+      "scope_statements": [
+        {
+          "statement_id": "V07-S1",
+          "kind": "semantic_assignment",
+          "target": "真人簇2（显示编号，尚未连接正式簇ID）",
+          "source_field": "notes",
+          "quote": "真人簇2属于enclosed(但是缺失了一部分房间)",
+          "interpretation": "用户将簇2解释为enclosed，同时指出漏标",
+          "scope_label": "enclosed",
+          "qualification": "范围类型与完整性分开；不能给整个簇自动定类",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [
+        {
+          "source_field": "notes",
+          "quote": "但是缺失了一部分房间"
+        }
+      ],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V08",
+    "image_id": "7y3sRwLe3Va_1410b021e1c14f529188eb026fbb369a",
+    "human_record": {
+      "case_id": "V08",
+      "image_id": "7y3sRwLe3Va_1410b021e1c14f529188eb026fbb369a",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "similar",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [],
+        "notes": "",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T08:26:34.564Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V08",
+      "priority": "保留或补充",
+      "issue_type": "未见明显文本冲突",
+      "visual_observation": "各版均显示同一外圈，右侧窗门与两侧开口位置整体接近；只展示一份真人代表。",
+      "proposed_question": "保持初步记录；similar仅限展示范围，不扩展为所有响应一致。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V08",
+      "scope_statements": [],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V09",
+    "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+    "human_record": {
+      "case_id": "V09",
+      "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+      "answers": {
+        "visibility": "clear",
+        "scope": "multiple_candidates",
+        "human_difference": "scope",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "scope",
+          "reference"
+        ],
+        "notes": "bi 的enclosed标注不错,但是真人的w2标注也是一种enclosed的标注方法(不是标的特别准确). gt是 extended,但是它忽略了凸起的墙柱,bi 的extended也略有问题",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T08:30:17.430Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V09",
+      "priority": "保留或补充",
+      "issue_type": "范围与局部细节可并存",
+      "visual_observation": "Bi两头在左右开口外扩范围有差别；W1/W2在门边凹凸取舍也不同。",
+      "proposed_question": "保留范围差异判断；柱体遗漏与enclosed范围选择分别记录，不能仅凭模型名称认定语义。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V09",
+      "scope_statements": [
+        {
+          "statement_id": "V09-S1",
+          "kind": "semantic_assignment",
+          "target": "W2本图所述标注",
+          "source_field": "notes",
+          "quote": "真人的w2标注也是一种enclosed的标注方法(不是标的特别准确)",
+          "interpretation": "用户认为W2也是一种enclosed标法",
+          "scope_label": "enclosed",
+          "qualification": "不准确不取消其范围类型；可能不止一种enclosed",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        },
+        {
+          "statement_id": "V09-S2",
+          "kind": "semantic_assignment",
+          "target": "gt（版本未明确）",
+          "source_field": "notes",
+          "quote": "gt是 extended,但是它忽略了凸起的墙柱",
+          "interpretation": "用户认为参考属于extended，同时漏柱",
+          "scope_label": "extended",
+          "qualification": "未认可其符合enclosed规则",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [
+        {
+          "source_field": "notes",
+          "quote": "不是标的特别准确"
+        },
+        {
+          "source_field": "notes",
+          "quote": "忽略了凸起的墙柱"
+        },
+        {
+          "source_field": "notes",
+          "quote": "bi 的extended也略有问题"
+        }
+      ],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V10",
+    "image_id": "jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037",
+    "human_record": {
+      "case_id": "V10",
+      "image_id": "jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "scope",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "reference",
+          "assumptions"
+        ],
+        "notes": "所有模型好像都识别错了 左边和右边的corner的位置,我感觉人工的标注是对的,但是w15角点顺序顺着是对的,你又无意义调整.我好像 改过这张图的gt",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T08:36:38.784Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V10",
+      "priority": "优先确认",
+      "issue_type": "点对读取纠错／参考版本待连接",
+      "visual_observation": "W15在导出列表中有相邻两上点／两下点；旧查看器按横向位置配对后地面可计算。高清原图的床侧、窗侧点位可与其核对，旧红线不能证明工人自交。",
+      "proposed_question": "先按有来源记录的配对方式核对W15，再确认真人scope还是local；你提及的改后GT尚需定位，不能默认现有reference就是最新版。",
+      "evidence_viewed": [
+        "03_comparison.jpg",
+        "hd/panorama.png"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "assistant",
+        "state": "我先处理证据／显示",
+        "required_now": false,
+        "task": "先核配对、显示版本与改后GT，不让你在存在读取误导时重判真人差异。",
+        "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V10",
+      "scope_statements": [],
+      "quality_excerpts": [
+        {
+          "source_field": "notes",
+          "quote": "所有模型好像都识别错了 左边和右边的corner的位置"
+        }
+      ],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V11",
+    "image_id": "UwV83HsGsw3_b979526475874ad68ae33f02d407a1fc",
+    "human_record": {
+      "case_id": "V11",
+      "image_id": "UwV83HsGsw3_b979526475874ad68ae33f02d407a1fc",
+      "answers": {
+        "visibility": "partial",
+        "scope": "uncertain",
+        "human_difference": "mixed",
+        "annotation_assessment": "uncertain",
+        "oos_assessment": "suspected",
+        "status": "reviewed",
+        "factors": [
+          "scope"
+        ],
+        "notes": "在不考虑是否inscope下. gt更像extended,其余更像enclosed",
+        "oos_reason": "如果是extended,那就会包含弧形墙,而且边界不好确定.如果最小空间,还是可以标注的.包括extended,都有很多种标注方法.\n我之前这个房子是判断oos,但是单单从这张图来看,不一定"
+      },
+      "updated_at": "2026-09-07T12:47:20.441Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V11",
+      "priority": "优先确认",
+      "issue_type": "OOS与范围条件相关",
+      "visual_observation": "电视木隔断、远端开敞区有不同取舍，参考点数较多；弧形判断不能只依据展开曲线。",
+      "proposed_question": "reviewed与不确定不冲突；请区分小范围可标、扩展范围是否触及非曼哈顿结构，保留suspected。",
+      "evidence_viewed": [
+        "03_comparison.jpg",
+        "02_blind_perspectives.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "rule",
+        "state": "条件判断已记录",
+        "required_now": false,
+        "task": "已保留最小空间可标、扩展可能触及弧墙、范围仍不确定的条件意见；不要求现在定唯一答案。",
+        "how_to_answer": "现阶段保留条件或不确定，不需要补填。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V11",
+      "scope_statements": [
+        {
+          "statement_id": "V11-S1",
+          "kind": "semantic_assignment",
+          "target": "gt（版本未明确）",
+          "source_field": "notes",
+          "quote": "在不考虑是否inscope下. gt更像extended",
+          "interpretation": "用户暂将GT解释为更像extended",
+          "scope_label": "extended",
+          "qualification": "明确排除合规性判断；保留更像措辞",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        },
+        {
+          "statement_id": "V11-S2",
+          "kind": "semantic_assignment",
+          "target": "其余（原文集合，不展开到单条响应）",
+          "source_field": "notes",
+          "quote": "其余更像enclosed",
+          "interpretation": "用户暂将其余解释为更像enclosed",
+          "scope_label": "enclosed",
+          "qualification": "集合对象待确认",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        },
+        {
+          "statement_id": "V11-S3",
+          "kind": "potential_scope",
+          "target": "最小空间／多种extended标法",
+          "source_field": "oos_reason",
+          "quote": "如果最小空间,还是可以标注的.包括extended,都有很多种标注方法.",
+          "interpretation": "最小范围可能可标，extended内部也可能有多种方法",
+          "scope_label": null,
+          "qualification": "范围不是必然只有两种",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        },
+        {
+          "statement_id": "V11-S4",
+          "kind": "rule_condition",
+          "target": "extended范围",
+          "source_field": "oos_reason",
+          "quote": "如果是extended,那就会包含弧形墙,而且边界不好确定.",
+          "interpretation": "用户认为该范围可能涉及弧墙和难定边界",
+          "scope_label": null,
+          "qualification": "用户意见；并非本轮已验证真实弧墙",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V12",
+    "image_id": "B6ByNegPMKs_75327de9719945aa8b893a6404667884",
+    "human_record": {
+      "case_id": "V12",
+      "image_id": "B6ByNegPMKs_75327de9719945aa8b893a6404667884",
+      "answers": {
+        "visibility": "partial",
+        "scope": "multiple_candidates",
+        "human_difference": "similar",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "scope"
+        ],
+        "notes": "大差不差,但是左右的边界(在哪截止)可能有点模糊,不同人可能有不同判断",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:47:27.545Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V12",
+      "priority": "保留或补充",
+      "issue_type": "非矛盾：已显示一致与潜在分歧",
+      "visual_observation": "走廊两端远离相机，玻璃反射与遮挡使终止位置难辨；当前轮廓总体接近。",
+      "proposed_question": "similar描述现有展示；评语描述可能的其他判断，可同时成立，不把潜在分歧当实测真人分歧。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V12",
+      "scope_statements": [
+        {
+          "statement_id": "V12-S1",
+          "kind": "potential_scope",
+          "target": "左右截断位置",
+          "source_field": "notes",
+          "quote": "左右的边界(在哪截止)可能有点模糊,不同人可能有不同判断",
+          "interpretation": "潜在截断差异；不强行命名为enclosed/extended",
+          "scope_label": null,
+          "qualification": "不是已观测到的不同人员回答",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V13",
+    "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+    "human_record": {
+      "case_id": "V13",
+      "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "similar",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "scope",
+          "local"
+        ],
+        "notes": "bi 的enclosed 标注有点错,HOHONET 和gt 属于enclosed",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T08:51:57.202Z",
+      "ai_advice_opened": true
+    },
+    "ai_followup": {
+      "case_id": "V13",
+      "priority": "保留或补充",
+      "issue_type": "显示受阻限制真人比较",
+      "visual_observation": "中央开口是否跨入房间有模型差别；W32显示受相机外判定阻断，不能据其红线评价几何。",
+      "proposed_question": "similar暂限可比点位，不能认定W29/W32完整布局一致；保留局部与范围分开。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "assistant",
+        "state": "我先处理证据／显示",
+        "required_now": false,
+        "task": "先排查W32读取／相机外判定对预览的影响；保留已写明的模型范围意见。",
+        "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V13",
+      "scope_statements": [
+        {
+          "statement_id": "V13-S1",
+          "kind": "semantic_assignment",
+          "target": "HoHoNet与gt（参考版本未明确）",
+          "source_field": "notes",
+          "quote": "HOHONET 和gt 属于enclosed",
+          "interpretation": "用户将两者解释为enclosed",
+          "scope_label": "enclosed",
+          "qualification": "Bi enclosed名称不能自动作为其语义标签",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [
+        {
+          "source_field": "notes",
+          "quote": "bi 的enclosed 标注有点错"
+        }
+      ],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V14",
+    "image_id": "S9hNv5qa7GM_bd9faec23bb3462c94a5fbc6c0a3d5cf",
+    "human_record": {
+      "case_id": "V14",
+      "image_id": "S9hNv5qa7GM_bd9faec23bb3462c94a5fbc6c0a3d5cf",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "similar",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [],
+        "notes": "",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T09:06:27.174Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V14",
+      "priority": "保留或补充",
+      "issue_type": "未见明显文本冲突",
+      "visual_observation": "卧室外圈与门口位置在各版整体接近，天花装饰线不直接当真实墙顶边。",
+      "proposed_question": "只有一份显示真人代表，不能由similar推到全部真人。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V14",
+      "scope_statements": [],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V15",
+    "image_id": "b8cTxDM8gDG_298a2386166a43c8a04e1c24433f7d15",
+    "human_record": {
+      "case_id": "V15",
+      "image_id": "b8cTxDM8gDG_298a2386166a43c8a04e1c24433f7d15",
+      "answers": {
+        "visibility": "partial",
+        "scope": "multiple_candidates",
+        "human_difference": "mixed",
+        "annotation_assessment": "uncertain",
+        "oos_assessment": "suspected",
+        "status": "deferred",
+        "factors": [
+          "scope",
+          "occlusion",
+          "local"
+        ],
+        "notes": "w10的角点顺序按照原始的就行.\n之后oos 是因为墙体扭曲过大,不太知道到底房间的布局是什么了",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T09:09:13.420Z",
+      "ai_advice_opened": true
+    },
+    "ai_followup": {
+      "case_id": "V15",
+      "priority": "优先确认",
+      "issue_type": "点序纠错／OOS原因分栏",
+      "visual_observation": "近处门扇、门柱及走廊凹处显著，W10红线跨区域属于列表连接诊断。",
+      "proposed_question": "撤回工人顺序错误归因；notes已有OOS理由而oos_reason为空，可建议复制原文但须你确认。墙面扭曲要区分投影/遮挡与真实非曼哈顿。",
+      "evidence_viewed": [
+        "03_comparison.jpg",
+        "02_blind_perspectives.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "rule",
+        "state": "人工补充已收到，保留不确定",
+        "required_now": false,
+        "task": "中央门边可能是墙拐角，也可能是同一片墙连续延入门内；用户明确无法判断，且尝试的3D不能正交。",
+        "how_to_answer": "不需要重复回答。保留结构不确定。拼接导致扭曲是用户的原因判断，尚未独立验证；3D尝试失败不等于证明真实房间非曼哈顿。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V15",
+      "scope_statements": [],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    },
+    "human_supplement": {
+      "case_id": "V15",
+      "image_id": "b8cTxDM8gDG_298a2386166a43c8a04e1c24433f7d15",
+      "source": "用户在当前对话直接补充",
+      "recorded_date": "2026-09-08",
+      "original_text": "v15歧义很大,正中间的墙因为全景图拼接而扭曲,我没法判断门这里是不是墙的拐角,还是说这是一整片墙连到门里. 因为我无论怎么尝试,3d 的都没法做到正交.",
+      "assistant_interpretation": "中央门边可能是墙拐角，也可能是同一片墙连续延入门内；用户明确无法判断，且尝试的3D不能正交。",
+      "interpretation_limits": "保留结构不确定。拼接导致扭曲是用户的原因判断，尚未独立验证；3D尝试失败不等于证明真实房间非曼哈顿。",
+      "clarification_received": true,
+      "final_geometry_adjudicated": false
+    }
+  },
+  {
+    "case_id": "V16",
+    "image_id": "VFuaQ6m2Qom_381ce3cd69b846c3b920be16d29ed48e",
+    "human_record": {
+      "case_id": "V16",
+      "image_id": "VFuaQ6m2Qom_381ce3cd69b846c3b920be16d29ed48e",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "similar",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "local"
+        ],
+        "notes": "w37是标错的,模型的标注没啥问题,不过你人工标注的角点顺序不调整反而是对的",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:44:40.761Z",
+      "ai_advice_opened": true
+    },
+    "ai_followup": {
+      "case_id": "V16",
+      "priority": "保留或补充",
+      "issue_type": "点序读取纠错／错误类型待分",
+      "visual_observation": "W36点位含凹处细节；W37点位较简化。两份均显示失败，失败类型不同。",
+      "proposed_question": "保留你对W37的质量意见，不能把点位或漏角错误改称顺序错误；similar需待可比连接后确认。",
+      "evidence_viewed": [
+        "03_comparison.jpg",
+        "hd/panorama.png"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "assistant",
+        "state": "我先处理证据／显示",
+        "required_now": false,
+        "task": "先排查两份真人的读取，保留你对W37的质量意见和顺序意见；有具体反证才提出重看。",
+        "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V16",
+      "scope_statements": [],
+      "quality_excerpts": [
+        {
+          "source_field": "notes",
+          "quote": "w37是标错的,模型的标注没啥问题"
+        }
+      ],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V17",
+    "image_id": "rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a",
+    "human_record": {
+      "case_id": "V17",
+      "image_id": "rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "scope",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "scope",
+          "local"
+        ],
+        "notes": "bi 的enclosed的和gt是最标准的enclosed,HOHONET 跨门扩张,",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T09:11:39.935Z",
+      "ai_advice_opened": true
+    },
+    "ai_followup": {
+      "case_id": "V17",
+      "priority": "保留或补充",
+      "issue_type": "已有支持／局部与范围并存",
+      "visual_observation": "Bi扩展头与HoHo跨入右侧门后；两个真人代表在该处确有不同延伸。",
+      "proposed_question": "human_difference=scope在当前展示有支持，无需因评语主要谈模型而强改。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V17",
+      "scope_statements": [
+        {
+          "statement_id": "V17-S1",
+          "kind": "semantic_assignment",
+          "target": "Bi enclosed头与gt",
+          "source_field": "notes",
+          "quote": "bi 的enclosed的和gt是最标准的enclosed",
+          "interpretation": "用户认为两者是标准enclosed",
+          "scope_label": "enclosed",
+          "qualification": "保留用户表述；不是新增最终GT",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        },
+        {
+          "statement_id": "V17-S2",
+          "kind": "observed_extent",
+          "target": "HoHoNet",
+          "source_field": "notes",
+          "quote": "HOHONET 跨门扩张",
+          "interpretation": "用户指出已显示的跨门扩张",
+          "scope_label": null,
+          "qualification": "是实际输出描述，未直接使用extended归类",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V18",
+    "image_id": "e9zR4mvMWw7_12c84e77f6564013a032220e8f9037e8",
+    "human_record": {
+      "case_id": "V18",
+      "image_id": "e9zR4mvMWw7_12c84e77f6564013a032220e8f9037e8",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "similar",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [],
+        "notes": "",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T09:48:55.925Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V18",
+      "priority": "保留或补充",
+      "issue_type": "未见明显文本冲突",
+      "visual_observation": "主卧室范围一致，第二真人代表在入口附近增添局部角点。",
+      "proposed_question": "similar可保留为整体描述；必要时补local，不把差一点视为范围多解。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V18",
+      "scope_statements": [],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V19",
+    "image_id": "zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b",
+    "human_record": {
+      "case_id": "V19",
+      "image_id": "zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b",
+      "answers": {
+        "visibility": "partial",
+        "scope": "one_clear",
+        "human_difference": "mixed",
+        "annotation_assessment": "uncertain",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "scope",
+          "occlusion",
+          "local"
+        ],
+        "notes": "这图有变动门把 右边的墙挡住了大部分,所以gt,bi,hoho,都不太对.反而是人的 那比较有道理. (但是没有微调以符合曼哈顿世界约束)   它应该是属于曼哈顿,但是遮挡严重,这个图分歧感觉挺大的",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T09:52:10.213Z",
+      "ai_advice_opened": true
+    },
+    "ai_followup": {
+      "case_id": "V19",
+      "priority": "保留或补充",
+      "issue_type": "遮挡证据／完成不等于确定",
+      "visual_observation": "右侧玻璃门／反射构件使后方墙面难辨，模型与真人对凹凸深度和位置解释不同。反射内容不能当作另一个真实空间。",
+      "proposed_question": "reviewed与uncertain可并存；真人更合理是候选判断，不能由其3D外观就确定真实遮挡后边界。",
+      "evidence_viewed": [
+        "03_comparison.jpg",
+        "hd/panorama.png"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V19",
+      "scope_statements": [],
+      "quality_excerpts": [
+        {
+          "source_field": "notes",
+          "quote": "但是没有微调以符合曼哈顿世界约束"
+        },
+        {
+          "source_field": "notes",
+          "quote": "遮挡严重"
+        }
+      ],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V20",
+    "image_id": "x8F5xyUWy9e_9926b38bd87e44e292d9c375050dd17d",
+    "human_record": {
+      "case_id": "V20",
+      "image_id": "x8F5xyUWy9e_9926b38bd87e44e292d9c375050dd17d",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "local",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "local"
+        ],
+        "notes": "所有模型和gt都漏了图片中偏左的 柱子,人工标注的没有忽略,我记得我好像改过这图的gt? ",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T09:53:26.112Z",
+      "ai_advice_opened": true
+    },
+    "ai_followup": {
+      "case_id": "V20",
+      "priority": "保留或补充",
+      "issue_type": "局部结构／参考版本待连接",
+      "visual_observation": "左侧门旁窄突出结构，两个人工版本加了角点，模型/当前参考作简化外圈。",
+      "proposed_question": "local与评语相符；你提到的改后GT需定位来源，不自动把当前reference称为最终GT。",
+      "evidence_viewed": [
+        "03_comparison.jpg",
+        "hd/panorama.png"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "assistant",
+        "state": "我先处理证据／显示",
+        "required_now": false,
+        "task": "保留漏柱判断；改后GT的来源定位由我先处理，不要求你重看柱子。",
+        "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V20",
+      "scope_statements": [],
+      "quality_excerpts": [
+        {
+          "source_field": "notes",
+          "quote": "所有模型和gt都漏了图片中偏左的 柱子,人工标注的没有忽略"
+        }
+      ],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V21",
+    "image_id": "jh4fc5c5qoQ_855bc326ad174253b57626daf123c608",
+    "human_record": {
+      "case_id": "V21",
+      "image_id": "jh4fc5c5qoQ_855bc326ad174253b57626daf123c608",
+      "answers": {
+        "visibility": "clear",
+        "scope": "multiple_candidates",
+        "human_difference": "mixed",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "scope",
+          "local"
+        ],
+        "notes": "这张图是 extended和enclosed比较差别明显的吧,gt标注的是extended,而且特别精细,bi extended也不错,都有略微一点点瑕疵.",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:44:29.301Z",
+      "ai_advice_opened": true
+    },
+    "ai_followup": {
+      "case_id": "V21",
+      "priority": "保留或补充",
+      "issue_type": "范围差异／真人显示受阻",
+      "visual_observation": "门厅远端两侧空间的纳入量不同，Bi扩展头和参考增添细部；W12显示阻断，不能据红线解释mixed。",
+      "proposed_question": "保留Bi范围差异的观察；真人mixed应待恢复历史读取或看原点后再确认。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "assistant",
+        "state": "我先处理证据／显示",
+        "required_now": false,
+        "task": "保留GT的extended解释；先解决W12预览读取，不能把显示受阻变成你的复核任务。",
+        "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V21",
+      "scope_statements": [
+        {
+          "statement_id": "V21-S1",
+          "kind": "output_comparison",
+          "target": "本图所述范围解释",
+          "source_field": "notes",
+          "quote": "这张图是 extended和enclosed比较差别明显的吧",
+          "interpretation": "用户认为两类范围差异明显",
+          "scope_label": null,
+          "qualification": "保留吧的试探语气",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        },
+        {
+          "statement_id": "V21-S2",
+          "kind": "semantic_assignment",
+          "target": "gt（版本未明确）",
+          "source_field": "notes",
+          "quote": "gt标注的是extended",
+          "interpretation": "用户将GT解释为extended",
+          "scope_label": "extended",
+          "qualification": "精细或不错不等于规则合规",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [
+        {
+          "source_field": "notes",
+          "quote": "都有略微一点点瑕疵"
+        }
+      ],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V22",
+    "image_id": "Z6MFQCViBuw_2008e72476f84104858e908beeac0193",
+    "human_record": {
+      "case_id": "V22",
+      "image_id": "Z6MFQCViBuw_2008e72476f84104858e908beeac0193",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "similar",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "local"
+        ],
+        "notes": "标注者角点顺序你不该改的,之后bi 的extended 成为了 过度解析,可能是太想去找extended的区域了.enclosed的模型标注大体没啥问题",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T09:59:31.923Z",
+      "ai_advice_opened": true
+    },
+    "ai_followup": {
+      "case_id": "V22",
+      "priority": "保留或补充",
+      "issue_type": "点序纠错／模型解释须克制",
+      "visual_observation": "餐厅大外圈近似一致；Bi扩展头在远端门/壁炉附近增加凹凸，未明显跨入另一大房间。",
+      "proposed_question": "可以写多出局部结构待核实，不能推断模型心理动机；撤回W15顺序修正归因。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "assistant",
+        "state": "我先处理证据／显示",
+        "required_now": false,
+        "task": "保留局部过度解析的观察，撤回工人顺序错误归因；对模型动机仅作假设标记，不需你再确认。",
+        "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V22",
+      "scope_statements": [
+        {
+          "statement_id": "V22-S1",
+          "kind": "output_comparison",
+          "target": "Bi extended头",
+          "source_field": "notes",
+          "quote": "bi 的extended 成为了 过度解析",
+          "interpretation": "用户认为扩展头出现过度解析",
+          "scope_label": null,
+          "qualification": "模型头名称不是语义标签；局部过分细分不必然是跨空间扩展",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [
+        {
+          "source_field": "notes",
+          "quote": "过度解析"
+        }
+      ],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V23",
+    "image_id": "VLzqgDo317F_5d3591edd7c546acaf99db40281b3409",
+    "human_record": {
+      "case_id": "V23",
+      "image_id": "VLzqgDo317F_5d3591edd7c546acaf99db40281b3409",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "similar",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [],
+        "notes": "人工 的标注 你又把顺序搞混乱了",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:05:09.083Z",
+      "ai_advice_opened": true
+    },
+    "ai_followup": {
+      "case_id": "V23",
+      "priority": "保留或补充",
+      "issue_type": "点序读取纠错",
+      "visual_observation": "两份真人关键点分布相似，旧页面均画出大对角线；模型同一房间轮廓相近。",
+      "proposed_question": "先恢复读取语义再谈真人形状；不能将共同的脚本红线记为共同标错。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "assistant",
+        "state": "我先处理证据／显示",
+        "required_now": false,
+        "task": "先处理错误诊断连线；你已指出工人顺序被误读，无需重判来证明这一点。",
+        "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V23",
+      "scope_statements": [],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V24",
+    "image_id": "2t7WUuJeko7_976c954bc5944db493d6149ee4bc7a2a",
+    "human_record": {
+      "case_id": "V24",
+      "image_id": "2t7WUuJeko7_976c954bc5944db493d6149ee4bc7a2a",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "similar",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [],
+        "notes": "",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:05:54.063Z",
+      "ai_advice_opened": true
+    },
+    "ai_followup": {
+      "case_id": "V24",
+      "priority": "保留或补充",
+      "issue_type": "未见明显文本冲突",
+      "visual_observation": "寝室外圈各版接近，床和窗帘遮挡下边界；显示一份真人。",
+      "proposed_question": "保留当前意见，不将空评语解释为额外确认。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V24",
+      "scope_statements": [],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V25",
+    "image_id": "7y3sRwLe3Va_b47475370e824b9e923a4a96bc98e1e3",
+    "human_record": {
+      "case_id": "V25",
+      "image_id": "7y3sRwLe3Va_b47475370e824b9e923a4a96bc98e1e3",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "mixed",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "suspected",
+        "status": "deferred",
+        "factors": [
+          "scope",
+          "local"
+        ],
+        "notes": "gt的顺序理清后,就是完全正确的, 人工标注的顺序没有调整",
+        "oos_reason": "天花板不是平的,但是如果取最下面,又全都是一个平面,仍然可以标注"
+      },
+      "updated_at": "2026-09-07T12:08:13.085Z",
+      "ai_advice_opened": true
+    },
+    "ai_followup": {
+      "case_id": "V25",
+      "priority": "优先确认",
+      "issue_type": "规则取舍／点序纠错",
+      "visual_observation": "门厅和卧室之间有顶面高度变化，Bi两头跨入卧室程度不同，人工红线不能视为墙边。",
+      "proposed_question": "你认为取低顶平面仍可标与suspected不冲突；需确认允许近似的规则。reference目前可渲染不等于已验证最终正确。",
+      "evidence_viewed": [
+        "03_comparison.jpg",
+        "02_blind_perspectives.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "rule",
+        "state": "条件判断已记录",
+        "required_now": false,
+        "task": "已保留按低顶平面可标的条件判断与疑似OOS；若后续必须形成统一纳入标准，再集中讨论规则。",
+        "how_to_answer": "现阶段保留条件或不确定，不需要补填。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V25",
+      "scope_statements": [
+        {
+          "statement_id": "V25-S1",
+          "kind": "rule_condition",
+          "target": "低顶面近似",
+          "source_field": "oos_reason",
+          "quote": "天花板不是平的,但是如果取最下面,又全都是一个平面,仍然可以标注",
+          "interpretation": "用户提出按最低顶面作近似仍可标",
+          "scope_label": null,
+          "qualification": "未给enclosed/extended定类，也未最终排除OOS",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [
+        {
+          "source_field": "notes",
+          "quote": "gt的顺序理清后,就是完全正确的"
+        }
+      ],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V26",
+    "image_id": "X7HyMhZNoso_28ada927582d4d6ea7cf44cabf31527a",
+    "human_record": {
+      "case_id": "V26",
+      "image_id": "X7HyMhZNoso_28ada927582d4d6ea7cf44cabf31527a",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "similar",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "scope"
+        ],
+        "notes": "有个gt的顺序没有调整,bi 的 两种情况基本无差别",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:09:00.045Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V26",
+      "priority": "优先确认",
+      "issue_type": "真人差异选项待确认",
+      "visual_observation": "Bi两头主范围接近；真人第二代表在右侧入口明显多纳入一小段，reference0则受列表连接影响。",
+      "proposed_question": "similar是否仅指总体房间？右侧入口扩展可记录local/scope，需你决定程度，不自动重分类。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V26",
+      "scope_statements": [
+        {
+          "statement_id": "V26-S1",
+          "kind": "output_comparison",
+          "target": "Bi两头",
+          "source_field": "notes",
+          "quote": "bi 的 两种情况基本无差别",
+          "interpretation": "用户认为双头基本相同",
+          "scope_label": null,
+          "qualification": "没有指定属于哪一种范围类型；不是坐标精确相同",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V27",
+    "image_id": "uNb9QFRL6hY_f7944295a76541b186e6a557ebdbba14",
+    "human_record": {
+      "case_id": "V27",
+      "image_id": "uNb9QFRL6hY_f7944295a76541b186e6a557ebdbba14",
+      "answers": {
+        "visibility": "clear",
+        "scope": "multiple_candidates",
+        "human_difference": "mixed",
+        "annotation_assessment": "uncertain",
+        "oos_assessment": "suspected",
+        "status": "deferred",
+        "factors": [
+          "scope",
+          "local",
+          "sequence",
+          "reference"
+        ],
+        "notes": "这个是站在门框下拍的,所以说有歧义",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:11:23.428Z",
+      "ai_advice_opened": true
+    },
+    "ai_followup": {
+      "case_id": "V27",
+      "priority": "优先确认",
+      "issue_type": "歧义与OOS不能互推",
+      "visual_observation": "近处双开门/门柱占据两侧视野，相机在空间交界附近；不同版本向两端延伸不同。",
+      "proposed_question": "门框下难界定支持scope疑问，不独立证明OOS；suspected是否要保留、依据是什么？",
+      "evidence_viewed": [
+        "03_comparison.jpg",
+        "02_blind_perspectives.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "rule",
+        "state": "人工补充已收到，保留不确定",
+        "required_now": false,
+        "task": "纳入右侧内部空间会涉及分层天花；用户仍不确定如何标合适。",
+        "how_to_answer": "不需要重复回答。OOS疑点有了具体范围和结构依据；不自动排除整图，也不替用户确定唯一范围。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V27",
+      "scope_statements": [
+        {
+          "statement_id": "V27-S1",
+          "kind": "potential_scope",
+          "target": "门框位置的空间范围",
+          "source_field": "notes",
+          "quote": "这个是站在门框下拍的,所以说有歧义",
+          "interpretation": "用户认为拍摄位置导致范围难界定",
+          "scope_label": null,
+          "qualification": "未指定两种具体边界；不自动归入E/X或OOS",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    },
+    "human_supplement": {
+      "case_id": "V27",
+      "image_id": "uNb9QFRL6hY_f7944295a76541b186e6a557ebdbba14",
+      "source": "用户在当前对话直接补充",
+      "recorded_date": "2026-09-08",
+      "original_text": "v27 意思是右边的里面空间,如果纳入标注的话,天花板就分层.之后说句实话,我也不知道怎么标合适,怎么标都不是特别完美",
+      "assistant_interpretation": "纳入右侧内部空间会涉及分层天花；用户仍不确定如何标合适。",
+      "interpretation_limits": "OOS疑点有了具体范围和结构依据；不自动排除整图，也不替用户确定唯一范围。",
+      "clarification_received": true,
+      "final_geometry_adjudicated": false
+    }
+  },
+  {
+    "case_id": "V28",
+    "image_id": "B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993",
+    "human_record": {
+      "case_id": "V28",
+      "image_id": "B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993",
+      "answers": {
+        "visibility": "clear",
+        "scope": "multiple_candidates",
+        "human_difference": "similar",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "scope"
+        ],
+        "notes": "HOHONET的肯定错误,但是其余的 右边到底在哪里结束,还有异议,我个人可能更倾向人工的.  都不是完美的标注",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:13:57.360Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V28",
+      "priority": "保留或补充",
+      "issue_type": "右侧截断争议与局部质量分开",
+      "visual_observation": "长走廊终点细小，HoHo在右端切断位置明显更近；其他版本较接近但终点仍难细判。",
+      "proposed_question": "保留你偏向人工且认为所有版本不完美的意见，无需修改旧候选选项。若要进一步分析，需要指出右侧有争议的截断位置；它不必然是enclosed/extended二分。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V28",
+      "scope_statements": [
+        {
+          "statement_id": "V28-S1",
+          "kind": "potential_scope",
+          "target": "右侧截断位置",
+          "source_field": "notes",
+          "quote": "其余的 右边到底在哪里结束,还有异议,我个人可能更倾向人工的",
+          "interpretation": "用户保留截断位置争议并偏向真人",
+          "scope_label": null,
+          "qualification": "局部终止位置不一定构成E/X分支",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [
+        {
+          "source_field": "notes",
+          "quote": "都不是完美的标注"
+        }
+      ],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V29",
+    "image_id": "yqstnuAEVhm_26b2e92ccd314a2da1a4fc8dfc6e6f56",
+    "human_record": {
+      "case_id": "V29",
+      "image_id": "yqstnuAEVhm_26b2e92ccd314a2da1a4fc8dfc6e6f56",
+      "answers": {
+        "visibility": "clear",
+        "scope": "multiple_candidates",
+        "human_difference": "scope",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "scope",
+          "local"
+        ],
+        "notes": "bi extended 和hoho 都是extended标注,其余是enclosed,但是簇2 在右侧的结束点不一致,感觉两种都大差不差",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:15:32.045Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V29",
+      "priority": "保留或补充",
+      "issue_type": "截断位置与跨门范围并存",
+      "visual_observation": "Bi扩展头/HoHo跨向右侧平台，两个真人均较短但截断面不完全一致。",
+      "proposed_question": "scope选项可保留；请明确两个真人的差异是门口截断位置，而非完整enclosed/extended二分。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V29",
+      "scope_statements": [
+        {
+          "statement_id": "V29-S1",
+          "kind": "semantic_assignment",
+          "target": "Bi extended头与HoHoNet",
+          "source_field": "notes",
+          "quote": "bi extended 和hoho 都是extended标注",
+          "interpretation": "用户将两者解释为extended",
+          "scope_label": "extended",
+          "qualification": "并非仅凭模型名字赋值",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        },
+        {
+          "statement_id": "V29-S2",
+          "kind": "semantic_assignment",
+          "target": "其余（原文集合）",
+          "source_field": "notes",
+          "quote": "其余是enclosed",
+          "interpretation": "用户将其余解释为enclosed",
+          "scope_label": "enclosed",
+          "qualification": "不展开到未显示响应",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        },
+        {
+          "statement_id": "V29-S3",
+          "kind": "potential_scope",
+          "target": "簇2右侧结束位置",
+          "source_field": "notes",
+          "quote": "但是簇2 在右侧的结束点不一致,感觉两种都大差不差",
+          "interpretation": "同一较小范围类别中仍有截断差异",
+          "scope_label": null,
+          "qualification": "簇2是显示编号，待连接；未确认两种都符合规则",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V30",
+    "image_id": "pRbA3pwrgk9_2a3810bc7ecc491e81ff1e8a17692ec1",
+    "human_record": {
+      "case_id": "V30",
+      "image_id": "pRbA3pwrgk9_2a3810bc7ecc491e81ff1e8a17692ec1",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "similar",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [],
+        "notes": "都大差不差, bi 没有出现两种标注",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:16:06.660Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V30",
+      "priority": "保留或补充",
+      "issue_type": "双头未覆盖预想分支",
+      "visual_observation": "两头都停在电梯/小空间外圈，没有跨到开门后的相邻区域；真人外圈近似。",
+      "proposed_question": "保留双头近似的观察，不等于不存在可想象的跨门范围。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V30",
+      "scope_statements": [
+        {
+          "statement_id": "V30-S1",
+          "kind": "output_comparison",
+          "target": "Bi两头",
+          "source_field": "notes",
+          "quote": "bi 没有出现两种标注",
+          "interpretation": "用户未看到双头产生两种明显标法",
+          "scope_label": null,
+          "qualification": "不等于图像不存在其他解释",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V31",
+    "image_id": "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+    "human_record": {
+      "case_id": "V31",
+      "image_id": "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+      "answers": {
+        "visibility": "clear",
+        "scope": "multiple_candidates",
+        "human_difference": "mixed",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "scope",
+          "local",
+          "sequence"
+        ],
+        "notes": "严格来说,只有我改过的gt 是算enclosed ,其余的都是extended,但是他们标注的也不好,他们包括长廊的这个东西,或者左边墙面有些标注不准",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:17:55.956Z",
+      "ai_advice_opened": true
+    },
+    "ai_followup": {
+      "case_id": "V31",
+      "priority": "优先确认",
+      "issue_type": "参考版本待连接／两份真人可比性",
+      "visual_observation": "浴室与长走廊之间的取舍是主要问题；两个人工点位图很接近且均受点对读取阻断。",
+      "proposed_question": "你提到改后GT应单独定位；human_difference=mixed是否主要指人与参考/模型，而非两份真人？待确认。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "assistant",
+        "state": "我先处理证据／显示",
+        "required_now": false,
+        "task": "先找改后GT及真人版本，连接你说的enclosed／其余extended；旧mixed选项保留，不要求现在改。",
+        "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V31",
+      "scope_statements": [
+        {
+          "statement_id": "V31-S1",
+          "kind": "semantic_assignment",
+          "target": "我改过的gt（待定位，不能替换为当前参考）",
+          "source_field": "notes",
+          "quote": "只有我改过的gt 是算enclosed",
+          "interpretation": "用户将自己修改的GT解释为enclosed",
+          "scope_label": "enclosed",
+          "qualification": "缺少准确版本映射",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        },
+        {
+          "statement_id": "V31-S2",
+          "kind": "semantic_assignment",
+          "target": "其余（原文集合）",
+          "source_field": "notes",
+          "quote": "其余的都是extended",
+          "interpretation": "用户将其余解释为extended",
+          "scope_label": "extended",
+          "qualification": "集合范围未确认，不能给所有历史响应赋标签",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [
+        {
+          "source_field": "notes",
+          "quote": "他们包括长廊的这个东西,或者左边墙面有些标注不准"
+        }
+      ],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V32",
+    "image_id": "7y3sRwLe3Va_dfe1f8e8b58d4da49f0c73516e7a4b67",
+    "human_record": {
+      "case_id": "V32",
+      "image_id": "7y3sRwLe3Va_dfe1f8e8b58d4da49f0c73516e7a4b67",
+      "answers": {
+        "visibility": "clear",
+        "scope": "multiple_candidates",
+        "human_difference": "not_applicable",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "scope"
+        ],
+        "notes": "bi的extended不是我想象中的extended.这个和之前的的25是同一个房间,如果对比来看,这肯定不够 \"extended\",不过他也确实标了额外空间",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:19:52.826Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V32",
+      "priority": "保留或补充",
+      "issue_type": "多视角证据待核实",
+      "visual_observation": "Bi扩展头在左侧门厅增加范围，仍未覆盖你预想的更大空间。与V25建筑相同，图中陈设有对应线索。",
+      "proposed_question": "保留同房间为用户提供线索，未核实前不填正式room_id；扩展程度不足与确实扩大并不矛盾。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "assistant",
+        "state": "我先处理证据／显示",
+        "required_now": false,
+        "task": "先核V25及本图的多视角对应和空间范围；你已说明实际有扩展但不够，不需要重述。",
+        "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V32",
+      "scope_statements": [
+        {
+          "statement_id": "V32-S1",
+          "kind": "output_comparison",
+          "target": "Bi extended头",
+          "source_field": "notes",
+          "quote": "bi的extended不是我想象中的extended",
+          "interpretation": "用户认为输出与预想扩展不一致",
+          "scope_label": null,
+          "qualification": "预想不是已确认正确范围",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        },
+        {
+          "statement_id": "V32-S2",
+          "kind": "potential_scope",
+          "target": "更大的空间范围／V25其他视角",
+          "source_field": "notes",
+          "quote": "这肯定不够 \"extended\",不过他也确实标了额外空间",
+          "interpretation": "用户认为实际有扩展，但扩展程度不足",
+          "scope_label": null,
+          "qualification": "不是简单有/无扩展；同房间身份是待核线索",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V33",
+    "image_id": "X7HyMhZNoso_2fa0da1a66e04428b315cb93b72143d5",
+    "human_record": {
+      "case_id": "V33",
+      "image_id": "X7HyMhZNoso_2fa0da1a66e04428b315cb93b72143d5",
+      "answers": {
+        "visibility": "clear",
+        "scope": "multiple_candidates",
+        "human_difference": "not_applicable",
+        "annotation_assessment": "",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [],
+        "notes": "其实这张图主要的问题是,左边和 马桶之间的区域,里面到底需不需要标注,还是说 就把它当做不是一个房间/凸出的墙?我记得一个房间的图的gt标注里,我是在另一个图里标注了这个空间,不像这所有标注直接 \"忽略\"(我也不知道怎么表述清楚)\nbi 完全没区别\n",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:44:51.423Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V33",
+      "priority": "保留或补充",
+      "issue_type": "一致输出与遗漏解释并存",
+      "visual_observation": "马桶左侧暗开口/凹处，在两头与参考中均被近似封住；Bi主轮廓近似。",
+      "proposed_question": "multiple_candidates有评语依据，factors为空只是选填遗漏；建议确认是否补scope，并定位你提到的另一视角。",
+      "evidence_viewed": [
+        "03_comparison.jpg",
+        "hd/panorama.png"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "assistant",
+        "state": "我先处理证据／显示",
+        "required_now": false,
+        "task": "先查你提到的另一视角和参考，保留纳入暗凹处的开放问题；没有新证据前不逼你二选一。",
+        "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V33",
+      "scope_statements": [
+        {
+          "statement_id": "V33-S1",
+          "kind": "potential_scope",
+          "target": "左边与马桶之间的区域",
+          "source_field": "notes",
+          "quote": "里面到底需不需要标注,还是说 就把它当做不是一个房间/凸出的墙?",
+          "interpretation": "用户提出纳入或不纳入区域的两种解释",
+          "scope_label": null,
+          "qualification": "原文未命名E/X；也未确认哪种合规",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        },
+        {
+          "statement_id": "V33-S2",
+          "kind": "output_comparison",
+          "target": "Bi两头",
+          "source_field": "notes",
+          "quote": "bi 完全没区别",
+          "interpretation": "用户认为两头没有明显区别",
+          "scope_label": null,
+          "qualification": "视觉表述，不直接代替坐标相等检验",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V34",
+    "image_id": "b8cTxDM8gDG_8316e9313299447bb1f574aaf8cbec73",
+    "human_record": {
+      "case_id": "V34",
+      "image_id": "b8cTxDM8gDG_8316e9313299447bb1f574aaf8cbec73",
+      "answers": {
+        "visibility": "clear",
+        "scope": "multiple_candidates",
+        "human_difference": "not_applicable",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "scope",
+          "local"
+        ],
+        "notes": "这所有标的都是extended ,只有gt0 的extended标注的好.这是很明可能出现 标注范围有歧义的图",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:24:54.441Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V34",
+      "priority": "优先确认",
+      "issue_type": "范围疑问与局部好坏分开",
+      "visual_observation": "长廊左端延伸及两侧凹处各版取舍不同。两份参考均20点，分别来自dataset_label与public_import；坐标并非完全相等，但单向最大最近点差仅约0.000030像素（1024×512坐标尺度），视觉上近乎同一份。",
+      "proposed_question": "你写“只有gt0较好”是否也包括几乎同坐标的gt1？保留来源区别，但不能把两者当作独立质量支持。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "assistant",
+        "state": "我先处理证据／显示",
+        "required_now": false,
+        "task": "两份参考近乎同坐标属于来源／重复支持整理；保留你对gt0的意见，不要求你再给gt1打分。",
+        "how_to_answer": "当前无人工待办；准备出新的具体证据后才可能重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V34",
+      "scope_statements": [
+        {
+          "statement_id": "V34-S1",
+          "kind": "semantic_assignment",
+          "target": "所有展示标注（用户原文集合）",
+          "source_field": "notes",
+          "quote": "这所有标的都是extended",
+          "interpretation": "用户认为展示结果均属于extended",
+          "scope_label": "extended",
+          "qualification": "仍然可能存在未被这些输出覆盖的其他范围",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        },
+        {
+          "statement_id": "V34-S2",
+          "kind": "potential_scope",
+          "target": "尚未具体画出的范围分支",
+          "source_field": "notes",
+          "quote": "这是很明可能出现 标注范围有歧义的图",
+          "interpretation": "用户认为本图有潜在范围歧义",
+          "scope_label": null,
+          "qualification": "潜在分支没有指定，也未指定为enclosed",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [
+        {
+          "source_field": "notes",
+          "quote": "只有gt0 的extended标注的好"
+        }
+      ],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V35",
+    "image_id": "e9zR4mvMWw7_18653fa3d6ba4f82889237201ee07d11",
+    "human_record": {
+      "case_id": "V35",
+      "image_id": "e9zR4mvMWw7_18653fa3d6ba4f82889237201ee07d11",
+      "answers": {
+        "visibility": "clear",
+        "scope": "multiple_candidates",
+        "human_difference": "not_applicable",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "scope"
+        ],
+        "notes": "两个gt反而是extended,其余是enclosed",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:25:57.124Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V35",
+      "priority": "保留或补充",
+      "issue_type": "双头相近但参考范围更大",
+      "visual_observation": "Bi/HoHo停在餐区较近边界，两份参考向左后方扩展。",
+      "proposed_question": "评语与multiple_candidates相容；参考扩展并不自动代表enclosed规则下正确。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V35",
+      "scope_statements": [
+        {
+          "statement_id": "V35-S1",
+          "kind": "semantic_assignment",
+          "target": "两个gt",
+          "source_field": "notes",
+          "quote": "两个gt反而是extended",
+          "interpretation": "用户将两份参考解释为extended",
+          "scope_label": "extended",
+          "qualification": "参考来源保留；不是两个独立真值",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        },
+        {
+          "statement_id": "V35-S2",
+          "kind": "semantic_assignment",
+          "target": "其余（原文集合）",
+          "source_field": "notes",
+          "quote": "其余是enclosed",
+          "interpretation": "用户将其余解释为enclosed",
+          "scope_label": "enclosed",
+          "qualification": "不根据Bi头名覆盖这条意见",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V36",
+    "image_id": "wc2JMjhGNzB_5c363f3933e84bb5aceb3899f997b6fb",
+    "human_record": {
+      "case_id": "V36",
+      "image_id": "wc2JMjhGNzB_5c363f3933e84bb5aceb3899f997b6fb",
+      "answers": {
+        "visibility": "clear",
+        "scope": "multiple_candidates",
+        "human_difference": "not_applicable",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "scope",
+          "local"
+        ],
+        "notes": "bi enclosed和gt属于enclosed,但是bi extended有问题,反而是hoho是extended(虽然标注的有小问题)",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:27:33.577Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V36",
+      "priority": "保留或补充",
+      "issue_type": "模型名称不等于实际范围",
+      "visual_observation": "Bi扩展头只在拱门附近增添狭小凹凸，HoHo实际纳入门后更大区域。",
+      "proposed_question": "评语有视觉支持；不能把Bi两个名称直接编码成两种已经验证的范围。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V36",
+      "scope_statements": [
+        {
+          "statement_id": "V36-S1",
+          "kind": "semantic_assignment",
+          "target": "Bi enclosed头与gt",
+          "source_field": "notes",
+          "quote": "bi enclosed和gt属于enclosed",
+          "interpretation": "用户将两者解释为enclosed",
+          "scope_label": "enclosed",
+          "qualification": "类型与质量分开",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        },
+        {
+          "statement_id": "V36-S2",
+          "kind": "semantic_assignment",
+          "target": "HoHoNet",
+          "source_field": "notes",
+          "quote": "反而是hoho是extended(虽然标注的有小问题)",
+          "interpretation": "用户将HoHo解释为extended，同时指出局部问题",
+          "scope_label": "extended",
+          "qualification": "Bi extended有问题不等于已经给它另一语义类型",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [
+        {
+          "source_field": "notes",
+          "quote": "bi extended有问题"
+        },
+        {
+          "source_field": "notes",
+          "quote": "虽然标注的有小问题"
+        }
+      ],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V37",
+    "image_id": "uNb9QFRL6hY_068fb0d52d01455c96fa23659c373bf8",
+    "human_record": {
+      "case_id": "V37",
+      "image_id": "uNb9QFRL6hY_068fb0d52d01455c96fa23659c373bf8",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "not_applicable",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [],
+        "notes": "都差不多",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:28:07.371Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V37",
+      "priority": "保留或补充",
+      "issue_type": "未见明显文本冲突",
+      "visual_observation": "各版取相同主空间外圈，局部顶边略不同，候选无人类。",
+      "proposed_question": "保留大致相似，不等于参考或模型已验证正确。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V37",
+      "scope_statements": [],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V38",
+    "image_id": "yqstnuAEVhm_6440d94be92546fdab587df78fbea28b",
+    "human_record": {
+      "case_id": "V38",
+      "image_id": "yqstnuAEVhm_6440d94be92546fdab587df78fbea28b",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "not_applicable",
+        "annotation_assessment": "",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [],
+        "notes": "这张图模型被玻璃干扰, bi所谓的extended其实还是同一个房间.  gt标的最对",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:29:34.118Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V38",
+      "priority": "保留或补充",
+      "issue_type": "同范围局部差异／因果待证",
+      "visual_observation": "浴室镜面、玻璃隔断密集，两头在附近增加不同角点，均未明显跨入右侧卧室。",
+      "proposed_question": "可写玻璃附近局部差异；被玻璃干扰是原因假设，不是已证明模型机制。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V38",
+      "scope_statements": [
+        {
+          "statement_id": "V38-S1",
+          "kind": "output_comparison",
+          "target": "Bi extended头",
+          "source_field": "notes",
+          "quote": "bi所谓的extended其实还是同一个房间",
+          "interpretation": "用户认为扩展头仍在同一房间范围内",
+          "scope_label": null,
+          "qualification": "没有直接断定其必为enclosed；玻璃干扰属于因果假设",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [
+        {
+          "source_field": "notes",
+          "quote": "gt标的最对"
+        }
+      ],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V39",
+    "image_id": "X7HyMhZNoso_84cc1504051f4b1c9492dfab5dce84f9",
+    "human_record": {
+      "case_id": "V39",
+      "image_id": "X7HyMhZNoso_84cc1504051f4b1c9492dfab5dce84f9",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "not_applicable",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [],
+        "notes": "都大差不差,标注空间一致",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:30:16.511Z",
+      "ai_advice_opened": true
+    },
+    "ai_followup": {
+      "case_id": "V39",
+      "priority": "保留或补充",
+      "issue_type": "未见明显文本冲突",
+      "visual_observation": "电视墙、两侧窗和客厅外圈在各版近似。",
+      "proposed_question": "保留空间一致的观察，不能推断全部候选无歧义。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V39",
+      "scope_statements": [
+        {
+          "statement_id": "V39-S1",
+          "kind": "output_comparison",
+          "target": "所展示标注",
+          "source_field": "notes",
+          "quote": "标注空间一致",
+          "interpretation": "用户认为空间范围一致",
+          "scope_label": null,
+          "qualification": "未赋E/X标签",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V40",
+    "image_id": "7y3sRwLe3Va_1679b5de39e548d38ba240f2fd99cae9",
+    "human_record": {
+      "case_id": "V40",
+      "image_id": "7y3sRwLe3Va_1679b5de39e548d38ba240f2fd99cae9",
+      "answers": {
+        "visibility": "clear",
+        "scope": "multiple_candidates",
+        "human_difference": "not_applicable",
+        "annotation_assessment": "",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [],
+        "notes": "这张图是在门框下拍摄的,所以范围很不好界定, 都一般.hoho错的,但是bi 的两种 方法 是有明显差别的. 虽说肯定有点小问题,gt 硬说的话,也有一点问题(这么难的标注成这样已经很不错的)",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:33:03.557Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V40",
+      "priority": "保留或补充",
+      "issue_type": "评语有问题但factors空",
+      "visual_observation": "门扇近相机，跨向右侧房间的范围在Bi两头间不同；HoHo左侧近端墙边与参考有差异。",
+      "proposed_question": "建议你确认是否补scope/local因素；annotation_assessment留空不是认定都错，也不强行替你选。",
+      "evidence_viewed": [
+        "03_comparison.jpg",
+        "02_blind_perspectives.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V40",
+      "scope_statements": [
+        {
+          "statement_id": "V40-S1",
+          "kind": "potential_scope",
+          "target": "门框下的空间范围",
+          "source_field": "notes",
+          "quote": "这张图是在门框下拍摄的,所以范围很不好界定",
+          "interpretation": "用户认为范围难定",
+          "scope_label": null,
+          "qualification": "未认可所有输出均符合规则",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        },
+        {
+          "statement_id": "V40-S2",
+          "kind": "output_comparison",
+          "target": "Bi两头",
+          "source_field": "notes",
+          "quote": "bi 的两种 方法 是有明显差别的",
+          "interpretation": "用户认为双头有明显差异",
+          "scope_label": null,
+          "qualification": "未逐头指定E/X语义，差异与瑕疵可以并存",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [
+        {
+          "source_field": "notes",
+          "quote": "虽说肯定有点小问题"
+        },
+        {
+          "source_field": "notes",
+          "quote": "gt 硬说的话,也有一点问题"
+        }
+      ],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V41",
+    "image_id": "b8cTxDM8gDG_184a9b92b85840d88bf5793da9aa9cba",
+    "human_record": {
+      "case_id": "V41",
+      "image_id": "b8cTxDM8gDG_184a9b92b85840d88bf5793da9aa9cba",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "not_applicable",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [],
+        "notes": "hoho错了",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:33:43.033Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V41",
+      "priority": "保留或补充",
+      "issue_type": "局部问题漏选非硬冲突",
+      "visual_observation": "HoHo在窗帘附近增添额外角点，Bi与参考较接近。",
+      "proposed_question": "你说HoHo错了但factors空；可补具体哪处错误与local，不自动替你下完整质量结论。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V41",
+      "scope_statements": [],
+      "quality_excerpts": [
+        {
+          "source_field": "notes",
+          "quote": "hoho错了"
+        }
+      ],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V42",
+    "image_id": "B6ByNegPMKs_8c889fb13bce4bcebdac872570cb5381",
+    "human_record": {
+      "case_id": "V42",
+      "image_id": "B6ByNegPMKs_8c889fb13bce4bcebdac872570cb5381",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "not_applicable",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "local"
+        ],
+        "notes": "bi全错.  hoho也有点问题,gt最好",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:35:22.348Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V42",
+      "priority": "保留或补充",
+      "issue_type": "局部复杂度不等于范围扩展",
+      "visual_observation": "Bi两头在玻璃走廊远端产生较多折线，参考主外圈简洁，HoHo高度/角位略偏。",
+      "proposed_question": "保留你的质量意见作为人工意见；双头不同不自动编码为两种范围解释。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V42",
+      "scope_statements": [],
+      "quality_excerpts": [
+        {
+          "source_field": "notes",
+          "quote": "bi全错.  hoho也有点问题,gt最好"
+        }
+      ],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V43",
+    "image_id": "e9zR4mvMWw7_5f9b1db7cc1748c2a71d9924bd1f4fa3",
+    "human_record": {
+      "case_id": "V43",
+      "image_id": "e9zR4mvMWw7_5f9b1db7cc1748c2a71d9924bd1f4fa3",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "not_applicable",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [],
+        "notes": "都大差不差",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:35:41.109Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V43",
+      "priority": "保留或补充",
+      "issue_type": "未见明显文本冲突",
+      "visual_observation": "卧室外圈与入口位置整体接近，床窗遮挡下边界。",
+      "proposed_question": "保持相似观察，不把reviewed当确定性标签。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V43",
+      "scope_statements": [],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V44",
+    "image_id": "uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269",
+    "human_record": {
+      "case_id": "V44",
+      "image_id": "uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "not_applicable",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "scope"
+        ],
+        "notes": "gt和bi extended属于extended,其余是enclosed ,我觉得属于的enclose更正确,右边的门口那里不标注会更好,. 不过这图确实体现了bi 的不同输出",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:37:27.867Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V44",
+      "priority": "保留或补充",
+      "issue_type": "规则下明确范围与模型多输出并存",
+      "visual_observation": "Bi扩展头和参考在右侧入口增加小段空间，另一头不纳入。",
+      "proposed_question": "one_clear指你按规则有偏好，scope因素指模型取舍不同，两者可以同时成立，无需强改为multiple_candidates。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V44",
+      "scope_statements": [
+        {
+          "statement_id": "V44-S1",
+          "kind": "semantic_assignment",
+          "target": "gt与Bi extended头",
+          "source_field": "notes",
+          "quote": "gt和bi extended属于extended",
+          "interpretation": "用户将两者解释为extended",
+          "scope_label": "extended",
+          "qualification": "不等于用户接受extended",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        },
+        {
+          "statement_id": "V44-S2",
+          "kind": "semantic_assignment",
+          "target": "其余（原文集合）",
+          "source_field": "notes",
+          "quote": "其余是enclosed",
+          "interpretation": "用户将其余解释为enclosed",
+          "scope_label": "enclosed",
+          "qualification": "范围类型是原意见",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        },
+        {
+          "statement_id": "V44-S3",
+          "kind": "rule_condition",
+          "target": "右侧门口是否纳入",
+          "source_field": "notes",
+          "quote": "我觉得属于的enclose更正确,右边的门口那里不标注会更好",
+          "interpretation": "用户偏好不纳入右门口的enclosed范围",
+          "scope_label": null,
+          "qualification": "这里明确有偏好，而非两种同样正确",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        },
+        {
+          "statement_id": "V44-S4",
+          "kind": "output_comparison",
+          "target": "Bi两头",
+          "source_field": "notes",
+          "quote": "这图确实体现了bi 的不同输出",
+          "interpretation": "用户认为双头体现了输出差异",
+          "scope_label": null,
+          "qualification": "不同输出不证明两种合法答案",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V45",
+    "image_id": "wc2JMjhGNzB_3949e4e00d354f79afea742a2b0599d2",
+    "human_record": {
+      "case_id": "V45",
+      "image_id": "wc2JMjhGNzB_3949e4e00d354f79afea742a2b0599d2",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "not_applicable",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [],
+        "notes": "都大差不差,bi 的基本没区别,我以为他会跨门标,结果没有",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:38:11.061Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V45",
+      "priority": "保留或补充",
+      "issue_type": "双头未覆盖预想分支",
+      "visual_observation": "两头均停在洗衣房主范围，没有跨入中央开门后的走廊；总体近似。",
+      "proposed_question": "模型没给出预想跨门分支与主范围明确并不矛盾，适合保留为覆盖能力反例。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V45",
+      "scope_statements": [
+        {
+          "statement_id": "V45-S1",
+          "kind": "output_comparison",
+          "target": "Bi两头",
+          "source_field": "notes",
+          "quote": "bi 的基本没区别",
+          "interpretation": "用户认为双头基本相同",
+          "scope_label": null,
+          "qualification": "不是数学相等判断",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        },
+        {
+          "statement_id": "V45-S2",
+          "kind": "potential_scope",
+          "target": "预想跨门范围",
+          "source_field": "notes",
+          "quote": "我以为他会跨门标,结果没有",
+          "interpretation": "用户原本期待跨门扩展，但未在输出中看到",
+          "scope_label": null,
+          "qualification": "期待不是对该扩展符合规则的确认",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V46",
+    "image_id": "yqstnuAEVhm_7acd3d3a7bee44a8ad04d460509b994e",
+    "human_record": {
+      "case_id": "V46",
+      "image_id": "yqstnuAEVhm_7acd3d3a7bee44a8ad04d460509b994e",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "not_applicable",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [
+          "local"
+        ],
+        "notes": "bi 的两个标注的最好,其余的都是忽略了右边墙上凸起.  这张图也没有标注歧义(也分不出enclosed和extended)",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:39:42.004Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V46",
+      "priority": "保留或补充",
+      "issue_type": "范围无明显分支但局部有差异",
+      "visual_observation": "Bi两头都保留右侧壁炉/墙突出附近凹凸，HoHo与参考更简化，主空间相同。",
+      "proposed_question": "局部错误不等于范围歧义；保留你对无歧义的初步判断，但只限本图/当前规则，不作确定真值。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V46",
+      "scope_statements": [
+        {
+          "statement_id": "V46-S1",
+          "kind": "scope_uncertainty",
+          "target": "本图E/X区分",
+          "source_field": "notes",
+          "quote": "也分不出enclosed和extended",
+          "interpretation": "用户认为本图难分出E/X两类",
+          "scope_label": null,
+          "qualification": "局部凸起保留的质量差异仍可存在",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [
+        {
+          "source_field": "notes",
+          "quote": "其余的都是忽略了右边墙上凸起"
+        }
+      ],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V47",
+    "image_id": "X7HyMhZNoso_a830b673f439458aa54a716194d972b7",
+    "human_record": {
+      "case_id": "V47",
+      "image_id": "X7HyMhZNoso_a830b673f439458aa54a716194d972b7",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "not_applicable",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [],
+        "notes": "都差不多",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:39:59.774Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V47",
+      "priority": "保留或补充",
+      "issue_type": "未见明显文本冲突",
+      "visual_observation": "衣帽间主外圈一致，均未跨门延入卧室。",
+      "proposed_question": "保留近似观察，候选不推断真人一致。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V47",
+      "scope_statements": [],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V48",
+    "image_id": "b8cTxDM8gDG_bd2d16e81707455eacd72cda7eb5d3d5",
+    "human_record": {
+      "case_id": "V48",
+      "image_id": "b8cTxDM8gDG_bd2d16e81707455eacd72cda7eb5d3d5",
+      "answers": {
+        "visibility": "clear",
+        "scope": "multiple_candidates",
+        "human_difference": "not_applicable",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [],
+        "notes": "gt 和hoho 在细微上略有偏差(很小),我反而觉得bi 更好.  但是没有出现我预想中的extended",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:42:33.268Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V48",
+      "priority": "优先确认",
+      "issue_type": "预想扩展的具体边界待说明",
+      "visual_observation": "各版均圈定当前室内外圈，Bi双头近似；玻璃外是可见露台，是否纳入需规则约定。",
+      "proposed_question": "保留你认为存在其他潜在范围的意见，不要求改multiple_candidates。需补充预想extended具体应跨过哪条边界；模型没输出它、你能想象它、你认为它符合规则，是三件事。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "人工补充已收到，无需重审",
+        "required_now": false,
+        "task": "预想跨过全景左右接缝处的玻璃门；用户现已明确按本任务曼哈顿约束应不跨门。",
+        "how_to_answer": "不需要重复回答。跨门是对模型输出的期待，不再作为用户认可的另一合规答案。此为本图、本任务规则下的判断，不推广为曼哈顿世界普遍禁止跨门。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V48",
+      "scope_statements": [
+        {
+          "statement_id": "V48-S1",
+          "kind": "potential_scope",
+          "target": "尚未具体指出的预想extended",
+          "source_field": "notes",
+          "quote": "没有出现我预想中的extended",
+          "interpretation": "用户期待的扩展没有被展示输出覆盖",
+          "scope_label": null,
+          "qualification": "具体跨过哪条边界尚未说明；不据此要求改多候选选项",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [
+        {
+          "source_field": "notes",
+          "quote": "gt 和hoho 在细微上略有偏差(很小),我反而觉得bi 更好"
+        }
+      ],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    },
+    "human_supplement": {
+      "case_id": "V48",
+      "image_id": "b8cTxDM8gDG_bd2d16e81707455eacd72cda7eb5d3d5",
+      "source": "用户在当前对话直接补充",
+      "recorded_date": "2026-09-08",
+      "original_text": "v48是左边和右边拼接处不是有个玻璃门嘛,我以为bi 的extended会跨过这个门. 但是说实话,正确的曼哈顿世界约束下,就是不跨过(可能是我对bi 的期待有点高)",
+      "assistant_interpretation": "预想跨过全景左右接缝处的玻璃门；用户现已明确按本任务曼哈顿约束应不跨门。",
+      "interpretation_limits": "跨门是对模型输出的期待，不再作为用户认可的另一合规答案。此为本图、本任务规则下的判断，不推广为曼哈顿世界普遍禁止跨门。",
+      "clarification_received": true,
+      "final_geometry_adjudicated": false
+    }
+  },
+  {
+    "case_id": "V49",
+    "image_id": "e9zR4mvMWw7_8783add8825d4ecf8eb1f2af3c22b8df",
+    "human_record": {
+      "case_id": "V49",
+      "image_id": "e9zR4mvMWw7_8783add8825d4ecf8eb1f2af3c22b8df",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "not_applicable",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [],
+        "notes": "大差不差,没歧义",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:42:53.437Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V49",
+      "priority": "保留或补充",
+      "issue_type": "未见明显文本冲突",
+      "visual_observation": "寝室外圈较清楚，各版整体接近，窗和衣柜附近局部有差别。",
+      "proposed_question": "保留你认为无歧义的观察，不将模型相近当证明。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V49",
+      "scope_statements": [
+        {
+          "statement_id": "V49-S1",
+          "kind": "scope_uncertainty",
+          "target": "本图范围",
+          "source_field": "notes",
+          "quote": "没歧义",
+          "interpretation": "保留用户认为本图无歧义的意见",
+          "scope_label": null,
+          "qualification": "不是模型一致性证明，也未指定E/X类型",
+          "annotation_ids": [],
+          "identity_status": "原文对象保留，未自动连接单条标注或全簇",
+          "final_user_decision": null
+        }
+      ],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  },
+  {
+    "case_id": "V50",
+    "image_id": "B6ByNegPMKs_1c21814e7e7447d5b650afdff65c287e",
+    "human_record": {
+      "case_id": "V50",
+      "image_id": "B6ByNegPMKs_1c21814e7e7447d5b650afdff65c287e",
+      "answers": {
+        "visibility": "clear",
+        "scope": "one_clear",
+        "human_difference": "not_applicable",
+        "annotation_assessment": "some_plausible",
+        "oos_assessment": "in_scope",
+        "status": "reviewed",
+        "factors": [],
+        "notes": "都大差不差",
+        "oos_reason": ""
+      },
+      "updated_at": "2026-09-07T12:43:13.800Z",
+      "ai_advice_opened": false
+    },
+    "ai_followup": {
+      "case_id": "V50",
+      "priority": "保留或补充",
+      "issue_type": "未见明显文本冲突",
+      "visual_observation": "办公区玻璃墙和实体墙外圈相近，HoHo与参考顶边高度略不同。",
+      "proposed_question": "大差不差可作总体描述，局部顶边仍不是完全相同。",
+      "evidence_viewed": [
+        "03_comparison.jpg"
+      ],
+      "final_user_decision": null,
+      "next_action": {
+        "actor": "none",
+        "state": "当前无需重审",
+        "required_now": false,
+        "task": "复用你已提交的意见和评语；目前没有需要你重复回答的具体问题。",
+        "how_to_answer": "只有新增证据、具体实质冲突或未来不同分析目标才重开。",
+        "meaning": "仅安排下一步工作，不把无需重审解释为绝对正确、最终GT或没有不确定性。"
+      }
+    },
+    "final_user_decision": null,
+    "scope_reading": {
+      "case_id": "V50",
+      "scope_statements": [],
+      "quality_excerpts": [],
+      "reading_status": "AI人工阅读提取，待用户确认；无条目表示评语未明确表达相关内容",
+      "final_user_decision": null
+    }
+  }
+]
