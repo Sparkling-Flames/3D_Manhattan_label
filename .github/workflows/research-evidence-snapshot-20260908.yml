@@ -1,0 +1,65 @@
+name: Read-only research evidence snapshot 20260908
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/research-evidence-snapshot-20260908.yml']
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: a704dd3d07070c3442c05041dee7ed61e91e3fad
+          fetch-depth: 1
+          lfs: false
+          filter: blob:none
+          sparse-checkout: |
+            export_label
+            import_json
+            active_logs
+            analysis_results
+            tools
+            tests
+            config
+            docs
+            lib
+            .github
+      - name: Package tracked evidence without executing analysis or changing source
+        run: |
+          python - <<'PY'
+          import hashlib, json, pathlib, subprocess, zipfile
+          root = pathlib.Path('.')
+          names = subprocess.check_output(['git', 'ls-files', '-z']).decode().split('\0')
+          allowed = {'.py','.csv','.json','.jsonl','.md','.txt','.xml','.yaml','.yml','.toml','.npz','.gz'}
+          prefixes = {'export_label','import_json','active_logs','analysis_results','tools','tests','config','docs','lib','.github'}
+          included, omitted = [], []
+          target = pathlib.Path('/tmp/research-evidence-20260908.zip')
+          with zipfile.ZipFile(target, 'w', zipfile.ZIP_DEFLATED) as archive:
+              for name in names:
+                  if not name:
+                      continue
+                  path = root / name
+                  if not path.is_file() or path.suffix.lower() not in allowed or ('/' in name and name.split('/')[0] not in prefixes):
+                      continue
+                  if path.stat().st_size > 100_000_000:
+                      omitted.append({'path':name,'reason':'file_over_100MB'})
+                      continue
+                  data = path.read_bytes()
+                  archive.writestr(name, data)
+                  included.append({'path':name,'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()})
+              manifest = {'source_commit':subprocess.check_output(['git','rev-parse','HEAD']).decode().strip(),'files':included,'omitted':omitted,'role':'read-only tracked research evidence; no new human observations or inference'}
+              archive.writestr('SNAPSHOT_MANIFEST.json', json.dumps(manifest, ensure_ascii=False, indent=2))
+          print('files',len(included),'archive_bytes',target.stat().st_size)
+          with zipfile.ZipFile(target) as archive:
+              assert archive.testzip() is None
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: research-evidence-20260908
+          path: /tmp/research-evidence-20260908.zip
+          retention-days: 7
+          if-no-files-found: error
