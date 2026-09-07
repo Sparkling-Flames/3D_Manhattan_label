@@ -1,0 +1,123 @@
+name: Verify and publish intent Bi-Layout review 20260908
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/intent-bilayout-review-20260908.yml']
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: work
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            tools/thesis_main/analysis
+            analysis_results/intent_bilayout_logic_review_20260908_v1
+      - uses: actions/checkout@v4
+        with:
+          ref: a704dd3d07070c3442c05041dee7ed61e91e3fad
+          path: baseline
+          fetch-depth: 1
+          filter: blob:none
+          lfs: false
+          sparse-checkout: |
+            tools/thesis_main
+            tests
+            export_label
+            analysis_results/uncertainty_cloud_inputs_20260906_v1
+            analysis_results/uncertainty_followup_analysis_20260908_v1
+            analysis_results/human_review_reconciliation_20260907_v1
+            analysis_results/uncertainty_handoff_received_20260907_v1/original_package/review_code
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install the tested numerical environment
+        run: python -m pip install numpy==2.3.5 pandas==2.2.3 scipy==1.17.0 shapely==2.1.2 Pillow==12.3.0 pytest
+      - name: Run plain-source audit and existing logic tests
+        run: |
+          set -euo pipefail
+          OUT=work/analysis_results/intent_bilayout_logic_review_20260908_v1
+          mkdir -p "$OUT/results" "$OUT/code"
+          cp work/tools/thesis_main/analysis/review_bilayout_logic_20260908.py "$OUT/code/logic_audit.py"
+          python "$OUT/code/logic_audit.py" --repo baseline --out "$OUT/results" | tee "$OUT/results/audit_run.log"
+          (cd baseline && python -m pytest -q tests/test_analyze_uncertainty_handoff.py tests/test_uncertainty_handoff_errata.py tests/test_reconcile_human_review_comments.py) | tee "$OUT/results/repo_tests.log"
+          python -m pip freeze > "$OUT/results/environment.txt"
+      - name: Copy required pinned inputs and verify downloadable archive
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import csv, hashlib, json, shutil, zipfile
+          base=Path('baseline'); out=Path('work/analysis_results/intent_bilayout_logic_review_20260908_v1')
+          names=['analysis_results/uncertainty_cloud_inputs_20260906_v1','analysis_results/uncertainty_followup_analysis_20260908_v1','analysis_results/human_review_reconciliation_20260907_v1','analysis_results/uncertainty_handoff_received_20260907_v1/original_package/review_code/audit.py','tools/thesis_main/analysis/prepare_uncertainty_visual_review.py','tools/thesis_main/analysis/analyze_uncertainty_handoff.py','tools/thesis_main/analysis/uncertainty_handoff_errata.py','tools/thesis_main/analysis/uncertainty_review_renderer.py','tools/thesis_main/data_prep/reconcile_human_review_comments.py','tests/test_analyze_uncertainty_handoff.py','tests/test_uncertainty_handoff_errata.py','tests/test_reconcile_human_review_comments.py','export_label/groudTruth.json','export_label/stage2_Chinese/project-72-at-2026-07-30-13-02-f69c5ac4.json']
+          allowed={'.py','.csv','.json','.jsonl','.md','.txt','.gz','.yaml','.xml','.npz'}
+          for name in names:
+              p=base/name
+              assert p.exists(),name
+              files=[p] if p.is_file() else [f for f in p.rglob('*') if f.is_file() and f.suffix in allowed and '__pycache__' not in f.parts]
+              for f in files:
+                  target=out/'evidence_repo'/f.relative_to(base);target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(f,target)
+          papers=list(csv.DictReader((out/'LITERATURE.tsv').open(),delimiter='\t'))
+          assert len(papers)==45 and len({p['id'] for p in papers})==45
+          assert sum(p['reading_depth']=='A' for p in papers)==9
+          qa=json.loads((out/'results/AUDIT_QA.json').read_text())
+          assert qa['Bi_paired_images']==380 and qa['distribution_rows_reproduced']==2619 and qa['roster_mixture_rows_reproduced']==276 and qa['building_prediction_rows_reproduced']==520
+          (out/'README.md').write_text('# 2026-09-08 core logic audit delivery\n\nRead REPORT_ZH.md and LITERATURE.tsv. A=targeted methods/results reading; B=primary abstract/metadata. No claim all 45 papers were fully read.\n\nPlain source is code/logic_audit.py. Offline reproduction after installing the recorded dependencies:\n\n```bash\npython code/logic_audit.py --repo evidence_repo --out rerun_results\n```\n\nThe evidence subset is pinned to a704dd3d07070c3442c05041dee7ed61e91e3fad. No new human observations or neural inference. ZIP and ordinary files are both published. The fuller Chinese report and individual literature cards are also provided in the conversation download package.\n',encoding='utf-8')
+          files=[]
+          for f in sorted(out.rglob('*')):
+              if f.is_file() and f.name not in {'DELIVERY_MANIFEST.json','review_core_20260908.zip','review_core_20260908.zip.sha256'}:
+                  files.append({'path':str(f.relative_to(out)),'sha256':hashlib.sha256(f.read_bytes()).hexdigest(),'bytes':f.stat().st_size})
+          (out/'DELIVERY_MANIFEST.json').write_text(json.dumps({'baseline':'a704dd3d07070c3442c05041dee7ed61e91e3fad','files':files,'file_count':len(files),'new_human_observations':0},ensure_ascii=False,indent=2))
+          zpath=out/'review_core_20260908.zip'
+          with zipfile.ZipFile(zpath,'w',zipfile.ZIP_DEFLATED) as z:
+              for record in files:z.write(out/record['path'],record['path'])
+              z.write(out/'DELIVERY_MANIFEST.json','DELIVERY_MANIFEST.json')
+          with zipfile.ZipFile(zpath) as z:
+              assert z.testzip() is None
+              for r in files:assert hashlib.sha256(z.read(r['path'])).hexdigest()==r['sha256'],r['path']
+          digest=hashlib.sha256(zpath.read_bytes()).hexdigest();(out/'review_core_20260908.zip.sha256').write_text(digest+'  review_core_20260908.zip\n')
+          print('Verified ordinary members',len(files),'ZIP bytes',zpath.stat().st_size,'SHA256',digest)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: intent-bilayout-review-20260908
+          path: |
+            work/analysis_results/intent_bilayout_logic_review_20260908_v1/review_core_20260908.zip
+            work/analysis_results/intent_bilayout_logic_review_20260908_v1/results/*.log
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Publish actual files and verify origin main bytes
+        run: |
+          set -euo pipefail
+          cd work
+          git config user.name 'Jiawei Zhang'
+          git config user.email '150024234+Sparkling-Flames@users.noreply.github.com'
+          git add -f analysis_results/intent_bilayout_logic_review_20260908_v1
+          git commit -m 'Publish independently recomputed Bi and convergence review with offline inputs, results and verified ZIP'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+          git fetch origin main
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json,subprocess
+          root=Path('analysis_results/intent_bilayout_logic_review_20260908_v1')
+          manifest=json.loads((root/'DELIVERY_MANIFEST.json').read_text())
+          for r in manifest['files']:
+              data=subprocess.check_output(['git','show','origin/main:'+str(root/r['path'])])
+              assert hashlib.sha256(data).hexdigest()==r['sha256'],r['path']
+          for name in ['DELIVERY_MANIFEST.json','review_core_20260908.zip','review_core_20260908.zip.sha256']:
+              data=subprocess.check_output(['git','show','origin/main:'+str(root/name)])
+              assert hashlib.sha256(data).digest()==hashlib.sha256((root/name).read_bytes()).digest(),name
+          print('MAIN_READBACK_VERIFIED',len(manifest['files'])+3,subprocess.check_output(['git','rev-parse','origin/main']).decode().strip())
+          PY
