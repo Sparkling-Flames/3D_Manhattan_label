@@ -1,0 +1,28 @@
+{
+  "seed": 20260908,
+  "replicates": 200,
+  "schemes": {
+    "two_thirds": 0.6666666666666666,
+    "sixty_percent": 0.6
+  },
+  "canonical": 2501,
+  "raw_versions": 2513,
+  "nonindependent_revisions": 12,
+  "buildings": 22,
+  "images": 214,
+  "contexts": 270,
+  "workers": 26,
+  "worker_split_rows": 8800,
+  "context_split_rows": 108000,
+  "selection": "global numeric worker permutation filtered by building, floor(history_fraction*N), same permutations across fractions",
+  "old_eligibility_filter": false,
+  "candidate_responses_included": false,
+  "new_workers": false,
+  "actual_time_order": false,
+  "replicates_are_independent_experiments": false,
+  "metric_fitting": false,
+  "sources": [
+    "analysis_results/uncertainty_cloud_inputs_20260906_v1/annotations.csv.gz",
+    "analysis_results/uncertainty_cloud_inputs_20260906_v1/facts/annotation_version_lineage.csv.gz"
+  ]
+}

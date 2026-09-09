@@ -1,6 +1,28 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 <!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260811_v23 SHA-256 f3c1ea58d0857a40aa2240b4680b674c76fe2cec8f048f61a643d9e4b74b0588 -->
-# HOHONET 椤圭洰鍦板浘
+# HOHONET 仓库地图
+
+## 当前研究速查（2026-09-09）
+
+新接手先读交接，再按SOP读取当前结果；同一building就是本研究当前的相似场景分组。
+
+| 想找什么 | 入口 | 状态或用途 |
+|---|---|---|
+| 接手研究与下一步 | [研究交接](thesis_main/研究交接_20260909.md) | 意图、结果、待解决问题和两条分析线差异 |
+| 当前方法 | [相似场景SOP](thesis_main/相似场景标注稳定性分析SOP.md) | 全阶段无辅助、硬点数分簇、稳定多簇、并列人员口径 |
+| 当前报告与图 | [分析结果](../analysis_results/multibuilding_threshold_stability_20260909_v1/分析结果.md) | 读revised；根目录geometry/replay/transfer为早期快照 |
+| 当前计算结果与核查 | [revised](../analysis_results/multibuilding_threshold_stability_20260909_v1/revised/) | with_workers、without_workers、comparison及QA |
+| 有效点集与人工修复 | [reviewed视图](../analysis_results/confirmed_point_calculation_view_20260909_v1/reviewed/) | 原始／有效点、精确身份、处理审计 |
+| 人工删点／补点依据 | [用户决定](../analysis_results/multibuilding_threshold_stability_20260909_v1/geometry_audit/USER_DECISIONS.json) | 不凭奇数或人员名自动修改 |
+| 输入身份、模型和参考 | [便携输入包](../analysis_results/uncertainty_cloud_inputs_20260906_v1/README_ZH.md) | 214历史图、166候选图和原始来源 |
+| 评论和初始化连接 | [连接说明](../analysis_results/uncertainty_decision_ready_20260908_v1/README_ZH.md) | 事实资料及历史精度审查 |
+| building数量、版本、人员排列 | [census](../analysis_results/building_holdout_exploration_20260908_v1/census/README_ZH.md) | 保持原路径，当前回放有依赖 |
+| 人员类型与组合研究 | [类型人数探索](../analysis_results/type_convergence_exploration_20260909_v1/README_ZH.md)、[参考偏差](../analysis_results/worker_reference_feasibility_20260909_v1/pooled/README_ZH.md)、[Semi行为](../analysis_results/semi_subtype_exploration_20260909_v1/README_ZH.md) | 独立口径，不能直接拼接当前场景结果 |
+| 计算代码与测试 | [analysis](../tools/thesis_main/analysis/)、[data_prep](../tools/thesis_main/data_prep/)、[tests](../tests/) | 当前命令与文件名列于交接第7节和revised交付检查 |
+| 已撤下的旧结果 | [历史归档](../analysis_results/research_history_archive_20260909_v1/README_ZH.md) | 原路径、ZIP成员和恢复说明 |
+| 正式实验合同 | [方法合同JSON](thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json) | 历史探索不改变正式协议 |
+
+以下为项目目录边界和历次登记。
 
 > 2026-07-18 vFinal 鏇存柊锛歅aper A 姝ｅ紡涓荤嚎宸叉敼涓?C1 璁捐 C2-B
 >锛坈ommon anchor + diverse bridge锛夈€丆2-A-RP 绮惧害琛ユ祴銆乀1 2脳2 鏉′欢璇曢獙锛?> 浠ュ強 Strong Global 瀵?Full-Integrated 鐨?V1 鍓嶇灮鍙岃噦鏀跨瓥璇曢獙銆?> `docs/thesis_main/manuscript/overleaf_project/main.tex` 鏄敮涓€璁烘枃鍏ュ彛锛?> 宸插垹闄よ宸ョ▼鍐呮湭寮曠敤鐨勬棫鐗堥噸澶嶇珷鑺傘€侰1 鍘熷 export銆乤ssignment 鍜屾爣娉ㄧ晫闈㈡湭鏀瑰彉銆?> 鏂版寮忓疄鐜颁綅浜?`tools/thesis_main/analysis/materialize_main_failure_outcomes.py`銆?> `build_c2_assignment_manifest_from_c1_gaps.py`銆乣c1_materialize_c2_gap_audits.py`
@@ -64,7 +86,7 @@
 
 ## 2026-07-30 Paper A C1-A/C2-B batch boundary
 
-- un_c1_closeout_launch.py 统一提供 reeze-c1-batch、design-c2b、uild-c2b --assignment-batch 和 ind-c2b-runtime-mapping；它们不连接 Label Studio API。
+- `tools/thesis_main/analysis/run_c1_closeout_launch.py` 统一提供 `freeze-c1-batch`、`design-c2b`、`build-c2b --assignment-batch` 和 `bind-c2b-runtime-mapping`；它们不连接 Label Studio API。
 - PAPER_A_C1_BATCH_SCOPE.template.json 定义 C1-A scope：original cohort、W034 17 张、W001 3 张，以及如 W011 漏交任务的显式 completion exception。
 - Stage 3 只读取全局 enrollment closed、all terminal 和 final pooled profile 状态；C1-A snapshot 不可替代该门。
 
@@ -121,7 +143,13 @@
 - `analysis_results/preflight_independent_audit_20260906_v1/`：前置分析包独立审查、方差/固定面板核验、来源敏感性重拟合及几何表示反例；入口 `tools/thesis_main/analysis/audit_preflight_claims_20260906.py`，检查 `tests/test_audit_preflight_claims_20260906.py`。原包 `analysis_results/preflight_20260906_v2/` 保留，其 `说明勘误_20260906.md` 更正轨迹保存范围；不定义正式实验或替代人工裁决。
 - `analysis_results/uncertainty_cloud_inputs_20260906_v1/`：云端可离线读取的不确定性研究输入，保留214历史图、166候选图、原始版本、模型坐标和已有分簇；生成入口 `tools/thesis_main/data_prep/build_uncertainty_cloud_inputs.py`，检查 `tests/test_build_uncertainty_cloud_inputs.py`。图片通过来源URL读取，疲劳与两倾向模拟分开留待研究，不修改原始资料或人工裁决。
 - `analysis_results/uncertainty_followup_analysis_20260908_v1/`：独立接手复核及本地export_label来源检索；入口 `tools/thesis_main/analysis/analyze_uncertainty_handoff.py`，检查 `tests/test_analyze_uncertainty_handoff.py`。三份用户确认点序的派生几何及分布恢复、building留图、名单混合结果在 `confirmed_20260908/`；不修改正式协议、旧簇或原始资料。
-- `docs/thesis_main/相似场景标注稳定性分析SOP.md`：当前历史探索的唯一解释/操作入口；全阶段无辅助手工、图内分簇与跨图人数预测，已确认误点用计算副本排除，硬点数与支持门槛分开；不改Paper A正式合同。
+- `docs/thesis_main/研究交接_20260909.md`：研究接手入口，明确同building即相似场景；当前场景结果与人员类型支线的计算口径尚未统一。
+- `analysis_results/research_history_archive_20260909_v1/`：9组旧结果及旧汇报稿的13个ZIP，逐文件字节核对、原路径清单和恢复说明；原目录留归档指引。
+- `analysis_results/building_holdout_exploration_20260908_v1/census/`：仍保留逐楼普查、canonical／版本身份和当前回放的200条全局人员顺序。
+- `analysis_results/uncertainty_decision_ready_20260908_v1/`：响应、初始化、评论与几何连接；工具位于data_prep的prepare_uncertainty_decision_index、prepare_scope_evidence_20260908及analysis的prepare_human_bi_comparisons_20260908，对应测试保留。
+- `analysis_results/independent_direction_worker_review_20260908_v1/`：Bi精度与旧人员分层的独立审查，保留audit_bilayout_precision代码及测试；不代替当前reviewed结果。
+- 历史分析工具及同名测试继续保留：building准备／留出／证据、order_free、scene_similarity_revision、participant_support、unb9试算、worker_evidence与worker_mixture；完整运行旧流水线前按归档清单恢复输入。源码位于`tools/thesis_main/analysis/`与`tools/thesis_main/data_prep/`，不迁移模块以免破坏当前导入依赖。
+- `docs/thesis_main/相似场景标注稳定性分析SOP.md`：当前历史探索的唯一解释/操作入口；同building定义相似场景，全阶段无辅助手工、图内分簇与跨图人数预测，已确认误点用计算副本排除，硬点数与支持门槛分开；不改Paper A正式合同。
 - `analysis_results/confirmed_point_calculation_view_20260909_v1/`：reviewed为2501条当前原始／有效点集视图，累计8份删指定点、2份补点、5份逐份排除，18个来源导出逐条核对。工具 `tools/thesis_main/data_prep/prepare_confirmed_point_calculation_view_20260909.py` 与同名测试；补点标记派生来源，非全局奇数修复。
 - `analysis_results/multibuilding_threshold_stability_20260909_v1/`：revised并列包含／排除W19与W26的55高人数及141低人数图，6q与硬点数OSPA、全人数及短窗回放、10楼共同预算预测、不补点敏感性。入口`分析结果.md`，方法由相似场景SOP维护；现有analyze_q_thresholds、replay_multibuilding_stability、transfer_multibuilding_stability、review_multibuilding_thresholds四个20260909脚本及测试复用；共享geometry_metrics配对搜索已修复，原始坐标及正式合同不改。
 - `analysis_results/uncertainty_handoff_received_20260907_v1/`：不完整外部移交包原样归档及缺漏记录；原包代码/报告不回写。

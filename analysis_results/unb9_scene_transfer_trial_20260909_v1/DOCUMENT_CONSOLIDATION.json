@@ -1,0 +1,162 @@
+{
+  "date": "2026-09-09",
+  "status": "completed_SOP_consolidation_and_confirmed_point_view; full_stability_prediction_pending",
+  "current_sop": "docs/thesis_main/相似场景标注稳定性分析SOP.md",
+  "removed_files": [
+    {
+      "path": "analysis_results/building_convergence_preparation_20260908_v1/同building验证选项.md",
+      "previous_bytes": 5524,
+      "reason": "重复或过时的解释已合并到SOP；底层数值和证据保留"
+    },
+    {
+      "path": "analysis_results/building_convergence_preparation_20260908_v1/audit/数据审计与解释边界.md",
+      "previous_bytes": 9845,
+      "reason": "重复或过时的解释已合并到SOP；底层数值和证据保留"
+    },
+    {
+      "path": "analysis_results/building_holdout_exploration_20260908_v1/探索报告.md",
+      "previous_bytes": 15611,
+      "reason": "重复或过时的解释已合并到SOP；底层数值和证据保留"
+    },
+    {
+      "path": "analysis_results/order_free_cluster_holdout_20260908_v1/方法与初步发现.md",
+      "previous_bytes": 13197,
+      "reason": "重复或过时的解释已合并到SOP；底层数值和证据保留"
+    },
+    {
+      "path": "analysis_results/building_convergence_evidence_20260908_v1/逐楼结果与审查.md",
+      "previous_bytes": 14758,
+      "reason": "重复或过时的解释已合并到SOP；底层数值和证据保留"
+    },
+    {
+      "path": "analysis_results/participant_support_audit_20260909_v1/人数与有效支持复核.md",
+      "previous_bytes": 17322,
+      "reason": "重复或过时的解释已合并到SOP；底层数值和证据保留"
+    },
+    {
+      "path": "analysis_results/unb9_scene_transfer_trial_20260909_v1/单楼逐人稳定与跨图预测完整报告.md",
+      "previous_bytes": 28731,
+      "reason": "重复或过时的解释已合并到SOP；底层数值和证据保留"
+    },
+    {
+      "path": "analysis_results/unb9_scene_transfer_trial_20260909_v1/point_count_audit/点数与新增类别核查.md",
+      "previous_bytes": 13495,
+      "reason": "重复或过时的解释已合并到SOP；底层数值和证据保留"
+    },
+    {
+      "path": "analysis_results/历史标注分析记录_20260908.docx",
+      "previous_bytes": 4836651,
+      "reason": "重复或过时的解释已合并到SOP；底层数值和证据保留"
+    },
+    {
+      "path": "analysis_results/scene_similarity_revision_20260909_v1/全景布局标注分析与后续实验准备.docx",
+      "previous_bytes": 13575305,
+      "reason": "重复或过时的解释已合并到SOP；底层数值和证据保留"
+    },
+    {
+      "path": "analysis_results/scene_similarity_revision_20260909_v1/全景布局标注分析摘要.docx",
+      "previous_bytes": 2790630,
+      "reason": "重复或过时的解释已合并到SOP；底层数值和证据保留"
+    },
+    {
+      "path": "tools/thesis_main/analysis/build_scene_similarity_report_20260909.py",
+      "previous_bytes": 51834,
+      "reason": "旧Word生成器依赖已撤下的旧报告；不再保留过时生成入口"
+    }
+  ],
+  "narrative_markdown_count": 8,
+  "word_count": 3,
+  "obsolete_word_builder_count": 1,
+  "preserved": "原始标注、原始点、成员及距离/统计CSV、审计JSON、图片、技术字段说明、独立人员研究",
+  "support_threshold": "m=1/2/3并列建议；尚未冻结；支持门槛与几何簇定义分开",
+  "other_thread_review": "2026-09-09本次已完成只读审查；核查支持事件、硬点数路径、图像隔离和分母",
+  "formal_protocol_changed": false,
+  "checks": {
+    "related_tests_passed": 15,
+    "test_command": ".venv/Scripts/python.exe -m pytest -q tests/test_audit_point_count_novelty_20260909.py tests/test_order_free_cluster_holdout_20260908.py tests/test_review_scene_similarity_revision_20260909.py tests/test_prepare_confirmed_point_calculation_view_20260909.py",
+    "local_links_checked": 53,
+    "sop_local_links_checked": 30,
+    "deleted_exact_files_verified": 12,
+    "illustrations_independently_verified": {
+      "02": [
+        22,
+        1
+      ],
+      "05": [
+        12,
+        8,
+        2,
+        1
+      ]
+    },
+    "git_diff_check": "passed",
+    "maps_and_index": "统一为SOP入口；移除已删除文档和生成器的活跃入口",
+    "method_review": "协作任务实际完成只读底层审查；子代理独立复核SOP和门槛示例",
+    "tests_not_run": "未重跑全量几何、预测和无关全仓库测试，本次是文档合并及旧生成器移除",
+    "protocol_guard": "本历史探索独立于正式Paper A合同；原始导出和正式合同未修改",
+    "metadata_semantics": "removed_files为本次实际删除项及原大小；current_sop为仓库相对路径；各历史QA数值继续表示当时计算检查，不表示新判据已通过",
+    "independent_readback_note": "所选版本标志实际为字符串true/false，按明确字段值筛选2501条；原始点数组和有效点排除规则逐条一致",
+    "file_list_entries_verified": 309
+  },
+  "confirmed_accidental_point_policy": {
+    "authorized": true,
+    "records": [
+      {
+        "canonical_annotation_id": "63001f819a4a6b408ae2",
+        "annotation_id": "6372",
+        "image_id": "wc2JMjhGNzB_c7c84bf01a834489ad11d8450a7dc2bc",
+        "worker_id": "32",
+        "condition": "manual",
+        "raw_point_count": 9,
+        "drop_zero_based_point_index": 4,
+        "action": "exclude_confirmed_point_in_calculation_copy",
+        "confirmation_source": "用户本轮提供的四条旧实验处理表；rq1_corrections_20260826/c1_geometry_repair_audit.csv逐条一致"
+      },
+      {
+        "canonical_annotation_id": "9e5409147dcedaf906b7",
+        "annotation_id": "6140",
+        "image_id": "uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14",
+        "worker_id": "2",
+        "condition": "manual",
+        "raw_point_count": 17,
+        "drop_zero_based_point_index": 10,
+        "action": "exclude_confirmed_point_in_calculation_copy",
+        "confirmation_source": "用户本轮提供的四条旧实验处理表；rq1_corrections_20260826/c1_geometry_repair_audit.csv逐条一致"
+      },
+      {
+        "canonical_annotation_id": "ba5291230a2bbae1658b",
+        "annotation_id": "6247",
+        "image_id": "uNb9QFRL6hY_ce88ee8b7ee84fca92c13ab16599d90e",
+        "worker_id": "13",
+        "condition": "semi",
+        "raw_point_count": 9,
+        "drop_zero_based_point_index": 6,
+        "action": "exclude_confirmed_point_in_calculation_copy",
+        "confirmation_source": "用户本轮提供的四条旧实验处理表；rq1_corrections_20260826/c1_geometry_repair_audit.csv逐条一致"
+      },
+      {
+        "canonical_annotation_id": "837d51d499c08b0e0765",
+        "annotation_id": "6147",
+        "image_id": "UwV83HsGsw3_0f1385fc03994285ad8253b49516d77b",
+        "worker_id": "2",
+        "condition": "manual",
+        "raw_point_count": 15,
+        "drop_zero_based_point_index": null,
+        "action": "exclude_response_from_geometry",
+        "confirmation_source": "用户本轮提供的四条旧实验处理表；rq1_corrections_20260826/c1_geometry_repair_audit.csv逐条一致"
+      }
+    ],
+    "index_base": 0,
+    "confirmation_lookup_status": "resolved_by_user_table_and_legacy_audit",
+    "identity_records_verified": 4,
+    "calculation_view_status": "已生成并回读2501条；3条删点、1条响应排除、其他28条奇数原样保留；下游完整稳定预测未重跑",
+    "source_data_unchanged": true,
+    "not_a_global_odd_point_repair_rule": true,
+    "calculation_view_path": "analysis_results/confirmed_point_calculation_view_20260909_v1/calculation_view.jsonl.gz",
+    "all_raw_arrays_independently_verified": 2501,
+    "calculation_included": 2465,
+    "unassisted_included": 1891,
+    "oos_included": 228
+  },
+  "full_stability_prediction_rerun": false
+}

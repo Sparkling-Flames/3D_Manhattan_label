@@ -890,15 +890,19 @@ def _room_region_file_records(path: Path) -> tuple[list[tuple[str, str]], set[st
 
 
 def _aligned_pano_region_records(image_path: Path, label_path: Path) -> tuple[list[tuple[str, str]], str]:
-    images = [line.strip() for line in image_path.read_text(encoding="utf-8-sig").splitlines() if line.strip()]
-    labels = [line.strip() for line in label_path.read_text(encoding="utf-8-sig").splitlines() if line.strip()]
+    images = [line.strip() for line in image_path.read_text(encoding="utf-8-sig").splitlines()]
+    labels = [line.strip() for line in label_path.read_text(encoding="utf-8-sig").splitlines()]
     if len(images) != len(labels):
         return [], f"line_count_mismatch:{len(images)}!={len(labels)}"
     records = []
-    for image, label in zip(images, labels):
+    for line_number, (image, label) in enumerate(zip(images, labels), 1):
+        image = image.replace('\\', '/')
         match = re.search(r"(?:^|/)data/mp_sb/([^/]+)/([^/]+)\.jpg$", image)
-        if match and label:
-            records.append((f"{match.group(1)}_{match.group(2)}", f"region_class:{label}"))
+        if not match:
+            match = re.search(r"(?:^|/)([^/]+)/undistorted_color_images/([^/]+)_i[0-9]+_[0-9]+\.jpg$", image)
+        if not match or not re.fullmatch(r'[0-9]+', label):
+            return [], f"invalid_aligned_record:line={line_number}"
+        records.append((f"{match.group(1)}_{match.group(2)}", f"region_class:{label}"))
     return records, "aligned_pano_region_class" if records else "no_matching_pano_paths"
 
 
@@ -940,9 +944,10 @@ def _room_region_mapping_audit(
                 source_by_id[image_id].add(display)
                 mapping_kind_by_id[image_id].add("structured_room_or_region")
         file_status.append({"path": display, "status": status, "record_count": str(len(records))})
-    pano_image = Path(ROOM_REGION_FILENAME_CANDIDATES[-1])
-    pano_label = Path(ROOM_REGION_FILENAME_CANDIDATES[-2])
-    if pano_image.is_file() and pano_label.is_file():
+    for pano_image in (Path(p) for p in ROOM_REGION_FILENAME_CANDIDATES if p.endswith('_image.txt')):
+        pano_label = pano_image.with_name(pano_image.name.replace('_image.txt', '_label.txt'))
+        if not pano_image.is_file() or not pano_label.is_file():
+            continue
         try:
             records, status = _aligned_pano_region_records(pano_image, pano_label)
         except Exception as exc:
@@ -1022,7 +1027,7 @@ def _room_region_mapping_audit(
             "roots": list(ROOM_REGION_FILENAME_SEARCH_ROOTS),
             "patterns": list(ROOM_REGION_FILENAME_PATTERNS),
             "candidate_paths": list(ROOM_REGION_FILENAME_CANDIDATES),
-            "interpretation": "这些有界检查来源未提供 room-instance/空间拓扑映射；其中 test_room_pano_* 提供数值 region class 对齐，不能替代 room-instance ID。",
+            "interpretation": "这些有界检查来源未提供 room-instance/空间拓扑映射；train/test 的 room_pano/room_single 图像与标签清单提供数值 region class 对齐，不能替代 room-instance ID。",
         },
     }
     return rows, meta, detail_rows
