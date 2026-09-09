@@ -1,5 +1,6 @@
 from tools.thesis_main.analysis.geometry_consensus.pairwise import pairwise_similarity
 from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry, normalize_geometry_for_c1_calculation
+from tools.thesis_main.analysis.quality_core.geometry_metrics import analyze_layout_pairing
 
 
 def _rectangle(offset: int = 0):
@@ -73,3 +74,64 @@ def test_variable_corner_counts_keep_boundary_and_wall_diagnostics() -> None:
     assert metrics["pointwise_correspondence_compatible"] is False
     assert metrics["boundary_similarity"] is not None
     assert metrics["wallwall_similarity"] is not None
+
+
+def test_unordered_28_points_are_solved_without_changing_input() -> None:
+    # W15/W21, yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65:
+    # the five independent components formerly exhausted the global search.
+    points = [
+        [173.96138996138995, 202.95495495495496], [170.007722007722, 316.2934362934363],
+        [365.05534105534105, 208.22651222651223], [363.73745173745175, 309.7039897039897],
+        [536.3809523809524, 187.14028314028315], [535.063063063063, 333.4259974259974],
+        [541.6525096525097, 367.6911196911197], [544.2882882882883, 152.87516087516087],
+        [636.5405405405405, 197.68339768339766], [635.2226512226512, 318.9292149292149],
+        [666.8519948519948, 338.6975546975547], [665.5341055341055, 181.86872586872587],
+        [678.7129987129987, 217.45173745173742], [846.0849420849422, 214.81595881595885],
+        [847.4028314028315, 300.4787644787645], [888.2574002574003, 193.72972972972974],
+        [889.5752895752896, 321.5649935649936], [925.1583011583011, 208.22651222651223],
+        [967.1715302011161, 205.13144186516968], [966.3084003439031, 301.80198587299174],
+        [953.3614524857128, 192.1844940069792], [954.2245823429254, 329.42214130379807],
+        [923.8769365633271, 302.66511573020443], [991.2010654259175, 362.2210758778805],
+        [988.6116758542795, 157.6592997184713], [1004.1480132841078, 332.87466073264886],
+        [1003.2848834268952, 187.005714863703], [678.7480571149212, 298.34946644414094],
+    ]
+    original = [point[:] for point in points]
+    geometry = normalize_geometry(points)
+    assert geometry["valid"] is True
+    assert geometry["pairing_method"] == "circular_x_pairing"
+    assert geometry["n_pairs"] == 14
+    stats = geometry["pairing_stats"]
+    assert stats["pairing_search_exhausted"] is False
+    assert stats["pairing_search_nodes"] < 10_000
+    assert stats["optimal_matching_count"] == 1
+    assert abs(stats["best_cost"] - 20.99198463695501) < 1e-9
+    assert abs(stats["second_best_cost"] - 31.535099180069608) < 1e-9
+    assert points == original == geometry["raw_points"] == geometry["canonical_points"]
+
+
+def test_component_pairing_retains_global_ties_and_relative_margin() -> None:
+    points = [[offset + x, y] for offset in (100, 500)
+              for x, y in ((0, 10), (10, 20), (10.3, 30), (20, 40))]
+    _, stats = analyze_layout_pairing(points, ambiguity_abs_epsilon=1.0)
+    # Each component has three epsilon-tied solutions, but choosing a worse
+    # solution in BOTH costs 1.2 overall: five global ties, not 3 * 3.
+    assert stats["optimal_matching_count"] == 5
+    assert abs(stats["best_cost"] - 39.4) < 1e-9
+    assert abs(stats["second_best_cost"] - 40.6) < 1e-9
+    assert stats["ambiguity_reason"] == "exact_tied_optimum"
+
+    _, near = analyze_layout_pairing([[100, 10], [110, 20], [110.2, 30], [120, 40], [600, 10], [640, 40]])
+    assert near["optimal_matching_count"] == 1
+    assert near["ambiguity_reason"] == "near_equivalent_matching"
+
+    tied = [[x, y] for x in range(100, 1000, 100) for y in (10, 20, 30, 40)]
+    _, many = analyze_layout_pairing(tied)
+    assert many["pairing_search_exhausted"] is False
+    assert many["optimal_matching_count"] == 3 ** 9
+    assert many["second_best_cost"] is None
+    assert many["ambiguity_reason"] == "exact_tied_optimum"
+
+    pairs, limited = analyze_layout_pairing(tied, maximum_search_nodes=1)
+    assert pairs == []
+    assert limited["pairing_search_exhausted"] is True
+    assert limited["best_cost"] is None

@@ -1,0 +1,117 @@
+{
+  "status": "passed",
+  "modes": [
+    "with_workers",
+    "without_workers"
+  ],
+  "common_image_n": 196,
+  "common_curve_rows": 345051,
+  "common_onset_rows": 69552,
+  "own_onset_rows": 69552,
+  "common_dense_image_n": 55,
+  "figures_generated": 4,
+  "figures_visually_reviewed": 4,
+  "no_imputation_curve_reuse": {
+    "with_workers": {
+      "status": "passed",
+      "operation": "reuse_unchanged_geometry_and_replace_two_recomputed_images",
+      "full_image_n": 196,
+      "recomputed_image_n": 2,
+      "recomputed_image_ids": [
+        "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+        "uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5"
+      ],
+      "unchanged_geometry_image_n": 194,
+      "reused_replay_image_n": 174,
+      "reused_curve_rows": 344673,
+      "recomputed_curve_rows": 11466,
+      "combined_curve_rows": 356139,
+      "exact_equal_unchanged_geometry_rows": {
+        "response_geometry.csv": 1836,
+        "pairwise_q.csv.gz": 15965
+      },
+      "reused_curve_source": "analysis_results\\multibuilding_threshold_stability_20260909_v1\\revised\\with_workers\\replay\\stability_curves.csv",
+      "recomputed_curve_source": "analysis_results\\multibuilding_threshold_stability_20260909_v1\\revised\\with_workers\\no_imputation\\affected_replay\\stability_curves.csv",
+      "note": "仅两张补点图重新执行全部配置和前缀。其余图几何响应字段和成对量逐值相同后复用曲线；无后续窗口图不产生曲线。此合并不是全部图重算。"
+    },
+    "without_workers": {
+      "status": "passed",
+      "operation": "reuse_unchanged_geometry_and_replace_two_recomputed_images",
+      "full_image_n": 196,
+      "recomputed_image_n": 2,
+      "recomputed_image_ids": [
+        "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+        "uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5"
+      ],
+      "unchanged_geometry_image_n": 194,
+      "reused_replay_image_n": 174,
+      "reused_curve_rows": 334341,
+      "recomputed_curve_rows": 10710,
+      "combined_curve_rows": 345051,
+      "exact_equal_unchanged_geometry_rows": {
+        "response_geometry.csv": 1795,
+        "pairwise_q.csv.gz": 14978
+      },
+      "reused_curve_source": "analysis_results\\multibuilding_threshold_stability_20260909_v1\\revised\\without_workers\\replay\\stability_curves.csv",
+      "recomputed_curve_source": "analysis_results\\multibuilding_threshold_stability_20260909_v1\\revised\\without_workers\\no_imputation\\affected_replay\\stability_curves.csv",
+      "note": "仅两张补点图重新执行全部配置和前缀。其余图几何响应字段和成对量逐值相同后复用曲线；无后续窗口图不产生曲线。此合并不是全部图重算。"
+    }
+  },
+  "checks": [
+    "两侧原始曲线完整连续、各节点200次状态计数及上下界算术",
+    "逐图共同预算=min(两侧人数)，仅比较k+h<=共同预算，并重新计算持续过线起点",
+    "共同高人数图和相同楼内预算重新计算transfer，外楼组身份逐行相同",
+    "N不足h+1时无窗口，人数库存仍保存；几何不可评价未静默删除"
+  ],
+  "definitions": {
+    "lower_difference": "不含两人下界−含两人下界；是边界之差，不能单独视为真实稳定率变化。",
+    "difference_possible_lower_upper": "[不含两人下界−含两人上界，不含两人上界−含两人下界]；非置信区间。",
+    "own_budget": "每侧使用自己的全部可观察人数；只描述，不据此直接声称排人改善。",
+    "common_budget": "同图使用相同总人数预算；不同人员池仍不同，不能解释成已隔离个人因果效应。",
+    "low_n": "各自N=1..15的支持分布；h1/2/3仅有限短窗口描述，N=1无后续验证。",
+    "onset": "从该k起所有保存节点持续达到80%；有限窗口事后摘要，并非现实停止保证。"
+  },
+  "files": {
+    "image_support_comparison.csv": "每张图一行，两侧N和共同N，包含无可用人数图。",
+    "common_budget_curves.csv.gz": "共同可观察图×配置×h×m×epsilon×k；两侧状态计数、稳定上下界和差范围。",
+    "own_budget_onsets.csv": "各口径×可观察图×配置×h×m×epsilon，各自全N下候选人数。",
+    "common_budget_onsets.csv": "相同粒度，共同N截断后重新计算人数；mode对称呈现。",
+    "common_onset_comparison.csv": "每图×参数同预算人数并列；无值保持空，不补零。",
+    "onset_state_summary.csv": "预算口径×人员口径×参数×全正人数/高人数/低人数；库存分母、无后续窗口和四种人数状态单列。",
+    "common_transfer_summary.csv": "共同高人数图、共同预算和外楼身份的楼×配置×源图数（含all）×口径。",
+    "own_budget_transfer_summary.csv": "两侧各自原transfer汇总，可能预算不同。",
+    "low_n_short_window_curves.csv": "口径×实际N(1..15)×配置×h1/2/3×k；m2/eps.1下图等权上下界。",
+    "people_count_distribution.csv": "口径×可用N一行；包括N0和N1，没有窗口的图也保留。",
+    "imputation_affected_image_onsets.csv": "两张补点图×人员口径×有/无补点×全部配置与h/m/epsilon；各自全N人数摘要。",
+    "imputation_affected_q_partitions.csv": "两张补点图×人员口径×有/无补点×6q；完整与q有效子集状态、簇成员均保留。"
+  },
+  "limits": [
+    "两侧没有预先指定主次，不以排人后更早稳定选口径或q。",
+    "共同预算控制可观察长度，不控制人员组成；历史排列与图划分大量重叠。",
+    "补点使用同图其他人信息，须另读无补点敏感性，不能算独立原始标注证据。",
+    "低人数稳定仅检查很短的未来范围，不能等同于高人数h5或长期稳定。"
+  ],
+  "low_n_common_curve_values_identical": true,
+  "visual_review": [
+    {
+      "file": "figures/paired_building_curves.png",
+      "status": "viewed",
+      "notes": "10楼标题和共同N可读，人数横轴为整数；黑灰线与未知带区分，无文字裁切。"
+    },
+    {
+      "file": "figures/paired_onset_states.png",
+      "status": "viewed",
+      "notes": "55图两口径四状态数完整，图例与条形标签可读。"
+    },
+    {
+      "file": "figures/paired_transfer_errors.png",
+      "status": "viewed",
+      "notes": "10楼成对黑灰误差范围完整，范围非置信区间说明可读。"
+    },
+    {
+      "file": "figures/low_n_short_windows.png",
+      "status": "viewed",
+      "notes": "h1/2/3分面可读，横轴人数为整数，明确横轴为不同图片组；本轮两口径曲线相同，重合显示符合数值。"
+    }
+  ]
+}

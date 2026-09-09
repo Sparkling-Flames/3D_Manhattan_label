@@ -1,0 +1,74 @@
+{
+  "status": "passed",
+  "tests_passed": 16,
+  "tests_command": ".venv/Scripts/python.exe -m pytest tests/test_prepare_confirmed_point_calculation_view_20260909.py tests/test_analyze_q_thresholds_20260909.py tests/test_replay_multibuilding_stability_20260909.py tests/test_transfer_multibuilding_stability_20260909.py tests/test_review_multibuilding_thresholds_20260909.py tests/test_order_free_cluster_holdout_20260908.py tests/test_audit_point_count_novelty_20260909.py -q",
+  "local_doc_links_checked": 87,
+  "missing_links": [],
+  "files_listed": 66,
+  "file_list": "FILE_LIST.json",
+  "filelist_row_counts": "all CSV and gzip CSV parsed to EOF; headers preserved",
+  "git_diff_check": "passed",
+  "new_code_doc_trailing_whitespace": "passed",
+  "maps_updated": [
+    "docs/README_INDEX.md",
+    "docs/PROJECT_MAP_CLEAN_20260308.md"
+  ],
+  "formal_protocol_changed": false,
+  "original_annotations_changed": false,
+  "current_report": "分析结果.md",
+  "current_method_sop": "../../docs/thesis_main/相似场景标注稳定性分析SOP.md",
+  "readback_records": [
+    "geometry/QA.json",
+    "replay/REVIEW_QA.json",
+    "review/REVIEW_QA.json",
+    "transfer/READBACK_QA.json"
+  ],
+  "visual_review_count": 9,
+  "new_3d_reviews": 0,
+  "visual_judgments_made": false,
+  "submitted_or_uploaded": false,
+  "unrelated_workspace_changes_preserved": true,
+  "unperformed": "No unrelated repository-wide tests, new-person validation, final threshold selection, two-model fitting, formal online stopping or new label distribution.",
+  "remaining_limits": [
+    "q uses historical pairing and unconfirmed final adjacency.",
+    "Different effective point counts always separated; odd unconfirmed points not guessed away.",
+    "Fixed-horizon historical replay and repeated image folds are dependent, not extra independent data.",
+    "Missing-state bounds are not confidence intervals; finite non-singleton N intervals still contain information.",
+    "All 70 building/config error intervals overlap; this does not prove equivalence."
+  ],
+  "geometry_followup": {
+    "qa": "geometry_audit/QA.json",
+    "responses_checked": 26,
+    "point_sheets_viewed": 7,
+    "new_judgment_images_generated": 9,
+    "judgment_images_viewed": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "user_judgments_pending": false,
+    "production_code_changed": true,
+    "repairs_applied": 7,
+    "tests": "No project code changes; diagnostic assertions and existing solver cross-checks passed.",
+    "user_confirmed_deletions": 5,
+    "user_unchanged": 1,
+    "temporary_exclusions_recorded": 4,
+    "numerical_application_pending": false,
+    "requested_added_points": 2,
+    "added_point_positions_pending": false,
+    "added_point_proposals_visually_reviewed": [
+      5,
+      6
+    ],
+    "remaining_unreviewed_cases": [],
+    "user_confirmed_added_points": 2
+  },
+  "current_delivery": "revised/DELIVERY_CHECKS.json",
+  "scope": "Earlier numerical delivery retained as snapshot; current paired analyses use revised/."
+}

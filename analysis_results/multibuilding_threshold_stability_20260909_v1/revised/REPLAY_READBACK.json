@@ -1,0 +1,216 @@
+{
+  "status": "passed",
+  "audit_time_utc": "2026-09-09T04:29:04.868015+00:00",
+  "scope": "Independent readback of both full revised replays. No partitions are recomputed. All cached subsets are checked against projected worker orders and geometry membership. All windows are reaggregated for support 1/2/3 and epsilon .05/.10/.20. Dense images use actual first/last replicate IDs and all eligible k/h for q .95, q .925 and ospa30_t6 independent direct-relation calculations.",
+  "method_independence": {
+    "called_changes": false,
+    "called_window_state": false,
+    "called_partition": false,
+    "membership": "Enumerate all pairs of people present at k; count whether equal/different cluster membership disagrees between k and j, divided by choose(k,2).",
+    "shares": "For every cluster at j, compare its projected old-person proportion at k against its full proportion at j; sum absolute differences and divide by two.",
+    "promotions": "Count j clusters whose support among k people is below m but support at j reaches m.",
+    "stable": "Prefix contains an m-supported cluster, every required partition is unique, and every j satisfies both change limits and zero support promotions.",
+    "full_count_aggregation": "Classify all stored windows from their maxima and support, aggregate counts in chunks, and compare every curve row including stable_single/multi and missing-state bounds.",
+    "identity_coverage": "Check actual window ordinal against independently constructed image/config/replicate/k/h enumeration; missing or duplicate rows fail."
+  },
+  "cohorts": {
+    "with_workers": {
+      "status": "passed",
+      "images": 196,
+      "responses": 1887,
+      "configs": [
+        "q_0.975",
+        "q_0.950",
+        "q_0.925",
+        "q_0.900",
+        "q_0.850",
+        "q_0.800",
+        "ospa30_t6"
+      ],
+      "lookaheads": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "replicates": 200,
+      "subset_partition_rows_checked": 1626653,
+      "subset_status_counts": {
+        "unique": 1381725,
+        "non_unique": 88466,
+        "unknown_geometry": 156462
+      },
+      "unique_partition_members_checked": 15879840,
+      "unique_clusters_point_count_checked": 4707570,
+      "full_prefix_uses_covered": 2641800,
+      "window_rows_reaggregated": 7914200,
+      "window_status_counts": {
+        "evaluated": 6672128,
+        "unknown_partition": 1242072
+      },
+      "base_window_groups_checked": 39571,
+      "curve_rows_compared": 356139,
+      "curve_count_mismatch_n": 0,
+      "dense_sample_images": 55,
+      "sample_replicates": [
+        0,
+        199
+      ],
+      "sample_configs": [
+        "ospa30_t6",
+        "q_0.925",
+        "q_0.950"
+      ],
+      "sample_all_eligible_k_and_h": true,
+      "sample_saved_prefixes_read": 7731,
+      "sample_windows_independently_recomputed": 28362,
+      "sample_window_status_counts": {
+        "evaluated": 23099,
+        "unknown_partition": 5263
+      },
+      "sample_distinct_evaluable_k_j_changes_recomputed": 28305,
+      "sample_rule_states_checked": 255258,
+      "sample_rule_state_counts": {
+        "q_0.950|stable": 38153,
+        "q_0.950|unknown": 25500,
+        "q_0.950|changing": 21433,
+        "q_0.925|stable": 40284,
+        "q_0.925|unknown": 23565,
+        "q_0.925|changing": 21237,
+        "ospa30_t6|stable": 35484,
+        "ospa30_t6|unknown": 23847,
+        "ospa30_t6|changing": 25755
+      },
+      "elapsed_seconds": 27.89597479999975
+    },
+    "without_workers": {
+      "status": "passed",
+      "images": 196,
+      "responses": 1843,
+      "configs": [
+        "q_0.975",
+        "q_0.950",
+        "q_0.925",
+        "q_0.900",
+        "q_0.850",
+        "q_0.800",
+        "ospa30_t6"
+      ],
+      "lookaheads": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "replicates": 200,
+      "subset_partition_rows_checked": 1559215,
+      "subset_status_counts": {
+        "unique": 1370773,
+        "non_unique": 81042,
+        "unknown_geometry": 107400
+      },
+      "unique_partition_members_checked": 15399814,
+      "unique_clusters_point_count_checked": 4326739,
+      "full_prefix_uses_covered": 2580200,
+      "window_rows_reaggregated": 7667800,
+      "window_status_counts": {
+        "evaluated": 6680224,
+        "unknown_partition": 987576
+      },
+      "base_window_groups_checked": 38339,
+      "curve_rows_compared": 345051,
+      "curve_count_mismatch_n": 0,
+      "dense_sample_images": 55,
+      "sample_replicates": [
+        0,
+        199
+      ],
+      "sample_configs": [
+        "ospa30_t6",
+        "q_0.925",
+        "q_0.950"
+      ],
+      "sample_all_eligible_k_and_h": true,
+      "sample_saved_prefixes_read": 7239,
+      "sample_windows_independently_recomputed": 27306,
+      "sample_window_status_counts": {
+        "evaluated": 23363,
+        "unknown_partition": 3943
+      },
+      "sample_distinct_evaluable_k_j_changes_recomputed": 28615,
+      "sample_rule_states_checked": 245754,
+      "sample_rule_state_counts": {
+        "q_0.950|stable": 41576,
+        "q_0.950|unknown": 20010,
+        "q_0.925|stable": 44046,
+        "q_0.925|unknown": 17727,
+        "ospa30_t6|stable": 36712,
+        "ospa30_t6|unknown": 21504,
+        "q_0.950|changing": 20332,
+        "q_0.925|changing": 20145,
+        "ospa30_t6|changing": 23702
+      },
+      "elapsed_seconds": 27.170728200000667
+    }
+  },
+  "totals": {
+    "subset_partition_rows_checked": 3185868,
+    "unique_clusters_point_count_checked": 9034309,
+    "window_rows_reaggregated": 15582000,
+    "curve_rows_compared": 701190,
+    "sample_windows_independently_recomputed": 55668,
+    "sample_distinct_evaluable_k_j_changes_recomputed": 56920,
+    "sample_rule_states_checked": 501012
+  },
+  "check_counts": {
+    "orders_unique_200": 2,
+    "qa_plan_configs_windows": 2,
+    "member_geometry_identity": 3730,
+    "all_geometry_responses_retained": 2,
+    "member_position_sorted_identity": 392,
+    "member_unique_people_building": 392,
+    "projected_order_complete_people": 78400,
+    "unique_subset_group": 2744,
+    "unique_valid_subset_mask": 3185868,
+    "known_partition_status": 3185868,
+    "no_spurious_geometry_unknown": 2922006,
+    "unique_partition_exact_member_coverage": 2752498,
+    "subset_cluster_hard_point_count": 9034309,
+    "full_subset_mask_coverage": 2744,
+    "nonunique_partition_not_forced": 433370,
+    "nonunique_candidate_count": 169508,
+    "invalid_q_prefix_unknown": 263862,
+    "all_subset_image_config_groups": 2,
+    "subset_qa_counts": 2,
+    "all_window_identifiers_known": 79,
+    "window_full_identity_order_no_missing_duplicates": 79,
+    "known_window_status": 79,
+    "integer_monotone_prefix_support": 79,
+    "evaluated_metrics_finite_valid": 79,
+    "unknown_window_metrics_not_zero_filled": 79,
+    "full_window_count": 2,
+    "all_window_groups_200_replicates": 2,
+    "full_curve_count": 2,
+    "all_curve_keys_unique_complete": 2,
+    "full_window_curve_state_counts_exact": 2,
+    "curve_denominator_and_single_multi": 2,
+    "full_curve_missing_state_bounds": 2,
+    "curve_building_identity": 2,
+    "sample_prefix_support_reconstructed": 55668,
+    "sample_nested_people_identity": 56920,
+    "sample_window_evaluability": 55668,
+    "sample_membership_share_promotions": 46462,
+    "sample_independent_state": 501012,
+    "complete_dense_first_last_sample_windows": 2
+  },
+  "error_n": 0,
+  "errors": [],
+  "errors_truncated": false,
+  "elapsed_seconds": 55.086743100000604,
+  "limits": [
+    "Checks saved partition membership and status consistency; does not independently prove all saved partitions are the unique optimum.",
+    "Full aggregation checks all stored window counts; relation/TV/promotion formulas are independently recomputed for the specified first/last dense-image sample.",
+    "Finite-window retrospective stability and missing-state bounds do not establish a prospective stopping guarantee or independent future-scene prediction."
+  ],
+  "written_file_only": "revised/REPLAY_READBACK.json"
+}

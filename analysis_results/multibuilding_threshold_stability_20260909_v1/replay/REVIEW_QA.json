@@ -1,0 +1,46 @@
+{
+  "status": "passed",
+  "reviewer": "q_threshold_analysis independent subagent",
+  "subset_rows_checked": 1606948,
+  "subset_status_counts": {
+    "unique": 1232755,
+    "non_unique": 81159,
+    "unknown_geometry": 293034
+  },
+  "all_subset_mask_members_and_hard_count_checked": true,
+  "all_q_invalid_prefix_states_checked": true,
+  "all_full_q_statuses_compared": 330,
+  "all_full_q_valid_subset_partitions_compared_separately": 330,
+  "geometry_recomputed_subset_sample": 290,
+  "window_rows_independently_aggregated": 3127600,
+  "curve_rows_independently_reconstructed": 140742,
+  "random_partition_metric_bruteforce_checks": 10000,
+  "trajectory_image_sample": [
+    "7y3sRwLe3Va_1410b021e1c14f529188eb026fbb369a",
+    "7y3sRwLe3Va_6376b741b50a4418b3dc3fde791c3c09",
+    "B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624",
+    "UwV83HsGsw3_71ada030981d4468b76dcebc1b6fb940",
+    "q9vSo1VnCiC_c421f07780004647a7198c4ac5371e8a",
+    "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+    "uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97",
+    "uNb9QFRL6hY_d02f87bbb0414146a7a15070110a0384",
+    "yqstnuAEVhm_66ecc07f3cda4d8ebaf84288325669f5",
+    "yqstnuAEVhm_e9b4d8e951cb4712b3905c8f4c4dabb5"
+  ],
+  "trajectory_replicates": [
+    0,
+    17,
+    103,
+    199
+  ],
+  "trajectory_windows_independently_recomputed": 11648,
+  "evaluated_window_checks": 9565,
+  "unknown_window_checks": 2083,
+  "all_curve_status_totals_equal_200": true,
+  "no_confirmed_implementation_bug": true,
+  "limitations": [
+    "m support promotions include reconfiguration, not exclusively first-seen classes",
+    "13 valid same-count pairs have cyclic-correspondence ambiguity; retained as non-edges per v5 rule, not proof of distinct semantic interpretations",
+    "finite lookahead candidate stability only; no online or perpetual stability claim"
+  ]
+}

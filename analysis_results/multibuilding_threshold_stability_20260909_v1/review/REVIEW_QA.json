@@ -1,0 +1,103 @@
+{
+  "status": "passed",
+  "source_image_n": 55,
+  "common_complete_unique_image_n": 18,
+  "common_image_ids": [
+    "7y3sRwLe3Va_1410b021e1c14f529188eb026fbb369a",
+    "7y3sRwLe3Va_4291cbfde1024467b1548934653f07ce",
+    "B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624",
+    "S9hNv5qa7GM_bd9faec23bb3462c94a5fbc6c0a3d5cf",
+    "UwV83HsGsw3_bc29294428a647038f70e0ea31ea8972",
+    "VFuaQ6m2Qom_ad4c387f8175498491966703c8441e0d",
+    "X7HyMhZNoso_987fd31155514f6facb131bd5c14881d",
+    "q9vSo1VnCiC_c421f07780004647a7198c4ac5371e8a",
+    "rPc6DW4iMge_0012f6dcce9645778ac459e189cf0db3",
+    "rPc6DW4iMge_1f14902595544e389c9c910c444e79e7",
+    "rPc6DW4iMge_9d3eb9f5d38844bfb4e5fb2cd05fd3fd",
+    "uNb9QFRL6hY_1096f195d3294cefa462add5ab0c342e",
+    "uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97",
+    "uNb9QFRL6hY_c1ebb8b34eb846ba9b5ce23b30b299a7",
+    "uNb9QFRL6hY_d02f87bbb0414146a7a15070110a0384",
+    "yqstnuAEVhm_66ecc07f3cda4d8ebaf84288325669f5",
+    "yqstnuAEVhm_a93ea1ea5702412c9ef9c82a436c4599",
+    "yqstnuAEVhm_e9b4d8e951cb4712b3905c8f4c4dabb5"
+  ],
+  "pointset_response_n": 1337,
+  "q_valid_n": 1311,
+  "thresholds": [
+    0.975,
+    0.95,
+    0.925,
+    0.9,
+    0.85,
+    0.8
+  ],
+  "newly_compatible_pair_n": 8982,
+  "figures_generated": 7,
+  "figures_visually_reviewed": 7,
+  "pair_examples_generated": 3,
+  "pair_examples_visually_reviewed": 3,
+  "checks": [
+    "330分区的完整55图与6参数覆盖",
+    "点集人数=可评价+不可评价人数",
+    "完整唯一分区未使用缺失几何图",
+    "共同图逐簇成员数、单例、m2/m3数量独立核对",
+    "放宽q连边集合单调且始终要求硬点数/唯一对应",
+    "新增连边首次进入区间唯一",
+    "3示例分位选择、8点硬条件、原始=有效坐标与图源路径独立回读通过"
+  ],
+  "schema": {
+    "full_threshold_summary.csv": "每个q一行；full_*以55完整图为分母；unique_q_subset_images仅作子集状态描述，不是整图成功数。",
+    "common_image_clusters.csv": "六参数全部完整唯一的固定图集，每图每q一行；singleton_share=单例响应数/该图全部可用响应数。",
+    "common_image_summary.csv": "共同图逐图指标等权汇总，mean/median/q25/q75；singleton_response_fraction另按响应加权。",
+    "newly_compatible_pairs.csv.gz": "每对响应只在首次通过六个q中某门槛时出现一次；第一档是最严q原有连边。",
+    "newly_compatible_pair_summary.csv": "每个进入区间的OSPA30描述分布；所有点对等权，image_mean_ospa30_mean另对图等权。",
+    "visual_pair_examples.csv": "3个机械选择的响应对，含分位/差值/源图/身份/原始和有效坐标；final_judgment留空，实际阅读记录另存VISUAL_NOTES.json。"
+  },
+  "limits": [
+    "q仍依赖历史配对/边界连接假设，原始最终点序未保存。",
+    "辅助OSPA距离不判断语义解释正确性，不据更少簇或更早稳定选择q。",
+    "共同18图是可判定子集，不能推广至55图；重复点对/图/人员不是独立样本。"
+  ],
+  "visual_review_source": "VISUAL_NOTES.json；4张黑灰统计图与3张原图/有效点比较图均已实际查看。",
+  "related_tests": {
+    "command": ".venv/Scripts/python.exe -m pytest -q tests/test_review_multibuilding_thresholds_20260909.py",
+    "passed": 1,
+    "tdd_red_observed": true
+  },
+  "replay_review": {
+    "status": "passed",
+    "curve_rows": 140742,
+    "onset_rows": 6930,
+    "parameter_rows": 126,
+    "rate": 0.8,
+    "onset_rule": "从k开始所有后续保存节点均达到80%；upper与lower同一有限起点才identified；upper不存在起点为not_reached，其余unknown。",
+    "figures_generated": 2,
+    "figures_visually_reviewed": 2,
+    "schema": {
+      "image_stability_onsets.csv": "每图×7配置×2后续窗口×3支持门槛×3变化容差；6930行，未识别人数为空而非0。",
+      "stability_parameter_summary.csv": "每配置×窗口×支持门槛×容差一行；状态数分母固定55图。原unknown拆有限但不同端点和保守端未定；宽<=2包含宽0；guaranteed<5统计保守端有限且<5的所有图，不限exact。",
+      "building_stability_curves_q095.csv": "10楼，q.95/h5/m2/eps.1，每楼各k逐图等权平均L/U；固定楼内高人数图及共同k范围。"
+    },
+    "checks": [
+      "完整140742节点状态数和L/U算术",
+      "每图每配置参数的连续1..N-h节点",
+      "55图×126参数组合覆盖",
+      "126汇总行状态守恒55",
+      "10楼共同节点均保留同一批图",
+      "独立逐节点后缀遍历核对全部6930行possible/guaranteed/identified/区间宽，非复用onset实现"
+    ],
+    "limits": [
+      "有限旧人员池回放，不证明新标注者在同一人数稳定。",
+      "k=1没有旧人对证据，早起点仍为后见窗口候选。",
+      "不把unknown算作changing，不把上界当真实稳定率；平均带不是置信区间。"
+    ],
+    "independent_onset_check_rows": 6930,
+    "visual_review": {
+      "stability_onset_states.png": "已实际查看；四类分段、计数、参数及55图固定分母可读。",
+      "building_stability_curves_q095.png": "已实际查看；10楼全部保留、各图细线、均值L/U和非置信区间说明可读。"
+    }
+  },
+  "total_figures_generated": 9,
+  "total_figures_visually_reviewed": 9
+}

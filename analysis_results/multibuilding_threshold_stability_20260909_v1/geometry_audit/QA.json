@@ -1,0 +1,47 @@
+{
+  "status": "passed",
+  "scope": "26 q-invalid responses among previous dense55 only; not all historical low-count images",
+  "responses": 26,
+  "images": 21,
+  "category_counts": {
+    "no_complete_matching_under_current_gate": 3,
+    "too_few_points": 3,
+    "multiple_deletion_candidates_unconfirmed": 9,
+    "one_deletion_candidate_unconfirmed": 9,
+    "unique_matching_found_without_coordinate_change": 2
+  },
+  "figures_viewed": 7,
+  "responses_visually_viewed": 26,
+  "point_deletion_trials_rechecked": 200,
+  "original_and_effective_points_unchanged": true,
+  "production_code_changed": true,
+  "prior_q_and_stability_outputs_changed": false,
+  "repairs_applied": 7,
+  "new_3d_reviews": 0,
+  "methods": {
+    "candidate_deletion": "Try deleting each zero-based index from a temporary copy and call existing normalize_geometry; store every valid candidate; uniqueness only conditional on this parser, never confirms accidental point.",
+    "candidate_graph": "Each pair requires circular horizontal difference <51.2 pixels and vertical difference >=1 pixel, separately from q threshold.",
+    "exact_matching": "For each connected component, memoize remaining-vertex tuples; enumerate each allowed partner of smallest remaining vertex, combine recursive results and retain two lowest distinct pairings. Combine component optima; the global second-best increment is minimum component second-best gap. No coordinate or q modification.",
+    "independent_check": "Existing analyze_layout_pairing exhaustively completed each 28-point component separately: nodes 2/2/7/36/2255; total best and second gap match. Six-point enumeration cross-check and no-matching case also pass.",
+    "wall_order": "Reordered diagnostic copy only demonstrates existing parser can evaluate the computed pairs. Does not confirm intended final wall adjacency."
+  },
+  "fields": {
+    "records.json": "one response per entry; exact IDs, original count, effective points, complete candidate indices, pairing graph/components, optimal pairings, unchanged flags, actual visual notes",
+    "records.csv": "same26 rows; nested values encoded as JSON, point indices zero based",
+    "independent_matching_checks.json": "two28-point responses, existing solver independent component results"
+  },
+  "review_limits": "All 9 candidate decisions applied to derived calculation view; other unconfirmed geometric cases not automatically repaired.",
+  "user_decisions": {
+    "manifest": "USER_DECISIONS.json",
+    "confirmed_remove": 5,
+    "leave_unchanged": 1,
+    "temporary_exclusions": 4,
+    "remaining_single_candidate_judgments": 0,
+    "calculation_view_or_statistics_updated": true,
+    "requested_add_counterpart": 2,
+    "pending_added_point_positions": 0,
+    "confirmed_added_points": 2
+  },
+  "recorded_points_scope": "pre_repair_diagnostic_snapshot",
+  "current_results": "../revised"
+}

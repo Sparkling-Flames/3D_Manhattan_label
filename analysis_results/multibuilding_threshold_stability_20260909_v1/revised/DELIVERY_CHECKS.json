@@ -1,0 +1,63 @@
+{
+  "status": "passed",
+  "scope": "Two symmetric worker scenarios; confirmed individual processing common; two no-imputation sensitivities.",
+  "tests_passed": 32,
+  "tests_command": ".venv/Scripts/python.exe -m pytest tests/test_prepare_confirmed_point_calculation_view_20260909.py tests/test_analyze_q_thresholds_20260909.py tests/test_replay_multibuilding_stability_20260909.py tests/test_transfer_multibuilding_stability_20260909.py tests/test_review_multibuilding_thresholds_20260909.py tests/test_order_free_cluster_holdout_20260908.py tests/test_audit_point_count_novelty_20260909.py tests/test_geometry_consensus_representation.py -q",
+  "shared_helper_additional_validation": "Subagent ran 48 related tests and 200 random small-input comparisons against previous implementation. Test sets overlap; do not add to the 32.",
+  "commands_in_dependency_order": [
+    ".venv/Scripts/python.exe -m tools.thesis_main.data_prep.prepare_confirmed_point_calculation_view_20260909 --output analysis_results/confirmed_point_calculation_view_20260909_v1/reviewed --decisions analysis_results/multibuilding_threshold_stability_20260909_v1/geometry_audit/USER_DECISIONS.json",
+    ".venv/Scripts/python.exe -m tools.thesis_main.analysis.analyze_q_thresholds_20260909 --input analysis_results/confirmed_point_calculation_view_20260909_v1/reviewed/calculation_view.jsonl.gz --out analysis_results/multibuilding_threshold_stability_20260909_v1/revised/with_workers/geometry --min-workers 1",
+    ".venv/Scripts/python.exe -m tools.thesis_main.analysis.analyze_q_thresholds_20260909 --input analysis_results/confirmed_point_calculation_view_20260909_v1/reviewed/calculation_view.jsonl.gz --out analysis_results/multibuilding_threshold_stability_20260909_v1/revised/with_workers/no_imputation/geometry --min-workers 1 --no-imputation",
+    ".venv/Scripts/python.exe -m tools.thesis_main.analysis.replay_multibuilding_stability_20260909 --geometry-dir analysis_results/multibuilding_threshold_stability_20260909_v1/revised/with_workers/geometry --out analysis_results/multibuilding_threshold_stability_20260909_v1/revised/with_workers/replay --lookaheads 1 2 3 5",
+    ".venv/Scripts/python.exe -m tools.thesis_main.analysis.replay_multibuilding_stability_20260909 --geometry-dir analysis_results/multibuilding_threshold_stability_20260909_v1/revised/with_workers/no_imputation/geometry --out analysis_results/multibuilding_threshold_stability_20260909_v1/revised/with_workers/no_imputation/affected_replay --lookaheads 1 2 3 5 --image-ids q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4 uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5",
+    ".venv/Scripts/python.exe -m tools.thesis_main.analysis.transfer_multibuilding_stability_20260909 --inventory analysis_results/multibuilding_threshold_stability_20260909_v1/revised/with_workers/image_inventory.csv --curves analysis_results/multibuilding_threshold_stability_20260909_v1/revised/with_workers/replay/stability_curves.csv --out analysis_results/multibuilding_threshold_stability_20260909_v1/revised/with_workers/transfer",
+    ".venv/Scripts/python.exe -m tools.thesis_main.analysis.analyze_q_thresholds_20260909 --input analysis_results/confirmed_point_calculation_view_20260909_v1/reviewed/calculation_view.jsonl.gz --out analysis_results/multibuilding_threshold_stability_20260909_v1/revised/without_workers/geometry --min-workers 1 --exclude-workers 19 26",
+    ".venv/Scripts/python.exe -m tools.thesis_main.analysis.analyze_q_thresholds_20260909 --input analysis_results/confirmed_point_calculation_view_20260909_v1/reviewed/calculation_view.jsonl.gz --out analysis_results/multibuilding_threshold_stability_20260909_v1/revised/without_workers/no_imputation/geometry --min-workers 1 --exclude-workers 19 26 --no-imputation",
+    ".venv/Scripts/python.exe -m tools.thesis_main.analysis.replay_multibuilding_stability_20260909 --geometry-dir analysis_results/multibuilding_threshold_stability_20260909_v1/revised/without_workers/geometry --out analysis_results/multibuilding_threshold_stability_20260909_v1/revised/without_workers/replay --lookaheads 1 2 3 5",
+    ".venv/Scripts/python.exe -m tools.thesis_main.analysis.replay_multibuilding_stability_20260909 --geometry-dir analysis_results/multibuilding_threshold_stability_20260909_v1/revised/without_workers/no_imputation/geometry --out analysis_results/multibuilding_threshold_stability_20260909_v1/revised/without_workers/no_imputation/affected_replay --lookaheads 1 2 3 5 --image-ids q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4 uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5",
+    ".venv/Scripts/python.exe -m tools.thesis_main.analysis.transfer_multibuilding_stability_20260909 --inventory analysis_results/multibuilding_threshold_stability_20260909_v1/revised/without_workers/image_inventory.csv --curves analysis_results/multibuilding_threshold_stability_20260909_v1/revised/without_workers/replay/stability_curves.csv --out analysis_results/multibuilding_threshold_stability_20260909_v1/revised/without_workers/transfer",
+    ".venv/Scripts/python.exe -m tools.thesis_main.analysis.review_multibuilding_thresholds_20260909 --paired-root analysis_results/multibuilding_threshold_stability_20260909_v1/revised",
+    ".venv/Scripts/python.exe -m tools.thesis_main.analysis.transfer_multibuilding_stability_20260909 --inventory analysis_results/multibuilding_threshold_stability_20260909_v1/revised/with_workers/no_imputation/image_inventory.csv --curves analysis_results/multibuilding_threshold_stability_20260909_v1/revised/with_workers/no_imputation/replay/stability_curves.csv --out analysis_results/multibuilding_threshold_stability_20260909_v1/revised/with_workers/no_imputation/transfer",
+    ".venv/Scripts/python.exe -m tools.thesis_main.analysis.transfer_multibuilding_stability_20260909 --inventory analysis_results/multibuilding_threshold_stability_20260909_v1/revised/without_workers/no_imputation/image_inventory.csv --curves analysis_results/multibuilding_threshold_stability_20260909_v1/revised/without_workers/no_imputation/replay/stability_curves.csv --out analysis_results/multibuilding_threshold_stability_20260909_v1/revised/without_workers/no_imputation/transfer"
+  ],
+  "short_window_reproduction_python": "from pathlib import Path; from tools.thesis_main.analysis.replay_multibuilding_stability_20260909 import short_window_check; p=Path('analysis_results/multibuilding_threshold_stability_20260909_v1/revised'); [short_window_check(p/m/'replay', p/m/'short_window_check') for m in ('with_workers','without_workers')]",
+  "geometry_readback": "passed",
+  "replay_readback": "passed",
+  "paired_review": "passed",
+  "figures_actually_reviewed": 4,
+  "visual_records": "comparison/QA.json",
+  "formal_protocol_changed": false,
+  "shared_pairing_implementation_changed": true,
+  "original_exports_points_order_changed": false,
+  "submitted_or_uploaded": false,
+  "new_3d_reviews": 0,
+  "maps_updated": [
+    "docs/README_INDEX.md",
+    "docs/PROJECT_MAP_CLEAN_20260308.md"
+  ],
+  "unperformed": [
+    "No unrelated full-repository test suite",
+    "No new-person independent validation",
+    "No final q/support/stopping rule selection",
+    "No same-room semantic confirmation",
+    "No two-type prediction model fit"
+  ],
+  "current_report": "../分析结果.md",
+  "local_links_checked": 32,
+  "missing_links": [],
+  "files_listed": 106,
+  "csv_files_fully_read": 76,
+  "file_list": "FILE_LIST.json",
+  "git_diff_check": "passed",
+  "report_independent_review": "Numeric checks passed; clarified per-image vs per-building common N, full-pool vs truncated example N, same-building-only plot caption, and missing onset field semantics.",
+  "root_figure_recheck": "paired_onset_states.png",
+  "additional_final_compatibility_check": {
+    "command": ".venv/Scripts/python.exe -m pytest tests/test_analyze_q_thresholds_20260909.py -q",
+    "passed": 3,
+    "new_regression": "Default q run does not overwrite existing richer legacy inventory; explicit revised input still writes its inventory."
+  },
+  "unique_related_tests_passed": 33,
+  "scene_group_definition": "Same building defines the similar-scene group in the current study; no additional same-room/type admission requirement.",
+  "precommit_tests_passed": 37,
+  "scope_clarification_changes_numerical_results": false
+}

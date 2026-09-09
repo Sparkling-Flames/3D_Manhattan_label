@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "dense_images": 55,
+  "building_n": 10,
+  "fold_rows": 30828,
+  "directed_image_folds": 4404,
+  "configs": [
+    "q_0.975",
+    "q_0.950",
+    "q_0.925",
+    "q_0.900",
+    "q_0.850",
+    "q_0.800",
+    "ospa30_t6"
+  ],
+  "lookahead": 5,
+  "min_support": 2,
+  "epsilon": 0.1,
+  "repeat_rate": 0.8,
+  "curve_rows_selected": 7434,
+  "summary_rows": 350,
+  "baseline_group_rows": 1909,
+  "target_image_onset_rows": 350,
+  "source_target_overlap": false,
+  "formal_protocol_changed": false,
+  "scope": "库存所选高人数图中的楼内留图；相同人员池的历史重排，不是新人员泛化。每图独立类，不预测跨图类ID。",
+  "selection": "库存中无辅助可计算不同标注者>=16；不按q或稳定结果删图。楼内>=2图枚举非空互补划分。",
+  "nodes": "每楼k=1至该楼密集图最小usable_n-5；源与目标共享该评价范围。",
+  "baseline": "外楼图且usable_n>=该楼共同人数预算；匹配源图数量。每楼/源图数固定随机50组，无放回；不足50种则枚举。各q复用身份。",
+  "error_bounds": "对预测及目标的稳定率区间计算每节点绝对差可行上下界，再平均目标图和k；不作置信区间。全未知可为[0,1]，不能解释成准确预测。",
+  "benefit_bounds": "外楼误差下界-同楼误差上界，外楼误差上界-同楼误差下界；并列反映未知导致的不确定。",
+  "onset": "rate=.8，首次且之后所有可评价k均达标。upper给乐观起点，lower给稳定率下界过线起点；二者相等且有限才identified。guaranteed仅指此回放判据的下界过线，绝非真实采集停止保证。起点不精确识别不等于毫无人数信息：同时报告两个候选起点及其宽度。",
+  "unknown": "upper仍未达为not_reached；possible/guaranteed不一致或只有possible为unknown；都不是永不稳定。",
+  "averaging": "curve列先按目标图和k平均，再按外楼组平均。summary为划分等权均值；source_n=all包含全部源图数量。N误差按可识别目标出现计数加权，明确分母。",
+  "dependence": "划分大量重叠；同人跨图；50组外楼源也重叠。行数与目标出现数不是独立样本量，不做显著性检验。",
+  "files": {
+    "folds.csv.gz": "每楼×几何配置×非空互补图划分；身份、共同预算、未知宽度、误差边界、N状态与可识别子集误差。",
+    "baseline_groups.csv": "每楼×源图数×外楼组；固定来源身份及抽样数量。",
+    "target_image_onsets.csv": "每张目标图×配置，按其building共同人数预算报告乐观起点、稳定率下界过线起点、精确识别与状态；不精确时保留区间。",
+    "building_summary.csv": "每楼×配置×源图数，另all为所有划分；误差和覆盖同时汇总。"
+  }
+}

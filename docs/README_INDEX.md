@@ -150,6 +150,9 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 - [前置分析包独立审查](../analysis_results/preflight_independent_audit_20260906_v1/独立审查报告.md)：原始坐标与建筑留出预测复现、固定15人面板穷举、去除合成初始化后的重拟合及几何指标解释；附[轨迹保存范围勘误](../analysis_results/preflight_20260906_v2/说明勘误_20260906.md)。只作研究决策支持。
 - [不确定性研究云端输入包](../analysis_results/uncertainty_cloud_inputs_20260906_v1/README_ZH.md)：214图历史响应、166图候选、模型原始坐标、已有分簇及版本连接；附[云端接手说明](../analysis_results/uncertainty_cloud_inputs_20260906_v1/CLOUD_HANDOFF_ZH.md)。不重新分簇或定义歧义标签。
 - [不确定性接手独立复核（2026-09-08）](../analysis_results/uncertainty_followup_analysis_20260908_v1/README_ZH.md)：读取敏感性及本地导出追溯；新增[用户点序确认后的深度分析](../analysis_results/uncertainty_followup_analysis_20260908_v1/深度分析_用户点序确认后.md)，包括非星形度量限制、经验分布恢复、building与人员组合诊断，不改原始标注或人工裁决。
+- [相似场景标注稳定性分析SOP（当前统一入口）](thesis_main/相似场景标注稳定性分析SOP.md)：全阶段无辅助手工统一，各图独立分簇，跨图预测稳定人数；已确认误点按记录排除后比较计算点数。支持人数m与几何/稳定阈值分开。
+  - [当前多楼阈值与人数分析](../analysis_results/multibuilding_threshold_stability_20260909_v1/分析结果.md)：revised中并列包含／排除W19与W26，55高人数图及141低人数图回放、10楼共同预算留图／楼外对照、短窗延长检查与不补点敏感性；不预设口径优劣。
+  - [26份q不可评价诊断](../analysis_results/multibuilding_threshold_stability_20260909_v1/分析结果.md#geometry-audit)：9项用户判断已应用reviewed计算副本，两份28点通过共享搜索修复恢复；geometry_audit保留修复前原图与确认记录，revised为当前计算。
 - [移交包独立审查与50图辅助视觉检查](../analysis_results/uncertainty_visual_review_20260907_v1/README_ZH.md)：30历史＋20候选、22个building；原始/3D对照、初始化与bootstrap勘误、预览点序建议及反例。[三步问卷与保存说明](../analysis_results/uncertainty_visual_review_20260907_v1/QUESTIONNAIRE_ZH.md)提供独立人工填写入口，包含3D角点组顺序调整、OOS意见／理由及分别保存说明。[50图高清复看与点序勘误](../analysis_results/uncertainty_visual_review_20260907_v1/ORDER_REVIEW_ZH.md)说明W31连接假设及逐图保留意见。附[不完整原包归档记录](../analysis_results/uncertainty_handoff_received_20260907_v1/README_ZH.md)；不替代人工裁决。
 - 上述50图入口已接入2048原始PNG、矢量标注叠图及新版交互3D；升级说明和复现命令随包保存。
 

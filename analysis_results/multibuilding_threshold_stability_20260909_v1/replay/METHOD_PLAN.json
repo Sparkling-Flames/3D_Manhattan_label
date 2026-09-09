@@ -1,0 +1,36 @@
+{
+  "status": "exploratory_not_frozen",
+  "selection": "usable distinct people >=16 before inspecting q or stability",
+  "scope": "all stages pooled; assistance_exposure=none; confirmed effective points; no same-image worker duplicates",
+  "configs": [
+    "q_0.975",
+    "q_0.950",
+    "q_0.925",
+    "q_0.900",
+    "q_0.850",
+    "q_0.800",
+    "ospa30_t6"
+  ],
+  "hard_effective_point_count_gate": true,
+  "q_geometry": "historical pairing assumption; invalid geometry makes the containing prefix unknown",
+  "orders": "200 existing global worker orders projected to each image; no within-image H/V budget truncation",
+  "windows": [
+    3,
+    5
+  ],
+  "supports": [
+    1,
+    2,
+    3
+  ],
+  "epsilons": [
+    0.05,
+    0.1,
+    0.2
+  ],
+  "stable": "Every following j=k+1..k+h has unique partition; old-person pair relation change and share TV <=epsilon; no cluster first reaches m relative to k; at least one m-supported cluster already at k.",
+  "support_promotion": "Includes a previously singleton cluster gaining its second supporter when m=2; not just clusters wholly absent at k.",
+  "unknown": "Any required non-unique, truncated or invalid-geometry partition, or no m-supported prefix cluster.",
+  "bounds": "stable/200 to (stable+unknown)/200; missing-state bounds, not confidence intervals",
+  "limit": "finite-window retrospective replay; stable multiple clusters allowed; not accuracy, online stopping or proof of perpetual stability"
+}

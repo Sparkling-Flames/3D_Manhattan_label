@@ -258,7 +258,10 @@ def analyze_layout_pairing(
     ambiguity_relative_margin: float = 0.01,
     maximum_search_nodes: int = 10_000,
 ) -> tuple[list[dict[str, float]], dict[str, object]]:
-    """Return a strict, seam-aware pairing and diagnostics for formal scoring."""
+    """Return a strict, seam-aware pairing and diagnostics for formal scoring.
+
+    The search budget covers component search and cost-state combinations.
+    """
     try:
         array = np.asarray(corners, dtype=np.float64)
     except Exception:
@@ -304,6 +307,8 @@ def analyze_layout_pairing(
 
     def search(remaining: tuple[int, ...], pairs: list[tuple[int, int]], cost: float) -> None:
         nonlocal search_nodes, search_exhausted
+        if search_exhausted:
+            return
         search_nodes += 1
         if search_nodes > maximum_search_nodes:
             search_exhausted = True
@@ -320,7 +325,59 @@ def analyze_layout_pairing(
             next_remaining = tuple(sorted(rest - {j}))
             search(next_remaining, pairs + [(i, j)], cost + circular_dx(i, j))
 
-    search(tuple(range(n_points)), [], 0.0)
+    # Independent components cannot share a pair. Search each only once;
+    # enumerating their Cartesian product repeats the same partial searches.
+    # ponytail: component search is still bounded enumeration; memoize states
+    # if one dense component alone exhausts the shared node budget.
+    unseen = set(range(n_points))
+    best_cost = 0.0
+    matching = []
+    cost_counts = {0.0: 1}
+    while unseen:
+        pending = [min(unseen)]
+        component = []
+        while pending:
+            i = pending.pop()
+            if i not in unseen:
+                continue
+            unseen.remove(i)
+            component.append(i)
+            pending.extend(candidates[i])
+        matchings = []
+        search(tuple(sorted(component)), [], 0.0)
+        if search_exhausted or not matchings:
+            break
+        matchings.sort(key=lambda item: item[0])
+        component_best = matchings[0][0]
+        best_cost += component_best
+        matching.extend(matchings[0][1])
+        deltas = {}
+        for cost, _pairs in matchings:
+            delta = cost - component_best
+            deltas[delta] = deltas.get(delta, 0) + 1
+
+        # Keep all epsilon-tied cost levels plus the first larger level.
+        # Nonnegative later deltas cannot make a discarded level relevant.
+        # Counts must be combined before applying the GLOBAL epsilon: two
+        # individually epsilon-small differences can exceed it in total.
+        combined = {}
+        for previous, count in cost_counts.items():
+            for delta, component_count in sorted(deltas.items()):
+                search_nodes += 1
+                if search_nodes > maximum_search_nodes:
+                    search_exhausted = True
+                    break
+                total = previous + delta
+                combined[total] = combined.get(total, 0) + count * component_count
+                if total > ambiguity_abs_epsilon:
+                    break
+            if search_exhausted:
+                break
+        if search_exhausted:
+            break
+        first_larger = min((cost for cost in combined if cost > ambiguity_abs_epsilon), default=None)
+        cost_counts = {cost: count for cost, count in combined.items()
+                       if cost <= ambiguity_abs_epsilon or cost == first_larger}
     if search_exhausted:
         base.update(pairing_search_exhausted=True, pairing_search_nodes=search_nodes)
         return [], base
@@ -332,14 +389,12 @@ def analyze_layout_pairing(
             unpaired_point_count=n_points - 2 * int(greedy_stats["n_pairs"]),
         )
         return greedy, base
-    matchings.sort(key=lambda item: item[0])
-    best_cost = matchings[0][0]
-    optimal = [item for item in matchings if abs(item[0] - best_cost) <= ambiguity_abs_epsilon]
-    second_cost = next((cost for cost, _pairs in matchings if cost > best_cost + ambiguity_abs_epsilon), None)
+    optimal_count = sum(count for delta, count in cost_counts.items() if delta <= ambiguity_abs_epsilon)
+    second_delta = min((delta for delta in cost_counts if delta > ambiguity_abs_epsilon), default=None)
+    second_cost = best_cost + second_delta if second_delta is not None else None
     near_margin = max(ambiguity_abs_epsilon, abs(best_cost) * ambiguity_relative_margin)
-    ambiguous = len(optimal) > 1 or (second_cost is not None and second_cost - best_cost <= near_margin)
-    reason = "exact_tied_optimum" if len(optimal) > 1 else "near_equivalent_matching" if ambiguous else ""
-    matching = optimal[0][1]
+    ambiguous = optimal_count > 1 or (second_cost is not None and second_cost - best_cost <= near_margin)
+    reason = "exact_tied_optimum" if optimal_count > 1 else "near_equivalent_matching" if ambiguous else ""
     pairs = []
     for i, j in matching:
         x1, x2 = float(array[i, 0]), float(array[j, 0])
@@ -357,7 +412,7 @@ def analyze_layout_pairing(
         pairing_ambiguous=ambiguous,
         best_cost=best_cost,
         second_best_cost=second_cost,
-        optimal_matching_count=len(optimal),
+        optimal_matching_count=optimal_count,
         ambiguity_reason=reason,
         pairing_search_exhausted=False,
         pairing_search_nodes=search_nodes,

@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "operation": "reuse_unchanged_geometry_and_replace_two_recomputed_images",
+  "full_image_n": 196,
+  "recomputed_image_n": 2,
+  "recomputed_image_ids": [
+    "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+    "uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5"
+  ],
+  "unchanged_geometry_image_n": 194,
+  "reused_replay_image_n": 174,
+  "reused_curve_rows": 334341,
+  "recomputed_curve_rows": 10710,
+  "combined_curve_rows": 345051,
+  "exact_equal_unchanged_geometry_rows": {
+    "response_geometry.csv": 1795,
+    "pairwise_q.csv.gz": 14978
+  },
+  "reused_curve_source": "analysis_results\\multibuilding_threshold_stability_20260909_v1\\revised\\without_workers\\replay\\stability_curves.csv",
+  "recomputed_curve_source": "analysis_results\\multibuilding_threshold_stability_20260909_v1\\revised\\without_workers\\no_imputation\\affected_replay\\stability_curves.csv",
+  "note": "仅两张补点图重新执行全部配置和前缀。其余图几何响应字段和成对量逐值相同后复用曲线；无后续窗口图不产生曲线。此合并不是全部图重算。"
+}

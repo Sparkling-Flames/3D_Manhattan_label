@@ -1,0 +1,1317 @@
+{
+  "audit_time_utc": "2026-09-09T04:19:02.831478+00:00",
+  "status": "passed",
+  "scope": "Independent readback of reviewed calculation view and four actual geometry products; no production outputs changed. Geometry normalization is recomputed with the current shared helper; raw coordinates and review actions are independently reconstructed. Full paired scalar recomputation is limited to pairs touching the nine judgments or the two restored 28-point records. All pair identities/count gates and all saved candidate-cluster gates are checked.",
+  "view_source": "analysis_results\\confirmed_point_calculation_view_20260909_v1\\reviewed\\calculation_view.jsonl.gz",
+  "canonical_n": 2501,
+  "raw_source_exports_checked": 18,
+  "raw_coordinate_order_checked_n": 2501,
+  "maximum_raw_coordinate_absolute_difference": 0.0,
+  "source_exports_read_only_size_mtime_preserved": true,
+  "unreviewed_rows_compared_with_prior_view": 2489,
+  "judgments": [
+    {
+      "judgment_number": 1,
+      "canonical_annotation_id": "8487d3e12302f924",
+      "annotation_identity": "P1|0|30|3105|17|3408",
+      "image_id": "UwV83HsGsw3_71ada030981d4468b76dcebc1b6fb940",
+      "worker_id": "17",
+      "action": "remove_confirmed_point",
+      "raw_n": 9,
+      "effective_n": 8,
+      "excluded": false,
+      "effective_points_1024x512": [
+        [
+          14.760360360360359,
+          202.03243243243244
+        ],
+        [
+          14.760360360360359,
+          307.2
+        ],
+        [
+          437.27567567567564,
+          343.1783783783784
+        ],
+        [
+          443.73333333333335,
+          176.20180180180176
+        ],
+        [
+          715.8774774774776,
+          289.67207207207207
+        ],
+        [
+          714.0324324324324,
+          225.0954954954955
+        ],
+        [
+          964.0360360360361,
+          285.05945945945945
+        ],
+        [
+          962.1909909909909,
+          234.32072072072071
+        ]
+      ]
+    },
+    {
+      "judgment_number": 2,
+      "canonical_annotation_id": "cf3e0b1c47e35600",
+      "annotation_identity": "P1|0|28|3054|19|4615",
+      "image_id": "UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+      "worker_id": "19",
+      "action": "remove_confirmed_point",
+      "raw_n": 9,
+      "effective_n": 8,
+      "excluded": false,
+      "effective_points_1024x512": [
+        [
+          464.52130325814534,
+          210.44611528822054
+        ],
+        [
+          461.9548872180451,
+          341.33333333333326
+        ],
+        [
+          127.0375939849624,
+          129.60401002506265
+        ],
+        [
+          132.1704260651629,
+          415.75939849624064
+        ],
+        [
+          703.1979949874687,
+          128.32080200501252
+        ],
+        [
+          700.6315789473684,
+          428.59147869674183
+        ],
+        [
+          884.1303258145364,
+          145.00250626566415
+        ],
+        [
+          880.280701754386,
+          422.17543859649123
+        ]
+      ]
+    },
+    {
+      "judgment_number": 3,
+      "canonical_annotation_id": "ee2e59495db1c2bf",
+      "annotation_identity": "P1|0|28|3053|19|4614",
+      "image_id": "UwV83HsGsw3_8e9c912f525744eeaea21083a20a1596",
+      "worker_id": "19",
+      "action": "leave_unchanged",
+      "raw_n": 7,
+      "effective_n": 7,
+      "excluded": false,
+      "effective_points_1024x512": [
+        [
+          352.8822055137845,
+          139.86967418546365
+        ],
+        [
+          446.5563909774436,
+          73.14285714285714
+        ],
+        [
+          450.406015037594,
+          440.140350877193
+        ],
+        [
+          73.14285714285714,
+          200.18045112781954
+        ],
+        [
+          65.44360902255639,
+          347.74937343358397
+        ],
+        [
+          975.2380952380951,
+          191.19799498746866
+        ],
+        [
+          976.5213032581454,
+          352.8822055137845
+        ]
+      ]
+    },
+    {
+      "judgment_number": 4,
+      "canonical_annotation_id": "36a4d17901b03d45",
+      "annotation_identity": "P1|0|28|3062|19|4623",
+      "image_id": "q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e",
+      "worker_id": "19",
+      "action": "remove_confirmed_point",
+      "raw_n": 9,
+      "effective_n": 8,
+      "excluded": false,
+      "effective_points_1024x512": [
+        [
+          399.077694235589,
+          145.00250626566415
+        ],
+        [
+          396.5112781954887,
+          390.0952380952381
+        ],
+        [
+          944.4411027568922,
+          150.13533834586465
+        ],
+        [
+          940.5914786967419,
+          364.43107769423557
+        ],
+        [
+          121.90476190476188,
+          157.8345864661654
+        ],
+        [
+          130.88721804511277,
+          382.3959899749373
+        ],
+        [
+          102.65664160401002,
+          147.5689223057644
+        ],
+        [
+          106.5062656641604,
+          392.6616541353383
+        ]
+      ]
+    },
+    {
+      "judgment_number": 5,
+      "canonical_annotation_id": "3a772c253f77d4b7",
+      "annotation_identity": "P1|0|39|3146|30|4212",
+      "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+      "worker_id": "30",
+      "action": "add_confirmed_point",
+      "raw_n": 9,
+      "effective_n": 10,
+      "excluded": false,
+      "effective_points_1024x512": [
+        [
+          859.1609756097562,
+          356.31869918699186
+        ],
+        [
+          867.4861788617886,
+          168.1691056910569
+        ],
+        [
+          654.3609756097561,
+          169.83414634146342
+        ],
+        [
+          283.0569105691057,
+          191.47967479674796
+        ],
+        [
+          289.7170731707317,
+          316.3577235772358
+        ],
+        [
+          104.89756097560976,
+          223.11544715447155
+        ],
+        [
+          108.22764227642277,
+          318.02276422764226
+        ],
+        [
+          527.8178861788618,
+          71.59674796747967
+        ],
+        [
+          526.1528455284553,
+          459.5512195121952
+        ],
+        [
+          654.3609756097561,
+          352.76014517
+        ]
+      ]
+    },
+    {
+      "judgment_number": 6,
+      "canonical_annotation_id": "40ac299ba105fdef",
+      "annotation_identity": "P1|0|39|3152|37|4510",
+      "image_id": "uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5",
+      "worker_id": "37",
+      "action": "add_confirmed_point",
+      "raw_n": 11,
+      "effective_n": 12,
+      "excluded": false,
+      "effective_points_1024x512": [
+        [
+          362.2417398386107,
+          178.17121948142074
+        ],
+        [
+          358.32649120694043,
+          364.11812274533855
+        ],
+        [
+          408.67989217950316,
+          168.96011410363877
+        ],
+        [
+          402.0497248327333,
+          373.39027396237526
+        ],
+        [
+          616.4251357116246,
+          171.1701698858954
+        ],
+        [
+          585.484354760032,
+          394.38580389381315
+        ],
+        [
+          46.90076335877862,
+          174.57506361323155
+        ],
+        [
+          33.87277353689567,
+          375.20610687022895
+        ],
+        [
+          784.2849872773536,
+          132.8854961832061
+        ],
+        [
+          784.2849872773536,
+          432.529262086514
+        ],
+        [
+          990.0247019565802,
+          171.49436155250106
+        ],
+        [
+          990.0247019565802,
+          379.165331243
+        ]
+      ]
+    },
+    {
+      "judgment_number": 7,
+      "canonical_annotation_id": "e6701d3b7c423a86",
+      "annotation_identity": "P1|0|28|3059|19|4620",
+      "image_id": "wc2JMjhGNzB_2195c5a9b9fd451b927b0050f23fac31",
+      "worker_id": "19",
+      "action": "exclude_response_temporarily",
+      "raw_n": 9,
+      "effective_n": null,
+      "excluded": true,
+      "effective_points_1024x512": null
+    },
+    {
+      "judgment_number": 8,
+      "canonical_annotation_id": "d1ded26e80b45fc5",
+      "annotation_identity": "P1|0|28|3056|19|4617",
+      "image_id": "wc2JMjhGNzB_dc4a9f470b834de1983c7e605ff06b2e",
+      "worker_id": "19",
+      "action": "remove_confirmed_point",
+      "raw_n": 11,
+      "effective_n": 10,
+      "excluded": false,
+      "effective_points_1024x512": [
+        [
+          157.8345864661654,
+          146.28571428571428
+        ],
+        [
+          160.40100250626566,
+          397.7944862155389
+        ],
+        [
+          343.89974937343356,
+          148.85213032581453
+        ],
+        [
+          347.74937343358397,
+          409.34335839599
+        ],
+        [
+          573.593984962406,
+          175.7994987468672
+        ],
+        [
+          569.7443609022556,
+          356.7318295739348
+        ],
+        [
+          460.671679197995,
+          319.5187969924812
+        ],
+        [
+          465.8045112781955,
+          174.51629072681703
+        ],
+        [
+          896.9624060150376,
+          139.86967418546365
+        ],
+        [
+          922.62656641604,
+          431.1578947368421
+        ]
+      ]
+    },
+    {
+      "judgment_number": 9,
+      "canonical_annotation_id": "bf715e62b25484d6",
+      "annotation_identity": "P1|0|28|3073|19|4635",
+      "image_id": "x8F5xyUWy9e_a51a0e2811f342a599ae4cdb9b84ff23",
+      "worker_id": "19",
+      "action": "remove_confirmed_point",
+      "raw_n": 11,
+      "effective_n": 10,
+      "excluded": false,
+      "effective_points_1024x512": [
+        [
+          341.33333333333326,
+          187.34837092731829
+        ],
+        [
+          341.33333333333326,
+          388.8120300751879
+        ],
+        [
+          111.6390977443609,
+          175.7994987468672
+        ],
+        [
+          100.09022556390977,
+          388.8120300751879
+        ],
+        [
+          50.045112781954884,
+          229.69423558897242
+        ],
+        [
+          47.478696741854634,
+          338.76691729323306
+        ],
+        [
+          704.4812030075187,
+          186.06516290726816
+        ],
+        [
+          714.7468671679198,
+          377.2631578947368
+        ],
+        [
+          881.5639097744361,
+          204.0300751879699
+        ],
+        [
+          880.280701754386,
+          355.4486215538847
+        ]
+      ]
+    }
+  ],
+  "additional_w26_individual_exclusions": {
+    "c14fda0522180ac6": 2,
+    "7f82401488af7306": 1,
+    "2da0deeeb2d81a3f": 1
+  },
+  "scenario_summaries": {
+    "with_workers/geometry": {
+      "response_n": 1887,
+      "image_n": 196,
+      "building_n": 22,
+      "worker_n": 26,
+      "workers": [
+        "1",
+        "2",
+        "6",
+        "8",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "17",
+        "18",
+        "19",
+        "21",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30",
+        "31",
+        "32",
+        "33",
+        "34",
+        "35",
+        "36",
+        "37"
+      ],
+      "stage_counts": {
+        "C2-A-RP": 80,
+        "C1": 670,
+        "P1": 978,
+        "C2-B": 159
+      },
+      "raw_condition_counts": {
+        "manual": 1660,
+        "oos": 227
+      },
+      "pair_n": 16590,
+      "q_valid_n": 1872,
+      "q_invalid_n": 15,
+      "q_invalid_reasons": {
+        "odd_keypoint_count": 11,
+        "incomplete_pairing": 4
+      },
+      "full_partition_n": 1176,
+      "invalid_response_identities": [
+        {
+          "canonical_annotation_id": "4d3e4911d8f07aa2",
+          "worker_id": "37",
+          "image_id": "7y3sRwLe3Va_6376b741b50a4418b3dc3fde791c3c09",
+          "effective_point_count": 11,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "f6bfdcf15004e457",
+          "worker_id": "32",
+          "image_id": "B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993",
+          "effective_point_count": 9,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "f57527778ab111cb3df8",
+          "worker_id": "2",
+          "image_id": "S9hNv5qa7GM_0c2a97f049db4a429776940850fedf2e",
+          "effective_point_count": 10,
+          "reason": "incomplete_pairing"
+        },
+        {
+          "canonical_annotation_id": "4df387c7c1aa91d86cee",
+          "worker_id": "37",
+          "image_id": "S9hNv5qa7GM_53d54b73e58940019b731673e65c1902",
+          "effective_point_count": 10,
+          "reason": "incomplete_pairing"
+        },
+        {
+          "canonical_annotation_id": "3a3dec28a207f0a0",
+          "worker_id": "28",
+          "image_id": "UwV83HsGsw3_71ada030981d4468b76dcebc1b6fb940",
+          "effective_point_count": 17,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "49fa488be3fef090",
+          "worker_id": "26",
+          "image_id": "UwV83HsGsw3_71ada030981d4468b76dcebc1b6fb940",
+          "effective_point_count": 17,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "ee2e59495db1c2bf",
+          "worker_id": "19",
+          "image_id": "UwV83HsGsw3_8e9c912f525744eeaea21083a20a1596",
+          "effective_point_count": 7,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "cd5abe0f20e47f74",
+          "worker_id": "37",
+          "image_id": "b8cTxDM8gDG_f63819c407e64c2897b703080766cb60",
+          "effective_point_count": 9,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "47664b60c1737c7f",
+          "worker_id": "19",
+          "image_id": "e9zR4mvMWw7_4fb8c9be319e4784b4b66f9ca5d839ab",
+          "effective_point_count": 15,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "acf40c242b1e8bb29e98",
+          "worker_id": "29",
+          "image_id": "pRbA3pwrgk9_16beb21e65a84850a509972190038d0e",
+          "effective_point_count": 13,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "e350ecfeaafde6028fcd",
+          "worker_id": "12",
+          "image_id": "pRbA3pwrgk9_8b07a4b08cf447abb246769d8dce8494",
+          "effective_point_count": 16,
+          "reason": "incomplete_pairing"
+        },
+        {
+          "canonical_annotation_id": "8191a93950c2601c",
+          "worker_id": "19",
+          "image_id": "rPc6DW4iMge_cc15fb105d86466faafdd633f89148de",
+          "effective_point_count": 6,
+          "reason": "incomplete_pairing"
+        },
+        {
+          "canonical_annotation_id": "2559d23544f7b937",
+          "worker_id": "2",
+          "image_id": "uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5",
+          "effective_point_count": 17,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "9117118c1ce15fc9",
+          "worker_id": "37",
+          "image_id": "uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2",
+          "effective_point_count": 11,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "ef46460f29fb4a76",
+          "worker_id": "31",
+          "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+          "effective_point_count": 9,
+          "reason": "odd_keypoint_count"
+        }
+      ]
+    },
+    "with_workers/no_imputation/geometry": {
+      "response_n": 1887,
+      "image_n": 196,
+      "building_n": 22,
+      "worker_n": 26,
+      "workers": [
+        "1",
+        "2",
+        "6",
+        "8",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "17",
+        "18",
+        "19",
+        "21",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30",
+        "31",
+        "32",
+        "33",
+        "34",
+        "35",
+        "36",
+        "37"
+      ],
+      "stage_counts": {
+        "C2-A-RP": 80,
+        "C1": 670,
+        "P1": 978,
+        "C2-B": 159
+      },
+      "raw_condition_counts": {
+        "manual": 1660,
+        "oos": 227
+      },
+      "pair_n": 16590,
+      "q_valid_n": 1870,
+      "q_invalid_n": 17,
+      "q_invalid_reasons": {
+        "odd_keypoint_count": 13,
+        "incomplete_pairing": 4
+      },
+      "full_partition_n": 1176,
+      "invalid_response_identities": [
+        {
+          "canonical_annotation_id": "4d3e4911d8f07aa2",
+          "worker_id": "37",
+          "image_id": "7y3sRwLe3Va_6376b741b50a4418b3dc3fde791c3c09",
+          "effective_point_count": 11,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "f6bfdcf15004e457",
+          "worker_id": "32",
+          "image_id": "B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993",
+          "effective_point_count": 9,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "f57527778ab111cb3df8",
+          "worker_id": "2",
+          "image_id": "S9hNv5qa7GM_0c2a97f049db4a429776940850fedf2e",
+          "effective_point_count": 10,
+          "reason": "incomplete_pairing"
+        },
+        {
+          "canonical_annotation_id": "4df387c7c1aa91d86cee",
+          "worker_id": "37",
+          "image_id": "S9hNv5qa7GM_53d54b73e58940019b731673e65c1902",
+          "effective_point_count": 10,
+          "reason": "incomplete_pairing"
+        },
+        {
+          "canonical_annotation_id": "3a3dec28a207f0a0",
+          "worker_id": "28",
+          "image_id": "UwV83HsGsw3_71ada030981d4468b76dcebc1b6fb940",
+          "effective_point_count": 17,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "49fa488be3fef090",
+          "worker_id": "26",
+          "image_id": "UwV83HsGsw3_71ada030981d4468b76dcebc1b6fb940",
+          "effective_point_count": 17,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "ee2e59495db1c2bf",
+          "worker_id": "19",
+          "image_id": "UwV83HsGsw3_8e9c912f525744eeaea21083a20a1596",
+          "effective_point_count": 7,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "cd5abe0f20e47f74",
+          "worker_id": "37",
+          "image_id": "b8cTxDM8gDG_f63819c407e64c2897b703080766cb60",
+          "effective_point_count": 9,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "47664b60c1737c7f",
+          "worker_id": "19",
+          "image_id": "e9zR4mvMWw7_4fb8c9be319e4784b4b66f9ca5d839ab",
+          "effective_point_count": 15,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "acf40c242b1e8bb29e98",
+          "worker_id": "29",
+          "image_id": "pRbA3pwrgk9_16beb21e65a84850a509972190038d0e",
+          "effective_point_count": 13,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "e350ecfeaafde6028fcd",
+          "worker_id": "12",
+          "image_id": "pRbA3pwrgk9_8b07a4b08cf447abb246769d8dce8494",
+          "effective_point_count": 16,
+          "reason": "incomplete_pairing"
+        },
+        {
+          "canonical_annotation_id": "3a772c253f77d4b7",
+          "worker_id": "30",
+          "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+          "effective_point_count": 9,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "8191a93950c2601c",
+          "worker_id": "19",
+          "image_id": "rPc6DW4iMge_cc15fb105d86466faafdd633f89148de",
+          "effective_point_count": 6,
+          "reason": "incomplete_pairing"
+        },
+        {
+          "canonical_annotation_id": "2559d23544f7b937",
+          "worker_id": "2",
+          "image_id": "uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5",
+          "effective_point_count": 17,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "40ac299ba105fdef",
+          "worker_id": "37",
+          "image_id": "uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5",
+          "effective_point_count": 11,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "9117118c1ce15fc9",
+          "worker_id": "37",
+          "image_id": "uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2",
+          "effective_point_count": 11,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "ef46460f29fb4a76",
+          "worker_id": "31",
+          "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+          "effective_point_count": 9,
+          "reason": "odd_keypoint_count"
+        }
+      ]
+    },
+    "without_workers/geometry": {
+      "response_n": 1843,
+      "image_n": 196,
+      "building_n": 22,
+      "worker_n": 24,
+      "workers": [
+        "1",
+        "2",
+        "6",
+        "8",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "17",
+        "18",
+        "21",
+        "27",
+        "28",
+        "29",
+        "30",
+        "31",
+        "32",
+        "33",
+        "34",
+        "35",
+        "36",
+        "37"
+      ],
+      "stage_counts": {
+        "C2-A-RP": 80,
+        "C1": 670,
+        "P1": 934,
+        "C2-B": 159
+      },
+      "raw_condition_counts": {
+        "manual": 1627,
+        "oos": 216
+      },
+      "pair_n": 15530,
+      "q_valid_n": 1832,
+      "q_invalid_n": 11,
+      "q_invalid_reasons": {
+        "odd_keypoint_count": 8,
+        "incomplete_pairing": 3
+      },
+      "full_partition_n": 1176,
+      "invalid_response_identities": [
+        {
+          "canonical_annotation_id": "4d3e4911d8f07aa2",
+          "worker_id": "37",
+          "image_id": "7y3sRwLe3Va_6376b741b50a4418b3dc3fde791c3c09",
+          "effective_point_count": 11,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "f6bfdcf15004e457",
+          "worker_id": "32",
+          "image_id": "B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993",
+          "effective_point_count": 9,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "f57527778ab111cb3df8",
+          "worker_id": "2",
+          "image_id": "S9hNv5qa7GM_0c2a97f049db4a429776940850fedf2e",
+          "effective_point_count": 10,
+          "reason": "incomplete_pairing"
+        },
+        {
+          "canonical_annotation_id": "4df387c7c1aa91d86cee",
+          "worker_id": "37",
+          "image_id": "S9hNv5qa7GM_53d54b73e58940019b731673e65c1902",
+          "effective_point_count": 10,
+          "reason": "incomplete_pairing"
+        },
+        {
+          "canonical_annotation_id": "3a3dec28a207f0a0",
+          "worker_id": "28",
+          "image_id": "UwV83HsGsw3_71ada030981d4468b76dcebc1b6fb940",
+          "effective_point_count": 17,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "cd5abe0f20e47f74",
+          "worker_id": "37",
+          "image_id": "b8cTxDM8gDG_f63819c407e64c2897b703080766cb60",
+          "effective_point_count": 9,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "acf40c242b1e8bb29e98",
+          "worker_id": "29",
+          "image_id": "pRbA3pwrgk9_16beb21e65a84850a509972190038d0e",
+          "effective_point_count": 13,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "e350ecfeaafde6028fcd",
+          "worker_id": "12",
+          "image_id": "pRbA3pwrgk9_8b07a4b08cf447abb246769d8dce8494",
+          "effective_point_count": 16,
+          "reason": "incomplete_pairing"
+        },
+        {
+          "canonical_annotation_id": "2559d23544f7b937",
+          "worker_id": "2",
+          "image_id": "uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5",
+          "effective_point_count": 17,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "9117118c1ce15fc9",
+          "worker_id": "37",
+          "image_id": "uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2",
+          "effective_point_count": 11,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "ef46460f29fb4a76",
+          "worker_id": "31",
+          "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+          "effective_point_count": 9,
+          "reason": "odd_keypoint_count"
+        }
+      ]
+    },
+    "without_workers/no_imputation/geometry": {
+      "response_n": 1843,
+      "image_n": 196,
+      "building_n": 22,
+      "worker_n": 24,
+      "workers": [
+        "1",
+        "2",
+        "6",
+        "8",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "17",
+        "18",
+        "21",
+        "27",
+        "28",
+        "29",
+        "30",
+        "31",
+        "32",
+        "33",
+        "34",
+        "35",
+        "36",
+        "37"
+      ],
+      "stage_counts": {
+        "C2-A-RP": 80,
+        "C1": 670,
+        "P1": 934,
+        "C2-B": 159
+      },
+      "raw_condition_counts": {
+        "manual": 1627,
+        "oos": 216
+      },
+      "pair_n": 15530,
+      "q_valid_n": 1830,
+      "q_invalid_n": 13,
+      "q_invalid_reasons": {
+        "odd_keypoint_count": 10,
+        "incomplete_pairing": 3
+      },
+      "full_partition_n": 1176,
+      "invalid_response_identities": [
+        {
+          "canonical_annotation_id": "4d3e4911d8f07aa2",
+          "worker_id": "37",
+          "image_id": "7y3sRwLe3Va_6376b741b50a4418b3dc3fde791c3c09",
+          "effective_point_count": 11,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "f6bfdcf15004e457",
+          "worker_id": "32",
+          "image_id": "B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993",
+          "effective_point_count": 9,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "f57527778ab111cb3df8",
+          "worker_id": "2",
+          "image_id": "S9hNv5qa7GM_0c2a97f049db4a429776940850fedf2e",
+          "effective_point_count": 10,
+          "reason": "incomplete_pairing"
+        },
+        {
+          "canonical_annotation_id": "4df387c7c1aa91d86cee",
+          "worker_id": "37",
+          "image_id": "S9hNv5qa7GM_53d54b73e58940019b731673e65c1902",
+          "effective_point_count": 10,
+          "reason": "incomplete_pairing"
+        },
+        {
+          "canonical_annotation_id": "3a3dec28a207f0a0",
+          "worker_id": "28",
+          "image_id": "UwV83HsGsw3_71ada030981d4468b76dcebc1b6fb940",
+          "effective_point_count": 17,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "cd5abe0f20e47f74",
+          "worker_id": "37",
+          "image_id": "b8cTxDM8gDG_f63819c407e64c2897b703080766cb60",
+          "effective_point_count": 9,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "acf40c242b1e8bb29e98",
+          "worker_id": "29",
+          "image_id": "pRbA3pwrgk9_16beb21e65a84850a509972190038d0e",
+          "effective_point_count": 13,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "e350ecfeaafde6028fcd",
+          "worker_id": "12",
+          "image_id": "pRbA3pwrgk9_8b07a4b08cf447abb246769d8dce8494",
+          "effective_point_count": 16,
+          "reason": "incomplete_pairing"
+        },
+        {
+          "canonical_annotation_id": "3a772c253f77d4b7",
+          "worker_id": "30",
+          "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+          "effective_point_count": 9,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "2559d23544f7b937",
+          "worker_id": "2",
+          "image_id": "uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5",
+          "effective_point_count": 17,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "40ac299ba105fdef",
+          "worker_id": "37",
+          "image_id": "uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5",
+          "effective_point_count": 11,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "9117118c1ce15fc9",
+          "worker_id": "37",
+          "image_id": "uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2",
+          "effective_point_count": 11,
+          "reason": "odd_keypoint_count"
+        },
+        {
+          "canonical_annotation_id": "ef46460f29fb4a76",
+          "worker_id": "31",
+          "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+          "effective_point_count": 9,
+          "reason": "odd_keypoint_count"
+        }
+      ]
+    }
+  },
+  "imputation_sensitivity_comparisons": [
+    {
+      "cohort": "with_workers",
+      "unchanged_images": 194,
+      "nonimputed_response_rows_all_columns_equal": 1885,
+      "nonincident_pair_rows_all_columns_equal": 16541,
+      "unaffected_partition_rows_all_columns_equal": 1164,
+      "two_imputed_original_responses_retained": true,
+      "imputed_raw_counts": {
+        "3a772c253f77d4b7": 9,
+        "40ac299ba105fdef": 11
+      }
+    },
+    {
+      "cohort": "without_workers",
+      "unchanged_images": 194,
+      "nonimputed_response_rows_all_columns_equal": 1841,
+      "nonincident_pair_rows_all_columns_equal": 15484,
+      "unaffected_partition_rows_all_columns_equal": 1164,
+      "two_imputed_original_responses_retained": true,
+      "imputed_raw_counts": {
+        "3a772c253f77d4b7": 9,
+        "40ac299ba105fdef": 11
+      }
+    }
+  ],
+  "worker_exclusion_comparisons": [
+    {
+      "variant": "geometry",
+      "removed_response_n": 44,
+      "removed_by_worker": {
+        "26": 6,
+        "19": 38
+      },
+      "remaining_response_all_columns_equal_n": 1843,
+      "remaining_pair_all_columns_equal_n": 15530,
+      "removed_canonical_ids": [
+        "00a98959a0e8cc08",
+        "19e349a755afd389",
+        "1ca216a593ef9439",
+        "1dd3bfc47096510e",
+        "356a21e60e73bd14",
+        "36a4d17901b03d45",
+        "39102f3b3f789ba6",
+        "3995500a074646db",
+        "47664b60c1737c7f",
+        "4963262a77ca17d1",
+        "49fa488be3fef090",
+        "5d31260441c8ba34",
+        "5e1a484331067f93",
+        "64e0306c0852c1d0",
+        "699723973bed2b86",
+        "6c4763b8a94746c7",
+        "6e9a9a4c4050aede",
+        "712e3eb9664c8fbc",
+        "734b8610ce382901",
+        "78e7d9bc59680788",
+        "7abc8dd3aaf1e4be",
+        "7e8393d71ff1fb42",
+        "81137b6e5348e384",
+        "8191a93950c2601c",
+        "854845dfd0d69ffa",
+        "9351679e3e0d6ade",
+        "9419e8b1ad3cbd83",
+        "9c069dd1b22d34b9",
+        "a283ac338d10b499",
+        "acbe8b7b71d168dc",
+        "b10df9b94b3677c1",
+        "b6dc5d3d3d9ab9db",
+        "b99625f1ef4427fc",
+        "bf715e62b25484d6",
+        "ccd2f1a9e269cf14",
+        "cf3e0b1c47e35600",
+        "d1ded26e80b45fc5",
+        "d3b8c5279c4cce15",
+        "de8eb69ecb323323",
+        "df7f08c1cf75bd2e",
+        "e2d08cec9b8c01da",
+        "ecac5ea3edb46be8",
+        "ee2e59495db1c2bf",
+        "f4095e74a221e17f"
+      ]
+    },
+    {
+      "variant": "no_imputation/geometry",
+      "removed_response_n": 44,
+      "removed_by_worker": {
+        "26": 6,
+        "19": 38
+      },
+      "remaining_response_all_columns_equal_n": 1843,
+      "remaining_pair_all_columns_equal_n": 15530,
+      "removed_canonical_ids": [
+        "00a98959a0e8cc08",
+        "19e349a755afd389",
+        "1ca216a593ef9439",
+        "1dd3bfc47096510e",
+        "356a21e60e73bd14",
+        "36a4d17901b03d45",
+        "39102f3b3f789ba6",
+        "3995500a074646db",
+        "47664b60c1737c7f",
+        "4963262a77ca17d1",
+        "49fa488be3fef090",
+        "5d31260441c8ba34",
+        "5e1a484331067f93",
+        "64e0306c0852c1d0",
+        "699723973bed2b86",
+        "6c4763b8a94746c7",
+        "6e9a9a4c4050aede",
+        "712e3eb9664c8fbc",
+        "734b8610ce382901",
+        "78e7d9bc59680788",
+        "7abc8dd3aaf1e4be",
+        "7e8393d71ff1fb42",
+        "81137b6e5348e384",
+        "8191a93950c2601c",
+        "854845dfd0d69ffa",
+        "9351679e3e0d6ade",
+        "9419e8b1ad3cbd83",
+        "9c069dd1b22d34b9",
+        "a283ac338d10b499",
+        "acbe8b7b71d168dc",
+        "b10df9b94b3677c1",
+        "b6dc5d3d3d9ab9db",
+        "b99625f1ef4427fc",
+        "bf715e62b25484d6",
+        "ccd2f1a9e269cf14",
+        "cf3e0b1c47e35600",
+        "d1ded26e80b45fc5",
+        "d3b8c5279c4cce15",
+        "de8eb69ecb323323",
+        "df7f08c1cf75bd2e",
+        "e2d08cec9b8c01da",
+        "ecac5ea3edb46be8",
+        "ee2e59495db1c2bf",
+        "f4095e74a221e17f"
+      ]
+    }
+  ],
+  "restored_28_point_records": [
+    {
+      "canonical_annotation_id": "716886a2da0110e0",
+      "worker_id": "15",
+      "annotation_identity": "P1|0|28|3079|15|3646",
+      "raw_points_preserved": true,
+      "q_valid": true,
+      "pairing_stats": {
+        "n_points": 28,
+        "n_pairs": 14,
+        "coverage": 1.0,
+        "odd_points": false,
+        "unpaired_point_count": 0,
+        "pairing_ambiguous": false,
+        "best_cost": 20.99198463695501,
+        "second_best_cost": 31.535099180069608,
+        "optimal_matching_count": 1,
+        "ambiguity_reason": "",
+        "finite_in_bounds": true,
+        "pairing_search_exhausted": false,
+        "pairing_search_nodes": 2312,
+        "raw_order_pairing_valid": false,
+        "unordered_pairing_ambiguous": false
+      }
+    },
+    {
+      "canonical_annotation_id": "6b2052d3fba9dfe9",
+      "worker_id": "21",
+      "annotation_identity": "P1|0|28|3079|21|3722",
+      "raw_points_preserved": true,
+      "q_valid": true,
+      "pairing_stats": {
+        "n_points": 28,
+        "n_pairs": 14,
+        "coverage": 1.0,
+        "odd_points": false,
+        "unpaired_point_count": 0,
+        "pairing_ambiguous": false,
+        "best_cost": 20.99198463695501,
+        "second_best_cost": 31.535099180069608,
+        "optimal_matching_count": 1,
+        "ambiguity_reason": "",
+        "finite_in_bounds": true,
+        "pairing_search_exhausted": false,
+        "pairing_search_nodes": 2312,
+        "raw_order_pairing_valid": false,
+        "unordered_pairing_ambiguous": false
+      }
+    }
+  ],
+  "reviewed_or_restored_incident_pair_numeric_rechecks": 714,
+  "total_pair_rows_checked": 64240,
+  "total_saved_clusters_checked": 26966,
+  "check_counts": {
+    "canonical_identity_set": 1,
+    "canonical_selected_version_set": 1,
+    "raw_source_unique_identity": 2513,
+    "raw_point_count": 2501,
+    "raw_coordinate_order_recomputed": 2501,
+    "raw_view_version_exact": 2501,
+    "raw_image_binding": 2501,
+    "canonical_metadata": 22509,
+    "selected_source_identity": 2501,
+    "composite_identity": 2501,
+    "user_decision_action": 9,
+    "review_provenance_identity": 9,
+    "review_original_point_identity": 9,
+    "confirmed_deletion_index_status": 5,
+    "confirmed_effective_coordinate_sequence": 9,
+    "confirmed_effective_count": 9,
+    "confirmed_inclusion": 9,
+    "confirmed_addition_provenance": 2,
+    "nine_review_records": 1,
+    "three_w26_individual_exclusions": 3,
+    "uninvolved_calculation_view_unchanged": 64714,
+    "exactly_two_imputations": 1,
+    "only_four_new_individual_exclusions": 1,
+    "scenario_exact_response_set": 4,
+    "scenario_unique_pair_id": 4,
+    "scenario_response_identity": 59680,
+    "scenario_effective_count_status": 7460,
+    "q_geometry_recomputed": 7460,
+    "all_within_image_pairs_present": 4,
+    "pair_image_identity": 64240,
+    "pair_response_link": 128480,
+    "pair_count_gate_exact": 64240,
+    "pair_hard_count_gate": 64240,
+    "invalid_q_not_zero_or_comparable": 1117,
+    "reviewed_pair_q_compatibility_recomputed": 1428,
+    "reviewed_pair_order_recomputed": 714,
+    "reviewed_pair_q_numeric_recomputed": 1428,
+    "reviewed_pair_ospa_numeric_recomputed": 2142,
+    "partition_response_denominator": 4704,
+    "partition_coverage_flag": 4704,
+    "candidate_partition_count": 4704,
+    "candidate_complete_membership": 9474,
+    "cluster_hard_count_gate": 26966,
+    "cluster_all_edges_compatible": 422172,
+    "invalid_whole_image_unknown": 312,
+    "geometry_qa_counts": 4,
+    "geometry_qa_scenario": 4,
+    "no_pairing_search_exhaustion": 4,
+    "imputation_withheld_not_response_removed": 2,
+    "nonimputed_response_all_columns_equal": 3726,
+    "nonimputed_pair_all_columns_equal": 32025,
+    "unaffected_partition_all_columns_equal": 2328,
+    "worker_exclusion_exact_identities": 2,
+    "retained_worker_response_all_columns_equal": 3686,
+    "retained_worker_pair_all_columns_equal": 31060,
+    "historical_28_point_recovery": 2,
+    "historical_28_point_present_all_scenarios": 8,
+    "raw_export_size_mtime_unchanged": 1
+  },
+  "error_n": 0,
+  "errors": [],
+  "limits": [
+    "A q-valid geometry remains dependent on historical ceiling/floor pairing and inferred boundary connections; this audit does not verify intended wall semantics.",
+    "Confirmed inserted points use same-image peer evidence; withholding the two additions preserves the original odd-count responses and is required for interpretation.",
+    "This readback does not evaluate replay or transfer outputs, which are being computed separately."
+  ],
+  "map_index_decision": "No tools/docs file structure changed in this readback; generated audit stays under the existing multibuilding analysis package.",
+  "warnings_detected_in_prior_metadata": [
+    {
+      "type": "stale_review_manifest_status",
+      "file": "geometry_audit/USER_DECISIONS.json",
+      "detail": "application_status and per-decision application_status still say pending although reviewed calculation view applies the decisions. This is stale status metadata; effective coordinate checks passed."
+    },
+    {
+      "type": "historical_policy_boundary",
+      "file": "geometry_audit/USER_DECISIONS.json",
+      "detail": "policy_boundary still states no whole-worker exclusion. The revised scenarios explicitly compare with and without workers 19/26; report the old manifest boundary as a prior snapshot, not current analysis policy."
+    },
+    {
+      "type": "incorrect_shared_helper_claim",
+      "files": [
+        "with_workers\\geometry\\QA.json",
+        "with_workers\\no_imputation\\geometry\\QA.json",
+        "without_workers\\geometry\\QA.json",
+        "without_workers\\no_imputation\\geometry\\QA.json"
+      ],
+      "detail": "protocol_guard says formal helpers unchanged, but shared quality_core/geometry_metrics.py was corrected in this turn. Pairing objective and ambiguity criterion are unchanged; helper implementation is changed."
+    }
+  ],
+  "metadata_warning_resolution": "Resolved at delivery: source manifest and per-decision application states updated; symmetric worker scenarios recorded; all four geometry QA helper descriptions corrected."
+}
