@@ -1,0 +1,55 @@
+name: Read-only reviewer evidence 20260909
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/reviewer-source-20260909.yml']
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: a6ed34afdb4663c4bfb4b0c566369ba733b1266e
+          fetch-depth: 1
+          filter: blob:none
+          lfs: false
+          sparse-checkout: |
+            tools
+            tests
+            docs
+            config
+            analysis_results
+            export_label
+            import_json
+            lib
+      - name: Package existing tracked research data and source only
+        run: |
+          python - <<'PY'
+          import hashlib,json,pathlib,subprocess,zipfile
+          root=pathlib.Path('.')
+          allowed={'.py','.md','.json','.csv','.jsonl','.gz','.yml','.yaml','.txt','.xml','.npz','.toml','.js'}
+          files=[]; skipped=[]
+          names=subprocess.check_output(['git','ls-files','-z']).decode().split('\0')
+          with zipfile.ZipFile('/tmp/reviewer_sources_20260909.zip','w',zipfile.ZIP_DEFLATED) as z:
+              for name in names:
+                  p=root/name
+                  if not name or not p.is_file() or p.suffix not in allowed: continue
+                  if '__pycache__' in p.parts: continue
+                  if p.suffix=='.js' and (p.name.startswith('image_') or p.name in {'three.min.js','OrbitControls.js'}): continue
+                  if p.stat().st_size>50000000:
+                      skipped.append({'path':name,'reason':'large member','bytes':p.stat().st_size});continue
+                  data=p.read_bytes();z.writestr(name,data)
+                  files.append({'path':name,'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()})
+              z.writestr('SNAPSHOT_MANIFEST.json',json.dumps({'baseline':subprocess.check_output(['git','rev-parse','HEAD']).decode().strip(),'files':files,'skipped':skipped,'note':'Read-only pinned source. No results or raw files changed; no encoded source execution.'},ensure_ascii=False,indent=2))
+          print('Members',len(files),'ZIP bytes',pathlib.Path('/tmp/reviewer_sources_20260909.zip').stat().st_size)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reviewer-sources-20260909
+          path: /tmp/reviewer_sources_20260909.zip
+          retention-days: 7
+          if-no-files-found: error
