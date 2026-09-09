@@ -1,0 +1,132 @@
+name: Independent worker building review 20260909
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/independent-worker-building-review-20260909.yml']
+permissions:
+  contents: write
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: work
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            analysis_results/independent_worker_building_review_20260909_v1
+      - uses: actions/checkout@v4
+        with:
+          ref: c091c3457130d225967e2b62b8e484c9205ab638
+          path: baseline
+          fetch-depth: 1
+          filter: blob:none
+          lfs: false
+          sparse-checkout: |
+            analysis_results/worker_reference_feasibility_20260909_v1
+            analysis_results/semi_subtype_exploration_20260909_v1
+            analysis_results/confirmed_point_calculation_view_20260909_v1
+            analysis_results/multibuilding_threshold_stability_20260909_v1
+            analysis_results/uncertainty_cloud_inputs_20260906_v1/facts
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install the locally tested numerical versions
+        run: python -m pip install numpy==2.3.5 pandas==2.2.3 scipy==1.17.0 scikit-learn==1.8.0 'pytest>=8,<10'
+      - name: Recompute independent checks and new comparisons
+        run: |
+          set -euo pipefail
+          OUT=work/analysis_results/independent_worker_building_review_20260909_v1
+          mkdir -p "$OUT/latest_results"
+          test "$(git -C baseline rev-parse HEAD)" = c091c3457130d225967e2b62b8e484c9205ab638
+          python "$OUT/code/latest_audit.py" --repo baseline --out "$OUT/latest_results" --part all | tee "$OUT/latest_results/run_audit.log"
+          python "$OUT/code/focused_checks.py" --repo baseline --out "$OUT/latest_results" | tee "$OUT/latest_results/run_focused.log"
+          (cd "$OUT/code" && python -m pytest -q test_latest_audit.py) | tee "$OUT/latest_results/new_math_tests.log"
+          python -m pip freeze > "$OUT/latest_results/environment.txt"
+      - name: Validate results and build a complete offline archive
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json,shutil,zipfile,os
+          import pandas as pd
+          root=Path('work/analysis_results/independent_worker_building_review_20260909_v1');results=root/'latest_results';base=Path('baseline')
+          qa=json.loads((results/'WORKER_QA.json').read_text());bqa=json.loads((results/'BUILDING_QA.json').read_text())
+          assert qa['reference_rows']==2027 and qa['semi_rows']==574 and qa['reproduced_membership_folds']==288 and qa['reproduced_prediction_rows']==10356
+          assert qa['prediction_max_error']<1e-7 and bqa['transfer_folds_recomputed']==61656 and bqa['max_error']<1e-10
+          assert len(pd.read_csv(results/'outside_single_source_numerical_checks.csv'))==200
+          stability=pd.read_csv(results/'complementary_building_stability_summary.csv');assert len(stability)==4 and (stability.valid==120).all()
+          s=pd.read_csv(results/'support_state_onset_sensitivity.csv');cur=pd.read_csv(base/'analysis_results/multibuilding_threshold_stability_20260909_v1/revised/with_workers/replay/stability_curves.csv');cur['N']=cur.k+cur.lookahead
+          sizes=cur.groupby('image_id').N.max();s['dense']=s.image_id.map(sizes)>=16
+          s.groupby(['cohort','config','h','dense']).agg(images=('image_id','size'),possible_changed=('possible_changed','sum'),state_changed=('status_changed','sum')).reset_index().to_csv(results/'support_state_sensitivity_summary.csv',index=False)
+          (root/'requirements.txt').write_text('numpy==2.3.5\npandas==2.2.3\nscipy==1.17.0\nscikit-learn==1.8.0\npytest>=8,<10\n')
+          (root/'README.md').write_text('# 独立审查交付\n\n读取REPORT_ZH.md；全部新结果在latest_results。完整离线包是worker_building_review_core_20260909.zip，不是仅有脚本。\n\n解压后安装requirements.txt，执行：\n\n```bash\npython code/latest_audit.py --repo evidence_repo --out rerun_results --part all\npython code/focused_checks.py --repo evidence_repo --out rerun_results\npython -m pytest -q code/test_latest_audit.py\n```\n\n实际输入固定c091c3457130d225967e2b62b8e484c9205ab638。离线窗口文件仅保存程序用到的q.95/OSPA与h1/h5投影；所有匹配行保留，原SHA和投影SHA分别记录，不冒充完整原文件。其他输入字节相同。不改原始标注、SOP或已确认规则；不决定论文方向。扩展中文报告、图表和前期旧底座对照另在本轮聊天附件。\n',encoding='utf-8')
+          stage=Path('/tmp/independent-review-package');stage.mkdir()
+          for name in ['code','latest_results']:shutil.copytree(root/name,stage/name,ignore=shutil.ignore_patterns('__pycache__','.pytest_cache'))
+          for name in ['REPORT_ZH.md','README.md','requirements.txt']:shutil.copy2(root/name,stage/name)
+          sources={}
+          for f in results.glob('SOURCE_MANIFEST_*.json'):
+              for r in json.loads(f.read_text())['files']:sources[r['path']]=r
+          projections=[]
+          for name,r in sorted(sources.items()):
+              original=base/name;assert hashlib.sha256(original.read_bytes()).hexdigest()==r['sha256'],name
+              target=stage/'evidence_repo'/name
+              if name.endswith('/window_metrics.csv.gz'):
+                  cohort='without_workers' if '/without_workers/' in name else 'with_workers'
+                  source=results/(cohort+'_selected_window_metrics.csv.gz');target=target.with_name('window_metrics.selected.csv.gz')
+                  selection='configs q_0.950 / ospa30_t6; lookahead 1 / 5; all matching rows; derived numeric serialization'
+              else:source=original;selection='byte_identical'
+              target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(source,target)
+              projections.append(dict(original_path=name,original_sha256=r['sha256'],packaged_path=str(target.relative_to(stage)),packaged_sha256=hashlib.sha256(target.read_bytes()).hexdigest(),selection=selection))
+          (stage/'OFFLINE_INPUT_PROJECTION.json').write_text(json.dumps(projections,ensure_ascii=False,indent=2))
+          shutil.copy2(stage/'OFFLINE_INPUT_PROJECTION.json',root/'OFFLINE_INPUT_PROJECTION.json')
+          records=[dict(path=str(f.relative_to(stage)),bytes=f.stat().st_size,sha256=hashlib.sha256(f.read_bytes()).hexdigest()) for f in sorted(stage.rglob('*')) if f.is_file()]
+          (stage/'DELIVERY_MANIFEST.json').write_text(json.dumps(dict(baseline='c091c3457130d225967e2b62b8e484c9205ab638',files=records,member_count=len(records),original_data_modified=False),ensure_ascii=False,indent=2))
+          zpath=root/'worker_building_review_core_20260909.zip'
+          with zipfile.ZipFile(zpath,'w',zipfile.ZIP_DEFLATED) as z:
+              for f in sorted(stage.rglob('*')):
+                  if f.is_file():z.write(f,f.relative_to(stage))
+          with zipfile.ZipFile(zpath) as z:
+              assert z.testzip() is None
+              for r in records:assert hashlib.sha256(z.read(r['path'])).hexdigest()==r['sha256'],r['path']
+          digest=hashlib.sha256(zpath.read_bytes()).hexdigest();(root/'worker_building_review_core_20260909.zip.sha256').write_text(digest+'  '+zpath.name+'\n')
+          ordinary=[dict(path=str(f.relative_to(root)),bytes=f.stat().st_size,sha256=hashlib.sha256(f.read_bytes()).hexdigest()) for f in sorted(root.rglob('*')) if f.is_file() and '__pycache__' not in f.parts and '.pytest_cache' not in f.parts and f.name!='MAIN_FILE_MANIFEST.json']
+          (root/'MAIN_FILE_MANIFEST.json').write_text(json.dumps(dict(files=ordinary,member_count=len(ordinary),baseline='c091c3457130d225967e2b62b8e484c9205ab638',workflow_source_commit=os.environ['GITHUB_SHA']),ensure_ascii=False,indent=2))
+          print('ZIP_VERIFIED',len(records),zpath.stat().st_size,digest)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: independent-worker-building-review-20260909
+          path: work/analysis_results/independent_worker_building_review_20260909_v1
+          if-no-files-found: error
+          retention-days: 14
+      - name: Publish files and verify actual main bytes
+        run: |
+          set -euo pipefail
+          cd work
+          git config user.name 'Jiawei Zhang'
+          git config user.email '150024234+Sparkling-Flames@users.noreply.github.com'
+          git add -f analysis_results/independent_worker_building_review_20260909_v1
+          git commit -m 'Publish independently verified worker/building results, full offline ZIP and source manifests'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+          git fetch origin main
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json,subprocess
+          root=Path('analysis_results/independent_worker_building_review_20260909_v1')
+          manifest=json.loads((root/'MAIN_FILE_MANIFEST.json').read_text())
+          for r in manifest['files']:
+              data=subprocess.check_output(['git','show','origin/main:'+str(root/r['path'])])
+              assert hashlib.sha256(data).hexdigest()==r['sha256'],r['path']
+          assert subprocess.check_output(['git','show','origin/main:'+str(root/'MAIN_FILE_MANIFEST.json')])==(root/'MAIN_FILE_MANIFEST.json').read_bytes()
+          print('MAIN_READBACK_VERIFIED',len(manifest['files'])+1,subprocess.check_output(['git','rev-parse','origin/main']).decode().strip())
+          PY
