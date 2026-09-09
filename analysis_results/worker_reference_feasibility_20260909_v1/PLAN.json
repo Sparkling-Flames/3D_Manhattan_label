@@ -1,0 +1,20 @@
+{
+  "metrics": [
+    "ospa30",
+    "ospa60",
+    "matched_angle",
+    "absolute_count_rate",
+    "missing_count_rate",
+    "extra_count_rate"
+  ],
+  "evaluation": "leave_one_building_out_within_stage_condition",
+  "reference_policy": "review_precedes_GT; unresolved_or_OOS_preserved_without_unique_reference_scoring",
+  "cohorts": [
+    "all_usable",
+    "fallback_only",
+    "reviewed_reference_only",
+    "current20_sensitivity"
+  ],
+  "worker_classes": null,
+  "geometry": "unordered_spherical_endpoints; no_wall_or_Manhattan_validity_claim"
+}

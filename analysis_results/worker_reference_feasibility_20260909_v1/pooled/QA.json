@@ -1,0 +1,20 @@
+{
+  "canonical_records": 2501,
+  "usable_responses": 2027,
+  "image_worker_units": 2025,
+  "images": 184,
+  "workers": 26,
+  "buildings": 22,
+  "repeated_image_worker_units": 2,
+  "source_status": {
+    "computable": 2027,
+    "reference_unavailable": 446,
+    "response_unavailable": 28
+  },
+  "phase_condition_block_used": false,
+  "reference_policy_changed": false,
+  "raw_points_reordered": false,
+  "duplicate_handling": "equal_response_mean_within_image_worker_then_equal_image_worker_weight",
+  "source": "analysis_results/worker_reference_feasibility_20260909_v1/response_measurements.csv.gz",
+  "reproducibility": "run default module first to rebuild source, then --pooled"
+}

@@ -1,0 +1,20 @@
+{
+  "k": [
+    2,
+    3,
+    4,
+    5
+  ],
+  "metrics": [
+    "ospa30",
+    "ospa60"
+  ],
+  "method": "training_effect_quantiles_or_1D_Ward; group_mean_training_effect_prediction; ties_not_split",
+  "grouping_unit": "worker",
+  "validation": "leave_one_building_out; refit_and_recut_using_training_only",
+  "natural_cluster_count_established": false,
+  "personality_labels": false,
+  "independent_people_validation": false,
+  "stability": "leave_one_building_deletion_against_full_fit_is_sensitivity_not_independent_replication",
+  "k_selection": "parallel_exploratory_comparisons; no_confirmatory_best_k_selection"
+}

@@ -1,0 +1,24 @@
+{
+  "replicates": 20,
+  "types": [
+    2,
+    3
+  ],
+  "cohorts": [
+    "all26",
+    "current20"
+  ],
+  "metrics": [
+    "ospa30",
+    "ospa60"
+  ],
+  "threshold_degrees": 6,
+  "grouping": "outside_building_Ward_reference_effect",
+  "split": "global_building_worker_permutation_then_2/3_within_type; no replacement",
+  "fixed_taxonomy": "full_selected_history_only; retrospective_prefix_counts_not_online_discovery",
+  "independent_prefix": "recluster_every_prefix_without_future_history_or_validation",
+  "duplicate_response": "one_raw_response_per_image_worker_per_replicate_shared_across_methods",
+  "unknown_reference": "included_for_disagreement; representative_reference_error_missing",
+  "stop_n": null,
+  "stable_multiple_clusters_allowed": true
+}

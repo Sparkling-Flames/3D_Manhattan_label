@@ -163,3 +163,11 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 
 - [空间标本使用与验证说明](label_studio/PANORAMA_STUDIO_v1.md)：独立建筑展台预览、原始／曼哈顿约束对照；2026-09-07 v3 加入手动角点组预览排序、恢复与独立记录导出，不写回标注。
 - [人工问卷与视觉观察核对](../analysis_results/human_review_reconciliation_20260907_v1/README_ZH.md)：50条人工评语与选项核对、点序读取勘误及逐图待确认单；记录完成不代表确定，不填最终裁决。 补充原文enclosed／extended、潜在范围、质量与规则分离的逐条提取；旧候选题仅归档。
+
+- [Manual粗依据＋Semi细行为探索](../analysis_results/semi_subtype_exploration_20260909_v1/README_ZH.md)：574条真实初始化连接，检验Semi在Manual以外的修改行为信息，保留质量反例及细类收敛人数限制；不确定最终类别。
+
+- [两类/三类人员与人数收敛探索](../analysis_results/type_convergence_exploration_20260909_v1/README_ZH.md)：全历史合并、楼外分型、楼内固定验证人员；AB/AAB/ABC/AABC覆盖、固定样本簇分布曲线及稳定多簇边界。不确定最终类型和停止人数。
+
+- [人员三组及更多组的可行性](../analysis_results/worker_reference_feasibility_20260909_v1/pooled/groups/README_ZH.md)：合并历史标注的2–5档训练内分组、跨building预测、成员敏感性及ABC等人员组合覆盖；不预设认真/粗心语义，不确定最终类型数。
+
+- [参考执行偏差可行性验证（2026-09-09）](../analysis_results/worker_reference_feasibility_20260909_v1/README_ZH.md)：人工复核优先、其他暂信GT；无序点集测量及跨building工人效应验证，保留参考疑问与计算失败，不生成最终工人类别。新增[全部阶段/条件合并分析](../analysis_results/worker_reference_feasibility_20260909_v1/pooled/README_ZH.md)，按图片与人组织，不按旧实验设置筛选或分组。

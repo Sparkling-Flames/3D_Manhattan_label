@@ -1,0 +1,24 @@
+{
+  "check": "roundtrip_full_output_relations_and_LOBO_isolation",
+  "passed": true,
+  "reference_records": 380,
+  "canonical_records": 2501,
+  "computable_records": 2027,
+  "heldout_prediction_rows": 40590,
+  "folds": 1242,
+  "tests": "4 passed",
+  "diff_check": "passed",
+  "files": [
+    "PLAN.json",
+    "QA.json",
+    "README_ZH.md",
+    "coverage.csv",
+    "fold_audit.csv",
+    "heldout_predictions.csv.gz",
+    "reference_ledger.jsonl",
+    "response_measurements.csv.gz",
+    "validation_by_building.csv",
+    "validation_summary.csv",
+    "worker_effects.csv"
+  ]
+}

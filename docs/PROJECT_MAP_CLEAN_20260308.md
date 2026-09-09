@@ -133,3 +133,9 @@
 - `tools/thesis_main/analysis/plot_annotation_research_k15_20_20260905.py`：按阶段/条件固定 k20 图像支持的 15–20 人描述性恢复曲线，分别展示图像与建筑等权结果。
 - `tools/label_studio/panorama_studio/`：独立全景布局重建与建筑展台预览；说明 `docs/label_studio/PANORAMA_STUDIO_v1.md`，当前示例 `analysis_results/panorama_studio_20260907_v3/index.html`（v1/v2 保留）；支持角点组预览排序，不写回标注。检查 `tests/test_panorama_studio.py` 与 `tests/panorama_studio_browser.cjs`，不替代现有预览或 A line 流程。
 - `analysis_results/human_review_reconciliation_20260907_v1/`：问卷原附件、50图辅助核对及待确认单；入口 `tools/thesis_main/data_prep/reconcile_human_review_comments.py`，检查 `tests/test_reconcile_human_review_comments.py`；点序读取与作者邻接分开，保留原记录和空白裁决。 补充原文enclosed／extended、潜在范围、质量与规则分离的逐条提取；旧候选题仅归档。
+
+- `tools/thesis_main/analysis/explore_semi_subtypes_20260909.py`：Manual参考执行粗依据与Semi附加修改行为的楼外训练/留出验证；结果 `analysis_results/semi_subtype_exploration_20260909_v1/README_ZH.md`，检查 `tests/test_explore_semi_subtypes_20260909.py`。真实初始化追溯、非线性Manual对照和细组收敛覆盖，不生成最终行为类别。
+
+- `tools/thesis_main/analysis/explore_type_convergence_20260909.py`：合并历史资料的两类/三类人员与固定验证组收敛探索，复用无序点集分簇；结果 `analysis_results/type_convergence_exploration_20260909_v1/README_ZH.md`，检查 `tests/test_explore_type_convergence_20260909.py`。不强制单簇，不确定类型或停止人数。
+
+- `tools/thesis_main/analysis/worker_reference_feasibility_20260909.py`：复核优先、其余暂信GT的参考点偏差探索；结果 `analysis_results/worker_reference_feasibility_20260909_v1/README_ZH.md`，检查 `tests/test_worker_reference_feasibility_20260909.py`。`--pooled`将所有阶段/条件合并，仅按图片与人组织，结果位于同包 `pooled/`；`--groups`验证2–5档分位数/Ward训练内分组及人员组合覆盖，结果位于 `pooled/groups/`。不依赖角点顺序，不生成正式工人类别或building停止人数。
