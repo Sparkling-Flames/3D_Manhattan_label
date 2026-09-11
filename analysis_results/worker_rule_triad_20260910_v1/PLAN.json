@@ -1,0 +1,62 @@
+{
+  "seed": 20260910,
+  "cohorts": [
+    "all26",
+    "current20"
+  ],
+  "minimum_training_responses": 6,
+  "minimum_training_buildings": 3,
+  "minimum_cluster_members": 2,
+  "singleton_rule": "reject_classification; zero group prediction with explicit abstention, retain comparison rows",
+  "rule_execution": "Manual reviewed-reference and all-reference; point location/count proxies, not human mental traits",
+  "triad": "same Semi response complete panel; edit(initial,final), log1p(active_seconds), final_reference_deviation",
+  "models": {
+    "quality2": [
+      [
+        "quality"
+      ],
+      2
+    ],
+    "edit_quality2": [
+      [
+        "edit",
+        "quality"
+      ],
+      2
+    ],
+    "time_quality2": [
+      [
+        "time",
+        "quality"
+      ],
+      2
+    ],
+    "triad2": [
+      [
+        "edit",
+        "time",
+        "quality"
+      ],
+      2
+    ],
+    "triad3": [
+      [
+        "edit",
+        "time",
+        "quality"
+      ],
+      3
+    ]
+  },
+  "scaling": "training-worker mean and population SD per axis; equal standardized axis weights",
+  "validation": "leave whole building out for all features/scaling/clusters/centroids; no selecting k on test",
+  "half_repeats": 100,
+  "half_unit": "building; same support rules in each half",
+  "sensitivities": [
+    "OSPA60",
+    "exclude_synthetic",
+    "reviewed_reference_only"
+  ],
+  "provisional_not_natural_classes": true,
+  "no_convergence_claim": true
+}

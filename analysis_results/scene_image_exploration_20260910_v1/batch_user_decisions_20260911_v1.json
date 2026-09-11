@@ -1,0 +1,907 @@
+{
+  "schema": "scene_batch_user_decisions_v1",
+  "date": "2026-09-11",
+  "source_type": "current_conversation",
+  "source_batch": "batch_discussion_audit.json",
+  "source_user_saved_at": "2026-09-10T15:16:04.389Z",
+  "research_tracks": [
+    "同房标注收敛相似性／预测",
+    "交界处标注歧义／相似性"
+  ],
+  "category_rule": "普通室内类型与交界属性分别记录、交叉统计；采集优先级独立于房间身份和历史评价纳入。",
+  "boundary_scope": "本批新增／修订决定；不覆盖其他图片先前的交界判断。",
+  "common_boundary_comment": "两区域交界处: B01, b07 的14,b13的13,b15 的02 暂且加入交界处的候选(不过优先级低)",
+  "clarification_history": [
+    "用户确认B08中的“06”指B06即jh楼内01。",
+    "用户后续纠正：B06／B08   是我的问题,我判断错误了,不是同房,感谢纠正"
+  ],
+  "rows": [
+    {
+      "case_id": "B01",
+      "source_comment": "两区域交界处: B01, b07 的14,b13的13,b15 的02 暂且加入交界处的候选(不过优先级低)",
+      "images": [
+        {
+          "image_id": "7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44",
+          "building": "7y3sRwLe3Va",
+          "number": 2,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44.png"
+        }
+      ],
+      "user_room_decision": "未新增同房关系",
+      "boundary_decisions": [
+        {
+          "image_id": "7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44",
+          "building": "7y3sRwLe3Va",
+          "number": 2,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44.png",
+          "state": "低优先级候选",
+          "priority": "低"
+        }
+      ],
+      "same_room_collection": "未另定",
+      "similar_scene_collection": "未排除",
+      "audit_note": "洗衣凹室开口进入交界候选；这是候选状态，未升级为已确认。",
+      "room_relations": []
+    },
+    {
+      "case_id": "B02",
+      "source_comment": "b02的两张图,其实这个空间是\"回\"字型,两张图分别照了 各一半(斜着分割 回\"字),不属于同房,但是b02的第一张,站在回字的 右下角拍的,这种到底算不算两个空间交界处?",
+      "images": [
+        {
+          "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+          "building": "B6ByNegPMKs",
+          "number": 47,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b.png"
+        },
+        {
+          "image_id": "B6ByNegPMKs_bb2332e3d7ad40a59ee5ad0eae108dec",
+          "building": "B6ByNegPMKs",
+          "number": 34,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/B6ByNegPMKs_bb2332e3d7ad40a59ee5ad0eae108dec.png"
+        }
+      ],
+      "user_room_decision": "47与34按用户判断不归同房",
+      "boundary_decisions": [
+        {
+          "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+          "building": "B6ByNegPMKs",
+          "number": 47,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b.png",
+          "state": "待定：用户提问",
+          "priority": null
+        }
+      ],
+      "same_room_collection": "未另定",
+      "similar_scene_collection": "未排除",
+      "audit_note": "用户将其解释为同一回字通行空间的不同部分。AI建议另记通行空间转折／范围歧义，暂不纳入两区域交界候选；转弯本身不足以认定交界。这项建议尚未获用户明确确认。",
+      "room_relations": [
+        {
+          "relation": "user_not_same_room",
+          "images": [
+            {
+              "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+              "building": "B6ByNegPMKs",
+              "number": 47,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b.png"
+            },
+            {
+              "image_id": "B6ByNegPMKs_bb2332e3d7ad40a59ee5ad0eae108dec",
+              "building": "B6ByNegPMKs",
+              "number": 34,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/B6ByNegPMKs_bb2332e3d7ad40a59ee5ad0eae108dec.png"
+            }
+          ],
+          "status": "用户决定"
+        }
+      ]
+    },
+    {
+      "case_id": "B03",
+      "source_comment": "b03不算交界处",
+      "images": [
+        {
+          "image_id": "X7HyMhZNoso_0595477618f44940b004970372df16dc",
+          "building": "X7HyMhZNoso",
+          "number": 1,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/X7HyMhZNoso_0595477618f44940b004970372df16dc.png"
+        }
+      ],
+      "user_room_decision": "未新增同房关系",
+      "boundary_decisions": [
+        {
+          "image_id": "X7HyMhZNoso_0595477618f44940b004970372df16dc",
+          "building": "X7HyMhZNoso",
+          "number": 1,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/X7HyMhZNoso_0595477618f44940b004970372df16dc.png",
+          "state": "暂不归入",
+          "priority": null
+        }
+      ],
+      "same_room_collection": "未另定",
+      "similar_scene_collection": "未排除",
+      "audit_note": "不因可见多个房间、栏杆或柱墙端而加入交界候选。",
+      "room_relations": []
+    },
+    {
+      "case_id": "B04",
+      "source_comment": "b04严格意义上也不算,同时也是oos",
+      "images": [
+        {
+          "image_id": "b8cTxDM8gDG_d38c4ae95f5b4640a2696b923b80d1f4",
+          "building": "b8cTxDM8gDG",
+          "number": 13,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/b8cTxDM8gDG_d38c4ae95f5b4640a2696b923b80d1f4.png"
+        }
+      ],
+      "user_room_decision": "未新增同房关系",
+      "boundary_decisions": [
+        {
+          "image_id": "b8cTxDM8gDG_d38c4ae95f5b4640a2696b923b80d1f4",
+          "building": "b8cTxDM8gDG",
+          "number": 13,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/b8cTxDM8gDG_d38c4ae95f5b4640a2696b923b80d1f4.png",
+          "state": "暂不归入",
+          "priority": null
+        }
+      ],
+      "same_room_collection": "未另定",
+      "similar_scene_collection": "未因本次评论整体排除",
+      "audit_note": "OOS为用户主张，单独记录；没有改正式OOS或eligibility，也不将其等同交界。",
+      "room_relations": []
+    },
+    {
+      "case_id": "B05",
+      "source_comment": "b05确实同房,39是典型的 model issue 跨门扩张,不算交界处",
+      "images": [
+        {
+          "image_id": "e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814",
+          "building": "e9zR4mvMWw7",
+          "number": 39,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814.png"
+        },
+        {
+          "image_id": "e9zR4mvMWw7_5f9b1db7cc1748c2a71d9924bd1f4fa3",
+          "building": "e9zR4mvMWw7",
+          "number": 23,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/e9zR4mvMWw7_5f9b1db7cc1748c2a71d9924bd1f4fa3.png"
+        }
+      ],
+      "user_room_decision": "39与23同房",
+      "boundary_decisions": [
+        {
+          "image_id": "e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814",
+          "building": "e9zR4mvMWw7",
+          "number": 39,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814.png",
+          "state": "暂不归入",
+          "priority": null
+        }
+      ],
+      "same_room_collection": "未另定",
+      "similar_scene_collection": "未排除",
+      "audit_note": "跨门扩张按用户报告记为模型问题；本轮没有复查模型输出，不能由此认定相机处在交界。",
+      "room_relations": [
+        {
+          "relation": "user_same_room",
+          "images": [
+            {
+              "image_id": "e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814",
+              "building": "e9zR4mvMWw7",
+              "number": 39,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814.png"
+            },
+            {
+              "image_id": "e9zR4mvMWw7_5f9b1db7cc1748c2a71d9924bd1f4fa3",
+              "building": "e9zR4mvMWw7",
+              "number": 23,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/e9zR4mvMWw7_5f9b1db7cc1748c2a71d9924bd1f4fa3.png"
+            }
+          ],
+          "status": "用户确认"
+        }
+      ]
+    },
+    {
+      "case_id": "B06",
+      "source_comment": "b06也暂且不算",
+      "images": [
+        {
+          "image_id": "jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b",
+          "building": "jh4fc5c5qoQ",
+          "number": 1,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b.png"
+        }
+      ],
+      "user_room_decision": "01与06不同房；后续用户已纠正最初的同房判断",
+      "boundary_decisions": [
+        {
+          "image_id": "jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b",
+          "building": "jh4fc5c5qoQ",
+          "number": 1,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b.png",
+          "state": "暂不归入",
+          "priority": null
+        }
+      ],
+      "same_room_collection": "未另定",
+      "similar_scene_collection": "未排除",
+      "audit_note": "后续用户原话：B06／B08   是我的问题,我判断错误了,不是同房,感谢纠正。窗、盆、马桶及出口相对关系支持分开；06另与12匹配。",
+      "room_relations": [
+        {
+          "relation": "user_not_same_room",
+          "images": [
+            {
+              "image_id": "jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b",
+              "building": "jh4fc5c5qoQ",
+              "number": 1,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b.png"
+            },
+            {
+              "image_id": "jh4fc5c5qoQ_5ce75bcca20d46a8adba099e08a36c8e",
+              "building": "jh4fc5c5qoQ",
+              "number": 6,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/jh4fc5c5qoQ_5ce75bcca20d46a8adba099e08a36c8e.png"
+            }
+          ],
+          "status": "用户后续纠正，争议关闭"
+        }
+      ]
+    },
+    {
+      "case_id": "B07",
+      "source_comment": "b07 的02是 14图片左边的房间, 但是他们的标注有显著区别, 这个不优先作为后续标注图片的候选(研究同房预测,不影响研究类似场景的图片选择)",
+      "images": [
+        {
+          "image_id": "jh4fc5c5qoQ_30cdb6fe9aa6449788e271f2e24d76ec",
+          "building": "jh4fc5c5qoQ",
+          "number": 2,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/jh4fc5c5qoQ_30cdb6fe9aa6449788e271f2e24d76ec.png"
+        },
+        {
+          "image_id": "jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6",
+          "building": "jh4fc5c5qoQ",
+          "number": 14,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6.png"
+        }
+      ],
+      "user_room_decision": "02与14同房，14位于该房间与相邻区域的交界候选位置",
+      "boundary_decisions": [
+        {
+          "image_id": "jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6",
+          "building": "jh4fc5c5qoQ",
+          "number": 14,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6.png",
+          "state": "低优先级候选",
+          "priority": "低"
+        }
+      ],
+      "same_room_collection": "02／14这组比较不优先用于下一轮同房标注",
+      "similar_scene_collection": "不影响相似场景候选",
+      "audit_note": "显著标注差异为用户观察；采集优先级与同房身份分开，未从已有评价中删除。02的交界属性本条未重新判定。",
+      "room_relations": [
+        {
+          "relation": "user_same_room",
+          "images": [
+            {
+              "image_id": "jh4fc5c5qoQ_30cdb6fe9aa6449788e271f2e24d76ec",
+              "building": "jh4fc5c5qoQ",
+              "number": 2,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/jh4fc5c5qoQ_30cdb6fe9aa6449788e271f2e24d76ec.png"
+            },
+            {
+              "image_id": "jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6",
+              "building": "jh4fc5c5qoQ",
+              "number": 14,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6.png"
+            }
+          ],
+          "status": "用户确认"
+        }
+      ]
+    },
+    {
+      "case_id": "B08",
+      "source_comment": "b08和06是一个房吧,所以也不算",
+      "images": [
+        {
+          "image_id": "jh4fc5c5qoQ_5ce75bcca20d46a8adba099e08a36c8e",
+          "building": "jh4fc5c5qoQ",
+          "number": 6,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/jh4fc5c5qoQ_5ce75bcca20d46a8adba099e08a36c8e.png"
+        }
+      ],
+      "user_room_decision": "初始同房意见已被后续纠正：B08的楼内06与B06的楼内01不同房",
+      "boundary_decisions": [
+        {
+          "image_id": "jh4fc5c5qoQ_5ce75bcca20d46a8adba099e08a36c8e",
+          "building": "jh4fc5c5qoQ",
+          "number": 6,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/jh4fc5c5qoQ_5ce75bcca20d46a8adba099e08a36c8e.png",
+          "state": "暂不归入",
+          "priority": null
+        }
+      ],
+      "same_room_collection": "未另定",
+      "similar_scene_collection": "未排除",
+      "audit_note": "用户已确认“06”指案例B06；随后明确承认不同房。独立复核支持06与楼内12同浴室，01的固定器具位置及门外空间不同。",
+      "room_relations": [
+        {
+          "relation": "user_not_same_room",
+          "images": [
+            {
+              "image_id": "jh4fc5c5qoQ_5ce75bcca20d46a8adba099e08a36c8e",
+              "building": "jh4fc5c5qoQ",
+              "number": 6,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/jh4fc5c5qoQ_5ce75bcca20d46a8adba099e08a36c8e.png"
+            },
+            {
+              "image_id": "jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b",
+              "building": "jh4fc5c5qoQ",
+              "number": 1,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b.png"
+            }
+          ],
+          "status": "用户后续纠正，争议关闭"
+        }
+      ]
+    },
+    {
+      "case_id": "B09",
+      "source_comment": "b09 严格意义来说也不算,但是确实能看到很多连通空间",
+      "images": [
+        {
+          "image_id": "jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8",
+          "building": "jtcxE69GiFV",
+          "number": 11,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8.png"
+        }
+      ],
+      "user_room_decision": "未新增同房关系",
+      "boundary_decisions": [
+        {
+          "image_id": "jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8",
+          "building": "jtcxE69GiFV",
+          "number": 11,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8.png",
+          "state": "暂不归入",
+          "priority": null
+        }
+      ],
+      "same_room_collection": "未另定",
+      "similar_scene_collection": "未排除",
+      "audit_note": "保留多连通空间可见属性，不能将其直接当交界位置。",
+      "room_relations": []
+    },
+    {
+      "case_id": "B10",
+      "source_comment": "b10 算同房,但是15严格来说不算交界处",
+      "images": [
+        {
+          "image_id": "jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea",
+          "building": "jtcxE69GiFV",
+          "number": 15,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea.png"
+        },
+        {
+          "image_id": "jtcxE69GiFV_36d9e8e9eba24f3fbff08082c41a4d68",
+          "building": "jtcxE69GiFV",
+          "number": 7,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/jtcxE69GiFV_36d9e8e9eba24f3fbff08082c41a4d68.png"
+        }
+      ],
+      "user_room_decision": "15与07同房",
+      "boundary_decisions": [
+        {
+          "image_id": "jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea",
+          "building": "jtcxE69GiFV",
+          "number": 15,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea.png",
+          "state": "暂不归入",
+          "priority": null
+        }
+      ],
+      "same_room_collection": "未另定",
+      "similar_scene_collection": "未排除",
+      "audit_note": "保留主卫与厕位的局部分区描述，但按用户本次判断记录同房；不由带门厕位自动推导交界。",
+      "room_relations": [
+        {
+          "relation": "user_same_room",
+          "images": [
+            {
+              "image_id": "jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea",
+              "building": "jtcxE69GiFV",
+              "number": 15,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea.png"
+            },
+            {
+              "image_id": "jtcxE69GiFV_36d9e8e9eba24f3fbff08082c41a4d68",
+              "building": "jtcxE69GiFV",
+              "number": 7,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/jtcxE69GiFV_36d9e8e9eba24f3fbff08082c41a4d68.png"
+            }
+          ],
+          "status": "用户确认"
+        }
+      ]
+    },
+    {
+      "case_id": "B11",
+      "source_comment": "b11同房建议没问题,也不算交界处先",
+      "images": [
+        {
+          "image_id": "pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e",
+          "building": "pa4otMbVnkk",
+          "number": 11,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e.png"
+        },
+        {
+          "image_id": "pa4otMbVnkk_7be30830c80b4fb3a83d5f956c07e143",
+          "building": "pa4otMbVnkk",
+          "number": 22,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_7be30830c80b4fb3a83d5f956c07e143.png"
+        },
+        {
+          "image_id": "pa4otMbVnkk_8d4d0f90d2b145648e952352535c0f50",
+          "building": "pa4otMbVnkk",
+          "number": 28,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_8d4d0f90d2b145648e952352535c0f50.png"
+        }
+      ],
+      "user_room_decision": "11／22／28同房",
+      "boundary_decisions": [
+        {
+          "image_id": "pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e",
+          "building": "pa4otMbVnkk",
+          "number": 11,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e.png",
+          "state": "暂不归入",
+          "priority": null
+        }
+      ],
+      "same_room_collection": "未另定",
+      "similar_scene_collection": "未排除",
+      "audit_note": "同房建议获用户认可；11靠凹入口的位置描述保留，当前不归交界候选。",
+      "room_relations": [
+        {
+          "relation": "user_same_room",
+          "images": [
+            {
+              "image_id": "pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e",
+              "building": "pa4otMbVnkk",
+              "number": 11,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e.png"
+            },
+            {
+              "image_id": "pa4otMbVnkk_7be30830c80b4fb3a83d5f956c07e143",
+              "building": "pa4otMbVnkk",
+              "number": 22,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_7be30830c80b4fb3a83d5f956c07e143.png"
+            },
+            {
+              "image_id": "pa4otMbVnkk_8d4d0f90d2b145648e952352535c0f50",
+              "building": "pa4otMbVnkk",
+              "number": 28,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_8d4d0f90d2b145648e952352535c0f50.png"
+            }
+          ],
+          "status": "用户确认"
+        }
+      ]
+    },
+    {
+      "case_id": "B12",
+      "source_comment": "b12的 14和05不算同房,我觉得14的标注重点应该是外面的区域,而不是房间里的05区域,但是05和47算同房,这个归为离交界区域很近,但还是暂且不算",
+      "images": [
+        {
+          "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+          "building": "pa4otMbVnkk",
+          "number": 14,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.png"
+        },
+        {
+          "image_id": "pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b",
+          "building": "pa4otMbVnkk",
+          "number": 5,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b.png"
+        },
+        {
+          "image_id": "pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807",
+          "building": "pa4otMbVnkk",
+          "number": 47,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807.png"
+        }
+      ],
+      "user_room_decision": "14不与05同房；05与47同房",
+      "boundary_decisions": [
+        {
+          "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+          "building": "pa4otMbVnkk",
+          "number": 14,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.png",
+          "state": "近交界但暂不归入",
+          "priority": null
+        }
+      ],
+      "same_room_collection": "未另定",
+      "similar_scene_collection": "未排除",
+      "audit_note": "用户认为14标注重点在门外，保留这个范围判断及物理门口关系；不将原来的入口对应证据写成14／05同房。",
+      "room_relations": [
+        {
+          "relation": "user_not_same_room",
+          "images": [
+            {
+              "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+              "building": "pa4otMbVnkk",
+              "number": 14,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.png"
+            },
+            {
+              "image_id": "pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b",
+              "building": "pa4otMbVnkk",
+              "number": 5,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b.png"
+            }
+          ],
+          "status": "用户决定；理由含标注重点"
+        },
+        {
+          "relation": "user_same_room",
+          "images": [
+            {
+              "image_id": "pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b",
+              "building": "pa4otMbVnkk",
+              "number": 5,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b.png"
+            },
+            {
+              "image_id": "pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807",
+              "building": "pa4otMbVnkk",
+              "number": 47,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807.png"
+            }
+          ],
+          "status": "用户确认"
+        }
+      ]
+    },
+    {
+      "case_id": "B13",
+      "source_comment": "b13 的02是13的右侧区域,01是13的左侧区域,虽然是同房,但是因为拍摄的重点不同,不优先作为后续标注图片的候选(研究同房,不影响研究类似场景的图片选择)",
+      "images": [
+        {
+          "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+          "building": "q9vSo1VnCiC",
+          "number": 13,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.png"
+        },
+        {
+          "image_id": "q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e",
+          "building": "q9vSo1VnCiC",
+          "number": 2,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e.png"
+        },
+        {
+          "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+          "building": "q9vSo1VnCiC",
+          "number": 1,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d.png"
+        }
+      ],
+      "user_room_decision": "13／02／01同房，分别保留交界、右侧、左侧区域",
+      "boundary_decisions": [
+        {
+          "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+          "building": "q9vSo1VnCiC",
+          "number": 13,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.png",
+          "state": "低优先级候选",
+          "priority": "低"
+        }
+      ],
+      "same_room_collection": "本组不优先用于下一轮同房标注",
+      "similar_scene_collection": "不影响相似场景候选",
+      "audit_note": "不把拍摄重点差异改写成不同房；同房采集优先级与交界候选优先级分别记录。",
+      "room_relations": [
+        {
+          "relation": "user_same_room",
+          "images": [
+            {
+              "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+              "building": "q9vSo1VnCiC",
+              "number": 13,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e",
+              "building": "q9vSo1VnCiC",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+              "building": "q9vSo1VnCiC",
+              "number": 1,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d.png"
+            }
+          ],
+          "status": "用户确认"
+        }
+      ]
+    },
+    {
+      "case_id": "B14",
+      "source_comment": "b14 的22和b13是同一房间, b14的22 离交界处很近,但是暂且先不归于交界处. 29 是22的交界处(图片左边的小空间),不应该归为同一个房间,但是29和27是同一房间",
+      "images": [
+        {
+          "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+          "building": "q9vSo1VnCiC",
+          "number": 22,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+        },
+        {
+          "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+          "building": "q9vSo1VnCiC",
+          "number": 1,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d.png"
+        },
+        {
+          "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+          "building": "q9vSo1VnCiC",
+          "number": 29,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+        },
+        {
+          "image_id": "q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b",
+          "building": "q9vSo1VnCiC",
+          "number": 27,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b.png"
+        }
+      ],
+      "user_room_decision": "22与B13所述13／02／01同房；29与22分开；29与27同房",
+      "boundary_decisions": [
+        {
+          "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+          "building": "q9vSo1VnCiC",
+          "number": 22,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png",
+          "state": "近交界但暂不归入",
+          "priority": null
+        }
+      ],
+      "same_room_collection": "未另定",
+      "similar_scene_collection": "未排除",
+      "audit_note": "按用户将床区与左侧小空间分组；“29是22的交界处”描述两空间关系，不足以单独确定29相机位于交界。撤回此前将27直接判为不同房的结论：两图的左右结构关系仍有镜像疑点，尚未查明成因，不能作为已确认不同房证据；用户同房判断及原图疑点并存。",
+      "room_relations": [
+        {
+          "relation": "user_same_room",
+          "images": [
+            {
+              "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+              "building": "q9vSo1VnCiC",
+              "number": 22,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+              "building": "q9vSo1VnCiC",
+              "number": 13,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e",
+              "building": "q9vSo1VnCiC",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+              "building": "q9vSo1VnCiC",
+              "number": 1,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d.png"
+            }
+          ],
+          "status": "用户确认"
+        },
+        {
+          "relation": "user_not_same_room",
+          "images": [
+            {
+              "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+              "building": "q9vSo1VnCiC",
+              "number": 22,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+              "building": "q9vSo1VnCiC",
+              "number": 29,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+            }
+          ],
+          "status": "用户决定"
+        },
+        {
+          "relation": "user_same_room",
+          "images": [
+            {
+              "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+              "building": "q9vSo1VnCiC",
+              "number": 29,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b",
+              "building": "q9vSo1VnCiC",
+              "number": 27,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b.png"
+            }
+          ],
+          "status": "用户确认；AI左右结构疑点仍保留"
+        }
+      ]
+    },
+    {
+      "case_id": "B15",
+      "source_comment": "b15我终于明白了,不是凸字型的空间,只是说02 在28的楼梯处拍摄,实际上28和44都不会标注这个楼梯处的.(因为有台阶,这就不算同一平面)但是02 的标注如果不标这个楼梯处,左边的的墙角就会有很大的误导性,我想大部分人都会标那里,但是如果对照28 来看,其实应该标这个地方的延长线,也就是02墙的右侧. 把他们暂且算是同房吧, 不过02 在同房预测的时候可以考虑排除.",
+      "images": [
+        {
+          "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+          "building": "uNb9QFRL6hY",
+          "number": 2,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png"
+        },
+        {
+          "image_id": "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b",
+          "building": "uNb9QFRL6hY",
+          "number": 28,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b.png"
+        },
+        {
+          "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+          "building": "uNb9QFRL6hY",
+          "number": 44,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.png"
+        }
+      ],
+      "user_room_decision": "02／28／44暂按同房",
+      "boundary_decisions": [
+        {
+          "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+          "building": "uNb9QFRL6hY",
+          "number": 2,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png",
+          "state": "低优先级候选",
+          "priority": "低"
+        }
+      ],
+      "same_room_collection": "02在同房预测中可考虑排除，尚未执行；28／44未被要求排除",
+      "similar_scene_collection": "未要求从相似场景候选排除",
+      "audit_note": "原图支持短台阶、高差及入口收窄；不标楼梯、墙的延长线位置及多数人会标哪里均保存为用户对规则与行为的解释，尚未核对标注分布或裁定GT。若以后评价排除02，需明确范围条件并并列包含02的对照。",
+      "room_relations": [
+        {
+          "relation": "user_same_room",
+          "images": [
+            {
+              "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+              "building": "uNb9QFRL6hY",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png"
+            },
+            {
+              "image_id": "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b",
+              "building": "uNb9QFRL6hY",
+              "number": 28,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b.png"
+            },
+            {
+              "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+              "building": "uNb9QFRL6hY",
+              "number": 44,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.png"
+            }
+          ],
+          "status": "用户暂定"
+        }
+      ]
+    }
+  ],
+  "executed_evaluation_exclusions": [],
+  "raw_user_json_overwritten": false,
+  "old_html_overwritten": false,
+  "visual_audit": {
+    "root_rechecked_numbers": {
+      "q9vSo1VnCiC": [
+        27,
+        29
+      ],
+      "uNb9QFRL6hY": [
+        28,
+        44
+      ],
+      "jh4fc5c5qoQ": [
+        1,
+        6,
+        12
+      ]
+    },
+    "unresolved": "q9的27／29用户确认同房；AI原图左右结构疑点尚未查明。该疑点不影响保存用户决定，也不被写成不同房结论。"
+  }
+}

@@ -124,6 +124,8 @@ docs/*
 !docs/agent/REPO_PATH_MAP.md
 !docs/thesis_main/
 docs/thesis_main/*
+!docs/thesis_main/研究交接与独立分析整理_20260909.md
+!docs/thesis_main/研究主线与新增标注验证说明_20260909.md
 !docs/thesis_main/PRESCREEN_STEP4_5_CLOSEOUT_NOTE.md
 !docs/thesis_main/PAPER_A_C1_BATCH_SCOPE.template.json
 !docs/thesis_main/C1_PRECLOSEOUT_AUDIT_FIELD_CONTRACT_v1.md
@@ -422,6 +424,7 @@ docs/label_studio/*
 
 # Consolidated research handoff and verified historical bundles (2026-09-09).
 !docs/thesis_main/相似场景标注稳定性分析SOP.md
+!docs/thesis_main/图片分类与同房间收敛预测研究SOP.md
 !docs/thesis_main/研究交接_20260909.md
 !analysis_results/research_history_archive_20260909_v1/*.zip
 /analysis_results/history_restore_local/
@@ -445,3 +448,20 @@ docs/label_studio/*
 !/analysis_results/worker_mixture_replay_20260908_v1/README_ZH.md
 /analysis_results/worker_evidence_strata_20260908_v1/*
 !/analysis_results/worker_evidence_strata_20260908_v1/README_ZH.md
+
+# 2026-09-11: retain local review panels/cache without adding them to Git.
+# Original valid/test panoramas, review JSON, HTML, reports and figures are retained.
+/analysis_results/scene_image_exploration_20260910_v1.zip
+/analysis_results/scene_image_exploration_20260910_v1/contact_sheets/
+/analysis_results/scene_image_exploration_20260910_v1/review_a_panels/
+/analysis_results/scene_image_exploration_20260910_v1/review_b_panels/
+/analysis_results/scene_image_exploration_20260910_v1/review_b_panels_resume/
+/analysis_results/scene_image_exploration_20260910_v1/root_round3_panels/
+/analysis_results/scene_image_exploration_20260910_v1/resume_a_*.jpg
+/analysis_results/scene_image_exploration_20260910_v1/*_qa.png
+/analysis_results/research_validation_20260909_v2/docx_qa/page-*.png
+/analysis_results/research_validation_20260909_v2/docx_qa/page*.txt
+/analysis_results/research_validation_20260909_v2/docx_qa/report.pdf
+# Large derived per-run predictions; keep summaries and generation scripts tracked.
+/analysis_results/research_validation_20260909_v2/prediction/target_predictions.csv.gz
+/analysis_results/worker_four_block_exploration_20260910_v1/predictions.csv.gz

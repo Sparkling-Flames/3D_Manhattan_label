@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "feature_rows": 12,
+  "feature_name": "d_model_feat",
+  "old_d_t_used": false,
+  "source_n_counts": {
+    "6": 924,
+    "7": 792
+  },
+  "balanced_source_n_counts": {
+    "6": 156,
+    "7": 296
+  },
+  "target_rows": 38016,
+  "fold_rows": 6864,
+  "summary_rows": 16,
+  "source_target_disjoint": true,
+  "outcome_used_for_allocation": false,
+  "new_feature_regression": false,
+  "common_n": 23,
+  "configs": [
+    "q_0.950",
+    "ospa30_t6"
+  ],
+  "modes": [
+    "with_workers",
+    "without_workers"
+  ],
+  "scope": "同楼多图划分历史探索，未做新人验证。"
+}

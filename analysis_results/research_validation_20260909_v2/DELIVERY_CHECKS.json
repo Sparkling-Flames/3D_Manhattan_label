@@ -1,0 +1,96 @@
+{
+  "status": "passed",
+  "date": "2026-09-09",
+  "deliverables": {
+    "report": "研究验证报告.md",
+    "word": "相似场景标注稳定阶段与人员组合_客观数据报告.docx",
+    "sop": "../../docs/thesis_main/相似场景标注稳定性分析SOP.md"
+  },
+  "scope": {
+    "inventory_images": 214,
+    "high_images": 55,
+    "high_buildings": 15,
+    "within_building_prediction_images": 50,
+    "within_prediction_buildings": 10,
+    "multiple_target_buildings": 6,
+    "multiple_target_images": 40,
+    "low_n_prospective_images": 98,
+    "low_n_buildings": 21
+  },
+  "final_invariants": {
+    "feature_arrays_finite": true,
+    "stage_rows": 195312,
+    "three_state_sum": 200,
+    "onset_rows": 11904,
+    "minimum_candidate_k": 2,
+    "prediction_rows": 616884,
+    "identical_prediction_gain_zero_rows": 59266,
+    "low_n_labels_pending": true,
+    "local_report_and_sop_links_checked": 18,
+    "missing_links": []
+  },
+  "tests": {
+    "command": "D:\\Work\\HOHONET\\.venv\\Scripts\\python.exe -m pytest tests/test_validate_building_stages_20260909.py tests/test_validate_worker_reuse_20260909.py tests/test_check_unb_prediction_20260909.py -q",
+    "exit_code": 0,
+    "summary": "...............                                                          [100%]\n15 passed in 1.74s",
+    "log": "tests.log"
+  },
+  "independent_checks": {
+    "stage_review": "workers/building_stage_code_review.json",
+    "prediction_review": "workers/prediction_code_review.json",
+    "worker_checks": "workers/OUTPUT_CHECKS.json",
+    "quality_prefix_checks": "workers/QUALITY_PREFIX_QA.json",
+    "raw_lineage_checks": "workers/QA.json"
+  },
+  "word_qa": {
+    "status": "passed",
+    "preset": "standard_business_brief",
+    "pages_planned": 13,
+    "tables": 14,
+    "inline_images": 7,
+    "table_width_dxa": 9360,
+    "forbidden_word_absent": true,
+    "visual_qa": "passed",
+    "rendered_pages": 13,
+    "render_engine": "Microsoft Word native ExportAsFixedFormat, followed by pypdfium2 page rasterization",
+    "pages_visually_inspected": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "layout": "No clipping, overflowing tables, missing Chinese glyphs or blank overflow pages observed. Final page-1 table/figure spacing re-rendered and inspected.",
+    "renderer_fallback": "Bundled render_docx.py unavailable because LibreOffice executable is absent; native Word rendering completed."
+  },
+  "repository_checks": {
+    "git_diff_check": "passed",
+    "raw_exports_unchanged": true,
+    "formal_method_contract_unchanged": true,
+    "active_logs_and_imports_unchanged": true,
+    "map_and_readme_synced": true,
+    "new_scripts_directory": "tools/thesis_main/analysis",
+    "full_repository_suite_run": false,
+    "omitted_tests_reason": "Formal Label Studio operations, active-time, routing and model-training implementations were not changed; targeted analysis tests and data-level independent recomputation were used."
+  },
+  "handoff": {
+    "changes": "持续阶段与合法k>=2起点；全楼留图预测及低人数前瞻预测；统一HoHoNet层特征；真实人员训练外分档/组合与质量前缀；SOP、报告和Word。",
+    "boundaries": "原始导出、人工处理决定、正式Paper A合同、人员资格和实验派发不变；不将重排或重复划分当作独立样本。",
+    "source_limits": [
+      "低人数98图尚无长期人类标签，已保存预测等待补采。",
+      "旧d_t缺少可核实的等覆盖分数/参考池，本轮不宣称两版分数公平优劣。",
+      "外部第二轮AI分析原始运行包未取得；本轮结果独立重算。",
+      "没有独立人工同/异簇标定集，q及稳定容差仍是探索参数。",
+      "两条人工补点撤回后已重算40条阶段敏感性；未逐个重跑全部预测和人员模型。"
+    ],
+    "next_data_validation": "补采已有N=3-7目标图与独立人员校准图，在查看完整目标标注前固定方法及预测；核验新图/新人是否保持历史预测效果。"
+  }
+}

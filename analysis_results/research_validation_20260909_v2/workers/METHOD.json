@@ -1,0 +1,31 @@
+{
+  "status": "retrospective_exploratory",
+  "seed": 20260909,
+  "cohorts": [
+    "all26",
+    "without_W19_W26",
+    "current20"
+  ],
+  "metrics": [
+    "ospa30",
+    "ospa60"
+  ],
+  "classification": "image-adjusted worker effects; entire target building excluded; continuous, median2, Ward3",
+  "class_meaning": "ordinal reference-relative deviation only, not personality, diligence or absolute quality",
+  "split_half": "200 disjoint equal-size building halves; common workers only; continuous rank and adjusted Rand",
+  "inputs": "reviewed point calculation view rebuilt from original exports; existing reference disposition retained and coordinates verified",
+  "manual_semi": "only assistance_exposure=none; assisted records not pooled into classes",
+  "combination": "all distinct-person subsets of size2 or4; identical-image identical-n arms; no invented or duplicated people",
+  "geometry": "v5 maximum-clique partition enumeration, hard effective point count gate, m=2 supported clusters; stable multiple clusters allowed",
+  "cluster_configs": {
+    "q_0.975": 0.025,
+    "q_0.950": 0.05,
+    "q_0.900": 0.1,
+    "ospa30_t6": 6.0
+  },
+  "cluster_outcome": "static combination structure only, not 20-person sustained convergence",
+  "inferential_limit": "existing-person finite-task reuse; observational retrospective categories; no independent new-person validation",
+  "original_data_changed": false,
+  "formal_protocol_changed": false,
+  "representative": "medoid selected using within-combination OSPA only; all tied medoids equally scored against reference; reference never used for selection"
+}

@@ -1,0 +1,55 @@
+{
+  "status": "passed",
+  "image_count": 12,
+  "unassisted_responses": 296,
+  "included_responses": 291,
+  "default_workers": [
+    "1",
+    "2",
+    "6"
+  ],
+  "all_defaults_cover_all_images": true,
+  "selection": "All 12 uNb images with common_n >= 19, sorted by image_id; no outcome selection.",
+  "coordinates": "Exact reviewed/raw 1024x512 point sets; display only, no inferred edges or additional point repair.",
+  "schema": "Image CSV: one image per row; annotation CSV: one image/person canonical response per row. Missing q validity is not false. Empty onset is not zero. HTML notes are user review candidates, never written to raw data.",
+  "source": "D:\\Work\\HOHONET\\analysis_results\\confirmed_point_calculation_view_20260909_v1\\reviewed\\calculation_view.jsonl.gz",
+  "visual_qa": "passed",
+  "cluster_view": {
+    "q": 0.95,
+    "source": "revised/{mode}/geometry/full_q_partitions.csv",
+    "scopes": [
+      "with_workers",
+      "without_workers"
+    ],
+    "membership_rows": 754,
+    "point_counts_hard_gate_checked": true,
+    "canonical_membership_coverage_checked": true,
+    "candidates_not_silently_resolved": true,
+    "display": "Full existing response pool, not a sampled k-prefix or proof of stability; invalid-q responses remain unassigned."
+  },
+  "browser_checks": {
+    "first_image_supported_groups": [
+      16,
+      6
+    ],
+    "first_group_people": 16,
+    "first_group_points": 128,
+    "person_highlight_verified": true,
+    "nonunique_four_candidates_and_switch_verified": true,
+    "q_invalid_worker_displayed_unassigned": true,
+    "scope_exclusion_verified": true,
+    "enlarged_overlay_visually_inspected": true,
+    "user_notes_not_modified": true
+  },
+  "tests": {
+    "command": ".venv/Scripts/python.exe -m pytest tests/test_build_unb_annotation_review_20260910.py -q",
+    "result": "1 passed in 1.46s; all candidate memberships cover the eligible canonical responses exactly and enforce identical point counts"
+  },
+  "boundaries": {
+    "raw_annotations_modified": false,
+    "clustering_reestimated": false,
+    "candidate_choice_is_confirmed_classification": false,
+    "formal_protocol_modified": false
+  },
+  "map_and_readme_synced": true
+}

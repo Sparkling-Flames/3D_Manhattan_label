@@ -1,0 +1,33 @@
+{
+  "status": "completed_exploratory",
+  "images": 55,
+  "buildings": 15,
+  "modes": [
+    "with_workers",
+    "without_workers"
+  ],
+  "geometry_source": "D:\\Work\\HOHONET\\analysis_results\\multibuilding_threshold_stability_20260909_v1\\revised",
+  "lineage_view": "confirmed_point_calculation_view_20260909_v1/reviewed/calculation_view.jsonl.gz",
+  "permutations": 200,
+  "min_support": 2,
+  "epsilon": 0.1,
+  "rate": 0.8,
+  "min_future": 5,
+  "horizons": [
+    19,
+    20,
+    22,
+    23,
+    24
+  ],
+  "anchor": "each k compared with every later j through H",
+  "anchor_stage": "each permutation must satisfy all anchor checks from k through H-5",
+  "rolling_stage": "same-permutation all later h5 checks; supplementary",
+  "three_value_logic": "known violation => changing even if other comparisons unknown; otherwise unknown if any required partition/support missing",
+  "HAC": "scipy complete linkage of continuous 1-min(q) distances with hard effective point counts; canonical-ID input order breaks exact-distance ties",
+  "v5": "reuse independently verified unique maximum-clique partitions, keep nonunique/invalid status",
+  "bounds": "unknown-state identification bounds, not statistical confidence intervals",
+  "elapsed_seconds": 610.3620955000006,
+  "min_candidate_k": 2,
+  "onset_domain_note": "k1 trajectory retained; candidates k>=2 because min_support=2"
+}

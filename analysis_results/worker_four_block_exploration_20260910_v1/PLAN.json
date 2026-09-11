@@ -1,0 +1,64 @@
+{
+  "blocks": {
+    "Q": [
+      "quality"
+    ],
+    "T": [
+      "time"
+    ],
+    "S": [
+      "scope_reject",
+      "scope_accept"
+    ],
+    "B": [
+      "edit",
+      "benefit"
+    ]
+  },
+  "combinations": [
+    "Q",
+    "T",
+    "S",
+    "B",
+    "QT",
+    "QS",
+    "QB",
+    "TS",
+    "TB",
+    "SB",
+    "QTS",
+    "QTB",
+    "QSB",
+    "TSB",
+    "QTSB"
+  ],
+  "classes": 2,
+  "additional_baseline": "Q_median2",
+  "cohorts": [
+    "all26",
+    "current20"
+  ],
+  "primary": "ospa30; all allowed references; natural and synthetic Semi separately described",
+  "sensitivity": [
+    "ospa60",
+    "without_synthetic",
+    "reviewed_quality_only",
+    "scope_all_historical"
+  ],
+  "training_minimum": {
+    "responses": 6,
+    "buildings": 3
+  },
+  "weighting": "each block unit total standardized squared distance; not each raw axis equal",
+  "fit": "task-adjusted effects independently per axis; target building excluded from every block",
+  "fairness": "all methods use same training-qualified workers for common-panel predictions; native coverage separately reported",
+  "half_repeats": 100,
+  "seed": 20260910,
+  "replay": "all prespecified methods; q=.95 and OSPA30<=6; point count hard constraint; 200 without-replacement orders; future>=5",
+  "exploratory_only": true,
+  "not_new_worker_validation": true,
+  "not_chosen_by_convergence": true,
+  "protocol": "No formal eligibility/routing/assignment/contract change",
+  "half_support_sensitivity": "Primary 6 responses/3 buildings remains; additional half diagnostic uses 3 responses/2 buildings because OOS has 9 images. Report separately, not as replacement.",
+  "replay_horizons": "7,8,10,13 and available arm n>=7; H13 permits checking k8; compare only same images and H; two pure types, balanced alternating MIX, ALL"
+}

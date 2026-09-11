@@ -1,0 +1,1543 @@
+{
+  "schema": "scene_comment_semantics_review_v1",
+  "source_path": "C:/Users/ASUS/Downloads/室内图片_争议复核后完整分类.json",
+  "source_saved_at": "2026-09-10T15:16:04.389Z",
+  "interpretation": "评论优先用于理解用户具体意图，但不是地面真值；选项、评论及AI解释均分别保留，不自动覆盖。语义不一致可来自旧字段过窄，而非用户操作错误。",
+  "research_purpose": "依据RGB真实物理空间、功能区构成和相机位置建立分类，之后检验这些条件能否解释或预测标注范围分歧、稳定人数及多簇形成。不能用预期分歧倒推房间身份。",
+  "definitions": {
+    "physical_space": "以固定几何及连通/分隔关系核对同一实际空间，装修相似与功能名相同不足以认定同房；否定当前配对后仍需搜索全楼其他匹配。",
+    "functional_zones": "开放厨房、餐厅、起居区可属于同一连续几何空间，并保留多个功能标签；语义分区不必是封闭房间。",
+    "doorway_position": "窄几何属性：相机处于同一开口的门洞范围/界面附近且有相应定位线索；不能凭看到门、靠门、功能区边界确认精确门框中心。",
+    "scope_choice_cues": "近门、宽开口、墙端、柱、开放功能交界、多空间串联、玻璃隔断等独立候选线索，不统一编码为门洞中心，也不自动证明难标。"
+  },
+  "summary": {
+    "nonempty_comments": 47,
+    "option_conflict_counts": {
+      "需核对": 27,
+      "无": 12,
+      "语义不一致": 8
+    },
+    "formal_status_claims": 7,
+    "new_original_images_viewed": 0,
+    "source_mutations": 0
+  },
+  "rows": [
+    {
+      "image_id": "7y3sRwLe3Va_a775c7668ca9419daaf506e76851821e",
+      "building": "7y3sRwLe3Va",
+      "split": "test",
+      "user_room": "r4",
+      "user_type": "厨房与用餐",
+      "user_boundary": "",
+      "user_doorway": "确认",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "是门洞,但不是典型的那种",
+      "user_audit_status": "已确认",
+      "number": 18,
+      "original_comment": "是门洞,但不是典型的那种",
+      "interpretation": "把非典型开口视为门洞；尚未说明相机是否处在开口平面内。",
+      "option_conflict": "需核对",
+      "conflict_reason": "确认支持开口判断，但评论没有给出门洞内位置证据。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "非典型开口与传统门洞可分开记录，之后比较范围分歧。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "7y3sRwLe3Va_b47475370e824b9e923a4a96bc98e1e3",
+      "building": "7y3sRwLe3Va",
+      "split": "test",
+      "user_room": "r7",
+      "user_type": "通行与连接",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "一个拐角拍了两个地方",
+      "user_audit_status": "已确认",
+      "number": 21,
+      "original_comment": "一个拐角拍了两个地方",
+      "interpretation": "相机位于拐角，可以同时观察两个地方；否定门洞并不否定这种空间连通线索。",
+      "option_conflict": "无",
+      "conflict_reason": "否与拐角描述兼容。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "拐角视点及多区域可见性是独立候选条件。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "7y3sRwLe3Va_dd83fb40a2e14ac99de9fe9bcfaf44df",
+      "building": "7y3sRwLe3Va",
+      "split": "test",
+      "user_room": "r8",
+      "user_type": "储藏与家务辅助",
+      "user_boundary": "",
+      "user_doorway": "疑似",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "？有点没看出来这图想拍的房间是哪个",
+      "number": 24,
+      "original_comment": "？有点没看出来这图想拍的房间是哪个",
+      "interpretation": "无法识别这张图的主要空间；没有明确认定储藏用途或门洞位置。",
+      "option_conflict": "需核对",
+      "conflict_reason": "储藏与家务辅助选项较评论确定，疑似门洞也不是评论明确结论。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "保留主空间不明及范围选择可能性，不能按已有类型强制归组。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+      "building": "B6ByNegPMKs",
+      "split": "test",
+      "user_room": "r13",
+      "user_type": "通行与连接",
+      "user_boundary": "",
+      "user_doorway": "疑似",
+      "user_artifact": "未见明显异常",
+      "user_status": "需讨论",
+      "user_note": "不过这个图确实不好判断标注空间,虽然不是在门框下拍的,但是确实这个拍摄位置,确实直接连接了两个空间",
+      "user_audit_status": "仍需讨论",
+      "number": 47,
+      "original_comment": "不过这个图确实不好判断标注空间,虽然不是在门框下拍的,但是确实这个拍摄位置,确实直接连接了两个空间",
+      "interpretation": "明确表示不在门框下，但位于直接连接两个空间的位置，主张范围难判。",
+      "option_conflict": "语义不一致",
+      "conflict_reason": "门洞疑似与明确不在门框下采用了不同定义；难判陈述不能代替门洞定位。 这可能是旧门洞选项承载广义空间交界的语义错位，并不证明用户手滑。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "记录连通处/范围选择线索；是否增加分歧需用标注数据检验。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "UwV83HsGsw3_16af52545aff47afb4d7b330a49091a2",
+      "building": "UwV83HsGsw3",
+      "split": "test",
+      "user_room": "r3",
+      "user_type": "厨房与用餐",
+      "user_boundary": "",
+      "user_doorway": "疑似",
+      "user_artifact": "未见明显异常",
+      "user_status": "需讨论",
+      "user_note": "不是门框但是有那个效果 , 这图算oos",
+      "user_audit_status": "仍需讨论",
+      "number": 3,
+      "original_comment": "不是门框但是有那个效果 , 这图算oos",
+      "interpretation": "否认传统门框，主张产生类似范围选择效果，并判断OOS。",
+      "option_conflict": "语义不一致",
+      "conflict_reason": "疑似门洞不能同时代表开放分区效应；OOS不由此字段决定。 这可能是旧门洞选项承载广义空间交界的语义错位，并不证明用户手滑。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "保留开放区域线索；OOS判断单列供规则审查。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "用户主张：这图算OOS。未独立验证，不修改正式eligibility。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "UwV83HsGsw3_528d342bf5494b3b94983545d6a1a282",
+      "building": "UwV83HsGsw3",
+      "split": "test",
+      "user_room": "r4",
+      "user_type": "厨房与用餐",
+      "user_boundary": "",
+      "user_doorway": "疑似",
+      "user_artifact": "未见明显异常",
+      "user_status": "需讨论",
+      "user_note": "不是门框但是有那个效果,这图好像和r3是同一个房间啊",
+      "user_audit_status": "仍需讨论",
+      "number": 6,
+      "original_comment": "不是门框但是有那个效果,这图好像和r3是同一个房间啊",
+      "interpretation": "不是门框但有类似效果，并怀疑当前r4与r3其实同一实际空间。",
+      "option_conflict": "语义不一致",
+      "conflict_reason": "门洞疑似混入范围歧义；r3/r4拆分与评论提出的合并候选尚未协调。 这可能是旧门洞选项承载广义空间交界的语义错位，并不证明用户手滑。",
+      "referenced_numbers_unresolved": [
+        {
+          "text": "r3",
+          "kind": "房间号",
+          "status": "同楼r3组候选，须搜索全楼"
+        }
+      ],
+      "reference_mapping_evidence": [],
+      "research_relevance": "核对同一开放空间跨功能分区的身份，允许一空间多个功能标签。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+      "building": "UwV83HsGsw3",
+      "split": "test",
+      "user_room": "r5",
+      "user_type": "通行与连接",
+      "user_boundary": "",
+      "user_doorway": "疑似",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "不是门框但是有那个效果",
+      "number": 9,
+      "original_comment": "不是门框但是有那个效果",
+      "interpretation": "否认门框，认为有相似效果，未进一步说明具体几何结构。",
+      "option_conflict": "语义不一致",
+      "conflict_reason": "疑似门洞与否认门框不宜直接合并解释。 这可能是旧门洞选项承载广义空间交界的语义错位，并不证明用户手滑。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "先回看开口/墙端/前区结构，再记录范围歧义候选。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "UwV83HsGsw3_b979526475874ad68ae33f02d407a1fc",
+      "building": "UwV83HsGsw3",
+      "split": "test",
+      "user_room": "r3",
+      "user_type": "起居与休闲",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "不是门框但是有那个效果,这个其实和r3,r4 是同一个连通的地方.18->17->19是从右到左 连着拍的",
+      "user_audit_status": "待我复核",
+      "number": 16,
+      "original_comment": "不是门框但是有那个效果,这个其实和r3,r4 是同一个连通的地方.18->17->19是从右到左 连着拍的",
+      "interpretation": "认为r3/r4属于同一连通大空间，且三幅图按横向顺序拍摄；门洞否与此兼容。",
+      "option_conflict": "需核对",
+      "conflict_reason": "门洞选项无冲突；不同房间编号与评论的连续空间关系需要对照。",
+      "referenced_numbers_unresolved": [
+        {
+          "text": "r3,r4",
+          "kind": "房间号",
+          "status": "用户提出共同大区域；保留身份关系待视觉核对"
+        },
+        {
+          "text": "18->17->19",
+          "kind": "编号体系待确认",
+          "case_candidates": [
+            "C018",
+            "C017",
+            "C019"
+          ],
+          "local_candidates": [
+            18,
+            17,
+            19
+          ],
+          "status": "旧案例依次对应Uw楼内06→03→16，均为评论中的r3/r4开放区；楼内18/17/19分别指其他图。优先候选为案例号，未替用户定案。"
+        }
+      ],
+      "reference_mapping_evidence": [
+        {
+          "text": "18->17->19",
+          "case_candidates": [
+            {
+              "case_id": "C018",
+              "image_id": "UwV83HsGsw3_528d342bf5494b3b94983545d6a1a282",
+              "dimension": "doorway",
+              "reason": "近处是厨房岛台和柜墙，玻璃外门在前方，开放分区不同于门洞中间。",
+              "images": [
+                {
+                  "image_id": "UwV83HsGsw3_528d342bf5494b3b94983545d6a1a282",
+                  "building": "UwV83HsGsw3",
+                  "number": 6
+                }
+              ]
+            },
+            {
+              "case_id": "C017",
+              "image_id": "UwV83HsGsw3_16af52545aff47afb4d7b330a49091a2",
+              "dimension": "doorway",
+              "reason": "开放厨房与起居区，无门框内定位证据；原备注不是门框但有效果不应混入门洞类别。",
+              "images": [
+                {
+                  "image_id": "UwV83HsGsw3_16af52545aff47afb4d7b330a49091a2",
+                  "building": "UwV83HsGsw3",
+                  "number": 3
+                }
+              ]
+            },
+            {
+              "case_id": "C019",
+              "image_id": "UwV83HsGsw3_b979526475874ad68ae33f02d407a1fc",
+              "dimension": "doorway",
+              "reason": "相机在沙发和壁炉旁，木饰面为电视/壁炉隔墙，不是门框。",
+              "images": [
+                {
+                  "image_id": "UwV83HsGsw3_b979526475874ad68ae33f02d407a1fc",
+                  "building": "UwV83HsGsw3",
+                  "number": 16
+                }
+              ]
+            }
+          ],
+          "building_number_candidates": [
+            {
+              "image_id": "UwV83HsGsw3_bca9a4ce9c82463c97dea098ccfae7a0",
+              "building": "UwV83HsGsw3",
+              "number": 18
+            },
+            {
+              "image_id": "UwV83HsGsw3_bc29294428a647038f70e0ea31ea8972",
+              "building": "UwV83HsGsw3",
+              "number": 17
+            },
+            {
+              "image_id": "UwV83HsGsw3_c3d8db2f8817403e88c7d96e96ebd9b6",
+              "building": "UwV83HsGsw3",
+              "number": 19
+            }
+          ]
+        }
+      ],
+      "research_relevance": "优先建立共同物理空间身份，功能区与拍摄位置独立记录。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "UwV83HsGsw3_f9641b59487a4b0ca0fe41a82edc0980",
+      "building": "UwV83HsGsw3",
+      "split": "test",
+      "user_room": "",
+      "user_type": "卧室",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "和20不是同一房间",
+      "user_audit_status": "已确认",
+      "number": 22,
+      "original_comment": "和20不是同一房间",
+      "interpretation": "明确否定与20同房，清空房间号；未表示该图在本楼没有其他匹配图。",
+      "option_conflict": "无",
+      "conflict_reason": "空房间号表示暂未重新编号，与拆分意见一致。",
+      "referenced_numbers_unresolved": [
+        {
+          "text": "20",
+          "kind": "编号双重映射一致",
+          "case_candidates": [
+            "C020"
+          ],
+          "local_candidates": [
+            20
+          ],
+          "status": "C020主图恰为Uw楼内20；两种编号指向同一图，引用对象无此歧义。"
+        }
+      ],
+      "reference_mapping_evidence": [
+        {
+          "text": "20",
+          "case_candidates": [
+            {
+              "case_id": "C020",
+              "image_id": "UwV83HsGsw3_cfd92c05e31846e89144f7b2bb8e59a8",
+              "dimension": "doorway",
+              "reason": "完整卫浴门框位于视点前方，床和卧室地面环绕，相机更像在卧室内靠门。",
+              "images": [
+                {
+                  "image_id": "UwV83HsGsw3_cfd92c05e31846e89144f7b2bb8e59a8",
+                  "building": "UwV83HsGsw3",
+                  "number": 20
+                }
+              ]
+            }
+          ],
+          "building_number_candidates": [
+            {
+              "image_id": "UwV83HsGsw3_cfd92c05e31846e89144f7b2bb8e59a8",
+              "building": "UwV83HsGsw3",
+              "number": 20
+            }
+          ]
+        }
+      ],
+      "research_relevance": "在全楼搜索该房间其他视角，不能把清空号当作单例。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "UwV83HsGsw3_fcd79f4b6a6642e99227caffb51bf407",
+      "building": "UwV83HsGsw3",
+      "split": "test",
+      "user_room": "r3",
+      "user_type": "起居与休闲",
+      "user_boundary": "",
+      "user_doorway": "疑似",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "不是门框但是有那个效果,这个和前面说的r3,r4还是同一个大区域,",
+      "user_audit_status": "待我复核",
+      "number": 23,
+      "original_comment": "不是门框但是有那个效果,这个和前面说的r3,r4还是同一个大区域,",
+      "interpretation": "认为同r3/r4属于同一大区域，同时否认门框。",
+      "option_conflict": "语义不一致",
+      "conflict_reason": "疑似门洞与否认门框采用不同语义；r3/r4关系仍待全楼核对。 这可能是旧门洞选项承载广义空间交界的语义错位，并不证明用户手滑。",
+      "referenced_numbers_unresolved": [
+        {
+          "text": "r3,r4",
+          "kind": "房间号",
+          "status": "用户认为同一大区域"
+        }
+      ],
+      "reference_mapping_evidence": [],
+      "research_relevance": "保留开放空间共同身份及局部功能区差别。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "VLzqgDo317F_5d3591edd7c546acaf99db40281b3409",
+      "building": "VLzqgDo317F",
+      "split": "valid",
+      "user_room": "r1",
+      "user_type": "起居与休闲",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "为什么ai认为有可能我没看出来",
+      "number": 2,
+      "original_comment": "为什么ai认为有可能我没看出来",
+      "interpretation": "质疑AI先前为何标可能，用户没有看到相应证据，未明确说明质疑维度。",
+      "option_conflict": "需核对",
+      "conflict_reason": "否没有被评论推翻；需要先定位AI原始待确认理由。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "避免把无法解释的AI候选计作已确认风险条件。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "VLzqgDo317F_79ee9be0827a4de19da5b3e475e3ae0a",
+      "building": "VLzqgDo317F",
+      "split": "valid",
+      "user_room": "r1",
+      "user_type": "起居与休闲",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "为什么ai认为有可能我没看出来",
+      "number": 3,
+      "original_comment": "为什么ai认为有可能我没看出来",
+      "interpretation": "质疑AI候选依据，评论未提出新空间身份或门洞定位。",
+      "option_conflict": "需核对",
+      "conflict_reason": "不是用户认可AI的证据；应对照原待确认项。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "同上，核对候选依据，保持用户否定与AI意见分离。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "X7HyMhZNoso_0595477618f44940b004970372df16dc",
+      "building": "X7HyMhZNoso",
+      "split": "test",
+      "user_room": "r8",
+      "user_type": "通行与连接",
+      "user_boundary": "",
+      "user_doorway": "疑似",
+      "user_artifact": "未见明显异常",
+      "user_status": "需讨论",
+      "user_note": "支撑柱子,oos",
+      "user_audit_status": "仍需讨论",
+      "number": 1,
+      "original_comment": "支撑柱子,oos",
+      "interpretation": "识别为支撑柱子并主张OOS，没有说相机处于真实门洞内。",
+      "option_conflict": "语义不一致",
+      "conflict_reason": "疑似门洞可能把立柱当作门框；OOS是另一个判断。 这可能是旧门洞选项承载广义空间交界的语义错位，并不证明用户手滑。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "柱/墙端对可标范围的影响作为待检验条件。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "用户主张：支撑柱子，OOS。未独立验证，不修改正式eligibility。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "X7HyMhZNoso_3cafb1bfb9084df995fff71810d7693f",
+      "building": "X7HyMhZNoso",
+      "split": "test",
+      "user_room": "",
+      "user_type": "卧室",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "和03不是同一房间",
+      "user_audit_status": "已确认",
+      "number": 10,
+      "original_comment": "和03不是同一房间",
+      "interpretation": "明确与03不同房，并清空房间号。",
+      "option_conflict": "无",
+      "conflict_reason": "拆分意图与空房间号一致。",
+      "referenced_numbers_unresolved": [
+        {
+          "text": "03",
+          "kind": "编号双重映射一致",
+          "case_candidates": [
+            "C003"
+          ],
+          "local_candidates": [
+            3
+          ],
+          "status": "C003主图为X7楼内03且包含楼内10对照，因此主图引用一致。"
+        }
+      ],
+      "reference_mapping_evidence": [
+        {
+          "text": "03",
+          "case_candidates": [
+            {
+              "case_id": "C003",
+              "image_id": "X7HyMhZNoso_0e8aea225d0942f494fd2255f49eb314",
+              "dimension": "room",
+              "reason": "03与10都填r2；03床旁为一扇大窗，10为上下两条横窗；床头与开口相对位置也不同，不能只因类似装修合并。",
+              "images": [
+                {
+                  "image_id": "X7HyMhZNoso_0e8aea225d0942f494fd2255f49eb314",
+                  "building": "X7HyMhZNoso",
+                  "number": 3
+                },
+                {
+                  "image_id": "X7HyMhZNoso_3cafb1bfb9084df995fff71810d7693f",
+                  "building": "X7HyMhZNoso",
+                  "number": 10
+                }
+              ]
+            }
+          ],
+          "building_number_candidates": [
+            {
+              "image_id": "X7HyMhZNoso_0e8aea225d0942f494fd2255f49eb314",
+              "building": "X7HyMhZNoso",
+              "number": 3
+            }
+          ]
+        }
+      ],
+      "research_relevance": "需继续检索本楼其他同房图，不等于没有同房样本。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9",
+      "building": "X7HyMhZNoso",
+      "split": "test",
+      "user_room": "r3",
+      "user_type": "卫浴",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "这个支撑不知道算不算",
+      "number": 19,
+      "original_comment": "这个支撑不知道算不算",
+      "interpretation": "对所见支撑结构是否算目标情况不确定，并未肯定门洞。",
+      "option_conflict": "需核对",
+      "conflict_reason": "否是硬选项，评论尚在询问结构归属。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "区分立柱、承重构件与开口边界，不以疑问判定难度。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "Z6MFQCViBuw_451088e169fd4fe3b14d1f26b18d9a27",
+      "building": "Z6MFQCViBuw",
+      "split": "test",
+      "user_room": "",
+      "user_type": "卧室",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "不是r1",
+      "user_audit_status": "已确认",
+      "number": 4,
+      "original_comment": "不是r1",
+      "interpretation": "否定原r1归组但尚未给新号；卧室标签是另一个维度。",
+      "option_conflict": "无",
+      "conflict_reason": "清空房间号与否定r1一致。",
+      "referenced_numbers_unresolved": [
+        {
+          "text": "r1",
+          "kind": "房间号",
+          "status": "否定原组，不证明本楼其他图皆不同房"
+        }
+      ],
+      "reference_mapping_evidence": [],
+      "research_relevance": "回到楼内身份匹配；功能相同不能证实同房。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "b8cTxDM8gDG_d38c4ae95f5b4640a2696b923b80d1f4",
+      "building": "b8cTxDM8gDG",
+      "split": "test",
+      "user_room": "r13",
+      "user_type": "复合／待定",
+      "user_boundary": "",
+      "user_doorway": "疑似",
+      "user_artifact": "未见明显异常",
+      "user_status": "需讨论",
+      "user_note": "门框分割出来的房间有点多,这张图确实不好判断标注的区域是什么",
+      "user_audit_status": "仍需讨论",
+      "number": 13,
+      "original_comment": "门框分割出来的房间有点多,这张图确实不好判断标注的区域是什么",
+      "interpretation": "认为多个门框分出多个区域，难以选定标注范围；未确认相机在哪一个门洞。",
+      "option_conflict": "需核对",
+      "conflict_reason": "疑似可保留未决，但多个可见门框不证明相机在门洞内。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "记录多空间串联/多开口可见及范围选择候选。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "b8cTxDM8gDG_dcbdda428eb846a586886b87d9552d0e",
+      "building": "b8cTxDM8gDG",
+      "split": "test",
+      "user_room": "r6",
+      "user_type": "卫浴",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "玻璃隔断",
+      "user_audit_status": "已确认",
+      "number": 15,
+      "original_comment": "玻璃隔断",
+      "interpretation": "指出玻璃隔断，未说明门洞位置或拼接异常。",
+      "option_conflict": "无",
+      "conflict_reason": "门洞否与玻璃隔断可以并存。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "玻璃造成的几何边界与视觉连通可独立考察。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "e9zR4mvMWw7_2224be23a70a475ea6daa55d4c90a91b",
+      "building": "e9zR4mvMWw7",
+      "split": "test",
+      "user_room": "r12",
+      "user_type": "厨房与用餐",
+      "user_boundary": "",
+      "user_doorway": "疑似",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "这个确实是站在了两个区域,一个厨房,一个餐厅的分割正中间,不算传统的门框",
+      "user_audit_status": "待我复核",
+      "number": 13,
+      "original_comment": "这个确实是站在了两个区域,一个厨房,一个餐厅的分割正中间,不算传统的门框",
+      "interpretation": "认为相机处于厨房与餐厅功能区域交界，明确不是传统门框。",
+      "option_conflict": "语义不一致",
+      "conflict_reason": "疑似門洞实际承载的是功能分界位置，不能视为窄门洞属性。 这可能是旧门洞选项承载广义空间交界的语义错位，并不证明用户手滑。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "开放客餐区功能交界可能没有封闭几何边界，需保留连续空间。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "e9zR4mvMWw7_2e52341d21b940b5b38a9e26c4cf4200",
+      "building": "e9zR4mvMWw7",
+      "split": "test",
+      "user_room": "r2",
+      "user_type": "卧室",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "离门很近",
+      "number": 15,
+      "original_comment": "离门很近",
+      "interpretation": "仅指出靠近门，未说在门洞平面内。",
+      "option_conflict": "无",
+      "conflict_reason": "门洞否与离门近相容。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "近门可作为单独视点条件。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "e9zR4mvMWw7_4fb8c9be319e4784b4b66f9ca5d839ab",
+      "building": "e9zR4mvMWw7",
+      "split": "test",
+      "user_room": "r15",
+      "user_type": "通行与连接",
+      "user_boundary": "",
+      "user_doorway": "疑似",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "离门近",
+      "number": 19,
+      "original_comment": "离门近",
+      "interpretation": "只指出离门近，没有明确处于门洞内。",
+      "option_conflict": "需核对",
+      "conflict_reason": "疑似尚未被证实；近门不足以决定门洞内。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "记录近门，同时用原图核对与相邻空间关系。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "e9zR4mvMWw7_f6c327acf9884d988714467217d67dcd",
+      "building": "e9zR4mvMWw7",
+      "split": "test",
+      "user_room": "r13",
+      "user_type": "厨房与用餐",
+      "user_boundary": "",
+      "user_doorway": "疑似",
+      "user_artifact": "未见明显异常",
+      "user_status": "需讨论",
+      "user_note": "这个也是类似,但是r13和r12 其实就跟我前面说的那样,030在区域分割的正中间拍的",
+      "user_audit_status": "仍需讨论",
+      "number": 38,
+      "original_comment": "这个也是类似,但是r13和r12 其实就跟我前面说的那样,030在区域分割的正中间拍的",
+      "interpretation": "把r12/r13联系为相似区域关系，借030指出功能分隔处视点。",
+      "option_conflict": "需核对",
+      "conflict_reason": "门洞疑似未区分功能边界；030编号体系及r12/r13物理连通关系待核对。",
+      "referenced_numbers_unresolved": [
+        {
+          "text": "r13,r12",
+          "kind": "房间号",
+          "status": "需核对两组开放布局关系"
+        },
+        {
+          "text": "030",
+          "kind": "编号体系待确认",
+          "case_candidates": [
+            "C030"
+          ],
+          "local_candidates": [
+            30
+          ],
+          "status": "C030主图为e9楼内13，是此前厨房餐厅分隔评论；楼内30为不同图。上下文较支持旧案例编号，仍未定案。"
+        }
+      ],
+      "reference_mapping_evidence": [
+        {
+          "text": "030",
+          "case_candidates": [
+            {
+              "case_id": "C030",
+              "image_id": "e9zR4mvMWw7_2224be23a70a475ea6daa55d4c90a91b",
+              "dimension": "doorway",
+              "reason": "厨房柜体端部和开放餐区分界，不是明确门框。",
+              "images": [
+                {
+                  "image_id": "e9zR4mvMWw7_2224be23a70a475ea6daa55d4c90a91b",
+                  "building": "e9zR4mvMWw7",
+                  "number": 13
+                }
+              ]
+            }
+          ],
+          "building_number_candidates": [
+            {
+              "image_id": "e9zR4mvMWw7_979426d6a1ea42e29cf5c3bd62eba342",
+              "building": "e9zR4mvMWw7",
+              "number": 30
+            }
+          ]
+        }
+      ],
+      "research_relevance": "对照同一开放空间的不同拍摄位置，不因厨房/餐厅名称拆成房间。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814",
+      "building": "e9zR4mvMWw7",
+      "split": "test",
+      "user_room": "r4",
+      "user_type": "卧室",
+      "user_boundary": "",
+      "user_doorway": "疑似",
+      "user_artifact": "未见明显异常",
+      "user_status": "需讨论",
+      "user_note": "离门很近",
+      "number": 39,
+      "original_comment": "离门很近",
+      "interpretation": "仅表示靠门，未确认跨两个空间的相机位置。",
+      "option_conflict": "需核对",
+      "conflict_reason": "疑似门洞缺少进一步定位依据。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "近门与门洞内分别分析，不能混为一类。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b",
+      "building": "jh4fc5c5qoQ",
+      "split": "valid",
+      "user_room": "r4",
+      "user_type": "卫浴",
+      "user_boundary": "",
+      "user_doorway": "疑似",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "如果 细分的话,确实把马桶的区域和换衣的区域分开来了,不是那种特别典型的,我个人可能偏 不是门洞",
+      "user_audit_status": "待我复核",
+      "number": 1,
+      "original_comment": "如果 细分的话,确实把马桶的区域和换衣的区域分开来了,不是那种特别典型的,我个人可能偏 不是门洞",
+      "interpretation": "认为马桶区与换衣区可细分，但倾向不属于典型门洞。",
+      "option_conflict": "需核对",
+      "conflict_reason": "疑似与倾向否不构成绝对矛盾，却不能作为肯定门洞使用。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "同一卫浴内部功能分区可保留，不自动拆物理房间。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "jh4fc5c5qoQ_30cdb6fe9aa6449788e271f2e24d76ec",
+      "building": "jh4fc5c5qoQ",
+      "split": "valid",
+      "user_room": "r1",
+      "user_type": "卧室",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "需讨论",
+      "user_note": "我有点看不懂这个视角",
+      "number": 2,
+      "original_comment": "我有点看不懂这个视角",
+      "interpretation": "无法理解视角，没有确认空间结构，也没说明是否拼接异常。",
+      "option_conflict": "需核对",
+      "conflict_reason": "卧室和门洞否不应被当作评论已验证；保持未决。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "对结构可识别度做待核对标记，不把看不懂等同图像质量差。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "jtcxE69GiFV_29d51ea54a5040098e9b1ba6eaa1f5bd",
+      "building": "jtcxE69GiFV",
+      "split": "valid",
+      "user_room": "r2",
+      "user_type": "卧室",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "需讨论",
+      "user_note": "和12 相比,这个是在正中央,12是在主房间外的卧室,不知道该不该算同一房间,因为标注差异应该很大",
+      "user_audit_status": "待我复核",
+      "number": 6,
+      "original_comment": "和12 相比,这个是在正中央,12是在主房间外的卧室,不知道该不该算同一房间,因为标注差异应该很大",
+      "interpretation": "认为06居于中心，12在主房间外的卧室/外围位置；同房身份仍犹豫，并预期标注差异。",
+      "option_conflict": "需核对",
+      "conflict_reason": "两图同r2仍未解决其身份疑问；预期差异不能用作房间分割准则。",
+      "referenced_numbers_unresolved": [
+        {
+          "text": "12",
+          "kind": "楼内图号候选",
+          "case_candidates": [
+            "C012"
+          ],
+          "local_candidates": [
+            12
+          ],
+          "status": "C012属于7y楼而非jtc；同楼语境优先jtc楼内12，后者也含用户结构畸变评论。"
+        }
+      ],
+      "reference_mapping_evidence": [
+        {
+          "text": "12",
+          "case_candidates": [
+            {
+              "case_id": "C012",
+              "image_id": "7y3sRwLe3Va_dfe1f8e8b58d4da49f0c73516e7a4b67",
+              "dimension": "doorway",
+              "reason": "两个独立门洞均在前方可见完整轮廓，视点更像位于前室。",
+              "images": [
+                {
+                  "image_id": "7y3sRwLe3Va_dfe1f8e8b58d4da49f0c73516e7a4b67",
+                  "building": "7y3sRwLe3Va",
+                  "number": 25
+                }
+              ]
+            }
+          ],
+          "building_number_candidates": [
+            {
+              "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+              "building": "jtcxE69GiFV",
+              "number": 12
+            }
+          ]
+        }
+      ],
+      "research_relevance": "用RGB几何证据判定同房，再独立检验拍摄位置与标注差异，避免结果导向分组。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+      "building": "jtcxE69GiFV",
+      "split": "valid",
+      "user_room": "r2",
+      "user_type": "卧室",
+      "user_boundary": "",
+      "user_doorway": "确认",
+      "user_artifact": "疑似异常",
+      "user_status": "需讨论",
+      "user_note": "不知道这个结构是什么样的 视角畸变有点大",
+      "user_audit_status": "仍需讨论",
+      "number": 12,
+      "original_comment": "不知道这个结构是什么样的 视角畸变有点大",
+      "interpretation": "无法确定结构且认为视角畸变明显。",
+      "option_conflict": "需核对",
+      "conflict_reason": "门洞确认比评论更肯定；疑似异常与评论相符但未证实拼接故障。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "区分全景投影变形、近景透视与拼接异常，位置保留未决。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea",
+      "building": "jtcxE69GiFV",
+      "split": "valid",
+      "user_room": "r9",
+      "user_type": "卫浴",
+      "user_boundary": "",
+      "user_doorway": "疑似",
+      "user_artifact": "未见明显异常",
+      "user_status": "需讨论",
+      "user_note": "这个确实离门框很近,有可能会让标注者产生标注范围的歧义",
+      "user_audit_status": "仍需讨论",
+      "number": 15,
+      "original_comment": "这个确实离门框很近,有可能会让标注者产生标注范围的歧义",
+      "interpretation": "认为靠近门框，可能使标注范围产生歧义。",
+      "option_conflict": "需核对",
+      "conflict_reason": "疑似门洞未得到门洞内位置证据；范围歧义是可能性。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "近门这一RGB条件与标注范围分歧分开测量。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "jtcxE69GiFV_666e7c94f27743a788c408a62c2c13f6",
+      "building": "jtcxE69GiFV",
+      "split": "valid",
+      "user_room": "r3",
+      "user_type": "卧室",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "跟22,23同一房间",
+      "user_audit_status": "已确认",
+      "number": 16,
+      "original_comment": "跟22,23同一房间",
+      "interpretation": "确认16与22/23同房。",
+      "option_conflict": "无",
+      "conflict_reason": "当前三图均r3，修订选项与评论一致。",
+      "referenced_numbers_unresolved": [
+        {
+          "text": "22,23",
+          "kind": "楼内图号候选",
+          "case_candidates": [
+            "C022",
+            "C023"
+          ],
+          "local_candidates": [
+            22,
+            23
+          ],
+          "status": "C022/C023分别属于Uw/X7；同楼语境指jtc楼内22/23，现与16均r3。"
+        }
+      ],
+      "reference_mapping_evidence": [
+        {
+          "text": "22,23",
+          "case_candidates": [
+            {
+              "case_id": "C022",
+              "image_id": "UwV83HsGsw3_fcd79f4b6a6642e99227caffb51bf407",
+              "dimension": "doorway",
+              "reason": "近处是墙端和开放起居过道，没有同一门框两侧的定位线索。",
+              "images": [
+                {
+                  "image_id": "UwV83HsGsw3_fcd79f4b6a6642e99227caffb51bf407",
+                  "building": "UwV83HsGsw3",
+                  "number": 23
+                }
+              ]
+            },
+            {
+              "case_id": "C023",
+              "image_id": "X7HyMhZNoso_0595477618f44940b004970372df16dc",
+              "dimension": "doorway",
+              "reason": "近景为楼梯平台立柱及墙端，真正的卧室门洞在左前方完整可见。",
+              "images": [
+                {
+                  "image_id": "X7HyMhZNoso_0595477618f44940b004970372df16dc",
+                  "building": "X7HyMhZNoso",
+                  "number": 1
+                }
+              ]
+            }
+          ],
+          "building_number_candidates": [
+            {
+              "image_id": "jtcxE69GiFV_9f0e2562fcf447f5a7c5e44e85978148",
+              "building": "jtcxE69GiFV",
+              "number": 22
+            },
+            {
+              "image_id": "jtcxE69GiFV_a197694b62d249968f88ae32a1b49d10",
+              "building": "jtcxE69GiFV",
+              "number": 23
+            }
+          ]
+        }
+      ],
+      "research_relevance": "保留该同房候选关系，再核对固定布局；可用于同房不同视角研究。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "jtcxE69GiFV_f4dc4040df5a4f038dd2b35f2bb65266",
+      "building": "jtcxE69GiFV",
+      "split": "valid",
+      "user_room": "r5",
+      "user_type": "卧室",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "确认和19同一房间",
+      "user_audit_status": "已确认",
+      "number": 31,
+      "original_comment": "确认和19同一房间",
+      "interpretation": "确认31与19同房。",
+      "option_conflict": "无",
+      "conflict_reason": "当前两图均r5，与评论一致。",
+      "referenced_numbers_unresolved": [
+        {
+          "text": "19",
+          "kind": "楼内图号候选",
+          "case_candidates": [
+            "C019"
+          ],
+          "local_candidates": [
+            19
+          ],
+          "status": "C019为Uw楼；同楼语境指jtc楼内19，现与31均r5。"
+        }
+      ],
+      "reference_mapping_evidence": [
+        {
+          "text": "19",
+          "case_candidates": [
+            {
+              "case_id": "C019",
+              "image_id": "UwV83HsGsw3_b979526475874ad68ae33f02d407a1fc",
+              "dimension": "doorway",
+              "reason": "相机在沙发和壁炉旁，木饰面为电视/壁炉隔墙，不是门框。",
+              "images": [
+                {
+                  "image_id": "UwV83HsGsw3_b979526475874ad68ae33f02d407a1fc",
+                  "building": "UwV83HsGsw3",
+                  "number": 16
+                }
+              ]
+            }
+          ],
+          "building_number_candidates": [
+            {
+              "image_id": "jtcxE69GiFV_7ca707708ef54c5bac2992d05d4f1408",
+              "building": "jtcxE69GiFV",
+              "number": 19
+            }
+          ]
+        }
+      ],
+      "research_relevance": "保留同房关系，不能沿用旧房号冲突。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "pRbA3pwrgk9_0350fc96e88c4a52886d4eb50b2d52c6",
+      "building": "pRbA3pwrgk9",
+      "split": "valid",
+      "user_room": "r2",
+      "user_type": "卫浴",
+      "user_boundary": "",
+      "user_doorway": "确认",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "这图是连接浴室和卧室的,但是这图算oos了",
+      "user_audit_status": "已确认",
+      "number": 1,
+      "original_comment": "这图是连接浴室和卧室的,但是这图算oos了",
+      "interpretation": "表示位于浴室与卧室的连接处并判OOS。",
+      "option_conflict": "需核对",
+      "conflict_reason": "连接处不必等于门洞内，确认需几何证据；OOS另列。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "跨卧室/卫浴连接视点候选，正式范围外状态待规则审查。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "用户主张：浴室卧室连接图算OOS。未独立验证。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "pRbA3pwrgk9_05c49a8b61034633ad57ae3527dac65d",
+      "building": "pRbA3pwrgk9",
+      "split": "valid",
+      "user_room": "r10",
+      "user_type": "复合／待定   像是连通的走廊空间这种",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "但是这图可能算oos",
+      "user_audit_status": "已确认",
+      "number": 3,
+      "original_comment": "但是这图可能算oos",
+      "interpretation": "只提出可能OOS，类型栏还手写了连通走廊解释。",
+      "option_conflict": "需核对",
+      "conflict_reason": "没有门洞冲突；type包含类名及自由文本，不能静默当标准枚举。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "保留连通走廊含义与OOS可能性，后者非已验证状态。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "用户主张：可能OOS。尚无具体判据。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad",
+      "building": "pRbA3pwrgk9",
+      "split": "valid",
+      "user_room": "r2",
+      "user_type": "卫浴",
+      "user_boundary": "",
+      "user_doorway": "疑似",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "oos,和01一样",
+      "user_audit_status": "已确认",
+      "number": 16,
+      "original_comment": "oos,和01一样",
+      "interpretation": "主张OOS并说与01一样，可能指同一连接空间或相同问题。",
+      "option_conflict": "需核对",
+      "conflict_reason": "与01一样不能自动解析为同房，也不能直接据此判OOS。",
+      "referenced_numbers_unresolved": [
+        {
+          "text": "01",
+          "kind": "楼内图号候选",
+          "case_candidates": [
+            "C001"
+          ],
+          "local_candidates": [
+            1
+          ],
+          "status": "C001为其他楼案例；同楼语境优先pRb楼内01，但一样究竟指OOS原因还是同房仍不明确。"
+        }
+      ],
+      "reference_mapping_evidence": [
+        {
+          "text": "01",
+          "case_candidates": [
+            {
+              "case_id": "C001",
+              "image_id": "2t7WUuJeko7_27af7fd637014142a4f530cfd4557189",
+              "dimension": "room",
+              "reason": "04和06分别填r4/r5，但入口双扇磨砂玻璃、门上花窗、花卉挂画、瓷器柜及旁边卧室/卫浴入口一致。",
+              "images": [
+                {
+                  "image_id": "2t7WUuJeko7_27af7fd637014142a4f530cfd4557189",
+                  "building": "2t7WUuJeko7",
+                  "number": 4
+                },
+                {
+                  "image_id": "2t7WUuJeko7_3be66dc4f0fb46449d63b07d92c74f3f",
+                  "building": "2t7WUuJeko7",
+                  "number": 6
+                }
+              ]
+            }
+          ],
+          "building_number_candidates": [
+            {
+              "image_id": "pRbA3pwrgk9_0350fc96e88c4a52886d4eb50b2d52c6",
+              "building": "pRbA3pwrgk9",
+              "number": 1
+            }
+          ]
+        }
+      ],
+      "research_relevance": "以01为对照查连接关系，保留问题相似与物理同房的区别。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "用户主张：OOS，与01一样；一样所指未明。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "pa4otMbVnkk_42218dacb31045bfbc70cd57d1b69a84",
+      "building": "pa4otMbVnkk",
+      "split": "valid",
+      "user_room": "r20",
+      "user_type": "通行与连接",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "这图可能oos",
+      "user_audit_status": "已确认",
+      "number": 8,
+      "original_comment": "这图可能oos",
+      "interpretation": "提出可能OOS，没有给出具体判据。",
+      "option_conflict": "无",
+      "conflict_reason": "与通行/门洞否无直接冲突；不可把可能OOS当正式排除。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "待补几何或规则证据，避免研究样本按主观怀疑剔除。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "用户主张：可能OOS。尚无具体判据。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e",
+      "building": "pa4otMbVnkk",
+      "split": "valid",
+      "user_room": "r3",
+      "user_type": "卧室",
+      "user_boundary": "",
+      "user_doorway": "疑似",
+      "user_artifact": "未见明显异常",
+      "user_status": "需讨论",
+      "user_note": "这图标注空间可能确实不好判断,右侧确实是像 台阶一样的墙,标注者确实可能标右边里面的区域",
+      "user_audit_status": "仍需讨论",
+      "number": 11,
+      "original_comment": "这图标注空间可能确实不好判断,右侧确实是像 台阶一样的墙,标注者确实可能标右边里面的区域",
+      "interpretation": "认为台阶状墙结构可能使人把右侧更内区域也纳入标注。",
+      "option_conflict": "需核对",
+      "conflict_reason": "疑似门洞不是评论明确判断；描述针对墙形与范围选择。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "凹入区域/台阶状墙端是候选形态，需与实际范围分歧关联。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+      "building": "pa4otMbVnkk",
+      "split": "valid",
+      "user_room": "r23",
+      "user_type": "复合／待定  , 厨房 客厅",
+      "user_boundary": "",
+      "user_doorway": "疑似",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "确实离门框很近",
+      "user_audit_status": "待我复核",
+      "number": 14,
+      "original_comment": "确实离门框很近",
+      "interpretation": "明确离门框很近；类型补充同时见厨房和客厅。",
+      "option_conflict": "需核对",
+      "conflict_reason": "近门不证实门洞内，type含自由文本需保留原义后再规范化。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "记录近门与开放多功能空间两个条件。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+      "building": "q9vSo1VnCiC",
+      "split": "test",
+      "user_room": "r9",
+      "user_type": "通行与连接",
+      "user_boundary": "",
+      "user_doorway": "确认",
+      "user_artifact": "未见明显异常",
+      "user_status": "需讨论",
+      "user_note": "这个房间分为了两个区域,他是在两个区域正中间拍摄,这图标注结果我记得确实差异很大,而且gt也不对",
+      "user_audit_status": "仍需讨论",
+      "number": 13,
+      "original_comment": "这个房间分为了两个区域,他是在两个区域正中间拍摄,这图标注结果我记得确实差异很大,而且gt也不对",
+      "interpretation": "认为相机在同一房间两区域之间，回忆标注差异很大且GT不对。",
+      "option_conflict": "需核对",
+      "conflict_reason": "区域中间不自动证明门洞；标注差异与GT错误均只是用户回忆/主张。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "优先检查区域关系，再对照真实标注和GT审查；不能先用记忆设结果。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "用户回忆：标注差异很大且GT不对。未读取原始标注/GT验证，不更改GT或正式状态。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+      "building": "q9vSo1VnCiC",
+      "split": "test",
+      "user_room": "r1",
+      "user_type": "卧室",
+      "user_boundary": "",
+      "user_doorway": "疑似",
+      "user_artifact": "未见明显异常",
+      "user_status": "需讨论",
+      "user_note": "确实离另一个空间的门洞很近,但是 我个人更倾向不是",
+      "user_audit_status": "仍需讨论",
+      "number": 22,
+      "original_comment": "确实离另一个空间的门洞很近,但是 我个人更倾向不是",
+      "interpretation": "确认靠近另一空间门洞，但倾向不属于目标门洞位置。",
+      "option_conflict": "需核对",
+      "conflict_reason": "疑似仍表示未决，评论方向更偏否，不能计为肯定。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "保留近门和相邻空间线索，原图复核窄位置属性。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+      "building": "uNb9QFRL6hY",
+      "split": "test",
+      "user_room": "",
+      "user_type": "卧室",
+      "user_boundary": "",
+      "user_doorway": "无法判断",
+      "user_artifact": "未见明显异常",
+      "user_status": "需讨论",
+      "user_note": "这个房间比较奇怪,他是一个\"凸\" 字型的房间,左右两侧通向走廊,这个不知道算不算",
+      "user_audit_status": "仍需讨论",
+      "number": 2,
+      "original_comment": "这个房间比较奇怪,他是一个\"凸\" 字型的房间,左右两侧通向走廊,这个不知道算不算",
+      "interpretation": "描述凸字型房间及左右通走廊，对是否属目标情况不确定。",
+      "option_conflict": "无",
+      "conflict_reason": "无法判断、空房号及评论未决一致。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "不规则平面与多连接出口单独记录，继续全楼寻找相同房间。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "uNb9QFRL6hY_4d422e01951e4c4a9fa3c2d10666a004",
+      "building": "uNb9QFRL6hY",
+      "split": "test",
+      "user_room": "r15",
+      "user_type": "通行与连接",
+      "user_boundary": "",
+      "user_doorway": "确认",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "这是最典型的门框中间",
+      "user_audit_status": "已确认",
+      "number": 24,
+      "original_comment": "这是最典型的门框中间",
+      "interpretation": "明确认定为典型门框中间视点。",
+      "option_conflict": "无",
+      "conflict_reason": "确认与评论一致，但仍是用户判断。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "可作为窄门洞位置正候选对照，需保留RGB定位不确定性。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "uNb9QFRL6hY_5948424345f541b9a570b48f1cfcf622",
+      "building": "uNb9QFRL6hY",
+      "split": "test",
+      "user_room": "r4",
+      "user_type": "卫浴",
+      "user_boundary": "",
+      "user_doorway": "确认",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "这也是典型,虽然不是传统的门框,但是确实是 厕所的两块区域的分隔",
+      "user_audit_status": "已确认",
+      "number": 25,
+      "original_comment": "这也是典型,虽然不是传统的门框,但是确实是 厕所的两块区域的分隔",
+      "interpretation": "将卫浴内部两区域分隔视为典型情况，同时说明不是传统门框。",
+      "option_conflict": "需核对",
+      "conflict_reason": "确认可能采用更广的区域交界含义，不宜直接汇总为窄门洞确认。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "保留卫浴内部几何分隔/功能交界；是否门洞内另核。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "uNb9QFRL6hY_6a500a9a43a340eb817c58bb084327fe",
+      "building": "uNb9QFRL6hY",
+      "split": "test",
+      "user_room": "r15",
+      "user_type": "通行与连接",
+      "user_boundary": "",
+      "user_doorway": "疑似",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "这个虽然和门框很近,但是不算是直接分隔两个区域的位置",
+      "user_audit_status": "已确认",
+      "number": 32,
+      "original_comment": "这个虽然和门框很近,但是不算是直接分隔两个区域的位置",
+      "interpretation": "明确认为只是靠近门框，不位于直接分隔两区的位置。",
+      "option_conflict": "语义不一致",
+      "conflict_reason": "疑似门洞与评论明确排除交界位置不一致，保留原值并送核对。 这可能是旧门洞选项承载广义空间交界的语义错位，并不证明用户手滑。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "近门但非交界可作为有用对照条件。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "yqstnuAEVhm_19e4188fa39244378481dcdb18c42dbe",
+      "building": "yqstnuAEVhm",
+      "split": "test",
+      "user_room": "r6",
+      "user_type": "厨房与用餐",
+      "user_boundary": "",
+      "user_doorway": "疑似",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "似乎是和厨房交界",
+      "number": 2,
+      "original_comment": "似乎是和厨房交界",
+      "interpretation": "推测与厨房交界，没有确认边界性质。",
+      "option_conflict": "需核对",
+      "conflict_reason": "疑似门洞可能是功能交界，不宜直接当门洞内。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "记录厨房相邻功能区，检查是否连续开放几何空间。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "yqstnuAEVhm_67429c0368af46509d43ac43dcb904e6",
+      "building": "yqstnuAEVhm",
+      "split": "test",
+      "user_room": "r8",
+      "user_type": "通行与连接",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "感觉像在门里",
+      "user_audit_status": "已确认",
+      "number": 16,
+      "original_comment": "感觉像在门里",
+      "interpretation": "感觉位于门里，但语义可能是房内或门洞内。",
+      "option_conflict": "需核对",
+      "conflict_reason": "否与可能门洞内存在潜在冲突；门里一词歧义需原图澄清。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "核对实际相机位置，不能按否自动丢弃候选。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "yqstnuAEVhm_858240c249474a24b753d21b85056f23",
+      "building": "yqstnuAEVhm",
+      "split": "test",
+      "user_room": "r4",
+      "user_type": "卧室",
+      "user_boundary": "",
+      "user_doorway": "疑似",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "离门很近",
+      "number": 21,
+      "original_comment": "离门很近",
+      "interpretation": "只指出离门很近。",
+      "option_conflict": "需核对",
+      "conflict_reason": "疑似门洞未被评论证实。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "单列近门条件。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+      "building": "yqstnuAEVhm",
+      "split": "test",
+      "user_room": "r2",
+      "user_type": "客厅",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "为啥这张ai待确认",
+      "number": 31,
+      "original_comment": "为啥这张ai待确认",
+      "interpretation": "询问AI为何待确认，没有认可AI候选；客厅是其当前类型表述。",
+      "option_conflict": "需核对",
+      "conflict_reason": "需要追溯AI理由；客厅为非标准枚举但含义清楚，保留原文。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "把不明AI理由与真实空间待定分开处理。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    },
+    {
+      "image_id": "zsNo4HB9uLZ_65eefaf93e6249908e6389eb4eabf0f5",
+      "building": "zsNo4HB9uLZ",
+      "split": "valid",
+      "user_room": "r7",
+      "user_type": "储藏与家务辅助",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "好像不是门框里 在门前",
+      "number": 9,
+      "original_comment": "好像不是门框里 在门前",
+      "interpretation": "倾向在门前而非门框内。",
+      "option_conflict": "无",
+      "conflict_reason": "否与评论方向一致。",
+      "referenced_numbers_unresolved": [],
+      "reference_mapping_evidence": [],
+      "research_relevance": "保留近门但非门洞对照，避免混入门洞中心。 以上是候选条件或用户假说，尚非标注难度、范围分歧或收敛效果的实证结论。",
+      "formal_status_claim": "无正式状态主张；已确认/已复核仅是填写状态，不是几何或统计真值。",
+      "review_basis": "逐条语义阅读原评论并对照源选项；编号查旧案例和楼内清单。本子任务未新做原图视觉判断。",
+      "source_options_preserved": true
+    }
+  ]
+}

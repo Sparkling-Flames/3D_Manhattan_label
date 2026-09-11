@@ -2,7 +2,25 @@
 <!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260811_v23 SHA-256 f3c1ea58d0857a40aa2240b4680b674c76fe2cec8f048f61a643d9e4b74b0588 -->
 # docs 文档索引
 
+2026-09-11图片研究目的：[图片分类与同房间收敛预测研究SOP v3](thesis_main/图片分类与同房间收敛预测研究SOP.md)。同房标注收敛预测与交界处歧义两条研究线；整体粗类、功能组合、主要呈现区域、交界属性分别记录。讨论版，不修改正式合同。
+
+2026-09-11新标准全量复核：[独立可填写页面](../analysis_results/scene_image_exploration_20260910_v1/室内空间_新标准复核_v3.html)、[复核报告与填写说明](../analysis_results/scene_image_exploration_20260910_v1/新标准全量复核报告_20260911.md)。648图主审/讨论沿用及独立交叉意见分层保留，最终由用户分类；生成器 `build_scene_open_layout_review.py`。 [本地文件/Git说明](../analysis_results/scene_image_exploration_20260910_v1/本地文件与Git保存说明_20260911.md)。
+
+2026-09-11争议批量复核：[B01—B15最新反馈整理](../analysis_results/scene_image_exploration_20260910_v1/批量反馈整理_20260911.md)。含四个低优先级交界候选及B06／B08不同房更正；[原可填写批量页](../analysis_results/scene_image_exploration_20260910_v1/争议图批量快速复核.html)与[此前AI建议](../analysis_results/scene_image_exploration_20260910_v1/争议图批量复核说明.md)保留为历史，用户源未覆盖。
+
+2026-09-10人员探索续算：[具体子类的名单复现与稳定阶段更新报告](../analysis_results/worker_four_block_exploration_20260910_v1/subtype_stage_validation/README_ZH.md)。按[探索SOP第9节](thesis_main/相似场景标注稳定性分析SOP.md#9-人员分类与独立结果复用)执行，不强行均分；具名子类与组号审计分开，含Word、真实回放和同图同人数对照；尚无新人确认。
+
+2026-09-10组数纠正：[不限定两组的补充探索](../analysis_results/worker_four_block_exploration_20260910_v1/group_count_extension/README_ZH.md)。15种指标组合同时变化组数；保留单人小组、名单重复性与收敛人数检查。原二分报告不能代替多组方案评价。
+
+2026-09-10人员分类补充：[指标组合、各组人数与名单修订报告](../analysis_results/worker_four_block_exploration_20260910_v1/report_revision_v2/README_ZH.md)；[原实验数据说明](../analysis_results/worker_four_block_exploration_20260910_v1/README_ZH.md)。比较15种组合与质量粗分基线，分别检查全部人员和后续20人；仅为探索结果，不修改正式分类规则。
+
 当前研究先读[研究交接](thesis_main/研究交接_20260909.md)，文件定位用[仓库地图顶部速查](PROJECT_MAP_CLEAN_20260308.md#当前研究速查2026-09-09)，旧结果见[历史归档](../analysis_results/research_history_archive_20260909_v1/README_ZH.md)。
+
+本次研究验证见[全楼持续阶段、人员组合与图像特征报告](../analysis_results/research_validation_20260909_v2/研究验证报告.md)及[客观Word报告](../analysis_results/research_validation_20260909_v2/相似场景标注稳定阶段与人员组合_客观数据报告.docx)。已按[相似场景SOP](thesis_main/相似场景标注稳定性分析SOP.md)检验55张高人数图、10楼50图留图和98张低人数图的前瞻预测；人员组合采用reviewed无辅助作答与楼外分档，原始标注和正式合同未改。
+
+2026-09-10补充：[uNb真实标注对照表](../analysis_results/research_validation_20260909_v2/annotation_review/uNb标注对照表.html)，12张高人数图、296份无辅助记录；默认按q=.95现有簇彩色叠加，支持单人突出与候选分区切换，单人组及q不可计算作答单列；保留候选房间/标法分组填写与导出。
+
+2026-09-10原图初分：[648图房间/场景核对页](../analysis_results/scene_image_exploration_20260910_v1/图片初分核对.html)、[探索说明](../analysis_results/scene_image_exploration_20260910_v1/探索说明.md)及[用户分类后的争议图片复核](../analysis_results/scene_image_exploration_20260910_v1/争议图片复核.html)。仅AI目视候选，房间身份、图像类型与门洞内拍摄属性分开；最终分类由用户决定，尚未检验这些类别的预测效果。
 
 
 > 2026-07-18锛歅aper A 姝ｅ紡鏂囨湰宸茶縼绉诲埌 vFinal銆傚綋鍓嶆鏂囧叆鍙ｄ负
@@ -154,10 +172,14 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 - [不确定性研究云端输入包](../analysis_results/uncertainty_cloud_inputs_20260906_v1/README_ZH.md)：214图历史响应、166图候选、模型原始坐标、已有分簇及版本连接；附[云端接手说明](../analysis_results/uncertainty_cloud_inputs_20260906_v1/CLOUD_HANDOFF_ZH.md)。不重新分簇或定义歧义标签。
 - [不确定性接手独立复核（2026-09-08）](../analysis_results/uncertainty_followup_analysis_20260908_v1/README_ZH.md)：读取敏感性及本地导出追溯；新增[用户点序确认后的深度分析](../analysis_results/uncertainty_followup_analysis_20260908_v1/深度分析_用户点序确认后.md)，包括非星形度量限制、经验分布恢复、building与人员组合诊断，不改原始标注或人工裁决。
 - [研究交接（2026-09-09）](thesis_main/研究交接_20260909.md)：同building即当前相似场景；研究意图、已做计算、人员组合支线、口径差异与下一步。
+- [研究交接与两轮独立分析整理（2026-09-09）](thesis_main/研究交接与独立分析整理_20260909.md)：非规范补充；区分两轮报告、人员与场景证据、稳定判据边界及第二轮材料缺失，不替代SOP或原结果。
+- [收敛假说、人员分档与HoHoNet特征核对](../analysis_results/convergence_hypothesis_review_20260909_v1/README_ZH.md)：直接回读窗口、分组表和NPZ；同楼早／晚／未达标例子、候选人员档位、214图特征覆盖及缓存数值差异，未进行新的预测模型验证。
+- [uNb预测检验：高低人数与特征配平](../analysis_results/unb_prediction_check_20260909_v1/README_ZH.md)：6→6、7→5及27图混合短窗；比较人数/DT配平、楼外基线和覆盖，区分旧d_t与d_model_feat，非正式协议。
+- [研究主线与新增标注验证说明](thesis_main/研究主线与新增标注验证说明_20260909.md)：讨论稿；按导师原文区分明确要求与回忆，串联人数、人员组成和场景预测，并说明新人旧图桥接与同楼新图验证的职责。
 - [数据连接与历史测量说明](../analysis_results/uncertainty_decision_ready_20260908_v1/README_ZH.md)：canonical、初始化、人工评论和Bi精度连接，保留历史测量边界。
 - [历史结果归档](../analysis_results/research_history_archive_20260909_v1/README_ZH.md)：旧楼内留出、单楼试算、旧人员分层／组合及旧汇报稿，含逐文件清单和恢复方法；[逐楼普查](../analysis_results/building_holdout_exploration_20260908_v1/census/README_ZH.md)仍保留。
-- [相似场景标注稳定性分析SOP（当前统一入口）](thesis_main/相似场景标注稳定性分析SOP.md)：以同building定义相似场景，全阶段无辅助手工统一，各图独立分簇，跨图预测稳定人数；已确认误点按记录排除后比较计算点数。支持人数m与几何/稳定阈值分开。
-  - [当前多楼阈值与人数分析](../analysis_results/multibuilding_threshold_stability_20260909_v1/分析结果.md)：revised中并列包含／排除W19与W26，55高人数图及141低人数图回放、10楼共同预算留图／楼外对照、短窗延长检查与不补点敏感性；不预设口径优劣。
+- [相似场景标注稳定性分析SOP（当前统一入口）](thesis_main/相似场景标注稳定性分析SOP.md)：按原始图像确认同房间，再探索跨房间类型；两级预测待执行，已有building结果保留为基线。全阶段无辅助手工统一，各图独立分簇，跨图预测稳定人数；已确认误点按记录排除后比较计算点数。支持人数m与几何/稳定阈值分开。
+  - [局部窗口基线：多楼阈值与人数分析](../analysis_results/multibuilding_threshold_stability_20260909_v1/分析结果.md)：revised中并列包含／排除W19与W26，55高人数图及141低人数图回放、10楼共同预算留图／楼外对照、短窗延长检查与不补点敏感性；不与本轮持续阶段人数混算。
   - [26份q不可评价诊断](../analysis_results/multibuilding_threshold_stability_20260909_v1/分析结果.md#geometry-audit)：9项用户判断已应用reviewed计算副本，两份28点通过共享搜索修复恢复；geometry_audit保留修复前原图与确认记录，revised为当前计算。
 - [移交包独立审查与50图辅助视觉检查](../analysis_results/uncertainty_visual_review_20260907_v1/README_ZH.md)：30历史＋20候选、22个building；原始/3D对照、初始化与bootstrap勘误、预览点序建议及反例。[三步问卷与保存说明](../analysis_results/uncertainty_visual_review_20260907_v1/QUESTIONNAIRE_ZH.md)提供独立人工填写入口，包含3D角点组顺序调整、OOS意见／理由及分别保存说明。[50图高清复看与点序勘误](../analysis_results/uncertainty_visual_review_20260907_v1/ORDER_REVIEW_ZH.md)说明W31连接假设及逐图保留意见。附[不完整原包归档记录](../analysis_results/uncertainty_handoff_received_20260907_v1/README_ZH.md)；不替代人工裁决。
 - 上述50图入口已接入2048原始PNG、矢量标注叠图及新版交互3D；升级说明和复现命令随包保存。
@@ -175,9 +197,12 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 
 ## 人员类型与组合探索（独立口径）
 
-- [Manual粗依据＋Semi细行为探索](../analysis_results/semi_subtype_exploration_20260909_v1/README_ZH.md)：574条真实初始化连接，检验Semi在Manual以外的修改行为信息，保留质量反例及细类收敛人数限制；不确定最终类别。
+- [规则执行粗依据与修改—时间—质量三指标](../analysis_results/worker_rule_triad_20260910_v1/README_ZH.md)：最新Semi点处理、同面板消融、互斥分半、初始化敏感性与Manual迁移；20人中16人满足三指标支持，候选类型未确认。
+- [速度与参考偏差的可解释粗类验证](../analysis_results/worker_behavior_time_20260910_v1/README_ZH.md)：26人／20人并列；日志重放、排除已知人工加秒、留楼与跨阶段验证、逐人两轴画像。速度可复现不等于质量或类内收敛。
+- [粗类验证：全部26人／当前20人](../analysis_results/worker_coarse_validation_20260910_v1/README_ZH.md)：最新计算副本、留楼粗分、互斥分半、硬点数类内持续阶段与同图同人数对照；存在局部稳定案例，未确认普遍人员类型或新人收敛。
+- [Manual粗依据＋Semi细行为探索](../analysis_results/semi_subtype_exploration_20260909_v1/README_ZH.md)：574条真实初始化连接；[9月10日复审](../analysis_results/semi_subtype_exploration_20260909_v1/分类要求与粗细分型复审_20260910.md)区分分类要求、附加行为信息、最新覆盖与计算版本；尚未确认类型或类内收敛。
 
-- [两类/三类人员与人数收敛探索](../analysis_results/type_convergence_exploration_20260909_v1/README_ZH.md)：全历史合并、楼外分型、楼内固定验证人员；AB/AAB/ABC/AABC覆盖、固定样本簇分布曲线及稳定多簇边界。不确定最终类型和停止人数。
+- [两类/三类人员与人数收敛探索](../analysis_results/type_convergence_exploration_20260909_v1/README_ZH.md)：全历史合并、楼外分型、楼内固定验证人员；保留旧覆盖与曲线。旧OSPA分区未落实硬点数约束，不能直接用作当前粗／细类收敛证据。
 
 - [人员三组及更多组的可行性](../analysis_results/worker_reference_feasibility_20260909_v1/pooled/groups/README_ZH.md)：合并历史标注的2–5档训练内分组、跨building预测、成员敏感性及ABC等人员组合覆盖；不预设认真/粗心语义，不确定最终类型数。
 

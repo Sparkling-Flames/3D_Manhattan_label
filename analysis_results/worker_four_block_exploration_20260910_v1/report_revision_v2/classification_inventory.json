@@ -1,0 +1,1877 @@
+[
+  {
+    "label": 1,
+    "n": 10,
+    "worker_ids": [
+      1,
+      2,
+      6,
+      8,
+      11,
+      15,
+      17,
+      28,
+      31,
+      33
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "Q_median2",
+    "description": "偏差较低",
+    "axis_means": {
+      "quality": -0.8509351109145928
+    }
+  },
+  {
+    "label": 2,
+    "n": 10,
+    "worker_ids": [
+      10,
+      12,
+      13,
+      29,
+      30,
+      32,
+      34,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "Q_median2",
+    "description": "偏差较高",
+    "axis_means": {
+      "quality": 0.8509351109145928
+    }
+  },
+  {
+    "label": 1,
+    "n": 1,
+    "worker_ids": [
+      2
+    ],
+    "missing_ids": [],
+    "accepted": false,
+    "status": "singleton_rejected",
+    "cohort": "current20",
+    "model": "Q",
+    "description": "偏差较低",
+    "axis_means": {
+      "quality": -3.904856325653671
+    }
+  },
+  {
+    "label": 2,
+    "n": 19,
+    "worker_ids": [
+      1,
+      6,
+      8,
+      10,
+      11,
+      12,
+      13,
+      15,
+      17,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [],
+    "accepted": false,
+    "status": "singleton_rejected",
+    "cohort": "current20",
+    "model": "Q",
+    "description": "偏差较高",
+    "axis_means": {
+      "quality": 0.20551875398177208
+    }
+  },
+  {
+    "label": 1,
+    "n": 8,
+    "worker_ids": [
+      1,
+      2,
+      6,
+      10,
+      12,
+      13,
+      17,
+      30
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "T",
+    "description": "较快",
+    "axis_means": {
+      "time": -0.7561660712374685
+    }
+  },
+  {
+    "label": 2,
+    "n": 12,
+    "worker_ids": [
+      8,
+      11,
+      15,
+      28,
+      29,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "T",
+    "description": "较慢",
+    "axis_means": {
+      "time": 0.5041107141583123
+    }
+  },
+  {
+    "label": 1,
+    "n": 7,
+    "worker_ids": [
+      1,
+      2,
+      11,
+      32,
+      33,
+      35,
+      36
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "S",
+    "description": "较少误拒可标图、较少误收不可标图",
+    "axis_means": {
+      "scope_reject": -0.026020408163265393,
+      "scope_accept": -0.3007936507936509
+    }
+  },
+  {
+    "label": 2,
+    "n": 13,
+    "worker_ids": [
+      6,
+      8,
+      10,
+      12,
+      13,
+      15,
+      17,
+      28,
+      29,
+      30,
+      31,
+      34,
+      37
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "S",
+    "description": "较多误拒可标图、较多误收不可标图",
+    "axis_means": {
+      "scope_reject": 0.014010989010989093,
+      "scope_accept": 0.161965811965812
+    }
+  },
+  {
+    "label": 1,
+    "n": 12,
+    "worker_ids": [
+      2,
+      6,
+      8,
+      10,
+      11,
+      13,
+      15,
+      17,
+      28,
+      32,
+      33,
+      36
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "B",
+    "description": "修改较少、净改善较多",
+    "axis_means": {
+      "edit": -1.312248484893171,
+      "benefit": 0.5897435773522223
+    }
+  },
+  {
+    "label": 2,
+    "n": 8,
+    "worker_ids": [
+      1,
+      12,
+      29,
+      30,
+      31,
+      34,
+      35,
+      37
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "B",
+    "description": "修改较多、净改善较少",
+    "axis_means": {
+      "edit": 1.9683727273397564,
+      "benefit": -0.8846153660283332
+    }
+  },
+  {
+    "label": 1,
+    "n": 10,
+    "worker_ids": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      15,
+      17,
+      30
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "QT",
+    "description": "偏差较低、较快",
+    "axis_means": {
+      "quality": -0.5518242733201044,
+      "time": -0.5754802761660419
+    }
+  },
+  {
+    "label": 2,
+    "n": 10,
+    "worker_ids": [
+      8,
+      28,
+      29,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "QT",
+    "description": "偏差较高、较慢",
+    "axis_means": {
+      "quality": 0.5518242733201042,
+      "time": 0.5754802761660418
+    }
+  },
+  {
+    "label": 1,
+    "n": 16,
+    "worker_ids": [
+      1,
+      2,
+      6,
+      8,
+      10,
+      11,
+      12,
+      13,
+      15,
+      17,
+      28,
+      31,
+      32,
+      33,
+      35,
+      36
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "QS",
+    "description": "偏差较低、较少误拒可标图、较少误收不可标图",
+    "axis_means": {
+      "quality": -0.3727034440941154,
+      "scope_reject": -0.05758928571428575,
+      "scope_accept": -0.052777777777777764
+    }
+  },
+  {
+    "label": 2,
+    "n": 4,
+    "worker_ids": [
+      29,
+      30,
+      34,
+      37
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "QS",
+    "description": "偏差较高、较多误拒可标图、较多误收不可标图",
+    "axis_means": {
+      "quality": 1.490813776376461,
+      "scope_reject": 0.2303571428571431,
+      "scope_accept": 0.21111111111111103
+    }
+  },
+  {
+    "label": 1,
+    "n": 12,
+    "worker_ids": [
+      2,
+      6,
+      8,
+      10,
+      11,
+      13,
+      15,
+      17,
+      28,
+      32,
+      33,
+      36
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "QB",
+    "description": "偏差较低、修改较少、净改善较多",
+    "axis_means": {
+      "quality": -0.6055002299567435,
+      "edit": -1.312248484893171,
+      "benefit": 0.5897435773522223
+    }
+  },
+  {
+    "label": 2,
+    "n": 8,
+    "worker_ids": [
+      1,
+      12,
+      29,
+      30,
+      31,
+      34,
+      35,
+      37
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "QB",
+    "description": "偏差较高、修改较多、净改善较少",
+    "axis_means": {
+      "quality": 0.9082503449351149,
+      "edit": 1.9683727273397564,
+      "benefit": -0.8846153660283332
+    }
+  },
+  {
+    "label": 1,
+    "n": 10,
+    "worker_ids": [
+      1,
+      2,
+      6,
+      8,
+      10,
+      12,
+      13,
+      17,
+      31,
+      34
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "TS",
+    "description": "较快、较少误拒可标图、较多误收不可标图",
+    "axis_means": {
+      "time": -0.49247730221882635,
+      "scope_reject": -0.12500000000000006,
+      "scope_accept": 0.10555555555555558
+    }
+  },
+  {
+    "label": 2,
+    "n": 10,
+    "worker_ids": [
+      11,
+      15,
+      28,
+      29,
+      30,
+      32,
+      33,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "TS",
+    "description": "较慢、较多误拒可标图、较少误收不可标图",
+    "axis_means": {
+      "time": 0.49247730221882635,
+      "scope_reject": 0.1250000000000001,
+      "scope_accept": -0.1055555555555556
+    }
+  },
+  {
+    "label": 1,
+    "n": 9,
+    "worker_ids": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      30
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "TB",
+    "description": "较快、修改较少、净改善较少",
+    "axis_means": {
+      "time": -0.6760611725137191,
+      "edit": -0.6522467491003664,
+      "benefit": -0.26707252109125856
+    }
+  },
+  {
+    "label": 2,
+    "n": 11,
+    "worker_ids": [
+      8,
+      15,
+      28,
+      29,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "TB",
+    "description": "较慢、修改较多、净改善较多",
+    "axis_means": {
+      "time": 0.5531409593294065,
+      "edit": 0.533656431082118,
+      "benefit": 0.21851388089284793
+    }
+  },
+  {
+    "label": 1,
+    "n": 12,
+    "worker_ids": [
+      2,
+      6,
+      8,
+      10,
+      11,
+      13,
+      15,
+      17,
+      28,
+      32,
+      33,
+      36
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "SB",
+    "description": "较少误拒可标图、较少误收不可标图、修改较少、净改善较多",
+    "axis_means": {
+      "scope_reject": -0.04642857142857146,
+      "scope_accept": -0.06666666666666667,
+      "edit": -1.312248484893171,
+      "benefit": 0.5897435773522223
+    }
+  },
+  {
+    "label": 2,
+    "n": 8,
+    "worker_ids": [
+      1,
+      12,
+      29,
+      30,
+      31,
+      34,
+      35,
+      37
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "SB",
+    "description": "较多误拒可标图、较多误收不可标图、修改较多、净改善较少",
+    "axis_means": {
+      "scope_reject": 0.06964285714285726,
+      "scope_accept": 0.09999999999999998,
+      "edit": 1.9683727273397564,
+      "benefit": -0.8846153660283332
+    }
+  },
+  {
+    "label": 1,
+    "n": 6,
+    "worker_ids": [
+      1,
+      2,
+      6,
+      10,
+      12,
+      13
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "QTS",
+    "description": "偏差较低、较快、较少误拒可标图、较少误收不可标图",
+    "axis_means": {
+      "quality": -0.554640815283874,
+      "time": -0.8716422479305651,
+      "scope_reject": -0.10595238095238098,
+      "scope_accept": -0.05740740740740733
+    }
+  },
+  {
+    "label": 2,
+    "n": 14,
+    "worker_ids": [
+      8,
+      11,
+      15,
+      17,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "QTS",
+    "description": "偏差较高、较慢、较多误拒可标图、较多误收不可标图",
+    "axis_means": {
+      "quality": 0.23770320655023172,
+      "time": 0.3735609633988136,
+      "scope_reject": 0.04540816326530617,
+      "scope_accept": 0.02460317460317457
+    }
+  },
+  {
+    "label": 1,
+    "n": 7,
+    "worker_ids": [
+      2,
+      8,
+      15,
+      17,
+      28,
+      33,
+      36
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "QTB",
+    "description": "偏差较低、较慢、修改较少、净改善较多",
+    "axis_means": {
+      "quality": -1.0165566838648399,
+      "time": 0.4006268041634659,
+      "edit": -0.6410442478569128,
+      "benefit": 1.351279741213546
+    }
+  },
+  {
+    "label": 2,
+    "n": 13,
+    "worker_ids": [
+      1,
+      6,
+      10,
+      11,
+      12,
+      13,
+      29,
+      30,
+      31,
+      32,
+      34,
+      35,
+      37
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "QTB",
+    "description": "偏差较高、较快、修改较多、净改善较少",
+    "axis_means": {
+      "quality": 0.5473766759272214,
+      "time": -0.21572212531878943,
+      "edit": 0.3451776719229531,
+      "benefit": -0.7276121683457556
+    }
+  },
+  {
+    "label": 1,
+    "n": 12,
+    "worker_ids": [
+      2,
+      6,
+      8,
+      10,
+      11,
+      13,
+      15,
+      17,
+      28,
+      32,
+      33,
+      36
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "QSB",
+    "description": "偏差较低、较少误拒可标图、较少误收不可标图、修改较少、净改善较多",
+    "axis_means": {
+      "quality": -0.6055002299567435,
+      "scope_reject": -0.04642857142857146,
+      "scope_accept": -0.06666666666666667,
+      "edit": -1.312248484893171,
+      "benefit": 0.5897435773522223
+    }
+  },
+  {
+    "label": 2,
+    "n": 8,
+    "worker_ids": [
+      1,
+      12,
+      29,
+      30,
+      31,
+      34,
+      35,
+      37
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "QSB",
+    "description": "偏差较高、较多误拒可标图、较多误收不可标图、修改较多、净改善较少",
+    "axis_means": {
+      "quality": 0.9082503449351149,
+      "scope_reject": 0.06964285714285726,
+      "scope_accept": 0.09999999999999998,
+      "edit": 1.9683727273397564,
+      "benefit": -0.8846153660283332
+    }
+  },
+  {
+    "label": 1,
+    "n": 8,
+    "worker_ids": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "TSB",
+    "description": "较快、较少误拒可标图、较少误收不可标图、修改较少、净改善较少",
+    "axis_means": {
+      "time": -0.7045797931863947,
+      "scope_reject": -0.08660714285714287,
+      "scope_accept": -0.05277777777777772,
+      "edit": -0.9365329118963845,
+      "benefit": -0.342922837587658
+    }
+  },
+  {
+    "label": 2,
+    "n": 12,
+    "worker_ids": [
+      8,
+      15,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "TSB",
+    "description": "较慢、较多误拒可标图、较多误收不可标图、修改较多、净改善较多",
+    "axis_means": {
+      "time": 0.46971986212426325,
+      "scope_reject": 0.05773809523809529,
+      "scope_accept": 0.035185185185185146,
+      "edit": 0.6243552745975899,
+      "benefit": 0.2286152250584387
+    }
+  },
+  {
+    "label": 1,
+    "n": 8,
+    "worker_ids": [
+      2,
+      8,
+      15,
+      17,
+      28,
+      32,
+      33,
+      36
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "QTSB",
+    "description": "偏差较低、较慢、较少误拒可标图、较少误收不可标图、修改较少、净改善较多",
+    "axis_means": {
+      "quality": -0.8413357652352351,
+      "time": 0.4274350929524762,
+      "scope_reject": -0.05089285714285722,
+      "scope_accept": -0.10833333333333331,
+      "edit": -0.5551469128655107,
+      "benefit": 1.2602989287325992
+    }
+  },
+  {
+    "label": 2,
+    "n": 12,
+    "worker_ids": [
+      1,
+      6,
+      10,
+      11,
+      12,
+      13,
+      29,
+      30,
+      31,
+      34,
+      35,
+      37
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "current20",
+    "model": "QTSB",
+    "description": "偏差较高、较快、较多误拒可标图、较多误收不可标图、修改较多、净改善较少",
+    "axis_means": {
+      "quality": 0.5608905101568232,
+      "time": -0.2849567286349842,
+      "scope_reject": 0.03392857142857152,
+      "scope_accept": 0.0722222222222222,
+      "edit": 0.37009794191034046,
+      "benefit": -0.840199285821733
+    }
+  },
+  {
+    "label": 1,
+    "n": 13,
+    "worker_ids": [
+      1,
+      2,
+      6,
+      8,
+      10,
+      11,
+      15,
+      17,
+      18,
+      21,
+      27,
+      28,
+      33
+    ],
+    "missing_ids": [
+      26
+    ],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "all26",
+    "model": "Q_median2",
+    "description": "偏差较低",
+    "axis_means": {
+      "quality": -1.5630520369406282
+    }
+  },
+  {
+    "label": 2,
+    "n": 12,
+    "worker_ids": [
+      12,
+      13,
+      14,
+      19,
+      29,
+      30,
+      31,
+      32,
+      34,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [
+      26
+    ],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "all26",
+    "model": "Q_median2",
+    "description": "偏差较高",
+    "axis_means": {
+      "quality": 1.0877220662069014
+    }
+  },
+  {
+    "label": 1,
+    "n": 24,
+    "worker_ids": [
+      1,
+      2,
+      6,
+      8,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      17,
+      18,
+      21,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [
+      26
+    ],
+    "accepted": false,
+    "status": "singleton_rejected",
+    "cohort": "all26",
+    "model": "Q",
+    "description": "偏差较低",
+    "axis_means": {
+      "quality": -0.7030290105506292
+    }
+  },
+  {
+    "label": 2,
+    "n": 1,
+    "worker_ids": [
+      19
+    ],
+    "missing_ids": [
+      26
+    ],
+    "accepted": false,
+    "status": "singleton_rejected",
+    "cohort": "all26",
+    "model": "Q",
+    "description": "偏差较高",
+    "axis_means": {
+      "quality": 9.605684567469744
+    }
+  },
+  {
+    "label": 1,
+    "n": 10,
+    "worker_ids": [
+      1,
+      2,
+      6,
+      10,
+      12,
+      13,
+      17,
+      19,
+      21,
+      30
+    ],
+    "missing_ids": [
+      14,
+      26
+    ],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "all26",
+    "model": "T",
+    "description": "较快",
+    "axis_means": {
+      "time": -0.8063825934047735
+    }
+  },
+  {
+    "label": 2,
+    "n": 14,
+    "worker_ids": [
+      8,
+      11,
+      15,
+      18,
+      27,
+      28,
+      29,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [
+      14,
+      26
+    ],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "all26",
+    "model": "T",
+    "description": "较慢",
+    "axis_means": {
+      "time": 0.5759875667176952
+    }
+  },
+  {
+    "label": 1,
+    "n": 10,
+    "worker_ids": [
+      1,
+      2,
+      11,
+      14,
+      19,
+      27,
+      32,
+      33,
+      35,
+      36
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "all26",
+    "model": "S",
+    "description": "较少误拒可标图、较少误收不可标图",
+    "axis_means": {
+      "scope_reject": -0.03851241351241351,
+      "scope_accept": -0.28376068376068375
+    }
+  },
+  {
+    "label": 2,
+    "n": 16,
+    "worker_ids": [
+      6,
+      8,
+      10,
+      12,
+      13,
+      15,
+      17,
+      18,
+      21,
+      26,
+      28,
+      29,
+      30,
+      31,
+      34,
+      37
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "all26",
+    "model": "S",
+    "description": "较多误拒可标图、较多误收不可标图",
+    "axis_means": {
+      "scope_reject": 0.024070258445258456,
+      "scope_accept": 0.17735042735042733
+    }
+  },
+  {
+    "label": 1,
+    "n": 5,
+    "worker_ids": [
+      6,
+      11,
+      19,
+      21,
+      26
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "all26",
+    "model": "B",
+    "description": "修改较少、净改善较少",
+    "axis_means": {
+      "edit": -3.3601412997233084,
+      "benefit": -2.370138114801867
+    }
+  },
+  {
+    "label": 2,
+    "n": 21,
+    "worker_ids": [
+      1,
+      2,
+      8,
+      10,
+      12,
+      13,
+      14,
+      15,
+      17,
+      18,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "all26",
+    "model": "B",
+    "description": "修改较多、净改善较多",
+    "axis_means": {
+      "edit": 0.8000336427912639,
+      "benefit": 0.5643185987623492
+    }
+  },
+  {
+    "label": 1,
+    "n": 23,
+    "worker_ids": [
+      1,
+      2,
+      6,
+      8,
+      10,
+      11,
+      12,
+      13,
+      15,
+      17,
+      18,
+      21,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [
+      14,
+      26
+    ],
+    "accepted": false,
+    "status": "singleton_rejected",
+    "cohort": "all26",
+    "model": "QT",
+    "description": "偏差较低、较慢",
+    "axis_means": {
+      "quality": -0.733189308903101,
+      "time": 0.06918833289684934
+    }
+  },
+  {
+    "label": 2,
+    "n": 1,
+    "worker_ids": [
+      19
+    ],
+    "missing_ids": [
+      14,
+      26
+    ],
+    "accepted": false,
+    "status": "singleton_rejected",
+    "cohort": "all26",
+    "model": "QT",
+    "description": "偏差较高、较快",
+    "axis_means": {
+      "quality": 9.605684567469744,
+      "time": -1.5913316566275348
+    }
+  },
+  {
+    "label": 1,
+    "n": 24,
+    "worker_ids": [
+      1,
+      2,
+      6,
+      8,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      17,
+      18,
+      21,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [
+      26
+    ],
+    "accepted": false,
+    "status": "singleton_rejected",
+    "cohort": "all26",
+    "model": "QS",
+    "description": "偏差较低、较多误拒可标图、较多误收不可标图",
+    "axis_means": {
+      "quality": -0.7030290105506292,
+      "scope_reject": -0.006667175417175403,
+      "scope_accept": -0.0032051282051282124
+    }
+  },
+  {
+    "label": 2,
+    "n": 1,
+    "worker_ids": [
+      19
+    ],
+    "missing_ids": [
+      26
+    ],
+    "accepted": false,
+    "status": "singleton_rejected",
+    "cohort": "all26",
+    "model": "QS",
+    "description": "偏差较高、较少误拒可标图、较少误收不可标图",
+    "axis_means": {
+      "quality": 9.605684567469744,
+      "scope_reject": -0.1063695563695566,
+      "scope_accept": -0.2948717948717947
+    }
+  },
+  {
+    "label": 1,
+    "n": 24,
+    "worker_ids": [
+      1,
+      2,
+      6,
+      8,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      17,
+      18,
+      21,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [
+      26
+    ],
+    "accepted": false,
+    "status": "singleton_rejected",
+    "cohort": "all26",
+    "model": "QB",
+    "description": "偏差较低、修改较多、净改善较多",
+    "axis_means": {
+      "quality": -0.7030290105506292,
+      "edit": 0.23640017179607783,
+      "benefit": 0.30123635120755493
+    }
+  },
+  {
+    "label": 2,
+    "n": 1,
+    "worker_ids": [
+      19
+    ],
+    "missing_ids": [
+      26
+    ],
+    "accepted": false,
+    "status": "singleton_rejected",
+    "cohort": "all26",
+    "model": "QB",
+    "description": "偏差较高、修改较少、净改善较少",
+    "axis_means": {
+      "quality": 9.605684567469744,
+      "edit": -0.5565537015210069,
+      "benefit": -4.069608241570068
+    }
+  },
+  {
+    "label": 1,
+    "n": 9,
+    "worker_ids": [
+      1,
+      2,
+      6,
+      10,
+      12,
+      13,
+      17,
+      19,
+      21
+    ],
+    "missing_ids": [
+      14,
+      26
+    ],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "all26",
+    "model": "TS",
+    "description": "较快、较少误拒可标图、较少误收不可标图",
+    "axis_means": {
+      "time": -0.8546418170566277,
+      "scope_reject": -0.08652828652828656,
+      "scope_accept": -0.04795821462488127
+    }
+  },
+  {
+    "label": 2,
+    "n": 15,
+    "worker_ids": [
+      8,
+      11,
+      15,
+      18,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [
+      14,
+      26
+    ],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "all26",
+    "model": "TS",
+    "description": "较慢、较多误拒可标图、较多误收不可标图",
+    "axis_means": {
+      "time": 0.5127850902339766,
+      "scope_reject": 0.034106634106634164,
+      "scope_accept": 0.01623931623931622
+    }
+  },
+  {
+    "label": 1,
+    "n": 11,
+    "worker_ids": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      19,
+      21,
+      30
+    ],
+    "missing_ids": [
+      14,
+      26
+    ],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "all26",
+    "model": "TB",
+    "description": "较快、修改较少、净改善较少",
+    "axis_means": {
+      "time": -0.7287282979756793,
+      "edit": -0.49916457934215347,
+      "benefit": -0.5030071837751783
+    }
+  },
+  {
+    "label": 2,
+    "n": 13,
+    "worker_ids": [
+      8,
+      15,
+      18,
+      27,
+      28,
+      29,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [
+      14,
+      26
+    ],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "all26",
+    "model": "TB",
+    "description": "较慢、修改较多、净改善较多",
+    "axis_means": {
+      "time": 0.616616252133267,
+      "edit": 0.8500623211151868,
+      "benefit": 0.5212580439321729
+    }
+  },
+  {
+    "label": 1,
+    "n": 21,
+    "worker_ids": [
+      1,
+      2,
+      8,
+      10,
+      12,
+      13,
+      14,
+      15,
+      17,
+      18,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "all26",
+    "model": "SB",
+    "description": "较少误拒可标图、较多误收不可标图、修改较多、净改善较多",
+    "axis_means": {
+      "scope_reject": -0.006029420315134583,
+      "scope_accept": 0.0014245014245014194,
+      "edit": 0.8000336427912639,
+      "benefit": 0.5643185987623492
+    }
+  },
+  {
+    "label": 2,
+    "n": 5,
+    "worker_ids": [
+      6,
+      11,
+      19,
+      21,
+      26
+    ],
+    "missing_ids": [],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "all26",
+    "model": "SB",
+    "description": "较多误拒可标图、较少误收不可标图、修改较少、净改善较少",
+    "axis_means": {
+      "scope_reject": 0.025323565323565285,
+      "scope_accept": -0.005982905982905989,
+      "edit": -3.3601412997233084,
+      "benefit": -2.370138114801867
+    }
+  },
+  {
+    "label": 1,
+    "n": 23,
+    "worker_ids": [
+      1,
+      2,
+      6,
+      8,
+      10,
+      11,
+      12,
+      13,
+      15,
+      17,
+      18,
+      21,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [
+      14,
+      26
+    ],
+    "accepted": false,
+    "status": "singleton_rejected",
+    "cohort": "all26",
+    "model": "QTS",
+    "description": "偏差较低、较慢、较多误拒可标图、较多误收不可标图",
+    "axis_means": {
+      "quality": -0.733189308903101,
+      "time": 0.06918833289684934,
+      "scope_reject": -0.0069906743819787035,
+      "scope_accept": 0.004645113340765506
+    }
+  },
+  {
+    "label": 2,
+    "n": 1,
+    "worker_ids": [
+      19
+    ],
+    "missing_ids": [
+      14,
+      26
+    ],
+    "accepted": false,
+    "status": "singleton_rejected",
+    "cohort": "all26",
+    "model": "QTS",
+    "description": "偏差较高、较快、较少误拒可标图、较少误收不可标图",
+    "axis_means": {
+      "quality": 9.605684567469744,
+      "time": -1.5913316566275348,
+      "scope_reject": -0.1063695563695566,
+      "scope_accept": -0.2948717948717947
+    }
+  },
+  {
+    "label": 1,
+    "n": 23,
+    "worker_ids": [
+      1,
+      2,
+      6,
+      8,
+      10,
+      11,
+      12,
+      13,
+      15,
+      17,
+      18,
+      21,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [
+      14,
+      26
+    ],
+    "accepted": false,
+    "status": "singleton_rejected",
+    "cohort": "all26",
+    "model": "QTB",
+    "description": "偏差较低、较慢、修改较多、净改善较多",
+    "axis_means": {
+      "quality": -0.733189308903101,
+      "time": 0.06918833289684934,
+      "edit": 0.26593710883716287,
+      "benefit": 0.230994947441798
+    }
+  },
+  {
+    "label": 2,
+    "n": 1,
+    "worker_ids": [
+      19
+    ],
+    "missing_ids": [
+      14,
+      26
+    ],
+    "accepted": false,
+    "status": "singleton_rejected",
+    "cohort": "all26",
+    "model": "QTB",
+    "description": "偏差较高、较快、修改较少、净改善较少",
+    "axis_means": {
+      "quality": 9.605684567469744,
+      "time": -1.5913316566275348,
+      "edit": -0.5565537015210069,
+      "benefit": -4.069608241570068
+    }
+  },
+  {
+    "label": 1,
+    "n": 24,
+    "worker_ids": [
+      1,
+      2,
+      6,
+      8,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      17,
+      18,
+      21,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [
+      26
+    ],
+    "accepted": false,
+    "status": "singleton_rejected",
+    "cohort": "all26",
+    "model": "QSB",
+    "description": "偏差较低、较多误拒可标图、较多误收不可标图、修改较多、净改善较多",
+    "axis_means": {
+      "quality": -0.7030290105506292,
+      "scope_reject": -0.006667175417175403,
+      "scope_accept": -0.0032051282051282124,
+      "edit": 0.23640017179607783,
+      "benefit": 0.30123635120755493
+    }
+  },
+  {
+    "label": 2,
+    "n": 1,
+    "worker_ids": [
+      19
+    ],
+    "missing_ids": [
+      26
+    ],
+    "accepted": false,
+    "status": "singleton_rejected",
+    "cohort": "all26",
+    "model": "QSB",
+    "description": "偏差较高、较少误拒可标图、较少误收不可标图、修改较少、净改善较少",
+    "axis_means": {
+      "quality": 9.605684567469744,
+      "scope_reject": -0.1063695563695566,
+      "scope_accept": -0.2948717948717947,
+      "edit": -0.5565537015210069,
+      "benefit": -4.069608241570068
+    }
+  },
+  {
+    "label": 1,
+    "n": 12,
+    "worker_ids": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      19,
+      21,
+      31,
+      34
+    ],
+    "missing_ids": [
+      14,
+      26
+    ],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "all26",
+    "model": "TSB",
+    "description": "较快、较少误拒可标图、较多误收不可标图、修改较少、净改善较少",
+    "axis_means": {
+      "time": -0.5992548324483701,
+      "scope_reject": -0.08851241351241355,
+      "scope_accept": 0.03846153846153838,
+      "edit": -0.08998807314458945,
+      "benefit": -0.7130009406325509
+    }
+  },
+  {
+    "label": 2,
+    "n": 12,
+    "worker_ids": [
+      8,
+      15,
+      18,
+      27,
+      28,
+      29,
+      30,
+      32,
+      33,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [
+      14,
+      26
+    ],
+    "accepted": true,
+    "status": "usable",
+    "cohort": "all26",
+    "model": "TSB",
+    "description": "较慢、较多误拒可标图、较少误收不可标图、修改较多、净改善较多",
+    "axis_means": {
+      "time": 0.59925483244837,
+      "scope_reject": 0.06624949124949131,
+      "scope_accept": -0.05413105413105406,
+      "edit": 0.5533213899557344,
+      "benefit": 0.8166072364318246
+    }
+  },
+  {
+    "label": 1,
+    "n": 23,
+    "worker_ids": [
+      1,
+      2,
+      6,
+      8,
+      10,
+      11,
+      12,
+      13,
+      15,
+      17,
+      18,
+      21,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "missing_ids": [
+      14,
+      26
+    ],
+    "accepted": false,
+    "status": "singleton_rejected",
+    "cohort": "all26",
+    "model": "QTSB",
+    "description": "偏差较低、较慢、较多误拒可标图、较多误收不可标图、修改较多、净改善较多",
+    "axis_means": {
+      "quality": -0.733189308903101,
+      "time": 0.06918833289684934,
+      "scope_reject": -0.0069906743819787035,
+      "scope_accept": 0.004645113340765506,
+      "edit": 0.26593710883716287,
+      "benefit": 0.230994947441798
+    }
+  },
+  {
+    "label": 2,
+    "n": 1,
+    "worker_ids": [
+      19
+    ],
+    "missing_ids": [
+      14,
+      26
+    ],
+    "accepted": false,
+    "status": "singleton_rejected",
+    "cohort": "all26",
+    "model": "QTSB",
+    "description": "偏差较高、较快、较少误拒可标图、较少误收不可标图、修改较少、净改善较少",
+    "axis_means": {
+      "quality": 9.605684567469744,
+      "time": -1.5913316566275348,
+      "scope_reject": -0.1063695563695566,
+      "scope_accept": -0.2948717948717947,
+      "edit": -0.5565537015210069,
+      "benefit": -4.069608241570068
+    }
+  }
+]

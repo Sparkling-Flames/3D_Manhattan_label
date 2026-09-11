@@ -1,0 +1,204 @@
+{
+  "schema_note": "独立人工探索性配对复核。rows为5个待讨论目标，candidate_images为本次实际重看对照；viewed_originals列出本次15张2048x1024原图。建议不等于用户最终状态。",
+  "coverage": {
+    "target_count": 5,
+    "viewed_original_count": 15,
+    "full_scan_resumed": false,
+    "checkpoint_coverage_unchanged": 214
+  },
+  "rows": [
+    {
+      "image_id": "pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e",
+      "building": "pa4",
+      "number": 11,
+      "source_comment": "这图标注空间可能确实不好判断,右侧确实是像 台阶一样的墙,标注者确实可能标右边里面的区域",
+      "candidates": [
+        22,
+        28
+      ],
+      "relation": "同一卧室，强视觉支持",
+      "evidence": "三图相同床头两画、三扇高窗和中央金镜、右侧大木衣柜；衣柜旁宽凹入通道的左右墙端、同侧浴室门及远端另一有门房间相对位置一致。11比22/28更靠凹入入口。",
+      "boundary": "其他交界处／宽凹入口候选；11靠近床区与凹入通道的转折，不是远端真正有门扇的门洞内。",
+      "scope": "保留右侧凹入通道及其深处可见区域是否纳入的范围歧义；不能从图片宣称标注者一定会标入。",
+      "comment": "用户重点是右侧阶梯状墙端及深处区域的范围，而非确认传统门洞。",
+      "conflict": "没有明确冲突；疑似应注明是宽凹入口还是传统门洞，避免混用。",
+      "candidate_images": [
+        {
+          "number": 22,
+          "image_id": "pa4otMbVnkk_7be30830c80b4fb3a83d5f956c07e143"
+        },
+        {
+          "number": 28,
+          "image_id": "pa4otMbVnkk_8d4d0f90d2b145648e952352535c0f50"
+        }
+      ]
+    },
+    {
+      "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+      "building": "pa4",
+      "number": 14,
+      "source_comment": "确实离门框很近",
+      "candidates": [
+        5,
+        47
+      ],
+      "relation": "同一实际工作间入口／界面，不直接等同于工作间内部同房视点",
+      "evidence": "14门内的单窄窗、窗下缝纫机桌、左CRT电视、右高木柜在5/47逐项对应；47从工作间看回同一门外厨房冰箱及休闲沙发。存在带门扇和铰链的完整隔墙门口，厨房和工作间不能仅因相通合并。高木件从5/47看是柜子，不应确定称钢琴。",
+      "boundary": "实际门洞非常近／可能位于门洞内的候选；两侧门框在近处展开，但单RGB不足以确定相机恰在门框中心或偏外。",
+      "scope": "明确保留厨房休闲区与门内工作间的范围歧义，门外客厅与小厨房是连续可见功能区。",
+      "comment": "评论只确认离门框很近，没有确认严格门洞内。",
+      "conflict": "user_status已复核与user_audit_status待我复核不一致；door疑似与评论不冲突，不能自动改确认。",
+      "candidate_images": [
+        {
+          "number": 5,
+          "image_id": "pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b"
+        },
+        {
+          "number": 47,
+          "image_id": "pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807"
+        }
+      ]
+    },
+    {
+      "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+      "building": "q9",
+      "number": 13,
+      "source_comment": "这个房间分为了两个区域,他是在两个区域正中间拍摄,这图标注结果我记得确实差异很大,而且gt也不对",
+      "candidates": [
+        2,
+        1
+      ],
+      "relation": "13与02同一前厅及卧室白开口，01为相邻同卧室内部对照",
+      "evidence": "13和02相同前厅白墙木悬板花瓶、通客厅双木门、通卧室无门扇白开口；开口内长凳、叶枝画下桌椅、外侧玻璃门与01对应。",
+      "boundary": "床区与前厅白开口交界候选，位置非常接近开口；不是右侧通客厅的双木门门洞。",
+      "scope": "保留前厅与床区两区域范围歧义；物理房身份可以记录前厅子区及关联卧室，研究相似组可另设，不能只因连通立即把客厅合并。",
+      "comment": "用户确认两个区域正中并回忆分歧/GT问题；前半是位置判断，后半只记录为待后续标注证据核验，不反过来定义类别。",
+      "conflict": "确认门洞可能指广义区域交界，需要区分白开口和有门框门扇的实际入口；不撤销用户位置意见。",
+      "candidate_images": [
+        {
+          "number": 2,
+          "image_id": "q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e"
+        },
+        {
+          "number": 1,
+          "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d"
+        }
+      ]
+    },
+    {
+      "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+      "building": "q9",
+      "number": 22,
+      "source_comment": "确实离另一个空间的门洞很近,但是 我个人更倾向不是",
+      "candidates": [
+        1,
+        29
+      ],
+      "relation": "与01同卧室及29床侧梳妆壁龛强支持；27不是直接匹配",
+      "evidence": "22与01的浴室宽木推拉门在床侧梳妆凹口旁，外玻璃门与粉毯躺椅方位一致。22面向梳妆桌时衣帽间门在左、浴室侧在右，与29相符；27同样面向桌子时衣帽间在右且内部保险柜架在左，是镜像配置，不能凭同家具合并。",
+      "boundary": "更像卧室侧靠白墙端／壁龛开口，看到两区；不是画面左方衣帽间门洞内，浴室推拉门也在另一相邻方位。",
+      "scope": "床区与梳妆凹口范围候选可保留；不能用严格门洞否定范围研究价值。",
+      "comment": "用户倾向不是门洞内，明确区分近门与处于门洞。",
+      "conflict": "文字倾向否，选项仍疑似，是未完成裁定而非应由AI自动改值。",
+      "candidate_images": [
+        {
+          "number": 1,
+          "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d"
+        },
+        {
+          "number": 29,
+          "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2"
+        }
+      ]
+    },
+    {
+      "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+      "building": "uNb",
+      "number": 2,
+      "source_comment": "这个房间比较奇怪,他是一个\"凸\" 字型的房间,左右两侧通向走廊,这个不知道算不算",
+      "candidates": [
+        28,
+        44
+      ],
+      "relation": "同一卧室，强视觉支持；不恢复旧r1整组",
+      "evidence": "02/28/44床右窄长窗、外侧双玻璃门两边拱镜龛、枝干画下双椅圆桌、短台阶通往单一窄入口的相对位置均一致。02左右画幅边缘是同一后方入口跨全景接缝展开，28/44均把该入口完整呈现在一侧，不能据02数成两条走廊。",
+      "boundary": "短台阶下方卧室入口收窄／墙端交界，未见相机跨有门扇门洞的充分依据。",
+      "scope": "仍可保留阶差、入口收窄与通道是否纳入的空间范围候选；需要旋转全景展示解释接缝。",
+      "comment": "用户凸字型是空间形态印象，但左右两侧走廊解释应更正为同一入口在接缝两边展示。",
+      "conflict": "用户已清空room，不能自动恢复旧r1；建议02与28/44作独立同房候选。",
+      "candidate_images": [
+        {
+          "number": 28,
+          "image_id": "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b"
+        },
+        {
+          "number": 44,
+          "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13"
+        }
+      ]
+    }
+  ],
+  "viewed_originals": [
+    {
+      "number": 11,
+      "image_id": "pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e"
+    },
+    {
+      "number": 14,
+      "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3"
+    },
+    {
+      "number": 22,
+      "image_id": "pa4otMbVnkk_7be30830c80b4fb3a83d5f956c07e143"
+    },
+    {
+      "number": 5,
+      "image_id": "pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b"
+    },
+    {
+      "number": 13,
+      "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4"
+    },
+    {
+      "number": 22,
+      "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf"
+    },
+    {
+      "number": 2,
+      "image_id": "q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e"
+    },
+    {
+      "number": 1,
+      "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d"
+    },
+    {
+      "number": 27,
+      "image_id": "q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b"
+    },
+    {
+      "number": 29,
+      "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2"
+    },
+    {
+      "number": 2,
+      "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086"
+    },
+    {
+      "number": 28,
+      "image_id": "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b"
+    },
+    {
+      "number": 44,
+      "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13"
+    },
+    {
+      "number": 28,
+      "image_id": "pa4otMbVnkk_8d4d0f90d2b145648e952352535c0f50"
+    },
+    {
+      "number": 47,
+      "image_id": "pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807"
+    }
+  ],
+  "limitations": "无深度或相机位姿，不能确认厘米级门洞中心；家具辅助结构比对，不单凭同装修/功能并房。未修改来源JSON、HTML、正式状态或逐组讨论记录。"
+}

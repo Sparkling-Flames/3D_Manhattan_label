@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "combination_identity_keys_unique": true,
+  "probability_accounting": true,
+  "no_target_building_in_group_training": true,
+  "combinatorial_counts_and_mean_reference_closed_form_checks": 6179,
+  "figure_source_tables": "classification_summary, disjoint_half_stability, combination_summary",
+  "test_command": ".venv/Scripts/python.exe -m pytest tests/test_validate_worker_reuse_20260909.py tests/test_worker_reference_feasibility_20260909.py tests/test_prepare_confirmed_point_calculation_view_20260909.py -q",
+  "test_result_record": "tests.log",
+  "raw_annotation_modified": false
+}

@@ -1,0 +1,285 @@
+{
+  "status": "passed_with_interpretation_boundaries",
+  "review_date": "2026-09-09",
+  "review_type": "Independent read-only review; only this review JSON is newly written.",
+  "code": "tools/thesis_main/analysis/predict_building_stages_20260909.py",
+  "earlier_review": {
+    "version_status": "Earlier review preceded unified k>=2 onset domain and exact-source identity gain corrections. Earlier onset/count/gain fields are superseded by the final rerun.",
+    "independent_curve_predictions": {
+      "checked_predictions": 80,
+      "cases": 10,
+      "buildings": 3,
+      "models": [
+        "building_mean",
+        "outside_mean",
+        "within_shared",
+        "outside_shared",
+        "blend_shared",
+        "within_risk",
+        "outside_risk",
+        "blend_risk"
+      ],
+      "design": "with_workers q_0.950 H20 fraction0.5 balanced first2folds and first2targets where available",
+      "input_evidence": [
+        "prediction/split_manifest.csv",
+        "stages/stage_curves.csv.gz",
+        "features/image_features.npz",
+        "features/image_feature_audit.csv"
+      ],
+      "max_absolute_error": 1.0186296250935811e-14,
+      "method": "Independently reconstructed float64 per-image L2 normalized shared-feature Euclidean distances, raw scalar risk distances, inverse-distance top3 weights, source means and fixed0.5 blends, then averaged interval absolute error over legal k2..H-5."
+    },
+    "aggregation": {
+      "per_building_rows": 5568,
+      "summary_rows": 936,
+      "metrics_checked": [
+        "curve_error_lower",
+        "curve_error_upper",
+        "gain_over_base_lower",
+        "gain_over_base_upper",
+        "target_unknown_width",
+        "count_error"
+      ],
+      "absolute_tolerance": 1e-12,
+      "all_match": true
+    },
+    "observed_source_budgets": [
+      {
+        "building_prefix": "S9",
+        "within_sources": 1,
+        "outside_mean_sources": 52
+      },
+      {
+        "building_prefix": "UwV",
+        "within_sources": 3,
+        "outside_mean_sources": 48
+      },
+      {
+        "building_prefix": "uNb",
+        "within_sources": 6,
+        "outside_mean_sources": 42
+      }
+    ],
+    "issues_identified_and_now_corrected": [
+      {
+        "issue": "Earlier onset routine admitted k1 despite the m2 support requirement. Images stable at every k>=2 could receive possible1/conservative2 and no identified onset.",
+        "old_fields_affected": [
+          "possible",
+          "conservative",
+          "identified",
+          "status",
+          "target_onset",
+          "target_status",
+          "pred_possible",
+          "pred_conservative",
+          "pred_status",
+          "count_prediction",
+          "count_error",
+          "identified_targets",
+          "count_targets",
+          "low_n conditional_count",
+          "no_imputation onset fields"
+        ],
+        "final_resolution": "Shared stage_onset excludes k1, then restores actual k indices. Stage summaries, count predictions, low-N forecasts and no-imputation onset fields were regenerated."
+      },
+      {
+        "issue": "Forecasts having identical source-image coefficients to baseline could retain conservative nonzero gain intervals.",
+        "old_fields_affected": [
+          "gain_over_base_lower",
+          "gain_over_base_upper",
+          "buildings_gain_definitely_positive",
+          "buildings_gain_definitely_negative"
+        ],
+        "final_resolution": "Compare actual normalized source-image coefficients. Identical linear forecasts receive exact zero gain."
+      }
+    ],
+    "final_schema_additions": [
+      "identical_linear_prediction_to_base",
+      "count_buildings",
+      "count_appearances",
+      "target_appearances"
+    ]
+  },
+  "final_revision_checks": {
+    "stage_onset_domain": {
+      "rows": 11904,
+      "minimum_nonmissing": {
+        "possible": 2.0,
+        "conservative": 2.0,
+        "identified": 2.0
+      }
+    },
+    "independent_onset_recalculation": {
+      "curve_groups": 11904,
+      "all_match": true,
+      "candidate_domain": "k>=2",
+      "rate": 0.8
+    },
+    "early_images": [
+      {
+        "image_id": "S9hNv5qa7GM_bd9faec23bb3462c94a5fbc6c0a3d5cf",
+        "mode": "with_workers",
+        "horizon": 20,
+        "config": "q_0.950",
+        "possible": 2.0,
+        "conservative": 2.0,
+        "identified": 2.0,
+        "status": "identified"
+      },
+      {
+        "image_id": "S9hNv5qa7GM_bd9faec23bb3462c94a5fbc6c0a3d5cf",
+        "mode": "without_workers",
+        "horizon": 20,
+        "config": "q_0.950",
+        "possible": 2.0,
+        "conservative": 2.0,
+        "identified": 2.0,
+        "status": "identified"
+      },
+      {
+        "image_id": "wc2JMjhGNzB_2195c5a9b9fd451b927b0050f23fac31",
+        "mode": "with_workers",
+        "horizon": 20,
+        "config": "q_0.950",
+        "possible": 2.0,
+        "conservative": 2.0,
+        "identified": 2.0,
+        "status": "identified"
+      },
+      {
+        "image_id": "wc2JMjhGNzB_2195c5a9b9fd451b927b0050f23fac31",
+        "mode": "without_workers",
+        "horizon": 20,
+        "config": "q_0.950",
+        "possible": 2.0,
+        "conservative": 2.0,
+        "identified": 2.0,
+        "status": "identified"
+      }
+    ],
+    "no_imputation_domain": {
+      "rows": 40,
+      "all_nonmissing_onsets_at_least_2": true
+    },
+    "prediction_onset_domain": {
+      "rows": 616884,
+      "all_nonmissing_at_least_2": true
+    },
+    "identity_gain": {
+      "one_source_within_rows": 448,
+      "one_source_buildings": [
+        "S9hNv5qa7GM",
+        "b8cTxDM8gDG"
+      ],
+      "all_one_source_marked_identical": true,
+      "all_one_source_gain_exact_zero": true,
+      "identical_rows": 59266,
+      "all_identical_gain_exact_zero": true
+    },
+    "final_aggregation": {
+      "prediction_rows": 616884,
+      "per_image_rows": 27456,
+      "per_building_rows": 5568,
+      "summary_rows": 936,
+      "all_values_and_count_denominators_match": true,
+      "absolute_tolerance": 1e-12,
+      "count_semantics": {
+        "count_buildings": "Buildings having at least one target with at least one nonmissing count error.",
+        "count_targets": "Unique targets having a nonmissing count error in at least one split; not all splits are necessarily covered.",
+        "identified_targets": "Unique targets with identified true onset regardless of count forecast availability.",
+        "count_appearances": "Nonmissing target-by-split count errors.",
+        "target_appearances": "All target-by-split appearances; overlapping appearances are not independent."
+      }
+    },
+    "final_primary_examples": [
+      {
+        "experiment": "high_split",
+        "mode": "with_workers",
+        "config": "q_0.950",
+        "horizon": 20,
+        "fraction": 0.5,
+        "design": "balanced",
+        "model": "building_mean",
+        "curve_error_lower": 0.2196731586,
+        "curve_error_upper": 0.5597561601,
+        "gain_over_base_lower": 0.0,
+        "gain_over_base_upper": 0.0,
+        "target_unknown_width": 0.1902030612,
+        "count_error": 1.0566239316,
+        "buildings": 10,
+        "images": 50,
+        "count_targets": 8,
+        "identified_targets": 13,
+        "count_buildings": 3,
+        "count_appearances": 334,
+        "target_appearances": 1074,
+        "buildings_gain_definitely_positive": 0,
+        "buildings_gain_definitely_negative": 0
+      },
+      {
+        "experiment": "high_split",
+        "mode": "with_workers",
+        "config": "q_0.950",
+        "horizon": 20,
+        "fraction": 0.5,
+        "design": "balanced",
+        "model": "outside_mean",
+        "curve_error_lower": 0.1780080844,
+        "curve_error_upper": 0.4517007606,
+        "gain_over_base_lower": -0.1479744935,
+        "gain_over_base_upper": 0.2776389318,
+        "target_unknown_width": 0.1902030612,
+        "count_error": 2.03125,
+        "buildings": 10,
+        "images": 50,
+        "count_targets": 13,
+        "identified_targets": 13,
+        "count_buildings": 8,
+        "count_appearances": 345,
+        "target_appearances": 1074,
+        "buildings_gain_definitely_positive": 0,
+        "buildings_gain_definitely_negative": 0
+      },
+      {
+        "experiment": "high_split",
+        "mode": "with_workers",
+        "config": "q_0.950",
+        "horizon": 20,
+        "fraction": 0.5,
+        "design": "balanced",
+        "model": "within_shared",
+        "curve_error_lower": 0.2199715089,
+        "curve_error_upper": 0.5600279604,
+        "gain_over_base_lower": -0.1091250653,
+        "gain_over_base_upper": 0.1095399065,
+        "target_unknown_width": 0.1902030612,
+        "count_error": 1.0749612023,
+        "buildings": 10,
+        "images": 50,
+        "count_targets": 8,
+        "identified_targets": 13,
+        "count_buildings": 3,
+        "count_appearances": 238,
+        "target_appearances": 1074,
+        "buildings_gain_definitely_positive": 0,
+        "buildings_gain_definitely_negative": 0
+      }
+    ],
+    "low_n_domain": {
+      "rows": 4104,
+      "targets": 98,
+      "all_nonmissing_onsets_at_least_2": true,
+      "all_evaluation_pending_long_history": true
+    }
+  },
+  "remaining_interpretation_boundaries": [
+    "No target human stability label is used in split design, feature distances or source selection. Outside sources exclude the entire target building. Person counts and risk ranks used for balance are observed design metadata.",
+    "outside_mean uses the full available outside-building pool and is not budget-matched to the smaller within-building source sets. Neighbor models use at most three source images.",
+    "Nonblend count forecasts are weighted medians conditional on identified source onsets. Target count MAE requires both an identified target onset and an available forecast; it is not full-target-set accuracy. Blend count follows the actual blend CDF.",
+    "count_targets means at least one split is covered. count_appearances/target_appearances is additionally needed to show missing split-level forecasts.",
+    "Evaluation averages splits within target, then targets within building, then buildings equally. Count-error means skip missing values at each stage, unlike pooled split-weighted MAE.",
+    "Four small buildings have only one target in some splits. The two fractions can round to the same source/target allocation; overlapping folds and fractions are not independent replications.",
+    "Unknown bounds are partial-identification bounds, not confidence intervals. Sustained stability to finite H does not establish eventual convergence.",
+    "The independent 80-prediction reconstruction covers selected examples, not every feature model. The final aggregation check covers every emitted evaluation row."
+  ]
+}

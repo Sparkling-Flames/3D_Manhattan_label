@@ -1,0 +1,55 @@
+case_id,image_id,human_text,supplement_text,reference_basis,reference_allowed,hold_reason,manual_responses,workers,audit_note
+V01,X7HyMhZNoso_2b16acff0dc042a1a75816a1fbd0a302,"主要是左边和右边的边界,因为我是记得这个房间的(其他全景图标注),好像从别的视角来看的话,好像全都不太对",,gt_assumed_correct,False,cross_view_reference_unresolved,5,5,保留原文；不生成新的逐人规则违反判决
+V02,pRbA3pwrgk9_8b07a4b08cf447abb246769d8dce8494,,,gt_assumed_correct,False,reviewer_oos,20,20,保留原文；不生成新的逐人规则违反判决
+V03,2t7WUuJeko7_7b017f053981438a9c075e599f2c5866,"w08没问题吧,它角点顺序完全不用调整",,gt_assumed_correct,True,,3,3,保留原文；不生成新的逐人规则违反判决
+V04,wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f,"工人的标注都是和 gt相似.
+不过这图是 bi layout 明显的 两种标注模式的差异","v04 左上和右上的天花板有个下凸,如果标extended就得忽略这里,如果标enclose,就得在这里截止(比如gt和两位工人)",gt_assumed_correct,True,,5,5,保留原文；不生成新的逐人规则违反判决
+V05,B6ByNegPMKs_d7ade8d217fe4d068fc3629dd2510898,HOHOENT的天花板标矮了,,gt_assumed_correct,True,,0,0,保留原文；不生成新的逐人规则违反判决
+V06,uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d,"这个两个工人的角点顺序你又搞错了,完全不用动 顺序,就是正常的",,gt_assumed_correct,False,scope_unresolved,6,6,保留原文；不生成新的逐人规则违反判决
+V07,yqstnuAEVhm_e3face7b2196414d95ed97151aa13058,"这属于高难图,我记得我改了一份 gt的标注.真人簇2属于enclosed(但是缺失了一部分房间),你可以看看worker002 的或者我修改的gt标注",,reviewed_reference,True,,25,25,保留原文；不生成新的逐人规则违反判决
+V08,7y3sRwLe3Va_1410b021e1c14f529188eb026fbb369a,,,reviewed_reference,True,,25,25,保留原文；不生成新的逐人规则违反判决
+V09,q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2,"bi 的enclosed标注不错,但是真人的w2标注也是一种enclosed的标注方法(不是标的特别准确). gt是 extended,但是它忽略了凸起的墙柱,bi 的extended也略有问题",,gt_assumed_correct,False,gt_extended_scope_not_unique_rule_reference,5,5,保留原文；不生成新的逐人规则违反判决
+V10,jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037,"所有模型好像都识别错了 左边和右边的corner的位置,我感觉人工的标注是对的,但是w15角点顺序顺着是对的,你又无意义调整.我好像 改过这张图的gt",,gt_assumed_correct,False,remembered_gt_revision_not_identified,6,6,保留原文；不生成新的逐人规则违反判决
+V11,UwV83HsGsw3_b979526475874ad68ae33f02d407a1fc,"在不考虑是否inscope下. gt更像extended,其余更像enclosed",,gt_assumed_correct,False,scope_unresolved,5,5,保留原文；不生成新的逐人规则违反判决
+V12,B6ByNegPMKs_75327de9719945aa8b893a6404667884,"大差不差,但是左右的边界(在哪截止)可能有点模糊,不同人可能有不同判断",,reviewed_reference,False,boundary_choice_uncertain,0,0,保留原文；不生成新的逐人规则违反判决
+V13,pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3,"bi 的enclosed 标注有点错,HOHONET 和gt 属于enclosed",,gt_assumed_correct,True,,6,6,保留原文；不生成新的逐人规则违反判决
+V14,S9hNv5qa7GM_bd9faec23bb3462c94a5fbc6c0a3d5cf,,,gt_assumed_correct,True,,20,20,保留原文；不生成新的逐人规则违反判决
+V15,b8cTxDM8gDG_298a2386166a43c8a04e1c24433f7d15,"w10的角点顺序按照原始的就行.
+之后oos 是因为墙体扭曲过大,不太知道到底房间的布局是什么了","v15歧义很大,正中间的墙因为全景图拼接而扭曲,我没法判断门这里是不是墙的拐角,还是说这是一整片墙连到门里. 因为我无论怎么尝试,3d 的都没法做到正交.",reviewed_reference,False,stitching_and_boundary_unresolved,26,26,保留原文；不生成新的逐人规则违反判决
+V16,VFuaQ6m2Qom_381ce3cd69b846c3b920be16d29ed48e,"w37是标错的,模型的标注没啥问题,不过你人工标注的角点顺序不调整反而是对的",,gt_assumed_correct,True,,2,2,保留原文；不生成新的逐人规则违反判决
+V17,rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a,"bi 的enclosed的和gt是最标准的enclosed,HOHONET 跨门扩张,",,reviewed_reference,True,,0,0,保留原文；不生成新的逐人规则违反判决
+V18,e9zR4mvMWw7_12c84e77f6564013a032220e8f9037e8,,,gt_assumed_correct,True,,0,0,保留原文；不生成新的逐人规则违反判决
+V19,zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b,"这图有变动门把 右边的墙挡住了大部分,所以gt,bi,hoho,都不太对.反而是人的 那比较有道理. (但是没有微调以符合曼哈顿世界约束)   它应该是属于曼哈顿,但是遮挡严重,这个图分歧感觉挺大的",,gt_assumed_correct,False,gt_questioned_no_replacement,4,4,保留原文；不生成新的逐人规则违反判决
+V20,x8F5xyUWy9e_9926b38bd87e44e292d9c375050dd17d,"所有模型和gt都漏了图片中偏左的 柱子,人工标注的没有忽略,我记得我好像改过这图的gt? ",,gt_assumed_correct,False,gt_missing_protrusion_no_replacement,5,5,保留原文；不生成新的逐人规则违反判决
+V21,jh4fc5c5qoQ_855bc326ad174253b57626daf123c608,"这张图是 extended和enclosed比较差别明显的吧,gt标注的是extended,而且特别精细,bi extended也不错,都有略微一点点瑕疵.",,gt_assumed_correct,False,extended_scope_not_unique_rule_reference,2,2,保留原文；不生成新的逐人规则违反判决
+V22,Z6MFQCViBuw_2008e72476f84104858e908beeac0193,"标注者角点顺序你不该改的,之后bi 的extended 成为了 过度解析,可能是太想去找extended的区域了.enclosed的模型标注大体没啥问题",,gt_assumed_correct,True,,5,5,保留原文；不生成新的逐人规则违反判决
+V23,VLzqgDo317F_5d3591edd7c546acaf99db40281b3409,人工 的标注 你又把顺序搞混乱了,,gt_assumed_correct,True,,2,2,保留原文；不生成新的逐人规则违反判决
+V24,2t7WUuJeko7_976c954bc5944db493d6149ee4bc7a2a,,,gt_assumed_correct,True,,1,1,保留原文；不生成新的逐人规则违反判决
+V25,7y3sRwLe3Va_b47475370e824b9e923a4a96bc98e1e3,"gt的顺序理清后,就是完全正确的, 人工标注的顺序没有调整",,gt_assumed_correct,False,nonplanar_ceiling_uncertain,5,5,保留原文；不生成新的逐人规则违反判决
+V26,X7HyMhZNoso_28ada927582d4d6ea7cf44cabf31527a,"有个gt的顺序没有调整,bi 的 两种情况基本无差别",,reviewed_reference,True,,0,0,保留原文；不生成新的逐人规则违反判决
+V27,uNb9QFRL6hY_f7944295a76541b186e6a557ebdbba14,"这个是站在门框下拍的,所以说有歧义","v27 意思是右边的里面空间,如果纳入标注的话,天花板就分层.之后说句实话,我也不知道怎么标合适,怎么标都不是特别完美",gt_assumed_correct,False,layered_ceiling_boundary_unresolved,5,5,保留原文；不生成新的逐人规则违反判决
+V28,B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993,"HOHONET的肯定错误,但是其余的 右边到底在哪里结束,还有异议,我个人可能更倾向人工的.  都不是完美的标注",,reviewed_reference,False,multiple_scope_choices,25,25,保留原文；不生成新的逐人规则违反判决
+V29,yqstnuAEVhm_26b2e92ccd314a2da1a4fc8dfc6e6f56,"bi extended 和hoho 都是extended标注,其余是enclosed,但是簇2 在右侧的结束点不一致,感觉两种都大差不差",,reviewed_reference,False,multiple_scope_choices,23,23,保留原文；不生成新的逐人规则违反判决
+V30,pRbA3pwrgk9_2a3810bc7ecc491e81ff1e8a17692ec1,"都大差不差, bi 没有出现两种标注",,gt_assumed_correct,True,,5,5,保留原文；不生成新的逐人规则违反判决
+V31,wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd,"严格来说,只有我改过的gt 是算enclosed ,其余的都是extended,但是他们标注的也不好,他们包括长廊的这个东西,或者左边墙面有些标注不准",,reviewed_reference,False,multiple_scope_choices_even_with_corrected_gt,6,6,保留原文；不生成新的逐人规则违反判决
+V32,7y3sRwLe3Va_dfe1f8e8b58d4da49f0c73516e7a4b67,"bi的extended不是我想象中的extended.这个和之前的的25是同一个房间,如果对比来看,这肯定不够 ""extended"",不过他也确实标了额外空间",,gt_assumed_correct,False,scope_comparison_unresolved,0,0,保留原文；不生成新的逐人规则违反判决
+V33,X7HyMhZNoso_2fa0da1a66e04428b315cb93b72143d5,"其实这张图主要的问题是,左边和 马桶之间的区域,里面到底需不需要标注,还是说 就把它当做不是一个房间/凸出的墙?我记得一个房间的图的gt标注里,我是在另一个图里标注了这个空间,不像这所有标注直接 ""忽略""(我也不知道怎么表述清楚)
+bi 完全没区别
+",,gt_assumed_correct,False,cross_view_scope_unresolved,0,0,保留原文；不生成新的逐人规则违反判决
+V34,b8cTxDM8gDG_8316e9313299447bb1f574aaf8cbec73,"这所有标的都是extended ,只有gt0 的extended标注的好.这是很明可能出现 标注范围有歧义的图",,gt_assumed_correct,False,extended_scope_may_exceed_current_image,0,0,保留原文；不生成新的逐人规则违反判决
+V35,e9zR4mvMWw7_18653fa3d6ba4f82889237201ee07d11,"两个gt反而是extended,其余是enclosed",,gt_assumed_correct,False,gt_extended_scope_not_unique_rule_reference,0,0,保留原文；不生成新的逐人规则违反判决
+V36,wc2JMjhGNzB_5c363f3933e84bb5aceb3899f997b6fb,"bi enclosed和gt属于enclosed,但是bi extended有问题,反而是hoho是extended(虽然标注的有小问题)",,gt_assumed_correct,True,,0,0,保留原文；不生成新的逐人规则违反判决
+V37,uNb9QFRL6hY_068fb0d52d01455c96fa23659c373bf8,都差不多,,gt_assumed_correct,True,,0,0,保留原文；不生成新的逐人规则违反判决
+V38,yqstnuAEVhm_6440d94be92546fdab587df78fbea28b,"这张图模型被玻璃干扰, bi所谓的extended其实还是同一个房间.  gt标的最对",,gt_assumed_correct,False,gt_inaccurate,0,0,旧账本gt_inaccurate与原文gt标的最对不一致；本轮无Manual响应，不改变估计
+V39,X7HyMhZNoso_84cc1504051f4b1c9492dfab5dce84f9,"都大差不差,标注空间一致",,gt_assumed_correct,True,,0,0,保留原文；不生成新的逐人规则违反判决
+V40,7y3sRwLe3Va_1679b5de39e548d38ba240f2fd99cae9,"这张图是在门框下拍摄的,所以范围很不好界定, 都一般.hoho错的,但是bi 的两种 方法 是有明显差别的. 虽说肯定有点小问题,gt 硬说的话,也有一点问题(这么难的标注成这样已经很不错的)",,gt_assumed_correct,False,boundary_and_gt_uncertain,0,0,保留原文；不生成新的逐人规则违反判决
+V41,b8cTxDM8gDG_184a9b92b85840d88bf5793da9aa9cba,hoho错了,,gt_assumed_correct,True,,0,0,保留原文；不生成新的逐人规则违反判决
+V42,B6ByNegPMKs_8c889fb13bce4bcebdac872570cb5381,"bi全错.  hoho也有点问题,gt最好",,gt_assumed_correct,True,,0,0,保留原文；不生成新的逐人规则违反判决
+V43,e9zR4mvMWw7_5f9b1db7cc1748c2a71d9924bd1f4fa3,都大差不差,,gt_assumed_correct,True,,0,0,保留原文；不生成新的逐人规则违反判决
+V44,uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269,"gt和bi extended属于extended,其余是enclosed ,我觉得属于的enclose更正确,右边的门口那里不标注会更好,. 不过这图确实体现了bi 的不同输出",,gt_assumed_correct,False,review_prefers_enclosed_over_gt,0,0,保留原文；不生成新的逐人规则违反判决
+V45,wc2JMjhGNzB_3949e4e00d354f79afea742a2b0599d2,"都大差不差,bi 的基本没区别,我以为他会跨门标,结果没有",,gt_assumed_correct,True,,0,0,保留原文；不生成新的逐人规则违反判决
+V46,yqstnuAEVhm_7acd3d3a7bee44a8ad04d460509b994e,"bi 的两个标注的最好,其余的都是忽略了右边墙上凸起.  这张图也没有标注歧义(也分不出enclosed和extended)",,gt_assumed_correct,False,gt_missing_protrusion,0,0,保留原文；不生成新的逐人规则违反判决
+V47,X7HyMhZNoso_a830b673f439458aa54a716194d972b7,都差不多,,gt_assumed_correct,True,,0,0,保留原文；不生成新的逐人规则违反判决
+V48,b8cTxDM8gDG_bd2d16e81707455eacd72cda7eb5d3d5,"gt 和hoho 在细微上略有偏差(很小),我反而觉得bi 更好.  但是没有出现我预想中的extended","v48是左边和右边拼接处不是有个玻璃门嘛,我以为bi 的extended会跨过这个门. 但是说实话,正确的曼哈顿世界约束下,就是不跨过(可能是我对bi 的期待有点高)",gt_assumed_correct,True,,0,0,保留原文；不生成新的逐人规则违反判决
+V49,e9zR4mvMWw7_8783add8825d4ecf8eb1f2af3c22b8df,"大差不差,没歧义",,gt_assumed_correct,True,,0,0,保留原文；不生成新的逐人规则违反判决
+V50,B6ByNegPMKs_1c21814e7e7447d5b650afdff65c287e,都大差不差,,gt_assumed_correct,True,,0,0,保留原文；不生成新的逐人规则违反判决

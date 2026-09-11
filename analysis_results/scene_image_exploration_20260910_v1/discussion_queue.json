@@ -1,0 +1,647 @@
+{
+  "schema": "scene_discussion_queue_v1",
+  "source_saved_at": "2026-09-10T15:16:04.389Z",
+  "status": "先逐组讨论，暂停剩余全量复核",
+  "selection_contract": "14本轮仍需讨论+6待我复核+3原需讨论但本轮未设；其他评论冲突见comment_semantics_review.json。未设状态不自动认定漏审。",
+  "rows": [
+    {
+      "image_id": "7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44",
+      "building": "7y3sRwLe3Va",
+      "number": 2,
+      "queue_reasons": [
+        "原状态需讨论，本轮未设状态"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C074",
+          "dimension": "reference"
+        }
+      ],
+      "source_user": {
+        "image_id": "7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44",
+        "building": "7y3sRwLe3Va",
+        "split": "test",
+        "user_room": "r11",
+        "user_type": "储藏与家务辅助",
+        "user_boundary": "",
+        "user_doorway": "疑似",
+        "user_artifact": "未见明显异常",
+        "user_status": "需讨论",
+        "user_note": ""
+      }
+    },
+    {
+      "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+      "building": "B6ByNegPMKs",
+      "number": 47,
+      "queue_reasons": [
+        "明确仍需讨论"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C015",
+          "dimension": "doorway"
+        }
+      ],
+      "source_user": {
+        "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+        "building": "B6ByNegPMKs",
+        "split": "test",
+        "user_room": "r13",
+        "user_type": "通行与连接",
+        "user_boundary": "",
+        "user_doorway": "疑似",
+        "user_artifact": "未见明显异常",
+        "user_status": "需讨论",
+        "user_note": "不过这个图确实不好判断标注空间,虽然不是在门框下拍的,但是确实这个拍摄位置,确实直接连接了两个空间",
+        "user_audit_status": "仍需讨论"
+      }
+    },
+    {
+      "image_id": "UwV83HsGsw3_16af52545aff47afb4d7b330a49091a2",
+      "building": "UwV83HsGsw3",
+      "number": 3,
+      "queue_reasons": [
+        "明确仍需讨论"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C017",
+          "dimension": "doorway"
+        }
+      ],
+      "source_user": {
+        "image_id": "UwV83HsGsw3_16af52545aff47afb4d7b330a49091a2",
+        "building": "UwV83HsGsw3",
+        "split": "test",
+        "user_room": "r3",
+        "user_type": "厨房与用餐",
+        "user_boundary": "",
+        "user_doorway": "疑似",
+        "user_artifact": "未见明显异常",
+        "user_status": "需讨论",
+        "user_note": "不是门框但是有那个效果 , 这图算oos",
+        "user_audit_status": "仍需讨论"
+      }
+    },
+    {
+      "image_id": "UwV83HsGsw3_528d342bf5494b3b94983545d6a1a282",
+      "building": "UwV83HsGsw3",
+      "number": 6,
+      "queue_reasons": [
+        "明确仍需讨论"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C018",
+          "dimension": "doorway"
+        }
+      ],
+      "source_user": {
+        "image_id": "UwV83HsGsw3_528d342bf5494b3b94983545d6a1a282",
+        "building": "UwV83HsGsw3",
+        "split": "test",
+        "user_room": "r4",
+        "user_type": "厨房与用餐",
+        "user_boundary": "",
+        "user_doorway": "疑似",
+        "user_artifact": "未见明显异常",
+        "user_status": "需讨论",
+        "user_note": "不是门框但是有那个效果,这图好像和r3是同一个房间啊",
+        "user_audit_status": "仍需讨论"
+      }
+    },
+    {
+      "image_id": "UwV83HsGsw3_b979526475874ad68ae33f02d407a1fc",
+      "building": "UwV83HsGsw3",
+      "number": 16,
+      "queue_reasons": [
+        "本轮状态待核对；有评论不表示未看"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C019",
+          "dimension": "doorway"
+        }
+      ],
+      "source_user": {
+        "image_id": "UwV83HsGsw3_b979526475874ad68ae33f02d407a1fc",
+        "building": "UwV83HsGsw3",
+        "split": "test",
+        "user_room": "r3",
+        "user_type": "起居与休闲",
+        "user_boundary": "",
+        "user_doorway": "否",
+        "user_artifact": "未见明显异常",
+        "user_status": "已复核",
+        "user_note": "不是门框但是有那个效果,这个其实和r3,r4 是同一个连通的地方.18->17->19是从右到左 连着拍的",
+        "user_audit_status": "待我复核"
+      }
+    },
+    {
+      "image_id": "UwV83HsGsw3_fcd79f4b6a6642e99227caffb51bf407",
+      "building": "UwV83HsGsw3",
+      "number": 23,
+      "queue_reasons": [
+        "本轮状态待核对；有评论不表示未看"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C022",
+          "dimension": "doorway"
+        }
+      ],
+      "source_user": {
+        "image_id": "UwV83HsGsw3_fcd79f4b6a6642e99227caffb51bf407",
+        "building": "UwV83HsGsw3",
+        "split": "test",
+        "user_room": "r3",
+        "user_type": "起居与休闲",
+        "user_boundary": "",
+        "user_doorway": "疑似",
+        "user_artifact": "未见明显异常",
+        "user_status": "已复核",
+        "user_note": "不是门框但是有那个效果,这个和前面说的r3,r4还是同一个大区域,",
+        "user_audit_status": "待我复核"
+      }
+    },
+    {
+      "image_id": "X7HyMhZNoso_0595477618f44940b004970372df16dc",
+      "building": "X7HyMhZNoso",
+      "number": 1,
+      "queue_reasons": [
+        "明确仍需讨论"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C023",
+          "dimension": "doorway"
+        }
+      ],
+      "source_user": {
+        "image_id": "X7HyMhZNoso_0595477618f44940b004970372df16dc",
+        "building": "X7HyMhZNoso",
+        "split": "test",
+        "user_room": "r8",
+        "user_type": "通行与连接",
+        "user_boundary": "",
+        "user_doorway": "疑似",
+        "user_artifact": "未见明显异常",
+        "user_status": "需讨论",
+        "user_note": "支撑柱子,oos",
+        "user_audit_status": "仍需讨论"
+      }
+    },
+    {
+      "image_id": "b8cTxDM8gDG_d38c4ae95f5b4640a2696b923b80d1f4",
+      "building": "b8cTxDM8gDG",
+      "number": 13,
+      "queue_reasons": [
+        "明确仍需讨论"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C027",
+          "dimension": "doorway"
+        }
+      ],
+      "source_user": {
+        "image_id": "b8cTxDM8gDG_d38c4ae95f5b4640a2696b923b80d1f4",
+        "building": "b8cTxDM8gDG",
+        "split": "test",
+        "user_room": "r13",
+        "user_type": "复合／待定",
+        "user_boundary": "",
+        "user_doorway": "疑似",
+        "user_artifact": "未见明显异常",
+        "user_status": "需讨论",
+        "user_note": "门框分割出来的房间有点多,这张图确实不好判断标注的区域是什么",
+        "user_audit_status": "仍需讨论"
+      }
+    },
+    {
+      "image_id": "e9zR4mvMWw7_2224be23a70a475ea6daa55d4c90a91b",
+      "building": "e9zR4mvMWw7",
+      "number": 13,
+      "queue_reasons": [
+        "本轮状态待核对；有评论不表示未看"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C030",
+          "dimension": "doorway"
+        }
+      ],
+      "source_user": {
+        "image_id": "e9zR4mvMWw7_2224be23a70a475ea6daa55d4c90a91b",
+        "building": "e9zR4mvMWw7",
+        "split": "test",
+        "user_room": "r12",
+        "user_type": "厨房与用餐",
+        "user_boundary": "",
+        "user_doorway": "疑似",
+        "user_artifact": "未见明显异常",
+        "user_status": "已复核",
+        "user_note": "这个确实是站在了两个区域,一个厨房,一个餐厅的分割正中间,不算传统的门框",
+        "user_audit_status": "待我复核"
+      }
+    },
+    {
+      "image_id": "e9zR4mvMWw7_f6c327acf9884d988714467217d67dcd",
+      "building": "e9zR4mvMWw7",
+      "number": 38,
+      "queue_reasons": [
+        "明确仍需讨论"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C031",
+          "dimension": "doorway"
+        }
+      ],
+      "source_user": {
+        "image_id": "e9zR4mvMWw7_f6c327acf9884d988714467217d67dcd",
+        "building": "e9zR4mvMWw7",
+        "split": "test",
+        "user_room": "r13",
+        "user_type": "厨房与用餐",
+        "user_boundary": "",
+        "user_doorway": "疑似",
+        "user_artifact": "未见明显异常",
+        "user_status": "需讨论",
+        "user_note": "这个也是类似,但是r13和r12 其实就跟我前面说的那样,030在区域分割的正中间拍的",
+        "user_audit_status": "仍需讨论"
+      }
+    },
+    {
+      "image_id": "e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814",
+      "building": "e9zR4mvMWw7",
+      "number": 39,
+      "queue_reasons": [
+        "原状态需讨论，本轮未设状态"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C093",
+          "dimension": "reference"
+        }
+      ],
+      "source_user": {
+        "image_id": "e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814",
+        "building": "e9zR4mvMWw7",
+        "split": "test",
+        "user_room": "r4",
+        "user_type": "卧室",
+        "user_boundary": "",
+        "user_doorway": "疑似",
+        "user_artifact": "未见明显异常",
+        "user_status": "需讨论",
+        "user_note": "离门很近"
+      }
+    },
+    {
+      "image_id": "jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b",
+      "building": "jh4fc5c5qoQ",
+      "number": 1,
+      "queue_reasons": [
+        "本轮状态待核对；有评论不表示未看"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C032",
+          "dimension": "doorway"
+        }
+      ],
+      "source_user": {
+        "image_id": "jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b",
+        "building": "jh4fc5c5qoQ",
+        "split": "valid",
+        "user_room": "r4",
+        "user_type": "卫浴",
+        "user_boundary": "",
+        "user_doorway": "疑似",
+        "user_artifact": "未见明显异常",
+        "user_status": "已复核",
+        "user_note": "如果 细分的话,确实把马桶的区域和换衣的区域分开来了,不是那种特别典型的,我个人可能偏 不是门洞",
+        "user_audit_status": "待我复核"
+      }
+    },
+    {
+      "image_id": "jh4fc5c5qoQ_30cdb6fe9aa6449788e271f2e24d76ec",
+      "building": "jh4fc5c5qoQ",
+      "number": 2,
+      "queue_reasons": [
+        "原状态需讨论，本轮未设状态"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C094",
+          "dimension": "reference"
+        }
+      ],
+      "source_user": {
+        "image_id": "jh4fc5c5qoQ_30cdb6fe9aa6449788e271f2e24d76ec",
+        "building": "jh4fc5c5qoQ",
+        "split": "valid",
+        "user_room": "r1",
+        "user_type": "卧室",
+        "user_boundary": "",
+        "user_doorway": "否",
+        "user_artifact": "未见明显异常",
+        "user_status": "需讨论",
+        "user_note": "我有点看不懂这个视角"
+      }
+    },
+    {
+      "image_id": "jh4fc5c5qoQ_5ce75bcca20d46a8adba099e08a36c8e",
+      "building": "jh4fc5c5qoQ",
+      "number": 6,
+      "queue_reasons": [
+        "明确仍需讨论"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C033",
+          "dimension": "doorway"
+        }
+      ],
+      "source_user": {
+        "image_id": "jh4fc5c5qoQ_5ce75bcca20d46a8adba099e08a36c8e",
+        "building": "jh4fc5c5qoQ",
+        "split": "valid",
+        "user_room": "r3",
+        "user_type": "卫浴",
+        "user_boundary": "",
+        "user_doorway": "疑似",
+        "user_artifact": "未见明显异常",
+        "user_status": "需讨论",
+        "user_note": "",
+        "user_audit_status": "仍需讨论"
+      }
+    },
+    {
+      "image_id": "jtcxE69GiFV_29d51ea54a5040098e9b1ba6eaa1f5bd",
+      "building": "jtcxE69GiFV",
+      "number": 6,
+      "queue_reasons": [
+        "本轮状态待核对；有评论不表示未看"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C005",
+          "dimension": "room"
+        },
+        {
+          "case_id": "C072",
+          "dimension": "artifact"
+        },
+        {
+          "case_id": "C097",
+          "dimension": "reference"
+        }
+      ],
+      "source_user": {
+        "image_id": "jtcxE69GiFV_29d51ea54a5040098e9b1ba6eaa1f5bd",
+        "building": "jtcxE69GiFV",
+        "split": "valid",
+        "user_room": "r2",
+        "user_type": "卧室",
+        "user_boundary": "",
+        "user_doorway": "否",
+        "user_artifact": "未见明显异常",
+        "user_status": "需讨论",
+        "user_note": "和12 相比,这个是在正中央,12是在主房间外的卧室,不知道该不该算同一房间,因为标注差异应该很大",
+        "user_audit_status": "待我复核"
+      }
+    },
+    {
+      "image_id": "jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8",
+      "building": "jtcxE69GiFV",
+      "number": 11,
+      "queue_reasons": [
+        "明确仍需讨论"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C035",
+          "dimension": "doorway"
+        }
+      ],
+      "source_user": {
+        "image_id": "jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8",
+        "building": "jtcxE69GiFV",
+        "split": "valid",
+        "user_room": "r17",
+        "user_type": "通行与连接",
+        "user_boundary": "",
+        "user_doorway": "疑似",
+        "user_artifact": "未见明显异常",
+        "user_status": "需讨论",
+        "user_note": "",
+        "user_audit_status": "仍需讨论"
+      }
+    },
+    {
+      "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+      "building": "jtcxE69GiFV",
+      "number": 12,
+      "queue_reasons": [
+        "明确仍需讨论"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C005",
+          "dimension": "room"
+        },
+        {
+          "case_id": "C072",
+          "dimension": "artifact"
+        },
+        {
+          "case_id": "C098",
+          "dimension": "reference"
+        }
+      ],
+      "source_user": {
+        "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+        "building": "jtcxE69GiFV",
+        "split": "valid",
+        "user_room": "r2",
+        "user_type": "卧室",
+        "user_boundary": "",
+        "user_doorway": "确认",
+        "user_artifact": "疑似异常",
+        "user_status": "需讨论",
+        "user_note": "不知道这个结构是什么样的 视角畸变有点大",
+        "user_audit_status": "仍需讨论"
+      }
+    },
+    {
+      "image_id": "jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea",
+      "building": "jtcxE69GiFV",
+      "number": 15,
+      "queue_reasons": [
+        "明确仍需讨论"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C036",
+          "dimension": "doorway"
+        }
+      ],
+      "source_user": {
+        "image_id": "jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea",
+        "building": "jtcxE69GiFV",
+        "split": "valid",
+        "user_room": "r9",
+        "user_type": "卫浴",
+        "user_boundary": "",
+        "user_doorway": "疑似",
+        "user_artifact": "未见明显异常",
+        "user_status": "需讨论",
+        "user_note": "这个确实离门框很近,有可能会让标注者产生标注范围的歧义",
+        "user_audit_status": "仍需讨论"
+      }
+    },
+    {
+      "image_id": "pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e",
+      "building": "pa4otMbVnkk",
+      "number": 11,
+      "queue_reasons": [
+        "明确仍需讨论"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C045",
+          "dimension": "doorway"
+        }
+      ],
+      "source_user": {
+        "image_id": "pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e",
+        "building": "pa4otMbVnkk",
+        "split": "valid",
+        "user_room": "r3",
+        "user_type": "卧室",
+        "user_boundary": "",
+        "user_doorway": "疑似",
+        "user_artifact": "未见明显异常",
+        "user_status": "需讨论",
+        "user_note": "这图标注空间可能确实不好判断,右侧确实是像 台阶一样的墙,标注者确实可能标右边里面的区域",
+        "user_audit_status": "仍需讨论"
+      }
+    },
+    {
+      "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+      "building": "pa4otMbVnkk",
+      "number": 14,
+      "queue_reasons": [
+        "本轮状态待核对；有评论不表示未看"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C046",
+          "dimension": "doorway"
+        }
+      ],
+      "source_user": {
+        "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+        "building": "pa4otMbVnkk",
+        "split": "valid",
+        "user_room": "r23",
+        "user_type": "复合／待定  , 厨房 客厅",
+        "user_boundary": "",
+        "user_doorway": "疑似",
+        "user_artifact": "未见明显异常",
+        "user_status": "已复核",
+        "user_note": "确实离门框很近",
+        "user_audit_status": "待我复核"
+      }
+    },
+    {
+      "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+      "building": "q9vSo1VnCiC",
+      "number": 13,
+      "queue_reasons": [
+        "明确仍需讨论"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C050",
+          "dimension": "doorway"
+        }
+      ],
+      "source_user": {
+        "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+        "building": "q9vSo1VnCiC",
+        "split": "test",
+        "user_room": "r9",
+        "user_type": "通行与连接",
+        "user_boundary": "",
+        "user_doorway": "确认",
+        "user_artifact": "未见明显异常",
+        "user_status": "需讨论",
+        "user_note": "这个房间分为了两个区域,他是在两个区域正中间拍摄,这图标注结果我记得确实差异很大,而且gt也不对",
+        "user_audit_status": "仍需讨论"
+      }
+    },
+    {
+      "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+      "building": "q9vSo1VnCiC",
+      "number": 22,
+      "queue_reasons": [
+        "明确仍需讨论"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C052",
+          "dimension": "doorway"
+        }
+      ],
+      "source_user": {
+        "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+        "building": "q9vSo1VnCiC",
+        "split": "test",
+        "user_room": "r1",
+        "user_type": "卧室",
+        "user_boundary": "",
+        "user_doorway": "疑似",
+        "user_artifact": "未见明显异常",
+        "user_status": "需讨论",
+        "user_note": "确实离另一个空间的门洞很近,但是 我个人更倾向不是",
+        "user_audit_status": "仍需讨论"
+      }
+    },
+    {
+      "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+      "building": "uNb9QFRL6hY",
+      "number": 2,
+      "queue_reasons": [
+        "明确仍需讨论"
+      ],
+      "old_cases": [
+        {
+          "case_id": "C008",
+          "dimension": "room"
+        },
+        {
+          "case_id": "C056",
+          "dimension": "doorway"
+        }
+      ],
+      "source_user": {
+        "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+        "building": "uNb9QFRL6hY",
+        "split": "test",
+        "user_room": "",
+        "user_type": "卧室",
+        "user_boundary": "",
+        "user_doorway": "无法判断",
+        "user_artifact": "未见明显异常",
+        "user_status": "需讨论",
+        "user_note": "这个房间比较奇怪,他是一个\"凸\" 字型的房间,左右两侧通向走廊,这个不知道算不算",
+        "user_audit_status": "仍需讨论"
+      }
+    }
+  ],
+  "source_mutated": false
+}

@@ -1,0 +1,60 @@
+{
+  "status": "exploratory",
+  "images": 214,
+  "checkpoint": "D:\\Work\\HOHONET\\ckpt\\mp3d_layout_HOHO_layout_aug_efficienthc_Transen1_resnet34\\ep300.pth",
+  "config": "D:\\Work\\HOHONET\\config\\mp3d_layout\\HOHO_layout_aug_efficienthc_Transen1_resnet34.yaml",
+  "device": "cpu",
+  "torch_version": "2.10.0+cpu",
+  "threads": 4,
+  "orbit": [
+    0,
+    0.25,
+    0.5,
+    0.75
+  ],
+  "pooling": "channel mean+population std over spatial axes then orbit mean",
+  "feature_shapes": {
+    "encoder_1": [
+      214,
+      128
+    ],
+    "encoder_2": [
+      214,
+      256
+    ],
+    "encoder_3": [
+      214,
+      512
+    ],
+    "encoder_4": [
+      214,
+      1024
+    ],
+    "compressed": [
+      214,
+      2048
+    ],
+    "refined": [
+      214,
+      2048
+    ],
+    "shared": [
+      214,
+      512
+    ],
+    "shared_local": [
+      214,
+      256
+    ],
+    "legacy_mean_phase0": [
+      214,
+      256
+    ]
+  },
+  "source_selection": "prefer local layout PNG; log cache paths and numerical deltas",
+  "labels_used_for_extraction": false,
+  "trained_for_human_stability": false,
+  "risk_reference_images": 1647,
+  "feature_cache_mixing": false,
+  "elapsed_seconds": 422.96706869999616
+}

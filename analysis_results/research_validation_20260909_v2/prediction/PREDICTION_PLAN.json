@@ -1,0 +1,33 @@
+{
+  "status": "exploratory_predefined_comparisons",
+  "primary_horizon": 20,
+  "secondary": "building minimum H plus all55 leave-building-out H19",
+  "target": "anchor_stage probability bounds",
+  "configs": [
+    "q_0.950",
+    "ospa30_t6",
+    "hac_q_0.950"
+  ],
+  "fractions": [
+    0.5,
+    0.6
+  ],
+  "split_limit": 200,
+  "balance": "marginal risk rank tercile and common person count; never target stability",
+  "within": "source mean or at most3 inverse-distance weighted neighbors",
+  "outside": "entire target building excluded",
+  "blend": "fixed 0.5 same-building mean + 0.5 outside feature neighbors",
+  "features": [
+    "encoder_2",
+    "encoder_4",
+    "compressed",
+    "refined",
+    "shared",
+    "legacy_mean_phase0",
+    "risk"
+  ],
+  "feature_fit": "per-image L2 normalization; no human-label feature selection",
+  "conditional_count": "weighted median of identified source onsets only; report source support and target coverage; supplementary",
+  "evaluation": "legal onset domain and curve scores k2..H-5; mean within target then building; overlapping splits not independent",
+  "low_n": "all N3-7 receive H20 forecasts; no long-horizon ground truth is invented; N0-2 inventory only"
+}

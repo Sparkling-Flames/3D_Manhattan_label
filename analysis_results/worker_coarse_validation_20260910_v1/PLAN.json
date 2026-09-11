@@ -1,0 +1,50 @@
+{
+  "cohorts": [
+    "all26",
+    "current20"
+  ],
+  "grouping": {
+    "median2": [
+      2,
+      "quantile"
+    ],
+    "ward2": [
+      2,
+      "ward"
+    ]
+  },
+  "reference_metrics": [
+    "ospa30",
+    "ospa60"
+  ],
+  "training": "whole target building excluded; all unassisted stages pooled",
+  "primary": "reviewed effective points, omit two imputed responses; no worker exclusions",
+  "reference_sensitivities": [
+    "all_allowed_references",
+    "human_reference_only",
+    "including_imputed"
+  ],
+  "permutations": 200,
+  "geometry": [
+    "q_0.950",
+    "ospa_metric_t6"
+  ],
+  "min_support": 2,
+  "epsilon": 0.1,
+  "min_future": 5,
+  "rate": 0.8,
+  "horizons": "8,10,and all available within arm, if >=7",
+  "arms": [
+    "A",
+    "B",
+    "ALL"
+  ],
+  "matched_comparison": "same image, cohort, metric, grouping, geometry, H and k",
+  "outcome": "same-permutation all-anchor sustained stage, unknown preserved",
+  "not_claimed": [
+    "natural personality types",
+    "new-worker validation",
+    "permanent convergence",
+    "formal protocol change"
+  ]
+}

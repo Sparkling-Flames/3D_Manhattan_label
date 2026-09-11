@@ -4,21 +4,37 @@
 
 ## 当前研究速查（2026-09-09）
 
-新接手先读交接，再按SOP读取当前结果；同一building就是本研究当前的相似场景分组。
+新接手先读交接，再按SOP读取当前结果；已有building预测保留为基线，后续按原图确认同房间并探索跨房间类型。
 
 | 想找什么 | 入口 | 状态或用途 |
 |---|---|---|
+| 图片分类的目的与当前复核规则 | [图片分类与同房间预测SOP v3](thesis_main/图片分类与同房间收敛预测研究SOP.md) | 2026-09-11讨论版；同房收敛预测、交界处歧义两条研究线；整体粗类、功能组合、主要呈现区域与交界分开；非正式合同 |
+| 新标准全量原图复核 | [可填写页面](../analysis_results/scene_image_exploration_20260910_v1/室内空间_新标准复核_v3.html)、[报告及填写说明](../analysis_results/scene_image_exploration_20260910_v1/新标准全量复核报告_20260911.md) | 648图主审/讨论沿用、独立交叉意见及人工填写分层；[本地文件/Git说明](../analysis_results/scene_image_exploration_20260910_v1/本地文件与Git保存说明_20260911.md)；生成器build_scene_open_layout_review.py；不覆盖旧页面或源JSON |
+| 争议图的批量反馈 | [B01—B15最新决定](../analysis_results/scene_image_exploration_20260910_v1/批量反馈整理_20260911.md)、[原可填写批量页](../analysis_results/scene_image_exploration_20260910_v1/争议图批量快速复核.html) | 2026-09-11；四个低优先级交界候选、B06／B08不同房更正；旧AI建议及用户原始填写保留 |
+| 具体人群子类是否进入稳定阶段 | [人员分类与具体子类更新报告](../analysis_results/worker_four_block_exploration_20260910_v1/subtype_stage_validation/README_ZH.md) | `worker_subtype_stages_20260910.py`；303分类配置，按行为含义对应子类、单独回放、参考偏差与多簇；探索SOP第9节；非正式资格结论 |
+| 人员组数不固定为二 | [多组补充探索](../analysis_results/worker_four_block_exploration_20260910_v1/group_count_extension/README_ZH.md) | `worker_group_count_exploration_20260910.py`；15指标组合×可行组数；人数、名单、重复性与收敛资料充足性；尚非新的收敛回放 |
+| 四类信息组合与质量粗分对照 | [人数与名单修订报告](../analysis_results/worker_four_block_exploration_20260910_v1/report_revision_v2/README_ZH.md)、[原实验](../analysis_results/worker_four_block_exploration_20260910_v1/README_ZH.md) | `worker_four_block_exploration_20260910.py`及同名测试；15组合、各组人数与平均特征、同图同人数稳定性；含Word；非规范探索 |
 | 接手研究与下一步 | [研究交接](thesis_main/研究交接_20260909.md) | 意图、结果、待解决问题和两条分析线差异 |
+| 后续独立分析整理 | [两轮分析整理](thesis_main/研究交接与独立分析整理_20260909.md) | 非规范补充；第一轮包可读，第二轮仅有粘贴文字，区分新增证据与待核验主张 |
+| 新假说的现有数据支持 | [收敛／人员／特征核对](../analysis_results/convergence_hypothesis_review_20260909_v1/README_ZH.md) | 探索支撑；楼内不同稳定过程、候选分档、HoHoNet缓存覆盖与来源差异 |
+| uNb预测的实际检验 | [高低人数与特征配平检验](../analysis_results/unb_prediction_check_20260909_v1/README_ZH.md) | 高人数多图留出、特征距离/人数配平及27图混合短窗，含脚本、基线和覆盖 |
+| 研究主线与新人验证 | [研究逻辑说明](thesis_main/研究主线与新增标注验证说明_20260909.md) | 讨论稿；导师原文依据、候选问题、新人桥接与新图验证，不冻结RQ或实验安排 |
 | 当前方法 | [相似场景SOP](thesis_main/相似场景标注稳定性分析SOP.md) | 全阶段无辅助、硬点数分簇、稳定多簇、并列人员口径 |
-| 当前报告与图 | [分析结果](../analysis_results/multibuilding_threshold_stability_20260909_v1/分析结果.md) | 读revised；根目录geometry/replay/transfer为早期快照 |
-| 当前计算结果与核查 | [revised](../analysis_results/multibuilding_threshold_stability_20260909_v1/revised/) | with_workers、without_workers、comparison及QA |
+| 原图房间/场景初分 | [可填写核对页](../analysis_results/scene_image_exploration_20260910_v1/图片初分核对.html)、[探索说明](../analysis_results/scene_image_exploration_20260910_v1/探索说明.md)、[争议图片复核](../analysis_results/scene_image_exploration_20260910_v1/争议图片复核.html) | valid/test共648图的AI目视候选；门洞内拍摄属性独立，最终由用户分类；生成器build_scene_image_exploration.py、build_scene_user_audit.py |
+| 持续阶段、特征与人员组合 | [研究验证报告](../analysis_results/research_validation_20260909_v2/研究验证报告.md)、[客观Word](../analysis_results/research_validation_20260909_v2/相似场景标注稳定阶段与人员组合_客观数据报告.docx) | 最新持续至H、合法k≥2、10楼50图留出、98低人数图待验证；6种层表示与人员复用实算 |
+| 局部窗口回放基线 | [分析结果](../analysis_results/multibuilding_threshold_stability_20260909_v1/分析结果.md) | 读revised；根目录geometry/replay/transfer为早期快照，不与新持续阶段人数混算 |
+| uNb实际标注人工核对 | [按簇叠加对照表](../analysis_results/research_validation_20260909_v2/annotation_review/uNb标注对照表.html) | 12张高人数图、q=.95现有簇、两个人员范围；候选多解与未归簇明确标注，保留单人查看和观察记录，生成器build_unb_annotation_review_20260910.py |
+| 局部窗口计算与核查 | [revised](../analysis_results/multibuilding_threshold_stability_20260909_v1/revised/) | 历史with_workers、without_workers、comparison及QA |
 | 有效点集与人工修复 | [reviewed视图](../analysis_results/confirmed_point_calculation_view_20260909_v1/reviewed/) | 原始／有效点、精确身份、处理审计 |
 | 人工删点／补点依据 | [用户决定](../analysis_results/multibuilding_threshold_stability_20260909_v1/geometry_audit/USER_DECISIONS.json) | 不凭奇数或人员名自动修改 |
 | 输入身份、模型和参考 | [便携输入包](../analysis_results/uncertainty_cloud_inputs_20260906_v1/README_ZH.md) | 214历史图、166候选图和原始来源 |
 | 评论和初始化连接 | [连接说明](../analysis_results/uncertainty_decision_ready_20260908_v1/README_ZH.md) | 事实资料及历史精度审查 |
 | building数量、版本、人员排列 | [census](../analysis_results/building_holdout_exploration_20260908_v1/census/README_ZH.md) | 保持原路径，当前回放有依赖 |
-| 人员类型与组合研究 | [类型人数探索](../analysis_results/type_convergence_exploration_20260909_v1/README_ZH.md)、[参考偏差](../analysis_results/worker_reference_feasibility_20260909_v1/pooled/README_ZH.md)、[Semi行为](../analysis_results/semi_subtype_exploration_20260909_v1/README_ZH.md) | 独立口径，不能直接拼接当前场景结果 |
-| 计算代码与测试 | [analysis](../tools/thesis_main/analysis/)、[data_prep](../tools/thesis_main/data_prep/)、[tests](../tests/) | 当前命令与文件名列于交接第7节和revised交付检查 |
+| 人员类型与组合研究 | [类型人数探索](../analysis_results/type_convergence_exploration_20260909_v1/README_ZH.md)、[参考偏差](../analysis_results/worker_reference_feasibility_20260909_v1/pooled/README_ZH.md)、[Semi行为及复审](../analysis_results/semi_subtype_exploration_20260909_v1/README_ZH.md) | 粗／细类尚未确认；旧人数曲线未落实硬点数约束，不能直接拼接当前结果 |
+| 最新粗类验证 | [26人／20人粗类验证](../analysis_results/worker_coarse_validation_20260910_v1/README_ZH.md) | `tools/thesis_main/analysis/validate_worker_coarse_20260910.py`；留楼分型、硬点数持续阶段及同人数对照，测试 `tests/test_validate_worker_coarse_20260910.py` |
+| 可解释速度与执行偏差 | [速度两轴画像](../analysis_results/worker_behavior_time_20260910_v1/README_ZH.md) | `tools/thesis_main/analysis/worker_behavior_time_20260910.py`；原日志审计、加秒排除与跨阶段验证，测试 `tests/test_worker_behavior_time_20260910.py`；探索用途 |
+| 规则执行与三指标分型 | [规则／三指标报告](../analysis_results/worker_rule_triad_20260910_v1/README_ZH.md) | `tools/thesis_main/analysis/worker_rule_triad_20260910.py`；修改、时间、参考质量同面板与迁移检验；测试 `tests/test_worker_rule_triad_20260910.py`；候选类别 |
+| 计算代码与测试 | [analysis](../tools/thesis_main/analysis/)、[data_prep](../tools/thesis_main/data_prep/)、[tests](../tests/) | 本轮命令与字段见研究验证报告附录D；交付检查见research_validation_20260909_v2/DELIVERY_CHECKS.json；旧命令保留于交接 |
 | 已撤下的旧结果 | [历史归档](../analysis_results/research_history_archive_20260909_v1/README_ZH.md) | 原路径、ZIP成员和恢复说明 |
 | 正式实验合同 | [方法合同JSON](thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json) | 历史探索不改变正式协议 |
 
@@ -149,7 +165,7 @@
 - `analysis_results/uncertainty_decision_ready_20260908_v1/`：响应、初始化、评论与几何连接；工具位于data_prep的prepare_uncertainty_decision_index、prepare_scope_evidence_20260908及analysis的prepare_human_bi_comparisons_20260908，对应测试保留。
 - `analysis_results/independent_direction_worker_review_20260908_v1/`：Bi精度与旧人员分层的独立审查，保留audit_bilayout_precision代码及测试；不代替当前reviewed结果。
 - 历史分析工具及同名测试继续保留：building准备／留出／证据、order_free、scene_similarity_revision、participant_support、unb9试算、worker_evidence与worker_mixture；完整运行旧流水线前按归档清单恢复输入。源码位于`tools/thesis_main/analysis/`与`tools/thesis_main/data_prep/`，不迁移模块以免破坏当前导入依赖。
-- `docs/thesis_main/相似场景标注稳定性分析SOP.md`：当前历史探索的唯一解释/操作入口；同building定义相似场景，全阶段无辅助手工、图内分簇与跨图人数预测，已确认误点用计算副本排除，硬点数与支持门槛分开；不改Paper A正式合同。
+- `docs/thesis_main/相似场景标注稳定性分析SOP.md`：当前历史探索的唯一解释/操作入口；按原始图像确认同房间并探索跨房间类型，两级预测待执行，已有building结果保留为基线。全阶段无辅助手工、图内分簇与跨图人数预测，已确认误点用计算副本排除，硬点数与支持门槛分开；不改Paper A正式合同。
 - `analysis_results/confirmed_point_calculation_view_20260909_v1/`：reviewed为2501条当前原始／有效点集视图，累计8份删指定点、2份补点、5份逐份排除，18个来源导出逐条核对。工具 `tools/thesis_main/data_prep/prepare_confirmed_point_calculation_view_20260909.py` 与同名测试；补点标记派生来源，非全局奇数修复。
 - `analysis_results/multibuilding_threshold_stability_20260909_v1/`：revised并列包含／排除W19与W26的55高人数及141低人数图，6q与硬点数OSPA、全人数及短窗回放、10楼共同预算预测、不补点敏感性。入口`分析结果.md`，方法由相似场景SOP维护；现有analyze_q_thresholds、replay_multibuilding_stability、transfer_multibuilding_stability、review_multibuilding_thresholds四个20260909脚本及测试复用；共享geometry_metrics配对搜索已修复，原始坐标及正式合同不改。
 - `analysis_results/uncertainty_handoff_received_20260907_v1/`：不完整外部移交包原样归档及缺漏记录；原包代码/报告不回写。

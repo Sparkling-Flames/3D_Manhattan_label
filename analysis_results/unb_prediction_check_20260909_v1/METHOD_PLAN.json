@@ -1,0 +1,33 @@
+{
+  "building": "uNb9QFRL6hY",
+  "status": "exploratory_historical_check_not_preregistered",
+  "configs": [
+    "q_0.950",
+    "ospa30_t6"
+  ],
+  "modes": [
+    "with_workers",
+    "without_workers"
+  ],
+  "point_views": [
+    "confirmed_additions",
+    "no_imputation"
+  ],
+  "design": "每次留1张uNb目标，用另外11张作源；每目标等权。目标结果不进入该折预测。",
+  "parameters": {
+    "lookahead": 5,
+    "min_support": 2,
+    "epsilon": 0.1,
+    "replicate_rate": 0.8
+  },
+  "predictors": [
+    "所有源图平均稳定曲线，沿用SOP",
+    "只用源图已identified人数的中位数；min/max仅经验范围"
+  ],
+  "outside": "复用既存50组、每组11张楼外源图及相同共同N，全部组等权；不按效果选组。",
+  "count_evaluation": "双方均有点预测且目标identified才计算配对MAE；其余目标状态及覆盖保留。",
+  "tolerance": "附加报告绝对误差<=2人；示例容差，不作为成功门槛，也不据结果选容差。",
+  "unknown": "不补成稳定/未稳定；曲线评价使用误差界，比较共享同一未知目标。",
+  "independence": "12图/1楼；同一人员池，50楼外组及留图有重叠，不作独立样本显著性检验。",
+  "provenance": "消费revised已审计历史派生曲线；原始运行时来源仍为export_label，未重读所有原始点或重分簇。"
+}

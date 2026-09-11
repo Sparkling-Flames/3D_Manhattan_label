@@ -1,0 +1,156 @@
+{
+  "status": "passed",
+  "check_scope": "four images, two v5 configurations, both worker scopes, H20, 200 common global orders; independently enumerated relations/TV/m2 promotions; production rows match",
+  "checks": [
+    {
+      "mode": "with_workers",
+      "image_id": "S9hNv5qa7GM_bd9faec23bb3462c94a5fbc6c0a3d5cf",
+      "config": "q_0.950",
+      "horizon": 20,
+      "permutations": 200,
+      "verified_nodes": 15,
+      "source_partitions_checked": 3234
+    },
+    {
+      "mode": "with_workers",
+      "image_id": "S9hNv5qa7GM_bd9faec23bb3462c94a5fbc6c0a3d5cf",
+      "config": "ospa30_t6",
+      "horizon": 20,
+      "permutations": 200,
+      "verified_nodes": 15,
+      "source_partitions_checked": 3234
+    },
+    {
+      "mode": "with_workers",
+      "image_id": "uNb9QFRL6hY_07a43087f1e54e3f828851d8e457a283",
+      "config": "q_0.950",
+      "horizon": 20,
+      "permutations": 200,
+      "verified_nodes": 15,
+      "source_partitions_checked": 4325
+    },
+    {
+      "mode": "with_workers",
+      "image_id": "uNb9QFRL6hY_07a43087f1e54e3f828851d8e457a283",
+      "config": "ospa30_t6",
+      "horizon": 20,
+      "permutations": 200,
+      "verified_nodes": 15,
+      "source_partitions_checked": 4325
+    },
+    {
+      "mode": "with_workers",
+      "image_id": "uNb9QFRL6hY_1096f195d3294cefa462add5ab0c342e",
+      "config": "q_0.950",
+      "horizon": 20,
+      "permutations": 200,
+      "verified_nodes": 15,
+      "source_partitions_checked": 3891
+    },
+    {
+      "mode": "with_workers",
+      "image_id": "uNb9QFRL6hY_1096f195d3294cefa462add5ab0c342e",
+      "config": "ospa30_t6",
+      "horizon": 20,
+      "permutations": 200,
+      "verified_nodes": 15,
+      "source_partitions_checked": 3891
+    },
+    {
+      "mode": "with_workers",
+      "image_id": "uNb9QFRL6hY_5948424345f541b9a570b48f1cfcf622",
+      "config": "q_0.950",
+      "horizon": 20,
+      "permutations": 200,
+      "verified_nodes": 15,
+      "source_partitions_checked": 3891
+    },
+    {
+      "mode": "with_workers",
+      "image_id": "uNb9QFRL6hY_5948424345f541b9a570b48f1cfcf622",
+      "config": "ospa30_t6",
+      "horizon": 20,
+      "permutations": 200,
+      "verified_nodes": 15,
+      "source_partitions_checked": 3891
+    },
+    {
+      "mode": "without_workers",
+      "image_id": "S9hNv5qa7GM_bd9faec23bb3462c94a5fbc6c0a3d5cf",
+      "config": "q_0.950",
+      "horizon": 20,
+      "permutations": 200,
+      "verified_nodes": 15,
+      "source_partitions_checked": 3234
+    },
+    {
+      "mode": "without_workers",
+      "image_id": "S9hNv5qa7GM_bd9faec23bb3462c94a5fbc6c0a3d5cf",
+      "config": "ospa30_t6",
+      "horizon": 20,
+      "permutations": 200,
+      "verified_nodes": 15,
+      "source_partitions_checked": 3234
+    },
+    {
+      "mode": "without_workers",
+      "image_id": "uNb9QFRL6hY_07a43087f1e54e3f828851d8e457a283",
+      "config": "q_0.950",
+      "horizon": 20,
+      "permutations": 200,
+      "verified_nodes": 15,
+      "source_partitions_checked": 4105
+    },
+    {
+      "mode": "without_workers",
+      "image_id": "uNb9QFRL6hY_07a43087f1e54e3f828851d8e457a283",
+      "config": "ospa30_t6",
+      "horizon": 20,
+      "permutations": 200,
+      "verified_nodes": 15,
+      "source_partitions_checked": 4105
+    },
+    {
+      "mode": "without_workers",
+      "image_id": "uNb9QFRL6hY_1096f195d3294cefa462add5ab0c342e",
+      "config": "q_0.950",
+      "horizon": 20,
+      "permutations": 200,
+      "verified_nodes": 15,
+      "source_partitions_checked": 3891
+    },
+    {
+      "mode": "without_workers",
+      "image_id": "uNb9QFRL6hY_1096f195d3294cefa462add5ab0c342e",
+      "config": "ospa30_t6",
+      "horizon": 20,
+      "permutations": 200,
+      "verified_nodes": 15,
+      "source_partitions_checked": 3891
+    },
+    {
+      "mode": "without_workers",
+      "image_id": "uNb9QFRL6hY_5948424345f541b9a570b48f1cfcf622",
+      "config": "q_0.950",
+      "horizon": 20,
+      "permutations": 200,
+      "verified_nodes": 15,
+      "source_partitions_checked": 3891
+    },
+    {
+      "mode": "without_workers",
+      "image_id": "uNb9QFRL6hY_5948424345f541b9a570b48f1cfcf622",
+      "config": "ospa30_t6",
+      "horizon": 20,
+      "permutations": 200,
+      "verified_nodes": 15,
+      "source_partitions_checked": 3891
+    }
+  ],
+  "production_files_modified": false,
+  "limitations": [
+    "HAC alternative not independently rerun in this subset audit",
+    "Exact equality of pooled probabilities does not establish human-semantic cluster validity",
+    "stage_tail strengthens one anchor to every later eligible anchor through H-5 as explicitly documented"
+  ]
+}

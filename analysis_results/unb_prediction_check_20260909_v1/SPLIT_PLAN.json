@@ -1,0 +1,24 @@
+{
+  "status": "exploratory_feature_balanced_splits",
+  "source_n": [
+    6,
+    7
+  ],
+  "target_n": [
+    6,
+    5
+  ],
+  "rationale": "用户要求约50/50、60/40并兼顾高标注数量、DT类似；12图对应6/6及7/5。",
+  "features": {
+    "path": "analysis_results\\stage3_test_preparation_20260804_v1\\test_task_risk_candidate.csv",
+    "field": "d_model_feat",
+    "meaning": "HoHoNet共享特征到固定训练参考空间的距离；不是旧版d_t，也不是人类难度真值。"
+  },
+  "assignment": "按12图d_model_feat及image_id排序分成3段，每段4图；每段及每个common_n档的源图数在比例期望的floor/ceil内。",
+  "comparison": "枚举所有6/6和7/5划分，再标记满足DT及人数配平的子集；不依收敛标签选择。",
+  "predictor": "源图平均稳定曲线；补充源图identified人数中位数及经验min/max范围。",
+  "baseline": "同源图数、共同N=23的既存50组楼外来源；另加按源图d_model_feat最小总绝对差匹配的楼外组，两者使用相同中位数规则。",
+  "scope": "DT只用于分配，没有拟合DT到收敛人数的回归模型；曲线配置不变。",
+  "point_view": "confirmed_additions；另由留一图检查报告不补点敏感性；本次多图曲线不冒称已做不补点比较。",
+  "aggregation": "先在每张目标图内平均其可比出现，再等权平均不同目标；同时给覆盖。划分、组、出现均非独立样本。"
+}

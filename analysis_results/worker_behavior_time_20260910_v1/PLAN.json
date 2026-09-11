@@ -1,0 +1,36 @@
+{
+  "cohorts": [
+    "all26",
+    "current20"
+  ],
+  "reference": "latest_reviewed_calculation_view; no_imputation; reviewed_reference_sensitivity",
+  "context": "original_image_stage_condition_context; timing_version retained; no comparisons of unmatched tasks",
+  "metrics": [
+    "log_time",
+    "ospa30",
+    "matched_angle",
+    "signed_count_rate"
+  ],
+  "bootstrap_unit": "building",
+  "bootstrap_replicates": 500,
+  "split_half_replicates": 100,
+  "seed": 20260910,
+  "classification": "axis-specific building-bootstrap 95% interval versus equal-worker mean; not natural clusters",
+  "validation": "leave_one_building_out; known workers, target-image relative deviations; speed-to-error slope fit on training-worker profiles only",
+  "primary": "no_known_time_adjustment",
+  "sensitivities": [
+    "pooled_clean",
+    "C1_clean",
+    "P1_legacy",
+    "pooled_with_deviations",
+    "reviewed_reference_only"
+  ],
+  "source_amendment": "known manual time shifts discovered during source audit; exclude affected task-worker rows without subtracting estimated seconds",
+  "claims_excluded": [
+    "carelessness",
+    "causality",
+    "novel_worker_generalization",
+    "subgroup_convergence",
+    "formal_worker_eligibility"
+  ]
+}
