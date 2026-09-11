@@ -8,7 +8,9 @@
 
 | 想找什么 | 入口 | 状态或用途 |
 |---|---|---|
-| 图片分类的目的与当前复核规则 | [图片分类与同房间预测SOP v3](thesis_main/图片分类与同房间收敛预测研究SOP.md) | 2026-09-11讨论版；同房收敛预测、交界处歧义两条研究线；整体粗类、功能组合、主要呈现区域与交界分开；非正式合同 |
+| 图片分类的目的与当前复核规则 | [图片分类与同房间预测SOP v5](thesis_main/图片分类与同房间收敛预测研究SOP.md) | 旧空间页仅41张意见不一致图亲审；本次260个同房组已看；收敛和持续分歧均研究，非正式合同 |
+| 整组复核后的选图与历史人数 | [机器关联表](../analysis_results/scene_image_exploration_20260910_v1/same_room_selection_registry_20260912.json)、[逐条评论解释](../analysis_results/scene_image_exploration_20260910_v1/group_comment_interpretation_20260912.json) | materialize_same_room_selection.py；原组/子集、空间来源、交界、OOS、难图及历史人数分层；排序是探索安排，不是预测结论 |
+| 同房研究的逐对建议 | [整组填写页](../analysis_results/scene_image_exploration_20260910_v1/同房研究_整组复核_v3.html)、[汇总数据](../analysis_results/scene_image_exploration_20260910_v1/same_room_pair_audit_20260912.json) | 全量检索、直接比较、预期范围与信息条件分层；含小幅歧义选项，人工交界只读保留；生成器build_same_room_pair_review.py，不自动传递合组或证明预测有效 |
 | 新标准全量原图复核 | [可填写页面](../analysis_results/scene_image_exploration_20260910_v1/室内空间_新标准复核_v3.html)、[报告及填写说明](../analysis_results/scene_image_exploration_20260910_v1/新标准全量复核报告_20260911.md) | 648图主审/讨论沿用、独立交叉意见及人工填写分层；[本地文件/Git说明](../analysis_results/scene_image_exploration_20260910_v1/本地文件与Git保存说明_20260911.md)；生成器build_scene_open_layout_review.py；不覆盖旧页面或源JSON |
 | 争议图的批量反馈 | [B01—B15最新决定](../analysis_results/scene_image_exploration_20260910_v1/批量反馈整理_20260911.md)、[原可填写批量页](../analysis_results/scene_image_exploration_20260910_v1/争议图批量快速复核.html) | 2026-09-11；四个低优先级交界候选、B06／B08不同房更正；旧AI建议及用户原始填写保留 |
 | 具体人群子类是否进入稳定阶段 | [人员分类与具体子类更新报告](../analysis_results/worker_four_block_exploration_20260910_v1/subtype_stage_validation/README_ZH.md) | `worker_subtype_stages_20260910.py`；303分类配置，按行为含义对应子类、单独回放、参考偏差与多簇；探索SOP第9节；非正式资格结论 |

@@ -1,0 +1,507 @@
+{
+  "schema": "scene_user_review_consistency_audit_v1",
+  "audit_date": "2026-09-12",
+  "source_path": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+  "source_snapshot": "analysis_results/scene_image_exploration_20260910_v1/user_review_20260912_v3.json",
+  "source_saved_at": "2026-09-11T14:16:06.467Z",
+  "review_scope": {
+    "source": "用户2026-09-12当前消息",
+    "region_and_boundary": "用户声明本轮已复核；候选仍为候选，不升级为确定位置",
+    "same_room": "本轮未成对验证，不从已确认状态或维持预填推断验证",
+    "historical_room_decisions": "保留原来源和日期，本轮不重置",
+    "required_pair_definition": "同一物理房间且视觉主空间一致；须成对查看",
+    "empty_status": "不代表漏看",
+    "carried_discussions": "38图本轮分类框为空，已有讨论与源选择仍保留，不能视为漏填"
+  },
+  "checks": {
+    "row_count": 648,
+    "unique_ids": true,
+    "baseline_id_set_match": true,
+    "baseline_metadata_unchanged": true,
+    "current_equals_prefill_plus_revision": true,
+    "changed_fields_consistent": true,
+    "source_copy_identical": true,
+    "raw_source_modified": false
+  },
+  "counts": {
+    "rows_with_input": 21,
+    "rows_with_substantive_changes": 9,
+    "new_nonempty_comments": 3,
+    "explicit_status": {
+      "": 629,
+      "已确认": 19
+    },
+    "source_nonempty_comments": 47,
+    "actual_room_field_changes": 0,
+    "images_reopened_this_audit": 19,
+    "findings": 13,
+    "images_with_findings": 12
+  },
+  "method": "对648条核对字段与来源，阅读原评论、新评论和既有交叉分歧，针对改动及非同房争议重看19张原图。本次未重新目视全量648张，也未执行新同房配对确认。",
+  "changed_rows": [
+    {
+      "image_id": "7y3sRwLe3Va_5c39473b25b74307858764d1a2045b9e",
+      "building": "7y3sRwLe3Va",
+      "number": 10,
+      "changes": {
+        "coarse_type": {
+          "before": "无法判断",
+          "after": "开放复合空间"
+        },
+        "functions": {
+          "before": "功能待定",
+          "after": "空房间+连廊"
+        },
+        "boundary": {
+          "before": "无法判断",
+          "after": "交界候选"
+        }
+      }
+    },
+    {
+      "image_id": "7y3sRwLe3Va_a775c7668ca9419daaf506e76851821e",
+      "building": "7y3sRwLe3Va",
+      "number": 18,
+      "changes": {
+        "boundary": {
+          "before": "近交界暂不归入",
+          "after": "交界候选"
+        },
+        "note": {
+          "before": "",
+          "after": "我觉得这个摄像机头顶就是 门框,极其靠近厨房和大木桌所在的区域交接,而且会使标注者难标"
+        }
+      }
+    },
+    {
+      "image_id": "B6ByNegPMKs_9c62e22ac161400e969f5962b748c3e8",
+      "building": "B6ByNegPMKs",
+      "number": 30,
+      "changes": {
+        "coarse_type": {
+          "before": "工作与学习",
+          "after": "储藏与家务辅助"
+        },
+        "functions": {
+          "before": "工作与学习",
+          "after": "空置房间"
+        }
+      }
+    },
+    {
+      "image_id": "UwV83HsGsw3_28e58f32d4274b62ac6d2b239e9e8516",
+      "building": "UwV83HsGsw3",
+      "number": 5,
+      "changes": {
+        "functions": {
+          "before": "储藏与家务",
+          "after": "衣帽间"
+        }
+      }
+    },
+    {
+      "image_id": "UwV83HsGsw3_a497aa9041fd41b3b5e6f3cab0849f98",
+      "building": "UwV83HsGsw3",
+      "number": 13,
+      "changes": {
+        "functions": {
+          "before": "储藏与家务",
+          "after": "衣帽间"
+        }
+      }
+    },
+    {
+      "image_id": "pa4otMbVnkk_d02457f6d5b84e8fb43b49a52c81c78e",
+      "building": "pa4otMbVnkk",
+      "number": 38,
+      "changes": {
+        "boundary": {
+          "before": "交界候选",
+          "after": "近交界暂不归入"
+        },
+        "note": {
+          "before": "",
+          "after": "与01是同房"
+        }
+      }
+    },
+    {
+      "image_id": "q9vSo1VnCiC_a823913d661144d4ad3d609e1e085fb1",
+      "building": "q9vSo1VnCiC",
+      "number": 18,
+      "changes": {
+        "boundary": {
+          "before": "暂不归入",
+          "after": "交界候选"
+        },
+        "note": {
+          "before": "",
+          "after": "这个疑似是oos"
+        }
+      }
+    },
+    {
+      "image_id": "q9vSo1VnCiC_c4b0b6a41c2a4db3927f5fa9cafb6345",
+      "building": "q9vSo1VnCiC",
+      "number": 24,
+      "changes": {
+        "boundary": {
+          "before": "暂不归入",
+          "after": "近交界暂不归入"
+        }
+      }
+    },
+    {
+      "image_id": "uNb9QFRL6hY_3b9e548b46af4410b97e1d12781ec3c9",
+      "building": "uNb9QFRL6hY",
+      "number": 21,
+      "changes": {
+        "boundary": {
+          "before": "近交界暂不归入",
+          "after": "交界候选"
+        }
+      }
+    }
+  ],
+  "new_comments": [
+    {
+      "image_id": "7y3sRwLe3Va_a775c7668ca9419daaf506e76851821e",
+      "building": "7y3sRwLe3Va",
+      "number": 18,
+      "comment": "我觉得这个摄像机头顶就是 门框,极其靠近厨房和大木桌所在的区域交接,而且会使标注者难标",
+      "interpretation": "支持交界候选；预期难标不等于实际分歧或质量已验证"
+    },
+    {
+      "image_id": "pa4otMbVnkk_d02457f6d5b84e8fb43b49a52c81c78e",
+      "building": "pa4otMbVnkk",
+      "number": 38,
+      "comment": "与01是同房",
+      "interpretation": "保留同房建议；本轮未验证配对"
+    },
+    {
+      "image_id": "q9vSo1VnCiC_a823913d661144d4ad3d609e1e085fb1",
+      "building": "q9vSo1VnCiC",
+      "number": 18,
+      "comment": "这个疑似是oos",
+      "interpretation": "保留疑似OOS意见；不是正式排除决定"
+    }
+  ],
+  "viewed_image_ids": [
+    "7y3sRwLe3Va_5c39473b25b74307858764d1a2045b9e",
+    "7y3sRwLe3Va_a775c7668ca9419daaf506e76851821e",
+    "B6ByNegPMKs_9c62e22ac161400e969f5962b748c3e8",
+    "pa4otMbVnkk_d02457f6d5b84e8fb43b49a52c81c78e",
+    "q9vSo1VnCiC_a823913d661144d4ad3d609e1e085fb1",
+    "q9vSo1VnCiC_c4b0b6a41c2a4db3927f5fa9cafb6345",
+    "uNb9QFRL6hY_3b9e548b46af4410b97e1d12781ec3c9",
+    "uNb9QFRL6hY_fcba704f80a04361842c0fdcb776becc",
+    "uNb9QFRL6hY_5dd7b4cf99584011ac17b25d45c6197c",
+    "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+    "Z6MFQCViBuw_2008e72476f84104858e908beeac0193",
+    "Z6MFQCViBuw_543e6efcc1e24215b18c4060255a9719",
+    "Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45",
+    "Z6MFQCViBuw_d9913cc77dc14f17b7228ac8de469b06",
+    "e9zR4mvMWw7_b0a7188b1afc4f648bd497af5202d978",
+    "yqstnuAEVhm_703d93b8575b4c0ba99c285dea126401",
+    "yqstnuAEVhm_9de98503fd994452b627cdcc7a7d47b2",
+    "UwV83HsGsw3_28e58f32d4274b62ac6d2b239e9e8516",
+    "UwV83HsGsw3_a497aa9041fd41b3b5e6f3cab0849f98"
+  ],
+  "findings": [
+    {
+      "image_id": "B6ByNegPMKs_9c62e22ac161400e969f5962b748c3e8",
+      "building": "B6ByNegPMKs",
+      "number": 30,
+      "path": "data/mp3d_layout/test/img/B6ByNegPMKs_9c62e22ac161400e969f5962b748c3e8.png",
+      "kind": "需要统一字段",
+      "fields": [
+        "coarse_type",
+        "functions",
+        "focus"
+      ],
+      "current": {
+        "coarse_type": "储藏与家务辅助",
+        "functions": "空置房间",
+        "focus": "空置办公室为主"
+      },
+      "prefill": {
+        "coarse_type": "工作与学习",
+        "functions": "工作与学习",
+        "focus": "空置办公室为主"
+      },
+      "evidence": "粗类已改为储藏与家务辅助，功能为空置房间，主区域仍为预填的空置办公室。空置不能证明储藏用途，原图也没有充分家务设施证据。",
+      "suggestion": "建议主区域写空置独立房间，功能写用途待定；粗类暂无法判断，或另说明采用办公空间判断的证据。",
+      "priority": "高",
+      "applied": false
+    },
+    {
+      "image_id": "7y3sRwLe3Va_5c39473b25b74307858764d1a2045b9e",
+      "building": "7y3sRwLe3Va",
+      "number": 10,
+      "path": "data/mp3d_layout/test/img/7y3sRwLe3Va_5c39473b25b74307858764d1a2045b9e.png",
+      "kind": "粗类判断差异",
+      "fields": [
+        "coarse_type"
+      ],
+      "current": {
+        "coarse_type": "开放复合空间"
+      },
+      "prefill": {
+        "coarse_type": "无法判断"
+      },
+      "evidence": "空房与连廊同时可见，但有明显门框/滑门轨道分隔；同时看到两个区域不能单独支持开放复合空间。交界候选有原图依据。",
+      "suggestion": "保留交界候选；粗类建议暂无法判断，描述保留空置房间＋连廊。",
+      "priority": "高",
+      "applied": false
+    },
+    {
+      "image_id": "Z6MFQCViBuw_2008e72476f84104858e908beeac0193",
+      "building": "Z6MFQCViBuw",
+      "number": 2,
+      "path": "data/mp3d_layout/test/img/Z6MFQCViBuw_2008e72476f84104858e908beeac0193.png",
+      "kind": "AI预填证据不足",
+      "fields": [
+        "functions"
+      ],
+      "current": {
+        "functions": "烹饪、用餐"
+      },
+      "prefill": {
+        "functions": "烹饪、用餐"
+      },
+      "evidence": "餐桌、红椅、陈列绳及展板可见，没有充分的烹饪设施证据；烹饪、用餐是未修改的AI预填。",
+      "suggestion": "厨房与用餐大类可以保留；功能建议用餐、陈列，删去无图像支持的烹饪。",
+      "priority": "中",
+      "applied": false
+    },
+    {
+      "image_id": "Z6MFQCViBuw_543e6efcc1e24215b18c4060255a9719",
+      "building": "Z6MFQCViBuw",
+      "number": 5,
+      "path": "data/mp3d_layout/test/img/Z6MFQCViBuw_543e6efcc1e24215b18c4060255a9719.png",
+      "kind": "AI预填证据不足",
+      "fields": [
+        "functions"
+      ],
+      "current": {
+        "functions": "烹饪、用餐"
+      },
+      "prefill": {
+        "functions": "烹饪、用餐"
+      },
+      "evidence": "餐桌、红椅、陈列绳及展板可见，没有充分的烹饪设施证据；烹饪、用餐是未修改的AI预填。",
+      "suggestion": "厨房与用餐大类可以保留；功能建议用餐、陈列，删去无图像支持的烹饪。",
+      "priority": "中",
+      "applied": false
+    },
+    {
+      "image_id": "Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45",
+      "building": "Z6MFQCViBuw",
+      "number": 8,
+      "path": "data/mp3d_layout/test/img/Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45.png",
+      "kind": "AI预填证据不足",
+      "fields": [
+        "functions"
+      ],
+      "current": {
+        "functions": "烹饪、用餐"
+      },
+      "prefill": {
+        "functions": "烹饪、用餐"
+      },
+      "evidence": "餐桌、红椅、陈列绳及展板可见，没有充分的烹饪设施证据；烹饪、用餐是未修改的AI预填。",
+      "suggestion": "厨房与用餐大类可以保留；功能建议用餐、陈列，删去无图像支持的烹饪。",
+      "priority": "中",
+      "applied": false
+    },
+    {
+      "image_id": "Z6MFQCViBuw_d9913cc77dc14f17b7228ac8de469b06",
+      "building": "Z6MFQCViBuw",
+      "number": 9,
+      "path": "data/mp3d_layout/test/img/Z6MFQCViBuw_d9913cc77dc14f17b7228ac8de469b06.png",
+      "kind": "AI预填证据不足",
+      "fields": [
+        "functions"
+      ],
+      "current": {
+        "functions": "烹饪、用餐"
+      },
+      "prefill": {
+        "functions": "烹饪、用餐"
+      },
+      "evidence": "餐桌、红椅、陈列绳及展板可见，没有充分的烹饪设施证据；烹饪、用餐是未修改的AI预填。",
+      "suggestion": "厨房与用餐大类可以保留；功能建议用餐、陈列，删去无图像支持的烹饪。",
+      "priority": "中",
+      "applied": false
+    },
+    {
+      "image_id": "e9zR4mvMWw7_b0a7188b1afc4f648bd497af5202d978",
+      "building": "e9zR4mvMWw7",
+      "number": 33,
+      "path": "data/mp3d_layout/test/img/e9zR4mvMWw7_b0a7188b1afc4f648bd497af5202d978.png",
+      "kind": "AI预填证据不足",
+      "fields": [
+        "functions"
+      ],
+      "current": {
+        "functions": "储藏"
+      },
+      "prefill": {
+        "functions": "储藏"
+      },
+      "evidence": "原图有独立家务水槽，空置区域无明显储藏布置；预填功能储藏与主区域家务水槽房不够一致。",
+      "suggestion": "保留储藏与家务辅助大类；功能建议家务清洁，暂不推断洗衣设备。",
+      "priority": "中",
+      "applied": false
+    },
+    {
+      "image_id": "pa4otMbVnkk_d02457f6d5b84e8fb43b49a52c81c78e",
+      "building": "pa4otMbVnkk",
+      "number": 38,
+      "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_d02457f6d5b84e8fb43b49a52c81c78e.png",
+      "kind": "AI预填证据不足",
+      "fields": [
+        "focus"
+      ],
+      "current": {
+        "focus": "浴室与卧室门口；浴室呈现较完整"
+      },
+      "prefill": {
+        "focus": "浴室与卧室门口；浴室呈现较完整"
+      },
+      "evidence": "浴室之外的相邻空间可见缝纫机、座椅等，没有足够的床铺证据；预填卧室指称过强。",
+      "suggestion": "主区域建议浴室与相邻房间入口；浴室呈现较完整。用户近交界判断可保留。",
+      "priority": "中",
+      "applied": false
+    },
+    {
+      "image_id": "pa4otMbVnkk_d02457f6d5b84e8fb43b49a52c81c78e",
+      "building": "pa4otMbVnkk",
+      "number": 38,
+      "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_d02457f6d5b84e8fb43b49a52c81c78e.png",
+      "kind": "同房验证范围待澄清",
+      "fields": [
+        "note",
+        "room"
+      ],
+      "current": {
+        "note": "与01是同房",
+        "room": "待定；门口视点同时呈现两间，不能仅用复合粗类代替空间身份判断。"
+      },
+      "prefill": {
+        "note": "",
+        "room": "待定；门口视点同时呈现两间，不能仅用复合粗类代替空间身份判断。"
+      },
+      "evidence": "新增评论为与01是同房，但用户本轮明确未成对验证同房；无法判断这条是否属于单独比较过的例外。",
+      "suggestion": "完整保留评论为用户提出的同房建议，本轮不自动确认为配对；此前历史明确决定不受影响。",
+      "priority": "中",
+      "applied": false
+    },
+    {
+      "image_id": "uNb9QFRL6hY_5dd7b4cf99584011ac17b25d45c6197c",
+      "building": "uNb9QFRL6hY",
+      "number": 27,
+      "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_5dd7b4cf99584011ac17b25d45c6197c.png",
+      "kind": "粗类判断差异",
+      "fields": [
+        "coarse_type"
+      ],
+      "current": {
+        "coarse_type": "通行与连接"
+      },
+      "prefill": {
+        "coarse_type": "通行与连接"
+      },
+      "evidence": "当前通行与连接；原图两侧大面积固定衣柜、抽屉和镜面占主体，具有明确更衣储物功能，也确实承担通行。",
+      "suggestion": "可讨论改为储藏与家务辅助，功能更衣、储藏、通行；非硬性填写矛盾。",
+      "priority": "低",
+      "applied": false
+    },
+    {
+      "image_id": "uNb9QFRL6hY_fcba704f80a04361842c0fdcb776becc",
+      "building": "uNb9QFRL6hY",
+      "number": 85,
+      "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_fcba704f80a04361842c0fdcb776becc.png",
+      "kind": "交界判断差异",
+      "fields": [
+        "boundary"
+      ],
+      "current": {
+        "boundary": "近交界暂不归入"
+      },
+      "prefill": {
+        "boundary": "近交界暂不归入"
+      },
+      "evidence": "当前近交界暂不归入；近处左右门框、上方门头及盥洗小间与外侧木地板走道支持位于门洞附近，AI更倾向交界候选。",
+      "suggestion": "保留两种意见，待讨论候选门槛；不凭RGB声称精确位于门洞几何中心。",
+      "priority": "中",
+      "applied": false,
+      "resolution": "采用用户本轮值，关闭本轮交界争议；AI历史意见仅保留溯源",
+      "resolved": true
+    },
+    {
+      "image_id": "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+      "building": "wc2JMjhGNzB",
+      "number": 26,
+      "path": "data/mp3d_layout/test/img/wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd.png",
+      "kind": "交界判断差异",
+      "fields": [
+        "boundary"
+      ],
+      "current": {
+        "boundary": "近交界暂不归入"
+      },
+      "prefill": {
+        "boundary": "近交界暂不归入"
+      },
+      "evidence": "当前近交界暂不归入；卫浴与木地板通道在近处开口分开，AI更倾向交界候选。",
+      "suggestion": "保留两种意见待讨论；不自动覆盖用户的近交界选择。",
+      "priority": "中",
+      "applied": false,
+      "resolution": "采用用户本轮值，关闭本轮交界争议；AI历史意见仅保留溯源",
+      "resolved": true
+    },
+    {
+      "image_id": "yqstnuAEVhm_9de98503fd994452b627cdcc7a7d47b2",
+      "building": "yqstnuAEVhm",
+      "number": 25,
+      "path": "data/mp3d_layout/test/img/yqstnuAEVhm_9de98503fd994452b627cdcc7a7d47b2.png",
+      "kind": "交界证据不足",
+      "fields": [
+        "boundary"
+      ],
+      "current": {
+        "boundary": "交界候选"
+      },
+      "prefill": {
+        "boundary": "交界候选"
+      },
+      "evidence": "当前交界候选；原图有通向用餐、起居的不同玻璃门开口，不应把两个开口误当同一个门洞的两侧。不能确定相机正处于其中一处交接位置。",
+      "suggestion": "建议先记位置无法判断，并保留多个连通空间及范围歧义；近交界也可作为待讨论意见。",
+      "priority": "中",
+      "applied": false,
+      "resolution": "采用用户本轮值，关闭本轮交界争议；AI历史意见仅保留溯源",
+      "resolved": true
+    }
+  ],
+  "accepted_or_not_forced": {
+    "boundary_candidate": [
+      "7y10",
+      "7y18",
+      "q9_18",
+      "uNb21"
+    ],
+    "clothing_room": [
+      "Uw05",
+      "Uw13"
+    ],
+    "near_boundary": [
+      "pa38",
+      "q9_24",
+      "yq19"
+    ],
+    "note": "这些判断与原图没有发现必须纠正的冲突；交界精确位置仍有目视不确定性。"
+  },
+  "downstream": "这是人工复核一致性审计，不是正式分类冻结或预测输入；没有覆盖用户值、旧AI审查文件或原HTML。",
+  "latest_user_resolution": "用户随后明确本轮交界差异采用人工复核值；同房需重新判断主视觉区域、预期标注范围及歧义难度可比性。"
+}

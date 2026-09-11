@@ -1,0 +1,3451 @@
+{
+  "schema": "same_room_research_pairs_v1",
+  "reviewer": "same_room_review_b",
+  "buildings": [
+    "X7HyMhZNoso",
+    "Z6MFQCViBuw",
+    "ZMojNkEp431",
+    "b8cTxDM8gDG",
+    "e9zR4mvMWw7",
+    "jh4fc5c5qoQ",
+    "jtcxE69GiFV",
+    "kEZ7cmS4wCh",
+    "pRbA3pwrgk9"
+  ],
+  "images": [
+    {
+      "image_id": "X7HyMhZNoso_0595477618f44940b004970372df16dc",
+      "building": "X7HyMhZNoso",
+      "number": 1,
+      "view_basis": "individual_original",
+      "main_visual_space": "楼梯平台与卧室门外走道",
+      "expected_annotation_extent": "平台围合及楼梯开口边界",
+      "ambiguity_and_information": "栏杆、高差及门外卧室信息不同于卧室内部",
+      "candidate_numbers": [],
+      "note": "原评论：支撑柱子,oos；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_0e0c08b705704f80b5f31c2bd3a40583",
+      "building": "X7HyMhZNoso",
+      "number": 2,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "条纹床头主卧",
+      "expected_annotation_extent": "主卧床区到房门/衣帽门的围合",
+      "ambiguity_and_information": "床遮挡下沿，衣帽间深处可见",
+      "candidate_numbers": [
+        21,
+        22,
+        25
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_0e8aea225d0942f494fd2255f49eb314",
+      "building": "X7HyMhZNoso",
+      "number": 3,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "黄色床品小卧室",
+      "expected_annotation_extent": "卧室本体，衣帽门处可截断",
+      "ambiguity_and_information": "床遮挡部分角点",
+      "candidate_numbers": [
+        10,
+        14
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_215ab480f5084ac992c0d0e6b3e82268",
+      "building": "X7HyMhZNoso",
+      "number": 4,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "开放布局沙发区",
+      "expected_annotation_extent": "沙发区至连续餐厨的范围存在多种解释",
+      "ambiguity_and_information": "电视隔墙与远处厨房形成范围差",
+      "candidate_numbers": [
+        7
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_28ada927582d4d6ea7cf44cabf31527a",
+      "building": "X7HyMhZNoso",
+      "number": 5,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "空置卧室",
+      "expected_annotation_extent": "窗墙、衣柜墙和入口组成的空房围合",
+      "ambiguity_and_information": "空房无遮挡，柜面与墙面需区分",
+      "candidate_numbers": [
+        26
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_29a5eef6980d4798bcc58e4c96e198cc",
+      "building": "X7HyMhZNoso",
+      "number": 6,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "小如厕洗手间",
+      "expected_annotation_extent": "房内盆厕边界至入口",
+      "ambiguity_and_information": "门外台阶可见，不能自动纳入",
+      "candidate_numbers": [],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_2b16acff0dc042a1a75816a1fbd0a302",
+      "building": "X7HyMhZNoso",
+      "number": 7,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "开放布局餐桌区",
+      "expected_annotation_extent": "餐桌附近与连续厨房范围",
+      "ambiguity_and_information": "岛台和电视墙遮挡远处起居",
+      "candidate_numbers": [
+        4,
+        15
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_2bb4931911e4412cb51f6437a82c5b6c",
+      "building": "X7HyMhZNoso",
+      "number": 8,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "独立客厅",
+      "expected_annotation_extent": "客厅窗墙及宽入口的围合",
+      "ambiguity_and_information": "沙发遮挡低位墙角",
+      "candidate_numbers": [
+        11,
+        12,
+        23
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_2fa0da1a66e04428b315cb93b72143d5",
+      "building": "X7HyMhZNoso",
+      "number": 9,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "带浴缸天窗主卫",
+      "expected_annotation_extent": "浴缸、盆厕、淋浴组成主卫",
+      "ambiguity_and_information": "淋浴门及侧墙遮挡不同器具",
+      "candidate_numbers": [
+        13,
+        19
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_3cafb1bfb9084df995fff71810d7693f",
+      "building": "X7HyMhZNoso",
+      "number": 10,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "白床小卧室",
+      "expected_annotation_extent": "床区与衣帽门间卧室范围",
+      "ambiguity_and_information": "床与衣柜口，横条窗与黄色卧室不同",
+      "candidate_numbers": [
+        3,
+        24
+      ],
+      "note": "原评论：和03不是同一房间；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_445ae0203f294b5c9889505576e37998",
+      "building": "X7HyMhZNoso",
+      "number": 11,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "独立客厅入口侧",
+      "expected_annotation_extent": "客厅本体，可见外侧玄关",
+      "ambiguity_and_information": "比08更靠宽口但主体完整",
+      "candidate_numbers": [
+        8
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_84cc1504051f4b1c9492dfab5dce84f9",
+      "building": "X7HyMhZNoso",
+      "number": 12,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "独立客厅电视侧",
+      "expected_annotation_extent": "同客厅窗墙及入口范围",
+      "ambiguity_and_information": "电视遮挡局部下沿",
+      "candidate_numbers": [
+        8
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_987fd31155514f6facb131bd5c14881d",
+      "building": "X7HyMhZNoso",
+      "number": 13,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "无浴缸淋浴主卫",
+      "expected_annotation_extent": "台盆马桶和淋浴隔区的围合",
+      "ambiguity_and_information": "淋浴玻璃与卧室外侧可见",
+      "candidate_numbers": [
+        9,
+        18
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_a59d092e0c50479089a85c2b36dd6d20",
+      "building": "X7HyMhZNoso",
+      "number": 14,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "黄色床品小卧室入口侧",
+      "expected_annotation_extent": "同黄色卧室范围",
+      "ambiguity_and_information": "比03更多门外楼梯信息",
+      "candidate_numbers": [
+        3,
+        24
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_a60fbec046b04e5bb256d4a665219f35",
+      "building": "X7HyMhZNoso",
+      "number": 15,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "开放布局厨房及餐桌",
+      "expected_annotation_extent": "餐厨连续区，远处沙发区有隔墙",
+      "ambiguity_and_information": "岛台遮挡下沿，空间范围解释多",
+      "candidate_numbers": [
+        7
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_a830b673f439458aa54a716194d972b7",
+      "building": "X7HyMhZNoso",
+      "number": 16,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "黄色卧室衣帽间",
+      "expected_annotation_extent": "小衣帽间柜墙到卧室门",
+      "ambiguity_and_information": "室内衣柜占围合，卧室仅门外可见",
+      "candidate_numbers": [],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_b1e740fa45384144b55ef6675440756b",
+      "building": "X7HyMhZNoso",
+      "number": 17,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "洗衣房",
+      "expected_annotation_extent": "家务间固定柜墙至房门",
+      "ambiguity_and_information": "机柜遮挡下沿",
+      "candidate_numbers": [],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_b6bb4e844c5b43ad92904f258660bcaf",
+      "building": "X7HyMhZNoso",
+      "number": 18,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "淋浴主卫淋浴侧",
+      "expected_annotation_extent": "淋浴隔区或整间主卫皆有范围解释",
+      "ambiguity_and_information": "相较13淋浴墙和玻璃主导，信息明显变",
+      "candidate_numbers": [
+        13
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9",
+      "building": "X7HyMhZNoso",
+      "number": 19,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "带浴缸天窗主卫中心",
+      "expected_annotation_extent": "同带浴缸主卫整体围合",
+      "ambiguity_and_information": "支撑/窄墙、淋浴隔断影响角点",
+      "candidate_numbers": [
+        9
+      ],
+      "note": "原评论：这个支撑不知道算不算；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_cd608227f6c94b91af3db8bf6cd28abd",
+      "building": "X7HyMhZNoso",
+      "number": 20,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "主卧衣帽通道",
+      "expected_annotation_extent": "衣柜通道至卧室和卫浴口",
+      "ambiguity_and_information": "两端跨门范围与主卧本体不同",
+      "candidate_numbers": [],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_e40ff9839f0b4a35a25e9dc16d391ae4",
+      "building": "X7HyMhZNoso",
+      "number": 21,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "条纹床头主卧入口侧",
+      "expected_annotation_extent": "主卧整体围合",
+      "ambiguity_and_information": "楼梯外侧可见多于02",
+      "candidate_numbers": [
+        2
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_e9ae19c83e6243dd81b7213ba5f8c329",
+      "building": "X7HyMhZNoso",
+      "number": 22,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "条纹床头主卧窗边",
+      "expected_annotation_extent": "同主卧整体围合",
+      "ambiguity_and_information": "贴床窗边但主要墙窗仍对应",
+      "candidate_numbers": [
+        2
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_ecda3dd2f5a44ac3a7b365de9e13c09b",
+      "building": "X7HyMhZNoso",
+      "number": 23,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "独立客厅窗侧",
+      "expected_annotation_extent": "同客厅主体",
+      "ambiguity_and_information": "侧墙近镜头，电视/沙发遮挡角点",
+      "candidate_numbers": [
+        8
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_efaff409ffad4b05ba2777dbadd554f6",
+      "building": "X7HyMhZNoso",
+      "number": 24,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "白床小卧室门侧",
+      "expected_annotation_extent": "同白床卧室本体",
+      "ambiguity_and_information": "房门及衣帽口可见，主体较完整",
+      "candidate_numbers": [
+        10,
+        14
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_f03d055128104fd486151e54c9e4a32a",
+      "building": "X7HyMhZNoso",
+      "number": 25,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "条纹床头主卧座椅侧",
+      "expected_annotation_extent": "同主卧整体围合",
+      "ambiguity_and_information": "低家具遮挡，外侧楼梯口可见",
+      "candidate_numbers": [
+        2
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "X7HyMhZNoso_f59aa4dda2024d88ac3f9b22331b475b",
+      "building": "X7HyMhZNoso",
+      "number": 26,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "空置卧室窗侧",
+      "expected_annotation_extent": "同空房柜墙/窗墙及入口",
+      "ambiguity_and_information": "低遮挡，窗侧视点改变",
+      "candidate_numbers": [
+        5
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "Z6MFQCViBuw_099d792dbfb2402ca355fd7ed860128f",
+      "building": "Z6MFQCViBuw",
+      "number": 1,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "红墙会客陈列室",
+      "expected_annotation_extent": "会客室门墙窗围合",
+      "ambiguity_and_information": "多门可见，陈列绳与家具挡墙脚",
+      "candidate_numbers": [
+        4,
+        6,
+        7
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "Z6MFQCViBuw_2008e72476f84104858e908beeac0193",
+      "building": "Z6MFQCViBuw",
+      "number": 2,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "长餐桌陈列室",
+      "expected_annotation_extent": "餐室整体",
+      "ambiguity_and_information": "餐椅遮挡下沿，多个门外空间可见",
+      "candidate_numbers": [
+        3,
+        5,
+        8,
+        9
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "Z6MFQCViBuw_22fff6c74efb476592569c18718feb41",
+      "building": "Z6MFQCViBuw",
+      "number": 3,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "窄肖像陈列室",
+      "expected_annotation_extent": "双门与侧窗限定小展室",
+      "ambiguity_and_information": "跨门透视明显，和大餐室主空间不同",
+      "candidate_numbers": [
+        2,
+        10
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "Z6MFQCViBuw_451088e169fd4fe3b14d1f26b18d9a27",
+      "building": "Z6MFQCViBuw",
+      "number": 4,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "华盖床陈列卧室",
+      "expected_annotation_extent": "床区房内围合",
+      "ambiguity_and_information": "大床与展绳遮挡低位墙线",
+      "candidate_numbers": [
+        1
+      ],
+      "note": "原评论：不是r1；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "Z6MFQCViBuw_543e6efcc1e24215b18c4060255a9719",
+      "building": "Z6MFQCViBuw",
+      "number": 5,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "餐室门侧",
+      "expected_annotation_extent": "长餐桌所在房内围合",
+      "ambiguity_and_information": "贴门视点，餐桌仅两端可见",
+      "candidate_numbers": [
+        2
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "Z6MFQCViBuw_59aed460238643f48f593e9b9ba1c17d",
+      "building": "Z6MFQCViBuw",
+      "number": 6,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "红墙会客陈列室近卧室门侧",
+      "expected_annotation_extent": "本会客区与前方门墙",
+      "ambiguity_and_information": "两室装修接近，固定细节对应待复核",
+      "candidate_numbers": [
+        1
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "Z6MFQCViBuw_80cd596c480c4f72a7457433b862d179",
+      "building": "Z6MFQCViBuw",
+      "number": 7,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "红墙会客陈列室窗侧",
+      "expected_annotation_extent": "两窗长镜及壁炉门墙围合",
+      "ambiguity_and_information": "绳栏、座椅和装饰遮挡",
+      "candidate_numbers": [
+        1
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45",
+      "building": "Z6MFQCViBuw",
+      "number": 8,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "长餐桌陈列室侧端",
+      "expected_annotation_extent": "同餐室整体",
+      "ambiguity_and_information": "桌椅遮挡部分墙脚",
+      "candidate_numbers": [
+        2
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "Z6MFQCViBuw_d9913cc77dc14f17b7228ac8de469b06",
+      "building": "Z6MFQCViBuw",
+      "number": 9,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "长餐桌陈列室另一侧端",
+      "expected_annotation_extent": "同餐室整体",
+      "ambiguity_and_information": "展柜与餐椅遮挡相近",
+      "candidate_numbers": [
+        2
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "Z6MFQCViBuw_fbef2c9afec642c88d01cf09c90aec12",
+      "building": "Z6MFQCViBuw",
+      "number": 10,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "抽屉柜陈列小室",
+      "expected_annotation_extent": "单窗与门墙限定陈列室",
+      "ambiguity_and_information": "柜体覆盖墙下沿，与03天花门型不同",
+      "candidate_numbers": [
+        3
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "ZMojNkEp431_1223ee164fc040c0bd13c366f7a22059",
+      "building": "ZMojNkEp431",
+      "number": 1,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "玻璃墙外长桌会议小室",
+      "expected_annotation_extent": "长桌所在小室，玻璃分隔作为可选截断",
+      "ambiguity_and_information": "透明隔墙外办公区透视及反射会干扰范围",
+      "candidate_numbers": [
+        2
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "ZMojNkEp431_f1bb3acca4ed4aada739514b1f2a44bd",
+      "building": "ZMojNkEp431",
+      "number": 2,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "同长桌会议小室电视端",
+      "expected_annotation_extent": "同长桌小室",
+      "ambiguity_and_information": "更贴玻璃与电视端，办公区透视仍可见",
+      "candidate_numbers": [
+        1
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "b8cTxDM8gDG_055056e12afe42578c6f429bc07159d2",
+      "building": "b8cTxDM8gDG",
+      "number": 1,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "黑帘影音室",
+      "expected_annotation_extent": "影音室整体至门口",
+      "ambiguity_and_information": "黑帘遮挡墙线",
+      "candidate_numbers": [],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "b8cTxDM8gDG_12fc603ce4bc4cbd81c704e630f130bd",
+      "building": "b8cTxDM8gDG",
+      "number": 2,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "白床卧室",
+      "expected_annotation_extent": "床区至镜柜及楼梯门",
+      "ambiguity_and_information": "门外楼梯与强光",
+      "candidate_numbers": [],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "b8cTxDM8gDG_184a9b92b85840d88bf5793da9aa9cba",
+      "building": "b8cTxDM8gDG",
+      "number": 3,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "双床卧室窗侧",
+      "expected_annotation_extent": "双床房墙窗围合",
+      "ambiguity_and_information": "电视与双床遮挡",
+      "candidate_numbers": [
+        16
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "b8cTxDM8gDG_298a2386166a43c8a04e1c24433f7d15",
+      "building": "b8cTxDM8gDG",
+      "number": 4,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "短走廊靠楼梯侧",
+      "expected_annotation_extent": "短走道或平台范围",
+      "ambiguity_and_information": "门外平台与多门信息",
+      "candidate_numbers": [
+        10
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "b8cTxDM8gDG_3638da5864ab4d2aa722479d9efa8b71",
+      "building": "b8cTxDM8gDG",
+      "number": 5,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "海景书房休憩区",
+      "expected_annotation_extent": "书架与海景窗围合的连续区",
+      "ambiguity_and_information": "玻璃外露台可见",
+      "candidate_numbers": [
+        12,
+        19
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "b8cTxDM8gDG_3892d409b66644439f5afcf3d296efbf",
+      "building": "b8cTxDM8gDG",
+      "number": 6,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "弯折卧室走廊",
+      "expected_annotation_extent": "弯廊墙线及各房门",
+      "ambiguity_and_information": "弯墙遮住远端",
+      "candidate_numbers": [
+        11
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "b8cTxDM8gDG_51c90ec9afc4495ab3788c6badc303df",
+      "building": "b8cTxDM8gDG",
+      "number": 7,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "黑床头卧室",
+      "expected_annotation_extent": "卧室窗、衣柜、卫生间口",
+      "ambiguity_and_information": "床挡下沿",
+      "candidate_numbers": [
+        17
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "b8cTxDM8gDG_8316e9313299447bb1f574aaf8cbec73",
+      "building": "b8cTxDM8gDG",
+      "number": 8,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "短走廊靠影音室端",
+      "expected_annotation_extent": "走道或影音入口范围",
+      "ambiguity_and_information": "两端空间不同程度可见",
+      "candidate_numbers": [
+        10
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "b8cTxDM8gDG_afc1807e6a1946b79137c1a158526913",
+      "building": "b8cTxDM8gDG",
+      "number": 9,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "开放厨房",
+      "expected_annotation_extent": "灶台及岛台所在厨房围合",
+      "ambiguity_and_information": "透见起居，柜体挡墙角",
+      "candidate_numbers": [
+        19
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "b8cTxDM8gDG_b15db460058c41e8aa0c0720344daa30",
+      "building": "b8cTxDM8gDG",
+      "number": 10,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "短走廊中段",
+      "expected_annotation_extent": "两端门和窗的走道围合",
+      "ambiguity_and_information": "两端跨门可能扩大范围",
+      "candidate_numbers": [
+        4,
+        8
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "b8cTxDM8gDG_bcd82ce0da1846a58f9d97b00e022af2",
+      "building": "b8cTxDM8gDG",
+      "number": 11,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "弯折走廊端部",
+      "expected_annotation_extent": "同弯廊与卧室门",
+      "ambiguity_and_information": "凹壁及弯折截断远端",
+      "candidate_numbers": [
+        6
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "b8cTxDM8gDG_bd2d16e81707455eacd72cda7eb5d3d5",
+      "building": "b8cTxDM8gDG",
+      "number": 12,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "海景书房沙发与桌侧",
+      "expected_annotation_extent": "同海景书房休憩围合",
+      "ambiguity_and_information": "玻璃外露台可见，书架挡墙",
+      "candidate_numbers": [
+        5
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "b8cTxDM8gDG_d38c4ae95f5b4640a2696b923b80d1f4",
+      "building": "b8cTxDM8gDG",
+      "number": 13,
+      "view_basis": "individual_original",
+      "main_visual_space": "楼梯平台健身通行区",
+      "expected_annotation_extent": "平台、高差和各宽口",
+      "ambiguity_and_information": "高差、多区及栏杆造成范围解释",
+      "candidate_numbers": [],
+      "note": "原评论：门框分割出来的房间有点多,这张图确实不好判断标注的区域是什么；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "b8cTxDM8gDG_d6f573aa1add4621af53ba492838ff45",
+      "building": "b8cTxDM8gDG",
+      "number": 14,
+      "view_basis": "individual_original",
+      "main_visual_space": "小床及桑拿区",
+      "expected_annotation_extent": "小床室本体至连接大床区开口",
+      "ambiguity_and_information": "桑拿门与相邻床区",
+      "candidate_numbers": [
+        18
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "b8cTxDM8gDG_dcbdda428eb846a586886b87d9552d0e",
+      "building": "b8cTxDM8gDG",
+      "number": 15,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "双盆浴缸卫浴",
+      "expected_annotation_extent": "卫浴主体至两端门",
+      "ambiguity_and_information": "玻璃淋浴与浴帘",
+      "candidate_numbers": [],
+      "note": "原评论：玻璃隔断；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "b8cTxDM8gDG_ddc9afa8e031453abd45c783fbfeb4aa",
+      "building": "b8cTxDM8gDG",
+      "number": 16,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "双床卧室入口侧",
+      "expected_annotation_extent": "同双床卧室围合",
+      "ambiguity_and_information": "门外卫浴走道可见",
+      "candidate_numbers": [
+        3
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "b8cTxDM8gDG_f339391e9479496e8652c972953f0ce4",
+      "building": "b8cTxDM8gDG",
+      "number": 17,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "黑床头卧室门侧",
+      "expected_annotation_extent": "同卧室范围",
+      "ambiguity_and_information": "门外红黑浴室更显著",
+      "candidate_numbers": [
+        7
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "b8cTxDM8gDG_f3748786c3704532abb2358581488f3f",
+      "building": "b8cTxDM8gDG",
+      "number": 18,
+      "view_basis": "individual_original",
+      "main_visual_space": "小床与相邻床区连接处",
+      "expected_annotation_extent": "两区截取存在多个解释",
+      "ambiguity_and_information": "同图两床区域隔墙与高差线索",
+      "candidate_numbers": [
+        14
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "b8cTxDM8gDG_f63819c407e64c2897b703080766cb60",
+      "building": "b8cTxDM8gDG",
+      "number": 19,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "海景餐桌与起居区",
+      "expected_annotation_extent": "餐桌起居到厨房连续范围",
+      "ambiguity_and_information": "不是上层书房，岛台与隔墙",
+      "candidate_numbers": [
+        5,
+        9
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_0977162f6d4e47f7b3764379ba68d8db",
+      "building": "e9zR4mvMWw7",
+      "number": 1,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "有顶露台餐桌区",
+      "expected_annotation_extent": "露台围栏与建筑外墙范围",
+      "ambiguity_and_information": "外部开放边界与室内不同",
+      "candidate_numbers": [],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_0ee61863ec0c4c06bac95fb886e98945",
+      "building": "e9zR4mvMWw7",
+      "number": 2,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "双床卧室窗角",
+      "expected_annotation_extent": "双床房整体围合",
+      "ambiguity_and_information": "窗角近相机，镜柜反射",
+      "candidate_numbers": [
+        32,
+        36
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_12c84e77f6564013a032220e8f9037e8",
+      "building": "e9zR4mvMWw7",
+      "number": 3,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "花床主卧",
+      "expected_annotation_extent": "主卧床区至衣帽及卫浴门",
+      "ambiguity_and_information": "双门外延范围歧义",
+      "candidate_numbers": [
+        7,
+        8,
+        11,
+        28
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_16eb46a968384060821cb59d0e04f4dd",
+      "building": "e9zR4mvMWw7",
+      "number": 4,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "入户前厅",
+      "expected_annotation_extent": "前厅至各口/楼梯",
+      "ambiguity_and_information": "多口及高差",
+      "candidate_numbers": [
+        18,
+        35
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_184edf3d3a4d482dae288e4811945331",
+      "building": "e9zR4mvMWw7",
+      "number": 5,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "彩色三角床品卧室",
+      "expected_annotation_extent": "独立卧室",
+      "ambiguity_and_information": "镜柜、床挡下沿",
+      "candidate_numbers": [],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_18653fa3d6ba4f82889237201ee07d11",
+      "building": "e9zR4mvMWw7",
+      "number": 6,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "白桌藤椅餐区",
+      "expected_annotation_extent": "餐区固定墙段到厨房口",
+      "ambiguity_and_information": "厨房与旁侧起居连通，范围可多解",
+      "candidate_numbers": [
+        9,
+        37
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_192fb2a16486430a96b34dffc2e8cbbc",
+      "building": "e9zR4mvMWw7",
+      "number": 7,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "花床主卧墙侧",
+      "expected_annotation_extent": "主卧整体",
+      "ambiguity_and_information": "门外卫浴及走道可见",
+      "candidate_numbers": [
+        3,
+        26
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_1cbe7276fcee411c8695f5f11ac45eb5",
+      "building": "e9zR4mvMWw7",
+      "number": 8,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "花床主卧入口侧",
+      "expected_annotation_extent": "主卧或入口跨门截取",
+      "ambiguity_and_information": "近房门，楼梯平台信息",
+      "candidate_numbers": [
+        3,
+        15
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_1d316dfbe35f41dd9203eaf88be5aae8",
+      "building": "e9zR4mvMWw7",
+      "number": 9,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "白桌藤椅餐区另一侧",
+      "expected_annotation_extent": "同餐区围合",
+      "ambiguity_and_information": "厨房墙端与横梁形成范围线索",
+      "candidate_numbers": [
+        6
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_1daae4b7becc43949516096170ce2a76",
+      "building": "e9zR4mvMWw7",
+      "number": 10,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "蓝条床品卧室",
+      "expected_annotation_extent": "独立卧室至门",
+      "ambiguity_and_information": "镜柜反射和床遮挡",
+      "candidate_numbers": [
+        27
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_1f8ee74dbb254dff85771776279eae94",
+      "building": "e9zR4mvMWw7",
+      "number": 11,
+      "view_basis": "individual_original",
+      "main_visual_space": "花床主卧近卫浴门",
+      "expected_annotation_extent": "卧室与卫浴门侧截取",
+      "ambiguity_and_information": "贴卫浴入口，白瓷砖小室信息显著",
+      "candidate_numbers": [
+        3
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_1ff35596f9cb4b98ba4f08dda81c1654",
+      "building": "e9zR4mvMWw7",
+      "number": 12,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "上层走廊中段及楼梯",
+      "expected_annotation_extent": "廊道及楼梯洞口",
+      "ambiguity_and_information": "双向延伸和多个房门",
+      "candidate_numbers": [
+        19,
+        21,
+        22
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_2224be23a70a475ea6daa55d4c90a91b",
+      "building": "e9zR4mvMWw7",
+      "number": 13,
+      "view_basis": "individual_original",
+      "main_visual_space": "厨房与白桌餐区连接视点",
+      "expected_annotation_extent": "厨房/餐区两种范围解释",
+      "ambiguity_and_information": "柜墙端、地材变换、对侧餐区均明显",
+      "candidate_numbers": [
+        38
+      ],
+      "note": "原评论：这个确实是站在了两个区域,一个厨房,一个餐厅的分割正中间,不算传统的门框；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_2594cedd9da64c338c1ba98abed9efb3",
+      "building": "e9zR4mvMWw7",
+      "number": 14,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "独立淋浴洗手卫浴",
+      "expected_annotation_extent": "单间盆厕淋浴范围",
+      "ambiguity_and_information": "玻璃隔挡及门外长廊",
+      "candidate_numbers": [
+        29
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_2e52341d21b940b5b38a9e26c4cf4200",
+      "building": "e9zR4mvMWw7",
+      "number": 15,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "花床主卧入口侧",
+      "expected_annotation_extent": "同08入口附近范围",
+      "ambiguity_and_information": "楼梯平台信息与08相似",
+      "candidate_numbers": [
+        8
+      ],
+      "note": "原评论：离门很近；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45",
+      "building": "e9zR4mvMWw7",
+      "number": 16,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "上层沙发起居楼梯侧",
+      "expected_annotation_extent": "上层起居主体及楼梯边",
+      "ambiguity_and_information": "半墙与高差",
+      "candidate_numbers": [
+        17,
+        40
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_4273c4dd97974531b5256f96204fee47",
+      "building": "e9zR4mvMWw7",
+      "number": 17,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "上层起居大窗侧",
+      "expected_annotation_extent": "同上层起居主体",
+      "ambiguity_and_information": "大窗旁，半墙仍可见",
+      "candidate_numbers": [
+        16
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_4984fc9f1fdf4ff7887430f71b9ae392",
+      "building": "e9zR4mvMWw7",
+      "number": 18,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "入户前厅内侧",
+      "expected_annotation_extent": "同前厅",
+      "ambiguity_and_information": "多口可见，较少户外信息",
+      "candidate_numbers": [
+        4
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_4fb8c9be319e4784b4b66f9ca5d839ab",
+      "building": "e9zR4mvMWw7",
+      "number": 19,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "上层走廊蓝床房门侧",
+      "expected_annotation_extent": "廊道本体或蓝床房口",
+      "ambiguity_and_information": "近侧门使门外卧室显著",
+      "candidate_numbers": [
+        12
+      ],
+      "note": "原评论：离门近；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_511976eee78f42e6858dcb7845a44777",
+      "building": "e9zR4mvMWw7",
+      "number": 20,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "下层蓝沙发起居区",
+      "expected_annotation_extent": "起居至连续餐区",
+      "ambiguity_and_information": "电视隔墙和远餐桌",
+      "candidate_numbers": [
+        34,
+        37
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_5a03fdefad7a46f4abaf1b2b924ec153",
+      "building": "e9zR4mvMWw7",
+      "number": 21,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "上层走廊中段",
+      "expected_annotation_extent": "同12廊道及楼梯洞",
+      "ambiguity_and_information": "相同多个房门和高差",
+      "candidate_numbers": [
+        12
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_5d711de78dbd400aa4cfd51fc05dfbee",
+      "building": "e9zR4mvMWw7",
+      "number": 22,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "上层走廊另一端平台",
+      "expected_annotation_extent": "廊道端部与楼梯半墙",
+      "ambiguity_and_information": "远端范围受墙遮挡",
+      "candidate_numbers": [
+        12,
+        41
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_5f9b1db7cc1748c2a71d9924bd1f4fa3",
+      "building": "e9zR4mvMWw7",
+      "number": 23,
+      "view_basis": "individual_original",
+      "main_visual_space": "绿叶床品卧室内",
+      "expected_annotation_extent": "卧室本体",
+      "ambiguity_and_information": "床、书桌与镜柜遮挡",
+      "candidate_numbers": [
+        39
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_6a856f5cb71645558f9f9ee069f37f1b",
+      "building": "e9zR4mvMWw7",
+      "number": 24,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "木餐桌及吧台侧",
+      "expected_annotation_extent": "餐区到厨房吧台界面",
+      "ambiguity_and_information": "透见室外露台与狭长厨房",
+      "candidate_numbers": [
+        38
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_75ea3fd50c1c4b8ba66dccc4247b8b81",
+      "building": "e9zR4mvMWw7",
+      "number": 25,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "卫浴外侧洗手小间",
+      "expected_annotation_extent": "洗手小间至内浴室门",
+      "ambiguity_and_information": "门后浴厕区单独围合",
+      "candidate_numbers": [],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_83347153d2184d33869626c6c83318f9",
+      "building": "e9zR4mvMWw7",
+      "number": 26,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "花床主卧墙侧",
+      "expected_annotation_extent": "同07主卧整体",
+      "ambiguity_and_information": "与07近似视点，卫浴灯光不同",
+      "candidate_numbers": [
+        7
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_8783add8825d4ecf8eb1f2af3c22b8df",
+      "building": "e9zR4mvMWw7",
+      "number": 27,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "蓝条床品卧室窗侧",
+      "expected_annotation_extent": "同蓝条床房",
+      "ambiguity_and_information": "镜柜与床形成类似遮挡",
+      "candidate_numbers": [
+        10
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_891cb55a08dd4aea9ee76656f6b4850d",
+      "building": "e9zR4mvMWw7",
+      "number": 28,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "花床主卧衣帽口侧",
+      "expected_annotation_extent": "同主卧整体",
+      "ambiguity_and_information": "双开衣帽门与卫浴口可见",
+      "candidate_numbers": [
+        3
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_93c08bd7515647fdaa2ef1239d02983c",
+      "building": "e9zR4mvMWw7",
+      "number": 29,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "独立内浴厕间",
+      "expected_annotation_extent": "浴缸马桶淋浴间",
+      "ambiguity_and_information": "门外25洗手间，黑腰线",
+      "candidate_numbers": [
+        14
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_979426d6a1ea42e29cf5c3bd62eba342",
+      "building": "e9zR4mvMWw7",
+      "number": 30,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "车库",
+      "expected_annotation_extent": "车库门及侧门完整围合",
+      "ambiguity_and_information": "裸露顶梁与侧门高差",
+      "candidate_numbers": [],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_a5b1928b6c1144bf8b7fda2317debf08",
+      "building": "e9zR4mvMWw7",
+      "number": 31,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "蓝床头墙卧室",
+      "expected_annotation_extent": "独立卧室",
+      "ambiguity_and_information": "镜柜和床遮挡",
+      "candidate_numbers": [],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_ac03b99e3f3642be80b4d24fde0af03a",
+      "building": "e9zR4mvMWw7",
+      "number": 32,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "双床卧室入口侧",
+      "expected_annotation_extent": "双床房本体",
+      "ambiguity_and_information": "近门附加廊道信息",
+      "candidate_numbers": [
+        2
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_b0a7188b1afc4f648bd497af5202d978",
+      "building": "e9zR4mvMWw7",
+      "number": 33,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "家务洗衣小间",
+      "expected_annotation_extent": "家务间水槽至房门",
+      "ambiguity_and_information": "门外餐厨和侧卫浴口",
+      "candidate_numbers": [],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_c904c55a5d0e420bbd6e4e030b9fe5b4",
+      "building": "e9zR4mvMWw7",
+      "number": 34,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "下层蓝沙发起居电视侧",
+      "expected_annotation_extent": "同下层起居区",
+      "ambiguity_and_information": "电视隔墙挡远厨房",
+      "candidate_numbers": [
+        20
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_cd47116ee6264bc691811409bf779f34",
+      "building": "e9zR4mvMWw7",
+      "number": 35,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "入户前厅门内",
+      "expected_annotation_extent": "同前厅",
+      "ambiguity_and_information": "前门、车库门及楼梯同时可见",
+      "candidate_numbers": [
+        4
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_d88c41884dc24efbb5c1b7dcf97998e9",
+      "building": "e9zR4mvMWw7",
+      "number": 36,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "双床卧室主体",
+      "expected_annotation_extent": "同双床房围合",
+      "ambiguity_and_information": "双床及镜柜遮挡",
+      "candidate_numbers": [
+        2
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_f624a40d100144e696a39abe258ee090",
+      "building": "e9zR4mvMWw7",
+      "number": 37,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "下层蓝沙发起居入口侧",
+      "expected_annotation_extent": "同下层起居",
+      "ambiguity_and_information": "门外前厅更多可见",
+      "candidate_numbers": [
+        6,
+        20
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_f6c327acf9884d988714467217d67dcd",
+      "building": "e9zR4mvMWw7",
+      "number": 38,
+      "view_basis": "individual_original",
+      "main_visual_space": "木餐桌区与厨房吧台边",
+      "expected_annotation_extent": "餐区为主，厨房侧可扩展",
+      "ambiguity_and_information": "宽口/柜墙端与两种空间范围",
+      "candidate_numbers": [
+        13,
+        24
+      ],
+      "note": "原评论：这个也是类似,但是r13和r12 其实就跟我前面说的那样,030在区域分割的正中间拍的；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814",
+      "building": "e9zR4mvMWw7",
+      "number": 39,
+      "view_basis": "individual_original",
+      "main_visual_space": "绿叶床房入口",
+      "expected_annotation_extent": "卧室本体或跨门廊道",
+      "ambiguity_and_information": "房门、廊道半墙更显著，信息区别于23",
+      "candidate_numbers": [
+        23
+      ],
+      "note": "原评论：离门很近；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_f8d915e2d06a4ff8ab6f4cdaf3e42295",
+      "building": "e9zR4mvMWw7",
+      "number": 40,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "上层起居楼梯侧",
+      "expected_annotation_extent": "同16起居及楼梯侧范围",
+      "ambiguity_and_information": "半墙和高差与16相似",
+      "candidate_numbers": [
+        16
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "e9zR4mvMWw7_fa7122ef2199445485623708ea54d018",
+      "building": "e9zR4mvMWw7",
+      "number": 41,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "上层走廊端部双床房门侧",
+      "expected_annotation_extent": "廊道端部与楼梯",
+      "ambiguity_and_information": "多个门内视野比中段不同",
+      "candidate_numbers": [
+        22
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b",
+      "building": "jh4fc5c5qoQ",
+      "number": 1,
+      "view_basis": "individual_original",
+      "main_visual_space": "白浴帘卫浴",
+      "expected_annotation_extent": "盆厕与淋浴小室",
+      "ambiguity_and_information": "浴帘遮蔽，外侧走道",
+      "candidate_numbers": [
+        6
+      ],
+      "note": "原评论：如果 细分的话,确实把马桶的区域和换衣的区域分开来了,不是那种特别典型的,我个人可能偏 不是门洞；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jh4fc5c5qoQ_30cdb6fe9aa6449788e271f2e24d76ec",
+      "building": "jh4fc5c5qoQ",
+      "number": 2,
+      "view_basis": "individual_original",
+      "main_visual_space": "紫床卧室",
+      "expected_annotation_extent": "卧室本体",
+      "ambiguity_and_information": "近家具和外门，窗外强光",
+      "candidate_numbers": [
+        14
+      ],
+      "note": "原评论：我有点看不懂这个视角；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jh4fc5c5qoQ_3182b6eba9ce405f9e1c0af86cc6b862",
+      "building": "jh4fc5c5qoQ",
+      "number": 3,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "黑外门侧直排厨房",
+      "expected_annotation_extent": "紧凑厨房起居间厨房主体",
+      "ambiguity_and_information": "小起居区与洗衣口可见",
+      "candidate_numbers": [
+        4,
+        11,
+        13
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jh4fc5c5qoQ_4547d37b305e41bdad0de45ade6971ca",
+      "building": "jh4fc5c5qoQ",
+      "number": 4,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "黄沙发起居小室",
+      "expected_annotation_extent": "同室沙发区至厨房口",
+      "ambiguity_and_information": "紧凑多功能但局部厨房被墙遮",
+      "candidate_numbers": [
+        3,
+        7,
+        10
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jh4fc5c5qoQ_45b6596b2c8f4336b7293cfd6d910492",
+      "building": "jh4fc5c5qoQ",
+      "number": 5,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "蓝床卧室",
+      "expected_annotation_extent": "独立卧室",
+      "ambiguity_and_information": "床挡角点",
+      "candidate_numbers": [
+        8,
+        9,
+        15
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jh4fc5c5qoQ_5ce75bcca20d46a8adba099e08a36c8e",
+      "building": "jh4fc5c5qoQ",
+      "number": 6,
+      "view_basis": "individual_original",
+      "main_visual_space": "深色浴帘卫浴",
+      "expected_annotation_extent": "盆厕与淋浴整体",
+      "ambiguity_and_information": "浴帘遮挡，外侧冰箱洗衣区",
+      "candidate_numbers": [
+        1,
+        12
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jh4fc5c5qoQ_6ab11272308c46068c9ae583da8ff311",
+      "building": "jh4fc5c5qoQ",
+      "number": 7,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "黄沙发房的厨房侧",
+      "expected_annotation_extent": "厨房角与同室桌椅",
+      "ambiguity_and_information": "和起居视点范围不同",
+      "candidate_numbers": [
+        4
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jh4fc5c5qoQ_755d110c2ed84d76be11ad56ae00b53f",
+      "building": "jh4fc5c5qoQ",
+      "number": 8,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "蓝床卧室较内侧",
+      "expected_annotation_extent": "同卧室围合",
+      "ambiguity_and_information": "门外洗衣机可见",
+      "candidate_numbers": [
+        5
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jh4fc5c5qoQ_77e6cfabf32d46fc9398ce824843adaa",
+      "building": "jh4fc5c5qoQ",
+      "number": 9,
+      "view_basis": "individual_original",
+      "main_visual_space": "蓝床卧室入口",
+      "expected_annotation_extent": "卧室或洗衣过道的跨门范围",
+      "ambiguity_and_information": "较5明显增加门外洗衣信息",
+      "candidate_numbers": [
+        5
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jh4fc5c5qoQ_855bc326ad174253b57626daf123c608",
+      "building": "jh4fc5c5qoQ",
+      "number": 10,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "黄沙发起居侧",
+      "expected_annotation_extent": "同沙发区与厨房开口",
+      "ambiguity_and_information": "厨房远处，围合整体可见",
+      "candidate_numbers": [
+        4
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jh4fc5c5qoQ_97739a403b984dcd8253741a073b18dd",
+      "building": "jh4fc5c5qoQ",
+      "number": 11,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "黑外门厨房灶台侧",
+      "expected_annotation_extent": "同直排厨房主区",
+      "ambiguity_and_information": "直排柜与小沙发遮挡",
+      "candidate_numbers": [
+        3
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jh4fc5c5qoQ_a59a3a61089343a8ba2834e7d3cd1066",
+      "building": "jh4fc5c5qoQ",
+      "number": 12,
+      "view_basis": "individual_original",
+      "main_visual_space": "深色浴帘卫浴中部",
+      "expected_annotation_extent": "同盆厕淋浴小室",
+      "ambiguity_and_information": "与06相似外侧冰箱洗衣信息",
+      "candidate_numbers": [
+        6
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jh4fc5c5qoQ_abbdc7ac89204f23a935fcb9ccae887c",
+      "building": "jh4fc5c5qoQ",
+      "number": 13,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "黑外门厨房水槽端",
+      "expected_annotation_extent": "同直排厨房及小起居",
+      "ambiguity_and_information": "水槽近处遮挡",
+      "candidate_numbers": [
+        3
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6",
+      "building": "jh4fc5c5qoQ",
+      "number": 14,
+      "view_basis": "individual_original",
+      "main_visual_space": "紫床卧室与洗衣区门口",
+      "expected_annotation_extent": "卧室/洗衣区两种截取",
+      "ambiguity_and_information": "大段门外家务区；保留人工交界属性",
+      "candidate_numbers": [
+        2
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jh4fc5c5qoQ_d6d4416592a0483691a1ed7d3b336a1a",
+      "building": "jh4fc5c5qoQ",
+      "number": 15,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "蓝床卧室床尾门侧",
+      "expected_annotation_extent": "同卧室围合",
+      "ambiguity_and_information": "门外洗衣区更完整",
+      "candidate_numbers": [
+        5
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_001ad2ad14234e06b2d996d71bb96fc4",
+      "building": "jtcxE69GiFV",
+      "number": 1,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "米白床头板卧室及同室沙发区",
+      "expected_annotation_extent": "床与沙发所在连续围合；外侧套间通过开口可见",
+      "ambiguity_and_information": "床柜及沙发遮住低处墙角；外套间是否纳入保留歧义",
+      "candidate_numbers": [
+        5,
+        17,
+        20,
+        33
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_0465bba4a7724a20876d042cab3b9ca1",
+      "building": "jtcxE69GiFV",
+      "number": 2,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "带水槽咖啡台的套间通道",
+      "expected_annotation_extent": "窄通道及嵌入台面，衣帽间和浴室经门可见",
+      "ambiguity_and_information": "多开门方向范围可延伸，不能等同于门内浴室",
+      "candidate_numbers": [],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_0aa01000f1934e73b35c348fa8d15040",
+      "building": "jtcxE69GiFV",
+      "number": 3,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "深灰墙长桌餐厅，临外侧玻璃门",
+      "expected_annotation_extent": "长桌所在餐厅围合，玻璃外另有露台",
+      "ambiguity_and_information": "临玻璃门增加外侧空间信息，椅子和窗帘遮墙角",
+      "candidate_numbers": [
+        8
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_1df105f34ccf4844877be7e8e2d90fad",
+      "building": "jtcxE69GiFV",
+      "number": 4,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "红毯卧室旁的小淋浴卫生间",
+      "expected_annotation_extent": "洗手台、玻璃淋浴间、厕位的本室围合",
+      "ambiguity_and_information": "镜面和淋浴玻璃需区分，门外卧室非本室",
+      "candidate_numbers": [],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037",
+      "building": "jtcxE69GiFV",
+      "number": 5,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "米白菱形床头板卧室床侧",
+      "expected_annotation_extent": "床与同室沙发区的连续围合",
+      "ambiguity_and_information": "床柜遮挡低墙，远侧套间入口可见",
+      "candidate_numbers": [
+        1
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_29d51ea54a5040098e9b1ba6eaa1f5bd",
+      "building": "jtcxE69GiFV",
+      "number": 6,
+      "view_basis": "individual_original",
+      "main_visual_space": "紫地毯双床卧室主体",
+      "expected_annotation_extent": "双床、电视窗墙及帘后小休息区；入口短通道另需辨别",
+      "ambiguity_and_information": "双床对称和帘后凹入区带来范围选择，卫生间独立门可见",
+      "candidate_numbers": [
+        12
+      ],
+      "note": "原评论：和12 相比,这个是在正中央,12是在主房间外的卧室,不知道该不该算同一房间,因为标注差异应该很大；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_36d9e8e9eba24f3fbff08082c41a4d68",
+      "building": "jtcxE69GiFV",
+      "number": 7,
+      "view_basis": "individual_original",
+      "main_visual_space": "双盆台与独立浴缸的主卫",
+      "expected_annotation_extent": "主卫围合，厕位及淋浴小隔间另有开口",
+      "ambiguity_and_information": "透明淋浴与镜面，厕位范围是否纳入可有歧义",
+      "candidate_numbers": [
+        15
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_3a61b286f9574cebb27cce0efa211bd0",
+      "building": "jtcxE69GiFV",
+      "number": 8,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "深灰墙长桌餐厅内部",
+      "expected_annotation_extent": "餐桌与外窗、门口墙形成的餐厅围合",
+      "ambiguity_and_information": "长桌椅遮墙脚，开口外的走廊另需辨别",
+      "candidate_numbers": [
+        3,
+        24
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_3fb4bb890d7f4964b496a46db647e72a",
+      "building": "jtcxE69GiFV",
+      "number": 9,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "红墙黑色台面的浴室",
+      "expected_annotation_extent": "浴缸、双盆台、厕位构成的本室围合",
+      "ambiguity_and_information": "门外另一房间可见，台面和浴缸遮低处",
+      "candidate_numbers": [],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_44661972414d44fabc0799f237e4d7f0",
+      "building": "jtcxE69GiFV",
+      "number": 10,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "带木柜长凳及外门的辅助门厅",
+      "expected_annotation_extent": "长凳柜及外门所在局部围合",
+      "ambiguity_and_information": "相连木地板通道范围需判断",
+      "candidate_numbers": [],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8",
+      "building": "jtcxE69GiFV",
+      "number": 11,
+      "view_basis": "individual_original",
+      "main_visual_space": "卧室门外楼梯脚通道",
+      "expected_annotation_extent": "楼梯脚、卧室门和沿外窗的短走廊",
+      "ambiguity_and_information": "多个门后空间都可见，信息分布不均；保留B09历史描述",
+      "candidate_numbers": [
+        30
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+      "building": "jtcxE69GiFV",
+      "number": 12,
+      "view_basis": "individual_original",
+      "main_visual_space": "紫地毯卧室入口短通道与双床区的开口",
+      "expected_annotation_extent": "短入口及门内双床区均呈现，能否合为一围合待定",
+      "ambiguity_and_information": "近墙遮住连接处，双床区仅从一面完整可见；沿用历史配对待定",
+      "candidate_numbers": [
+        6
+      ],
+      "note": "原评论：不知道这个结构是什么样的 视角畸变有点大；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_5d3af9ad575b4be88587967ff8114c36",
+      "building": "jtcxE69GiFV",
+      "number": 13,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "紫地毯卧室旁的浴缸卫生间",
+      "expected_annotation_extent": "浴缸、厕位和洗手台所在本室",
+      "ambiguity_and_information": "浴帘和镜面遮挡/反射，卧室经独立门可见",
+      "candidate_numbers": [],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_63929ab917fd40f3ac0b6917b1bc97ff",
+      "building": "jtcxE69GiFV",
+      "number": 14,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "黑白花纹小盥洗室",
+      "expected_annotation_extent": "洗手台与黑色厕位所在小室",
+      "ambiguity_and_information": "镜面及开门外门厅可见，围合主体较清楚",
+      "candidate_numbers": [],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea",
+      "building": "jtcxE69GiFV",
+      "number": 15,
+      "view_basis": "individual_original",
+      "main_visual_space": "主卫厕位隔间入口及浴缸区",
+      "expected_annotation_extent": "局部厕位与主卫大区域两种范围信息并存",
+      "ambiguity_and_information": "近处门扇遮主卫连接墙，厕位范围远较07突出；不改B10交界结果",
+      "candidate_numbers": [
+        7
+      ],
+      "note": "原评论：这个确实离门框很近,有可能会让标注者产生标注范围的歧义；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_666e7c94f27743a788c408a62c2c13f6",
+      "building": "jtcxE69GiFV",
+      "number": 16,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "红床毯木饰面卧室内部",
+      "expected_annotation_extent": "床、书桌、柜墙及双窗墙的卧室围合",
+      "ambiguity_and_information": "床、桌遮低墙，卫生间和入口门后另有空间",
+      "candidate_numbers": [
+        21,
+        22,
+        23
+      ],
+      "note": "原评论：跟22,23同一房间；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_6723e18211d244f8b17ced91aae64d99",
+      "building": "jtcxE69GiFV",
+      "number": 17,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "米白大卧室入口侧",
+      "expected_annotation_extent": "卧室床与沙发围合，入口木地板通道近距离可见",
+      "ambiguity_and_information": "门扇和近门视点带来外侧范围信息变化",
+      "candidate_numbers": [
+        1
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_67790605390f4d439c3c59395967ec84",
+      "building": "jtcxE69GiFV",
+      "number": 18,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "灰柜镜面衣帽间中央",
+      "expected_annotation_extent": "中央柜体两侧走道及两端固定柜墙",
+      "ambiguity_and_information": "中央柜体分隔可见区域，镜面与实体需区分",
+      "candidate_numbers": [
+        32
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_7ca707708ef54c5bac2992d05d4f1408",
+      "building": "jtcxE69GiFV",
+      "number": 19,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "黄色床毯小卧室入口侧",
+      "expected_annotation_extent": "单床、窗、衣柜墙的卧室围合",
+      "ambiguity_and_information": "入口木地板和远侧浴室通道可见；床遮低墙",
+      "candidate_numbers": [
+        31
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_87e96c5b923840bc8276d949ff157948",
+      "building": "jtcxE69GiFV",
+      "number": 20,
+      "view_basis": "individual_original",
+      "main_visual_space": "米白大卧室床侧",
+      "expected_annotation_extent": "床与同室沙发区围合，外套间经开口可见",
+      "ambiguity_and_information": "近床遮挡及大镜面；范围仍主要同一卧室",
+      "candidate_numbers": [
+        1
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_8ff0fdd4091340d1a96431ecad7d1cfe",
+      "building": "jtcxE69GiFV",
+      "number": 21,
+      "view_basis": "individual_original",
+      "main_visual_space": "红床毯木饰面卧室书桌侧",
+      "expected_annotation_extent": "床、双窗、桌柜墙的卧室围合",
+      "ambiguity_and_information": "镜柜反射、床桌遮低墙，与16共享开门信息",
+      "candidate_numbers": [
+        16
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_9f0e2562fcf447f5a7c5e44e85978148",
+      "building": "jtcxE69GiFV",
+      "number": 22,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "红床毯卧室入口近处",
+      "expected_annotation_extent": "卧室为主，木地板门外短通道明显",
+      "ambiguity_and_information": "门扇遮挡及门外空间信息增加",
+      "candidate_numbers": [
+        16,
+        23
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_a197694b62d249968f88ae32a1b49d10",
+      "building": "jtcxE69GiFV",
+      "number": 23,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "红床毯卧室衣柜旁",
+      "expected_annotation_extent": "同一卧室围合，浴室和入口两侧可见",
+      "ambiguity_and_information": "柜角和床占据近景，开门范围解释尚需验证",
+      "candidate_numbers": [
+        16,
+        22
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_aaa3143c2ccb4ba4b51a472b48f5e260",
+      "building": "jtcxE69GiFV",
+      "number": 24,
+      "view_basis": "individual_original",
+      "main_visual_space": "深灰餐厅窗侧",
+      "expected_annotation_extent": "同一长桌餐厅的固定围合",
+      "ambiguity_and_information": "窗帘及椅子遮角，较03少玻璃门外信息",
+      "candidate_numbers": [
+        8
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_c6baa663ada7439f9a409a86c7fd809b",
+      "building": "jtcxE69GiFV",
+      "number": 25,
+      "view_basis": "individual_original",
+      "main_visual_space": "黑白壁纸书桌与粉色固定座位房间",
+      "expected_annotation_extent": "书桌区、固定座位和柜体构成的同室围合",
+      "ambiguity_and_information": "突出柜体与桌遮挡，门外走廊另外可见",
+      "candidate_numbers": [
+        26,
+        28
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_c90412ad99334d3aa7a1ec74d8e543a1",
+      "building": "jtcxE69GiFV",
+      "number": 26,
+      "view_basis": "individual_original",
+      "main_visual_space": "黑白壁纸房间柜体旁",
+      "expected_annotation_extent": "同一书桌与固定座位房间围合",
+      "ambiguity_and_information": "近柜体分割两侧视野，局部信息较25不完整",
+      "candidate_numbers": [
+        25
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_d972562e44f44b4db2a197310dc6113f",
+      "building": "jtcxE69GiFV",
+      "number": 27,
+      "view_basis": "individual_original",
+      "main_visual_space": "窗下白柜的短通道",
+      "expected_annotation_extent": "白柜窗墙及房门前的局部走道",
+      "ambiguity_and_information": "两端连通走廊，不能仅连通合为同一个主区域",
+      "candidate_numbers": [
+        30
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_dce110162b244b2ab76a0804fc830a9e",
+      "building": "jtcxE69GiFV",
+      "number": 28,
+      "view_basis": "individual_original",
+      "main_visual_space": "黑白壁纸房间中央",
+      "expected_annotation_extent": "书桌、粉色座位、突出柜体所在围合",
+      "ambiguity_and_information": "柜体和家具遮低角，门外通道范围另辨",
+      "candidate_numbers": [
+        25
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_eb93e479aeae4b59a26c3ea106f9be7a",
+      "building": "jtcxE69GiFV",
+      "number": 29,
+      "view_basis": "individual_original",
+      "main_visual_space": "壁挂酒架前的会客区域",
+      "expected_annotation_extent": "酒架、座椅所在会客空间及宽开口",
+      "ambiguity_and_information": "数个宽开口及地面材质转换，范围解释可能不一",
+      "candidate_numbers": [],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_f473cf5a09a64090acec3bfe8fccaacd",
+      "building": "jtcxE69GiFV",
+      "number": 30,
+      "view_basis": "individual_original",
+      "main_visual_space": "楼梯脚旁的多门通道",
+      "expected_annotation_extent": "楼梯脚和外窗门前的走廊段",
+      "ambiguity_and_information": "多个近处门扇造成分隔和范围延伸信息",
+      "candidate_numbers": [
+        11,
+        27
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_f4dc4040df5a4f038dd2b35f2bb65266",
+      "building": "jtcxE69GiFV",
+      "number": 31,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "黄色床毯小卧室浴室侧",
+      "expected_annotation_extent": "单床窗墙、衣柜、电视墙的卧室围合",
+      "ambiguity_and_information": "近浴室开口的信息较19突出，仍同一卧室主体",
+      "candidate_numbers": [
+        19
+      ],
+      "note": "原评论：确认和19同一房间；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_fb1ac7e96b884d289aff3fe02bb3c248",
+      "building": "jtcxE69GiFV",
+      "number": 32,
+      "view_basis": "individual_original",
+      "main_visual_space": "灰柜衣帽间梳妆台侧",
+      "expected_annotation_extent": "中央镜柜两侧走道及梳妆台端固定围合",
+      "ambiguity_and_information": "中央实体柜遮住另一侧；镜面反射与真实开口并存",
+      "candidate_numbers": [
+        18
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_fb7f2438518243b180ae78cf1e2737e3",
+      "building": "jtcxE69GiFV",
+      "number": 33,
+      "view_basis": "individual_original",
+      "main_visual_space": "米白卧室床尾及沙发前",
+      "expected_annotation_extent": "床与沙发所在连续围合",
+      "ambiguity_and_information": "沙发及床柜遮低墙，外侧套间可见",
+      "candidate_numbers": [
+        1
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "jtcxE69GiFV_ff6cc28d8a7049ec980d1d52480530b5",
+      "building": "jtcxE69GiFV",
+      "number": 34,
+      "view_basis": "individual_original",
+      "main_visual_space": "厨房与起居之间的用餐区域",
+      "expected_annotation_extent": "餐桌区域及周围数个宽开口，厨居两侧分区仍须辨别",
+      "ambiguity_and_information": "跨宽开口纳入哪个范围有多种解释，未找到同主区域其他图",
+      "candidate_numbers": [],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "kEZ7cmS4wCh_3c4a8eb4ef504942b6df1937932aa3f2",
+      "building": "kEZ7cmS4wCh",
+      "number": 1,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "白墙矮柜前的厅及起居开口",
+      "expected_annotation_extent": "矮柜墙与客厅前厅区域，两侧木门外另有区域",
+      "ambiguity_and_information": "多个开门和宽客厅开口，范围连续性需辨别",
+      "candidate_numbers": [
+        2
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "kEZ7cmS4wCh_6811d52593b740cb9047202ce1e8a1e4",
+      "building": "kEZ7cmS4wCh",
+      "number": 2,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "木柜围合的衣帽/卫浴连接走道",
+      "expected_annotation_extent": "木柜走道及洗漱区入口，卧室经门可见",
+      "ambiguity_and_information": "两侧柜墙形成局部围合，与门外房间关系不应自动合并",
+      "candidate_numbers": [
+        1
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "pRbA3pwrgk9_0350fc96e88c4a52886d4eb50b2d52c6",
+      "building": "pRbA3pwrgk9",
+      "number": 1,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "卧室与小浴室连接口附近",
+      "expected_annotation_extent": "小浴室和门内白床卧室同时可见，主围合归属需核实",
+      "ambiguity_and_information": "近墙和门扇将双侧信息分开；原OOS评论仅保留不裁定",
+      "candidate_numbers": [
+        16,
+        17
+      ],
+      "note": "原评论：这图是连接浴室和卧室的,但是这图算oos了；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "pRbA3pwrgk9_03de6e2562bb4f56a88db3ceb681af78",
+      "building": "pRbA3pwrgk9",
+      "number": 2,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "主卫玻璃淋浴间内部",
+      "expected_annotation_extent": "玻璃围合的淋浴空间及玻璃外双盆浴缸区",
+      "ambiguity_and_information": "玻璃边界与浴室外围可能形成不同范围解释",
+      "candidate_numbers": [
+        13
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "pRbA3pwrgk9_05c49a8b61034633ad57ae3527dac65d",
+      "building": "pRbA3pwrgk9",
+      "number": 3,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "红毯主卧衣帽间及浴室门前",
+      "expected_annotation_extent": "卧室侧邻近衣帽间与浴室的多门墙段",
+      "ambiguity_and_information": "两侧门后区域显著，靠门范围归属不确定；原OOS评论保留",
+      "candidate_numbers": [
+        11
+      ],
+      "note": "原评论：但是这图可能算oos；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "pRbA3pwrgk9_0dad4bd3fa7e4349a5325596c10d6fdf",
+      "building": "pRbA3pwrgk9",
+      "number": 4,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "红毯黑色图案床头主卧内部",
+      "expected_annotation_extent": "床、窗、座椅和入室楼梯门的本卧室围合",
+      "ambiguity_and_information": "多门通往衣帽间及浴室，床椅遮低墙",
+      "candidate_numbers": [
+        6,
+        8,
+        10,
+        18
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "pRbA3pwrgk9_16beb21e65a84850a509972190038d0e",
+      "building": "pRbA3pwrgk9",
+      "number": 5,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "有宽矮抽屉柜的衣帽间",
+      "expected_annotation_extent": "本衣帽间固定柜架和门内围合",
+      "ambiguity_and_information": "卧室经独立门可见，柜体遮低墙",
+      "candidate_numbers": [
+        12,
+        15
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "pRbA3pwrgk9_285b697fed754f86a09602c93628cfb4",
+      "building": "pRbA3pwrgk9",
+      "number": 6,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "红毯主卧床尾",
+      "expected_annotation_extent": "床窗、座椅和楼梯入口的卧室围合",
+      "ambiguity_and_information": "床及座椅遮墙脚，开门外附属空间可见",
+      "candidate_numbers": [
+        4
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "pRbA3pwrgk9_2a3810bc7ecc491e81ff1e8a17692ec1",
+      "building": "pRbA3pwrgk9",
+      "number": 7,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "家用电梯轿厢内部",
+      "expected_annotation_extent": "轿厢壁及开启的轿门",
+      "ambiguity_and_information": "轿厢和外室分层，未找到同主体另一个视点",
+      "candidate_numbers": [],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "pRbA3pwrgk9_2e5e98be62684eb8b3143fda3059ddde",
+      "building": "pRbA3pwrgk9",
+      "number": 8,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "红毯主卧阳台门旁",
+      "expected_annotation_extent": "同卧室床窗和门墙围合",
+      "ambiguity_and_information": "外门近处信息增强，床边植物遮角",
+      "candidate_numbers": [
+        4
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "pRbA3pwrgk9_3851376d4f84494ebdc080b34ddc0f5e",
+      "building": "pRbA3pwrgk9",
+      "number": 9,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "洗衣房门侧",
+      "expected_annotation_extent": "洗衣机柜、洗手池长台和单门的本室",
+      "ambiguity_and_information": "机柜和台面遮低角，门外楼梯厅可见",
+      "candidate_numbers": [
+        19,
+        20
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "pRbA3pwrgk9_4fe4474e9bf9429ea92d202bdea4dce5",
+      "building": "pRbA3pwrgk9",
+      "number": 10,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "红毯主卧楼梯入口侧",
+      "expected_annotation_extent": "主卧室围合，入口台阶经大门可见",
+      "ambiguity_and_information": "近台阶入口使另一平面信息突出，浴室及衣帽间两侧开门",
+      "candidate_numbers": [
+        4
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "pRbA3pwrgk9_8b07a4b08cf447abb246769d8dce8494",
+      "building": "pRbA3pwrgk9",
+      "number": 11,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "主卧与蓝白主卫连接口",
+      "expected_annotation_extent": "蓝白主卫与红毯卧室同时可见，主围合归属待辨",
+      "ambiguity_and_information": "门旁近墙与门扇割开双侧空间，不因同套间合组",
+      "candidate_numbers": [
+        3
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "pRbA3pwrgk9_8caa90fc5528451f9e9f45634676499b",
+      "building": "pRbA3pwrgk9",
+      "number": 12,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "宽矮柜衣帽间门内",
+      "expected_annotation_extent": "衣帽间柜架和宽矮抽屉柜所在围合",
+      "ambiguity_and_information": "柜架遮低角，卧室仅通过门可见",
+      "candidate_numbers": [
+        5
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "pRbA3pwrgk9_950f2117a6164fbc8d2faff96c40a1e9",
+      "building": "pRbA3pwrgk9",
+      "number": 13,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "蓝墙双盆和独立浴缸的主卫",
+      "expected_annotation_extent": "双盆台、独立浴缸、玻璃淋浴和厕位门的浴室围合",
+      "ambiguity_and_information": "玻璃淋浴及厕位带来局部分区歧义",
+      "candidate_numbers": [
+        2
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "pRbA3pwrgk9_9c9bed9bf7d94ac0bcea18e3bf521930",
+      "building": "pRbA3pwrgk9",
+      "number": 14,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "绿墙浴室淋浴内部",
+      "expected_annotation_extent": "玻璃内淋浴及外厕位和洗手台",
+      "ambiguity_and_information": "玻璃外不同子区可见；与01/17不是相同固定设施布局",
+      "candidate_numbers": [
+        17
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "pRbA3pwrgk9_b1477ef96be5470d9881a9f6c9f825ae",
+      "building": "pRbA3pwrgk9",
+      "number": 15,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "高柜架为主的另一衣帽间",
+      "expected_annotation_extent": "高窄架和挂衣杆所在本室",
+      "ambiguity_and_information": "看向卧室座椅，柜架遮挡，不能以相同木材当作05/12同房",
+      "candidate_numbers": [
+        5
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad",
+      "building": "pRbA3pwrgk9",
+      "number": 16,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "白床卧室浴室连接口旁",
+      "expected_annotation_extent": "与01同一连接口，卧室及小浴室均呈现",
+      "ambiguity_and_information": "门口两侧范围归属歧义相似，原OOS评论不作裁定",
+      "candidate_numbers": [
+        1
+      ],
+      "note": "原评论：oos,和01一样；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "pRbA3pwrgk9_c19e6a85e45d4aae9e9a4b703650132b",
+      "building": "pRbA3pwrgk9",
+      "number": 17,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "白床卧室旁的小浴室内部",
+      "expected_annotation_extent": "厕位、棕色洗手台、黑架和玻璃淋浴围合",
+      "ambiguity_and_information": "门外卧室可见，镜面和淋浴玻璃另须辨别",
+      "candidate_numbers": [
+        1,
+        14
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "pRbA3pwrgk9_e0dc27df8b2d4484bde0f97284d4cdf7",
+      "building": "pRbA3pwrgk9",
+      "number": 18,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "红毯主卧阳台出口前",
+      "expected_annotation_extent": "主卧室围合及外门可见阳台",
+      "ambiguity_and_information": "阳台与室内不同范围信息显著，床椅仍同卧室",
+      "candidate_numbers": [
+        4
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "pRbA3pwrgk9_ec8f8c12b70e4969ae24adb7031d9312",
+      "building": "pRbA3pwrgk9",
+      "number": 19,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "洗衣房长台中部",
+      "expected_annotation_extent": "长台池柜及洗衣机柜与单门所在本室",
+      "ambiguity_and_information": "柜台遮低角，与09共享单一开门外侧信息",
+      "candidate_numbers": [
+        9
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    },
+    {
+      "image_id": "pRbA3pwrgk9_ecd2d3d74f1244a19bab0131ca065c26",
+      "building": "pRbA3pwrgk9",
+      "number": 20,
+      "view_basis": "large_panel_recheck",
+      "main_visual_space": "洗衣房长台另一端",
+      "expected_annotation_extent": "同洗衣房固定长台与机柜围合",
+      "ambiguity_and_information": "平移引起台面遮挡变化，门外信息相近",
+      "candidate_numbers": [
+        9
+      ],
+      "note": "原评论：无；本轮评论：无。配对仅为AI候选；未列对象不等于无同房图。"
+    }
+  ],
+  "pairs": [
+    {
+      "building": "X7HyMhZNoso",
+      "a": 2,
+      "b": 21,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "条纹床头两侧窄窗、衣帽口和长横窗对应，同主卧。",
+      "differences": "21靠近出门方向，门外楼梯范围信息较02多，可比性待核。"
+    },
+    {
+      "building": "X7HyMhZNoso",
+      "a": 2,
+      "b": 22,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "条纹床头旁窄窗、转角高窗和衣帽口对应，均以同床区围合为主。",
+      "differences": "视点改变，主体围合仍可相互对应。"
+    },
+    {
+      "building": "X7HyMhZNoso",
+      "a": 2,
+      "b": 25,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "主卧长高窗、床头两侧窗、双椅和衣帽口对应，主要空间均为主卧。",
+      "differences": "视点改变，主体围合仍可相互对应。"
+    },
+    {
+      "building": "X7HyMhZNoso",
+      "a": 3,
+      "b": 14,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "黄色卧室横窗、衣帽口和房门位置一致。 root另行逐张原图复核也支持横窗、衣帽口和房门对应；未更改本代理字段schema。",
+      "differences": "14贴入口，额外楼梯区域更显著。"
+    },
+    {
+      "building": "X7HyMhZNoso",
+      "a": 3,
+      "b": 10,
+      "physical_same": "不支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "待定",
+      "decision": "不支持",
+      "evidence": "03单横窗在侧墙，10双条窗且门/衣帽关系不同；保留用户03/10不同房评论。",
+      "differences": "并非仅床品变化，固定窗型不同。"
+    },
+    {
+      "building": "X7HyMhZNoso",
+      "a": 10,
+      "b": 24,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "白床房双横条窗、衣帽门和入口对应，均在卧室内呈现完整主体。",
+      "differences": "视点改变，主体围合仍可相互对应。"
+    },
+    {
+      "building": "X7HyMhZNoso",
+      "a": 14,
+      "b": 24,
+      "physical_same": "不支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "待定",
+      "decision": "不支持",
+      "evidence": "旧 r2 错把黄色卧室与白床房放一起；固定窗型及衣帽门关系不同。",
+      "differences": "固定门窗或设施布局不同，不能以同功能类别或相似装修解释为同一实际围合。"
+    },
+    {
+      "building": "X7HyMhZNoso",
+      "a": 5,
+      "b": 26,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "空房单横窗、双移门衣柜及门口墙折对应，均无遮挡呈现同一围合。",
+      "differences": "视点改变，主体围合仍可相互对应。"
+    },
+    {
+      "building": "X7HyMhZNoso",
+      "a": 8,
+      "b": 11,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "独立客厅电视两旁窄窗、侧墙三横窗与宽入口固定关系一致。",
+      "differences": "11近宽入口且多见玄关，范围差需验证。"
+    },
+    {
+      "building": "X7HyMhZNoso",
+      "a": 8,
+      "b": 12,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "独立客厅电视两旁窄窗、侧墙三横窗与宽入口固定关系一致。",
+      "differences": "均为客厅主体，沙发与电视造成相似低位遮挡。"
+    },
+    {
+      "building": "X7HyMhZNoso",
+      "a": 8,
+      "b": 23,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "独立客厅电视两旁窄窗、侧墙三横窗与宽入口固定关系一致。",
+      "differences": "均为客厅主体，沙发与电视造成相似低位遮挡。"
+    },
+    {
+      "building": "X7HyMhZNoso",
+      "a": 9,
+      "b": 19,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "浴缸上天窗、盆厕和淋浴窄墙位置一致，均为带浴缸主卫。",
+      "differences": "09贴浴缸墙，19靠淋浴门及窄支撑，局部遮挡可比性待定。"
+    },
+    {
+      "building": "X7HyMhZNoso",
+      "a": 13,
+      "b": 18,
+      "physical_same": "支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "存在明显差异",
+      "decision": "对照候选",
+      "evidence": "台盆上横窗、马桶旁竖窗及淋浴隔断对应同主卫。",
+      "differences": "13以盆厕整体为主，18在淋浴隔区，主围合/可见玻璃与墙角显著不同。"
+    },
+    {
+      "building": "X7HyMhZNoso",
+      "a": 9,
+      "b": 13,
+      "physical_same": "不支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "待定",
+      "decision": "不支持",
+      "evidence": "09有天窗浴缸，13为侧窗淋浴室，门窗及固定浴缸配置不相容。",
+      "differences": "固定门窗或设施布局不同，不能以同功能类别或相似装修解释为同一实际围合。"
+    },
+    {
+      "building": "X7HyMhZNoso",
+      "a": 4,
+      "b": 7,
+      "physical_same": "支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "存在明显差异",
+      "decision": "对照候选",
+      "evidence": "共同电视隔墙、厨房岛台、餐桌和露台门支持同片开放布局。",
+      "differences": "04主要起居围合，07主要餐桌与厨房；连通不等于当前研究主空间一致。"
+    },
+    {
+      "building": "X7HyMhZNoso",
+      "a": 7,
+      "b": 15,
+      "physical_same": "支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "存在明显差异",
+      "decision": "对照候选",
+      "evidence": "餐桌侧窄窗、时钟墙与岛台相对应，同开放餐厨。",
+      "differences": "07处在餐桌外侧，15厨房岛台侧；预期空间截取与遮挡差异明显。"
+    },
+    {
+      "building": "Z6MFQCViBuw",
+      "a": 1,
+      "b": 7,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "两窗中央长镜、黑壁炉、雕像门框和对门关系一致，均以会客室为主。",
+      "differences": "视点沿展绳通道移动，均有家具挡墙脚。"
+    },
+    {
+      "building": "Z6MFQCViBuw",
+      "a": 1,
+      "b": 6,
+      "physical_same": "待定",
+      "main_visual_alignment": "待定",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "待定",
+      "evidence": "均为红墙会客展室，但06近华盖卧室出口，局部门框和中央家具对应仍不充分。",
+      "differences": "旧组作为线索保留，不仅靠红墙和粉沙发认同房；需更清楚的直接固定结构对照。"
+    },
+    {
+      "building": "Z6MFQCViBuw",
+      "a": 2,
+      "b": 5,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "同深色格天花、餐桌、红椅及多个门框对应。",
+      "differences": "05门侧仅局部桌面，主室仍相同但跨门信息更多。"
+    },
+    {
+      "building": "Z6MFQCViBuw",
+      "a": 2,
+      "b": 8,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "深色绘画格顶、餐桌、连续高窗及门框相互对应。",
+      "differences": "均在餐桌周边，主要围合完整，相似桌椅遮挡。"
+    },
+    {
+      "building": "Z6MFQCViBuw",
+      "a": 2,
+      "b": 9,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "长餐桌、三连窗、蓝瓶边柜和吊灯天花对应。",
+      "differences": "桌两侧位置改变，但同餐室围合和陈设挡墙条件相近。"
+    },
+    {
+      "building": "Z6MFQCViBuw",
+      "a": 2,
+      "b": 3,
+      "physical_same": "不支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "待定",
+      "decision": "不支持",
+      "evidence": "03小室椭圆肖像、双扇门及单侧窗，与餐室多窗长桌固定布局不同。",
+      "differences": "旧 r2 包含多个有门墙分隔的展室。"
+    },
+    {
+      "building": "Z6MFQCViBuw",
+      "a": 3,
+      "b": 10,
+      "physical_same": "不支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "待定",
+      "decision": "不支持",
+      "evidence": "03双开雕花门和侧窗，10小门高墙、圆纹顶和多抽屉柜，固定门顶格局不同。",
+      "differences": "装修相似不足以并房。"
+    },
+    {
+      "building": "Z6MFQCViBuw",
+      "a": 1,
+      "b": 4,
+      "physical_same": "不支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "待定",
+      "decision": "不支持",
+      "evidence": "04华盖床与高窗围合有完整门墙，用户原评论明确04不是 r1。",
+      "differences": "同套展区不能按连通合并。"
+    },
+    {
+      "building": "ZMojNkEp431",
+      "a": 1,
+      "b": 2,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "长桌房的石墙电视、玻璃框及侧门对应，均处在玻璃分隔同一侧，主空间一致。",
+      "differences": "两者共享透明隔墙/反射歧义，02较靠电视端但未见显著额外围合信息缺失。"
+    },
+    {
+      "building": "b8cTxDM8gDG",
+      "a": 3,
+      "b": 16,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "双床、阳台门、窄窗、壁挂电视与双扇柜门固定关系对应。",
+      "differences": "16更近入口但主体均完整，双床形成相似低位遮挡。"
+    },
+    {
+      "building": "b8cTxDM8gDG",
+      "a": 5,
+      "b": 12,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "同海景转角玻璃、黑书架和天窗序列，均在书房休憩整体内。",
+      "differences": "桌/沙发视点改变，玻璃及书架信息条件相近。"
+    },
+    {
+      "building": "b8cTxDM8gDG",
+      "a": 5,
+      "b": 19,
+      "physical_same": "不支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "待定",
+      "decision": "不支持",
+      "evidence": "05天窗长书架区与19下层餐厨起居门窗及隔墙不同，非同一个围合。",
+      "differences": "旧 r12 跨越楼层/围合，仅海景相似不成立。"
+    },
+    {
+      "building": "b8cTxDM8gDG",
+      "a": 6,
+      "b": 11,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "弯墙、端部盆栽壁龛及黑床卧室门对应同弯走廊。",
+      "differences": "两端可見的弯后墙线不等，截断范围可比性待定。"
+    },
+    {
+      "building": "b8cTxDM8gDG",
+      "a": 7,
+      "b": 17,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "黑床头墙、拱窗、双柜门及红黑浴室入口关系一致。",
+      "differences": "17比07更靠近卫浴门，跨门信息有差。"
+    },
+    {
+      "building": "b8cTxDM8gDG",
+      "a": 4,
+      "b": 10,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "短廊侧窗、两端木门及平台/影音方向相符。",
+      "differences": "04贴一端，10在中段，外部范围显露不同。"
+    },
+    {
+      "building": "b8cTxDM8gDG",
+      "a": 8,
+      "b": 10,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "同短廊侧窗和两端门对应。",
+      "differences": "08在影音入口一端，可能包含更大影音主区。"
+    },
+    {
+      "building": "b8cTxDM8gDG",
+      "a": 14,
+      "b": 18,
+      "physical_same": "待定",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "存在明显差异",
+      "decision": "待定",
+      "evidence": "14床头固定木框、三侧窗与桑拿门在18左侧对应；18另一侧是有实体门墙分隔的另一床房。",
+      "differences": "18处两床房连接口，不能由相接确认相机主围合与14同一实际房间；保留相邻关系和研究配对待定。"
+    },
+    {
+      "building": "b8cTxDM8gDG",
+      "a": 9,
+      "b": 19,
+      "physical_same": "支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "存在明显差异",
+      "decision": "对照候选",
+      "evidence": "灶台、蓝岛台和海景起居连续区对应，支持同开放布局。",
+      "differences": "09主要厨房柜墙，19主要餐桌与沙发；主空间不一致。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 2,
+      "b": 36,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "双床上横窗、侧大窗、镜柜及门墙顺序对应，均为同双床卧室。",
+      "differences": "均房内视点，双床造成相似下沿遮挡。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 2,
+      "b": 32,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "双床、两种窗型和镜柜对应。",
+      "differences": "32更靠房门，廊道信息较多，范围可比性待定。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 3,
+      "b": 7,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "花床房红帘窗、双开衣帽门、侧卫浴口和入口门对应。",
+      "differences": "均主卧主体，门外空间有限。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 3,
+      "b": 28,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "花床、红帘窗与双开衣帽门相对位置对应。",
+      "differences": "28更靠衣帽侧，主体仍完整。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 7,
+      "b": 26,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "固定门窗及柜台墙位置相同，视点也相近。",
+      "differences": "局部光照不同，无明显新信息缺失。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 8,
+      "b": 15,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "同花床房入口门、外侧楼梯半墙与对面卫浴门对应，视点近似。",
+      "differences": "两图共享入口跨门范围歧义，不能代表已实测相同难度。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 3,
+      "b": 8,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "主卧红帘、衣帽门和主床对应同一主区域。",
+      "differences": "08近入口，平台外延比03显著。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 3,
+      "b": 11,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "存在明显差异",
+      "decision": "对照候选",
+      "evidence": "同花床、窗、床侧衣帽间门和双开卫浴门对应；11主要仍在卧室侧靠卫浴门位置。",
+      "differences": "11紧贴卫浴门，门内厕位与低处另一地面显露更突出；保留卧室同一主体，但范围信息存在明显差异，不能当作套间两室自动合组。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 10,
+      "b": 27,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "蓝条床房窗、镜柜及房门关系一致。",
+      "differences": "同房内两侧视点，床及镜柜条件相近。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 4,
+      "b": 18,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "前厅双黑门、侧车库门及短楼梯一致。",
+      "differences": "04靠外门见更多户外，18在内侧，各口延伸信息不同。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 4,
+      "b": 35,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "同前厅黑双门、车库门、楼梯与另一侧起居开口对应。",
+      "differences": "门内相近位置，共享多开口和高差线索。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 6,
+      "b": 9,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "白桌藤椅餐区横梁、厨房墙端、镜墙及家务门对应。",
+      "differences": "两者均以同一小餐区为主，厨房口可能扩展的歧义相近。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 6,
+      "b": 37,
+      "physical_same": "不支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "待定",
+      "decision": "不支持",
+      "evidence": "06白桌餐区与37蓝沙发起居之间有厨房/前厅墙段，固定开口关系不相容为同小室。",
+      "differences": "旧 r11 错把不同主要实际区域放一起。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 12,
+      "b": 21,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "同上层廊道中央双扇柜门、楼梯半墙与两侧房门对应。",
+      "differences": "近似位置反向视点，双向廊道截取条件相近。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 12,
+      "b": 19,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "相同廊道双柜、蓝床房门与楼梯半墙可对应。",
+      "differences": "19更靠蓝床房口，外侧房间信息不同。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 12,
+      "b": 22,
+      "physical_same": "支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "存在明显差异",
+      "decision": "对照候选",
+      "evidence": "同廊道楼梯半墙及端部房门连续关系可对应。",
+      "differences": "12位于中段，22在另一端半墙处，两端可见范围及截断不同。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 22,
+      "b": 41,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "廊道端部半墙、双床门和绿叶床房口一致。",
+      "differences": "41靠房门，22靠半墙，门外内容与廊道可见长度不同。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 14,
+      "b": 29,
+      "physical_same": "不支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "待定",
+      "decision": "不支持",
+      "evidence": "14单间盆厕淋浴且无黑腰线/浴缸，29有黑腰线、浴缸及门外洗手间，固定设施不同。",
+      "differences": "旧 r8 不能直接合组。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 16,
+      "b": 40,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "上层客厅楼梯半墙、横窗、大窗及沙发背对应，位置相近。",
+      "differences": "共享高差及半墙处范围问题。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 16,
+      "b": 17,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "上层起居大窗、半墙、露台门和沙发关系对应。",
+      "differences": "17大窗侧，16楼梯侧，低位遮挡与高差信息显著程度不同。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 20,
+      "b": 34,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "下层起居窗、电视隔墙与前厅开口对应，均以蓝沙发起居围合为主。",
+      "differences": "电视与沙发遮挡位置变化，但主要区域可比。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 20,
+      "b": 37,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "同蓝沙发起居与电视墙、前厅门对应。",
+      "differences": "37靠前厅口，外围可见更明显，范围比较待定。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 24,
+      "b": 38,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "木餐桌、露台门、白吧台与厨房墙端对应，均以同一餐区为主。",
+      "differences": "38靠柜墙端而24靠露台门，厨房与起居显露不同。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 13,
+      "b": 38,
+      "physical_same": "支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "存在明显差异",
+      "decision": "对照候选",
+      "evidence": "保留逐组讨论13/38同组历史；同狭长厨房柜列及两端餐区可相互定位。",
+      "differences": "13主要厨房与白桌餐区一端，38木餐桌/起居一端；本轮主空间条件不同，交界人工结论不改。"
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "a": 23,
+      "b": 39,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "存在明显差异",
+      "decision": "对照候选",
+      "evidence": "保留B05用户确认23/39同房；绿叶床、床头横窗、侧大窗和镜柜一致。",
+      "differences": "39贴入口使廊道半墙及另一侧门占明显信息，预期范围较23室内视点不同；不以模型或既有质量作判据。"
+    },
+    {
+      "building": "jh4fc5c5qoQ",
+      "a": 1,
+      "b": 6,
+      "physical_same": "不支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "待定",
+      "decision": "不支持",
+      "evidence": "保留B06/B08用户后续确认不同房；01窗/盆/厕关系及门外书桌与06门外冰箱关系不同。",
+      "differences": "并非仅浴帘颜色不同，固定配置及出口关系不同。"
+    },
+    {
+      "building": "jh4fc5c5qoQ",
+      "a": 2,
+      "b": 14,
+      "physical_same": "支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "存在明显差异",
+      "decision": "对照候选",
+      "evidence": "保留B07用户同房决定；紫床、侧窄窗、外门和柜墙对应。",
+      "differences": "02卧室内，14在卧室与家务区交接处，两区信息明显不同；不用已知标注结果作选择依据。"
+    },
+    {
+      "building": "jh4fc5c5qoQ",
+      "a": 3,
+      "b": 11,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "黑外门、灶台烟道、水槽竖窗和小沙发关系一致，主空间均同一直排厨房。",
+      "differences": "两视点都暴露紧凑起居和门外家务线索。"
+    },
+    {
+      "building": "jh4fc5c5qoQ",
+      "a": 3,
+      "b": 13,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "烟道、灶台、竖窗水槽与黑外门相互对应。",
+      "differences": "沿同厨房移动，固定柜台挡下沿条件类似。"
+    },
+    {
+      "building": "jh4fc5c5qoQ",
+      "a": 3,
+      "b": 4,
+      "physical_same": "不支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "待定",
+      "decision": "不支持",
+      "evidence": "03黑外门直排长灶台、侧小红枕沙发；04白外门且灶台在凹角、黄沙发，固定门柜结构不同。",
+      "differences": "旧 r5 不能因同装修并房。"
+    },
+    {
+      "building": "jh4fc5c5qoQ",
+      "a": 4,
+      "b": 10,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "黄沙发起居区、侧窗书桌、白外门与凹角厨房对应。",
+      "differences": "起居主空间一致，家具遮挡相似。"
+    },
+    {
+      "building": "jh4fc5c5qoQ",
+      "a": 4,
+      "b": 7,
+      "physical_same": "支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "存在明显差异",
+      "decision": "对照候选",
+      "evidence": "同白外门、侧窗桌和厨房凹角对应同紧凑开放室。",
+      "differences": "07主要厨房工作区，04主要起居围合；连通不提升为同主区域。"
+    },
+    {
+      "building": "jh4fc5c5qoQ",
+      "a": 5,
+      "b": 8,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "灰床头、旁窄窗、梳妆台与洗衣入口对应，均房内主卧室。",
+      "differences": "床遮挡及少量门外洗衣信息相似。"
+    },
+    {
+      "building": "jh4fc5c5qoQ",
+      "a": 5,
+      "b": 15,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "蓝床卧室固定窗门及梳妆台关系一致。",
+      "differences": "15比05更近洗衣门侧，附加外侧信息可比性待定。"
+    },
+    {
+      "building": "jh4fc5c5qoQ",
+      "a": 5,
+      "b": 9,
+      "physical_same": "待定",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "存在明显差异",
+      "decision": "待定",
+      "evidence": "蓝床、床旁窗与梳妆台在09门内对应；09同时位于家务过道及卫浴门旁。",
+      "differences": "卧室和门外过道被实体门墙分开，09的范围跨门且相机归属不确定；相接不足确认同房。"
+    },
+    {
+      "building": "jh4fc5c5qoQ",
+      "a": 6,
+      "b": 12,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "同窗旁台盆、淋浴隔墙、马桶与门外冰箱洗衣机关系一致。",
+      "differences": "两图视点接近，浴帘遮蔽和跨门背景均相近。"
+    },
+    {
+      "building": "jtcxE69GiFV",
+      "a": 1,
+      "b": 5,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "菱形床头板、落地窗与入口墙、沙发侧套间开口相互对应；同一卧室整体",
+      "differences": "视点移至床侧，床柜遮挡位置变化，未见突出范围差异"
+    },
+    {
+      "building": "jtcxE69GiFV",
+      "a": 1,
+      "b": 20,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "床头板、床边窗、入口门、沙发及外套间开口对应",
+      "differences": "20靠床和镜子，低墙遮挡变化，仍共享同室整体范围"
+    },
+    {
+      "building": "jtcxE69GiFV",
+      "a": 1,
+      "b": 33,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "床窗、壁柱门洞、沙发墙和套间开口均一致",
+      "differences": "33较靠沙发但完整呈现卧室同一围合，未分成独立主区"
+    },
+    {
+      "building": "jtcxE69GiFV",
+      "a": 1,
+      "b": 17,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "同床头板窗墙及入口壁柱，17仍围绕卧室呈现",
+      "differences": "17贴近入口，门扇与木地板走廊信息比01突出，需实测范围可比性"
+    },
+    {
+      "building": "jtcxE69GiFV",
+      "a": 3,
+      "b": 8,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "深灰墙、同一长桌、对侧壁龛及外侧落地门窗位置对应",
+      "differences": "03贴玻璃门显露较多露台，08较内侧，范围歧义是否相近未定"
+    },
+    {
+      "building": "jtcxE69GiFV",
+      "a": 8,
+      "b": 24,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "餐桌、灰墙壁龛与成组窗及走廊开口对应",
+      "differences": "24靠窗，家具遮挡变化但同一餐厅范围清楚"
+    },
+    {
+      "building": "jtcxE69GiFV",
+      "a": 6,
+      "b": 12,
+      "physical_same": "待定",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "存在明显差异",
+      "decision": "待定",
+      "evidence": "同紫地毯、双窗电视墙、双床及卫生间门可定位为直接连接的卧室与入口；保留逐组第二组暂不确认同房的历史结论",
+      "differences": "06主卧室整体，12近墙后的短通道与单侧卧室视野；不以同套间连接自动认定同主空间"
+    },
+    {
+      "building": "jtcxE69GiFV",
+      "a": 7,
+      "b": 15,
+      "physical_same": "支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "存在明显差异",
+      "decision": "对照候选",
+      "evidence": "B10用户确认07/15同房；双盆台、浴缸与厕位门彼此对应",
+      "differences": "15近厕位门并突出厕位隔间，07呈现主卫整体，范围及遮挡信息不同；交界分类不改"
+    },
+    {
+      "building": "jtcxE69GiFV",
+      "a": 16,
+      "b": 21,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "红床毯房的双窗、木饰面书桌柜墙、浴室门均对应",
+      "differences": "21向桌侧平移，仍显示同卧室围合与同组开门"
+    },
+    {
+      "building": "jtcxE69GiFV",
+      "a": 16,
+      "b": 22,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "用户16原评论明确与22同房；固定双窗及床旁门、书桌柜墙直接支持",
+      "differences": "22贴入口导致门外走廊及近门墙信息突出，范围可比性待定"
+    },
+    {
+      "building": "jtcxE69GiFV",
+      "a": 16,
+      "b": 23,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "用户16原评论明确与23同房；同木柜、床旁双门与双窗墙",
+      "differences": "23近柜角，浴室开口和床的遮挡变化，尚不直接提升优先"
+    },
+    {
+      "building": "jtcxE69GiFV",
+      "a": 22,
+      "b": 23,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "床旁入口、邻柜、浴室门及双窗墙直接匹配，同为卧室入口/柜侧视点",
+      "differences": "两者共享入口与门外信息；23较远离门框，保留门扇遮挡变化"
+    },
+    {
+      "building": "jtcxE69GiFV",
+      "a": 18,
+      "b": 32,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "中央镜柜、两端罗马帘窗、红绒固定座位和梳妆台对应同一衣帽间",
+      "differences": "分别偏柜体两侧，实体柜使远端信息不等，整个衣帽间范围可比性待核"
+    },
+    {
+      "building": "jtcxE69GiFV",
+      "a": 19,
+      "b": 31,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "31原评论确认与19同房；床头窗、衣柜和电视墙直接一致",
+      "differences": "19近入口、31近浴室，两个外侧空间显示程度不同"
+    },
+    {
+      "building": "jtcxE69GiFV",
+      "a": 25,
+      "b": 28,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "窗下固定柜、电视墙、门洞和粉红固定座位及中间高柜一致",
+      "differences": "桌侧到中部平移，仍为同一个完整小室；共享突出柜体和开门线索"
+    },
+    {
+      "building": "jtcxE69GiFV",
+      "a": 25,
+      "b": 26,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "同窗墙、固定座位、突出花纹高柜和门洞可直接对应",
+      "differences": "26紧贴高柜，割裂左右信息，围合可见性较25有不确定差异"
+    },
+    {
+      "building": "jtcxE69GiFV",
+      "a": 11,
+      "b": 30,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "同豹纹楼梯、黑扶手、床房木饰面门以及外侧玻璃双门可对应同一楼梯脚通道",
+      "differences": "11靠卧室门、30靠连接门，门扇和走廊远端显露不同，范围可比性待核"
+    },
+    {
+      "building": "jtcxE69GiFV",
+      "a": 27,
+      "b": 30,
+      "physical_same": "待定",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "待定",
+      "evidence": "窗下长柜短通道通过门可见同型楼梯，支持相邻区域但不足证明同主走道范围",
+      "differences": "27主要窗下柜通道，30主要楼梯脚及多门区域，不能沿连通关系并组"
+    },
+    {
+      "building": "kEZ7cmS4wCh",
+      "a": 1,
+      "b": 2,
+      "physical_same": "待定",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "待定",
+      "evidence": "相似木饰面不足证明同房；01主要白墙矮柜前厅，02为柜墙围合的连接走道",
+      "differences": "可能处于同套间相邻位置，尚未直接核实同一组门墙对应，保留待定"
+    },
+    {
+      "building": "pRbA3pwrgk9",
+      "a": 1,
+      "b": 16,
+      "physical_same": "待定",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "待定",
+      "evidence": "同一黑架、棕色洗手台、滑门轨道及白床橙梁卧室直接定位同一连接口。 root独立逐张原图交叉复核同意待定，支持同接口定位但不足保证同一实际房间。",
+      "differences": "两间实体门墙分隔的房间同时呈现；01较靠浴室、16较偏卧室。可作为同连接场景线索，房间归属仍待定，不能等同同一实际房间。"
+    },
+    {
+      "building": "pRbA3pwrgk9",
+      "a": 1,
+      "b": 17,
+      "physical_same": "待定",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "存在明显差异",
+      "decision": "待定",
+      "evidence": "黑架、棕台、厕位与卧室橙梁对应同一浴室门内外",
+      "differences": "17主浴室内部，01连接口同时呈现两室，不能仅因相接认定同一实际房间配对"
+    },
+    {
+      "building": "pRbA3pwrgk9",
+      "a": 2,
+      "b": 13,
+      "physical_same": "支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "存在明显差异",
+      "decision": "对照候选",
+      "evidence": "同蓝墙、独立浴缸、窗与双盆台对应同一主卫外围；02是其中玻璃淋浴设施内部",
+      "differences": "02被透明淋浴围合包围，13在浴室大区；比较的是同一主卫内设施子区视点差异，不是同主围合优先配对"
+    },
+    {
+      "building": "pRbA3pwrgk9",
+      "a": 3,
+      "b": 11,
+      "physical_same": "待定",
+      "main_visual_alignment": "待定",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "存在明显差异",
+      "decision": "待定",
+      "evidence": "同卧室床头、衣帽间门及蓝白浴室门定位于同一接口附近",
+      "differences": "03在多门卧室侧，11更靠浴室门内外；两间实体门墙分开的房间并不能凭连通合组"
+    },
+    {
+      "building": "pRbA3pwrgk9",
+      "a": 4,
+      "b": 6,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "固定床头墙、阳台门、凹窗座与楼梯入口相互对应同一主卧围合",
+      "differences": "床侧到床尾视点变化；共有附属门洞和床椅遮挡条件"
+    },
+    {
+      "building": "pRbA3pwrgk9",
+      "a": 4,
+      "b": 8,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "同床头墙及其两侧挂灯、阳台门、凹窗座和楼梯门直接对应",
+      "differences": "08靠外窗，仍完整呈现同一卧室主体，未见必然范围差异"
+    },
+    {
+      "building": "pRbA3pwrgk9",
+      "a": 4,
+      "b": 10,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "同床墙、凹窗座、蓝椅及楼梯大门匹配，均为主卧",
+      "differences": "10近楼梯门并显露上行台阶和门侧附属空间，范围解释可比性待核"
+    },
+    {
+      "building": "pRbA3pwrgk9",
+      "a": 4,
+      "b": 18,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "待定",
+      "difficulty_similarity": "待定",
+      "decision": "基础候选",
+      "evidence": "同床头固定墙、凹窗座、楼梯门及外门对应",
+      "differences": "18贴外门，阳台信息比04更完整，但未强行按家具占比判为不同主空间"
+    },
+    {
+      "building": "pRbA3pwrgk9",
+      "a": 5,
+      "b": 12,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "宽矮抽屉柜、上方成排挂架和门旁高柜顺序直接对应同衣帽间",
+      "differences": "视点平移，柜与门外卧室可见性接近"
+    },
+    {
+      "building": "pRbA3pwrgk9",
+      "a": 5,
+      "b": 15,
+      "physical_same": "不支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "待定",
+      "decision": "不支持",
+      "evidence": "05/12有占整墙的宽矮抽屉柜和相邻柜架，15相应围合为高窄抽屉架且门外呈卧室另一位置",
+      "differences": "同一卧室的两个附属衣帽间，固定设施布局不同；不能因木柜相似合组"
+    },
+    {
+      "building": "pRbA3pwrgk9",
+      "a": 9,
+      "b": 19,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "洗衣叠机、配电板、长台池柜及单门对应同一洗衣房",
+      "differences": "沿台平移，均能看到同一门外楼梯信息"
+    },
+    {
+      "building": "pRbA3pwrgk9",
+      "a": 9,
+      "b": 20,
+      "physical_same": "支持",
+      "main_visual_alignment": "一致",
+      "extent_alignment": "预期相近",
+      "difficulty_similarity": "预期相近",
+      "decision": "优先候选",
+      "evidence": "同长台与不锈钢池、墙上检修板、叠机柜及门的位置一致",
+      "differences": "另一个台侧视点，固定范围与柜台遮挡相近"
+    },
+    {
+      "building": "pRbA3pwrgk9",
+      "a": 14,
+      "b": 17,
+      "physical_same": "不支持",
+      "main_visual_alignment": "不同",
+      "extent_alignment": "存在明显差异",
+      "difficulty_similarity": "待定",
+      "decision": "不支持",
+      "evidence": "14为绿墙、白盆白台和另一淋浴壁龛；17为棕色台、黑立架、不同窗门布局",
+      "differences": "均为小浴室不代表同房，固定台柜与淋浴布局有直接反证"
+    }
+  ]
+}

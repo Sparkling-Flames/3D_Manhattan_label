@@ -2,7 +2,11 @@
 <!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260811_v23 SHA-256 f3c1ea58d0857a40aa2240b4680b674c76fe2cec8f048f61a643d9e4b74b0588 -->
 # docs 文档索引
 
-2026-09-11图片研究目的：[图片分类与同房间收敛预测研究SOP v3](thesis_main/图片分类与同房间收敛预测研究SOP.md)。同房标注收敛预测与交界处歧义两条研究线；整体粗类、功能组合、主要呈现区域、交界属性分别记录。讨论版，不修改正式合同。
+2026-09-12图片研究目的：[图片分类与同房间收敛预测研究SOP v5](thesis_main/图片分类与同房间收敛预测研究SOP.md)。旧空间页亲审范围修正为41张意见不一致图；本次260个同房组均已看。收敛预测、困难组分歧预测、交界与OOS分层记录；讨论版，不修改正式合同。
+
+2026-09-12整组复核结果：[机器关联表](../analysis_results/scene_image_exploration_20260910_v1/same_room_selection_registry_20260912.json)、[55条评论解释](../analysis_results/scene_image_exploration_20260910_v1/group_comment_interpretation_20260912.json)。关联原组/子集、648图空间来源、单图问题及历史人数，保留图数排序、低歧义与分歧候选视图；生成器`materialize_same_room_selection.py`。
+
+2026-09-12同房研究重新配对：[整组填写页](../analysis_results/scene_image_exploration_20260910_v1/同房研究_整组复核_v3.html)。全量图像检索后，逐对记录物理房间、主空间、预计标注范围及信息差异；AI建议预填，含小幅歧义选项，人工交界只读保留；生成器 `build_same_room_pair_review.py`。
 
 2026-09-11新标准全量复核：[独立可填写页面](../analysis_results/scene_image_exploration_20260910_v1/室内空间_新标准复核_v3.html)、[复核报告与填写说明](../analysis_results/scene_image_exploration_20260910_v1/新标准全量复核报告_20260911.md)。648图主审/讨论沿用及独立交叉意见分层保留，最终由用户分类；生成器 `build_scene_open_layout_review.py`。 [本地文件/Git说明](../analysis_results/scene_image_exploration_20260910_v1/本地文件与Git保存说明_20260911.md)。
 
