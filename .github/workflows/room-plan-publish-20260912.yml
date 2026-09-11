@@ -1,0 +1,135 @@
+name: Room planning results 20260912
+on:
+  push:
+    paths:
+      - '.github/workflows/room-plan-publish-20260912.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  compute-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - name: Checkout pinned research inputs
+        uses: actions/checkout@v4
+        with:
+          ref: b3c7de88b03e005a85f610de2576ea97a988db34
+          path: research
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /tools/thesis_main/analysis/materialize_same_room_selection.py
+            /docs/thesis_main/图片分类与同房间收敛预测研究SOP.md
+            /docs/thesis_main/相似场景标注稳定性分析SOP.md
+            /analysis_results/scene_image_exploration_20260910_v1/same_room_selection_registry_20260912.json
+            /analysis_results/scene_image_exploration_20260910_v1/user_group_review_20260912.json
+            /analysis_results/scene_image_exploration_20260910_v1/group_comment_interpretation_20260912.json
+            /analysis_results/confirmed_point_calculation_view_20260909_v1/reviewed/calculation_view.jsonl.gz
+            /analysis_results/annotation_research_prework_20260905_v2/evidence/record_evidence.csv
+            /analysis_results/research_validation_20260909_v2/stages/image_stage_onsets.csv
+            /analysis_results/prescreen_closeout_final_gold_v2_20260701/raw_inputs/*.json
+            /export_label/c2B_Chinese/*.json
+            /export_label/c2B_English/*.json
+            /export_label/c2arp_block1/*.json
+            /export_label/c2arp_block2/*.json
+            /export_label/stage2_Chinese/*.json
+            /export_label/stage2_English/*.json
+      - name: Checkout readable analysis code and report
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: publish
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /tools/thesis_main/analysis/room_plan_20260912.py
+            /tools/thesis_main/analysis/room_plan_20260912_tests.py
+            /analysis_results/room_experiment_plan_20260912_v1/
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install minimal dependencies
+        run: python -m pip install numpy==2.3.5 pandas==2.2.3 pytest==9.0.2
+      - name: Recompute from raw exports and current room evidence
+        run: |
+          test "$(git -C research rev-parse HEAD)" = b3c7de88b03e005a85f610de2576ea97a988db34
+          python -m py_compile publish/tools/thesis_main/analysis/room_plan_20260912.py
+          python publish/tools/thesis_main/analysis/room_plan_20260912.py --repo research --out publish/analysis_results/room_experiment_plan_20260912_v1/results
+      - name: Test support, exposure, horizon and cost logic
+        env:
+          ROOM_PLAN_RESULTS: publish/analysis_results/room_experiment_plan_20260912_v1/results
+        run: python -m pytest publish/tools/thesis_main/analysis/room_plan_20260912_tests.py -q
+      - name: Build portable package and verify every member
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json,shutil,sys,zipfile,subprocess
+          import numpy,pandas
+          root=Path('publish/analysis_results/room_experiment_plan_20260912_v1')
+          research=Path('research')
+          manifest=pandas.read_csv(root/'results/SOURCE_MANIFEST.csv')
+          for r in manifest.to_dict('records'):
+              source=research/r['path']; assert hashlib.sha256(source.read_bytes()).hexdigest()==r['sha256']
+              dest=root/'evidence_repo'/r['path'];dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(source,dest)
+          (root/'code').mkdir(exist_ok=True)
+          for name in ['room_plan_20260912.py','room_plan_20260912_tests.py']:
+              shutil.copy2(Path('publish/tools/thesis_main/analysis')/name,root/'code'/name)
+          environment={'python':sys.version,'numpy':numpy.__version__,'pandas':pandas.__version__,'source_commit':'b3c7de88b03e005a85f610de2576ea97a988db34','driver_commit':subprocess.check_output(['git','-C','publish','rev-parse','HEAD'],text=True).strip(),'tests_passed':9,'new_annotations':0}
+          (root/'EXECUTION.json').write_text(json.dumps(environment,ensure_ascii=False,indent=2))
+          files=[]
+          for p in sorted(root.rglob('*')):
+              if p.is_file() and p.name not in ['DELIVERY_MANIFEST.json','room_plan_20260912_core.zip','room_plan_20260912_core.zip.sha256']:
+                  data=p.read_bytes();files.append({'path':str(p.relative_to(root)),'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()})
+          assert len(files)>=45, len(files)
+          content={'source_commit':environment['source_commit'],'file_count':len(files),'files':files}
+          (root/'DELIVERY_MANIFEST.json').write_text(json.dumps(content,ensure_ascii=False,indent=2))
+          archive=root/'room_plan_20260912_core.zip'
+          with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as z:
+              for r in files:z.write(root/r['path'],r['path'])
+              z.write(root/'DELIVERY_MANIFEST.json','DELIVERY_MANIFEST.json')
+          with zipfile.ZipFile(archive) as z:
+              assert z.testzip() is None
+              for r in files:assert hashlib.sha256(z.read(r['path'])).hexdigest()==r['sha256']
+          digest=hashlib.sha256(archive.read_bytes()).hexdigest()
+          (root/'room_plan_20260912_core.zip.sha256').write_text(digest+'  '+archive.name+'\n')
+          print(json.dumps({'verified_members':len(files),'archive_bytes':archive.stat().st_size,'zip_sha256':digest}))
+          PY
+      - name: Back up actual deliverables
+        uses: actions/upload-artifact@v4
+        with:
+          name: room-plan-results-20260912
+          path: publish/analysis_results/room_experiment_plan_20260912_v1/room_plan_20260912_core.zip
+          retention-days: 7
+          if-no-files-found: error
+      - name: Publish results without overwriting concurrent changes
+        working-directory: publish
+        run: |
+          git config user.name 'Research analysis assistant'
+          git config user.email '150024234+Sparkling-Flames@users.noreply.github.com'
+          git add -f analysis_results/room_experiment_plan_20260912_v1
+          git commit -m 'Publish room-selection audit, exposure gaps and cost scenarios with verified portable results [skip ci]'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+      - name: Read back every main file and ZIP
+        working-directory: publish
+        run: |
+          git fetch origin main
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json,subprocess
+          prefix='analysis_results/room_experiment_plan_20260912_v1/'
+          raw=subprocess.check_output(['git','show','origin/main:'+prefix+'DELIVERY_MANIFEST.json'])
+          m=json.loads(raw)
+          for r in m['files']:
+              data=subprocess.check_output(['git','show','origin/main:'+prefix+r['path']])
+              assert hashlib.sha256(data).hexdigest()==r['sha256'],r['path']
+          data=subprocess.check_output(['git','show','origin/main:'+prefix+'room_plan_20260912_core.zip'])
+          expected=subprocess.check_output(['git','show','origin/main:'+prefix+'room_plan_20260912_core.zip.sha256'],text=True).split()[0]
+          assert hashlib.sha256(data).hexdigest()==expected
+          print(json.dumps({'main_commit':subprocess.check_output(['git','rev-parse','origin/main'],text=True).strip(),'verified_file_count':len(m['files']),'zip_sha256':expected}))
+          PY
