@@ -1,0 +1,56 @@
+name: Room selection evidence 20260912
+on:
+  push:
+    paths:
+      - '.github/workflows/room-selection-source-20260912.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: b3c7de88b03e005a85f610de2576ea97a988db34
+          fetch-depth: 1
+          sparse-checkout: |
+            docs
+            tools/thesis_main/analysis
+            tests
+            analysis_results/scene_image_exploration_20260910_v1
+            analysis_results/research_validation_20260909_v2
+            analysis_results/worker_four_block_exploration_20260910_v1
+            analysis_results/confirmed_point_calculation_view_20260909_v1
+            analysis_results/annotation_research_prework_20260905_v2/evidence
+            analysis_results/uncertainty_cloud_inputs_20260906_v1/facts
+            analysis_results/multibuilding_threshold_stability_20260909_v1/revised/comparison
+      - name: Package source files and verify ZIP
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json,subprocess,zipfile
+          root=Path('.')
+          pinned='b3c7de88b03e005a85f610de2576ea97a988db34'
+          assert subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()==pinned
+          paths=subprocess.check_output(['git','ls-files','-z']).decode().split('\0')
+          output=Path('/tmp/room_selection_source_20260912.zip')
+          rows=[]
+          with zipfile.ZipFile(output,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as z:
+              for name in paths:
+                  p=root/name
+                  if not name or not p.is_file(): continue
+                  if p.suffix.lower() not in {'.md','.json','.jsonl','.csv','.gz','.py','.txt','.yaml','.yml'}: continue
+                  if not (name.startswith('docs/') or name.startswith('tools/thesis_main/analysis/') or name.startswith('tests/') or name.startswith('analysis_results/')): continue
+                  data=p.read_bytes(); rows.append({'path':name,'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()}); z.writestr(name,data)
+              z.writestr('SOURCE_MANIFEST.json',json.dumps({'source_commit':pinned,'files':rows},ensure_ascii=False,indent=2))
+          with zipfile.ZipFile(output) as z: assert z.testzip() is None
+          print(json.dumps({'files':len(rows),'archive_bytes':output.stat().st_size}))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: room-selection-source-20260912
+          path: /tmp/room_selection_source_20260912.zip
+          retention-days: 7
+          if-no-files-found: error
