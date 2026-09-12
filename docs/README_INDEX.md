@@ -2,9 +2,9 @@
 <!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260811_v23 SHA-256 f3c1ea58d0857a40aa2240b4680b674c76fe2cec8f048f61a643d9e4b74b0588 -->
 # docs 文档索引
 
-2026-09-12图片研究目的：[图片分类与同房间收敛预测研究SOP v5](thesis_main/图片分类与同房间收敛预测研究SOP.md)。旧空间页亲审范围修正为41张意见不一致图；本次260个同房组均已看。收敛预测、困难组分歧预测、交界与OOS分层记录；讨论版，不修改正式合同。
+2026-09-12图片研究目的：[图片分类与同房间收敛预测研究SOP v6](thesis_main/图片分类与同房间收敛预测研究SOP.md)。早期648图分类及争议复核完整接续，41张仅指后续意见不一致图那一轮；本次260个同房组均已看。最新[说明](../analysis_results/research_direction_review_20260912_v1/人员范围与多视点选图_修订建议.md)及[稳定性SOP](thesis_main/相似场景标注稳定性分析SOP.md)明确：W11退出后续但历史保留，多视点优先、困难图保留、按实际人数观察，无统一追加5人要求；讨论版，不修改正式合同。
 
-2026-09-12整组复核结果：[机器关联表](../analysis_results/scene_image_exploration_20260910_v1/same_room_selection_registry_20260912.json)、[55条评论解释](../analysis_results/scene_image_exploration_20260910_v1/group_comment_interpretation_20260912.json)。关联原组/子集、648图空间来源、单图问题及历史人数，保留图数排序、低歧义与分歧候选视图；生成器`materialize_same_room_selection.py`。
+2026-09-12完整复核结果：[机器关联表v2](../analysis_results/scene_image_exploration_20260910_v1/same_room_selection_registry_v2_20260912.json)、[字段说明](../analysis_results/scene_image_exploration_20260910_v1/同房研究配对复核要求_20260912.md)、[55条评论解释](../analysis_results/scene_image_exploration_20260910_v1/group_comment_interpretation_20260912.json)。关联648图历轮分类、47条早期评论、原组/子集、门洞与一般交界、单图问题及Manual/Semi历史人数；采用值和未亲审AI建议分开，旧v1仅供追溯；生成器`materialize_same_room_selection.py`。
 
 2026-09-12同房研究重新配对：[整组填写页](../analysis_results/scene_image_exploration_20260910_v1/同房研究_整组复核_v3.html)。全量图像检索后，逐对记录物理房间、主空间、预计标注范围及信息差异；AI建议预填，含小幅歧义选项，人工交界只读保留；生成器 `build_same_room_pair_review.py`。
 

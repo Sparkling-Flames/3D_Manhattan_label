@@ -2,7 +2,38 @@ import copy
 
 import pytest
 
-from tools.thesis_main.analysis.materialize_same_room_selection import assemble, annotation_coverage
+from tools.thesis_main.analysis.materialize_same_room_selection import assemble, annotation_coverage, reconcile_spatial_history
+
+
+def test_later_ai_does_not_erase_earlier_human_classification():
+    initial = [dict(image_id=i, user_type='卧室' if i != 'd' else '复合／待定', user_doorway='确认',
+                    user_room='r1', user_artifact='未见明显异常', user_status='已复核', user_note='') for i in 'abcd']
+    last = [dict(image_id=r['image_id'], source_user=r, discussion=None, user_revision={},
+                 current_classification=dict(coarse_type='开放复合空间', functions='厨房、起居', focus='厨房',
+                                             boundary='暂不归入')) for r in initial]
+    for row in last:
+        row['prefill'] = copy.deepcopy(row['current_classification'])
+    last[1]['discussion'] = dict(record_path='discussion.md', batch_records=[dict(case_id='B01',
+        boundary_decisions=[dict(image_id='b', state='低优先级候选')])])
+    review = dict(saved_at='group_time', source_user=dict(saved_at='later_time',
+        source_user=dict(rows=initial, saved_at='dispute_time'), rows=last))
+    result = dict(images=[dict(image_id=i, building='b', number=n, in_previous_disagreement_filter=i in 'bc',
+        group_codes=['G001'] if i == 'c' else [], doorway_user_comment_codes=['G001'] if i == 'c' else [],
+        annotation_boundary_comment_codes=[]) for n, i in enumerate('abcd', 1)],
+        groups=[dict(review_code='G001', image_ids=['c'], raw_current=dict(note='3在门洞'), interpretation=dict(doorway=[3]))], candidates=[])
+    baseline = copy.deepcopy(review)
+    reconcile_spatial_history(result, review, dict(source_user=dict(saved_at='initial', rows=initial), cases=[]), dict(rows=[]))
+    assert review == baseline
+    a, b, c, d = result['images']
+    assert a['spatial_classification']['coarse_type'] == '卧室'
+    assert a['spatial_ai_proposal']['coarse_type'] == '开放复合空间'
+    assert a['doorway_reconciliation']['current_working_label'] == '确认'
+    assert b['spatial_classification']['coarse_type'] == '开放复合空间'
+    assert b['spatial_classification']['boundary'] == '暂不归入'
+    assert b['doorway_reconciliation']['current_working_label'] == '否'
+    assert c['doorway_reconciliation']['source'] == '最新整组评论.G001'
+    assert d['spatial_classification']['coarse_type'] is None and d['legacy_coarse_type_raw'] == '复合／待定'
+    assert result['spatial_reconciliation_summary']['initial_dispute_target_images'] == 0
 
 
 def test_people_are_not_person_images_and_semi_is_retained():
