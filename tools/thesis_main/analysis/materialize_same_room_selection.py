@@ -14,6 +14,53 @@ def read(path):
     return json.loads(Path(path).read_text(encoding='utf-8'))
 
 
+def annotation_coverage(result, rows):
+    """人数为集合并集；人图数为每图人数之和；Manual与Semi可能是同一人。"""
+    by_image = defaultdict(list)
+    for r in rows:
+        if r['assistance_exposure'] not in ('none', 'model_preannotation'):
+            raise ValueError('未知辅助条件')
+        by_image[r['image_id']].append(r)
+
+    def summarize(image_ids):
+        if len(image_ids) != len(set(image_ids)):
+            raise ValueError('统计成员重复')
+        sets = {k: [] for k in ('any', 'manual', 'manual_included', 'semi')}
+        for image_id in image_ids:
+            rr = by_image[image_id]
+            sets['any'].append({str(r['worker_id']) for r in rr})
+            sets['manual'].append({str(r['worker_id']) for r in rr if r['assistance_exposure'] == 'none'})
+            sets['manual_included'].append({str(r['worker_id']) for r in rr if r['unassisted_manual_included']})
+            sets['semi'].append({str(r['worker_id']) for r in rr if r['assistance_exposure'] == 'model_preannotation'})
+        unions = {k: set().union(*v) for k, v in sets.items()}
+        return dict(n_images=len(image_ids),
+            n_annotated_images=sum(bool(v) for v in sets['any']),
+            n_manual_images=sum(bool(v) for v in sets['manual']),
+            n_semi_images=sum(bool(v) for v in sets['semi']),
+            n_both_mode_images=sum(bool(a and b) for a, b in zip(sets['manual'], sets['semi'])),
+            n_semi_only_images=sum(bool(b) and not a for a, b in zip(sets['manual'], sets['semi'])),
+            n_people={k: len(v) for k, v in unions.items()},
+            n_person_images={k: sum(map(len, v)) for k, v in sets.items()},
+            worker_ids={k: sorted(v) for k, v in unions.items()},
+            n_people_both_modes=len(unions['manual'] & unions['semi']),
+            n_canonical_records=sum(len(by_image[i]) for i in image_ids),
+            per_image={i: {k: len(v[j]) for k, v in sets.items()} for j, i in enumerate(image_ids)})
+
+    for r in result['images']:
+        r['annotation_counts'] = summarize([r['image_id']])
+    for r in result['groups'] + result['candidates']:
+        r['annotation_counts'] = summarize(r['image_ids'])
+    result['annotation_coverage'] = summarize([r['image_id'] for r in result['images']])
+    result['annotation_count_rules'] = dict(
+        scope='既有canonical快照，非全仓库最新导出的重新普查；未找到不等于从未标注。',
+        modes='manual=assistance_exposure:none；semi=model_preannotation；manual_included为已有无辅助计算纳入标记。',
+        units='n_people为成员图之间人员ID去重人数；n_person_images为各图去重人数之和；n_canonical_records为记录数，不能替代人数。',
+        overlap='同一人跨图只计一个组内人；同一人参与两种模式可同时出现在两列，any为并集，不是Manual+Semi。',
+        groups='原260展示组与合并/拆分后的259候选分别统计；含不同房或待定组。组间可重叠，禁止汇总各组人数作为总人数。',
+        ranking='已有优先级不变；低歧义排序中的高人数特指manual_included>=19，Semi历史单列，不冒充无辅助证据。')
+    return result
+
+
 def historical_counts(rows, root):
     """核对既有canonical清单到原始导出；人数按图内人员去重，不混合辅助条件。"""
     source_rows, people = defaultdict(list), defaultdict(list)
@@ -240,7 +287,7 @@ def main():
     with gzip.open(HISTORY, 'rt', encoding='utf-8') as stream:
         rows = [json.loads(line) for line in stream]
     counts, audit = historical_counts(rows, ROOT)
-    result = assemble(review, read(OUT / 'group_comment_interpretation_20260912.json'), counts)
+    result = annotation_coverage(assemble(review, read(OUT / 'group_comment_interpretation_20260912.json'), counts), rows)
     result['historical_source_audit'] = dict(**audit, calculation_index=str(HISTORY.relative_to(ROOT)),
         definition='既有canonical计算快照，经任务/标注/人员/图像ID回查18份原导出；未重扫所有新导出。0仅指快照未找到。',
         high_people_threshold=19, threshold_note='沿用旧高人数探索展示门槛；不是足以收敛的判据。',
@@ -254,7 +301,7 @@ def main():
     result['input_integrity'] = dict(original_spatial_source_unchanged=True, original_pair_evidence_unchanged=True,
         user_review_snapshot=str(args.review.relative_to(ROOT)) if args.review.is_relative_to(ROOT) else str(args.review),
         comment_interpretation='group_comment_interpretation_20260912.json')
-    (OUT / 'same_room_selection_registry_20260912.json').write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')
+    (OUT / 'same_room_selection_registry_20260912.json').write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8', newline='\n')
     print(json.dumps(result['summary'], ensure_ascii=False))
 
 

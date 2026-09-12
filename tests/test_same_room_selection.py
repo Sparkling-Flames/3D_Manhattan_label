@@ -2,7 +2,23 @@ import copy
 
 import pytest
 
-from tools.thesis_main.analysis.materialize_same_room_selection import assemble
+from tools.thesis_main.analysis.materialize_same_room_selection import assemble, annotation_coverage
+
+
+def test_people_are_not_person_images_and_semi_is_retained():
+    result = dict(images=[dict(image_id=i) for i in ['a', 'b', 'c']],
+                  groups=[dict(image_ids=['a', 'b'])], candidates=[dict(image_ids=['b'])])
+    rows = [dict(image_id=i, worker_id=w, assistance_exposure=m, unassisted_manual_included=m == 'none')
+            for i, w, m in [('a', '1', 'none'), ('a', '1', 'none'), ('b', '1', 'model_preannotation'),
+                            ('b', '2', 'model_preannotation')]]
+    annotation_coverage(result, rows)
+    g = result['groups'][0]['annotation_counts']
+    assert g['n_people']['any'] == 2 and g['n_person_images']['any'] == 3
+    assert g['n_canonical_records'] == 4 and g['n_people_both_modes'] == 1
+    assert g['n_semi_images'] == g['n_semi_only_images'] == 1
+    assert result['candidates'][0]['annotation_counts']['n_people']['manual'] == 0
+    assert result['candidates'][0]['annotation_counts']['n_people']['semi'] == 2
+    assert result['images'][2]['annotation_counts']['n_people']['any'] == 0
 
 
 def test_review_scope_subset_and_difficult_images_are_not_lost():
