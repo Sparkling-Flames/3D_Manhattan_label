@@ -1,5 +1,7 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
+探索研究要求核对入口：`docs/thesis_main/用户研究要求核对清单_20260913.md`，对应当前研究说明与两份探索SOP，追踪长对话要求、历史规则冲突和未定事项；不替代正式合同。
+
 空间分维度续审：`tools/thesis_main/analysis/build_spatial_dimensions_review.py`与同目录`spatial_dimensions_review.html`生成[填写页及历轮核对](../analysis_results/spatial_dimensions_review_20260913_v2/续审说明.md)。接续旧视觉证据、人工六阶段记录、逐组讨论和OOS，保留原值；不改变正式合同、同房/门洞或选图决定。
 
 开放复合空间探索复核：`tools/thesis_main/analysis/summarize_open_layout_recheck.py`汇总逐图视觉记录；[结果入口](../analysis_results/open_layout_recheck_20260913_v1/复核说明.md)及[查看页](../analysis_results/open_layout_recheck_20260913_v1/开放复合空间复核查看.html)。人工主区域与分类保留，新增AI建议独立，待核实后再决定是否采用；不改变方法合同或选图状态。
