@@ -4,10 +4,13 @@
 
 ## 当前入口
 
+2026-09-13：四份中英文正式／调试userscript更新为`manual_scope_only_20260913_v10`。新Manual提交检查Scope单选及旧表单混载；Semi仍走原校验，角点、3D与active_time逻辑不变。只完成本地文件更新，浏览器仍需安装新版。可导入任务独立放在`import_json/scene_stability_stage1_20260913_v2/label_studio_import/`，上一级JSON是管理材料，不导入LS。
+
 - ls_userscript_annotator.js：不确定性元标签 v2 的正式标注员脚本。保留 task-worker active_time；字段必填与条件显示由 XML 原生能力负责，脚本只校验 `difficulty_reason` 中“无明确原因”与具体原因的互斥；当前仅为本地待部署工件。
 - ls_userscript_debug.js：对应的调试/巡检脚本。仅供开发者或管理员使用，保留 HOHONET_DISABLE_ACTIVE_TIME 开关。
 - analyze_quality_formal.py：正式分析入口。先调用上游 analyze_quality.py，再剔除兼容字段并输出 formal CSV。
 - start_log_server.sh：正式日志服务启动脚本，已改为按仓库相对路径启动 cors_server.py。
+- `label_studio_view_config_manual.xml` 与英文对应配置使用 `manual_scope_only_v1`：只采集布局标注和 `worker_scope_response`，不采集多解、主观难度、困难原因或 Manual Model Issue；Semi/future 配置保持原字段。
 
 ## 使用原则
 

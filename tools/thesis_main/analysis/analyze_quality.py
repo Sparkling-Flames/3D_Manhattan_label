@@ -17,8 +17,10 @@ if _project_root not in sys.path:
 
 from tools.thesis_main.analysis.quality_core.active_time import load_active_logs, lookup_active_log_entry
 from tools.thesis_main.analysis.quality_core.choice_parser import (
+    MANUAL_SCOPE_ONLY_FORM_VERSION,
     _normalize_choice_values,
     _normalize_model_issue_values,
+    _normalize_scope_values,
     _pick_primary_model_issue,
     _scope_is_oos,
     _split_choice_values,
@@ -173,6 +175,7 @@ def main():
             export_init_type = str(t_data.get('init_type', '')).strip()
             export_is_anchor = t_data.get('is_anchor', '')
             export_has_expert_ref = t_data.get('has_expert_ref', '')
+            annotation_form_version = str(t_data.get('annotation_form_version') or '').strip()
 
             # Infer condition (manual vs semi) from presence of predictions
             task_has_prediction = False
@@ -294,7 +297,13 @@ def main():
                 
                 ann_corners, ann_poly, ann_choice_map, quality = extract_data(ann.get('result', []))
                 # Prefer deterministic v2 parsing from structured fields (scope/difficulty/model_issue).
-                qflags = parse_quality_flags_v2(ann_choice_map, quality_all=quality, mode=str(args.quality_mode))
+                qflags = parse_quality_flags_v2(
+                    ann_choice_map,
+                    quality_all=quality,
+                    mode=str(args.quality_mode),
+                    annotation_form_version=annotation_form_version,
+                    condition=condition,
+                )
 
                 # Track task-level scope votes.
                 # NOTE: missing/unknown scope should not be silently counted as in-scope.
@@ -435,7 +444,7 @@ def main():
                         task_user_poly[t_id][u_id] = final_ann_poly
                 except Exception:
                     pass
-                scope_norm = _normalize_choice_values('scope', ann_choice_map.get('scope', [])) if isinstance(ann_choice_map, dict) else []
+                scope_norm = _normalize_scope_values(ann_choice_map) if isinstance(ann_choice_map, dict) else []
                 diff_norm = _normalize_choice_values('difficulty', ann_choice_map.get('difficulty', [])) if isinstance(ann_choice_map, dict) else []
                 model_norm = _normalize_model_issue_values(_normalize_choice_values('model_issue', ann_choice_map.get('model_issue', []))) if isinstance(ann_choice_map, dict) else []
 
@@ -446,14 +455,14 @@ def main():
 
                 difficulty_filled = bool(diff_norm_l)
                 model_issue_filled = bool(model_norm_l)
-                scope_filled = bool([str(x).strip() for x in scope_norm if str(x).strip()])
+                scope_filled = bool([str(x).strip() for x in scope_norm if str(x).strip()]) and not bool(qflags.get('scope_invalid'))
 
                 difficulty_conflict = bool(has_trivial and len(diff_norm_l) > 1)
                 model_issue_conflict = bool(has_acceptable and len(model_norm_l) > 1)
 
                 # model_issue is only required for semi-auto conditions.
                 condition_norm = str(condition or '').strip().lower()
-                model_issue_required = ('semi' in condition_norm)
+                model_issue_required = ('semi' in condition_norm) and annotation_form_version != MANUAL_SCOPE_ONLY_FORM_VERSION
                 model_issue_missing_required = bool(model_issue_required and (not model_issue_filled))
 
                 rows.append({
@@ -549,7 +558,7 @@ def main():
                     'model_issue_conflict': bool(model_issue_conflict),
                     'model_issue_missing_required': bool(model_issue_missing_required),
                     # Derived, deterministic fields for multi-select model_issue.
-                    'has_model_issue': bool([t for t in model_norm_l if t != 'acceptable']),
+                    'has_model_issue': None if annotation_form_version == MANUAL_SCOPE_ONLY_FORM_VERSION else bool([t for t in model_norm_l if t != 'acceptable']),
                     'model_issue_types': ";".join([t for t in model_norm_l if t != 'acceptable']),
                     'model_issue_primary': _pick_primary_model_issue([t for t in model_norm_l if t != 'acceptable']),
                     # Keep tri-state for scope-derived fields: True / False / empty (unknown).
@@ -559,14 +568,18 @@ def main():
                     'difficulty_conflict_v2': bool(qflags.get('difficulty_conflict')),
                     'model_issue_conflict_v2': bool(qflags.get('model_issue_conflict')),
                     'is_oos': qflags.get('is_oos'),
-                    'is_occlusion': bool(qflags.get('is_occlusion')),
-                    'is_fail': bool(qflags.get('is_fail')),
-                    'is_residual': bool(qflags.get('is_residual')),
+                    'is_occlusion': qflags.get('is_occlusion'),
+                    'is_fail': qflags.get('is_fail'),
+                    'is_residual': qflags.get('is_residual'),
                     'is_normal': qflags.get('is_normal'),
                     'n_corners': len(ann_corners),
                     'has_manual_poly': bool(ann_poly)
                 })
                 
+    except ValueError as e:
+        if "manual_scope_only_v1" in str(e) and "semi" in str(e):
+            raise
+        print(f"Error processing JSON: {e}")
     except Exception as e:
         print(f"Error processing JSON: {e}")
 

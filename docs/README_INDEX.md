@@ -1,6 +1,10 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
-第一阶段逐人人图建议：[安排说明与图片包](../analysis_results/stage1_person_image_packages_20260913_v1/第一阶段分配建议说明.md)。中文9人各建议20张、英文10人各必做30张＋可选20张；可选建议10张同房补充＋10张门洞，按0份承诺计入必做预算。24份原始导出含草稿复核；提供逐人图册和工作簿，未导入或派发。
+当前研究交接：[2026-09-13现状与阅读顺序](thesis_main/研究现状交接_20260913.md)。全量历史196图1843份、55张高人数图；不能用本轮102张采用池替代历史总量。正文要求与执行说明已同步纠正。
+
+第一阶段最新交付：[整房优先说明](../analysis_results/stage1_person_image_packages_20260913_v2/整房优先版交付说明.md)、[完成后可分析覆盖](../analysis_results/stage1_person_image_packages_20260913_v2/完成后可分析覆盖.md)。任务7、Project G、Project H的JSON独立存放；H已定稿20图。不提供ZIP，旧分发表及门洞空白复核页已清理。
+
+第一阶段当前执行：[三项目安排与人员分类续研](thesis_main/第一阶段执行与人员分类续研说明_20260913.md)、[v2清单与工作簿](../analysis_results/stage1_person_image_packages_20260913_v2/第一阶段分配建议说明.md)。480份已按整房优先重新分配；H已定12门洞＋8同房。单项、联合及AABC人员组合研究继续保留，未导入或派发。
 
 外部两阶段提案独立审查：[判断与差异](../analysis_results/two_stage_independent_review_20260913_v1/独立审查意见.md)。复核480行匹配、原始记录、逐组覆盖及转录差异；未采用外部方案或修改现行SOP。
 
@@ -232,3 +236,5 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 - [人员三组及更多组的可行性](../analysis_results/worker_reference_feasibility_20260909_v1/pooled/groups/README_ZH.md)：合并历史标注的2–5档训练内分组、跨building预测、成员敏感性及ABC等人员组合覆盖；不预设认真/粗心语义，不确定最终类型数。
 
 - [参考执行偏差可行性验证（2026-09-09）](../analysis_results/worker_reference_feasibility_20260909_v1/README_ZH.md)：人工复核优先、其他暂信GT；无序点集测量及跨building工人效应验证，保留参考疑问与计算失败，不生成最终工人类别。新增[全部阶段/条件合并分析](../analysis_results/worker_reference_feasibility_20260909_v1/pooled/README_ZH.md)，按图片与人组织，不按旧实验设置筛选或分组。
+2026-09-13脚本更新：中英文正式／调试userscript为`manual_scope_only_20260913_v10`；新Manual检查Scope单选与表单一致性。三个LS可导入JSON独立在`import_json/scene_stability_stage1_20260913_v2/label_studio_import/`，管理材料在上一级；尚未线上安装或导入。
+> 2026-09-13最新执行替换：用户确认480份内优先完整覆盖部分房间，采用后视角多者优先。当前必做G172/G184/G179/G178/G047/G237，44个采用视角中37张新增、7张仅历史；中文每人20张、英文每人30张。旧19组43图的分散配对及下文旧计数不再执行。G184五图最高19人、距20人目标各缺1人。H定稿12门洞＋8同房共20张，G178四张原选做转入必做；个人表标记已接触者跳过。现行说明在analysis_results/stage1_person_image_packages_20260913_v2/整房优先版交付说明.md，整房审计见同目录必做整房核查.json。下文过程性说明保留作历史，不覆盖本段及现行机器包。

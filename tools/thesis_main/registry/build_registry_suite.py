@@ -7,6 +7,11 @@ from pathlib import Path
 import xml.etree.ElementTree as ET
 
 from tools.thesis_main.analysis.active_log_utils import resolve_active_log_files
+from tools.thesis_main.analysis.quality_core.choice_parser import (
+    MANUAL_SCOPE_ONLY_FORM_VERSION,
+    _normalize_scope_values,
+    parse_quality_flags_v2,
+)
 from tools.thesis_main.registry.build_task_registry import DEFAULT_IMPORT_DIR, build_registry
 
 
@@ -239,7 +244,7 @@ def extract_choice_map(results: list[dict]) -> tuple[dict[str, list[str]], str, 
 def scope_is_oos(scope_values: list[str]) -> bool:
     for value in normalize_choice_values(scope_values):
         value_lower = value.lower()
-        if value_lower.startswith("oos") or "out-of-scope" in value_lower or "out of scope" in value_lower:
+        if value_lower.startswith("oos") or value_lower.startswith("out_of_scope") or "out-of-scope" in value_lower or "out of scope" in value_lower:
             return True
         if any(token in value for token in ["边界不可判定", "几何假设不成立", "错层", "多平面", "证据不足"]):
             return True
@@ -265,7 +270,9 @@ def normalize_model_issue(values: list[str]) -> list[str]:
     return out
 
 
-def determine_schema_version(choice_map: dict[str, list[str]], raw_field_profile: str, geometry_present: bool, results: list[dict]) -> str:
+def determine_schema_version(choice_map: dict[str, list[str]], raw_field_profile: str, geometry_present: bool, results: list[dict], annotation_form_version: str = "") -> str:
+    if str(annotation_form_version or "").strip() == MANUAL_SCOPE_ONLY_FORM_VERSION:
+        return MANUAL_SCOPE_ONLY_FORM_VERSION
     has_quality = bool(choice_map.get("quality"))
     has_structured = any(choice_map.get(field) for field in ["scope", "difficulty", "model_issue", "tool_issue"])
     if has_structured and has_quality:
@@ -385,7 +392,7 @@ def match_planned_task(task: dict, title_index: dict[str, list[dict]]) -> tuple[
 
 
 def build_compat_fields(choice_map: dict[str, list[str]], schema_version: str) -> dict:
-    scope_values = normalize_choice_values(choice_map.get("scope", []))
+    scope_values = _normalize_scope_values(choice_map)
     difficulty_values = normalize_choice_values(choice_map.get("difficulty", []))
     model_issue_values = normalize_model_issue(choice_map.get("model_issue", []))
     quality_values = normalize_choice_values(choice_map.get("quality", []))
@@ -455,6 +462,7 @@ def build_registries(tasks: list[dict], title_index: dict[str, list[dict]], acti
         export_project_id = str(task.get("project") or "")
         export_dataset_group = str(task_data.get("dataset_group") or "").strip()
         export_init_type = str(task_data.get("init_type") or "").strip()
+        annotation_form_version = str(task_data.get("annotation_form_version") or "").strip()
         matched_row, join_status, candidate_count = match_planned_task(task, title_index)
         join_status_counter[join_status] += 1
 
@@ -480,10 +488,16 @@ def build_registries(tasks: list[dict], title_index: dict[str, list[dict]], acti
             annotator_id = parse_completed_by(annotation.get("completed_by"))
             results = annotation.get("result", []) or []
             choice_map, raw_field_profile, geometry_present = extract_choice_map(results)
-            schema_version = determine_schema_version(choice_map, raw_field_profile, geometry_present, results)
+            schema_version = determine_schema_version(
+                choice_map,
+                raw_field_profile,
+                geometry_present,
+                results,
+                annotation_form_version,
+            )
             schema_counter[schema_version] += 1
 
-            scope_values = normalize_choice_values(choice_map.get("scope", []))
+            scope_values = _normalize_scope_values(choice_map)
             difficulty_values = normalize_choice_values(choice_map.get("difficulty", []))
             model_issue_values = normalize_model_issue(choice_map.get("model_issue", []))
             quality_values = normalize_choice_values(choice_map.get("quality", []))
@@ -517,10 +531,16 @@ def build_registries(tasks: list[dict], title_index: dict[str, list[dict]], acti
                 active_time_event_count = int(per_task_log.get("event_count", 0))
 
             scope_missing = not bool(scope_values)
-            difficulty_missing = not bool(difficulty_values)
-            model_issue_missing = not bool(model_issue_values)
+            difficulty_missing = schema_version != MANUAL_SCOPE_ONLY_FORM_VERSION and not bool(difficulty_values)
+            model_issue_missing = schema_version != MANUAL_SCOPE_ONLY_FORM_VERSION and not bool(model_issue_values)
             is_oos = "" if scope_missing and not compat["compat_scope"] else str(scope_is_oos(scope_values or normalize_choice_values(compat["compat_scope"]))).lower()
+            if schema_version == MANUAL_SCOPE_ONLY_FORM_VERSION:
+                flags = parse_quality_flags_v2(choice_map, annotation_form_version=schema_version,
+                    condition=' '.join([runtime_condition, str(task_data.get('condition') or ''), planned_condition]))
+                is_oos = "" if flags['is_oos'] is None else str(flags['is_oos']).lower()
             is_fail = str(has_prediction_failure(model_issue_values or normalize_choice_values(compat["compat_model_issue"]))).lower()
+            if schema_version == MANUAL_SCOPE_ONLY_FORM_VERSION:
+                is_fail = ""
 
             annotation_row = {
                 "task_id": task_id,

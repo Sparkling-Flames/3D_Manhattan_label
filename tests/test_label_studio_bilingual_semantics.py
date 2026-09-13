@@ -36,6 +36,7 @@ IMAGE_FIELDS = {
     "perceived_difficulty",
     "difficulty_reason",
 }
+MANUAL_IMAGE_FIELDS = {"worker_scope_response"}
 PROPOSAL_FIELDS = {
     "material_issue",
     "observed_defects",
@@ -67,7 +68,7 @@ def test_uncertainty_xml_uses_the_expected_fields_by_role() -> None:
         manual = set(_choice_aliases(ACTIVE[f"{language}_manual"]))
         semi = set(_choice_aliases(ACTIVE[f"{language}_semi"]))
         future = set(_choice_aliases(ACTIVE[f"{language}_future"]))
-        assert manual == IMAGE_FIELDS
+        assert manual == MANUAL_IMAGE_FIELDS
         assert semi == IMAGE_FIELDS | PROPOSAL_FIELDS
         assert future == IMAGE_FIELDS | PROPOSAL_FIELDS
 
@@ -264,6 +265,11 @@ def test_uncertainty_v2_manifest_records_the_frozen_boundaries() -> None:
     assert manifest["boundaries"]["phase_event_persistence"] == "not_collected"
     assert manifest["boundaries"]["strict_server_auditable_timing"] is False
     assert set(manifest["image_fields"]) == IMAGE_FIELDS
+    assert manifest["manual_scope_only_form_version"] == "manual_scope_only_v1"
+    assert set(manifest["manual_image_fields"]) == MANUAL_IMAGE_FIELDS
+    assert set(manifest["manual_not_collected_fields"]) == {
+        "multiple_plausible_layouts", "perceived_difficulty", "difficulty_reason", "model_issue"
+    }
     assert set(manifest["proposal_fields"]) == PROPOSAL_FIELDS
     assert manifest["worker_primary_defect_collected"] is False
     assert manifest["inactive_branch_policy"]["material_issue_no"] == "clear_on_selection_and_fail_closed_before_submit"

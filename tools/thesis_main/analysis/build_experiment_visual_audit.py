@@ -192,10 +192,10 @@ def prepare_quality_frame(df: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, str
     result["difficulty_conflict_bool"] = _coerce_bool_series(result, "difficulty_conflict")
     result["model_issue_conflict_bool"] = _coerce_bool_series(result, "model_issue_conflict")
     result["model_issue_missing_required_bool"] = _coerce_bool_series(result, "model_issue_missing_required")
-    if "difficulty_filled" in result.columns:
-        result["difficulty_missing_bool"] = ~_coerce_bool_series(result, "difficulty_filled", default=False)
-    else:
+    if "difficulty_missing" in result.columns:
         result["difficulty_missing_bool"] = _coerce_bool_series(result, "difficulty_missing")
+    else:
+        result["difficulty_missing_bool"] = ~_coerce_bool_series(result, "difficulty_filled", default=False)
     if "scope_filled" in result.columns:
         result["scope_missing_bool"] = ~_coerce_bool_series(result, "scope_filled", default=False)
     else:

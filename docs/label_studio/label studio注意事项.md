@@ -237,3 +237,10 @@ GT 项目允许继续存在于同一实例，但只按**管理员维护项目**�
 - 修改前十份文件保存在 `tools/label_studio/config_history/uncertainty_meta_v1_prechange_20260824/`，旧导出解析继续固定读取该快照。
 - 填写顺序只由培训要求保证，没有技术时间锁；不采集 proposal 缺失或编辑操作次数。
 - 详细字段、文件入口和边界以 `tools/label_studio/label_studio_uncertainty_meta_manifest_v1.json` 为准。
+
+## 11. Manual scope-only 本地批次
+
+- 中英文 Manual 配置使用 `annotation_form_version=manual_scope_only_v1`，只采集布局标注与 `worker_scope_response`；`multiple_plausible_layouts`、`perceived_difficulty`、`difficulty_reason` 和 Manual `model_issue` 不采集。
+- 页面仍使用 `$vis_3d`。安全空预览使用不带查询参数的 viewer URL，例如同源 `/tools/vis_3d.html`；不得把旧模板中的 `data=` 参考点查询复制到新包。
+- 历史接触只作防重复提示：按 `base_task_id/image_id` 对照既有已提交记录，并把历史记录与本轮草稿分别记录；不猜测运行时 Project ID，也不把草稿当已提交。
+- 中英文必做与英文自愿扩展使用独立 Project；外部 manifest 仍是分发真源，规划人数不是硬上限，也不由 LS 页面自动派单。

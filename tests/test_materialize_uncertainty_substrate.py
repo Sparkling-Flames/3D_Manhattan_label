@@ -16,6 +16,13 @@ def _rows(path: Path) -> list[dict[str, str]]:
         return list(csv.DictReader(handle))
 
 
+def test_frozen_substrate_rejects_manual_scope_only_form() -> None:
+    with pytest.raises(ValueError, match="manual_scope_only_v1"):
+        substrate._reject_unsupported_annotation_form(
+            {"annotation_form_version": "manual_scope_only_v1"}
+        )
+
+
 def test_uncertainty_substrate_contract_and_determinism(tmp_path: Path) -> None:
     first, second = tmp_path / "first", tmp_path / "second"
     result = substrate.materialize(first)

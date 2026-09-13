@@ -517,11 +517,14 @@ def _pick_consensus_token(
 
 def _scope_bucket(raw_scope: Any) -> str:
     scope = str(raw_scope).strip()
+    scope_lower = scope.lower()
     if not scope:
         return "missing"
-    if scope == "normal":
+    if scope_lower in {"normal", "in_scope", "in-scope", "inscope"} or "in-scope" in scope_lower or "in scope" in scope_lower:
         return "in_scope"
-    return "oos"
+    if scope_lower.startswith("oos") or scope_lower.startswith("out_of_scope") or "out-of-scope" in scope_lower or "out of scope" in scope_lower:
+        return "oos"
+    return "missing"
 
 
 def _task_scene_consensus(quality_df: pd.DataFrame) -> pd.DataFrame:
@@ -592,6 +595,7 @@ def build_analysis_frame(registry_df: pd.DataFrame, quality_df: pd.DataFrame) ->
         "model_issue",
         "scope_filled",
         "difficulty_filled",
+        "difficulty_missing",
         "difficulty_conflict",
         "model_issue_required",
         "model_issue_filled",
@@ -644,11 +648,18 @@ def build_analysis_frame(registry_df: pd.DataFrame, quality_df: pd.DataFrame) ->
     merged["scope_filled"] = _to_bool_series(
         merged.get("scope_filled", pd.Series([False] * len(merged))),
         default=False,
-    )
+    ) & merged["scope_bucket"].ne("missing")
     merged["difficulty_filled"] = _to_bool_series(
         merged.get("difficulty_filled", pd.Series([False] * len(merged))),
         default=False,
     )
+    difficulty_missing_source = merged.get("difficulty_missing_quality")
+    if difficulty_missing_source is None:
+        difficulty_missing_source = merged.get("difficulty_missing")
+    if difficulty_missing_source is None:
+        merged["difficulty_missing"] = ~merged["difficulty_filled"]
+    else:
+        merged["difficulty_missing"] = _to_bool_series(difficulty_missing_source, default=False)
     merged["difficulty_conflict"] = _to_bool_series(
         merged.get("difficulty_conflict", pd.Series([False] * len(merged))),
         default=False,
@@ -663,7 +674,7 @@ def build_analysis_frame(registry_df: pd.DataFrame, quality_df: pd.DataFrame) ->
     )
     merged["type4_flag"] = (
         ~merged["scope_filled"]
-        | ~merged["difficulty_filled"]
+        | merged["difficulty_missing"]
         | merged["difficulty_conflict"]
         | merged["model_issue_conflict"]
         | merged["model_issue_missing_required"]
@@ -682,7 +693,7 @@ def _collect_type4_reason_codes(row: pd.Series) -> str:
     reasons: list[str] = []
     if not bool(row.get("scope_filled", False)):
         reasons.append("scope_missing")
-    if not bool(row.get("difficulty_filled", False)):
+    if bool(row.get("difficulty_missing", not bool(row.get("difficulty_filled", False)))):
         reasons.append("difficulty_missing")
     if bool(row.get("difficulty_conflict", False)):
         reasons.append("difficulty_conflict")
@@ -1816,7 +1827,7 @@ def analyze_process_evidence(df: pd.DataFrame, output_dir: Path) -> None:
             n_rows=("task_id", "count"),
             n_type4=("type4_flag", "sum"),
             n_scope_missing=("scope_filled", lambda s: (~s).sum()),
-            n_difficulty_missing=("difficulty_filled", lambda s: (~s).sum()),
+            n_difficulty_missing=("difficulty_missing", "sum"),
             n_difficulty_conflict=("difficulty_conflict", "sum"),
             n_model_issue_conflict=("model_issue_conflict", "sum"),
             n_model_issue_missing_required=("model_issue_missing_required", "sum"),

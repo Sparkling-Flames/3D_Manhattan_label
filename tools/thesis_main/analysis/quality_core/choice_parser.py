@@ -54,6 +54,7 @@ def _load_label_studio_choice_alias_map(xml_path: Path) -> dict[str, dict[str, s
 
 
 _CHOICE_VALUE_TO_ALIAS_BY_FIELD: dict[str, dict[str, str]] = _load_label_studio_choice_alias_map(_LABEL_STUDIO_CONFIG_PATH)
+MANUAL_SCOPE_ONLY_FORM_VERSION = "manual_scope_only_v1"
 
 
 def _map_choice_value_to_alias(field_name: str, value: str) -> str:
@@ -78,6 +79,13 @@ def _normalize_choice_values(field_name: str, values) -> list[str]:
         if v2 and v2 not in out:
             out.append(v2)
     return out
+
+
+def _normalize_scope_values(choice_map: dict) -> list[str]:
+    """Normalize both the legacy ``scope`` and current worker scope field."""
+    choice_map = choice_map or {}
+    values = choice_map.get("scope") or choice_map.get("worker_scope_response", [])
+    return _normalize_choice_values("scope", values)
 
 
 def _split_choice_values(values) -> list:
@@ -149,11 +157,24 @@ def _scope_is_oos(scope_values: list) -> bool:
     """Decide OOS purely from structured scope field when present."""
     for s in _split_choice_values(scope_values):
         sl = s.lower()
-        if sl.startswith("oos") or ("out-of-scope" in sl) or ("out of scope" in sl) or ("oos：" in s) or ("oos:" in sl):
+        if sl.startswith("oos") or sl.startswith("out_of_scope") or ("out-of-scope" in sl) or ("out of scope" in sl) or ("oos：" in s) or ("oos:" in sl):
             return True
         if "边界不可判定" in s or "几何假设不成立" in s or "错层" in s or "多平面" in s or "证据不足" in s:
             return True
     return False
+
+
+def _scope_value_is_valid(value: str) -> bool:
+    text = str(value or "").strip()
+    lower = text.lower()
+    return bool(
+        lower in {"normal", "in_scope", "in-scope", "inscope"}
+        or "in-scope" in lower
+        or "in scope" in lower
+        or "camera room" in lower
+        or "只标相机房间" in text
+        or _scope_is_oos([text])
+    )
 
 
 def _has_token_in_choices(choice_values: list, tokens: list) -> bool:
@@ -180,7 +201,13 @@ def _has_prediction_fail(choice_values: list) -> bool:
     return False
 
 
-def parse_quality_flags_v2(choice_map: dict, quality_all: str = "", mode: str = "v2") -> dict:
+def parse_quality_flags_v2(
+    choice_map: dict,
+    quality_all: str = "",
+    mode: str = "v2",
+    annotation_form_version: str = "",
+    condition: str = "",
+) -> dict:
     """Parse flags using v2 structured fields.
 
     This repo is v2-only: we do NOT fall back to legacy free-text keyword parsing.
@@ -193,15 +220,19 @@ def parse_quality_flags_v2(choice_map: dict, quality_all: str = "", mode: str = 
     if mode_norm != "v2":
         raise ValueError(f"quality_mode must be 'v2' (got: {mode!r})")
 
-    scope_vals = _normalize_choice_values("scope", choice_map.get("scope", []))
+    manual_scope_only = str(annotation_form_version or "").strip() == MANUAL_SCOPE_ONLY_FORM_VERSION
+    if manual_scope_only and "semi" in str(condition or "").strip().lower():
+        raise ValueError("manual_scope_only_v1 cannot be used with semi condition")
+    scope_vals = _normalize_scope_values(choice_map)
     diff_vals = _normalize_choice_values("difficulty", choice_map.get("difficulty", []))
     model_vals = _normalize_model_issue_values(_normalize_choice_values("model_issue", choice_map.get("model_issue", [])))
     tool_vals = _normalize_choice_values("tool_issue", choice_map.get("tool_issue", []))
 
     has_structured = bool(scope_vals or diff_vals or model_vals or tool_vals)
     scope_missing = not bool(_split_choice_values(scope_vals))
-    difficulty_missing = not bool(_split_choice_values(diff_vals))
-    model_issue_missing = not bool(_split_choice_values(model_vals))
+    scope_invalid = bool(scope_vals) and any(not _scope_value_is_valid(value) for value in scope_vals)
+    difficulty_missing = (not manual_scope_only) and not bool(_split_choice_values(diff_vals))
+    model_issue_missing = (not manual_scope_only) and not bool(_split_choice_values(model_vals))
 
     difficulty_conflict = ("trivial" in set([str(x).strip().lower() for x in diff_vals]) and len(diff_vals) > 1)
     model_issue_conflict = ("acceptable" in set([str(x).strip().lower() for x in model_vals]) and len(model_vals) > 1)
@@ -209,7 +240,7 @@ def parse_quality_flags_v2(choice_map: dict, quality_all: str = "", mode: str = 
     if has_structured:
         # IMPORTANT: if structured fields exist but scope is empty, treat it as UNKNOWN.
         # Do not silently fold it into in-scope; downstream filtering/plots can decide.
-        is_oos = None if scope_missing else _scope_is_oos(scope_vals)
+        is_oos = None if scope_missing or scope_invalid else _scope_is_oos(scope_vals)
         # Difficulty: only set coarse booleans; keep the raw strings in CSV for detailed analysis.
         is_occlusion = _has_token_in_choices(diff_vals, ["occlusion", "遮挡"])
         is_residual = _has_token_in_choices(diff_vals, ["residual", "尽力调整", "仍不佳", "hard to align", "对齐困难"])
@@ -218,21 +249,22 @@ def parse_quality_flags_v2(choice_map: dict, quality_all: str = "", mode: str = 
 
         # In-scope flag is the complement of OOS within scope selections.
         scope_text = ";".join(_split_choice_values(scope_vals)).lower()
-        is_normal = None if scope_missing else (
-            ("in-scope" in scope_text or "camera room" in scope_text or "normal" in scope_text or "只标相机房间" in scope_text)
+        is_normal = None if scope_missing or scope_invalid else (
+            ("in-scope" in scope_text or "in_scope" in scope_text or "camera room" in scope_text or "normal" in scope_text or "只标相机房间" in scope_text)
             and not bool(is_oos)
         )
 
         return {
             "scope_missing": bool(scope_missing),
+            "scope_invalid": bool(scope_invalid),
             "difficulty_missing": bool(difficulty_missing),
             "model_issue_missing": bool(model_issue_missing),
             "difficulty_conflict": bool(difficulty_conflict),
             "model_issue_conflict": bool(model_issue_conflict),
             "is_oos": is_oos,
-            "is_occlusion": bool(is_occlusion),
-            "is_fail": bool(is_fail),
-            "is_residual": bool(is_residual),
+            "is_occlusion": None if manual_scope_only else bool(is_occlusion),
+            "is_fail": None if manual_scope_only else bool(is_fail),
+            "is_residual": None if manual_scope_only else bool(is_residual),
             "is_normal": is_normal,
         }
 
@@ -240,14 +272,15 @@ def parse_quality_flags_v2(choice_map: dict, quality_all: str = "", mode: str = 
     # IMPORTANT (paper/reproducibility): do NOT infer scope from legacy free-text.
     return {
         "scope_missing": True,
-        "difficulty_missing": True,
-        "model_issue_missing": True,
+        "scope_invalid": False,
+        "difficulty_missing": not manual_scope_only,
+        "model_issue_missing": not manual_scope_only,
         "difficulty_conflict": False,
         "model_issue_conflict": False,
         "is_oos": None,
-        "is_occlusion": False,
-        "is_fail": False,
-        "is_residual": False,
+        "is_occlusion": None if manual_scope_only else False,
+        "is_fail": None if manual_scope_only else False,
+        "is_residual": None if manual_scope_only else False,
         "is_normal": None,
     }
 

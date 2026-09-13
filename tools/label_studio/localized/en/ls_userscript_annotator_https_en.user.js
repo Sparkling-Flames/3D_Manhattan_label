@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HoHoNet Helper Official Annotator HTTPS EN
 // @namespace    https://label.sparkle0825.top/
-// @version      uncertainty_meta_supervisor_draft_20260828_v9
+// @version      manual_scope_only_20260913_v10
 // @description  Self-contained HTTPS helper for foreign HoHoNet Stage 1 annotators. Based on the official annotator helper; adds same-origin HTTPS defaults and optional CloudResearch worker-id metadata.
 // @author       HoHoNet
 // @match        https://label.sparkle0825.top/*
@@ -345,7 +345,7 @@
   const existingPreviewPanelStyle = document.getElementById(PREVIEW_PANEL_STYLE_ID);
   if (existingPreviewPanelStyle) existingPreviewPanelStyle.remove();
 
-  const SCRIPT_VERSION = "uncertainty_meta_supervisor_draft_20260828_v9";
+  const SCRIPT_VERSION = "manual_scope_only_20260913_v10";
   window.__HOHONET_HELPER_SCRIPT_VERSION__ = SCRIPT_VERSION;
   window.__HOHONET_HELPER_SCRIPT_FLAVOR__ = "foreign_https_en";
   console.log(`HoHoNet Helper: loaded (v${SCRIPT_VERSION})`);
@@ -2049,6 +2049,17 @@
     return button.name === "submit" || button.name === "update";
   }
 
+  function getManualScopeOnlyIssue(data) {
+    if (data?.annotation_form_version !== "manual_scope_only_v1") return "";
+    const root = document.querySelector(".lsf-main-view");
+    if (String(data.condition || "").toLowerCase().includes("semi") ||
+        root?.querySelector('input[name="no_specific_reason"], input[name="boundary_misalignment"]')) {
+      return "The task version and form do not match. Please contact the administrator.";
+    }
+    const choices = root?.querySelectorAll('input[name="in_scope"]:checked, input[name="out_of_scope"]:checked');
+    return choices?.length === 1 ? "" : "Please select exactly one Scope answer before submitting.";
+  }
+
   function installMetaSubmitGuard() {
     if (window.__HOHONET_META_GUARD_INSTALLED__) return;
     window.__HOHONET_META_GUARD_INSTALLED__ = true;
@@ -2062,6 +2073,11 @@
     };
 
     const runCheck = () => {
+      const manualIssue = getManualScopeOnlyIssue(getStore()?.task?.data);
+      if (manualIssue) {
+        alert(manualIssue);
+        return false;
+      }
       const clearedIssueDetails = clearConditionalIssueDetailsIfNoSelected();
       if (clearedIssueDetails > 0) {
         alert("Hidden issue types, repair actions, and repair extent were cleared because 'No material issue' is selected. Submit again.");

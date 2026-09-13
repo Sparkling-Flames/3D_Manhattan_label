@@ -6,6 +6,8 @@ from pathlib import Path
 from typing import Any
 import xml.etree.ElementTree as ET
 
+from tools.thesis_main.analysis.quality_core.choice_parser import MANUAL_SCOPE_ONLY_FORM_VERSION, parse_quality_flags_v2
+
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[3]
 _DEFAULT_XML = (
@@ -90,17 +92,25 @@ def get_annotations(task: dict) -> list[dict]:
     return []
 
 
-def check_meta_rules(condition: str, difficulty: list[str], model_issue: list[str]) -> list[str]:
+def check_meta_rules(
+    condition: str,
+    difficulty: list[str],
+    model_issue: list[str],
+    annotation_form_version: str = "",
+) -> list[str]:
     reasons: list[str] = []
     difficulty_set = {str(x).strip().lower() for x in difficulty if str(x).strip()}
     model_set = {str(x).strip().lower() for x in model_issue if str(x).strip()}
+    manual_scope_only = str(annotation_form_version or "").strip() == MANUAL_SCOPE_ONLY_FORM_VERSION
+    if manual_scope_only:
+        parse_quality_flags_v2({}, annotation_form_version=annotation_form_version, condition=condition)
 
-    if not difficulty_set:
+    if not manual_scope_only and not difficulty_set:
         reasons.append("difficulty_empty")
-    if "trivial" in difficulty_set and len(difficulty_set) > 1:
+    if not manual_scope_only and "trivial" in difficulty_set and len(difficulty_set) > 1:
         reasons.append("difficulty_conflict_trivial")
 
-    model_issue_required = "semi" in str(condition or "").strip().lower()
+    model_issue_required = "semi" in str(condition or "").strip().lower() and not manual_scope_only
     if model_issue_required and not model_set:
         reasons.append("model_issue_empty_required")
     if "acceptable" in model_set and len(model_set) > 1:
@@ -118,8 +128,10 @@ def validate_export(export_data: list[dict], alias_map: dict[str, dict[str, str]
             continue
         task_id = task.get("id")
         condition = ""
+        annotation_form_version = ""
         if isinstance(task.get("data"), dict):
             condition = str(task["data"].get("condition") or "")
+            annotation_form_version = str(task["data"].get("annotation_form_version") or "").strip()
         for ann in get_annotations(task):
             ann_id = ann.get("id")
             was_cancelled = bool(ann.get("was_cancelled"))
@@ -130,7 +142,7 @@ def validate_export(export_data: list[dict], alias_map: dict[str, dict[str, str]
             difficulty = normalize_values("difficulty", choice_map.get("difficulty", []), alias_map)
             model_issue = normalize_values("model_issue", choice_map.get("model_issue", []), alias_map)
 
-            reasons = check_meta_rules(condition, difficulty, model_issue)
+            reasons = check_meta_rules(condition, difficulty, model_issue, annotation_form_version)
             row = {
                 "task_id": task_id,
                 "annotation_id": ann_id,

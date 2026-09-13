@@ -5,11 +5,10 @@ import gzip
 import json
 import random
 import re
-import shutil
 import zipfile
+import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
 from html import escape
-from itertools import combinations
 from pathlib import Path
 from urllib.parse import unquote, urlparse
 
@@ -18,6 +17,27 @@ SELECTION = ROOT / 'analysis_results/candidate_selection_review_20260913_v2/选�
 REGISTRY = ROOT / 'analysis_results/scene_image_exploration_20260910_v1/same_room_selection_registry_v2_20260912.json'
 VIEW = ROOT / 'analysis_results/confirmed_point_calculation_view_20260909_v1/reviewed/calculation_view.jsonl.gz'
 ROSTER = ROOT / 'analysis_results/prescreen_closeout_final_gold_v2_20260701/raw_inputs/prescreen_worker_roster.csv'
+PROJECT_NAMES = {'zh_required': '任务7', 'en_required': 'Project G', 'en_optional': 'Project H'}
+
+
+def chinese_names():
+    """只读人员表A列编号、C列姓名信息，保留如张fl这样的原记录。"""
+    ns = {'m': 'http://schemas.openxmlformats.org/spreadsheetml/2006/main'}
+    result = {}
+    with zipfile.ZipFile(ROOT / 'export_label/标注人员.xlsx') as z:
+        strings = [''.join(si.itertext()) for si in ET.fromstring(z.read('xl/sharedStrings.xml')).findall('m:si', ns)]
+        for path in z.namelist():
+            if not path.startswith('xl/worksheets/sheet') or not path.endswith('.xml'):
+                continue
+            for row in ET.fromstring(z.read(path)).findall('.//m:sheetData/m:row', ns):
+                cells = {}
+                for c in row:
+                    v = c.find('m:v', ns)
+                    if v is not None:
+                        cells[re.sub(r'\d+', '', c.attrib['r'])] = strings[int(v.text)] if c.get('t') == 's' else v.text
+                if str(cells.get('A', '')).isdigit() and cells.get('C'):
+                    result[int(cells['A'])] = cells['C'].split()[-1]
+    return result
 
 
 def read(path):
@@ -85,291 +105,310 @@ def exposure(records):
     return seen, by_pair, sources
 
 
-def worker_page(worker, rows, language, image_paths, folder):
-    english = language == 'en'
-    title = f'W{worker:03d} — Image list' if english else f'W{worker:03d} — 图片清单'
-    intro = ('Planning list. Image codes are not Label Studio task IDs. Complete the 30 required images first. '
-             'The additional 20 images are optional: you may do none, some, or all. '
-             'Use the task links and annotation instructions supplied separately when the project is ready.' if english else
-             '图片分配建议清单，图片编号不是Label Studio任务编号。本次必做20张；正式标注时使用另行提供的任务链接和标注说明。')
-    blocks = []
-    for tier in ['required', 'optional']:
-        selected = [r for r in rows if r['tier'] == tier]
-        if not selected:
+
+
+def mild_order(rows, worker, language):
+    """组内轮换后，中文交换2对、英文3对；不优化相邻比例。"""
+    rng = random.Random(20260913 + worker)
+    groups = defaultdict(list)
+    for row in sorted(rows, key=lambda r: r['order']):
+        groups[row['batch']].append(dict(row))
+    ordered = []
+    for group in groups.values():
+        rng.shuffle(group)
+        ordered.extend(group)
+    pairs = [(i, j) for i in range(len(ordered)) for j in range(i + 1, len(ordered))
+             if ordered[i]['batch'] != ordered[j]['batch']]
+    rng.shuffle(pairs)
+    swaps, used = [], set()
+    for i, j in pairs:
+        if i in used or j in used:
             continue
-        heading = ('Required — 30 images' if english else '必做 — 20张') if tier == 'required' else 'Optional — 20 additional images'
-        blocks.append(f'<h2>{heading}</h2>')
-        if tier == 'optional':
-            blocks.append('<p>Optional candidate list for planning review. If you volunteer, following the listed order is helpful; record any skipped images. No optional task is required.</p>')
-        last_group = None
-        for r in selected:
-            if r['batch'] != last_group:
-                blocks.append(f'<h3>{escape(r["batch"])}</h3>')
-                last_group = r['batch']
-            rel = 'images/' + Path(image_paths[r['image_id']]).name
-            blocks.append(f'<figure><figcaption>{r["order"]:02d} · {escape(r["code"])}</figcaption>'
-                          f'<a href="{escape(rel)}"><img loading="lazy" src="{escape(rel)}" alt="{escape(r["code"])}"></a></figure>')
-    html = ('<!doctype html><html lang="' + ('en' if english else 'zh-CN') + '"><meta charset="utf-8">'
-            '<meta name="viewport" content="width=device-width,initial-scale=1"><title>' + title + '</title>'
-            '<style>body{max-width:1100px;margin:32px auto;padding:0 20px;font:16px/1.6 Arial,sans-serif;color:#183343;background:#f5f8fa}'
-            'h1,h2{color:#174e64}h2{margin-top:48px;border-bottom:2px solid #a4c6d1}figure{margin:20px 0;background:white;padding:14px;border-radius:8px}'
-            'img{width:100%;height:auto}figcaption{font-weight:bold}p{max-width:950px}</style><h1>' + title + '</h1><p>' + intro + '</p>' + ''.join(blocks) + '</html>')
-    (folder / f'W{worker:03d}.html').write_text(html, encoding='utf-8')
-    assert html.count('<figure>') == len(rows)
+        ordered[i], ordered[j] = ordered[j], ordered[i]
+        swaps.append([i + 1, j + 1])
+        used.update([i, j])
+        if len(swaps) == (2 if language == 'zh' else 3):
+            break
+    for i, row in enumerate(ordered, 1):
+        row['order'] = i
+    return ordered, swaps
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--external-package', required=True, type=Path)
-    parser.add_argument('--output', type=Path, default=ROOT / 'analysis_results/stage1_person_image_packages_20260913_v1')
-    parser.add_argument('--optional-door-count', type=int, default=10)
+def optional_pool(ids, adopted, english, seen):
+    return [dict(image_id=iid, ready_for_import=iid in adopted,
+                 eligible_workers=sorted(english - seen.get(iid, set())),
+                 selection_state='已采用' if iid in adopted else '待用户采用') for iid in sorted(ids)]
+
+
+def complete_room_assignment(current, registry, languages, seen):
+    """固定人员负载，按采用后视角数优先整房选择；不以收敛结果选房。"""
+    import numpy as np
+    from scipy.optimize import milp, LinearConstraint, Bounds
+    from scipy.sparse import lil_matrix
+    images = [r for r in current['images'] if r['status'] == '确定采用']
+    workers = sorted(current['future_workers'])
+    order = {r['group']: i for i, r in enumerate(current['effective_groups'])}
+    groups = sorted({r['group'] for r in images}, key=lambda g: (-sum(r['group'] == g for r in images), order[g]))
+    need = {r['image_id']: min(r['new_needed'], len(set(workers) - seen[r['image_id']])) for r in images}
+    pairs = [(w, r['image_id']) for r in images if need[r['image_id']] for w in workers if w not in seen[r['image_id']]]
+    wi = {w: i for i, w in enumerate(workers)}
+    ri = {r['image_id']: i + len(workers) for i, r in enumerate(images)}
+    matrix = lil_matrix((len(workers) + len(images), len(groups) + len(pairs)))
+    bound = np.zeros(matrix.shape[0])
+    for w, i in wi.items():
+        bound[i] = 30 if languages[w] == 'en' else 20
+    for r in images:
+        matrix[ri[r['image_id']], groups.index(r['group'])] = -need[r['image_id']]
+    for j, (w, iid) in enumerate(pairs, len(groups)):
+        matrix[wi[w], j] = matrix[ri[iid], j] = 1
+    cost = np.zeros(matrix.shape[1])
+    cost[:len(groups)] = [-2 ** (len(groups) - i) for i in range(len(groups))]
+    solved = milp(cost, integrality=np.ones(len(cost)), bounds=Bounds(0, 1), constraints=LinearConstraint(matrix.tocsr(), bound, bound), options={'time_limit': 45})
+    assert solved.success, f'整房分配未求得最优可行解：{solved.message}'
+    chosen = {g for i, g in enumerate(groups) if solved.x[i] > .5}
+    lookup = {r['image_id']: r for r in images}
+    rows = []
+    for j, (w, iid) in enumerate(pairs, len(groups)):
+        if solved.x[j] <= .5:
+            continue
+        r, im = lookup[iid], registry[iid]
+        rows.append(dict(worker_id=w, image_id=iid, tier='required', language=languages[w], batch=r['group'], source_groups=r['group'], code=f'{im["building"]}-{im["number"]:02d}', number=im['number'], scene=r['scene'], difficulty=r['difficulty'], doorway=r['doorway'], image_path=im['path'], selection_state='已明确采用', baseline_credit=r['history_manual'], order=len(rows)+1))
+    audit = [dict(group=g, priority_rank=i+1, adopted_images=len(rr), selected=g in chosen, requested_new=sum(r['new_needed'] for r in rr), possible_new=sum(need[r['image_id']] for r in rr), assigned_new=sum(need[r['image_id']] for r in rr) if g in chosen else 0, target_shortfall=sum(r['new_needed']-need[r['image_id']] for r in rr) if g in chosen else 0, adopted_numbers='、'.join(str(r['number']) for r in rr), note=next(r['note'] for r in current['effective_groups'] if r['group']==g)) for i,g in enumerate(groups) for rr in [[r for r in images if r['group']==g]]]
+    return rows, audit
+
+
+def build_v2():
+    parser = argparse.ArgumentParser(description='保留已审议必做人图，生成三个独立项目准备包；不派发。')
+    parser.add_argument('--previous-package', type=Path, default=ROOT / 'analysis_results/stage1_person_image_packages_20260913_v1')
+    parser.add_argument('--output', type=Path, default=ROOT / 'analysis_results/stage1_person_image_packages_20260913_v2')
     args = parser.parse_args()
-    assert 0 <= args.optional_door_count <= 20
     out = args.output
     out.mkdir(parents=True, exist_ok=True)
+    old = read(args.previous_package / '分配建议与核验.json')
+    assert old['schema'] == 'stage1_image_package_proposal_v1'
     current = read(SELECTION)
     assert current['schema'] == 'candidate_selection_planning_v2'
     assert current['source_user'] == read(SELECTION.parent / '用户审查原始记录.json')
-    images = {r['image_id']: r for r in read(REGISTRY)['images']}
+    registry = {r['image_id']: r for r in read(REGISTRY)['images']}
     adopted = {r['image_id']: r for r in current['images'] if r['status'] == '确定采用'}
-    assert len(adopted) == 102
     active = set(current['future_workers'])
-    assert len(active) == 19 and not active & {11, 19, 26}
     languages = {int(r['annotator_id']): r['language'] for r in csv_rows(ROSTER)}
-    assert Counter(languages[w] for w in active) == {'zh': 9, 'en': 10}
-    english = sorted(w for w in active if languages[w] == 'en')
+    assert len(active) == 19 and not active & {11, 19, 26}
+    english = {w for w in active if languages[w] == 'en'}
     with gzip.open(VIEW, 'rt', encoding='utf-8') as f:
         records = [json.loads(line) for line in f]
     seen, by_pair, sources = exposure(records)
-    manual = defaultdict(set)
-    semi = defaultdict(set)
+    manual, semi = defaultdict(set), defaultdict(set)
     for r in records:
-        worker, iid = int(r['worker_id']), r['image_id']
-        if worker in {19, 26}:
+        w, iid = int(r['worker_id']), r['image_id']
+        if w in {19, 26}:
             continue
         if r['unassisted_manual_included']:
-            manual[iid].add(worker)
+            manual[iid].add(w)
         if r['assistance_exposure'] == 'model_preannotation':
-            semi[iid].add(worker)
-    for iid, row in adopted.items():
-        assert set(row['manual_workers']) == manual[iid]
-        assert row['history_manual'] == len(manual[iid])
-
-    witness = csv_rows(args.external_package / 'results/NOT_FOR_DISPATCH_assignment_witness.csv')
-    required, assigned = [], defaultdict(set)
-    for r in witness:
-        worker, iid = int(r['worker_id']), r['image_id']
-        source = adopted[iid]
-        assert source['oos']['disposition'] == '保留候选'
-        assert (r['group'], int(r['number'])) == (source['group'], source['number'])
-        assert r['difficulty'] == source['difficulty'] and r['coarse'] == source['scene']
-        assert worker in source['clean_workers']
-        required.append(dict(worker_id=worker, image_id=iid, tier='required'))
-        assigned[iid].add(worker)
-    assert len(required) == 480 and len(assigned) == 43
+            semi[iid].add(w)
+    # v1仅提供已审议的匹配和候选快照，采用、资格和历史人数重新核对。
+    required, room_audit = complete_room_assignment(current, registry, languages, seen)
     check_pairs(required, active, seen)
-    for worker in active:
-        assert sum(r['worker_id'] == worker for r in required) == (30 if languages[worker] == 'en' else 20)
-    for iid, workers in assigned.items():
-        row = adopted[iid]
-        assert len(workers) + len(manual[iid]) == min(row['planned_manual'], row['current_roster_cap'])
-        assert all(sum(languages[w] == lang for w in ((workers | manual[iid]) & active)) >= 2 for lang in ['zh', 'en'])
-
-    doorway_pool = {r['image_id']: r for r in current['supplementary_doorway_candidates']}
-    pool = {**doorway_pool, **adopted}
-    offered = defaultdict(set)
-    optional = []
-    # ponytail: 固定候选内的可解释贪心编排，不声称科学最优；只有容量检查失败才需要整数优化。
-    worker_order = english[:]
-    random.Random(20260913).shuffle(worker_order)
-    priority = {group: i for i, group in enumerate(['G178', 'G090', 'G205', 'G078', 'G015'])}
-    for optional_kind, count, candidates_pool in [('同房补充', 20 - args.optional_door_count, adopted),
-                                                  ('门洞补充', args.optional_door_count, doorway_pool)]:
-        for turn in range(count):
-            order = worker_order[turn % 10:] + worker_order[:turn % 10]
-            for worker in order:
-                candidates = []
-                for iid, row in candidates_pool.items():
-                    if worker in seen[iid] or worker in assigned[iid] or worker in offered[iid]:
-                        continue
-                    if optional_kind == '同房补充':
-                        if row['planned_manual'] <= len(manual[iid]) + len(assigned[iid]) + len(offered[iid]):
-                            continue
-                        preference = (priority.get(row['group'], 99), -len(offered[iid]), row['group'], row['number'])
-                    else:
-                        assert row['oos']['disposition'] == '保留候选'
-                        if iid in adopted and len(manual[iid]) + len(assigned[iid]) + len(offered[iid]) >= adopted[iid]['planned_manual']:
-                            continue
-                        # 确认身份、可补齐少量历史的图优先，不把既有收敛标签用于选图。
-                        preference = (row['doorway'] != '确认', not (0 < len(manual[iid]) < 8),
-                                      -len(offered[iid]), -sum(w not in seen[iid] for w in english), row['building'], row['number'])
-                    candidates.append((preference, iid))
-                assert candidates, f'W{worker:03d} {optional_kind}不足，需要重新审图'
-                iid = min(candidates)[1]
-                offered[iid].add(worker)
-                optional.append(dict(worker_id=worker, image_id=iid, tier='optional', optional_kind=optional_kind))
-    # 避免无历史的新门洞图仅安排一个可选名额；这不是实际完成或收敛保证。
-    for iid in sorted(offered):
-        if iid not in doorway_pool or len(offered[iid]) != 1 or manual[iid]:
-            continue
-        donor = next((r for r in optional if r['optional_kind'] == '门洞补充'
-                      and len(offered[r['image_id']]) >= 3 and not manual[r['image_id']]
-                      and r['worker_id'] not in offered[iid] | seen[iid] | assigned[iid]), None)
-        if donor is not None:
-            offered[donor['image_id']].remove(donor['worker_id'])
-            offered[iid].add(donor['worker_id'])
-            donor['image_id'] = iid
-    rows = required + optional
-    check_pairs(rows, active, seen)
-    assert len(optional) == 200
-    for worker in english:
-        assert Counter(r['optional_kind'] for r in optional if r['worker_id'] == worker) == {
-            '门洞补充': args.optional_door_count, '同房补充': 20 - args.optional_door_count}
-    for r in rows:
+    assert len(required) == 480
+    assigned = defaultdict(set)
+    for r in required:
+        source = adopted[r['image_id']]
+        assert source['oos']['disposition'] == '保留候选' and r['worker_id'] in source['clean_workers']
+        assert (r['batch'], r['number'], r['scene'], r['difficulty']) == (source['group'], source['number'], source['scene'], source['difficulty'])
+        r.pop('optional_kind', None)
+        r['project_key'] = r['language'] + '_required'
+        assigned[r['image_id']].add(r['worker_id'])
+    for iid, source in adopted.items():
+        assert set(source['manual_workers']) == manual[iid]
+        if iid in assigned:
+            assert len(assigned[iid]) == min(source['new_needed'], len(active - seen[iid]))
+    rows, ordering = [], []
+    for w in sorted(active):
+        subset = [r for r in required if r['worker_id'] == w]
+        assert len(subset) == (30 if languages[w] == 'en' else 20)
+        ordered, swaps = mild_order(subset, w, languages[w])
+        rows.extend(ordered)
+        ordering.append(dict(worker_id=w, swapped_positions=swaps))
+    pool_ids = {r['image_id'] for r in old['assignments'] if r['tier'] == 'optional'}
+    pool = optional_pool(pool_ids, adopted, english, seen)
+    doors = {r['image_id']: r for r in current['supplementary_doorway_candidates']}
+    for r in pool:
         iid = r['image_id']
-        source = adopted[iid] if r['tier'] == 'required' else pool[iid]
-        registry = images[iid]
-        group_codes = source.get('group_codes', [source['group']] if 'group' in source else [])
-        # 多个重叠展示组不强行合并为一个物理房间；单图先独立保留。
-        batch = source['group'] if 'group' in source else (group_codes[0] if len(group_codes) == 1 else f'{registry["building"]}-{registry["number"]:02d}')
-        r.update(language=languages[r['worker_id']], batch=batch, source_groups=' / '.join(group_codes),
-                 code=f'{registry["building"]}-{registry["number"]:02d}', number=registry['number'],
-                 scene=source['scene'], difficulty=source.get('difficulty', '未预判'),
-                 doorway=source['doorway'], image_path=registry['path'],
-                 selection_state='已明确采用' if iid in adopted else ('原表备选；本次仅建议可选' if any(x['image_id'] == iid for x in current['images']) else '补充候选；尚未逐图采用'),
-                 baseline_credit=1 if r['tier'] == 'required' else 0)
-        r.setdefault('optional_kind', '')
-    for worker in sorted(active):
-        for tier in ['required', 'optional']:
-            subset = [r for r in rows if r['worker_id'] == worker and r['tier'] == tier]
-            batches = sorted({r['batch'] for r in subset})
-            random.Random(20260913 + worker + (1000 if tier == 'optional' else 0)).shuffle(batches)
-            # 组内保持相邻，轮换人员看到各组的顺序；不提供预期难度或历史标注给标注者。
-            subset.sort(key=lambda r: (batches.index(r['batch']), r['number']))
-            for order, r in enumerate(subset, 1):
-                r['order'] = order
-    rows.sort(key=lambda r: (r['worker_id'], r['tier'] != 'required', r['order']))
-
-    image_summary = []
-    for iid in sorted(set(adopted) | {r['image_id'] for r in optional}):
-        source = adopted.get(iid, pool.get(iid))
-        new = assigned[iid]
-        extra = offered[iid]
-        clean_reserve = active - seen[iid] - new
-        old = len(manual[iid])
-        maximum = source.get('planned_manual')
-        image_summary.append(dict(image_id=iid, code=f'{images[iid]["building"]}-{images[iid]["number"]:02d}',
-                                  group=source.get('group', ' / '.join(source.get('group_codes', []))),
-                                  scene=source['scene'], difficulty=source.get('difficulty', '未预判'),
-                                  history_manual=old, history_semi=len(semi[iid]), required_new=len(new),
-                                  required_plan_total=old + len(new), optional_offered=len(extra),
-                                  all_optional_done_total=old + len(new) + len(extra),
-                                  user_target=maximum, gap_after_required=max(0, maximum - old - len(new)) if maximum is not None else None,
-                                  required_workers=sorted(new), optional_workers=sorted(extra),
-                                  alternative_workers=sorted(clean_reserve) if new else [],
-                                  alternative_note='仅该图未接触的现有人选，不代表其总工作量仍有余量',
-                                  one_dropout_total=old + len(new) - 1 if new else old,
-                                  doorway=source['doorway'], in_adopted_pool=iid in adopted))
-        if iid in adopted:
-            assert old + len(new) + len(extra) <= source['planned_manual']
-    room_rows = []
-    for group in sorted({r['group'] for r in adopted.values()}):
-        rr = [r for r in image_summary if r['in_adopted_pool'] and r['group'] == group]
-        room_rows.append(dict(group=group, adopted_images=len(rr), history_manual=sum(r['history_manual'] for r in rr),
-                              required_new=sum(r['required_new'] for r in rr),
-                              manual_after_required=sum(r['required_plan_total'] for r in rr),
-                              views_with_manual=sum(r['required_plan_total'] > 0 for r in rr),
-                              views_at_least8=sum(r['required_plan_total'] >= 8 for r in rr),
-                              optional_offered=sum(r['optional_offered'] for r in rr)))
-    worker_rows = []
-    for worker in sorted(active):
-        required_rows = [r for r in rows if r['worker_id'] == worker and r['tier'] == 'required']
-        optional_rows = [r for r in rows if r['worker_id'] == worker and r['tier'] == 'optional']
-        counts = Counter(r['difficulty'] for r in required_rows)
-        worker_rows.append(dict(worker_id=worker, language=languages[worker], required=len(required_rows),
-                                optional=len(optional_rows), total_offered=len(required_rows) + len(optional_rows),
-                                simple=counts['简单'], medium=counts['中等'], hard=counts['困难'],
-                                required_rooms=len({r['batch'] for r in required_rows}),
-                                submitted_images=sum(w == worker and bool(v['submissions']) for (w, _), v in by_pair.items()),
-                                draft_only_images=sum(w == worker and not v['submissions'] and bool(v['drafts']) for (w, _), v in by_pair.items())))
-    history_rows = []
-    for (worker, iid), info in sorted(by_pair.items()):
-        if worker not in active:
-            continue
-        registry = images.get(iid)
-        history_rows.append(dict(worker_id=worker, language=languages[worker], image_id=iid,
-                                 code=f'{registry["building"]}-{registry["number"]:02d}' if registry else iid,
-                                 in_648=registry is not None, has_submission=bool(info['submissions']),
-                                 has_draft=bool(info['drafts']), manual_in_analysis=worker in manual[iid],
-                                 semi_exposure=worker in semi[iid], sources=';'.join(sorted(info['sources']))))
-    scenarios = []
-    for number in [0, 2, 5, 10]:
-        outcomes = []
-        for people in combinations(english, number):
-            counts = Counter(r['image_id'] for r in optional if r['worker_id'] in people)
-            outcomes.append((sum(counts.values()), sum(n >= 2 for n in counts.values()), sum(n >= 5 for n in counts.values())))
-        scenarios.append(dict(volunteers_finishing20=number, optional_new=number * 20,
-                              min_images_with2_new=min(x[1] for x in outcomes), max_images_with2_new=max(x[1] for x in outcomes),
-                              min_images_with5_new=min(x[2] for x in outcomes), max_images_with5_new=max(x[2] for x in outcomes),
-                              interpretation='枚举哪些英文人员完成全部20张；不是参与率预测，不含历史、不判定收敛'))
-    assert sum(r['baseline_credit'] for r in rows) == 480
-    assert sum(r['required_plan_total'] for r in image_summary if r['in_adopted_pool']) == 863
-    assert scenarios[0]['optional_new'] == 0
-    doorway_inventory = []
-    for r in current['supplementary_doorway_all_records']:
+        source = adopted[iid] if iid in adopted else doors[iid]
+        assert source['oos']['disposition'] == '保留候选'
+        im = registry[iid]
+        r.update(code=f'{im["building"]}-{im["number"]:02d}', image_path=im['path'],
+                 group=source.get('group', ' / '.join(source.get('group_codes', []))), scene=source['scene'],
+                 kind='同房补充' if iid in adopted else '门洞补充', history_manual=len(manual[iid]),
+                 history_semi=len(semi[iid]), project_key='en_optional')
+    assert len(pool) == 25 and sum(r['ready_for_import'] for r in pool) == 12
+    review_path = ROOT / 'import_json/scene_stability_stage1_20260913_v2/ProjectH_用户复核原文.json'
+    review = read(review_path)
+    decisions = {r['image_id']: r for r in review['decisions']}
+    assert len(decisions) == len(review['decisions']) == 13
+    assert set(decisions) == {r['image_id'] for r in pool if r['kind'] == '门洞补充'}
+    selected_doors = {iid for iid, r in decisions.items() if r['decision'] == '采用到Project H'}
+    assert len(selected_doors) == 12 and review['fixed_pool_size'] == 20
+    room_candidates = sorted((r for r in pool if r['kind'] == '同房补充' and r['image_id'] not in assigned), key=lambda r: (-len(r['eligible_workers']), r['code']))
+    selected_rooms, group_counts = [], Counter()
+    while len(selected_rooms) < 20 - len(selected_doors):
+        remaining = [r for r in room_candidates if r['image_id'] not in selected_rooms]
+        pick = min(remaining, key=lambda r: (group_counts[r['group']], -len(r['eligible_workers']), r['code']))
+        selected_rooms.append(pick['image_id'])
+        group_counts[pick['group']] += 1
+    selected_h = selected_doors | set(selected_rooms)
+    for r in pool:
+        r['ready_for_import'] = r['image_id'] in selected_h
+        r['user_review'] = decisions.get(r['image_id'])
+        r['selection_state'] = '本次纳入H' if r['ready_for_import'] else ('用户备选' if r['image_id'] in decisions else '转入本次必做')
+        r['history_submitted'] = len({w for (w, iid), info in by_pair.items() if iid == r['image_id'] and info['submissions'] and w not in {19, 26}})
+    assert len(selected_h) == 20
+    assert not selected_h & set(assigned)
+    images = [dict(image_id=iid, code=f'{registry[iid]["building"]}-{registry[iid]["number"]:02d}', group=r['group'], scene=r['scene'], difficulty=r['difficulty'], history_manual=len(manual[iid]), history_semi=len(semi[iid]), required_new=len(assigned[iid]), required_plan_total=len(manual[iid])+len(assigned[iid]), user_target=r['planned_manual'], gap_after_required=max(0,r['planned_manual']-len(manual[iid])-len(assigned[iid])), required_workers=sorted(assigned[iid]), in_adopted_pool=True) for iid,r in adopted.items()]
+    for r in images:
         iid = r['image_id']
-        doorway_inventory.append(dict(image_id=iid, code=f'{r["building"]}-{r["number"]:02d}', groups=' / '.join(r['group_codes']),
-                                      doorway=r['doorway'], oos=r['oos']['disposition'], history_manual=len(manual[iid]),
-                                      history_semi=len(semi[iid]), clean_english=sum(w not in seen[iid] for w in english),
-                                      optional_offered=len(offered[iid]), history_workers=sorted(manual[iid])))
-    result = dict(schema='stage1_image_package_proposal_v1', status='建议包_未导入_未派发', optional_pool='mixed',
-                  optional_door_count=args.optional_door_count, optional_room_count=20 - args.optional_door_count,
-                  selection_source=str(SELECTION), registry_source=str(REGISTRY),
-                  external_assignment_source=str(args.external_package / 'results/NOT_FOR_DISPATCH_assignment_witness.csv'),
-                  formal_contract_changed=False, user_selection_changed=False,
-                  raw_sources=sources, raw_submission_rows=sum(s['submission_rows'] for s in sources),
-                  raw_draft_rows=sum(s['draft_rows'] for s in sources),
-                  exposure_scope='canonical来源加P1/C1/C2-B/RP1-2阶段当前导出，含所有提交版本和可识别草稿；未覆盖未保存浏览、其他未提供的新导出、旧服务器异名账号',
-                  workers=worker_rows, assignments=rows, images=image_summary, rooms=room_rows,
-                  history=history_rows, doorway_inventory=doorway_inventory, optional_scenarios=scenarios,
-                  counts=dict(required=480, optional_offers=200, required_images=43,
-                              optional_images=len({r['image_id'] for r in optional}), rooms=19,
-                              required_same_person_repeat_conflicts=0, optional_same_person_repeat_conflicts=0),
-                  order_seed=20260913)
+        assert r['history_manual'] == len(manual[iid]) and r['history_semi'] == len(semi[iid])
+        assert r['required_new'] == len(assigned[iid])
+        r['alternative_workers'] = sorted(active - seen[iid] - assigned[iid]) if assigned[iid] else []
+    rooms = [dict(group=g, adopted_images=len(rr), history_manual=sum(r['history_manual'] for r in rr), required_new=sum(r['required_new'] for r in rr), manual_after_required=sum(r['required_plan_total'] for r in rr), views_with_manual=sum(r['required_plan_total']>0 for r in rr), views_at_least8=sum(r['required_plan_total']>=8 for r in rr)) for g in sorted({r['group'] for r in images}) for rr in [[r for r in images if r['group']==g]]]
+    workers = [{k: v for k, v in r.items() if k not in ['optional', 'total_offered']} for r in old['workers']]
+    names = chinese_names()
+    for r in workers:
+        personal = [x for x in required if x['worker_id'] == r['worker_id']]
+        r.update(simple=sum(x['difficulty']=='简单' for x in personal), medium=sum(x['difficulty']=='中等' for x in personal), hard=sum(x['difficulty']=='困难' for x in personal), required_rooms=len({x['batch'] for x in personal}))
+        if r['language'] == 'zh':
+            r['name'] = names[r['worker_id']]
+        r['optional_planning_count'] = 20 if r['language'] == 'en' else 0
+        w = r['worker_id']
+        r['submitted_images'] = sum(worker == w and bool(info['submissions']) for (worker, _), info in by_pair.items())
+        r['draft_only_images'] = sum(worker == w and not info['submissions'] and bool(info['drafts']) for (worker, _), info in by_pair.items())
+    history = []
+    for (w, iid), info in sorted(by_pair.items()):
+        if w not in active:
+            continue
+        im = registry.get(iid)
+        history.append(dict(worker_id=w, language=languages[w], image_id=iid,
+            code=f'{im["building"]}-{im["number"]:02d}' if im else iid,
+            in_648=im is not None, has_submission=bool(info['submissions']), has_draft=bool(info['drafts']),
+            manual_in_analysis=w in manual[iid], semi_exposure=w in semi[iid], sources=';'.join(sorted(info['sources']))))
+    # 只复制实际记录的图片地址；不带参考点、预测、旧任务身份或scope_gold。
+    urls = {}
+    url_sources = [ROOT / r['path'] for r in sources] + [ROOT / 'export_label/groudTruth.json', ROOT / 'import_json/mp3d_validation_gt_audit_20260809/mp3d_validation_all_gt_import.json']
+    for source in url_sources:
+        for task in read(source):
+            url = task['data']['image']
+            urls.setdefault(Path(unquote(urlparse(url).path)).stem, url)
+    imports = ROOT / 'import_json/scene_stability_stage1_20260913_v2'
+    imports.mkdir(parents=True, exist_ok=True)
+    task_imports = imports / 'label_studio_import'
+    task_imports.mkdir(exist_ok=True)
+    pending_imports = imports / 'pending_review'
+    pending_imports.mkdir(exist_ok=True)
+    projects = []
+    for key, language in [('zh_required', 'zh'), ('en_required', 'en'), ('en_optional', 'en')]:
+        ids = sorted({r['image_id'] for r in rows if r['project_key'] == key}) if key != 'en_optional' else sorted(r['image_id'] for r in pool if r['ready_for_import'])
+        template = ROOT / ('import_json/stage1_prescreen_final_20260325/stage1_prescreen_manual_import_v2.json' if language == 'zh' else 'import_json/stage1_prescreen_foreign_https_20260609/stage1_prescreen_manual_import_v2_foreign_https.json')
+        vis = read(template)[0]['data']['vis_3d'].split('?')[0]
+        tasks = []
+        for i, iid in enumerate(ids, 1):
+            assert iid in urls, f'缺少已记录图片URL：{iid}'
+            tasks.append(dict(data=dict(image=urls[iid], vis_3d=vis, base_task_id=iid,
+                title=Path(unquote(urlparse(urls[iid]).path)).name, condition='manual',
+                dataset_group='scene_stability_stage1', project_key=key,
+                annotation_form_version='manual_scope_only_v1', package_task_code=f'{i:03d}')))
+        for task in tasks:
+            task['data']['project_display_name'] = PROJECT_NAMES[key]
+        target_file = task_imports / f'{PROJECT_NAMES[key]}.json'
+        save_json(target_file, tasks)
+        code_map = {iid: f'{i:03d}' for i, iid in enumerate(ids, 1)}
+        for r in rows if key != 'en_optional' else pool:
+            if r['project_key'] == key and r['image_id'] in code_map:
+                r['package_task_code'] = code_map[r['image_id']]
+                r['display_task_code'] = PROJECT_NAMES[key] + '-' + code_map[r['image_id']]
+        projects.append(dict(project_key=key, project_display_name=PROJECT_NAMES[key], language=language, images=len(ids),
+            import_file=target_file.relative_to(ROOT).as_posix(),
+            draft_file=None,
+            release_status='ready_for_runtime_binding',
+            project_id=None, project_binding_status='pending_post_import', image_urls_status='observed_in_repository_not_network_checked',
+            selection_mode='free_choice' if key == 'en_optional' else 'required_manifest',
+            personal_hard_cap=20 if key == 'en_optional' else None, image_pool_limit=20 if key == 'en_optional' else None, image_hard_cap=None))
+    save_json(imports / 'projects.json', projects)
+    save_json(imports / 'pending_doorway_adoption.json', [])
+    save_json(imports / 'ProjectH_本次选图与备选.json', pool)
+    save_json(imports / 'required_assignments.json', rows)
+    save_json(imports / 'historical_exposure.json', [dict(worker_id=w, image_id=iid) for (w, iid) in sorted(by_pair) if w in active])
+    result = dict(schema='stage1_image_package_proposal_v2', status='本地准备完成_未导入_未派发',
+        selection_source=str(SELECTION), registry_source=str(REGISTRY), previous_proposal=str(args.previous_package),
+        assignments=rows, workers=workers, images=images, rooms=rooms, optional_pool=pool, projects=projects,
+        history=history, raw_sources=sources, exposure_scope=old['exposure_scope'],
+        optional_policy=dict(mode='free_choice_separate_project', individual_assignments=False, planning_per_english_worker=20,
+                             guaranteed_new=0, personal_hard_cap=20, image_pool_limit=20, image_hard_cap=None, fixed_kind_ratio=False,
+                             release_status='ready_for_runtime_binding'),
+        ordering=dict(seed=20260913, method='组内轮换后中文2对英文3对跨组交换；无最小间隔约束', workers=ordering),
+        counts=dict(required=480, required_images=len({r['image_id'] for r in required}), optional_ready_images=20, optional_pending_images=0, optional_reserve_images=5, rooms=len({r['batch'] for r in required})),
+        formal_contract_changed=False, user_selection_changed=False)
     save_json(out / '分配建议与核验.json', result)
-    save_csv(out / '逐人人图建议.csv', rows)
-    save_csv(out / '历史人员图片记录.csv', history_rows)
+    save_json(out / '必做整房核查.json', room_audit)
+    save_csv(out / '必做整房核查.csv', room_audit)
+    save_csv(out / '必做逐人人图清单.csv', rows)
+    save_json(out / '英文自愿候选池.json', pool)
     save_csv(out / '原始导出核对范围.csv', sources)
-    shutil.copy2(args.external_package / 'results/NOT_FOR_DISPATCH_assignment_witness.csv', out / '必做匹配来源快照.csv')
-
-    for language, folder_name in [('zh', '中文图片包'), ('en', '英文图片包')]:
-        folder = out / folder_name
+    coverage = []
+    required_ids = {r['image_id'] for r in rows}
+    optional_ids = {r['image_id'] for r in pool if r['ready_for_import']}
+    for group in current['effective_groups']:
+        rr = [r for r in current['images'] if r['group'] == group['group']]
+        accepted = [r for r in rr if r['status'] == '确定采用']
+        number_text = lambda a: '、'.join(f'{r["number"]:02d}' for r in a) or '—'
+        coverage.append(dict(group=group['group'], adoption=group['adoption'], reviewed=len(rr), adopted=len(accepted),
+            required=number_text([r for r in accepted if r['image_id'] in required_ids]),
+            optional=number_text([r for r in accepted if r['image_id'] in optional_ids]),
+            history_only_now=number_text([r for r in accepted if r['image_id'] not in required_ids | optional_ids and r['history_manual'] > 0]),
+            not_scheduled=number_text([r for r in accepted if r['image_id'] not in required_ids | optional_ids and r['history_manual'] == 0])))
+    save_json(out / '逐组使用核对.json', coverage)
+    report = ['# 已筛选图片实际用到了哪里', '', '本轮改为优先完整覆盖部分房间，旧版分散覆盖19组的480份配对已被替换。已采用19组102张中，本轮必做覆盖6组44张：7张仅复用历史、37张新增480份。', '',
+        '排序先限于明确采用、非OOS的图片，再按剔除不采用图后的房间视角数降序；同数时沿用原审查表顺序。原记录没有另一个明确的数字优先级，不把表顺序宣称为用户优先级。固定中文每人20张、英文每人30张，排除本人历史接触；只选择能够整房安排的组合。G090虽有7张，但在更高顺位房间及固定个人负载均保留时无法一起装入480份，故本轮暂缓。', '',
+        '入选G172/G184/G179/G178/G047/G237。G184的18、26、41、59、88最多19人，距目标20人各缺1人；没有伪称全部达到原目标。实际退出还会带来进一步缺口。', '',
+        'Project H另为12张已复核门洞＋8张同房补充，20张固定池。选做不能作为完整覆盖的承诺；G178原4张选做已转入必做，H保留其余8张同房图。', '',
+        '| 组 | 审过图数 | 已采用 | 必做图片编号 | H拟保留同房 | 当前复用历史Manual | 暂未安排新增Manual且无历史Manual |',
+        '|---|---:|---:|---|---|---|---|']
+    report += [f'| {r["group"]} | {r["reviewed"]} | {r["adopted"]} | {r["required"]} | {r["optional"]} | {r["history_only_now"]} | {r["not_scheduled"]} |' for r in coverage]
+    report += ['', '完成采集后，以图为单位检验同房其他视角的预测，不把同图的随机顺序重排当成新增独立图片。完整视角覆盖有助于研究，但不保证相似或收敛。当前尚未导入或派发，旧版分发表不要混用。']
+    (out / '逐组使用核对.md').write_text('\n'.join(report), encoding='utf-8')
+    for lang, name in [('zh', '中文必做包'), ('en', '英文必做包')]:
+        folder = out / name
         folder.mkdir(exist_ok=True)
-        image_folder = folder / 'images'
-        image_folder.mkdir(exist_ok=True)
-        selected = [r for r in rows if r['language'] == language]
-        image_paths = {r['image_id']: r['image_path'] for r in selected}
-        for relative in image_paths.values():
-            source = ROOT / relative
-            assert source.is_file(), relative
-            destination = image_folder / source.name
-            shutil.copy2(source, destination)
         links = []
-        for worker in sorted(w for w in active if languages[w] == language):
-            subset = [r for r in selected if r['worker_id'] == worker]
-            worker_page(worker, subset, language, image_paths, folder)
-            links.append(f'<li><a href="W{worker:03d}.html">W{worker:03d}</a> — ' + ('30 required + 20 optional' if language == 'en' else '必做20张') + '</li>')
-        (folder / 'index.html').write_text('<!doctype html><meta charset="utf-8"><title>图片包目录</title><h1>逐人图片建议包</h1><p>这是管理用合集，每个人只对应自己的清单。图片编号不是LS任务编号。英文可选图为待最终选用的候选；未派发。</p><ul>' + ''.join(links) + '</ul>', encoding='utf-8')
-        with zipfile.ZipFile(out / (folder_name + '.zip'), 'w', zipfile.ZIP_STORED) as archive:
-            for p in sorted(folder.rglob('*')):
-                if p.is_file():
-                    archive.write(p, p.relative_to(folder).as_posix())
-        with zipfile.ZipFile(out / (folder_name + '.zip')) as archive:
-            assert archive.testzip() is None
-            assert len([n for n in archive.namelist() if n.startswith('images/')]) == len(image_paths)
-    print(json.dumps(dict(counts=result['counts'], workers=worker_rows, optional_scenarios=scenarios,
-                          sources=len(sources), submission_rows=result['raw_submission_rows'], drafts=result['raw_draft_rows']), ensure_ascii=False))
+        combined = []
+        for w in sorted(w for w in active if languages[w] == lang):
+            rr = [r for r in rows if r['worker_id'] == w]
+            intro = 'Required list. Project links will be supplied after setup. The separate optional project is voluntary.' if lang == 'en' else '必做清单。项目创建并核对编号后另行提供任务入口。'
+            content = ''.join(f'<tr><td>{r["order"]}</td><td>{r["display_task_code"]}</td><td>{escape(r["code"])}</td></tr>' for r in rr)
+            if lang == 'en':
+                path = folder / f'W{w:03d}.html'
+                path.write_text(f'<!doctype html><meta charset="utf-8"><title>W{w:03d}</title><style>body{{font:17px/1.6 Arial;max-width:900px;margin:32px auto}}td,th{{padding:6px 24px;text-align:left}}</style><h1>W{w:03d} · {len(rr)}</h1><p>{intro}</p><p>Package code ≠ Label Studio task ID. Runtime binding pending.</p><table><tr><th>Order</th><th>Package code</th><th>Image</th></tr>{content}</table>', encoding='utf-8')
+                links.append(f'<li>W{w:03d} — <a href="Project_G_W{w:03d}.xlsx">Excel</a> · <a href="W{w:03d}.html">HTML</a></li>')
+            else:
+                combined.append(f'<h2 id="W{w:03d}">{escape(names[w])} · W{w:03d} · 任务7必做20张</h2><table><tr><th>个人顺序</th><th>包内编号</th><th>图片编号</th></tr>{content}</table>')
+                links.append(f'<a href="#W{w:03d}">W{w:03d}</a>')
+        index = folder / 'index.html'
+        if lang == 'zh':
+            index.write_text('<!doctype html><meta charset="utf-8"><title>中文必做汇总</title><style>body{font:17px/1.6 Arial;max-width:1000px;margin:32px auto}td,th{padding:5px 24px;text-align:left}nav{position:sticky;top:0;background:white;padding:12px}nav a{padding:8px}</style><h1>中文必做任务汇总 · 9人各20张</h1><p>在这一份文件内找到自己的编号，按个人顺序标注。包内编号不是线上任务ID，项目创建后另行提供入口。</p><nav>' + ' '.join(links) + '</nav>' + ''.join(combined), encoding='utf-8')
+        else:
+            index.write_text('<!doctype html><meta charset="utf-8"><h1>管理目录 · Individual English lists</h1><p>每人只发送自己的文件。</p><ul>' + ''.join(links) + '</ul>', encoding='utf-8')
+    import os
+    gallery = []
+    for iid in sorted({r['image_id'] for r in rows} | pool_ids, key=lambda iid: (registry[iid]['group_codes'], registry[iid]['number'])):
+        r = registry[iid]
+        path = ROOT / r['path']
+        assert path.is_file()
+        relative = Path(os.path.relpath(path, out)).as_posix()
+        gallery.append(f'<figure><figcaption>{escape(" / ".join(r["group_codes"]))} · {r["building"]}-{r["number"]:02d}</figcaption><img loading="lazy" width="100%" src="{escape(relative)}"></figure>')
+    (out / '管理用原图总览.html').write_text('<!doctype html><meta charset="utf-8"><h1>管理用原图总览</h1><p>含本次必做、选做及1张门洞备选；不是人员分发表。门洞复核原话另存。原图来自仓库，移动本页需保留路径。</p>' + ''.join(gallery), encoding='utf-8')
+    (out / '.gitignore').write_text('*.zip\n工作簿检查/\n*.inspect.ndjson\n', encoding='utf-8')
+    print(json.dumps(result['counts'], ensure_ascii=False))
 
 
 if __name__ == '__main__':
-    main()
+    build_v2()

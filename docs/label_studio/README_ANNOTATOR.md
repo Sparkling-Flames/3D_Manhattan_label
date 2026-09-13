@@ -130,13 +130,19 @@ localStorage.setItem("HOHONET_HELPER_BASE_URL", "http://175.178.71.217:8000");
 - 必填
 - 单选
 
-#### `difficulty`
+#### 当前 Manual scope-only 批次
+
+- 范围字段名为 `worker_scope_response`，必填、单选。
+- 只提交布局标注和范围判断；不填写多解、主观难度、困难原因或 `model_issue`。
+- 不要因为困难、局部遮挡或多个合理布局就直接选择 OOS。
+
+#### `difficulty`（仅旧版或 Semi/future）
 
 - 可多选
 - 只表示这张图为什么难标
 - 不表示这张图是否 OOS
 
-#### `model_issue`
+#### `model_issue`（仅 Semi/future）
 
 - 只在 `semi` 任务里填写
 - 可多选

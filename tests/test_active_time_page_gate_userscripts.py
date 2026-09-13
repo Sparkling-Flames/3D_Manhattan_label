@@ -14,7 +14,7 @@ PRECHANGE_OFFICIAL_DEBUG = PRECHANGE / "zh" / "userscript" / "ls_userscript_debu
 PRECHANGE_FOREIGN = PRECHANGE / "en" / "userscript" / "ls_userscript_annotator_https_en.user.js"
 PRECHANGE_FOREIGN_DEBUG = PRECHANGE / "en" / "userscript" / "ls_userscript_annotator_https_en_debug.user.js"
 INSTRUCTION_MANIFEST = ROOT / "tools" / "label_studio" / "label_studio_xml_instruction_manifest_v2.json"
-VERSION = "uncertainty_meta_supervisor_draft_20260828_v9"
+VERSION = "manual_scope_only_20260913_v10"
 
 
 def _script(path: Path) -> str:
@@ -121,7 +121,7 @@ def test_meta_guard_only_targets_real_label_studio_submit_controls() -> None:
     for path in (OFFICIAL, OFFICIAL_DEBUG, FOREIGN, FOREIGN_DEBUG):
         source = _script(path)
         start = source.index("function isMetaSubmitButton(target)")
-        end = source.index("function installMetaSubmitGuard()", start)
+        end = source.index("function getManualScopeOnlyIssue(", start)
         matcher = source[start:end]
         assert 'button?.closest?.(".lsf-controls")' in matcher
         assert 'button.name === "submit"' in matcher

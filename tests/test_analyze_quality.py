@@ -88,6 +88,77 @@ class TestParseQualityFlagsV2:
         """difficulty 字段解析"""
         result = parse_quality_flags_v2(sample_choice_map_in_scope, mode='v2')
         assert result['is_occlusion'] == True  # "遮挡" 应被识别
+
+    def test_manual_scope_only_uses_worker_scope_and_skips_removed_fields(self):
+        result = parse_quality_flags_v2(
+            {"worker_scope_response": ["in_scope"]},
+            mode="v2",
+            annotation_form_version="manual_scope_only_v1",
+        )
+        assert result["scope_missing"] is False
+        assert result["scope_invalid"] is False
+        assert result["is_oos"] is False
+        assert result["is_normal"] is True
+        assert result["difficulty_missing"] is False
+        assert result["model_issue_missing"] is False
+        assert result["is_occlusion"] is None
+        assert result["is_residual"] is None
+        assert result["is_fail"] is None
+
+        oos = parse_quality_flags_v2(
+            {"worker_scope_response": ["out_of_scope"]},
+            mode="v2",
+            annotation_form_version="manual_scope_only_v1",
+        )
+        assert oos["is_oos"] is True
+        assert oos["is_normal"] is False
+
+        invalid = parse_quality_flags_v2(
+            {"worker_scope_response": ["not_a_scope_value"]},
+            mode="v2",
+            annotation_form_version="manual_scope_only_v1",
+        )
+        assert invalid["scope_missing"] is False
+        assert invalid["scope_invalid"] is True
+        assert invalid["is_oos"] is None
+
+        empty = parse_quality_flags_v2(
+            {},
+            mode="v2",
+            annotation_form_version="manual_scope_only_v1",
+        )
+        assert empty["scope_missing"] is True
+        assert empty["difficulty_missing"] is False
+        assert empty["model_issue_missing"] is False
+
+        with pytest.raises(ValueError, match="manual_scope_only_v1.*semi"):
+            parse_quality_flags_v2(
+                {},
+                mode="v2",
+                annotation_form_version="manual_scope_only_v1",
+                condition="semi",
+            )
+
+    def test_legacy_missing_difficulty_remains_visible(self):
+        result = parse_quality_flags_v2({"scope": ["normal"]}, mode="v2")
+        assert result["difficulty_missing"] is True
+        assert result["model_issue_missing"] is True
+
+    def test_new_form_registry_preserves_unknown_and_rejects_semi(self):
+        from tools.thesis_main.registry.build_registry_suite import build_registries
+        from tools.thesis_main.registry.meta_label_guard import check_meta_rules
+        task = {"id": 1, "data": {"condition": "manual", "annotation_form_version": "manual_scope_only_v1"},
+                "annotations": [{"id": 2, "completed_by": 28, "result": [
+                    {"from_name": "worker_scope_response", "type": "choices", "value": {"choices": ["unknown_scope"]}}]}]}
+        rows = build_registries([task], {}, {}, {})[0]
+        assert rows[0]["is_oos"] == ""
+        assert rows[0]["is_fail"] == ""
+        assert rows[0]["difficulty_missing"] is False
+        task["data"]["condition"] = "semi"
+        with pytest.raises(ValueError, match="semi"):
+            build_registries([task], {}, {}, {})
+        with pytest.raises(ValueError, match="semi"):
+            check_meta_rules("semi", [], [], "manual_scope_only_v1")
     
     def test_invalid_mode_raises(self):
         """无效 mode 应抛出异常"""

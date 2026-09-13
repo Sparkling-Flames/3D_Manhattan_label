@@ -1,0 +1,170 @@
+{
+  "scope": "19个明确采用房间、102张采用图；其他未采用或待复核的历史图未计入本表",
+  "assumption": "必做480份全部有效完成；选做不计入保证；排除W019/W026，保留W011历史",
+  "main_rooms": [
+    {
+      "room": "G047",
+      "scene": "卧室",
+      "views": 5,
+      "historical": 20,
+      "new": 32,
+      "total": 52,
+      "minimum": 8,
+      "maximum": 20
+    },
+    {
+      "room": "G172",
+      "scene": "起居与休闲",
+      "views": 11,
+      "historical": 28,
+      "new": 145,
+      "total": 173,
+      "minimum": 15,
+      "maximum": 23
+    },
+    {
+      "room": "G178",
+      "scene": "工作与学习",
+      "views": 7,
+      "historical": 0,
+      "new": 84,
+      "total": 84,
+      "minimum": 12,
+      "maximum": 12
+    },
+    {
+      "room": "G179",
+      "scene": "卧室",
+      "views": 8,
+      "historical": 57,
+      "new": 85,
+      "total": 142,
+      "minimum": 15,
+      "maximum": 24
+    },
+    {
+      "room": "G184",
+      "scene": "卫浴",
+      "views": 9,
+      "historical": 66,
+      "new": 110,
+      "total": 176,
+      "minimum": 15,
+      "maximum": 23
+    },
+    {
+      "room": "G237",
+      "scene": "厨房与用餐",
+      "views": 4,
+      "historical": 24,
+      "new": 24,
+      "total": 48,
+      "minimum": 8,
+      "maximum": 24
+    }
+  ],
+  "additional_exploratory_rooms": [
+    {
+      "room": "G057",
+      "views": 3,
+      "counts": [
+        7,
+        19,
+        5
+      ]
+    },
+    {
+      "room": "G202",
+      "views": 2,
+      "counts": [
+        6,
+        23
+      ]
+    },
+    {
+      "room": "G205",
+      "views": 2,
+      "counts": [
+        5,
+        5
+      ]
+    }
+  ],
+  "scenes_with_at_least3_persons_per_image": [
+    {
+      "scene": "主空间待定",
+      "rooms": [
+        "G207"
+      ],
+      "room_count": 1,
+      "views": 1,
+      "person_images": 24
+    },
+    {
+      "scene": "卧室",
+      "rooms": [
+        "G047",
+        "G109",
+        "G165",
+        "G179",
+        "G205"
+      ],
+      "room_count": 5,
+      "views": 17,
+      "person_images": 233
+    },
+    {
+      "scene": "卫浴",
+      "rooms": [
+        "G057",
+        "G184",
+        "G197",
+        "G202"
+      ],
+      "room_count": 4,
+      "views": 15,
+      "person_images": 260
+    },
+    {
+      "scene": "厨房与用餐",
+      "rooms": [
+        "G078",
+        "G237"
+      ],
+      "room_count": 2,
+      "views": 5,
+      "person_images": 53
+    },
+    {
+      "scene": "工作与学习",
+      "rooms": [
+        "G178"
+      ],
+      "room_count": 1,
+      "views": 7,
+      "person_images": 84
+    },
+    {
+      "scene": "起居与休闲",
+      "rooms": [
+        "G015",
+        "G141",
+        "G172"
+      ],
+      "room_count": 3,
+      "views": 13,
+      "person_images": 182
+    },
+    {
+      "scene": "通行与连接",
+      "rooms": [
+        "G027"
+      ],
+      "room_count": 1,
+      "views": 1,
+      "person_images": 24
+    }
+  ],
+  "threshold_note": "3只是排除0—2人图后的库存展示，不是收敛门槛，不要求共同人数，不把8人扩充成20人",
+  "optional_guaranteed_new": 0
+}

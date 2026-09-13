@@ -154,6 +154,36 @@ def test_default_gate_keeps_only_joined_thesis_rows():
     assert bool(analysis.loc[analysis["task_id"] == "2", "type4_flag"].iloc[0]) is True
 
 
+def test_manual_scope_only_empty_difficulty_is_not_type4():
+    registry = pd.DataFrame([{
+        "task_id": "1", "annotation_id": "11", "annotator_id": "2", "base_task_id": "base-1",
+        "dataset_group": "Manual_scope_only", "matched_registry_uid": "uid-1",
+        "task_join_status": "matched_by_title", "active_time_source": "log", "active_time_value": 20.0,
+        "compat_scope": "", "compat_difficulty": "", "compat_model_issue": "",
+    }])
+    quality = pd.DataFrame([{
+        "task_id": "1", "annotator_id": "2", "active_time": 20.0, "iou": 0.9,
+        "layout_used": True, "scope": "in_scope", "difficulty": "", "model_issue": "",
+        "scope_filled": True, "difficulty_filled": False, "difficulty_missing": False,
+        "difficulty_conflict": False, "model_issue_required": False, "model_issue_filled": False,
+        "model_issue_conflict": False, "model_issue_missing_required": False,
+        "model_issue_primary": "", "task_scope_is_mixed": False,
+    }])
+
+    analysis = build_analysis_frame(registry, quality)
+    row = analysis.iloc[0]
+    assert row["scope_bucket"] == "in_scope"
+    assert bool(row["difficulty_filled"]) is False
+    assert bool(row["difficulty_missing"]) is False
+    assert bool(row["type4_flag"]) is False
+
+    quality.loc[0, "scope"] = "unknown_scope"
+    invalid_scope = build_analysis_frame(registry, quality).iloc[0]
+    assert invalid_scope["scope_bucket"] == "missing"
+    assert bool(invalid_scope["scope_filled"]) is False
+    assert bool(invalid_scope["type4_flag"]) is True
+
+
 def test_selection_manifest_and_manifest_membership_are_applied():
     df = pd.DataFrame(
         [

@@ -1,6 +1,10 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
-第一阶段人图建议：`tools/thesis_main/analysis/build_stage1_image_packages_20260913.py`及同目录`build_stage1_image_workbook_20260913.mjs`生成[分配说明、逐人清单与图片包](../analysis_results/stage1_person_image_packages_20260913_v1/第一阶段分配建议说明.md)；测试`tests/test_stage1_image_packages_20260913.py`。480份必做／200份可选提供量分开，原始提交与草稿防重复；仅探索建议，不改正式assignment或用户采用决定。
+研究当前入口：`docs/thesis_main/研究现状交接_20260913.md`。库存脚本`tools/thesis_main/analysis/audit_history_inventory_20260913.py`逐条回查canonical与18份原导出，生成当前v2结果目录`全量历史与本轮覆盖核对.json/.csv`，区分全量历史、采用子集及新增计划。旧9月9日交接保留为历史。
+
+第一阶段v2交付：`label_studio_import/`放任务7、Project G、Project H；H已定稿20图。结果目录的`完成后可分析覆盖.json/.md`说明6个重点同房间及历史扩展覆盖。旧v1人员包/工作簿、v2 ZIP和旧门洞复核空表已删除，v1仍保留生成器与审计依赖的机器输入。当前中文、英文必做、英文选做分别存放，不创建新压缩包。
+
+第一阶段人图准备：`tools/thesis_main/analysis/build_stage1_image_packages_20260913.py`及同目录`build_stage1_image_workbook_20260913.mjs`生成[v2清单与工作簿](../analysis_results/stage1_person_image_packages_20260913_v2/第一阶段分配建议说明.md)，任务准备文件在`import_json/scene_stability_stage1_20260913_v2/`；测试`tests/test_stage1_image_packages_20260913.py`。[执行与人员分类续研](thesis_main/第一阶段执行与人员分类续研说明_20260913.md)说明480份必做、中英文分Project、英文自由选择扩展池、Scope表单及AABC后处理。未绑定线上项目，不修改正式assignment。
 
 外部两阶段提案审查：`tools/thesis_main/analysis/audit_two_stage_proposal_20260913.py`及[独立意见](../analysis_results/two_stage_independent_review_20260913_v1/独立审查意见.md)，输出人数／原始身份／匹配／视点覆盖核验；仅审查，不更新采用决定或派发。
 
@@ -208,3 +212,5 @@
 - `tools/thesis_main/analysis/explore_type_convergence_20260909.py`：合并历史资料的两类/三类人员与固定验证组收敛探索，复用无序点集分簇；结果 `analysis_results/type_convergence_exploration_20260909_v1/README_ZH.md`，检查 `tests/test_explore_type_convergence_20260909.py`。不强制单簇，不确定类型或停止人数。
 
 - `tools/thesis_main/analysis/worker_reference_feasibility_20260909.py`：复核优先、其余暂信GT的参考点偏差探索；结果 `analysis_results/worker_reference_feasibility_20260909_v1/README_ZH.md`，检查 `tests/test_worker_reference_feasibility_20260909.py`。`--pooled`将所有阶段/条件合并，仅按图片与人组织，结果位于同包 `pooled/`；`--groups`验证2–5档分位数/Ward训练内分组及人员组合覆盖，结果位于 `pooled/groups/`。不依赖角点顺序，不生成正式工人类别或building停止人数。
+2026-09-13补充：LS任务JSON独立目录`import_json/scene_stability_stage1_20260913_v2/label_studio_import/`；四份userscript新增Manual Scope检查，行为验证`tests/test_manual_scope_userscript.cjs`，不修改角点／3D／计时逻辑。
+> 2026-09-13最新执行替换：用户确认480份内优先完整覆盖部分房间，采用后视角多者优先。当前必做G172/G184/G179/G178/G047/G237，44个采用视角中37张新增、7张仅历史；中文每人20张、英文每人30张。旧19组43图的分散配对及下文旧计数不再执行。G184五图最高19人、距20人目标各缺1人。H定稿12门洞＋8同房共20张，G178四张原选做转入必做；个人表标记已接触者跳过。现行说明在analysis_results/stage1_person_image_packages_20260913_v2/整房优先版交付说明.md，整房审计见同目录必做整房核查.json。下文过程性说明保留作历史，不覆盖本段及现行机器包。

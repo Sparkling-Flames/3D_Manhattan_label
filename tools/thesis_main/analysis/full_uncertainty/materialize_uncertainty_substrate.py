@@ -43,6 +43,14 @@ from tools.thesis_main.analysis.geometry_consensus.representation import (
 from tools.thesis_main.analysis.quality_core.choice_parser import extract_data
 
 
+def _reject_unsupported_annotation_form(task_data: Mapping[str, object]) -> None:
+    if str(task_data.get("annotation_form_version") or "").strip() == "manual_scope_only_v1":
+        raise ValueError(
+            "uncertainty_substrate_v1 does not accept manual_scope_only_v1; "
+            "use a versioned new substrate"
+        )
+
+
 ROOT = Path(__file__).resolve().parents[4]
 SCHEMA_VERSION = "uncertainty_substrate_v1"
 DEFAULT_OUTPUT = ROOT / "analysis_results" / "uncertainty_substrate_20260823_v1"
@@ -460,6 +468,7 @@ def _build_bundles(
             raise KeyError(f"canonical sidecar missing: {legacy_canonical_id}")
         stage, block = _normalise_stage(raw["stage"])
         task_data = parse_jsonish(raw["task_data_json"]) or {}
+        _reject_unsupported_annotation_form(task_data)
         condition = str(raw.get("condition") or task_data.get("condition") or sidecar.get("condition") or "unknown").strip().lower()
         base = str(raw.get("base_task_id") or task_data.get("base_task_id") or "").strip()
         image_id = str(task_data.get("image_id") or base).strip()

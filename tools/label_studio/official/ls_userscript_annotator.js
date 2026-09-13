@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HoHoNet Helper Official Annotator
 // @namespace    http://tampermonkey.net/
-// @version      uncertainty_meta_supervisor_draft_20260828_v9
+// @version      manual_scope_only_20260913_v10
 // @description  正式标注版：连接 Label Studio 与 HoHoNet 3D 查看器，并强制记录 active_time
 // @author       HoHoNet
 // @match        http://175.178.71.217:8080/*
@@ -269,7 +269,7 @@
   const existingPreviewPanelStyle = document.getElementById(PREVIEW_PANEL_STYLE_ID);
   if (existingPreviewPanelStyle) existingPreviewPanelStyle.remove();
 
-  const SCRIPT_VERSION = "uncertainty_meta_supervisor_draft_20260828_v9";
+  const SCRIPT_VERSION = "manual_scope_only_20260913_v10";
   console.log(`HoHoNet Helper: 已加载 (v${SCRIPT_VERSION})`);
   console.log(
     "HoHoNet viewer base: set localStorage.HOHONET_VIEWER_BASE_URL = location.origin when /tools is reverse-proxied on LS origin",
@@ -1949,6 +1949,17 @@
     return button.name === "submit" || button.name === "update";
   }
 
+  function getManualScopeOnlyIssue(data) {
+    if (data?.annotation_form_version !== "manual_scope_only_v1") return "";
+    const root = document.querySelector(".lsf-main-view");
+    if (String(data.condition || "").toLowerCase().includes("semi") ||
+        root?.querySelector('input[name="no_specific_reason"], input[name="boundary_misalignment"]')) {
+      return "任务版本与表单不一致，请联系管理员。";
+    }
+    const choices = root?.querySelectorAll('input[name="in_scope"]:checked, input[name="out_of_scope"]:checked');
+    return choices?.length === 1 ? "" : "提交前请选择且仅选择一个标注范围判断。";
+  }
+
   function installMetaSubmitGuard() {
     if (window.__HOHONET_META_GUARD_INSTALLED__) return;
     window.__HOHONET_META_GUARD_INSTALLED__ = true;
@@ -1962,6 +1973,11 @@
     };
 
     const runCheck = () => {
+      const manualIssue = getManualScopeOnlyIssue(getStore()?.task?.data);
+      if (manualIssue) {
+        alert(manualIssue);
+        return false;
+      }
       const clearedIssueDetails = clearConditionalIssueDetailsIfNoSelected();
       if (clearedIssueDetails > 0) {
         alert("已清除“无实质性问题”分支下残留的问题类型、修正操作和修正范围。请再次提交。");

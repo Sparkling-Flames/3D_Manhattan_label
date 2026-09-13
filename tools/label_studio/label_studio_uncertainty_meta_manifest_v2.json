@@ -4,7 +4,7 @@
   "status": "forward_local_configuration",
   "deployment_status": "local_artifacts_ready_not_deployed",
   "previous_manifest": "tools/label_studio/label_studio_uncertainty_meta_manifest_v1.json",
-  "script_version": "uncertainty_meta_supervisor_draft_20260828_v9",
+  "script_version": "manual_scope_only_20260913_v10",
   "timing_basis": "worker_instruction_only_not_system_locked",
   "proposal_missing_not_collected": true,
   "edit_operation_count_not_collected": true,
@@ -13,6 +13,9 @@
   "worker_primary_defect_collected": false,
   "researcher_primary_defect_retained": true,
   "image_fields": ["worker_scope_response", "multiple_plausible_layouts", "perceived_difficulty", "difficulty_reason"],
+  "manual_scope_only_form_version": "manual_scope_only_v1",
+  "manual_image_fields": ["worker_scope_response"],
+  "manual_not_collected_fields": ["multiple_plausible_layouts", "perceived_difficulty", "difficulty_reason", "model_issue"],
   "proposal_fields": ["material_issue", "observed_defects", "repair_actions", "repair_extent", "issue_confidence"],
   "inactive_branch_policy": {
     "material_issue_no": "clear_on_selection_and_fail_closed_before_submit",

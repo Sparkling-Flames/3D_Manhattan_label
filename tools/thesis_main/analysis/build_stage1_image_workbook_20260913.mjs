@@ -5,7 +5,7 @@ import { Workbook, SpreadsheetFile, FileBlob } from '@oai/artifact-tool';
 
 const base = path.resolve(process.argv[2]);
 const d = JSON.parse(await fs.readFile(path.join(base, '分配建议与核验.json'), 'utf8'));
-assert.equal(d.schema, 'stage1_image_package_proposal_v1');
+assert.equal(d.schema, 'stage1_image_package_proposal_v2');
 const out = path.join(base, 'outputs', '01a0852f-dc20-7081-99dd-0413afa69d79');
 const qa = path.join(base, '工作簿检查');
 await fs.mkdir(out, {recursive:true});
@@ -14,6 +14,7 @@ const wb = Workbook.create();
 const previews = [];
 const palette = {navy:'#153F53', teal:'#267C88', pale:'#EDF5F7', text:'#243A45', line:'#D7E3E8'};
 const id = w => `W${String(w).padStart(3,'0')}`;
+const personSheet = w => w.language === 'zh' ? w.name : id(w.worker_id);
 const col = n => {let s=''; for(n++;n;n=Math.floor((n-1)/26))s=String.fromCharCode(65+(n-1)%26)+s; return s;};
 const peopleText = a => a.map(id).join('、');
 let tableIndex=0;
@@ -40,105 +41,108 @@ function sheet(name, title, note, headers, rows, widths) {
   previews.push({name,range:`A1:${last}${Math.min(end, name.startsWith('W')?end:19)}`});
   return s;
 }
-const overview=wb.worksheets.add('使用说明与总览');overview.showGridLines=false;
-overview.getRange('A1:J38').format={font:{name:'Microsoft YaHei',size:11,color:palette.text},rowHeight:25,columnWidthPx:110};
-overview.getRange('A1:J2').merge();overview.getRange('A1').values=[['第一阶段 · 逐人图片分配建议']];
-overview.getRange('A1:J2').format={fill:palette.navy,font:{size:22,bold:true,color:'#FFFFFF'}};
-overview.getRange('A3:J4').merge();overview.getRange('A3').values=[['管理用工作簿。中文每人20张；英文每人必做30张，另有可选20张。所有可选任务按0份承诺计入必做预算；这是建议包，未导入或派发。']];
-overview.getRange('A3:J4').format={fill:palette.pale,wrapText:true};
-
-const ar=d.assignments.map(r=>[id(r.worker_id),r.language==='zh'?'中文':'英文',r.tier==='required'?'必做':'可选',r.optional_kind||'—',r.order,r.batch,r.code,r.image_id,r.difficulty,r.scene,r.image_path,r.baseline_credit]);
-const assign=sheet('全部人图建议','680行人员 × 图片建议','每行只属于一人、一图、一个任务部分；“必做信用”仅指预算计入，不表示已经完成。预期难度等研究信息只供管理者查看。',
-  ['人员','语言','任务部分','可选用途','顺序','房间／组','图片编号','完整图片ID','预期难度','场景类型','仓库原图路径','必做预算计入'],ar,[85,65,75,105,65,110,185,300,95,120,340,95]);
-const n=ar.length+5;
-const wr=d.workers.map(w=>[id(w.worker_id),w.language==='zh'?'中文':'英文',w.submitted_images,w.draft_only_images,null,null,null,null,w.simple,w.medium,w.hard]);
-const personnel=sheet('人员总表','每个人需要做多少张','历史提交图按独立图片去重；“仅草稿”也避免重复分配。右侧难度数量只统计必做部分，英文优先困难不是约束。',
- ['人员','语言','历史提交图','仅草稿图','必做','可选同房','可选门洞','提供合计','必做简单','必做中等','必做困难'],wr,[90,65,110,100,85,100,100,100,100,100,100]);
-for(let i=0;i<wr.length;i++){
-  const r=i+6;
-  personnel.getRange(`E${r}:H${r}`).formulas=[[
-    `=COUNTIFS('全部人图建议'!$A$6:$A$${n},A${r},'全部人图建议'!$C$6:$C$${n},"必做")`,
-    `=COUNTIFS('全部人图建议'!$A$6:$A$${n},A${r},'全部人图建议'!$D$6:$D$${n},"同房补充")`,
-    `=COUNTIFS('全部人图建议'!$A$6:$A$${n},A${r},'全部人图建议'!$D$6:$D$${n},"门洞补充")`,
-    `=SUM(E${r}:G${r})`]];
-}
+const summary=sheet('总览','第一阶段 · 三个独立项目','中文、英文必做分Project，可使用相同原图；英文自愿另一个Project。包内编号不是线上任务ID，本地已准备，尚未导入或派发。',
+ ['项目','人数','每人必做','必做人图','导入图片','用途'],[
+ ['任务7',9,20,null,d.projects.find(p=>p.project_key==='zh_required').images,'整房优先，按个人清单'],['Project G',10,30,null,d.projects.find(p=>p.project_key==='en_required').images,'整房优先，按个人清单'],
+ ['Project H',10,0,null,20,'12张门洞＋8张同房，自愿完成'],['原H候选未入H',null,null,null,5,'4张同房转必做、1张门洞备选']],[170,90,110,120,110,390]);
+summary.getRange('D6:D8').formulas=[['=B6*C6'],['=B7*C7'],['=B8*C8']];
+const assignments=sheet('必做人图','480个人 × 图片组合','按整房优先重新分配，替代旧版配对。中文组内轮换后交换2对跨房间位置，英文交换3对，没有强制最小间隔。',
+ ['人员','项目','个人顺序','包内编号','图片编号','房间组','预期难度','主要场景','完整图片ID'],
+ d.assignments.map(r=>[id(r.worker_id),r.project_key,r.order,r.package_task_code,r.code,r.batch,r.difficulty,r.scene,r.image_id]),[90,135,95,95,200,110,110,170,340]);
+const personnel=sheet('人员总表','中文每人20张 · 英文每人必做30张','Project H最终只放20张，每人最多20张，可不做或只做部分，不逐人另派。缺失的实际参与数量不能填写为已完成。',
+ ['人员','语言','必做数','额外规划量','历史提交图','仅草稿图','简单','中等','困难'],
+ d.workers.map(w=>[id(w.worker_id),w.language,null,w.optional_planning_count,w.submitted_images,w.draft_only_images,w.simple,w.medium,w.hard]),[100,85,105,125,125,115,105,105,105]);
+for(let i=0;i<d.workers.length;i++)personnel.getRange(`C${i+6}`).formulas=[[`=COUNTIF('必做人图'!$A$6:$A$485,A${i+6})`]];
 for(const w of d.workers){
-  const rr=d.assignments.filter(r=>r.worker_id===w.worker_id);
-  sheet(id(w.worker_id),`${id(w.worker_id)} · ${w.language==='zh'?'中文20张':'英文30张＋可选20张'}`,
-    '管理用清单：按房间分组显示，必做在前、可选在后；该人员的原提交与草稿均已核对。查看实际图片请打开语言图片包中同名HTML。',
-    ['部分','顺序','房间／组','图片编号','可选用途','预期难度','场景类型','采用状态'],
-    rr.map(r=>[r.tier==='required'?'必做':'可选',r.order,r.batch,r.code,r.optional_kind||'—',r.difficulty,r.scene,r.selection_state]),
-    [72,62,140,185,105,88,120,245]);
+ sheet(personSheet(w),`${personSheet(w)} · ${w.language==='zh'?'任务7':'Project G'} · 必做${w.required}张`,'管理用个人清单。自愿图在Project H自由选择，不在此表安排。正式任务入口待项目创建后绑定。',
+ ['顺序','包内编号','图片编号','房间组','主要场景','预期难度'],
+ d.assignments.filter(r=>r.worker_id===w.worker_id).map(r=>[r.order,r.display_task_code,r.code,r.batch,r.scene,r.difficulty]),[85,145,210,110,200,125]);
 }
-const im=d.images.map(r=>[r.code,r.group,r.scene,r.history_manual,r.required_new,null,r.optional_offered,null,r.user_target,r.gap_after_required,peopleText(r.required_workers),peopleText(r.optional_workers)]);
-const ims=sheet('逐图人数','每张图：历史、必做、可选分别计算','“全部可选完成后”只是上限情景。门洞补充图未填写目标人数的保持空白；仅复用历史的原人数保留。',
- ['图片编号','组号','场景','历史Manual','必做新增','历史＋必做','可选提供','全可选完成后','原目标','必做后缺口','必做人员','可选人员'],im,[185,125,120,100,95,105,95,120,95,105,340,340]);
-for(let i=0;i<im.length;i++){
-  const r=i+6;ims.getRange(`F${r}`).formulas=[[`=D${r}+E${r}`]];ims.getRange(`H${r}`).formulas=[[`=F${r}+G${r}`]];
-  ims.getRange(`J${r}`).formulas=[[`=IF(I${r}="","",MAX(0,I${r}-F${r}))`]];
+sheet('英文自愿候选池','Project H · 20张入包、5张暂缓或备选','未接触人员是资格核对，不是必做分配。历史提交与当前可用于几何计算的人数分别列出。',
+ ['图片编号','房间组','方向','采用状态','历史提交人数','几何计算人数','未接触人数','未接触人员'],
+ d.optional_pool.map(r=>[r.code,r.group,r.kind,r.selection_state,r.history_submitted,r.history_manual,r.eligible_workers.length,peopleText(r.eligible_workers)]),[200,110,125,140,115,115,120,460]);
+const images=sheet('逐图人数','历史、必做与自愿实际完成分开','历史＋必做是全部必做完成且可用时的计划量。自愿新增尚未发生，不预测为200份。原目标不是硬上限。',
+ ['图片编号','房间组','主要场景','历史Manual','必做新增','历史＋必做','原目标','必做后差额','替补候选人数'],
+ d.images.map(r=>[r.code,r.group,r.scene,r.history_manual,r.required_new,null,r.user_target,null,r.alternative_workers.length]),[200,120,175,120,115,125,100,125,135]);
+for(let i=0;i<d.images.length;i++){
+ const n=i+6;images.getRange(`F${n}`).formulas=[[`=D${n}+E${n}`]];
+ images.getRange(`H${n}`).formulas=[[`=IF(G${n}="","",MAX(0,G${n}-F${n}))`]];
 }
-sheet('房间覆盖','必做阶段实际覆盖哪些房间视角','按19个已采用组核算。至少8人的列仅描述覆盖，不是统一准入门槛；可选视角不能当成必做后已经获得。',
- ['组号','已采用图片','历史Manual','必做新增','必做后Manual','有Manual视角','其中至少8人','可选提供'],
- d.rooms.map(r=>[r.group,r.adopted_images,r.history_manual,r.required_new,r.manual_after_required,r.views_with_manual,r.views_at_least8,r.optional_offered]),[95,120,120,120,130,150,150,120]);
-sheet('门洞历史与候选','门洞图：已有标注和本次可选建议','40张历轮记录中，34张保留为候选、3张OOS待核实、3张明确OOS排除。确认／疑似指门洞身份；不能与OOS状态混用。',
- ['图片编号','关联组','门洞身份','OOS处置','历史Manual','历史Semi','未做过的英文人员数','可选提供','已有Manual人员'],
- d.doorway_inventory.map(r=>[r.code,r.groups,r.doorway,r.oos,r.history_manual,r.history_semi,r.clean_english,r.optional_offered,peopleText(r.history_workers)]),[185,145,100,145,110,110,165,105,360]);
-const reserve=d.images.filter(r=>r.required_new);
-sheet('退出后的替补候选','有人退出：先查该图还能找谁','替补列只说明该人员没接触过这张图，不表示其20／30张工作量仍有空余。不可把自愿任务算成已答应补位，也不能重复派给原标注者。',
- ['图片编号','组号','原目标','历史＋必做','少1人后','未接触替补人数','候选人员'],
- reserve.map(r=>[r.code,r.group,r.user_target,r.required_plan_total,r.one_dropout_total,r.alternative_workers.length,peopleText(r.alternative_workers)]),[185,95,105,125,105,155,460]);
-sheet('可选参与情景','可选任务：0人参加也单独保留必做计划','分别枚举哪些英文人员完成全部20张，展示覆盖范围。部分人只做几张时按真实提交逐图统计；这些是情景，不是参与率预测。',
- ['完成20张人数','新增可选份数','至少新增2人图数下限','至少新增2人图数上限','至少新增5人图数下限','至少新增5人图数上限'],
- d.optional_scenarios.map(r=>[r.volunteers_finishing20,r.optional_new,r.min_images_with2_new,r.max_images_with2_new,r.min_images_with5_new,r.max_images_with5_new]),[160,150,180,180,180,180]);
-sheet('历史人员图片','每人以前做过什么图片','24份原始导出的全部提交版本与可识别草稿汇总；修订与多份导出不重复增加独立图片数。未保存的浏览行为不在此记录中。',
- ['人员','语言','图片编号','已提交','存在草稿','计入Manual历史','有Semi接触','在648图中','原始导出来源'],
- d.history.map(r=>[id(r.worker_id),r.language,r.code,r.has_submission?'是':'否',r.has_draft?'是':'否',r.manual_in_analysis?'是':'否',r.semi_exposure?'是':'否',r.in_648?'是':'否',r.sources]),[90,70,190,85,95,145,120,110,460]);
-sheet('来源与口径','来源、字段与使用边界','本轮是研究探索分配建议，不改Paper A正式方法合同、原始导出、图片采用决定或LS项目配置。',
- ['项目','说明'],[
- ['选图依据',d.selection_source],['同房与图片路径',d.registry_source],['必做匹配来源',d.external_assignment_source],
- ['必做选择理由','沿用已独立核验的43图、19组覆盖候选，解决本次逐人安排；不是科学最优选图，完整多视角研究仍需后续数据。'],
- ['可选组成','每人10张同房补充＋10张门洞；两类共20张，可以不做、部分做或全部做。'],
- ['门洞采用状态','确认是门洞不等于本次已采用。13张新增门洞候选均无明确OOS／待核实记录，仍保留待最终采用状态。'],
- ['历史与未来人员','保留W11历史；后续不派W11；本轮主计算排除W019／W026，其他既往人员按现有可用记录保留。'],
- ['不重复范围',d.exposure_scope],['可选分析','保留实际参与者、提供顺序、跳过和实际人数；自愿参与人员不能自动代表全部英文人员。'],
- ['图片包用法','解压中文／英文图片包，打开index.html，再打开对应人员页。共用images目录只保存原图，不含历史标注或GT。'],
- ['任务身份','图片编号不是LS任务编号；本次没有生成或猜测线上项目号、任务链接，也未派发。'],
- ['单位','1份＝一个人对一张图片的一次作答。分配、实际提交、可用于几何分析的作答是三个不同计数。']],[170,900]);
-
-overview.getRange('A6:D6').values=[['任务组','必做','可选同房','可选门洞']];
-overview.getRange('A6:D6').format={fill:palette.teal,font:{bold:true,color:'#FFFFFF'}};
-overview.getRange('A7:A8').values=[['中文'],['英文']];
-for(const r of [7,8])overview.getRange(`B${r}:D${r}`).formulas=[['E','F','G'].map(c=>`=SUMIF('人员总表'!$B$6:$B$24,A${r},'人员总表'!$${c}$6:$${c}$24)`)];
-overview.getRange('A10:D10').values=[['合计',null,null,null]];
-overview.getRange('B10:D10').formulas=[['B','C','D'].map(c=>`=SUM(${c}7:${c}8)`)];
-overview.getRange('A10:D10').format={fill:palette.pale,font:{bold:true}};
-const chart=overview.charts.add('bar',overview.getRange('A6:D8'));
-chart.title='必做与可选提供量（人图）';chart.hasLegend=true;chart.yAxis={numberFormatCode:'0'};chart.setPosition('E6','J20');
-const notes=[
- '必做：43张图片、19个已采用组；480份新增。原102图池已有383份Manual，必做全完成且可用后为863份。',
- '可选：25张补充图片，提供200个人图名额；其中12张是已采用房间视角，13张是确认门洞的补充候选。',
- '门洞历史：34张可继续考虑的候选中，15张有Manual，共211份；8张已有20人以上，19张尚无Manual。',
- '退出：6张必做图已用尽现有未接触人员；其中3张最多到19人，低于原20人目标。替补表不把可选参与当承诺。',
- '使用顺序：人员总表 → 对应W编号清单 → 解压图片包查看原图。必做和可选各自编号，避免把50张都说成必须完成。',
- '解释边界：8人真实有效共识可记收敛；本表没有因人数不足改写成不收敛，也没有给目标图片提前填收敛结果。'
-];
-notes.forEach((text,i)=>{const r=22+i*2;overview.getRange(`A${r}:J${r+1}`).merge();overview.getRange(`A${r}`).values=[[text]];overview.getRange(`A${r}:J${r+1}`).format={wrapText:true,fill:i%2? '#FFFFFF':palette.pale};});
-previews.unshift({name:'使用说明与总览',range:'A1:J34'});
-// 检查可见汇总及全部公式，再检查导出的文件，而不是只检查构建器输入。
-assert.deepEqual(overview.getRange('B10:D10').values,[[480,100,100]]);
-for(let i=0;i<d.workers.length;i++)assert.deepEqual(personnel.getRange(`E${i+6}:H${i+6}`).values,[[d.workers[i].required,d.workers[i].language==='en'?10:0,d.workers[i].language==='en'?10:0,d.workers[i].total_offered]]);
+sheet('房间覆盖','19个已采用房间组的视角覆盖','达到8人仅描述人数，不是统一的收敛门槛。每组实际收敛状态仍需新标注回来后判断。',
+ ['房间组','已采用图','历史Manual','必做新增','计划合计','有标注视角','至少8人视角'],
+ d.rooms.map(r=>[r.group,r.adopted_images,r.history_manual,r.required_new,r.manual_after_required,r.views_with_manual,r.views_at_least8]),[125,125,135,125,125,155,160]);
+sheet('研究与后续分析','人员分类与AABC组合仍是研究主线','分类方案暂不决定；新增结果齐备后汇总各方案的人数、名单、含义、重复性及组内稳定性。',
+ ['项目','执行口径'],[
+ ['路线一','质量、时间、范围规则判断、Semi表现分别探索粗类；不预设认真／粗心标签。'],
+ ['路线二','四块信息15种非空组合，探索不同组数；另保留质量＋时间＋修改幅度三轴方案。'],
+ ['AABC','两个A是同类型的两个不同人；按同图实际存在的独立标注组合，人数不够时记不可组合。'],
+ ['验证隔离','先用别的房间资料分类，再检查目标房间的人员子类和组合；不根据目标收敛结果调整分类。'],
+ ['旧结果','旧26人／20人结果保留原人数，不能改称本轮19人结果。W11保留历史，W19和W26不进本轮主分析。'],
+ ['后续报告','先说明单项与联合两条方案的优缺点，再列每组人数和客观证据；分类和研究结论尚未确定。'],
+ ['图片预测','同房不同视角、相似场景不同房间并行；同building为对照。收齐后离线多次划分与重排。'],
+ ['表单','新Manual只收几何与Scope；不收集的字段不当成漏填，历史语义保留。'],
+ ['自愿结果','最多10人各20张，共200人图可能量；按实际人图去重统计；自愿参与不能自动代表全体人员。'],
+ ['采集限制','Project H定稿20张：12张门洞、8张同房。历史做过者不能再作为新增独立标注；选做不保证房间补齐。'],
+ ['真源','采用依据与原文分存；import_json下三个任务文件及必做manifest是新项目准备数据。'],
+ ['运行状态','Project ID和线上任务ID尚未绑定；图片URL来自仓库，尚未在线逐一检查。']],[175,940]);
+for(let i=0;i<d.workers.length;i++)assert.equal(personnel.getRange(`C${i+6}`).values[0][0],d.workers[i].required);
+assert.deepEqual(summary.getRange('D6:D8').values,[[180],[300],[0]]);
+assert.equal(assignments.getUsedRange().values.length,485);
 const errors=await wb.inspect({kind:'match',searchTerm:'#REF!|#DIV/0!|#VALUE!|#NAME\\?|#N/A',options:{useRegex:true,maxResults:30},summary:'formula errors'});
 await fs.writeFile(path.join(qa,'公式扫描.json'),JSON.stringify(errors));
-console.log('formula scan',errors.ndjson);
 for(const p of previews){
-  const image=await wb.render({sheetName:p.name,range:p.range,scale:1,format:'png'});
-  await fs.writeFile(path.join(qa,`${p.name}.png`),new Uint8Array(await image.arrayBuffer()));
-  console.log('rendered',p.name);
+ const im=await wb.render({sheetName:p.name,range:p.range,scale:1,format:'png'});
+ await fs.writeFile(path.join(qa,`${p.name}.png`),new Uint8Array(await im.arrayBuffer()));
 }
-const target=path.join(out,'第一阶段逐人图片分配建议.xlsx');
+const target=path.join(out,'第一阶段三项目分配与研究安排.xlsx');
 await (await SpreadsheetFile.exportXlsx(wb)).save(target);
 const reopened=await SpreadsheetFile.importXlsx(await FileBlob.load(target));
-assert.deepEqual(reopened.worksheets.getItem('使用说明与总览').getRange('B10:D10').values,[[480,100,100]]);
-assert.equal(reopened.worksheets.getItem('全部人图建议').getUsedRange().values.length,685);
-await fs.writeFile(path.join(qa,'工作簿核验.json'),JSON.stringify({sheets:previews.length,assignmentRows:680,required:480,optional:200,reopened:true,previews:previews.map(p=>p.name)},null,2));
-console.log('saved',target);
+assert.deepEqual(reopened.worksheets.getItem('总览').getRange('D6:D8').values,[[180],[300],[0]]);
+assert.equal(reopened.worksheets.getItem('必做人图').getUsedRange().values.length,485);
+await fs.writeFile(path.join(qa,'工作簿核验.json'),JSON.stringify({sheets:previews.length,required:480,optionalAssigned:0,reopened:true},null,2));
+// 与既有分发表一致：中文一份工作簿收齐9人，英文各自独立文件。
+for(const group of [d.workers.filter(w=>w.language==='zh'), ...d.workers.filter(w=>w.language==='en').map(w=>[w])]){
+ const delivery=Workbook.create(), english=group[0].language==='en';
+ for(const w of group){
+  const rr=d.assignments.filter(r=>r.worker_id===w.worker_id), s=delivery.worksheets.add(personSheet(w));
+  s.showGridLines=false;s.getRange(`A1:C${rr.length+5}`).format={font:{name:'Microsoft YaHei',size:11},rowHeight:25,columnWidthPx:150};
+  s.getRange(`C1:C${rr.length+5}`).format.columnWidthPx=280;
+  s.getRange('A1:C1').merge();s.getRange('A1').values=[[`${english?'Project G':'任务7'} · ${personSheet(w)} · ${rr.length} ${english?'required images':'张必做图'}`]];
+  s.getRange('A1:C1').format={fill:palette.navy,font:{bold:true,color:'#FFFFFF',size:17},rowHeight:40};
+  s.getRange('A2:C3').merge();s.getRange('A2').values=[[english?'Complete Project G in the listed order. Project H is optional. Codes are package labels; live task links pending.':'按本页顺序完成任务7。中文9人清单汇集在这一个文件内，请打开自己姓名的sheet。包内编号待与线上任务绑定。']];
+  s.getRange('A2:C3').format={wrapText:true,fill:palette.pale};
+  s.getRange('A5:C5').values=[english?['Order','Package code','Image code']:['个人顺序','包内编号','图片编号']];
+  s.getRange('A5:C5').format={fill:palette.teal,font:{bold:true,color:'#FFFFFF'}};
+  s.getRange(`A6:C${rr.length+5}`).values=rr.map(r=>[r.order,r.display_task_code,r.code]);
+  s.freezePanes.freezeRows(5);
+ }
+ const file=path.join(base,english?'英文必做包':'中文必做包',english?`Project_G_${id(group[0].worker_id)}.xlsx`:'任务7.xlsx');
+ await (await SpreadsheetFile.exportXlsx(delivery)).save(file);
+ const check=await SpreadsheetFile.importXlsx(await FileBlob.load(file));
+ for(const w of group)assert.equal(check.worksheets.getItem(personSheet(w)).getUsedRange().values.length,w.required+5);
+ if(!english || group[0].worker_id===28){
+  const im=await delivery.render({sheetName:personSheet(group[0]),range:`A1:C${group[0].required+5}`,scale:1,format:'png'});
+  await fs.writeFile(path.join(qa,english?'英文个人分发表.png':'中文汇总分发表.png'),new Uint8Array(await im.arrayBuffer()));
+ }
+}
+const hFolder=path.join(base,'英文选做包');
+await fs.mkdir(hFolder,{recursive:true});
+for(const w of d.workers.filter(w=>w.language==='en')){
+ const optional=Workbook.create(), s=optional.worksheets.add(id(w.worker_id));
+ const rr=d.optional_pool.filter(r=>r.ready_for_import).sort((a,b)=>a.package_task_code.localeCompare(b.package_task_code));
+ s.getRange('A1:C25').format={font:{name:'Arial',size:11},rowHeight:25,columnWidthPx:210};
+ s.getRange('A1:C1').merge();s.getRange('A1').values=[[`Project H · ${id(w.worker_id)} · Optional`]];
+ s.getRange('A1:C1').format={fill:palette.navy,font:{bold:true,color:'#FFFFFF',size:17},rowHeight:40};
+ s.getRange('A2:C3').merge();s.getRange('A2').values=[['Choose any eligible images, up to 20. You may complete none or only some. Skip images marked Already seen. Project links will be supplied after setup.']];
+ s.getRange('A2:C3').format={wrapText:true,fill:palette.pale};
+ s.getRange('A5:C5').values=[['Package code','Image code','Availability']];
+ s.getRange('A5:C5').format={fill:palette.teal,font:{bold:true,color:'#FFFFFF'}};
+ s.getRange('A6:C25').values=rr.map(r=>[r.display_task_code,r.code,r.eligible_workers.includes(w.worker_id)?'Optional':'Already seen — skip']);
+ s.freezePanes.freezeRows(5);
+ const file=path.join(hFolder,`Project_H_${id(w.worker_id)}.xlsx`);
+ await (await SpreadsheetFile.exportXlsx(optional)).save(file);
+ const check=await SpreadsheetFile.importXlsx(await FileBlob.load(file));
+ assert.deepEqual(check.worksheets.getItem(id(w.worker_id)).getRange('A6:C25').values,s.getRange('A6:C25').values);
+ if(w.worker_id===34){const im=await optional.render({sheetName:id(w.worker_id),range:'A1:C25',scale:1,format:'png'});await fs.writeFile(path.join(qa,'英文选做分发表.png'),new Uint8Array(await im.arrayBuffer()));}
+}
+console.log(target);
