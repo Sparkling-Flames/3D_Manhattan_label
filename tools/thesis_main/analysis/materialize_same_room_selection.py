@@ -162,10 +162,12 @@ def reconcile_spatial_history(result, review, initial_audit, semantics):
             coordinate_verified=False, annotation_boundary_only_codes=r['annotation_boundary_comment_codes'],
             note='沿用用户工作分类词汇；确认可包含非传统开口，不等于实测传统门框中心。')
         r['review_coverage'] = dict(early_dispute_target=any(c['severity'] != '对照记录' for c in cases.get(i, [])),
+            initial_spatial_classification_personally_reviewed=True,
+            initial_review_evidence='用户后续明确说明：首次648图全量亲审区域分类；后续仅局部修正。',
             early_dispute_dimensions=sorted({c['dimension'] for c in cases.get(i, []) if c['severity'] != '对照记录'}),
             early_user_input_changed=bool(delta), initial_submitter_review_status=first['user_status'],
             later_spatial_personally_reviewed=in_cross, group_personally_reviewed=bool(r['group_codes']),
-            note='旧提交中的已复核可能来自初分类者；记录被采纳不等于用户逐张逐字段重看。')
+            note='首次区域分类全量人工复核；后续41图仅为该轮范围。此声明不自动确认同房关系或所有其他字段。AI审查独立保留。')
         r['spatial_conflicts'] = issues
         oos = []
         if (r['building'], number) in earlier_oos:

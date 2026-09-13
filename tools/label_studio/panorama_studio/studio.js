@@ -529,6 +529,11 @@ function chooseVariant(index,resetView=false){
 async function chooseCase(index){
   const token=++imageToken;currentCase=(index+dataset.cases.length)%dataset.cases.length;$("fatal").hidden=true;
   const c=dataset.cases[currentCase];$("case-select").value=currentCase;
+  if(c.history_script&&!c.history_loaded){
+    try{await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=c.history_script;s.onload=resolve;s.onerror=()=>reject(new Error('历史标注包读取失败'));document.head.append(s);});}
+    catch(e){if(token===imageToken){$("fatal").hidden=false;$("fatal").textContent=e.message;}return;}
+    if(token!==imageToken)return;
+  }
   $("case-count").textContent=String(currentCase+1).padStart(2,"0")+" / "+dataset.cases.length;
   $("case-title").textContent=c.title;$("image-id").textContent=c.image_id;$("category").textContent=c.category||"布局观察";
   $("variant-select").replaceChildren(...c.variants.map((v,i)=>{const o=document.createElement("option");o.value=i;o.textContent=v.name;return o;}));
@@ -536,6 +541,7 @@ async function chooseCase(index){
   $("texture-state").textContent="正在载入原图…";
   const defaultIndex=Math.max(0,c.variants.findIndex(v=>v.source.role==="dataset_reference"));
   $("variant-select").value=defaultIndex;chooseVariant(defaultIndex,true);
+  document.dispatchEvent(new CustomEvent('studio-case',{detail:c}));
   try{
     if(!window.STUDIO_IMAGES[currentCase])await new Promise((resolve,reject)=>{
       const s=document.createElement("script");s.src=c.image_script;s.onload=resolve;s.onerror=()=>reject(new Error("图像包读取失败"));document.head.append(s);
@@ -601,7 +607,7 @@ for(const v of views){let start=null;
   });
   v.renderer.domElement.addEventListener("pointerup",()=>start=null);
 }
-$("bundle-stats").textContent=dataset.counts.cases+" 个验证案例 · "+dataset.counts.variants+" 个来源版本";
+$("bundle-stats").textContent=dataset.counts.cases+" 个图像案例 · "+dataset.counts.variants+" 个来源版本";
 // Read-only test seam: expose state, never a geometry mutation or save API.
 window.STUDIO={snapshot:()=>({caseIndex:currentCase,variantIndex:currentVariant,materialMode,viewMode,selected,endpoint,
   imageReady:!!originalImage,textureReady:!!texture,fitStatus:geometry?.fit.status,

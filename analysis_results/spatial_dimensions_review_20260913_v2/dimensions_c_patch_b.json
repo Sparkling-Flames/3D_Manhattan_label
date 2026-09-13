@@ -1,0 +1,1471 @@
+{
+  "rows": [
+    {
+      "image_id": "uNb9QFRL6hY_071ca188c1b7423c947607cc794e9f72",
+      "building": "uNb9QFRL6hY",
+      "number": 5,
+      "functional_regions": [
+        "通行",
+        "储藏家务",
+        "卫浴"
+      ],
+      "main_space": "更衣及卫浴前室为主，独立衣帽间与卫浴相邻可见",
+      "relations": [
+        {
+          "region_a": "通行（前室）",
+          "region_b": "储藏家务（衣帽间）",
+          "relation": "明确墙体与门洞分隔",
+          "evidence": "衣帽间内挂衣杆和搁板清楚，有完整木门框及打开的厚木门扇。"
+        },
+        {
+          "region_a": "通行（前室）",
+          "region_b": "卫浴",
+          "relation": "明确墙体与门洞分隔",
+          "evidence": "洗手台/淋浴在前室另一侧完整木框矩形口后，墙端把衣帽间与卫浴分开。"
+        },
+        {
+          "region_a": "储藏家务（衣帽间）",
+          "region_b": "卫浴",
+          "relation": "明确墙体与门洞分隔",
+          "evidence": "两者分居实体墙两侧，分别由前室的独立口部进入；不是同一无墙区域。"
+        }
+      ],
+      "relation_scope_note": "仅描述已辨认区域对；门开着仍保留门框/门扇分隔，未由此改变人工交界、同房、标注范围或优先级。",
+      "reason": "原图确认独立衣帽间与前室壁柜须分开：木镜面壁柜属前室附属储藏，不将整面柜门当独立房门。保留人工储藏家务粗类。",
+      "review_basis": "new_original",
+      "evidence_refs": [
+        "analysis_results/open_layout_recheck_20260913_v1/review_c.json#uNb9QFRL6hY_071ca188c1b7423c947607cc794e9f72",
+        "analysis_results/scene_image_exploration_20260910_v1/same_room_selection_registry_v2_20260912.json#images/uNb9QFRL6hY_071ca188c1b7423c947607cc794e9f72",
+        "data/mp3d_layout/test/img/uNb9QFRL6hY_071ca188c1b7423c947607cc794e9f72.png",
+        "analysis_results/spatial_dimensions_review_20260913_v2/dimensions_c.json#uNb9QFRL6hY_071ca188c1b7423c947607cc794e9f72"
+      ],
+      "needs_original_followup": false,
+      "human_comparison": "对照人工粗类“储藏与家务辅助”；人工focus=None，来源=未有人工作答。主要空间表述如复用AI focus仍仅为AI建议；维度拆分不自动冲突，不修改人工同房、交界和标注范围。",
+      "human_conflicts": [],
+      "uncertainties": [],
+      "human_original": {
+        "spatial_classification": {
+          "coarse_type": "储藏与家务辅助",
+          "functions": null,
+          "focus": null,
+          "boundary": null
+        },
+        "field_sources": {
+          "coarse_type": "早期争议复核导出.user_type",
+          "functions": "未有人工作答",
+          "focus": "未有人工作答",
+          "boundary": "未有人工作答"
+        },
+        "all_user_notes": [],
+        "prior_discussion": null,
+        "review_history": [
+          {
+            "stage": "initial_648",
+            "values": {
+              "image_id": "uNb9QFRL6hY_071ca188c1b7423c947607cc794e9f72",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r23",
+              "user_type": "储藏与家务辅助",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "user_dispute_review",
+            "values": {
+              "image_id": "uNb9QFRL6hY_071ca188c1b7423c947607cc794e9f72",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r23",
+              "user_type": "储藏与家务辅助",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "later_spatial_review",
+            "values": null,
+            "user_revision": {},
+            "applied_fields": []
+          }
+        ]
+      },
+      "earlier_ai_focus": "更衣／卫浴前室为主",
+      "earlier_ai_functions": "通行、更衣"
+    },
+    {
+      "image_id": "uNb9QFRL6hY_1434b965c3c147419c4ff40310633b58",
+      "building": "uNb9QFRL6hY",
+      "number": 10,
+      "functional_regions": [
+        "卧室",
+        "通行"
+      ],
+      "main_space": "卧室床区为主，入口可见",
+      "relations": [
+        {
+          "region_a": "卧室",
+          "region_b": "通行（室内入口）",
+          "relation": "局部分隔或宽开口",
+          "evidence": "床区与短入口沿墙端连续，没有在床区和短入口之间再出现木门。"
+        },
+        {
+          "region_a": "通行（室内入口）",
+          "region_b": "通行（外部走廊）",
+          "relation": "明确墙体与门洞分隔",
+          "evidence": "短入口远端清楚有木门框、打开木门及地毯到木地板的边界。"
+        }
+      ],
+      "relation_scope_note": "仅描述已辨认区域对；门开着仍保留门框/门扇分隔，未由此改变人工交界、同房、标注范围或优先级。",
+      "reason": "补图将卧室内部入口与门外长走廊分成两层关系；床旁两椅是附属休憩。用户门口标注歧义及29低优先级记录保留，不由建筑描述重定。",
+      "review_basis": "new_original",
+      "evidence_refs": [
+        "analysis_results/open_layout_recheck_20260913_v1/review_c.json#uNb9QFRL6hY_1434b965c3c147419c4ff40310633b58",
+        "analysis_results/scene_image_exploration_20260910_v1/same_room_selection_registry_v2_20260912.json#images/uNb9QFRL6hY_1434b965c3c147419c4ff40310633b58",
+        "data/mp3d_layout/test/img/uNb9QFRL6hY_1434b965c3c147419c4ff40310633b58.png",
+        "analysis_results/spatial_dimensions_review_20260913_v2/dimensions_c.json#uNb9QFRL6hY_1434b965c3c147419c4ff40310633b58"
+      ],
+      "needs_original_followup": false,
+      "human_comparison": "对照人工粗类“卧室”；人工focus=None，来源=未有人工作答。主要空间表述如复用AI focus仍仅为AI建议；维度拆分不自动冲突，不修改人工同房、交界和标注范围。",
+      "human_conflicts": [],
+      "uncertainties": [],
+      "human_original": {
+        "spatial_classification": {
+          "coarse_type": "卧室",
+          "functions": null,
+          "focus": null,
+          "boundary": null
+        },
+        "field_sources": {
+          "coarse_type": "早期争议复核导出.user_type",
+          "functions": "未有人工作答",
+          "focus": "未有人工作答",
+          "boundary": "未有人工作答"
+        },
+        "all_user_notes": [
+          {
+            "source": "最新整组评论.G179",
+            "text": "uNb9QFRL6hY · 02 / 28 / 44 / 80  和这个是极其类似的房间,甚至可以放在一起预测.可能就是门口那里标不标有点歧义,29优先级低",
+            "scope": "whole_group_see_interpretation"
+          }
+        ],
+        "prior_discussion": null,
+        "review_history": [
+          {
+            "stage": "initial_648",
+            "values": {
+              "image_id": "uNb9QFRL6hY_1434b965c3c147419c4ff40310633b58",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r1",
+              "user_type": "卧室",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "user_dispute_review",
+            "values": {
+              "image_id": "uNb9QFRL6hY_1434b965c3c147419c4ff40310633b58",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r1",
+              "user_type": "卧室",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "later_spatial_review",
+            "values": null,
+            "user_revision": {},
+            "applied_fields": []
+          }
+        ]
+      },
+      "earlier_ai_focus": "卧室入口／床区并重",
+      "earlier_ai_functions": "睡眠、休憩"
+    },
+    {
+      "image_id": "uNb9QFRL6hY_2d80f7d125794c87aee34d9d46a78304",
+      "building": "uNb9QFRL6hY",
+      "number": 17,
+      "functional_regions": [
+        "厨房",
+        "用餐",
+        "起居休闲"
+      ],
+      "main_space": "厨房为主；独立餐桌及远端休憩区次要",
+      "relations": [
+        {
+          "region_a": "厨房",
+          "region_b": "用餐",
+          "relation": "无明显建筑分隔",
+          "evidence": "岛台以外的完整餐椅桌组沿同一木地板和梁架顶棚延伸。"
+        },
+        {
+          "region_a": "用餐",
+          "region_b": "起居休闲",
+          "relation": "局部分隔或宽开口",
+          "evidence": "餐桌后方植栽及休憩座区在宽敞连续开口后，没有完整封闭门洞边界；家具遮挡下部。"
+        },
+        {
+          "region_a": "厨房",
+          "region_b": "起居休闲",
+          "relation": "局部分隔或宽开口",
+          "evidence": "通过餐区连续延伸至远端休憩，局部柱墙与植栽划分；非因远处可见而认定无墙。"
+        }
+      ],
+      "relation_scope_note": "仅描述已辨认区域对；门开着仍保留门框/门扇分隔，未由此改变人工交界、同房、标注范围或优先级。",
+      "reason": "实际查看原图，厨餐开敞证据清楚；远端休憩与餐区只隔局部柱端和家具，保留厨房主区。",
+      "review_basis": "new_original",
+      "evidence_refs": [
+        "analysis_results/open_layout_recheck_20260913_v1/review_c.json#uNb9QFRL6hY_2d80f7d125794c87aee34d9d46a78304",
+        "analysis_results/scene_image_exploration_20260910_v1/same_room_selection_registry_v2_20260912.json#images/uNb9QFRL6hY_2d80f7d125794c87aee34d9d46a78304",
+        "data/mp3d_layout/test/img/uNb9QFRL6hY_2d80f7d125794c87aee34d9d46a78304.png",
+        "analysis_results/spatial_dimensions_review_20260913_v2/dimensions_c.json#uNb9QFRL6hY_2d80f7d125794c87aee34d9d46a78304"
+      ],
+      "needs_original_followup": false,
+      "human_comparison": "对照人工粗类“厨房与用餐”；人工focus=None，来源=未有人工作答。主要空间表述如复用AI focus仍仅为AI建议；维度拆分不自动冲突，不修改人工同房、交界和标注范围。",
+      "human_conflicts": [],
+      "uncertainties": [
+        "远端座区下部被餐椅和植栽遮挡，未断言每段地面边界；不是重复同一图可完全消除的遮挡。"
+      ],
+      "human_original": {
+        "spatial_classification": {
+          "coarse_type": "厨房与用餐",
+          "functions": null,
+          "focus": null,
+          "boundary": null
+        },
+        "field_sources": {
+          "coarse_type": "早期争议复核导出.user_type",
+          "functions": "未有人工作答",
+          "focus": "未有人工作答",
+          "boundary": "未有人工作答"
+        },
+        "all_user_notes": [],
+        "prior_discussion": null,
+        "review_history": [
+          {
+            "stage": "initial_648",
+            "values": {
+              "image_id": "uNb9QFRL6hY_2d80f7d125794c87aee34d9d46a78304",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r11",
+              "user_type": "厨房与用餐",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "user_dispute_review",
+            "values": {
+              "image_id": "uNb9QFRL6hY_2d80f7d125794c87aee34d9d46a78304",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r11",
+              "user_type": "厨房与用餐",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "later_spatial_review",
+            "values": null,
+            "user_revision": {},
+            "applied_fields": []
+          }
+        ]
+      },
+      "earlier_ai_focus": "厨房为主；餐饮与起居远处可见",
+      "earlier_ai_functions": "厨房、餐饮"
+    },
+    {
+      "image_id": "uNb9QFRL6hY_3b9e548b46af4410b97e1d12781ec3c9",
+      "building": "uNb9QFRL6hY",
+      "number": 21,
+      "functional_regions": [
+        "卫浴",
+        "通行",
+        "储藏家务"
+      ],
+      "main_space": "洗漱／淋浴为主；前室可见",
+      "relations": [
+        {
+          "region_a": "卫浴",
+          "region_b": "通行（前室）",
+          "relation": "明确墙体与门洞分隔",
+          "evidence": "原图卫浴口部侧墙及木框明确，前室在口外。"
+        },
+        {
+          "region_a": "通行（前室）",
+          "region_b": "储藏家务（衣帽间）",
+          "relation": "明确墙体与门洞分隔",
+          "evidence": "前室侧边衣帽间搁板挂杆清楚，门口有完整木框。"
+        },
+        {
+          "region_a": "卫浴（淋浴）",
+          "region_b": "卫浴（洗漱厕位）",
+          "relation": "其他明确分隔",
+          "evidence": "透明淋浴玻璃门、把手与玻璃侧片可见。"
+        }
+      ],
+      "relation_scope_note": "仅描述已辨认区域对；门开着仍保留门框/门扇分隔，未由此改变人工交界、同房、标注范围或优先级。",
+      "reason": "原图与用户洗漱淋浴为主、前室可见一致；补足门框及淋浴玻璃边界，未改交界候选。",
+      "review_basis": "new_original",
+      "evidence_refs": [
+        "analysis_results/open_layout_recheck_20260913_v1/review_c.json#uNb9QFRL6hY_3b9e548b46af4410b97e1d12781ec3c9",
+        "analysis_results/scene_image_exploration_20260910_v1/same_room_selection_registry_v2_20260912.json#images/uNb9QFRL6hY_3b9e548b46af4410b97e1d12781ec3c9",
+        "data/mp3d_layout/test/img/uNb9QFRL6hY_3b9e548b46af4410b97e1d12781ec3c9.png",
+        "analysis_results/spatial_dimensions_review_20260913_v2/dimensions_c.json#uNb9QFRL6hY_3b9e548b46af4410b97e1d12781ec3c9"
+      ],
+      "needs_original_followup": false,
+      "human_comparison": "对照人工粗类“卫浴”；人工focus=洗漱／淋浴为主；前室可见，来源=后续41图亲审.current_classification.focus。主要空间表述如复用AI focus仍仅为AI建议；维度拆分不自动冲突，不修改人工同房、交界和标注范围。",
+      "human_conflicts": [],
+      "uncertainties": [],
+      "human_original": {
+        "spatial_classification": {
+          "coarse_type": "卫浴",
+          "functions": "卫浴",
+          "focus": "洗漱／淋浴为主；前室可见",
+          "boundary": "交界候选"
+        },
+        "field_sources": {
+          "coarse_type": "后续41图亲审.current_classification.coarse_type",
+          "functions": "后续41图亲审.current_classification.functions",
+          "focus": "后续41图亲审.current_classification.focus",
+          "boundary": "后续41图亲审.current_classification.boundary"
+        },
+        "all_user_notes": [],
+        "prior_discussion": null,
+        "review_history": [
+          {
+            "stage": "initial_648",
+            "values": {
+              "image_id": "uNb9QFRL6hY_3b9e548b46af4410b97e1d12781ec3c9",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r4",
+              "user_type": "卫浴",
+              "user_boundary": "",
+              "user_doorway": "确认",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "user_dispute_review",
+            "values": {
+              "image_id": "uNb9QFRL6hY_3b9e548b46af4410b97e1d12781ec3c9",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r4",
+              "user_type": "卫浴",
+              "user_boundary": "",
+              "user_doorway": "确认",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "later_spatial_review",
+            "values": null,
+            "user_revision": {
+              "boundary": "交界候选"
+            },
+            "applied_fields": [
+              "coarse_type",
+              "functions",
+              "focus",
+              "boundary"
+            ]
+          }
+        ]
+      },
+      "earlier_ai_focus": "洗漱／淋浴为主；前室可见",
+      "earlier_ai_functions": "卫浴"
+    },
+    {
+      "image_id": "uNb9QFRL6hY_3c97da43516341758224453830954124",
+      "building": "uNb9QFRL6hY",
+      "number": 22,
+      "functional_regions": [
+        "通行",
+        "储藏家务",
+        "卫浴"
+      ],
+      "main_space": "更衣及卫浴前室为主，独立衣帽间与卫浴相邻可见",
+      "relations": [
+        {
+          "region_a": "通行（前室）",
+          "region_b": "储藏家务（衣帽间）",
+          "relation": "明确墙体与门洞分隔",
+          "evidence": "衣帽间内挂衣杆和搁板清楚，有完整木门框及打开的厚木门扇。"
+        },
+        {
+          "region_a": "通行（前室）",
+          "region_b": "卫浴",
+          "relation": "明确墙体与门洞分隔",
+          "evidence": "洗手台/淋浴在前室另一侧完整木框矩形口后，墙端把衣帽间与卫浴分开。"
+        },
+        {
+          "region_a": "储藏家务（衣帽间）",
+          "region_b": "卫浴",
+          "relation": "明确墙体与门洞分隔",
+          "evidence": "两者分居实体墙两侧，分别由前室的独立口部进入；不是同一无墙区域。"
+        }
+      ],
+      "relation_scope_note": "仅描述已辨认区域对；门开着仍保留门框/门扇分隔，未由此改变人工交界、同房、标注范围或优先级。",
+      "reason": "原图确认独立衣帽间与前室壁柜须分开：木镜面壁柜属前室附属储藏，不将整面柜门当独立房门。保留人工储藏家务粗类。",
+      "review_basis": "new_original",
+      "evidence_refs": [
+        "analysis_results/open_layout_recheck_20260913_v1/review_c.json#uNb9QFRL6hY_3c97da43516341758224453830954124",
+        "analysis_results/scene_image_exploration_20260910_v1/same_room_selection_registry_v2_20260912.json#images/uNb9QFRL6hY_3c97da43516341758224453830954124",
+        "data/mp3d_layout/test/img/uNb9QFRL6hY_3c97da43516341758224453830954124.png",
+        "analysis_results/spatial_dimensions_review_20260913_v2/dimensions_c.json#uNb9QFRL6hY_3c97da43516341758224453830954124"
+      ],
+      "needs_original_followup": false,
+      "human_comparison": "对照人工粗类“储藏与家务辅助”；人工focus=None，来源=未有人工作答。主要空间表述如复用AI focus仍仅为AI建议；维度拆分不自动冲突，不修改人工同房、交界和标注范围。",
+      "human_conflicts": [],
+      "uncertainties": [],
+      "human_original": {
+        "spatial_classification": {
+          "coarse_type": "储藏与家务辅助",
+          "functions": null,
+          "focus": null,
+          "boundary": null
+        },
+        "field_sources": {
+          "coarse_type": "早期争议复核导出.user_type",
+          "functions": "未有人工作答",
+          "focus": "未有人工作答",
+          "boundary": "未有人工作答"
+        },
+        "all_user_notes": [],
+        "prior_discussion": null,
+        "review_history": [
+          {
+            "stage": "initial_648",
+            "values": {
+              "image_id": "uNb9QFRL6hY_3c97da43516341758224453830954124",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r23",
+              "user_type": "储藏与家务辅助",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "user_dispute_review",
+            "values": {
+              "image_id": "uNb9QFRL6hY_3c97da43516341758224453830954124",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r23",
+              "user_type": "储藏与家务辅助",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "later_spatial_review",
+            "values": null,
+            "user_revision": {},
+            "applied_fields": []
+          }
+        ]
+      },
+      "earlier_ai_focus": "更衣／卫浴前室为主",
+      "earlier_ai_functions": "通行、更衣"
+    },
+    {
+      "image_id": "uNb9QFRL6hY_5dd7b4cf99584011ac17b25d45c6197c",
+      "building": "uNb9QFRL6hY",
+      "number": 27,
+      "functional_regions": [
+        "通行",
+        "储藏家务",
+        "卫浴"
+      ],
+      "main_space": "更衣通道为主；柜体次要",
+      "relations": [
+        {
+          "region_a": "通行（更衣通道）",
+          "region_b": "储藏家务（壁柜）",
+          "relation": "无明显建筑分隔",
+          "evidence": "白色镜面柜沿通道壁布置，柜前站立和行走区域连续；柜门不当作第二房间入口。"
+        },
+        {
+          "region_a": "通行（更衣通道）",
+          "region_b": "卫浴",
+          "relation": "局部分隔或宽开口",
+          "evidence": "正前主浴室有宽墙端开口，两侧柱形墙脚，未见跨此口的门扇。"
+        }
+      ],
+      "relation_scope_note": "仅描述已辨认区域对；门开着仍保留门框/门扇分隔，未由此改变人工交界、同房、标注范围或优先级。",
+      "reason": "原图为沿通道壁柜，符合用户更衣通道为主、柜体次要；可见主浴室另记区域关系。",
+      "review_basis": "new_original",
+      "evidence_refs": [
+        "analysis_results/open_layout_recheck_20260913_v1/review_c.json#uNb9QFRL6hY_5dd7b4cf99584011ac17b25d45c6197c",
+        "analysis_results/scene_image_exploration_20260910_v1/same_room_selection_registry_v2_20260912.json#images/uNb9QFRL6hY_5dd7b4cf99584011ac17b25d45c6197c",
+        "data/mp3d_layout/test/img/uNb9QFRL6hY_5dd7b4cf99584011ac17b25d45c6197c.png",
+        "analysis_results/spatial_dimensions_review_20260913_v2/dimensions_c.json#uNb9QFRL6hY_5dd7b4cf99584011ac17b25d45c6197c"
+      ],
+      "needs_original_followup": false,
+      "human_comparison": "对照人工粗类“通行与连接”；人工focus=更衣通道为主；柜体次要，来源=后续41图亲审.current_classification.focus。主要空间表述如复用AI focus仍仅为AI建议；维度拆分不自动冲突，不修改人工同房、交界和标注范围。",
+      "human_conflicts": [],
+      "uncertainties": [],
+      "human_original": {
+        "spatial_classification": {
+          "coarse_type": "通行与连接",
+          "functions": "通行、更衣",
+          "focus": "更衣通道为主；柜体次要",
+          "boundary": "暂不归入"
+        },
+        "field_sources": {
+          "coarse_type": "后续41图亲审.current_classification.coarse_type",
+          "functions": "后续41图亲审.current_classification.functions",
+          "focus": "后续41图亲审.current_classification.focus",
+          "boundary": "后续41图亲审.current_classification.boundary"
+        },
+        "all_user_notes": [],
+        "prior_discussion": null,
+        "review_history": [
+          {
+            "stage": "initial_648",
+            "values": {
+              "image_id": "uNb9QFRL6hY_5dd7b4cf99584011ac17b25d45c6197c",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r24",
+              "user_type": "储藏与家务辅助",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "user_dispute_review",
+            "values": {
+              "image_id": "uNb9QFRL6hY_5dd7b4cf99584011ac17b25d45c6197c",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r24",
+              "user_type": "储藏与家务辅助",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "later_spatial_review",
+            "values": null,
+            "user_revision": {},
+            "applied_fields": [
+              "coarse_type",
+              "functions",
+              "focus",
+              "boundary"
+            ]
+          }
+        ]
+      },
+      "earlier_ai_focus": "更衣通道为主；柜体次要",
+      "earlier_ai_functions": "通行、更衣"
+    },
+    {
+      "image_id": "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+      "building": "uNb9QFRL6hY",
+      "number": 29,
+      "functional_regions": [
+        "卧室",
+        "通行"
+      ],
+      "main_space": "卧室床区与入口共同呈现；入口比其他视点更突出",
+      "relations": [
+        {
+          "region_a": "卧室",
+          "region_b": "通行（室内入口）",
+          "relation": "局部分隔或宽开口",
+          "evidence": "床区与短入口沿墙端连续，没有在床区和短入口之间再出现木门。"
+        },
+        {
+          "region_a": "通行（室内入口）",
+          "region_b": "通行（外部走廊）",
+          "relation": "明确墙体与门洞分隔",
+          "evidence": "短入口远端清楚有木门框、打开木门及地毯到木地板的边界。"
+        }
+      ],
+      "relation_scope_note": "仅描述已辨认区域对；门开着仍保留门框/门扇分隔，未由此改变人工交界、同房、标注范围或优先级。",
+      "reason": "补图将卧室内部入口与门外长走廊分成两层关系；床旁两椅是附属休憩。用户门口标注歧义及29低优先级记录保留，不由建筑描述重定。",
+      "review_basis": "new_original",
+      "evidence_refs": [
+        "analysis_results/open_layout_recheck_20260913_v1/review_c.json#uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+        "analysis_results/scene_image_exploration_20260910_v1/same_room_selection_registry_v2_20260912.json#images/uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+        "data/mp3d_layout/test/img/uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd.png",
+        "analysis_results/spatial_dimensions_review_20260913_v2/dimensions_c.json#uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd"
+      ],
+      "needs_original_followup": false,
+      "human_comparison": "对照人工粗类“卧室”；人工focus=None，来源=未有人工作答。主要空间表述如复用AI focus仍仅为AI建议；维度拆分不自动冲突，不修改人工同房、交界和标注范围。",
+      "human_conflicts": [],
+      "uncertainties": [],
+      "human_original": {
+        "spatial_classification": {
+          "coarse_type": "卧室",
+          "functions": null,
+          "focus": null,
+          "boundary": null
+        },
+        "field_sources": {
+          "coarse_type": "早期争议复核导出.user_type",
+          "functions": "未有人工作答",
+          "focus": "未有人工作答",
+          "boundary": "未有人工作答"
+        },
+        "all_user_notes": [
+          {
+            "source": "最新整组评论.G179",
+            "text": "uNb9QFRL6hY · 02 / 28 / 44 / 80  和这个是极其类似的房间,甚至可以放在一起预测.可能就是门口那里标不标有点歧义,29优先级低",
+            "scope": "whole_group_see_interpretation"
+          }
+        ],
+        "prior_discussion": null,
+        "review_history": [
+          {
+            "stage": "initial_648",
+            "values": {
+              "image_id": "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r1",
+              "user_type": "卧室",
+              "user_boundary": "",
+              "user_doorway": "疑似",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "user_dispute_review",
+            "values": {
+              "image_id": "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "",
+              "user_type": "卧室",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": "",
+              "user_audit_status": "已确认"
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "later_spatial_review",
+            "values": null,
+            "user_revision": {},
+            "applied_fields": []
+          }
+        ]
+      },
+      "earlier_ai_focus": "卧室入口为主；床区次要",
+      "earlier_ai_functions": "睡眠、休憩"
+    },
+    {
+      "image_id": "uNb9QFRL6hY_6d10858fd25f4c06883c28694ade2c00",
+      "building": "uNb9QFRL6hY",
+      "number": 37,
+      "functional_regions": [
+        "通行",
+        "储藏家务",
+        "卫浴"
+      ],
+      "main_space": "更衣及卫浴前室为主，独立衣帽间与卫浴相邻可见",
+      "relations": [
+        {
+          "region_a": "通行（前室）",
+          "region_b": "储藏家务（衣帽间）",
+          "relation": "明确墙体与门洞分隔",
+          "evidence": "衣帽间内挂衣杆和搁板清楚，有完整木门框及打开的厚木门扇。"
+        },
+        {
+          "region_a": "通行（前室）",
+          "region_b": "卫浴",
+          "relation": "明确墙体与门洞分隔",
+          "evidence": "洗手台/淋浴在前室另一侧完整木框矩形口后，墙端把衣帽间与卫浴分开。"
+        },
+        {
+          "region_a": "储藏家务（衣帽间）",
+          "region_b": "卫浴",
+          "relation": "明确墙体与门洞分隔",
+          "evidence": "两者分居实体墙两侧，分别由前室的独立口部进入；不是同一无墙区域。"
+        }
+      ],
+      "relation_scope_note": "仅描述已辨认区域对；门开着仍保留门框/门扇分隔，未由此改变人工交界、同房、标注范围或优先级。",
+      "reason": "原图确认独立衣帽间与前室壁柜须分开：木镜面壁柜属前室附属储藏，不将整面柜门当独立房门。保留人工储藏家务粗类。",
+      "review_basis": "new_original",
+      "evidence_refs": [
+        "analysis_results/open_layout_recheck_20260913_v1/review_c.json#uNb9QFRL6hY_6d10858fd25f4c06883c28694ade2c00",
+        "analysis_results/scene_image_exploration_20260910_v1/same_room_selection_registry_v2_20260912.json#images/uNb9QFRL6hY_6d10858fd25f4c06883c28694ade2c00",
+        "data/mp3d_layout/test/img/uNb9QFRL6hY_6d10858fd25f4c06883c28694ade2c00.png",
+        "analysis_results/spatial_dimensions_review_20260913_v2/dimensions_c.json#uNb9QFRL6hY_6d10858fd25f4c06883c28694ade2c00"
+      ],
+      "needs_original_followup": false,
+      "human_comparison": "对照人工粗类“储藏与家务辅助”；人工focus=None，来源=未有人工作答。主要空间表述如复用AI focus仍仅为AI建议；维度拆分不自动冲突，不修改人工同房、交界和标注范围。",
+      "human_conflicts": [],
+      "uncertainties": [],
+      "human_original": {
+        "spatial_classification": {
+          "coarse_type": "储藏与家务辅助",
+          "functions": null,
+          "focus": null,
+          "boundary": null
+        },
+        "field_sources": {
+          "coarse_type": "早期争议复核导出.user_type",
+          "functions": "未有人工作答",
+          "focus": "未有人工作答",
+          "boundary": "未有人工作答"
+        },
+        "all_user_notes": [
+          {
+            "source": "最新整组评论.G189",
+            "text": "24,83都是门洞交界处",
+            "scope": "whole_group_see_interpretation"
+          }
+        ],
+        "prior_discussion": null,
+        "review_history": [
+          {
+            "stage": "initial_648",
+            "values": {
+              "image_id": "uNb9QFRL6hY_6d10858fd25f4c06883c28694ade2c00",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r23",
+              "user_type": "储藏与家务辅助",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "user_dispute_review",
+            "values": {
+              "image_id": "uNb9QFRL6hY_6d10858fd25f4c06883c28694ade2c00",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r23",
+              "user_type": "储藏与家务辅助",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "later_spatial_review",
+            "values": null,
+            "user_revision": {},
+            "applied_fields": []
+          }
+        ]
+      },
+      "earlier_ai_focus": "更衣／卫浴前室为主",
+      "earlier_ai_functions": "通行、更衣"
+    },
+    {
+      "image_id": "uNb9QFRL6hY_7c9caadd3cb34400893356727278e975",
+      "building": "uNb9QFRL6hY",
+      "number": 42,
+      "functional_regions": [
+        "卫浴",
+        "通行"
+      ],
+      "main_space": "厕间外的卫浴前区为主，内侧马桶和坐浴盆可见",
+      "relations": [
+        {
+          "region_a": "通行（卫浴前区）",
+          "region_b": "卫浴（厕间）",
+          "relation": "明确墙体与门洞分隔",
+          "evidence": "原图内侧厕间有完整白门框和打开白门，马桶及坐浴盆在门内。"
+        }
+      ],
+      "relation_scope_note": "仅描述已辨认区域对；门开着仍保留门框/门扇分隔，未由此改变人工交界、同房、标注范围或优先级。",
+      "reason": "原图明确站在厕间外观察内厕位，与用户‘42是房间外的图吧’相容；卫浴粗类可指套内功能，不自动构成人工冲突。",
+      "review_basis": "new_original",
+      "evidence_refs": [
+        "analysis_results/open_layout_recheck_20260913_v1/review_c.json#uNb9QFRL6hY_7c9caadd3cb34400893356727278e975",
+        "analysis_results/scene_image_exploration_20260910_v1/same_room_selection_registry_v2_20260912.json#images/uNb9QFRL6hY_7c9caadd3cb34400893356727278e975",
+        "data/mp3d_layout/test/img/uNb9QFRL6hY_7c9caadd3cb34400893356727278e975.png",
+        "analysis_results/spatial_dimensions_review_20260913_v2/dimensions_c.json#uNb9QFRL6hY_7c9caadd3cb34400893356727278e975"
+      ],
+      "needs_original_followup": false,
+      "human_comparison": "对照人工粗类“卫浴”；人工focus=None，来源=未有人工作答。主要空间表述如复用AI focus仍仅为AI建议；维度拆分不自动冲突，不修改人工同房、交界和标注范围。",
+      "human_conflicts": [],
+      "uncertainties": [
+        "本轮未同时复核61/82，不能把42与它们的房间身份直接确认为新结论；该问题需配对证据，不靠重复42原图解决。"
+      ],
+      "human_original": {
+        "spatial_classification": {
+          "coarse_type": "卫浴",
+          "functions": null,
+          "focus": null,
+          "boundary": null
+        },
+        "field_sources": {
+          "coarse_type": "早期争议复核导出.user_type",
+          "functions": "未有人工作答",
+          "focus": "未有人工作答",
+          "boundary": "未有人工作答"
+        },
+        "all_user_notes": [
+          {
+            "source": "最新整组评论.G196",
+            "text": "42是61,82的房间外的图吧,42疑似oos,但是61,82还是同一张厕所图的",
+            "scope": "whole_group_see_interpretation"
+          }
+        ],
+        "prior_discussion": null,
+        "review_history": [
+          {
+            "stage": "initial_648",
+            "values": {
+              "image_id": "uNb9QFRL6hY_7c9caadd3cb34400893356727278e975",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r7",
+              "user_type": "卫浴",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "user_dispute_review",
+            "values": {
+              "image_id": "uNb9QFRL6hY_7c9caadd3cb34400893356727278e975",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r7",
+              "user_type": "卫浴",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "later_spatial_review",
+            "values": null,
+            "user_revision": {},
+            "applied_fields": []
+          }
+        ]
+      },
+      "earlier_ai_focus": "如厕区入口为主",
+      "earlier_ai_functions": "卫浴"
+    },
+    {
+      "image_id": "uNb9QFRL6hY_9f199750b00c4f5484a546d79e06a0f8",
+      "building": "uNb9QFRL6hY",
+      "number": 50,
+      "functional_regions": [
+        "卫浴",
+        "通行"
+      ],
+      "main_space": "主浴室洗漱浴缸区为主，厕间可见",
+      "relations": [
+        {
+          "region_a": "卫浴（淋浴）",
+          "region_b": "卫浴（主浴室）",
+          "relation": "其他明确分隔",
+          "evidence": "原图透明玻璃侧片、门铰链和入口门槛明确界定淋浴区。"
+        },
+        {
+          "region_a": "卫浴（主浴室）",
+          "region_b": "通行（更衣通道）",
+          "relation": "局部分隔或宽开口",
+          "evidence": "主浴室通向镜面柜通道的口部为局部墙端宽口。"
+        },
+        {
+          "region_a": "卫浴（主浴室）",
+          "region_b": "卫浴（厕间）",
+          "relation": "明确墙体与门洞分隔",
+          "evidence": "马桶处于完整小间，开着白门仍有实体侧墙与门框。"
+        }
+      ],
+      "relation_scope_note": "仅描述已辨认区域对；门开着仍保留门框/门扇分隔，未由此改变人工交界、同房、标注范围或优先级。",
+      "reason": "原图分别记录淋浴玻璃、厕间墙门以及主浴室宽口；中央软凳和梳妆椅是卫浴附属。用户67范围不同及高难度记录仍保留。",
+      "review_basis": "new_original",
+      "evidence_refs": [
+        "analysis_results/open_layout_recheck_20260913_v1/review_c.json#uNb9QFRL6hY_9f199750b00c4f5484a546d79e06a0f8",
+        "analysis_results/scene_image_exploration_20260910_v1/same_room_selection_registry_v2_20260912.json#images/uNb9QFRL6hY_9f199750b00c4f5484a546d79e06a0f8",
+        "data/mp3d_layout/test/img/uNb9QFRL6hY_9f199750b00c4f5484a546d79e06a0f8.png",
+        "analysis_results/spatial_dimensions_review_20260913_v2/dimensions_c.json#uNb9QFRL6hY_9f199750b00c4f5484a546d79e06a0f8"
+      ],
+      "needs_original_followup": false,
+      "human_comparison": "对照人工粗类“卫浴”；人工focus=None，来源=未有人工作答。主要空间表述如复用AI focus仍仅为AI建议；维度拆分不自动冲突，不修改人工同房、交界和标注范围。",
+      "human_conflicts": [],
+      "uncertainties": [],
+      "human_original": {
+        "spatial_classification": {
+          "coarse_type": "卫浴",
+          "functions": null,
+          "focus": null,
+          "boundary": null
+        },
+        "field_sources": {
+          "coarse_type": "早期争议复核导出.user_type",
+          "functions": "未有人工作答",
+          "focus": "未有人工作答",
+          "boundary": "未有人工作答"
+        },
+        "all_user_notes": [
+          {
+            "source": "最新整组评论.G184",
+            "text": "这标注难度很高,我记得有标过. 67的标注空间和剩余的不一致,它是站在浴室里了,但是我记得也有人标了外面的空间",
+            "scope": "whole_group_see_interpretation"
+          }
+        ],
+        "prior_discussion": null,
+        "review_history": [
+          {
+            "stage": "initial_648",
+            "values": {
+              "image_id": "uNb9QFRL6hY_9f199750b00c4f5484a546d79e06a0f8",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r5",
+              "user_type": "卫浴",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "user_dispute_review",
+            "values": {
+              "image_id": "uNb9QFRL6hY_9f199750b00c4f5484a546d79e06a0f8",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r5",
+              "user_type": "卫浴",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "later_spatial_review",
+            "values": null,
+            "user_revision": {},
+            "applied_fields": []
+          }
+        ]
+      },
+      "earlier_ai_focus": "主浴室为主；厕间次要可见",
+      "earlier_ai_functions": "卫浴"
+    },
+    {
+      "image_id": "uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2",
+      "building": "uNb9QFRL6hY",
+      "number": 52,
+      "functional_regions": [
+        "特殊用途",
+        "通行"
+      ],
+      "main_space": "健身器械及运动垫区域为主",
+      "relations": [
+        {
+          "region_a": "特殊用途（健身）",
+          "region_b": "通行（楼梯平台）",
+          "relation": "明确墙体与门洞分隔",
+          "evidence": "跑步机和运动垫旁，台阶平台在拱形双玻璃门后；门扇、铰链和门框可见。"
+        }
+      ],
+      "relation_scope_note": "仅描述已辨认区域对；门开着仍保留门框/门扇分隔，未由此改变人工交界、同房、标注范围或优先级。",
+      "reason": "原图明确跑步机与多张运动垫，右侧边柜画作是附属陈设，不把它解释为独立起居区。旧人工起居休闲可涵盖运动休闲，本建议补健身细项，不强改类别。",
+      "review_basis": "new_original",
+      "evidence_refs": [
+        "analysis_results/open_layout_recheck_20260913_v1/review_c.json#uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2",
+        "analysis_results/scene_image_exploration_20260910_v1/same_room_selection_registry_v2_20260912.json#images/uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2",
+        "data/mp3d_layout/test/img/uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2.png",
+        "analysis_results/spatial_dimensions_review_20260913_v2/dimensions_c.json#uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2"
+      ],
+      "needs_original_followup": false,
+      "human_comparison": "人工起居与休闲是较宽称呼；AI更具体识别健身，有包含关系，不据名称不同列冲突。用户OOS评论保留。",
+      "human_conflicts": [],
+      "uncertainties": [],
+      "human_original": {
+        "spatial_classification": {
+          "coarse_type": "起居与休闲",
+          "functions": null,
+          "focus": null,
+          "boundary": null
+        },
+        "field_sources": {
+          "coarse_type": "早期争议复核导出.user_type",
+          "functions": "未有人工作答",
+          "focus": "未有人工作答",
+          "boundary": "未有人工作答"
+        },
+        "all_user_notes": [
+          {
+            "source": "最新整组评论.G187",
+            "text": "oos",
+            "scope": "whole_group_see_interpretation"
+          }
+        ],
+        "prior_discussion": null,
+        "review_history": [
+          {
+            "stage": "initial_648",
+            "values": {
+              "image_id": "uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r10",
+              "user_type": "起居与休闲",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "user_dispute_review",
+            "values": {
+              "image_id": "uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r10",
+              "user_type": "起居与休闲",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "later_spatial_review",
+            "values": null,
+            "user_revision": {},
+            "applied_fields": []
+          }
+        ]
+      },
+      "earlier_ai_focus": "健身为主",
+      "earlier_ai_functions": "健身"
+    },
+    {
+      "image_id": "uNb9QFRL6hY_ba24e5a57ef34c6dbc0458ed4c1e701d",
+      "building": "uNb9QFRL6hY",
+      "number": 60,
+      "functional_regions": [
+        "卫浴",
+        "通行"
+      ],
+      "main_space": "淋浴入口及主浴室共同呈现，洗漱浴缸区清楚",
+      "relations": [
+        {
+          "region_a": "卫浴（淋浴）",
+          "region_b": "卫浴（主浴室）",
+          "relation": "其他明确分隔",
+          "evidence": "原图透明玻璃侧片、门铰链和入口门槛明确界定淋浴区。"
+        },
+        {
+          "region_a": "卫浴（主浴室）",
+          "region_b": "通行（更衣通道）",
+          "relation": "局部分隔或宽开口",
+          "evidence": "主浴室通向镜面柜通道的口部为局部墙端宽口。"
+        }
+      ],
+      "relation_scope_note": "仅描述已辨认区域对；门开着仍保留门框/门扇分隔，未由此改变人工交界、同房、标注范围或优先级。",
+      "reason": "原图分别记录淋浴玻璃、厕间墙门以及主浴室宽口；中央软凳和梳妆椅是卫浴附属。用户67范围不同及高难度记录仍保留。",
+      "review_basis": "new_original",
+      "evidence_refs": [
+        "analysis_results/open_layout_recheck_20260913_v1/review_c.json#uNb9QFRL6hY_ba24e5a57ef34c6dbc0458ed4c1e701d",
+        "analysis_results/scene_image_exploration_20260910_v1/same_room_selection_registry_v2_20260912.json#images/uNb9QFRL6hY_ba24e5a57ef34c6dbc0458ed4c1e701d",
+        "data/mp3d_layout/test/img/uNb9QFRL6hY_ba24e5a57ef34c6dbc0458ed4c1e701d.png",
+        "analysis_results/spatial_dimensions_review_20260913_v2/dimensions_c.json#uNb9QFRL6hY_ba24e5a57ef34c6dbc0458ed4c1e701d"
+      ],
+      "needs_original_followup": false,
+      "human_comparison": "对照人工粗类“卫浴”；人工focus=None，来源=未有人工作答。主要空间表述如复用AI focus仍仅为AI建议；维度拆分不自动冲突，不修改人工同房、交界和标注范围。",
+      "human_conflicts": [],
+      "uncertainties": [],
+      "human_original": {
+        "spatial_classification": {
+          "coarse_type": "卫浴",
+          "functions": null,
+          "focus": null,
+          "boundary": null
+        },
+        "field_sources": {
+          "coarse_type": "早期争议复核导出.user_type",
+          "functions": "未有人工作答",
+          "focus": "未有人工作答",
+          "boundary": "未有人工作答"
+        },
+        "all_user_notes": [
+          {
+            "source": "最新整组评论.G184",
+            "text": "这标注难度很高,我记得有标过. 67的标注空间和剩余的不一致,它是站在浴室里了,但是我记得也有人标了外面的空间",
+            "scope": "whole_group_see_interpretation"
+          }
+        ],
+        "prior_discussion": null,
+        "review_history": [
+          {
+            "stage": "initial_648",
+            "values": {
+              "image_id": "uNb9QFRL6hY_ba24e5a57ef34c6dbc0458ed4c1e701d",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r5",
+              "user_type": "卫浴",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "user_dispute_review",
+            "values": {
+              "image_id": "uNb9QFRL6hY_ba24e5a57ef34c6dbc0458ed4c1e701d",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r5",
+              "user_type": "卫浴",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "later_spatial_review",
+            "values": null,
+            "user_revision": {},
+            "applied_fields": []
+          }
+        ]
+      },
+      "earlier_ai_focus": "淋浴入口为主；主浴室次要",
+      "earlier_ai_functions": "卫浴"
+    },
+    {
+      "image_id": "uNb9QFRL6hY_dcbe971afee14c57beb3c76980ead77a",
+      "building": "uNb9QFRL6hY",
+      "number": 76,
+      "functional_regions": [
+        "通行",
+        "储藏家务",
+        "卫浴"
+      ],
+      "main_space": "更衣及卫浴前室为主，独立衣帽间与卫浴相邻可见",
+      "relations": [
+        {
+          "region_a": "通行（前室）",
+          "region_b": "储藏家务（衣帽间）",
+          "relation": "明确墙体与门洞分隔",
+          "evidence": "衣帽间内挂衣杆和搁板清楚，有完整木门框及打开的厚木门扇。"
+        },
+        {
+          "region_a": "通行（前室）",
+          "region_b": "卫浴",
+          "relation": "明确墙体与门洞分隔",
+          "evidence": "洗手台/淋浴在前室另一侧完整木框矩形口后，墙端把衣帽间与卫浴分开。"
+        },
+        {
+          "region_a": "储藏家务（衣帽间）",
+          "region_b": "卫浴",
+          "relation": "明确墙体与门洞分隔",
+          "evidence": "两者分居实体墙两侧，分别由前室的独立口部进入；不是同一无墙区域。"
+        }
+      ],
+      "relation_scope_note": "仅描述已辨认区域对；门开着仍保留门框/门扇分隔，未由此改变人工交界、同房、标注范围或优先级。",
+      "reason": "原图确认独立衣帽间与前室壁柜须分开：木镜面壁柜属前室附属储藏，不将整面柜门当独立房门。保留人工储藏家务粗类。",
+      "review_basis": "new_original",
+      "evidence_refs": [
+        "analysis_results/open_layout_recheck_20260913_v1/review_c.json#uNb9QFRL6hY_dcbe971afee14c57beb3c76980ead77a",
+        "analysis_results/scene_image_exploration_20260910_v1/same_room_selection_registry_v2_20260912.json#images/uNb9QFRL6hY_dcbe971afee14c57beb3c76980ead77a",
+        "data/mp3d_layout/test/img/uNb9QFRL6hY_dcbe971afee14c57beb3c76980ead77a.png",
+        "analysis_results/spatial_dimensions_review_20260913_v2/dimensions_c.json#uNb9QFRL6hY_dcbe971afee14c57beb3c76980ead77a"
+      ],
+      "needs_original_followup": false,
+      "human_comparison": "对照人工粗类“储藏与家务辅助”；人工focus=None，来源=未有人工作答。主要空间表述如复用AI focus仍仅为AI建议；维度拆分不自动冲突，不修改人工同房、交界和标注范围。",
+      "human_conflicts": [],
+      "uncertainties": [],
+      "human_original": {
+        "spatial_classification": {
+          "coarse_type": "储藏与家务辅助",
+          "functions": null,
+          "focus": null,
+          "boundary": null
+        },
+        "field_sources": {
+          "coarse_type": "早期争议复核导出.user_type",
+          "functions": "未有人工作答",
+          "focus": "未有人工作答",
+          "boundary": "未有人工作答"
+        },
+        "all_user_notes": [],
+        "prior_discussion": null,
+        "review_history": [
+          {
+            "stage": "initial_648",
+            "values": {
+              "image_id": "uNb9QFRL6hY_dcbe971afee14c57beb3c76980ead77a",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r23",
+              "user_type": "储藏与家务辅助",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "user_dispute_review",
+            "values": {
+              "image_id": "uNb9QFRL6hY_dcbe971afee14c57beb3c76980ead77a",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r23",
+              "user_type": "储藏与家务辅助",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "later_spatial_review",
+            "values": null,
+            "user_revision": {},
+            "applied_fields": []
+          }
+        ]
+      },
+      "earlier_ai_focus": "更衣／卫浴前室为主",
+      "earlier_ai_functions": "通行、更衣"
+    },
+    {
+      "image_id": "uNb9QFRL6hY_ddd25dd6cdec45f1a5222ed50c061b9b",
+      "building": "uNb9QFRL6hY",
+      "number": 77,
+      "functional_regions": [
+        "通行",
+        "储藏家务",
+        "卫浴"
+      ],
+      "main_space": "更衣及卫浴前室为主，独立衣帽间与卫浴相邻可见",
+      "relations": [
+        {
+          "region_a": "通行（前室）",
+          "region_b": "储藏家务（衣帽间）",
+          "relation": "明确墙体与门洞分隔",
+          "evidence": "衣帽间内挂衣杆和搁板清楚，有完整木门框及打开的厚木门扇。"
+        },
+        {
+          "region_a": "通行（前室）",
+          "region_b": "卫浴",
+          "relation": "明确墙体与门洞分隔",
+          "evidence": "洗手台/淋浴在前室另一侧完整木框矩形口后，墙端把衣帽间与卫浴分开。"
+        },
+        {
+          "region_a": "储藏家务（衣帽间）",
+          "region_b": "卫浴",
+          "relation": "明确墙体与门洞分隔",
+          "evidence": "两者分居实体墙两侧，分别由前室的独立口部进入；不是同一无墙区域。"
+        }
+      ],
+      "relation_scope_note": "仅描述已辨认区域对；门开着仍保留门框/门扇分隔，未由此改变人工交界、同房、标注范围或优先级。",
+      "reason": "原图确认独立衣帽间与前室壁柜须分开：木镜面壁柜属前室附属储藏，不将整面柜门当独立房门。保留人工储藏家务粗类。",
+      "review_basis": "new_original",
+      "evidence_refs": [
+        "analysis_results/open_layout_recheck_20260913_v1/review_c.json#uNb9QFRL6hY_ddd25dd6cdec45f1a5222ed50c061b9b",
+        "analysis_results/scene_image_exploration_20260910_v1/same_room_selection_registry_v2_20260912.json#images/uNb9QFRL6hY_ddd25dd6cdec45f1a5222ed50c061b9b",
+        "data/mp3d_layout/test/img/uNb9QFRL6hY_ddd25dd6cdec45f1a5222ed50c061b9b.png",
+        "analysis_results/spatial_dimensions_review_20260913_v2/dimensions_c.json#uNb9QFRL6hY_ddd25dd6cdec45f1a5222ed50c061b9b"
+      ],
+      "needs_original_followup": false,
+      "human_comparison": "对照人工粗类“储藏与家务辅助”；人工focus=None，来源=未有人工作答。主要空间表述如复用AI focus仍仅为AI建议；维度拆分不自动冲突，不修改人工同房、交界和标注范围。",
+      "human_conflicts": [],
+      "uncertainties": [],
+      "human_original": {
+        "spatial_classification": {
+          "coarse_type": "储藏与家务辅助",
+          "functions": null,
+          "focus": null,
+          "boundary": null
+        },
+        "field_sources": {
+          "coarse_type": "早期争议复核导出.user_type",
+          "functions": "未有人工作答",
+          "focus": "未有人工作答",
+          "boundary": "未有人工作答"
+        },
+        "all_user_notes": [
+          {
+            "source": "最新整组评论.G189",
+            "text": "24,83都是门洞交界处",
+            "scope": "whole_group_see_interpretation"
+          }
+        ],
+        "prior_discussion": null,
+        "review_history": [
+          {
+            "stage": "initial_648",
+            "values": {
+              "image_id": "uNb9QFRL6hY_ddd25dd6cdec45f1a5222ed50c061b9b",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r23",
+              "user_type": "储藏与家务辅助",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "user_dispute_review",
+            "values": {
+              "image_id": "uNb9QFRL6hY_ddd25dd6cdec45f1a5222ed50c061b9b",
+              "building": "uNb9QFRL6hY",
+              "split": "test",
+              "user_room": "r23",
+              "user_type": "储藏与家务辅助",
+              "user_boundary": "",
+              "user_doorway": "否",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": ""
+            },
+            "user_revision": null,
+            "applied_fields": null
+          },
+          {
+            "stage": "later_spatial_review",
+            "values": null,
+            "user_revision": {},
+            "applied_fields": []
+          }
+        ]
+      },
+      "earlier_ai_focus": "更衣／卫浴前室为主",
+      "earlier_ai_functions": "通行、更衣"
+    }
+  ]
+}

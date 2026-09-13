@@ -9,6 +9,9 @@ const reasonText = {
   vertical_pair_mismatch:"上下端点横坐标不同；原始视图保留各自射线",
   preview_order_changed_fit_not_recomputed:"预览顺序已调整；浏览器未重跑约束拟合",
   preview_order_changed_geometry_not_revalidated:"预览顺序副本未重跑几何有效性检查",
+  preview_order_semantics_unconfirmed:"当前轮廓仅做显示有效性检查，排列语义仍需人工确认",
+  preview_ceiling_invalid:"当前天花板代理轮廓自交或退化",
+  preview_coordinates_unavailable:"部分代理坐标缺失或非有限，不能组成完整表面",
   ambiguous_axis_assignment:"部分墙面主方向归属含混", optimizer_failed:"约束优化未可靠完成"
 };
 let currentCase=0, currentVariant=0, geometry=null, originalImage=null, imageToken=0;
@@ -33,13 +36,57 @@ function parsePermutation(text,n){
   throw new Error(`排列必须完整且不重复：1…${n} 或 0…${n-1}`);
 }
 
+function previewPolygon(points){
+  const invalid={valid:false,triangles:[],issues:["invalid_footprint"]};
+  if(!Array.isArray(points)||points.length<3||points.some(p=>!Array.isArray(p)||p.length!==3||!p.every(Number.isFinite)))
+    return {...invalid,issues:["preview_coordinates_unavailable"]};
+  const p=points.map(v=>new THREE.Vector2(v[0],v[2])),n=p.length;
+  const scale=Math.max(...p.map(v=>v.x))-Math.min(...p.map(v=>v.x));
+  const depth=Math.max(...p.map(v=>v.y))-Math.min(...p.map(v=>v.y));
+  const lengthEps=Math.max(scale,depth,1)*1e-8,areaEps=lengthEps*Math.max(scale,depth,1);
+  const turn=(a,b,c)=>(b.x-a.x)*(c.y-a.y)-(b.y-a.y)*(c.x-a.x);
+  const onSegment=(a,b,c)=>Math.abs(turn(a,b,c))<=areaEps&&
+    c.x>=Math.min(a.x,b.x)-lengthEps&&c.x<=Math.max(a.x,b.x)+lengthEps&&
+    c.y>=Math.min(a.y,b.y)-lengthEps&&c.y<=Math.max(a.y,b.y)+lengthEps;
+  for(let i=0;i<n;i++){
+    const a=p[i],b=p[(i+1)%n],c=p[(i+2)%n];
+    if(a.distanceTo(b)<=lengthEps)return {...invalid,issues:["duplicate_or_zero_edge","invalid_footprint"]};
+    // Adjacent collinear edges may continue forward, but cannot double back.
+    if(Math.abs(turn(a,b,c))<=areaEps&&(b.x-a.x)*(c.x-b.x)+(b.y-a.y)*(c.y-b.y)<0)return invalid;
+    for(let j=i+1;j<n;j++){
+      if(j===i+1||(i===0&&j===n-1))continue;
+      const c=p[j],d=p[(j+1)%n],s=[turn(a,b,c),turn(a,b,d),turn(c,d,a),turn(c,d,b)];
+      if(onSegment(a,b,c)||onSegment(a,b,d)||onSegment(c,d,a)||onSegment(c,d,b)||
+        ((s[0]>areaEps&&s[1]<-areaEps||s[0]<-areaEps&&s[1]>areaEps)&&
+         (s[2]>areaEps&&s[3]<-areaEps||s[2]<-areaEps&&s[3]>areaEps)))return invalid;
+    }
+  }
+  const area=p.reduce((s,a,i)=>s+a.x*p[(i+1)%n].y-p[(i+1)%n].x*a.y,0)/2;
+  if(Math.abs(area)<=areaEps)return invalid;
+  const triangles=THREE.ShapeUtils.triangulateShape(p,[]);
+  const triangleArea=triangles.reduce((s,t)=>s+Math.abs(turn(p[t[0]],p[t[1]],p[t[2]]))/2,0);
+  if(!triangles.length||Math.abs(triangleArea-Math.abs(area))>areaEps*n)return invalid;
+  const origin=new THREE.Vector2(0,0);
+  const visible=p.every((a,i)=>Math.sign(area)*turn(a,p[(i+1)%n],origin)>areaEps);
+  return {valid:true,triangles,issues:visible?[]:["camera_visibility_unresolved"],area:Math.abs(area)};
+}
+
 function orderedPreview(source,order){
   const result=clone(source),changed=order.some((value,index)=>value!==index);
   result.pairs=order.map(index=>clone(source.pairs[index]));
   for(const key of ["floor","ceiling"]){if(source.raw[key])result.raw[key]=order.map(index=>clone(source.raw[key][index]));}
   if(changed){
-    result.raw.surface_valid=false;result.raw.metrics=null;
-    result.raw.issues=[...new Set([...(result.raw.issues||[]),"preview_order_changed_geometry_not_revalidated"])];
+    const floor=previewPolygon(result.raw.floor),ceiling=previewPolygon(result.raw.ceiling);
+    // Old triangle indices address the old vertex ring; always triangulate the new ring.
+    result.raw.floor_triangles=floor.triangles;result.raw.ceiling_triangles=ceiling.triangles;
+    result.raw.surface_valid=floor.valid&&ceiling.valid;result.raw.metrics=null;
+    result.raw.source_issues=clone(source.raw.issues||[]);
+    const recomputed=new Set(["invalid_footprint","duplicate_or_zero_edge","camera_visibility_unresolved",
+      "preview_order_changed_geometry_not_revalidated"]);
+    result.raw.issues=[...new Set([...(source.raw.issues||[]).filter(i=>!recomputed.has(i)),...floor.issues,
+      ...(!ceiling.valid?["preview_ceiling_invalid"]:[]),"preview_order_semantics_unconfirmed"])];
+    result.raw.preview_validation={scope:"floor_and_ceiling_proxy_polygon_only",floor_valid:floor.valid,
+      ceiling_valid:ceiling.valid,source_order_changed:true,annotation_correctness_confirmed:false};
     result.fit={status:"blocked",reasons:["preview_order_changed_fit_not_recomputed"]};
   }
   return result;
@@ -77,15 +124,16 @@ function orderRecord(){
     original_point_id_semantics:"parsed_only_from_source_pair_id_raw_top_bottom; null_when_unparseable",
     preview_source_pair_ids:geometry?.pairs.map(pair=>pair.source_pair_id)||[],history:clone(orderHistory),
     group_unit:"paired_top_bottom_endpoints",top_bottom_roles_preserved:true,source_coordinates_modified:false,
+    preview_surface_valid:geometry?.raw.surface_valid||false,preview_validation:geometry?.raw.preview_validation||null,
     source_geometry_writeback:false,fit_recomputed:false,source_fit_status:sourceGeometry?.fit?.status||null,
     fit_available_in_preview:previewOrder.every((v,i)=>v===i)&&sourceGeometry?.fit?.status==="ok"};
 }
 
 function updateOrderEditor(){
   const changed=previewOrder.some((value,index)=>value!==index),n=previewOrder.length;
-  $("order-status").textContent=!geometry?"无可核对点组":changed?"预览副本 · 拟合禁用":sourceGeometry.fit?.status==="ok"?"原始顺序 · 拟合可用":"原始顺序 · 原拟合不可用";
+  $("order-status").textContent=!geometry?"无可核对点组":changed?(geometry.raw.surface_valid?"代理面可显示 · 拟合禁用":"轮廓异常 · 线框预览"):sourceGeometry.fit?.status==="ok"?"原始顺序 · 拟合可用":"原始顺序 · 原拟合不可用";
   $("order-permutation").value=previewOrder.map(value=>value+1).join(",");
-  $("order-map").textContent=geometry?geometry.pairs.map((pair,index)=>{const ids=sourcePointIds(pair),raw=ids[0]===null?"原始点 ID 不可解析 (null)":`原始点 ID top=${ids[0]}, bottom=${ids[1]}`;return `预览组 ${index+1} (payload slots ${2*index},${2*index+1}) ← 原始组 ${previewOrder[index]+1} (payload slots ${2*previewOrder[index]},${2*previewOrder[index]+1}) · source_pair_id=${pair.source_pair_id} · ${raw}`;}).join("\n"):"无法排序：payload 不含可核对点组；请先核对上下配对，不自动造组。";
+  $("order-map").textContent=geometry?geometry.pairs.map((pair,index)=>{const ids=sourcePointIds(pair),raw=ids[0]===null?"原始点 ID 不可解析 (null)":`原始点 ID top=${ids[0]}, bottom=${ids[1]}`;return `预览组 ${index+1} (payload slots, 0-based: ${2*index},${2*index+1}) ← 原始组 ${previewOrder[index]+1} (payload slots, 0-based: ${2*previewOrder[index]},${2*previewOrder[index]+1}) · source_pair_id=${pair.source_pair_id} · ${raw}`;}).join("\n"):"无法排序：payload 不含可核对点组；请先核对上下配对，不自动造组。";
   $("order-earlier").disabled=!selected||selected.index===0;$("order-later").disabled=!selected||selected.index===n-1;
   $("order-restore").disabled=!changed;$("order-export").disabled=!geometry;$("order-apply").disabled=!geometry;$("order-permutation").disabled=!geometry;
 }
@@ -451,9 +499,13 @@ function updateMetrics(variant){
   const notes=[...raw.issues,...(fit.reasons||[])];
   $("issues").classList.toggle("warning",notes.length>0);
   $("issues").textContent=notes.length?reasons([...new Set(notes)]):"当前几何检查通过。约束结果仅供对照，不代表正确性判断。";
-  $("raw-caption").textContent=raw.surface_valid?"水平地面 · 原始角点射线":"输入异常 · 保留可解析线框";
+  $("raw-title").textContent=raw.preview_validation?"顺序预览副本":"原始重建";
+  $("raw-caption").textContent=raw.preview_validation?
+    (raw.surface_valid?"预览排列 · 代理面，语义未确认":"预览轮廓异常 · 线框"):
+    raw.surface_valid?"水平地面 · 原始角点射线":"输入异常 · 保留可解析线框";
   $("fit-caption").textContent=fit.status==="ok"?"固定主方向 · 共面天花板":"未生成约束房间";
   const pre=document.createElement("pre");pre.textContent=JSON.stringify(variant.source,null,2);
+  if(raw.preview_validation)pre.textContent+="\n\n原始顺序诊断（保留，不作为当前轮廓检查结果）：\n"+reasons(raw.source_issues);
   $("provenance").replaceChildren(pre);
 }
 
@@ -465,7 +517,7 @@ function chooseVariant(index,resetView=false){
   if(!geometry){selected=null;$("issues").textContent="输入无法解析："+variant.error;$("mean-error").textContent="—";
     $("fit-empty").hidden=false;$("fit-empty").textContent=variant.error;
     $("metrics").replaceChildren();$("pair-buttons").replaceChildren();$("selection-details").textContent="";
-    $("raw-caption").textContent="输入无法解析";$("fit-caption").textContent="未生成约束房间";
+    $("raw-title").textContent="原始重建";$("raw-caption").textContent="输入无法解析";$("fit-caption").textContent="未生成约束房间";
     $("provenance").textContent=JSON.stringify(variant.source);$("issues").classList.add("warning");
     document.querySelector(".selection-block").classList.remove("has-selection");
     rebuild();drawPanorama();drawCrop();updateOrderEditor();return;}
@@ -477,6 +529,11 @@ function chooseVariant(index,resetView=false){
 async function chooseCase(index){
   const token=++imageToken;currentCase=(index+dataset.cases.length)%dataset.cases.length;$("fatal").hidden=true;
   const c=dataset.cases[currentCase];$("case-select").value=currentCase;
+  if(c.history_script&&!c.history_loaded){
+    try{await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=c.history_script;s.onload=resolve;s.onerror=()=>reject(new Error('历史标注包读取失败'));document.head.append(s);});}
+    catch(e){if(token===imageToken){$("fatal").hidden=false;$("fatal").textContent=e.message;}return;}
+    if(token!==imageToken)return;
+  }
   $("case-count").textContent=String(currentCase+1).padStart(2,"0")+" / "+dataset.cases.length;
   $("case-title").textContent=c.title;$("image-id").textContent=c.image_id;$("category").textContent=c.category||"布局观察";
   $("variant-select").replaceChildren(...c.variants.map((v,i)=>{const o=document.createElement("option");o.value=i;o.textContent=v.name;return o;}));
@@ -484,6 +541,7 @@ async function chooseCase(index){
   $("texture-state").textContent="正在载入原图…";
   const defaultIndex=Math.max(0,c.variants.findIndex(v=>v.source.role==="dataset_reference"));
   $("variant-select").value=defaultIndex;chooseVariant(defaultIndex,true);
+  document.dispatchEvent(new CustomEvent('studio-case',{detail:c}));
   try{
     if(!window.STUDIO_IMAGES[currentCase])await new Promise((resolve,reject)=>{
       const s=document.createElement("script");s.src=c.image_script;s.onload=resolve;s.onerror=()=>reject(new Error("图像包读取失败"));document.head.append(s);
@@ -549,7 +607,7 @@ for(const v of views){let start=null;
   });
   v.renderer.domElement.addEventListener("pointerup",()=>start=null);
 }
-$("bundle-stats").textContent=dataset.counts.cases+" 个验证案例 · "+dataset.counts.variants+" 个来源版本";
+$("bundle-stats").textContent=dataset.counts.cases+" 个图像案例 · "+dataset.counts.variants+" 个来源版本";
 // Read-only test seam: expose state, never a geometry mutation or save API.
 window.STUDIO={snapshot:()=>({caseIndex:currentCase,variantIndex:currentVariant,materialMode,viewMode,selected,endpoint,
   imageReady:!!originalImage,textureReady:!!texture,fitStatus:geometry?.fit.status,

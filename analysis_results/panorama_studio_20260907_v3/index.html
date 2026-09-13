@@ -5,7 +5,7 @@
   <title>空间标本 · 全景布局审查</title>
   <link rel="stylesheet" href="studio.css">
   <script defer src="three.min.js"></script><script defer src="OrbitControls.js"></script>
-  <script defer src="data.js"></script><script defer src="studio.js"></script>
+  <script defer src="data.js"></script><script defer src="history_data.js"></script><script defer src="studio.js"></script><script defer src="history.js"></script><link rel="stylesheet" href="history.css">
 </head>
 <body>
   <header class="masthead">
@@ -30,7 +30,7 @@
         </div>
         <div class="compare-grid" id="compare-grid">
           <article class="model-card" id="card-raw">
-            <div class="model-header"><div><span class="eyebrow">01 / OBSERVATION</span><h3>原始重建</h3></div><button class="expand" data-expand="raw" aria-label="放大原始模型">⛶</button></div>
+            <div class="model-header"><div><span class="eyebrow">01 / OBSERVATION</span><h3 id="raw-title">原始重建</h3></div><button class="expand" data-expand="raw" aria-label="放大原始模型">⛶</button></div>
             <div class="viewport" id="viewport-raw"><div class="labels-layer"></div></div>
             <div class="model-footer"><span id="raw-caption">水平地面 · 保留原始角点</span><span>相对尺度</span></div>
           </article>

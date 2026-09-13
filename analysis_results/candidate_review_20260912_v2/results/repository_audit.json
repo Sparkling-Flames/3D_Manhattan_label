@@ -1,0 +1,252 @@
+{
+  "status": "passed",
+  "registry_images": 648,
+  "candidate_groups": 22,
+  "candidate_images": 112,
+  "buildings": 13,
+  "raw_exports": 18,
+  "raw_versions": 2513,
+  "canonical_checked": 2501,
+  "raw_unique_worker_images": 2499,
+  "local_images_present": 112,
+  "current_participants": [
+    1,
+    2,
+    6,
+    8,
+    10,
+    12,
+    13,
+    15,
+    17,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37
+  ],
+  "old20_budget_scenarios": {
+    "15_pooled": 282,
+    "15_active19": 284,
+    "19_pooled": 362,
+    "19_active19": 364
+  },
+  "field_coverage": {
+    "all_canonical": {
+      "n": 2501,
+      "difficulty": 2500,
+      "model_issue": 574,
+      "scope": 2500
+    },
+    "usable_manual_all_workers": {
+      "n": 1887,
+      "difficulty": 1887,
+      "model_issue": 0,
+      "scope": 1887
+    },
+    "usable_manual_active19": {
+      "n": 1524,
+      "difficulty": 1524,
+      "model_issue": 0,
+      "scope": 1524
+    },
+    "all_semi": {
+      "n": 574,
+      "difficulty": 574,
+      "model_issue": 574,
+      "scope": 574
+    }
+  },
+  "meta_frequencies": {
+    "all_canonical": {
+      "difficulty": {
+        "trivial": 897,
+        "occlusion": 1298,
+        "low_texture": 215,
+        "seam": 264,
+        "low_quality": 125,
+        "reflection": 328
+      },
+      "model_issue": {
+        "corner_drift": 112,
+        "over_parsing": 85,
+        "overextend_adjacent": 69,
+        "acceptable": 276,
+        "corner_duplicate": 125,
+        "underextend": 19,
+        "topology_failure": 5,
+        "fail": 5
+      },
+      "scope": {
+        "normal": 1984,
+        "oos_open_boundary": 279,
+        "oos_split_level": 91,
+        "oos_geometry": 116,
+        "oos_insufficient": 30
+      }
+    },
+    "usable_manual_all_workers": {
+      "difficulty": {
+        "trivial": 586,
+        "occlusion": 1067,
+        "low_texture": 171,
+        "seam": 217,
+        "low_quality": 106,
+        "reflection": 273
+      },
+      "model_issue": {},
+      "scope": {
+        "normal": 1447,
+        "oos_split_level": 84,
+        "oos_geometry": 95,
+        "oos_open_boundary": 235,
+        "oos_insufficient": 26
+      }
+    },
+    "usable_manual_active19": {
+      "difficulty": {
+        "trivial": 488,
+        "seam": 184,
+        "low_texture": 127,
+        "occlusion": 854,
+        "low_quality": 93,
+        "reflection": 201
+      },
+      "model_issue": {},
+      "scope": {
+        "normal": 1164,
+        "oos_split_level": 50,
+        "oos_geometry": 84,
+        "oos_open_boundary": 202,
+        "oos_insufficient": 24
+      }
+    },
+    "all_semi": {
+      "difficulty": {
+        "trivial": 293,
+        "seam": 37,
+        "occlusion": 224,
+        "low_texture": 44,
+        "low_quality": 15,
+        "reflection": 46
+      },
+      "model_issue": {
+        "corner_drift": 112,
+        "over_parsing": 85,
+        "overextend_adjacent": 69,
+        "acceptable": 276,
+        "corner_duplicate": 125,
+        "underextend": 19,
+        "topology_failure": 5,
+        "fail": 5
+      },
+      "scope": {
+        "normal": 510,
+        "oos_open_boundary": 32,
+        "oos_insufficient": 4,
+        "oos_geometry": 21,
+        "oos_split_level": 7
+      }
+    }
+  },
+  "W19_W26_source_count_sensitivity": [
+    {
+      "group": "G179",
+      "number": 65,
+      "included": 25,
+      "without_W19_W26": 24
+    },
+    {
+      "group": "G237",
+      "number": 26,
+      "included": 25,
+      "without_W19_W26": 24
+    },
+    {
+      "group": "G200",
+      "number": 70,
+      "included": 25,
+      "without_W19_W26": 24
+    },
+    {
+      "group": "G027",
+      "number": 11,
+      "included": 25,
+      "without_W19_W26": 24
+    },
+    {
+      "group": "G036",
+      "number": 33,
+      "included": 25,
+      "without_W19_W26": 24
+    },
+    {
+      "group": "G197",
+      "number": 47,
+      "included": 26,
+      "without_W19_W26": 24
+    },
+    {
+      "group": "G014",
+      "number": 8,
+      "included": 25,
+      "without_W19_W26": 24
+    },
+    {
+      "group": "G014",
+      "number": 12,
+      "included": 25,
+      "without_W19_W26": 24
+    }
+  ],
+  "scene_coverage": {
+    "all648": {
+      "images": 648,
+      "adopted_types": {
+        "卧室": 151,
+        "厨房与用餐": 52,
+        "通行与连接": 124,
+        "卫浴": 117,
+        "储藏与家务辅助": 44,
+        "开放复合空间": 9,
+        "采用值为空": 32,
+        "工作与学习": 29,
+        "起居与休闲": 77,
+        "特殊用途": 11,
+        "无法判断": 2
+      },
+      "doorway_working_labels": {
+        "否": 606,
+        "确认": 27,
+        "疑似": 14,
+        "无法判断": 1
+      }
+    },
+    "candidate112": {
+      "images": 112,
+      "adopted_types": {
+        "厨房与用餐": 13,
+        "通行与连接": 8,
+        "开放复合空间": 4,
+        "卧室": 33,
+        "卫浴": 22,
+        "采用值为空": 4,
+        "起居与休闲": 18,
+        "工作与学习": 7,
+        "储藏与家务辅助": 2,
+        "无法判断": 1
+      },
+      "doorway_working_labels": {
+        "否": 110,
+        "确认": 1,
+        "疑似": 1
+      }
+    }
+  },
+  "limitation": "当前快照回查；无新目标结果、视觉裁定、功效证明或最终人员匹配。"
+}

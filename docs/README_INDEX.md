@@ -1,8 +1,23 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
+
+2026-09-13空间分维度续审：[填写入口](../analysis_results/spatial_dimensions_review_20260913_v2/空间关系续审.html)、[人工历轮与OOS核对](../analysis_results/spatial_dimensions_review_20260913_v2/续审说明.md)。功能／主空间／逐对分隔关系分开，六阶段人工记录与OOS作用范围接续，旧“开放复合”仅作历史字段。
+
+2026-09-13开放布局探索复核：[逐图查看](../analysis_results/open_layout_recheck_20260913_v1/开放复合空间复核查看.html)、[说明及待核实清单](../analysis_results/open_layout_recheck_20260913_v1/复核说明.md)。全648图与已选98图分开计数，原人工主区域、评论与新AI建议并列；改类意见需人工核实，不覆盖既有分类。
+
+2026-09-13开放布局探索复核：[逐图查看](../analysis_results/open_layout_recheck_20260913_v1/开放复合空间复核查看.html)、[说明及待核实清单](../analysis_results/open_layout_recheck_20260913_v1/复核说明.md)。全648图与已选98图分开计数，原人工主区域、评论与新AI建议并列；改类意见需人工核实，不覆盖既有分类。
+
+2026-09-13门洞记录：[人工确认整理](../analysis_results/scene_image_exploration_20260910_v1/门洞人工确认整理_20260913.md)、[人工与AI完整台账](../analysis_results/scene_image_exploration_20260910_v1/门洞人工与AI历轮核对_20260913.json)，接续早期全量分类、历轮修正及最新交界评论，非新增视觉裁决。
+
+2026-09-13实际选用（接续两条人工确认）：[新版机器表](../analysis_results/candidate_selection_review_20260913_v2/选用复核机器表.json)、[样本量](../analysis_results/candidate_selection_review_20260913_v2/样本量与复算报告.md)、[收敛与门洞解释](../analysis_results/candidate_selection_review_20260913_v2/设计分析.md)。工具：`tools/thesis_main/analysis/summarize_candidate_decisions_20260913.py`；原话、确认、生效值分存；102图、按主要空间统计、OOS过滤后34张门洞补充候选，实际8人有效共识可判收敛；仅本轮探索设计，不派发。
+
 <!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260811_v23 SHA-256 f3c1ea58d0857a40aa2240b4680b674c76fe2cec8f048f61a643d9e4b74b0588 -->
 # docs 文档索引
 
-2026-09-12图片研究目的：[图片分类与同房间收敛预测研究SOP v6](thesis_main/图片分类与同房间收敛预测研究SOP.md)。早期648图分类及争议复核完整接续，41张仅指后续意见不一致图那一轮；本次260个同房组均已看。最新[说明](../analysis_results/research_direction_review_20260912_v1/人员范围与多视点选图_修订建议.md)及[稳定性SOP](thesis_main/相似场景标注稳定性分析SOP.md)明确：W11退出后续但历史保留，多视点优先、困难图保留、按实际人数观察，无统一追加5人要求；讨论版，不修改正式合同。
+当前完整研究方向：[研究主线与房间／场景选图方案](thesis_main/研究主线与房间场景选图方案_20260912.md)。人数过程、同房预测、相似场景标注与跨房间预测、人员子类与组合；batch指房间／实际场景研究组，采用价值不指批次。候选页v5只填逐图采用与采集安排，全部完成计划标注后离线划分图片、重排人员验证预测，预期难度为简单／中等／困难，门洞覆盖缺口单列。
+
+2026-09-12外部候选包整合：[独立审查与使用说明](../analysis_results/candidate_review_20260912_v2/README_整合审查.md)、[本地候选审查台](../analysis_results/candidate_review_20260912_v2/候选图片审查台.html)。22组112图，人数与预算默认未定；15人及380份仅为外部情景，非最终选图或派发。已回查2501份历史记录。
+
+2026-09-12图片研究目的：[图片分类与同房间收敛预测研究SOP v7](thesis_main/图片分类与同房间收敛预测研究SOP.md)。早期648图分类及争议复核完整接续，41张仅指后续意见不一致图那一轮；本次260个同房组均已看。最新[说明](../analysis_results/research_direction_review_20260912_v1/人员范围与多视点选图_修订建议.md)及[稳定性SOP](thesis_main/相似场景标注稳定性分析SOP.md)明确：W11退出后续但历史保留，多视点优先、困难图保留、按实际人数观察，无统一追加5人要求；讨论版，不修改正式合同。
 
 2026-09-12完整复核结果：[机器关联表v2](../analysis_results/scene_image_exploration_20260910_v1/same_room_selection_registry_v2_20260912.json)、[字段说明](../analysis_results/scene_image_exploration_20260910_v1/同房研究配对复核要求_20260912.md)、[55条评论解释](../analysis_results/scene_image_exploration_20260910_v1/group_comment_interpretation_20260912.json)。关联648图历轮分类、47条早期评论、原组/子集、门洞与一般交界、单图问题及Manual/Semi历史人数；采用值和未亲审AI建议分开，旧v1仅供追溯；生成器`materialize_same_room_selection.py`。
 
@@ -196,7 +211,7 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 
 ## 独立全景 3D 预览
 
-- [空间标本使用与验证说明](label_studio/PANORAMA_STUDIO_v1.md)：独立建筑展台预览、原始／曼哈顿约束对照；2026-09-07 v3 加入手动角点组预览排序、恢复与独立记录导出，不写回标注。
+- [空间标本使用与验证说明](label_studio/PANORAMA_STUDIO_v1.md)：[统一入口](../analysis_results/panorama_studio_20260907_v3/index.html)支持组号查询、Manual/Semi历史分簇、逐人3D及手动角点组预览排序，不写回标注。历史数据由`build_room_history_studio.py`刷新，使用既有canonical快照。
 - [人工问卷与视觉观察核对](../analysis_results/human_review_reconciliation_20260907_v1/README_ZH.md)：50条人工评语与选项核对、点序读取勘误及逐图待确认单；记录完成不代表确定，不填最终裁决。 补充原文enclosed／extended、潜在范围、质量与规则分离的逐条提取；旧候选题仅归档。
 
 ## 人员类型与组合探索（独立口径）

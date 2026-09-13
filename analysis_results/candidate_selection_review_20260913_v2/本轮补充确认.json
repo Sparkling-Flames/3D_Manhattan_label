@@ -1,0 +1,23 @@
+{
+  "schema": "candidate_selection_user_confirmation_v1",
+  "date": "2026-09-13",
+  "source": "本任务用户对两项填写核对的回复",
+  "confirmations": [
+    {
+      "question": "G165整组填了“待定”，但组内3张图均填“采用”。这是有意保留整组待定，还是整组漏选了？我会保留原填写，收到答复后再记录修正。",
+      "user_reply_verbatim": "漏选了,是采用",
+      "target": "groups",
+      "selector": {"group": "G165"},
+      "before": {"adoption": "待定"},
+      "after": {"adoption": "建议采用"}
+    },
+    {
+      "question": "G027整组已采用，备注写“形成了稳定2簇”，但历史图11的采用和采集安排均为“待定”。图11应如何处理？",
+      "user_reply_verbatim": "图11采用，仅复用历史",
+      "target": "decisions",
+      "selector": {"group": "G027", "number": 11},
+      "before": {"selection": "待定", "collection": "待定"},
+      "after": {"selection": "采用", "collection": "仅复用历史"}
+    }
+  ]
+}

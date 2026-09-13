@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>空间关系续审</title>
+<style>
+*{box-sizing:border-box}body{font:16px system-ui,"Microsoft YaHei",sans-serif;background:#edf1f5;color:#203047;margin:0}header{background:white;padding:18px 24px;border-bottom:1px solid #ccd4df}h1{font-size:24px;margin:0 0 8px}p{line-height:1.7}nav{position:sticky;top:0;background:#fff;padding:12px 24px;z-index:2;display:flex;gap:10px;align-items:center;flex-wrap:wrap;border-bottom:1px solid #ccd4df}button,select,input,textarea{font:inherit;padding:8px;border:1px solid #aab8ca;border-radius:5px}button{background:white;cursor:pointer}button:hover{background:#edf4ff}input,textarea{width:100%}textarea{min-height:70px}nav input{width:210px}main{max-width:1300px;margin:20px auto;padding:0 16px}article{background:white;padding:20px;margin-bottom:24px;border-radius:10px;border:1px solid #d3dbe6}h2{font-size:20px}.pano{display:block;width:100%;height:auto}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.field{margin:10px 0;display:block}.field span{display:block;margin-bottom:5px}.initial{background:#edf5ff;border-color:#9ebbdc}.changed{background:#fff0d8!important;border-color:#db8d29!important}.warn{background:#fff0d8;padding:10px;border-left:4px solid #dc932c}.human{background:#f1f3f6;padding:12px;line-height:1.7}.muted{color:#53657d;font-size:14px}details{margin:12px 0}summary{cursor:pointer;font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:1.5}.relation{background:#f7f9fc;border:1px solid #dbe2ec;padding:10px;margin:10px 0}.relation>div{display:flex;align-items:center;gap:8px}.relation input{min-width:0}.relation select{max-width:45%}.badge{display:inline-block;padding:3px 8px;background:#e8eef6;border-radius:4px;margin:3px}footer{padding:20px;text-align:center}@media(max-width:800px){.grid{grid-template-columns:1fr}.relation>div{flex-wrap:wrap}.relation select{max-width:100%}nav{position:static}article{padding:12px}}
+</style>
+<header><h1>空间关系续审 · 功能、主空间、分隔关系</h1>
+<p>粗类按主要用途统计：卧室、卫浴、起居与休闲、厨房与用餐、工作与学习、通行与连接等。长廊、走道、通行区均不另设类别。下方功能、主区与分隔是辅助描述，不是新增细类；旧“开放复合空间”保留历史来源。</p>
+<p class="muted">先看“需核实”。可直接改建议并写评论；蓝色＝原AI建议，橙色＝你改过的值。复核状态只由你手动选择，不会随编辑自动变化。展开历轮记录可以看到原文、预填、修改与来源。</p></header>
+<nav><label>筛选 <select id="filter"><option>需核实</option><option>有不确定性</option><option>有OOS记录</option><option>全部</option><option>本轮已填写</option></select></label>
+<input id="search" aria-label="搜索楼名、组号、编号或主空间" placeholder="楼名 / G179 / 主空间">
+<button id="prev">上一页</button><span id="count" aria-live="polite"></span><button id="next">下一页</button>
+<button id="export">导出本轮填写</button><button id="import">导入本轮填写</button><input hidden id="file" type="file" accept="application/json,.json"><span id="saved" role="status"></span></nav>
+<main id="cards"></main><footer>原始人工导出保持不变；下载的本轮JSON是新增判断层。</footer>
+<script id="source" type="application/json">/*__DATA__*/</script>
+<script>
+const rows=JSON.parse(document.getElementById('source').textContent),byId=new Map(rows.map(r=>[r.image_id,r]));
+const key='spatial_dimensions_review_20260913_v2',schema='spatial_dimensions_user_review_v2';
+const relationTypes=['无明显建筑分隔','局部分隔或宽开口','明确墙体与门洞分隔','其他明确分隔','无法判断'];
+const statuses=['未复核','维持建议','已修改','待讨论'];
+let edits={},page=0;const pageSize=12;
+const E=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const clone=v=>JSON.parse(JSON.stringify(v));
+function base(r){return {functional_regions:r.ai.functional_regions,main_space:r.ai.main_space,relations:r.ai.relations,status:'未复核',note:''}}
+function validate(values){
+ if(!values||!Array.isArray(values.functional_regions)||!values.functional_regions.every(x=>typeof x==='string')||typeof values.main_space!=='string'||typeof values.note!=='string'||!statuses.includes(values.status)||!Array.isArray(values.relations))throw Error('填写字段不完整');
+ for(const x of values.relations)if(!x||!['region_a','region_b','evidence'].every(k=>typeof x[k]==='string')||!relationTypes.includes(x.relation))throw Error('区域关系字段错误');
+ return values;
+}
+try{const stored=localStorage.getItem(key);if(stored){const parsed=JSON.parse(stored);for(const [id,v] of Object.entries(parsed)){if(!byId.has(id))throw Error('保存的图片身份不匹配');validate(v)}edits=parsed}}catch(e){document.getElementById('saved').textContent='未载入旧缓存：'+e.message}
+function store(){try{localStorage.setItem(key,JSON.stringify(edits));document.getElementById('saved').textContent='本地已保存，请定期导出JSON'}catch(e){document.getElementById('saved').textContent='浏览器保存失败，请立即导出JSON'}}
+function fieldClass(v,b){return JSON.stringify(v)===JSON.stringify(b)?'initial':'changed'}
+function raw(title,value){return '<details><summary>'+E(title)+'</summary><pre>'+E(JSON.stringify(value,null,2))+'</pre></details>'}
+function relationEditor(rel,i,baseline){return `<div class="relation"><div><input aria-label="区域A" data-rel="${i}" data-key="region_a" class="${fieldClass(rel.region_a,baseline?.region_a)}" value="${E(rel.region_a)}"><span>↔</span><input aria-label="区域B" data-rel="${i}" data-key="region_b" class="${fieldClass(rel.region_b,baseline?.region_b)}" value="${E(rel.region_b)}"><select aria-label="分隔关系" data-rel="${i}" data-key="relation" class="${fieldClass(rel.relation,baseline?.relation)}">${relationTypes.map(x=>`<option ${rel.relation===x?'selected':''}>${E(x)}</option>`).join('')}</select><button data-remove="${i}" aria-label="删除这条关系">删除</button></div><label class="field"><span>可见结构依据</span><input data-rel="${i}" data-key="evidence" class="${fieldClass(rel.evidence,baseline?.evidence)}" value="${E(rel.evidence)}"></label></div>`}
+function render(){
+ const f=document.getElementById('filter').value,q=document.getElementById('search').value.trim().toLowerCase();
+ const visible=rows.filter(r=>(f==='全部'||f==='需核实'&&r.ai.human_conflicts.length>0||f==='有不确定性'&&r.ai.uncertainties.length>0||f==='有OOS记录'&&r.oos_events.length>0||f==='本轮已填写'&&edits[r.image_id])&&(!q||[r.building,r.number,r.groups.join(' '),r.ai.main_space,r.ai.functional_regions.join(' ')].join(' ').toLowerCase().includes(q)));
+ const pages=Math.max(1,Math.ceil(visible.length/pageSize));page=Math.min(page,pages-1);
+ document.getElementById('count').textContent=`${visible.length}图 · ${page+1}/${pages}页`;
+ document.getElementById('prev').disabled=page===0;document.getElementById('next').disabled=page===pages-1;
+ document.getElementById('cards').innerHTML=visible.slice(page*pageSize,(page+1)*pageSize).map(r=>{
+  const b=base(r),v=edits[r.image_id]||b;
+  const history=r.history;
+  return `<article data-id="${E(r.image_id)}"><h2>${E(r.building)} · ${String(r.number).padStart(2,'0')} <span class="muted">${E(r.groups.join(' / '))}</span></h2>
+  <span class="badge">当前粗类：${E(r.coarse.value||'分类未定')}</span><span class="badge">${r.coarse.human_accepted?'本次用户认可主区后归并':'沿用既有粗类'}</span><span class="badge">${E(r.oos.latest_explicit_opinion?'最新OOS意见：'+r.oos.latest_explicit_opinion:r.oos.status)}</span>
+  <a href="../../${E(r.path)}" target="_blank"><img class="pano" loading="lazy" src="../../${E(r.path)}" alt="${E(r.building)} ${r.number} 全景原图"></a>
+  ${r.ai.human_conflicts.length?'<div class="warn"><b>需与你核实的同一事实判断</b>'+r.ai.human_conflicts.map(c=>'<p>'+E(c.field)+'：人工 '+E(c.human_value)+'；AI '+E(c.ai_value)+'<br>'+E(c.reason)+'<br><small>'+E(c.human_source)+'</small></p>').join('')+'</div>':''}
+  <div class="grid"><section><h3>本轮建议／你的填写</h3>
+  <label class="field"><span>功能区域（多个用＋分开）</span><input data-field="functional_regions" class="${fieldClass(v.functional_regions,b.functional_regions)}" value="${E(v.functional_regions.join('＋'))}"></label>
+  <label class="field"><span>主区域补充描述（不是分类名称）</span><input data-field="main_space" class="${fieldClass(v.main_space,b.main_space)}" value="${E(v.main_space)}"></label>
+  <h4>区域之间的关系</h4>${v.relations.map((x,i)=>relationEditor(x,i,b.relations[i])).join('')}
+  <button data-add>增加一条关系</button><p class="muted">${E(r.ai.relation_scope_note)}</p>
+  <label class="field"><span>本轮复核状态（手动选择）</span><select data-field="status" class="${fieldClass(v.status,b.status)}">${statuses.map(s=>`<option ${v.status===s?'selected':''}>${E(s)}</option>`).join('')}</select></label>
+  <label class="field"><span>你的评论（有具体图片问题请直接写）</span><textarea data-field="note" class="${fieldClass(v.note,b.note)}">${E(v.note)}</textarea></label></section>
+  <section><h3>原人工判断与依据</h3><div class="human">原采用粗类：${E(r.adopted.coarse_type||'未单独归一化，见原文')}<br>原功能：${E(r.adopted.functions||'无独立字段')}<br>原主区域／复核保留值：${E(r.adopted.focus||'见早期区域类别和评论')}<br>主区域来源：${E(r.field_sources.focus)}<br>原门洞工作记录：${E(r.doorway.doorway.current_working_label)}<br>一般交界：${E(r.doorway.general_boundary||'未单列')}</div>
+  <p><b>本轮AI依据：</b>${E(r.ai.reason)}</p><p>${E(r.ai.human_comparison)}</p>${r.root_crosscheck?'<p><b>主代理原图交叉意见：</b>'+E(r.root_crosscheck.reason)+'</p>':''}
+  ${r.ai.uncertainties.length?'<p class="warn">待定信息：'+E(r.ai.uncertainties.join('；'))+'</p>':''}
+  ${raw('当前粗类及来源',r.coarse)}${raw('本次对话已解决的历史争议',r.resolved_conflicts)}${raw('历轮人工评论及讨论',r.comments)}${raw('首次648图：原始填写',history.initial_648)}${raw('早期争议复核：原始填写',history.early_dispute)}
+  ${raw('后续空间复核：预填、改值及合成值（该轮'+(history.later_personally_reviewed?'在亲审范围':'不在亲审范围')+'）',history.later_spatial)}
+  ${raw('早期配对实际填写',r.pair_reviews)}${raw('整组复核原始记录',r.group_reviews)}${raw('最新选图填写',r.selection)}
+  ${raw('OOS原文、作用范围与来源',r.oos_events)}${raw('门洞历轮人工与AI台账',r.doorway)}${raw('全部本轮AI续审证据',r.ai)}</section></div></article>`;
+ }).join('')||'<article>当前筛选没有图片。</article>';
+}
+document.getElementById('cards').addEventListener('input',e=>{
+ const el=e.target,article=el.closest('article');if(!article||(!el.dataset.field&&!el.dataset.key))return;
+ const id=article.dataset.id,r=byId.get(id),v=edits[id]||(edits[id]=clone(base(r))),b=base(r);
+ if(el.dataset.field){const k=el.dataset.field;v[k]=k==='functional_regions'?el.value.split(/[＋+、,，]/).map(x=>x.trim()).filter(Boolean):el.value;el.className=fieldClass(v[k],b[k])}
+ else{const i=Number(el.dataset.rel),k=el.dataset.key;v.relations[i][k]=el.value;el.className=fieldClass(el.value,b.relations[i]?.[k])}
+ store();
+});
+document.getElementById('cards').addEventListener('click',e=>{const el=e.target,a=el.closest('article');if(!a)return;const id=a.dataset.id;
+ if(el.hasAttribute('data-add')||el.hasAttribute('data-remove')){const v=edits[id]||(edits[id]=clone(base(byId.get(id))));if(el.hasAttribute('data-add'))v.relations.push({region_a:'',region_b:'',relation:'无法判断',evidence:''});else v.relations.splice(Number(el.dataset.remove),1);store();render()}});
+document.getElementById('filter').onchange=()=>{page=0;render()};document.getElementById('search').oninput=()=>{page=0;render()};
+document.getElementById('prev').onclick=()=>{page--;render()};document.getElementById('next').onclick=()=>{page++;render()};
+document.getElementById('export').onclick=()=>{
+ const decisions=rows.map(r=>{const initial=base(r),current=edits[r.image_id]||initial;return {image_id:r.image_id,building:r.building,number:r.number,initial_ai:initial,current,has_user_input:!!edits[r.image_id],changed_fields:Object.keys(initial).filter(k=>JSON.stringify(initial[k])!==JSON.stringify(current[k]))}});
+ const result={schema,source_key:key,source_machine_table:'analysis_results/spatial_dimensions_review_20260913_v2/空间描述与历轮人工记录.json',interpretation:'新增人工填写层；历轮原文通过source_machine_table关联保留，未填不等于确认或否定。',saved_at:new Date().toISOString(),decisions};
+ const url=URL.createObjectURL(new Blob([JSON.stringify(result,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='空间关系_我的本轮复核.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+document.getElementById('import').onclick=()=>document.getElementById('file').click();
+document.getElementById('file').onchange=async e=>{try{
+ const file=e.target.files[0];if(!file)return;const d=JSON.parse(await file.text());if(d.schema!==schema||d.source_key!==key||!Array.isArray(d.decisions))throw Error('不是本页导出的复核文件；旧轮记录已在来源区保留');
+ const next={},seen=new Set();for(const x of d.decisions){if(!byId.has(x.image_id)||seen.has(x.image_id))throw Error('图片身份重复或不匹配');seen.add(x.image_id);validate(x.current);if(x.has_user_input)next[x.image_id]=x.current}
+ if(seen.size!==rows.length)throw Error('不是完整648图导出');edits={...edits,...next};store();render();
+ }catch(err){alert('导入失败：'+err.message)}finally{e.target.value=''}};
+render();
+</script></html>

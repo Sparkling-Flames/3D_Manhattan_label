@@ -25,6 +25,7 @@ def test_later_ai_does_not_erase_earlier_human_classification():
     reconcile_spatial_history(result, review, dict(source_user=dict(saved_at='initial', rows=initial), cases=[]), dict(rows=[]))
     assert review == baseline
     a, b, c, d = result['images']
+    assert all(r['review_coverage']['initial_spatial_classification_personally_reviewed'] for r in result['images'])
     assert a['spatial_classification']['coarse_type'] == '卧室'
     assert a['spatial_ai_proposal']['coarse_type'] == '开放复合空间'
     assert a['doorway_reconciliation']['current_working_label'] == '确认'
