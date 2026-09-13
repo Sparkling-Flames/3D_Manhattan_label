@@ -1,0 +1,891 @@
+{
+  "schema": "two_stage_independent_audit_v1",
+  "package": "C:\\Users\\ASUS\\Downloads\\两阶段规则审查与复算包_20260913",
+  "adopted_images": 102,
+  "current_totals": {
+    "category": "确定采用",
+    "images": 102,
+    "groups": 19,
+    "buildings": 13,
+    "history_manual": 383,
+    "history_raw_manual": 384,
+    "history_semi": 69,
+    "new_needed": 1072,
+    "planned_manual": 1455,
+    "capacity_shortfall": 9
+  },
+  "transcription_differences": [
+    {
+      "group": "G172",
+      "number": 71,
+      "field": "difficulty",
+      "external": "中等",
+      "current": "未定",
+      "adopted": false
+    },
+    {
+      "group": "G172",
+      "number": 71,
+      "field": "collection",
+      "external": "需要新增标注",
+      "current": "待定",
+      "adopted": false
+    },
+    {
+      "group": "G014",
+      "number": 8,
+      "field": "collection",
+      "external": "需要新增标注",
+      "current": "待定",
+      "adopted": false
+    },
+    {
+      "group": "G014",
+      "number": 17,
+      "field": "collection",
+      "external": "需要新增标注",
+      "current": "待定",
+      "adopted": false
+    },
+    {
+      "group": "G014",
+      "number": 12,
+      "field": "collection",
+      "external": "需要新增标注",
+      "current": "待定",
+      "adopted": false
+    },
+    {
+      "group": "G014",
+      "number": 22,
+      "field": "collection",
+      "external": "需要新增标注",
+      "current": "待定",
+      "adopted": false
+    }
+  ],
+  "adopted_transcription_differences": [],
+  "raw_audit": {
+    "files": 18,
+    "versions": 2513,
+    "canonical_checked": 2501,
+    "max_coordinate_difference": 4.547473508864641e-13
+  },
+  "witness": {
+    "rows": 480,
+    "images": 43,
+    "existing_response_conflicts": 0,
+    "groups": 19,
+    "buildings": 13
+  },
+  "stage1_manual_total": 863,
+  "below_user_upper": [
+    {
+      "group": "G184",
+      "number": 26,
+      "user_upper": 20,
+      "stage1": 19,
+      "current_cap": 19
+    },
+    {
+      "group": "G184",
+      "number": 88,
+      "user_upper": 20,
+      "stage1": 19,
+      "current_cap": 19
+    },
+    {
+      "group": "G057",
+      "number": 4,
+      "user_upper": 20,
+      "stage1": 19,
+      "current_cap": 19
+    }
+  ],
+  "deferred_positive_gap_images": [
+    {
+      "group": "G179",
+      "number": 55,
+      "image_id": "uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78",
+      "difficulty": "简单",
+      "original_manual": 15,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 15
+    },
+    {
+      "group": "G179",
+      "number": 68,
+      "image_id": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+      "difficulty": "简单",
+      "original_manual": 15,
+      "phase1_manual": 5,
+      "phase1_new": 0,
+      "remain": 10
+    },
+    {
+      "group": "G179",
+      "number": 81,
+      "image_id": "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+      "difficulty": "简单",
+      "original_manual": 15,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 15
+    },
+    {
+      "group": "G179",
+      "number": 86,
+      "image_id": "uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269",
+      "difficulty": "简单",
+      "original_manual": 15,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 15
+    },
+    {
+      "group": "G184",
+      "number": 18,
+      "image_id": "uNb9QFRL6hY_2ed0e171a7c34f17a85363923a26ab98",
+      "difficulty": "困难",
+      "original_manual": 20,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 20
+    },
+    {
+      "group": "G184",
+      "number": 41,
+      "image_id": "uNb9QFRL6hY_76ba70b55bde4313939a4a0cd78a49d3",
+      "difficulty": "困难",
+      "original_manual": 20,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 20
+    },
+    {
+      "group": "G184",
+      "number": 59,
+      "image_id": "uNb9QFRL6hY_b98c9460586e4f138658181461df9f51",
+      "difficulty": "困难",
+      "original_manual": 20,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 20
+    },
+    {
+      "group": "G184",
+      "number": 66,
+      "image_id": "uNb9QFRL6hY_c6410f47ad754d6cbd890ba7dff8b449",
+      "difficulty": "困难",
+      "original_manual": 20,
+      "phase1_manual": 5,
+      "phase1_new": 0,
+      "remain": 15
+    },
+    {
+      "group": "G184",
+      "number": 67,
+      "image_id": "uNb9QFRL6hY_ca08ebfb2da647f68db41630637e400b",
+      "difficulty": "中等",
+      "original_manual": 15,
+      "phase1_manual": 5,
+      "phase1_new": 0,
+      "remain": 10
+    },
+    {
+      "group": "G172",
+      "number": 1,
+      "image_id": "uNb9QFRL6hY_00b4950b469b4520b29f895aa029419c",
+      "difficulty": "中等",
+      "original_manual": 15,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 15
+    },
+    {
+      "group": "G172",
+      "number": 3,
+      "image_id": "uNb9QFRL6hY_05285f9bc0234526bf0f6362679e38d0",
+      "difficulty": "中等",
+      "original_manual": 15,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 15
+    },
+    {
+      "group": "G172",
+      "number": 4,
+      "image_id": "uNb9QFRL6hY_068fb0d52d01455c96fa23659c373bf8",
+      "difficulty": "中等",
+      "original_manual": 15,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 15
+    },
+    {
+      "group": "G172",
+      "number": 9,
+      "image_id": "uNb9QFRL6hY_13a430466eb64e2087e7fb5acde7a398",
+      "difficulty": "中等",
+      "original_manual": 15,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 15
+    },
+    {
+      "group": "G172",
+      "number": 20,
+      "image_id": "uNb9QFRL6hY_3450b3accb584493bf13be8e9554dbea",
+      "difficulty": "中等",
+      "original_manual": 15,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 15
+    },
+    {
+      "group": "G172",
+      "number": 43,
+      "image_id": "uNb9QFRL6hY_84722e58b32f4646acc12614994f835b",
+      "difficulty": "中等",
+      "original_manual": 15,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 15
+    },
+    {
+      "group": "G172",
+      "number": 53,
+      "image_id": "uNb9QFRL6hY_a728d2eef41b449f82357899de802dd3",
+      "difficulty": "中等",
+      "original_manual": 15,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 15
+    },
+    {
+      "group": "G172",
+      "number": 58,
+      "image_id": "uNb9QFRL6hY_b73ae36f994747e196380b1cb71cf407",
+      "difficulty": "中等",
+      "original_manual": 15,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 15
+    },
+    {
+      "group": "G047",
+      "number": 17,
+      "image_id": "S9hNv5qa7GM_dbcf0a37c275473094e1160770291679",
+      "difficulty": "简单",
+      "original_manual": 8,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 8
+    },
+    {
+      "group": "G047",
+      "number": 19,
+      "image_id": "S9hNv5qa7GM_e5e6c99e38014827b50ad33cd22e3c9d",
+      "difficulty": "简单",
+      "original_manual": 8,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 8
+    },
+    {
+      "group": "G057",
+      "number": 1,
+      "image_id": "VFuaQ6m2Qom_109e18c64a614dc49e41a33ae979f98a",
+      "difficulty": "困难",
+      "original_manual": 20,
+      "phase1_manual": 2,
+      "phase1_new": 0,
+      "remain": 18
+    },
+    {
+      "group": "G057",
+      "number": 2,
+      "image_id": "VFuaQ6m2Qom_24d1e0ee55a542b68d600b81eae4f4d4",
+      "difficulty": "困难",
+      "original_manual": 20,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 20
+    },
+    {
+      "group": "G057",
+      "number": 11,
+      "image_id": "VFuaQ6m2Qom_f75a440593bb4140b899730917096859",
+      "difficulty": "困难",
+      "original_manual": 20,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 20
+    },
+    {
+      "group": "G237",
+      "number": 2,
+      "image_id": "yqstnuAEVhm_19e4188fa39244378481dcdb18c42dbe",
+      "difficulty": "简单",
+      "original_manual": 8,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 8
+    },
+    {
+      "group": "G141",
+      "number": 25,
+      "image_id": "pa4otMbVnkk_867c64cd8f474949bcd87100dc18c2d4",
+      "difficulty": "中等",
+      "original_manual": 15,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 15
+    },
+    {
+      "group": "G141",
+      "number": 29,
+      "image_id": "pa4otMbVnkk_8d9a72e210cd480a897945c465e5cade",
+      "difficulty": "中等",
+      "original_manual": 15,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 15
+    },
+    {
+      "group": "G141",
+      "number": 41,
+      "image_id": "pa4otMbVnkk_e976f604378648b3bd1d1ed1e9638294",
+      "difficulty": "中等",
+      "original_manual": 15,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 15
+    },
+    {
+      "group": "G205",
+      "number": 22,
+      "image_id": "wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66",
+      "difficulty": "简单",
+      "original_manual": 8,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 8
+    },
+    {
+      "group": "G205",
+      "number": 29,
+      "image_id": "wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366",
+      "difficulty": "简单",
+      "original_manual": 8,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 8
+    },
+    {
+      "group": "G205",
+      "number": 61,
+      "image_id": "wc2JMjhGNzB_e6693f97b36545f7a76e03c3fe32ba8c",
+      "difficulty": "简单",
+      "original_manual": 8,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 8
+    },
+    {
+      "group": "G078",
+      "number": 8,
+      "image_id": "Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45",
+      "difficulty": "简单",
+      "original_manual": 8,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 8
+    },
+    {
+      "group": "G109",
+      "number": 1,
+      "image_id": "jtcxE69GiFV_001ad2ad14234e06b2d996d71bb96fc4",
+      "difficulty": "中等",
+      "original_manual": 15,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 15
+    },
+    {
+      "group": "G109",
+      "number": 20,
+      "image_id": "jtcxE69GiFV_87e96c5b923840bc8276d949ff157948",
+      "difficulty": "中等",
+      "original_manual": 15,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 15
+    },
+    {
+      "group": "G015",
+      "number": 11,
+      "image_id": "7y3sRwLe3Va_606f9842b8af48daa28f10df8b69d861",
+      "difficulty": "中等",
+      "original_manual": 15,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 15
+    },
+    {
+      "group": "G002",
+      "number": 3,
+      "image_id": "2t7WUuJeko7_218fdf5321f9482e85e828c56f2c0c94",
+      "difficulty": "简单",
+      "original_manual": 8,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 8
+    },
+    {
+      "group": "G002",
+      "number": 17,
+      "image_id": "2t7WUuJeko7_edc7b2c25f054ce8992ae3fb66e80881",
+      "difficulty": "中等",
+      "original_manual": 15,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 15
+    },
+    {
+      "group": "G178",
+      "number": 72,
+      "image_id": "uNb9QFRL6hY_d5c47aa99b274a67b305aa601234f1f1",
+      "difficulty": "简单",
+      "original_manual": 12,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 12
+    },
+    {
+      "group": "G178",
+      "number": 78,
+      "image_id": "uNb9QFRL6hY_e0b8950793b447bd8b9f916e98e849d1",
+      "difficulty": "简单",
+      "original_manual": 12,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 12
+    },
+    {
+      "group": "G178",
+      "number": 79,
+      "image_id": "uNb9QFRL6hY_e24473d2b8a24568b89c1c4c2a4a9bf1",
+      "difficulty": "简单",
+      "original_manual": 12,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 12
+    },
+    {
+      "group": "G178",
+      "number": 87,
+      "image_id": "uNb9QFRL6hY_fd411e4f6035431593833d9d0beb4d32",
+      "difficulty": "简单",
+      "original_manual": 12,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 12
+    },
+    {
+      "group": "G090",
+      "number": 28,
+      "image_id": "e9zR4mvMWw7_891cb55a08dd4aea9ee76656f6b4850d",
+      "difficulty": "简单",
+      "original_manual": 8,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 8
+    },
+    {
+      "group": "G090",
+      "number": 26,
+      "image_id": "e9zR4mvMWw7_83347153d2184d33869626c6c83318f9",
+      "difficulty": "简单",
+      "original_manual": 8,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 8
+    },
+    {
+      "group": "G090",
+      "number": 15,
+      "image_id": "e9zR4mvMWw7_2e52341d21b940b5b38a9e26c4cf4200",
+      "difficulty": "简单",
+      "original_manual": 8,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 8
+    },
+    {
+      "group": "G202",
+      "number": 25,
+      "image_id": "wc2JMjhGNzB_479b5e13d201492086bb3b69be5b124d",
+      "difficulty": "中等",
+      "original_manual": 15,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 15
+    },
+    {
+      "group": "G202",
+      "number": 51,
+      "image_id": "wc2JMjhGNzB_aeb3199e10354e45a4884bb185c03257",
+      "difficulty": "中等",
+      "original_manual": 15,
+      "phase1_manual": 0,
+      "phase1_new": 0,
+      "remain": 15
+    }
+  ],
+  "remaining": 592,
+  "group_depth": [
+    {
+      "group": "G179",
+      "adopted": 8,
+      "original_manual_views": 8,
+      "phase1_any_views": 5,
+      "phase1_ge3_views": 5,
+      "phase1_ge8_views": 4,
+      "newly_assigned_views": 2,
+      "new_total": 30
+    },
+    {
+      "group": "G184",
+      "adopted": 9,
+      "original_manual_views": 9,
+      "phase1_any_views": 6,
+      "phase1_ge3_views": 6,
+      "phase1_ge8_views": 4,
+      "newly_assigned_views": 2,
+      "new_total": 28
+    },
+    {
+      "group": "G172",
+      "adopted": 11,
+      "original_manual_views": 11,
+      "phase1_any_views": 3,
+      "phase1_ge3_views": 3,
+      "phase1_ge8_views": 3,
+      "newly_assigned_views": 2,
+      "new_total": 25
+    },
+    {
+      "group": "G047",
+      "adopted": 5,
+      "original_manual_views": 5,
+      "phase1_any_views": 3,
+      "phase1_ge3_views": 3,
+      "phase1_ge8_views": 3,
+      "newly_assigned_views": 2,
+      "new_total": 16
+    },
+    {
+      "group": "G057",
+      "adopted": 6,
+      "original_manual_views": 6,
+      "phase1_any_views": 4,
+      "phase1_ge3_views": 3,
+      "phase1_ge8_views": 3,
+      "newly_assigned_views": 2,
+      "new_total": 27
+    },
+    {
+      "group": "G237",
+      "adopted": 4,
+      "original_manual_views": 4,
+      "phase1_any_views": 3,
+      "phase1_ge3_views": 3,
+      "phase1_ge8_views": 3,
+      "newly_assigned_views": 2,
+      "new_total": 16
+    },
+    {
+      "group": "G165",
+      "adopted": 3,
+      "original_manual_views": 3,
+      "phase1_any_views": 3,
+      "phase1_ge3_views": 3,
+      "phase1_ge8_views": 3,
+      "newly_assigned_views": 2,
+      "new_total": 16
+    },
+    {
+      "group": "G207",
+      "adopted": 4,
+      "original_manual_views": 3,
+      "phase1_any_views": 3,
+      "phase1_ge3_views": 3,
+      "phase1_ge8_views": 3,
+      "newly_assigned_views": 2,
+      "new_total": 16
+    },
+    {
+      "group": "G141",
+      "adopted": 6,
+      "original_manual_views": 6,
+      "phase1_any_views": 3,
+      "phase1_ge3_views": 3,
+      "phase1_ge8_views": 3,
+      "newly_assigned_views": 3,
+      "new_total": 42
+    },
+    {
+      "group": "G205",
+      "adopted": 5,
+      "original_manual_views": 5,
+      "phase1_any_views": 2,
+      "phase1_ge3_views": 2,
+      "phase1_ge8_views": 2,
+      "newly_assigned_views": 2,
+      "new_total": 14
+    },
+    {
+      "group": "G078",
+      "adopted": 4,
+      "original_manual_views": 4,
+      "phase1_any_views": 3,
+      "phase1_ge3_views": 3,
+      "phase1_ge8_views": 3,
+      "newly_assigned_views": 3,
+      "new_total": 19
+    },
+    {
+      "group": "G109",
+      "adopted": 5,
+      "original_manual_views": 5,
+      "phase1_any_views": 3,
+      "phase1_ge3_views": 3,
+      "phase1_ge8_views": 3,
+      "newly_assigned_views": 3,
+      "new_total": 38
+    },
+    {
+      "group": "G015",
+      "adopted": 4,
+      "original_manual_views": 4,
+      "phase1_any_views": 3,
+      "phase1_ge3_views": 3,
+      "phase1_ge8_views": 3,
+      "newly_assigned_views": 3,
+      "new_total": 39
+    },
+    {
+      "group": "G002",
+      "adopted": 5,
+      "original_manual_views": 5,
+      "phase1_any_views": 3,
+      "phase1_ge3_views": 3,
+      "phase1_ge8_views": 3,
+      "newly_assigned_views": 3,
+      "new_total": 38
+    },
+    {
+      "group": "G178",
+      "adopted": 7,
+      "original_manual_views": 7,
+      "phase1_any_views": 3,
+      "phase1_ge3_views": 3,
+      "phase1_ge8_views": 3,
+      "newly_assigned_views": 3,
+      "new_total": 36
+    },
+    {
+      "group": "G090",
+      "adopted": 7,
+      "original_manual_views": 6,
+      "phase1_any_views": 3,
+      "phase1_ge3_views": 3,
+      "phase1_ge8_views": 3,
+      "newly_assigned_views": 3,
+      "new_total": 24
+    },
+    {
+      "group": "G027",
+      "adopted": 2,
+      "original_manual_views": 2,
+      "phase1_any_views": 2,
+      "phase1_ge3_views": 2,
+      "phase1_ge8_views": 2,
+      "newly_assigned_views": 1,
+      "new_total": 12
+    },
+    {
+      "group": "G202",
+      "adopted": 5,
+      "original_manual_views": 5,
+      "phase1_any_views": 3,
+      "phase1_ge3_views": 3,
+      "phase1_ge8_views": 3,
+      "newly_assigned_views": 2,
+      "new_total": 29
+    },
+    {
+      "group": "G197",
+      "adopted": 2,
+      "original_manual_views": 2,
+      "phase1_any_views": 2,
+      "phase1_ge3_views": 2,
+      "phase1_ge8_views": 2,
+      "newly_assigned_views": 1,
+      "new_total": 15
+    }
+  ],
+  "newly_completed_current19": [
+    [
+      "G179",
+      29
+    ],
+    [
+      "G184",
+      26
+    ],
+    [
+      "G184",
+      88
+    ],
+    [
+      "G057",
+      4
+    ],
+    [
+      "G057",
+      10
+    ],
+    [
+      "G202",
+      26
+    ]
+  ],
+  "all_current19_complete_after": [
+    [
+      "G179",
+      8
+    ],
+    [
+      "G179",
+      29
+    ],
+    [
+      "G179",
+      65
+    ],
+    [
+      "G184",
+      26
+    ],
+    [
+      "G184",
+      50
+    ],
+    [
+      "G184",
+      60
+    ],
+    [
+      "G184",
+      88
+    ],
+    [
+      "G172",
+      45
+    ],
+    [
+      "G047",
+      15
+    ],
+    [
+      "G057",
+      4
+    ],
+    [
+      "G057",
+      10
+    ],
+    [
+      "G237",
+      26
+    ],
+    [
+      "G165",
+      15
+    ],
+    [
+      "G207",
+      15
+    ],
+    [
+      "G027",
+      11
+    ],
+    [
+      "G202",
+      26
+    ],
+    [
+      "G202",
+      53
+    ],
+    [
+      "G197",
+      47
+    ]
+  ],
+  "cohort_workload": [
+    {
+      "language": "zh",
+      "workers": 9,
+      "total": 180,
+      "counts": {
+        "中等": 88,
+        "困难": 37,
+        "简单": 55
+      },
+      "hard_share": 0.20555555555555555,
+      "hard_available_edges": 37
+    },
+    {
+      "language": "en",
+      "workers": 10,
+      "total": 300,
+      "counts": {
+        "中等": 158,
+        "困难": 32,
+        "简单": 110
+      },
+      "hard_share": 0.10666666666666667,
+      "hard_available_edges": 32
+    }
+  ],
+  "stage1_new_by_building": {
+    "uNb9QFRL6hY": 134,
+    "S9hNv5qa7GM": 16,
+    "VFuaQ6m2Qom": 27,
+    "yqstnuAEVhm": 16,
+    "rPc6DW4iMge": 16,
+    "wc2JMjhGNzB": 59,
+    "pa4otMbVnkk": 42,
+    "Z6MFQCViBuw": 19,
+    "jtcxE69GiFV": 38,
+    "7y3sRwLe3Va": 39,
+    "2t7WUuJeko7": 38,
+    "e9zR4mvMWw7": 24,
+    "B6ByNegPMKs": 12
+  },
+  "uniform_floor_costs": {
+    "6": 437,
+    "8": 610
+  },
+  "manifest_paths_present": 41,
+  "partial_package_limitations": [
+    "缺少完整用户原始JSON；逐项转录字段不作真源",
+    "未发现工作簿生成脚本或独立raw_exposure_assignment_check生成入口"
+  ],
+  "current_protocol_or_selection_changed": false
+}

@@ -1,5 +1,9 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
+第一阶段人图建议：`tools/thesis_main/analysis/build_stage1_image_packages_20260913.py`及同目录`build_stage1_image_workbook_20260913.mjs`生成[分配说明、逐人清单与图片包](../analysis_results/stage1_person_image_packages_20260913_v1/第一阶段分配建议说明.md)；测试`tests/test_stage1_image_packages_20260913.py`。480份必做／200份可选提供量分开，原始提交与草稿防重复；仅探索建议，不改正式assignment或用户采用决定。
+
+外部两阶段提案审查：`tools/thesis_main/analysis/audit_two_stage_proposal_20260913.py`及[独立意见](../analysis_results/two_stage_independent_review_20260913_v1/独立审查意见.md)，输出人数／原始身份／匹配／视点覆盖核验；仅审查，不更新采用决定或派发。
+
 探索研究要求核对入口：`docs/thesis_main/用户研究要求核对清单_20260913.md`，对应当前研究说明与两份探索SOP，追踪长对话要求、历史规则冲突和未定事项；不替代正式合同。
 
 空间分维度续审：`tools/thesis_main/analysis/build_spatial_dimensions_review.py`与同目录`spatial_dimensions_review.html`生成[填写页及历轮核对](../analysis_results/spatial_dimensions_review_20260913_v2/续审说明.md)。接续旧视觉证据、人工六阶段记录、逐组讨论和OOS，保留原值；不改变正式合同、同房/门洞或选图决定。

@@ -1,5 +1,9 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
+第一阶段逐人人图建议：[安排说明与图片包](../analysis_results/stage1_person_image_packages_20260913_v1/第一阶段分配建议说明.md)。中文9人各建议20张、英文10人各必做30张＋可选20张；可选建议10张同房补充＋10张门洞，按0份承诺计入必做预算。24份原始导出含草稿复核；提供逐人图册和工作簿，未导入或派发。
+
+外部两阶段提案独立审查：[判断与差异](../analysis_results/two_stage_independent_review_20260913_v1/独立审查意见.md)。复核480行匹配、原始记录、逐组覆盖及转录差异；未采用外部方案或修改现行SOP。
+
 探索研究要求核对：[长对话要求清单](thesis_main/用户研究要求核对清单_20260913.md)，逐项区分已记录要求、本次补齐、历史参数及未定事项；不代表对应实验均已完成。
 
 2026-09-13空间分维度续审：[填写入口](../analysis_results/spatial_dimensions_review_20260913_v2/空间关系续审.html)、[人工历轮与OOS核对](../analysis_results/spatial_dimensions_review_20260913_v2/续审说明.md)。功能／主空间／逐对分隔关系分开，六阶段人工记录与OOS作用范围接续，旧“开放复合”仅作历史字段。
