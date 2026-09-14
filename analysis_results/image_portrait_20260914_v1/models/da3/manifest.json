@@ -1,0 +1,283 @@
+{
+  "model": "da3",
+  "source": "https://github.com/ByteDance-Seed/Depth-Anything-3",
+  "revision": "3d835ec1a5802d64a8b8b15f817a1ab54809bfe4",
+  "frozen": true,
+  "device": "cuda",
+  "runtime_versions": {
+    "torch": "2.11.0+cu128",
+    "torchvision": "0.26.0+cu128",
+    "numpy": "1.26.4",
+    "safetensors": "0.8.0",
+    "transformers": "4.57.6"
+  },
+  "dinov3_backend": "official Transformers DINOv3ViTModel (HF weights) when present; original Meta torch.hub only for original .pth; strict loading, final norm applied to selected block outputs",
+  "inference_dtype": "bfloat16 autocast",
+  "feature_storage_dtype": "raw float16, pooled float32",
+  "geometry_dtype": "float32",
+  "local_raw_container": "Early raw NPZ files use compression; later raw NPZ are uncompressed for speed. Numerical values/dtypes and numpy.load interface identical; cloud NPZ always compressed.",
+  "candidates": {
+    "dinov3": [
+      3,
+      6,
+      9,
+      11,
+      12
+    ],
+    "da3": [
+      5,
+      7,
+      9,
+      11
+    ],
+    "ulayout": [
+      "compressed",
+      "transformer"
+    ]
+  },
+  "projection": {
+    "convention": "x_right_y_down_z_forward",
+    "order": [
+      "front",
+      "right",
+      "back",
+      "left",
+      "up",
+      "down"
+    ],
+    "face_size": 512,
+    "fov_degrees": 90,
+    "intrinsics": [
+      [
+        256.0,
+        0,
+        255.5
+      ],
+      [
+        0,
+        256.0,
+        255.5
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ],
+    "camera_to_panorama": {
+      "front": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "right": [
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          -1.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "back": [
+        [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      ],
+      "left": [
+        [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "up": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "down": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          -1.0,
+          0.0
+        ]
+      ]
+    },
+    "independent_capture_count": 1
+  },
+  "layer_indexing": "DA3 zero-based; DINOv3 one-based",
+  "input_resize": "uLayout panorama 1024x512 PIL BICUBIC; DINO panorama same and cubefaces512; DA3 cubefaces512 then official processor504",
+  "checkpoint_source": "https://huggingface.co/depth-anything/DA3-SMALL",
+  "ulayout_postprocess": "official radians -> pixel float -> round; official wrapper corner field is GT and is deliberately NOT exported; predicted corners unavailable",
+  "ulayout_corner_logits": "Raw unused second model return; official training wrapper optimizes boundaries and ignores corner return. Do not interpret these logits as calibrated/trained corner confidence.",
+  "yaw": "input rolled +yaw, features and boundaries rolled -yaw to original coordinates",
+  "feature_fields": "Spatial feature keys have global mean+population std(ddof=0) (2C), local16 image-x token bands (16,2C). DINO CLS is the direct768-vector, not mean+std. Cubeface bands use each perspective image own x, NOT panorama azimuth; up/down faces especially cannot be treated as ERP azimuth. Reproject via saved face rotation/K; compare projection conditions separately.",
+  "region_split_rule": "numpy.array_split(token_width,16): remainder goes to earliest bands. DA3 W36 first4 bands have3 tokens, remaining12 have2. Equal width only if width divisible by16; no equal-angle claim.",
+  "region_token_intervals_half_open": {
+    "36": [
+      [
+        0,
+        3
+      ],
+      [
+        3,
+        6
+      ],
+      [
+        6,
+        9
+      ],
+      [
+        9,
+        12
+      ],
+      [
+        12,
+        14
+      ],
+      [
+        14,
+        16
+      ],
+      [
+        16,
+        18
+      ],
+      [
+        18,
+        20
+      ],
+      [
+        20,
+        22
+      ],
+      [
+        22,
+        24
+      ],
+      [
+        24,
+        26
+      ],
+      [
+        26,
+        28
+      ],
+      [
+        28,
+        30
+      ],
+      [
+        30,
+        32
+      ],
+      [
+        32,
+        34
+      ],
+      [
+        34,
+        36
+      ]
+    ]
+  },
+  "feature_token_shapes": {
+    "complete_out_layer": [
+      768,
+      36,
+      36
+    ],
+    "derived_aux_global_stream": [
+      384,
+      36,
+      36
+    ]
+  },
+  "geometry_sampling": "DA3 stride8 retains original pixel coordinates and full-resolution intrinsics; no scaled intrinsics needed.",
+  "da3_processed_to_cube_pixel": "512->504 official INTER_AREA resize; cube coordinate=(processed_coordinate+0.5)*512/504-0.5 for both axes. Cubeface ray geometry uses projection.intrinsics in 512 coordinates.",
+  "da3_scale": "Relative depth and predicted poses, no metric scale claim. Each single-face inference has independent arbitrary scale; jointly inferred twelve-face conditions need not share the single-face scales. Align scale per corresponding face before single/multiview depth comparison. Camera intrinsics are predictions; known projection intrinsics separately retained.",
+  "da3_multiview_cameras": "Twelve independently predicted cameras: no same-center or known six-face rotation constraints imposed. Two source capture positions do not imply physically verified two-pose output; same-capture center/rotation diagnostic matrices exported.",
+  "da3_aux_identity": "Official backbone restores main outputs but not exported aux after reference selection. Adapter records reference_view_index and applies inverse permutation only to aux; geometry remains in official original input order.",
+  "da3_feature_schema_version": 2,
+  "da3_layer_semantics": "Primary out_layer_5/7/9/11: complete 768-channel decoder input [384 local,384 normalized global], already restored by official backbone. Official feat_layer_* aux is exactly last384 channels; duplicate storage omitted after equality validation. Raw aux=out_layer_[384:]; pooled global aux=concatenate(full[384:768],full[1152:1536]); local16 uses same column indices. All information retained without duplicate aux arrays.",
+  "geometric_validity": "Finite/invertible predictions do not imply source-image visibility. Blur/occlusion may still receive predicted geometry and confidence; do not treat these as observed visual evidence.",
+  "multiview_pairing": "lexicographically adjacent image_id chain per supported relationship group, deduplicated; review_codes retained, not independent rooms",
+  "reprojection_columns": [
+    "source_face",
+    "source_x",
+    "source_y",
+    "target_face",
+    "target_x",
+    "target_y",
+    "projected_depth",
+    "target_depth",
+    "relative_depth_error",
+    "depth_agreement_5pct"
+  ],
+  "reprojection_meaning": "Predicted geometric candidates only, not image-observed matches; projected finite positive depths in bounds; agreement masks are exploratory, not GT."
+}

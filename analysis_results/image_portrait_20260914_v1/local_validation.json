@@ -35,8 +35,49 @@
       "check": "90 degree phase continuous predicted ceiling/floor boundaries",
       "result": "Restored overlay aligns with source panorama; no physical correctness claim",
       "temporary_screenshot_cleaned": true
+    },
+    {
+      "model": "da3",
+      "image_id": "2t7WUuJeko7_073656b4030d4389ba7f304298be1d73",
+      "check": "Front/up/down cubefaces and single-face depth",
+      "result": "Projection orientation visually consistent. Nadir blur also produces predicted depth; fixed nadir mask supplied for sensitivity, not observed visibility.",
+      "temporary_screenshot_cleaned": true
     }
   ],
   "visual_traits": "648 thumbnail first pass plus fixed 21 original-resolution reviews; limitations in visual/FIELDS_ZH.md",
-  "protocol_boundary": "No original export, normative method contract, collection plan or Label Studio state changed"
+  "protocol_boundary": "No original export, normative method contract, collection plan or Label Studio state changed",
+  "da3_pair_numeric_review": {
+    "pair_id": "pair0000",
+    "max_same_capture_rotation_degrees": 108.15,
+    "interpretation": "Camera consistency failure candidate; projectability and 5% predicted depth agreement do not establish physical matches"
+  },
+  "layout_runtime_versions": {
+    "hohonet": {
+      "python": "3.11.7",
+      "torch": "2.11.0+cu128",
+      "numpy": "1.26.4",
+      "opencv": "4.11.0"
+    },
+    "bilayout": {
+      "python": "3.11.7",
+      "torch": "2.10.0+cu130",
+      "numpy": "1.26.4",
+      "opencv": "4.10.0"
+    }
+  },
+  "verification": {
+    "unit_tests": "14 passed: common, bundle, layout, output audit, modern, visual traits",
+    "bundle_check": {
+      "images": 648,
+      "responses": 2501,
+      "original_images_required": false,
+      "status": "passed"
+    },
+    "modern_complete_payload_images": {
+      "ulayout": 648,
+      "da3": 648,
+      "dinov3": 0
+    },
+    "da3_multiview": "running; final verification pending"
+  }
 }

@@ -15,6 +15,7 @@
   "inference_dtype": "float32",
   "feature_storage_dtype": "raw float16, pooled float32",
   "geometry_dtype": "float32",
+  "local_raw_container": "Early raw NPZ files use compression; later raw NPZ are uncompressed for speed. Numerical values/dtypes and numpy.load interface identical; cloud NPZ always compressed.",
   "candidates": {
     "dinov3": [
       3,
@@ -175,11 +176,94 @@
   "ulayout_postprocess": "official radians -> pixel float -> round; official wrapper corner field is GT and is deliberately NOT exported; predicted corners unavailable",
   "ulayout_corner_logits": "Raw unused second model return; official training wrapper optimizes boundaries and ignores corner return. Do not interpret these logits as calibrated/trained corner confidence.",
   "yaw": "input rolled +yaw, features and boundaries rolled -yaw to original coordinates",
-  "feature_fields": "Each key has global mean+std (2C), local16 image-x bands (16,2C). Cubeface local16 is each perspective image own equal-width x strips, NOT sixteen panorama azimuth sectors; up/down faces especially cannot be treated as ERP azimuth. Reproject via saved face rotation/K; compare projection conditions separately.",
+  "feature_fields": "Each key has global mean+population std(ddof=0) (2C), local16 image-x token bands (16,2C). Cubeface bands use each perspective image own x, NOT panorama azimuth; up/down faces especially cannot be treated as ERP azimuth. Reproject via saved face rotation/K; compare projection conditions separately.",
+  "region_split_rule": "numpy.array_split(token_width,16): remainder goes to earliest bands. DA3 W36 first4 bands have3 tokens, remaining12 have2. Equal width only if width divisible by16; no equal-angle claim.",
+  "region_token_intervals_half_open": {
+    "256": [
+      [
+        0,
+        16
+      ],
+      [
+        16,
+        32
+      ],
+      [
+        32,
+        48
+      ],
+      [
+        48,
+        64
+      ],
+      [
+        64,
+        80
+      ],
+      [
+        80,
+        96
+      ],
+      [
+        96,
+        112
+      ],
+      [
+        112,
+        128
+      ],
+      [
+        128,
+        144
+      ],
+      [
+        144,
+        160
+      ],
+      [
+        160,
+        176
+      ],
+      [
+        176,
+        192
+      ],
+      [
+        192,
+        208
+      ],
+      [
+        208,
+        224
+      ],
+      [
+        224,
+        240
+      ],
+      [
+        240,
+        256
+      ]
+    ]
+  },
+  "feature_token_shapes": {
+    "compressed": [
+      1024,
+      256
+    ],
+    "transformer": [
+      1024,
+      256
+    ]
+  },
   "geometry_sampling": "DA3 stride8 retains original pixel coordinates and full-resolution intrinsics; no scaled intrinsics needed.",
   "da3_processed_to_cube_pixel": "512->504 official INTER_AREA resize; cube coordinate=(processed_coordinate+0.5)*512/504-0.5 for both axes. Cubeface ray geometry uses projection.intrinsics in 512 coordinates.",
   "da3_scale": "relative depth and predicted poses, no metric scale claim; camera intrinsics are predictions, known projection intrinsics separately retained",
   "da3_multiview_cameras": "Twelve independently predicted cameras: no same-center or known six-face rotation constraints imposed. Two source capture positions do not imply physically verified two-pose output; same-capture center/rotation diagnostic matrices exported.",
+  "da3_aux_identity": "Official backbone restores main outputs but not exported aux after reference selection. Adapter records reference_view_index and applies inverse permutation only to aux; geometry remains in official original input order.",
+  "da3_feature_schema_version": 2,
+  "da3_layer_semantics": "Primary out_layer_5/7/9/11: complete 768-channel decoder input [384 local,384 normalized global], already restored by official backbone. Official feat_layer_* aux is exactly last384 channels; duplicate storage omitted after equality validation. Raw aux=out_layer_[384:]; pooled global aux=concatenate(full[384:768],full[1152:1536]); local16 uses same column indices. All information retained without duplicate aux arrays.",
+  "geometric_validity": "Finite/invertible predictions do not imply source-image visibility. Blur/occlusion may still receive predicted geometry and confidence; do not treat these as observed visual evidence.",
   "multiview_pairing": "lexicographically adjacent image_id chain per supported relationship group, deduplicated; review_codes retained, not independent rooms",
   "reprojection_columns": [
     "source_face",

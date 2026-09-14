@@ -5,6 +5,7 @@ from collections import Counter
 from pathlib import Path
 import numpy as np
 from tools.thesis_main.analysis.image_portrait.common import BUNDLE, read_images, save_json
+from tools.thesis_main.analysis.image_portrait.modern_models import reusable, supported_pairs
 
 
 def check_npz(path):
@@ -57,6 +58,26 @@ def audit(root=BUNDLE):
         report['models'][name] = dict(numerical_image_count=len(covered),
             missing_image_ids=sorted(ids-covered), file_count=len(files),
             bytes=sum(p.stat().st_size for p in files), status_counts=dict(statuses), errors=errors)
+        if name in ('ulayout', 'dinov3', 'da3'):
+            complete = {image_id for image_id in covered if reusable(
+                directory/f'{image_id}.features.npz', directory/f'{image_id}.geometry.npz',
+                [image_id], name)}
+            report['models'][name].update(complete_payload_image_count=len(complete),
+                incomplete_payload_image_ids=sorted(covered-complete))
+    directory = root/'models/da3/multiview'
+    relation_path = root/'metadata/relationships.jsonl'
+    if directory.exists() and relation_path.exists():
+        relations = [json.loads(line) for line in relation_path.read_text(encoding='utf8').splitlines()]
+        pairs = supported_pairs(relations)
+        incomplete = []
+        for number, (members, _) in enumerate(pairs):
+            pair_id = f'pair{number:04d}'
+            if not reusable(directory/f'{pair_id}.features.npz', directory/f'{pair_id}.geometry.npz',
+                            members, 'da3', multiview=True):
+                incomplete.append(pair_id)
+        report['da3_multiview'] = dict(expected_pairs=len(pairs),
+            complete_payload_pair_count=len(pairs)-len(incomplete), incomplete_pair_ids=incomplete,
+            bytes=sum(p.stat().st_size for p in directory.glob('*.npz')))
     save_json(root/'output_coverage.json',report)
     print(json.dumps({k:{'images':v['numerical_image_count'],'errors':len(v['errors']),
         'statuses':v['status_counts']} for k,v in report['models'].items()},ensure_ascii=False))
