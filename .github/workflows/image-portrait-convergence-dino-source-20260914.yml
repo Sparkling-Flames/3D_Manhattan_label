@@ -1,0 +1,141 @@
+name: Convergence continuation DINO source 20260914
+on:
+  push:
+    branches: [codex/image-portrait-20260914]
+    paths: [.github/workflows/image-portrait-convergence-dino-source-20260914.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  numeric_source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: c9953c25ec1356c97e8723db83e2c8e0ae0b9e41
+          fetch-depth: 1
+          filter: blob:none
+          lfs: false
+          sparse-checkout: |
+            analysis_results/image_portrait_20260914_v1
+            tools
+            tests
+            docs/README_INDEX.md
+      - name: Install numerical array reader only
+        run: python -m pip install numpy
+      - name: Verify fresh arrays and export deterministic numerical candidates
+        run: |
+          python - <<'PY'
+          import pathlib, json, gzip, hashlib, subprocess, zipfile, numpy as np
+          root=pathlib.Path('.'); bundle=root/'analysis_results/image_portrait_20260914_v1'
+          dest=pathlib.Path('/tmp/convergence_source');dest.mkdir()
+          commit=subprocess.check_output(['git','rev-parse','HEAD']).decode().strip()
+          assert commit=='c9953c25ec1356c97e8723db83e2c8e0ae0b9e41'
+          images=[json.loads(s) for s in (bundle/'metadata/images.jsonl').read_text().splitlines() if s.strip()]
+          responses=[json.loads(s) for s in gzip.open(bundle/'human/responses.jsonl.gz','rt') if s.strip()]
+          humans={r['image_id'] for r in responses}
+          ids=[r['image_id'] for r in images];hid=[i for i in ids if i in humans]
+          manifest={'input_commit':commit,'images':len(ids),'human_images':len(hid),'model_files':[],'core_files':[],'AGENTS_paths':[],'no_images_weights_or_inference':True}
+          tracked=subprocess.check_output(['git','ls-files','-z']).decode().split('\0')
+          with zipfile.ZipFile(dest/'core_latest.zip','w',zipfile.ZIP_DEFLATED) as z:
+            for name in tracked:
+              p=root/name
+              if not name or not p.is_file():continue
+              agent=p.name=='AGENTS.md'
+              inside=name.startswith('analysis_results/image_portrait_20260914_v1/')
+              source=name.startswith(('tools/','tests/')) and p.suffix in ('.py','.json','.md','.yaml','.yml','.toml')
+              core=inside and (p.suffix in ('.md','.json','.jsonl','.gz','.log','.csv') or '/history/' in name and p.suffix=='.npz')
+              if agent or source or core or name in ('pytest.ini','docs/README_INDEX.md'):
+                data=p.read_bytes();z.writestr(name,data)
+                manifest['core_files'].append({'path':name,'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()})
+                if agent:manifest['AGENTS_paths'].append(name)
+            z.writestr('INPUT_TREE.txt',subprocess.check_output(['git','ls-tree','-r','HEAD','--','analysis_results/image_portrait_20260914_v1']))
+          layers=(3,6,9,11,12);faces=('front','right','back','left','up','down'); views=('panorama',)+faces
+          matrices={};glob={};
+          for layer in layers:
+            for pool in ('panorama_global','panorama_local16','cube_global_mean','cube_global_concat','cube_local16_mean','cube_local_moments'):
+              matrices[f'dino_l{layer}_{pool}']=[]
+            for view in views:glob[f'{view}_l{layer}']=[]
+          glob['panorama_cls']=[];glob['cube_cls_mean']=[];matrices['dino_panorama_cls']=[];matrices['dino_cube_cls_mean']=[]
+          for image in ids:
+            p=bundle/'models/dinov3'/f'{image}.features.npz'
+            data=p.read_bytes();z=np.load(p,allow_pickle=False)
+            assert z['image_ids'].tolist()==[image]
+            for layer in layers:
+              for view in views:
+                g=z[f'{view}_block{layer}_patch_global'];loc=z[f'{view}_block{layer}_patch_local16']
+                assert g.shape==(1536,) and loc.shape==(16,1536) and np.isfinite(g).all() and np.isfinite(loc).all()
+                glob[f'{view}_l{layer}'].append(g)
+              if image in humans:
+                fc=np.stack([z[f'{v}_block{layer}_patch_global'] for v in faces])
+                lc=np.stack([z[f'{v}_block{layer}_patch_local16'] for v in faces])
+                vals={'panorama_global':z[f'panorama_block{layer}_patch_global'],'panorama_local16':z[f'panorama_block{layer}_patch_local16'].ravel(),'cube_global_mean':fc.mean(0),'cube_global_concat':fc.ravel(),'cube_local16_mean':lc.mean(0).ravel(),'cube_local_moments':np.r_[lc.mean((0,1)),lc.std((0,1))]}
+                for pool,value in vals.items():matrices[f'dino_l{layer}_{pool}'].append(value)
+            cls=[z[f'{v}_block12_cls_global'] for v in views]
+            assert all(c.shape==(768,) and np.isfinite(c).all() for c in cls)
+            glob['panorama_cls'].append(cls[0]);glob['cube_cls_mean'].append(np.mean(cls[1:],axis=0))
+            if image in humans:
+              matrices['dino_panorama_cls'].append(cls[0]);matrices['dino_cube_cls_mean'].append(np.mean(cls[1:],axis=0))
+            manifest['model_files'].append({'image_id':image,'path':str(p),'sha256':hashlib.sha256(data).hexdigest(),'bytes':len(data),'required_keys_valid':True})
+          assert len(manifest['model_files'])==648
+          np.savez_compressed(dest/'dino_all648_global.npz',image_ids=np.array(ids),**{k:np.array(v,dtype=np.float32) for k,v in glob.items()})
+          for layer in layers:
+            with zipfile.ZipFile(dest/f'dino_layer_{layer}.zip','w',zipfile.ZIP_STORED) as archive:
+              for name,values in matrices.items():
+                if not name.startswith(f'dino_l{layer}_'):continue
+                path=dest/f'{name}.npz';np.savez_compressed(path,image_ids=np.array(hid),X=np.array(values,dtype=np.float32));archive.write(path,path.name);path.unlink()
+          with zipfile.ZipFile(dest/'dino_cls_and_sample.zip','w',zipfile.ZIP_STORED) as archive:
+            for name in ('dino_panorama_cls','dino_cube_cls_mean'):
+              p=dest/f'{name}.npz';np.savez_compressed(p,image_ids=np.array(hid),X=np.array(matrices[name],dtype=np.float32));archive.write(p,p.name);p.unlink()
+            p=bundle/'models/dinov3'/f'{ids[0]}.features.npz';archive.write(p,'original_sample/'+p.name)
+          manifest['candidate_pooling']='Deterministic per-image operations only; no target values, fitted scaler, PCA, learned thresholds or model inference. Local cube strips are not ERP azimuth sectors.'
+          (dest/'LATEST_SOURCE_MANIFEST.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
+          print('Verified',len(manifest['model_files']),'DINO images,',len(hid),'human image candidates; commit',commit)
+          for p in dest.iterdir(): print(p.name,p.stat().st_size)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: convergence-current-core
+          path: |
+            /tmp/convergence_source/core_latest.zip
+            /tmp/convergence_source/LATEST_SOURCE_MANIFEST.json
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: convergence-dino-global
+          path: |
+            /tmp/convergence_source/dino_all648_global.npz
+            /tmp/convergence_source/dino_cls_and_sample.zip
+          compression-level: 0
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: convergence-dino-layer3
+          path: /tmp/convergence_source/dino_layer_3.zip
+          compression-level: 0
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: convergence-dino-layer6
+          path: /tmp/convergence_source/dino_layer_6.zip
+          compression-level: 0
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: convergence-dino-layer9
+          path: /tmp/convergence_source/dino_layer_9.zip
+          compression-level: 0
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: convergence-dino-layer11
+          path: /tmp/convergence_source/dino_layer_11.zip
+          compression-level: 0
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: convergence-dino-layer12
+          path: /tmp/convergence_source/dino_layer_12.zip
+          compression-level: 0
+          retention-days: 14
