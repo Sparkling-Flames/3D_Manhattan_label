@@ -1,0 +1,120 @@
+name: Portrait pro numeric transport 20260914
+on:
+  push:
+    branches: ['codex/image-portrait-20260914']
+    paths: ['.github/workflows/image-portrait-pro-numerics-20260914.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  numerics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: e086b2b94d60b8a858a71f0326f12930538fe4fe
+          fetch-depth: 1
+          filter: blob:none
+          lfs: false
+          sparse-checkout: |
+            analysis_results/image_portrait_20260914_v1
+      - name: Install numeric array reader only
+        run: python -m pip install numpy==2.3.5
+      - name: Extract audited existing numbers without visual model execution
+        run: |
+          python - <<'PY'
+          import gzip,hashlib,io,json,pathlib,zipfile,collections
+          import numpy as np
+          root=pathlib.Path('analysis_results/image_portrait_20260914_v1')
+          target_ids={json.loads(s)['image_id'] for s in gzip.open(root/'human/responses.jsonl.gz','rt') if s.strip()}
+          ids=[json.loads(s)['image_id'] for s in (root/'metadata/images.jsonl').read_text().splitlines() if s.strip()]
+          assert len(ids)==648 and len(target_ids)==214
+          outputs=pathlib.Path('/tmp/portrait_numerics');outputs.mkdir()
+          archives=[zipfile.ZipFile(outputs/f'numeric_{i}.zip','w',zipfile.ZIP_STORED) for i in range(9)]
+          manifest=[];errors=[];counts=collections.Counter()
+          def read_npz(path):
+              raw=path.read_bytes();manifest.append({'path':str(path),'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()})
+              with np.load(io.BytesIO(raw),allow_pickle=False) as z:
+                  return {k:z[k] for k in z.files}
+          def put(bucket,path,arrays):
+              f=io.BytesIO();np.savez_compressed(f,**arrays);archives[bucket].writestr(path,f.getvalue());counts[str(bucket)]+=1
+          for model,bucket in [('hohonet',0),('bilayout',1),('ulayout',2)]:
+              for image in ids:
+                  try:
+                      if model=='ulayout':
+                          geom=read_npz(root/'models'/model/(image+'.geometry.npz'))
+                          put(bucket,f'predictions/{model}/{image}.npz',geom)
+                          path=root/'models'/model/(image+'.features.npz')
+                          if image not in target_ids:continue
+                          a=read_npz(path);layers=['compressed','transformer'];sep='_';end_global='_global';end_local='_local16'
+                          key=lambda yaw,layer,pool:f'yaw{yaw}_{layer}_{"global" if pool=="global" else "local16"}'
+                      else:
+                          a=read_npz(root/'models'/model/(image+'.npz'))
+                          geom={k:v for k,v in a.items() if '__raw__' in k or '__post__' in k}
+                          put(bucket,f'predictions/{model}/{image}.npz',geom)
+                          if image not in target_ids:continue
+                          layers=['encoder_stage2','encoder_stage4','compressed','refined','shared'] if model=='hohonet' else ['fc','fg_enclosed','fg_extended']
+                          key=lambda yaw,layer,pool:f'yaw{yaw}__{layer}__{"global" if pool=="global" else "regions"}'
+                      features={}
+                      for layer in layers:
+                          gs=np.stack([a[key(y,layer,'global')] for y in (0,90,180,270)])
+                          ls=np.stack([a[key(y,layer,'local')] for y in (0,90,180,270)])
+                          assert gs.ndim==2 and ls.shape[:2]==(4,16) and np.isfinite(gs).all() and np.isfinite(ls).all()
+                          features[layer+'__global']=gs.mean(0,dtype=np.float64).astype(np.float32)
+                          features[layer+'__local16']=ls.mean(0,dtype=np.float64).astype(np.float32)
+                          features[layer+'__phase_sd']=gs.std(0,dtype=np.float64).astype(np.float32)
+                          features[layer+'__phase_globals']=gs
+                      if 'legacy_single_phase_mean' in a:features['legacy_single_phase_mean']=a['legacy_single_phase_mean']
+                      put(bucket,f'features/{model}/{image}.npz',features)
+                  except Exception as e:errors.append({'model':model,'image_id':image,'error':repr(e)})
+          for j,image in enumerate(ids):
+              try:
+                  path=root/'models/da3'/(image+'.geometry.npz')
+                  arrays=read_npz(path);put(6+j%3,f'geometry/da3/{image}.npz',arrays)
+                  if image in target_ids:
+                      path=root/'models/da3'/(image+'.features.npz')
+                      arrays=read_npz(path)
+                      assert int(arrays['feature_schema_version'])==2 and arrays['image_ids'].tolist()==[image]
+                      for face in ('front','right','back','left','up','down'):
+                          for layer in (5,7,9,11):
+                              assert arrays[f'{face}_view0_out_layer_{layer}_global'].shape==(1536,)
+                              assert arrays[f'{face}_view0_out_layer_{layer}_local16'].shape==(16,1536)
+                      put(3+j%3,f'features/da3/{image}.npz',arrays)
+              except Exception as e:errors.append({'model':'da3','image_id':image,'error':repr(e)})
+          for j,path in enumerate(sorted((root/'models/da3/multiview').glob('*.geometry.npz'))):
+              try:
+                  arrays=read_npz(path);put(6+j%3,f'geometry/da3_multiview/{path.name}',arrays)
+              except Exception as e:errors.append({'model':'da3_multiview','path':str(path),'error':repr(e)})
+          record={'input_commit':'e086b2b94d60b8a858a71f0326f12930538fe4fe','human_target_image_ids':sorted(target_ids),'portrait_image_count':648,'input_files':manifest,'errors':errors,'counts':dict(counts),'method':'Existing arrays only. Layout feature yaw means use float64 accumulation and float32 storage; raw/post predictions retained for all648. DA3 exported full768-channel layer pools copied for all214 human-covered images; single/pair sampled geometries copied for all648/316. Target availability used only for transport, no values, fitting or inference.'}
+          for z in archives:z.writestr('NUMERIC_TRANSPORT_MANIFEST.json',json.dumps(record,ensure_ascii=False,indent=2));z.close()
+          for p in outputs.iterdir():print(p.name,p.stat().st_size)
+          print('ERRORS',json.dumps(errors));assert not errors
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: portrait-numeric-0, path: /tmp/portrait_numerics/numeric_0.zip, retention-days: 7, if-no-files-found: error}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: portrait-numeric-1, path: /tmp/portrait_numerics/numeric_1.zip, retention-days: 7, if-no-files-found: error}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: portrait-numeric-2, path: /tmp/portrait_numerics/numeric_2.zip, retention-days: 7, if-no-files-found: error}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: portrait-numeric-3, path: /tmp/portrait_numerics/numeric_3.zip, retention-days: 7, if-no-files-found: error}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: portrait-numeric-4, path: /tmp/portrait_numerics/numeric_4.zip, retention-days: 7, if-no-files-found: error}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: portrait-numeric-5, path: /tmp/portrait_numerics/numeric_5.zip, retention-days: 7, if-no-files-found: error}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: portrait-numeric-6, path: /tmp/portrait_numerics/numeric_6.zip, retention-days: 7, if-no-files-found: error}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: portrait-numeric-7, path: /tmp/portrait_numerics/numeric_7.zip, retention-days: 7, if-no-files-found: error}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: portrait-numeric-8, path: /tmp/portrait_numerics/numeric_8.zip, retention-days: 7, if-no-files-found: error}
