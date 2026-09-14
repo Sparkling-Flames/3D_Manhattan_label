@@ -1,0 +1,63 @@
+name: Portrait pro read-only evidence snapshot 20260914
+on:
+  push:
+    branches: ['codex/image-portrait-20260914']
+    paths: ['.github/workflows/image-portrait-pro-snapshot-20260914.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: e086b2b94d60b8a858a71f0326f12930538fe4fe
+          fetch-depth: 1
+          filter: blob:none
+          lfs: false
+          sparse-checkout: |
+            analysis_results/image_portrait_20260914_v1
+            tools
+            tests
+            lib
+            config
+      - name: Package existing numeric evidence and source, never images or weights
+        run: |
+          python - <<'PY'
+          import hashlib,json,pathlib,subprocess,zipfile,collections
+          root=pathlib.Path('.'); bundle='analysis_results/image_portrait_20260914_v1/'
+          names=subprocess.check_output(['git','ls-files','-z']).decode().split('\0')
+          allowed={'.py','.md','.json','.csv','.jsonl','.gz','.yaml','.yml','.txt','.toml','.ini','.npz'}
+          inventory=[]; packed=[]; omitted=[]
+          with zipfile.ZipFile('/tmp/portrait_core_e086b2b9.zip','w',zipfile.ZIP_DEFLATED) as z:
+              for name in names:
+                  p=root/name
+                  if not name or not p.is_file(): continue
+                  if p.suffix not in allowed: continue
+                  if not (name.startswith(bundle) or name.startswith(('tools/','tests/','lib/','config/')) or p.name=='AGENTS.md'): continue
+                  if '__pycache__' in p.parts: continue
+                  size=p.stat().st_size
+                  rec={'path':name,'bytes':size}
+                  inventory.append(rec)
+                  if name.startswith(bundle+'models/') and p.suffix=='.npz':
+                      omitted.append(rec);continue
+                  if size>50000000:
+                      omitted.append(rec);continue
+                  data=p.read_bytes();rec['sha256']=hashlib.sha256(data).hexdigest()
+                  z.writestr(name,data);packed.append(rec)
+              manifest={'input_commit':'e086b2b94d60b8a858a71f0326f12930538fe4fe','packed':packed,'omitted':omitted,'inventory':inventory,'tracked_agents':[n for n in names if pathlib.PurePosixPath(n).name=='AGENTS.md'],'note':'Read-only snapshot; models NPZ omitted from core pending schema-aware numeric extraction; no image or weight download, no visual inference.'}
+              z.writestr('SNAPSHOT_MANIFEST.json',json.dumps(manifest,ensure_ascii=False,indent=2))
+          print('PACKED',len(packed),'OMITTED',len(omitted),'BYTES',pathlib.Path('/tmp/portrait_core_e086b2b9.zip').stat().st_size)
+          totals=collections.Counter()
+          for r in omitted: totals['/'.join(r['path'].split('/')[:4])]+=r['bytes']
+          print(json.dumps(dict(totals),indent=2))
+          print('Tracked AGENTS:',manifest['tracked_agents'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: portrait-core-e086b2b9
+          path: /tmp/portrait_core_e086b2b9.zip
+          retention-days: 7
+          if-no-files-found: error
