@@ -1,0 +1,130 @@
+name: Difficulty main-space numerical source 20260915
+on:
+  push:
+    branches: [codex/image-portrait-20260914]
+    paths: [.github/workflows/image-portrait-difficulty-source-20260915.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: a36e307724a127b7c110b4e5039f2d62a121091b
+          fetch-depth: 1
+          filter: blob:none
+          lfs: false
+          sparse-checkout: |
+            analysis_results/image_portrait_20260914_v1
+            tools/thesis_main/analysis/image_portrait
+            tests
+      - run: python -m pip install numpy
+      - name: Export existing arrays only, no visual inference or fitted transforms
+        run: |
+          python - <<'PY'
+          import pathlib,json,gzip,hashlib,subprocess,zipfile,collections,numpy as np
+          root=pathlib.Path('.');b=root/'analysis_results/image_portrait_20260914_v1';out=pathlib.Path('/tmp/difficulty_source');out.mkdir()
+          commit=subprocess.check_output(['git','rev-parse','HEAD']).decode().strip();assert commit=='a36e307724a127b7c110b4e5039f2d62a121091b'
+          images=[json.loads(s) for s in (b/'metadata/images.jsonl').read_text().splitlines() if s.strip()]
+          spatial=[json.loads(s) for s in gzip.open(b/'metadata/spatial_history.jsonl.gz','rt') if s.strip()]
+          ids=[r['image_id'] for r in images];labels={r['image_id']:(r.get('latest_selection_record') or {}).get('difficulty') for r in spatial}
+          labelled=[i for i in ids if labels[i] in ('简单','中等','困难')];assert len(labelled)==106
+          manifest={'input_commit':commit,'images':648,'labelled':len(labelled),'label_counts':dict(collections.Counter(labels[i] for i in labelled)),'source_files':[],'core_files':[],'no_inference':True,'no_fitted_transforms':True}
+          tracked=subprocess.check_output(['git','ls-files','-z']).decode().split('\0');manifest['AGENTS_paths']=[x for x in tracked if pathlib.Path(x).name=='AGENTS.md']
+          with zipfile.ZipFile(out/'current_core.zip','w',zipfile.ZIP_DEFLATED) as archive:
+            for name in tracked:
+              p=root/name
+              if not p.is_file():continue
+              core=name.startswith(str(b)+'/') and p.suffix in ('.md','.json','.jsonl','.gz','.log','.csv')
+              source=name.startswith('tools/thesis_main/analysis/image_portrait/') and p.suffix=='.py'
+              if core or source or p.name=='AGENTS.md':
+                data=p.read_bytes();archive.writestr(name,data);manifest['core_files'].append({'path':name,'sha256':hashlib.sha256(data).hexdigest()})
+            archive.writestr('INPUT_TREE.txt',subprocess.check_output(['git','ls-tree','-r','HEAD','--',str(b)]))
+          faces=('front','right','back','left','up','down');yaws=(0,90,180,270)
+          for model in ('hohonet','bilayout','ulayout','dinov3','da3'):
+            glob=collections.defaultdict(list);local=collections.defaultdict(list)
+            predzip=zipfile.ZipFile(out/(model+'_predictions.zip'),'w',zipfile.ZIP_DEFLATED)
+            for image in ids:
+              p=b/'models'/model/(image+('.npz' if model in ('hohonet','bilayout') else '.features.npz'))
+              data=p.read_bytes();z=np.load(p,allow_pickle=False);manifest['source_files'].append({'model':model,'image_id':image,'path':str(p),'sha256':hashlib.sha256(data).hexdigest(),'bytes':len(data)})
+              def add(key,g,l=None):
+                g=np.asarray(g,dtype=np.float32);assert np.isfinite(g).all();glob[key].append(g)
+                if l is not None and image in labelled:
+                  l=np.asarray(l,dtype=np.float32);assert np.isfinite(l).all();local[key].append(l.ravel())
+              if model in ('hohonet','bilayout'):
+                st=json.loads(p.with_suffix('.json').read_text());assert st['status']=='ok' and all(q['status']=='ok' for q in st['phases'])
+                layers=('encoder_stage2','encoder_stage4','compressed','refined','shared') if model=='hohonet' else ('fc','fg_enclosed','fg_extended')
+                for layer in layers:add(layer,np.mean([z[f'yaw{y}__{layer}__global'] for y in yaws],axis=0),np.mean([z[f'yaw{y}__{layer}__regions'] for y in yaws],axis=0))
+                if model=='hohonet':add('legacy_mean',z['legacy_single_phase_mean'])
+                if image in labelled:
+                  import io
+                  buf=io.BytesIO();np.savez_compressed(buf,**{k:z[k] for k in z.files if '__raw__' in k or '__post__' in k});predzip.writestr(image+'.npz',buf.getvalue())
+              elif model=='ulayout':
+                assert z['image_ids'].tolist()==[image]
+                for layer in ('compressed','transformer'):add(layer,np.mean([z[f'yaw{y}_{layer}_global'] for y in yaws],axis=0),np.mean([z[f'yaw{y}_{layer}_local16'] for y in yaws],axis=0))
+                if image in labelled:predzip.write(b/'models'/model/(image+'.geometry.npz'),image+'.npz')
+              elif model=='dinov3':
+                assert z['image_ids'].tolist()==[image]
+                for layer in (3,6,9,11,12):
+                  for view in ('panorama',)+faces:
+                    g=z[f'{view}_block{layer}_patch_global'];l=z[f'{view}_block{layer}_patch_local16'];assert g.shape==(1536,) and l.shape==(16,1536)
+                  gs=np.stack([z[f'{v}_block{layer}_patch_global'] for v in faces]);ls=np.stack([z[f'{v}_block{layer}_patch_local16'] for v in faces])
+                  add(f'l{layer}_panorama',z[f'panorama_block{layer}_patch_global'],z[f'panorama_block{layer}_patch_local16'])
+                  add(f'l{layer}_cube_mean',gs.mean(0),ls.mean(0))
+                  add(f'l{layer}_cube_concat',gs.ravel())
+                  add(f'l{layer}_horizontal',gs[:4].mean(0),ls[:4].mean(0))
+                  add(f'l{layer}_face_variation',gs.std(0))
+                add('panorama_cls',z['panorama_block12_cls_global']);add('cube_cls',np.mean([z[f'{v}_block12_cls_global'] for v in faces],axis=0))
+                if image==ids[0]:predzip.write(p,p.name)
+              else:
+                assert z['image_ids'].tolist()==[image] and int(z['feature_schema_version'])==2
+                for layer in (5,7,9,11):
+                  gs=np.stack([z[f'{v}_view0_out_layer_{layer}_global'] for v in faces]);ls=np.stack([z[f'{v}_view0_out_layer_{layer}_local16'] for v in faces]);assert gs.shape==(6,1536)
+                  add(f'l{layer}_cube_mean',gs.mean(0),ls.mean(0));add(f'l{layer}_horizontal',gs[:4].mean(0));add(f'l{layer}_face_variation',gs.std(0))
+                if image in labelled:predzip.write(b/'models'/model/(image+'.geometry.npz'),image+'.npz')
+            predzip.close()
+            np.savez_compressed(out/(model+'_global648.npz'),image_ids=np.array(ids),**{k:np.stack(v) for k,v in glob.items()})
+            np.savez_compressed(out/(model+'_local106.npz'),image_ids=np.array(labelled),**{k:np.stack(v) for k,v in local.items()})
+            print('Verified',model,len(ids),'images; pools',len(glob),len(local),flush=True)
+          (out/'INPUT_MANIFEST.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: difficulty-current-core
+          path: |
+            /tmp/difficulty_source/current_core.zip
+            /tmp/difficulty_source/INPUT_MANIFEST.json
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: difficulty-hohonet
+          path: /tmp/difficulty_source/hohonet*
+          compression-level: 0
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: difficulty-bilayout
+          path: /tmp/difficulty_source/bilayout*
+          compression-level: 0
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: difficulty-ulayout
+          path: /tmp/difficulty_source/ulayout*
+          compression-level: 0
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: difficulty-dinov3
+          path: /tmp/difficulty_source/dinov3*
+          compression-level: 0
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: difficulty-da3
+          path: /tmp/difficulty_source/da3*
+          compression-level: 0
+          retention-days: 14
