@@ -11,7 +11,7 @@
     "safetensors": "0.8.0",
     "transformers": "4.57.6"
   },
-  "dinov3_backend": "official Transformers DINOv3ViTModel (HF weights) when present; original Meta torch.hub only for original .pth; strict loading, final norm applied to selected block outputs",
+  "dinov3_backend": "Meta dinov3.hub.backbones.dinov3_vitb16; restricted local torch.load; strict state_dict loading",
   "inference_dtype": "float32",
   "feature_storage_dtype": "raw float16, pooled float32",
   "geometry_dtype": "float32",
@@ -172,10 +172,10 @@
   },
   "layer_indexing": "DA3 zero-based; DINOv3 one-based",
   "input_resize": "uLayout panorama 1024x512 PIL BICUBIC; DINO panorama same and cubefaces512; DA3 cubefaces512 then official processor504",
-  "checkpoint_source": "https://huggingface.co/facebook/dinov3-vitb16-pretrain-lvd1689m",
+  "checkpoint_source": "Meta official licensed download: dinov3_vitb16_pretrain_lvd1689m-73cec8be.pth",
   "ulayout_postprocess": "official radians -> pixel float -> round; official wrapper corner field is GT and is deliberately NOT exported; predicted corners unavailable",
   "ulayout_corner_logits": "Raw unused second model return; official training wrapper optimizes boundaries and ignores corner return. Do not interpret these logits as calibrated/trained corner confidence.",
-  "yaw": "input rolled +yaw, features and boundaries rolled -yaw to original coordinates",
+  "yaw": "No yaw augmentation; panorama plus six fixed cubefaces",
   "feature_fields": "Spatial feature keys have global mean+population std(ddof=0) (2C), local16 image-x token bands (16,2C). DINO CLS is the direct768-vector, not mean+std. Cubeface bands use each perspective image own x, NOT panorama azimuth; up/down faces especially cannot be treated as ERP azimuth. Reproject via saved face rotation/K; compare projection conditions separately.",
   "region_split_rule": "numpy.array_split(token_width,16): remainder goes to earliest bands. DA3 W36 first4 bands have3 tokens, remaining12 have2. Equal width only if width divisible by16; no equal-angle claim.",
   "region_token_intervals_half_open": {
@@ -348,7 +348,5 @@
     "relative_depth_error",
     "depth_agreement_5pct"
   ],
-  "reprojection_meaning": "Predicted geometric candidates only, not image-observed matches; projected finite positive depths in bounds; agreement masks are exploratory, not GT.",
-  "access_status": "blocked_access_request_rejected",
-  "attempted_images": 0
+  "reprojection_meaning": "Predicted geometric candidates only, not image-observed matches; projected finite positive depths in bounds; agreement masks are exploratory, not GT."
 }

@@ -117,7 +117,11 @@ def load_dinov3(device):
     weights = LOCAL / 'dinov3-weights/dinov3_vitb16_pretrain_lvd1689m.pth'
     if not weights.is_file():
         raise FileNotFoundError(f'Official licensed DINOv3 weights required: {weights}')
-    model = torch.hub.load(str(LOCAL / 'dinov3-src'), 'dinov3_vitb16', source='local', weights=str(weights))
+    # Import only the backbone: hubconf also imports unrelated segmentation dependencies.
+    sys.path.insert(0, str(LOCAL / 'dinov3-src'))
+    from dinov3.hub.backbones import dinov3_vitb16
+    model = dinov3_vitb16(pretrained=False)
+    model.load_state_dict(torch.load(weights, map_location='cpu', weights_only=True), strict=True)
     return model.eval().requires_grad_(False).to(device)
 
 
@@ -500,17 +504,17 @@ def manifest(model, device):
     intervals = {str(width): [[int(part[0]), int(part[-1]) + 1] for part in np.array_split(np.arange(width), 16)] for width in widths}
     return dict(model=model, source=source, revision=revision, frozen=True, device=device,
                 runtime_versions={name: version(name) for name in ('torch','torchvision','numpy','safetensors','transformers')},
-                dinov3_backend='official Transformers DINOv3ViTModel (HF weights) when present; original Meta torch.hub only for original .pth; strict loading, final norm applied to selected block outputs',
+                dinov3_backend=('Transformers DINOv3ViTModel' if (LOCAL / 'dinov3-hf/model.safetensors').is_file() else 'Meta dinov3.hub.backbones.dinov3_vitb16; restricted local torch.load; strict state_dict loading'),
                 inference_dtype='bfloat16 autocast' if model == 'da3' and device == 'cuda' else 'float32',
                 feature_storage_dtype='raw float16, pooled float32', geometry_dtype='float32',
                 local_raw_container='Early raw NPZ files use compression; later raw NPZ are uncompressed for speed. Numerical values/dtypes and numpy.load interface identical; cloud NPZ always compressed.',
                 candidates={'dinov3': list(DINO_LAYERS), 'da3': list(DA3_LAYERS), 'ulayout': ['compressed', 'transformer']},
                 projection=projection, layer_indexing='DA3 zero-based; DINOv3 one-based',
                 input_resize='uLayout panorama 1024x512 PIL BICUBIC; DINO panorama same and cubefaces512; DA3 cubefaces512 then official processor504',
-                checkpoint_source={'ulayout':'https://drive.google.com/file/d/19PKz_VRkUPcJgxTmjL5jQVaNPqEups5I/view','da3':'https://huggingface.co/depth-anything/DA3-SMALL','dinov3':'https://huggingface.co/facebook/dinov3-vitb16-pretrain-lvd1689m'}[model],
+                checkpoint_source={'ulayout':'https://drive.google.com/file/d/19PKz_VRkUPcJgxTmjL5jQVaNPqEups5I/view','da3':'https://huggingface.co/depth-anything/DA3-SMALL','dinov3':('https://huggingface.co/facebook/dinov3-vitb16-pretrain-lvd1689m' if (LOCAL / 'dinov3-hf/model.safetensors').is_file() else 'Meta official licensed download: dinov3_vitb16_pretrain_lvd1689m-73cec8be.pth')}[model],
                 ulayout_postprocess='official radians -> pixel float -> round; official wrapper corner field is GT and is deliberately NOT exported; predicted corners unavailable',
                 ulayout_corner_logits='Raw unused second model return; official training wrapper optimizes boundaries and ignores corner return. Do not interpret these logits as calibrated/trained corner confidence.',
-                yaw='input rolled +yaw, features and boundaries rolled -yaw to original coordinates',
+                yaw='No yaw augmentation; panorama plus six fixed cubefaces' if model == 'dinov3' else 'input rolled +yaw, features and boundaries rolled -yaw to original coordinates',
                 feature_fields='Spatial feature keys have global mean+population std(ddof=0) (2C), local16 image-x token bands (16,2C). DINO CLS is the direct768-vector, not mean+std. Cubeface bands use each perspective image own x, NOT panorama azimuth; up/down faces especially cannot be treated as ERP azimuth. Reproject via saved face rotation/K; compare projection conditions separately.',
                 region_split_rule='numpy.array_split(token_width,16): remainder goes to earliest bands. DA3 W36 first4 bands have3 tokens, remaining12 have2. Equal width only if width divisible by16; no equal-angle claim.',
                 region_token_intervals_half_open=intervals,

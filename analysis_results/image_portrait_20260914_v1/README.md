@@ -1,13 +1,13 @@
 # 648图图片画像工作包
 
-本包用于探索图片特质、冻结模型反馈与人类标注结果的关系。**四个模型已完成本地提取；DINOv3访问申请被作者拒绝，未运行。本包不含A–E云端分析结论。**648图为画像覆盖；历史真人响应仅覆盖214图、26人、2501条canonical响应。
+本包用于探索图片特质、冻结模型反馈与人类标注结果的关系。**五个模型均已完成648图的本地提取；DINOv3使用用户取得的Meta官方许可权重。本包不含A–E云端分析结论。**648图为画像覆盖；历史真人响应仅覆盖214图、26人、2501条canonical响应。
 
 |本地交付|实际覆盖|
 |---|---|
 |HoHoNet、Bi-Layout、uLayout|各648图，每图4个水平旋转相位|
 |DA3单图|648图，各6个独立推理透视面，四个完整768通道候选层|
 |DA3同房辅助|316组固定配对，各2个拍摄位置、12个透视面共同推理|
-|DINOv3|0图；648条受阻记录，无替代模型或随机权重|
+|DINOv3|648图完成、0失败；官方ViT-B/16 LVD1689M，全景及六面，各5层patch和最后CLS|
 |图片可见特质|648图盲评初筛，21图原分辨率复核；保留来源和局限|
 
 覆盖及验证详见`output_coverage.json`、`local_validation.json`和各模型`validation.json`/运行记录。推理成功只说明输出可计算，不证明几何物理正确，也不证明能预测人类难度。
@@ -22,6 +22,8 @@
 6. `models/`保存每个模型的实际特征、预测及失败；五份可复制任务说明：[A 图片特质](prompts/A.md)、[B 模型反馈](prompts/B.md)、[C 模型层](prompts/C.md)、[D 同房几何](prompts/D.md)、[E 人员分类与组合](prompts/E.md)，输出分别写入`cloud/A`至`cloud/E`。
 
 ## 方法边界
+
+研究主线为人类标注的**不确定性及其随人数增加的收敛过程**：区分统一共识、稳定多簇和观察内持续变化，分别记录质量与分布稳定性。图片与模型画像用于解释和预测这一过程；结构分歧、有限预算几何覆盖或耗时关联都只提供部分证据，不能各自替代收敛。人员分类及真实组合仍是主线的一部分。
 
 - 冻结视觉模型，不训练视觉网络；模型差异、置信值、预测几何一致性均不是人类难度或GT。
 - 固定保留数据source_split，并建议分层报告。多个布局模型使用MP3D训练；本轮人类目标留出不代表视觉模型没见过该图。具体权重的完整训练成员未核实，不能声称648图全部是视觉模型外部检验集。
@@ -44,7 +46,7 @@
 |HoHoNet ep300 ResNet34布局|编码器stage2/4、水平压缩、水平精炼、共享latent、旧0°均值|[论文§3及§4.1](https://arxiv.org/pdf/2011.11498)区分编码器/压缩/精炼；原任务消融不能直接推广成人类难度。|
 |Bi-Layout MP3D|Fc、enclosed/extended Fg、两头depth及height相关输出|[论文§4](https://arxiv.org/html/2404.09993v1#S4)。共享Transformer先new/enclosed后origin/extended；静态Global Context Embedding不是逐图特征。原模型最终ratio为两个原始ratio的均值，禁止GT挑头。|
 |uLayout best_mp3d|全景压缩特征、最终SWG、上下边界|[论文§3.3](https://arxiv.org/html/2503.21562v1#S3.SS3)。该官方权重训练含MP3D与LSUN。|
-|DINOv3 ViT-B/16|one-based block3/6/9/11/12 patch、最后CLS；全景及六面|[附录B.2](https://arxiv.org/html/2508.10104v1#A2.SS2)几何层比较来自7B，不能照搬层号到12层B模型。权重门禁失败时明确缺失。|
+|DINOv3 ViT-B/16|one-based block3/6/9/11/12 patch、最后CLS；全景及六面|[附录B.2](https://arxiv.org/html/2508.10104v1#A2.SS2)几何层比较来自7B，不能照搬层号到12层B模型。本轮使用Meta官方ViT-B/16 LVD1689M权重。|
 |DA3 Small|zero-based输出层5/7/9/11；深度、置信、相机、单图/同房条件|[论文§3.2](https://arxiv.org/html/2511.10647v1#S3.SS2)及[官方配置](https://raw.githubusercontent.com/ByteDance-Seed/Depth-Anything-3/main/src/depth_anything_3/configs/da3-small.yaml)。只在有效对应区域比较，新增视角是新增信息。|
 
 ## 布局模型数值字段
@@ -70,8 +72,17 @@ python -m pytest tests/test_image_portrait_bundle.py tests/test_image_portrait_c
 python -m tools.thesis_main.analysis.image_portrait.layout_models --model hohonet
 python -m tools.thesis_main.analysis.image_portrait.layout_models --model bilayout --bi-root <本地官方Bi仓库>
 python -m tools.thesis_main.analysis.image_portrait.modern_models --model ulayout
+python -m tools.thesis_main.analysis.image_portrait.modern_models --model dinov3
 python -m tools.thesis_main.analysis.image_portrait.modern_models --model da3
 python -m tools.thesis_main.analysis.image_portrait.modern_models --model da3 --multiview
 ```
 
 前两项不需原图或模型权重；推理命令仅本地运行。模型依赖/权重位置由本地环境管理，云端不下载。代码和工作包在`codex/image-portrait-20260914`分支交付；不上传原图、权重、截图、ZIP。不修改正式Paper A合同、原始导出或采集安排。A–E任务完成后回本地复算关键表、复核视觉反例，再形成统一结论。
+
+## DINOv3补充数据的解释边界
+
+此前Hugging Face拒绝记录是历史获取状态；用户随后取得Meta官网下载许可并提供ViT-B/16权重。严格加载官方模型，冻结全部参数，不改变原先固定的5个候选层。全景与六面是两种表征条件，仍只有648个独立图片身份。每个patch字段提供global均值/标准差及local16条带，最后CLS单独保留；geometry文件只含身份和原始尺寸，不是DINO深度或布局预测。
+
+DINO数据是在首轮Pro结果返回后补齐的。后续将其作为新增分析，保留此前结果及其输入版本；先复用相同目标、划分、覆盖和比较条件，再检验它对不确定性轨迹、簇内波动、稳定多簇及人员构成交互的增量。后续若受首轮结果启发新增目标或汇聚方式，应标为后续探索，不能追记为预指定。不得因DINO某层表现更好而回改主线、收敛判据或只保留有利层。
+
+现有Pro传输workflow固定读取旧提交，其旧快照不含本次DINO补充数据。继续分析时应显式读取本分支更新后的models/dinov3及运行清单，不能因旧workflow可下载就认定已取得新增特征。

@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "checkpoint": "dinov3_vitb16_pretrain_lvd1689m-73cec8be.pth",
+  "checkpoint_bytes": 342860279,
+  "source": "User-provided Meta official licensed download; earlier HF access rejection resolved through Meta download",
+  "strict_state_dict_load": true,
+  "restricted_weights_only_load": true,
+  "frozen": true,
+  "architecture": {
+    "blocks": 12,
+    "channels": 768,
+    "patch_size": 16
+  },
+  "selected_one_based_blocks": [
+    3,
+    6,
+    9,
+    11,
+    12
+  ],
+  "official_final_patch_and_cls_exact_match": true,
+  "official_equivalence_input": "Deterministic 64x64 RGB numeric fixture; CPU float32; not an outcome-based layer selection",
+  "first_image_raw_shape_and_finite_check": "2t7WUuJeko7_073656b4030d4389ba7f304298be1d73",
+  "raw_dtype": "float16",
+  "pooled_dtype": "float32",
+  "normalization": "RGB/255 then ImageNet mean (.485,.456,.406), std (.229,.224,.225); official norm=True intermediate outputs; CLS/register tokens excluded from patch grid",
+  "scope": "Extraction validation only; no statistical relationship with human uncertainty or convergence established"
+}
