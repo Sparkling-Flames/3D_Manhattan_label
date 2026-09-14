@@ -1,0 +1,98 @@
+name: Targeted 106 difficulty numeric source 20260915
+on:
+  push:
+    branches: [codex/image-portrait-20260914]
+    paths: [.github/workflows/image-portrait-difficulty-targeted-source-20260915.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: a36e307724a127b7c110b4e5039f2d62a121091b
+          fetch-depth: 1
+          filter: blob:none
+          lfs: false
+          sparse-checkout: |
+            analysis_results/image_portrait_20260914_v1/metadata
+            analysis_results/image_portrait_20260914_v1/evaluation
+            analysis_results/image_portrait_20260914_v1/visual
+      - name: Expand only to actual labelled-image arrays
+        run: |
+          python - <<'PY'
+          import json,gzip,pathlib,subprocess
+          b=pathlib.Path('analysis_results/image_portrait_20260914_v1')
+          rows=[json.loads(s) for s in gzip.open(b/'metadata/spatial_history.jsonl.gz','rt') if s.strip()]
+          ids=[r['image_id'] for r in rows if (r.get('latest_selection_record') or {}).get('difficulty') in ('简单','中等','困难')];assert len(ids)==106
+          patterns=['/'+str(b)+'/metadata/','/'+str(b)+'/evaluation/','/'+str(b)+'/visual/','/'+str(b)+'/*.md','/'+str(b)+'/*.json']
+          for m in ('hohonet','bilayout','ulayout','dinov3','da3'):
+            patterns+=['/'+str(b)+'/models/'+m+'/*.json','/'+str(b)+'/models/'+m+'/*.jsonl']
+            for i in ids:
+              for suffix in (('.npz',) if m in ('hohonet','bilayout') else ('.features.npz','.geometry.npz')):
+                patterns.append('/'+str(b)+'/models/'+m+'/'+i+suffix)
+          subprocess.run(['git','sparse-checkout','set','--no-cone','--stdin'],input='\n'.join(patterns)+'\n',text=True,check=True)
+          pathlib.Path('/tmp/labelled_ids.json').write_text(json.dumps(ids))
+          PY
+      - name: Package original numeric files without inference
+        run: |
+          python - <<'PY'
+          import pathlib,json,zipfile,subprocess,hashlib
+          b=pathlib.Path('analysis_results/image_portrait_20260914_v1');dest=pathlib.Path('/tmp/targeted');dest.mkdir()
+          ids=json.loads(pathlib.Path('/tmp/labelled_ids.json').read_text());commit=subprocess.check_output(['git','rev-parse','HEAD']).decode().strip()
+          manifest={'input_commit':commit,'target_images':ids,'no_original_images_or_weights':True,'model_files':[],'core_files':[]}
+          with zipfile.ZipFile(dest/'core.zip','w',zipfile.ZIP_DEFLATED) as z:
+            for p in b.rglob('*'):
+              if p.is_file() and p.suffix in ('.json','.jsonl','.gz','.md'):
+                data=p.read_bytes();z.writestr(str(p),data);manifest['core_files'].append({'path':str(p),'sha256':hashlib.sha256(data).hexdigest()})
+            tree=subprocess.check_output(['git','ls-tree','-r','HEAD','--',str(b)]);z.writestr('INPUT_TREE.txt',tree)
+            manifest['AGENTS_paths']=[x for x in subprocess.check_output(['git','ls-files']).decode().splitlines() if pathlib.Path(x).name=='AGENTS.md']
+          for m in ('hohonet','bilayout','ulayout','dinov3','da3'):
+            with zipfile.ZipFile(dest/(m+'.zip'),'w',zipfile.ZIP_STORED) as z:
+              for image in ids:
+                for suffix in (('.npz',) if m in ('hohonet','bilayout') else ('.features.npz','.geometry.npz')):
+                  p=b/'models'/m/(image+suffix);data=p.read_bytes();z.writestr(p.name,data)
+                  manifest['model_files'].append({'image_id':image,'model':m,'path':str(p),'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()})
+          (dest/'INPUT_MANIFEST.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
+          print('Original numeric files',len(manifest['model_files']),'; target images',len(ids),'; input',commit)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: difficulty-targeted-core
+          path: |
+            /tmp/targeted/core.zip
+            /tmp/targeted/INPUT_MANIFEST.json
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: difficulty-targeted-hohonet
+          path: /tmp/targeted/hohonet.zip
+          compression-level: 0
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: difficulty-targeted-bilayout
+          path: /tmp/targeted/bilayout.zip
+          compression-level: 0
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: difficulty-targeted-ulayout
+          path: /tmp/targeted/ulayout.zip
+          compression-level: 0
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: difficulty-targeted-dinov3
+          path: /tmp/targeted/dinov3.zip
+          compression-level: 0
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: difficulty-targeted-da3
+          path: /tmp/targeted/da3.zip
+          compression-level: 0
+          retention-days: 14
