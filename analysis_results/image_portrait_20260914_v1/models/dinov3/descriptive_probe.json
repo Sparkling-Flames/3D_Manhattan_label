@@ -1,0 +1,73 @@
+{
+  "status": "descriptive_only",
+  "images": 648,
+  "building_ids": 25,
+  "same_building_random_other_image_probability": 0.06391321769992558,
+  "method": "All 648 inputs, no human outcomes. Cosine nearest5 excluding self. Panorama patch channel means only (first768 of global), not std or local16. cube12 averages six individually L2-normalized face means, then normalizes aggregate. No fitted PCA/scaler. This is post-first-Pro descriptive exploration, not predictive validation or candidate selection.",
+  "warning": "Nearest-neighbor agreement describes representation differences, not geometric truth, uncertainty, or convergence. Building enrichment also mixes room identity, visual context and dataset sampling.",
+  "representations": {
+    "3": {
+      "pairwise_cosine_quantiles": [
+        0.94767811404357,
+        0.9856223800018851,
+        0.9953226229511467
+      ],
+      "same_building_top5_fraction": 0.32623456790123456,
+      "top5_overlap_with_panorama_block12": 0.18950617283950616
+    },
+    "6": {
+      "pairwise_cosine_quantiles": [
+        0.9555063085489758,
+        0.985246364195363,
+        0.993535822662874
+      ],
+      "same_building_top5_fraction": 0.4719135802469136,
+      "top5_overlap_with_panorama_block12": 0.3169753086419753
+    },
+    "9": {
+      "pairwise_cosine_quantiles": [
+        0.9439834973025822,
+        0.9727399566489263,
+        0.9851081655001049
+      ],
+      "same_building_top5_fraction": 0.5953703703703703,
+      "top5_overlap_with_panorama_block12": 0.4645061728395062
+    },
+    "11": {
+      "pairwise_cosine_quantiles": [
+        0.9187022645988798,
+        0.950760761730636,
+        0.9702144945474677
+      ],
+      "same_building_top5_fraction": 0.6074074074074074,
+      "top5_overlap_with_panorama_block12": 0.6305555555555555
+    },
+    "12": {
+      "pairwise_cosine_quantiles": [
+        0.8554085805233037,
+        0.909318697078999,
+        0.9467830451632052
+      ],
+      "same_building_top5_fraction": 0.6574074074074074,
+      "top5_overlap_with_panorama_block12": 1.0
+    },
+    "cube12": {
+      "pairwise_cosine_quantiles": [
+        0.8528963939226729,
+        0.9141947610225312,
+        0.9516359117353458
+      ],
+      "same_building_top5_fraction": 0.6648148148148149,
+      "top5_overlap_with_panorama_block12": 0.6262345679012346
+    },
+    "cls12": {
+      "pairwise_cosine_quantiles": [
+        0.20849291115447732,
+        0.34994826732840184,
+        0.5469390303486655
+      ],
+      "same_building_top5_fraction": 0.6691358024691358,
+      "top5_overlap_with_panorama_block12": 0.5256172839506174
+    }
+  }
+}
