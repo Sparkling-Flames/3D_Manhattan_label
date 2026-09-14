@@ -39,7 +39,7 @@ def write(path, value, lines=False):
         # Fixed gzip timestamp makes repeated source checks leave identical artifacts.
         path.write_bytes(gzip.compress(text.encode('utf-8'), mtime=0))
     else:
-        path.write_text(text, encoding='utf-8')
+        path.write_text(text, encoding='utf-8', newline='\n')
 
 
 def unique(records, key):
@@ -371,8 +371,8 @@ def build(out=OUT):
     config = dict(schema='image_portrait_exploration_v1', seed=SEED, frozen_visual_models=True,
         model_candidates={'knn_k': [1, 3, 5], 'ridge_alpha': [0.1, 1, 10, 100], 'pca_components': [None, 16, 32]},
         preprocessing='Fit standardization and PCA within each inner training fold only; cap PCA at min(n_train-1,n_features).',
-        inner_validation='Leave-building inside outer training; same-room small folds use fixed ridge alpha=10 and k=1 without tuning.',
-        selection='Minimize image-macro MAE on inner folds; ties choose smaller PCA then larger ridge alpha/smaller k; never use outer outcomes.',
+        inner_validation='Leave-building inside outer training; same-room small folds use fixed ridge alpha=10, k=1 and PCA=None without tuning.',
+        selection='Minimize image-macro MAE on inner folds; ties choose PCA=None first, then smaller finite PCA dimension, then larger ridge alpha/smaller k; never use outer outcomes.',
         endpoints=['reference_geometry_error', 'owner_valid_active_seconds', 'point_count_disagreement', 'within_topology_geometry_dispersion', 'scope_choice_distribution'],
         quality='Use references with explicit source and scope; exclude missing, not-geometry-ready and known bad GT. Public reference is not assumed adjudicated.',
         time='Use time_source_checks.speed_usable; never replace with lead_time or sum audit events.',

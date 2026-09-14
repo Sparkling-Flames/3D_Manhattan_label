@@ -3,6 +3,7 @@ import argparse
 import contextlib
 import io
 import json
+import zipfile
 import sys
 from pathlib import Path
 import numpy as np
@@ -13,6 +14,27 @@ from tools.thesis_main.analysis.image_portrait.common import (
     ROOT, BUNDLE, LOCAL, YAW_DEGREES, read_images, save_json,
     pool_spatial, restore_yaw, restore_corners,
 )
+from tools.thesis_main.analysis.image_portrait.audit_outputs import check_npz
+
+
+def complete_export(destination, status_path, image_id, model):
+    if not destination.exists() or not status_path.exists():
+        return False
+    try:
+        status = json.loads(status_path.read_text(encoding='utf8'))
+        if status['image_id'] != image_id or status['model'] != model or status['status'] != 'ok':
+            return False
+        if sorted(p['yaw'] for p in status['phases'] if p['status']=='ok') != list(YAW_DEGREES):
+            return False
+        check_npz(destination)
+        layers = ['encoder_stage2','encoder_stage4','compressed','refined','shared'] if model=='hohonet' else ['fc','fg_enclosed','fg_extended']
+        post_keys = ['cor_id','y_bon_','y_cor_'] if model=='hohonet' else ['corners_extended','corners_enclosed']
+        with np.load(destination, allow_pickle=False) as values:
+            required = {f'yaw{yaw}__{layer}__{pool}' for yaw in YAW_DEGREES for layer in layers for pool in ['global','regions']}
+            required.update(f'yaw{yaw}__post__{key}' for yaw in YAW_DEGREES for key in post_keys)
+            return required.issubset(values.files)
+    except (OSError, ValueError, KeyError, zipfile.BadZipFile, EOFError):
+        return False
 
 
 def guided_branches(calls):
@@ -31,9 +53,9 @@ def load(name, bi_root):
         sys.path.insert(0, str(bi_root))
         from unittest.mock import patch
         from models.bi_layout import Bi_Layout
-        from models.modules import horizon_net_feature_extractor as hfe
-        original = hfe.Resnet
-        with patch.object(hfe, 'Resnet', side_effect=lambda backbone, pretrained: original(backbone, pretrained=False)):
+        import torchvision.models
+        original = torchvision.models.resnet50
+        with patch.object(torchvision.models, 'resnet50', side_effect=lambda **kwargs: original(weights=None)):
             model = Bi_Layout(win_size=16, depth=8, rpe='lr_parameter_mirror',
                               feature_channel=512, height_compression_scale=16)
         checkpoint = torch.load(bi_root/'checkpoints/Bi_Layout_Net/mp3d/mp3d_best_model.pkl',
@@ -115,7 +137,7 @@ def run(args):
         image_id = row['image_id']
         destination = out/f'{image_id}.npz'
         status_path = out/f'{image_id}.json'
-        if destination.exists() and status_path.exists() and not args.overwrite and json.loads(status_path.read_text(encoding='utf8'))['status'] == 'ok':
+        if not args.overwrite and complete_export(destination, status_path, image_id, args.model):
             continue
         status = dict(image_id=image_id, model=args.model, yaw_degrees=list(YAW_DEGREES), phases=[])
         arrays = {}
@@ -154,7 +176,9 @@ def run(args):
         save_json(status_path, status)
         print(f'{args.model} {index+1}/{len(rows)} {image_id} {status["status"]}', flush=True)
     save_json(out/'run_config.json', dict(model=args.model, precision='float32', frozen=True,
-        input_hw=[512,1024], yaw_degrees=list(YAW_DEGREES), aligned_to_original=True,
+        input_hw=[512,1024], resize='PIL.Image.Resampling.BILINEAR', input_rgb_range=[0,1],
+        yaw_degrees=list(YAW_DEGREES), aligned_to_original=True,
+        legacy_mean_semantics='old pooling on current preprocessing; archived historical values are in history/',
         feature_pool='channel mean/std global and 16 equal azimuth sectors',
         bi_head_order=['enclosed','extended'] if args.model=='bilayout' else None,
         raw_spatial_local_only=True, requested_count=len(rows)))

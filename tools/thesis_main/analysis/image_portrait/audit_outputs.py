@@ -1,5 +1,6 @@
 """Recheck the portable numerical package without images or visual dependencies."""
 import json
+import zipfile
 from collections import Counter
 from pathlib import Path
 import numpy as np
@@ -36,7 +37,7 @@ def audit(root=BUNDLE):
             try:
                 check_npz(path)
                 covered.add(image_id)
-            except (ValueError, OSError) as exc:
+            except (ValueError, OSError, zipfile.BadZipFile, EOFError) as exc:
                 errors.append(dict(file=path.name, error=str(exc)))
         if name in ('hohonet','bilayout'):
             for image_id in ids:

@@ -21,8 +21,8 @@
     ]
   },
   "preprocessing": "Fit standardization and PCA within each inner training fold only; cap PCA at min(n_train-1,n_features).",
-  "inner_validation": "Leave-building inside outer training; same-room small folds use fixed ridge alpha=10 and k=1 without tuning.",
-  "selection": "Minimize image-macro MAE on inner folds; ties choose smaller PCA then larger ridge alpha/smaller k; never use outer outcomes.",
+  "inner_validation": "Leave-building inside outer training; same-room small folds use fixed ridge alpha=10, k=1 and PCA=None without tuning.",
+  "selection": "Minimize image-macro MAE on inner folds; ties choose PCA=None first, then smaller finite PCA dimension, then larger ridge alpha/smaller k; never use outer outcomes.",
   "endpoints": [
     "reference_geometry_error",
     "owner_valid_active_seconds",
