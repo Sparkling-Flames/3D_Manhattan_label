@@ -1,5 +1,7 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
+图片画像探索：`tools/thesis_main/analysis/image_portrait/`生成[648图数值工作包](../analysis_results/image_portrait_20260914_v1/README.md)，测试位于`tests/test_image_portrait_*.py`。原图/权重/高维空间数组仅本地保留，云端A–E通过数值与文字分析；不修改正式协议。
+
 研究当前入口：`docs/thesis_main/研究现状交接_20260913.md`。库存脚本`tools/thesis_main/analysis/audit_history_inventory_20260913.py`逐条回查canonical与18份原导出，生成当前v2结果目录`全量历史与本轮覆盖核对.json/.csv`，区分全量历史、采用子集及新增计划。旧9月9日交接保留为历史。
 
 第一阶段v2交付：`label_studio_import/`放任务7、Project G、Project H；H已定稿20图。结果目录的`完成后可分析覆盖.json/.md`说明6个重点同房间及历史扩展覆盖。旧v1人员包/工作簿、v2 ZIP和旧门洞复核空表已删除，v1仍保留生成器与审计依赖的机器输入。当前中文、英文必做、英文选做分别存放，不创建新压缩包。

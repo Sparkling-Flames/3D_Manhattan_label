@@ -1,0 +1,38 @@
+{
+  "images": 648,
+  "buildings": 25,
+  "responses": 2501,
+  "human_images": 214,
+  "workers": 26,
+  "raw_exports_verified": 18,
+  "semi_initializations": 574,
+  "raw_active_events_verified": 26057,
+  "speed_usable": 2049,
+  "relationships": {
+    "supported": 156,
+    "unsupported": 67,
+    "pending": 37
+  },
+  "room_components": {
+    "supported_component": 82,
+    "overlap_with_pending_or_unsupported": 74
+  },
+  "folds": {
+    "leave_building": 25,
+    "same_room_leave_view": 262,
+    "leave_supported_room_conservative": 82
+  },
+  "sources": [
+    "analysis_results/scene_image_exploration_20260910_v1/inventory.json",
+    "analysis_results/spatial_dimensions_review_20260913_v2/空间描述与历轮人工记录.json",
+    "analysis_results/confirmed_point_calculation_view_20260909_v1/reviewed/calculation_view.jsonl.gz",
+    "analysis_results/annotation_research_prework_20260905_v2/evidence/record_evidence.csv",
+    "analysis_results/uncertainty_cloud_inputs_20260906_v1/facts/"
+  ],
+  "limits": [
+    "No new visual ratings in this bundle; historical human and AI provenance retained separately.",
+    "Same-building unknown relationships excluded conservatively; room evaluation overlaps building exclusion policy.",
+    "Active time frozen historical totals retained; raw event provenance checked, totals not recomputed.",
+    "Known bad GT unusable for quality; model source GT independence must be examined."
+  ]
+}

@@ -1,5 +1,7 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
+图片画像探索：[648图工作包与A–E任务入口](../analysis_results/image_portrait_20260914_v1/README.md)。冻结模型、多层特征及真人结果分开记录；实际覆盖以运行状态为准，不替代正式方法合同。
+
 当前研究交接：[2026-09-13现状与阅读顺序](thesis_main/研究现状交接_20260913.md)。全量历史196图1843份、55张高人数图；不能用本轮102张采用池替代历史总量。正文要求与执行说明已同步纠正。
 
 第一阶段最新交付：[整房优先说明](../analysis_results/stage1_person_image_packages_20260913_v2/整房优先版交付说明.md)、[完成后可分析覆盖](../analysis_results/stage1_person_image_packages_20260913_v2/完成后可分析覆盖.md)。任务7、Project G、Project H的JSON独立存放；H已定稿20图。不提供ZIP，旧分发表及门洞空白复核页已清理。

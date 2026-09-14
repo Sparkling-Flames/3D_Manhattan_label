@@ -1,0 +1,23 @@
+{
+  "historical_feature_images": 214,
+  "max_distance_recompute_delta": 0.00014495849609375,
+  "reference_images": 1647,
+  "worker_axis_rows": 5057,
+  "worker_axis_counts": {
+    "quality": 1482,
+    "time": 1500,
+    "scope_reject": 727,
+    "scope_accept": 234,
+    "edit": 574,
+    "benefit": 540
+  },
+  "historical_membership_rows": 7095,
+  "group_count_configs": 303,
+  "group_count_rule": "2..floor(eligible_workers/2)",
+  "legacy_d_t_status": "missing_verified_realized_scores_and_calibration_reference_pool",
+  "legacy_d_t_explanation": "Only frozen rule and 214 single-phase mean vectors located; reference manifest still declares blocked_by_runtime_bridge. Do not compute replacement using risk reference or all648.",
+  "d_model_feat_status": "214 archived descriptors reprojected against exact saved 1647-reference cache; both distances reproduce",
+  "d_model_feat_limits": "Historical frozen projection, not PCA fit on current training fold; report separately from train-only PCA comparison. No new inference claimed.",
+  "worker_axis_limits": "Canonical identities verified; historical metrics retained with their original OSPA/reference/time definitions, not silently substituted for current metrics. Fit classes using current training only.",
+  "geometry_code": "tools/thesis_main/analysis/audit_annotation_research_data_20260905.py and imported repository modules are Git-tracked; helper invocation needs numpy and existing dependencies, no image files."
+}
