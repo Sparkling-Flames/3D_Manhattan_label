@@ -1,6 +1,16 @@
 # 648图图片画像工作包
 
-本包用于探索图片特质、冻结模型反馈与人类标注结果的关系。**运行中；不代表所有模型已完成，也不含A–E云端分析结论。**各模型目录的状态记录才是实际覆盖依据。648图为画像覆盖；历史真人响应仅覆盖214图、26人、2501条canonical响应。
+本包用于探索图片特质、冻结模型反馈与人类标注结果的关系。**四个模型已完成本地提取；DINOv3访问申请被作者拒绝，未运行。本包不含A–E云端分析结论。**648图为画像覆盖；历史真人响应仅覆盖214图、26人、2501条canonical响应。
+
+|本地交付|实际覆盖|
+|---|---|
+|HoHoNet、Bi-Layout、uLayout|各648图，每图4个水平旋转相位|
+|DA3单图|648图，各6个独立推理透视面，四个完整768通道候选层|
+|DA3同房辅助|316组固定配对，各2个拍摄位置、12个透视面共同推理|
+|DINOv3|0图；648条受阻记录，无替代模型或随机权重|
+|图片可见特质|648图盲评初筛，21图原分辨率复核；保留来源和局限|
+
+覆盖及验证详见`output_coverage.json`、`local_validation.json`和各模型`validation.json`/运行记录。推理成功只说明输出可计算，不证明几何物理正确，也不证明能预测人类难度。
 
 ## 入口与使用顺序
 
@@ -9,7 +19,7 @@
 3. `metadata/`保留分类、空间关系、来源记录；`human/`保留逐份真实作答、参考、时间证据与历史Semi初始化。展示组不是独立物理房间普查。
 4. 使用`evaluation/`固定划分。待定或不支持关系重叠的组件不进入同房评价；当前保守留房还排除了目标楼其他图，因此不是纯同楼跨房泛化。
 5. `visual/`保存新增盲评可见证据及历史原文；人工、AI和未知来源分别保留。
-6. `models/`保存每个模型的实际特征、预测及失败；`prompts/`为五份可复制任务说明，输出分别写入`cloud/A`至`cloud/E`。
+6. `models/`保存每个模型的实际特征、预测及失败；五份可复制任务说明：[A 图片特质](prompts/A.md)、[B 模型反馈](prompts/B.md)、[C 模型层](prompts/C.md)、[D 同房几何](prompts/D.md)、[E 人员分类与组合](prompts/E.md)，输出分别写入`cloud/A`至`cloud/E`。
 
 ## 方法边界
 
@@ -20,6 +30,7 @@
 - 六个透视面仅是一张全景的投影；旋转、重排和重采样均不增加独立图片或人员。
 - 原图天底模糊区域仍可能产生模型深度。`projection/`提供向下纬度>60°的固定保守排除mask，仅作D的敏感性分析；它不是逐图真实模糊边界或可见性GT，也未修改模型输入。
 - DA3单图条件为各透视面独立推理，深度尺度分别任意；辅助条件为两个拍摄位置的12面共同推理。比较时按面处理尺度，不直接相减深度。预测相机未施加已知六面共心/旋转约束；先报告同拍摄点相机一致性，再讨论可投影候选，5%预测深度一致不是物理对应验证。
+- 本轮DA3配对相机不一致具有普遍性：每对六面恢复到全景坐标后的最大旋转差最小37.81°、中位138.31°、最大179.97°。因此当前12面联合预测不能当作已验证的房间重建或可靠信息补足证据。316对中180对满足主评价关系条件，另136对有待定/不支持关系重叠；关系合格也不代表预测几何合格。
 - 标准化、降维、选层、调参、人员分型只能用当前训练侧。报告相同覆盖的配对比较及各模型全部覆盖。
 - 可见特质为648图缩略图初筛，另有21张固定抽样原分辨率复核。连接空间和低对比字段接近常量；墙地/遮挡信息高度重复，反射/玻璃有漏辨。`visual/resolution_recheck.json`保留纠正，不把未复核图当作高清标签，不据此宣称精确边界可见率。
 - 公共参考不是人工最终真值；历史Semi planned初始化一致不是参与者实际看过的证明，历史checkpoint仍可能未知。
@@ -58,6 +69,9 @@ python -m tools.thesis_main.analysis.image_portrait.build_bundle --check
 python -m pytest tests/test_image_portrait_bundle.py tests/test_image_portrait_common.py tests/test_image_portrait_layout.py -q
 python -m tools.thesis_main.analysis.image_portrait.layout_models --model hohonet
 python -m tools.thesis_main.analysis.image_portrait.layout_models --model bilayout --bi-root <本地官方Bi仓库>
+python -m tools.thesis_main.analysis.image_portrait.modern_models --model ulayout
+python -m tools.thesis_main.analysis.image_portrait.modern_models --model da3
+python -m tools.thesis_main.analysis.image_portrait.modern_models --model da3 --multiview
 ```
 
 前两项不需原图或模型权重；推理命令仅本地运行。模型依赖/权重位置由本地环境管理，云端不下载。代码和工作包在`codex/image-portrait-20260914`分支交付；不上传原图、权重、截图、ZIP。不修改正式Paper A合同、原始导出或采集安排。A–E任务完成后回本地复算关键表、复核视觉反例，再形成统一结论。

@@ -1,5 +1,5 @@
 {
-  "status": "in_progress",
+  "status": "validated_available_models_dinov3_access_rejected",
   "human_outcomes_used_for_model_selection": false,
   "visual_checks": [
     {
@@ -78,6 +78,25 @@
       "da3": 648,
       "dinov3": 0
     },
-    "da3_multiview": "running; final verification pending"
-  }
+    "da3_multiview": {
+      "expected_pairs": 316,
+      "validated_pairs": 316,
+      "invalid_pairs": [],
+      "main_room_relation_eligible_pairs": 180,
+      "overlap_pending_or_unsupported_pairs": 136,
+      "max_within_capture_rotation_degrees_per_pair": {
+        "min": 37.81,
+        "median": 138.31,
+        "max": 179.97
+      },
+      "interpretation": "Widespread inconsistency with known rigid six-face geometry. Numeric projectability is not physically validated correspondence."
+    },
+    "layout_complete_payload_images": {
+      "hohonet": 648,
+      "bilayout": 648,
+      "invalid_image_ids": []
+    }
+  },
+  "map_and_index": "Registered exploratory package and tools in docs/README_INDEX.md and docs/PROJECT_MAP_CLEAN_20260308.md; no formal protocol change.",
+  "tests_not_run": "Unrelated formal Paper A / Label Studio operational suites: this change does not modify those workflows."
 }

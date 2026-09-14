@@ -1,0 +1,2555 @@
+{
+  "expected_pairs": 316,
+  "validated_pairs": 316,
+  "invalid": [],
+  "duplicate_aux_pairs": [],
+  "npz_files": 632,
+  "npz_bytes": 1876369847,
+  "max_npz_bytes": 4648396,
+  "complete_layer_channels": 768,
+  "layers_zero_based": [
+    5,
+    7,
+    9,
+    11
+  ],
+  "feature_schema_version": 2,
+  "main_room_evaluation_eligible_pairs": 180,
+  "rotation_consistency": {
+    "definition": "For each pair, maximum predicted panorama orientation disagreement among six faces within either source capture. Known face-to-panorama rotations removed. Descriptive diagnostic only, no threshold or physical validity claim.",
+    "source": "Each pair*.geometry.npz same_capture_panorama_rotation_degrees [2,6,6]",
+    "min_degrees": 37.80868148803711,
+    "median_degrees": 138.30718231201172,
+    "max_degrees": 179.966552734375,
+    "per_pair": [
+      {
+        "pair_id": "pair0000",
+        "capture_rotation_max_degrees": [
+          36.15974807739258,
+          108.1515121459961
+        ],
+        "pair_max_degrees": 108.1515121459961
+      },
+      {
+        "pair_id": "pair0001",
+        "capture_rotation_max_degrees": [
+          122.59551239013672,
+          64.08601379394531
+        ],
+        "pair_max_degrees": 122.59551239013672
+      },
+      {
+        "pair_id": "pair0002",
+        "capture_rotation_max_degrees": [
+          47.24551773071289,
+          68.80915069580078
+        ],
+        "pair_max_degrees": 68.80915069580078
+      },
+      {
+        "pair_id": "pair0003",
+        "capture_rotation_max_degrees": [
+          59.29731369018555,
+          75.95752716064453
+        ],
+        "pair_max_degrees": 75.95752716064453
+      },
+      {
+        "pair_id": "pair0004",
+        "capture_rotation_max_degrees": [
+          70.05570220947266,
+          99.57669830322266
+        ],
+        "pair_max_degrees": 99.57669830322266
+      },
+      {
+        "pair_id": "pair0005",
+        "capture_rotation_max_degrees": [
+          93.71702575683594,
+          148.10162353515625
+        ],
+        "pair_max_degrees": 148.10162353515625
+      },
+      {
+        "pair_id": "pair0006",
+        "capture_rotation_max_degrees": [
+          69.03355407714844,
+          86.04036712646484
+        ],
+        "pair_max_degrees": 86.04036712646484
+      },
+      {
+        "pair_id": "pair0007",
+        "capture_rotation_max_degrees": [
+          47.150699615478516,
+          33.38274383544922
+        ],
+        "pair_max_degrees": 47.150699615478516
+      },
+      {
+        "pair_id": "pair0008",
+        "capture_rotation_max_degrees": [
+          93.75257873535156,
+          60.44453430175781
+        ],
+        "pair_max_degrees": 93.75257873535156
+      },
+      {
+        "pair_id": "pair0009",
+        "capture_rotation_max_degrees": [
+          58.39157485961914,
+          99.8802490234375
+        ],
+        "pair_max_degrees": 99.8802490234375
+      },
+      {
+        "pair_id": "pair0010",
+        "capture_rotation_max_degrees": [
+          57.62978744506836,
+          176.23219299316406
+        ],
+        "pair_max_degrees": 176.23219299316406
+      },
+      {
+        "pair_id": "pair0011",
+        "capture_rotation_max_degrees": [
+          55.75151443481445,
+          104.76107025146484
+        ],
+        "pair_max_degrees": 104.76107025146484
+      },
+      {
+        "pair_id": "pair0012",
+        "capture_rotation_max_degrees": [
+          112.22748565673828,
+          62.033042907714844
+        ],
+        "pair_max_degrees": 112.22748565673828
+      },
+      {
+        "pair_id": "pair0013",
+        "capture_rotation_max_degrees": [
+          53.15875244140625,
+          121.59307098388672
+        ],
+        "pair_max_degrees": 121.59307098388672
+      },
+      {
+        "pair_id": "pair0014",
+        "capture_rotation_max_degrees": [
+          50.08622360229492,
+          149.26634216308594
+        ],
+        "pair_max_degrees": 149.26634216308594
+      },
+      {
+        "pair_id": "pair0015",
+        "capture_rotation_max_degrees": [
+          51.82432174682617,
+          175.18234252929688
+        ],
+        "pair_max_degrees": 175.18234252929688
+      },
+      {
+        "pair_id": "pair0016",
+        "capture_rotation_max_degrees": [
+          179.18508911132812,
+          172.8844451904297
+        ],
+        "pair_max_degrees": 179.18508911132812
+      },
+      {
+        "pair_id": "pair0017",
+        "capture_rotation_max_degrees": [
+          117.94996643066406,
+          93.654052734375
+        ],
+        "pair_max_degrees": 117.94996643066406
+      },
+      {
+        "pair_id": "pair0018",
+        "capture_rotation_max_degrees": [
+          143.32955932617188,
+          141.3693084716797
+        ],
+        "pair_max_degrees": 143.32955932617188
+      },
+      {
+        "pair_id": "pair0019",
+        "capture_rotation_max_degrees": [
+          85.52137756347656,
+          109.06464385986328
+        ],
+        "pair_max_degrees": 109.06464385986328
+      },
+      {
+        "pair_id": "pair0020",
+        "capture_rotation_max_degrees": [
+          179.50584411621094,
+          178.63681030273438
+        ],
+        "pair_max_degrees": 179.50584411621094
+      },
+      {
+        "pair_id": "pair0021",
+        "capture_rotation_max_degrees": [
+          72.04930877685547,
+          109.15750122070312
+        ],
+        "pair_max_degrees": 109.15750122070312
+      },
+      {
+        "pair_id": "pair0022",
+        "capture_rotation_max_degrees": [
+          144.06752014160156,
+          136.1358184814453
+        ],
+        "pair_max_degrees": 144.06752014160156
+      },
+      {
+        "pair_id": "pair0023",
+        "capture_rotation_max_degrees": [
+          165.78619384765625,
+          168.14976501464844
+        ],
+        "pair_max_degrees": 168.14976501464844
+      },
+      {
+        "pair_id": "pair0024",
+        "capture_rotation_max_degrees": [
+          123.51648712158203,
+          121.30860137939453
+        ],
+        "pair_max_degrees": 123.51648712158203
+      },
+      {
+        "pair_id": "pair0025",
+        "capture_rotation_max_degrees": [
+          129.756103515625,
+          143.6072998046875
+        ],
+        "pair_max_degrees": 143.6072998046875
+      },
+      {
+        "pair_id": "pair0026",
+        "capture_rotation_max_degrees": [
+          103.45726776123047,
+          110.11971282958984
+        ],
+        "pair_max_degrees": 110.11971282958984
+      },
+      {
+        "pair_id": "pair0027",
+        "capture_rotation_max_degrees": [
+          78.21463012695312,
+          143.93890380859375
+        ],
+        "pair_max_degrees": 143.93890380859375
+      },
+      {
+        "pair_id": "pair0028",
+        "capture_rotation_max_degrees": [
+          93.05165100097656,
+          88.05375671386719
+        ],
+        "pair_max_degrees": 93.05165100097656
+      },
+      {
+        "pair_id": "pair0029",
+        "capture_rotation_max_degrees": [
+          179.33338928222656,
+          112.08089447021484
+        ],
+        "pair_max_degrees": 179.33338928222656
+      },
+      {
+        "pair_id": "pair0030",
+        "capture_rotation_max_degrees": [
+          165.64910888671875,
+          99.77730560302734
+        ],
+        "pair_max_degrees": 165.64910888671875
+      },
+      {
+        "pair_id": "pair0031",
+        "capture_rotation_max_degrees": [
+          179.30380249023438,
+          174.97816467285156
+        ],
+        "pair_max_degrees": 179.30380249023438
+      },
+      {
+        "pair_id": "pair0032",
+        "capture_rotation_max_degrees": [
+          104.3152847290039,
+          101.0588607788086
+        ],
+        "pair_max_degrees": 104.3152847290039
+      },
+      {
+        "pair_id": "pair0033",
+        "capture_rotation_max_degrees": [
+          111.90564727783203,
+          171.46807861328125
+        ],
+        "pair_max_degrees": 171.46807861328125
+      },
+      {
+        "pair_id": "pair0034",
+        "capture_rotation_max_degrees": [
+          159.65310668945312,
+          66.63107299804688
+        ],
+        "pair_max_degrees": 159.65310668945312
+      },
+      {
+        "pair_id": "pair0035",
+        "capture_rotation_max_degrees": [
+          83.35230255126953,
+          69.41268157958984
+        ],
+        "pair_max_degrees": 83.35230255126953
+      },
+      {
+        "pair_id": "pair0036",
+        "capture_rotation_max_degrees": [
+          111.7392349243164,
+          166.92166137695312
+        ],
+        "pair_max_degrees": 166.92166137695312
+      },
+      {
+        "pair_id": "pair0037",
+        "capture_rotation_max_degrees": [
+          108.8299331665039,
+          73.12879943847656
+        ],
+        "pair_max_degrees": 108.8299331665039
+      },
+      {
+        "pair_id": "pair0038",
+        "capture_rotation_max_degrees": [
+          62.058895111083984,
+          120.95511627197266
+        ],
+        "pair_max_degrees": 120.95511627197266
+      },
+      {
+        "pair_id": "pair0039",
+        "capture_rotation_max_degrees": [
+          129.0689239501953,
+          168.92666625976562
+        ],
+        "pair_max_degrees": 168.92666625976562
+      },
+      {
+        "pair_id": "pair0040",
+        "capture_rotation_max_degrees": [
+          117.65552520751953,
+          53.97166442871094
+        ],
+        "pair_max_degrees": 117.65552520751953
+      },
+      {
+        "pair_id": "pair0041",
+        "capture_rotation_max_degrees": [
+          115.39862060546875,
+          61.015769958496094
+        ],
+        "pair_max_degrees": 115.39862060546875
+      },
+      {
+        "pair_id": "pair0042",
+        "capture_rotation_max_degrees": [
+          169.58438110351562,
+          93.87985229492188
+        ],
+        "pair_max_degrees": 169.58438110351562
+      },
+      {
+        "pair_id": "pair0043",
+        "capture_rotation_max_degrees": [
+          61.35609436035156,
+          63.11875534057617
+        ],
+        "pair_max_degrees": 63.11875534057617
+      },
+      {
+        "pair_id": "pair0044",
+        "capture_rotation_max_degrees": [
+          97.56755065917969,
+          118.6169204711914
+        ],
+        "pair_max_degrees": 118.6169204711914
+      },
+      {
+        "pair_id": "pair0045",
+        "capture_rotation_max_degrees": [
+          55.56172561645508,
+          177.95689392089844
+        ],
+        "pair_max_degrees": 177.95689392089844
+      },
+      {
+        "pair_id": "pair0046",
+        "capture_rotation_max_degrees": [
+          69.2574462890625,
+          46.05875778198242
+        ],
+        "pair_max_degrees": 69.2574462890625
+      },
+      {
+        "pair_id": "pair0047",
+        "capture_rotation_max_degrees": [
+          178.3404998779297,
+          65.40362548828125
+        ],
+        "pair_max_degrees": 178.3404998779297
+      },
+      {
+        "pair_id": "pair0048",
+        "capture_rotation_max_degrees": [
+          47.02317810058594,
+          154.35984802246094
+        ],
+        "pair_max_degrees": 154.35984802246094
+      },
+      {
+        "pair_id": "pair0049",
+        "capture_rotation_max_degrees": [
+          177.92091369628906,
+          97.40328216552734
+        ],
+        "pair_max_degrees": 177.92091369628906
+      },
+      {
+        "pair_id": "pair0050",
+        "capture_rotation_max_degrees": [
+          168.80072021484375,
+          177.09254455566406
+        ],
+        "pair_max_degrees": 177.09254455566406
+      },
+      {
+        "pair_id": "pair0051",
+        "capture_rotation_max_degrees": [
+          169.52294921875,
+          93.30065155029297
+        ],
+        "pair_max_degrees": 169.52294921875
+      },
+      {
+        "pair_id": "pair0052",
+        "capture_rotation_max_degrees": [
+          79.95275115966797,
+          117.43312072753906
+        ],
+        "pair_max_degrees": 117.43312072753906
+      },
+      {
+        "pair_id": "pair0053",
+        "capture_rotation_max_degrees": [
+          125.2471694946289,
+          129.7410888671875
+        ],
+        "pair_max_degrees": 129.7410888671875
+      },
+      {
+        "pair_id": "pair0054",
+        "capture_rotation_max_degrees": [
+          86.04338073730469,
+          52.275203704833984
+        ],
+        "pair_max_degrees": 86.04338073730469
+      },
+      {
+        "pair_id": "pair0055",
+        "capture_rotation_max_degrees": [
+          177.8903045654297,
+          76.53285217285156
+        ],
+        "pair_max_degrees": 177.8903045654297
+      },
+      {
+        "pair_id": "pair0056",
+        "capture_rotation_max_degrees": [
+          49.92045593261719,
+          61.886268615722656
+        ],
+        "pair_max_degrees": 61.886268615722656
+      },
+      {
+        "pair_id": "pair0057",
+        "capture_rotation_max_degrees": [
+          118.0836181640625,
+          64.53856658935547
+        ],
+        "pair_max_degrees": 118.0836181640625
+      },
+      {
+        "pair_id": "pair0058",
+        "capture_rotation_max_degrees": [
+          72.81857299804688,
+          125.47511291503906
+        ],
+        "pair_max_degrees": 125.47511291503906
+      },
+      {
+        "pair_id": "pair0059",
+        "capture_rotation_max_degrees": [
+          170.02777099609375,
+          171.87681579589844
+        ],
+        "pair_max_degrees": 171.87681579589844
+      },
+      {
+        "pair_id": "pair0060",
+        "capture_rotation_max_degrees": [
+          101.62532806396484,
+          79.7094955444336
+        ],
+        "pair_max_degrees": 101.62532806396484
+      },
+      {
+        "pair_id": "pair0061",
+        "capture_rotation_max_degrees": [
+          122.17858123779297,
+          179.6231689453125
+        ],
+        "pair_max_degrees": 179.6231689453125
+      },
+      {
+        "pair_id": "pair0062",
+        "capture_rotation_max_degrees": [
+          70.08842468261719,
+          78.43973541259766
+        ],
+        "pair_max_degrees": 78.43973541259766
+      },
+      {
+        "pair_id": "pair0063",
+        "capture_rotation_max_degrees": [
+          66.01699829101562,
+          62.79253387451172
+        ],
+        "pair_max_degrees": 66.01699829101562
+      },
+      {
+        "pair_id": "pair0064",
+        "capture_rotation_max_degrees": [
+          91.6937484741211,
+          166.60072326660156
+        ],
+        "pair_max_degrees": 166.60072326660156
+      },
+      {
+        "pair_id": "pair0065",
+        "capture_rotation_max_degrees": [
+          129.17063903808594,
+          115.66692352294922
+        ],
+        "pair_max_degrees": 129.17063903808594
+      },
+      {
+        "pair_id": "pair0066",
+        "capture_rotation_max_degrees": [
+          155.64743041992188,
+          104.18853759765625
+        ],
+        "pair_max_degrees": 155.64743041992188
+      },
+      {
+        "pair_id": "pair0067",
+        "capture_rotation_max_degrees": [
+          167.9227294921875,
+          77.65421295166016
+        ],
+        "pair_max_degrees": 167.9227294921875
+      },
+      {
+        "pair_id": "pair0068",
+        "capture_rotation_max_degrees": [
+          61.99958419799805,
+          76.44914245605469
+        ],
+        "pair_max_degrees": 76.44914245605469
+      },
+      {
+        "pair_id": "pair0069",
+        "capture_rotation_max_degrees": [
+          129.89483642578125,
+          152.8986358642578
+        ],
+        "pair_max_degrees": 152.8986358642578
+      },
+      {
+        "pair_id": "pair0070",
+        "capture_rotation_max_degrees": [
+          112.76802062988281,
+          83.24724578857422
+        ],
+        "pair_max_degrees": 112.76802062988281
+      },
+      {
+        "pair_id": "pair0071",
+        "capture_rotation_max_degrees": [
+          70.56647491455078,
+          103.39979553222656
+        ],
+        "pair_max_degrees": 103.39979553222656
+      },
+      {
+        "pair_id": "pair0072",
+        "capture_rotation_max_degrees": [
+          174.58053588867188,
+          173.31666564941406
+        ],
+        "pair_max_degrees": 174.58053588867188
+      },
+      {
+        "pair_id": "pair0073",
+        "capture_rotation_max_degrees": [
+          177.5365447998047,
+          144.1769256591797
+        ],
+        "pair_max_degrees": 177.5365447998047
+      },
+      {
+        "pair_id": "pair0074",
+        "capture_rotation_max_degrees": [
+          102.32343292236328,
+          132.4087677001953
+        ],
+        "pair_max_degrees": 132.4087677001953
+      },
+      {
+        "pair_id": "pair0075",
+        "capture_rotation_max_degrees": [
+          166.72454833984375,
+          160.3105926513672
+        ],
+        "pair_max_degrees": 166.72454833984375
+      },
+      {
+        "pair_id": "pair0076",
+        "capture_rotation_max_degrees": [
+          112.03517150878906,
+          58.24005126953125
+        ],
+        "pair_max_degrees": 112.03517150878906
+      },
+      {
+        "pair_id": "pair0077",
+        "capture_rotation_max_degrees": [
+          60.500526428222656,
+          94.91625213623047
+        ],
+        "pair_max_degrees": 94.91625213623047
+      },
+      {
+        "pair_id": "pair0078",
+        "capture_rotation_max_degrees": [
+          104.42632293701172,
+          138.3438262939453
+        ],
+        "pair_max_degrees": 138.3438262939453
+      },
+      {
+        "pair_id": "pair0079",
+        "capture_rotation_max_degrees": [
+          70.38541412353516,
+          65.27412414550781
+        ],
+        "pair_max_degrees": 70.38541412353516
+      },
+      {
+        "pair_id": "pair0080",
+        "capture_rotation_max_degrees": [
+          131.873779296875,
+          110.55203247070312
+        ],
+        "pair_max_degrees": 131.873779296875
+      },
+      {
+        "pair_id": "pair0081",
+        "capture_rotation_max_degrees": [
+          106.83745574951172,
+          49.59708023071289
+        ],
+        "pair_max_degrees": 106.83745574951172
+      },
+      {
+        "pair_id": "pair0082",
+        "capture_rotation_max_degrees": [
+          83.36064147949219,
+          177.3367156982422
+        ],
+        "pair_max_degrees": 177.3367156982422
+      },
+      {
+        "pair_id": "pair0083",
+        "capture_rotation_max_degrees": [
+          177.89935302734375,
+          60.54018783569336
+        ],
+        "pair_max_degrees": 177.89935302734375
+      },
+      {
+        "pair_id": "pair0084",
+        "capture_rotation_max_degrees": [
+          115.10368347167969,
+          50.29439163208008
+        ],
+        "pair_max_degrees": 115.10368347167969
+      },
+      {
+        "pair_id": "pair0085",
+        "capture_rotation_max_degrees": [
+          118.99031829833984,
+          113.1169662475586
+        ],
+        "pair_max_degrees": 118.99031829833984
+      },
+      {
+        "pair_id": "pair0086",
+        "capture_rotation_max_degrees": [
+          73.06259155273438,
+          148.3577880859375
+        ],
+        "pair_max_degrees": 148.3577880859375
+      },
+      {
+        "pair_id": "pair0087",
+        "capture_rotation_max_degrees": [
+          128.81942749023438,
+          90.52751922607422
+        ],
+        "pair_max_degrees": 128.81942749023438
+      },
+      {
+        "pair_id": "pair0088",
+        "capture_rotation_max_degrees": [
+          58.020259857177734,
+          55.40750503540039
+        ],
+        "pair_max_degrees": 58.020259857177734
+      },
+      {
+        "pair_id": "pair0089",
+        "capture_rotation_max_degrees": [
+          60.016502380371094,
+          115.57632446289062
+        ],
+        "pair_max_degrees": 115.57632446289062
+      },
+      {
+        "pair_id": "pair0090",
+        "capture_rotation_max_degrees": [
+          169.47793579101562,
+          64.27742767333984
+        ],
+        "pair_max_degrees": 169.47793579101562
+      },
+      {
+        "pair_id": "pair0091",
+        "capture_rotation_max_degrees": [
+          151.29335021972656,
+          75.7659912109375
+        ],
+        "pair_max_degrees": 151.29335021972656
+      },
+      {
+        "pair_id": "pair0092",
+        "capture_rotation_max_degrees": [
+          138.27053833007812,
+          111.08811950683594
+        ],
+        "pair_max_degrees": 138.27053833007812
+      },
+      {
+        "pair_id": "pair0093",
+        "capture_rotation_max_degrees": [
+          57.33316421508789,
+          155.36097717285156
+        ],
+        "pair_max_degrees": 155.36097717285156
+      },
+      {
+        "pair_id": "pair0094",
+        "capture_rotation_max_degrees": [
+          61.16297149658203,
+          62.7828369140625
+        ],
+        "pair_max_degrees": 62.7828369140625
+      },
+      {
+        "pair_id": "pair0095",
+        "capture_rotation_max_degrees": [
+          165.92161560058594,
+          177.2147674560547
+        ],
+        "pair_max_degrees": 177.2147674560547
+      },
+      {
+        "pair_id": "pair0096",
+        "capture_rotation_max_degrees": [
+          121.06047821044922,
+          103.46284484863281
+        ],
+        "pair_max_degrees": 121.06047821044922
+      },
+      {
+        "pair_id": "pair0097",
+        "capture_rotation_max_degrees": [
+          92.6886215209961,
+          142.07742309570312
+        ],
+        "pair_max_degrees": 142.07742309570312
+      },
+      {
+        "pair_id": "pair0098",
+        "capture_rotation_max_degrees": [
+          162.96107482910156,
+          174.15042114257812
+        ],
+        "pair_max_degrees": 174.15042114257812
+      },
+      {
+        "pair_id": "pair0099",
+        "capture_rotation_max_degrees": [
+          96.96975708007812,
+          88.30228424072266
+        ],
+        "pair_max_degrees": 96.96975708007812
+      },
+      {
+        "pair_id": "pair0100",
+        "capture_rotation_max_degrees": [
+          174.8765106201172,
+          127.49897003173828
+        ],
+        "pair_max_degrees": 174.8765106201172
+      },
+      {
+        "pair_id": "pair0101",
+        "capture_rotation_max_degrees": [
+          162.7702178955078,
+          174.4850616455078
+        ],
+        "pair_max_degrees": 174.4850616455078
+      },
+      {
+        "pair_id": "pair0102",
+        "capture_rotation_max_degrees": [
+          73.80679321289062,
+          78.80004119873047
+        ],
+        "pair_max_degrees": 78.80004119873047
+      },
+      {
+        "pair_id": "pair0103",
+        "capture_rotation_max_degrees": [
+          107.13382720947266,
+          121.26959991455078
+        ],
+        "pair_max_degrees": 121.26959991455078
+      },
+      {
+        "pair_id": "pair0104",
+        "capture_rotation_max_degrees": [
+          62.20506286621094,
+          123.81181335449219
+        ],
+        "pair_max_degrees": 123.81181335449219
+      },
+      {
+        "pair_id": "pair0105",
+        "capture_rotation_max_degrees": [
+          138.89227294921875,
+          79.08377838134766
+        ],
+        "pair_max_degrees": 138.89227294921875
+      },
+      {
+        "pair_id": "pair0106",
+        "capture_rotation_max_degrees": [
+          79.76660919189453,
+          65.25323486328125
+        ],
+        "pair_max_degrees": 79.76660919189453
+      },
+      {
+        "pair_id": "pair0107",
+        "capture_rotation_max_degrees": [
+          178.03433227539062,
+          114.0774917602539
+        ],
+        "pair_max_degrees": 178.03433227539062
+      },
+      {
+        "pair_id": "pair0108",
+        "capture_rotation_max_degrees": [
+          44.88789749145508,
+          45.229793548583984
+        ],
+        "pair_max_degrees": 45.229793548583984
+      },
+      {
+        "pair_id": "pair0109",
+        "capture_rotation_max_degrees": [
+          170.36416625976562,
+          92.91754913330078
+        ],
+        "pair_max_degrees": 170.36416625976562
+      },
+      {
+        "pair_id": "pair0110",
+        "capture_rotation_max_degrees": [
+          58.375335693359375,
+          140.91299438476562
+        ],
+        "pair_max_degrees": 140.91299438476562
+      },
+      {
+        "pair_id": "pair0111",
+        "capture_rotation_max_degrees": [
+          159.69668579101562,
+          156.04318237304688
+        ],
+        "pair_max_degrees": 159.69668579101562
+      },
+      {
+        "pair_id": "pair0112",
+        "capture_rotation_max_degrees": [
+          110.3031005859375,
+          149.42063903808594
+        ],
+        "pair_max_degrees": 149.42063903808594
+      },
+      {
+        "pair_id": "pair0113",
+        "capture_rotation_max_degrees": [
+          177.1377410888672,
+          127.73372650146484
+        ],
+        "pair_max_degrees": 177.1377410888672
+      },
+      {
+        "pair_id": "pair0114",
+        "capture_rotation_max_degrees": [
+          47.780120849609375,
+          46.00023651123047
+        ],
+        "pair_max_degrees": 47.780120849609375
+      },
+      {
+        "pair_id": "pair0115",
+        "capture_rotation_max_degrees": [
+          74.42098236083984,
+          74.62382507324219
+        ],
+        "pair_max_degrees": 74.62382507324219
+      },
+      {
+        "pair_id": "pair0116",
+        "capture_rotation_max_degrees": [
+          66.63060760498047,
+          178.6272735595703
+        ],
+        "pair_max_degrees": 178.6272735595703
+      },
+      {
+        "pair_id": "pair0117",
+        "capture_rotation_max_degrees": [
+          83.1541748046875,
+          172.72540283203125
+        ],
+        "pair_max_degrees": 172.72540283203125
+      },
+      {
+        "pair_id": "pair0118",
+        "capture_rotation_max_degrees": [
+          119.61638641357422,
+          144.88232421875
+        ],
+        "pair_max_degrees": 144.88232421875
+      },
+      {
+        "pair_id": "pair0119",
+        "capture_rotation_max_degrees": [
+          61.69685745239258,
+          112.2875747680664
+        ],
+        "pair_max_degrees": 112.2875747680664
+      },
+      {
+        "pair_id": "pair0120",
+        "capture_rotation_max_degrees": [
+          179.12269592285156,
+          89.28837585449219
+        ],
+        "pair_max_degrees": 179.12269592285156
+      },
+      {
+        "pair_id": "pair0121",
+        "capture_rotation_max_degrees": [
+          75.50404357910156,
+          82.91400909423828
+        ],
+        "pair_max_degrees": 82.91400909423828
+      },
+      {
+        "pair_id": "pair0122",
+        "capture_rotation_max_degrees": [
+          63.93326187133789,
+          66.70467376708984
+        ],
+        "pair_max_degrees": 66.70467376708984
+      },
+      {
+        "pair_id": "pair0123",
+        "capture_rotation_max_degrees": [
+          59.7420768737793,
+          56.642215728759766
+        ],
+        "pair_max_degrees": 59.7420768737793
+      },
+      {
+        "pair_id": "pair0124",
+        "capture_rotation_max_degrees": [
+          178.0559539794922,
+          56.69575500488281
+        ],
+        "pair_max_degrees": 178.0559539794922
+      },
+      {
+        "pair_id": "pair0125",
+        "capture_rotation_max_degrees": [
+          82.2643814086914,
+          71.00025939941406
+        ],
+        "pair_max_degrees": 82.2643814086914
+      },
+      {
+        "pair_id": "pair0126",
+        "capture_rotation_max_degrees": [
+          176.00001525878906,
+          73.24932861328125
+        ],
+        "pair_max_degrees": 176.00001525878906
+      },
+      {
+        "pair_id": "pair0127",
+        "capture_rotation_max_degrees": [
+          90.14032745361328,
+          60.58009719848633
+        ],
+        "pair_max_degrees": 90.14032745361328
+      },
+      {
+        "pair_id": "pair0128",
+        "capture_rotation_max_degrees": [
+          108.9968490600586,
+          56.27181625366211
+        ],
+        "pair_max_degrees": 108.9968490600586
+      },
+      {
+        "pair_id": "pair0129",
+        "capture_rotation_max_degrees": [
+          45.303131103515625,
+          67.0240249633789
+        ],
+        "pair_max_degrees": 67.0240249633789
+      },
+      {
+        "pair_id": "pair0130",
+        "capture_rotation_max_degrees": [
+          177.87069702148438,
+          75.19844818115234
+        ],
+        "pair_max_degrees": 177.87069702148438
+      },
+      {
+        "pair_id": "pair0131",
+        "capture_rotation_max_degrees": [
+          70.86205291748047,
+          163.78184509277344
+        ],
+        "pair_max_degrees": 163.78184509277344
+      },
+      {
+        "pair_id": "pair0132",
+        "capture_rotation_max_degrees": [
+          107.60884094238281,
+          143.93988037109375
+        ],
+        "pair_max_degrees": 143.93988037109375
+      },
+      {
+        "pair_id": "pair0133",
+        "capture_rotation_max_degrees": [
+          88.28692626953125,
+          171.72476196289062
+        ],
+        "pair_max_degrees": 171.72476196289062
+      },
+      {
+        "pair_id": "pair0134",
+        "capture_rotation_max_degrees": [
+          85.4579086303711,
+          85.1019058227539
+        ],
+        "pair_max_degrees": 85.4579086303711
+      },
+      {
+        "pair_id": "pair0135",
+        "capture_rotation_max_degrees": [
+          107.94961547851562,
+          92.05081176757812
+        ],
+        "pair_max_degrees": 107.94961547851562
+      },
+      {
+        "pair_id": "pair0136",
+        "capture_rotation_max_degrees": [
+          97.984619140625,
+          81.68527221679688
+        ],
+        "pair_max_degrees": 97.984619140625
+      },
+      {
+        "pair_id": "pair0137",
+        "capture_rotation_max_degrees": [
+          84.33695220947266,
+          85.6631851196289
+        ],
+        "pair_max_degrees": 85.6631851196289
+      },
+      {
+        "pair_id": "pair0138",
+        "capture_rotation_max_degrees": [
+          128.3753204345703,
+          110.39305114746094
+        ],
+        "pair_max_degrees": 128.3753204345703
+      },
+      {
+        "pair_id": "pair0139",
+        "capture_rotation_max_degrees": [
+          47.9586181640625,
+          150.35830688476562
+        ],
+        "pair_max_degrees": 150.35830688476562
+      },
+      {
+        "pair_id": "pair0140",
+        "capture_rotation_max_degrees": [
+          115.5260009765625,
+          97.90335083007812
+        ],
+        "pair_max_degrees": 115.5260009765625
+      },
+      {
+        "pair_id": "pair0141",
+        "capture_rotation_max_degrees": [
+          56.67857360839844,
+          63.57878112792969
+        ],
+        "pair_max_degrees": 63.57878112792969
+      },
+      {
+        "pair_id": "pair0142",
+        "capture_rotation_max_degrees": [
+          63.69473648071289,
+          61.21490478515625
+        ],
+        "pair_max_degrees": 63.69473648071289
+      },
+      {
+        "pair_id": "pair0143",
+        "capture_rotation_max_degrees": [
+          101.88872528076172,
+          56.98313903808594
+        ],
+        "pair_max_degrees": 101.88872528076172
+      },
+      {
+        "pair_id": "pair0144",
+        "capture_rotation_max_degrees": [
+          112.14220428466797,
+          54.21132278442383
+        ],
+        "pair_max_degrees": 112.14220428466797
+      },
+      {
+        "pair_id": "pair0145",
+        "capture_rotation_max_degrees": [
+          176.10003662109375,
+          176.93185424804688
+        ],
+        "pair_max_degrees": 176.93185424804688
+      },
+      {
+        "pair_id": "pair0146",
+        "capture_rotation_max_degrees": [
+          74.6789321899414,
+          69.25824737548828
+        ],
+        "pair_max_degrees": 74.6789321899414
+      },
+      {
+        "pair_id": "pair0147",
+        "capture_rotation_max_degrees": [
+          64.98942565917969,
+          171.4716033935547
+        ],
+        "pair_max_degrees": 171.4716033935547
+      },
+      {
+        "pair_id": "pair0148",
+        "capture_rotation_max_degrees": [
+          172.6614990234375,
+          176.222412109375
+        ],
+        "pair_max_degrees": 176.222412109375
+      },
+      {
+        "pair_id": "pair0149",
+        "capture_rotation_max_degrees": [
+          36.37996292114258,
+          37.80868148803711
+        ],
+        "pair_max_degrees": 37.80868148803711
+      },
+      {
+        "pair_id": "pair0150",
+        "capture_rotation_max_degrees": [
+          63.766048431396484,
+          75.31549072265625
+        ],
+        "pair_max_degrees": 75.31549072265625
+      },
+      {
+        "pair_id": "pair0151",
+        "capture_rotation_max_degrees": [
+          54.2341194152832,
+          57.820743560791016
+        ],
+        "pair_max_degrees": 57.820743560791016
+      },
+      {
+        "pair_id": "pair0152",
+        "capture_rotation_max_degrees": [
+          169.05416870117188,
+          177.76658630371094
+        ],
+        "pair_max_degrees": 177.76658630371094
+      },
+      {
+        "pair_id": "pair0153",
+        "capture_rotation_max_degrees": [
+          65.89297485351562,
+          103.43590545654297
+        ],
+        "pair_max_degrees": 103.43590545654297
+      },
+      {
+        "pair_id": "pair0154",
+        "capture_rotation_max_degrees": [
+          50.39451599121094,
+          47.06039810180664
+        ],
+        "pair_max_degrees": 50.39451599121094
+      },
+      {
+        "pair_id": "pair0155",
+        "capture_rotation_max_degrees": [
+          167.1192169189453,
+          93.16195678710938
+        ],
+        "pair_max_degrees": 167.1192169189453
+      },
+      {
+        "pair_id": "pair0156",
+        "capture_rotation_max_degrees": [
+          174.96861267089844,
+          173.0302734375
+        ],
+        "pair_max_degrees": 174.96861267089844
+      },
+      {
+        "pair_id": "pair0157",
+        "capture_rotation_max_degrees": [
+          145.97666931152344,
+          111.18380737304688
+        ],
+        "pair_max_degrees": 145.97666931152344
+      },
+      {
+        "pair_id": "pair0158",
+        "capture_rotation_max_degrees": [
+          58.24504470825195,
+          129.7476043701172
+        ],
+        "pair_max_degrees": 129.7476043701172
+      },
+      {
+        "pair_id": "pair0159",
+        "capture_rotation_max_degrees": [
+          176.22425842285156,
+          155.9872283935547
+        ],
+        "pair_max_degrees": 176.22425842285156
+      },
+      {
+        "pair_id": "pair0160",
+        "capture_rotation_max_degrees": [
+          178.88775634765625,
+          66.34424591064453
+        ],
+        "pair_max_degrees": 178.88775634765625
+      },
+      {
+        "pair_id": "pair0161",
+        "capture_rotation_max_degrees": [
+          38.985408782958984,
+          67.46542358398438
+        ],
+        "pair_max_degrees": 67.46542358398438
+      },
+      {
+        "pair_id": "pair0162",
+        "capture_rotation_max_degrees": [
+          74.55603790283203,
+          55.759071350097656
+        ],
+        "pair_max_degrees": 74.55603790283203
+      },
+      {
+        "pair_id": "pair0163",
+        "capture_rotation_max_degrees": [
+          175.4775848388672,
+          175.66664123535156
+        ],
+        "pair_max_degrees": 175.66664123535156
+      },
+      {
+        "pair_id": "pair0164",
+        "capture_rotation_max_degrees": [
+          167.35440063476562,
+          169.7015838623047
+        ],
+        "pair_max_degrees": 169.7015838623047
+      },
+      {
+        "pair_id": "pair0165",
+        "capture_rotation_max_degrees": [
+          114.96370697021484,
+          91.5295639038086
+        ],
+        "pair_max_degrees": 114.96370697021484
+      },
+      {
+        "pair_id": "pair0166",
+        "capture_rotation_max_degrees": [
+          43.15235137939453,
+          105.95314025878906
+        ],
+        "pair_max_degrees": 105.95314025878906
+      },
+      {
+        "pair_id": "pair0167",
+        "capture_rotation_max_degrees": [
+          58.948760986328125,
+          159.44158935546875
+        ],
+        "pair_max_degrees": 159.44158935546875
+      },
+      {
+        "pair_id": "pair0168",
+        "capture_rotation_max_degrees": [
+          50.65616226196289,
+          38.15061569213867
+        ],
+        "pair_max_degrees": 50.65616226196289
+      },
+      {
+        "pair_id": "pair0169",
+        "capture_rotation_max_degrees": [
+          179.95120239257812,
+          171.3667449951172
+        ],
+        "pair_max_degrees": 179.95120239257812
+      },
+      {
+        "pair_id": "pair0170",
+        "capture_rotation_max_degrees": [
+          64.00614929199219,
+          49.46261215209961
+        ],
+        "pair_max_degrees": 64.00614929199219
+      },
+      {
+        "pair_id": "pair0171",
+        "capture_rotation_max_degrees": [
+          36.687625885009766,
+          50.82211685180664
+        ],
+        "pair_max_degrees": 50.82211685180664
+      },
+      {
+        "pair_id": "pair0172",
+        "capture_rotation_max_degrees": [
+          167.91127014160156,
+          71.5754165649414
+        ],
+        "pair_max_degrees": 167.91127014160156
+      },
+      {
+        "pair_id": "pair0173",
+        "capture_rotation_max_degrees": [
+          179.38356018066406,
+          49.921146392822266
+        ],
+        "pair_max_degrees": 179.38356018066406
+      },
+      {
+        "pair_id": "pair0174",
+        "capture_rotation_max_degrees": [
+          179.17311096191406,
+          174.5997772216797
+        ],
+        "pair_max_degrees": 179.17311096191406
+      },
+      {
+        "pair_id": "pair0175",
+        "capture_rotation_max_degrees": [
+          165.73377990722656,
+          172.7340087890625
+        ],
+        "pair_max_degrees": 172.7340087890625
+      },
+      {
+        "pair_id": "pair0176",
+        "capture_rotation_max_degrees": [
+          107.28280639648438,
+          114.20047760009766
+        ],
+        "pair_max_degrees": 114.20047760009766
+      },
+      {
+        "pair_id": "pair0177",
+        "capture_rotation_max_degrees": [
+          37.67692947387695,
+          49.82981491088867
+        ],
+        "pair_max_degrees": 49.82981491088867
+      },
+      {
+        "pair_id": "pair0178",
+        "capture_rotation_max_degrees": [
+          179.83059692382812,
+          166.00184631347656
+        ],
+        "pair_max_degrees": 179.83059692382812
+      },
+      {
+        "pair_id": "pair0179",
+        "capture_rotation_max_degrees": [
+          158.8404083251953,
+          176.3889923095703
+        ],
+        "pair_max_degrees": 176.3889923095703
+      },
+      {
+        "pair_id": "pair0180",
+        "capture_rotation_max_degrees": [
+          179.45675659179688,
+          164.37490844726562
+        ],
+        "pair_max_degrees": 179.45675659179688
+      },
+      {
+        "pair_id": "pair0181",
+        "capture_rotation_max_degrees": [
+          147.9158172607422,
+          124.59803771972656
+        ],
+        "pair_max_degrees": 147.9158172607422
+      },
+      {
+        "pair_id": "pair0182",
+        "capture_rotation_max_degrees": [
+          123.84001922607422,
+          171.4163055419922
+        ],
+        "pair_max_degrees": 171.4163055419922
+      },
+      {
+        "pair_id": "pair0183",
+        "capture_rotation_max_degrees": [
+          91.04161071777344,
+          48.67251968383789
+        ],
+        "pair_max_degrees": 91.04161071777344
+      },
+      {
+        "pair_id": "pair0184",
+        "capture_rotation_max_degrees": [
+          148.04649353027344,
+          164.82957458496094
+        ],
+        "pair_max_degrees": 164.82957458496094
+      },
+      {
+        "pair_id": "pair0185",
+        "capture_rotation_max_degrees": [
+          173.94097900390625,
+          170.70664978027344
+        ],
+        "pair_max_degrees": 173.94097900390625
+      },
+      {
+        "pair_id": "pair0186",
+        "capture_rotation_max_degrees": [
+          162.28382873535156,
+          110.833984375
+        ],
+        "pair_max_degrees": 162.28382873535156
+      },
+      {
+        "pair_id": "pair0187",
+        "capture_rotation_max_degrees": [
+          171.03536987304688,
+          53.519493103027344
+        ],
+        "pair_max_degrees": 171.03536987304688
+      },
+      {
+        "pair_id": "pair0188",
+        "capture_rotation_max_degrees": [
+          83.1815414428711,
+          65.2767105102539
+        ],
+        "pair_max_degrees": 83.1815414428711
+      },
+      {
+        "pair_id": "pair0189",
+        "capture_rotation_max_degrees": [
+          104.64749908447266,
+          84.37568664550781
+        ],
+        "pair_max_degrees": 104.64749908447266
+      },
+      {
+        "pair_id": "pair0190",
+        "capture_rotation_max_degrees": [
+          145.05178833007812,
+          58.83147430419922
+        ],
+        "pair_max_degrees": 145.05178833007812
+      },
+      {
+        "pair_id": "pair0191",
+        "capture_rotation_max_degrees": [
+          99.83979034423828,
+          49.45065689086914
+        ],
+        "pair_max_degrees": 99.83979034423828
+      },
+      {
+        "pair_id": "pair0192",
+        "capture_rotation_max_degrees": [
+          144.564208984375,
+          144.86106872558594
+        ],
+        "pair_max_degrees": 144.86106872558594
+      },
+      {
+        "pair_id": "pair0193",
+        "capture_rotation_max_degrees": [
+          57.09278106689453,
+          56.3875732421875
+        ],
+        "pair_max_degrees": 57.09278106689453
+      },
+      {
+        "pair_id": "pair0194",
+        "capture_rotation_max_degrees": [
+          127.47938537597656,
+          166.6903839111328
+        ],
+        "pair_max_degrees": 166.6903839111328
+      },
+      {
+        "pair_id": "pair0195",
+        "capture_rotation_max_degrees": [
+          54.625709533691406,
+          66.47642517089844
+        ],
+        "pair_max_degrees": 66.47642517089844
+      },
+      {
+        "pair_id": "pair0196",
+        "capture_rotation_max_degrees": [
+          175.41897583007812,
+          76.84681701660156
+        ],
+        "pair_max_degrees": 175.41897583007812
+      },
+      {
+        "pair_id": "pair0197",
+        "capture_rotation_max_degrees": [
+          178.8378448486328,
+          166.474853515625
+        ],
+        "pair_max_degrees": 178.8378448486328
+      },
+      {
+        "pair_id": "pair0198",
+        "capture_rotation_max_degrees": [
+          99.9825210571289,
+          57.70625686645508
+        ],
+        "pair_max_degrees": 99.9825210571289
+      },
+      {
+        "pair_id": "pair0199",
+        "capture_rotation_max_degrees": [
+          128.80308532714844,
+          143.07907104492188
+        ],
+        "pair_max_degrees": 143.07907104492188
+      },
+      {
+        "pair_id": "pair0200",
+        "capture_rotation_max_degrees": [
+          177.1464080810547,
+          179.1685028076172
+        ],
+        "pair_max_degrees": 179.1685028076172
+      },
+      {
+        "pair_id": "pair0201",
+        "capture_rotation_max_degrees": [
+          86.7170181274414,
+          122.99235534667969
+        ],
+        "pair_max_degrees": 122.99235534667969
+      },
+      {
+        "pair_id": "pair0202",
+        "capture_rotation_max_degrees": [
+          131.99966430664062,
+          149.973388671875
+        ],
+        "pair_max_degrees": 149.973388671875
+      },
+      {
+        "pair_id": "pair0203",
+        "capture_rotation_max_degrees": [
+          78.66655731201172,
+          157.4418487548828
+        ],
+        "pair_max_degrees": 157.4418487548828
+      },
+      {
+        "pair_id": "pair0204",
+        "capture_rotation_max_degrees": [
+          114.22100830078125,
+          72.17561340332031
+        ],
+        "pair_max_degrees": 114.22100830078125
+      },
+      {
+        "pair_id": "pair0205",
+        "capture_rotation_max_degrees": [
+          135.7978057861328,
+          178.8021697998047
+        ],
+        "pair_max_degrees": 178.8021697998047
+      },
+      {
+        "pair_id": "pair0206",
+        "capture_rotation_max_degrees": [
+          121.56456756591797,
+          116.00431823730469
+        ],
+        "pair_max_degrees": 121.56456756591797
+      },
+      {
+        "pair_id": "pair0207",
+        "capture_rotation_max_degrees": [
+          179.62342834472656,
+          173.14913940429688
+        ],
+        "pair_max_degrees": 179.62342834472656
+      },
+      {
+        "pair_id": "pair0208",
+        "capture_rotation_max_degrees": [
+          167.8206024169922,
+          89.2783203125
+        ],
+        "pair_max_degrees": 167.8206024169922
+      },
+      {
+        "pair_id": "pair0209",
+        "capture_rotation_max_degrees": [
+          50.12898254394531,
+          31.526050567626953
+        ],
+        "pair_max_degrees": 50.12898254394531
+      },
+      {
+        "pair_id": "pair0210",
+        "capture_rotation_max_degrees": [
+          55.48238754272461,
+          46.251014709472656
+        ],
+        "pair_max_degrees": 55.48238754272461
+      },
+      {
+        "pair_id": "pair0211",
+        "capture_rotation_max_degrees": [
+          123.85994720458984,
+          67.6001968383789
+        ],
+        "pair_max_degrees": 123.85994720458984
+      },
+      {
+        "pair_id": "pair0212",
+        "capture_rotation_max_degrees": [
+          131.2664794921875,
+          155.10919189453125
+        ],
+        "pair_max_degrees": 155.10919189453125
+      },
+      {
+        "pair_id": "pair0213",
+        "capture_rotation_max_degrees": [
+          149.80926513671875,
+          63.57929992675781
+        ],
+        "pair_max_degrees": 149.80926513671875
+      },
+      {
+        "pair_id": "pair0214",
+        "capture_rotation_max_degrees": [
+          135.3649139404297,
+          120.47876739501953
+        ],
+        "pair_max_degrees": 135.3649139404297
+      },
+      {
+        "pair_id": "pair0215",
+        "capture_rotation_max_degrees": [
+          176.92218017578125,
+          178.8499755859375
+        ],
+        "pair_max_degrees": 178.8499755859375
+      },
+      {
+        "pair_id": "pair0216",
+        "capture_rotation_max_degrees": [
+          179.7093963623047,
+          169.64564514160156
+        ],
+        "pair_max_degrees": 179.7093963623047
+      },
+      {
+        "pair_id": "pair0217",
+        "capture_rotation_max_degrees": [
+          147.54598999023438,
+          153.8263397216797
+        ],
+        "pair_max_degrees": 153.8263397216797
+      },
+      {
+        "pair_id": "pair0218",
+        "capture_rotation_max_degrees": [
+          85.09848022460938,
+          79.07977294921875
+        ],
+        "pair_max_degrees": 85.09848022460938
+      },
+      {
+        "pair_id": "pair0219",
+        "capture_rotation_max_degrees": [
+          179.56842041015625,
+          172.873779296875
+        ],
+        "pair_max_degrees": 179.56842041015625
+      },
+      {
+        "pair_id": "pair0220",
+        "capture_rotation_max_degrees": [
+          170.0591583251953,
+          144.31202697753906
+        ],
+        "pair_max_degrees": 170.0591583251953
+      },
+      {
+        "pair_id": "pair0221",
+        "capture_rotation_max_degrees": [
+          55.89545822143555,
+          64.03418731689453
+        ],
+        "pair_max_degrees": 64.03418731689453
+      },
+      {
+        "pair_id": "pair0222",
+        "capture_rotation_max_degrees": [
+          65.99488067626953,
+          43.805877685546875
+        ],
+        "pair_max_degrees": 65.99488067626953
+      },
+      {
+        "pair_id": "pair0223",
+        "capture_rotation_max_degrees": [
+          69.93846130371094,
+          50.13569641113281
+        ],
+        "pair_max_degrees": 69.93846130371094
+      },
+      {
+        "pair_id": "pair0224",
+        "capture_rotation_max_degrees": [
+          128.53164672851562,
+          104.055908203125
+        ],
+        "pair_max_degrees": 128.53164672851562
+      },
+      {
+        "pair_id": "pair0225",
+        "capture_rotation_max_degrees": [
+          73.29859161376953,
+          178.5337371826172
+        ],
+        "pair_max_degrees": 178.5337371826172
+      },
+      {
+        "pair_id": "pair0226",
+        "capture_rotation_max_degrees": [
+          78.50792694091797,
+          51.761375427246094
+        ],
+        "pair_max_degrees": 78.50792694091797
+      },
+      {
+        "pair_id": "pair0227",
+        "capture_rotation_max_degrees": [
+          64.39100646972656,
+          90.59982299804688
+        ],
+        "pair_max_degrees": 90.59982299804688
+      },
+      {
+        "pair_id": "pair0228",
+        "capture_rotation_max_degrees": [
+          114.3619613647461,
+          125.02161407470703
+        ],
+        "pair_max_degrees": 125.02161407470703
+      },
+      {
+        "pair_id": "pair0229",
+        "capture_rotation_max_degrees": [
+          50.37333297729492,
+          80.86284637451172
+        ],
+        "pair_max_degrees": 80.86284637451172
+      },
+      {
+        "pair_id": "pair0230",
+        "capture_rotation_max_degrees": [
+          62.6864013671875,
+          61.650882720947266
+        ],
+        "pair_max_degrees": 62.6864013671875
+      },
+      {
+        "pair_id": "pair0231",
+        "capture_rotation_max_degrees": [
+          47.80732345581055,
+          161.34124755859375
+        ],
+        "pair_max_degrees": 161.34124755859375
+      },
+      {
+        "pair_id": "pair0232",
+        "capture_rotation_max_degrees": [
+          173.0406951904297,
+          152.952880859375
+        ],
+        "pair_max_degrees": 173.0406951904297
+      },
+      {
+        "pair_id": "pair0233",
+        "capture_rotation_max_degrees": [
+          147.77366638183594,
+          155.9008331298828
+        ],
+        "pair_max_degrees": 155.9008331298828
+      },
+      {
+        "pair_id": "pair0234",
+        "capture_rotation_max_degrees": [
+          176.9651641845703,
+          177.39576721191406
+        ],
+        "pair_max_degrees": 177.39576721191406
+      },
+      {
+        "pair_id": "pair0235",
+        "capture_rotation_max_degrees": [
+          110.71123504638672,
+          166.73187255859375
+        ],
+        "pair_max_degrees": 166.73187255859375
+      },
+      {
+        "pair_id": "pair0236",
+        "capture_rotation_max_degrees": [
+          73.54269409179688,
+          61.44184875488281
+        ],
+        "pair_max_degrees": 73.54269409179688
+      },
+      {
+        "pair_id": "pair0237",
+        "capture_rotation_max_degrees": [
+          74.0804672241211,
+          162.3658447265625
+        ],
+        "pair_max_degrees": 162.3658447265625
+      },
+      {
+        "pair_id": "pair0238",
+        "capture_rotation_max_degrees": [
+          174.89883422851562,
+          118.85619354248047
+        ],
+        "pair_max_degrees": 174.89883422851562
+      },
+      {
+        "pair_id": "pair0239",
+        "capture_rotation_max_degrees": [
+          42.792293548583984,
+          50.245269775390625
+        ],
+        "pair_max_degrees": 50.245269775390625
+      },
+      {
+        "pair_id": "pair0240",
+        "capture_rotation_max_degrees": [
+          171.15293884277344,
+          164.98487854003906
+        ],
+        "pair_max_degrees": 171.15293884277344
+      },
+      {
+        "pair_id": "pair0241",
+        "capture_rotation_max_degrees": [
+          163.09593200683594,
+          71.32490539550781
+        ],
+        "pair_max_degrees": 163.09593200683594
+      },
+      {
+        "pair_id": "pair0242",
+        "capture_rotation_max_degrees": [
+          179.70913696289062,
+          170.82675170898438
+        ],
+        "pair_max_degrees": 179.70913696289062
+      },
+      {
+        "pair_id": "pair0243",
+        "capture_rotation_max_degrees": [
+          118.81482696533203,
+          105.29705047607422
+        ],
+        "pair_max_degrees": 118.81482696533203
+      },
+      {
+        "pair_id": "pair0244",
+        "capture_rotation_max_degrees": [
+          106.08524322509766,
+          169.41085815429688
+        ],
+        "pair_max_degrees": 169.41085815429688
+      },
+      {
+        "pair_id": "pair0245",
+        "capture_rotation_max_degrees": [
+          49.29523849487305,
+          175.84629821777344
+        ],
+        "pair_max_degrees": 175.84629821777344
+      },
+      {
+        "pair_id": "pair0246",
+        "capture_rotation_max_degrees": [
+          90.72454071044922,
+          87.31871032714844
+        ],
+        "pair_max_degrees": 90.72454071044922
+      },
+      {
+        "pair_id": "pair0247",
+        "capture_rotation_max_degrees": [
+          46.067813873291016,
+          39.03487014770508
+        ],
+        "pair_max_degrees": 46.067813873291016
+      },
+      {
+        "pair_id": "pair0248",
+        "capture_rotation_max_degrees": [
+          49.714759826660156,
+          109.68153381347656
+        ],
+        "pair_max_degrees": 109.68153381347656
+      },
+      {
+        "pair_id": "pair0249",
+        "capture_rotation_max_degrees": [
+          70.09973907470703,
+          126.36883544921875
+        ],
+        "pair_max_degrees": 126.36883544921875
+      },
+      {
+        "pair_id": "pair0250",
+        "capture_rotation_max_degrees": [
+          127.2178955078125,
+          169.87396240234375
+        ],
+        "pair_max_degrees": 169.87396240234375
+      },
+      {
+        "pair_id": "pair0251",
+        "capture_rotation_max_degrees": [
+          78.56534576416016,
+          145.78668212890625
+        ],
+        "pair_max_degrees": 145.78668212890625
+      },
+      {
+        "pair_id": "pair0252",
+        "capture_rotation_max_degrees": [
+          120.41303253173828,
+          98.86873626708984
+        ],
+        "pair_max_degrees": 120.41303253173828
+      },
+      {
+        "pair_id": "pair0253",
+        "capture_rotation_max_degrees": [
+          63.64308547973633,
+          163.98814392089844
+        ],
+        "pair_max_degrees": 163.98814392089844
+      },
+      {
+        "pair_id": "pair0254",
+        "capture_rotation_max_degrees": [
+          177.54957580566406,
+          176.32362365722656
+        ],
+        "pair_max_degrees": 177.54957580566406
+      },
+      {
+        "pair_id": "pair0255",
+        "capture_rotation_max_degrees": [
+          56.77717208862305,
+          169.6009979248047
+        ],
+        "pair_max_degrees": 169.6009979248047
+      },
+      {
+        "pair_id": "pair0256",
+        "capture_rotation_max_degrees": [
+          169.52235412597656,
+          138.643310546875
+        ],
+        "pair_max_degrees": 169.52235412597656
+      },
+      {
+        "pair_id": "pair0257",
+        "capture_rotation_max_degrees": [
+          135.84324645996094,
+          154.3052978515625
+        ],
+        "pair_max_degrees": 154.3052978515625
+      },
+      {
+        "pair_id": "pair0258",
+        "capture_rotation_max_degrees": [
+          156.14329528808594,
+          157.08204650878906
+        ],
+        "pair_max_degrees": 157.08204650878906
+      },
+      {
+        "pair_id": "pair0259",
+        "capture_rotation_max_degrees": [
+          116.71487426757812,
+          102.83265686035156
+        ],
+        "pair_max_degrees": 116.71487426757812
+      },
+      {
+        "pair_id": "pair0260",
+        "capture_rotation_max_degrees": [
+          171.983154296875,
+          169.61996459960938
+        ],
+        "pair_max_degrees": 171.983154296875
+      },
+      {
+        "pair_id": "pair0261",
+        "capture_rotation_max_degrees": [
+          129.23593139648438,
+          179.57958984375
+        ],
+        "pair_max_degrees": 179.57958984375
+      },
+      {
+        "pair_id": "pair0262",
+        "capture_rotation_max_degrees": [
+          59.94245147705078,
+          101.43897247314453
+        ],
+        "pair_max_degrees": 101.43897247314453
+      },
+      {
+        "pair_id": "pair0263",
+        "capture_rotation_max_degrees": [
+          115.12355041503906,
+          76.57208251953125
+        ],
+        "pair_max_degrees": 115.12355041503906
+      },
+      {
+        "pair_id": "pair0264",
+        "capture_rotation_max_degrees": [
+          43.782203674316406,
+          103.66423797607422
+        ],
+        "pair_max_degrees": 103.66423797607422
+      },
+      {
+        "pair_id": "pair0265",
+        "capture_rotation_max_degrees": [
+          92.4301986694336,
+          79.84273529052734
+        ],
+        "pair_max_degrees": 92.4301986694336
+      },
+      {
+        "pair_id": "pair0266",
+        "capture_rotation_max_degrees": [
+          51.43590545654297,
+          60.62286376953125
+        ],
+        "pair_max_degrees": 60.62286376953125
+      },
+      {
+        "pair_id": "pair0267",
+        "capture_rotation_max_degrees": [
+          174.0291748046875,
+          151.38778686523438
+        ],
+        "pair_max_degrees": 174.0291748046875
+      },
+      {
+        "pair_id": "pair0268",
+        "capture_rotation_max_degrees": [
+          132.20184326171875,
+          110.77222442626953
+        ],
+        "pair_max_degrees": 132.20184326171875
+      },
+      {
+        "pair_id": "pair0269",
+        "capture_rotation_max_degrees": [
+          75.21012878417969,
+          64.8067626953125
+        ],
+        "pair_max_degrees": 75.21012878417969
+      },
+      {
+        "pair_id": "pair0270",
+        "capture_rotation_max_degrees": [
+          98.96246337890625,
+          179.54173278808594
+        ],
+        "pair_max_degrees": 179.54173278808594
+      },
+      {
+        "pair_id": "pair0271",
+        "capture_rotation_max_degrees": [
+          66.74746704101562,
+          148.46774291992188
+        ],
+        "pair_max_degrees": 148.46774291992188
+      },
+      {
+        "pair_id": "pair0272",
+        "capture_rotation_max_degrees": [
+          145.88156127929688,
+          151.98104858398438
+        ],
+        "pair_max_degrees": 151.98104858398438
+      },
+      {
+        "pair_id": "pair0273",
+        "capture_rotation_max_degrees": [
+          148.17323303222656,
+          113.6370620727539
+        ],
+        "pair_max_degrees": 148.17323303222656
+      },
+      {
+        "pair_id": "pair0274",
+        "capture_rotation_max_degrees": [
+          70.91631317138672,
+          76.865234375
+        ],
+        "pair_max_degrees": 76.865234375
+      },
+      {
+        "pair_id": "pair0275",
+        "capture_rotation_max_degrees": [
+          179.6602325439453,
+          158.9228057861328
+        ],
+        "pair_max_degrees": 179.6602325439453
+      },
+      {
+        "pair_id": "pair0276",
+        "capture_rotation_max_degrees": [
+          164.1855010986328,
+          145.38645935058594
+        ],
+        "pair_max_degrees": 164.1855010986328
+      },
+      {
+        "pair_id": "pair0277",
+        "capture_rotation_max_degrees": [
+          169.1112823486328,
+          80.9213638305664
+        ],
+        "pair_max_degrees": 169.1112823486328
+      },
+      {
+        "pair_id": "pair0278",
+        "capture_rotation_max_degrees": [
+          144.32608032226562,
+          134.5245361328125
+        ],
+        "pair_max_degrees": 144.32608032226562
+      },
+      {
+        "pair_id": "pair0279",
+        "capture_rotation_max_degrees": [
+          151.46371459960938,
+          170.31137084960938
+        ],
+        "pair_max_degrees": 170.31137084960938
+      },
+      {
+        "pair_id": "pair0280",
+        "capture_rotation_max_degrees": [
+          55.52569580078125,
+          178.65753173828125
+        ],
+        "pair_max_degrees": 178.65753173828125
+      },
+      {
+        "pair_id": "pair0281",
+        "capture_rotation_max_degrees": [
+          138.50448608398438,
+          177.75283813476562
+        ],
+        "pair_max_degrees": 177.75283813476562
+      },
+      {
+        "pair_id": "pair0282",
+        "capture_rotation_max_degrees": [
+          123.06829833984375,
+          177.5631103515625
+        ],
+        "pair_max_degrees": 177.5631103515625
+      },
+      {
+        "pair_id": "pair0283",
+        "capture_rotation_max_degrees": [
+          145.94158935546875,
+          99.99454498291016
+        ],
+        "pair_max_degrees": 145.94158935546875
+      },
+      {
+        "pair_id": "pair0284",
+        "capture_rotation_max_degrees": [
+          166.57493591308594,
+          160.3943328857422
+        ],
+        "pair_max_degrees": 166.57493591308594
+      },
+      {
+        "pair_id": "pair0285",
+        "capture_rotation_max_degrees": [
+          80.1569595336914,
+          66.48002624511719
+        ],
+        "pair_max_degrees": 80.1569595336914
+      },
+      {
+        "pair_id": "pair0286",
+        "capture_rotation_max_degrees": [
+          117.63380432128906,
+          88.95137023925781
+        ],
+        "pair_max_degrees": 117.63380432128906
+      },
+      {
+        "pair_id": "pair0287",
+        "capture_rotation_max_degrees": [
+          72.7861328125,
+          124.4126968383789
+        ],
+        "pair_max_degrees": 124.4126968383789
+      },
+      {
+        "pair_id": "pair0288",
+        "capture_rotation_max_degrees": [
+          111.58845520019531,
+          121.59752655029297
+        ],
+        "pair_max_degrees": 121.59752655029297
+      },
+      {
+        "pair_id": "pair0289",
+        "capture_rotation_max_degrees": [
+          95.47945404052734,
+          69.55669403076172
+        ],
+        "pair_max_degrees": 95.47945404052734
+      },
+      {
+        "pair_id": "pair0290",
+        "capture_rotation_max_degrees": [
+          49.02896499633789,
+          54.54100799560547
+        ],
+        "pair_max_degrees": 54.54100799560547
+      },
+      {
+        "pair_id": "pair0291",
+        "capture_rotation_max_degrees": [
+          137.90394592285156,
+          64.88890838623047
+        ],
+        "pair_max_degrees": 137.90394592285156
+      },
+      {
+        "pair_id": "pair0292",
+        "capture_rotation_max_degrees": [
+          175.95506286621094,
+          41.60332489013672
+        ],
+        "pair_max_degrees": 175.95506286621094
+      },
+      {
+        "pair_id": "pair0293",
+        "capture_rotation_max_degrees": [
+          50.21817398071289,
+          64.42202758789062
+        ],
+        "pair_max_degrees": 64.42202758789062
+      },
+      {
+        "pair_id": "pair0294",
+        "capture_rotation_max_degrees": [
+          66.7161636352539,
+          171.88717651367188
+        ],
+        "pair_max_degrees": 171.88717651367188
+      },
+      {
+        "pair_id": "pair0295",
+        "capture_rotation_max_degrees": [
+          58.31416702270508,
+          71.11318969726562
+        ],
+        "pair_max_degrees": 71.11318969726562
+      },
+      {
+        "pair_id": "pair0296",
+        "capture_rotation_max_degrees": [
+          46.438697814941406,
+          140.06089782714844
+        ],
+        "pair_max_degrees": 140.06089782714844
+      },
+      {
+        "pair_id": "pair0297",
+        "capture_rotation_max_degrees": [
+          57.50749206542969,
+          70.13749694824219
+        ],
+        "pair_max_degrees": 70.13749694824219
+      },
+      {
+        "pair_id": "pair0298",
+        "capture_rotation_max_degrees": [
+          90.25983428955078,
+          55.3004150390625
+        ],
+        "pair_max_degrees": 90.25983428955078
+      },
+      {
+        "pair_id": "pair0299",
+        "capture_rotation_max_degrees": [
+          107.57141876220703,
+          62.60401153564453
+        ],
+        "pair_max_degrees": 107.57141876220703
+      },
+      {
+        "pair_id": "pair0300",
+        "capture_rotation_max_degrees": [
+          50.837615966796875,
+          172.85069274902344
+        ],
+        "pair_max_degrees": 172.85069274902344
+      },
+      {
+        "pair_id": "pair0301",
+        "capture_rotation_max_degrees": [
+          76.70459747314453,
+          60.84462356567383
+        ],
+        "pair_max_degrees": 76.70459747314453
+      },
+      {
+        "pair_id": "pair0302",
+        "capture_rotation_max_degrees": [
+          141.5670166015625,
+          79.82940673828125
+        ],
+        "pair_max_degrees": 141.5670166015625
+      },
+      {
+        "pair_id": "pair0303",
+        "capture_rotation_max_degrees": [
+          126.37120056152344,
+          135.13409423828125
+        ],
+        "pair_max_degrees": 135.13409423828125
+      },
+      {
+        "pair_id": "pair0304",
+        "capture_rotation_max_degrees": [
+          176.0436248779297,
+          174.88929748535156
+        ],
+        "pair_max_degrees": 176.0436248779297
+      },
+      {
+        "pair_id": "pair0305",
+        "capture_rotation_max_degrees": [
+          162.82569885253906,
+          89.77470397949219
+        ],
+        "pair_max_degrees": 162.82569885253906
+      },
+      {
+        "pair_id": "pair0306",
+        "capture_rotation_max_degrees": [
+          44.63763427734375,
+          125.8221435546875
+        ],
+        "pair_max_degrees": 125.8221435546875
+      },
+      {
+        "pair_id": "pair0307",
+        "capture_rotation_max_degrees": [
+          110.6906509399414,
+          115.94686126708984
+        ],
+        "pair_max_degrees": 115.94686126708984
+      },
+      {
+        "pair_id": "pair0308",
+        "capture_rotation_max_degrees": [
+          179.966552734375,
+          139.28550720214844
+        ],
+        "pair_max_degrees": 179.966552734375
+      },
+      {
+        "pair_id": "pair0309",
+        "capture_rotation_max_degrees": [
+          69.20897674560547,
+          66.15339660644531
+        ],
+        "pair_max_degrees": 69.20897674560547
+      },
+      {
+        "pair_id": "pair0310",
+        "capture_rotation_max_degrees": [
+          67.41604614257812,
+          177.4903106689453
+        ],
+        "pair_max_degrees": 177.4903106689453
+      },
+      {
+        "pair_id": "pair0311",
+        "capture_rotation_max_degrees": [
+          135.68153381347656,
+          36.051856994628906
+        ],
+        "pair_max_degrees": 135.68153381347656
+      },
+      {
+        "pair_id": "pair0312",
+        "capture_rotation_max_degrees": [
+          131.3384552001953,
+          102.49008178710938
+        ],
+        "pair_max_degrees": 131.3384552001953
+      },
+      {
+        "pair_id": "pair0313",
+        "capture_rotation_max_degrees": [
+          174.1097412109375,
+          109.05693054199219
+        ],
+        "pair_max_degrees": 174.1097412109375
+      },
+      {
+        "pair_id": "pair0314",
+        "capture_rotation_max_degrees": [
+          85.85652923583984,
+          109.32301330566406
+        ],
+        "pair_max_degrees": 109.32301330566406
+      },
+      {
+        "pair_id": "pair0315",
+        "capture_rotation_max_degrees": [
+          116.47250366210938,
+          135.04132080078125
+        ],
+        "pair_max_degrees": 135.04132080078125
+      }
+    ]
+  }
+}
