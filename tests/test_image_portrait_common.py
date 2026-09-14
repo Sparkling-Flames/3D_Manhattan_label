@@ -1,6 +1,14 @@
 import numpy as np
 import pytest
-from tools.thesis_main.analysis.image_portrait.common import pool_spatial,restore_yaw,restore_corners,cube_faces
+from tools.thesis_main.analysis.image_portrait.common import pool_spatial,restore_yaw,restore_corners,cube_faces,conservative_nadir_masks
+
+
+def test_nadir_sensitivity_mask():
+    masks = conservative_nadir_masks(504)
+    assert all(masks[k].all() for k in masks if k != 'down')
+    assert not masks['down'][252,252]
+    assert masks['down'][0,0]
+    np.testing.assert_array_equal(masks['down'], masks['down'][::-1,::-1])
 
 
 def test_yaw_pool_and_float_corners():

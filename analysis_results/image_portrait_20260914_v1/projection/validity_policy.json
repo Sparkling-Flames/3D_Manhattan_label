@@ -1,0 +1,9 @@
+{
+  "status": "sensitivity_only",
+  "face_size": 504,
+  "exclude_downward_latitude_gt_degrees": 60,
+  "meaning": "Conservative spherical nadir exclusion; NOT per-image measured blur contour, ground truth visibility, or model confidence",
+  "trigger": "Original-image-only inspection found source nadir blur while DA3 still predicts structure",
+  "analysis": "Report results both with this mask excluded and on all otherwise valid geometry; source and target coordinates use original 504 grid, not stride8 indices",
+  "scope": "Mask affects geometry comparisons only; inputs and extracted image features remain unmasked"
+}

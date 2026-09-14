@@ -1,0 +1,197 @@
+{
+  "model": "ulayout",
+  "source": "https://github.com/JonathanLee112/uLayout",
+  "revision": "d3d05973c441fd41aaea439e79a577a00702a716",
+  "frozen": true,
+  "device": "cuda",
+  "runtime_versions": {
+    "torch": "2.11.0+cu128",
+    "torchvision": "0.26.0+cu128",
+    "numpy": "1.26.4",
+    "safetensors": "0.8.0",
+    "transformers": "4.57.6"
+  },
+  "dinov3_backend": "official Transformers DINOv3ViTModel (HF weights) when present; original Meta torch.hub only for original .pth; strict loading, final norm applied to selected block outputs",
+  "inference_dtype": "float32",
+  "feature_storage_dtype": "raw float16, pooled float32",
+  "geometry_dtype": "float32",
+  "candidates": {
+    "dinov3": [
+      3,
+      6,
+      9,
+      11,
+      12
+    ],
+    "da3": [
+      5,
+      7,
+      9,
+      11
+    ],
+    "ulayout": [
+      "compressed",
+      "transformer"
+    ]
+  },
+  "projection": {
+    "convention": "x_right_y_down_z_forward",
+    "order": [
+      "front",
+      "right",
+      "back",
+      "left",
+      "up",
+      "down"
+    ],
+    "face_size": 512,
+    "fov_degrees": 90,
+    "intrinsics": [
+      [
+        256.0,
+        0,
+        255.5
+      ],
+      [
+        0,
+        256.0,
+        255.5
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ],
+    "camera_to_panorama": {
+      "front": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "right": [
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          -1.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "back": [
+        [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      ],
+      "left": [
+        [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "up": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "down": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          -1.0,
+          0.0
+        ]
+      ]
+    },
+    "independent_capture_count": 1
+  },
+  "layer_indexing": "DA3 zero-based; DINOv3 one-based",
+  "input_resize": "uLayout panorama 1024x512 PIL BICUBIC; DINO panorama same and cubefaces512; DA3 cubefaces512 then official processor504",
+  "checkpoint_source": "https://drive.google.com/file/d/19PKz_VRkUPcJgxTmjL5jQVaNPqEups5I/view",
+  "ulayout_postprocess": "official radians -> pixel float -> round; official wrapper corner field is GT and is deliberately NOT exported; predicted corners unavailable",
+  "ulayout_corner_logits": "Raw unused second model return; official training wrapper optimizes boundaries and ignores corner return. Do not interpret these logits as calibrated/trained corner confidence.",
+  "yaw": "input rolled +yaw, features and boundaries rolled -yaw to original coordinates",
+  "feature_fields": "Each key has global mean+std (2C), local16 image-x bands (16,2C). Cubeface local16 is each perspective image own equal-width x strips, NOT sixteen panorama azimuth sectors; up/down faces especially cannot be treated as ERP azimuth. Reproject via saved face rotation/K; compare projection conditions separately.",
+  "geometry_sampling": "DA3 stride8 retains original pixel coordinates and full-resolution intrinsics; no scaled intrinsics needed.",
+  "da3_processed_to_cube_pixel": "512->504 official INTER_AREA resize; cube coordinate=(processed_coordinate+0.5)*512/504-0.5 for both axes. Cubeface ray geometry uses projection.intrinsics in 512 coordinates.",
+  "da3_scale": "relative depth and predicted poses, no metric scale claim; camera intrinsics are predictions, known projection intrinsics separately retained",
+  "da3_multiview_cameras": "Twelve independently predicted cameras: no same-center or known six-face rotation constraints imposed. Two source capture positions do not imply physically verified two-pose output; same-capture center/rotation diagnostic matrices exported.",
+  "multiview_pairing": "lexicographically adjacent image_id chain per supported relationship group, deduplicated; review_codes retained, not independent rooms",
+  "reprojection_columns": [
+    "source_face",
+    "source_x",
+    "source_y",
+    "target_face",
+    "target_x",
+    "target_y",
+    "projected_depth",
+    "target_depth",
+    "relative_depth_error",
+    "depth_agreement_5pct"
+  ],
+  "reprojection_meaning": "Predicted geometric candidates only, not image-observed matches; projected finite positive depths in bounds; agreement masks are exploratory, not GT."
+}

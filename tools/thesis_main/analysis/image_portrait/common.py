@@ -72,3 +72,15 @@ def cube_faces(rgb, size=512):
                       source_shape_hw=[h,w],face_size=size,fov_degrees=90,
                       intrinsics=[[size/2,0,(size-1)/2],[0,size/2,(size-1)/2],[0,0,1]],
                       camera_to_panorama=rotations,independent_capture_count=1)
+
+
+def conservative_nadir_masks(size=504):
+    """Sensitivity mask for latitude >60 deg downward, not observed blur labels."""
+    if size < 2:
+        raise ValueError('face size must be at least two')
+    t = (np.arange(size, dtype=np.float32)+.5)*2/size-1
+    xx, yy = np.meshgrid(t,t)
+    masks = {name: np.ones((size,size),dtype=bool)
+             for name in ('front','right','back','left','up','down')}
+    masks['down'] = 1/np.sqrt(1+xx*xx+yy*yy) <= np.sin(np.pi/3)
+    return masks

@@ -1,0 +1,42 @@
+{
+  "status": "in_progress",
+  "human_outcomes_used_for_model_selection": false,
+  "visual_checks": [
+    {
+      "model": "hohonet",
+      "image_id": "2t7WUuJeko7_073656b4030d4389ba7f304298be1d73",
+      "check": "Four restored yaw boundary overlays on the same panorama",
+      "result": "Coordinate alignment visually consistent; no physical correctness claim",
+      "temporary_screenshot_cleaned": true
+    },
+    {
+      "model": "hohonet",
+      "image_id": "B6ByNegPMKs_bdc0695537064383b5cc5dbcff2a0b99",
+      "check": "Official fallback warning investigated using 0/90 degree corner overlays",
+      "corner_counts_by_yaw": {
+        "0": 12,
+        "90": 8,
+        "180": 12,
+        "270": 12
+      },
+      "result": "90 degree phase invokes official cuboid fallback; separate postprocessing-induced topology change from raw prediction differences",
+      "temporary_screenshot_cleaned": true
+    },
+    {
+      "model": "bilayout",
+      "image_id": "2t7WUuJeko7_073656b4030d4389ba7f304298be1d73",
+      "check": "90 degree phase both predicted heads floating corner overlays",
+      "result": "Restored overlay aligns with source panorama; no physical correctness claim",
+      "temporary_screenshot_cleaned": true
+    },
+    {
+      "model": "ulayout",
+      "image_id": "2t7WUuJeko7_073656b4030d4389ba7f304298be1d73",
+      "check": "90 degree phase continuous predicted ceiling/floor boundaries",
+      "result": "Restored overlay aligns with source panorama; no physical correctness claim",
+      "temporary_screenshot_cleaned": true
+    }
+  ],
+  "visual_traits": "648 thumbnail first pass plus fixed 21 original-resolution reviews; limitations in visual/FIELDS_ZH.md",
+  "protocol_boundary": "No original export, normative method contract, collection plan or Label Studio state changed"
+}

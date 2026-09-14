@@ -1,0 +1,29 @@
+{
+  "model": "bilayout",
+  "precision": "float32",
+  "frozen": true,
+  "input_hw": [
+    512,
+    1024
+  ],
+  "resize": "PIL.Image.Resampling.BILINEAR",
+  "input_rgb_range": [
+    0,
+    1
+  ],
+  "yaw_degrees": [
+    0,
+    90,
+    180,
+    270
+  ],
+  "aligned_to_original": true,
+  "legacy_mean_semantics": "old pooling on current preprocessing; archived historical values are in history/",
+  "feature_pool": "channel mean/std global and 16 equal azimuth sectors",
+  "bi_head_order": [
+    "enclosed",
+    "extended"
+  ],
+  "raw_spatial_local_only": true,
+  "requested_count": 648
+}
