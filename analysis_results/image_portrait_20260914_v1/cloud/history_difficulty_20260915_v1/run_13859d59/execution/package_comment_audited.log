@@ -1,0 +1,35 @@
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+{
+  "status": "verified",
+  "archive": "history_difficulty_study.zip",
+  "archive_bytes": 67108372,
+  "archive_sha256": "bb3016b0df31534df47a0e4f56b2a460d2603ec657b92808ca671509398ea516",
+  "input_commit": "13859d591acb1bac7790fb0762f2c53282f65748",
+  "files_verified": 760,
+  "zip_integrity": "passed",
+  "hash_mismatches": [],
+  "extracted_test_command": [
+    "/opt/hostedtoolcache/Python/3.11.16/x64/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_history_difficulty_v1.py",
+    "tests/test_history_difficulty_v1_followup.py",
+    "-q"
+  ],
+  "extracted_tests_returncode": 0,
+  "extracted_test_output": "................................                                         [100%]\n32 passed in 1.11s\n",
+  "full_nested_cv_refitted_in_extract": false,
+  "exact_kernel_numerics_tested": true
+}
