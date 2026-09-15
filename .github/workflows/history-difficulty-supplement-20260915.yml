@@ -1,0 +1,73 @@
+name: Historical difficulty condition and singleton checks
+on:
+  push:
+    branches: [codex/image-portrait-20260914]
+    paths: [.github/workflows/history-difficulty-supplement-20260915.yml]
+permissions:
+  contents: write
+jobs:
+  supplemental:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        stage: [people_conditioned, diagnostics]
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/image-portrait-20260914
+          fetch-depth: 1
+          filter: blob:none
+          lfs: false
+          sparse-checkout: |
+            tools
+            lib/misc
+            tests
+            analysis_results/image_portrait_20260914_v1/cloud/history_difficulty_20260915_v1
+            analysis_results/image_portrait_20260914_v1/cloud/pro_exploration/v2_convergence_e086b2b9/process
+            analysis_results/image_portrait_20260914_v1/evaluation
+            analysis_results/image_portrait_20260914_v1/human
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy==1.26.4 pandas==2.2.3 scipy==1.14.1 scikit-learn==1.5.2 shapely==2.0.7 pillow==10.4.0 opencv-python-headless==4.10.0.84 PyYAML==6.0.2 pytest==8.3.5
+      - name: Execute actual numerical supplement
+        run: |
+          python - <<'PY'
+          import subprocess,sys,json
+          from tools.thesis_main.analysis.image_portrait.history_difficulty_v1_core import OUT
+          stage='${{ matrix.stage }}';cmd=[sys.executable,'-m','tools.thesis_main.analysis.image_portrait.history_difficulty_v1_'+stage]
+          with (OUT/'execution'/f'{stage}.log').open('w') as f:r=subprocess.run(cmd,stdout=f,stderr=subprocess.STDOUT)
+          (OUT/'execution'/f'{stage}_STATUS.json').write_text(json.dumps({'stage':stage,'returncode':r.returncode,'command':cmd,'execution_sha':subprocess.check_output(['git','rev-parse','HEAD']).decode().strip()},indent=2));print((OUT/'execution'/f'{stage}.log').read_text()[-18000:])
+          PY
+      - name: Save supplement only, keep prior outputs
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          python - <<'PY'
+          import subprocess
+          from tools.thesis_main.analysis.image_portrait.history_difficulty_v1_core import OUT
+          stage='${{ matrix.stage }}';paths=['E_conditioned'] if stage=='people_conditioned' else ['diagnostics','extra','expert/verified_nonempty_comments.csv','expert/COMMENT_COUNT_CORRECTION.json','targets/medium_mode_semantics.csv','targets/stability_rule_increment_per_image.csv','targets/grade_actual_n_distribution.csv','D/assigned_tier_room_source_coverage.csv','B/historical_semi_initialization_audit.csv','B/semi_initialization_image_heterogeneity.csv']
+          paths+=['execution/'+stage+'.log','execution/'+stage+'_STATUS.json'];subprocess.run(['git','add','--sparse','-f',*[str(OUT/p) for p in paths if (OUT/p).exists()]],check=True)
+          PY
+          git commit -m 'research: preserve executed ${{ matrix.stage }} supplement' || exit 0
+          for attempt in 1 2 3 4; do
+            git pull --rebase origin codex/image-portrait-20260914 && git push origin HEAD:codex/image-portrait-20260914 && break
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: history-difficulty-${{ matrix.stage }}
+          path: analysis_results/image_portrait_20260914_v1/cloud/history_difficulty_20260915_v1/run_13859d59
+          retention-days: 30
+      - run: |
+          python - <<'PY'
+          import json
+          from tools.thesis_main.analysis.image_portrait.history_difficulty_v1_core import OUT
+          assert json.loads((OUT/'execution/${{ matrix.stage }}_STATUS.json').read_text())['returncode']==0
+          PY
