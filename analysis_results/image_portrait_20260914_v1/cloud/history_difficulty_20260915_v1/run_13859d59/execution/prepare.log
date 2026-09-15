@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/runner/work/3D_Manhattan_label/3D_Manhattan_label/tools/thesis_main/analysis/image_portrait/history_difficulty_v1_core.py", line 250, in <module>
+    prepare() if args.stage=='prepare' else targets()
+    ^^^^^^^^^
+  File "/home/runner/work/3D_Manhattan_label/3D_Manhattan_label/tools/thesis_main/analysis/image_portrait/history_difficulty_v1_core.py", line 108, in prepare
+    assert int(r['effective_point_count'])==len(z['effective_points_1024x512'])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: cannot convert float NaN to integer

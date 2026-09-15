@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/runner/work/3D_Manhattan_label/3D_Manhattan_label/tools/thesis_main/analysis/image_portrait/history_difficulty_v1_models.py", line 135, in <module>
+    if __name__=='__main__':run()
+                            ^^^^^
+  File "/home/runner/work/3D_Manhattan_label/3D_Manhattan_label/tools/thesis_main/analysis/image_portrait/history_difficulty_v1_models.py", line 106, in run
+    ids=read(OUT/'inputs/historical_ids.json');dest=OUT/'kernels';dest.mkdir(parents=True,exist_ok=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/3D_Manhattan_label/3D_Manhattan_label/tools/thesis_main/analysis/image_portrait/history_difficulty_v1_core.py", line 39, in read
+    return json.loads(p.read_text(encoding='utf-8-sig'))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/runner/work/3D_Manhattan_label/3D_Manhattan_label/analysis_results/image_portrait_20260914_v1/cloud/history_difficulty_20260915_v1/run_13859d59/inputs/historical_ids.json'
