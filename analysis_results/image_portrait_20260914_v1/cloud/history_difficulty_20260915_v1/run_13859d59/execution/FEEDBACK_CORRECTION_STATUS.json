@@ -1,0 +1,42 @@
+{
+  "status": "partial_with_failures",
+  "images": 205,
+  "finite_coverage": {
+    "image_id": 205,
+    "count_hohonet": 205,
+    "count_yaw_range_hohonet": 205,
+    "hohonet_fallback_phases": 205,
+    "rotation_hohonet": 205,
+    "count_bi_enclosed": 205,
+    "count_yaw_range_bi_enclosed": 205,
+    "count_bi_extended": 203,
+    "count_yaw_range_bi_extended": 203,
+    "bi_head_geometry_gap": 203,
+    "bi_height_head_gap": 203,
+    "rotation_bi_enclosed": 205,
+    "rotation_bi_extended": 203,
+    "rotation_ulayout": 205,
+    "gap_hohonet_bi_enclosed": 205,
+    "gap_hohonet_bi_extended": 203,
+    "gap_hohonet_ulayout": 205,
+    "gap_bi_enclosed_bi_extended": 203,
+    "gap_bi_enclosed_ulayout": 205,
+    "gap_bi_extended_ulayout": 203
+  },
+  "failure_records": [
+    {
+      "image_id": "7y3sRwLe3Va_a775c7668ca9419daaf506e76851821e",
+      "model": "bilayout",
+      "stage": "feedback",
+      "error": "ValueError('unusable model corner shape')"
+    },
+    {
+      "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+      "model": "bilayout",
+      "stage": "feedback",
+      "error": "ValueError('unusable model corner shape')"
+    }
+  ],
+  "reason": "runtime dependency repaired; unusable postprocessed geometries remain missing",
+  "failures_preserved": true
+}
