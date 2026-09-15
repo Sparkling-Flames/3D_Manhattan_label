@@ -1,6 +1,6 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
-**Pro研究统一入口：[现行任务、版本报告、输入及复算限制](../analysis_results/image_portrait_20260914_v1/PRO_START_HERE.md)。**两轮历史粗分类已接入；[本地审核与续研提示词](../analysis_results/image_portrait_20260914_v1/review_workflow_20260915/README.md)复用空间标本，算法候选须经用户审核，早期范围2—8。
+**Pro研究统一入口：[现行任务、版本报告、输入及复算限制](../analysis_results/image_portrait_20260914_v1/PRO_START_HERE.md)。**2026-09-16已接收新候选下的A—E；[多轮发现、导师讨论及DA3独立复核](thesis_main/图片难度与收敛_多轮证据及导师讨论对照_20260916.md)。算法候选仍须用户审核，早期范围2—8；原审核工具入口保留。
 
 
 图片画像探索：[648图工作包与A–E任务入口](../analysis_results/image_portrait_20260914_v1/README.md)。冻结模型、多层特征及真人结果分开记录；实际覆盖以运行状态为准，不替代正式方法合同。

@@ -1,0 +1,16 @@
+{
+  "same_room": "fixed supported components excluding entire ambiguous overlaps",
+  "cross_room": "same semantic scene/mainspace in other building; not same-building assumed similarity",
+  "same_building": "diagnostic only, not independent-room evidence",
+  "neighbor_selection": "fixed per-image L2 similarity; no outcomes used to choose neighbor, actual ID retained",
+  "categorical_probability": "source empirical frequency and NN one-hot, no unequal smoothing",
+  "uniform_sources": "expected loss of choosing a uniformly random real source",
+  "reviewed_labels": "not provided; algorithm candidates only",
+  "no_physical_DA3_correspondence": true,
+  "ordered_layers": [
+    "dinov3__block3__panorama_mean",
+    "dinov3__block12__panorama_mean",
+    "dinov3__cls__panorama",
+    "dinov3__block12__faces_global"
+  ]
+}

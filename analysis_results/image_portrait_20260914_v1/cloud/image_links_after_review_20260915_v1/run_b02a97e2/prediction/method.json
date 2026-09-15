@@ -1,0 +1,124 @@
+{
+  "configurations": [
+    {
+      "algorithm": "ridge",
+      "pca": null,
+      "parameter": 100.0
+    },
+    {
+      "algorithm": "ridge",
+      "pca": null,
+      "parameter": 10.0
+    },
+    {
+      "algorithm": "ridge",
+      "pca": null,
+      "parameter": 1.0
+    },
+    {
+      "algorithm": "ridge",
+      "pca": null,
+      "parameter": 0.1
+    },
+    {
+      "algorithm": "ridge",
+      "pca": 16,
+      "parameter": 100.0
+    },
+    {
+      "algorithm": "ridge",
+      "pca": 16,
+      "parameter": 10.0
+    },
+    {
+      "algorithm": "ridge",
+      "pca": 16,
+      "parameter": 1.0
+    },
+    {
+      "algorithm": "ridge",
+      "pca": 16,
+      "parameter": 0.1
+    },
+    {
+      "algorithm": "ridge",
+      "pca": 32,
+      "parameter": 100.0
+    },
+    {
+      "algorithm": "ridge",
+      "pca": 32,
+      "parameter": 10.0
+    },
+    {
+      "algorithm": "ridge",
+      "pca": 32,
+      "parameter": 1.0
+    },
+    {
+      "algorithm": "ridge",
+      "pca": 32,
+      "parameter": 0.1
+    },
+    {
+      "algorithm": "knn",
+      "pca": null,
+      "parameter": 1
+    },
+    {
+      "algorithm": "knn",
+      "pca": null,
+      "parameter": 3
+    },
+    {
+      "algorithm": "knn",
+      "pca": null,
+      "parameter": 5
+    },
+    {
+      "algorithm": "knn",
+      "pca": 16,
+      "parameter": 1
+    },
+    {
+      "algorithm": "knn",
+      "pca": 16,
+      "parameter": 3
+    },
+    {
+      "algorithm": "knn",
+      "pca": 16,
+      "parameter": 5
+    },
+    {
+      "algorithm": "knn",
+      "pca": 32,
+      "parameter": 1
+    },
+    {
+      "algorithm": "knn",
+      "pca": 32,
+      "parameter": 3
+    },
+    {
+      "algorithm": "knn",
+      "pca": 32,
+      "parameter": 5
+    }
+  ],
+  "target_versions": [
+    "grade_v1_unmodified",
+    "candidate_v2_unreviewed"
+  ],
+  "new_fit": true,
+  "numerical_inputs": "exact prior L2 Gram matrices for 205 images, not fitted old predictions",
+  "new_oos_arrays_in_deep": 0,
+  "missing_oos_deep_images": 9,
+  "failed": [],
+  "requested_features": 155,
+  "preprocessing": "per-image L2; all centering, kernel variance scaling, PCA and hyperparameters training-side",
+  "classification": "three-class Brier primary; RPS descriptive secondary; unknown not a class",
+  "traits_duplicate_removed": "corner_occlusion removed when using floor_boundary",
+  "repeated_historical_exploration": true,
+  "tie_break": "Saved CONFIGS order; layer ties by stable lexical name; no outer-outcome tie breaking"
+}

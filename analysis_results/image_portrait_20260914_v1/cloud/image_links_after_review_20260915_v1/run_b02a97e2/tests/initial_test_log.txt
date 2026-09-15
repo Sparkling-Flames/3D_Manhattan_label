@@ -1,0 +1,123 @@
+..........F......................                                        [100%]
+=================================== FAILURES ===================================
+________________________ test_oos_geometry_and_exposure ________________________
+
+self = Index(['responses', 'images', 'workers', 'valid_responses', 'valid_images',
+       'explicit_unassisted_included', 'invalid_or_excluded_geometry'],
+      dtype='object')
+key = 'valid_geometry'
+
+    def get_loc(self, key):
+        """
+        Get integer location, slice or boolean mask for requested label.
+    
+        Parameters
+        ----------
+        key : label
+    
+        Returns
+        -------
+        int if unique index, slice if monotonic index, else mask
+    
+        Examples
+        --------
+        >>> unique_index = pd.Index(list('abc'))
+        >>> unique_index.get_loc('b')
+        1
+    
+        >>> monotonic_index = pd.Index(list('abbc'))
+        >>> monotonic_index.get_loc('b')
+        slice(1, 3, None)
+    
+        >>> non_monotonic_index = pd.Index(list('abcb'))
+        >>> non_monotonic_index.get_loc('b')
+        array([False,  True, False,  True])
+        """
+        casted_key = self._maybe_cast_indexer(key)
+        try:
+>           return self._engine.get_loc(casted_key)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/opt/pyvenv/lib/python3.13/site-packages/pandas/core/indexes/base.py:3805: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+index.pyx:167: in pandas._libs.index.IndexEngine.get_loc
+    ???
+index.pyx:196: in pandas._libs.index.IndexEngine.get_loc
+    ???
+pandas/_libs/hashtable_class_helper.pxi:7081: in pandas._libs.hashtable.PyObjectHashTable.get_item
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   KeyError: 'valid_geometry'
+
+pandas/_libs/hashtable_class_helper.pxi:7089: KeyError
+
+The above exception was the direct cause of the following exception:
+
+    def test_oos_geometry_and_exposure():
+     raw=[r for r in readj(B/'human/responses.jsonl.gz')if r['worker_id']not in EXCLUDE and r['raw_condition']=='oos'];assert len(raw)==216
+     assert all(r.get('assistance_exposure')=='none'and r.get('unassisted_manual_included')for r in raw)
+>    a=pd.read_csv(OUT/'audit/coverage.csv').set_index('condition');assert a.loc['oos_geometry','valid_geometry']==212
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_image_links_followup.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/pyvenv/lib/python3.13/site-packages/pandas/core/indexing.py:1183: in __getitem__
+    return self.obj._get_value(*key, takeable=self._takeable)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/pyvenv/lib/python3.13/site-packages/pandas/core/frame.py:4214: in _get_value
+    series = self._get_item_cache(col)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/pyvenv/lib/python3.13/site-packages/pandas/core/frame.py:4638: in _get_item_cache
+    loc = self.columns.get_loc(item)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Index(['responses', 'images', 'workers', 'valid_responses', 'valid_images',
+       'explicit_unassisted_included', 'invalid_or_excluded_geometry'],
+      dtype='object')
+key = 'valid_geometry'
+
+    def get_loc(self, key):
+        """
+        Get integer location, slice or boolean mask for requested label.
+    
+        Parameters
+        ----------
+        key : label
+    
+        Returns
+        -------
+        int if unique index, slice if monotonic index, else mask
+    
+        Examples
+        --------
+        >>> unique_index = pd.Index(list('abc'))
+        >>> unique_index.get_loc('b')
+        1
+    
+        >>> monotonic_index = pd.Index(list('abbc'))
+        >>> monotonic_index.get_loc('b')
+        slice(1, 3, None)
+    
+        >>> non_monotonic_index = pd.Index(list('abcb'))
+        >>> non_monotonic_index.get_loc('b')
+        array([False,  True, False,  True])
+        """
+        casted_key = self._maybe_cast_indexer(key)
+        try:
+            return self._engine.get_loc(casted_key)
+        except KeyError as err:
+            if isinstance(casted_key, slice) or (
+                isinstance(casted_key, abc.Iterable)
+                and any(isinstance(x, slice) for x in casted_key)
+            ):
+                raise InvalidIndexError(key)
+>           raise KeyError(key) from err
+E           KeyError: 'valid_geometry'
+
+/opt/pyvenv/lib/python3.13/site-packages/pandas/core/indexes/base.py:3812: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_image_links_followup.py::test_oos_geometry_and_exposure - KeyError: 'valid_geometry'
+1 failed, 32 passed in 4.02s

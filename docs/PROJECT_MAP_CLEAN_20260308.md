@@ -1,11 +1,11 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
-Pro资料整理：入口为`analysis_results/image_portrait_20260914_v1/PRO_START_HERE.md`。两轮历史粗分类分别存于`cloud/history_difficulty_20260915_v1/`、`cloud/history_difficulty_review_20260915_v2/`；对应`history_difficulty_*.py`和测试。`review_handoff.py/js`复用空间标本，生成本地`local_review_studio/`（含预览，Git忽略）；可传输证据与提示词在`review_workflow_20260915/`。历史主空间结果与旧v1/v2原路径保留。
+Pro资料整理：入口为`analysis_results/image_portrait_20260914_v1/PRO_START_HERE.md`。两轮历史粗分类分别存于`cloud/history_difficulty_20260915_v1/`、`cloud/history_difficulty_review_20260915_v2/`；新候选下A—E在`cloud/image_links_after_review_20260915_v1/`，代码`image_links_followup_*.py`、测试`test_image_links_followup.py`。本地独立复核脚本`image_links_independent_audit.py`及同名测试，输出`independent_synthesis_20260916/`，说明为`docs/thesis_main/图片难度与收敛_多轮证据及导师讨论对照_20260916.md`。原`review_handoff.py/js`、本地审核页（Git忽略）及`review_workflow_20260915/`入口保留。
 
 
 图片画像探索：`tools/thesis_main/analysis/image_portrait/`生成[648图数值工作包](../analysis_results/image_portrait_20260914_v1/README.md)，测试位于`tests/test_image_portrait_*.py`。原图/权重/高维空间数组仅本地保留，云端A–E通过数值与文字分析；不修改正式协议。
 
-当前阶段：[历史作答难度粗分类与图片联系的Pro续研任务](thesis_main/历史作答难度粗分类续研任务_20260915.md)。旧实验difficulty字段停用；[106张人工tag来源和覆盖](../analysis_results/image_portrait_20260914_v1/difficulty_tags_20260915_v1/README.md)保留作独立对照。早期范围按用户授权为2—8，两轮历史研究已接入；候选待用户审核，新候选A—E尚待续研。
+当前阶段：[历史作答难度粗分类与图片联系的Pro续研任务](thesis_main/历史作答难度粗分类续研任务_20260915.md)。旧实验difficulty字段停用；[106张人工tag来源和覆盖](../analysis_results/image_portrait_20260914_v1/difficulty_tags_20260915_v1/README.md)保留作独立对照。早期范围按用户授权为2—8，两轮历史研究及新候选A—E已接入；候选待用户审核，细化图片证据及新人员验证仍待完成。
 
 主空间返回结果的[逻辑审查](thesis_main/主空间与历史粗分层逻辑复核_20260915.md)及定向证据保存在`analysis_results/image_portrait_20260914_v1/mainspace_logic_review_20260915/`。该目录只保留原报告正文和审查记录，不表示整包迁移或正式方法变更。
 

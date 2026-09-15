@@ -4,6 +4,8 @@
 
 ## 当前交付
 
+2026-09-16：此处提示词已由Pro执行，[新候选A—E原报告](../cloud/image_links_after_review_20260915_v1/run_b02a97e2/REPORT_ZH.md)及[接收方多轮综合复核](../../../docs/thesis_main/图片难度与收敛_多轮证据及导师讨论对照_20260916.md)已接入。9张OOS几何已补算，历史＋tag并集285；本页审核工具仍为原276图，未填写任何新增用户决定。下文未完成状态属于工具交付当时，候选版A—E现已完成，审核版仍待用户判断。
+
 - [本地审核工具](../local_review_studio/index.html)：复用空间标本的原图、真人点集叠加、3D和历史分簇；新增两版候选对照、按条件审核、保存及JSON导入导出。下载的“图片历史难度_我的审核.json”是新增用户判断层，不修改原标注或旧tag。直接用本机浏览器打开index.html。
 - [可传给Pro的审核依据](review_evidence.json)：276图，205张历史图与106张tag重叠35图；230个图×条件。无原图字节。
 - [第二轮完整报告](../cloud/history_difficulty_review_20260915_v2/run_c0069628/REPORT_ZH.md)与[原候选表](../cloud/history_difficulty_review_20260915_v2/run_c0069628/USER_DECISION_TABLE.csv)。第二轮80个新文件原样接入，字节核对见[migration.json](migration.json)。包内原始响应及两份图像元数据与本地一致，未复制覆盖原始数据。

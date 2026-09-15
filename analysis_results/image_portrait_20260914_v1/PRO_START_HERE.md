@@ -1,8 +1,8 @@
-# Pro研究唯一入口｜2026-09-15整理
+# Pro研究唯一入口｜2026-09-16更新
 
-**当前执行入口：[两轮资料、审核工具、验证状态与新Pro提示词](review_workflow_20260915/README.md)。**第二轮已从用户指定路径接收；本地复用空间标本，原图不上传Git。早期2—8，粗分类须经用户审核。
+**最新：[多轮发现、导师讨论证据及DA3独立复核](../../docs/thesis_main/图片难度与收敛_多轮证据及导师讨论对照_20260916.md)。**按第二轮候选重新分析的A—E已接收，9张OOS几何已补回；[本轮原报告](cloud/image_links_after_review_20260915_v1/run_b02a97e2/REPORT_ZH.md)。原[审核入口与已执行提示词](review_workflow_20260915/README.md)保留；当前需补的是用户审核、精细图片证据与后续新数据检验，不要从旧提示词重复开始。
 
-使用分支 `codex/image-portrait-20260914` 的最新提交。本文负责导航和版本状态；具体研究要求只读下面第一项，旧报告里的“下一步”和旧提示词不覆盖它。
+使用分支 `codex/image-portrait-20260914` 的最新提交。本文负责导航和版本状态；历史任务保留要求来源，不把旧报告里的“尚未执行”当当前状态。
 
 后续两段Pro返回的[独立审读](Pro历史粗分类两轮独立审读_20260915.md)只评判定义、证据和推论，其中旧k范围及授权判断已撤回；新阈值作为工作候选，分类待用户审核，不称最终真值。
 
@@ -10,15 +10,16 @@
 
 ## 最短阅读顺序
 
-1. [唯一现行Pro任务／完整可复制提示词](../../docs/thesis_main/历史作答难度粗分类续研任务_20260915.md)。按它实际完成粗分类和A—E，不止写方法建议。
-2. [主空间研究的接收方逻辑复核](../../docs/thesis_main/主空间与历史粗分层逻辑复核_20260915.md)。重点为收益集中、DINO同房信息条件、中等档定义及S9机制解释。
-3. [最新返回报告](cloud/difficulty_tags_20260915_v1/mainspace_v1_9d19e4e7/REPORT_ZH.md)及[原复算说明](cloud/difficulty_tags_20260915_v1/mainspace_v1_9d19e4e7/REPRODUCE.md)。报告有据可查，不等于其中所有推论已确认；原来的路径和代码保留。
-4. 按下表读取需要的数据。只有需要追溯旧过程时才读v2，v1无需默认通读。
+1. [本次接收方综合复核](../../docs/thesis_main/图片难度与收敛_多轮证据及导师讨论对照_20260916.md)：新发现、证据限制、模型分别揭示什么。
+2. [最新A—E报告](cloud/image_links_after_review_20260915_v1/run_b02a97e2/REPORT_ZH.md)及[复算说明](cloud/image_links_after_review_20260915_v1/run_b02a97e2/REPRODUCE.md)。代码`image_links_followup_*.py`；517个文件原样接入，33项测试在隔离副本通过。
+3. [历史任务及授权边界](../../docs/thesis_main/历史作答难度粗分类续研任务_20260915.md)：k=2—8，原106tag与候选／用户审核分开，旧实验difficulty停用。
+4. 按下表读取需要的数据；[106tag主空间研究](cloud/difficulty_tags_20260915_v1/mainspace_v1_9d19e4e7/REPORT_ZH.md)只在相应目标下引用，不能与新候选分数直接横比。
 
 ## 资料分工与状态
 
 |资料|位置|本轮用途与限制|
 |---|---|---|
+|第二轮候选下的新A—E|[image_links_after_review](cloud/image_links_after_review_20260915_v1/run_b02a97e2/)|214历史图、239图×条件；与106tag并集285。未收到人工审核版；DA3物理信息补足仍未通过几何检查。|
 |648图身份与分类|[metadata](metadata/)|`images.jsonl`、`spatial_history.jsonl.gz`；同房支持见`relationships.jsonl`。展示组不是独立房间。|
 |真实作答和有效性来源|[human](human/)|`responses.jsonl.gz`、参考、Semi初始化、时间来源分别记录。新粗类由真实作答派生，不能由旧difficulty或模型输出代替。|
 |106人工tag对照|[difficulty_tags_20260915_v1](difficulty_tags_20260915_v1/README.md)|保留用户原值，与历史粗类分别分析；这里的旧Pro提示词已经停用。|

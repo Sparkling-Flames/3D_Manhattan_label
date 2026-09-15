@@ -1,0 +1,7 @@
+# 审核更新入口
+
+当前收到的资料没有新用户审核值。`targets/version_and_review_changes.csv`保存三列来源：grade_v1、review_draft_grade、reviewed_grade；最后一列为空，review_status=not_provided。
+
+收到本地审核工具导出的JSON后，必须按image_id×condition一对一关联，仅status=已审核可进入独立的reviewed_grade；未审核、暂缓、保留疑问均不自动认可。审核理由只进入解释表，不进入纯图片特征。
+
+本次包不臆造审核工具JSON的具体schema适配：实际文件到达后应核对字段与版本，再输出新的reviewed目标及对应预测目录，不覆盖当前候选版。若只改变语义等级，不重新生成原始几何；若明确修改点，则另外保存人工修订来源并重算受影响几何。

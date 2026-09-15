@@ -1,0 +1,26 @@
+[
+  {
+    "file": "candidate_prediction.png",
+    "caption": "第二轮候选，Manual；基线61图，含点数/反馈方案60图。精确配对差值另见预测表；不是审核真值。"
+  },
+  {
+    "file": "boundary_process_associations.png",
+    "caption": "Manual133图；调整log人数、类别和楼宇；区间为探索描述，未覆盖多重分析选择；部分边界与遮挡初筛高度共线。"
+  },
+  {
+    "file": "oos_clusters_growth.png",
+    "caption": "9张OOS任务几何，非in-scope重分类；字母与oos表按image_id排序对应。F同点数、7簇、末段新几何率0，需区分分区变化。"
+  },
+  {
+    "file": "feedback_increment.png",
+    "caption": "每行在相同图片覆盖配对；楼宇重采样区间。分类Brier与连续MAE尺度不同，不比较行间效果量大小。"
+  },
+  {
+    "file": "person_composition.png",
+    "caption": "46张Manual图，Q在目标楼外形成；两组各8名不同真实人员，同一两名未来人员独立于组合。Q是参考偏差，不等于语义真值。"
+  },
+  {
+    "file": "person_picture_conditions.png",
+    "caption": "Q两端对比在边界部分可见32图和可见14图中分别展示；两层效应差异区间跨0，不能宣布专长交互已确认。"
+  }
+]
