@@ -1,0 +1,23 @@
+{
+  "stage": "post-hoc evidence-informed proposed rubric; user final decision pending",
+  "expert_grades": "comparison/context only; not algorithm inputs; after feedback not independent validation",
+  "primary_cut": 0.1,
+  "sensitivity_cuts": [
+    0.05,
+    0.075,
+    0.1,
+    0.125,
+    0.15,
+    0.2
+  ],
+  "simple": "1-2 supported, <=3 total, count-band singletons, full-pattern by k<=8 >=.8; actual observed horizon kept",
+  "medium_structural": "2-4 supported, <=6 total, count-band singletons, min conditional LOO Jaccard>=.85; NOT evidence of full distribution convergence",
+  "medium_process": "same plus core cumulative by min(h,n-1)>=.8, h=10/12/15/18/19",
+  "count_band": "n4-8:<=1; n9-16:<=2; n17-24:<=3; proposed, not literature-validated",
+  "difficult": "n>=10, total>=10, f1>=4, late-quarter new geometry>=.15, core-tail15<.8; conditionally fragmented, never nonconvergence theorem",
+  "avoid_forced_grade": true,
+  "all_grades_provisional": true,
+  "weak_cluster_separation": "cross compatible >.5 yields separate semantic caution; no silent merging",
+  "source_window": "finite historical people pool, not chronological acquisition",
+  "large_models_refit": false
+}

@@ -1,8 +1,12 @@
 # Pro研究唯一入口｜2026-09-15整理
 
+**当前执行入口：[两轮资料、审核工具、验证状态与新Pro提示词](review_workflow_20260915/README.md)。**第二轮已从用户指定路径接收；本地复用空间标本，原图不上传Git。早期2—8，粗分类须经用户审核。
+
 使用分支 `codex/image-portrait-20260914` 的最新提交。本文负责导航和版本状态；具体研究要求只读下面第一项，旧报告里的“下一步”和旧提示词不覆盖它。
 
-**当前任务：历史真实作答 → 独立难度粗分类 → 图片分类、特质、模型表示及人员构成的联系。**旧实验自带difficulty字段停用；106张用户亲填tag保留为独立对照。早期k比较2—7，稳定多簇允许稳定，困难候选按当前观察范围解释。新粗分类研究尚未执行。
+后续两段Pro返回的[独立审读](Pro历史粗分类两轮独立审读_20260915.md)只评判定义、证据和推论，其中旧k范围及授权判断已撤回；新阈值作为工作候选，分类待用户审核，不称最终真值。
+
+**当前任务：历史真实作答 → 独立难度粗分类 → 图片分类、特质、模型表示及人员构成的联系。**旧实验自带difficulty字段停用；106张用户亲填tag保留为独立对照。早期k比较2—8（含8），稳定多簇允许稳定，困难候选按当前观察范围解释。两轮历史研究已接入，候选粗类待用户审核。
 
 ## 最短阅读顺序
 
@@ -30,7 +34,7 @@
 
 返回代码保留在 `tools/thesis_main/analysis/image_portrait/`：`pro_*.py`对应v1，`convergence_v2_*.py`对应v2，`difficulty_stratified_*.py`与`difficulty_history_*.py`对应最新主空间返回。迁入不代表这些旧入口自动满足新任务；尤其`difficulty_stratified_prepare.py`仍围绕106张人工标签，新任务须按实际历史作答目标扩展输入。
 
-新结果写入 `cloud/history_difficulty_20260915_v1/`，这个目录目前未生成。保留旧输出，不能直接运行旧报告生成命令覆盖已归档结论。新粗类使用独立字段，不覆盖原difficulty。
+新结果写入 `cloud/history_difficulty_20260915_v1/`，该目录已保存第一轮实际结果；第二轮另存cloud/history_difficulty_review_20260915_v2/。保留旧输出，不能直接运行旧报告生成命令覆盖已归档结论。新粗类使用独立字段，不覆盖原difficulty。
 
 原包的 [REPRODUCE.md](cloud/difficulty_tags_20260915_v1/mainspace_v1_9d19e4e7/REPRODUCE.md)记录旧分析复算方式；[requirements-mainspace.txt](../../requirements-mainspace.txt)原样保存，仅供独立环境参考，本地没有据此修改依赖。若需从原模型NPZ重新汇聚，先明确目标ID和缺少哪些缓存，不能把缺缓存补零或悄悄只分析106图。
 

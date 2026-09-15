@@ -1,0 +1,15 @@
+{
+  "groups": 230,
+  "orders_primary": 200,
+  "orders_sensitivity": 100,
+  "new_geometry_inference": false,
+  "elapsed_seconds": 466.081835683,
+  "primary_all_conditions": true,
+  "other_cut_growth_coverage": "expert-labelled with >=6 valid people or old hard candidates",
+  "independent_new_people": 0,
+  "full_partition": "evaluation target only, not prefix prediction input",
+  "reclustering": "every observed prefix",
+  "core_definition": "all supported terminal clusters recovered at Jaccard .75 with >=2 distinct observed members, no extra supported cluster; conditional core TV<=.10/.15/.20 and cluster median distance dev<=.02 over suffix",
+  "full_definition": "old G10 without a priori singleton / whole-image-invalid blocking",
+  "statuses_not_semantic_truth": true
+}

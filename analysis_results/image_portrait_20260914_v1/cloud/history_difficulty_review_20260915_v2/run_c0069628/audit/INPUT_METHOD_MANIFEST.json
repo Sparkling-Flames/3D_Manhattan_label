@@ -1,0 +1,62 @@
+{
+  "input_branch": "codex/image-portrait-20260914",
+  "verified_latest_commit": "c0069628141dd078626c42ba574fd699c7661f55",
+  "artifact_run": 34932323300,
+  "artifact_id": 10381788487,
+  "artifact_note": "previous full delivery recovered; actual raw bytes checked against current c0069628 Git blobs, not assumed current by name",
+  "input_files": [
+    {
+      "path": "analysis_results/image_portrait_20260914_v1/metadata/images.jsonl",
+      "bytes": 207733,
+      "sha256": "5e1b529055a066deae1ffeeda3ebe44ee9e61475ae1d4927c2a568ac3a72f2fa",
+      "git_blob": "02eebd582fc33aee5936fe69dd45d1853408e803",
+      "latest_commit_blob_match": true
+    },
+    {
+      "path": "analysis_results/image_portrait_20260914_v1/metadata/relationships.jsonl",
+      "bytes": 171314,
+      "sha256": "a2d104423d092fe45e93afc14d6c226da7b84c121e31897df009dcd54583777d",
+      "git_blob": "9a6e2c9922ac0dd88797e005e0ba7187b4160b57",
+      "latest_commit_blob_match": true
+    },
+    {
+      "path": "analysis_results/image_portrait_20260914_v1/metadata/spatial_history.jsonl.gz",
+      "bytes": 724078,
+      "sha256": "08bf319d570399ec6e55ee521c5f5cbcf58a8be34d50ee7c369381cdd51ef17b",
+      "git_blob": "676ddba4e9330ed6b6d484b0cfb03bf377dbf0fd",
+      "latest_commit_blob_match": true
+    },
+    {
+      "path": "analysis_results/image_portrait_20260914_v1/metadata/spatial_provenance.json",
+      "bytes": 359481,
+      "sha256": "20280fa07f1e359c7bf31806f212609452f43a61f7360fe7ed47b10242b102bd",
+      "git_blob": "0d60a109e5ffbf9f7ed4355c017cc3e374fbe2df",
+      "latest_commit_blob_match": true
+    },
+    {
+      "path": "analysis_results/image_portrait_20260914_v1/human/responses.jsonl.gz",
+      "bytes": 591446,
+      "sha256": "4add760d1bd310137367d4f56ce9550a5e7d0f9f982ffaba9e9301fd00bd57a8",
+      "git_blob": "6261c30d1abf2d7ad0e71702348fc81819e783ad",
+      "latest_commit_blob_match": true
+    }
+  ],
+  "method_version": "history_difficulty_review_v2_valid_only_cluster_local_20260915",
+  "new_image_inference": false,
+  "original_images_accessed": false,
+  "legacy_experimental_difficulty_used": false,
+  "user_tags_unchanged": true,
+  "raw_geometry_unchanged": true,
+  "proposed_thresholds_not_frozen": true,
+  "field_use": "whitelisted identity, verified effective geometry, task condition; user tags/comments comparison only",
+  "subsampling": "actual different people, no replication",
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "packages": {
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scipy": "1.17.0",
+    "shapely": "2.1.2",
+    "matplotlib": "3.10.8",
+    "pytest": "9.0.2"
+  }
+}
