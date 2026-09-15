@@ -1,0 +1,109 @@
+{
+  "input_commit": "13859d591acb1bac7790fb0762f2c53282f65748",
+  "execution_commit": "bb12af6802e278da5c64540e5ef104c6f89d0516",
+  "bundle_check": {
+    "status": "passed",
+    "images": 648,
+    "responses": 2501,
+    "original_images_required": false
+  },
+  "actual_historical_images": 205,
+  "expert_tag_images": 106,
+  "overlap_images": 35,
+  "old_experimental_difficulty_used": false,
+  "scope_subtypes_collapsed": true,
+  "early_k_supersedes_old_prompt": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "artifacts": [
+    {
+      "path": "human/responses.jsonl.gz",
+      "sha256": "4add760d1bd310137367d4f56ce9550a5e7d0f9f982ffaba9e9301fd00bd57a8"
+    },
+    {
+      "path": "metadata/spatial_history.jsonl.gz",
+      "sha256": "08bf319d570399ec6e55ee521c5f5cbcf58a8be34d50ee7c369381cdd51ef17b"
+    },
+    {
+      "path": "evaluation/folds.jsonl.gz",
+      "sha256": "fb5df1fbdb1eeb0e7bbf9b07d7d3b48fa2ea187472254c067aaf7d3113a58f16"
+    },
+    {
+      "path": "evaluation/config.json",
+      "sha256": "40b4976fa492902291deb6d96566f39d3fcd24d119c1574de15b7adcba893288"
+    },
+    {
+      "path": "visual/visual_traits.json",
+      "sha256": "469450c67759e9e88401ea4762276ed9adae8526aaec82af99d8299280cf5bcf"
+    },
+    {
+      "path": "cloud/pro_exploration/v2_convergence_e086b2b9/process/image_growth_curves.csv.gz",
+      "sha256": "af5d8901b14485a243fed22727bdb4e3372c5dc04f27885d34d32bd4788bec60"
+    },
+    {
+      "path": "cloud/pro_exploration/v2_convergence_e086b2b9/process/exact_mode_discovery_curves.csv.gz",
+      "sha256": "87306e4bbb46d28a8717e37bb5c50ee7e514bf3ba798ba2473550bd9cdda4dc9"
+    },
+    {
+      "path": "cloud/pro_exploration/v2_convergence_e086b2b9/process/image_uncertainty_structure.csv",
+      "sha256": "cb0b53b8396142aa35cc5f5be6ed6bf5536a238887a14bec781a88389daa9cbe"
+    },
+    {
+      "path": "cloud/pro_exploration/v2_convergence_e086b2b9/process/mode_memberships.csv.gz",
+      "sha256": "73d38239aa4c7eaf58c8f80f90ed1c4c6596affe17fd6d4e0d4591619af69fd0"
+    },
+    {
+      "path": "cloud/pro_exploration/v2_convergence_e086b2b9/process/quality_change_summary.csv",
+      "sha256": "5fb99ba79aa93cabb7814c999bc466cd5040c80724c294e0b1c7b2823cc3ab4d"
+    },
+    {
+      "path": "cloud/pro_exploration/v2_convergence_e086b2b9/process/states_with_explicit_singleton_semantics.csv",
+      "sha256": "019ea703229d48aa128764b5f52695b5c72b23ecf11ae4a575e058b5e41e1617"
+    },
+    {
+      "path": "cloud/pro_exploration/v2_convergence_e086b2b9/process/replay_states.csv.gz",
+      "sha256": "0ae65763f218a52ec23297377f0c0047a8e6ba162257013d3e69950f160ff03b"
+    },
+    {
+      "path": "cloud/pro_exploration/v2_convergence_e086b2b9/process/exact_mode_latency_method.json",
+      "sha256": "9ccd5da42280ebf98f49aaa7e9f2ea16be349159503b1a81e07d70f019424a55"
+    },
+    {
+      "path": "cloud/pro_exploration/v2_convergence_e086b2b9/process/image_state_probabilities.csv",
+      "sha256": "6594a34ff5654400ac4867297744d01c89421850b78cf712444af0b336ab0b0c"
+    },
+    {
+      "path": "cloud/pro_exploration/v2_convergence_e086b2b9/process/exact_mode_discovery_support_delay.csv",
+      "sha256": "636fde050f1026182dc3697c3710e487bc4029d139ef7a55be6a4ceda317e42d"
+    },
+    {
+      "path": "cloud/pro_exploration/v2_convergence_e086b2b9/process/fixed_partition_vs_reclustered_growth.csv.gz",
+      "sha256": "c43b947dd1c561977789c38ed40aa453ce0cfd5894ff811c9fdc9824cbc1fce8"
+    },
+    {
+      "path": "cloud/pro_exploration/v2_convergence_e086b2b9/process/method.json",
+      "sha256": "0e984c50db5e3b0eb38fab38bb220b18ec117a39af18140b07e40c4d90f41fe3"
+    },
+    {
+      "path": "cloud/pro_exploration/v2_convergence_e086b2b9/process/state_summary.csv",
+      "sha256": "bdc81e7ed48fce958948fc64960cf9dfdc225c1924f5fe760c9522ae3e0103c2"
+    },
+    {
+      "path": "cloud/pro_exploration/v2_convergence_e086b2b9/process/quality_and_marginal_change.csv",
+      "sha256": "22e1b82fa7ef0dd51792764df67c6782c9603c90e8765b17e9bef8e911a032c0"
+    }
+  ],
+  "missing_invalid_counts": 5,
+  "metadata_source_conflicts": [],
+  "notes": [
+    "No original images, model weights or visual inference.",
+    "Expert tags/comments excluded from tier generation and pure image features.",
+    "Finite-person old replays are reused as evidence, not new data or chronology."
+  ]
+}

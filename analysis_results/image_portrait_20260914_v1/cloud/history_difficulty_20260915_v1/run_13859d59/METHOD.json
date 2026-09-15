@@ -1,0 +1,74 @@
+{
+  "version": "history_difficulty_v1_followup",
+  "anchor": {
+    "cut": 0.1,
+    "rule": "G10_geometry",
+    "early_k": 7,
+    "late_h": 19,
+    "max_few_modes": 3,
+    "max_singleton_mass": 0.1,
+    "order_fraction_required": 0.8,
+    "confirmation": "suffix",
+    "medium_definition": "cumulative"
+  },
+  "early_k": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "late_h": [
+    10,
+    12,
+    15,
+    18,
+    19
+  ],
+  "mode_caps": [
+    2,
+    3,
+    4
+  ],
+  "singleton_caps": [
+    0,
+    0.1
+  ],
+  "order_proportions": [
+    0.8,
+    0.9
+  ],
+  "cuts": [
+    0.05,
+    0.1,
+    0.2
+  ],
+  "rules": [
+    "P_pattern",
+    "D10_distribution",
+    "D20_distribution",
+    "G10_geometry"
+  ],
+  "medium_definitions": [
+    "interval",
+    "cumulative"
+  ],
+  "confirmation": [
+    "suffix",
+    "suffix_and_tail"
+  ],
+  "difficulty_candidate": "n>=10, total modes>=5, >=2 singleton people and share>=.2, plus observed latter-half novelty>.05 or repartition>.05 or within-mode step>.02",
+  "actual_n_is_primary": true,
+  "grade_and_status_separate": true,
+  "old_experimental_difficulty_used": false,
+  "expert_tags_used_for_tiers": false,
+  "retrospective_full_partition_used_only_for_targets": true,
+  "replays_are_not_independent_samples": true,
+  "short_suffix_is_not_long_term_stability": true,
+  "unresolved_singletons_may_be_rare_modes": true,
+  "robustness": "cut/rule/k/h/confirmation family, agreement is sensitivity not confidence",
+  "classification_k8": "latest user request supersedes old k<8 text",
+  "entry": "history_difficulty_v1_targets"
+}
