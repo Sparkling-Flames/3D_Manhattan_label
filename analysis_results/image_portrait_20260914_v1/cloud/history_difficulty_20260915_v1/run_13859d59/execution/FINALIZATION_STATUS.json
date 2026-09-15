@@ -1,0 +1,20 @@
+[
+  {
+    "stage": "finalize",
+    "returncode": 0,
+    "command": [
+      "/opt/hostedtoolcache/Python/3.11.16/x64/bin/python",
+      "-m",
+      "tools.thesis_main.analysis.image_portrait.history_difficulty_v1_finalize"
+    ]
+  },
+  {
+    "stage": "report",
+    "returncode": 0,
+    "command": [
+      "/opt/hostedtoolcache/Python/3.11.16/x64/bin/python",
+      "-m",
+      "tools.thesis_main.analysis.image_portrait.history_difficulty_v1_report"
+    ]
+  }
+]

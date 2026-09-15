@@ -1,0 +1,76 @@
+/home/runner/work/3D_Manhattan_label/3D_Manhattan_label/tools/thesis_main/analysis/image_portrait/history_difficulty_v1_finalize.py:13: DtypeWarning: Columns (22,23) have mixed types. Specify dtype option on import or set low_memory=False.
+  def load(name):return pd.read_csv(OUT/name)
+{
+  "coverage": {
+    "historical_unique_images": 205,
+    "historical_image_conditions": 230,
+    "expert_images": 106,
+    "overlap_images": 35,
+    "historical_outside_expert": 170,
+    "primary_assigned_images": 31,
+    "primary_assigned_image_conditions": 31,
+    "new_primary_assigned_images": 25,
+    "robust_assigned_images": 11,
+    "new_robust_assigned_images": 9,
+    "union_descriptive_images": 276,
+    "union_expert_or_primary_assigned": 131,
+    "grid_rows": 4636800,
+    "grade_counts": {
+      "('manual', 'difficult_candidate')": 10,
+      "('manual', 'medium')": 1,
+      "('manual', 'simple')": 15,
+      "('semi', 'difficult_candidate')": 1,
+      "('semi', 'medium')": 1,
+      "('semi', 'simple')": 3
+    },
+    "status_counts": {
+      "('manual', 'assigned_observed_early')": 15,
+      "('manual', 'assigned_observed_fragmentation_and_change')": 10,
+      "('manual', 'assigned_observed_later')": 1,
+      "('manual', 'insufficient_people')": 51,
+      "('manual', 'invalid_response_evidence')": 12,
+      "('manual', 'limited_horizon_or_order_sensitive')": 73,
+      "('manual', 'order_sensitive_or_other_trajectory')": 3,
+      "('manual', 'singleton_support_unresolved')": 9,
+      "('manual', 'stable_outside_three_tier_limits')": 13,
+      "('semi', 'assigned_observed_early')": 3,
+      "('semi', 'assigned_observed_fragmentation_and_change')": 1,
+      "('semi', 'assigned_observed_later')": 1,
+      "('semi', 'invalid_response_evidence')": 4,
+      "('semi', 'limited_horizon_or_order_sensitive')": 21,
+      "('semi', 'order_sensitive_or_other_trajectory')": 2,
+      "('semi', 'singleton_support_unresolved')": 4,
+      "('semi', 'stable_outside_three_tier_limits')": 7
+    }
+  },
+  "person": {
+    "status": "executed",
+    "real_subset_rows": 8130,
+    "target_images": 64,
+    "profiles_source_condition_separated": true,
+    "outside_target_building": true,
+    "qualified_condition_worker_scores": 1550,
+    "orders_per_subset": 30,
+    "unknown_is_not_type": true,
+    "main_use": "condition-specific scores and contrasts here; E/ pooled Q/T scores are superseded for primary reporting",
+    "valid_main_E_common_people_file": "E/same_room_exact_common_people.csv",
+    "limits": [
+      "Observed panel, not independently randomized worker assignment.",
+      "Time never interpreted as care.",
+      "Reference-alignment scores do not adjudicate semantic legitimacy.",
+      "Subset observations are not independent samples; intervals resample buildings."
+    ],
+    "common_people_pairs": 13,
+    "common_people_pairs_atleast4": 12
+  },
+  "queue": 77,
+  "predictions": 329994,
+  "comments": {
+    "total_tag_images": 106,
+    "actual_nonempty_image_comments": 26,
+    "images_with_nonempty_group_comment": 96,
+    "unique_groups_with_nonempty_comment": 19,
+    "supersedes": "A_B/executed_summary.json comments_nonempty counted JSON containers, not actual text",
+    "old_value_not_used_for_any_model": true
+  }
+}

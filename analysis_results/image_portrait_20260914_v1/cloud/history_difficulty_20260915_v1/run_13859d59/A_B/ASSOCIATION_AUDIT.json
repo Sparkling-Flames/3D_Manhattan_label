@@ -1,0 +1,8 @@
+{
+  "status": "corrected_and_recomputed",
+  "superseded_file": "associations_with_count_building_scene_controls.csv",
+  "primary_file": "associations_verified.csv",
+  "issue": "Old controls='none' was tested with substring 'n' and therefore duplicated count-adjusted rows; verified implementation uses explicit sets.",
+  "effect_on_prediction": "none; predictor has independent training-only implementation",
+  "effect_on_adjusted_n_building_scene": "none; those controls were already correctly applied"
+}

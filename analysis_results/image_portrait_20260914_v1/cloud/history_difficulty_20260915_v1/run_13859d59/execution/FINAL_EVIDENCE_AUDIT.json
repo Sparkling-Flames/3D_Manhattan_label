@@ -1,0 +1,103 @@
+{
+  "status": "passed",
+  "required_stages": {
+    "execution/INPUT_ATTEMPT2_STATUS.json": [
+      {
+        "stage": "prepare",
+        "returncode": 0,
+        "command": [
+          "/opt/hostedtoolcache/Python/3.11.16/x64/bin/python",
+          "-m",
+          "tools.thesis_main.analysis.image_portrait.history_difficulty_v1_core",
+          "prepare"
+        ]
+      },
+      {
+        "stage": "targets",
+        "returncode": 0,
+        "command": [
+          "/opt/hostedtoolcache/Python/3.11.16/x64/bin/python",
+          "-m",
+          "tools.thesis_main.analysis.image_portrait.history_difficulty_v1_targets"
+        ]
+      },
+      {
+        "stage": "models",
+        "returncode": 0,
+        "command": [
+          "/opt/hostedtoolcache/Python/3.11.16/x64/bin/python",
+          "-m",
+          "tools.thesis_main.analysis.image_portrait.history_difficulty_v1_models"
+        ]
+      }
+    ],
+    "execution/predict_STATUS.json": {
+      "stage": "predict",
+      "returncode": 0,
+      "command": [
+        "/opt/hostedtoolcache/Python/3.11.16/x64/bin/python",
+        "-m",
+        "tools.thesis_main.analysis.image_portrait.history_difficulty_v1_predict"
+      ],
+      "execution_sha": "c39b0646e1e1704c1ec708fa2bf2784663ff91b4"
+    },
+    "execution/associations_STATUS.json": {
+      "stage": "associations",
+      "returncode": 0,
+      "command": [
+        "/opt/hostedtoolcache/Python/3.11.16/x64/bin/python",
+        "-m",
+        "tools.thesis_main.analysis.image_portrait.history_difficulty_v1_associations"
+      ],
+      "execution_sha": "c39b0646e1e1704c1ec708fa2bf2784663ff91b4"
+    },
+    "execution/transfer_STATUS.json": {
+      "stage": "transfer",
+      "returncode": 0,
+      "command": [
+        "/opt/hostedtoolcache/Python/3.11.16/x64/bin/python",
+        "-m",
+        "tools.thesis_main.analysis.image_portrait.history_difficulty_v1_transfer"
+      ],
+      "execution_sha": "c39b0646e1e1704c1ec708fa2bf2784663ff91b4"
+    },
+    "execution/people_STATUS.json": {
+      "stage": "people",
+      "returncode": 0,
+      "command": [
+        "/opt/hostedtoolcache/Python/3.11.16/x64/bin/python",
+        "-m",
+        "tools.thesis_main.analysis.image_portrait.history_difficulty_v1_people"
+      ],
+      "execution_sha": "c39b0646e1e1704c1ec708fa2bf2784663ff91b4"
+    },
+    "execution/people_conditioned_STATUS.json": {
+      "stage": "people_conditioned",
+      "returncode": 0,
+      "command": [
+        "/opt/hostedtoolcache/Python/3.11.16/x64/bin/python",
+        "-m",
+        "tools.thesis_main.analysis.image_portrait.history_difficulty_v1_people_conditioned"
+      ],
+      "execution_sha": "006a519fe512f753d13121deca9c3c543bf0bd0e"
+    },
+    "execution/diagnostics_STATUS.json": {
+      "stage": "diagnostics",
+      "returncode": 0,
+      "command": [
+        "/opt/hostedtoolcache/Python/3.11.16/x64/bin/python",
+        "-m",
+        "tools.thesis_main.analysis.image_portrait.history_difficulty_v1_diagnostics"
+      ],
+      "execution_sha": "006a519fe512f753d13121deca9c3c543bf0bd0e"
+    }
+  },
+  "old_experimental_difficulty_in_predictors": false,
+  "expert_tags_used_for_tiers": false,
+  "actual_source_scope": 205,
+  "condition_specific_person_main_analysis": "E_conditioned/",
+  "pooled_person_profiles": "E/ original exploratory outputs retained, not primary",
+  "comments_counter_corrected": true,
+  "association_none_control_corrected": true,
+  "report_results_from_verified_tables": true
+}
