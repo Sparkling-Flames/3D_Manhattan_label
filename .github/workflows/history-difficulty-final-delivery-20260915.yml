@@ -1,0 +1,101 @@
+name: Historical difficulty final verified delivery
+on:
+  push:
+    branches: [codex/image-portrait-20260914]
+    paths: [.github/workflows/history-difficulty-final-delivery-20260915.yml]
+permissions:
+  contents: write
+jobs:
+  deliver:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/image-portrait-20260914
+          fetch-depth: 1
+          filter: blob:none
+          lfs: false
+          sparse-checkout: |
+            tools
+            lib/misc
+            tests
+            analysis_results/image_portrait_20260914_v1/cloud/history_difficulty_20260915_v1
+            analysis_results/image_portrait_20260914_v1/cloud/pro_exploration/v2_convergence_e086b2b9/process
+            analysis_results/image_portrait_20260914_v1/cloud/pro_exploration/v2_convergence_e086b2b9/foundation/human
+            analysis_results/image_portrait_20260914_v1/cloud/difficulty_tags_20260915_v1/mainspace_v1_9d19e4e7/images
+            analysis_results/image_portrait_20260914_v1/metadata
+            analysis_results/image_portrait_20260914_v1/evaluation
+            analysis_results/image_portrait_20260914_v1/human
+            analysis_results/image_portrait_20260914_v1/visual
+            analysis_results/candidate_selection_review_20260913_v2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy==1.26.4 pandas==2.2.3 scipy==1.14.1 scikit-learn==1.5.2 shapely==2.0.7 pillow==10.4.0 opencv-python-headless==4.10.0.84 PyYAML==6.0.2 pytest==8.3.5 matplotlib==3.9.4 markdown==3.7 tabulate==0.9.0
+      - name: Final evidence and report
+        run: |
+          python - <<'PY'
+          import subprocess,sys,json
+          from tools.thesis_main.analysis.image_portrait.history_difficulty_v1_core import OUT
+          status=[]
+          for stage in ['finalize','report']:
+            cmd=[sys.executable,'-m','tools.thesis_main.analysis.image_portrait.history_difficulty_v1_'+stage]
+            with (OUT/'execution'/f'{stage}.log').open('w') as f:r=subprocess.run(cmd,stdout=f,stderr=subprocess.STDOUT)
+            status.append({'stage':stage,'returncode':r.returncode,'command':cmd});print(stage,r.returncode);print((OUT/'execution'/f'{stage}.log').read_text()[-20000:])
+            if r.returncode:break
+          (OUT/'execution/FINALIZATION_STATUS.json').write_text(json.dumps(status,indent=2));assert len(status)==2 and all(s['returncode']==0 for s in status)
+          PY
+      - name: Portable ZIP and independent extract tests
+        run: |
+          python - <<'PY'
+          import subprocess,sys,json,pathlib,hashlib,zipfile
+          from tools.thesis_main.analysis.image_portrait.history_difficulty_v1_core import OUT,js
+          cmd=[sys.executable,'-m','tools.thesis_main.analysis.image_portrait.history_difficulty_v1_package']
+          with (OUT/'execution/package.log').open('w') as f:r=subprocess.run(cmd,stdout=f,stderr=subprocess.STDOUT)
+          print((OUT/'execution/package.log').read_text()[-20000:]);assert r.returncode==0
+          dest=pathlib.Path('/tmp/history_difficulty_delivery');archive=dest/'history_difficulty_study.zip';v=json.loads((dest/'DELIVERY_VERIFICATION.json').read_text())
+          internal={k:value for k,value in v.items() if k not in ['archive_bytes','archive_sha256']}
+          internal['archive_hash_note']='The final archive SHA-256 is in the accompanying external DELIVERY_VERIFICATION.json to avoid a self-hash cycle.'
+          with zipfile.ZipFile(archive,'a',zipfile.ZIP_DEFLATED) as z:z.writestr('DELIVERY_VERIFICATION.json',json.dumps(internal,ensure_ascii=False,indent=2))
+          with zipfile.ZipFile(archive) as z:
+            assert z.testzip() is None
+            mf=json.loads(z.read('FILE_MANIFEST.json'))
+            for rec in mf['files']:assert hashlib.sha256(z.read(rec['path'])).hexdigest()==rec['sha256']
+          v['archive_bytes']=archive.stat().st_size;v['archive_sha256']=hashlib.sha256(archive.read_bytes()).hexdigest();v['post_append_integrity_and_hash_recheck']='passed'
+          (dest/'DELIVERY_VERIFICATION.json').write_text(json.dumps(v,ensure_ascii=False,indent=2));js('execution/DELIVERY_VERIFICATION.json',v)
+          print(json.dumps(v,ensure_ascii=False,indent=2))
+          PY
+      - name: Update new entry without changing old reports
+        if: always()
+        run: |
+          python - <<'PY'
+          import pathlib,json
+          from tools.thesis_main.analysis.image_portrait.history_difficulty_v1_core import OUT
+          parent=OUT.parent
+          text='# 历史作答粗分类续研入口\n\n本轮输出：`run_13859d59/`。首先阅读[中文综合报告](run_13859d59/REPORT_ZH.md)，独立HTML为[REPORT_ZH.html](run_13859d59/REPORT_ZH.html)。\n\n实际运行与失败见execution；主逐图结果targets/primary_with_robustness.csv；纯图片留出prediction；来源人类历史条件迁移D；按Manual/Semi独立、目标楼外估计的人员主分析E_conditioned；原评论独立对照expert。\n\n旧mainspace_history报告未覆盖。三档只作历史观察派生，最终收敛判据未冻结。当前数据不能把全部170张新历史覆盖写成170张新难度真值。\n\n完整ZIP由GitHub Actions Historical difficulty final verified delivery的artifact交付，不提交ZIP到源码库；其校验记录见run_13859d59/execution/DELIVERY_VERIFICATION.json。\n'
+          (parent/'README.md').write_text(text,encoding='utf-8')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add --sparse -f analysis_results/image_portrait_20260914_v1/cloud/history_difficulty_20260915_v1
+          git commit -m 'research: deliver verified historical tiers, A-E evidence and Chinese synthesis' || exit 0
+          for attempt in 1 2 3 4; do
+            git pull --rebase origin codex/image-portrait-20260914 && git push origin HEAD:codex/image-portrait-20260914 && break
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: history-difficulty-verified-delivery
+          path: |
+            /tmp/history_difficulty_delivery/history_difficulty_study.zip
+            /tmp/history_difficulty_delivery/REPORT_ZH.html
+            /tmp/history_difficulty_delivery/DELIVERY_VERIFICATION.json
+            /tmp/history_difficulty_delivery/per_image_historical_tiers.csv
+            /tmp/history_difficulty_delivery/local_image_review_queue.csv
+          compression-level: 0
+          retention-days: 90
+          if-no-files-found: error
