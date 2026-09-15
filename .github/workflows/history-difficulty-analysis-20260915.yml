@@ -39,26 +39,30 @@ jobs:
                 pat.append('/'+str((B/'models'/model/(i+ext)).relative_to(pathlib.Path.cwd())))
           subprocess.run(['git','sparse-checkout','set','--no-cone','--stdin'],input='\n'.join(pat)+'\n',text=True,check=True)
           PY
-      - name: Correct missing dependency feedback without hiding failed attempt
+      - name: Recompute feedback with explicit native coverage
         run: |
           python - <<'PY'
-          import shutil,pandas as pd
+          import shutil,pandas as pd,json
           from tools.thesis_main.analysis.image_portrait.history_difficulty_v1_core import OUT,read,js
           from tools.thesis_main.analysis.image_portrait.history_difficulty_v1_models import feedback
           for name in ['model_feedback.csv','feedback_failures.csv']:
-            old=OUT/'B'/name
-            if old.exists():shutil.copy2(old,old.with_name('attempt2_missing_dependency_'+name))
+            old=OUT/'B'/name;archive=old.with_name('attempt2_missing_dependency_'+name)
+            if old.exists() and not archive.exists():shutil.copy2(old,archive)
           feedback(read(OUT/'inputs/historical_ids.json'))
-          x=pd.read_csv(OUT/'B/model_feedback.csv');assert len(x)==205
-          assert x[['count_hohonet','count_bi_enclosed','count_bi_extended','bi_head_geometry_gap']].notna().all().all()
-          js('execution/FEEDBACK_CORRECTION_STATUS.json',{'status':'passed','images':205,'reason':'lib.misc was not in first sparse checkout; raw outputs never changed','failures_preserved':True})
+          x=pd.read_csv(OUT/'B/model_feedback.csv');failed=pd.read_csv(OUT/'B/feedback_failures.csv');assert len(x)==205
+          print('Actual finite coverage:',x.notna().sum().to_dict());print('Failures:',failed.to_string(index=False))
+          info={'status':'partial_with_failures' if len(failed) else 'passed','images':205,'finite_coverage':x.notna().sum().to_dict(),'failure_records':failed.to_dict('records'),'reason':'runtime dependency repaired; unusable postprocessed geometries remain missing','failures_preserved':True}
+          js('execution/FEEDBACK_CORRECTION_STATUS.json',info)
+          assert not any('ModuleNotFoundError' in str(r) for r in failed.to_dict('records'))
+          assert 'count_bi_enclosed' in x and x.count_bi_enclosed.notna().sum()>0
           PY
-      - name: Preserve corrected feedback
+      - name: Preserve corrected feedback and failures
+        if: always()
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add --sparse -f analysis_results/image_portrait_20260914_v1/cloud/history_difficulty_20260915_v1/run_13859d59/B analysis_results/image_portrait_20260914_v1/cloud/history_difficulty_20260915_v1/run_13859d59/execution/FEEDBACK_CORRECTION_STATUS.json
-          git commit -m 'research: complete actual Bi feedback after numeric dependency repair'
+          git commit -m 'research: preserve Bi feedback recomputation with explicit failures and native coverage' || exit 0
           git pull --rebase origin codex/image-portrait-20260914
           git push origin HEAD:codex/image-portrait-20260914
   analyses:
@@ -99,8 +103,7 @@ jobs:
           stage='${{ matrix.stage }}';command=[sys.executable,'-m','tools.thesis_main.analysis.image_portrait.history_difficulty_v1_'+stage]
           with (OUT/'execution'/f'{stage}.log').open('w') as f:r=subprocess.run(command,stdout=f,stderr=subprocess.STDOUT)
           record={'stage':stage,'returncode':r.returncode,'command':command,'execution_sha':subprocess.check_output(['git','rev-parse','HEAD']).decode().strip()}
-          (OUT/'execution'/f'{stage}_STATUS.json').write_text(json.dumps(record,indent=2))
-          print(json.dumps(record));print((OUT/'execution'/f'{stage}.log').read_text()[-16000:])
+          (OUT/'execution'/f'{stage}_STATUS.json').write_text(json.dumps(record,indent=2));print(json.dumps(record));print((OUT/'execution'/f'{stage}.log').read_text()[-16000:])
           if stage=='associations':
             with (OUT/'execution/focused_tests.log').open('w') as f:t=subprocess.run([sys.executable,'-m','pytest','tests/test_history_difficulty_v1.py','-q'],stdout=f,stderr=subprocess.STDOUT)
             (OUT/'execution/FOCUSED_TEST_STATUS.json').write_text(json.dumps({'returncode':t.returncode}));print((OUT/'execution/focused_tests.log').read_text())
