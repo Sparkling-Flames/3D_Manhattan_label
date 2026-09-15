@@ -1,0 +1,82 @@
+name: Historical difficulty compute inputs 20260915
+on:
+  push:
+    branches: [codex/image-portrait-20260914]
+    paths: [.github/workflows/history-difficulty-compute-inputs-20260915.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  compute:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          lfs: false
+          sparse-checkout: |
+            tools
+            analysis_results/image_portrait_20260914_v1/metadata
+            analysis_results/image_portrait_20260914_v1/evaluation
+            analysis_results/image_portrait_20260914_v1/human
+            analysis_results/image_portrait_20260914_v1/visual
+            analysis_results/image_portrait_20260914_v1/cloud/pro_exploration/v2_convergence_e086b2b9/process
+            analysis_results/image_portrait_20260914_v1/cloud/pro_exploration/v2_convergence_e086b2b9/foundation/human
+            analysis_results/image_portrait_20260914_v1/cloud/difficulty_tags_20260915_v1/mainspace_v1_9d19e4e7/images
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy==1.26.4 pandas==2.2.3 scipy==1.14.1 scikit-learn==1.5.2 shapely==2.0.7 pillow==10.4.0 opencv-python-headless==4.10.0.84 PyYAML==6.0.2 pytest==8.3.5
+      - name: Fetch only numeric files for actual historical targets
+        run: |
+          python - <<'PY'
+          import gzip,json,pathlib,subprocess
+          b=pathlib.Path('analysis_results/image_portrait_20260914_v1')
+          raw=[json.loads(x) for x in gzip.open(b/'human/responses.jsonl.gz','rt') if x.strip()]
+          ids=sorted({r['image_id'] for r in raw if r['main_worker_included'] and r['raw_condition'] in ('manual','semi')})
+          existing=set(subprocess.check_output(['git','ls-tree','-r','--name-only','HEAD']).decode().splitlines())
+          patterns=['/tools/','/.gitignore','/.gitattributes','/'+str(b)+'/metadata/','/'+str(b)+'/evaluation/','/'+str(b)+'/human/','/'+str(b)+'/visual/','/'+str(b)+'/cloud/pro_exploration/v2_convergence_e086b2b9/process/','/'+str(b)+'/cloud/pro_exploration/v2_convergence_e086b2b9/foundation/human/','/'+str(b)+'/cloud/difficulty_tags_20260915_v1/mainspace_v1_9d19e4e7/images/','/'+str(b)+'/cloud/history_difficulty_20260915_v1/','/analysis_results/candidate_selection_review_20260913_v2/用户审查原始记录.json']
+          for model in ('hohonet','bilayout','ulayout','dinov3','da3'):
+              for i in ids:
+                  endings=('.npz','.json') if model in ('hohonet','bilayout') else ('.features.npz','.geometry.npz')
+                  for ext in endings:
+                      name=str(b/'models'/model/(i+ext))
+                      if name in existing:patterns.append('/'+name)
+          subprocess.run(['git','sparse-checkout','set','--no-cone','--stdin'],input='\n'.join(patterns)+'\n',text=True,check=True)
+          print('Historical target IDs:',len(ids),'; requested numeric source files are now checked out; no images or weights.')
+          PY
+      - name: Execute independent input, tier and model stages
+        run: |
+          python - <<'PY'
+          import pathlib,subprocess,json,sys,hashlib
+          o=pathlib.Path('analysis_results/image_portrait_20260914_v1/cloud/history_difficulty_20260915_v1/run_13859d59');(o/'execution').mkdir(parents=True,exist_ok=True)
+          stages=[('prepare',['history_difficulty_v1_core','prepare']),('targets',['history_difficulty_v1_targets']),('models',['history_difficulty_v1_models'])]
+          status=[]
+          for name,args in stages:
+              command=[sys.executable,'-m','tools.thesis_main.analysis.image_portrait.'+args[0],*args[1:]]
+              with (o/'execution'/f'{name}.log').open('w') as f:r=subprocess.run(command,stdout=f,stderr=subprocess.STDOUT)
+              status.append({'stage':name,'returncode':r.returncode,'command':command});print(name,r.returncode,flush=True)
+              print((o/'execution'/f'{name}.log').read_text()[-12000:],flush=True)
+          (o/'execution/INPUT_STAGE_STATUS.json').write_text(json.dumps(status,indent=2))
+          PY
+      - name: Preserve new results only
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add --sparse -f analysis_results/image_portrait_20260914_v1/cloud/history_difficulty_20260915_v1/run_13859d59
+          git commit -m 'research: preserve executed historical tiers, numerical inputs and stage logs' || exit 0
+          git pull --rebase origin codex/image-portrait-20260914
+          git push origin HEAD:codex/image-portrait-20260914
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: history-difficulty-executed-inputs
+          path: analysis_results/image_portrait_20260914_v1/cloud/history_difficulty_20260915_v1/run_13859d59
+          retention-days: 30
+          if-no-files-found: error
