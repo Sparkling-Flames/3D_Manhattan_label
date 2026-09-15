@@ -1,0 +1,349 @@
+PREDICT 1 180 scene seconds 3.46 rows 1746
+PREDICT 2 180 main_space seconds 3.48 rows 1746
+PREDICT 3 180 fine_human seconds 3.39 rows 1746
+PREDICT 4 180 fine_ai seconds 3.82 rows 1746
+PREDICT 5 180 traits seconds 5.64 rows 1746
+PREDICT 6 180 positions seconds 8.06 rows 1746
+PREDICT 7 180 scene_traits seconds 6.13 rows 1746
+PREDICT 8 180 main_traits seconds 6.14 rows 1746
+PREDICT 9 180 feedback_counts seconds 3.7 rows 1746
+PREDICT 10 180 feedback_heads seconds 3.65 rows 1746
+PREDICT 11 180 feedback_rotation seconds 3.75 rows 1746
+PREDICT 12 180 feedback_between seconds 3.65 rows 1746
+PREDICT 13 180 feedback_all seconds 3.79 rows 1746
+PREDICT 14 180 hohonet__encoder_stage2__global seconds 3.98 rows 1746
+PREDICT 15 180 hohonet__encoder_stage2__regions seconds 4.04 rows 1746
+PREDICT 16 180 hohonet__encoder_stage4__global seconds 4.02 rows 1746
+PREDICT 17 180 hohonet__encoder_stage4__regions seconds 4.05 rows 1746
+PREDICT 18 180 hohonet__compressed__global seconds 3.98 rows 1746
+PREDICT 19 180 hohonet__compressed__regions seconds 4.04 rows 1746
+PREDICT 20 180 hohonet__refined__global seconds 3.98 rows 1746
+PREDICT 21 180 hohonet__refined__regions seconds 4.04 rows 1746
+PREDICT 22 180 hohonet__shared__global seconds 3.94 rows 1746
+PREDICT 23 180 hohonet__shared__regions seconds 4.01 rows 1746
+PREDICT 24 180 hohonet__legacy_current seconds 3.93 rows 1746
+PREDICT 25 180 bilayout__fc__global seconds 4.04 rows 1746
+PREDICT 26 180 bilayout__fc__regions seconds 4.07 rows 1746
+PREDICT 27 180 bilayout__fg_enclosed__global seconds 3.92 rows 1746
+PREDICT 28 180 bilayout__fg_enclosed__regions seconds 3.99 rows 1746
+PREDICT 29 180 bilayout__fg_extended__global seconds 3.92 rows 1746
+PREDICT 30 180 bilayout__fg_extended__regions seconds 3.99 rows 1746
+PREDICT 31 180 ulayout__compressed__global seconds 4.03 rows 1746
+PREDICT 32 180 ulayout__compressed__local16 seconds 4.09 rows 1746
+PREDICT 33 180 ulayout__transformer__global seconds 3.91 rows 1746
+PREDICT 34 180 ulayout__transformer__local16 seconds 3.96 rows 1746
+PREDICT 35 180 dinov3__block3__panorama_global seconds 3.93 rows 1746
+PREDICT 36 180 dinov3__block3__faces_global seconds 3.91 rows 1746
+PREDICT 37 180 dinov3__block3__panorama_local16 seconds 4.03 rows 1746
+PREDICT 38 180 dinov3__block3__faces_local16 seconds 4.0 rows 1746
+PREDICT 39 180 dinov3__block3__panorama_mean seconds 3.9 rows 1746
+PREDICT 40 180 dinov3__block3__faces_concat seconds 3.99 rows 1746
+PREDICT 41 180 dinov3__block3__faces_local96 seconds 4.02 rows 1746
+PREDICT 42 180 dinov3__block6__panorama_global seconds 3.95 rows 1746
+PREDICT 43 180 dinov3__block6__faces_global seconds 3.94 rows 1746
+PREDICT 44 180 dinov3__block6__panorama_local16 seconds 4.02 rows 1746
+PREDICT 45 180 dinov3__block6__faces_local16 seconds 4.0 rows 1746
+PREDICT 46 180 dinov3__block6__panorama_mean seconds 3.95 rows 1746
+PREDICT 47 180 dinov3__block6__faces_concat seconds 4.01 rows 1746
+PREDICT 48 180 dinov3__block6__faces_local96 seconds 4.04 rows 1746
+PREDICT 49 180 dinov3__block9__panorama_global seconds 3.99 rows 1746
+PREDICT 50 180 dinov3__block9__faces_global seconds 3.98 rows 1746
+PREDICT 51 180 dinov3__block9__panorama_local16 seconds 4.03 rows 1746
+PREDICT 52 180 dinov3__block9__faces_local16 seconds 4.03 rows 1746
+PREDICT 53 180 dinov3__block9__panorama_mean seconds 3.99 rows 1746
+PREDICT 54 180 dinov3__block9__faces_concat seconds 4.02 rows 1746
+PREDICT 55 180 dinov3__block9__faces_local96 seconds 4.05 rows 1746
+PREDICT 56 180 dinov3__block11__panorama_global seconds 4.02 rows 1746
+PREDICT 57 180 dinov3__block11__faces_global seconds 4.0 rows 1746
+PREDICT 58 180 dinov3__block11__panorama_local16 seconds 4.06 rows 1746
+PREDICT 59 180 dinov3__block11__faces_local16 seconds 4.04 rows 1746
+PREDICT 60 180 dinov3__block11__panorama_mean seconds 4.01 rows 1746
+PREDICT 61 180 dinov3__block11__faces_concat seconds 4.05 rows 1746
+PREDICT 62 180 dinov3__block11__faces_local96 seconds 4.07 rows 1746
+PREDICT 63 180 dinov3__block12__panorama_global seconds 4.04 rows 1746
+PREDICT 64 180 dinov3__block12__faces_global seconds 4.05 rows 1746
+PREDICT 65 180 dinov3__block12__panorama_local16 seconds 4.07 rows 1746
+PREDICT 66 180 dinov3__block12__faces_local16 seconds 4.04 rows 1746
+PREDICT 67 180 dinov3__block12__panorama_mean seconds 4.0 rows 1746
+PREDICT 68 180 dinov3__block12__faces_concat seconds 4.07 rows 1746
+PREDICT 69 180 dinov3__block12__faces_local96 seconds 4.08 rows 1746
+PREDICT 70 180 dinov3__cls__panorama seconds 4.01 rows 1746
+PREDICT 71 180 dinov3__cls__faces seconds 4.01 rows 1746
+PREDICT 72 180 da3__layer5__faces_global seconds 3.97 rows 1746
+PREDICT 73 180 da3__layer5__faces_local16 seconds 4.01 rows 1746
+PREDICT 74 180 da3__layer5__faces_concat seconds 4.02 rows 1746
+PREDICT 75 180 da3__layer7__faces_global seconds 3.98 rows 1746
+PREDICT 76 180 da3__layer7__faces_local16 seconds 4.02 rows 1746
+PREDICT 77 180 da3__layer7__faces_concat seconds 4.02 rows 1746
+PREDICT 78 180 da3__layer9__faces_global seconds 3.98 rows 1746
+PREDICT 79 180 da3__layer9__faces_local16 seconds 4.02 rows 1746
+PREDICT 80 180 da3__layer9__faces_concat seconds 4.02 rows 1746
+PREDICT 81 180 da3__layer11__faces_global seconds 3.99 rows 1746
+PREDICT 82 180 da3__layer11__faces_local16 seconds 4.01 rows 1746
+PREDICT 83 180 da3__layer11__faces_concat seconds 4.02 rows 1746
+PREDICT 84 180 counts_plus::hohonet__encoder_stage2__global seconds 4.78 rows 1746
+PREDICT 85 180 counts_plus::hohonet__encoder_stage2__regions seconds 4.84 rows 1746
+PREDICT 86 180 counts_plus::hohonet__encoder_stage4__global seconds 4.79 rows 1746
+PREDICT 87 180 counts_plus::hohonet__encoder_stage4__regions seconds 4.82 rows 1746
+PREDICT 88 180 counts_plus::hohonet__compressed__global seconds 4.76 rows 1746
+PREDICT 89 180 counts_plus::hohonet__compressed__regions seconds 4.82 rows 1746
+PREDICT 90 180 counts_plus::hohonet__refined__global seconds 4.76 rows 1746
+PREDICT 91 180 counts_plus::hohonet__refined__regions seconds 4.81 rows 1746
+PREDICT 92 180 counts_plus::hohonet__shared__global seconds 4.71 rows 1746
+PREDICT 93 180 counts_plus::hohonet__shared__regions seconds 4.78 rows 1746
+PREDICT 94 180 counts_plus::hohonet__legacy_current seconds 4.71 rows 1746
+PREDICT 95 180 counts_plus::bilayout__fc__global seconds 4.81 rows 1746
+PREDICT 96 180 counts_plus::bilayout__fc__regions seconds 4.84 rows 1746
+PREDICT 97 180 counts_plus::bilayout__fg_enclosed__global seconds 4.72 rows 1746
+PREDICT 98 180 counts_plus::bilayout__fg_enclosed__regions seconds 4.77 rows 1746
+PREDICT 99 180 counts_plus::bilayout__fg_extended__global seconds 4.7 rows 1746
+PREDICT 100 180 counts_plus::bilayout__fg_extended__regions seconds 4.76 rows 1746
+PREDICT 101 180 counts_plus::ulayout__compressed__global seconds 4.8 rows 1746
+PREDICT 102 180 counts_plus::ulayout__compressed__local16 seconds 4.82 rows 1746
+PREDICT 103 180 counts_plus::ulayout__transformer__global seconds 4.7 rows 1746
+PREDICT 104 180 counts_plus::ulayout__transformer__local16 seconds 4.73 rows 1746
+PREDICT 105 180 counts_plus::dinov3__block3__panorama_global seconds 4.72 rows 1746
+PREDICT 106 180 counts_plus::dinov3__block3__faces_global seconds 4.69 rows 1746
+PREDICT 107 180 counts_plus::dinov3__block3__panorama_local16 seconds 4.79 rows 1746
+PREDICT 108 180 counts_plus::dinov3__block3__faces_local16 seconds 4.77 rows 1746
+PREDICT 109 180 counts_plus::dinov3__block3__panorama_mean seconds 4.69 rows 1746
+PREDICT 110 180 counts_plus::dinov3__block3__faces_concat seconds 4.77 rows 1746
+PREDICT 111 180 counts_plus::dinov3__block3__faces_local96 seconds 4.81 rows 1746
+PREDICT 112 180 counts_plus::dinov3__block6__panorama_global seconds 4.75 rows 1746
+PREDICT 113 180 counts_plus::dinov3__block6__faces_global seconds 4.73 rows 1746
+PREDICT 114 180 counts_plus::dinov3__block6__panorama_local16 seconds 4.8 rows 1746
+PREDICT 115 180 counts_plus::dinov3__block6__faces_local16 seconds 4.78 rows 1746
+PREDICT 116 180 counts_plus::dinov3__block6__panorama_mean seconds 4.74 rows 1746
+PREDICT 117 180 counts_plus::dinov3__block6__faces_concat seconds 4.78 rows 1746
+PREDICT 118 180 counts_plus::dinov3__block6__faces_local96 seconds 4.84 rows 1746
+PREDICT 119 180 counts_plus::dinov3__block9__panorama_global seconds 4.78 rows 1746
+PREDICT 120 180 counts_plus::dinov3__block9__faces_global seconds 4.77 rows 1746
+PREDICT 121 180 counts_plus::dinov3__block9__panorama_local16 seconds 4.82 rows 1746
+PREDICT 122 180 counts_plus::dinov3__block9__faces_local16 seconds 4.83 rows 1746
+PREDICT 123 180 counts_plus::dinov3__block9__panorama_mean seconds 4.78 rows 1746
+PREDICT 124 180 counts_plus::dinov3__block9__faces_concat seconds 4.82 rows 1746
+PREDICT 125 180 counts_plus::dinov3__block9__faces_local96 seconds 4.84 rows 1746
+PREDICT 126 180 counts_plus::dinov3__block11__panorama_global seconds 4.81 rows 1746
+PREDICT 127 180 counts_plus::dinov3__block11__faces_global seconds 4.79 rows 1746
+PREDICT 128 180 counts_plus::dinov3__block11__panorama_local16 seconds 4.84 rows 1746
+PREDICT 129 180 counts_plus::dinov3__block11__faces_local16 seconds 4.83 rows 1746
+PREDICT 130 180 counts_plus::dinov3__block11__panorama_mean seconds 4.8 rows 1746
+PREDICT 131 180 counts_plus::dinov3__block11__faces_concat seconds 4.84 rows 1746
+PREDICT 132 180 counts_plus::dinov3__block11__faces_local96 seconds 4.85 rows 1746
+PREDICT 133 180 counts_plus::dinov3__block12__panorama_global seconds 4.8 rows 1746
+PREDICT 134 180 counts_plus::dinov3__block12__faces_global seconds 4.79 rows 1746
+PREDICT 135 180 counts_plus::dinov3__block12__panorama_local16 seconds 4.85 rows 1746
+PREDICT 136 180 counts_plus::dinov3__block12__faces_local16 seconds 4.83 rows 1746
+PREDICT 137 180 counts_plus::dinov3__block12__panorama_mean seconds 4.81 rows 1746
+PREDICT 138 180 counts_plus::dinov3__block12__faces_concat seconds 4.84 rows 1746
+PREDICT 139 180 counts_plus::dinov3__block12__faces_local96 seconds 4.87 rows 1746
+PREDICT 140 180 counts_plus::dinov3__cls__panorama seconds 4.8 rows 1746
+PREDICT 141 180 counts_plus::dinov3__cls__faces seconds 4.8 rows 1746
+PREDICT 142 180 counts_plus::da3__layer5__faces_global seconds 4.78 rows 1746
+PREDICT 143 180 counts_plus::da3__layer5__faces_local16 seconds 4.81 rows 1746
+PREDICT 144 180 counts_plus::da3__layer5__faces_concat seconds 4.81 rows 1746
+PREDICT 145 180 counts_plus::da3__layer7__faces_global seconds 4.77 rows 1746
+PREDICT 146 180 counts_plus::da3__layer7__faces_local16 seconds 4.79 rows 1746
+PREDICT 147 180 counts_plus::da3__layer7__faces_concat seconds 4.82 rows 1746
+PREDICT 148 180 counts_plus::da3__layer9__faces_global seconds 4.78 rows 1746
+PREDICT 149 180 counts_plus::da3__layer9__faces_local16 seconds 4.8 rows 1746
+PREDICT 150 180 counts_plus::da3__layer9__faces_concat seconds 4.79 rows 1746
+PREDICT 151 180 counts_plus::da3__layer11__faces_global seconds 4.77 rows 1746
+PREDICT 152 180 counts_plus::da3__layer11__faces_local16 seconds 4.78 rows 1746
+PREDICT 153 180 counts_plus::da3__layer11__faces_concat seconds 4.8 rows 1746
+PREDICT 154 180 main_plus::feedback_counts seconds 4.37 rows 1746
+PREDICT 155 180 main_plus::feedback_all seconds 4.49 rows 1746
+PREDICT 156 180 main_plus::hohonet__encoder_stage2__global seconds 4.59 rows 1746
+PREDICT 157 180 main_plus::hohonet__encoder_stage4__global seconds 4.6 rows 1746
+PREDICT 158 180 main_plus::hohonet__compressed__global seconds 4.58 rows 1746
+PREDICT 159 180 main_plus::hohonet__refined__global seconds 4.57 rows 1746
+PREDICT 160 180 main_plus::hohonet__shared__global seconds 4.54 rows 1746
+PREDICT 161 180 main_plus::bilayout__fc__global seconds 4.62 rows 1746
+PREDICT 162 180 main_plus::bilayout__fg_enclosed__global seconds 4.52 rows 1746
+PREDICT 163 180 main_plus::bilayout__fg_extended__global seconds 4.51 rows 1746
+PREDICT 164 180 main_plus::ulayout__compressed__global seconds 4.62 rows 1746
+PREDICT 165 180 main_plus::ulayout__transformer__global seconds 4.48 rows 1746
+PREDICT 166 180 main_plus::dinov3__block3__panorama_global seconds 4.54 rows 1746
+PREDICT 167 180 main_plus::dinov3__block3__faces_global seconds 4.51 rows 1746
+PREDICT 168 180 main_plus::dinov3__block6__panorama_global seconds 4.57 rows 1746
+PREDICT 169 180 main_plus::dinov3__block6__faces_global seconds 4.56 rows 1746
+PREDICT 170 180 main_plus::dinov3__block9__panorama_global seconds 4.61 rows 1746
+PREDICT 171 180 main_plus::dinov3__block9__faces_global seconds 4.6 rows 1746
+PREDICT 172 180 main_plus::dinov3__block11__panorama_global seconds 4.62 rows 1746
+PREDICT 173 180 main_plus::dinov3__block11__faces_global seconds 4.63 rows 1746
+PREDICT 174 180 main_plus::dinov3__block12__panorama_global seconds 4.63 rows 1746
+PREDICT 175 180 main_plus::dinov3__block12__faces_global seconds 4.63 rows 1746
+PREDICT 176 180 main_plus::dinov3__cls__panorama seconds 4.63 rows 1746
+PREDICT 177 180 main_plus::da3__layer5__faces_global seconds 4.6 rows 1746
+PREDICT 178 180 main_plus::da3__layer7__faces_global seconds 4.61 rows 1746
+PREDICT 179 180 main_plus::da3__layer9__faces_global seconds 4.61 rows 1746
+PREDICT 180 180 main_plus::da3__layer11__faces_global seconds 4.6 rows 1746
+SCORES                       feature algorithm condition             target  target_images  predicted_images  buildings  image_loss  building_macro_loss metric  accuracy  recall_simple  recall_medium  recall_difficult_candidate
+                     constant  baseline    manual         cdf_early7             42                42         15    0.422619             0.396810    MAE       NaN            NaN            NaN                         NaN
+                     constant  baseline    manual  cdf_observed_by19             42                42         15    0.259286             0.267295    MAE       NaN            NaN            NaN                         NaN
+                     constant  baseline    manual            half_tv            133               133         20    0.113067             0.109283    MAE       NaN            NaN            NaN                         NaN
+                     constant  baseline    manual  late_new_geometry            133               133         20    0.207737             0.213313    MAE       NaN            NaN            NaN                         NaN
+                     constant  baseline    manual     singleton_mass            166               166         22    0.240314             0.236648    MAE       NaN            NaN            NaN                         NaN
+                     constant  baseline    manual       tier_primary             26                26         12    0.251763             0.260212    RPS  0.576923       1.000000            0.0                         0.0
+                     constant  baseline    manual within_mode_median            126               126         19    0.014809             0.015274    MAE       NaN            NaN            NaN                         NaN
+                     constant  baseline      semi         cdf_early7             16                16          7    0.243750             0.256190    MAE       NaN            NaN            NaN                         NaN
+                     constant  baseline      semi  cdf_observed_by19             16                16          7    0.300000             0.377452    MAE       NaN            NaN            NaN                         NaN
+                     constant  baseline      semi            half_tv             42                42         12    0.125632             0.113643    MAE       NaN            NaN            NaN                         NaN
+                     constant  baseline      semi  late_new_geometry             42                42         12    0.187161             0.179966    MAE       NaN            NaN            NaN                         NaN
+                     constant  baseline      semi     singleton_mass             43                43         12    0.190038             0.172030    MAE       NaN            NaN            NaN                         NaN
+                     constant  baseline      semi       tier_primary              5                 5          3    0.264583             0.246528    RPS  0.600000       1.000000            0.0                         0.0
+                     constant  baseline      semi within_mode_median             41                41         12    0.016347             0.016079    MAE       NaN            NaN            NaN                         NaN
+                 feedback_all     ridge    manual         cdf_early7             42                42         15    0.443455             0.415855    MAE       NaN            NaN            NaN                         NaN
+                 feedback_all     ridge    manual  cdf_observed_by19             42                42         15    0.271091             0.277700    MAE       NaN            NaN            NaN                         NaN
+                 feedback_all     ridge    manual            half_tv            133               131         20    0.103803             0.096619    MAE       NaN            NaN            NaN                         NaN
+                 feedback_all     ridge    manual  late_new_geometry            133               131         20    0.159175             0.170034    MAE       NaN            NaN            NaN                         NaN
+                 feedback_all     ridge    manual     singleton_mass            166               164         22    0.217791             0.216212    MAE       NaN            NaN            NaN                         NaN
+                 feedback_all     ridge    manual       tier_primary             26                26         12    0.135997             0.176994    RPS  0.807692       0.866667            0.0                         0.8
+                 feedback_all     ridge    manual within_mode_median            126               124         19    0.014471             0.014774    MAE       NaN            NaN            NaN                         NaN
+                 feedback_all     ridge      semi         cdf_early7             16                16          7    0.334802             0.411862    MAE       NaN            NaN            NaN                         NaN
+                 feedback_all     ridge      semi  cdf_observed_by19             16                16          7    0.303637             0.392414    MAE       NaN            NaN            NaN                         NaN
+                 feedback_all     ridge      semi            half_tv             42                42         12    0.120256             0.110756    MAE       NaN            NaN            NaN                         NaN
+                 feedback_all     ridge      semi  late_new_geometry             42                42         12    0.187499             0.176338    MAE       NaN            NaN            NaN                         NaN
+                 feedback_all     ridge      semi     singleton_mass             43                43         12    0.182184             0.162396    MAE       NaN            NaN            NaN                         NaN
+                 feedback_all     ridge      semi       tier_primary              5                 5          3    0.357014             0.322319    RPS  0.400000       0.666667            0.0                         0.0
+                 feedback_all     ridge      semi within_mode_median             41                41         12    0.018102             0.020012    MAE       NaN            NaN            NaN                         NaN
+              feedback_counts     ridge    manual         cdf_early7             42                42         15    0.444041             0.414403    MAE       NaN            NaN            NaN                         NaN
+              feedback_counts     ridge    manual  cdf_observed_by19             42                42         15    0.264995             0.265176    MAE       NaN            NaN            NaN                         NaN
+              feedback_counts     ridge    manual            half_tv            133               131         20    0.105459             0.107813    MAE       NaN            NaN            NaN                         NaN
+              feedback_counts     ridge    manual  late_new_geometry            133               131         20    0.184685             0.198938    MAE       NaN            NaN            NaN                         NaN
+              feedback_counts     ridge    manual     singleton_mass            166               164         22    0.227207             0.225829    MAE       NaN            NaN            NaN                         NaN
+              feedback_counts     ridge    manual       tier_primary             26                26         12    0.138191             0.175229    RPS  0.807692       0.933333            0.0                         0.7
+              feedback_counts     ridge    manual within_mode_median            126               124         19    0.014517             0.014888    MAE       NaN            NaN            NaN                         NaN
+              feedback_counts     ridge      semi         cdf_early7             16                16          7    0.422711             0.516975    MAE       NaN            NaN            NaN                         NaN
+              feedback_counts     ridge      semi  cdf_observed_by19             16                16          7    0.335641             0.453693    MAE       NaN            NaN            NaN                         NaN
+              feedback_counts     ridge      semi            half_tv             42                42         12    0.118402             0.104013    MAE       NaN            NaN            NaN                         NaN
+              feedback_counts     ridge      semi  late_new_geometry             42                42         12    0.189229             0.179149    MAE       NaN            NaN            NaN                         NaN
+              feedback_counts     ridge      semi     singleton_mass             43                43         12    0.190196             0.167096    MAE       NaN            NaN            NaN                         NaN
+              feedback_counts     ridge      semi       tier_primary              5                 5          3    0.267307             0.249807    RPS  0.600000       1.000000            0.0                         0.0
+              feedback_counts     ridge      semi within_mode_median             41                41         12    0.017102             0.018018    MAE       NaN            NaN            NaN                         NaN
+               main_frequency  baseline    manual         cdf_early7             42                42         15    0.347738             0.306500    MAE       NaN            NaN            NaN                         NaN
+               main_frequency  baseline    manual  cdf_observed_by19             42                42         15    0.294762             0.304395    MAE       NaN            NaN            NaN                         NaN
+               main_frequency  baseline    manual            half_tv            133               133         20    0.124396             0.121606    MAE       NaN            NaN            NaN                         NaN
+               main_frequency  baseline    manual  late_new_geometry            133               133         20    0.220459             0.224162    MAE       NaN            NaN            NaN                         NaN
+               main_frequency  baseline    manual     singleton_mass            166               166         22    0.251153             0.252166    MAE       NaN            NaN            NaN                         NaN
+               main_frequency  baseline    manual       tier_primary             26                26         12    0.236712             0.241230    RPS  0.653846       0.800000            0.0                         0.5
+               main_frequency  baseline    manual within_mode_median            126               126         19    0.015224             0.015166    MAE       NaN            NaN            NaN                         NaN
+               main_frequency  baseline      semi         cdf_early7             16                16          7    0.362500             0.324048    MAE       NaN            NaN            NaN                         NaN
+               main_frequency  baseline      semi  cdf_observed_by19             16                16          7    0.433125             0.471452    MAE       NaN            NaN            NaN                         NaN
+               main_frequency  baseline      semi            half_tv             42                42         12    0.132222             0.121310    MAE       NaN            NaN            NaN                         NaN
+               main_frequency  baseline      semi  late_new_geometry             42                42         12    0.204750             0.198866    MAE       NaN            NaN            NaN                         NaN
+               main_frequency  baseline      semi     singleton_mass             43                43         12    0.196033             0.189652    MAE       NaN            NaN            NaN                         NaN
+               main_frequency  baseline      semi       tier_primary              5                 5          3    0.467361             0.415509    RPS  0.400000       0.666667            0.0                         0.0
+               main_frequency  baseline      semi within_mode_median             41                41         12    0.016800             0.016113    MAE       NaN            NaN            NaN                         NaN
+              scene_frequency  baseline    manual         cdf_early7             42                42         15    0.396905             0.381381    MAE       NaN            NaN            NaN                         NaN
+              scene_frequency  baseline    manual  cdf_observed_by19             42                42         15    0.301310             0.306310    MAE       NaN            NaN            NaN                         NaN
+              scene_frequency  baseline    manual            half_tv            133               133         20    0.120955             0.117095    MAE       NaN            NaN            NaN                         NaN
+              scene_frequency  baseline    manual  late_new_geometry            133               133         20    0.229006             0.235231    MAE       NaN            NaN            NaN                         NaN
+              scene_frequency  baseline    manual     singleton_mass            166               166         22    0.253490             0.254033    MAE       NaN            NaN            NaN                         NaN
+              scene_frequency  baseline    manual       tier_primary             26                26         12    0.239489             0.240856    RPS  0.615385       0.733333            0.0                         0.5
+              scene_frequency  baseline    manual within_mode_median            126               126         19    0.015218             0.015351    MAE       NaN            NaN            NaN                         NaN
+              scene_frequency  baseline      semi         cdf_early7             16                16          7    0.318750             0.296905    MAE       NaN            NaN            NaN                         NaN
+              scene_frequency  baseline      semi  cdf_observed_by19             16                16          7    0.364375             0.394667    MAE       NaN            NaN            NaN                         NaN
+              scene_frequency  baseline      semi            half_tv             42                42         12    0.127455             0.109579    MAE       NaN            NaN            NaN                         NaN
+              scene_frequency  baseline      semi  late_new_geometry             42                42         12    0.198260             0.186314    MAE       NaN            NaN            NaN                         NaN
+              scene_frequency  baseline      semi     singleton_mass             43                43         12    0.191852             0.173393    MAE       NaN            NaN            NaN                         NaN
+              scene_frequency  baseline      semi       tier_primary              5                 5          3    0.264583             0.246528    RPS  0.600000       1.000000            0.0                         0.0
+              scene_frequency  baseline      semi within_mode_median             41                41         12    0.019005             0.020366    MAE       NaN            NaN            NaN                         NaN
+            selected_all_deep     ridge    manual         cdf_early7             42                42         15    0.429024             0.434212    MAE       NaN            NaN            NaN                         NaN
+            selected_all_deep     ridge    manual  cdf_observed_by19             42                42         15    0.254890             0.258036    MAE       NaN            NaN            NaN                         NaN
+            selected_all_deep     ridge    manual            half_tv            133               133         20    0.099176             0.095095    MAE       NaN            NaN            NaN                         NaN
+            selected_all_deep     ridge    manual  late_new_geometry            133               133         20    0.196155             0.215961    MAE       NaN            NaN            NaN                         NaN
+            selected_all_deep     ridge    manual     singleton_mass            166               166         22    0.248807             0.239680    MAE       NaN            NaN            NaN                         NaN
+            selected_all_deep     ridge    manual       tier_primary             26                26         12    0.163658             0.173851    RPS  0.807692       0.733333            0.0                         1.0
+            selected_all_deep     ridge    manual within_mode_median            126               126         19    0.013202             0.013169    MAE       NaN            NaN            NaN                         NaN
+            selected_all_deep     ridge      semi         cdf_early7             16                16          7    0.411177             0.494821    MAE       NaN            NaN            NaN                         NaN
+            selected_all_deep     ridge      semi  cdf_observed_by19             16                16          7    0.461621             0.566273    MAE       NaN            NaN            NaN                         NaN
+            selected_all_deep     ridge      semi            half_tv             42                42         12    0.138680             0.132230    MAE       NaN            NaN            NaN                         NaN
+            selected_all_deep     ridge      semi  late_new_geometry             42                42         12    0.256614             0.271683    MAE       NaN            NaN            NaN                         NaN
+            selected_all_deep     ridge      semi     singleton_mass             43                43         12    0.250401             0.243210    MAE       NaN            NaN            NaN                         NaN
+            selected_all_deep     ridge      semi       tier_primary              5                 5          3    0.215788             0.180157    RPS  0.400000       0.666667            0.0                         0.0
+            selected_all_deep     ridge      semi within_mode_median             41                41         12    0.022271             0.021033    MAE       NaN            NaN            NaN                         NaN
+    selected_counts_plus_dino     ridge    manual         cdf_early7             42                42         15    0.372138             0.354860    MAE       NaN            NaN            NaN                         NaN
+    selected_counts_plus_dino     ridge    manual  cdf_observed_by19             42                42         15    0.324548             0.327445    MAE       NaN            NaN            NaN                         NaN
+    selected_counts_plus_dino     ridge    manual            half_tv            133               131         20    0.102488             0.096946    MAE       NaN            NaN            NaN                         NaN
+    selected_counts_plus_dino     ridge    manual  late_new_geometry            133               131         20    0.200552             0.201040    MAE       NaN            NaN            NaN                         NaN
+    selected_counts_plus_dino     ridge    manual     singleton_mass            166               164         22    0.243408             0.229865    MAE       NaN            NaN            NaN                         NaN
+    selected_counts_plus_dino     ridge    manual       tier_primary             26                26         12    0.206137             0.192946    RPS  0.730769       0.800000            0.0                         0.7
+    selected_counts_plus_dino     ridge    manual within_mode_median            126               124         19    0.014707             0.014935    MAE       NaN            NaN            NaN                         NaN
+    selected_counts_plus_dino     ridge      semi         cdf_early7             16                16          7    0.462107             0.585143    MAE       NaN            NaN            NaN                         NaN
+    selected_counts_plus_dino     ridge      semi  cdf_observed_by19             16                16          7    0.335296             0.452595    MAE       NaN            NaN            NaN                         NaN
+    selected_counts_plus_dino     ridge      semi            half_tv             42                42         12    0.127778             0.117622    MAE       NaN            NaN            NaN                         NaN
+    selected_counts_plus_dino     ridge      semi  late_new_geometry             42                42         12    0.222185             0.203550    MAE       NaN            NaN            NaN                         NaN
+    selected_counts_plus_dino     ridge      semi     singleton_mass             43                43         12    0.211007             0.185718    MAE       NaN            NaN            NaN                         NaN
+    selected_counts_plus_dino     ridge      semi       tier_primary              5                 5          3    0.315691             0.277475    RPS  0.200000       0.333333            0.0                         0.0
+    selected_counts_plus_dino     ridge      semi within_mode_median             41                41         12    0.017647             0.018495    MAE       NaN            NaN            NaN                         NaN
+selected_counts_plus_existing     ridge    manual         cdf_early7             42                42         15    0.513786             0.510855    MAE       NaN            NaN            NaN                         NaN
+selected_counts_plus_existing     ridge    manual  cdf_observed_by19             42                42         15    0.231018             0.203680    MAE       NaN            NaN            NaN                         NaN
+selected_counts_plus_existing     ridge    manual            half_tv            133               131         20    0.090480             0.091710    MAE       NaN            NaN            NaN                         NaN
+selected_counts_plus_existing     ridge    manual  late_new_geometry            133               131         20    0.186333             0.210480    MAE       NaN            NaN            NaN                         NaN
+selected_counts_plus_existing     ridge    manual     singleton_mass            166               164         22    0.230901             0.220115    MAE       NaN            NaN            NaN                         NaN
+selected_counts_plus_existing     ridge    manual       tier_primary             26                26         12    0.211139             0.261990    RPS  0.730769       0.733333            0.0                         0.8
+selected_counts_plus_existing     ridge    manual within_mode_median            126               124         19    0.013087             0.012720    MAE       NaN            NaN            NaN                         NaN
+selected_counts_plus_existing     ridge      semi         cdf_early7             16                16          7    0.396932             0.570682    MAE       NaN            NaN            NaN                         NaN
+selected_counts_plus_existing     ridge      semi  cdf_observed_by19             16                16          7    0.329298             0.439657    MAE       NaN            NaN            NaN                         NaN
+selected_counts_plus_existing     ridge      semi            half_tv             42                42         12    0.149828             0.142737    MAE       NaN            NaN            NaN                         NaN
+selected_counts_plus_existing     ridge      semi  late_new_geometry             42                42         12    0.206832             0.208064    MAE       NaN            NaN            NaN                         NaN
+selected_counts_plus_existing     ridge      semi     singleton_mass             43                43         12    0.208014             0.199961    MAE       NaN            NaN            NaN                         NaN
+selected_counts_plus_existing     ridge      semi       tier_primary              5                 5          3    0.314075             0.286636    RPS  0.200000       0.333333            0.0                         0.0
+selected_counts_plus_existing     ridge      semi within_mode_median             41                41         12    0.017681             0.018971    MAE       NaN            NaN            NaN                         NaN
+                selected_dino     ridge    manual         cdf_early7             42                42         15    0.397656             0.396724    MAE       NaN            NaN            NaN                         NaN
+                selected_dino     ridge    manual  cdf_observed_by19             42                42         15    0.319121             0.349763    MAE       NaN            NaN            NaN                         NaN
+                selected_dino     ridge    manual            half_tv            133               133         20    0.108285             0.101151    MAE       NaN            NaN            NaN                         NaN
+                selected_dino     ridge    manual  late_new_geometry            133               133         20    0.195781             0.195653    MAE       NaN            NaN            NaN                         NaN
+                selected_dino     ridge    manual     singleton_mass            166               166         22    0.260445             0.241786    MAE       NaN            NaN            NaN                         NaN
+                selected_dino     ridge    manual       tier_primary             26                26         12    0.303396             0.265567    RPS  0.576923       0.666667            0.0                         0.5
+                selected_dino     ridge    manual within_mode_median            126               126         19    0.015330             0.014966    MAE       NaN            NaN            NaN                         NaN
+                selected_dino     ridge      semi         cdf_early7             16                16          7    0.423473             0.517060    MAE       NaN            NaN            NaN                         NaN
+                selected_dino     ridge      semi  cdf_observed_by19             16                16          7    0.362800             0.460546    MAE       NaN            NaN            NaN                         NaN
+                selected_dino     ridge      semi            half_tv             42                42         12    0.129508             0.122770    MAE       NaN            NaN            NaN                         NaN
+                selected_dino     ridge      semi  late_new_geometry             42                42         12    0.272585             0.264904    MAE       NaN            NaN            NaN                         NaN
+                selected_dino     ridge      semi     singleton_mass             43                43         12    0.236020             0.219724    MAE       NaN            NaN            NaN                         NaN
+                selected_dino     ridge      semi       tier_primary              5                 5          3    0.203377             0.169814    RPS  0.400000       0.666667            0.0                         0.0
+                selected_dino     ridge      semi within_mode_median             41                41         12    0.020349             0.019352    MAE       NaN            NaN            NaN                         NaN
+       selected_existing_deep     ridge    manual         cdf_early7             42                42         15    0.459403             0.437561    MAE       NaN            NaN            NaN                         NaN
+       selected_existing_deep     ridge    manual  cdf_observed_by19             42                42         15    0.233030             0.245794    MAE       NaN            NaN            NaN                         NaN
+       selected_existing_deep     ridge    manual            half_tv            133               133         20    0.094967             0.092550    MAE       NaN            NaN            NaN                         NaN
+       selected_existing_deep     ridge    manual  late_new_geometry            133               133         20    0.196155             0.215961    MAE       NaN            NaN            NaN                         NaN
+       selected_existing_deep     ridge    manual     singleton_mass            166               166         22    0.248807             0.239680    MAE       NaN            NaN            NaN                         NaN
+       selected_existing_deep     ridge    manual       tier_primary             26                26         12    0.163658             0.173851    RPS  0.807692       0.733333            0.0                         1.0
+       selected_existing_deep     ridge    manual within_mode_median            126               126         19    0.013202             0.013169    MAE       NaN            NaN            NaN                         NaN
+       selected_existing_deep     ridge      semi         cdf_early7             16                16          7    0.411177             0.494821    MAE       NaN            NaN            NaN                         NaN
+       selected_existing_deep     ridge      semi  cdf_observed_by19             16                16          7    0.448495             0.547986    MAE       NaN            NaN            NaN                         NaN
+       selected_existing_deep     ridge      semi            half_tv             42                42         12    0.143371             0.142688    MAE       NaN            NaN            NaN                         NaN
+       selected_existing_deep     ridge      semi  late_new_geometry             42                42         12    0.231948             0.247173    MAE       NaN            NaN            NaN                         NaN
+       selected_existing_deep     ridge      semi     singleton_mass             43                43         12    0.217727             0.225162    MAE       NaN            NaN            NaN                         NaN
+       selected_existing_deep     ridge      semi       tier_primary              5                 5          3    0.311354             0.339434    RPS  0.200000       0.333333            0.0                         0.0
+       selected_existing_deep     ridge      semi within_mode_median             41                41         12    0.022029             0.020533    MAE       NaN            NaN            NaN                         NaN
+      selected_main_plus_dino     ridge    manual         cdf_early7             42                42         15    0.396467             0.389934    MAE       NaN            NaN            NaN                         NaN
+      selected_main_plus_dino     ridge    manual  cdf_observed_by19             42                42         15    0.315458             0.351786    MAE       NaN            NaN            NaN                         NaN
+      selected_main_plus_dino     ridge    manual            half_tv            133               133         20    0.119352             0.121049    MAE       NaN            NaN            NaN                         NaN
+      selected_main_plus_dino     ridge    manual  late_new_geometry            133               133         20    0.195676             0.203213    MAE       NaN            NaN            NaN                         NaN
+      selected_main_plus_dino     ridge    manual     singleton_mass            166               166         22    0.268580             0.272415    MAE       NaN            NaN            NaN                         NaN
+      selected_main_plus_dino     ridge    manual       tier_primary             26                26         12    0.307559             0.283465    RPS  0.461538       0.666667            0.0                         0.2
+      selected_main_plus_dino     ridge    manual within_mode_median            126               126         19    0.015325             0.015688    MAE       NaN            NaN            NaN                         NaN
+      selected_main_plus_dino     ridge      semi         cdf_early7             16                16          7    0.408701             0.433913    MAE       NaN            NaN            NaN                         NaN
+      selected_main_plus_dino     ridge      semi  cdf_observed_by19             16                16          7    0.305332             0.384161    MAE       NaN            NaN            NaN                         NaN
+      selected_main_plus_dino     ridge      semi            half_tv             42                42         12    0.157163             0.158070    MAE       NaN            NaN            NaN                         NaN
+      selected_main_plus_dino     ridge      semi  late_new_geometry             42                42         12    0.204447             0.197769    MAE       NaN            NaN            NaN                         NaN
+      selected_main_plus_dino     ridge      semi     singleton_mass             43                43         12    0.199617             0.196060    MAE       NaN            NaN            NaN                         NaN
+      selected_main_plus_dino     ridge      semi       tier_primary              5                 5          3    0.241759             0.201466    RPS  0.200000       0.333333            0.0                         0.0
+      selected_main_plus_dino     ridge      semi within_mode_median             41                41         12    0.017318             0.017339    MAE       NaN            NaN            NaN                         NaN
+  selected_main_plus_existing     ridge    manual         cdf_early7             42                42         15    0.350919             0.337929    MAE       NaN            NaN            NaN                         NaN
+  selected_main_plus_existing     ridge    manual  cdf_observed_by19             42                42         15    0.232828             0.237684    MAE       NaN            NaN            NaN                         NaN
+  selected_main_plus_existing     ridge    manual            half_tv            133               133         20    0.107882             0.113320    MAE       NaN            NaN            NaN                         NaN
+  selected_main_plus_existing     ridge    manual  late_new_geometry            133               133         20    0.210736             0.222141    MAE       NaN            NaN            NaN                         NaN
+  selected_main_plus_existing     ridge    manual     singleton_mass            166               166         22    0.232200             0.235720    MAE       NaN            NaN            NaN                         NaN
+  selected_main_plus_existing     ridge    manual       tier_primary             26                26         12    0.262324             0.268365    RPS  0.615385       0.600000            0.0                         0.7
+  selected_main_plus_existing     ridge    manual within_mode_median            126               126         19    0.013631             0.013434    MAE       NaN            NaN            NaN                         NaN
+  selected_main_plus_existing     ridge      semi         cdf_early7             16                16          7    0.430092             0.520230    MAE       NaN            NaN            NaN                         NaN
+  selected_main_plus_existing     ridge      semi  cdf_observed_by19             16                16          7    0.308658             0.390615    MAE       NaN            NaN            NaN                         NaN
+  selected_main_plus_existing     ridge      semi            half_tv             42                42         12    0.134378             0.126797    MAE       NaN            NaN            NaN                         NaN
+  selected_main_plus_existing     ridge      semi  late_new_geometry             42                42         12    0.221859             0.217107    MAE       NaN            NaN            NaN                         NaN
+  selected_main_plus_existing     ridge      semi     singleton_mass             43                43         12    0.222732             0.225987    MAE       NaN            NaN            NaN                         NaN
+  selected_main_plus_existing     ridge      semi       tier_primary              5                 5          3    0.293959             0.263899    RPS  0.200000       0.333333            0.0                         0.0
+  selected_main_plus_existing     ridge      semi within_mode_median             41                41         12    0.019074             0.018279    MAE       NaN            NaN            NaN                         NaN
