@@ -1,0 +1,79 @@
+name: Historical difficulty input audit 20260915
+on:
+  push:
+    branches: [codex/image-portrait-20260914]
+    paths: [.github/workflows/history-difficulty-audit-20260915.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          lfs: false
+          sparse-checkout: |
+            tools/thesis_main/analysis/image_portrait
+            analysis_results/image_portrait_20260914_v1/metadata
+            analysis_results/image_portrait_20260914_v1/evaluation
+            analysis_results/image_portrait_20260914_v1/human
+            analysis_results/image_portrait_20260914_v1/visual
+            analysis_results/image_portrait_20260914_v1/cloud/pro_exploration/v2_convergence_e086b2b9/process
+            analysis_results/image_portrait_20260914_v1/cloud/pro_exploration/v2_convergence_e086b2b9/foundation/human
+            analysis_results/image_portrait_20260914_v1/cloud/difficulty_tags_20260915_v1/mainspace_v1_9d19e4e7/images
+      - run: python -m pip install numpy pandas scipy
+      - name: Read actual sources and expose schemas
+        run: |
+          python - <<'PY'
+          import pathlib,json,gzip,subprocess,hashlib,collections
+          import pandas as pd
+          from tools.thesis_main.analysis.image_portrait.build_bundle import verify_bundle
+          b=pathlib.Path('analysis_results/image_portrait_20260914_v1');o=b/'cloud/history_difficulty_20260915_v1/input_audit';o.mkdir(parents=True,exist_ok=True)
+          def read(p):
+            p=b/p
+            if p.suffix=='.gz':return [json.loads(x) for x in gzip.open(p,'rt',encoding='utf-8-sig') if x.strip()]
+            if p.suffix=='.jsonl':return [json.loads(x) for x in p.read_text(encoding='utf-8-sig').splitlines() if x.strip()]
+            return json.loads(p.read_text(encoding='utf-8-sig'))
+          def safe(x):
+            if isinstance(x,dict):return {str(k):safe(v) for k,v in x.items()}
+            if isinstance(x,(list,tuple)):return [safe(v) for v in x]
+            if isinstance(x,float) and not pd.notna(x):return None
+            return x
+          raw=read('human/responses.jsonl.gz');images=read('metadata/images.jsonl');sp=read('metadata/spatial_history.jsonl.gz')
+          selected=[r for r in raw if r['main_worker_included'] and r['raw_condition'] in ('manual','semi')]
+          ids=sorted({r['image_id'] for r in selected});tags=[r['image_id'] for r in sp if (r.get('latest_selection_record') or {}).get('difficulty') in ('简单','中等','困难')]
+          tracked=subprocess.check_output(['git','ls-tree','-r','--name-only','HEAD']).decode().splitlines();trackedset=set(tracked)
+          schema={'baseline':'13859d591acb1bac7790fb0762f2c53282f65748','execution_sha':subprocess.check_output(['git','rev-parse','HEAD']).decode().strip(),'bundle_check':verify_bundle(b),'historical_ids':ids,'tag_ids':tags,'AGENTS_paths':[s for s in tracked if pathlib.Path(s).name=='AGENTS.md'],'raw_response_keys':sorted(raw[0]),'raw_condition_counts':dict(collections.Counter(r['raw_condition'] for r in selected)),'image_example':images[0],'source_samples':{},'tables':{},'model_inventory':{}}
+          for name in ['metadata/spatial_history.jsonl.gz','evaluation/folds.jsonl.gz','evaluation/room_components.jsonl','visual/visual_traits.json','visual/resolution_recheck.json','human/semi_initializations.jsonl.gz']:
+            v=read(name);v=v[:2] if isinstance(v,list) else v
+            schema['source_samples'][name]=v
+          for name in ['cloud/pro_exploration/v2_convergence_e086b2b9/process/image_uncertainty_structure.csv','cloud/pro_exploration/v2_convergence_e086b2b9/process/replay_states.csv.gz','cloud/pro_exploration/v2_convergence_e086b2b9/process/image_growth_curves.csv.gz','cloud/pro_exploration/v2_convergence_e086b2b9/process/mode_memberships.csv.gz','cloud/pro_exploration/v2_convergence_e086b2b9/foundation/human/response_metrics.csv.gz','cloud/difficulty_tags_20260915_v1/mainspace_v1_9d19e4e7/images/metadata_all648.csv']:
+            p=b/name
+            if p.exists():
+              d=pd.read_csv(p);schema['tables'][name]={'rows':len(d),'columns':d.columns.tolist(),'first_rows':safe(d.head(2).to_dict('records')),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
+            else:schema['tables'][name]={'missing':True}
+          for model in ['hohonet','bilayout','ulayout','dinov3','da3']:
+            suffix='.npz' if model in ['hohonet','bilayout'] else '.features.npz'
+            missing=[i for i in ids if str(b/'models'/model/(i+suffix)) not in trackedset]
+            schema['model_inventory'][model]={'historical_target_count':len(ids),'tracked_features':len(ids)-len(missing),'missing_ids':missing,'bytes_read':False}
+          (o/'INPUT_AUDIT.json').write_text(json.dumps(safe(schema),ensure_ascii=False,indent=2,allow_nan=False))
+          print(json.dumps({'bundle':schema['bundle_check'],'historical_images':len(ids),'tag_images':len(tags),'overlap':len(set(ids)&set(tags)),'model_inventory':schema['model_inventory']},ensure_ascii=False))
+          PY
+      - name: Preserve audit only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f analysis_results/image_portrait_20260914_v1/cloud/history_difficulty_20260915_v1/input_audit
+          git commit -m 'research: record current historical-input and model-coverage audit' || exit 0
+          git pull --rebase origin codex/image-portrait-20260914
+          git push origin HEAD:codex/image-portrait-20260914
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: historical-difficulty-input-audit
+          path: analysis_results/image_portrait_20260914_v1/cloud/history_difficulty_20260915_v1/input_audit
+          retention-days: 30
