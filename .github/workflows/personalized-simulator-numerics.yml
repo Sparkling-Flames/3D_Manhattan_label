@@ -1,0 +1,62 @@
+name: Personalized simulator numerical verification
+on:
+  push:
+    branches: [codex/simulated-annotators]
+    paths:
+      - .github/workflows/personalized-simulator-numerics.yml
+      - tools/thesis_main/analysis/personalized_simulator_v2.py
+      - tools/thesis_main/analysis/personalized_simulator_v2_run.py
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: personalized-simulator-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  numeric:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          lfs: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /tools/thesis_main/analysis/personalized_simulator_v2.py
+            /tools/thesis_main/analysis/personalized_simulator_v2_run.py
+            /.github/workflows/personalized-simulator-numerics.yml
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy==2.2.6 pandas==2.2.3 scipy==1.15.3
+      - name: Audit sources and run isolated numerical experiment
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p /tmp/personalized-results
+          python tools/thesis_main/analysis/personalized_simulator_v2_run.py --output /tmp/personalized-results 2>&1 | tee /tmp/personalized-results/execution.log
+      - name: Package source and provenance
+        if: always()
+        run: |
+          python - <<'PY'
+          import pathlib,hashlib,json,shutil,subprocess,zipfile
+          d=pathlib.Path('/tmp/personalized-results');d.mkdir(exist_ok=True)
+          code=d/'code';code.mkdir(exist_ok=True)
+          for p in pathlib.Path('tools/thesis_main/analysis').glob('personalized_simulator_v2*.py'):shutil.copy2(p,code/p.name)
+          (d/'code_commit.txt').write_text(subprocess.check_output(['git','rev-parse','HEAD']).decode())
+          hashes={str(p.relative_to(d)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(d.rglob('*')) if p.is_file()}
+          (d/'SHA256.json').write_text(json.dumps(hashes,indent=2))
+          print('PACKAGED',len(hashes),'files')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: personalized-simulator-v2-numerics
+          path: /tmp/personalized-results/
+          retention-days: 30
