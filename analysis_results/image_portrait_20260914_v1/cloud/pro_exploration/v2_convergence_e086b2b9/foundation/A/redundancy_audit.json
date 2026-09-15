@@ -1,0 +1,41 @@
+{
+  "floor_partial_exactly_occlusion_present": true,
+  "changes_21_same_AI_reviewer": {
+    "selection": "fixed index range(0,648,32), chosen before high-resolution review",
+    "n": 21,
+    "agreement": {
+      "floor_boundary": {
+        "matches": 20,
+        "denominator": 21
+      },
+      "ceiling_boundary": {
+        "matches": 19,
+        "denominator": 21
+      },
+      "corner_occlusion": {
+        "matches": 20,
+        "denominator": 21
+      },
+      "connected_space": {
+        "matches": 21,
+        "denominator": 21
+      },
+      "reflection_glass": {
+        "matches": 15,
+        "denominator": 21
+      },
+      "low_contrast": {
+        "matches": 21,
+        "denominator": 21
+      }
+    },
+    "changed_images": 9,
+    "independent_reviewer": false,
+    "outcomes_blinded": true
+  },
+  "scene_changed_from_initial": 3,
+  "notes": [
+    "Do not include index, historical human difficulty, response count, or historical outcome-bearing descriptions as image features.",
+    "Open-layout unknown is not closed. Scope choices are rule/rejection categories, not direct enclosed/extended labels."
+  ]
+}

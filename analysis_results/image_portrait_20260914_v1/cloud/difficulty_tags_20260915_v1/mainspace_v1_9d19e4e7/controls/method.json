@@ -1,0 +1,7 @@
+{
+  "control": "same hierarchy, training subset, class-residualization and clipping, but all covariates zero",
+  "interpretation": "matches the unsmoothed training-stratum intercept implicit in linear Ridge; not a learned visual representation",
+  "primary_control_algorithm": "Ridge only",
+  "knn_note": "zero-feature kNN has arbitrary tied neighbors and is not used as a no-information comparator",
+  "group_strength_for_initial_frequency_baselines": 3
+}

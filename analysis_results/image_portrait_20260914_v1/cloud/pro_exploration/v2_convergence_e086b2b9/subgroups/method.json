@@ -1,0 +1,31 @@
+{
+  "information_combinations": [
+    "Q",
+    "T",
+    "S",
+    "B",
+    "QT",
+    "QS",
+    "QB",
+    "TS",
+    "TB",
+    "SB",
+    "QTS",
+    "QTB",
+    "QSB",
+    "TSB",
+    "QTSB",
+    "quality_time_edit"
+  ],
+  "group_counts": "2..floor(training qualified people/2)",
+  "training": "heldout building excluded from EVERY block",
+  "primary_axis_support": "6 responses and3 buildings",
+  "local_membership_validation": "20 disjoint-building half splits per outer fold; unknown people penalize Jaccard rather than form a class",
+  "strict_local_rule": ">=3 people, <=75% training population, median Jaccard>=.75, >=80% attempts recover at least80% group people",
+  "relaxed_rule": "separate .60 Jaccard diagnostic, NOT silently promoted",
+  "selection": "training recovery only; one candidate per information per fold for full prefix replay",
+  "continuous_tail": "training quartiles from previously verified heldout-building current endpoint scores; tails are not claimed real types",
+  "rarefaction": "all groups exact fixed-full-partition occupancy; distinct from prefix-reclustered detailed curves",
+  "equal_n_control": "real same-image people subsets, no duplicate worker; no additional independent samples",
+  "repeat_roster_caveat": "Overlapping outer training sets do not give independent membership confirmation; disjoint halves are primary recovery diagnostic"
+}

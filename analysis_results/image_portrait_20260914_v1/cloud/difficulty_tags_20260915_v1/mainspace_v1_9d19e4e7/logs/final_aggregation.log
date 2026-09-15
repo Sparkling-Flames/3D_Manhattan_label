@@ -1,0 +1,42 @@
+SELECTED pooled 5724
+SELECTED within_coarse 5724
+SELECTED within_main 5724
+       design                      feature  rps_mean  accuracy  balanced_accuracy
+       pooled             baseline__coarse  0.111046  0.773585           0.804878
+       pooled        baseline__coarse_main  0.102875  0.773585           0.804878
+       pooled               baseline__fine  0.157959  0.566038           0.562500
+       pooled             baseline__global  0.205847  0.462264           0.333333
+       pooled        baseline__human_focus  0.208424  0.462264           0.333333
+       pooled               baseline__main  0.100002  0.811321           0.837398
+       pooled         selected__all_models  0.104677  0.754717           0.796582
+       pooled           selected__bilayout  0.109891  0.773585           0.816824
+       pooled                selected__da3  0.103996  0.773585           0.811515
+       pooled             selected__dinov3  0.121150  0.698113           0.715001
+       pooled           selected__existing  0.088423  0.811321           0.837398
+       pooled selected__existing_plus_dino  0.096513  0.783019           0.816990
+       pooled           selected__feedback  0.080572  0.811321           0.837398
+       pooled            selected__hohonet  0.107554  0.735849           0.754915
+       pooled           selected__semantic  0.093260  0.811321           0.837398
+       pooled            selected__ulayout  0.114264  0.745283           0.777076
+within_coarse         selected__all_models  0.078774  0.792453           0.797059
+within_coarse           selected__bilayout  0.096756  0.764151           0.734559
+within_coarse                selected__da3  0.129514  0.698113           0.684285
+within_coarse             selected__dinov3  0.112298  0.669811           0.701987
+within_coarse           selected__existing  0.077125  0.792453           0.784356
+within_coarse selected__existing_plus_dino  0.077715  0.792453           0.797059
+within_coarse           selected__feedback  0.079921  0.783019           0.762195
+within_coarse            selected__hohonet  0.119719  0.726415           0.749440
+within_coarse           selected__semantic  0.133171  0.688679           0.701562
+within_coarse            selected__ulayout  0.114055  0.679245           0.670680
+  within_main         selected__all_models  0.069817  0.839623           0.836382
+  within_main           selected__bilayout  0.089004  0.811321           0.773882
+  within_main                selected__da3  0.113865  0.764151           0.737214
+  within_main             selected__dinov3  0.104280  0.707547           0.734507
+  within_main           selected__existing  0.068168  0.839623           0.823679
+  within_main selected__existing_plus_dino  0.069499  0.839623           0.836382
+  within_main           selected__feedback  0.073856  0.820755           0.794715
+  within_main            selected__hohonet  0.100182  0.783019           0.794238
+  within_main           selected__semantic  0.130900  0.716981           0.727279
+  within_main            selected__ulayout  0.105886  0.726415           0.710003
+CONTRASTS DONE
+AUDIT queue 61 IDs 50 methods 1788

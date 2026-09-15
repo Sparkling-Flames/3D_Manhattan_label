@@ -1,0 +1,8 @@
+{
+  "clustering": "same-point complete linkage; three unmodified thresholds",
+  "limitation": "A diameter-bounded partition is not proof of true multimodal geometry density or semantic ambiguity.",
+  "cross_compatibility": "fraction of across-mode pairs at distance<=cut; high values flag weak separation, not automatic mode merging",
+  "leave_one": "remove each distinct actual worker once; recluster; compare each surviving>=2-person full mode with best matching new cluster. Conditional recovery, not a new independent data sample.",
+  "fixed_vs_online": "Exact fixed full-mode discovery compared with prefix re-clustering; differences expose partition identifiability beyond rare-mode occupancy.",
+  "spatial_deltas": "derived1024-column boundary differences only; no source image viewed"
+}

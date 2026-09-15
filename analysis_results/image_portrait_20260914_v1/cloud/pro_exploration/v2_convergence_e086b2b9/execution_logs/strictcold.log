@@ -1,0 +1,43 @@
+COLD model_points rows 6064 seconds 2.1
+COLD scene rows 6064 seconds 2.1
+COLD scene_AI rows 6064 seconds 2.1
+COLD model_feedback rows 6064 seconds 2.6
+COLD C_hohonet_shared_global rows 6064 seconds 6.7
+COLD points_plus_shared rows 6064 seconds 6.3
+COLD C_da3_layer11_global rows 6064 seconds 9.9
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/mnt/data/pro_exploration_work/repo/tools/thesis_main/analysis/image_portrait/convergence_v2_strictcold.py", line 32, in <module>
+    finish();print('STRICT COLD DONE',flush=True)
+    ~~~~~~^^
+  File "/mnt/data/pro_exploration_work/repo/tools/thesis_main/analysis/image_portrait/convergence_v2_strictcold.py", line 18, in finish
+    fs=[pd.read_csv(OUT/'strict_cold/prediction/cold'/(n+'.csv.gz'))for n in NAMES];d=pd.concat(fs,ignore_index=True);d=d[~(d.algorithm.isin(['constant','same_scene'])&(d.feature!='scene'))];csv('strict_cold/predictions.csv.gz',d)
+        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/pyvenv/lib/python3.13/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/opt/pyvenv/lib/python3.13/site-packages/pandas/io/parsers/readers.py", line 620, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/opt/pyvenv/lib/python3.13/site-packages/pandas/io/parsers/readers.py", line 1620, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/opt/pyvenv/lib/python3.13/site-packages/pandas/io/parsers/readers.py", line 1880, in _make_engine
+    self.handles = get_handle(
+                   ~~~~~~~~~~^
+        f,
+        ^^
+    ...<6 lines>...
+        storage_options=self.options.get("storage_options", None),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/opt/pyvenv/lib/python3.13/site-packages/pandas/io/common.py", line 765, in get_handle
+    handle = gzip.GzipFile(  # type: ignore[assignment]
+        filename=handle,
+        mode=ioargs.mode,
+        **compression_args,
+    )
+  File "/usr/lib/python3.13/gzip.py", line 203, in __init__
+    fileobj = self.myfileobj = builtins.open(filename, mode or 'rb')
+                               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/data/pro_exploration_work/repo/analysis_results/image_portrait_20260914_v1/cloud/pro_exploration/v2_convergence_e086b2b9/strict_cold/prediction/cold/scene.csv.gz'

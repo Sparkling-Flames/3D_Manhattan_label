@@ -1,0 +1,49 @@
+{
+  "issue": "module-level output path did not initially propagate through imported shared writer",
+  "resolution": "moved all7 genuinely computed strict-image-only files to separate namespace; reran displaced conditional files and checked against earlier aggregate; tiny float32 transport differences recorded rather than claimed bitwise equality",
+  "conditional_recompute": [
+    {
+      "feature": "scene",
+      "compared_rows": 3032,
+      "max_delta": 1.0000333894311098e-12,
+      "within_1e6": true
+    },
+    {
+      "feature": "scene_AI",
+      "compared_rows": 3032,
+      "max_delta": 1.0000333894311098e-12,
+      "within_1e6": true
+    },
+    {
+      "feature": "model_points",
+      "compared_rows": 3032,
+      "max_delta": 1.0000333894311098e-12,
+      "within_1e6": true
+    },
+    {
+      "feature": "model_feedback",
+      "compared_rows": 3032,
+      "max_delta": 3.6135699998940396e-07,
+      "within_1e6": true
+    },
+    {
+      "feature": "C_hohonet_shared_global",
+      "compared_rows": 3032,
+      "max_delta": 1.000088900582341e-12,
+      "within_1e6": true
+    },
+    {
+      "feature": "C_da3_layer11_global",
+      "compared_rows": 3032,
+      "max_delta": 1.0000333894311098e-12,
+      "within_1e6": true
+    },
+    {
+      "feature": "points_plus_shared",
+      "compared_rows": 3032,
+      "max_delta": 1.0000333894311098e-12,
+      "within_1e6": true
+    }
+  ],
+  "old_v1_modified": false
+}

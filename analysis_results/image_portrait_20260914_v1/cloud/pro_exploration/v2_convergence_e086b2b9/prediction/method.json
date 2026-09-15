@@ -1,0 +1,10 @@
+{
+  "folds": "original25 leave-building; conservative-room scores are subsets of identical building exclusions",
+  "horizon": "actual observed valid-person n is declared evaluation horizon, not image-derived difficulty; horizon-only baseline mandatory",
+  "target_labels": "process_targets.csv, exploratory definitions only",
+  "training_selection": "all21 existing scaler/PCA/ridge/KNN candidates inner leave-building; fixed layers AND inner-layer selector retained",
+  "source_split_warning": "visual model train membership unknown; no external-visual-model claim",
+  "validation_status": "follow-up on already viewed data, not independent confirmation",
+  "prediction_scope": "no target annotation coordinates read in cold prediction; horizon known as design parameter",
+  "unknown_states": "not silently labeled as non-convergence; stable probability targets missing when judgment blocked"
+}

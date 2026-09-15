@@ -1,0 +1,34 @@
+{
+  "prefix_people": [
+    2,
+    3,
+    5
+  ],
+  "orders": 30,
+  "cut": 0.1,
+  "targets": [
+    "future_new_point_rate",
+    "future_new_geometry_rate",
+    "future_unsupported_geometry_rate",
+    "prefix_future_mass_TV",
+    "new_supported_future_mode"
+  ],
+  "prefix_features": [
+    "prefix_modes",
+    "prefix_supported_modes",
+    "prefix_supported_mass",
+    "prefix_largest_share",
+    "prefix_topology_disagreement",
+    "prefix_topology_entropy",
+    "prefix_same_point_pair_distance_contribution",
+    "prefix_scope_entropy",
+    "prefix_scope_known_fraction"
+  ],
+  "missing_pair_dispersion": "Use sum of same-point pair d divided by all pairs: defined0 when no same-point pair, not imputed mean.",
+  "scope_missing": "Known fraction retained; empty-known-set entropy convention0 is paired with known fraction.",
+  "future": "Only actual disjoint people; none at terminaln; no duplicate workers.",
+  "TV": "Prefix-defined modes + one unmatched overflow bucket; future assigned to nearest prefix mode medoid within cut. This evaluates distribution drift, not physical mode truth.",
+  "no_full_partition_in_predictors": true,
+  "training": "Original building folds and inner building alpha selection; equal30 replays per image; inference aggregates by image then building",
+  "interpretation": "Process update is not a complete convergence certificate and is not new-worker validation"
+}

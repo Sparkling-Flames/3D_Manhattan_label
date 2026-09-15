@@ -1,0 +1,631 @@
+{
+  "schema": "image_difficulty_tag_inventory_v1",
+  "user_confirmed": "2026-09-15: use located tags",
+  "source": "metadata/spatial_history.jsonl.gz#/latest_selection_record",
+  "original_source": "analysis_results/candidate_selection_review_20260913_v2/用户审查原始记录.json#/decisions",
+  "total_images": 648,
+  "labelled_images": 106,
+  "labels": {
+    "简单": 49,
+    "中等": 41,
+    "困难": 16
+  },
+  "undetermined": 6,
+  "not_recorded": 536,
+  "labelled_buildings": 13,
+  "labelled_display_groups": 21,
+  "scene_counts": [
+    {
+      "scene_category": "储藏与家务辅助",
+      "all_images": 44,
+      "labelled": 2,
+      "简单": 2,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 42
+    },
+    {
+      "scene_category": "卧室",
+      "all_images": 151,
+      "labelled": 33,
+      "简单": 23,
+      "中等": 10,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 118
+    },
+    {
+      "scene_category": "卫浴",
+      "all_images": 117,
+      "labelled": 22,
+      "简单": 0,
+      "中等": 6,
+      "困难": 16,
+      "undetermined": 0,
+      "not_recorded": 95
+    },
+    {
+      "scene_category": "厨房与用餐",
+      "all_images": 52,
+      "labelled": 13,
+      "简单": 10,
+      "中等": 3,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 39
+    },
+    {
+      "scene_category": "复合／待定",
+      "all_images": 30,
+      "labelled": 4,
+      "简单": 4,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 26
+    },
+    {
+      "scene_category": "复合／待定   像是连通的走廊空间这种",
+      "all_images": 1,
+      "labelled": 0,
+      "简单": 0,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 1
+    },
+    {
+      "scene_category": "复合／待定  , 厨房 客厅",
+      "all_images": 1,
+      "labelled": 0,
+      "简单": 0,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 1
+    },
+    {
+      "scene_category": "工作与学习",
+      "all_images": 29,
+      "labelled": 7,
+      "简单": 6,
+      "中等": 1,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 22
+    },
+    {
+      "scene_category": "开放复合空间",
+      "all_images": 9,
+      "labelled": 4,
+      "简单": 0,
+      "中等": 4,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 5
+    },
+    {
+      "scene_category": "无法判断",
+      "all_images": 2,
+      "labelled": 1,
+      "简单": 1,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 1
+    },
+    {
+      "scene_category": "特殊用途",
+      "all_images": 11,
+      "labelled": 0,
+      "简单": 0,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 11
+    },
+    {
+      "scene_category": "起居与休闲",
+      "all_images": 77,
+      "labelled": 17,
+      "简单": 0,
+      "中等": 17,
+      "困难": 0,
+      "undetermined": 1,
+      "not_recorded": 59
+    },
+    {
+      "scene_category": "通行与连接",
+      "all_images": 124,
+      "labelled": 3,
+      "简单": 3,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 5,
+      "not_recorded": 116
+    }
+  ],
+  "building_counts": [
+    {
+      "building": "2t7WUuJeko7",
+      "all_images": 17,
+      "labelled": 5,
+      "简单": 2,
+      "中等": 3,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 12
+    },
+    {
+      "building": "7y3sRwLe3Va",
+      "all_images": 26,
+      "labelled": 4,
+      "简单": 0,
+      "中等": 4,
+      "困难": 0,
+      "undetermined": 4,
+      "not_recorded": 18
+    },
+    {
+      "building": "B6ByNegPMKs",
+      "all_images": 51,
+      "labelled": 3,
+      "简单": 3,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 1,
+      "not_recorded": 47
+    },
+    {
+      "building": "S9hNv5qa7GM",
+      "all_images": 23,
+      "labelled": 5,
+      "简单": 5,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 18
+    },
+    {
+      "building": "UwV83HsGsw3",
+      "all_images": 23,
+      "labelled": 0,
+      "简单": 0,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 23
+    },
+    {
+      "building": "VFuaQ6m2Qom",
+      "all_images": 11,
+      "labelled": 6,
+      "简单": 0,
+      "中等": 0,
+      "困难": 6,
+      "undetermined": 0,
+      "not_recorded": 5
+    },
+    {
+      "building": "VLzqgDo317F",
+      "all_images": 3,
+      "labelled": 0,
+      "简单": 0,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 3
+    },
+    {
+      "building": "X7HyMhZNoso",
+      "all_images": 26,
+      "labelled": 0,
+      "简单": 0,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 26
+    },
+    {
+      "building": "Z6MFQCViBuw",
+      "all_images": 10,
+      "labelled": 4,
+      "简单": 4,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 6
+    },
+    {
+      "building": "ZMojNkEp431",
+      "all_images": 2,
+      "labelled": 0,
+      "简单": 0,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 2
+    },
+    {
+      "building": "b8cTxDM8gDG",
+      "all_images": 19,
+      "labelled": 0,
+      "简单": 0,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 19
+    },
+    {
+      "building": "e9zR4mvMWw7",
+      "all_images": 41,
+      "labelled": 7,
+      "简单": 7,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 34
+    },
+    {
+      "building": "jh4fc5c5qoQ",
+      "all_images": 15,
+      "labelled": 0,
+      "简单": 0,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 15
+    },
+    {
+      "building": "jtcxE69GiFV",
+      "all_images": 34,
+      "labelled": 5,
+      "简单": 0,
+      "中等": 5,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 29
+    },
+    {
+      "building": "kEZ7cmS4wCh",
+      "all_images": 2,
+      "labelled": 0,
+      "简单": 0,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 2
+    },
+    {
+      "building": "pRbA3pwrgk9",
+      "all_images": 20,
+      "labelled": 0,
+      "简单": 0,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 20
+    },
+    {
+      "building": "pa4otMbVnkk",
+      "all_images": 49,
+      "labelled": 6,
+      "简单": 0,
+      "中等": 6,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 43
+    },
+    {
+      "building": "q9vSo1VnCiC",
+      "all_images": 34,
+      "labelled": 0,
+      "简单": 0,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 34
+    },
+    {
+      "building": "rPc6DW4iMge",
+      "all_images": 22,
+      "labelled": 3,
+      "简单": 3,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 19
+    },
+    {
+      "building": "rqfALeAoiTq",
+      "all_images": 1,
+      "labelled": 0,
+      "简单": 0,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 1
+    },
+    {
+      "building": "uNb9QFRL6hY",
+      "all_images": 88,
+      "labelled": 40,
+      "简单": 12,
+      "中等": 20,
+      "困难": 8,
+      "undetermined": 1,
+      "not_recorded": 47
+    },
+    {
+      "building": "wc2JMjhGNzB",
+      "all_images": 68,
+      "labelled": 14,
+      "简单": 9,
+      "中等": 3,
+      "困难": 2,
+      "undetermined": 0,
+      "not_recorded": 54
+    },
+    {
+      "building": "x8F5xyUWy9e",
+      "all_images": 11,
+      "labelled": 0,
+      "简单": 0,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 11
+    },
+    {
+      "building": "yqstnuAEVhm",
+      "all_images": 36,
+      "labelled": 4,
+      "简单": 4,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 32
+    },
+    {
+      "building": "zsNo4HB9uLZ",
+      "all_images": 16,
+      "labelled": 0,
+      "简单": 0,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 16
+    }
+  ],
+  "display_group_counts": [
+    {
+      "selection_display_group": "G002",
+      "all_images": 5,
+      "labelled": 5,
+      "简单": 2,
+      "中等": 3,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 0
+    },
+    {
+      "selection_display_group": "G014",
+      "all_images": 4,
+      "labelled": 0,
+      "简单": 0,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 4,
+      "not_recorded": 0
+    },
+    {
+      "selection_display_group": "G015",
+      "all_images": 4,
+      "labelled": 4,
+      "简单": 0,
+      "中等": 4,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 0
+    },
+    {
+      "selection_display_group": "G027",
+      "all_images": 2,
+      "labelled": 1,
+      "简单": 1,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 1,
+      "not_recorded": 0
+    },
+    {
+      "selection_display_group": "G036",
+      "all_images": 2,
+      "labelled": 2,
+      "简单": 2,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 0
+    },
+    {
+      "selection_display_group": "G047",
+      "all_images": 5,
+      "labelled": 5,
+      "简单": 5,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 0
+    },
+    {
+      "selection_display_group": "G057",
+      "all_images": 6,
+      "labelled": 6,
+      "简单": 0,
+      "中等": 0,
+      "困难": 6,
+      "undetermined": 0,
+      "not_recorded": 0
+    },
+    {
+      "selection_display_group": "G078",
+      "all_images": 4,
+      "labelled": 4,
+      "简单": 4,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 0
+    },
+    {
+      "selection_display_group": "G090",
+      "all_images": 7,
+      "labelled": 7,
+      "简单": 7,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 0
+    },
+    {
+      "selection_display_group": "G109",
+      "all_images": 5,
+      "labelled": 5,
+      "简单": 0,
+      "中等": 5,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 0
+    },
+    {
+      "selection_display_group": "G141",
+      "all_images": 6,
+      "labelled": 6,
+      "简单": 0,
+      "中等": 6,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 0
+    },
+    {
+      "selection_display_group": "G165",
+      "all_images": 3,
+      "labelled": 3,
+      "简单": 3,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 0
+    },
+    {
+      "selection_display_group": "G172",
+      "all_images": 12,
+      "labelled": 11,
+      "简单": 0,
+      "中等": 11,
+      "困难": 0,
+      "undetermined": 1,
+      "not_recorded": 0
+    },
+    {
+      "selection_display_group": "G178",
+      "all_images": 7,
+      "labelled": 7,
+      "简单": 6,
+      "中等": 1,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 0
+    },
+    {
+      "selection_display_group": "G179",
+      "all_images": 9,
+      "labelled": 9,
+      "简单": 4,
+      "中等": 5,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 0
+    },
+    {
+      "selection_display_group": "G184",
+      "all_images": 9,
+      "labelled": 9,
+      "简单": 0,
+      "中等": 1,
+      "困难": 8,
+      "undetermined": 0,
+      "not_recorded": 0
+    },
+    {
+      "selection_display_group": "G197",
+      "all_images": 2,
+      "labelled": 2,
+      "简单": 0,
+      "中等": 2,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 0
+    },
+    {
+      "selection_display_group": "G200",
+      "all_images": 2,
+      "labelled": 2,
+      "简单": 2,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 0
+    },
+    {
+      "selection_display_group": "G202",
+      "all_images": 5,
+      "labelled": 5,
+      "简单": 0,
+      "中等": 3,
+      "困难": 2,
+      "undetermined": 0,
+      "not_recorded": 0
+    },
+    {
+      "selection_display_group": "G205",
+      "all_images": 5,
+      "labelled": 5,
+      "简单": 5,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 0
+    },
+    {
+      "selection_display_group": "G207",
+      "all_images": 4,
+      "labelled": 4,
+      "简单": 4,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 0
+    },
+    {
+      "selection_display_group": "G237",
+      "all_images": 4,
+      "labelled": 4,
+      "简单": 4,
+      "中等": 0,
+      "困难": 0,
+      "undetermined": 0,
+      "not_recorded": 0
+    }
+  ],
+  "limitations": [
+    "Counts only; no significance or model fitting.",
+    "Scene: spatial_classification.coarse_type when nonempty; else existing spatial_prior_user.user_type, as in Pro v2 evidence_layers.",
+    "Display groups are not independent physical-room identities.",
+    "User difficulty judgments are not verified human convergence outcomes.",
+    "Ordinal 0/1/2 records order, not equal distances.",
+    "Unlabelled images are retained, never relabelled as easy."
+  ]
+}

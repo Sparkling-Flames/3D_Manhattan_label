@@ -1,0 +1,9 @@
+{
+  "first_order_statistic": "E[K_first]=(N+1)/(m+1)",
+  "second_order_statistic": "E[K_support2]=2(N+1)/(m+1) for m>=2",
+  "absent_probability": "choose(N-m,k)/choose(N,k)",
+  "one_probability": "m*choose(N-m,k-1)/choose(N,k)",
+  "conditioning": "Full observed partition, retained as retrospective descriptive sensitivity. These formulas never assert a mode is reasonable or estimate unseen population mass.",
+  "implication": "Fixed-partition discovery depends on counts, not on whether modes have the same point count. Geometric re-clustering differences are a distinct process.",
+  "counts": "Repeated orders are not independent observations"
+}

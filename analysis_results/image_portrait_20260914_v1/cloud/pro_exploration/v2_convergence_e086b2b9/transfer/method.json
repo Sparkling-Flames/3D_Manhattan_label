@@ -1,0 +1,10 @@
+{
+  "primary_relations": "Only supported components with no pending/unsupported overlap",
+  "scene": "Human-reviewed adopted scene label, NOT an AI visible trait",
+  "different_room": "Different confirmed components; different buildings exclude unknown same-room leakage",
+  "same_building": "Explicit baseline only, not declared scene similarity",
+  "matching": "Report native AND donor horizon difference<=2",
+  "same_room_prediction": "Uses only other views in target supported component",
+  "shared_worker": "Same actual IDs in both views, no geometric coordinate registration claimed",
+  "comparison_unit": "Images then building, not donor pairs as independent physical rooms"
+}

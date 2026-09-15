@@ -1,0 +1,12 @@
+{
+  "status": "partial_reproduction_knn_mismatch",
+  "predictions": 6064,
+  "max_abs_delta": 0.4,
+  "mismatched_predictions": 16,
+  "mismatches_by_algorithm": {
+    "knn": 16
+  },
+  "non_knn_max_abs_delta": 2.00002774758401e-15,
+  "source": "Current migrated source, delivered scene classes and process targets; full inner/outer grouped fitting rerun; no NPZ, originals or target n used.",
+  "interpretation": "KNN discrepancies are retained, not silently accepted. Exact environment/cache reproduction and explicit handling of near-equal distances remain unresolved. Ridge and constant/same-scene baselines reproduce."
+}

@@ -1,0 +1,51 @@
+{
+  "target": "historical observed convergence trajectory class, not replacement subjective difficulty",
+  "early_k": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "late_h": [
+    10,
+    12,
+    15,
+    18,
+    19
+  ],
+  "max_early_supported_modes": 2,
+  "max_few_supported_modes": [
+    2,
+    3,
+    4
+  ],
+  "singleton_sensitivity": [
+    0,
+    0.1
+  ],
+  "order_fraction": [
+    0.8,
+    0.9
+  ],
+  "distance_cuts": [
+    0.05,
+    0.1,
+    0.2
+  ],
+  "rules": [
+    "P_pattern",
+    "D10_distribution",
+    "D20_distribution",
+    "G10_geometry"
+  ],
+  "actual_n_retained": true,
+  "independent_new_participants": 0,
+  "semantic_legitimacy": "requires local image review",
+  "chronology": "finite-pool random order sensitivity, not arrival-time reconstruction",
+  "forbidden_conclusion": "fragmented or not stable in observed sample does not imply never converges",
+  "two_tags_not_pooled": true,
+  "ordinal_interval": "process tiers are not exhaustive ordinal labels; insufficient/intermediate/stable-many states retained",
+  "singletons": "one distinct worker, not a single supported cluster"
+}

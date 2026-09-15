@@ -1,0 +1,35 @@
+{
+  "date": "2026-09-15",
+  "acceptance": "historical exploratory evidence with unresolved limitations",
+  "migration_files_byte_identical": 333,
+  "syntax_and_doc_links": "passed",
+  "git_diff_check": "passed",
+  "v2_bundle_common_tests": {
+    "passed": 27,
+    "failed": 0
+  },
+  "all_four_test_modules_default": {
+    "passed": 39,
+    "failed": 3,
+    "reasons": [
+      "Two sklearn reference KNN cases hit threadpoolctl OpenBLAS version None error",
+      "Missing v1 features/registry.json"
+    ]
+  },
+  "all_four_test_modules_sklearn_non_cython_distances": {
+    "passed": 41,
+    "failed": 1,
+    "temporary_process_config": {
+      "enable_cython_pairwise_dist": false
+    },
+    "remaining_failure": "tests/test_image_portrait_pro_exploration.py::test_all_feature_runs_have_explicit_coverage requires missing v1 features/registry.json"
+  },
+  "separate_scene_prediction_reproduction": {
+    "status": "partial",
+    "predictions": 6064,
+    "unresolved_knn_differences": 16
+  },
+  "original_results_modified": false,
+  "dependencies_modified": false,
+  "pushed_this_import": false
+}

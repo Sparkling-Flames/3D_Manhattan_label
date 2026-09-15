@@ -1,0 +1,3 @@
+/mnt/data/pro_exploration_work/repo/tools/thesis_main/analysis/image_portrait/convergence_v2_finalize.py:75: DtypeWarning: Columns (16,17) have mixed types. Specify dtype option on import or set low_memory=False.
+  p=pd.read_csv(OUT/'prediction/cold_all_predictions.csv.gz');meta=images()[['image_id','source_split']];p=p.merge(meta,on='image_id',how='left');tg=pd.read_csv(OUT/'prediction/process_targets.csv')[['image_id','condition','n_valid']];p=p.merge(tg,on=['image_id','condition'],how='left')
+FINAL AUDIT OK

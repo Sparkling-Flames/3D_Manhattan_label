@@ -1,0 +1,250 @@
+"""Render a Chinese synthesis from executed, versioned result tables."""
+from pathlib import Path
+import json
+import pandas as pd
+from tools.thesis_main.analysis.image_portrait.pro_core import OUT,COMMIT
+
+NAMES={'reference_geometry_error':'参考几何偏差','owner_valid_active_seconds':'耗时/秒','point_count_disagreement':'点数分歧','within_topology_geometry_dispersion':'同点数几何波动','scope_non_normal_rate':'规则拒绝比例','scope_entropy':'规则回答熵'}
+
+def read(p):return pd.read_csv(OUT/p)
+def table(df):return df.to_markdown(index=False,floatfmt='.4f')
+def link(p):return f'数据：[{p}]({p})。\n'
+def main():
+ s=read('prediction/final_score_summary.csv');parts=[]
+ def add(text):parts.append(text.strip()+'\n')
+ add(f'''# 图片特质—标注表现—人员差异：A–E 统筹数值研究报告
+
+输入版本：`{COMMIT}`。分析版本：`pro_exploration_v1.0_e086b2b9`。日期：2026-09-14。
+
+本报告对应已经执行的数值计算；所有指标、层候选、训练侧选择、失败记录和逐例结果均在同版本交付目录中。报告中的“质量”只指明确参考下的几何偏差，不等于真实物理正确性。本轮没有形成正式收敛判据，也没有把不同结果合成为总难度分数。
+
+**核心结论：当前最有支撑的联系是“模型反馈／表征—结构分歧及有限观察池覆盖过程”，以及“连续人员差异—条件耗时”。当前证据不支持统一图片难度、稳定四类人员、异质组合普遍更好，或 DA3 已可靠补足真实空间信息。**
+
+## 1. 先回答五个研究问题
+
+**什么图片特质有用？** 现有场景类别与 AI 可见特质未稳定改善跨楼预测，不能据此认定真实可见性、遮挡或门洞没有作用：测量表高度冗余，多个字段近乎常量；同房共同人员的可变特质对照实际上缺失。相反，预测结构复杂度和旋转敏感性分别携带不同信号。三个模型的预测点数本身，就能明显改善 Manual 点数分歧预测；旋转敏感性对参考几何偏差更有用。
+
+**人数增加后会出现什么？** 有统一模式，也有同点数下的多个支持模式。覆盖率、模式比例稳定和“将来不会再变”是三个不同命题。固定十人观察窗口内，先看八人的支持簇，对另外两名真实人员的平均几何覆盖为 Manual 63.5%、Semi 79.2%（探索距离阈值 0.10）。不能说八人已经普遍足够。有限观察池中的多模式稳定可以数值检验，但不能升格为招募停止规则。
+
+**能跨视角、跨房间预测吗？** 固定留楼检验中，Manual 参考偏差、点数分歧以及有限窗口覆盖过程可以得到预测增量；耗时与同点数波动不是同样结果。同房历史的额外价值没有普遍成立：其质量收益区间跨零，耗时直接迁移反而明显更差。仅利用其他真实拍摄位置的模型反馈，Semi 的小覆盖结构预测有线索，但对简单基线的增益仍不够稳定。不能把同 building 当成相似场景，或把这些结果称为精确稳定人数预测。
+
+**存在人员差异吗？** 存在，尤其是速度；连续质量、编辑幅度也有一定跨楼排序复现性。但连续差异并不自然形成稳定类别。规则执行、范围拒绝倾向、参考偏差和有符号几何偏差不是同一指标。当前特质交互没有改善留出预测，实际组合也没有显示普遍的异质性优势。
+
+**什么模型或层有用？** 没有统一最优。Manual 结构分歧偏向 HoHoNet 压缩层，参考偏差偏向 Bi 的部分表征；新增 DA3 面级汇聚在 Semi 耗时上有条件增量。层与参数均在训练侧选择。DA3 表征有预测信号，不代表其联合相机几何可信：本次关系合格的 180 对中，0 对通过哪怕 20° 的同拍摄点旋转一致性必要检查。
+''')
+ add('''## 2. 实际覆盖、目标与评价边界
+
+### 2.1 不把 648 图当成 648 个人类结果样本
+
+2501 条 canonical 响应来自 214 图、26 人；其中 Manual 1693、Semi 574，另有 **234 条 OOS 规则任务**。W011 保留；排除 W019/W026 后，当前主分析为 24 人。OOS 不能混入 Manual。''')
+ c=read('coverage.csv');c=c[c.main_included].copy();cols=['condition','responses','images','workers','valid_geometry','quality_evaluable','time_usable','quality_images','time_images','geometry_dispersion_images'];add(table(c[cols].rename(columns={'condition':'条件','responses':'响应','images':'涉及图','workers':'人员','valid_geometry':'有效几何响应','quality_evaluable':'参考可评响应','time_usable':'可用时间响应','quality_images':'质量目标图','time_images':'时间目标图','geometry_dispersion_images':'同点数波动图'})));add(link('coverage.csv'))
+ add('''Manual 点数分歧可评 166 图、同点数波动 150 图；Semi 分别为 43、42 图。Manual 有 20 图只得到一名人员响应，46 图至少十人；Semi 有 18 图至少十人。低人数图保留在逐图表与覆盖报告中，而不是被包装成已充分观察的稳定图。
+
+缺失／已知不可用参考不填零；`zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b` 不能进入质量比较，但仍保留其其他证据。两条既有 imputed 几何记录保留标记，并另做排除后的重训敏感性；本轮没有补删任何点。
+
+### 2.2 指标保持原始维度
+
+参考几何偏差为 `d_mask = 1 − IoU`，IoU 比较 1024×512 全景图上墙顶、墙地边界之间的区域。它不是三维物理精度。逐图质量取有效人员参考偏差中位数。耗时取通过人员、任务和原始日志来源核验的 active seconds 中位数，不能用 lead_time 替代。
+
+点数分歧为不同真实人员两两点数不相同的比例。同点数几何波动只在点数相同的人员对上计算 d_mask 中位数，不同点数的距离不混入。规则回答另保留拒绝比例、五类分布与熵；`scope` 实际是规则适用／拒绝原因，不能被解释为 Bi 的 enclosed/extended 范围选择。
+
+人员分析另保留有符号墙顶／墙地与区域宽度偏差。旧画像中的 OSPA30、编辑幅度、参考池与时间语义未改名为当前 d_mask；规则正确性与一般范围拒绝倾向分别建模。
+
+### 2.3 固定评价与不确定性
+
+主比较遵循固定 leave-building 划分；工作包定义 25 个留楼折、262 个同房留视角折、82 个保守留房折。关系组件是分析用身份，不宣称等于独立物理房间总数。实际有结果的楼数随条件和目标变化。保守留房折同样排除目标整栋楼，是主划分的子覆盖，**不是第二份独立验证**。关系待定、重叠组成不进入无歧义房间主比较。
+
+先建立训练集常数中位数与同类场景中位数基线，再比较 Ridge 与 kNN。训练内标准化；PCA 取无／16／32 维并按训练矩阵秩截断；Ridge α=0.1/1/10/100，kNN k=1/3/5，共 21 个数值设置。参数由内层留楼 MAE 决定，层和汇聚也在训练侧选择。没有拿外层最优层冒充可部署选择。
+
+主结果给出图等权 MAE，并同时保存楼等权、房间等权、全部可用覆盖和逐图配对误差。人员组成预测在外层、内层及每张训练图自己的楼之外形成画像；目标侧只使用真实分配人员身份，不使用其目标结果。
+
+95% 区间采用 2000 次楼级聚类重采样，单位仍是已有楼／图；它们是条件于历史人员池的探索性区间，不是增加的人数，不包含新人招募不确定性，也不是多重比较校正后的确认性检验。历史实验非随机分配、不同阶段和参考语义差异仍然限制因果解释。
+''')
+ add('''## 3. 图片本身、模型反馈、表征与人员信息各贡献什么？
+
+### 3.1 Manual：增量是分目标的
+
+下表为固定留楼、Ridge 的实际外层 MAE，越低越好。每一列使用该目标的相同图覆盖，而不是为了方法删掉困难图。C 训练侧选层指当前预列的 29 个层／汇聚候选；并非在本表中直接挑最优值。''')
+ names={'baseline':'常数中位数','A_all_traits':'A：类别＋已有特质','B_feedback':'B：24维模型反馈','AB_traits_feedback':'A＋B','ABC_traits_feedback_shared':'A＋B＋HoHo共享表征','SEL_current_prespecified_all':'C：训练侧选择当前候选','ABCN_actual_people_count':'A＋B＋C＋真实人数','ABCP_crossfit_worker_composition':'A＋B＋C＋跨拟合人员组成'}
+ z=s[(s.design=='leave_building')&(s.condition=='manual')&s.feature.isin(names)&s.target.isin(list(NAMES)[:4])&(((s.feature=='baseline')&(s.algorithm=='constant_median'))|((s.feature!='baseline')&(s.algorithm=='ridge')))].copy();z['方法']=z.feature.map(names);t=z.pivot(index='方法',columns='target',values='image_MAE').rename(columns=NAMES).reindex(list(names.values()));add(table(t.reset_index()));add(link('prediction/final_score_summary.csv'))
+ add('''B 相对常数基线的 Manual 参考偏差 MAE 降低 0.0138，配对 95% 区间为 [−0.0240, −0.0033]；点数分歧降低 0.0581，区间 [−0.0888, −0.0258]。训练侧选 C 层后，点数分歧 MAE 从 0.3292 降至 0.2329，差值区间 [−0.1289, −0.0623]。
+
+但 B 的耗时与同点数波动增益区间均跨零。加入人员组成后，耗时相对“已有 A+B+C+真实人数”再降 **5.58 秒 MAE**，区间 [−9.78, −0.53]；参考偏差没有可靠额外改善。因此，人数构成不是一个可被整体叫作“质量能力”的潜变量，图片与人员信息作用的结果维度也不同。
+
+四模型的训练侧选层后等权组合，Manual 参考偏差 MAE 为 0.0495、时间为 65.71 秒、结构分歧为 0.2623；不是所有目标都优于单一训练侧选择。组合没有用外层结果优化权重。
+
+源敏感性也实际重新训练：排除两条 imputed 记录后结论几乎不变。仅 C1、仅 P1、仅 adjudicated 参考、仅 public 参考时，B 对 Manual 参考偏差的方向均仍优于常数基线；Bi 固定表征在 C1 的优势弱于整体分析。不能将 pooled 历史结果当成同一实验条件的验证。''');add(link('cross_route/family_increment_paired.csv'));add(link('sensitivity/source_forecast_summary.csv'))
+ add('''### 3.2 简单反馈拆开后，更能说明“有用信息来自哪里”
+
+以下是本轮新增的低维拆解，不属于工作包原预列层候选。全部保留，没有用它们替换不利的 24 维结果。''')
+ names2={'BX_counts_only':'3个预测点数字段','BX_rotation_only':'4个旋转敏感性字段','BX_disagreement_only':'2个跨模型分歧字段','BX_Bi_policy_only':'3个Bi范围策略字段'}
+ z=s[(s.design=='leave_building')&(s.condition=='manual')&(s.algorithm=='ridge')&s.feature.isin(names2)&s.target.isin(list(NAMES)[:4])].copy();z['方法']=z.feature.map(names2);add(table(z.pivot(index='方法',columns='target',values='image_MAE').rename(columns=NAMES).reset_index()));add(link('cross_route/sparse_and_auxiliary_paired.csv'))
+ add('''预测点数的 3 维基线已将结构分歧 MAE 降至 0.2477，说明高维表征的部分收益可能只是结构复杂度信息，不能全部归功于深层语义。旋转敏感性与参考偏差关系较强；单独跨模型分歧、单独 Bi 两头差异没有在 Manual 上稳定改善这些目标。跨模型一致／不一致并不是通用的人工标注可靠性指标。
+
+### 3.3 A 路线不能被解释为“遮挡没有作用”
+
+648 图中，墙地边界 partial 与遮挡 present 都为 514，二者逐图完全重合；建模去掉一份重复信息，描述表仍保留两字段。connected_space 有 644 个 present，low_contrast 有 643 个 absent；reflection 仅 3 个 absent，却有 194 个 unknown。它们不是具有充分对照覆盖的精确真值。
+
+21 图原分辨率复核仍由 AI 完成，其中 9 图至少一项变动；反射字段仅 15/21 一致。人工采纳、AI 初筛、未知、复核版本都保留。空间开放证据有 605 图未知，不能把它们当作封闭空间。类别记录也不能一概视为人工确认。
+
+无调整关联与预测分别报告。下面几个 Manual 对照的差值均为“后者减前者”，不能解释为因果效应：墙地边界 partial−present；墙顶 partial−present；门洞确认−否。''')
+ a=read('A/unadjusted_trait_contrasts.csv');z=a[(a.condition=='manual')&a.feature.isin(['floor_boundary','ceiling_boundary','doorway'])&(a.target=='reference_geometry_error')];add(table(z[['feature','n0','n1','unadjusted_mean_difference','cluster_CI_low','cluster_CI_high']]));add(link('A/unadjusted_trait_contrasts.csv'))
+ add('''30 对同房视角、17 个无歧义关系组件、108 条共同人员视角比较并没有为上述主要二元特质提供有效的“暴露有变化且两侧都明确”的对照；反射的一些变化是 present↔unknown，不是可靠的 present↔absent。这个识别缺口有数值记录，不能硬拟合出图片特质因果效应。相同粗标签下仍有人员相同而结果不同的视角，说明当前画像的区分能力有限。''');add(link('A/common_worker_matched_view_contrasts.csv'));add(link('D/common_person_view_outcome_differences.csv'))
+ add('''### 3.4 Semi 不复现 Manual 的整体增益
+
+Semi 的常数基线 MAE 为参考偏差 0.0368、耗时 53.98 秒、结构分歧 0.2490、同点数波动 0.0341。24 维反馈对应 0.0378、64.13、0.2585、0.0389；当前候选 C 训练侧选择对应 0.0455、56.49、0.2903、0.0381。没有普遍改善。
+
+新增 DA3 面级汇聚进入训练侧选择后，Semi 耗时降至 49.80 秒，相对原 C 候选改进约 6.69 秒，区间 [−13.59, −2.17]。这是特定目标与候选集合下的增量，不等于已经稳定击败所有简单基线，也不证明任何 DA3 几何物理有效性。
+
+Manual 的质量—时间图级 Spearman 为 0.177，结构分歧—同点数波动为 0.176；Semi 后一相关为 −0.031。这些维度不能事先合为一个总分。''');add(link('cross_route/endpoint_correlations.csv'))
+ add('''## 4. 共识、多模式与观察人数：不能混淆覆盖和稳定
+
+### 4.1 三个不同的探索对象
+
+第一类是同点数 complete-linkage 的全观察池分簇，距离阈值分别 0.05、0.10、0.20；每个支持簇至少两名不同真实人员，单人簇保留。它回答“目前观察到了什么结构”，不直接回答未来稳定性。
+
+第二类是有限池几何覆盖：用 100 个不放回顺序，计算已出现支持簇的真实 medoid 能覆盖多少已观察记录。这类覆盖可能在多个 complete-linkage 簇之间重叠，**因此高覆盖不能自动说明各簇比例稳定，更不能推出已经发现全部有效模式。**
+
+第三类是本轮补充的模式质量分布稳定：以全观察池分簇为回顾性参照，检查前缀模式比例的总变差距离（TV≤0.10 或 0.20），并要求 ≥90% 观察质量由出现至少两人的模式代表。另有更严格版本要求每个全池支持模式都已经出现两名人员；判据必须持续满足到观察末尾，起点至少留两名真实后续人员。它仍是回顾性的有限池定义，不是正式停止规则。
+
+在 n≥10、几何阈值 0.10、TV 0.10 的严格版本下，46 张 Manual 中，15 图在至少 90% 的随机顺序中满足：6 图为单一支持模式，9 图为多支持模式；18 张 Semi 对应 5 图，其中单模式 2、多模式 3。若只要求 90% 质量而不要求发现每个支持模式，多模式计数会变成 12 和 6。这个差异本身说明“稳定”取决于问题定义。
+
+Manual 26 图、Semi 7 图没有满足上述稳定条件的顺序；**这些图全部首先被“全池支持模式质量不足90%”所限制，不能将它们写成已证明持续变化或永不稳定**。未获第二人支持的单人标法仍可能合理，需要复核，而不能为了让分布稳定删掉。
+
+更关键的限制是：接近全观察池末尾时，前缀比例必然接近全池比例。这些计数和条件中位起点不是招募人数建议。全部阈值、起点缺失和低人数情况均保留。''');add(link('stability/mode_mass_image_results.csv'));add(link('stability/mode_mass_summary.csv'));add(link('stability/finite_population_summaries.csv'))
+ add('''一个具体多模式例子是 `X7HyMhZNoso_987fd31155514f6facb131bd5c14881d`：24 人都使用 8 点，在阈值 0.10 下形成 18 人与 6 人两个几何簇，不是不同点数造成的强制分离。严格模式比例规则下，100 个顺序均出现有限池稳定起点，条件中位数为 11。这个数只是此图此定义的回顾性结果，不是普适“11人足够”，两种几何解释的合理性必须交本地看图判断。
+
+### 4.2 固定十人窗口，更直接测量未覆盖的真实人员
+
+每图从已有真实人员池不放回取十人；固定最后两人作为未来观察，比较前 2/3/5/8 人。200 次顺序只用于描述同一观察池，不增加独立样本。点数覆盖、允许单人模式的几何覆盖、至少两人支持模式的几何覆盖分别保留。''')
+ h=read('stability/fixed_horizon10_summary.csv');z=h[h.cut==.1][['condition','n_images','prefix','topology_coverage','geometry_with_singletons','supported_geometry_coverage','both_future_supported']];add(table(z));add(link('stability/fixed_horizon10_image_curves.csv'))
+ add('''这给出了比“稳定人数”更可识别的预测目标：在给定真实观察预算下，还会漏掉多少后续人员的几何结果。对八人前缀的支持几何覆盖，固定留楼预测如下；所有 12 种阈值×前缀组合都已保存，没有只保留这一列。''')
+ hp=read('stability/horizon_prediction/paired_comparisons.csv');z=hp[(hp.design=='leave_building')&(hp.target=='coverage_cut0.1_prefix8')&(hp.baseline=='constant_median')&(hp.algorithm=='ridge')&hp.feature.isin(['A_all_traits','B_feedback','C_hohonet_shared_global','C_da3_layer11_global'])];add(table(z[['condition','feature','n_images','n_buildings','method_MAE','baseline_MAE','delta_MAE','CI_low','CI_high']]));add(link('stability/horizon_prediction/paired_comparisons.csv'))
+ add('''B 的 Manual MAE 从 0.3058 降至 0.1505，Semi 从 0.1815 降至 0.0965，两个条件的图等权与楼等权配对区间均支持该探索性增量。A 初筛特质没有达到同样效果；DA3 全局层11也没有稳定达到相同效果。
+
+这是一条值得推进的线索，但目标是在已有高标注图片、已有人员池中定义的：高人数图如何被选入、自然人员顺序、未来新人的分布都尚未被前瞻验证。不得把 200 次顺序当成 200 个新实验，或把 MAE 改善解释为成功停止标注的概率。
+''')
+ add('''## 5. 同房不同视角：几何补足失败，不代表所有辅助信息都无用
+
+### 5.1 D 几何审计先行
+
+DA3 有 316 组两拍摄位置联合输出，但只有 180 对通过当前无歧义关系门。每个全景展开的六个透视面来自同一拍摄位置，绝不是六个相机中心样本；单面独立深度也没有共同尺度保证。
+
+依据已知六面旋转重算同拍摄点相机一致性：316 对的最大内部旋转不一致，最小仍为 **37.81°**、中位数 **138.31°**；关系合格 180 对的中位数为 **123.66°**。0/180 通过 5°、10°、20° 必要检查。重算与导出角度的最大差约 7.6×10⁻⁶ 度，说明不是本轮读取顺序误差造成的结论。
+
+重新评价了投影坐标、尺度、相机中心、预测深度一致阈值 1%/5%/10%，并剔除固定的 60° nadir 范围做敏感性。独立面与联合面的形状变化采用逐面尺度拟合，不虚构共同尺度。
+
+反例 `pair0001`：去除 nadir 后有 38,294 个可投影候选，其中预测深度相差≤5%的比例 53.27%，但同拍摄点最大旋转不一致为 **122.60°**。预测深度自一致完全不能认证物理正确。当前可靠的几何信息补足覆盖为零；不输出“新增可见真实面积”或可信深度补洞收益。''');add(link('D/pair_geometry_audit.csv'));add(link('D/scale_free_face_changes.csv.gz'))
+ add('''### 5.2 同房真实历史转移：不是一律有益
+
+有真人结果的同房目标／辅助视角覆盖比 316 对小很多：Manual 质量有 31 个目标图、13 个关系组件、9 栋楼；耗时有 40 图、17 组件、12 楼；Semi 没有双方都有真人结果的同房配对。
+
+直接同房历史中位数的质量 MAE 为 0.0528，而相同目标图上的楼外基线为 0.0717，差值 −0.0189，区间 [−0.0495, 0.0069]，不能确定收益。耗时 MAE 为 **119.64秒**，楼外基线 **83.02秒**，反而恶化 **36.62秒**，区间 [12.80, 65.07]。历史人员组成、阶段与视角信息不同，不能只因为同房就迁移耗时。
+
+### 5.3 绕过配准的新增辅助视角实验
+
+另实际比较了目标单图反馈、其他真实拍摄位置反馈均值、目标＋辅助均值／标准差／位置数。这只使用固定认可关系，不用辅助人的结果，不宣称三维补足。全部 262 个有合格辅助关系的目标身份均保留；缺真人目标的图不冒充监督样本。
+
+可评 Manual 质量60图、时间69图、结构59图、几何波动54图；Semi 为16图。Manual 加入辅助信息，没有相对同覆盖目标单图的稳健质量、时间或结构增量；使用辅助均值替代目标信息，质量还更差。
+
+Semi 结构分歧的相同覆盖目标单图 MAE 0.2996，目标＋辅助 0.1722，差值区间 [−0.2190, −0.0630]。但相对于同覆盖常数基线 0.2308，差值区间为 [−0.1235, 0.0034]，跨零；只有16图、9栋楼。因此这是有条件线索，不足以宣称多视角已经稳定改善标注表现。''');add(link('D/history_same_room_vs_outside_building.csv'));add(link('D/non_geometric_auxiliary_increment.csv'));add(link('cross_route/sparse_and_auxiliary_paired.csv'))
+ add('''## 6. 人员差异、分类、交互与真实组合
+
+### 6.1 先承认连续差异，再检验是否需要分类
+
+完整保留 Q（质量）、T（时间）、S（规则）、B（Semi 编辑／收益）15 种非空组合，以及“质量＋时间＋修改幅度”。S 内错误拒绝与错误接受分别保留。画像使用任务／context 截距消除后的人员效应，最低支持为每轴6条、3栋楼；每个目标楼完全排除。未知轴保留不可用，不形成“未知类型”。
+
+连续特征、无分型基线、训练侧质量中位数二分，以及 Ward k=2…floor(N/2) 都已实际比较。主支持下最多到12组，共同信息覆盖下通常最多11组；不强行均分。组名 A/B/C/D 只是各训练折内部命名，不是跨折固定性格。单人类型会标注为缺乏类别支持。
+
+100 次不重叠楼宇两半的连续排序复现结果：''');add(table(read('E/continuous_rank_summary.csv')));add(link('E/continuous_disjoint_half_rank_reproducibility.csv'))
+ add('''速度排序最强，但质量、编辑幅度也不是完全无信息。与此同时，主支持门下固定二组分类的 ARI 中位数：T=0.809、QT=0.353、Q=0.177、质量＋时间＋修改幅度=0.088、B=−0.079。**连续效应可复现，并不保证存在可复现的硬边界类别。**
+
+规则 S 的错误接受来自9张 OOS 图，在两半各至少6条的门下无法同时满足支持；该项主分析是覆盖不足，不是“人员没有规则差异”。降低为3条／2栋楼的明确敏感性下，S 的二组 ARI 约0.007，仍未支持稳定类别。所有16组合和各可行 k 都保留。
+
+留出图的人员相对 log(1+seconds) 预测，无人员效应基线 MAE 为0.5993，训练侧人员主效应为0.4117。质量相对差异的预测改善远小于时间；不同误差函数也可能得出不同表面结论，例如人员点数效应能降低 MSE，却使 MAE 变差。不能选择一个指标制造“全能优质工人”。''');add(link('E/disjoint_halves_summary.csv'));add(link('E/worker_prediction_summary.csv'));add(link('E/selected_and_continuous_paired_summary.csv'))
+ add('''### 6.2 规则、范围倾向、系统偏差与几何质量不是同一轴
+
+当前全数据人员连续描述中，Manual 参考偏差与规则拒绝倾向的 Spearman 约0.382，与有符号区域宽度偏差约−0.304；速度与参考偏差约0.166。这些只是描述性相关，不是同一类型的不同名称。拒绝规则可能是误拒绝，几何偏离也可能来自参考不适用；有符号偏差可能是系统性范围解释而不是随机不认真。
+
+加入人员×可见特质的训练内正则交互后，Manual 相对 log-time MAE 从0.4117变差为0.4268，差值区间[0.0018,0.0322]；质量、点数目标和 Semi 对应结果也未改善。这否定的是当前特质分辨率与该交互模型的增量，不是证明人员专长不存在。''');add(link('E/worker_trait_interaction_summary.csv'));add(link('E/continuous_worker_axis_correlations.csv'))
+ add('''### 6.3 真正不同人员的组合已计算，不是复制人员
+
+形成 **96,756 个唯一真实人员子集**，人数2/3/4；可行子集少于等于600时穷举，否则每图／人数不放回取600个，同一批子集供所有信息组合和类别数比较。输出具体 worker_id、类标签来源、人员支持、枚举或抽样方式、缺失时间／质量、几何簇与观察池覆盖。
+
+以下是保存的 AA、AB、AAB、ACD、AABC、ABCD 例子的覆盖。不同信息组合可能给同一真实子集不同标签，这些不是新的独立子集；`examples_supported_types` 才是各类型均有训练侧支持的例子数。''');add(table(read('E/requested_composition_examples_coverage.csv')));add(link('E/real_worker_combinations.csv.gz'));add(link('E/requested_pattern_real_examples.csv.gz'))
+ add('''人数效应与构成效应分别比较。固定两人、匹配 A/B 边际比例，比较 AB 与 (AA+BB)/2：Q 分型的 Manual 观察池几何覆盖差为−0.0086，区间[−0.0325,0.0187]；T 分型同样没有正面覆盖证据。Q 分型的同点数几何波动反而增加约0.0148，区间[0.0043,0.0304]。不能由异质性本身推出组合更好。
+
+两人组合的“成员质量中位数”和总时间在上述边际匹配下是线性恒等量；其接近零的差值不是无协同效应的实证发现，更不能将浮点误差当成显著效应。本轮专门加入恒等式测试。
+
+人数从2到4，Manual 对相同历史池的支持几何覆盖平均增加约0.2335，时间总量同时明显增加。这不是更低成本、更高融合质量的证据：这里的组合质量是成员参考偏差中位数，**不是新合成标注的质量**；覆盖对象也包括组合自身已观察成员。真正的外部未观察人员覆盖另见固定十人窗口结果。没有自动融合、补点或更改任何人工几何。''');add(link('E/fixed_number_marginal_matched_compositions.csv'));add(link('E/number_effect_same_images.csv'))
+ add('''## 7. 哪些层或模型提供了信息，哪些结果主要暴露模型偏差？
+
+HoHoNet 比较 encoder_stage2／stage4、compressed、refined、shared；Bi 比较 fc、fg_enclosed、fg_extended；uLayout 比较 compressed／transformer；DA3 比较完整输出层5／7／9／11。全局和 local16 都被实际测试，另有历史层、原始单旋转均值、相位标准差、六面全局拼接、局部条带矩等探索。DA3 全层包含归一化辅助半部的事实按导出验证处理，没有用删减后的半层冒充完整层。
+
+当前候选的训练侧选择按模型分开，结果如下，不能把每列的外层最小值再选为新“最优模型”。''')
+ z=read('C/training_selected_score_summary.csv');z=z[(z.design=='leave_building')&(z.algorithm=='ridge')&z.target.isin(list(NAMES)[:4])&z.feature.isin(['SEL_current_hohonet','SEL_current_bilayout','SEL_current_ulayout','SEL_current_da3','SEL_historical_inductive_layers'])];add(table(z.pivot(index=['condition','feature'],columns='target',values='image_MAE').rename(columns=NAMES).reset_index()));add(link('C/training_selected_layers.csv'))
+ add('''Manual 参考偏差中，一个固定候选 Bi fg_enclosed/global 的 MAE 为0.0484，但它是固定候选的外层描述，不能代替训练侧选层实际结果0.0511。Manual 结构目标中，HoHoNet compressed/global 的优势更稳定；新增相位标准差 kNN 的外层0.2291优于0.2487的原候选选择，但其新增选择的配对区间跨零，暂不宣布可靠增益。
+
+“局部更好”也不是普遍结论：Manual 的部分局部汇聚更差；Semi 局部候选相对某些很差的全局候选有改善，却仍未必超过常数基线。DA3 local16 是每透视面的条带，不是全景统一方位；不能拼接后解释为真实空间对应。
+
+原始预测与后处理必须分开：HoHoNet 有23/648图在旋转后后处理点数变化，Bi enclosed/extended 分别104/124图。`B6ByNegPMKs_bdc0695537064383b5cc5dbcff2a0b99` 的90°阶段有立方体回退，不能把点数变化全部归为图像不确定性。uLayout 未训练的角点 logits 不被用来预测拓扑点数。
+
+Bi 两头边界差异中位数只有0.000658，多数图并没有强范围策略响应。在“人工和两头点数相同、两头差异≥0.01”的严格可解释对照下，Manual 仅5图24条响应，Semi仅2图8条响应；远不足以把人类分歧系统地归因于范围策略。
+
+旧 d_t 的实际分数与参考池不可验证，没有使用；历史冻结参考距离另列探索，不能保证对当前留出图的归纳有效性，因此不进入主要训练侧表征选择。预训练时是否见过当前物理房间也无法由这份工作包彻底排除；“留楼预测人类目标”不等于证明视觉模型从未见过该楼。
+''')
+ add('''## 8. 反例、来源冲突和当前不支持的解释
+
+### 8.1 模型与人类可以相反
+
+反例阈值在目标楼之外取模型／人工分歧的25%和75%分位，而不是看测试图后自定阈值。“模型一致”在这里仅指相对低分歧，并非模型绝对相同或正确。采用 Bi enclosed 的三架构边界比较，Manual 的点数分歧有5图“模型低分歧、人高分歧”，7图反向；同点数波动则为2图与6图。Semi 对应也均存在。两种 Bi 策略的全部反例和中间象限都保留。
+
+`uNb9QFRL6hY_3b9e548b46af4410b97e1d12781ec3c9`：24人，点数分歧0.7319，模型边界分歧0.0193。`B6ByNegPMKs_ee063d1562c147f586ebb9f6fdb05ca6`：5人，点数分歧0，模型分歧0.0713。前者不能由模型一致宣布人错；后者的点数一致也不能代替几何一致性。
+
+### 8.2 历史 Semi 不能统一解释为同一个模型初始化实验
+
+P1 自然控制、自然 trap、合成扰动分别分析。当前参考下的平均净偏差变化约−0.0117、+0.0196、−0.0211，但合成任务的设计参考不必等于当前公共参考，不能把这些数直接解释成任务成功率或模型因果效应。
+
+C1 的旧字段写“缺少初始化”，新追溯记录却验证了 planned import payload。进一步核对，来源指向 `export_label/groudTruth.json:data.vis_3d -> formal_import:_prediction_from_vis`，不是已绑定 checkpoint 的模型推理。计划载荷可核实不等于已核实当时界面展示事件。因此 C1 只能单列研究编辑和来源，不以“初始偏差近零、最后更差”证明模型辅助伤害质量。
+
+还对 B 画像轴改用仅 P1 自然初始化作了敏感性。某些联合类别很容易改变：QTB 二组完整来源与自然来源的跨折 ARI 中位数约−0.036；单 B 二组却可保持1.0。必须区分“来源变化敏感性”和“不重叠楼宇复现性”，后者的 B 二组依然很弱。
+
+### 8.3 材料冲突裁决
+
+`AGENTS.md` 在冻结版本的完整跟踪清单中不存在；并非凭一次404假设没有权限。遵循工作包 README、评价合同及本次用户的更严格要求，不创建虚假的 AGENTS 内容。旧 coverage 记录与新 visual_traits/resolution_recheck 冲突时，以已核对的648图/21图实际文件为准；新旧版本与 SHA 保留。
+
+模型 run_status 的 complete 只证明运行覆盖。DA3 的最终完整层验证优先于中途 aux_compaction 未完成记录；该审计不把推理成功升级为物理正确。DINOv3 作者拒绝访问，零图运行，无补造、无替代。''');add(link('B/cross_fitted_counterexample_quadrants.csv'));add(link('B/historical_semi_resolved_sources.csv'));add(link('B/initialization_source_conflicts.csv'));add(link('E/B_source_sensitivity_type_ARI.csv'))
+ add('''## 9. 本地看图清单与各路线交付
+
+本地清单按 image_id、具体疑问、触发条件、数值依据和优先级列出。它包括模型／人工反向例、立方体回退、Bi 两头真正分离、近常量 AI 字段少数例、原分辨率复核冲突、多点数／同点数多模式，以及预测深度自一致但相机刚性失败的配对。
+
+应首先确认：不同几何模式是否都是合理边界／范围解释；单人模式是否为有效但未获支持的解释；共同人员视角差异是否来自真实信息增减；门洞是否真是可通行开口而非窗或反射；模型的深度对应是否落在同一真实表面。不能由参考、模型或多数投票预先裁决。''');add(link('local_image_review_queue.csv'))
+ route=[['A','648画像；Manual187/Semi43结果；30同房对/108共同人员比较','覆盖、共现、冗余、图级预测、共同人员视角对照','画像测量不足；关键可变特质对照缺失','A/'],['B','648模型反馈；Manual187/Semi43；历史Semi538主响应','旋转、后处理、模型差异、Bi两策略、历史初始与来源敏感性','模型一致反例；Bi可解释对照仅5/2图；C1来源限制','B/'],['C','214真人相关画像；29当前预列候选＋历史与新增汇聚','72总特征方案，训练内PCA/调参/选层，单模型与组合','无统一最优；Semi多目标不改善；DINO/d_t不可用','C/'],['D','316联合配对；180关系合格；真人历史辅助覆盖31/40等','坐标/尺度/相机审计，预测深度敏感性，真人历史与非几何辅助预测','0/180通过20°必要检查；信息补足无法认证','D/'],['E','24主分析人员；16信息组合；96,756真实子集','楼外画像、连续/分类/无分型、组数、交互、匹配构成与人数','速度差异可靠；稳定类别及异质组合普适收益未证实','E/']]
+ add(table(pd.DataFrame(route,columns=['路线','实际覆盖','执行内容','失败或边界','结果目录'])))
+ add('''## 10. 建议优先推进什么，以及目前不能支持什么
+
+**第一优先：预测给定标注预算下的未覆盖结构／几何分布，而不是寻找一个万能稳定人数。** 当前 B 在固定十人窗口的外层预测有实质增量，可同时保留点数结构、同点数几何、支持多模式及单人模式。下一步应在未参与画像拟合的房间、真实新人员上做前瞻检查，事先规定参考范围和主要有限预算目标；不能沿用本次外层结果反复挑图、挑阈值后再当确认性结果。
+
+**第二优先：用连续人员成本差异支持预算条件决策，暂不把固定类型作为核心机制。** 速度排序及留出相对时间可复现，人员组成对图级耗时也有独立增量；质量、规则、范围与系统偏差要保持分轴。任何分配收益都还需要实际对照，当前没有证明同时降低总成本并提高融合质量，更没有证明四类型混合优于其他构成。
+
+**第三优先：把图片画像测量和范围语义补实，再解释交互。** 现有 A 不是因果链的合格测量层。优先在已列数值反例中进行独立人工复核，明确定义遮挡程度、真实边界可见比例、门洞连通性、范围解释；保留未知及合理多解。检查“相同粗标签却同人员结果差异很大”的真实视角对，比泛化增加一个近常量标签更有价值。
+
+DA3 联合几何目前不宜作为空间补足主线证据。非几何面表征可以保留为预测比较，但正确的尺度／相机约束和真实空间对应应另行验证。DINOv3、旧 d_t 的不可用不能用其他输出冒名补齐。
+
+本轮不能支持：新人的精确稳定人数、所有多簇都合理或错误、模型一致即GT、固定四类人员、图像特质的因果效应、同房一定更容易迁移、已达可靠三维信息补足，以及实验成功概率或论文录用概率。也不能把本次推荐当成已经与导师冻结的最终论文主线。
+
+## 11. 可复算交付与测试记录
+
+`EXECUTION_MANIFEST.json` 保留输入提交、方法版本、源文件 SHA、环境、72个特征方案及完整执行清单；`inputs/NUMERIC_TRANSPORT_MANIFEST.json` 保留原模型数组哈希与无推理的数值转运口径。`prediction/completed_feature_inventory.csv` 是最终完整清单，增量运行中的 run_status.json 只对应最后一批，不可替代全清单。
+
+逐响应在 human/response_metrics；逐图在 human/image_outcomes；逐人画像、类别和真实组合在 E/；各外层预测及内层选参在 prediction/；全部阈值和人数曲线在 stability/。数据字典与执行命令见 `REPRODUCE.md`。648图画像不用于填充没有真人结果的监督标签。
+
+测试实际结果：新增数值、训练侧隔离、真实人员、点数分簇等测试通过；既有测试中一项依赖工作包外 `analysis_results/spatial_dimensions_review_20260913_v2/空间描述与历轮人工记录.json`，该文件不在此次只读快照，故明确记录为环境缺件失败，不伪称全部通过。详细测试数量、原始输出和 XML 见 tests/。
+
+此前运行中修复了一个私有辅助函数显式导入问题、PCA字符串None读取为缺失的汇总问题、空表缺列头、人员特征维度元数据及方法JSON存放路径；重新计算／核对的最终表保留。没有以程序错误为由删除困难样本或替换固定划分。
+
+主要输入出处均为本仓库冻结版本的原始证据：工作包 README、evaluation/config.json 与 metrics.md、prompts/A–E、human 响应／参考／时间追溯／初始化、metadata 关系与画像、visual 两个版本、各模型 manifest/run_status/validation、history 画像轴与特征。指标实现复用 `audit_annotation_research_data_20260905.py` 的几何实现；人员效应沿用已归档的任务截距消除数值实现并作训练侧隔离测试。报告中的新增探索、实测值和解释性假设已经分开，未引用未阅读论文代替本轮结果。
+''')
+ (OUT/'REPORT_ZH.md').write_text('\n'.join(parts),encoding='utf-8')
+ print('REPORT bytes', (OUT/'REPORT_ZH.md').stat().st_size)
+if __name__=='__main__':main()

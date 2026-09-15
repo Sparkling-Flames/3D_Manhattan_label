@@ -1,0 +1,82 @@
+feature,dimension,n_images,model,pooling,candidate_kind
+hohonet__encoder_stage2__global,256,106,hohonet,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+hohonet__encoder_stage2__regions,4096,106,hohonet,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+hohonet__encoder_stage4__global,1024,106,hohonet,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+hohonet__encoder_stage4__regions,16384,106,hohonet,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+hohonet__compressed__global,2048,106,hohonet,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+hohonet__compressed__regions,32768,106,hohonet,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+hohonet__refined__global,2048,106,hohonet,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+hohonet__refined__regions,32768,106,hohonet,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+hohonet__shared__global,512,106,hohonet,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+hohonet__shared__regions,8192,106,hohonet,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+hohonet__legacy_current,256,106,hohonet,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+bilayout__fc__global,1024,106,bilayout,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+bilayout__fc__regions,16384,106,bilayout,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+bilayout__fg_enclosed__global,1024,106,bilayout,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+bilayout__fg_enclosed__regions,16384,106,bilayout,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+bilayout__fg_extended__global,1024,106,bilayout,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+bilayout__fg_extended__regions,16384,106,bilayout,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+ulayout__compressed__global,2048,106,ulayout,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+ulayout__compressed__local16,32768,106,ulayout,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+ulayout__transformer__global,2048,106,ulayout,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+ulayout__transformer__local16,32768,106,ulayout,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__block3__panorama_global,1536,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__block3__panorama_local16,24576,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__block3__panorama_mean,768,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",new_pool_exploration
+dinov3__block3__faces_global,1536,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__block3__faces_local16,24576,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__block3__faces_concat,9216,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",new_pool_exploration
+dinov3__block6__panorama_global,1536,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__block6__panorama_local16,24576,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__block6__panorama_mean,768,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",new_pool_exploration
+dinov3__block6__faces_global,1536,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__block6__faces_local16,24576,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__block6__faces_concat,9216,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",new_pool_exploration
+dinov3__block9__panorama_global,1536,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__block9__panorama_local16,24576,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__block9__panorama_mean,768,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",new_pool_exploration
+dinov3__block9__faces_global,1536,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__block9__faces_local16,24576,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__block9__faces_concat,9216,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",new_pool_exploration
+dinov3__block11__panorama_global,1536,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__block11__panorama_local16,24576,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__block11__panorama_mean,768,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",new_pool_exploration
+dinov3__block11__faces_global,1536,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__block11__faces_local16,24576,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__block11__faces_concat,9216,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",new_pool_exploration
+dinov3__block12__panorama_global,1536,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__block12__panorama_local16,24576,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__block12__panorama_mean,768,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",new_pool_exploration
+dinov3__block12__faces_global,1536,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__block12__faces_local16,24576,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__block12__faces_concat,9216,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",new_pool_exploration
+dinov3__cls__panorama,768,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__cls__faces_global,768,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+dinov3__cls__faces_concat,4608,106,dinov3,"face means/ordered concat are declared numeric pooling, not additional captures",new_pool_exploration
+da3__layer5__faces_global,1536,106,da3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+da3__layer5__faces_local16,24576,106,da3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+da3__layer5__faces_concat,9216,106,da3,"face means/ordered concat are declared numeric pooling, not additional captures",new_pool_exploration
+da3__layer7__faces_global,1536,106,da3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+da3__layer7__faces_local16,24576,106,da3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+da3__layer7__faces_concat,9216,106,da3,"face means/ordered concat are declared numeric pooling, not additional captures",new_pool_exploration
+da3__layer9__faces_global,1536,106,da3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+da3__layer9__faces_local16,24576,106,da3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+da3__layer9__faces_concat,9216,106,da3,"face means/ordered concat are declared numeric pooling, not additional captures",new_pool_exploration
+da3__layer11__faces_global,1536,106,da3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+da3__layer11__faces_local16,24576,106,da3,"face means/ordered concat are declared numeric pooling, not additional captures",prespecified_layer_numeric_pool
+da3__layer11__faces_concat,9216,106,da3,"face means/ordered concat are declared numeric pooling, not additional captures",new_pool_exploration
+feedback__all,25,106,numeric_feedback,explicit per-panorama summaries; not truth or convergence,followup_feedback
+feedback__point_counts,3,106,numeric_feedback,explicit per-panorama summaries; not truth or convergence,followup_feedback
+feedback__rotation,4,106,numeric_feedback,explicit per-panorama summaries; not truth or convergence,followup_feedback
+feedback__between_models,6,106,numeric_feedback,explicit per-panorama summaries; not truth or convergence,followup_feedback
+feedback__bi_scope,2,106,numeric_feedback,explicit per-panorama summaries; not truth or convergence,followup_feedback
+feedback__da3,4,106,numeric_feedback,explicit per-panorama summaries; not truth or convergence,followup_feedback
+dinov3__block3__faces_local96,147456,106,dinov3,ordered 6 faces x 16 local strips x full channel mean/std; not additional capture positions,full_local_prespecified_layers_followup_pooling
+dinov3__block6__faces_local96,147456,106,dinov3,ordered 6 faces x 16 local strips x full channel mean/std; not additional capture positions,full_local_prespecified_layers_followup_pooling
+dinov3__block9__faces_local96,147456,106,dinov3,ordered 6 faces x 16 local strips x full channel mean/std; not additional capture positions,full_local_prespecified_layers_followup_pooling
+dinov3__block11__faces_local96,147456,106,dinov3,ordered 6 faces x 16 local strips x full channel mean/std; not additional capture positions,full_local_prespecified_layers_followup_pooling
+dinov3__block12__faces_local96,147456,106,dinov3,ordered 6 faces x 16 local strips x full channel mean/std; not additional capture positions,full_local_prespecified_layers_followup_pooling
+da3__layer5__faces_local96,147456,106,da3,ordered 6 faces x 16 local strips x full channel mean/std; not additional capture positions,full_local_prespecified_layers_followup_pooling
+da3__layer7__faces_local96,147456,106,da3,ordered 6 faces x 16 local strips x full channel mean/std; not additional capture positions,full_local_prespecified_layers_followup_pooling
+da3__layer9__faces_local96,147456,106,da3,ordered 6 faces x 16 local strips x full channel mean/std; not additional capture positions,full_local_prespecified_layers_followup_pooling
+da3__layer11__faces_local96,147456,106,da3,ordered 6 faces x 16 local strips x full channel mean/std; not additional capture positions,full_local_prespecified_layers_followup_pooling

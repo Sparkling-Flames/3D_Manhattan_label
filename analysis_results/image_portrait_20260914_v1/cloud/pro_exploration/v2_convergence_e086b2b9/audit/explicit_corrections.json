@@ -1,0 +1,31 @@
+[
+  {
+    "issue": "invalid-person mismatch in matched controls",
+    "affected_rows": 51,
+    "resolution": "exclude ONLY unmatched contrast; all original target groups and invalid flags retained; source corrected; pre-correction table retained"
+  },
+  {
+    "issue": "side means used different finite permutation subsets",
+    "affected_images_metrics": 15,
+    "resolution": "delta remains paired; side means setNA in summary when not recoverable from exported image table; native one-side means not presented as paired"
+  },
+  {
+    "issue": "overstrong distinct-physical-room donor name",
+    "files": [
+      "transfer/room_scene_process_predictions.csv",
+      "transfer/paired_process_transfer.csv",
+      "transfer/coverage_failures.csv"
+    ],
+    "resolution": "renamed to other supported component; treated as building baseline, not verified separate physical room"
+  },
+  {
+    "issue": "single-building CI not estimable",
+    "files": [
+      {
+        "file": "transfer/paired_process_transfer.csv",
+        "rows": 2
+      }
+    ],
+    "resolution": "retain point estimate and n; CI=NA when groups<2; common function fixed"
+  }
+]

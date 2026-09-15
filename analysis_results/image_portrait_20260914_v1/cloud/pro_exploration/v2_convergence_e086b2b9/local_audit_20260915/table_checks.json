@@ -1,0 +1,527 @@
+{
+  "status": "passed",
+  "scope": "Table reaggregation and intervals, not full model refitting",
+  "counts": {
+    "manual": {
+      "responses": 1634,
+      "images": 187
+    },
+    "oos": {
+      "responses": 216,
+      "images": 9
+    },
+    "semi": {
+      "responses": 538,
+      "images": 43
+    }
+  },
+  "structure": {
+    "manual": {
+      "images": 187,
+      "supported_multiple": 58,
+      "same_point_multiple": 38,
+      "supported_minority": 34
+    },
+    "semi": {
+      "images": 43,
+      "supported_multiple": 16,
+      "same_point_multiple": 11,
+      "supported_minority": 15
+    }
+  },
+  "checked_intervals": [
+    {
+      "table": "process/quality_change_summary.csv",
+      "key": [
+        "manual"
+      ],
+      "paired_mean": -0.0016852611805701617,
+      "interval": [
+        -0.009542494839877083,
+        0.006618601189988281
+      ]
+    },
+    {
+      "table": "process/quality_change_summary.csv",
+      "key": [
+        "semi"
+      ],
+      "paired_mean": -0.003161066467479212,
+      "interval": [
+        -0.008126250581630797,
+        0.0010191424484277392
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "manual",
+        "B",
+        "fixed_future_cov"
+      ],
+      "paired_mean": 0.007856662800631761,
+      "interval": [
+        -0.015577769970842256,
+        0.030156761153892337
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "manual",
+        "B",
+        "mode_entropy"
+      ],
+      "paired_mean": -0.006665360283516398,
+      "interval": [
+        -0.0431794870442271,
+        0.037964149992123324
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "manual",
+        "B",
+        "same_topology_median_d"
+      ],
+      "paired_mean": 0.002768363907879231,
+      "interval": [
+        -0.005088454278438915,
+        0.01213393572352279
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "manual",
+        "B",
+        "topology_disagreement"
+      ],
+      "paired_mean": -0.0019016565456292022,
+      "interval": [
+        -0.023416133891867877,
+        0.0208212832081832
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "manual",
+        "Q",
+        "fixed_future_cov"
+      ],
+      "paired_mean": -0.008348155546221538,
+      "interval": [
+        -0.02441560892723439,
+        0.011167978632566999
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "manual",
+        "Q",
+        "mode_entropy"
+      ],
+      "paired_mean": 0.04440025429271204,
+      "interval": [
+        0.011627276833638537,
+        0.07120581798443311
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "manual",
+        "Q",
+        "same_topology_median_d"
+      ],
+      "paired_mean": 0.01595377497369594,
+      "interval": [
+        0.005679185874153936,
+        0.029468230980414498
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "manual",
+        "Q",
+        "topology_disagreement"
+      ],
+      "paired_mean": 0.03722408507347296,
+      "interval": [
+        0.010991888599877816,
+        0.058568822018057125
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "manual",
+        "S",
+        "fixed_future_cov"
+      ],
+      "paired_mean": 0.0026630576797320674,
+      "interval": [
+        -0.011156141021676254,
+        0.013524449107175146
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "manual",
+        "S",
+        "mode_entropy"
+      ],
+      "paired_mean": -0.015943855595324772,
+      "interval": [
+        -0.03634898261111333,
+        0.008785531214041848
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "manual",
+        "S",
+        "same_topology_median_d"
+      ],
+      "paired_mean": -0.009177347594935088,
+      "interval": [
+        -0.016236921637824295,
+        -0.004171904492618447
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "manual",
+        "S",
+        "topology_disagreement"
+      ],
+      "paired_mean": 0.004609285573082833,
+      "interval": [
+        -0.015968468746548885,
+        0.026448457950910793
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "manual",
+        "T",
+        "fixed_future_cov"
+      ],
+      "paired_mean": -0.002466696067081645,
+      "interval": [
+        -0.026295045643664045,
+        0.02824417772639564
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "manual",
+        "T",
+        "mode_entropy"
+      ],
+      "paired_mean": 0.007678173584942422,
+      "interval": [
+        -0.045721151247195765,
+        0.051365699843936075
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "manual",
+        "T",
+        "same_topology_median_d"
+      ],
+      "paired_mean": 0.010688189733984945,
+      "interval": [
+        -1.3644344490883556e-05,
+        0.023884738334099154
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "manual",
+        "T",
+        "topology_disagreement"
+      ],
+      "paired_mean": -0.004735627469930966,
+      "interval": [
+        -0.029443168847342195,
+        0.01652342985755805
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "semi",
+        "B",
+        "fixed_future_cov"
+      ],
+      "paired_mean": -0.04100580688020612,
+      "interval": [
+        -0.08159644087690535,
+        -0.009315690104590796
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "semi",
+        "B",
+        "mode_entropy"
+      ],
+      "paired_mean": 0.10661783873997112,
+      "interval": [
+        0.039476329096751146,
+        0.19300623994090493
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "semi",
+        "B",
+        "same_topology_median_d"
+      ],
+      "paired_mean": 0.017407735579108668,
+      "interval": [
+        0.0027478693922844697,
+        0.04455178202533973
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "semi",
+        "B",
+        "topology_disagreement"
+      ],
+      "paired_mean": 0.059327776967132775,
+      "interval": [
+        0.003346351724910218,
+        0.1276111276653692
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "semi",
+        "Q",
+        "fixed_future_cov"
+      ],
+      "paired_mean": -0.01333247505963889,
+      "interval": [
+        -0.0310160430276864,
+        -0.00036498373019291366
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "semi",
+        "Q",
+        "mode_entropy"
+      ],
+      "paired_mean": 0.021551376047203887,
+      "interval": [
+        -0.00020585521142688098,
+        0.05570611700865369
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "semi",
+        "Q",
+        "same_topology_median_d"
+      ],
+      "paired_mean": 0.01037838793120611,
+      "interval": [
+        0.005366364952309783,
+        0.02038916881356512
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "semi",
+        "Q",
+        "topology_disagreement"
+      ],
+      "paired_mean": -0.0008864787347172214,
+      "interval": [
+        -0.01366372733662618,
+        0.0076974717109341015
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "semi",
+        "S",
+        "fixed_future_cov"
+      ],
+      "paired_mean": -0.019102223679771227,
+      "interval": [
+        -0.055949323761600014,
+        0.018691146113710852
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "semi",
+        "S",
+        "mode_entropy"
+      ],
+      "paired_mean": 0.01388012320626528,
+      "interval": [
+        -0.02772301731193352,
+        0.04869242946381005
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "semi",
+        "S",
+        "same_topology_median_d"
+      ],
+      "paired_mean": 0.003241194293933,
+      "interval": [
+        -0.0016498838838955427,
+        0.00806180734575113
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "semi",
+        "S",
+        "topology_disagreement"
+      ],
+      "paired_mean": -0.004919672437961667,
+      "interval": [
+        -0.016467878043279774,
+        0.003330508855487286
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "semi",
+        "T",
+        "fixed_future_cov"
+      ],
+      "paired_mean": -0.00395528327458839,
+      "interval": [
+        -0.009711813714232666,
+        -0.00025811248021862486
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "semi",
+        "T",
+        "mode_entropy"
+      ],
+      "paired_mean": 0.008626798313695002,
+      "interval": [
+        -0.0016768885575919102,
+        0.027089590251083578
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "semi",
+        "T",
+        "same_topology_median_d"
+      ],
+      "paired_mean": 0.003827207046409667,
+      "interval": [
+        -0.0002322099214173577,
+        0.011668752112437494
+      ]
+    },
+    {
+      "table": "combinations/fixed_future_paired_summary.csv",
+      "key": [
+        "semi",
+        "T",
+        "topology_disagreement"
+      ],
+      "paired_mean": 0.0009737869598321941,
+      "interval": [
+        -0.004921955702793676,
+        0.01271727739617806
+      ]
+    },
+    {
+      "table": "prefix/paired_increments.csv",
+      "target": "manual k3 prefix_future_mass_TV",
+      "n": 133,
+      "method_MAE": 0.20068498763956125,
+      "baseline_MAE": 0.24362876463565636,
+      "paired_mean": -0.04294377699609508,
+      "interval": [
+        -0.0655768260758031,
+        -0.014728814164573353
+      ]
+    },
+    {
+      "table": "strict_cold/paired_increments.csv",
+      "target": "manual stable_G10 scene ridge vs constant",
+      "n": 42,
+      "paired_mean": -0.054019973648978335,
+      "interval": [
+        -0.09894375308878697,
+        -0.021981827307057007
+      ]
+    }
+  ],
+  "windows": {
+    "manual": {
+      "images": 46,
+      "tail3_frequency_pass": 0.7873913043478261,
+      "last_half_frequency_pass": 0.3010869565217391,
+      "disjoint_halves_frequency_pass": 0.19543478260869562
+    },
+    "semi": {
+      "images": 18,
+      "tail3_frequency_pass": 0.9672222222222222,
+      "last_half_frequency_pass": 0.3772222222222222,
+      "disjoint_halves_frequency_pass": 0.2427777777777778
+    }
+  },
+  "mode_2_of_24_at_k8": {
+    "seen": 0.5652173913043479,
+    "supported": 0.10144927536231885
+  },
+  "onset_inconsistent_window": {
+    "rows": 1481,
+    "image_condition_units": 45,
+    "all_current_changes_rows": 2601,
+    "meaning": "Different windows: nonempty retrospective suffix onset is not certification under the tail G10 state"
+  },
+  "class_unions": {
+    "total": 396,
+    "both_unified80": 22,
+    "both_unified_to_multiple80": 0
+  },
+  "visual_queue": {
+    "questions": 112,
+    "images": 62
+  }
+}

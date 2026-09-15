@@ -1,0 +1,36 @@
+{
+  "version": "followup_v2_prefix_recluster_20260914",
+  "orders": 100,
+  "seed": 20260914,
+  "cuts": [
+    0.05,
+    0.1,
+    0.2
+  ],
+  "states": [
+    "observed_unified",
+    "stable_multicluster",
+    "current_changes",
+    "cannot_judge_low_n",
+    "cannot_judge_singletons",
+    "cannot_judge_invalid"
+  ],
+  "min_n_for_two_observed_transition_check": 4,
+  "tail_window": "last min(3,n-2) transitions, no requirement to collect beyond actual n",
+  "rules": [
+    "P_pattern",
+    "D10_distribution",
+    "D20_distribution",
+    "G10_geometry"
+  ],
+  "TV_reference": "full observed partition, retrospective only",
+  "supported_cluster": "at least2 distinct actual workers",
+  "singleton_mass_threshold": 0.1,
+  "geometry_drift": 0.02,
+  "partition_coassignment_drift": 0.05,
+  "real_chronology_available": false,
+  "pooling": "Manual/Semi separate, same-worker duplicate forbidden; context-specific sensitivity follows",
+  "quality": "actual medoid reference error, not majority truth, not automatic fusion",
+  "future_coverage": "complementary people only; terminal n returns NA",
+  "onset": "finite observed sustained interval, not a stopping guarantee"
+}

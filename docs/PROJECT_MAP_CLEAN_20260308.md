@@ -1,6 +1,15 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
+Pro资料整理：入口为`analysis_results/image_portrait_20260914_v1/PRO_START_HERE.md`。最新主空间结果保留于`cloud/difficulty_tags_20260915_v1/mainspace_v1_9d19e4e7/`，对应`difficulty_stratified_*.py`、`difficulty_history_*.py`和`tests/test_difficulty_stratified_followup.py`；依赖快照为根目录`requirements-mainspace.txt`。旧v1/v2原路径保留，新续研另开版本输出。
+
+
 图片画像探索：`tools/thesis_main/analysis/image_portrait/`生成[648图数值工作包](../analysis_results/image_portrait_20260914_v1/README.md)，测试位于`tests/test_image_portrait_*.py`。原图/权重/高维空间数组仅本地保留，云端A–E通过数值与文字分析；不修改正式协议。
+
+当前阶段：[历史作答难度粗分类与图片联系的Pro续研任务](thesis_main/历史作答难度粗分类续研任务_20260915.md)。旧实验difficulty字段停用；[106张人工tag来源和覆盖](../analysis_results/image_portrait_20260914_v1/difficulty_tags_20260915_v1/README.md)保留作独立对照。`difficulty_tags.py`与`tests/test_image_portrait_difficulty_tags.py`仍服务原标签整理，未改为历史粗分类器；新数值研究尚未执行。
+
+主空间返回结果的[逻辑审查](thesis_main/主空间与历史粗分层逻辑复核_20260915.md)及定向证据保存在`analysis_results/image_portrait_20260914_v1/mainspace_logic_review_20260915/`。该目录只保留原报告正文和审查记录，不表示整包迁移或正式方法变更。
+
+Pro返回结果：`analysis_results/image_portrait_20260914_v1/cloud/pro_exploration/`保存收到的v1和v2；`tools/thesis_main/analysis/image_portrait/pro_*.py`、`convergence_v2_*.py`为返回代码。接收方检查为`audit_pro_convergence_return_20260915.py`及v2下`local_audit_20260915/`，说明见[本地复核](thesis_main/Pro收敛续研复核_20260915.md)。未迁入无关旧仓库副本，未覆盖当前视觉模型提取器。
 
 研究当前入口：`docs/thesis_main/研究现状交接_20260913.md`。库存脚本`tools/thesis_main/analysis/audit_history_inventory_20260913.py`逐条回查canonical与18份原导出，生成当前v2结果目录`全量历史与本轮覆盖核对.json/.csv`，区分全量历史、采用子集及新增计划。旧9月9日交接保留为历史。
 

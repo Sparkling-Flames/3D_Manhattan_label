@@ -1,0 +1,169 @@
+{
+  "input_commit": "e086b2b94d60b8a858a71f0326f12930538fe4fe",
+  "method_version": "convergence_followup_v2_20260914",
+  "python": "3.13.5",
+  "packages": {
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scipy": "1.17.0",
+    "scikit-learn": "1.8.0",
+    "statsmodels": "0.14.6",
+    "shapely": "2.1.2",
+    "pytest": "9.0.2",
+    "matplotlib": "3.10.8",
+    "mistune": "3.2.1",
+    "tabulate": "0.10.0",
+    "Pillow": "12.3.0",
+    "pydantic": "2.13.4",
+    "requests": "2.32.5"
+  },
+  "seed": 20260914,
+  "source": [
+    {
+      "path": "tools/thesis_main/analysis/image_portrait/convergence_v2_combinations.py",
+      "sha256": "25822f8c291e297cefd0b3ffd8b0bb7d0867c65552fb3e769bb2bb37ddabde37",
+      "bytes": 8637
+    },
+    {
+      "path": "tools/thesis_main/analysis/image_portrait/convergence_v2_common.py",
+      "sha256": "bcfcd0d8c5a21cfe69900c3789d0abf6975024748d6b73356b4f29692615aedb",
+      "bytes": 2996
+    },
+    {
+      "path": "tools/thesis_main/analysis/image_portrait/convergence_v2_context.py",
+      "sha256": "288cf7b02e4fe41d88665ee91e73828db455413b6f659f4d3d1f3cfc7955db65",
+      "bytes": 15889
+    },
+    {
+      "path": "tools/thesis_main/analysis/image_portrait/convergence_v2_deep_groups.py",
+      "sha256": "75b25fe3ff4ae09e317ea1366389e442b7d57d82528ad223b7fa3179ea93a3f9",
+      "bytes": 12692
+    },
+    {
+      "path": "tools/thesis_main/analysis/image_portrait/convergence_v2_deliver.py",
+      "sha256": "4c61643df6c0c4b226de92cd44f47e8d9161d36e4a6a19c992b32359f3308694",
+      "bytes": 39389
+    },
+    {
+      "path": "tools/thesis_main/analysis/image_portrait/convergence_v2_figures.py",
+      "sha256": "cb95689e0b3d1386494f42fd188515ca321f494fa317b2d58f45d1d7883d4490",
+      "bytes": 6758
+    },
+    {
+      "path": "tools/thesis_main/analysis/image_portrait/convergence_v2_finalize.py",
+      "sha256": "403855c1987c8a4be8e57ff1c77430a98dc9c800b9d189ebd513e9743755e6cb",
+      "bytes": 8946
+    },
+    {
+      "path": "tools/thesis_main/analysis/image_portrait/convergence_v2_interpret.py",
+      "sha256": "0d013cdad949d3b90b231890f0a9c29ca0accf55325a6d8b7f86731f9dafb8f1",
+      "bytes": 9810
+    },
+    {
+      "path": "tools/thesis_main/analysis/image_portrait/convergence_v2_mode_latency.py",
+      "sha256": "24700cfbf543f8c700cc4fe17fa0bac46e309f32f16eb65151d692fd4654bf86",
+      "bytes": 3207
+    },
+    {
+      "path": "tools/thesis_main/analysis/image_portrait/convergence_v2_package.py",
+      "sha256": "742d96355870f78f9ee9ed8840aaa6fe8e14c29dbba8825aec5111562c875406",
+      "bytes": 7546
+    },
+    {
+      "path": "tools/thesis_main/analysis/image_portrait/convergence_v2_partition_audit.py",
+      "sha256": "9868386ac0903ed081c70410af6f053e80ce0983914333a558df05d87241c0af",
+      "bytes": 5841
+    },
+    {
+      "path": "tools/thesis_main/analysis/image_portrait/convergence_v2_prediction.py",
+      "sha256": "bcfc55544d9e7fb042834349ec6a5d1fea37d1804f90295d0979b2773f4a3220",
+      "bytes": 12297
+    },
+    {
+      "path": "tools/thesis_main/analysis/image_portrait/convergence_v2_prefix.py",
+      "sha256": "0b84ac39501d78ee8881be8f7be682d04e528477e155a39b1dbeaecdf5a13230",
+      "bytes": 8249
+    },
+    {
+      "path": "tools/thesis_main/analysis/image_portrait/convergence_v2_prepare.py",
+      "sha256": "6598b68087bc3a61fe47341caba49f256e8c6d4c8e686962f3d25768ca11d764",
+      "bytes": 4236
+    },
+    {
+      "path": "tools/thesis_main/analysis/image_portrait/convergence_v2_process.py",
+      "sha256": "d673c5a5d7a917351129f259ed0d5dcdd977d8372b476d51fbe3a64afff877e5",
+      "bytes": 11364
+    },
+    {
+      "path": "tools/thesis_main/analysis/image_portrait/convergence_v2_run.py",
+      "sha256": "d7010149bea374f782c2748b5e5bd2b37ed8ce71266c347ac16f85d63f012f07",
+      "bytes": 1743
+    },
+    {
+      "path": "tools/thesis_main/analysis/image_portrait/convergence_v2_strictcold.py",
+      "sha256": "00ca4af53ae888283e77c8c659e70e35245b392502cd1b7f8920f5321eab3487",
+      "bytes": 3216
+    },
+    {
+      "path": "tools/thesis_main/analysis/image_portrait/convergence_v2_subgroups.py",
+      "sha256": "540755e2b78d86d0b6eb6c4468515185c3142eca0b0780a3fcf7b89dcdb9e0ac",
+      "bytes": 13951
+    }
+  ],
+  "inputs": [
+    {
+      "path": "analysis_results/image_portrait_20260914_v1/human/responses.jsonl.gz",
+      "sha256": "4add760d1bd310137367d4f56ce9550a5e7d0f9f982ffaba9e9301fd00bd57a8",
+      "bytes": 591446
+    },
+    {
+      "path": "analysis_results/image_portrait_20260914_v1/human/references.jsonl.gz",
+      "sha256": "fde92c079d6f4cefcc5cdc0723a5097fe11c3cd01ecf607a4ee55112f3ef21cf",
+      "bytes": 55008
+    },
+    {
+      "path": "analysis_results/image_portrait_20260914_v1/human/time_source_checks.jsonl",
+      "sha256": "1d4749206cdcba8130642a8384dfe1371f76ce84f034cb5ba51d0d3e1641c285",
+      "bytes": 1137664
+    },
+    {
+      "path": "analysis_results/image_portrait_20260914_v1/evaluation/folds.jsonl.gz",
+      "sha256": "fb5df1fbdb1eeb0e7bbf9b07d7d3b48fa2ea187472254c067aaf7d3113a58f16",
+      "bytes": 605150
+    },
+    {
+      "path": "analysis_results/image_portrait_20260914_v1/evaluation/config.json",
+      "sha256": "40b4976fa492902291deb6d96566f39d3fcd24d119c1574de15b7adcba893288",
+      "bytes": 2294
+    },
+    {
+      "path": "analysis_results/image_portrait_20260914_v1/evaluation/metrics.md",
+      "sha256": "7c4b6ea51e83012f71f42432ea0a247eb8b366e516c4e39a79145c15255f4c6a",
+      "bytes": 3056
+    },
+    {
+      "path": "analysis_results/image_portrait_20260914_v1/metadata/spatial_history.jsonl.gz",
+      "sha256": "08bf319d570399ec6e55ee521c5f5cbcf58a8be34d50ee7c369381cdd51ef17b",
+      "bytes": 724078
+    },
+    {
+      "path": "analysis_results/image_portrait_20260914_v1/metadata/relationships.jsonl",
+      "sha256": "a2d104423d092fe45e93afc14d6c226da7b84c121e31897df009dcd54583777d",
+      "bytes": 171314
+    },
+    {
+      "path": "analysis_results/image_portrait_20260914_v1/history/worker_axes_historical.jsonl.gz",
+      "sha256": "909c90dcc262bfcdb51e5214372935d0ce9d4e6f73e90f9b909042f98b815085",
+      "bytes": 141791
+    }
+  ],
+  "old_result_files_preserved": 31,
+  "global_people_policy": "W011 retained; W019/W026 excluded",
+  "no_original_images_or_weights": true,
+  "new_vision_inference": false,
+  "independent_new_validation": false,
+  "github_submission": false,
+  "study_axis": "annotation_uncertainty_and_convergence",
+  "result_tables": "RESULT_FILE_MANIFEST.csv",
+  "tests": "tests/execution_final.log"
+}

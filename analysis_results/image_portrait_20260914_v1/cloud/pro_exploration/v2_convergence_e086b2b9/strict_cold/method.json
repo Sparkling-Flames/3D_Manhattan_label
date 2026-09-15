@@ -1,0 +1,19 @@
+{
+  "no_target_annotations": true,
+  "no_actual_valid_n_predictor": true,
+  "no_target_person_scores": true,
+  "targets": "Versioned finite-process outcomes at each image actual n; endpoint evaluation still depends on observed horizon.",
+  "fixed_features": [
+    "scene",
+    "scene_AI",
+    "model_points",
+    "model_feedback",
+    "C_hohonet_shared_global",
+    "C_da3_layer11_global",
+    "points_plus_shared"
+  ],
+  "selection": "same original25 building folds, inner21 scaler/PCA/Ridge/KNN grid",
+  "not_selected_by_current_outer_scores": true,
+  "relation_to_prior": "The earlier prediction/ analysis conditions on actual valid n; it is NOT strictly image-only. Keep both, never silently substitute.",
+  "followup_not_fresh_confirmation": true
+}

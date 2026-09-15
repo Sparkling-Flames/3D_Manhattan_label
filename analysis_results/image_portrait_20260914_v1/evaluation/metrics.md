@@ -2,6 +2,8 @@
 
 本合同只约束本图片画像探索，不替代正式 Paper A 合同。seed=20260914。
 
+2026-09-15续研说明：本版初始工作包未生成终点人数／粗难度标签；用户现授权另建[历史作答粗分类探索](../../../docs/thesis_main/历史作答难度粗分类续研任务_20260915.md)，以独立版本输出，不回写原始标签或冻结最终收敛判据。旧实验difficulty字段停用，106张用户人工tag仅作独立对照。下列既有身份、几何、条件隔离与训练侧处理要求继续适用，新增粗分类的定义和缺失状态须在新输出中明确记录。
+
 - 身份：以 image_id 关联，canonical_annotation_id 标记真实作答。同人同图多条件分开；重复版本不增加独立人数。
 - 几何：raw_points 保留原点序；effective_points 是已确认派生视图。主计算报告 reviewed 与不使用 imputed_point 两种覆盖。奇数点不能自动修复；无效和空响应单列。
 - 参考质量：复用 tools/thesis_main/analysis/audit_annotation_research_data_20260905.py 的 normalize_geometry、_dense_boundaries、_d_mask；d_mask=1-布局区域交并比，越低越接近参考。解析失败记不可计算。公共数据参考不是人工最终真值，单列来源；reference_not_geometry_ready、missing 和已知坏 GT 不计算质量。

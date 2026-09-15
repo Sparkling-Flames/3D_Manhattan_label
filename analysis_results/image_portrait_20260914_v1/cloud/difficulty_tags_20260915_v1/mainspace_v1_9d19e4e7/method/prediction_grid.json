@@ -1,0 +1,140 @@
+{
+  "grid": [
+    {
+      "algorithm": "ridge",
+      "pca": 0,
+      "alpha": 100.0,
+      "k": 0
+    },
+    {
+      "algorithm": "ridge",
+      "pca": 0,
+      "alpha": 10.0,
+      "k": 0
+    },
+    {
+      "algorithm": "ridge",
+      "pca": 0,
+      "alpha": 1.0,
+      "k": 0
+    },
+    {
+      "algorithm": "ridge",
+      "pca": 0,
+      "alpha": 0.1,
+      "k": 0
+    },
+    {
+      "algorithm": "knn",
+      "pca": 0,
+      "alpha": 0.0,
+      "k": 1
+    },
+    {
+      "algorithm": "knn",
+      "pca": 0,
+      "alpha": 0.0,
+      "k": 3
+    },
+    {
+      "algorithm": "knn",
+      "pca": 0,
+      "alpha": 0.0,
+      "k": 5
+    },
+    {
+      "algorithm": "ridge",
+      "pca": 16,
+      "alpha": 100.0,
+      "k": 0
+    },
+    {
+      "algorithm": "ridge",
+      "pca": 16,
+      "alpha": 10.0,
+      "k": 0
+    },
+    {
+      "algorithm": "ridge",
+      "pca": 16,
+      "alpha": 1.0,
+      "k": 0
+    },
+    {
+      "algorithm": "ridge",
+      "pca": 16,
+      "alpha": 0.1,
+      "k": 0
+    },
+    {
+      "algorithm": "knn",
+      "pca": 16,
+      "alpha": 0.0,
+      "k": 1
+    },
+    {
+      "algorithm": "knn",
+      "pca": 16,
+      "alpha": 0.0,
+      "k": 3
+    },
+    {
+      "algorithm": "knn",
+      "pca": 16,
+      "alpha": 0.0,
+      "k": 5
+    },
+    {
+      "algorithm": "ridge",
+      "pca": 32,
+      "alpha": 100.0,
+      "k": 0
+    },
+    {
+      "algorithm": "ridge",
+      "pca": 32,
+      "alpha": 10.0,
+      "k": 0
+    },
+    {
+      "algorithm": "ridge",
+      "pca": 32,
+      "alpha": 1.0,
+      "k": 0
+    },
+    {
+      "algorithm": "ridge",
+      "pca": 32,
+      "alpha": 0.1,
+      "k": 0
+    },
+    {
+      "algorithm": "knn",
+      "pca": 32,
+      "alpha": 0.0,
+      "k": 1
+    },
+    {
+      "algorithm": "knn",
+      "pca": 32,
+      "alpha": 0.0,
+      "k": 3
+    },
+    {
+      "algorithm": "knn",
+      "pca": 32,
+      "alpha": 0.0,
+      "k": 5
+    }
+  ],
+  "primary_selection": "inner leave-building image-macro cumulative Brier / ranked probability score",
+  "modes": [
+    "global",
+    "coarse",
+    "main"
+  ],
+  "probability_map": "clip to [1e-6,1] and renormalize; not a calibrated likelihood guarantee",
+  "followup": true,
+  "outer_split": "fixed leave-building membership from work package",
+  "seed": 20260915
+}

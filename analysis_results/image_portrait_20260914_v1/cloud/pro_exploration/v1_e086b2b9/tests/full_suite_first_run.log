@@ -1,0 +1,40 @@
+.........................F.                                              [100%]
+=================================== FAILURES ===================================
+___________________ test_visual_traits_identity_and_contract ___________________
+
+    def test_visual_traits_identity_and_contract():
+>       source=images()
+               ^^^^^^^^
+
+tests/test_image_portrait_visual_traits.py:6: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/thesis_main/analysis/image_portrait/visual_traits.py:10: in images
+    rows = json.loads(SOURCE.read_text(encoding='utf-8'))['images']
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.13/pathlib/_local.py:548: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/data/pro_exploration_work/repo/analysis_results/spatial_dimensions_review_20260913_v2/空间描述与历轮人工记录.json')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/data/pro_exploration_work/repo/analysis_results/spatial_dimensions_review_20260913_v2/空间描述与历轮人工记录.json'
+
+/usr/lib/python3.13/pathlib/_local.py:539: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_image_portrait_visual_traits.py::test_visual_traits_identity_and_contract - FileNotFoundError: [Errno 2] No such file or directory: '/mnt/data/pro_exploration_work/repo/analysis_results/spatial_dimensions_review_20260913_v2/空间描述与历轮人工记录.json'
+1 failed, 26 passed in 2.65s
