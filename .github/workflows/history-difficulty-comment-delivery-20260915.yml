@@ -1,0 +1,101 @@
+name: Historical difficulty final comment-audited delivery
+on:
+  push:
+    branches: [codex/image-portrait-20260914]
+    paths: [.github/workflows/history-difficulty-comment-delivery-20260915.yml]
+permissions:
+  contents: write
+jobs:
+  delivery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/image-portrait-20260914
+          fetch-depth: 1
+          filter: blob:none
+          lfs: false
+          sparse-checkout: |
+            tools
+            lib/misc
+            tests
+            analysis_results/image_portrait_20260914_v1/cloud/history_difficulty_20260915_v1
+            analysis_results/image_portrait_20260914_v1/cloud/pro_exploration/v2_convergence_e086b2b9/process
+            analysis_results/image_portrait_20260914_v1/cloud/pro_exploration/v2_convergence_e086b2b9/foundation/human
+            analysis_results/image_portrait_20260914_v1/cloud/difficulty_tags_20260915_v1/mainspace_v1_9d19e4e7/images
+            analysis_results/image_portrait_20260914_v1/metadata
+            analysis_results/image_portrait_20260914_v1/evaluation
+            analysis_results/image_portrait_20260914_v1/human
+            analysis_results/image_portrait_20260914_v1/visual
+            analysis_results/candidate_selection_review_20260913_v2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy==1.26.4 pandas==2.2.3 scipy==1.14.1 scikit-learn==1.5.2 shapely==2.0.7 pillow==10.4.0 opencv-python-headless==4.10.0.84 PyYAML==6.0.2 pytest==8.3.5 matplotlib==3.9.4 markdown==3.7 tabulate==0.9.0
+      - name: Audit source comments and exact endpoint expansion
+        run: |
+          python -m tools.thesis_main.analysis.image_portrait.history_difficulty_v1_comment_audit
+          python - <<'PY'
+          import pandas as pd,json
+          from tools.thesis_main.analysis.image_portrait.history_difficulty_v1_core import OUT,csv,js
+          a=pd.read_csv(OUT/'targets/continuous_targets.csv');e=pd.read_csv(OUT/'expert/independent_tags106.csv');expert=set(e.image_id);rows=[]
+          for condition,g in a.groupby('condition'):
+            for endpoint in ['cdf_early7','cdf_observed_by19','late_new_geometry','half_tv','singleton_mass','within_mode_median']:
+              z=g.dropna(subset=[endpoint]);rows.append({'condition':condition,'endpoint':endpoint,'images':z.image_id.nunique(),'outside_106_expert':len(set(z.image_id)-expert),'valid_record_only_images':z.loc[z.n_invalid==0,'image_id'].nunique(),'buildings':z.building.nunique()})
+          csv('targets/continuous_endpoint_expansion.csv',rows)
+          c=pd.read_csv(OUT/'E/same_room_exact_common_people.csv');d=c[c.n_common>=4]
+          comparisons=[]
+          for k in ['point_count_disagreement','singleton_mass','p_early7','p_by19','late_new']:
+            x=d[[k+'_a',k+'_b']].dropna();comparisons.append({'measure':k,'paired_views':len(x),'mean_absolute_difference':(x[k+'_a']-x[k+'_b']).abs().mean(),'nonzero_pairs':int(((x[k+'_a']-x[k+'_b']).abs()>1e-9).sum())})
+          csv('E/common_people_view_differences_summary.csv',comparisons)
+          selected=pd.read_csv(OUT/'prediction/compact_primary_scores.csv');st=selected[selected.target=='tier_primary']
+          trans=pd.read_csv(OUT/'D/conditional_transfer_summary.csv');trans=trans[(trans.design=='same_room')&trans.method.isin(['source_frequency','dinov3__block3__panorama_global','dinov3__block12__panorama_global'])]
+          changes=pd.read_csv(OUT/'targets/interval_to_cumulative_changes.csv.gz');ch=changes[(changes.cut==.1)&(changes.rule=='G10_geometry')&(changes.confirmation=='suffix')&(changes.early_k==7)&(changes.late_h==19)&(changes.max_few_modes==3)&(changes.max_singleton_mass==.1)&(changes.order_fraction_required==.8)]
+          js('COMPACT_READING.json',{'endpoint_expansion':rows,'common_people':comparisons,'tier_prediction':st.to_dict('records'),'same_room_continuous':trans.to_dict('records'),'cumulative_primary_changes':ch.to_dict('records')})
+          (OUT/'COMMENT_REPRODUCE.md').write_text('报告生成后运行：\n\n```bash\npython -m tools.thesis_main.analysis.image_portrait.history_difficulty_v1_comment_audit\n```\n\n此补充来源审计只改变盲化解释，不修改任何粗类、预测或参数。\n',encoding='utf-8')
+          PY
+      - name: Rebuild portable archive and verify exact payload
+        run: |
+          python - <<'PY'
+          import subprocess,sys,json,pathlib,hashlib,zipfile
+          from tools.thesis_main.analysis.image_portrait.history_difficulty_v1_core import OUT,js
+          cmd=[sys.executable,'-m','tools.thesis_main.analysis.image_portrait.history_difficulty_v1_package']
+          with (OUT/'execution/package_comment_audited.log').open('w') as f:r=subprocess.run(cmd,stdout=f,stderr=subprocess.STDOUT)
+          print((OUT/'execution/package_comment_audited.log').read_text()[-14000:]);assert r.returncode==0
+          dest=pathlib.Path('/tmp/history_difficulty_delivery');archive=dest/'history_difficulty_study.zip';v=json.loads((dest/'DELIVERY_VERIFICATION.json').read_text());v['comment_outcome_audit_included']=True
+          internal={k:value for k,value in v.items() if k not in ['archive_bytes','archive_sha256']}
+          internal['archive_hash_note']='Final archive SHA is in accompanying external verification JSON, avoiding a self-hash cycle.'
+          with zipfile.ZipFile(archive,'a',zipfile.ZIP_DEFLATED) as z:z.writestr('DELIVERY_VERIFICATION.json',json.dumps(internal,ensure_ascii=False,indent=2))
+          with zipfile.ZipFile(archive) as z:
+            assert z.testzip() is None
+            for row in json.loads(z.read('FILE_MANIFEST.json'))['files']:assert hashlib.sha256(z.read(row['path'])).hexdigest()==row['sha256']
+          v.update(archive_bytes=archive.stat().st_size,archive_sha256=hashlib.sha256(archive.read_bytes()).hexdigest(),post_append_integrity_and_hash_recheck='passed')
+          (dest/'DELIVERY_VERIFICATION.json').write_text(json.dumps(v,ensure_ascii=False,indent=2));js('execution/DELIVERY_VERIFICATION.json',v)
+          print(json.dumps(v,ensure_ascii=False,indent=2))
+          PY
+      - name: Preserve new audited documentation and statistics
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add --sparse -f analysis_results/image_portrait_20260914_v1/cloud/history_difficulty_20260915_v1/run_13859d59
+          git commit -m 'research: finalize expert-comment blindness limits and verified historical difficulty delivery' || exit 0
+          git pull --rebase origin codex/image-portrait-20260914
+          git push origin HEAD:codex/image-portrait-20260914
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: history-difficulty-final-comment-audited
+          path: |
+            /tmp/history_difficulty_delivery/history_difficulty_study.zip
+            /tmp/history_difficulty_delivery/REPORT_ZH.html
+            /tmp/history_difficulty_delivery/DELIVERY_VERIFICATION.json
+            /tmp/history_difficulty_delivery/per_image_historical_tiers.csv
+            /tmp/history_difficulty_delivery/local_image_review_queue.csv
+          compression-level: 0
+          retention-days: 90
+          if-no-files-found: error
