@@ -1,0 +1,69 @@
+{
+  "schema": "empirical_annotator_simulation_v1",
+  "seed": 20260915,
+  "replicates": 3,
+  "min_human": 16,
+  "human_records": 1834,
+  "human_images": 196,
+  "historical_worker_profiles": 24,
+  "evaluation_images": 54,
+  "evaluation_buildings": 15,
+  "evaluation_samples": 8100,
+  "candidate_images": 166,
+  "candidate_samples": 8300,
+  "excluded": {
+    "worker_19_or_26": 77,
+    "basic_parse_failure": 9,
+    "assisted_response": 574,
+    "not_in_reviewed_calculation": 7,
+    "model_basic_parse_failure": 3
+  },
+  "metric_summary": {
+    "worker_conservative": {
+      "image_weighted": {
+        "corner_count_tv": 0.5618973230910683,
+        "human_to_sim_nearest_deg": 7.0013757195750435,
+        "sim_to_human_nearest_deg": 4.570449804832895,
+        "symmetric_coverage_deg": 5.785912762203969,
+        "human_diversity_deg": 6.200429383298605,
+        "synthetic_diversity_deg": 2.0979299834737684,
+        "diversity_absolute_error_deg": 4.238082323520444,
+        "basic_parse_failure_rate": 0.0,
+        "geometry_issue_rate": 0.0
+      },
+      "building_weighted": {
+        "corner_count_tv": 0.4981132646063997,
+        "human_to_sim_nearest_deg": 7.185064338178858,
+        "sim_to_human_nearest_deg": 4.840091230023427,
+        "symmetric_coverage_deg": 6.012577784101141,
+        "human_diversity_deg": 6.637506864533608,
+        "synthetic_diversity_deg": 2.097144846748333,
+        "diversity_absolute_error_deg": 4.757707909907327,
+        "basic_parse_failure_rate": 0.0,
+        "geometry_issue_rate": 0.0
+      }
+    }
+  },
+  "sample_count_per_method": 50,
+  "synthetic_worker_count": 50,
+  "methods": [
+    "worker_conservative"
+  ],
+  "conservative_mode": true,
+  "max_jitter_px": 8.0,
+  "fit_shrinkage": 8,
+  "candidate_count_penalty_degrees": 5,
+  "worker_residual_min_donors": 3,
+  "model_training_overlap": "not_independently_verified",
+  "new_visual_inference": false,
+  "scope_simulation": false,
+  "human_intent_classification": false,
+  "input_sha256": {
+    "analysis_results/confirmed_point_calculation_view_20260909_v1/reviewed/calculation_view.jsonl.gz": "5d27cc6a4223784d529eaabdd59dc72ef4118c97d87c015e0d62fc2ed60e3ee1",
+    "analysis_results/uncertainty_cloud_inputs_20260906_v1/models/layouts.jsonl": "1edbdac412bff45f65bc7f6077a6aabfc3ab574a2782d343db3e36d0ef5f0d34",
+    "analysis_results/uncertainty_cloud_inputs_20260906_v1/images.csv": "be963778373e46221f8aa858f558ce540577b794d5ee9a8d6e01525833d452b8",
+    "analysis_results/uncertainty_cloud_inputs_20260906_v1/models/MODEL_PROVENANCE.json": "07bfdf380cfbc65bf1b31a747360eb5d0a8f967eabfe7af60946056451e5141c"
+  },
+  "validation_scope": "familiar-worker cross-building retrospective simulation; fixed offline model bank",
+  "source_code_sha256": "b304a052afe923bceb652f60463475ce56334329569747487408e8d6d1933a70"
+}
