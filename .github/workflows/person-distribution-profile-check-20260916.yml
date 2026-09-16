@@ -1,0 +1,74 @@
+name: Person distribution profile and sensitivity 20260916
+on:
+  push:
+    branches: [codex/image-portrait-20260914]
+    paths: [.github/workflows/person-distribution-profile-check-20260916.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  supplement:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OUT: analysis_results/image_portrait_20260914_v1/cloud/person_distribution_hypothesis_20260916_v1/run_ae94e825
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/image-portrait-20260914
+          fetch-depth: 1
+          filter: blob:none
+          lfs: false
+          sparse-checkout: |
+            tools
+            lib/misc
+            .github/workflows/person-distribution-profile-check-20260916.yml
+            analysis_results/image_portrait_20260914_v1/cloud/person_distribution_hypothesis_20260916_v1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy==1.26.4 pandas==2.2.3 scipy==1.14.1 scikit-learn==1.5.2 shapely==2.0.6 pillow==11.1.0 tabulate==0.9.0
+      - name: Train and evaluate alternate continuous profiles and Ward types
+        run: |
+          set -o pipefail
+          python -u -m tools.thesis_main.analysis.image_portrait.person_distribution_profile_v1 --output "$OUT" 2>&1 | tee "$OUT/profile_run.log"
+      - name: Compare all feasible AABC and ABCD roles using same seed people
+        run: |
+          set -o pipefail
+          python -u -m tools.thesis_main.analysis.image_portrait.person_distribution_all_roles_v1 --output "$OUT" 2>&1 | tee "$OUT/all_roles_run.log"
+      - name: Publish completed profile and composition supplement
+        run: |
+          git config user.name 'research-numerics'
+          git config user.email 'research-numerics@users.noreply.github.com'
+          git add --sparse -f "$OUT/profile_alternative" "$OUT/all_role_compositions" "$OUT/profile_run.log" "$OUT/all_roles_run.log"
+          git commit -m 'research: executed alternative personal traits and all feasible real-worker composition roles'
+          git restore --worktree "$OUT"
+          git pull --rebase origin codex/image-portrait-20260914
+          git push origin HEAD:codex/image-portrait-20260914
+      - name: Add actual geometric-mode half-share consistency
+        run: |
+          set -o pipefail
+          python -u -m tools.thesis_main.analysis.image_portrait.person_distribution_mode_shares_v1 --output "$OUT" 2>&1 | tee "$OUT/mode_shares_run.log"
+      - name: Publish diagnostic sensitivity without overwriting original flags
+        run: |
+          git add --sparse -f "$OUT/mode_share_sensitivity" "$OUT/mode_shares_run.log"
+          git commit -m 'research: geometric-mode share diagnostic checked against original exact simulation draws'
+          git restore --worktree "$OUT"
+          git pull --rebase origin codex/image-portrait-20260914
+          git push origin HEAD:codex/image-portrait-20260914
+      - name: Preserve actual supplemental results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: person-distribution-profile-sensitivity
+          path: |
+            analysis_results/image_portrait_20260914_v1/cloud/person_distribution_hypothesis_20260916_v1/run_ae94e825/profile_alternative/
+            analysis_results/image_portrait_20260914_v1/cloud/person_distribution_hypothesis_20260916_v1/run_ae94e825/all_role_compositions/
+            analysis_results/image_portrait_20260914_v1/cloud/person_distribution_hypothesis_20260916_v1/run_ae94e825/mode_share_sensitivity/
+            analysis_results/image_portrait_20260914_v1/cloud/person_distribution_hypothesis_20260916_v1/run_ae94e825/profile_run.log
+            analysis_results/image_portrait_20260914_v1/cloud/person_distribution_hypothesis_20260916_v1/run_ae94e825/all_roles_run.log
+            analysis_results/image_portrait_20260914_v1/cloud/person_distribution_hypothesis_20260916_v1/run_ae94e825/mode_shares_run.log
+          retention-days: 30
