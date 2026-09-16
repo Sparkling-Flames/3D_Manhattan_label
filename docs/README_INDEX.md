@@ -1,11 +1,18 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
-假说探索：[本轮Pro目标提示词](../analysis_results/image_portrait_20260914_v1/prompts/PERSON_TYPE_HYPOTHESIS.md)与[图片×人员类型模拟审读](thesis_main/人员模拟建议独立审读与最小验证方案_20260916.md)。用户授权自主探索，方法不预定；假说仍未证实，暂不纳入正式方案或改变采集。
+**新线程先读：[2026-09-16研究主线与采集现状交接](thesis_main/新线程交接_研究主线与采集现状_20260916.md)。**汇总导师计划、阅读顺序、922份候选方案、已核验／待处理事项与本地未提交状态；算法模拟暂缓，39图由用户审核。
+
+覆盖方案审查：[全历史覆盖方案独立复核](thesis_main/全历史覆盖方案独立复核_20260916.md)。922份计数及XLSX一致性通过；11图待复核涉及首批165份，新人实际共同覆盖24图，4张共同图同房关系待核对。候选名单不等于可直接派发。
+
+2026-09-16 全历史接续安排：[执行说明](../analysis_results/full_history_coverage_20260916/执行说明.md)、[人员×图片表](../analysis_results/full_history_coverage_20260916/图片名单与人员覆盖.xlsx)。新人真实编号空白；922份拟新增，11张共同历史图待复核，未派发。工具：`tools/thesis_main/analysis/build_full_history_coverage_20260916.py`、同目录 `build_full_history_coverage_workbook_20260916.mjs`；检查：`tests/test_full_history_coverage_20260916.py`。
+
+最新主线（2026-09-16）：[导师对话解释、独立真人采集与15人各50图规划](thesis_main/第一阶段执行与人员分类续研说明_20260913.md)。750份为计划人图作答，分配未冻结；真实作答离线组合研究不确定性／收敛。[旧Pro假说提示词](../analysis_results/image_portrait_20260914_v1/prompts/PERSON_TYPE_HYPOTHESIS.md)与[模拟审读](thesis_main/人员模拟建议独立审读与最小验证方案_20260916.md)已按用户要求暂缓，作为历史保留。
 
 图片重点审核：[39图／44项问题可视化](../analysis_results/image_portrait_20260914_v1/review_workflow_20260915/key39/README.md)，复用原空间标本，含OOS几何；本地图片不上传。
 
 **Pro研究统一入口：[现行任务、版本报告、输入及复算限制](../analysis_results/image_portrait_20260914_v1/PRO_START_HERE.md)。**2026-09-16已接收新候选下的A—E；[多轮发现、导师讨论及DA3独立复核](thesis_main/图片难度与收敛_多轮证据及导师讨论对照_20260916.md)。算法候选仍须用户审核，早期范围2—8；原审核工具入口保留。
 
+2026-09-15追加候选：[英文共用追加池](../analysis_results/english_followup_pool_20260915/追加候选说明.md)。用户确认W035完成H，暂无新导出；31张对10名英文人员均未发现历史同图接触，另5张仅供个人补齐。排除现必做和H，未创建项目或派发。
 
 图片画像探索：[648图工作包与A–E任务入口](../analysis_results/image_portrait_20260914_v1/README.md)。冻结模型、多层特征及真人结果分开记录；实际覆盖以运行状态为准，不替代正式方法合同。
 
@@ -253,3 +260,7 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 - [参考执行偏差可行性验证（2026-09-09）](../analysis_results/worker_reference_feasibility_20260909_v1/README_ZH.md)：人工复核优先、其他暂信GT；无序点集测量及跨building工人效应验证，保留参考疑问与计算失败，不生成最终工人类别。新增[全部阶段/条件合并分析](../analysis_results/worker_reference_feasibility_20260909_v1/pooled/README_ZH.md)，按图片与人组织，不按旧实验设置筛选或分组。
 2026-09-13脚本更新：中英文正式／调试userscript为`manual_scope_only_20260913_v10`；新Manual检查Scope单选与表单一致性。三个LS可导入JSON独立在`import_json/scene_stability_stage1_20260913_v2/label_studio_import/`，管理材料在上一级；尚未线上安装或导入。
 > 2026-09-13最新执行替换：用户确认480份内优先完整覆盖部分房间，采用后视角多者优先。当前必做G172/G184/G179/G178/G047/G237，44个采用视角中37张新增、7张仅历史；中文每人20张、英文每人30张。旧19组43图的分散配对及下文旧计数不再执行。G184五图最高19人、距20人目标各缺1人。H定稿12门洞＋8同房共20张，G178四张原选做转入必做；个人表标记已接触者跳过。现行说明在analysis_results/stage1_person_image_packages_20260913_v2/整房优先版交付说明.md，整房审计见同目录必做整房核查.json。下文过程性说明保留作历史，不覆盖本段及现行机器包。
+
+- [全648图同房与池外补标盘点](../analysis_results/unassigned_room_inventory_20260915/盘点说明.md)：区分无分组、同房待定和未分配；列出少人数历史及高人数历史的池外视角，未新增采用或派发。
+
+- [人员分类采集量与历史耗时核算](../analysis_results/worker_sample_budget_20260916/人员样本量与耗时建议.md)：新人约50张分阶段采集、旧中文追加及独立人图容量，26人历史计时覆盖与逐人均值；预算建议，不承诺分类充分性。

@@ -1,0 +1,938 @@
+{
+  "status": "预算建议，不是样本量充分性证明或派发",
+  "historical_time_records": 2501,
+  "valid_time_records": 1949,
+  "source_time": "analysis_results\\uncertainty_cloud_inputs_20260906_v1\\facts\\active_time_context.csv.gz",
+  "source_annotations": "analysis_results\\uncertainty_cloud_inputs_20260906_v1\\annotations.csv.gz",
+  "source_time_rules": "worker_behavior_time_20260910.clean_time；阶段原始日志规则及已知人工加秒排除，既有SOURCE_AUDIT可追溯",
+  "time_missing_workers": [
+    14,
+    26
+  ],
+  "timing_status_counts": {
+    "project+task+annotator": 1328,
+    "eligible": 664,
+    "fallback_no_direct_log": 348,
+    "not_evaluable": 79,
+    "owner_valid": 40,
+    "eligible_partial_session_coverage": 20,
+    "eligible_with_protocol_deviation": 17,
+    "fallback_annotation_missing_task_level_ambiguous": 4,
+    "fallback_project_mismatch_no_direct_log": 1
+  },
+  "known_shift_rows": 83,
+  "timing_summary": {
+    "all_modes": {
+      "records": 1949,
+      "workers": 24,
+      "mean_minutes": 3.7672738156319476,
+      "median_minutes": 2.25,
+      "worker_equal_mean_minutes": 3.490950614004892,
+      "total_active_hours": 122.37361111111112
+    },
+    "manual": {
+      "records": 1508,
+      "workers": 24,
+      "mean_minutes": 4.0542661361626875,
+      "median_minutes": 2.4916666666666667,
+      "worker_equal_mean_minutes": 3.7654381660727974,
+      "total_active_hours": 101.89722222222223
+    },
+    "semi": {
+      "records": 441,
+      "workers": 23,
+      "mean_minutes": 2.7859032501889645,
+      "median_minutes": 1.55,
+      "worker_equal_mean_minutes": 2.6170732920024036,
+      "total_active_hours": 20.476388888888888
+    },
+    "manual_excluding_W019_W026": {
+      "records": 1469,
+      "workers": 23,
+      "mean_minutes": 4.14378261856138,
+      "median_minutes": 2.55,
+      "worker_equal_mean_minutes": 3.899479884924718,
+      "total_active_hours": 101.45361111111112
+    },
+    "current_chinese_manual": {
+      "records": 640,
+      "workers": 9,
+      "mean_minutes": 2.3484895833333335,
+      "median_minutes": 1.4333333333333333,
+      "worker_equal_mean_minutes": 2.233680846996434,
+      "total_active_hours": 25.050555555555555
+    }
+  },
+  "workers": [
+    {
+      "worker_id": 1,
+      "historical_records": 105,
+      "manual": {
+        "records": 49,
+        "workers": 1,
+        "mean_minutes": 1.3027210884353742,
+        "median_minutes": 1.1,
+        "worker_equal_mean_minutes": 1.3027210884353742,
+        "total_active_hours": 1.0638888888888889
+      },
+      "semi": {
+        "records": 23,
+        "workers": 1,
+        "mean_minutes": 0.972463768115942,
+        "median_minutes": 0.9166666666666666,
+        "worker_equal_mean_minutes": 0.972463768115942,
+        "total_active_hours": 0.37277777777777776
+      },
+      "combined": {
+        "records": 72,
+        "workers": 1,
+        "mean_minutes": 1.1972222222222222,
+        "median_minutes": 1.0666666666666667,
+        "worker_equal_mean_minutes": 1.1972222222222222,
+        "total_active_hours": 1.4366666666666668
+      }
+    },
+    {
+      "worker_id": 2,
+      "historical_records": 102,
+      "manual": {
+        "records": 76,
+        "workers": 1,
+        "mean_minutes": 2.187719298245614,
+        "median_minutes": 1.4916666666666667,
+        "worker_equal_mean_minutes": 2.187719298245614,
+        "total_active_hours": 2.7711111111111113
+      },
+      "semi": {
+        "records": 23,
+        "workers": 1,
+        "mean_minutes": 1.0152173913043478,
+        "median_minutes": 0.5166666666666667,
+        "worker_equal_mean_minutes": 1.0152173913043478,
+        "total_active_hours": 0.38916666666666666
+      },
+      "combined": {
+        "records": 99,
+        "workers": 1,
+        "mean_minutes": 1.9153198653198653,
+        "median_minutes": 1.1833333333333333,
+        "worker_equal_mean_minutes": 1.9153198653198653,
+        "total_active_hours": 3.160277777777778
+      }
+    },
+    {
+      "worker_id": 6,
+      "historical_records": 101,
+      "manual": {
+        "records": 79,
+        "workers": 1,
+        "mean_minutes": 1.1647679324894513,
+        "median_minutes": 0.7,
+        "worker_equal_mean_minutes": 1.1647679324894513,
+        "total_active_hours": 1.533611111111111
+      },
+      "semi": {
+        "records": 22,
+        "workers": 1,
+        "mean_minutes": 0.8136363636363637,
+        "median_minutes": 0.6083333333333333,
+        "worker_equal_mean_minutes": 0.8136363636363637,
+        "total_active_hours": 0.29833333333333334
+      },
+      "combined": {
+        "records": 101,
+        "workers": 1,
+        "mean_minutes": 1.0882838283828382,
+        "median_minutes": 0.6333333333333333,
+        "worker_equal_mean_minutes": 1.0882838283828382,
+        "total_active_hours": 1.8319444444444444
+      }
+    },
+    {
+      "worker_id": 8,
+      "historical_records": 101,
+      "manual": {
+        "records": 79,
+        "workers": 1,
+        "mean_minutes": 4.066877637130802,
+        "median_minutes": 3.183333333333333,
+        "worker_equal_mean_minutes": 4.066877637130802,
+        "total_active_hours": 5.354722222222223
+      },
+      "semi": {
+        "records": 21,
+        "workers": 1,
+        "mean_minutes": 2.962698412698413,
+        "median_minutes": 2.0,
+        "worker_equal_mean_minutes": 2.962698412698413,
+        "total_active_hours": 1.0369444444444444
+      },
+      "combined": {
+        "records": 100,
+        "workers": 1,
+        "mean_minutes": 3.835,
+        "median_minutes": 3.025,
+        "worker_equal_mean_minutes": 3.835,
+        "total_active_hours": 6.391666666666667
+      }
+    },
+    {
+      "worker_id": 10,
+      "historical_records": 102,
+      "manual": {
+        "records": 79,
+        "workers": 1,
+        "mean_minutes": 1.669620253164557,
+        "median_minutes": 1.2333333333333334,
+        "worker_equal_mean_minutes": 1.669620253164557,
+        "total_active_hours": 2.1983333333333333
+      },
+      "semi": {
+        "records": 22,
+        "workers": 1,
+        "mean_minutes": 1.4090909090909092,
+        "median_minutes": 1.175,
+        "worker_equal_mean_minutes": 1.4090909090909092,
+        "total_active_hours": 0.5166666666666667
+      },
+      "combined": {
+        "records": 101,
+        "workers": 1,
+        "mean_minutes": 1.6128712871287127,
+        "median_minutes": 1.2166666666666666,
+        "worker_equal_mean_minutes": 1.6128712871287127,
+        "total_active_hours": 2.715
+      }
+    },
+    {
+      "worker_id": 11,
+      "historical_records": 102,
+      "manual": {
+        "records": 77,
+        "workers": 1,
+        "mean_minutes": 2.785064935064935,
+        "median_minutes": 2.283333333333333,
+        "worker_equal_mean_minutes": 2.785064935064935,
+        "total_active_hours": 3.5741666666666667
+      },
+      "semi": {
+        "records": 22,
+        "workers": 1,
+        "mean_minutes": 1.043939393939394,
+        "median_minutes": 0.8333333333333334,
+        "worker_equal_mean_minutes": 1.043939393939394,
+        "total_active_hours": 0.3827777777777778
+      },
+      "combined": {
+        "records": 99,
+        "workers": 1,
+        "mean_minutes": 2.398148148148148,
+        "median_minutes": 1.9,
+        "worker_equal_mean_minutes": 2.398148148148148,
+        "total_active_hours": 3.9569444444444444
+      }
+    },
+    {
+      "worker_id": 12,
+      "historical_records": 101,
+      "manual": {
+        "records": 40,
+        "workers": 1,
+        "mean_minutes": 1.1354166666666667,
+        "median_minutes": 0.9833333333333333,
+        "worker_equal_mean_minutes": 1.1354166666666667,
+        "total_active_hours": 0.7569444444444444
+      },
+      "semi": {
+        "records": 4,
+        "workers": 1,
+        "mean_minutes": 1.5958333333333334,
+        "median_minutes": 0.7333333333333333,
+        "worker_equal_mean_minutes": 1.5958333333333334,
+        "total_active_hours": 0.1063888888888889
+      },
+      "combined": {
+        "records": 44,
+        "workers": 1,
+        "mean_minutes": 1.1772727272727272,
+        "median_minutes": 0.9583333333333334,
+        "worker_equal_mean_minutes": 1.1772727272727272,
+        "total_active_hours": 0.8633333333333333
+      }
+    },
+    {
+      "worker_id": 13,
+      "historical_records": 102,
+      "manual": {
+        "records": 79,
+        "workers": 1,
+        "mean_minutes": 1.2512658227848101,
+        "median_minutes": 0.8333333333333334,
+        "worker_equal_mean_minutes": 1.2512658227848101,
+        "total_active_hours": 1.6475
+      },
+      "semi": {
+        "records": 23,
+        "workers": 1,
+        "mean_minutes": 1.3014492753623188,
+        "median_minutes": 0.85,
+        "worker_equal_mean_minutes": 1.3014492753623188,
+        "total_active_hours": 0.4988888888888889
+      },
+      "combined": {
+        "records": 102,
+        "workers": 1,
+        "mean_minutes": 1.2625816993464052,
+        "median_minutes": 0.8416666666666667,
+        "worker_equal_mean_minutes": 1.2625816993464052,
+        "total_active_hours": 2.1463888888888887
+      }
+    },
+    {
+      "worker_id": 14,
+      "historical_records": 89,
+      "manual": {
+        "records": 0,
+        "mean_minutes": null,
+        "median_minutes": null
+      },
+      "semi": {
+        "records": 0,
+        "mean_minutes": null,
+        "median_minutes": null
+      },
+      "combined": {
+        "records": 0,
+        "mean_minutes": null,
+        "median_minutes": null
+      }
+    },
+    {
+      "worker_id": 15,
+      "historical_records": 102,
+      "manual": {
+        "records": 80,
+        "workers": 1,
+        "mean_minutes": 4.812291666666667,
+        "median_minutes": 3.3833333333333333,
+        "worker_equal_mean_minutes": 4.812291666666667,
+        "total_active_hours": 6.416388888888889
+      },
+      "semi": {
+        "records": 22,
+        "workers": 1,
+        "mean_minutes": 2.422727272727273,
+        "median_minutes": 1.8416666666666666,
+        "worker_equal_mean_minutes": 2.422727272727273,
+        "total_active_hours": 0.8883333333333333
+      },
+      "combined": {
+        "records": 102,
+        "workers": 1,
+        "mean_minutes": 4.296895424836602,
+        "median_minutes": 2.816666666666667,
+        "worker_equal_mean_minutes": 4.296895424836602,
+        "total_active_hours": 7.304722222222222
+      }
+    },
+    {
+      "worker_id": 17,
+      "historical_records": 101,
+      "manual": {
+        "records": 79,
+        "workers": 1,
+        "mean_minutes": 2.5124472573839665,
+        "median_minutes": 1.4333333333333333,
+        "worker_equal_mean_minutes": 2.5124472573839665,
+        "total_active_hours": 3.3080555555555557
+      },
+      "semi": {
+        "records": 22,
+        "workers": 1,
+        "mean_minutes": 1.5007575757575757,
+        "median_minutes": 1.0583333333333333,
+        "worker_equal_mean_minutes": 1.5007575757575757,
+        "total_active_hours": 0.5502777777777778
+      },
+      "combined": {
+        "records": 101,
+        "workers": 1,
+        "mean_minutes": 2.2920792079207923,
+        "median_minutes": 1.3166666666666667,
+        "worker_equal_mean_minutes": 2.2920792079207923,
+        "total_active_hours": 3.8583333333333334
+      }
+    },
+    {
+      "worker_id": 18,
+      "historical_records": 89,
+      "manual": {
+        "records": 14,
+        "workers": 1,
+        "mean_minutes": 3.84047619047619,
+        "median_minutes": 2.9833333333333334,
+        "worker_equal_mean_minutes": 3.84047619047619,
+        "total_active_hours": 0.8961111111111111
+      },
+      "semi": {
+        "records": 22,
+        "workers": 1,
+        "mean_minutes": 2.084848484848485,
+        "median_minutes": 1.425,
+        "worker_equal_mean_minutes": 2.084848484848485,
+        "total_active_hours": 0.7644444444444445
+      },
+      "combined": {
+        "records": 36,
+        "workers": 1,
+        "mean_minutes": 2.7675925925925924,
+        "median_minutes": 2.2,
+        "worker_equal_mean_minutes": 2.7675925925925924,
+        "total_active_hours": 1.6605555555555556
+      }
+    },
+    {
+      "worker_id": 19,
+      "historical_records": 57,
+      "manual": {
+        "records": 39,
+        "workers": 1,
+        "mean_minutes": 0.6824786324786325,
+        "median_minutes": 0.35,
+        "worker_equal_mean_minutes": 0.6824786324786325,
+        "total_active_hours": 0.4436111111111111
+      },
+      "semi": {
+        "records": 18,
+        "workers": 1,
+        "mean_minutes": 0.25833333333333336,
+        "median_minutes": 0.21666666666666667,
+        "worker_equal_mean_minutes": 0.25833333333333336,
+        "total_active_hours": 0.0775
+      },
+      "combined": {
+        "records": 57,
+        "workers": 1,
+        "mean_minutes": 0.5485380116959064,
+        "median_minutes": 0.3,
+        "worker_equal_mean_minutes": 0.5485380116959064,
+        "total_active_hours": 0.5211111111111111
+      }
+    },
+    {
+      "worker_id": 21,
+      "historical_records": 57,
+      "manual": {
+        "records": 39,
+        "workers": 1,
+        "mean_minutes": 1.3974358974358974,
+        "median_minutes": 0.6333333333333333,
+        "worker_equal_mean_minutes": 1.3974358974358974,
+        "total_active_hours": 0.9083333333333333
+      },
+      "semi": {
+        "records": 18,
+        "workers": 1,
+        "mean_minutes": 0.6768518518518519,
+        "median_minutes": 0.6,
+        "worker_equal_mean_minutes": 0.6768518518518519,
+        "total_active_hours": 0.20305555555555554
+      },
+      "combined": {
+        "records": 57,
+        "workers": 1,
+        "mean_minutes": 1.1698830409356726,
+        "median_minutes": 0.6333333333333333,
+        "worker_equal_mean_minutes": 1.1698830409356726,
+        "total_active_hours": 1.111388888888889
+      }
+    },
+    {
+      "worker_id": 26,
+      "historical_records": 56,
+      "manual": {
+        "records": 0,
+        "mean_minutes": null,
+        "median_minutes": null
+      },
+      "semi": {
+        "records": 0,
+        "mean_minutes": null,
+        "median_minutes": null
+      },
+      "combined": {
+        "records": 0,
+        "mean_minutes": null,
+        "median_minutes": null
+      }
+    },
+    {
+      "worker_id": 27,
+      "historical_records": 90,
+      "manual": {
+        "records": 66,
+        "workers": 1,
+        "mean_minutes": 7.91060606060606,
+        "median_minutes": 6.083333333333333,
+        "worker_equal_mean_minutes": 7.91060606060606,
+        "total_active_hours": 8.701666666666666
+      },
+      "semi": {
+        "records": 23,
+        "workers": 1,
+        "mean_minutes": 9.710869565217392,
+        "median_minutes": 5.516666666666667,
+        "worker_equal_mean_minutes": 9.710869565217392,
+        "total_active_hours": 3.7225
+      },
+      "combined": {
+        "records": 89,
+        "workers": 1,
+        "mean_minutes": 8.375842696629213,
+        "median_minutes": 5.933333333333334,
+        "worker_equal_mean_minutes": 8.375842696629213,
+        "total_active_hours": 12.424166666666666
+      }
+    },
+    {
+      "worker_id": 28,
+      "historical_records": 102,
+      "manual": {
+        "records": 79,
+        "workers": 1,
+        "mean_minutes": 4.799789029535865,
+        "median_minutes": 3.4833333333333334,
+        "worker_equal_mean_minutes": 4.799789029535865,
+        "total_active_hours": 6.3197222222222225
+      },
+      "semi": {
+        "records": 23,
+        "workers": 1,
+        "mean_minutes": 4.0318840579710145,
+        "median_minutes": 3.75,
+        "worker_equal_mean_minutes": 4.0318840579710145,
+        "total_active_hours": 1.5455555555555556
+      },
+      "combined": {
+        "records": 102,
+        "workers": 1,
+        "mean_minutes": 4.626633986928105,
+        "median_minutes": 3.5,
+        "worker_equal_mean_minutes": 4.626633986928105,
+        "total_active_hours": 7.865277777777778
+      }
+    },
+    {
+      "worker_id": 29,
+      "historical_records": 102,
+      "manual": {
+        "records": 77,
+        "workers": 1,
+        "mean_minutes": 4.861904761904762,
+        "median_minutes": 3.783333333333333,
+        "worker_equal_mean_minutes": 4.861904761904762,
+        "total_active_hours": 6.239444444444445
+      },
+      "semi": {
+        "records": 23,
+        "workers": 1,
+        "mean_minutes": 4.238405797101449,
+        "median_minutes": 3.85,
+        "worker_equal_mean_minutes": 4.238405797101449,
+        "total_active_hours": 1.6247222222222222
+      },
+      "combined": {
+        "records": 100,
+        "workers": 1,
+        "mean_minutes": 4.718500000000001,
+        "median_minutes": 3.816666666666667,
+        "worker_equal_mean_minutes": 4.718500000000001,
+        "total_active_hours": 7.864166666666667
+      }
+    },
+    {
+      "worker_id": 30,
+      "historical_records": 102,
+      "manual": {
+        "records": 79,
+        "workers": 1,
+        "mean_minutes": 1.8867088607594937,
+        "median_minutes": 1.2833333333333334,
+        "worker_equal_mean_minutes": 1.8867088607594937,
+        "total_active_hours": 2.484166666666667
+      },
+      "semi": {
+        "records": 13,
+        "workers": 1,
+        "mean_minutes": 1.5884615384615384,
+        "median_minutes": 1.3666666666666667,
+        "worker_equal_mean_minutes": 1.5884615384615384,
+        "total_active_hours": 0.3441666666666667
+      },
+      "combined": {
+        "records": 92,
+        "workers": 1,
+        "mean_minutes": 1.8445652173913045,
+        "median_minutes": 1.2833333333333334,
+        "worker_equal_mean_minutes": 1.8445652173913045,
+        "total_active_hours": 2.828333333333333
+      }
+    },
+    {
+      "worker_id": 31,
+      "historical_records": 108,
+      "manual": {
+        "records": 31,
+        "workers": 1,
+        "mean_minutes": 2.8069892473118276,
+        "median_minutes": 2.4,
+        "worker_equal_mean_minutes": 2.8069892473118276,
+        "total_active_hours": 1.4502777777777778
+      },
+      "semi": {
+        "records": 4,
+        "workers": 1,
+        "mean_minutes": 2.3625,
+        "median_minutes": 2.2083333333333335,
+        "worker_equal_mean_minutes": 2.3625,
+        "total_active_hours": 0.1575
+      },
+      "combined": {
+        "records": 35,
+        "workers": 1,
+        "mean_minutes": 2.756190476190476,
+        "median_minutes": 2.35,
+        "worker_equal_mean_minutes": 2.756190476190476,
+        "total_active_hours": 1.6077777777777778
+      }
+    },
+    {
+      "worker_id": 32,
+      "historical_records": 103,
+      "manual": {
+        "records": 79,
+        "workers": 1,
+        "mean_minutes": 4.425949367088608,
+        "median_minutes": 3.65,
+        "worker_equal_mean_minutes": 4.425949367088608,
+        "total_active_hours": 5.8275
+      },
+      "semi": {
+        "records": 23,
+        "workers": 1,
+        "mean_minutes": 3.898550724637681,
+        "median_minutes": 3.8,
+        "worker_equal_mean_minutes": 3.898550724637681,
+        "total_active_hours": 1.4944444444444445
+      },
+      "combined": {
+        "records": 102,
+        "workers": 1,
+        "mean_minutes": 4.30702614379085,
+        "median_minutes": 3.6666666666666665,
+        "worker_equal_mean_minutes": 4.30702614379085,
+        "total_active_hours": 7.321944444444444
+      }
+    },
+    {
+      "worker_id": 33,
+      "historical_records": 102,
+      "manual": {
+        "records": 80,
+        "workers": 1,
+        "mean_minutes": 5.94875,
+        "median_minutes": 4.508333333333334,
+        "worker_equal_mean_minutes": 5.94875,
+        "total_active_hours": 7.931666666666667
+      },
+      "semi": {
+        "records": 22,
+        "workers": 1,
+        "mean_minutes": 2.487878787878788,
+        "median_minutes": 2.0416666666666665,
+        "worker_equal_mean_minutes": 2.487878787878788,
+        "total_active_hours": 0.9122222222222223
+      },
+      "combined": {
+        "records": 102,
+        "workers": 1,
+        "mean_minutes": 5.202287581699347,
+        "median_minutes": 3.6083333333333334,
+        "worker_equal_mean_minutes": 5.202287581699347,
+        "total_active_hours": 8.84388888888889
+      }
+    },
+    {
+      "worker_id": 34,
+      "historical_records": 121,
+      "manual": {
+        "records": 12,
+        "workers": 1,
+        "mean_minutes": 2.763888888888889,
+        "median_minutes": 2.9,
+        "worker_equal_mean_minutes": 2.763888888888889,
+        "total_active_hours": 0.5527777777777778
+      },
+      "semi": {
+        "records": 0,
+        "mean_minutes": null,
+        "median_minutes": null
+      },
+      "combined": {
+        "records": 12,
+        "workers": 1,
+        "mean_minutes": 2.763888888888889,
+        "median_minutes": 2.9,
+        "worker_equal_mean_minutes": 2.763888888888889,
+        "total_active_hours": 0.5527777777777778
+      }
+    },
+    {
+      "worker_id": 35,
+      "historical_records": 101,
+      "manual": {
+        "records": 40,
+        "workers": 1,
+        "mean_minutes": 3.29875,
+        "median_minutes": 2.8916666666666666,
+        "worker_equal_mean_minutes": 3.29875,
+        "total_active_hours": 2.1991666666666667
+      },
+      "semi": {
+        "records": 4,
+        "workers": 1,
+        "mean_minutes": 1.5875,
+        "median_minutes": 1.2,
+        "worker_equal_mean_minutes": 1.5875,
+        "total_active_hours": 0.10583333333333333
+      },
+      "combined": {
+        "records": 44,
+        "workers": 1,
+        "mean_minutes": 3.143181818181818,
+        "median_minutes": 2.75,
+        "worker_equal_mean_minutes": 3.143181818181818,
+        "total_active_hours": 2.305
+      }
+    },
+    {
+      "worker_id": 36,
+      "historical_records": 101,
+      "manual": {
+        "records": 76,
+        "workers": 1,
+        "mean_minutes": 17.40109649122807,
+        "median_minutes": 11.833333333333334,
+        "worker_equal_mean_minutes": 17.40109649122807,
+        "total_active_hours": 22.04138888888889
+      },
+      "semi": {
+        "records": 22,
+        "workers": 1,
+        "mean_minutes": 7.986363636363636,
+        "median_minutes": 6.041666666666667,
+        "worker_equal_mean_minutes": 7.986363636363636,
+        "total_active_hours": 2.9283333333333332
+      },
+      "combined": {
+        "records": 98,
+        "workers": 1,
+        "mean_minutes": 15.287585034013606,
+        "median_minutes": 11.233333333333333,
+        "worker_equal_mean_minutes": 15.287585034013606,
+        "total_active_hours": 24.969722222222224
+      }
+    },
+    {
+      "worker_id": 37,
+      "historical_records": 102,
+      "manual": {
+        "records": 80,
+        "workers": 1,
+        "mean_minutes": 5.4575,
+        "median_minutes": 3.9,
+        "worker_equal_mean_minutes": 5.4575,
+        "total_active_hours": 7.276666666666666
+      },
+      "semi": {
+        "records": 22,
+        "workers": 1,
+        "mean_minutes": 4.242424242424242,
+        "median_minutes": 4.35,
+        "worker_equal_mean_minutes": 4.242424242424242,
+        "total_active_hours": 1.5555555555555556
+      },
+      "combined": {
+        "records": 102,
+        "workers": 1,
+        "mean_minutes": 5.195424836601307,
+        "median_minutes": 3.925,
+        "worker_equal_mean_minutes": 5.195424836601307,
+        "total_active_hours": 8.832222222222223
+      }
+    }
+  ],
+  "current_cn_axis_support": [
+    {
+      "worker_id": 1,
+      "benefit": 24,
+      "edit": 25,
+      "quality": 62,
+      "scope_accept": 9,
+      "scope_reject": 28,
+      "time": 49
+    },
+    {
+      "worker_id": 2,
+      "benefit": 22,
+      "edit": 23,
+      "quality": 58,
+      "scope_accept": 9,
+      "scope_reject": 28,
+      "time": 73
+    },
+    {
+      "worker_id": 6,
+      "benefit": 21,
+      "edit": 22,
+      "quality": 63,
+      "scope_accept": 9,
+      "scope_reject": 28,
+      "time": 79
+    },
+    {
+      "worker_id": 8,
+      "benefit": 19,
+      "edit": 22,
+      "quality": 61,
+      "scope_accept": 9,
+      "scope_reject": 28,
+      "time": 79
+    },
+    {
+      "worker_id": 10,
+      "benefit": 21,
+      "edit": 23,
+      "quality": 63,
+      "scope_accept": 9,
+      "scope_reject": 28,
+      "time": 79
+    },
+    {
+      "worker_id": 12,
+      "benefit": 20,
+      "edit": 22,
+      "quality": 59,
+      "scope_accept": 9,
+      "scope_reject": 28,
+      "time": 40
+    },
+    {
+      "worker_id": 13,
+      "benefit": 22,
+      "edit": 23,
+      "quality": 61,
+      "scope_accept": 9,
+      "scope_reject": 28,
+      "time": 79
+    },
+    {
+      "worker_id": 15,
+      "benefit": 19,
+      "edit": 22,
+      "quality": 63,
+      "scope_accept": 9,
+      "scope_reject": 28,
+      "time": 79
+    },
+    {
+      "worker_id": 17,
+      "benefit": 21,
+      "edit": 22,
+      "quality": 63,
+      "scope_accept": 9,
+      "scope_reject": 28,
+      "time": 79
+    }
+  ],
+  "after_required_deficit": 592,
+  "capacity_cases": [
+    {
+      "old_people": 9,
+      "old_additional_cap": 20,
+      "new_cap": 30,
+      "minimum_new_people": 14
+    },
+    {
+      "old_people": 9,
+      "old_additional_cap": 20,
+      "new_cap": 40,
+      "minimum_new_people": 11
+    },
+    {
+      "old_people": 9,
+      "old_additional_cap": 20,
+      "new_cap": 50,
+      "minimum_new_people": 11
+    },
+    {
+      "old_people": 9,
+      "old_additional_cap": 30,
+      "new_cap": 30,
+      "minimum_new_people": 11
+    },
+    {
+      "old_people": 9,
+      "old_additional_cap": 30,
+      "new_cap": 40,
+      "minimum_new_people": 11
+    },
+    {
+      "old_people": 9,
+      "old_additional_cap": 30,
+      "new_cap": 50,
+      "minimum_new_people": 11
+    }
+  ],
+  "time_budget": [
+    {
+      "new_people": 15,
+      "new_images_each": 30,
+      "old_people": 9,
+      "old_extra_each": 20,
+      "new_person_hours": 2.07189130928069,
+      "old_person_hours": 0.7828298611111111,
+      "total_person_images": 630,
+      "total_active_person_hours": 38.12383838921035
+    },
+    {
+      "new_people": 15,
+      "new_images_each": 40,
+      "old_people": 9,
+      "old_extra_each": 20,
+      "new_person_hours": 2.762521745707587,
+      "old_person_hours": 0.7828298611111111,
+      "total_person_images": 780,
+      "total_active_person_hours": 48.4832949356138
+    },
+    {
+      "new_people": 15,
+      "new_images_each": 50,
+      "old_people": 9,
+      "old_extra_each": 20,
+      "new_person_hours": 3.453152182134483,
+      "old_person_hours": 0.7828298611111111,
+      "total_person_images": 930,
+      "total_active_person_hours": 58.84275148201725
+    }
+  ],
+  "assumptions": [
+    "当前480份必做全部完成且可纳入；未当成已完成事实",
+    "不保证其他H选做，未扣W035尚未导出复核结果",
+    "旧中文9人可继续，W011不新增；英文无新增任务；新人未接触任何图片",
+    "102张采用图为工作量范围，额外H12张及待复核新增图没有统一目标，未自动算入",
+    "时间成本保留可用时间的失败/几何异常记录，不按正确或几何可计算筛选",
+    "训练、阅读、休息、返工和管理时间未计入；新人时间用历史均值作情景，非新人实测"
+  ],
+  "sample_size_status": "未进行每人10/20/30/40/50张的完整分型样本量实验；40—50张仅分阶段预算，允许暂不能分类"
+}
