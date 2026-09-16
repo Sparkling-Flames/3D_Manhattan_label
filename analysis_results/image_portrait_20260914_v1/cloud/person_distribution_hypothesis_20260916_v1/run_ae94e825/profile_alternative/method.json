@@ -1,0 +1,17 @@
+{
+  "status": "complete",
+  "additional_exploration_trigger": "co-annotation average-link types often collapse to a large group plus singleton profiles",
+  "five_features": [
+    "within-image relative log count",
+    "relative ceiling endpoint mean",
+    "relative floor endpoint mean",
+    "within-image relative peer distance",
+    "mean squared relative log count"
+  ],
+  "worker_scaling": "training workers only",
+  "shrinkage": 8,
+  "grouping": "Ward on shrunken standardized training-only behavioral profile",
+  "image_condition": "training-image kernel weights; no target human outcome beyond exposed seeds",
+  "no_quality_truth_axis": true,
+  "no_time_or_fatigue_model": true
+}
