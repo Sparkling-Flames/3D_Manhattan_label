@@ -1,0 +1,12 @@
+{
+  "target": "three-way forecast of an unseen real response relative to current seed geometry",
+  "geometry_cut": 0.1,
+  "outer": "leave building",
+  "inner": "three training-building groups",
+  "group_profiles": "training source used to construct training features; target/validation buildings excluded; retrospective known workers",
+  "future_target_n_used_as_feature": false,
+  "unknown_geometry_generated": false,
+  "role": "abstaining extension: it predicts unsupported mass, not new polygon coordinates or a complete future clustering",
+  "raw_difficulty_used": false,
+  "review39_used": false
+}
