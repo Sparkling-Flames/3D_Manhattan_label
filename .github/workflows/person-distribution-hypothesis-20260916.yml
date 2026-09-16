@@ -1,0 +1,81 @@
+name: Person distribution hypothesis numeric validation 20260916
+on:
+  push:
+    branches: [codex/image-portrait-20260914]
+    paths: [.github/workflows/person-distribution-hypothesis-20260916.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  numerical:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OUT: analysis_results/image_portrait_20260914_v1/cloud/person_distribution_hypothesis_20260916_v1/run_ae94e825
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/image-portrait-20260914
+          fetch-depth: 1
+          filter: blob:none
+          lfs: false
+          sparse-checkout: |
+            tools
+            lib/misc
+            .agents
+            .github/workflows/person-distribution-hypothesis-20260916.yml
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install numerical libraries only
+        run: python -m pip install numpy==1.26.4 pandas==2.2.3 scipy==1.14.1 scikit-learn==1.5.2 shapely==2.0.6 pillow==11.1.0 tabulate==0.9.0
+      - name: Source and instruction inventory
+        run: |
+          mkdir -p "$OUT"
+          git rev-parse HEAD > "$OUT/code_commit.log"
+          git ls-tree -r --name-only HEAD | grep -E '(^|/)AGENTS\.md$' > "$OUT/agents_inventory.log" || true
+          python -m pip freeze > "$OUT/environment.log"
+          python -m py_compile tools/thesis_main/analysis/image_portrait/person_distribution_hypothesis_v1.py tools/thesis_main/analysis/image_portrait/person_distribution_run_v1.py tools/thesis_main/analysis/image_portrait/person_distribution_growth_v1.py
+      - name: Exact implementation tests
+        run: python -u -m tools.thesis_main.analysis.image_portrait.person_distribution_run_v1 --test-only --output "$OUT"
+      - name: Actual leave-building fitting and hidden-person scoring
+        run: |
+          set -o pipefail
+          python -u -m tools.thesis_main.analysis.image_portrait.person_distribution_run_v1 --output "$OUT" 2>&1 | tee "$OUT/fit_run.log"
+      - name: Actual growth and distinct-worker composition tests
+        run: |
+          set -o pipefail
+          python -u -m tools.thesis_main.analysis.image_portrait.person_distribution_growth_v1 --output "$OUT" 2>&1 | tee "$OUT/growth_run.log"
+      - name: Verify completed numerics and record provenance
+        run: |
+          python - <<'PY'
+          import os,json,pathlib,hashlib,pandas as pd
+          out=pathlib.Path(os.environ['OUT'])
+          assert json.loads((out/'FIT_COMPLETE.json').read_text())['status']=='complete'
+          assert json.loads((out/'GROWTH_COMPLETE.json').read_text())['status']=='complete'
+          for p in out.rglob('__pycache__'):
+            import shutil;shutil.rmtree(p)
+          records=[]
+          for p in sorted(out.rglob('*')):
+            if p.is_file():records.append({'path':str(p.relative_to(out)),'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
+          (out/'FILE_MANIFEST.json').write_text(json.dumps(records,indent=2))
+          (out/'README.md').write_text('# 图片与人员条件分布：已执行数值结果\n\n本目录为独立假说探索，不改变正式方案、原标注、39图审核或采集安排。输入和方法见 `source_audit.json`、`method.json`；逐图预测、训练内选取、模拟增长与真实组合均已实际计算。\n\n中文综合报告在结果人工审读后另行提交；本条不代表论文假说得到支持。\n',encoding='utf8')
+          print(pd.read_csv(out/'score_summary.csv').query("condition=='manual' and k==4").to_string(index=False))
+          PY
+      - name: Commit only isolated research results
+        run: |
+          git config user.name 'research-numerics'
+          git config user.email 'research-numerics@users.noreply.github.com'
+          git add -f "$OUT"
+          git commit -m 'research: executed person-distribution hypothesis results; no collection or review changes'
+          git push origin HEAD:codex/image-portrait-20260914
+      - name: Preserve actual output, including failure logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: person-distribution-hypothesis-numerics
+          path: analysis_results/image_portrait_20260914_v1/cloud/person_distribution_hypothesis_20260916_v1/run_ae94e825/
+          retention-days: 30
