@@ -1,0 +1,112 @@
+name: Person distribution growth and falsification 20260916
+on:
+  push:
+    branches: [codex/image-portrait-20260914]
+    paths: [.github/workflows/person-distribution-hypothesis-tail-20260916.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OUT: analysis_results/image_portrait_20260914_v1/cloud/person_distribution_hypothesis_20260916_v1/run_ae94e825
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/image-portrait-20260914
+          fetch-depth: 1
+          filter: blob:none
+          lfs: false
+          sparse-checkout: |
+            tools
+            lib/misc
+            .agents
+            .github/workflows
+            analysis_results/image_portrait_20260914_v1/cloud/person_distribution_hypothesis_20260916_v1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy==1.26.4 pandas==2.2.3 scipy==1.14.1 scikit-learn==1.5.2 shapely==2.0.6 pillow==11.1.0 tabulate==0.9.0
+      - name: Restore verified completed fitting artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import os,json,pathlib,urllib.request,urllib.error,zipfile,io,hashlib
+          out=pathlib.Path(os.environ['OUT']);out.mkdir(parents=True,exist_ok=True)
+          class NoRedirect(urllib.request.HTTPRedirectHandler):
+            def redirect_request(self,req,fp,code,msg,headers,newurl):return None
+          url='https://api.github.com/repos/Sparkling-Flames/3D_Manhattan_label/actions/artifacts/10429662445/zip';head={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'}
+          try:
+            r=urllib.request.build_opener(NoRedirect).open(urllib.request.Request(url,headers=head),timeout=60);payload=r.read()
+          except urllib.error.HTTPError as e:
+            if e.code!=302:raise
+            with urllib.request.urlopen(e.headers['Location'],timeout=120)as r:payload=r.read()
+          assert hashlib.sha256(payload).hexdigest()=='8a04351a5e16ba5578bdb19f23d853f1a08adec05879e5197103d73799c911d3'
+          z=zipfile.ZipFile(io.BytesIO(payload));assert z.testzip()is None
+          for n in z.namelist():assert not pathlib.PurePosixPath(n).is_absolute()and'..'not in pathlib.PurePosixPath(n).parts
+          z.extractall(out);assert json.loads((out/'FIT_COMPLETE.json').read_text())['status']=='complete'
+          (out/'publication_retry.json').write_text(json.dumps({'previous_run':35052941639,'artifact':10429662445,'issue':'git add outside sparse checkout; fixed with explicit output path and --sparse','fitting_repeated':False,'predictions_changed':False},indent=2))
+          PY
+      - name: Publish completed fitting checkpoint
+        run: |
+          git config user.name 'research-numerics'
+          git config user.email 'research-numerics@users.noreply.github.com'
+          git add --sparse -f "$OUT"
+          git commit -m 'research: publish completed image-person heldout distribution predictions'
+          git pull --rebase origin codex/image-portrait-20260914
+          git push origin HEAD:codex/image-portrait-20260914
+      - name: Execute simulated growth and genuine compositions
+        run: |
+          set -o pipefail
+          python -u - <<'PY' 2>&1 | tee "$OUT/growth_run.log"
+          import os
+          from pathlib import Path
+          from tools.thesis_main.analysis.image_portrait import person_distribution_hypothesis_v1 as core
+          from tools.thesis_main.analysis.image_portrait.person_distribution_resume_v1 import paired_exact
+          from tools.thesis_main.analysis.image_portrait import person_distribution_growth_v1 as growth
+          core.boot_pair=paired_exact
+          growth.run(Path(os.environ['OUT']))
+          PY
+      - name: Publish growth checkpoint
+        run: |
+          find "$OUT" -type d -name __pycache__ -prune -exec rm -rf '{}' +
+          git add --sparse -f "$OUT"
+          git commit -m 'research: executed growth, minority-candidate ceiling and real worker combinations'
+          git pull --rebase origin codex/image-portrait-20260914
+          git push origin HEAD:codex/image-portrait-20260914
+      - name: Execute identity placebo and minority diagnostics
+        run: |
+          set -o pipefail
+          python -u -m tools.thesis_main.analysis.image_portrait.person_distribution_diagnostics_v1 --output "$OUT" 2>&1 | tee "$OUT/diagnostics_run.log"
+      - name: Execute unsupported-candidate probability extension
+        run: |
+          set -o pipefail
+          python -u -m tools.thesis_main.analysis.image_portrait.person_distribution_novelty_v1 --output "$OUT" 2>&1 | tee "$OUT/novelty_run.log"
+      - name: Verify and publish completed experiment
+        run: |
+          python - <<'PY'
+          import pathlib,os,json,hashlib,shutil,subprocess
+          out=pathlib.Path(os.environ['OUT'])
+          for n in ['FIT_COMPLETE.json','GROWTH_COMPLETE.json','diagnostics/DIAGNOSTICS_COMPLETE.json','novelty_extension/COMPLETE.json']:assert json.loads((out/n).read_text())['status']=='complete'
+          for p in out.rglob('__pycache__'):shutil.rmtree(p)
+          records=[{'path':str(p.relative_to(out)),'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}for p in sorted(out.rglob('*'))if p.is_file()and p.name!='FILE_MANIFEST.json']
+          (out/'FILE_MANIFEST.json').write_text(json.dumps(records,indent=2));(out/'EXECUTION_COMPLETE.json').write_text(json.dumps({'status':'complete','formal_protocol_changed':False,'user_review_filled':False,'new_visual_inference':False,'files':len(records),'code_commit':subprocess.check_output(['git','rev-parse','HEAD']).decode().strip()},indent=2))
+          PY
+          git add --sparse -f "$OUT"
+          git commit -m 'research: complete image-person hypothesis diagnostics and novelty forecasts'
+          git pull --rebase origin codex/image-portrait-20260914
+          git push origin HEAD:codex/image-portrait-20260914
+      - name: Preserve actual numerics and failure logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: person-distribution-hypothesis-final-numerics
+          path: analysis_results/image_portrait_20260914_v1/cloud/person_distribution_hypothesis_20260916_v1/run_ae94e825/
+          retention-days: 30
