@@ -1,0 +1,68 @@
+name: Person distribution controlled compositions 20260916
+on:
+  push:
+    branches: [codex/image-portrait-20260914]
+    paths: [.github/workflows/person-distribution-controlled-compositions-20260916.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  compositions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OUT: analysis_results/image_portrait_20260914_v1/cloud/person_distribution_hypothesis_20260916_v1/run_ae94e825
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/image-portrait-20260914
+          fetch-depth: 1
+          filter: blob:none
+          lfs: false
+          sparse-checkout: |
+            tools
+            lib/misc
+            .github/workflows/person-distribution-controlled-compositions-20260916.yml
+            analysis_results/image_portrait_20260914_v1/cloud/person_distribution_hypothesis_20260916_v1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy==1.26.4 pandas==2.2.3 scipy==1.14.1 scikit-learn==1.5.2 shapely==2.0.6 pillow==11.1.0 tabulate==0.9.0
+      - name: Verify online inference equals saved predictions
+        run: |
+          set -o pipefail
+          python -u -m tools.thesis_main.analysis.image_portrait.person_distribution_online_v1 --output "$OUT" --verify-saved 2>&1 | tee "$OUT/online_api_run.log"
+      - name: Execute genuinely matched personnel comparisons
+        run: |
+          set -o pipefail
+          python -u -m tools.thesis_main.analysis.image_portrait.person_distribution_composition_control_v1 --output "$OUT" 2>&1 | tee "$OUT/composition_control_run.log"
+      - name: Check and publish only new supplement
+        run: |
+          python - <<'PY'
+          import os,json,pathlib
+          out=pathlib.Path(os.environ['OUT'])
+          assert json.loads((out/'online_api_verification.json').read_text())['status']=='passed'
+          assert json.loads((out/'composition_control/COMPLETE.json').read_text())['status']=='complete'
+          PY
+          git config user.name 'research-numerics'
+          git config user.email 'research-numerics@users.noreply.github.com'
+          git add --sparse -f "$OUT/composition_control" "$OUT/online_api_verification.json" "$OUT/online_api_examples.json" "$OUT/online_api_run.log" "$OUT/composition_control_run.log"
+          git commit -m 'research: executed matched AABC-ABCD comparisons and real-type growth; no new people'
+          git restore --worktree "$OUT"
+          git pull --rebase origin codex/image-portrait-20260914
+          git push origin HEAD:codex/image-portrait-20260914
+      - name: Preserve actual supplementary results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: person-distribution-controlled-compositions
+          path: |
+            analysis_results/image_portrait_20260914_v1/cloud/person_distribution_hypothesis_20260916_v1/run_ae94e825/composition_control/
+            analysis_results/image_portrait_20260914_v1/cloud/person_distribution_hypothesis_20260916_v1/run_ae94e825/online_api_verification.json
+            analysis_results/image_portrait_20260914_v1/cloud/person_distribution_hypothesis_20260916_v1/run_ae94e825/online_api_examples.json
+            analysis_results/image_portrait_20260914_v1/cloud/person_distribution_hypothesis_20260916_v1/run_ae94e825/online_api_run.log
+            analysis_results/image_portrait_20260914_v1/cloud/person_distribution_hypothesis_20260916_v1/run_ae94e825/composition_control_run.log
+          retention-days: 30
