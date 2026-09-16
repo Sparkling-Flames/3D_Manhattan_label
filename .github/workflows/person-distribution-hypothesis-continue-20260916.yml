@@ -1,0 +1,136 @@
+name: Person distribution hypothesis continuation 20260916
+on:
+  push:
+    branches: [codex/image-portrait-20260914]
+    paths: [.github/workflows/person-distribution-hypothesis-continue-20260916.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+jobs:
+  numerical:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OUT: analysis_results/image_portrait_20260914_v1/cloud/person_distribution_hypothesis_20260916_v1/run_ae94e825
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/image-portrait-20260914
+          fetch-depth: 1
+          filter: blob:none
+          lfs: false
+          sparse-checkout: |
+            tools
+            lib/misc
+            .agents
+            .github/workflows/person-distribution-hypothesis-20260916.yml
+            .github/workflows/person-distribution-hypothesis-continue-20260916.yml
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy==1.26.4 pandas==2.2.3 scipy==1.14.1 scikit-learn==1.5.2 shapely==2.0.6 pillow==11.1.0 tabulate==0.9.0
+      - name: Preserve previous attempt, stop redundant computation only
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import os,json,time,pathlib,urllib.request,urllib.error,zipfile,io,hashlib
+          out=pathlib.Path(os.environ['OUT']);out.mkdir(parents=True,exist_ok=True)
+          base='https://api.github.com/repos/Sparkling-Flames/3D_Manhattan_label';head={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'}
+          def api(path,method='GET'):
+            req=urllib.request.Request(base+path,headers=head,method=method)
+            with urllib.request.urlopen(req,timeout=60) as r:
+              d=r.read();return json.loads(d) if d else {}
+          run=35051833974;status=api(f'/actions/runs/{run}')
+          if status['status']!='completed':
+            try:api(f'/actions/runs/{run}/cancel','POST')
+            except urllib.error.HTTPError as e:
+              if e.code!=409:raise
+          for _ in range(80):
+            status=api(f'/actions/runs/{run}')
+            if status['status']=='completed':break
+            time.sleep(3)
+          arts=api(f'/actions/runs/{run}/artifacts')['artifacts'];record={'previous_run':run,'previous_conclusion':status.get('conclusion'),'reason':'replace slow bootstrap implementation by mathematically equivalent sufficient-statistic version; no new target split or parameter search','downloaded':False}
+          if arts:
+            artifact=next(a for a in arts if a['name']=='person-distribution-hypothesis-numerics')
+            class NoRedirect(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self,req,fp,code,msg,headers,newurl):return None
+            opener=urllib.request.build_opener(NoRedirect)
+            try:
+              res=opener.open(urllib.request.Request(artifact['archive_download_url'],headers=head),timeout=60);payload=res.read()
+            except urllib.error.HTTPError as e:
+              if e.code not in (301,302,303,307,308):raise
+              with urllib.request.urlopen(e.headers['Location'],timeout=120) as r:payload=r.read()
+            z=zipfile.ZipFile(io.BytesIO(payload));assert z.testzip() is None
+            for n in z.namelist():
+              p=pathlib.PurePosixPath(n);assert not p.is_absolute() and '..'not in p.parts
+            z.extractall(out);record.update(downloaded=True,artifact_id=artifact['id'],artifact_sha256=hashlib.sha256(payload).hexdigest(),files=len(z.namelist()),completed_fitted_scores_received=(out/'per_image_scores.csv').exists())
+          (out/'resume_provenance.json').write_text(json.dumps(record,indent=2));print(record)
+          PY
+      - name: Compile and complete exact scores without refitting when possible
+        run: |
+          set -o pipefail
+          python -m py_compile tools/thesis_main/analysis/image_portrait/person_distribution_*.py
+          python -u -m tools.thesis_main.analysis.image_portrait.person_distribution_resume_v1 --output "$OUT" 2>&1 | tee "$OUT/resume_fit_run.log"
+      - name: Publish completed fitting checkpoint
+        run: |
+          git config user.name 'research-numerics'
+          git config user.email 'research-numerics@users.noreply.github.com'
+          find "$OUT" -type d -name __pycache__ -prune -exec rm -rf '{}' +
+          git add -f "$OUT"
+          git commit -m 'research: completed heldout image-person distribution fitting and paired comparisons'
+          git pull --rebase origin codex/image-portrait-20260914
+          git push origin HEAD:codex/image-portrait-20260914
+      - name: Simulated growth and genuine compositions
+        run: |
+          set -o pipefail
+          python -u - <<'PY' 2>&1 | tee "$OUT/growth_run.log"
+          import os
+          from pathlib import Path
+          from tools.thesis_main.analysis.image_portrait import person_distribution_hypothesis_v1 as core
+          from tools.thesis_main.analysis.image_portrait.person_distribution_resume_v1 import paired_exact
+          from tools.thesis_main.analysis.image_portrait import person_distribution_growth_v1 as growth
+          core.boot_pair=paired_exact
+          growth.run(Path(os.environ['OUT']))
+          PY
+      - name: Publish completed growth checkpoint
+        run: |
+          find "$OUT" -type d -name __pycache__ -prune -exec rm -rf '{}' +
+          git add -f "$OUT"
+          git commit -m 'research: completed real-versus-simulated growth and distinct-worker composition evaluation'
+          git pull --rebase origin codex/image-portrait-20260914
+          git push origin HEAD:codex/image-portrait-20260914
+      - name: Minority preservation and identity falsification
+        run: |
+          set -o pipefail
+          python -u -m tools.thesis_main.analysis.image_portrait.person_distribution_diagnostics_v1 --output "$OUT" 2>&1 | tee "$OUT/diagnostics_run.log"
+      - name: Explicit forecast of unsupported candidate mass
+        run: |
+          set -o pipefail
+          python -u -m tools.thesis_main.analysis.image_portrait.person_distribution_novelty_v1 --output "$OUT" 2>&1 | tee "$OUT/novelty_run.log"
+      - name: Final verification and publication
+        run: |
+          python - <<'PY'
+          import pathlib,os,json,hashlib,shutil
+          out=pathlib.Path(os.environ['OUT'])
+          for name in ['FIT_COMPLETE.json','GROWTH_COMPLETE.json','diagnostics/DIAGNOSTICS_COMPLETE.json','novelty_extension/COMPLETE.json']:assert json.loads((out/name).read_text())['status']=='complete'
+          for p in out.rglob('__pycache__'):shutil.rmtree(p)
+          records=[{'path':str(p.relative_to(out)),'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}for p in sorted(out.rglob('*'))if p.is_file()and p.name!='FILE_MANIFEST.json']
+          (out/'FILE_MANIFEST.json').write_text(json.dumps(records,indent=2))
+          (out/'EXECUTION_COMPLETE.json').write_text(json.dumps({'status':'complete','formal_protocol_changed':False,'user_review_filled':False,'new_visual_inference':False,'files':len(records)},indent=2))
+          PY
+          git add -f "$OUT"
+          git commit -m 'research: executed minority, identity placebo, and unsupported-geometry forecasts'
+          git pull --rebase origin codex/image-portrait-20260914
+          git push origin HEAD:codex/image-portrait-20260914
+      - name: Preserve actual results and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: person-distribution-hypothesis-complete-numerics
+          path: analysis_results/image_portrait_20260914_v1/cloud/person_distribution_hypothesis_20260916_v1/run_ae94e825/
+          retention-days: 30
