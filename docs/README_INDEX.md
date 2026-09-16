@@ -1,5 +1,9 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
+假说探索：[本轮Pro目标提示词](../analysis_results/image_portrait_20260914_v1/prompts/PERSON_TYPE_HYPOTHESIS.md)与[图片×人员类型模拟审读](thesis_main/人员模拟建议独立审读与最小验证方案_20260916.md)。用户授权自主探索，方法不预定；假说仍未证实，暂不纳入正式方案或改变采集。
+
+图片重点审核：[39图／44项问题可视化](../analysis_results/image_portrait_20260914_v1/review_workflow_20260915/key39/README.md)，复用原空间标本，含OOS几何；本地图片不上传。
+
 **Pro研究统一入口：[现行任务、版本报告、输入及复算限制](../analysis_results/image_portrait_20260914_v1/PRO_START_HERE.md)。**2026-09-16已接收新候选下的A—E；[多轮发现、导师讨论及DA3独立复核](thesis_main/图片难度与收敛_多轮证据及导师讨论对照_20260916.md)。算法候选仍须用户审核，早期范围2—8；原审核工具入口保留。
 
 

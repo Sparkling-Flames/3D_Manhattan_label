@@ -1,5 +1,9 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
+模拟假说探索：`analysis_results/image_portrait_20260914_v1/prompts/PERSON_TYPE_HYPOTHESIS.md`为最新Pro目标提示词；`docs/thesis_main/人员模拟建议独立审读与最小验证方案_20260916.md`保存原型核对及可选设计。用户授权自主探索，假说仍未证实且未纳入正式方案；模拟代码分支未合并，采集不变。
+
+39图重点审核：`review_handoff.py --focus39`生成`analysis_results/image_portrait_20260914_v1/local_review_studio/key39/`（Git忽略），问题与无图依据在`review_workflow_20260915/key39/`；复用`review_handoff.js`和Panorama Studio，包含44项问题与OOS分区。对应本地检查`tests/test_image_portrait_review_handoff.py`。
+
 Pro资料整理：入口为`analysis_results/image_portrait_20260914_v1/PRO_START_HERE.md`。两轮历史粗分类分别存于`cloud/history_difficulty_20260915_v1/`、`cloud/history_difficulty_review_20260915_v2/`；新候选下A—E在`cloud/image_links_after_review_20260915_v1/`，代码`image_links_followup_*.py`、测试`test_image_links_followup.py`。本地独立复核脚本`image_links_independent_audit.py`及同名测试，输出`independent_synthesis_20260916/`，说明为`docs/thesis_main/图片难度与收敛_多轮证据及导师讨论对照_20260916.md`。原`review_handoff.py/js`、本地审核页（Git忽略）及`review_workflow_20260915/`入口保留。
 
 
