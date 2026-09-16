@@ -1,0 +1,141 @@
+GROWTH 1 / 1460
+GROWTH 31 / 1460
+GROWTH 61 / 1460
+GROWTH 91 / 1460
+GROWTH 121 / 1460
+GROWTH 151 / 1460
+GROWTH 181 / 1460
+GROWTH 211 / 1460
+GROWTH 241 / 1460
+GROWTH 271 / 1460
+GROWTH 301 / 1460
+GROWTH 331 / 1460
+GROWTH 361 / 1460
+GROWTH 391 / 1460
+GROWTH 421 / 1460
+GROWTH 451 / 1460
+GROWTH 481 / 1460
+GROWTH 511 / 1460
+GROWTH 541 / 1460
+GROWTH 571 / 1460
+GROWTH 601 / 1460
+GROWTH 631 / 1460
+GROWTH 661 / 1460
+GROWTH 691 / 1460
+GROWTH 721 / 1460
+GROWTH 751 / 1460
+GROWTH 781 / 1460
+GROWTH 811 / 1460
+GROWTH 841 / 1460
+GROWTH 871 / 1460
+GROWTH 901 / 1460
+GROWTH 931 / 1460
+GROWTH 961 / 1460
+GROWTH 991 / 1460
+GROWTH 1021 / 1460
+GROWTH 1051 / 1460
+GROWTH 1081 / 1460
+GROWTH 1111 / 1460
+GROWTH 1141 / 1460
+GROWTH 1171 / 1460
+GROWTH 1201 / 1460
+GROWTH 1231 / 1460
+GROWTH 1261 / 1460
+GROWTH 1291 / 1460
+GROWTH 1321 / 1460
+GROWTH 1351 / 1460
+GROWTH 1381 / 1460
+GROWTH 1411 / 1460
+GROWTH 1441 / 1460
+GROWTH_SUMMARY
+   condition  k  cut            method              metric  images     real  predicted      mae  interval_coverage    mc_se
+      manual  4  0.1 seed_context_t025 diagnostic_stable80      46 0.293478   0.911685 0.629755           0.619565 0.027866
+      manual  4  0.1 seed_context_t025    late_quarter_new      46 0.155797   0.000000 0.155797           0.456522 0.000000
+      manual  4  0.1 seed_context_t025  terminal_supported      46 3.152174   2.200068 1.124660           0.293478 0.005833
+      manual  4  0.1        seed_equal diagnostic_stable80      46 0.293478   0.912024 0.630774           0.608696 0.027839
+      manual  4  0.1        seed_equal    late_quarter_new      46 0.155797   0.000000 0.155797           0.456522 0.000000
+      manual  4  0.1        seed_equal  terminal_supported      46 3.152174   2.201087 1.124321           0.293478 0.004364
+      manual  4  0.1  seed_person_t025 diagnostic_stable80      46 0.293478   0.917799 0.632473           0.586957 0.026841
+      manual  4  0.1  seed_person_t025    late_quarter_new      46 0.155797   0.000000 0.155797           0.456522 0.000000
+      manual  4  0.1  seed_person_t025  terminal_supported      46 3.152174   2.195312 1.127378           0.293478 0.008736
+      manual  4  0.1        seed_type4 diagnostic_stable80      46 0.293478   0.916101 0.630095           0.586957 0.026298
+      manual  4  0.1        seed_type4    late_quarter_new      46 0.155797   0.000000 0.155797           0.456522 0.000000
+      manual  4  0.1        seed_type4  terminal_supported      46 3.152174   2.185122 1.132133           0.304348 0.012078
+      manual  4  0.1  selected_mixture diagnostic_stable80      46 0.293478   0.744226 0.495584           0.880435 0.053204
+      manual  4  0.1  selected_mixture    late_quarter_new      46 0.155797   0.022249 0.142606           0.684783 0.007596
+      manual  4  0.1  selected_mixture  terminal_supported      46 3.152174   2.919497 0.867188           0.619565 0.072654
+      manual  8  0.1 seed_context_t025 diagnostic_stable80      46 0.293478   0.901495 0.612772           0.641304 0.030498
+      manual  8  0.1 seed_context_t025    late_quarter_new      46 0.155797   0.000000 0.155797           0.456522 0.000000
+      manual  8  0.1 seed_context_t025  terminal_supported      46 3.152174   3.227242 0.790421           0.717391 0.067393
+      manual  8  0.1        seed_equal diagnostic_stable80      46 0.293478   0.902174 0.614810           0.619565 0.031312
+      manual  8  0.1        seed_equal    late_quarter_new      46 0.155797   0.000000 0.155797           0.456522 0.000000
+      manual  8  0.1        seed_equal  terminal_supported      46 3.152174   3.256114 0.790761           0.695652 0.065574
+      manual  8  0.1  seed_person_t025 diagnostic_stable80      46 0.293478   0.901155 0.612432           0.630435 0.030230
+      manual  8  0.1  seed_person_t025    late_quarter_new      46 0.155797   0.000000 0.155797           0.456522 0.000000
+      manual  8  0.1  seed_person_t025  terminal_supported      46 3.152174   3.203465 0.784307           0.706522 0.068740
+      manual  8  0.1        seed_type4 diagnostic_stable80      46 0.293478   0.897418 0.608016           0.641304 0.029608
+      manual  8  0.1        seed_type4    late_quarter_new      46 0.155797   0.000000 0.155797           0.456522 0.000000
+      manual  8  0.1        seed_type4  terminal_supported      46 3.152174   3.149457 0.769022           0.728261 0.070398
+      manual  8  0.1  selected_mixture diagnostic_stable80      46 0.293478   0.749321 0.490489           0.891304 0.055191
+      manual  8  0.1  selected_mixture    late_quarter_new      46 0.155797   0.028510 0.139108           0.706522 0.008761
+      manual  8  0.1  selected_mixture  terminal_supported      46 3.152174   3.313859 0.758832           0.782609 0.089998
+oos_geometry  4  0.1 seed_context_t025 diagnostic_stable80       9 0.055556   0.868056 0.812500           0.666667 0.047099
+oos_geometry  4  0.1 seed_context_t025    late_quarter_new       9 0.287037   0.000000 0.287037           0.111111 0.000000
+oos_geometry  4  0.1 seed_context_t025  terminal_supported       9 4.222222   2.880208 1.668403           0.111111 0.007624
+oos_geometry  4  0.1        seed_equal diagnostic_stable80       9 0.055556   0.857639 0.802083           0.666667 0.049355
+oos_geometry  4  0.1        seed_equal    late_quarter_new       9 0.287037   0.000000 0.287037           0.111111 0.000000
+oos_geometry  4  0.1        seed_equal  terminal_supported       9 4.222222   2.880208 1.668403           0.111111 0.007624
+oos_geometry  4  0.1  seed_person_t025 diagnostic_stable80       9 0.055556   0.866319 0.810764           0.666667 0.047568
+oos_geometry  4  0.1  seed_person_t025    late_quarter_new       9 0.287037   0.000000 0.287037           0.111111 0.000000
+oos_geometry  4  0.1  seed_person_t025  terminal_supported       9 4.222222   2.881944 1.670139           0.111111 0.006944
+oos_geometry  4  0.1        seed_type4 diagnostic_stable80       9 0.055556   0.883681 0.828125           0.666667 0.045901
+oos_geometry  4  0.1        seed_type4    late_quarter_new       9 0.287037   0.000000 0.287037           0.111111 0.000000
+oos_geometry  4  0.1        seed_type4  terminal_supported       9 4.222222   2.855903 1.682292           0.166667 0.023515
+oos_geometry  4  0.1  selected_mixture diagnostic_stable80       9 0.055556   0.649306 0.593750           0.888889 0.070968
+oos_geometry  4  0.1  selected_mixture    late_quarter_new       9 0.287037   0.017940 0.269097           0.388889 0.006782
+oos_geometry  4  0.1  selected_mixture  terminal_supported       9 4.222222   3.803819 1.394097           0.388889 0.076622
+oos_geometry  8  0.1 seed_context_t025 diagnostic_stable80       9 0.055556   0.828125 0.772569           0.666667 0.053367
+oos_geometry  8  0.1 seed_context_t025    late_quarter_new       9 0.287037   0.000000 0.287037           0.111111 0.000000
+oos_geometry  8  0.1 seed_context_t025  terminal_supported       9 4.222222   4.604167 1.423611           0.444444 0.098274
+oos_geometry  8  0.1        seed_equal diagnostic_stable80       9 0.055556   0.815972 0.760417           0.666667 0.054850
+oos_geometry  8  0.1        seed_equal    late_quarter_new       9 0.287037   0.000000 0.287037           0.111111 0.000000
+oos_geometry  8  0.1        seed_equal  terminal_supported       9 4.222222   4.625000 1.434028           0.444444 0.097291
+oos_geometry  8  0.1  seed_person_t025 diagnostic_stable80       9 0.055556   0.826389 0.770833           0.722222 0.054888
+oos_geometry  8  0.1  seed_person_t025    late_quarter_new       9 0.287037   0.000000 0.287037           0.111111 0.000000
+oos_geometry  8  0.1  seed_person_t025  terminal_supported       9 4.222222   4.590278 1.402778           0.444444 0.098626
+oos_geometry  8  0.1        seed_type4 diagnostic_stable80       9 0.055556   0.824653 0.769097           0.666667 0.051302
+oos_geometry  8  0.1        seed_type4    late_quarter_new       9 0.287037   0.000000 0.287037           0.111111 0.000000
+oos_geometry  8  0.1        seed_type4  terminal_supported       9 4.222222   4.489583 1.368056           0.444444 0.102708
+oos_geometry  8  0.1  selected_mixture diagnostic_stable80       9 0.055556   0.685764 0.630208           0.833333 0.070028
+oos_geometry  8  0.1  selected_mixture    late_quarter_new       9 0.287037   0.029225 0.257812           0.444444 0.008303
+oos_geometry  8  0.1  selected_mixture  terminal_supported       9 4.222222   4.793403 1.463542           0.555556 0.114784
+        semi  4  0.1 seed_context_t025 diagnostic_stable80      18 0.500000   0.943576 0.504340           0.611111 0.020595
+        semi  4  0.1 seed_context_t025    late_quarter_new      18 0.055556   0.000000 0.055556           0.750000 0.000000
+        semi  4  0.1 seed_context_t025  terminal_supported      18 2.611111   1.742188 1.033854           0.277778 0.007284
+        semi  4  0.1        seed_equal diagnostic_stable80      18 0.500000   0.940972 0.506944           0.611111 0.021586
+        semi  4  0.1        seed_equal    late_quarter_new      18 0.055556   0.000000 0.055556           0.750000 0.000000
+        semi  4  0.1        seed_equal  terminal_supported      18 2.611111   1.746528 1.031250           0.277778 0.003472
+        semi  4  0.1  seed_person_t025 diagnostic_stable80      18 0.500000   0.942708 0.503472           0.611111 0.020792
+        semi  4  0.1  seed_person_t025    late_quarter_new      18 0.055556   0.000000 0.055556           0.750000 0.000000
+        semi  4  0.1  seed_person_t025  terminal_supported      18 2.611111   1.742188 1.033854           0.277778 0.006756
+        semi  4  0.1        seed_type4 diagnostic_stable80      18 0.500000   0.947049 0.506076           0.611111 0.019833
+        semi  4  0.1        seed_type4    late_quarter_new      18 0.055556   0.000000 0.055556           0.750000 0.000000
+        semi  4  0.1        seed_type4  terminal_supported      18 2.611111   1.741319 1.034722           0.277778 0.006858
+        semi  4  0.1  selected_mixture diagnostic_stable80      18 0.500000   0.915799 0.471354           0.694444 0.024830
+        semi  4  0.1  selected_mixture    late_quarter_new      18 0.055556   0.006221 0.060041           0.777778 0.002257
+        semi  4  0.1  selected_mixture  terminal_supported      18 2.611111   1.857639 1.046875           0.305556 0.023364
+        semi  8  0.1 seed_context_t025 diagnostic_stable80      18 0.500000   0.940104 0.471354           0.638889 0.019705
+        semi  8  0.1 seed_context_t025    late_quarter_new      18 0.055556   0.000000 0.055556           0.750000 0.000000
+        semi  8  0.1 seed_context_t025  terminal_supported      18 2.611111   2.339410 0.936632           0.444444 0.046796
+        semi  8  0.1        seed_equal diagnostic_stable80      18 0.500000   0.936632 0.471354           0.638889 0.019453
+        semi  8  0.1        seed_equal    late_quarter_new      18 0.055556   0.000000 0.055556           0.750000 0.000000
+        semi  8  0.1        seed_equal  terminal_supported      18 2.611111   2.344618 0.931424           0.444444 0.045784
+        semi  8  0.1  seed_person_t025 diagnostic_stable80      18 0.500000   0.942708 0.477431           0.611111 0.017481
+        semi  8  0.1  seed_person_t025    late_quarter_new      18 0.055556   0.000000 0.055556           0.750000 0.000000
+        semi  8  0.1  seed_person_t025  terminal_supported      18 2.611111   2.316840 0.905382           0.527778 0.048673
+        semi  8  0.1        seed_type4 diagnostic_stable80      18 0.500000   0.945312 0.476562           0.611111 0.015845
+        semi  8  0.1        seed_type4    late_quarter_new      18 0.055556   0.000000 0.055556           0.750000 0.000000
+        semi  8  0.1        seed_type4  terminal_supported      18 2.611111   2.300347 0.921875           0.472222 0.050711
+        semi  8  0.1  selected_mixture diagnostic_stable80      18 0.500000   0.891493 0.464410           0.666667 0.027247
+        semi  8  0.1  selected_mixture    late_quarter_new      18 0.055556   0.006655 0.058738           0.777778 0.002178
+        semi  8  0.1  selected_mixture  terminal_supported      18 2.611111   2.342882 0.910590           0.583333 0.063761
