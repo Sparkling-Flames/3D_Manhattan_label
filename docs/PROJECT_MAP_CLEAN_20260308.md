@@ -1,5 +1,11 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
+2026-09-16 main接续：`docs/thesis_main/新线程交接_研究主线与采集现状_20260916.md`为当前入口，`全历史覆盖方案独立复核_20260916.md`记录检查与待处理项。完整实验留在研究分支，main不整体合并假说模型及实验输出。
+
+采集工件：`analysis_results/full_history_coverage_20260916/`、`worker_sample_budget_20260916/`、`unassigned_room_inventory_20260915/`与较早`english_followup_pool_20260915/`。工具位于`tools/thesis_main/analysis/`：`build_full_history_coverage_20260916.py`、`build_full_history_coverage_workbook_20260916.mjs`、`plan_worker_sample_budget_20260916.py`、`audit_unassigned_rooms_20260915.py`；覆盖测试`tests/test_full_history_coverage_20260916.py`。候选准备不等于派发或已完成数据。
+
+研究归档入口：`analysis_results/image_portrait_20260914_v1/PRO_START_HERE.md`。main保留`review_workflow_20260915/key39/`的说明与无图依据；本地`local_review_studio/`继续忽略，不上传图片。原39图生成器及完整输入在研究分支。
+
 研究当前入口：`docs/thesis_main/研究现状交接_20260913.md`。库存脚本`tools/thesis_main/analysis/audit_history_inventory_20260913.py`逐条回查canonical与18份原导出，生成当前v2结果目录`全量历史与本轮覆盖核对.json/.csv`，区分全量历史、采用子集及新增计划。旧9月9日交接保留为历史。
 
 第一阶段v2交付：`label_studio_import/`放任务7、Project G、Project H；H已定稿20图。结果目录的`完成后可分析覆盖.json/.md`说明6个重点同房间及历史扩展覆盖。旧v1人员包/工作簿、v2 ZIP和旧门洞复核空表已删除，v1仍保留生成器与审计依赖的机器输入。当前中文、英文必做、英文选做分别存放，不创建新压缩包。

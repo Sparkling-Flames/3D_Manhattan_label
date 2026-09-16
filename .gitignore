@@ -124,6 +124,11 @@ docs/*
 !docs/agent/REPO_PATH_MAP.md
 !docs/thesis_main/
 docs/thesis_main/*
+!docs/thesis_main/新线程交接_研究主线与采集现状_20260916.md
+!docs/thesis_main/全历史覆盖方案独立复核_20260916.md
+!docs/thesis_main/Pro收敛续研复核_20260915.md
+!docs/thesis_main/主空间与历史粗分层逻辑复核_20260915.md
+!docs/thesis_main/历史作答难度粗分类续研任务_20260915.md
 !docs/thesis_main/用户研究要求核对清单_20260913.md
 !docs/thesis_main/第一阶段执行与人员分类续研说明_20260913.md
 !docs/thesis_main/研究主线与房间场景选图方案_20260912.md
@@ -206,6 +211,7 @@ docs/AGENT_CONTEXT_INDEX.md
 # Do not upload ZIP or TXT files (repo-wide)
 *.zip
 *.txt
+!/requirements-mainspace.txt
 !config/paper_a_analysis_requirements.lock.txt
 !config/paper_a_torch_requirements.lock.txt
 
@@ -471,6 +477,7 @@ docs/label_studio/*
 /analysis_results/worker_four_block_exploration_20260910_v1/predictions.csv.gz
 
 # Disposable spatial review montages and browser QA screenshots.
+/analysis_results/image_portrait_20260914_v1/local_review_studio/
 /analysis_results/open_layout_recheck_20260913_v1/tmp_[abc]/*.jpg
 /analysis_results/open_layout_recheck_20260913_v1/parent_check_*.jpg
 /analysis_results/candidate_review_20260912_v2/results/审查页预览.png

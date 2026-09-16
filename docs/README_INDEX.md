@@ -1,5 +1,13 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
+**当前入口（2026-09-16，main）：[研究主线与采集交接](thesis_main/新线程交接_研究主线与采集现状_20260916.md)。**独立真人采集、人员组合及不确定性／收敛为主线；更多人手尚未确认，不扩大既有922份候选。假说研究暂停，完整实验保留在`codex/image-portrait-20260914`与`codex/simulated-annotators`。
+
+本轮准备：[覆盖执行说明](../analysis_results/full_history_coverage_20260916/执行说明.md)、[人员×图片工作簿](../analysis_results/full_history_coverage_20260916/图片名单与人员覆盖.xlsx)、[独立复核](thesis_main/全历史覆盖方案独立复核_20260916.md)。11图待复核涉及首批165份，新人身份为空，未派发；原480份进度须按最新导出另核对。
+
+支撑资料：[人员预算](../analysis_results/worker_sample_budget_20260916/人员样本量与耗时建议.md)、[池外库存](../analysis_results/unassigned_room_inventory_20260915/盘点说明.md)、[较早英文追加候选](../analysis_results/english_followup_pool_20260915/追加候选说明.md)。较早候选不自动成为本轮新增英文任务。[39图审核入口](../analysis_results/image_portrait_20260914_v1/review_workflow_20260915/key39/README.md)继续由用户处理；[历史研究导航](../analysis_results/image_portrait_20260914_v1/PRO_START_HERE.md)用于查阅，不作为续跑指令。
+
+## 以下保留既有阶段索引，旧计划状态须据最新交接核对
+
 当前研究交接：[2026-09-13现状与阅读顺序](thesis_main/研究现状交接_20260913.md)。全量历史196图1843份、55张高人数图；不能用本轮102张采用池替代历史总量。正文要求与执行说明已同步纠正。
 
 第一阶段最新交付：[整房优先说明](../analysis_results/stage1_person_image_packages_20260913_v2/整房优先版交付说明.md)、[完成后可分析覆盖](../analysis_results/stage1_person_image_packages_20260913_v2/完成后可分析覆盖.md)。任务7、Project G、Project H的JSON独立存放；H已定稿20图。不提供ZIP，旧分发表及门洞空白复核页已清理。
