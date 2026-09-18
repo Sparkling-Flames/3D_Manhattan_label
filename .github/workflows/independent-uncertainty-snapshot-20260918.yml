@@ -1,0 +1,53 @@
+name: Independent uncertainty numerical snapshot 20260918
+on:
+  push:
+    branches: [research/uncertainty-independent-20260918]
+    paths: [.github/workflows/independent-uncertainty-snapshot-20260918.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Retrieve pinned public numerical files without changing source data
+        shell: bash
+        run: |
+          mkdir -p snapshot
+          python - <<'PY'
+          import hashlib, json, pathlib, urllib.request
+          root = pathlib.Path('snapshot')
+          base = 'https://raw.githubusercontent.com/Sparkling-Flames/3D_Manhattan_label/'
+          latest = 'd3477e700082c0a8482f1ffabd9dcc5649c9754d'
+          historical = 'c61930ecac1a20c99cd0b73c10aa7e10bd9e65ac'
+          manifest = []
+          def fetch(ref, path, destination):
+              url = base + ref + '/' + urllib.parse.quote(path)
+              data = urllib.request.urlopen(url, timeout=90).read()
+              target = root / destination
+              target.parent.mkdir(parents=True, exist_ok=True)
+              target.write_bytes(data)
+              manifest.append(dict(ref=ref, path=path, local=destination, bytes=len(data), sha256=hashlib.sha256(data).hexdigest(), git_blob_sha1=hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()))
+              return data
+          import urllib.parse
+          key = fetch(latest, 'analysis_results/pro_cluster_review_20260918/data.json', 'key39/data.json')
+          assert manifest[-1]['git_blob_sha1'] == '5e3a08f091a4611505f9eeb90680bf5edec87c49'
+          parsed = json.loads(key)
+          assert parsed['schema'] == 'pro_cluster_review_key39_v1' and len(parsed['cases']) == 39
+          for name in ['README.md', '研究对象澄清_用户原话.json', '用户裁决与重点案例.md']:
+              fetch(latest, 'analysis_results/pro_cluster_review_20260918/'+name, 'key39/'+name)
+          for name in ['responses.jsonl.gz','references.jsonl.gz','semi_initializations.jsonl.gz']:
+              fetch(historical, 'analysis_results/image_portrait_20260914_v1/human/'+name, 'human/'+name)
+          inp = 'analysis_results/image_portrait_20260914_v1/cloud/image_links_after_review_20260915_v1/run_b02a97e2/inputs/'
+          for name in ['response_audit.csv.gz','group_index.json','pairwise_geometry.npz','effective_points.json']:
+              fetch(historical, inp+name, 'history_inputs/'+name)
+          (root/'MANIFEST.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding='utf-8')
+          print(json.dumps({'cases':len(parsed['cases']),'files':len(manifest),'bytes':sum(r['bytes'] for r in manifest),'source_data_changed':False}))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: independent-uncertainty-pinned-numerics-20260918
+          path: snapshot/
+          retention-days: 14
+          if-no-files-found: error
