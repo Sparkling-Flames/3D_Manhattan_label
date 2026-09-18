@@ -1,0 +1,76 @@
+               N  clusters  singletons  density_unassigned
+method                                                    
+A0_legacy    817       268         158                   0
+A1_mask      817       221         106                   0
+A2_local     817       299         175                   0
+A3_cyclic    817       282         141                   0
+A4_adaptive  817       282         141                   0
+A5_density   817       414         223                 223
+A6_spectral  817       118           0                   0
+A7_event     817       329         195                   0
+{
+  "cyclic_DP_brute_reference_symmetry_cyclic_order_instances": 40,
+  "pure_localization_cutoff_counterexample": [
+    {
+      "x_shift": 19,
+      "total_squared": 1444.0,
+      "localization_squared": 1444.0,
+      "unmatched_squared": 0.0,
+      "unmatched_pairs": 0,
+      "matched_pairs": 4,
+      "matches": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ]
+      ]
+    },
+    {
+      "x_shift": 21,
+      "total_squared": 1600.0,
+      "localization_squared": 0,
+      "unmatched_squared": 1600.0,
+      "unmatched_pairs": 8,
+      "matched_pairs": 0,
+      "matches": []
+    }
+  ],
+  "zero_threshold_flips_but_changed_hierarchy": {
+    "before": [
+      1,
+      1,
+      2
+    ],
+    "after": [
+      2,
+      1,
+      1
+    ],
+    "ARI": -0.5
+  },
+  "HDBSCAN_does_not_mutate_precomputed_input": true,
+  "spherical_vs_repository_3D_line_projection_max_abs_px": 3.069544618483633e-12,
+  "spherical_periodic_shift_and_identity_for_every_available_record": true,
+  "all_39_image_SHA256_match": true,
+  "key39_source_blob_unchanged": true,
+  "versions": {
+    "python": "3.13.15",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scipy": "1.17.0",
+    "sklearn": "1.8.0",
+    "numba": "0.65.1"
+  }
+}

@@ -1,0 +1,1725 @@
+[
+  {
+    "code": "jtcxE69GiFV-05",
+    "reviews": {
+      "user_image_note": "边界明显,大体范围个人感觉是无歧义的.但是墙面有很多凸起的小柱子/柜子,我记得模型是完全标歪的,现有人工的标注也不是很理想,而且说实话,这图的分簇有待商榷,我没有明显看出来两簇的不同,是右下角的bottom y 的区别吗",
+      "peer_image_note": "边界是这个房间内 有床和沙发桌子遮挡 两个开口但是界限还是比较清楚",
+      "user_condition_records": [
+        {
+          "image_id": "jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "简单",
+            "reason": "这两个其实差不多",
+            "cluster_semantics": "小偏差",
+            "singleton_assessment": "小偏差"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "基本一致，质量另议。双方认为主范围清楚、簇间差别小；用户另指出模型和人工标注质量不佳。保留小结构与定位问题，一正的“简单”不等于结果正确。模型标歪为用户回忆，尚未独立验证。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [
+      {
+        "image_id": "jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037",
+        "issue_id": "jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037:1",
+        "condition": "manual",
+        "answer": "同一范围，主要是局部定位差异",
+        "note": "可能是第一对点的bottomy 和第四对点的差异吧. 我也没看出太大的差别"
+      }
+    ],
+    "user_point_review": []
+  },
+  {
+    "code": "uNb9QFRL6hY-40",
+    "reviews": {
+      "user_image_note": "这图有个楼梯的开口,但是一般不会标那里,主要是左边的墙角,是阶梯型的,不注意很容易遗漏, 其实所有人都没有标好.单人标法是错的",
+      "peer_image_note": "就这个房间 有个沙发和钢琴遮挡 一个小开口 墙上镶嵌壁炉",
+      "user_condition_records": [
+        {
+          "image_id": "uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        },
+        {
+          "image_id": "uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62",
+          "condition": "semi",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "简单",
+            "reason": "差不多",
+            "cluster_semantics": "差不多",
+            "singleton_assessment": "差不多"
+          }
+        },
+        {
+          "image_id": "uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62",
+          "condition": "semi",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "实质分歧：共同漏标是否被“差不多”掩盖。一正认为简单、各标法相近；用户认为阶梯墙角被普遍漏标且单人标法错误。优先核对共同遗漏；多数一致不证明正确，也不直接证明低难度。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [
+      {
+        "image_id": "uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62",
+        "issue_id": "uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62:1",
+        "condition": "manual",
+        "answer": "属于必标墙体转折，省略按漏标处理",
+        "note": "w6 我认为他的想法: 全景图左右是相连的,但是他是不是认为左边太挤了,所以在右边标了. 其实最左边应该挤在一起有3对点(最正确),或者2对点再加06最右侧的一对点"
+      }
+    ],
+    "user_point_review": []
+  },
+  {
+    "code": "uNb9QFRL6hY-45",
+    "reviews": {
+      "user_image_note": "右侧有个 阶梯通向门口,更右侧的墙的阶梯状 容易被遗漏,单人标法1,簇3,4都是漏了,单人标法2对于天花版位置的理解不同,但是簇6把墙正中间的装饰东西 给标了,这不是说不能标,而是他标了个寂寞,完全不理解",
+      "peer_image_note": "和上一张图一样的房间 沙发钢琴 一个突出的壁炉",
+      "user_condition_records": [
+        {
+          "image_id": "uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "中等",
+            "reason": "有一个突出的壁炉导致不知道算不算墙体  视角我觉得都差不多 视角转向了",
+            "cluster_semantics": "一些偏差",
+            "singleton_assessment": "没有把壁炉当作墙"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "分歧归因不同。一正重在壁炉是否算墙；用户区分右侧阶梯墙遗漏、天花板理解及装饰物过度解析。分别保留具体部位和机制，暂不把所有差异都归为合理多解。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [
+      {
+        "image_id": "uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97",
+        "issue_id": "uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97:1",
+        "condition": "manual",
+        "answer": "允许简化，保留与省略均可接受",
+        "note": "但是主要是这两位跟我之前有一张图的评论说的一样,凸起得标突出来的尖端,还有和墙面相连的位置. 他这个相当于只标了一半"
+      },
+      {
+        "image_id": "uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97",
+        "issue_id": "uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97:2",
+        "condition": "manual",
+        "answer": "必须纳入，省略属于漏标",
+        "note": ""
+      }
+    ],
+    "user_point_review": []
+  },
+  {
+    "code": "7y3sRwLe3Va-08",
+    "reviews": {
+      "user_image_note": "oos,几何标注有分歧很正常. 左/右下楼梯和中偏右都是第一层的位置,这张就是很明显的无法收敛",
+      "peer_image_note": "走廊 二楼挑空 栏杆   q15:超出范围 ",
+      "user_condition_records": [],
+      "peer_condition_records": [],
+      "assistant_text_comparison_not_visual_adjudication": "OOS意见一致，收敛判断强度不同。双方均指出挑空／跨楼层问题；用户进一步认为无法收敛。保存原话，但OOS与分布稳定分开，不将静态审图升格为“永远不收敛”的结论。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [],
+    "user_point_review": []
+  },
+  {
+    "code": "7y3sRwLe3Va-12",
+    "reviews": {
+      "user_image_note": "oos,图片右边很明显看到了一层地板 ,这其实也是无法收敛",
+      "peer_image_note": "走廊 二楼挑空 栏杆   q16:超出范围 ",
+      "user_condition_records": [],
+      "peer_condition_records": [],
+      "assistant_text_comparison_not_visual_adjudication": "OOS意见一致。用户指出可见一层地板并判断无法收敛，一正判断超范围。保留范围问题及用户过程判断，不能以OOS代替真实人数增长下的收敛检验。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [],
+    "user_point_review": [
+      {
+        "image_id": "7y3sRwLe3Va_6376b741b50a4418b3dc3fde791c3c09",
+        "canonical_annotation_id": "4d3e4911d8f07aa2",
+        "worker_id": "W037",
+        "condition": "oos_geometry",
+        "action": "",
+        "point_index": null,
+        "added_coordinate": null,
+        "reason": "",
+        "confirmed": false,
+        "selected_original_point": null,
+        "imputed_not_original_worker_response": false,
+        "application_status": "pending_not_applied"
+      }
+    ]
+  },
+  {
+    "code": "B6ByNegPMKs-11",
+    "reviews": {
+      "user_image_note": "右边的门那里,是开放的,可能导致范围不同,1,2,5都是大致一致的,3,4是另一种,6的话把柱子给标注了,这种是过度解析了. 其实很多簇我也不知道你是怎么分的,其实没有很大差别,",
+      "peer_image_note": "长走廊 开口门多个 ",
+      "user_condition_records": [
+        {
+          "image_id": "B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "中等",
+            "reason": "本质上是一条长走廊 长方形 但是截止地判断不同",
+            "cluster_semantics": "不同人对走廊截止地判断不同",
+            "singleton_assessment": "对走廊截止地不同"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "截止歧义基本一致，簇数量的语义存疑。用户认为1／2／5与3／4各自相近，6为柱子过度解析；一正强调走廊截止差异。保留真实截止问题，不把六个数值簇视为六种合理解释，本轮不合并簇。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [
+      {
+        "image_id": "B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086",
+        "issue_id": "B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086:1",
+        "condition": "manual",
+        "answer": "只接受近端门框处截止",
+        "note": "当然这图我也发现 左边在哪闭合,截止也是有不同的标法的"
+      }
+    ],
+    "user_point_review": []
+  },
+  {
+    "code": "B6ByNegPMKs-21",
+    "reviews": {
+      "user_image_note": "右边有开的门,这范围标注的都一致",
+      "peer_image_note": "开口门 小房间 柜子遮挡",
+      "user_condition_records": [
+        {
+          "image_id": "B6ByNegPMKs_7018ca302c584d0d85024187f3568460",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        },
+        {
+          "image_id": "B6ByNegPMKs_7018ca302c584d0d85024187f3568460",
+          "condition": "semi",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "B6ByNegPMKs_7018ca302c584d0d85024187f3568460",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "简单",
+            "reason": "简单小房间",
+            "cluster_semantics": "比较统一",
+            "singleton_assessment": "无"
+          }
+        },
+        {
+          "image_id": "B6ByNegPMKs_7018ca302c584d0d85024187f3568460",
+          "condition": "semi",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "范围判断基本一致。用户说大家标注范围一致，一正Manual评简单、统一。记录开门存在但未造成实际范围分歧；不替用户补“简单”，也不向Semi传播Manual评级。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [],
+    "user_point_review": []
+  },
+  {
+    "code": "B6ByNegPMKs-22",
+    "reviews": {
+      "user_image_note": "这处于走廊,主要是左右的 空间闭合点可能出现歧义,1,2,3,5,6大致是一组,右边截止标的稍近,很多簇其实很相近,左边的闭合不同簇的区别我也没太看清",
+      "peer_image_note": "长走廊 玻璃墙 图像目视距离远",
+      "user_condition_records": [
+        {
+          "image_id": "B6ByNegPMKs_75327de9719945aa8b893a6404667884",
+          "condition": "semi",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "B6ByNegPMKs_75327de9719945aa8b893a6404667884",
+          "condition": "semi",
+          "review": {
+            "status": "已审核",
+            "grade": "中等",
+            "reason": "对走廊截止点判断不同",
+            "cluster_semantics": "对走廊截止点判断不同",
+            "singleton_assessment": "对走廊截止点判断不同"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "都关注走廊截止，但用户认为多数簇相近且左侧差别不清楚，一正Semi以截止不同解释。保留截止歧义候选，不把每个簇都算为独立语义；一正此处评级仅为Semi。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [
+      {
+        "image_id": "B6ByNegPMKs_75327de9719945aa8b893a6404667884",
+        "issue_id": "B6ByNegPMKs_75327de9719945aa8b893a6404667884:1",
+        "condition": "semi",
+        "answer": "两类差异混合，需要逐组注明",
+        "note": "1,2,30,34可能都是 具体的标注点的定位可能 较不准确,主要是 一对点的x坐标没有对齐,"
+      }
+    ],
+    "user_point_review": []
+  },
+  {
+    "code": "UwV83HsGsw3-06",
+    "reviews": {
+      "user_image_note": "单从这张图来看不是oos,但是这图中右边沿着玻璃的区域是看不见的,到底标不标这个区域是有歧义的,之后左上的区域也不知道布局,但是我看过这张图的其他视角,这个房间很大,连通几张图,右边沿着玻璃的区域后段的玻璃是弧形",
+      "peer_image_note": "大房间 联通房间 大开口 玻璃墙 家具遮挡 q17 超出范围 不适用",
+      "user_condition_records": [],
+      "peer_condition_records": [],
+      "assistant_text_comparison_not_visual_adjudication": "条件性分歧：用户说单看本图不是OOS，但不可见区域有歧义，且其他视角显示后段弧形玻璃；一正直接判不适用。分列单图证据与跨视图房间知识，保持适用性待裁定，不能截取前半句作为明确非OOS。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [
+      {
+        "image_id": "UwV83HsGsw3_528d342bf5494b3b94983545d6a1a282",
+        "issue_id": "UwV83HsGsw3_528d342bf5494b3b94983545d6a1a282:1",
+        "condition": "image",
+        "answer": "结合同房其他视角确认OOS，请注明结构依据",
+        "note": "除了右侧看不见区域的弧形墙的问题,左边确实也不知道哪里闭合比较合适"
+      }
+    ],
+    "user_point_review": []
+  },
+  {
+    "code": "UwV83HsGsw3-08",
+    "reviews": {
+      "user_image_note": "oos,这就是上张图的另一个视角,弧形墙",
+      "peer_image_note": "大房间 联通房间 大开口 玻璃墙 家具遮挡 q18 超出范围 不适用",
+      "user_condition_records": [],
+      "peer_condition_records": [],
+      "assistant_text_comparison_not_visual_adjudication": "OOS意见一致，用户指出弧形墙，一正判超范围。保留双方意见，不由本视角自动推断同房全部视角的可见性、难度或适用性相同。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [],
+    "user_point_review": [
+      {
+        "image_id": "UwV83HsGsw3_71ada030981d4468b76dcebc1b6fb940",
+        "canonical_annotation_id": "49fa488be3fef090",
+        "worker_id": "W026",
+        "condition": "oos_geometry",
+        "action": "",
+        "point_index": null,
+        "added_coordinate": null,
+        "reason": "",
+        "confirmed": false,
+        "selected_original_point": null,
+        "imputed_not_original_worker_response": false,
+        "application_status": "pending_not_applied"
+      },
+      {
+        "image_id": "UwV83HsGsw3_71ada030981d4468b76dcebc1b6fb940",
+        "canonical_annotation_id": "3a3dec28a207f0a0",
+        "worker_id": "W028",
+        "condition": "oos_geometry",
+        "action": "",
+        "point_index": null,
+        "added_coordinate": null,
+        "reason": "",
+        "confirmed": false,
+        "selected_original_point": null,
+        "imputed_not_original_worker_response": false,
+        "application_status": "pending_not_applied"
+      }
+    ]
+  },
+  {
+    "code": "UwV83HsGsw3-23",
+    "reviews": {
+      "user_image_note": "这个遮挡过大,右边的墙挡住了大部分信息,也不知道标注啥了",
+      "peer_image_note": "边界不明 开口过大 玻璃墙 家具遮挡 q19：不适用",
+      "user_condition_records": [],
+      "peer_condition_records": [],
+      "assistant_text_comparison_not_visual_adjudication": "信息不足的判断接近。用户说遮挡太大、不知如何标注，一正说边界不明、不适用。记录严重信息不足；遮挡不可判断不自动等于几何协议明确OOS。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [
+      {
+        "image_id": "UwV83HsGsw3_fcd79f4b6a6642e99227caffb51bf407",
+        "issue_id": "UwV83HsGsw3_fcd79f4b6a6642e99227caffb51bf407:1",
+        "condition": "image",
+        "answer": "暂缓",
+        "note": "能标确实能勉强标,但是我看过这个房间的其他视角和构型,这确实信息丢失严重"
+      }
+    ],
+    "user_point_review": []
+  },
+  {
+    "code": "X7HyMhZNoso-19",
+    "reviews": {
+      "user_image_note": "这个主要是画面正中 图突出来了一个柱子的区域,把洗澡的地方隔出来了,这是主要分歧的,簇1是对的,2是没标这个地方,3是没标好这个地方",
+      "peer_image_note": "浴室 边界比较明确 家具遮挡 q33",
+      "user_condition_records": [
+        {
+          "image_id": "X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        },
+        {
+          "image_id": "X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9",
+          "condition": "semi",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "中等",
+            "reason": "Q33 这个房间的结构可以分成忽略和不忽略 忽略小隔间它就是长方形 不忽略就是要把小隔间划分出来",
+            "cluster_semantics": "不同人对房间结构判断不同",
+            "singleton_assessment": "简单的标法"
+          }
+        },
+        {
+          "image_id": "X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9",
+          "condition": "semi",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "实质分歧：应标结构漏掉，还是可接受的简化。用户说簇1正确、2漏、3未标好；一正Manual将忽略／保留小隔间描述为不同结构判断。优先核对规则是否允许省略，未核对前不把两种都宣布为合理答案，也不直接把簇1升为GT。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [
+      {
+        "image_id": "X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9",
+        "issue_id": "X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9:1",
+        "condition": "manual",
+        "answer": "必须保留，省略按漏标处理",
+        "note": "必须得标,但是这不标/标错的问题也是很好的研究对象"
+      },
+      {
+        "image_id": "X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9",
+        "issue_id": "X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9:2",
+        "condition": "manual",
+        "answer": "同一结构解释但定位错误",
+        "note": "是这样子的,这个不是突出来了一个隔断嘛,比如\"凸\"字,突出来的最尖端,和连接墙体的位置 都要标注,这个人没有标注突出来的位置"
+      }
+    ],
+    "user_point_review": []
+  },
+  {
+    "code": "b8cTxDM8gDG-19",
+    "reviews": {
+      "user_image_note": "这个右边有开口,而且有部分墙是斜的,这可能导致歧义,我个人倾向于oos",
+      "peer_image_note": "家具遮挡 房间范围因为里侧光照不足有点不可判断  内部结构复杂Q20：超出范围",
+      "user_condition_records": [],
+      "peer_condition_records": [],
+      "assistant_text_comparison_not_visual_adjudication": "OOS方向相近，确定程度不同。用户因斜墙和开口倾向OOS；一正判超范围，并提光照和结构复杂。保留“倾向”措辞，不能改写为双方已正式确认。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [],
+    "user_point_review": [
+      {
+        "image_id": "b8cTxDM8gDG_f63819c407e64c2897b703080766cb60",
+        "canonical_annotation_id": "cd5abe0f20e47f74",
+        "worker_id": "W037",
+        "condition": "oos_geometry",
+        "action": "",
+        "point_index": null,
+        "added_coordinate": null,
+        "reason": "",
+        "confirmed": false,
+        "selected_original_point": null,
+        "imputed_not_original_worker_response": false,
+        "application_status": "pending_not_applied"
+      }
+    ]
+  },
+  {
+    "code": "e9zR4mvMWw7-03",
+    "reviews": {
+      "user_image_note": "画面左边有个门通向另一个房间,但是好像所有的簇都大致在同一个空间,w1可能标歪了点",
+      "peer_image_note": "房间内有一个小房间 家具遮挡 ",
+      "user_condition_records": [
+        {
+          "image_id": "e9zR4mvMWw7_12c84e77f6564013a032220e8f9037e8",
+          "condition": "semi",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "e9zR4mvMWw7_12c84e77f6564013a032220e8f9037e8",
+          "condition": "semi",
+          "review": {
+            "status": "已审核",
+            "grade": "简单",
+            "reason": "小房间不计入 简单长方形房间",
+            "cluster_semantics": "没有代表不同的空间范围。是不同人员的 角点判断偏差",
+            "singleton_assessment": "角点判断偏差"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "同范围与小偏差基本一致。用户认为开门未导致跨房差异、W1可能标歪；一正Semi认为角点偏差。分别记录开口存在、是否真的跨范围和定位误差。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [],
+    "user_point_review": []
+  },
+  {
+    "code": "e9zR4mvMWw7-10",
+    "reviews": {
+      "user_image_note": "画面中偏右是有开门的,但是正式人员里没有标注错误这个地方,这个分簇我也没看出来有什么不同,可能主要在第三对点的 top y 偏低?",
+      "peer_image_note": "卧室房间 有家具遮挡 玻璃镜子 一个开口的门 房间简单 Q03:数值簇非真实分离",
+      "user_condition_records": [
+        {
+          "image_id": "e9zR4mvMWw7_1daae4b7becc43949516096170ce2a76",
+          "condition": "semi",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "e9zR4mvMWw7_1daae4b7becc43949516096170ce2a76",
+          "condition": "semi",
+          "review": {
+            "status": "已审核",
+            "grade": "简单",
+            "reason": "房型简单 遮挡较小 范围容易界定",
+            "cluster_semantics": "微小波动",
+            "singleton_assessment": "角点判断不同"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "无明显语义分离基本一致。用户怀疑第三对点top y导致差别，一正Semi明确数值簇非真实分离。top y作为待验证线索，不能以簇数替代语义多解数。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [],
+    "user_point_review": []
+  },
+  {
+    "code": "e9zR4mvMWw7-16",
+    "reviews": {
+      "user_image_note": "应该不算oos,簇1主要是第3对点的bottom y ,w32是他个人原因标错. 我其实也没太看出来这个分簇的区别",
+      "peer_image_note": "边界不易判断 楼梯处延伸 ",
+      "user_condition_records": [
+        {
+          "image_id": "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45",
+          "condition": "semi",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45",
+          "condition": "semi",
+          "review": {
+            "status": "已审核",
+            "grade": "中等",
+            "reason": "中等候选 真实分离 Q25空间范围解释不同",
+            "cluster_semantics": "空间范围解释不同",
+            "singleton_assessment": "空间范围解释不同"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "明确分歧：一正Semi称真实分离、空间范围解释不同；用户认为主要是第三对点bottom y与W32个人错误，没看出分簇区别。列为优先争议例，在核对边界前不将“真实多解”作为定论，不能用已填等级覆盖用户文字。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [
+      {
+        "image_id": "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45",
+        "issue_id": "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45:1",
+        "condition": "semi",
+        "answer": "不同边界解释但至少一种不符合规则",
+        "note": "其实现在的分簇分的不好,第三对点的bottom y 有些标的特别靠近图片下面,有些又标的偏上.  032的这个标注就是标到了楼梯延伸到的下一层想象中的平面去了,应该是不太对的"
+      }
+    ],
+    "user_point_review": []
+  },
+  {
+    "code": "e9zR4mvMWw7-32",
+    "reviews": {
+      "user_image_note": "中间偏右有个门通向走廊,感觉没人标错,都是同一空间,我也疑惑分簇区别",
+      "peer_image_note": "卧室户型 有床遮挡 玻璃镜子 开口门",
+      "user_condition_records": [
+        {
+          "image_id": "e9zR4mvMWw7_ac03b99e3f3642be80b4d24fde0af03a",
+          "condition": "semi",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "e9zR4mvMWw7_ac03b99e3f3642be80b4d24fde0af03a",
+          "condition": "semi",
+          "review": {
+            "status": "已审核",
+            "grade": "简单",
+            "reason": "房间范围易判断 非真实分离",
+            "cluster_semantics": "小范围偏差",
+            "singleton_assessment": "小范围偏差"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "基本一致。双方认为通走廊的门没有造成实际跨范围，主要是小偏差。可作为数值簇未必对应语义分歧的例子，本轮不重分簇。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [],
+    "user_point_review": []
+  },
+  {
+    "code": "q9vSo1VnCiC-09",
+    "reviews": {
+      "user_image_note": "应该是oos,中间偏右有个空间,有个绿色的门",
+      "peer_image_note": "协议适用 房间范围可判定 房间结构比较复杂 墙体凹凸多 ",
+      "user_condition_records": [],
+      "peer_condition_records": [],
+      "assistant_text_comparison_not_visual_adjudication": "明确适用性冲突。用户39图及11图文字均提出OOS；一正明确写协议适用、范围可判断。当前保留冲突，不纳入默认新增安排，历史资料保留；需按具体结构与规则裁定，不能由评级消除冲突。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [
+      {
+        "image_id": "q9vSo1VnCiC_69591068e5614642b710a8fb7733bdeb",
+        "issue_id": "q9vSo1VnCiC_69591068e5614642b710a8fb7733bdeb:1",
+        "condition": "image",
+        "answer": "其他判断",
+        "note": "不是,是因为右侧天花板往下凹了,导致天花板有2个平面"
+      }
+    ],
+    "user_point_review": []
+  },
+  {
+    "code": "q9vSo1VnCiC-23",
+    "reviews": {
+      "user_image_note": "左右 都是浴缸所在区域的开口,没有见到有人误标错区域,w12稍微标的偏离一些,w1可能是bottom y 标的不好",
+      "peer_image_note": "四方形房间 边界易判断 有卫浴结构遮挡",
+      "user_condition_records": [
+        {
+          "image_id": "q9vSo1VnCiC_c421f07780004647a7198c4ac5371e8a",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "q9vSo1VnCiC_c421f07780004647a7198c4ac5371e8a",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "中等",
+            "reason": "卫浴结构遮挡Q：未真实分离",
+            "cluster_semantics": "遮挡导致判断不统一",
+            "singleton_assessment": "遮挡导致"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "范围判断基本一致，偏差归因略有不同。用户未见误标区域，指出W12／W1定位偏差；一正Manual虽评中等，也写未真实分离，归因为遮挡。中等不等于存在多个合理范围。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [],
+    "user_point_review": []
+  },
+  {
+    "code": "q9vSo1VnCiC-32",
+    "reviews": {
+      "user_image_note": "这个可能确实有歧义,主要是全景图左右两边的那个马桶的空间标不标的问题,簇1是没标,簇2怎么混进来了个w14这么离谱的东西?它标的偏离太大了,簇2其实也是没有标注这马桶的区域的,簇3是标了那个区域,但是簇4是标了空间交接的墙",
+      "peer_image_note": "卫浴内有小房间 洗手台遮挡 ",
+      "user_condition_records": [
+        {
+          "image_id": "q9vSo1VnCiC_e74e843601574864a14517f990c748a0",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "q9vSo1VnCiC_e74e843601574864a14517f990c748a0",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "中等",
+            "reason": "小房间和洗手台遮挡 Q：真实分离",
+            "cluster_semantics": "忽略小房间结构",
+            "singleton_assessment": "把小房间结构包括在内"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "范围歧义一致，成员和语义数量存疑。用户指出簇1／2均排除马桶区、W14偏离很大、簇4标交接墙；一正关注包含／忽略小房间。保留歧义，将W14及簇1／2列为后续核对例，不宣布有四种合理答案。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [
+      {
+        "image_id": "q9vSo1VnCiC_e74e843601574864a14517f990c748a0",
+        "issue_id": "q9vSo1VnCiC_e74e843601574864a14517f990c748a0:1",
+        "condition": "manual",
+        "answer": "两种均允许，作为范围歧义",
+        "note": ""
+      }
+    ],
+    "user_point_review": []
+  },
+  {
+    "code": "rPc6DW4iMge-05",
+    "reviews": {
+      "user_image_note": "这张图确实是难图,遮挡很多,图片中间 靠后的位置被遮挡很多,而且右边有玻璃罩着的洗澡的地方,中间偏右的拐角也很多人漏标, 这图值得作为 潜在的无法收敛的图来讨论.",
+      "peer_image_note": "边界较模糊 遮挡多 玻璃结构 小房间Q37：此视角相对来说更加复杂  暴露的结构需要更多标注人员进行判断",
+      "user_condition_records": [
+        {
+          "image_id": "rPc6DW4iMge_0dfe61800cc540db8e25c1738bc4b8ff",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "rPc6DW4iMge_0dfe61800cc540db8e25c1738bc4b8ff",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "困难候选",
+            "reason": "房间结构复杂",
+            "cluster_semantics": "对房间结构判断 不同",
+            "singleton_assessment": "简化房间结构"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "困难与复杂结构判断一致，双方关注遮挡、玻璃淋浴和小结构。用户提潜在无法收敛，一正提需要更多人判断。保留历史困难／持续分歧候选；一正的加人意见不是已证明的采集必要性，先使用已有结果。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [],
+    "user_point_review": []
+  },
+  {
+    "code": "rPc6DW4iMge-06",
+    "reviews": {
+      "user_image_note": "跟上张图是一个房间,左边的玻璃地方很容易被漏标和歧义,簇2是标里面的,簇3是标外面玻璃罩的,簇1,4,6是直接没标这个地方,7是标了一半,9,10,11是没标,这图就是 未收敛的典型图",
+      "peer_image_note": "边界较模糊 遮挡多 玻璃结构 小房间Q24：空间范围解释和结构解释不同Q38：此视角相对容易判断",
+      "user_condition_records": [
+        {
+          "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "困难候选",
+            "reason": "空间范围和房间结构判断困难",
+            "cluster_semantics": "空间范围解释和结构解释不同",
+            "singleton_assessment": "空间范围解释和结构解释不同"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "困难判断一致。一正仍评困难候选，只说相对05容易；这与用户称未收敛典型并不直接矛盾。保留玻璃区内／外／遗漏／部分处理和同房视角对照，不写成永久不收敛。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [],
+    "user_point_review": []
+  },
+  {
+    "code": "rPc6DW4iMge-13",
+    "reviews": {
+      "user_image_note": "左右是一个房间的开口,正中间是 通向外面的走廊,目前都是标注了同一 区域,没有跨门标这两个额外的地方",
+      "peer_image_note": "此处为连接处 通向不同房间 ",
+      "user_condition_records": [
+        {
+          "image_id": "rPc6DW4iMge_4350d36797324601adba7351d09602d2",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "rPc6DW4iMge_4350d36797324601adba7351d09602d2",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "中等",
+            "reason": "对空间范围判断容易出现分歧",
+            "cluster_semantics": "偏差",
+            "singleton_assessment": "偏差"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "证据层次不同：一正说连接处容易出现范围分歧，用户说现有标注均同一区域、无人跨门。记录潜在风险，不能宣称已观察到跨范围多解。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [],
+    "user_point_review": []
+  },
+  {
+    "code": "rPc6DW4iMge-15",
+    "reviews": {
+      "user_image_note": "除了簇3是有点过度解析了,其余两簇是同一空间,具体区别可能是标的精准度吧,我也没有看出明显区别,簇1标的更偏一点",
+      "peer_image_note": "四方形房间 家具遮挡 墙面有凹凸",
+      "user_condition_records": [
+        {
+          "image_id": "rPc6DW4iMge_9d3eb9f5d38844bfb4e5fb2cd05fd3fd",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "rPc6DW4iMge_9d3eb9f5d38844bfb4e5fb2cd05fd3fd",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "简单",
+            "reason": "q8:未真实分离 四方形房间",
+            "cluster_semantics": "小偏差 ",
+            "singleton_assessment": "对凹凸墙体进行标注"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "多数同范围、小偏差基本一致。用户称簇3过度解析，一正称凹凸墙体标注；保留该局部应不应标的细节争议。已有23人优先复用，旧已采用身份不证明应追加15人。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [
+      {
+        "image_id": "rPc6DW4iMge_9d3eb9f5d38844bfb4e5fb2cd05fd3fd",
+        "issue_id": "rPc6DW4iMge_9d3eb9f5d38844bfb4e5fb2cd05fd3fd:1",
+        "condition": "manual",
+        "answer": "不应纳入的门框或柜体细节",
+        "note": "我觉得不应该标,但是这个人就是喜欢这样子标,037很有研究价值"
+      }
+    ],
+    "user_point_review": []
+  },
+  {
+    "code": "rPc6DW4iMge-17",
+    "reviews": {
+      "user_image_note": "右侧门的开口通向外面,簇2,6,7,9是明显标了右侧连通区域的,w36可能手滑多标了一个点,w17可能少标了一个点.其他的次要分歧就是左边洗手台的bottom y 和右边门后 墙在哪截止,我确实没想到这图分歧这么大",
+      "peer_image_note": "厕所 门口大开口 范围判断不同",
+      "user_condition_records": [
+        {
+          "image_id": "rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a",
+          "condition": "semi",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a",
+          "condition": "semi",
+          "review": {
+            "status": "已审核",
+            "grade": "中等",
+            "reason": "q31:范围判断不同 ",
+            "cluster_semantics": "判断范围在厕所内",
+            "singleton_assessment": "判断范围在厕所外"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "厕所内／外范围分歧一致。用户另提出W36可能多点、W17可能少点，以及bottom y和截止问题。范围分歧与疑似数据问题分别登记，不按文字自动改点；一正此处为Semi判断。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [
+      {
+        "image_id": "rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a",
+        "issue_id": "rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a:1",
+        "condition": "semi",
+        "answer": "应在厕所门处截止",
+        "note": ""
+      }
+    ],
+    "user_point_review": [
+      {
+        "image_id": "rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a",
+        "canonical_annotation_id": "3d1c6d9fda198b1b",
+        "worker_id": "W017",
+        "condition": "semi",
+        "action": "",
+        "point_index": null,
+        "added_coordinate": null,
+        "reason": "",
+        "confirmed": false,
+        "selected_original_point": null,
+        "imputed_not_original_worker_response": false,
+        "application_status": "pending_not_applied"
+      },
+      {
+        "image_id": "rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a",
+        "canonical_annotation_id": "adb443cf2cd44a01",
+        "worker_id": "W036",
+        "condition": "semi",
+        "action": "",
+        "point_index": null,
+        "added_coordinate": null,
+        "reason": "",
+        "confirmed": false,
+        "selected_original_point": null,
+        "imputed_not_original_worker_response": false,
+        "application_status": "pending_not_applied"
+      }
+    ]
+  },
+  {
+    "code": "rPc6DW4iMge-20",
+    "reviews": {
+      "user_image_note": "这图在走廊,左右中都是开口连向其他空间,w34是额外标了中间的门的框,但是最右侧和最左侧的位置不同,与簇1很大差别,w37只是多标了中间门框(与簇1),我觉得这个簇2的分类有误",
+      "peer_image_note": "连接处多房间开口 ",
+      "user_condition_records": [
+        {
+          "image_id": "rPc6DW4iMge_cc15fb105d86466faafdd633f89148de",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "rPc6DW4iMge_cc15fb105d86466faafdd633f89148de",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "中等",
+            "reason": "对范围判断不同Q28：对局部结构判断不同Q40:这个视角更容易判断房间内也需要标注",
+            "cluster_semantics": "对角点判断不同",
+            "singleton_assessment": "对角点判断不同"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "用户给出具体成员分组反例：W34／W37都加门框，但端点行为不同，质疑簇2；一正概括为范围与局部结构不同。保留算法核对案例，未追溯输入和对应关系前不宣称已经证明bug，本轮不改阈值。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [
+      {
+        "image_id": "rPc6DW4iMge_cc15fb105d86466faafdd633f89148de",
+        "issue_id": "rPc6DW4iMge_cc15fb105d86466faafdd633f89148de:1",
+        "condition": "manual",
+        "answer": "暂缓",
+        "note": "037还是多手标了门框,但是这个到底算不算不同空间? 034我也不知道他的想法"
+      }
+    ],
+    "user_point_review": []
+  },
+  {
+    "code": "rPc6DW4iMge-22",
+    "reviews": {
+      "user_image_note": "这跟rPc6DW4iMge · 05 同一房间,视角相近,只不过它站的位置明显能看到图片左侧有连通 走廊. 这图跟那个图的判断类似,只不过w2 说是28点,但是图中确只看到27点,认为不可计算了.我感觉实质上是没有出现奇数点的,就是28,w18图中也不是奇数点啊. 不同簇的区别还是在于 左侧洗手台,右边玻璃罩着的洗澡区域",
+      "peer_image_note": "门口开口 房间内玻璃墙 多小房间",
+      "user_condition_records": [
+        {
+          "image_id": "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "中等",
+            "reason": "结构复杂 玻璃墙Q30:局部结构判断不一致\n",
+            "cluster_semantics": "对结构的判断不一致",
+            "singleton_assessment": "简化结构判断"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "结构分歧基本一致；点数／有效性问题单列。用户质疑W2、W18显示与不可计算判断，需要按原始导出、解析、有效几何、绘图逐层核对。本轮未完成该链路，不修改原点或有效性；不能用显示疑问直接推断数据已错。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [],
+    "user_point_review": [
+      {
+        "image_id": "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+        "canonical_annotation_id": "9b8f8bec4da82b48",
+        "worker_id": "W018",
+        "condition": "manual",
+        "action": "",
+        "point_index": null,
+        "added_coordinate": null,
+        "reason": "",
+        "confirmed": false,
+        "selected_original_point": null,
+        "imputed_not_original_worker_response": false,
+        "application_status": "pending_not_applied"
+      }
+    ]
+  },
+  {
+    "code": "uNb9QFRL6hY-36",
+    "reviews": {
+      "user_image_note": "这是走廊,两边开口,同时左侧地面是有小楼梯,疑似oos,因为狠多人标左侧楼梯外面的区域作为截止. 正确的硬是要标注的话,得在楼梯处截止,要不然天花板和地板都分层,其实目前两个簇标的都不是很对,簇1在图片左侧标的更深,簇2稍浅",
+      "peer_image_note": "连廊 不易判断连廊结束区域",
+      "user_condition_records": [
+        {
+          "image_id": "uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        },
+        {
+          "image_id": "uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d",
+          "condition": "semi",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "简单",
+            "reason": "对连廊的结束区域判断不同Q41视角差不多",
+            "cluster_semantics": "结束区域判断不同",
+            "singleton_assessment": "结束区域判断不同"
+          }
+        },
+        {
+          "image_id": "uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d",
+          "condition": "semi",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "实质分歧：普通截止差异还是适用性／错误。一正Manual认为简单连廊截止问题；用户指出楼梯、多层地面天花，疑似OOS且两簇都不对。先解决范围与适用性，不把简单标签当确定依据。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [
+      {
+        "image_id": "uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d",
+        "issue_id": "uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d:1",
+        "condition": "image",
+        "answer": "暂缓",
+        "note": "可以在台阶处截止,但是现有标注没有这样标的,但是这样的标注范围又很奇怪了"
+      }
+    ],
+    "user_point_review": []
+  },
+  {
+    "code": "uNb9QFRL6hY-52",
+    "reviews": {
+      "user_image_note": "oos,左侧有连通,左侧跑步机那块区域,多层天花了,右边也是多层,但是这个分簇我也有点疑惑",
+      "peer_image_note": "客厅 家具遮挡 墙面凹凸 q22:适用",
+      "user_condition_records": [],
+      "peer_condition_records": [],
+      "assistant_text_comparison_not_visual_adjudication": "明确适用性冲突。用户认为连通区及两侧多层天花使其OOS，一正明确写适用。保留冲突，后续按具体结构和规则复核；标注一致也不能自动证明适用。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [
+      {
+        "image_id": "uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2",
+        "issue_id": "uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2:1",
+        "condition": "image",
+        "answer": "属于必须保留的主空间层差，图像OOS",
+        "note": "这个是oos,但是也有很大研究价值,分歧"
+      }
+    ],
+    "user_point_review": [
+      {
+        "image_id": "uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2",
+        "canonical_annotation_id": "9117118c1ce15fc9",
+        "worker_id": "W037",
+        "condition": "oos_geometry",
+        "action": "remove_confirmed_point",
+        "point_index": 0,
+        "added_coordinate": null,
+        "reason": "我不太确认1和6,哪个点和 4的x坐标更接近,这个删除离4更远的就行",
+        "confirmed": false,
+        "selected_original_point": [
+          175.38549116251232,
+          218.6213204524539
+        ],
+        "imputed_not_original_worker_response": false,
+        "application_status": "pending_not_applied"
+      }
+    ]
+  },
+  {
+    "code": "uNb9QFRL6hY-56",
+    "reviews": {
+      "user_image_note": "左右是 房间的门的开口,w31和37就是标了图右边的区域,w1中间区域标的很歪,但是12我不明白为什么分到簇4,w11标的3个点,这是半自动标注的问题吧,模型预标注是三个点",
+      "peer_image_note": "墙体镶嵌结构 简单房间",
+      "user_condition_records": [
+        {
+          "image_id": "uNb9QFRL6hY_aed830f085ee4ad88ef6bed7f66f1359",
+          "condition": "semi",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "uNb9QFRL6hY_aed830f085ee4ad88ef6bed7f66f1359",
+          "condition": "semi",
+          "review": {
+            "status": "已审核",
+            "grade": "中等",
+            "reason": "对墙体镶嵌结构判断不一致",
+            "cluster_semantics": "对墙体镶嵌结构判断不一致",
+            "singleton_assessment": "对墙体镶嵌结构判断不一致"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "分歧归因不同，另有模型预标注假说。一正Semi关注镶嵌墙体；用户指出跨门、W1偏差、W12归簇和W11三点可能沿用预标注。分别保留范围、定位、成员和预标注线索；当前不能确认模型导致错误或人员固定习惯。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [
+      {
+        "image_id": "uNb9QFRL6hY_aed830f085ee4ad88ef6bed7f66f1359",
+        "issue_id": "uNb9QFRL6hY_aed830f085ee4ad88ef6bed7f66f1359:1",
+        "condition": "semi",
+        "answer": "应在门处截止，门外不属于主空间",
+        "note": ""
+      }
+    ],
+    "user_point_review": []
+  },
+  {
+    "code": "uNb9QFRL6hY-63",
+    "reviews": {
+      "user_image_note": "在走廊,左边是连通房间,34,35是标了里面,但是我不明白簇1,2怎么分的,10,28,32标的是右侧更深的区域,其余两簇都是标的较浅的区域,分簇有点问题啊",
+      "peer_image_note": "长走廊 走廊结束位置不好判断",
+      "user_condition_records": [
+        {
+          "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "中等",
+            "reason": "q11:走廊空间范围判断不一致Q44:视角差不多",
+            "cluster_semantics": "走廊空间范围判断不一致",
+            "singleton_assessment": "走廊空间范围判断不一致"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "范围／截止分歧一致，成员划分存疑。用户细分左侧入房和右侧深浅并质疑簇1／2；一正也关注走廊范围。保留现象，成员交算法后续核对，不将现有簇视为已审核语义组。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [
+      {
+        "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+        "issue_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:1",
+        "condition": "manual",
+        "answer": "暂缓",
+        "note": "这个跟前面那张图有台阶的走廊是类似的(uNb9QFRL6hY-36),如果在楼梯前截止就不是oos,但是也会导致范围很奇怪"
+      }
+    ],
+    "user_point_review": []
+  },
+  {
+    "code": "uNb9QFRL6hY-70",
+    "reviews": {
+      "user_image_note": "门右侧开口,簇1,2都没标门外,但是我觉得没啥区别,w35是标了门外",
+      "peer_image_note": "简单房间 墙体镶嵌结构",
+      "user_condition_records": [
+        {
+          "image_id": "uNb9QFRL6hY_d02f87bbb0414146a7a15070110a0384",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "uNb9QFRL6hY_d02f87bbb0414146a7a15070110a0384",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "简单",
+            "reason": "q12:小部分人判断失误",
+            "cluster_semantics": "小部分人判断失误",
+            "singleton_assessment": "小部分人判断失误"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "多数一致、少数范围异常基本一致。用户认为簇1／2无明显区别而W35跨门，一正称少数判断失误。保留少数异常与多数小偏差，不把每簇都解释为合理方案。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [],
+    "user_point_review": []
+  },
+  {
+    "code": "wc2JMjhGNzB-30",
+    "reviews": {
+      "user_image_note": "左侧有露台开口,中间偏右右通向其他地方的小洞,同时右侧那个阶梯式的墙容易被忽略,簇 2是完全标了这个地的,簇1,3,4是注意到了,但是没真正的标好细节,簇5是选择忽略. ",
+      "peer_image_note": "大开口 墙体凹凸结构 家具遮挡",
+      "user_condition_records": [
+        {
+          "image_id": "wc2JMjhGNzB_55b45b0f19c2460bbcd1fb1c86c6610d",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        },
+        {
+          "image_id": "wc2JMjhGNzB_55b45b0f19c2460bbcd1fb1c86c6610d",
+          "condition": "semi",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "wc2JMjhGNzB_55b45b0f19c2460bbcd1fb1c86c6610d",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "中等",
+            "reason": "家具遮挡Q35:墙体凹凸结构标注与否判断不一致",
+            "cluster_semantics": "忽略墙体凹凸",
+            "singleton_assessment": "不忽略墙体凹凸"
+          }
+        },
+        {
+          "image_id": "wc2JMjhGNzB_55b45b0f19c2460bbcd1fb1c86c6610d",
+          "condition": "semi",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "用户细分了“注意到但未标好”。一正主要区分忽略／不忽略墙体凹凸，用户另区分簇1／3／4注意到但细节不足与簇2完整处理。保留未注意、注意但不准确、较完整处理的观察，不立即构造新算法分类或GT。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [],
+    "user_point_review": []
+  },
+  {
+    "code": "wc2JMjhGNzB-59",
+    "reviews": {
+      "user_image_note": "中间有玻璃,里面是别的房间(马桶),只有w32标了里面的区域,但是簇1,2我没见到明显区别",
+      "peer_image_note": "玻璃镜子",
+      "user_condition_records": [
+        {
+          "image_id": "wc2JMjhGNzB_dc4a9f470b834de1983c7e605ff06b2e",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "wc2JMjhGNzB_dc4a9f470b834de1983c7e605ff06b2e",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "简单",
+            "reason": "q13:否",
+            "cluster_semantics": "偏差",
+            "singleton_assessment": "镜子导致误判"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "主体小偏差判断接近，但玻璃／镜子成因并不相同。用户称玻璃后另一房间被W32纳入；一正说镜子误判。保留透视玻璃与反射解释的差别，未进行视觉裁定，不能静默统一成镜面错误。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [
+      {
+        "image_id": "wc2JMjhGNzB_dc4a9f470b834de1983c7e605ff06b2e",
+        "issue_id": "wc2JMjhGNzB_dc4a9f470b834de1983c7e605ff06b2e:1",
+        "condition": "image",
+        "answer": "透过透明玻璃看到实际区域",
+        "note": ""
+      },
+      {
+        "image_id": "wc2JMjhGNzB_dc4a9f470b834de1983c7e605ff06b2e",
+        "issue_id": "wc2JMjhGNzB_dc4a9f470b834de1983c7e605ff06b2e:2",
+        "condition": "manual",
+        "answer": "应排除，标注在玻璃围护处截止",
+        "note": ""
+      }
+    ],
+    "user_point_review": []
+  },
+  {
+    "code": "wc2JMjhGNzB-60",
+    "reviews": {
+      "user_image_note": "左侧有开口通向其他房间,都没有误标,簇1,2没见明显区别,反倒是w1 标的另类却没被区分,w37 把柜子那里多标了点",
+      "peer_image_note": "墙体镶嵌结构",
+      "user_condition_records": [
+        {
+          "image_id": "wc2JMjhGNzB_dda6efcba51c40de8552408953719515",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "wc2JMjhGNzB_dda6efcba51c40de8552408953719515",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "简单",
+            "reason": "q14:否",
+            "cluster_semantics": "角点判断不同",
+            "singleton_assessment": "角点判断不同"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "主范围一致，同时有过分拆开和异常未区分的质疑。用户指出W1另类未区分、W37加柜子点，一正概括角点差异。该图关联11图旧采用选项，但最新要求明确仍未定；已有23人先复用，不沿用旧选项追加。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [
+      {
+        "image_id": "wc2JMjhGNzB_dda6efcba51c40de8552408953719515",
+        "issue_id": "wc2JMjhGNzB_dda6efcba51c40de8552408953719515:1",
+        "condition": "manual",
+        "answer": "属于不应作为布局角点的柜体细节",
+        "note": "这个人是惯犯,还是很莫名其妙的标了"
+      }
+    ],
+    "user_point_review": []
+  },
+  {
+    "code": "wc2JMjhGNzB-67",
+    "reviews": {
+      "user_image_note": "图片左右是通向卧室开口,左边还有个门可以看到浴室,注意天花板的下凸,w34是漏标了右边一组点,w37在浴室的门那里多标了.我发现它特别喜欢在门框那多标,我这次审图看到了很多次了",
+      "peer_image_note": "厕所开口",
+      "user_condition_records": [
+        {
+          "image_id": "wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        },
+        {
+          "image_id": "wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f",
+          "condition": "semi",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "简单",
+            "reason": "q36:空间范围解释不同",
+            "cluster_semantics": "偏差",
+            "singleton_assessment": "偏差"
+          }
+        },
+        {
+          "image_id": "wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f",
+          "condition": "semi",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "分歧归因不同。一正Manual写空间范围解释不同，用户具体指出W34漏点、W37加门框，并观察到W37多图重复。保留可定位问题与行为假说；跨图核实后才讨论类型，不用目标图同时分型和检验。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [
+      {
+        "image_id": "wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f",
+        "issue_id": "wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f:1",
+        "condition": "manual",
+        "answer": "确为漏标，应提交具体补点复核",
+        "note": "按照簇1的第4对点 补充"
+      },
+      {
+        "image_id": "wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f",
+        "issue_id": "wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f:2",
+        "condition": "manual",
+        "answer": "确属不应标的额外结构",
+        "note": "这肯定不该标,但是这个人就是喜欢这样标注"
+      }
+    ],
+    "user_point_review": []
+  },
+  {
+    "code": "yqstnuAEVhm-15",
+    "reviews": {
+      "user_image_note": "oos,楼梯通向的地方,多层地板",
+      "peer_image_note": "q23:不适用",
+      "user_condition_records": [],
+      "peer_condition_records": [],
+      "assistant_text_comparison_not_visual_adjudication": "OOS意见一致。用户指出楼梯、多层地板，一正写不适用。保存共同意见，不把OOS自动标为困难或无法收敛。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [],
+    "user_point_review": []
+  },
+  {
+    "code": "yqstnuAEVhm-32",
+    "reviews": {
+      "user_image_note": "这图较难,主要是中间凸起的壁炉,中间偏右那里有个小隔间(我个人倾向不标的,但是这次也没人标),还有右侧门口的区域.w1和簇2没太大差别,w8是我说的细节全都没注意到,其余的都是大概这几个地方的缺漏和不同,确实没收敛,簇2是相对最正确的",
+      "peer_image_note": "家具遮挡 墙体遮挡 墙体镶嵌",
+      "user_condition_records": [
+        {
+          "image_id": "yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "困难候选",
+            "reason": "范围大 墙体凹凸 家具遮挡多 q27:局部结构判断不同 空间范围解释不同",
+            "cluster_semantics": "对墙体判断结构不同",
+            "singleton_assessment": "对墙体判断结构不同"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "困难判断一致。用户具体指出壁炉、W8漏细节、簇2相对正确并判断未收敛；一正关注结构和范围。保留困难候选及人工观察，相对正确不是正式GT，静态审核不证明永远不收敛。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [],
+    "user_point_review": []
+  },
+  {
+    "code": "yqstnuAEVhm-34",
+    "reviews": {
+      "user_image_note": "走廊中,右侧开口那标注的截止略有歧义,w12是标外面的了,w1也有一点,其余的都是在玻璃门处截止",
+      "peer_image_note": "走廊 长方形结构 玻璃门",
+      "user_condition_records": [
+        {
+          "image_id": "yqstnuAEVhm_e9b4d8e951cb4712b3905c8f4c4dabb5",
+          "condition": "manual",
+          "review": {
+            "status": "未审核",
+            "grade": "",
+            "reason": "",
+            "cluster_semantics": "",
+            "singleton_assessment": ""
+          }
+        }
+      ],
+      "peer_condition_records": [
+        {
+          "image_id": "yqstnuAEVhm_e9b4d8e951cb4712b3905c8f4c4dabb5",
+          "condition": "manual",
+          "review": {
+            "status": "已审核",
+            "grade": "简单",
+            "reason": "Q29:空间范围解释不同",
+            "cluster_semantics": "对空间范围解释不同",
+            "singleton_assessment": "空间范围解释不同"
+          }
+        }
+      ],
+      "assistant_text_comparison_not_visual_adjudication": "截止差异基本一致。用户更明确指出多数止于玻璃门，W12及部分W1跨出；一正称范围解释不同。保留多数／少数信息，不替用户补简单等级。",
+      "final_scope_adjudication": null,
+      "final_difficulty_adjudication": null
+    },
+    "user_adjudications": [
+      {
+        "image_id": "yqstnuAEVhm_e9b4d8e951cb4712b3905c8f4c4dabb5",
+        "issue_id": "yqstnuAEVhm_e9b4d8e951cb4712b3905c8f4c4dabb5:1",
+        "condition": "manual",
+        "answer": "在玻璃门处截止",
+        "note": "这没有被排除的标注,都是在玻璃门处截止的,但是w12 略微超出了一点"
+      }
+    ],
+    "user_point_review": []
+  }
+]
