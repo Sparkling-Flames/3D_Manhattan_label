@@ -1,0 +1,27 @@
+name: Pairing time source supplement
+on:
+  push:
+    branches: [research/pairing-time-audit-20260919]
+    paths: [.github/workflows/pairing-time-supplement-20260919.yml]
+permissions:
+  contents: read
+jobs:
+  retrieve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - run: |
+          python - <<'PY'
+          import pathlib,urllib.request,urllib.parse,json,hashlib
+          root=pathlib.Path('supplement');root.mkdir();ref='c3d2bdb3bca1047d554be38588ca01a1fa5c4709';pre='analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/'
+          paths=[pre+'c1_task_worker_active_time.csv',pre+'c1_task_worker_active_time.summary.json','tools/thesis_main/analysis/quality_core/active_time.py','tools/thesis_main/analysis/active_log_utils.py','tools/thesis_main/analysis/annotation_uncertainty_timing.py','analysis_results/unassigned_room_inventory_20260915/全648图同房与分配明细.json']
+          manifest=[]
+          for p in paths:
+              b=urllib.request.urlopen('https://raw.githubusercontent.com/Sparkling-Flames/3D_Manhattan_label/'+ref+'/'+urllib.parse.quote(p),timeout=90).read();t=root/p;t.parent.mkdir(parents=True,exist_ok=True);t.write_bytes(b);manifest.append(dict(path=p,sha256=hashlib.sha256(b).hexdigest()))
+          (root/'SUPPLEMENT_MANIFEST.json').write_text(json.dumps({'ref':ref,'files':manifest},ensure_ascii=False,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pairing-time-source-supplement
+          path: supplement/
+          retention-days: 14
