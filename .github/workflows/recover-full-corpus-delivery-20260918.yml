@@ -1,0 +1,44 @@
+name: Recover completed full corpus delivery 20260918
+on:
+  push:
+    branches: [research/recovery-export-20260918]
+    paths: [.github/workflows/recover-full-corpus-delivery-20260918.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: f8b7d60d4727fb7a7b4ce6d4b62d38019994fd0f
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            analysis_results/full_corpus_clustering_20260918
+            .github/workflows
+      - name: Assemble immutable source snapshot
+        run: |
+          python - <<'PY'
+          import pathlib,shutil,urllib.request,hashlib,json
+          out=pathlib.Path('delivery_sources');out.mkdir()
+          shutil.copytree('analysis_results/full_corpus_clustering_20260918',out/'study')
+          shutil.copytree('.github/workflows',out/'archived_workflows')
+          p='analysis_results/image_portrait_20260914_v1/metadata/images.jsonl'
+          ref='c61930ecac1a20c99cd0b73c10aa7e10bd9e65ac'
+          b=urllib.request.urlopen('https://raw.githubusercontent.com/Sparkling-Flames/3D_Manhattan_label/'+ref+'/'+p,timeout=90).read()
+          target=out/'study/snapshot/history'/p;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(b)
+          manifest=[]
+          for p in sorted(out.rglob('*')):
+              if p.is_file():manifest.append({'path':str(p.relative_to(out)),'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
+          (out/'RECOVERY_SOURCE_MANIFEST.json').write_text(json.dumps({'research_ref':'f8b7d60d4727fb7a7b4ce6d4b62d38019994fd0f','metadata_ref':ref,'operation':'copy_only_no_analysis','files':manifest},indent=2))
+          print(len(manifest),'files copied and hashed')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: full-corpus-recovered-sources-20260918
+          path: delivery_sources/
+          retention-days: 14
+          if-no-files-found: error
