@@ -1,0 +1,186 @@
+{
+  "started": 1789734646.2031996,
+  "steps": [
+    {
+      "script": "full_corpus.py",
+      "returncode": 0
+    },
+    {
+      "script": "pointset_and_versions.py",
+      "returncode": 0
+    },
+    {
+      "script": "model_linkage.py",
+      "returncode": 0
+    },
+    {
+      "script": "model_prediction_check.py",
+      "returncode": 0
+    },
+    {
+      "script": "source_validation.py",
+      "returncode": 0
+    },
+    {
+      "script": "supplement_checks.py",
+      "returncode": 0
+    }
+  ],
+  "state": "passed",
+  "csv_comparisons": [
+    {
+      "file": "all_response_audit.csv",
+      "rows": 2501,
+      "columns": 20,
+      "matches": true
+    },
+    {
+      "file": "finite_pool_novelty.csv",
+      "rows": 1716,
+      "columns": 11,
+      "matches": true
+    },
+    {
+      "file": "group_summary.csv",
+      "rows": 4302,
+      "columns": 18,
+      "matches": true
+    },
+    {
+      "file": "human_model_distances.csv",
+      "rows": 2299,
+      "columns": 18,
+      "matches": true
+    },
+    {
+      "file": "input_version_changes.csv",
+      "rows": 4,
+      "columns": 9,
+      "matches": true
+    },
+    {
+      "file": "input_version_partition_sensitivity.csv",
+      "rows": 54,
+      "columns": 16,
+      "matches": true
+    },
+    {
+      "file": "leave_one_out.csv",
+      "rows": 9196,
+      "columns": 13,
+      "matches": true
+    },
+    {
+      "file": "memberships.csv",
+      "rows": 42552,
+      "columns": 15,
+      "matches": true
+    },
+    {
+      "file": "model_candidate_coverage.csv",
+      "rows": 4998,
+      "columns": 10,
+      "matches": true
+    },
+    {
+      "file": "model_dispersion_delta_bootstrap.csv",
+      "rows": 5,
+      "columns": 6,
+      "matches": true
+    },
+    {
+      "file": "model_dispersion_incremental_bootstrap.csv",
+      "rows": 2,
+      "columns": 5,
+      "matches": true
+    },
+    {
+      "file": "model_dispersion_inner_tuning.csv",
+      "rows": 360,
+      "columns": 4,
+      "matches": true
+    },
+    {
+      "file": "model_dispersion_lobo_predictions.csv",
+      "rows": 575,
+      "columns": 9,
+      "matches": true
+    },
+    {
+      "file": "model_dispersion_lobo_scores.csv",
+      "rows": 5,
+      "columns": 3,
+      "matches": true
+    },
+    {
+      "file": "model_geometry_availability.csv",
+      "rows": 5788,
+      "columns": 7,
+      "matches": true
+    },
+    {
+      "file": "model_image_features.csv",
+      "rows": 214,
+      "columns": 15,
+      "matches": true
+    },
+    {
+      "file": "model_linkage_targets.csv",
+      "rows": 238,
+      "columns": 10,
+      "matches": true
+    },
+    {
+      "file": "odd_repair_exclusion_audit.csv",
+      "rows": 30,
+      "columns": 20,
+      "matches": true
+    },
+    {
+      "file": "pairwise_features.csv",
+      "rows": 20371,
+      "columns": 23,
+      "matches": true
+    },
+    {
+      "file": "pointset_input_version_memberships.csv",
+      "rows": 432,
+      "columns": 9,
+      "matches": true
+    },
+    {
+      "file": "pointset_memberships.csv",
+      "rows": 14286,
+      "columns": 10,
+      "matches": true
+    },
+    {
+      "file": "pointset_pairwise.csv",
+      "rows": 20672,
+      "columns": 5,
+      "matches": true
+    },
+    {
+      "file": "pointset_summary.csv",
+      "rows": 1434,
+      "columns": 12,
+      "matches": true
+    },
+    {
+      "file": "spherical_memberships.csv",
+      "rows": 6897,
+      "columns": 12,
+      "matches": true
+    },
+    {
+      "file": "spherical_summary.csv",
+      "rows": 2856,
+      "columns": 18,
+      "matches": true
+    }
+  ],
+  "tolerance": 1e-09,
+  "row_order_ignored": true,
+  "semantic_validation": false,
+  "ended": 1789734689.763573
+}

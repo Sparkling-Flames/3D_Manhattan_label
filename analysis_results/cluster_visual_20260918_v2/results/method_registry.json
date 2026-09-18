@@ -1,0 +1,34 @@
+{
+  "A0_legacy": {
+    "family": "legacy",
+    "label": "Point-count gate + mask complete 0.10"
+  },
+  "A1_mask": {
+    "family": "mask",
+    "label": "No count gate; mask complete 0.10"
+  },
+  "A2_local": {
+    "family": "local",
+    "label": "Mask 0.10 AND local-boundary 20px complete"
+  },
+  "A3_cyclic": {
+    "family": "cyclic",
+    "label": "Cyclic partial RMS; cap20, complete12px"
+  },
+  "A4_adaptive": {
+    "family": "adaptive",
+    "label": "Local-gap scaled cyclic matching complete0.6"
+  },
+  "A5_density": {
+    "family": "density",
+    "label": "HDBSCAN on mask; minsize2,minsample2; noise retained"
+  },
+  "A6_spectral": {
+    "family": "spectral",
+    "label": "Local scale graph kNN3; eigengap1-6 + kmeans"
+  },
+  "A7_event": {
+    "family": "event",
+    "label": "Mask0.10 AND soft event Jaccard0.35; sigma8px"
+  }
+}

@@ -1,0 +1,49 @@
+name: Full corpus model candidate extraction 20260918
+on:
+  push:
+    branches: [research/full-corpus-clustering-20260918]
+    paths: [.github/workflows/full-corpus-model-candidates-20260918.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install numpy
+      - name: Extract compact numeric arrays from exact source NPZs
+        run: |
+          python - <<'PY'
+          import numpy as np,json,pathlib,gzip,urllib.request,urllib.parse,hashlib,concurrent.futures,io
+          root=pathlib.Path('model_snapshot');root.mkdir();repo='Sparkling-Flames/3D_Manhattan_label';main='d3477e700082c0a8482f1ffabd9dcc5649c9754d';hist='c61930ecac1a20c99cd0b73c10aa7e10bd9e65ac';prefix='analysis_results/image_portrait_20260914_v1/'
+          def get(ref,p):return urllib.request.urlopen('https://raw.githubusercontent.com/'+repo+'/'+ref+'/'+urllib.parse.quote(p),timeout=120).read()
+          raw=get(hist,prefix+'human/responses.jsonl.gz');rows=[json.loads(l)for l in gzip.decompress(raw).splitlines()];ids=sorted(set(r['image_id']for r in rows));jobs=[]
+          for image in ids:
+              for family,suffix in [('hohonet','.npz'),('bilayout','.npz'),('ulayout','.geometry.npz')]:jobs.append((image,family,suffix))
+          def one(job):
+              image,family,suffix=job;p=prefix+'models/'+family+'/'+image+suffix
+              try:
+                  b=get(hist,p);z=np.load(io.BytesIO(b),allow_pickle=False);arr={};shapes={}
+                  for k in z.files:
+                      a=z[k];shapes[k]={'shape':list(a.shape),'dtype':str(a.dtype)}
+                      if a.size<=20000:arr[k]=a
+                  dest=root/family;dest.mkdir(exist_ok=True);np.savez_compressed(dest/(image+'.npz'),**arr)
+                  return dict(image_id=image,family=family,path=p,source_ref=hist,sha256=hashlib.sha256(b).hexdigest(),arrays=shapes,retained=list(arr),status='ok')
+              except Exception as e:return dict(image_id=image,family=family,path=p,status='unavailable',error=str(e))
+          with concurrent.futures.ThreadPoolExecutor(max_workers=8)as pool:manifest=list(pool.map(one,jobs))
+          (root/'ARRAY_MANIFEST.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
+          paths=['analysis_results/confirmed_point_calculation_view_20260909_v1/reviewed/calculation_view.jsonl.gz','analysis_results/confirmed_point_calculation_view_20260909_v1/reviewed/confirmed_processing_audit.csv','analysis_results/confirmed_point_calculation_view_20260909_v1/reviewed/confirmed_user_decisions.json','analysis_results/multibuilding_threshold_stability_20260909_v1/geometry_audit/USER_DECISIONS.json']
+          for p in paths:
+              b=get(main,p);dest=root/'sop_sources'/p;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(b)
+          print(json.dumps({'images':len(ids),'files':len(manifest),'errors':[r for r in manifest if r['status']!='ok'],'first_arrays':manifest[0]},ensure_ascii=False))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: full-corpus-model-candidates-20260918
+          path: model_snapshot/
+          retention-days: 7
+          if-no-files-found: error

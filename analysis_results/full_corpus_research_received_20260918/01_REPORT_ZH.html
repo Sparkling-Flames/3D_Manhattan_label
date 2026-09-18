@@ -1,0 +1,340 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>全量标注分簇研究 · 恢复报告</title><style>body{font-family:system-ui,-apple-system,"Microsoft YaHei",sans-serif;max-width:1050px;margin:auto;padding:36px 28px;color:#202c38;line-height:1.85;background:white}h1{font-size:30px;line-height:1.4}h2{font-size:23px;margin-top:40px;border-bottom:1px solid #d8e0e8;padding-bottom:8px}h3{font-size:19px;margin-top:28px}table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}th,td{border:1px solid #d9e1e8;padding:10px;text-align:left}th{background:#eef3f7}a{color:#126398}code{overflow-wrap:anywhere;background:#f2f4f6;padding:2px 4px}blockquote{border-left:4px solid #6c7f8e;padding-left:18px;color:#384b5b}.nav{background:#eef3f7;border:1px solid #d5dfe7;padding:15px;margin-bottom:25px}pre{white-space:pre-wrap;overflow-wrap:anywhere}@media print{body{max-width:none;padding:0}h2,h3{break-after:avoid}tr{break-inside:avoid}}</style><div class="nav"><a href="00_START_HERE.html">交付包首页</a>　|　<a href="02_full_corpus_atlas.html">全量交互图册</a>　|　<a href="full_study_20260918/README.md">GitHub原始研究说明</a></div><h1>全量布局标注分簇、模型候选与不确定性研究</h1>
+<p><strong>2026-09-18｜被中断轮次的恢复交付版</strong><br />
+研究来源：<code>research/full-corpus-clustering-20260918</code>，固定提交 <code>f8b7d60d4727fb7a7b4ce6d4b62d38019994fd0f</code>。</p>
+<h2>阅读与恢复说明</h2>
+<p>这份报告整理的是上一轮已经完成、但没有正常导出的全量研究，不是把更早的39图试验重新命名。主要数值直接来自已完成的GitHub运行 <code>35329148252</code> 及上述研究提交；其原始研究说明逐字节保留在 <code>full_study_20260918/README.md</code>。本报告根据该说明、行级结果和中断前草稿重新编排；交互图册重新生成，因此不宣称排版文件与已丢失的本机文件逐字节相同。</p>
+<p>恢复过程中，使用交付包内的数值输入重新运行了六个程序，25份与已提交结果共同的CSV逐项对照通过，绝对和相对容差均为 <code>1e-9</code>。具体检查见 <code>recovery/REPRODUCTION_CHECK.json</code>。这是复算及交付完整性检查，不是新的语义盲审。</p>
+<p>先阅读本报告，再打开 <code>02_full_corpus_atlas.html</code> 查看全部239个图片×条件单元及27种结果视图；详细分析入口、原点、已确认处理、模型候选和行级结果均在 <code>full_study_20260918/</code>。</p>
+<h2>核心结论</h2>
+<p>当前应采用“多种表示下的真人分布、模型候选对照、未解释差异”相互配合的研究框架，而不是将局部事件规则提前选为胜出方法，或将Bi-Layout两头直接当作两类真人。环序匹配仍是重要候选；默认参数失败不能否定整类方法。局部事件可作为可核查的解释层，但存在计数、顺序、邻接、对应和定位必须分开。</p>
+<p>本轮已实际运行全量分簇与模型对照，并完成一个留建筑的模型信息预测检查。没有新增真人作答，没有重新训练深度模型，没有恢复暂停的虚拟人员生成，也没有对全部214图开展新的逐图语义盲审。</p>
+<h2>1. 版本与资料优先级</h2>
+<p>本轮固定的资料版本如下：</p>
+<table>
+<thead>
+<tr>
+  <th>资料角色</th>
+  <th>提交或来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>当前研究入口及9月18日裁决材料</td>
+  <td>main <code>d3477e700082c0a8482f1ffabd9dcc5649c9754d</code></td>
+</tr>
+<tr>
+  <td>历史全量人类数值包</td>
+  <td><code>c61930ecac1a20c99cd0b73c10aa7e10bd9e65ac</code></td>
+</tr>
+<tr>
+  <td>更早39图分簇研究</td>
+  <td><code>58af46c5fdb250dab42a99d930358d1986a13abd</code></td>
+</tr>
+<tr>
+  <td>本轮全量研究交付</td>
+  <td><code>f8b7d60d4727fb7a7b4ce6d4b62d38019994fd0f</code></td>
+</tr>
+<tr>
+  <td>导师原始交流</td>
+  <td>包内 <code>sources/mentor_conversation_6.txt</code></td>
+</tr>
+</tbody>
+</table>
+<p>现行研究主线不以旧Paper A的路由、风险斜率或资格规则替代。9月18日交接已撤回“22张高人数图统一再加15人”的旧默认建议；922份不是本轮已经完成或可以直接派发的新增量。648张分类图片不等于648张都具有人类作答。</p>
+<p>已确认点处置的权威输入为：</p>
+<p><code>analysis_results/confirmed_point_calculation_view_20260909_v1/reviewed/calculation_view.jsonl.gz</code></p>
+<p>以及配套 <code>confirmed_processing_audit.csv</code> 和用户决定。对2501条记录逐ID核对后，<code>effective_points_1024x512</code>、<code>processing_status</code>、<code>calculation_included</code>、<code>imputed_point</code> 与本轮人类包完全相同。原始点和18个原导出路径保留。恢复时没有用旧实验difficulty字段重建分析，也没有静默套用未确认的修复。</p>
+<p>导师明确支持独立真人采集，再按ABCD、AABC等真实人员组合后处理。关于“算法模拟”的部分仍来自不确定的语音回忆，不能升级成已冻结要求。交流文件第43—47行还明确保留了用户向导师报告的限制：Bi双头在不少图上很接近，微小坐标变化可能改变“更接近哪一头”，所以不能直接代替两类真人。</p>
+<h2>2. 全量范围、奇数点与人员排除</h2>
+<table>
+<thead>
+<tr>
+  <th>口径</th>
+  <th style="text-align:right">实际数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>canonical原始记录</td>
+  <td style="text-align:right">2501</td>
+</tr>
+<tr>
+  <td>W019/W026排除记录</td>
+  <td style="text-align:right">113</td>
+</tr>
+<tr>
+  <td>保留记录</td>
+  <td style="text-align:right">2388</td>
+</tr>
+<tr>
+  <td>保留人员</td>
+  <td style="text-align:right">24</td>
+</tr>
+<tr>
+  <td>有人类记录的图片</td>
+  <td style="text-align:right">214</td>
+</tr>
+<tr>
+  <td>图片×原始条件单元</td>
+  <td style="text-align:right">239</td>
+</tr>
+<tr>
+  <td>进入配对几何分簇</td>
+  <td style="text-align:right">2364</td>
+</tr>
+<tr>
+  <td>配对不可用，但可做无序点集比较</td>
+  <td style="text-align:right">17</td>
+</tr>
+<tr>
+  <td>点集也不可用或明确排除</td>
+  <td style="text-align:right">7</td>
+</tr>
+</tbody>
+</table>
+<p>配对几何按原始条件分开：Manual 1620、Semi 532、OOS 212。W011历史保留；W019、W026在分簇和模型—人类比较之前排除。原始审计文件仍列出这113条被排记录用于追溯，但它们不参与分析。</p>
+<p>库存中的无辅助人图1843份，包含某些可做无序点集但不能可靠上下配对的作答；本轮配对无辅助为1832份。两者不是同一个分母，不应因为不同而直接判为数据丢失。</p>
+<p>排除W019/W026后仍生效的人工处置为：<strong>4份删点、2份补点、1份歧义整份排除</strong>。15份未确认奇数保持原状，不自动删除一枚点，也不凭模型补齐。<code>effective=null</code>不回填raw。</p>
+<p>两份已确认补点为W030/q9-13与W037/uNb-47。其补点参考了同图其他人的完整历史，所以另做 <code>no_borrowed_imputation</code> 敏感性：恢复原9点／11点，在配对视图中不可归一化，但原始点集继续参加无序OSPA比较。这样既遵循SOP，又不把借用同图后验信息的修复冒充完全独立初始作答。</p>
+<p>P1/Project28/task3081的两项新导出修正——W002坐标百分比更正而28点不变、W018删除越界点21→20——仍放在 <code>pending_two_export_updates</code> 独立版本。它们未混入主计算，结果见 <code>input_version_changes.csv</code>、<code>input_version_partition_sensitivity.csv</code> 和 <code>pointset_input_version_memberships.csv</code>。</p>
+<p><strong>OOS、错误表达与缺陷作答不会仅因为不符合规范而退出分布研究。</strong> 但某一距离无法计算时必须明确记缺失，不能把缺失值当零距离或一个确定模式。</p>
+<h2>3. 全量分簇已经尝试的配置</h2>
+<p>配对几何共18个配置：更早8种主方法，加环序聚类阈值6／8／10／14／16，以及无点数门墙带阈值0.05／0.075／0.125／0.15／0.20。另有6种无序球面OSPA配置，截断30度，聚类阈值3／6／9度，各自有／无点数门。球面投影与立体角比较另有独立的适用条件。</p>
+<table>
+<thead>
+<tr>
+  <th>主要配置</th>
+  <th style="text-align:right">总显示组数</th>
+  <th style="text-align:right">单人组</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>旧点数门＋墙带0.10</td>
+  <td style="text-align:right">882</td>
+  <td style="text-align:right">509</td>
+</tr>
+<tr>
+  <td>无点数门＋墙带0.10</td>
+  <td style="text-align:right">743</td>
+  <td style="text-align:right">366</td>
+</tr>
+<tr>
+  <td>局部边界默认</td>
+  <td style="text-align:right">983</td>
+  <td style="text-align:right">602</td>
+</tr>
+<tr>
+  <td>环序cap20，聚类阈值8</td>
+  <td style="text-align:right">1394</td>
+  <td style="text-align:right">1007</td>
+</tr>
+<tr>
+  <td>环序cap20，聚类阈值10</td>
+  <td style="text-align:right">1154</td>
+  <td style="text-align:right">727</td>
+</tr>
+<tr>
+  <td>环序cap20，聚类阈值12</td>
+  <td style="text-align:right">887</td>
+  <td style="text-align:right">473</td>
+</tr>
+<tr>
+  <td>局部尺度环序默认</td>
+  <td style="text-align:right">910</td>
+  <td style="text-align:right">488</td>
+</tr>
+<tr>
+  <td>局部尺度谱图默认</td>
+  <td style="text-align:right">428</td>
+  <td style="text-align:right">65</td>
+</tr>
+<tr>
+  <td>软角点密度＋墙带默认</td>
+  <td style="text-align:right">1068</td>
+  <td style="text-align:right">653</td>
+</tr>
+</tbody>
+</table>
+<p>18种配对配置产生42552行“方法×成员”记录、20371对几何特征。239个单元中，21个只有一份配对几何，218个至少两份，73个至少八份。低人数单元形成单簇，并不证明收敛。多个配置、成对记录和重采样共享同一批人图，不增加独立样本量。</p>
+<p>所有这些分组都是描述性候选，不是语义准确率。密度算法未分配记录保留独立状态；不能按簇少、单人少或曲线平来选“更正确”的方法。</p>
+<h3>对外部审查的实质回应</h3>
+<p><strong>X7-19的成功参数已经纳入，而非只报告失败参数。</strong> A3 cut8精确得到 <code>{W011,W015,W033}</code>、<code>{W034}</code>、<code>{W037}</code>；cut12全并。它证明默认配置失败不能否定环序方法，但也不能由一个开发图成功，为全量统一选定8。该配置在全量上产生1394组、1007个单人组，必须进一步校准并检验，而不是按局部满意度决定。</p>
+<p><strong>计数不保存完整关系。</strong> W015与W011、W033的“前缘2、后连接2”可以相同，但局部排列及对应不同。是否把它们分在同一组，取决于要保存“部位是否被表达”，还是更细的顺序、对应和落点。原点导出未保存最终墙面连接；按x排序的计算环序不等于已经确认的人的连接意图。</p>
+<p>因此应分别评判表达关系、顺序／对应关系和几何异常。两份作答可以属于同一表达组，同时一份存在严重位置异常。不能在一个案例里要求“位置变化不得拆簇”，在另一个案例里又用“位置变化必须拆簇”评价同一个未分层目标。</p>
+<p>人工ROI是固定图实验中可以使用的测量工具，但当前实现只是看图后制定的坐标及高度规则，不是自动识别门框、隔断或墙角的通用模型。新作答在ROI内没有点时，可能是未表达，也可能是偏出区域或对应不明确；后两者不应直接等同于0。</p>
+<h2>4. Bi-Layout与其他候选：重新计算的证据</h2>
+<p>实际读取214图×HoHoNet、Bi、uLayout三族，共642份冻结数值文件。本轮没有重新推理或训练。主要对照使用零度输入后已逆变换回原全景坐标的预测，其他三个旋转相位只形成敏感性特征。</p>
+<p>使用Bi的两个角点候选、HoHoNet的一个角点候选，以及uLayout已经保存的密集边界。uLayout官方包装中的corner字段是GT，相关导出已明确排除；未使用第二返回的角点logits也不被当成校准置信度。本轮没有据此伪造预测角点。</p>
+<p>距离统一为球面墙带的 <code>1−立体角IoU</code>，只是该表示下的几何接近程度，不是合理性、正确性或人群选择概率。阈值0.05／0.10／0.20的结果全部保存。</p>
+<p>人类可投影几何2299份，全部四个模型候选共同可用2294份。其他记录在配对几何或点集视图中继续保留，不因模型比较不可用而从主研究中删除。</p>
+<h3>4.1 两个模型头经常几乎一致</h3>
+<p>214图的Bi双头距离中位数为 <strong>0.002395</strong>，其中 <strong>175图小于0.02</strong>。0.02只是探索分隔，不是正式歧义标准。</p>
+<p>对于满足三角不等式的距离，<code>|d(Y,E)−d(Y,X)| ≤ d(E,X)</code>。因此，两头越近，“更接近哪一头”的差值本来就受到很小的上界限制。将小差值归一化不会自动增加辨识信息，也不应被放大解释成人员类型。</p>
+<p>2299份可比较真人，在距离容忍度0.10下的状态如下：</p>
+<table>
+<thead>
+<tr>
+  <th>与Bi双头的关系</th>
+  <th style="text-align:right">份数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>同时兼容两头</td>
+  <td style="text-align:right">1566</td>
+</tr>
+<tr>
+  <td>只兼容enclosed</td>
+  <td style="text-align:right">138</td>
+</tr>
+<tr>
+  <td>只兼容extended</td>
+  <td style="text-align:right">51</td>
+</tr>
+<tr>
+  <td>两头都不兼容</td>
+  <td style="text-align:right">544</td>
+</tr>
+</tbody>
+</table>
+<p>不能强制把both和neither二选一成两种空间或两类人。两头都远可能来自模型失配、人类偏差、未被候选表达的局部／范围差异或表示条件问题，需要进一步解释。</p>
+<p>7y3-08提供一个直接数值反例：双头距离约0.000346，而22份可投影OOS真人作答的平均相互距离约0.16947。两头一致不能证明真人没有分歧；反过来也不证明这些真人差异都合理。</p>
+<h3>4.2 多模型候选覆盖</h3>
+<table>
+<thead>
+<tr>
+  <th>固定候选集合，共同2294份</th>
+  <th style="text-align:right">0.10内覆盖记录</th>
+  <th style="text-align:right">比例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Bi两个头</td>
+  <td style="text-align:right">1755</td>
+  <td style="text-align:right">76.50%</td>
+</tr>
+<tr>
+  <td>HoHoNet＋uLayout边界</td>
+  <td style="text-align:right">1773</td>
+  <td style="text-align:right">77.29%</td>
+</tr>
+<tr>
+  <td>上述四候选的并集</td>
+  <td style="text-align:right">1883</td>
+  <td style="text-align:right">82.08%</td>
+</tr>
+</tbody>
+</table>
+<p>这是几何覆盖，不是准确率。增加候选必然不降低并集覆盖，因此四候选超过两候选不能独立证明方法更好；两个候选集合之间的对照也没有建立模型优胜。四候选仍有 <strong>411份</strong> 在该容忍度外，必须保留为候选外证据，而不是强配给最近模型。</p>
+<h2>5. 模型信息能否预测真人分散度？本轮已有小型实测</h2>
+<p>使用115张至少有5名可投影Manual作答的图片、18个建筑，预测“历史真人平均成对立体角墙带距离”。外层逐建筑留出，内层按建筑4折选择Ridge正则；插补、标准化和选参只看训练侧，没有用目标图真人作答作为输入。</p>
+<table>
+<thead>
+<tr>
+  <th>输入</th>
+  <th style="text-align:right">外层MAE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>训练建筑总体均值</td>
+  <td style="text-align:right">0.042295</td>
+</tr>
+<tr>
+  <td>Bi双头距离</td>
+  <td style="text-align:right">0.037943</td>
+</tr>
+<tr>
+  <td>模型角点数量</td>
+  <td style="text-align:right">0.034907</td>
+</tr>
+<tr>
+  <td>模型点数＋模型间距离</td>
+  <td style="text-align:right">0.031156</td>
+</tr>
+<tr>
+  <td>再加入旋转变化</td>
+  <td style="text-align:right">0.031211</td>
+</tr>
+</tbody>
+</table>
+<p>“点数＋模型间距离”相对仅点数的MAE差约−0.00375；对已保存外层误差按建筑重采样的描述性区间约为 <strong>[−0.00766，−0.00026]</strong>。再加入旋转变化的额外差异区间跨零。这里没有在每次重采样中重新拟合整个流程，因而不是独立确认性区间。</p>
+<p>这个结果支持把模型信息保留为真人几何分散度的候选预测变量。它没有证明已预测语义模式、人数终点、新人员表现或“客观图片难度”。目标仍受到当前人员构成和可计算选择的影响。留建筑只针对本轮下游回归，不宣称预训练布局模型从未见过有关图片／建筑。</p>
+<p>DINOv3和DA3在本轮没有重新拟合或比较预测增益，不能把它们在仓库中存在的特征文件等同于本轮已经验证有效。</p>
+<h2>6. 建议采用的分簇与评价策略</h2>
+<p>当前主候选仍包括环序部分匹配、墙带和边界表示；局部事件是解释和验证层，不立即替代它们。全量图继续输出稳定ID、原始／有效点、多个配置成员及未知／失败状态。不能为每张图挑视觉上最顺眼的阈值，再当成一个统一算法的结果。</p>
+<p>先明确希望保持不变的关系，再校准距离：范围选择是否相同，哪些结构部位被表达，顺序／邻接是否得到证据支持，定位异常是否超过特定容忍度。不同关系可以同时成立，必要时给多关系判断，而不是强求一个单类。</p>
+<p>人工局部ROI不必因为“不自动”而被否定。若主要研究固定图片上的人群分布，它可以是合法的测量工具，但应报告开发时间、盲复核分歧，以及对未参与开发作答的表现。附近有歧义点、点偏出ROI或对应不唯一时保留unknown；有充分证据说明未表达时才记0。</p>
+<p>顺序、邻接和对应不确定性须与存在计数分开，不能全部笼统归为定位噪声。缺少连接信息时，保存“计算序列”与“对应证据状态”，不要宣称已经恢复了心理意图。</p>
+<h2>7. 所有新增标注收齐后，Bi与其他模型怎么使用？</h2>
+<p><strong>先冻结真人证据及验证角色。</strong> 确认人员排除、点修复版本、时间和信息条件。全历史可以描述；但前k人预测不能读取目标图剩余人的簇中心、事件定义或借用剩余人的修复信息。</p>
+<p><strong>先形成不由模型决定的真人分布，再投射模型候选。</strong> Bi E/X、HoHoNet和uLayout是外部候选，不是额外票。允许一头覆盖多个几何组、两头覆盖同一组、模型候选没有真人支持，以及真人表达没有任何候选覆盖。</p>
+<p><strong>在有局部开口依据的图上检验范围关系。</strong> enclosed／extended可以启发近端与延伸的对照，但不把每图锁成两类。左右两个开口可以形成不同选择组合，模型双头并没有穷举所有局部组合。</p>
+<p><strong>真人频率来自真人，而不是模型头数量。</strong> 人员历史从其他房间形成，再比较图像信息、人员连续特征、加性模型和有限交互。不要直接用“最近模型头”次数给人命名成enclosed型或extended型。</p>
+<p><strong>同时监测已编码事件和未解释变化。</strong> 事件分布稳定而未编码区域出现新的大变化时，只能说该事件层稳定。保留原点只是追溯条件，不会自动产生残差指标；应实际计算未解释点、局部新边界、对应冲突及模型候选外覆盖，并在留出真人上检查。</p>
+<p><strong>同人数比较人员构成，再比较人数增长。</strong> AABC须由同图四位不同真人组成，不重复计票。Bootstrap只是误差估计。稳定不要求熵归零，而是指定人群与条件下，分布估计、模式比例与遗漏重要差异的风险达到声明的容忍度。质量上限另需明确reference，不能由分布变平推出。</p>
+<p>各模型的定位应分别保留：</p>
+<table>
+<thead>
+<tr>
+  <th>模型或表示</th>
+  <th>当前可研究的角色</th>
+  <th>不能直接当作什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>HoHoNet</td>
+  <td>结构候选、旋转诊断</td>
+  <td>真人真值或独立人类票</td>
+</tr>
+<tr>
+  <td>Bi-Layout</td>
+  <td>政策相关的两个范围候选，及候选覆盖／失配</td>
+  <td>两类人员、两种必然分离的模式或真人概率</td>
+</tr>
+<tr>
+  <td>uLayout</td>
+  <td>密集边界对照</td>
+  <td>由包装GT字段变出的预测角点</td>
+</tr>
+<tr>
+  <td>DINOv3</td>
+  <td>全局特征用于跨图条件预测；局部特征可探索对应</td>
+  <td>给同图各作答拼同一向量就能区分表达</td>
+</tr>
+<tr>
+  <td>DA3</td>
+  <td>带来源与有效性说明的预测几何、相对信息或特征</td>
+  <td>经过认证的物理真值或新增真实观察</td>
+</tr>
+</tbody>
+</table>
+<p>DA3已有多视角设置在9月16日历史审查中没有通过已知相机几何检查。真实其他视角与同一全景的六个cubeface不是同一证据条件，不能混用。本轮并未重新完成DA3的物理几何验收。</p>
+<h2>8. 论文叙事与潜在贡献</h2>
+<p>建议主问题是：<strong>给定图像与规则，人类布局标注为何形成不同的结构／几何分布；模型候选解释了多少、遗漏了多少；改变真实人员构成后，需要多少证据才能刻画这种分布？</strong></p>
+<p>论文可以围绕三项可验证的贡献组织。</p>
+<p>第一，结构化分歧测量：区分范围、表达、顺序／对应和连续几何，保留错误、OOS与未知，不把多峰直接等同于错误或无法收敛。</p>
+<p>第二，模型候选和真人分布的覆盖／失配：模型多解不等于人群多解，两头接近不等于真人无分歧；检查候选外但反复出现的真人表达或偏差。</p>
+<p>第三，人员构成条件下的分布稳定与证据需求：检验图片、人员及交互是否有增量，在相同人数下比较构成，再验证新人员／新房间迁移。<strong>第三项尚未在本轮建立。</strong></p>
+<p>18种聚类配置、几个手工ROI或“使用Bi-Layout”本身不是创新证明。保留分歧、多判断学习、群体构成建模和多假设预测各有前人工作。本项目的潜力在于把这些问题落实到同时有点数、顺序、连续几何和表示失配的完整布局标注，并提供可复现、可迁移的证据。不能只因新分类更容易预测，就认定它更正确。</p>
+<h2>9. 本次恢复、验证和交付边界</h2>
+<p>GitHub原执行 <code>35329148252</code> 已完成全部数值阶段。此轮恢复先取回该ZIP并验证SHA256与ZIP CRC，再从研究提交取回代码、README及补充结果。没有将主目录替换成上一轮39图结果。</p>
+<p>为控制下载体积，642个模型NPZ只保留未改动的程序实际读取的数组：Bi两头四个yaw角点、HoHoNet四个yaw角点，以及uLayout四个yaw密集边界。所有保留数组逐项检查形状、dtype和字节哈希，没有改值或重新推理。原始NPZ哈希与子集NPZ哈希均保留在 <code>model_snapshot/COMPACT_RECOVERY_MANIFEST.json</code>；完整原数组清单仍在 <code>ARRAY_MANIFEST.json</code>。这是无损字段子集，不冒称与原NPZ压缩文件逐字节相同。</p>
+<p>交付包中的输入已经足够运行全量数值程序，不依赖临时GitHub artifact的有效期。六个程序已用这些输入复跑，25份共同CSV对照通过。交互图册的数据完整性和下拉、X7 cut8／cut12、模型／原点切换、点集视图均经浏览器执行检查，报告在 <code>recovery/ATLAS_CHECK.json</code>。</p>
+<p>图册含全部239单元与2388份保留记录；39图嵌入原图缩略图，175图需要联网读取固定提交原图或手动载入本地图片。此包不包含模型权重、字体、214张原尺寸全景或声称214图已被完整视觉盲审。原始main、人工决定、任务派发没有改变；为取回字节新增的<code>research/recovery-export-20260918</code>只执行复制打包。</p>
+<h2>参考文献与原始全文入口</h2>
+<p>以下保留本轮原研究使用的文献线索。此次恢复不属于新一轮系统文献检索，不据此宣称已经证明创新优先权。</p>
+<ol>
+<li>Tsai, Yu-Ju; Jhang, Jin-Cheng; Zheng, Jingjing; Wang, Wei; Chen, Albert Y. C.; Sun, Min; Kuo, Cheng-Hao; Yang, Ming-Hsuan. (2024). <strong>No More Ambiguity in 360° Room Layout via Bi-Layout Estimation.</strong> <em>Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition</em>, 28056–28065. <a href="https://arxiv.org/pdf/2404.09993">作者PDF</a>。其best-of-two对GT评价不等于人群概率估计。</li>
+<li>Gordon, Mitchell L.; Lam, Michelle S.; Park, Joon Sung; Patel, Kayur; Hancock, Jeffrey T.; Hashimoto, Tatsunori; Bernstein, Michael S. (2022). <strong>Jury Learning: Integrating Dissenting Voices into Machine Learning Models.</strong> <em>Proceedings of the 2022 CHI Conference on Human Factors in Computing Systems</em>. DOI:10.1145/3491102.3502004. <a href="https://arxiv.org/pdf/2202.02950">作者PDF</a>。群体构成改变预测不是本项目首次提出。</li>
+<li>Uma, Alexandra N.; Fornaciari, Tommaso; Hovy, Dirk; Paun, Silviu; Plank, Barbara; Poesio, Massimo. (2021). <strong>Learning from Disagreement: A Survey.</strong> <em>Journal of Artificial Intelligence Research</em>, 72:1385–1470. DOI:10.1613/jair.1.12752. <a href="https://www.jair.org/index.php/jair/article/download/12752/26751">期刊PDF</a>。评价目标与分歧学习必须匹配。</li>
+<li>Yan, Yan; Rosales, Romer; Fung, Glenn; Schmidt, Mark; Hermosillo, Gerardo; Bogoni, Luca; Moy, Linda; Dy, Jennifer. (2010). <strong>Modeling Annotator Expertise: Learning When Everybody Knows a Bit of Something.</strong> <em>Proceedings of AISTATS</em>, PMLR9:932–939. <a href="https://proceedings.mlr.press/v9/yan10a/yan10a.pdf">会议PDF</a>。输入条件相关的人员表现已有原始方法。</li>
+<li>Rahmathullah, Abu Sajana; García-Fernández, Ángel F.; Svensson, Lennart. (2017). <strong>Generalized Optimal Sub-pattern Assignment Metric.</strong> <em>20th International Conference on Information Fusion</em>, 1–8. DOI:10.23919/ICIF.2017.8009645. <a href="https://arxiv.org/pdf/1601.05585">作者PDF</a>。匹配代价不等于空间语义。</li>
+<li>Siméoni, Oriane, et al. (2025). <strong>DINOv3.</strong> Technical report, arXiv:2508.10104. <a href="https://arxiv.org/pdf/2508.10104">报告PDF</a>。本项目实际缓存为DINOv3；本轮未重新拟合其增益。</li>
+<li>Lin, Haotong; Chen, Sili; Liew, Junhao; Chen, Donny Y.; Li, Zhenyu; Shi, Guang; Feng, Jiashi; Kang, Bingyi. (2025). <strong>Depth Anything 3: Recovering the Visual Space from Any Views.</strong> Technical report, arXiv:2511.10647v1. <a href="https://arxiv.org/pdf/2511.10647v1">2025版PDF</a>。按原研究引用2025技术报告版本，不混用后续版本作者表。</li>
+</ol>
+<p>本报告所有新研究数字均可在包内CSV及程序中定位。导师要求的解释以最新交流文件的明确书面段落为准，不将语音回忆和更早Paper A合同升级成当前要求。</p>
+</html>

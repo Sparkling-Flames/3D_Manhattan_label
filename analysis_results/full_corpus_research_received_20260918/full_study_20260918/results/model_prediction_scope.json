@@ -1,0 +1,50 @@
+{
+  "images": 115,
+  "buildings": 18,
+  "condition": "manual",
+  "minimum_spherical_people": 5,
+  "target": "historical_mean_pairwise_solid_angle_distance",
+  "person_features_fitted": false,
+  "semantic_clustering_validation": false,
+  "model_weights_retrained": false,
+  "feature_sets": {
+    "global_mean": [],
+    "model_counts": [
+      "bi_enclosed_corners",
+      "bi_extended_corners",
+      "hohonet_corners"
+    ],
+    "bi_head_gap": [
+      "gap_bi_enclosed__bi_extended"
+    ],
+    "model_counts_and_gaps": [
+      "bi_enclosed_corners",
+      "bi_extended_corners",
+      "hohonet_corners",
+      "gap_bi_enclosed__bi_extended",
+      "gap_bi_enclosed__hohonet",
+      "gap_bi_enclosed__ulayout_boundary",
+      "gap_bi_extended__hohonet",
+      "gap_bi_extended__ulayout_boundary",
+      "gap_hohonet__ulayout_boundary"
+    ],
+    "counts_gaps_rotation": [
+      "bi_enclosed_corners",
+      "bi_extended_corners",
+      "hohonet_corners",
+      "gap_bi_enclosed__bi_extended",
+      "gap_bi_enclosed__hohonet",
+      "gap_bi_enclosed__ulayout_boundary",
+      "gap_bi_extended__hohonet",
+      "gap_bi_extended__ulayout_boundary",
+      "gap_hohonet__ulayout_boundary",
+      "rotation_bi_enclosed",
+      "rotation_bi_extended",
+      "rotation_hohonet",
+      "rotation_ulayout_boundary"
+    ]
+  },
+  "outer": "leave_one_building_out",
+  "inner": "4-fold building-group CV, MAE",
+  "bootstrap": "descriptive resampling of saved outer errors by building, not independent validation or refit"
+}

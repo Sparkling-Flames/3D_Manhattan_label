@@ -1,0 +1,6049 @@
+{
+  "schema": "received_research_visual_audit_v1",
+  "date": "2026-09-18",
+  "reviewer": "current Codex visual review; not blind; no subagents in this round",
+  "scope": {
+    "original_images": 39,
+    "specified_pairs": 29,
+    "pair_images": 19,
+    "additional_b6_22_semi_responses": 24,
+    "all_214_semantically_validated": false,
+    "all_843_individually_reviewed": false
+  },
+  "interpretation": "Mismerge/missplit is relative to range, structural expression, or geometry target; none is universal semantic gold. Wrong/OOS/omitted/extra remain research observations.",
+  "source_data": "../pro_cluster_review_20260918/data.json",
+  "images": [
+    {
+      "code": "jtcxE69GiFV-05",
+      "image_path": "data/mp3d_layout/valid/img/jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037.png",
+      "original_viewed": true,
+      "note": "床与窗帘遮住墙脚，房间开阔处有高差/延伸，底点定位需要留不确定。",
+      "pair_ids": [
+        1
+      ],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "uNb9QFRL6hY-40",
+      "image_path": "data/mp3d_layout/test/img/uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62.png",
+      "original_viewed": true,
+      "note": "左右接缝邻近与玻璃门周围转折密集，顶面另有装饰梁。",
+      "pair_ids": [
+        18
+      ],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "uNb9QFRL6hY-45",
+      "image_path": "data/mp3d_layout/test/img/uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97.png",
+      "original_viewed": true,
+      "note": "右侧返回墙与中央壁炉凸出、复杂顶面并存。",
+      "pair_ids": [
+        19
+      ],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "7y3sRwLe3Va-08",
+      "image_path": "data/mp3d_layout/test/img/7y3sRwLe3Va_4291cbfde1024467b1548934653f07ce.png",
+      "original_viewed": true,
+      "note": "楼梯井、栏杆和不同高度边界可见，不能等同单层闭合房间。",
+      "pair_ids": [],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "7y3sRwLe3Va-12",
+      "image_path": "data/mp3d_layout/test/img/7y3sRwLe3Va_6376b741b50a4418b3dc3fde791c3c09.png",
+      "original_viewed": true,
+      "note": "楼梯空缺与走廊延伸可见，单层表示存在限制。",
+      "pair_ids": [],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "B6ByNegPMKs-11",
+      "image_path": "data/mp3d_layout/test/img/B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086.png",
+      "original_viewed": true,
+      "note": "走廊近远截止和圆柱同时可见，应分别考察。",
+      "pair_ids": [
+        2,
+        3
+      ],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "B6ByNegPMKs-21",
+      "image_path": "data/mp3d_layout/test/img/B6ByNegPMKs_7018ca302c584d0d85024187f3568460.png",
+      "original_viewed": true,
+      "note": "中央打开的门与办公空间连接，门边表达可增减。",
+      "pair_ids": [
+        4
+      ],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "B6ByNegPMKs-22",
+      "image_path": "data/mp3d_layout/test/img/B6ByNegPMKs_75327de9719945aa8b893a6404667884.png",
+      "original_viewed": true,
+      "note": "狭长玻璃走廊，两端角点在全景中很接近。",
+      "pair_ids": [],
+      "extra_all_worker_overlay": true
+    },
+    {
+      "code": "UwV83HsGsw3-06",
+      "image_path": "data/mp3d_layout/test/img/UwV83HsGsw3_528d342bf5494b3b94983545d6a1a282.png",
+      "original_viewed": true,
+      "note": "玻璃、遮挡与开放空间延伸可见；单视角不确证隐藏形状。",
+      "pair_ids": [],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "UwV83HsGsw3-08",
+      "image_path": "data/mp3d_layout/test/img/UwV83HsGsw3_71ada030981d4468b76dcebc1b6fb940.png",
+      "original_viewed": true,
+      "note": "玻璃围护与室内开放区并存，遮挡区边界不唯一。",
+      "pair_ids": [],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "UwV83HsGsw3-23",
+      "image_path": "data/mp3d_layout/test/img/UwV83HsGsw3_fcd79f4b6a6642e99227caffb51bf407.png",
+      "original_viewed": true,
+      "note": "大墙遮挡后方区域，不能从一张图确定隐藏闭合。",
+      "pair_ids": [],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "X7HyMhZNoso-19",
+      "image_path": "data/mp3d_layout/test/img/X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9.png",
+      "original_viewed": true,
+      "note": "窄隔断有前缘与后方连接的不同高度，局部面积小。",
+      "pair_ids": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "b8cTxDM8gDG-19",
+      "image_path": "data/mp3d_layout/test/img/b8cTxDM8gDG_f63819c407e64c2897b703080766cb60.png",
+      "original_viewed": true,
+      "note": "中央墙体、两侧开敞区域及家具遮挡，可能有多处局部表达。",
+      "pair_ids": [],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "e9zR4mvMWw7-03",
+      "image_path": "data/mp3d_layout/test/img/e9zR4mvMWw7_12c84e77f6564013a032220e8f9037e8.png",
+      "original_viewed": true,
+      "note": "卧室门洞、角落遮挡和开口位置需区分。",
+      "pair_ids": [],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "e9zR4mvMWw7-10",
+      "image_path": "data/mp3d_layout/test/img/e9zR4mvMWw7_1daae4b7becc43949516096170ce2a76.png",
+      "original_viewed": true,
+      "note": "卧室开门与镜面易干扰对应，床遮挡底点。",
+      "pair_ids": [
+        9
+      ],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "e9zR4mvMWw7-16",
+      "image_path": "data/mp3d_layout/test/img/e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45.png",
+      "original_viewed": true,
+      "note": "楼梯下行、护墙顶缘与本层地面同时存在。",
+      "pair_ids": [
+        11
+      ],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "e9zR4mvMWw7-32",
+      "image_path": "data/mp3d_layout/test/img/e9zR4mvMWw7_ac03b99e3f3642be80b4d24fde0af03a.png",
+      "original_viewed": true,
+      "note": "卧室开门和镜面并存，门后范围需明确。",
+      "pair_ids": [
+        10
+      ],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "q9vSo1VnCiC-09",
+      "image_path": "data/mp3d_layout/test/img/q9vSo1VnCiC_69591068e5614642b710a8fb7733bdeb.png",
+      "original_viewed": true,
+      "note": "梁和低顶/高顶分区同时可见，不能只归因于门颜色。",
+      "pair_ids": [],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "q9vSo1VnCiC-23",
+      "image_path": "data/mp3d_layout/test/img/q9vSo1VnCiC_c421f07780004647a7198c4ac5371e8a.png",
+      "original_viewed": true,
+      "note": "台面遮挡墙脚、门洞连通卧室。",
+      "pair_ids": [],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "q9vSo1VnCiC-32",
+      "image_path": "data/mp3d_layout/test/img/q9vSo1VnCiC_e74e843601574864a14517f990c748a0.png",
+      "original_viewed": true,
+      "note": "接缝小空间、台面和门边同时存在，角点对应复杂。",
+      "pair_ids": [
+        12,
+        13
+      ],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "rPc6DW4iMge-05",
+      "image_path": "data/mp3d_layout/test/img/rPc6DW4iMge_0dfe61800cc540db8e25c1738bc4b8ff.png",
+      "original_viewed": true,
+      "note": "弧形玻璃淋浴、门洞及柜体遮挡并存。",
+      "pair_ids": [],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "rPc6DW4iMge-06",
+      "image_path": "data/mp3d_layout/test/img/rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5.png",
+      "original_viewed": true,
+      "note": "玻璃淋浴与柜体、门洞使可见范围与轮廓不同。",
+      "pair_ids": [],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "rPc6DW4iMge-13",
+      "image_path": "data/mp3d_layout/test/img/rPc6DW4iMge_4350d36797324601adba7351d09602d2.png",
+      "original_viewed": true,
+      "note": "走廊多方向开口，可见近端与延伸，原图不足以判定人群稳定性。",
+      "pair_ids": [],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "rPc6DW4iMge-15",
+      "image_path": "data/mp3d_layout/test/img/rPc6DW4iMge_9d3eb9f5d38844bfb4e5fb2cd05fd3fd.png",
+      "original_viewed": true,
+      "note": "卧室衣柜框可见，与主要围护轮廓不是同一层次。",
+      "pair_ids": [
+        14,
+        15
+      ],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "rPc6DW4iMge-17",
+      "image_path": "data/mp3d_layout/test/img/rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a.png",
+      "original_viewed": true,
+      "note": "小卫生间柜体、开门与外部走廊并存。",
+      "pair_ids": [],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "rPc6DW4iMge-20",
+      "image_path": "data/mp3d_layout/test/img/rPc6DW4iMge_cc15fb105d86466faafdd633f89148de.png",
+      "original_viewed": true,
+      "note": "浴室框、左右走廊和左近开口可独立增减。",
+      "pair_ids": [
+        16,
+        17
+      ],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "rPc6DW4iMge-22",
+      "image_path": "data/mp3d_layout/test/img/rPc6DW4iMge_fbc169773c954580baea6d2798c0d486.png",
+      "original_viewed": true,
+      "note": "淋浴玻璃、拱口与门洞并存，越界修正仍单列。",
+      "pair_ids": [],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "uNb9QFRL6hY-36",
+      "image_path": "data/mp3d_layout/test/img/uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d.png",
+      "original_viewed": true,
+      "note": "走廊两端延伸且有近开口，范围可局部变化。",
+      "pair_ids": [],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "uNb9QFRL6hY-52",
+      "image_path": "data/mp3d_layout/test/img/uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2.png",
+      "original_viewed": true,
+      "note": "植物严重遮挡，顶面/凸出结构复杂；OOS仍有研究价值。",
+      "pair_ids": [],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "uNb9QFRL6hY-56",
+      "image_path": "data/mp3d_layout/test/img/uNb9QFRL6hY_aed830f085ee4ad88ef6bed7f66f1359.png",
+      "original_viewed": true,
+      "note": "柜体细节与开门后区域混合，不宜只按房间名分组。",
+      "pair_ids": [],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "uNb9QFRL6hY-63",
+      "image_path": "data/mp3d_layout/test/img/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.png",
+      "original_viewed": true,
+      "note": "左右截止距离不同，顶底对应不能只用整体掩模。",
+      "pair_ids": [
+        20,
+        21
+      ],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "uNb9QFRL6hY-70",
+      "image_path": "data/mp3d_layout/test/img/uNb9QFRL6hY_d02f87bbb0414146a7a15070110a0384.png",
+      "original_viewed": true,
+      "note": "衣帽间柜体与门内走廊，额外点可能来自局部表达。",
+      "pair_ids": [
+        22
+      ],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "wc2JMjhGNzB-30",
+      "image_path": "data/mp3d_layout/test/img/wc2JMjhGNzB_55b45b0f19c2460bbcd1fb1c86c6610d.png",
+      "original_viewed": true,
+      "note": "卧室右侧壁炉邻近转折紧凑，容易被全局面积稀释。",
+      "pair_ids": [
+        23
+      ],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "wc2JMjhGNzB-59",
+      "image_path": "data/mp3d_layout/test/img/wc2JMjhGNzB_dc4a9f470b834de1983c7e605ff06b2e.png",
+      "original_viewed": true,
+      "note": "玻璃接缝和五金可见，后方卫生间连续可见。",
+      "pair_ids": [
+        24,
+        25
+      ],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "wc2JMjhGNzB-60",
+      "image_path": "data/mp3d_layout/test/img/wc2JMjhGNzB_dda6efcba51c40de8552408953719515.png",
+      "original_viewed": true,
+      "note": "柜前立边与后墙存在深度差，点位差异可能对应不同边界。",
+      "pair_ids": [
+        26
+      ],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "wc2JMjhGNzB-67",
+      "image_path": "data/mp3d_layout/test/img/wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f.png",
+      "original_viewed": true,
+      "note": "大厅浴室/衣柜开口与主墙角可分层表达。",
+      "pair_ids": [
+        27,
+        28
+      ],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "yqstnuAEVhm-15",
+      "image_path": "data/mp3d_layout/test/img/yqstnuAEVhm_66ecc07f3cda4d8ebaf84288325669f5.png",
+      "original_viewed": true,
+      "note": "楼梯井、栏杆及不同层的边界可见。",
+      "pair_ids": [],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "yqstnuAEVhm-32",
+      "image_path": "data/mp3d_layout/test/img/yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65.png",
+      "original_viewed": true,
+      "note": "卧室壁炉与相邻起居区连通，局部增量需单独检查。",
+      "pair_ids": [],
+      "extra_all_worker_overlay": false
+    },
+    {
+      "code": "yqstnuAEVhm-34",
+      "image_path": "data/mp3d_layout/test/img/yqstnuAEVhm_e9b4d8e951cb4712b3905c8f4c4dabb5.png",
+      "original_viewed": true,
+      "note": "狭长走廊右端邻接区域可见，截止细节需要点集辅助。",
+      "pair_ids": [
+        29
+      ],
+      "extra_all_worker_overlay": false
+    }
+  ],
+  "pairs": [
+    {
+      "pair_id": 1,
+      "code": "jtcxE69GiFV-05",
+      "condition": "manual",
+      "workers": [
+        "W015",
+        "W012"
+      ],
+      "canonical_ids": [
+        "a431c68f99235de30da3",
+        "dbdc83a7c9f53399480c"
+      ],
+      "image_path": "data/mp3d_layout/valid/img/jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "jtcxE69GiFV-05",
+        "condition": "manual",
+        "worker_a": "W015",
+        "worker_b": "W012",
+        "relation": "same_range_expression_localization_diff",
+        "visual_note": "墙角对应相近；首个及左侧底点差异，不是两个房间",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "False",
+        "A2_local": "False",
+        "A3_cyclic": "False",
+        "A4_adaptive": "False",
+        "A5_density": "False",
+        "A6_spectral": "True",
+        "A7_event": "False",
+        "spherical": "True",
+        "solid": "True",
+        "event_signature_equal": ""
+      },
+      "current_visual_note": "四处主要角点位置相近，底点有偏移；支持同粗范围，不据此确认完全相同结构。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "3"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "5",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "5",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "3"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 2,
+      "code": "B6ByNegPMKs-11",
+      "condition": "manual",
+      "workers": [
+        "W002",
+        "W006"
+      ],
+      "canonical_ids": [
+        "75ca740199bbfca6",
+        "e2c06769623e335c"
+      ],
+      "image_path": "data/mp3d_layout/test/img/B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "B6ByNegPMKs-11",
+        "condition": "manual",
+        "worker_a": "W002",
+        "worker_b": "W006",
+        "relation": "different_right_closure",
+        "visual_note": "近端门框和门内较远位置",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "False",
+        "A2_local": "False",
+        "A3_cyclic": "False",
+        "A4_adaptive": "False",
+        "A5_density": "False",
+        "A6_spectral": "False",
+        "A7_event": "False",
+        "spherical": "False",
+        "solid": "False",
+        "event_signature_equal": "False"
+      },
+      "current_visual_note": "右端一人在近门框、一人在门内更远处；左端也需保留独立差异。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "1"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "1"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 3,
+      "code": "B6ByNegPMKs-11",
+      "condition": "manual",
+      "workers": [
+        "W002",
+        "W034"
+      ],
+      "canonical_ids": [
+        "75ca740199bbfca6",
+        "d709cefe9dcba87b"
+      ],
+      "image_path": "data/mp3d_layout/test/img/B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "B6ByNegPMKs-11",
+        "condition": "manual",
+        "worker_a": "W002",
+        "worker_b": "W034",
+        "relation": "same_right_closure_extra_column",
+        "visual_note": "范围相近，但W034额外表达柱体",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "False",
+        "A2_local": "False",
+        "A3_cyclic": "True",
+        "A4_adaptive": "True",
+        "A5_density": "False",
+        "A6_spectral": "True",
+        "A7_event": "False",
+        "spherical": "True",
+        "solid": "True",
+        "event_signature_equal": "False"
+      },
+      "current_visual_note": "W034在柱侧增加上下点，右端仍接近近门框；柱体表达与截止选择应分别描述。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "6"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "6"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "6"
+          },
+          "A3_cyclic": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "11"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "8"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "6"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "6"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "10"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "7"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "6"
+          },
+          "A3_cyclic": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "11"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "11"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "8"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "11"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "8"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 4,
+      "code": "B6ByNegPMKs-21",
+      "condition": "semi",
+      "workers": [
+        "W001",
+        "W032"
+      ],
+      "canonical_ids": [
+        "456be942f0947a669713",
+        "bf6d1e98afbb6306ebff"
+      ],
+      "image_path": "data/mp3d_layout/test/img/B6ByNegPMKs_7018ca302c584d0d85024187f3568460.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "B6ByNegPMKs-21",
+        "condition": "semi",
+        "worker_a": "W001",
+        "worker_b": "W032",
+        "relation": "same_range_extra_center_pair",
+        "visual_note": "W001中央门状区域多一对；未评论不等于没差异",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "True",
+        "A2_local": "False",
+        "A3_cyclic": "False",
+        "A4_adaptive": "False",
+        "A5_density": "False",
+        "A6_spectral": "True",
+        "A7_event": "False",
+        "spherical": "True",
+        "solid": "True",
+        "event_signature_equal": ""
+      },
+      "current_visual_note": "W001在中央开门边缘多一对；可见表达增量，不能由同粗范围吞掉。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 5,
+      "code": "X7HyMhZNoso-19",
+      "condition": "manual",
+      "workers": [
+        "W033",
+        "W034"
+      ],
+      "canonical_ids": [
+        "adc213fc12f5f948aa56",
+        "5f7815f3a489b8007a97"
+      ],
+      "image_path": "data/mp3d_layout/test/img/X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "X7HyMhZNoso-19",
+        "condition": "manual",
+        "worker_a": "W033",
+        "worker_b": "W034",
+        "relation": "full_vs_omitted_partition",
+        "visual_note": "隔断前缘及连接均表达，对比全部省略",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "True",
+        "A2_local": "False",
+        "A3_cyclic": "True",
+        "A4_adaptive": "True",
+        "A5_density": "False",
+        "A6_spectral": "True",
+        "A7_event": "False",
+        "spherical": "True",
+        "solid": "True",
+        "event_signature_equal": "False"
+      },
+      "current_visual_note": "W033在狭窄隔断有多层点，W034没有这组局部点；局部表达确有不同。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 6,
+      "code": "X7HyMhZNoso-19",
+      "condition": "manual",
+      "workers": [
+        "W033",
+        "W037"
+      ],
+      "canonical_ids": [
+        "adc213fc12f5f948aa56",
+        "ae929aa9e6dd3cd587ac"
+      ],
+      "image_path": "data/mp3d_layout/test/img/X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "X7HyMhZNoso-19",
+        "condition": "manual",
+        "worker_a": "W033",
+        "worker_b": "W037",
+        "relation": "full_vs_partial_partition",
+        "visual_note": "有后连接高度，缺前缘高度",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "True",
+        "A2_local": "False",
+        "A3_cyclic": "True",
+        "A4_adaptive": "True",
+        "A5_density": "False",
+        "A6_spectral": "True",
+        "A7_event": "True",
+        "spherical": "True",
+        "solid": "True",
+        "event_signature_equal": "False"
+      },
+      "current_visual_note": "W037有隔断附近低层上下点，但无W033高前缘端点；支持部分表达，具体墙连接未确认。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 7,
+      "code": "X7HyMhZNoso-19",
+      "condition": "manual",
+      "workers": [
+        "W034",
+        "W037"
+      ],
+      "canonical_ids": [
+        "5f7815f3a489b8007a97",
+        "ae929aa9e6dd3cd587ac"
+      ],
+      "image_path": "data/mp3d_layout/test/img/X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "X7HyMhZNoso-19",
+        "condition": "manual",
+        "worker_a": "W034",
+        "worker_b": "W037",
+        "relation": "omitted_vs_partial_partition",
+        "visual_note": "零局部对和两局部对",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "True",
+        "A2_local": "True",
+        "A3_cyclic": "True",
+        "A4_adaptive": "True",
+        "A5_density": "False",
+        "A6_spectral": "True",
+        "A7_event": "False",
+        "spherical": "True",
+        "solid": "True",
+        "event_signature_equal": "False"
+      },
+      "current_visual_note": "W034省略与W037保留低层局部点可区分；合并会丢失这项行为差异。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "3"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": true,
+            "cluster_a": "2",
+            "cluster_b": "2"
+          },
+          "A3_cyclic": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "4"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "3"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "4"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": true,
+            "cluster_a": "2",
+            "cluster_b": "2"
+          },
+          "A3_cyclic": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "4"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "3"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": true,
+            "cluster_a": "2",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "4"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 8,
+      "code": "X7HyMhZNoso-19",
+      "condition": "manual",
+      "workers": [
+        "W011",
+        "W015"
+      ],
+      "canonical_ids": [
+        "c599740d3bc3761f8f39",
+        "a68c32790d01e6b27d0d"
+      ],
+      "image_path": "data/mp3d_layout/test/img/X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "X7HyMhZNoso-19",
+        "condition": "manual",
+        "worker_a": "W011",
+        "worker_b": "W015",
+        "relation": "same_expressed_partition_localization_diff",
+        "visual_note": "均有前缘及后缘；W015有后缘横坐标偏移",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "True",
+        "A1_mask": "True",
+        "A2_local": "False",
+        "A3_cyclic": "True",
+        "A4_adaptive": "True",
+        "A5_density": "False",
+        "A6_spectral": "True",
+        "A7_event": "True",
+        "spherical": "True",
+        "solid": "True",
+        "event_signature_equal": "True"
+      },
+      "current_visual_note": "两人都有隔断高低两层点，W015低层点明显横向错位；只能说局部存在性相似，不能确认完整对应相同。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A3_cyclic": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A3_cyclic": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 9,
+      "code": "e9zR4mvMWw7-10",
+      "condition": "semi",
+      "workers": [
+        "W035",
+        "W006"
+      ],
+      "canonical_ids": [
+        "4664edbc4eb51884",
+        "4693ec5fcc3f09fc"
+      ],
+      "image_path": "data/mp3d_layout/test/img/e9zR4mvMWw7_1daae4b7becc43949516096170ce2a76.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "e9zR4mvMWw7-10",
+        "condition": "semi",
+        "worker_a": "W035",
+        "worker_b": "W006",
+        "relation": "same_range_expression_localization_diff",
+        "visual_note": "没有新增房间证据，主要顶点高度",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "False",
+        "A2_local": "False",
+        "A3_cyclic": "False",
+        "A4_adaptive": "False",
+        "A5_density": "False",
+        "A6_spectral": "False",
+        "A7_event": "False",
+        "spherical": "False",
+        "solid": "False",
+        "event_signature_equal": ""
+      },
+      "current_visual_note": "主要四处顶底位置相近，顶部及床遮挡底部有偏移；不足以推断另一房间或纯粹粗心。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "10",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 10,
+      "code": "e9zR4mvMWw7-32",
+      "condition": "semi",
+      "workers": [
+        "W031",
+        "W002"
+      ],
+      "canonical_ids": [
+        "38b4c355b2582da5",
+        "7f2a70bd247387c9"
+      ],
+      "image_path": "data/mp3d_layout/test/img/e9zR4mvMWw7_ac03b99e3f3642be80b4d24fde0af03a.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "e9zR4mvMWw7-32",
+        "condition": "semi",
+        "worker_a": "W031",
+        "worker_b": "W002",
+        "relation": "same_range_expression_localization_diff",
+        "visual_note": "同样四个位置机会，顶底坐标不同",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "False",
+        "A2_local": "False",
+        "A3_cyclic": "False",
+        "A4_adaptive": "False",
+        "A5_density": "False",
+        "A6_spectral": "False",
+        "A7_event": "False",
+        "spherical": "False",
+        "solid": "True",
+        "event_signature_equal": ""
+      },
+      "current_visual_note": "都取卧室主要四处位置，但门侧顶底x及底点明显不同；隐藏角点对应仍需保留疑问。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "9",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 11,
+      "code": "e9zR4mvMWw7-16",
+      "condition": "semi",
+      "workers": [
+        "W032",
+        "W006"
+      ],
+      "canonical_ids": [
+        "c54bc02d1fcd094e",
+        "e30721b054460f15"
+      ],
+      "image_path": "data/mp3d_layout/test/img/e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "e9zR4mvMWw7-16",
+        "condition": "semi",
+        "worker_a": "W032",
+        "worker_b": "W006",
+        "relation": "different_local_floor_boundary",
+        "visual_note": "W032第三底点明显降到楼梯下方，不能因同点数隐藏",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "False",
+        "A2_local": "False",
+        "A3_cyclic": "False",
+        "A4_adaptive": "False",
+        "A5_density": "False",
+        "A6_spectral": "False",
+        "A7_event": "False",
+        "spherical": "False",
+        "solid": "False",
+        "event_signature_equal": ""
+      },
+      "current_visual_note": "W032在楼梯附近的底点比W006更低；可确认局部底边选择不同，不能确认想象了哪一个完整空间。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "1"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "1"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "9",
+            "cluster_b": "1"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "1"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "1"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "6",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "1"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "6",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "6",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "5",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "9",
+            "cluster_b": "1"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "1"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 12,
+      "code": "q9vSo1VnCiC-32",
+      "condition": "manual",
+      "workers": [
+        "W014",
+        "W027"
+      ],
+      "canonical_ids": [
+        "7485c5f92ef686bc",
+        "7c4d53d444805ad4"
+      ],
+      "image_path": "data/mp3d_layout/test/img/q9vSo1VnCiC_e74e843601574864a14517f990c748a0.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "q9vSo1VnCiC-32",
+        "condition": "manual",
+        "worker_a": "W014",
+        "worker_b": "W027",
+        "relation": "large_local_misplacement",
+        "visual_note": "第二、三对横坐标偏離相应墙角；粗范围相近",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "True",
+        "A1_mask": "True",
+        "A2_local": "False",
+        "A3_cyclic": "False",
+        "A4_adaptive": "False",
+        "A5_density": "False",
+        "A6_spectral": "False",
+        "A7_event": "False",
+        "spherical": "False",
+        "solid": "False",
+        "event_signature_equal": ""
+      },
+      "current_visual_note": "W014在洗手台两侧的点与W027差别明显；同大致范围并不能消除定位或对应问题。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": true,
+            "cluster_a": "2",
+            "cluster_b": "2"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "2",
+            "cluster_b": "2"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "2"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "5",
+            "cluster_b": "2"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "5"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "2"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "3"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": true,
+            "cluster_a": "2",
+            "cluster_b": "2"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "2",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": true,
+            "cluster_a": "2",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": true,
+            "cluster_a": "2",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": true,
+            "cluster_a": "2",
+            "cluster_b": "2"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "2"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "5",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "5",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "5"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "2"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "3"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 13,
+      "code": "q9vSo1VnCiC-32",
+      "condition": "manual",
+      "workers": [
+        "W006",
+        "W027"
+      ],
+      "canonical_ids": [
+        "aa6b631e83349cba",
+        "7c4d53d444805ad4"
+      ],
+      "image_path": "data/mp3d_layout/test/img/q9vSo1VnCiC_e74e843601574864a14517f990c748a0.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "q9vSo1VnCiC-32",
+        "condition": "manual",
+        "worker_a": "W006",
+        "worker_b": "W027",
+        "relation": "different_seam_range_and_expression",
+        "visual_note": "W006进入接缝小空间并有额外表达",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "False",
+        "A2_local": "False",
+        "A3_cyclic": "False",
+        "A4_adaptive": "False",
+        "A5_density": "False",
+        "A6_spectral": "False",
+        "A7_event": "False",
+        "spherical": "False",
+        "solid": "False",
+        "event_signature_equal": ""
+      },
+      "current_visual_note": "W006在全景接缝两侧小空间及门边加点；相同主区域之外存在额外表达。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "2"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "2"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "5",
+            "cluster_b": "2"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "5",
+            "cluster_b": "2"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "6",
+            "cluster_b": "5"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "2"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "6",
+            "cluster_b": "3"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "2"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "5",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": true,
+            "cluster_a": "2",
+            "cluster_b": "2"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "5",
+            "cluster_b": "2"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "5",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "5",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "7",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "6",
+            "cluster_b": "5"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "2"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "6",
+            "cluster_b": "3"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 14,
+      "code": "rPc6DW4iMge-15",
+      "condition": "manual",
+      "workers": [
+        "W002",
+        "W011"
+      ],
+      "canonical_ids": [
+        "a4b73bebf231dbe2321a",
+        "a02304edf778c294c6fb"
+      ],
+      "image_path": "data/mp3d_layout/test/img/rPc6DW4iMge_9d3eb9f5d38844bfb4e5fb2cd05fd3fd.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "rPc6DW4iMge-15",
+        "condition": "manual",
+        "worker_a": "W002",
+        "worker_b": "W011",
+        "relation": "same_range_expression_localization_diff",
+        "visual_note": "同样四对，大致范围相同",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "False",
+        "A2_local": "False",
+        "A3_cyclic": "False",
+        "A4_adaptive": "False",
+        "A5_density": "False",
+        "A6_spectral": "True",
+        "A7_event": "False",
+        "spherical": "True",
+        "solid": "True",
+        "event_signature_equal": "True"
+      },
+      "current_visual_note": "四处主体角点相近，底点受床和柜遮挡；若只分表达可能过拆，几何分析仍应记录差异。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "5",
+            "cluster_b": "2"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "5"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "5",
+            "cluster_b": "2"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 15,
+      "code": "rPc6DW4iMge-15",
+      "condition": "manual",
+      "workers": [
+        "W002",
+        "W037"
+      ],
+      "canonical_ids": [
+        "a4b73bebf231dbe2321a",
+        "454169e6fe8a9b1ba08c"
+      ],
+      "image_path": "data/mp3d_layout/test/img/rPc6DW4iMge_9d3eb9f5d38844bfb4e5fb2cd05fd3fd.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "rPc6DW4iMge-15",
+        "condition": "manual",
+        "worker_a": "W002",
+        "worker_b": "W037",
+        "relation": "same_range_extra_closet_frame",
+        "visual_note": "额外柜框位置，非另一卧室",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "False",
+        "A2_local": "False",
+        "A3_cyclic": "False",
+        "A4_adaptive": "False",
+        "A5_density": "False",
+        "A6_spectral": "True",
+        "A7_event": "False",
+        "spherical": "True",
+        "solid": "True",
+        "event_signature_equal": "False"
+      },
+      "current_visual_note": "W037沿衣柜框附近增点；是同卧室内的额外轮廓，动机不明。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "5",
+            "cluster_b": "11"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "8"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "15"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "10"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "5"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "5",
+            "cluster_b": "11"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 16,
+      "code": "rPc6DW4iMge-20",
+      "condition": "manual",
+      "workers": [
+        "W034",
+        "W037"
+      ],
+      "canonical_ids": [
+        "d10e31caaec1101e",
+        "60b3a58f097c620f"
+      ],
+      "image_path": "data/mp3d_layout/test/img/rPc6DW4iMge_cc15fb105d86466faafdd633f89148de.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "rPc6DW4iMge-20",
+        "condition": "manual",
+        "worker_a": "W034",
+        "worker_b": "W037",
+        "relation": "same_count_different_local_event_set",
+        "visual_note": "均六对，但左开口/右走廊角不同，同时有框",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "True",
+        "A1_mask": "True",
+        "A2_local": "False",
+        "A3_cyclic": "False",
+        "A4_adaptive": "False",
+        "A5_density": "True",
+        "A6_spectral": "True",
+        "A7_event": "False",
+        "spherical": "False",
+        "solid": "False",
+        "event_signature_equal": "False"
+      },
+      "current_visual_note": "均12点且都取浴室框；W034左侧另取开口角、右侧少一处，W037保留右侧两角；同点数不能代表同局部集合。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": true,
+            "cluster_a": "2",
+            "cluster_b": "2"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "2",
+            "cluster_b": "2"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "3"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "2"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "2"
+          },
+          "A5_density": {
+            "same_cluster": true,
+            "cluster_a": "6",
+            "cluster_b": "6"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "5",
+            "cluster_b": "5"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "4"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": true,
+            "cluster_a": "2",
+            "cluster_b": "2"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "2",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "5"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": true,
+            "cluster_a": "3",
+            "cluster_b": "3"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": true,
+            "cluster_a": "2",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": true,
+            "cluster_a": "2",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": true,
+            "cluster_a": "2",
+            "cluster_b": "2"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "3"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "7",
+            "cluster_b": "8"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "5",
+            "cluster_b": "6"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "3"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": true,
+            "cluster_a": "2",
+            "cluster_b": "2"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "2"
+          },
+          "A5_density": {
+            "same_cluster": true,
+            "cluster_a": "6",
+            "cluster_b": "6"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "5",
+            "cluster_b": "5"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "4"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 17,
+      "code": "rPc6DW4iMge-20",
+      "condition": "manual",
+      "workers": [
+        "W006",
+        "W037"
+      ],
+      "canonical_ids": [
+        "f2eb30664b7474ad",
+        "60b3a58f097c620f"
+      ],
+      "image_path": "data/mp3d_layout/test/img/rPc6DW4iMge_cc15fb105d86466faafdd633f89148de.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "rPc6DW4iMge-20",
+        "condition": "manual",
+        "worker_a": "W006",
+        "worker_b": "W037",
+        "relation": "same_range_extra_bath_frame",
+        "visual_note": "四个基础角对比加浴室框",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "False",
+        "A2_local": "False",
+        "A3_cyclic": "False",
+        "A4_adaptive": "False",
+        "A5_density": "False",
+        "A6_spectral": "False",
+        "A7_event": "False",
+        "spherical": "True",
+        "solid": "True",
+        "event_signature_equal": "False"
+      },
+      "current_visual_note": "W037增加浴室门框附近点，W006取左右走廊基本位置；主范围相近仍有结构表达差异。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "6"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "5"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "5"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "8"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "6"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "6"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "5"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 18,
+      "code": "uNb9QFRL6hY-40",
+      "condition": "manual",
+      "workers": [
+        "W006",
+        "W032"
+      ],
+      "canonical_ids": [
+        "f8b24f616d167c27b810",
+        "d2c9465ce508ba7c1195"
+      ],
+      "image_path": "data/mp3d_layout/test/img/uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "uNb9QFRL6hY-40",
+        "condition": "manual",
+        "worker_a": "W006",
+        "worker_b": "W032",
+        "relation": "different_seam_expression",
+        "visual_note": "接缝拥挤墙角的表达数量不同",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "True",
+        "A2_local": "False",
+        "A3_cyclic": "True",
+        "A4_adaptive": "True",
+        "A5_density": "False",
+        "A6_spectral": "True",
+        "A7_event": "True",
+        "spherical": "True",
+        "solid": "True",
+        "event_signature_equal": ""
+      },
+      "current_visual_note": "W006在左右接缝邻近保留更多墙角，W032省略其中部分；不推断其是否误解接缝。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A3_cyclic": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A3_cyclic": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 19,
+      "code": "uNb9QFRL6hY-45",
+      "condition": "manual",
+      "workers": [
+        "W006",
+        "W011"
+      ],
+      "canonical_ids": [
+        "561446db19099c48c68e",
+        "006d495cbff76f46e992"
+      ],
+      "image_path": "data/mp3d_layout/test/img/uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "uNb9QFRL6hY-45",
+        "condition": "manual",
+        "worker_a": "W006",
+        "worker_b": "W011",
+        "relation": "different_right_turn_expression",
+        "visual_note": "右侧转折表达有区别",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "False",
+        "A2_local": "False",
+        "A3_cyclic": "False",
+        "A4_adaptive": "False",
+        "A5_density": "False",
+        "A6_spectral": "False",
+        "A7_event": "False",
+        "spherical": "True",
+        "solid": "True",
+        "event_signature_equal": ""
+      },
+      "current_visual_note": "W006在右边返回墙密集取点，W011只保留较粗四对；差异真实可见。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 20,
+      "code": "uNb9QFRL6hY-63",
+      "condition": "manual",
+      "workers": [
+        "W011",
+        "W035"
+      ],
+      "canonical_ids": [
+        "5d4b529359890ec3",
+        "84737c49b7cb43cb"
+      ],
+      "image_path": "data/mp3d_layout/test/img/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "uNb9QFRL6hY-63",
+        "condition": "manual",
+        "worker_a": "W011",
+        "worker_b": "W035",
+        "relation": "different_left_closure",
+        "visual_note": "近端开口与开口后较远端",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "False",
+        "A2_local": "False",
+        "A3_cyclic": "False",
+        "A4_adaptive": "False",
+        "A5_density": "False",
+        "A6_spectral": "False",
+        "A7_event": "False",
+        "spherical": "False",
+        "solid": "False",
+        "event_signature_equal": ""
+      },
+      "current_visual_note": "W011左端取近门洞，W035取门后远端；此处有明确局部截止差异。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "7"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "5"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "5"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "12"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "8"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "9"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "5"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "7"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "5"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "16"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "13"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "12"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "5"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "12"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "8"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 21,
+      "code": "uNb9QFRL6hY-63",
+      "condition": "manual",
+      "workers": [
+        "W011",
+        "W032"
+      ],
+      "canonical_ids": [
+        "5d4b529359890ec3",
+        "f6377d1bf3f1d93a"
+      ],
+      "image_path": "data/mp3d_layout/test/img/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "uNb9QFRL6hY-63",
+        "condition": "manual",
+        "worker_a": "W011",
+        "worker_b": "W032",
+        "relation": "different_right_top_boundary_mixed",
+        "visual_note": "W032顶点更低、底点接近；不自动称完整向后范围",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "True",
+        "A1_mask": "True",
+        "A2_local": "False",
+        "A3_cyclic": "False",
+        "A4_adaptive": "False",
+        "A5_density": "False",
+        "A6_spectral": "False",
+        "A7_event": "False",
+        "spherical": "False",
+        "solid": "True",
+        "event_signature_equal": ""
+      },
+      "current_visual_note": "W032右端顶点降低、底部与W011更接近；不是一个一致平移的完整远端范围。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "10"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "10"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "6"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "10"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "14"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "11"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "10"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "8"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "10"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "6"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 22,
+      "code": "uNb9QFRL6hY-70",
+      "condition": "manual",
+      "workers": [
+        "W031",
+        "W035"
+      ],
+      "canonical_ids": [
+        "1e6add292cbf2f86",
+        "b3865e9a7310a075"
+      ],
+      "image_path": "data/mp3d_layout/test/img/uNb9QFRL6hY_d02f87bbb0414146a7a15070110a0384.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "uNb9QFRL6hY-70",
+        "condition": "manual",
+        "worker_a": "W031",
+        "worker_b": "W035",
+        "relation": "extra_visible_extension",
+        "visual_note": "W035增加右侧门后局部对",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "True",
+        "A2_local": "False",
+        "A3_cyclic": "False",
+        "A4_adaptive": "True",
+        "A5_density": "False",
+        "A6_spectral": "True",
+        "A7_event": "False",
+        "spherical": "False",
+        "solid": "True",
+        "event_signature_equal": ""
+      },
+      "current_visual_note": "W035在右门内增点，并有门框附近表达；不能只描述为整图范围改变。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "5"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "3"
+          },
+          "A4_adaptive": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "14"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "8"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "7"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": true,
+            "cluster_a": "2",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "5"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "3"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "13"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "11"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "9"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "14"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "8"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 23,
+      "code": "wc2JMjhGNzB-30",
+      "condition": "manual",
+      "workers": [
+        "W002",
+        "W034"
+      ],
+      "canonical_ids": [
+        "203bd6757c614dae7d28",
+        "745e6f7ed41f5f3abf93"
+      ],
+      "image_path": "data/mp3d_layout/test/img/wc2JMjhGNzB_55b45b0f19c2460bbcd1fb1c86c6610d.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "wc2JMjhGNzB-30",
+        "condition": "manual",
+        "worker_a": "W002",
+        "worker_b": "W034",
+        "relation": "full_vs_omitted_right_returns",
+        "visual_note": "右侧多次转折表达与省略",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "True",
+        "A2_local": "True",
+        "A3_cyclic": "False",
+        "A4_adaptive": "True",
+        "A5_density": "False",
+        "A6_spectral": "True",
+        "A7_event": "False",
+        "spherical": "True",
+        "solid": "True",
+        "event_signature_equal": ""
+      },
+      "current_visual_note": "W002表达右侧壁炉邻近的紧凑转折，W034没有；整体面积相近会掩盖该差异。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "5"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A4_adaptive": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "5"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "3"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "5"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "5"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "5"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "3"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 24,
+      "code": "wc2JMjhGNzB-59",
+      "condition": "manual",
+      "workers": [
+        "W030",
+        "W027"
+      ],
+      "canonical_ids": [
+        "cd1c84f77a0c7939",
+        "04402852e137134a"
+      ],
+      "image_path": "data/mp3d_layout/test/img/wc2JMjhGNzB_dc4a9f470b834de1983c7e605ff06b2e.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "wc2JMjhGNzB-59",
+        "condition": "manual",
+        "worker_a": "W030",
+        "worker_b": "W027",
+        "relation": "same_range_expression_localization_diff",
+        "visual_note": "相同四对；边界位置不同",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "False",
+        "A2_local": "False",
+        "A3_cyclic": "False",
+        "A4_adaptive": "False",
+        "A5_density": "False",
+        "A6_spectral": "False",
+        "A7_event": "True",
+        "spherical": "False",
+        "solid": "False",
+        "event_signature_equal": ""
+      },
+      "current_visual_note": "两人四处主要角点相近，顶底落点有偏移；同表达的解释较合理，但仍需报告几何差异。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A7_event": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "13",
+            "cluster_b": "10"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "9"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A7_event": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 25,
+      "code": "wc2JMjhGNzB-59",
+      "condition": "manual",
+      "workers": [
+        "W027",
+        "W032"
+      ],
+      "canonical_ids": [
+        "04402852e137134a",
+        "6748e788317900ca"
+      ],
+      "image_path": "data/mp3d_layout/test/img/wc2JMjhGNzB_dc4a9f470b834de1983c7e605ff06b2e.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "wc2JMjhGNzB-59",
+        "condition": "manual",
+        "worker_a": "W027",
+        "worker_b": "W032",
+        "relation": "extra_through_glass_pair",
+        "visual_note": "W032在开口内新增一对",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "False",
+        "A2_local": "False",
+        "A3_cyclic": "False",
+        "A4_adaptive": "False",
+        "A5_density": "False",
+        "A6_spectral": "False",
+        "A7_event": "False",
+        "spherical": "False",
+        "solid": "False",
+        "event_signature_equal": ""
+      },
+      "current_visual_note": "W032在玻璃后洗手台附近增一对；看得见新增点，不能据此确认其完整玻璃后布局。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "3"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "3"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "6"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "6"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "7"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "7"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "6"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "3"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "3"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "6"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "5"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "6"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "6"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "10",
+            "cluster_b": "14"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "9",
+            "cluster_b": "10"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "9"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "3"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "7"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "7"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "6"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 26,
+      "code": "wc2JMjhGNzB-60",
+      "condition": "manual",
+      "workers": [
+        "W001",
+        "W027"
+      ],
+      "canonical_ids": [
+        "c6a0dacbc82fcd8d74f2",
+        "78dc36e89fc34111fd75"
+      ],
+      "image_path": "data/mp3d_layout/test/img/wc2JMjhGNzB_dda6efcba51c40de8552408953719515.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "wc2JMjhGNzB-60",
+        "condition": "manual",
+        "worker_a": "W001",
+        "worker_b": "W027",
+        "relation": "local_position_and_boundary_site_change",
+        "visual_note": "W001角点落到柜前缘附近；混合局部偏移，非已证明另一空间",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "True",
+        "A1_mask": "True",
+        "A2_local": "True",
+        "A3_cyclic": "False",
+        "A4_adaptive": "False",
+        "A5_density": "False",
+        "A6_spectral": "True",
+        "A7_event": "False",
+        "spherical": "False",
+        "solid": "True",
+        "event_signature_equal": ""
+      },
+      "current_visual_note": "W001有点落在柜前立边，W027更靠后侧；差异涉及局部边界位置，不只是无意义坐标噪声。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": true,
+            "cluster_a": "3",
+            "cluster_b": "3"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "7",
+            "cluster_b": "5"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "7",
+            "cluster_b": "5"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "6",
+            "cluster_b": "2"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "6",
+            "cluster_b": "9"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": true,
+            "cluster_a": "3",
+            "cluster_b": "3"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "7",
+            "cluster_b": "5"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "4",
+            "cluster_b": "10"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "5",
+            "cluster_b": "9"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "5",
+            "cluster_b": "9"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": false,
+            "cluster_a": "6",
+            "cluster_b": "4"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": false,
+            "cluster_a": "2",
+            "cluster_b": "4"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "7",
+            "cluster_b": "5"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "6",
+            "cluster_b": "2"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "6",
+            "cluster_b": "9"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 27,
+      "code": "wc2JMjhGNzB-67",
+      "condition": "manual",
+      "workers": [
+        "W002",
+        "W034"
+      ],
+      "canonical_ids": [
+        "79927da8c000e31d9cda",
+        "032cd152706166629e82"
+      ],
+      "image_path": "data/mp3d_layout/test/img/wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "wc2JMjhGNzB-67",
+        "condition": "manual",
+        "worker_a": "W002",
+        "worker_b": "W034",
+        "relation": "missing_right_corner",
+        "visual_note": "W034少右侧主角，不应用未确认修复",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "True",
+        "A2_local": "False",
+        "A3_cyclic": "True",
+        "A4_adaptive": "True",
+        "A5_density": "False",
+        "A6_spectral": "True",
+        "A7_event": "False",
+        "spherical": "",
+        "solid": "",
+        "event_signature_equal": "False"
+      },
+      "current_visual_note": "W034少右侧远主角；保留原始6点，不用修复后的假想作答评估方法。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 28,
+      "code": "wc2JMjhGNzB-67",
+      "condition": "manual",
+      "workers": [
+        "W002",
+        "W037"
+      ],
+      "canonical_ids": [
+        "79927da8c000e31d9cda",
+        "5dcbaaa4a3faeb7832f8"
+      ],
+      "image_path": "data/mp3d_layout/test/img/wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "wc2JMjhGNzB-67",
+        "condition": "manual",
+        "worker_a": "W002",
+        "worker_b": "W037",
+        "relation": "extra_bath_frame",
+        "visual_note": "W037增加门框右侧一对",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "False",
+        "A2_local": "False",
+        "A3_cyclic": "False",
+        "A4_adaptive": "False",
+        "A5_density": "False",
+        "A6_spectral": "True",
+        "A7_event": "False",
+        "spherical": "True",
+        "solid": "True",
+        "event_signature_equal": "False"
+      },
+      "current_visual_note": "W037多浴室门右侧一对；同大厅范围仍有额外门框表达。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A6_spectral": {
+            "same_cluster": true,
+            "cluster_a": "1",
+            "cluster_b": "1"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          }
+        }
+      },
+      "final_user_decision": null
+    },
+    {
+      "pair_id": 29,
+      "code": "yqstnuAEVhm-34",
+      "condition": "manual",
+      "workers": [
+        "W006",
+        "W012"
+      ],
+      "canonical_ids": [
+        "d3d0c96ce57812bb",
+        "b88d269a40ffad84"
+      ],
+      "image_path": "data/mp3d_layout/test/img/yqstnuAEVhm_e9b4d8e951cb4712b3905c8f4c4dabb5.png",
+      "viewed": "original panorama with raw point markers; original export order labels; no inferred wall connections",
+      "raw_equals_effective": [
+        true,
+        true
+      ],
+      "source_claim": {
+        "code": "yqstnuAEVhm-34",
+        "condition": "manual",
+        "worker_a": "W006",
+        "worker_b": "W012",
+        "relation": "different_local_closure_boundary",
+        "visual_note": "右侧近端与略远边界；不是已证实整个别的房间",
+        "review_status": "analyst_development_relation_not_blind_gold",
+        "A0_legacy": "False",
+        "A1_mask": "False",
+        "A2_local": "False",
+        "A3_cyclic": "False",
+        "A4_adaptive": "False",
+        "A5_density": "False",
+        "A6_spectral": "False",
+        "A7_event": "False",
+        "spherical": "False",
+        "solid": "False",
+        "event_signature_equal": ""
+      },
+      "current_visual_note": "右端顶底截止有偏差但仍在同一邻接区域；近远边界差异比另一个房间的命名稳妥。",
+      "memberships_read_back": {
+        "key39": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "11"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "4"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "5"
+          }
+        },
+        "full_corpus": {
+          "A0_legacy": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A1_mask": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A1_mask_cut0.050": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "6"
+          },
+          "A1_mask_cut0.075": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A1_mask_cut0.125": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.150": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A1_mask_cut0.200": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A2_local": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A3_cyclic": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A3_cyclic_cut06": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "8"
+          },
+          "A3_cyclic_cut08": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "6"
+          },
+          "A3_cyclic_cut10": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "5"
+          },
+          "A3_cyclic_cut14": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "3"
+          },
+          "A3_cyclic_cut16": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "2"
+          },
+          "A4_adaptive": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "4"
+          },
+          "A5_density": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "11"
+          },
+          "A6_spectral": {
+            "same_cluster": false,
+            "cluster_a": "3",
+            "cluster_b": "4"
+          },
+          "A7_event": {
+            "same_cluster": false,
+            "cluster_a": "1",
+            "cluster_b": "5"
+          }
+        }
+      },
+      "final_user_decision": null
+    }
+  ],
+  "b6_22": {
+    "condition": "semi",
+    "workers": [
+      "W001",
+      "W002",
+      "W006",
+      "W008",
+      "W010",
+      "W011",
+      "W012",
+      "W013",
+      "W014",
+      "W015",
+      "W017",
+      "W018",
+      "W021",
+      "W027",
+      "W028",
+      "W029",
+      "W030",
+      "W031",
+      "W032",
+      "W033",
+      "W034",
+      "W035",
+      "W036",
+      "W037"
+    ],
+    "canonical_ids": [
+      "b21b9e1bc1f9748c",
+      "f6296e82c056709c",
+      "b17159a624da813a",
+      "aba9b1487cd9adfb",
+      "dd75ae13e342b2e4",
+      "5945adbef25e9e2d",
+      "4b34ab7cdc3ff32b",
+      "ee2a23d20aaa38a2",
+      "a10636e431b96e35",
+      "8f3e2abc0f04f753",
+      "f8530b0e7a20bef6",
+      "202d1d9063738999",
+      "c9f042d8c21ca99b",
+      "c6f141b411336076",
+      "5429d9e5ae4acde8",
+      "ad6812c23b79784a",
+      "1c1e863ffcab5dcb",
+      "a55a92a57a48a087",
+      "89af3c23558522cb",
+      "3bd7cc7151dff5c8",
+      "45579518b52a9571",
+      "a81657f0ac5d7807",
+      "a2615a25ae6631e5",
+      "4fbebe49572a79a5"
+    ],
+    "detail_crops_workers": [
+      "W001",
+      "W002",
+      "W030",
+      "W034",
+      "W006",
+      "W028"
+    ],
+    "note": "24份都8点且集中在走廊两端。W001/W030顶底横向不齐可见；W028/W034两端轮廓更紧凑，可能混合截止深度、对应和定位。不能据此认证4/5/8种空间；也不能把用户原文1,2,30,34自动解释为工人编号。",
+    "memberships_read_back": {
+      "A0_legacy": {
+        "W001": "5",
+        "W002": "1",
+        "W006": "1",
+        "W008": "1",
+        "W010": "1",
+        "W011": "1",
+        "W012": "6",
+        "W013": "1",
+        "W014": "1",
+        "W015": "1",
+        "W017": "1",
+        "W018": "1",
+        "W021": "1",
+        "W027": "1",
+        "W028": "2",
+        "W029": "2",
+        "W030": "7",
+        "W031": "2",
+        "W032": "3",
+        "W033": "3",
+        "W034": "8",
+        "W035": "4",
+        "W036": "1",
+        "W037": "4"
+      },
+      "A1_mask": {
+        "W001": "5",
+        "W002": "1",
+        "W006": "1",
+        "W008": "1",
+        "W010": "1",
+        "W011": "1",
+        "W012": "6",
+        "W013": "1",
+        "W014": "1",
+        "W015": "1",
+        "W017": "1",
+        "W018": "1",
+        "W021": "1",
+        "W027": "1",
+        "W028": "2",
+        "W029": "2",
+        "W030": "7",
+        "W031": "2",
+        "W032": "3",
+        "W033": "3",
+        "W034": "8",
+        "W035": "4",
+        "W036": "1",
+        "W037": "4"
+      },
+      "A1_mask_cut0.050": {
+        "W001": "4",
+        "W002": "1",
+        "W006": "1",
+        "W008": "1",
+        "W010": "1",
+        "W011": "1",
+        "W012": "5",
+        "W013": "1",
+        "W014": "1",
+        "W015": "1",
+        "W017": "1",
+        "W018": "1",
+        "W021": "1",
+        "W027": "1",
+        "W028": "2",
+        "W029": "6",
+        "W030": "7",
+        "W031": "2",
+        "W032": "3",
+        "W033": "3",
+        "W034": "8",
+        "W035": "9",
+        "W036": "1",
+        "W037": "10"
+      },
+      "A1_mask_cut0.075": {
+        "W001": "4",
+        "W002": "1",
+        "W006": "1",
+        "W008": "1",
+        "W010": "1",
+        "W011": "1",
+        "W012": "5",
+        "W013": "1",
+        "W014": "1",
+        "W015": "1",
+        "W017": "1",
+        "W018": "1",
+        "W021": "1",
+        "W027": "1",
+        "W028": "2",
+        "W029": "2",
+        "W030": "6",
+        "W031": "2",
+        "W032": "3",
+        "W033": "3",
+        "W034": "7",
+        "W035": "8",
+        "W036": "1",
+        "W037": "9"
+      },
+      "A1_mask_cut0.125": {
+        "W001": "5",
+        "W002": "1",
+        "W006": "1",
+        "W008": "1",
+        "W010": "1",
+        "W011": "1",
+        "W012": "6",
+        "W013": "1",
+        "W014": "1",
+        "W015": "1",
+        "W017": "1",
+        "W018": "1",
+        "W021": "1",
+        "W027": "1",
+        "W028": "2",
+        "W029": "2",
+        "W030": "7",
+        "W031": "2",
+        "W032": "3",
+        "W033": "3",
+        "W034": "8",
+        "W035": "4",
+        "W036": "1",
+        "W037": "4"
+      },
+      "A1_mask_cut0.150": {
+        "W001": "5",
+        "W002": "1",
+        "W006": "1",
+        "W008": "1",
+        "W010": "1",
+        "W011": "1",
+        "W012": "1",
+        "W013": "1",
+        "W014": "1",
+        "W015": "1",
+        "W017": "1",
+        "W018": "1",
+        "W021": "1",
+        "W027": "1",
+        "W028": "2",
+        "W029": "2",
+        "W030": "6",
+        "W031": "2",
+        "W032": "3",
+        "W033": "3",
+        "W034": "2",
+        "W035": "4",
+        "W036": "1",
+        "W037": "4"
+      },
+      "A1_mask_cut0.200": {
+        "W001": "3",
+        "W002": "1",
+        "W006": "1",
+        "W008": "1",
+        "W010": "1",
+        "W011": "1",
+        "W012": "1",
+        "W013": "1",
+        "W014": "1",
+        "W015": "1",
+        "W017": "1",
+        "W018": "1",
+        "W021": "1",
+        "W027": "1",
+        "W028": "2",
+        "W029": "2",
+        "W030": "3",
+        "W031": "2",
+        "W032": "4",
+        "W033": "4",
+        "W034": "2",
+        "W035": "5",
+        "W036": "1",
+        "W037": "5"
+      },
+      "A2_local": {
+        "W001": "5",
+        "W002": "1",
+        "W006": "1",
+        "W008": "1",
+        "W010": "1",
+        "W011": "1",
+        "W012": "6",
+        "W013": "1",
+        "W014": "1",
+        "W015": "1",
+        "W017": "1",
+        "W018": "1",
+        "W021": "1",
+        "W027": "1",
+        "W028": "2",
+        "W029": "2",
+        "W030": "7",
+        "W031": "2",
+        "W032": "3",
+        "W033": "3",
+        "W034": "8",
+        "W035": "4",
+        "W036": "1",
+        "W037": "4"
+      },
+      "A3_cyclic": {
+        "W001": "3",
+        "W002": "1",
+        "W006": "1",
+        "W008": "1",
+        "W010": "1",
+        "W011": "1",
+        "W012": "1",
+        "W013": "1",
+        "W014": "1",
+        "W015": "1",
+        "W017": "1",
+        "W018": "1",
+        "W021": "1",
+        "W027": "1",
+        "W028": "2",
+        "W029": "2",
+        "W030": "3",
+        "W031": "2",
+        "W032": "1",
+        "W033": "1",
+        "W034": "2",
+        "W035": "2",
+        "W036": "1",
+        "W037": "2"
+      },
+      "A3_cyclic_cut06": {
+        "W001": "4",
+        "W002": "1",
+        "W006": "1",
+        "W008": "1",
+        "W010": "1",
+        "W011": "1",
+        "W012": "5",
+        "W013": "1",
+        "W014": "1",
+        "W015": "1",
+        "W017": "1",
+        "W018": "1",
+        "W021": "1",
+        "W027": "1",
+        "W028": "2",
+        "W029": "2",
+        "W030": "6",
+        "W031": "2",
+        "W032": "3",
+        "W033": "3",
+        "W034": "2",
+        "W035": "2",
+        "W036": "1",
+        "W037": "2"
+      },
+      "A3_cyclic_cut08": {
+        "W001": "4",
+        "W002": "1",
+        "W006": "1",
+        "W008": "1",
+        "W010": "1",
+        "W011": "1",
+        "W012": "5",
+        "W013": "1",
+        "W014": "1",
+        "W015": "1",
+        "W017": "1",
+        "W018": "1",
+        "W021": "1",
+        "W027": "1",
+        "W028": "2",
+        "W029": "2",
+        "W030": "6",
+        "W031": "2",
+        "W032": "3",
+        "W033": "3",
+        "W034": "2",
+        "W035": "2",
+        "W036": "1",
+        "W037": "2"
+      },
+      "A3_cyclic_cut10": {
+        "W001": "3",
+        "W002": "1",
+        "W006": "1",
+        "W008": "1",
+        "W010": "1",
+        "W011": "1",
+        "W012": "1",
+        "W013": "1",
+        "W014": "1",
+        "W015": "1",
+        "W017": "1",
+        "W018": "1",
+        "W021": "1",
+        "W027": "1",
+        "W028": "2",
+        "W029": "2",
+        "W030": "3",
+        "W031": "2",
+        "W032": "4",
+        "W033": "4",
+        "W034": "2",
+        "W035": "2",
+        "W036": "1",
+        "W037": "2"
+      },
+      "A3_cyclic_cut14": {
+        "W001": "2",
+        "W002": "1",
+        "W006": "1",
+        "W008": "1",
+        "W010": "1",
+        "W011": "1",
+        "W012": "1",
+        "W013": "1",
+        "W014": "1",
+        "W015": "1",
+        "W017": "1",
+        "W018": "1",
+        "W021": "1",
+        "W027": "1",
+        "W028": "2",
+        "W029": "2",
+        "W030": "2",
+        "W031": "2",
+        "W032": "1",
+        "W033": "1",
+        "W034": "2",
+        "W035": "2",
+        "W036": "1",
+        "W037": "2"
+      },
+      "A3_cyclic_cut16": {
+        "W001": "2",
+        "W002": "1",
+        "W006": "1",
+        "W008": "1",
+        "W010": "1",
+        "W011": "1",
+        "W012": "1",
+        "W013": "1",
+        "W014": "1",
+        "W015": "1",
+        "W017": "1",
+        "W018": "1",
+        "W021": "1",
+        "W027": "1",
+        "W028": "2",
+        "W029": "2",
+        "W030": "2",
+        "W031": "2",
+        "W032": "1",
+        "W033": "1",
+        "W034": "2",
+        "W035": "2",
+        "W036": "1",
+        "W037": "2"
+      },
+      "A4_adaptive": {
+        "W001": "4",
+        "W002": "1",
+        "W006": "1",
+        "W008": "1",
+        "W010": "1",
+        "W011": "1",
+        "W012": "5",
+        "W013": "1",
+        "W014": "1",
+        "W015": "1",
+        "W017": "1",
+        "W018": "1",
+        "W021": "1",
+        "W027": "1",
+        "W028": "2",
+        "W029": "2",
+        "W030": "6",
+        "W031": "2",
+        "W032": "3",
+        "W033": "3",
+        "W034": "2",
+        "W035": "2",
+        "W036": "1",
+        "W037": "2"
+      },
+      "A5_density": {
+        "W001": "3",
+        "W002": "4",
+        "W006": "1",
+        "W008": "1",
+        "W010": "1",
+        "W011": "1",
+        "W012": "6",
+        "W013": "1",
+        "W014": "7",
+        "W015": "4",
+        "W017": "1",
+        "W018": "1",
+        "W021": "8",
+        "W027": "1",
+        "W028": "2",
+        "W029": "2",
+        "W030": "3",
+        "W031": "2",
+        "W032": "5",
+        "W033": "5",
+        "W034": "2",
+        "W035": "2",
+        "W036": "1",
+        "W037": "2"
+      },
+      "A6_spectral": {
+        "W001": "3",
+        "W002": "4",
+        "W006": "1",
+        "W008": "1",
+        "W010": "1",
+        "W011": "1",
+        "W012": "3",
+        "W013": "1",
+        "W014": "5",
+        "W015": "4",
+        "W017": "1",
+        "W018": "1",
+        "W021": "5",
+        "W027": "1",
+        "W028": "2",
+        "W029": "2",
+        "W030": "3",
+        "W031": "2",
+        "W032": "3",
+        "W033": "3",
+        "W034": "2",
+        "W035": "2",
+        "W036": "1",
+        "W037": "2"
+      },
+      "A7_event": {
+        "W001": "5",
+        "W002": "1",
+        "W006": "1",
+        "W008": "1",
+        "W010": "1",
+        "W011": "1",
+        "W012": "6",
+        "W013": "1",
+        "W014": "1",
+        "W015": "1",
+        "W017": "1",
+        "W018": "1",
+        "W021": "1",
+        "W027": "1",
+        "W028": "2",
+        "W029": "2",
+        "W030": "7",
+        "W031": "2",
+        "W032": "3",
+        "W033": "3",
+        "W034": "8",
+        "W035": "4",
+        "W036": "1",
+        "W037": "4"
+      }
+    }
+  },
+  "user_decisions_changed": false,
+  "pending_export_applied": false,
+  "full_numerical_pipeline_rerun": false
+}

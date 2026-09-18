@@ -1,5 +1,7 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
+**2026-09-18研究接收与视觉复核：**`analysis_results/cluster_visual_20260918_v2/`保存指定研究分支的39图代码与结果；`analysis_results/full_corpus_research_received_20260918/`保存全量自包含数值包、图册及[本轮复核入口](../analysis_results/full_corpus_research_received_20260918/仓库接收与视觉复核.md)。来源/人员/条件连接检查为`tests/test_received_research_visual_audit.py`；研究代码保持交付快照，不改变生产分析和正式协议。
+
 **研究包更新：**`analysis_results/pro_cluster_review_20260918/`新增用户原话与全39图裁决索引，`data.json`增量保存最新裁决；原始附件归档在`human_review_reconciliation_20260918/`。沿用生成器`--adjudication`，不新增研究算法，不改变历史计算。
 
 

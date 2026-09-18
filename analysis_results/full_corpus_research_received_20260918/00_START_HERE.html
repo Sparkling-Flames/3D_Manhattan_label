@@ -1,0 +1,17 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>全量标注研究 · 交付入口</title><style>body{font-family:system-ui,"Microsoft YaHei",sans-serif;max-width:980px;margin:40px auto;padding:0 25px;color:#26323f;line-height:1.8;background:#f5f7fa}h1{font-size:30px}h2{font-size:22px}a{color:#125d94}.card{background:white;border:1px solid #d5dfe8;border-radius:9px;padding:22px;margin:20px 0}code{overflow-wrap:anywhere}table{width:100%;border-collapse:collapse}td,th{padding:10px;border-bottom:1px solid #ddd;text-align:left}.muted{color:#586878;font-size:14px}</style>
+<h1>全量布局标注分簇与模型研究</h1><p>2026-09-18 · 中断恢复交付包</p>
+<div class="card"><h2><a href="01_REPORT_ZH.html">01　阅读完整研究报告</a></h2><p>全量分簇、奇数点与SOP、Bi与其他模型关系、预测检查、分层评价和论文叙事。<a href="01_REPORT_ZH.md">Markdown源文</a></p>
+<h2><a href="02_full_corpus_atlas.html">02　打开全量交互图册</a></h2><p>239个图片×条件，27种结果视图；查看人员A/B、原始/有效点、模型叠加和配置成员。39张原图缩略图已内嵌，其余原图按需联网或手动载入。</p></div>
+<div class="card"><h2>本包对应的范围</h2><p>2501条canonical记录 → 排除W019/W026的113条 → 保留2388条、24人、214图。其中2364条进入配对几何，2381条进入无序点集比较。W011历史保留；pending修正不混入主版本。</p><p>这是全量研究，不是之前的39图试验。簇编号是数值候选，不是空间真值；不可计算记录不是单人模式。</p></div>
+<div class="card"><h2>数据与复算入口</h2><table><tr><th>材料</th><th>用途</th></tr>
+<tr><td><a href="full_study_20260918/README.md">GitHub原始研究说明</a></td><td>保存原字节，与恢复报告分别保留</td></tr>
+<tr><td><a href="full_study_20260918/results/memberships.csv">配对方案成员表</a></td><td>42552行方法×成员</td></tr>
+<tr><td><a href="full_study_20260918/results/pointset_memberships.csv">无序点集成员表</a></td><td>包括部分不能上下配对的作答</td></tr>
+<tr><td><a href="full_study_20260918/results/all_response_audit.csv">全量来源和点处理审计</a></td><td>原始与有效点、确认／排除状态及导出路径</td></tr>
+<tr><td><a href="full_study_20260918/results/human_model_distances.csv">真人—模型距离</a></td><td>Bi双头、HoHoNet和uLayout对照</td></tr>
+<tr><td><a href="full_study_20260918/results/model_dispersion_lobo_scores.csv">留建筑预测结果</a></td><td>115图、18建筑，真人几何分散度目标</td></tr>
+<tr><td><a href="recovery/REPRODUCTION_CHECK.json">此次复跑核验</a></td><td>六程序执行，25份共同CSV逐项一致</td></tr>
+<tr><td><a href="recovery/ATLAS_CHECK.json">图册检查</a></td><td>选项数量、X7阈值切换、模型与点集视图</td></tr>
+<tr><td><a href="00_README.txt">使用说明</a></td><td>离线范围、数据子集说明与复算命令</td></tr>
+<tr><td><a href="MANIFEST_SHA256.json">实际交付文件哈希清单</a></td><td>可用verify_package.py校验每个文件</td></tr></table></div>
+<div class="card"><h2>恢复状态</h2><p>数值代码、结果和输入来自固定GitHub提交与原执行工件；报告重新编排，图册重新生成。模型NPZ只删除程序未读取的大特征数组，保留数组的值、dtype和形状不变，并以复跑确认依赖完整。</p><p class="muted">不包含权重、字体、214张原尺寸图片；不宣称本轮完成了214图语义盲审、人员构成效应或未来真人收敛预测。研究提交 <code>f8b7d60d4727fb7a7b4ce6d4b62d38019994fd0f</code>。</p></div></html>

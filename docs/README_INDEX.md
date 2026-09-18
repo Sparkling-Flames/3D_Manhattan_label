@@ -1,5 +1,7 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
+**2026-09-18两轮研究接收：**[仓库接收与当前视觉复核](../analysis_results/full_corpus_research_received_20260918/仓库接收与视觉复核.md)串联全量报告、239单元图册、复算输入和前序39图研究；本轮复看39原图、29组作答对与B6-22全部24份Semi，未冻结新算法或应用待确认修正。
+
 **最新研究定位：**OOS、漏标、多标、定位偏差均有研究价值；规范偏好不作为排除指令。用户26项新回答（4项暂缓）已原文归档，点数分簇允许讨论。见[开放式Pro研究入口](../analysis_results/pro_cluster_review_20260918/README.md)。
 
 

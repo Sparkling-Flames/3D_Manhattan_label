@@ -1,0 +1,86 @@
+name: Full corpus clustering reproduction 20260918
+on:
+  push:
+    branches: [research/full-corpus-clustering-20260918]
+    paths: [.github/workflows/full-corpus-clustering-reproduce-20260918.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      STUDY: analysis_results/full_corpus_clustering_20260918
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/full-corpus-clustering-20260918
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            analysis_results/full_corpus_clustering_20260918
+            analysis_results/cluster_visual_20260918_v2/code
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install numpy==2.3.5 pandas==2.2.3 scipy==1.17.0 scikit-learn==1.8.0 numba==0.65.1 pillow==12.1.0
+      - uses: actions/download-artifact@v4
+        with:
+          name: full-corpus-model-candidates-20260918
+          run-id: 35327544108
+          github-token: ${{ github.token }}
+          path: analysis_results/full_corpus_clustering_20260918/model_snapshot
+      - name: Retrieve and validate fixed canonical sources
+        run: |
+          python - <<'PY'
+          import os,pathlib,urllib.request,hashlib,json,shutil
+          r=pathlib.Path(os.environ['STUDY']);base='https://raw.githubusercontent.com/Sparkling-Flames/3D_Manhattan_label/'
+          main='d3477e700082c0a8482f1ffabd9dcc5649c9754d';hist='c61930ecac1a20c99cd0b73c10aa7e10bd9e65ac';prefix='analysis_results/image_portrait_20260914_v1/'
+          jobs=[(main,'analysis_results/pro_cluster_review_20260918/data.json','inputs/frozen/key39/data.json'),(hist,prefix+'human/responses.jsonl.gz','inputs/frozen/human/responses.jsonl.gz'),(hist,prefix+'metadata/images.jsonl','snapshot/history/'+prefix+'metadata/images.jsonl')]
+          manifest=[]
+          for ref,p,dest in jobs:
+              b=urllib.request.urlopen(base+ref+'/'+p,timeout=120).read();target=r/dest;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(b)
+              manifest.append(dict(ref=ref,path=p,local=dest,sha256=hashlib.sha256(b).hexdigest()))
+          b=(r/'inputs/frozen/key39/data.json').read_bytes();assert hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()=='5e3a08f091a4611505f9eeb90680bf5edec87c49'
+          for name in ['clustering_study.py','legacy_reproduction.py','spherical_followup.py']:
+              shutil.copyfile(pathlib.Path('analysis_results/cluster_visual_20260918_v2/code')/name,r/'code'/name)
+          (r/'results').mkdir(exist_ok=True);(r/'results/source_download_manifest.json').write_text(json.dumps(manifest,indent=2))
+          PY
+      - name: Full corpus, point-set and version sensitivities, model coverage and nested prediction
+        run: |
+          set -o pipefail
+          python -u "$STUDY/code/full_corpus.py" --root "$STUDY" | tee "$STUDY/results/full_run.log"
+          python -u "$STUDY/code/pointset_and_versions.py" --root "$STUDY" | tee "$STUDY/results/pointset_run.log"
+          python -u "$STUDY/code/model_linkage.py" | tee "$STUDY/results/model_linkage.log"
+          python -u "$STUDY/code/model_prediction_check.py" | tee "$STUDY/results/model_prediction.log"
+          python -u "$STUDY/code/source_validation.py" | tee "$STUDY/results/source_validation.log"
+          python - <<'PY'
+          import os,json,pathlib,pandas as pd,hashlib
+          r=pathlib.Path(os.environ['STUDY']);s=pd.read_csv(r/'results/group_summary.csv');v=s.groupby('method').clusters.sum()
+          assert int(v['A3_cyclic_cut08'])==1394 and int(v['A3_cyclic'])==887 and int(v['A0_legacy'])==882
+          assert len(pd.read_csv(r/'results/memberships.csv'))==42552
+          p=pd.read_csv(r/'results/model_dispersion_lobo_scores.csv').set_index('model')
+          assert abs(float(p.loc['model_counts_and_gaps','MAE'])-.0311557)<1e-5
+          result={'status':'completed','source_data_unchanged':True,'semantic_validation':False,'new_visual_review_all214':False,'code_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest()for p in (r/'code').glob('*.py')}}
+          (r/'results/CLOUD_REPRODUCED.json').write_text(json.dumps(result,indent=2))
+          PY
+      - name: Commit numerical outputs and helper code to research branch only
+        run: |
+          git config user.name research-numerics
+          git config user.email research-numerics@users.noreply.github.com
+          git add --sparse -f "$STUDY/code" "$STUDY/results"
+          git commit -m 'research: full-corpus W019/W026-excluded clustering and model linkage independently executed'
+          git pull --rebase origin research/full-corpus-clustering-20260918
+          git push origin HEAD:research/full-corpus-clustering-20260918
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: full-corpus-clustering-execution-20260918
+          path: analysis_results/full_corpus_clustering_20260918/results/
+          retention-days: 14
+          if-no-files-found: error

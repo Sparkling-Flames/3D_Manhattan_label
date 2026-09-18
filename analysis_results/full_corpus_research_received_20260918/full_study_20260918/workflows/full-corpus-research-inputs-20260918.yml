@@ -1,0 +1,58 @@
+name: Full corpus research input audit 20260918
+on:
+  push:
+    branches: [research/full-corpus-clustering-20260918]
+    paths: [.github/workflows/full-corpus-research-inputs-20260918.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Retrieve pinned versioned sources, never modify annotations
+        run: |
+          python - <<'PY'
+          import json,pathlib,urllib.request,urllib.parse,hashlib,concurrent.futures,gzip,re
+          repo='Sparkling-Flames/3D_Manhattan_label';refs={'main':'d3477e700082c0a8482f1ffabd9dcc5649c9754d','history':'c61930ecac1a20c99cd0b73c10aa7e10bd9e65ac'}
+          root=pathlib.Path('snapshot');root.mkdir();jobs=[];manifest=[]
+          def urlget(u):return urllib.request.urlopen(urllib.request.Request(u,headers={'User-Agent':'research-readonly'}),timeout=120).read()
+          for label,ref in refs.items():
+              tree=json.loads(urlget('https://api.github.com/repos/'+repo+'/git/trees/'+ref+'?recursive=1'))
+              (root/('tree_'+label+'.json')).write_text(json.dumps(tree))
+              assert not tree.get('truncated'), 'Need subtree traversal rather than incomplete tree'
+              entries=[e for e in tree['tree'] if e['type']=='blob'];prefix='analysis_results/image_portrait_20260914_v1/'
+              for e in entries:
+                  p=e['path'];pick=False
+                  if label=='main':
+                      pick=(p.startswith('docs/thesis_main/') and ('SOP' in p or any('202609'+str(k) in p for k in range(9,19)) or 'Bi' in p or 'bilayout' in p.lower()))
+                      pick=pick or (p.startswith('analysis_results/human_review_reconciliation_') and '/evidence_repo/' not in p and p.endswith(('.json','.jsonl','.csv','.md')))
+                      pick=pick or (p.startswith('analysis_results/intent_bilayout_logic_review_20260908_v1/') and '/evidence_repo/' not in p and p.endswith(('.json','.csv','.md')))
+                      pick=pick or p in ['analysis_results/pro_cluster_review_20260918/data.json','analysis_results/rq1_corrections_20260826/c1_geometry_repair_audit.csv']
+                  else:
+                      pick=p.startswith(prefix+'models/') and p.endswith(('.json','.jsonl','.csv','.md','.gz'))
+                      pick=pick or p in [prefix+'metadata/images.jsonl',prefix+'metadata/relationships.jsonl',prefix+'metadata/spatial_history.jsonl.gz',prefix+'human/responses.jsonl.gz']
+                  if pick and e.get('size',0)<12000000:jobs.append((label,ref,p,e['sha']))
+          def fetch(job):
+              label,ref,p,sha=job;dest=root/label/p;dest.parent.mkdir(parents=True,exist_ok=True)
+              try:
+                  b=urlget('https://raw.githubusercontent.com/'+repo+'/'+ref+'/'+urllib.parse.quote(p));actual=hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest();assert actual==sha
+                  dest.write_bytes(b);return dict(label=label,ref=ref,path=p,bytes=len(b),sha256=hashlib.sha256(b).hexdigest(),status='ok')
+              except Exception as ex:return dict(label=label,ref=ref,path=p,status='error',error=str(ex))
+          with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:manifest=list(pool.map(fetch,jobs))
+          # Copy the exact raw exports used by the frozen canonical source where still present.
+          hp=root/'history'/'analysis_results/image_portrait_20260914_v1/human/responses.jsonl.gz'
+          responses=[json.loads(l) for l in gzip.decompress(hp.read_bytes()).splitlines()]
+          paths=sorted(set(r['raw_export_path'] for r in responses));tree=json.loads((root/'tree_main.json').read_text());lookup={e['path']:e for e in tree['tree']}
+          rawjobs=[('main',refs['main'],p,lookup[p]['sha']) for p in paths if p in lookup]
+          with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:manifest.extend(pool.map(fetch,rawjobs))
+          (root/'MANIFEST.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
+          print(json.dumps({'files':len(manifest),'bytes':sum(x.get('bytes',0)for x in manifest),'errors':[x for x in manifest if x['status']!='ok']},ensure_ascii=False))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: full-corpus-versioned-inputs-20260918
+          path: snapshot/
+          retention-days: 7
+          if-no-files-found: error
