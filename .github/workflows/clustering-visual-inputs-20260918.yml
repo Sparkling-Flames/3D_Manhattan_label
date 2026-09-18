@@ -1,0 +1,47 @@
+name: Key39 original-pixel retrieval 20260918
+on:
+  push:
+    branches: [research/clustering-visual-20260918]
+    paths: [.github/workflows/clustering-visual-inputs-20260918.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  retrieve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Retrieve the exact 39 image paths and preserve missingness
+        run: |
+          python - <<'PY'
+          import json, pathlib, urllib.request, urllib.parse, hashlib, concurrent.futures
+          ref='d3477e700082c0a8482f1ffabd9dcc5649c9754d'
+          base='https://raw.githubusercontent.com/Sparkling-Flames/3D_Manhattan_label/'+ref+'/'
+          root=pathlib.Path('key39_pixels'); root.mkdir()
+          payload=urllib.request.urlopen(base+'analysis_results/pro_cluster_review_20260918/data.json',timeout=90).read()
+          assert hashlib.sha1(b'blob '+str(len(payload)).encode()+b'\0'+payload).hexdigest()=='5e3a08f091a4611505f9eeb90680bf5edec87c49'
+          data=json.loads(payload)
+          def one(case):
+              p=case['image_path_reference_only'].replace('\\','/')
+              result={'code':case['code'],'image_id':case['image_id'],'path':p,'ref':ref}
+              try:
+                  b=urllib.request.urlopen(base+urllib.parse.quote(p),timeout=90).read()
+                  if not (b.startswith(b'\x89PNG') or b.startswith(b'\xff\xd8')):
+                      raise ValueError('Not decoded PNG/JPEG bytes; possibly LFS pointer')
+                  name=case['code']+pathlib.Path(p).suffix
+                  (root/name).write_bytes(b)
+                  result.update(status='downloaded',local=name,bytes=len(b),sha256=hashlib.sha256(b).hexdigest())
+              except Exception as e: result.update(status='unavailable',error=str(e))
+              print(json.dumps(result,ensure_ascii=False),flush=True)
+              return result
+          with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
+              manifest=list(pool.map(one,data['cases']))
+          (root/'MANIFEST.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
+          print('Images:',sum(x['status']=='downloaded' for x in manifest),'/',len(manifest))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: key39-original-pixels-20260918
+          path: key39_pixels/
+          retention-days: 7
+          if-no-files-found: error
