@@ -1,0 +1,81 @@
+name: Reproduce key39 clustering study 20260918
+on:
+  push:
+    branches: [research/clustering-visual-20260918]
+    paths: [.github/workflows/clustering-visual-reproduce-20260918.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      STUDY: analysis_results/cluster_visual_20260918_v2
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/clustering-visual-20260918
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            analysis_results/cluster_visual_20260918_v2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install matching numerical dependencies
+        run: python -m pip install numpy==2.3.5 pandas==2.2.3 scipy==1.17.0 scikit-learn==1.8.0 numba==0.65.1 pillow==12.1.0
+      - name: Retrieve pinned source and original pixels
+        run: |
+          python - <<'PY'
+          import os,json,pathlib,hashlib,concurrent.futures,urllib.request,urllib.parse
+          r=pathlib.Path(os.environ['STUDY']); (r/'results').mkdir(exist_ok=True);(r/'inputs/key39').mkdir(parents=True,exist_ok=True);(r/'inputs/pixels').mkdir(parents=True,exist_ok=True)
+          ref='d3477e700082c0a8482f1ffabd9dcc5649c9754d';base='https://raw.githubusercontent.com/Sparkling-Flames/3D_Manhattan_label/'+ref+'/'
+          b=urllib.request.urlopen(base+'analysis_results/pro_cluster_review_20260918/data.json',timeout=90).read()
+          assert hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()=='5e3a08f091a4611505f9eeb90680bf5edec87c49'
+          (r/'inputs/key39/data.json').write_bytes(b);d=json.loads(b)
+          def get(c):
+              p=c['image_path_reference_only'].replace('\\','/');b=urllib.request.urlopen(base+urllib.parse.quote(p),timeout=90).read()
+              assert b.startswith(b'\x89PNG');name=c['code']+'.png';(r/'inputs/pixels'/name).write_bytes(b)
+              return dict(code=c['code'],image_id=c['image_id'],path=p,ref=ref,status='downloaded',local=name,bytes=len(b),sha256=hashlib.sha256(b).hexdigest())
+          with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:manifest=list(pool.map(get,d['cases']))
+          (r/'inputs/pixels/MANIFEST.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
+          (r/'results/original_image_manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
+          (r/'results/source_research_clarification.json').write_text(json.dumps(d['research_clarification'],ensure_ascii=False,indent=2))
+          (r/'results/source_review_comments.json').write_text(json.dumps([dict(code=c['code'],reviews=c['reviews'],user_adjudications=c.get('user_adjudications'),user_point_review=c.get('user_point_review'))for c in d['cases']],ensure_ascii=False,indent=2))
+          (r/'results/source_and_code_manifest.json').write_text(json.dumps({'source_ref':ref,'data_sha256':hashlib.sha256((r/'inputs/key39/data.json').read_bytes()).hexdigest(),'code_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest()for p in sorted((r/'code').glob('*.py'))}},indent=2))
+          PY
+      - name: Run eight methods, interpolation, all-person sensitivity and event prototype
+        run: |
+          set -o pipefail
+          python -u "$STUDY/code/clustering_study.py" --root "$STUDY" | tee "$STUDY/results/cloud_clustering.log"
+          python -u "$STUDY/code/spherical_followup.py" | tee "$STUDY/results/cloud_spherical.log"
+          python -u "$STUDY/code/validation_and_sensitivity.py" | tee "$STUDY/results/cloud_validation.log"
+          python -u "$STUDY/code/local_event_prototype.py" | tee "$STUDY/results/cloud_events.log"
+          python - <<'PY'
+          import os,json,pathlib,pandas as pd
+          r=pathlib.Path(os.environ['STUDY'])/'results';s=pd.read_csv(r/'group_summary.csv')
+          expected={'A0_legacy':249,'A1_mask':203,'A2_local':279,'A3_cyclic':262,'A4_adaptive':262,'A5_density':394,'A6_spectral':112,'A7_event':306}
+          actual=s.groupby('method').clusters.sum().to_dict();assert actual==expected,(actual,expected)
+          assert len(pd.read_csv(r/'memberships.csv'))==6248
+          assert len(pd.read_csv(r/'local_event_records.csv'))==89
+          (r/'CLOUD_REPRODUCED.json').write_text(json.dumps({'original_partitions':45,'methods':8,'row_memberships':6248,'local_event_rows':89,'local_expected_cluster_totals_match':True,'semantic_validation':False,'raw_annotations_changed':False},indent=2))
+          PY
+      - name: Preserve numerical rows in research branch, not main
+        run: |
+          git config user.name research-numerics
+          git config user.email research-numerics@users.noreply.github.com
+          git add --sparse -f "$STUDY/results"
+          git commit -m 'research: independently reproduced eight schemes, spherical sensitivity, all-person checks and event rows'
+          git pull --rebase origin research/clustering-visual-20260918
+          git push origin HEAD:research/clustering-visual-20260918
+      - name: Archive exact numerical execution evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: key39-clustering-reproduced-numerics
+          path: analysis_results/cluster_visual_20260918_v2/results/
+          retention-days: 14
