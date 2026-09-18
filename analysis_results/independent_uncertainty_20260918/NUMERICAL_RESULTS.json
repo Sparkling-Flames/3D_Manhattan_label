@@ -1,0 +1,78 @@
+{
+  "schema": "independent_uncertainty_executed_results_v1",
+  "date": "2026-09-18",
+  "source_main_commit": "d3477e700082c0a8482f1ffabd9dcc5649c9754d",
+  "source_history_commit": "c61930ecac1a20c99cd0b73c10aa7e10bd9e65ac",
+  "key39_git_blob_sha1": "5e3a08f091a4611505f9eeb90680bf5edec87c49",
+  "raw_responses": 2501,
+  "workers": 26,
+  "images": 214,
+  "historical_groups_reproduced": 239,
+  "historical_geometry_responses": 2364,
+  "max_reproduced_distance_error": 0.0,
+  "key39_display_responses": 843,
+  "key39_historical_geometry_responses": 781,
+  "key39_partitions_exactly_reproduced": 45,
+  "all_worker_geometrically_normalizable": 2440,
+  "all_worker_non_normalizable_retained": 61,
+  "key39_all_worker_normalizable": 817,
+  "key39_all_worker_non_normalizable": 26,
+  "historical_gate_audit": {
+    "key39": {"groups":45,"different_count_pairs":2733,"mask_compatible_different_count_pairs":647,"partition_changed_groups":24,"clusters_hard":249,"clusters_relaxed":203},
+    "outside39": {"images":175,"groups":194,"different_count_pairs":4229,"mask_compatible_different_count_pairs":1202,"partition_changed_groups":62},
+    "same_count_cross_cluster_pairs":2252,
+    "same_count_cross_cluster_compatible":1026,
+    "compatible_different_count_pairs_with_local_22_5deg_window_difference_gt20px":406,
+    "same_old_cluster_pairs_with_local_22_5deg_window_difference_gt20px":346
+  },
+  "all_worker_gate_sensitivity": {
+    "key39_different_count_pairs":3357,"key39_compatible":787,
+    "outside39_different_count_pairs":4807,"outside39_compatible":1380
+  },
+  "representation": {
+    "key39_unique_endpoint_recoveries":817,
+    "key39_historical_raw_order_pairings":638,
+    "key39_historical_circular_x_pairings":143,
+    "native_projected_pairwise_mean_absolute_distance_change":0.00043616630136960346,
+    "native_projected_pairwise_max_absolute_distance_change":0.025513689709827925,
+    "native_boundary_crossings_retained_as_diagnostics":5,
+    "collinear_point_insertion_mask_distance":0.0,
+    "collinear_point_insertion_legacy_gate_distance":2
+  },
+  "gospa_prototype": {
+    "p":2,"alpha":2,"cutoffs_px":[10,20,40],"pair_settings":24510,
+    "cyclic_order_violations_by_cutoff":[0,4,45],
+    "cyclic_restriction_pair_settings_tested":49,
+    "unique_pairs_among_violations":45,
+    "all_restricted_results_obey_cyclic_order":true,
+    "bruteforce_toy_cases":30,
+    "bruteforce_max_squared_error":1.4551915228366852e-11,
+    "nonviolating_controls":100,
+    "nonviolating_control_max_squared_difference":1.8189894035458565e-12,
+    "semantic_accuracy_evaluated":false,
+    "metric_theorem_claimed_for_restriction":false
+  },
+  "W037_outside39_all_workers_point_count_comparison": {
+    "manual":{"images":54,"above_image_median":9,"equal":27,"below":18,"mean_relative_effective_points":-0.5740740740740741},
+    "semi":{"images":14,"above_image_median":6,"equal":7,"below":1,"mean_relative_effective_points":0.7142857142857143},
+    "causal_manual_semi_effect_claimed":false,
+    "total_point_count_equals_detail_behavior":false
+  },
+  "finite_pool_next_response_after_8_of_24": {
+    "B6_22_semi":{"new_point_count":0.0,"new_mask_incompatible":0.289873},
+    "e9_32_semi":{"new_point_count":0.054348,"new_mask_incompatible":0.0},
+    "pool_external_prediction":false
+  },
+  "finite_population_identity_max_error":2.7755575615628914e-17,
+  "new_semantic_gold_created":false,
+  "new_semantic_clustering_validated":false,
+  "future_new_worker_prediction_performed":false,
+  "outside39_semantic_validation":false,
+  "selected39_is_population_sample":false,
+  "original_panorama_pixels_personally_reviewed_this_run":false,
+  "invalid_responses_imputed_as_zero_distance":false,
+  "source_annotations_changed":false,
+  "pending_repairs_applied":false,
+  "main_changed":false,
+  "virtual_people_created":false
+}
