@@ -1,0 +1,54 @@
+name: Pairing and time inputs 20260919
+on:
+  push:
+    branches: [research/pairing-time-audit-20260919]
+    paths: [.github/workflows/pairing-time-inputs-20260919.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Retrieve selected frozen evidence without altering annotations
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import pathlib,json,gzip,hashlib,urllib.request,urllib.parse,concurrent.futures,os
+          ref='c3d2bdb3bca1047d554be38588ca01a1fa5c4709'
+          base='https://raw.githubusercontent.com/Sparkling-Flames/3D_Manhattan_label/'+ref+'/'
+          out=pathlib.Path('audit_inputs');out.mkdir()
+          def get(p):
+              b=urllib.request.urlopen(base+urllib.parse.quote(p),timeout=120).read();f=out/p;f.parent.mkdir(parents=True,exist_ok=True);f.write_bytes(b)
+              return dict(path=p,bytes=len(b),sha256=hashlib.sha256(b).hexdigest())
+          req=urllib.request.Request('https://api.github.com/repos/Sparkling-Flames/3D_Manhattan_label/git/trees/'+ref+'?recursive=1',headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'})
+          tree=json.load(urllib.request.urlopen(req));assert not tree.get('truncated')
+          (out/'REPO_TREE.json').write_text(json.dumps(tree))
+          paths=[]
+          for x in tree['tree']:
+              p=x['path'];ext=pathlib.Path(p).suffix
+              if x['type']!='blob':continue
+              take=(p.startswith('active_logs/') and ext in ['.jsonl','.json','.csv']) or (p.startswith('analysis_results/cluster_review_extra_20260919/') and ext in ['.json','.md']) or (p.startswith('analysis_results/scene_image_exploration_20260910_v1/') and ext=='.json') or (p.startswith('analysis_results/full_history_coverage_20260916/') and ext in ['.json','.csv']) or (p.startswith('analysis_results/spatial_dimensions_review_20260913_v2/') and ext in ['.json','.md'])
+              take=take or (p.startswith('docs/thesis_main/') and '/' not in p[len('docs/thesis_main/'):] and ext in ['.md','.json'] and any(s in p.lower() for s in ['sop','time','当前状态','研究要求','相似场景','同房间']))
+              take=take or p in ['analysis_results/annotation_research_prework_20260905_v2/evidence/record_evidence.csv','tools/thesis_main/data_prep/materialize_annotation_research_prework_evidence_20260905.py','tools/thesis_main/analysis/audit_annotation_research_data_20260905.py']
+              take=take or (p.startswith('analysis_results/calibration_dual_track_processing_20260815_v3/') and ('time' in p.lower() or 'manifest' in p.lower()) and ext in ['.json','.csv'])
+              if take:paths.append(p)
+          manifest=[]
+          with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:manifest+=list(pool.map(get,sorted(set(paths))))
+          review=json.loads((out/'analysis_results/cluster_review_extra_20260919/用户_12图审核_原始.json').read_text())
+          images=sorted({e['image_path'] for e in review['evidence']})
+          hist='https://raw.githubusercontent.com/Sparkling-Flames/3D_Manhattan_label/c61930ecac1a20c99cd0b73c10aa7e10bd9e65ac/analysis_results/image_portrait_20260914_v1/human/responses.jsonl.gz'
+          raw=urllib.request.urlopen(hist,timeout=90).read();rows=[json.loads(l)for l in gzip.decompress(raw).decode().splitlines()]
+          exports=sorted({r['raw_export_path'] for r in rows})
+          with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:manifest+=list(pool.map(get,images+exports))
+          (out/'MANIFEST.json').write_text(json.dumps({'source_ref':ref,'raw_data_changed':False,'new_analysis':False,'image_count':len(images),'raw_exports':len(exports),'files':manifest},ensure_ascii=False,indent=2))
+          print(len(manifest),'files',sum(x['bytes'] for x in manifest),'bytes',len(images),'images')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pairing-time-frozen-inputs-20260919
+          path: audit_inputs/
+          retention-days: 14
+          if-no-files-found: error
