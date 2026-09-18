@@ -1,5 +1,6 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
+**当前研究入口：**[真人标注不确定性研究：当前状态](thesis_main/真人标注不确定性研究_当前状态.md)。两份旧线程交接已移入`docs/thesis_main/archive_20260918/`，仅作历史追溯。
 **2026-09-18研究接收与视觉复核：**`analysis_results/cluster_visual_20260918_v2/`保存指定研究分支的39图代码与结果；`analysis_results/full_corpus_research_received_20260918/`保存全量自包含数值包、图册及[本轮复核入口](../analysis_results/full_corpus_research_received_20260918/仓库接收与视觉复核.md)。来源/人员/条件连接检查为`tests/test_received_research_visual_audit.py`；研究代码保持交付快照，不改变生产分析和正式协议。
 
 **研究包更新：**`analysis_results/pro_cluster_review_20260918/`新增用户原话与全39图裁决索引，`data.json`增量保存最新裁决；原始附件归档在`human_review_reconciliation_20260918/`。沿用生成器`--adjudication`，不新增研究算法，不改变历史计算。
@@ -10,17 +11,17 @@
 
 **2026-09-18分簇资料整理：**`analysis_results/pro_cluster_review_20260918/`保存无图JSON与Pro说明；[问题1与3处理结论](../analysis_results/human_review_reconciliation_20260918/问题1与3_处理结论.md)记录高人数历史优先复用和意见处置。生成／核验脚本`tools/thesis_main/analysis/prepare_pro_cluster_review_20260918.py`，测试`tests/test_prepare_pro_cluster_review_20260918.py`；不改变生产分簇、任务或协议。
 
-**2026-09-18更新：**[39图双方文字对照与选图处理](../analysis_results/human_review_reconciliation_20260918/审核对照与选图处理说明.md)已记录。11图旧选项不构成最终决定，全部按文字及新增必要性重审；撤回22张高人数图统一追加15人的默认建议，922份保留为待重排的历史候选快照。用户39条文字均为实质审核意见；分簇研究留待后续Pro。
+**2026-09-18更新：**[39图双方文字对照与选图处理](../analysis_results/human_review_reconciliation_20260918/审核对照与选图处理说明.md)已记录。11图旧选项不构成最终决定，全部按文字及新增必要性重审；撤回22张高人数图统一追加15人的默认建议，922份保留为待重排的历史候选快照。用户39条文字均为实质审核意见；后续两轮分簇研究已接收，当前结果见顶部入口。
 
 11图[既有审查界面](../analysis_results/full_history_coverage_20260916/11图采集采用审核.html)保留供查阅；其历史“采用”选项不自动更改分配。
 
-2026-09-16 main接续：`docs/thesis_main/新线程交接_研究主线与采集现状_20260916.md`为当前入口，`全历史覆盖方案独立复核_20260916.md`记录检查与待处理项。完整实验留在研究分支，main不整体合并假说模型及实验输出。
+2026-09-16 main接续：`docs/thesis_main/真人标注不确定性研究_当前状态.md`为当前入口，`全历史覆盖方案独立复核_20260916.md`记录检查与待处理项。完整实验留在研究分支，main不整体合并假说模型及实验输出。
 
 采集工件：`analysis_results/full_history_coverage_20260916/`、`worker_sample_budget_20260916/`、`unassigned_room_inventory_20260915/`与较早`english_followup_pool_20260915/`。工具位于`tools/thesis_main/analysis/`：`build_full_history_coverage_20260916.py`、`build_full_history_coverage_workbook_20260916.mjs`、`plan_worker_sample_budget_20260916.py`、`audit_unassigned_rooms_20260915.py`；覆盖测试`tests/test_full_history_coverage_20260916.py`。候选准备不等于派发或已完成数据。
 
 研究归档入口：`analysis_results/image_portrait_20260914_v1/PRO_START_HERE.md`。main保留`review_workflow_20260915/key39/`的说明与无图依据；本地`local_review_studio/`继续忽略，不上传图片。原39图生成器及完整输入在研究分支。
 
-研究当前入口：`docs/thesis_main/研究现状交接_20260913.md`。库存脚本`tools/thesis_main/analysis/audit_history_inventory_20260913.py`逐条回查canonical与18份原导出，生成当前v2结果目录`全量历史与本轮覆盖核对.json/.csv`，区分全量历史、采用子集及新增计划。旧9月9日交接保留为历史。
+研究当前入口：`docs/thesis_main/真人标注不确定性研究_当前状态.md`。库存脚本`tools/thesis_main/analysis/audit_history_inventory_20260913.py`逐条回查canonical与18份原导出，生成当前v2结果目录`全量历史与本轮覆盖核对.json/.csv`，区分全量历史、采用子集及新增计划。旧9月9日交接保留为历史。
 
 第一阶段v2交付：`label_studio_import/`放任务7、Project G、Project H；H已定稿20图。结果目录的`完成后可分析覆盖.json/.md`说明6个重点同房间及历史扩展覆盖。旧v1人员包/工作簿、v2 ZIP和旧门洞复核空表已删除，v1仍保留生成器与审计依赖的机器输入。当前中文、英文必做、英文选做分别存放，不创建新压缩包。
 
