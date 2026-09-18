@@ -1,0 +1,438 @@
+{
+  "schema": "collection_adoption_review_v1",
+  "source_key": "collection_adoption_11_20260916_v1",
+  "proposal_source": "analysis_results/full_history_coverage_20260916/全历史覆盖机器表.json",
+  "source_machine_table": "analysis_results/spatial_dimensions_review_20260913_v2/空间描述与历轮人工记录.json",
+  "interpretation": "新增人工填写层；历轮原文通过source_machine_table关联保留，未填不等于确认或否定。",
+  "saved_at": "2026-09-16T13:56:14.429Z",
+  "decisions": [
+    {
+      "image_id": "7y3sRwLe3Va_1410b021e1c14f529188eb026fbb369a",
+      "building": "7y3sRwLe3Va",
+      "number": 4,
+      "initial_ai": {
+        "functional_regions": [
+          "通行",
+          "储藏家务"
+        ],
+        "main_space": "带外门的过渡小间",
+        "relations": [
+          {
+            "region_a": "后门过渡区",
+            "region_b": "洗衣凹室",
+            "relation": "明确墙体与门洞分隔",
+            "evidence": "旧原图中左侧门外可见洗衣机，过渡区与洗衣凹室由门框分开"
+          }
+        ],
+        "status": "未复核",
+        "note": ""
+      },
+      "current": {
+        "functional_regions": [
+          "通行",
+          "储藏家务"
+        ],
+        "main_space": "带外门的过渡小间",
+        "relations": [
+          {
+            "region_a": "后门过渡区",
+            "region_b": "洗衣凹室",
+            "relation": "明确墙体与门洞分隔",
+            "evidence": "旧原图中左侧门外可见洗衣机，过渡区与洗衣凹室由门框分开"
+          }
+        ],
+        "status": "采用",
+        "note": ""
+      },
+      "has_user_input": true,
+      "changed_fields": [
+        "status"
+      ]
+    },
+    {
+      "image_id": "UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+      "building": "UwV83HsGsw3",
+      "number": 9,
+      "initial_ai": {
+        "functional_regions": [
+          "卫浴",
+          "储藏家务"
+        ],
+        "main_space": "洗漱更衣过渡区域为主，保留旧通行视角描述",
+        "relations": [
+          {
+            "region_a": "卫浴",
+            "region_b": "储藏家务",
+            "relation": "明确墙体与门洞分隔",
+            "evidence": "双洗漱台两侧衣帽间有明确门框。"
+          }
+        ],
+        "status": "未复核",
+        "note": ""
+      },
+      "current": {
+        "functional_regions": [
+          "卫浴",
+          "储藏家务"
+        ],
+        "main_space": "洗漱更衣过渡区域为主，保留旧通行视角描述",
+        "relations": [
+          {
+            "region_a": "卫浴",
+            "region_b": "储藏家务",
+            "relation": "明确墙体与门洞分隔",
+            "evidence": "双洗漱台两侧衣帽间有明确门框。"
+          }
+        ],
+        "status": "采用",
+        "note": "这图是复杂图,有很多标注分歧的,边界确实比较模糊,但是我觉得当时已经标了部分人,而且这图很有研究价值,而且这图的玻璃很有误导性,"
+      },
+      "has_user_input": true,
+      "changed_fields": [
+        "status",
+        "note"
+      ]
+    },
+    {
+      "image_id": "X7HyMhZNoso_987fd31155514f6facb131bd5c14881d",
+      "building": "X7HyMhZNoso",
+      "number": 13,
+      "initial_ai": {
+        "functional_regions": [
+          "卫浴"
+        ],
+        "main_space": "卫浴为主",
+        "relations": [],
+        "status": "未复核",
+        "note": ""
+      },
+      "current": {
+        "functional_regions": [
+          "卫浴"
+        ],
+        "main_space": "卫浴为主",
+        "relations": [],
+        "status": "采用",
+        "note": ""
+      },
+      "has_user_input": true,
+      "changed_fields": [
+        "status"
+      ]
+    },
+    {
+      "image_id": "b8cTxDM8gDG_298a2386166a43c8a04e1c24433f7d15",
+      "building": "b8cTxDM8gDG",
+      "number": 4,
+      "initial_ai": {
+        "functional_regions": [
+          "通行"
+        ],
+        "main_space": "通行为主",
+        "relations": [],
+        "status": "未复核",
+        "note": ""
+      },
+      "current": {
+        "functional_regions": [
+          "通行"
+        ],
+        "main_space": "通行为主",
+        "relations": [],
+        "status": "备选",
+        "note": "这图很抽象,绝对属于无法收敛的图"
+      },
+      "has_user_input": true,
+      "changed_fields": [
+        "status",
+        "note"
+      ]
+    },
+    {
+      "image_id": "e9zR4mvMWw7_4fb8c9be319e4784b4b66f9ca5d839ab",
+      "building": "e9zR4mvMWw7",
+      "number": 19,
+      "initial_ai": {
+        "functional_regions": [
+          "通行"
+        ],
+        "main_space": "通行为主",
+        "relations": [],
+        "status": "未复核",
+        "note": ""
+      },
+      "current": {
+        "functional_regions": [
+          "通行"
+        ],
+        "main_space": "通行为主",
+        "relations": [],
+        "status": "采用",
+        "note": ""
+      },
+      "has_user_input": true,
+      "changed_fields": [
+        "status"
+      ]
+    },
+    {
+      "image_id": "pRbA3pwrgk9_8b07a4b08cf447abb246769d8dce8494",
+      "building": "pRbA3pwrgk9",
+      "number": 11,
+      "initial_ai": {
+        "functional_regions": [
+          "卫浴",
+          "卧室"
+        ],
+        "main_space": "卫浴为主",
+        "relations": [
+          {
+            "region_a": "卫浴",
+            "region_b": "卧室",
+            "relation": "明确墙体与门洞分隔",
+            "evidence": "旧逐图记录卧室可见但隔墙与门洞。"
+          }
+        ],
+        "status": "未复核",
+        "note": ""
+      },
+      "current": {
+        "functional_regions": [
+          "卫浴",
+          "卧室"
+        ],
+        "main_space": "卫浴为主",
+        "relations": [
+          {
+            "region_a": "卫浴",
+            "region_b": "卧室",
+            "relation": "明确墙体与门洞分隔",
+            "evidence": "旧逐图记录卧室可见但隔墙与门洞。"
+          }
+        ],
+        "status": "待讨论",
+        "note": "这是处于门洞交界处"
+      },
+      "has_user_input": true,
+      "changed_fields": [
+        "status",
+        "note"
+      ]
+    },
+    {
+      "image_id": "q9vSo1VnCiC_69591068e5614642b710a8fb7733bdeb",
+      "building": "q9vSo1VnCiC",
+      "number": 9,
+      "initial_ai": {
+        "functional_regions": [
+          "起居休闲",
+          "用餐"
+        ],
+        "main_space": "客餐厅并重",
+        "relations": [
+          {
+            "region_a": "起居休闲",
+            "region_b": "用餐",
+            "relation": "无明显建筑分隔",
+            "evidence": "旧原图核查：独立餐桌与沙发电视区共享连续地面，之间无整墙门洞隔断。"
+          }
+        ],
+        "status": "未复核",
+        "note": ""
+      },
+      "current": {
+        "functional_regions": [
+          "起居休闲",
+          "用餐"
+        ],
+        "main_space": "客餐厅并重",
+        "relations": [
+          {
+            "region_a": "起居休闲",
+            "region_b": "用餐",
+            "relation": "无明显建筑分隔",
+            "evidence": "旧原图核查：独立餐桌与沙发电视区共享连续地面，之间无整墙门洞隔断。"
+          }
+        ],
+        "status": "待讨论",
+        "note": "oos"
+      },
+      "has_user_input": true,
+      "changed_fields": [
+        "status",
+        "note"
+      ]
+    },
+    {
+      "image_id": "x8F5xyUWy9e_a51a0e2811f342a599ae4cdb9b84ff23",
+      "building": "x8F5xyUWy9e",
+      "number": 9,
+      "initial_ai": {
+        "functional_regions": [
+          "通行",
+          "特殊用途"
+        ],
+        "main_space": "入口内门前",
+        "relations": [
+          {
+            "region_a": "通行",
+            "region_b": "特殊用途（按摩房）",
+            "relation": "明确墙体与门洞分隔",
+            "evidence": "旧记录楼梯门厅与有门房间相连，AI focus明确按摩房间之间内厅/水疗入口。"
+          }
+        ],
+        "status": "未复核",
+        "note": ""
+      },
+      "current": {
+        "functional_regions": [
+          "通行",
+          "特殊用途"
+        ],
+        "main_space": "入口内门前",
+        "relations": [
+          {
+            "region_a": "通行",
+            "region_b": "特殊用途（按摩房）",
+            "relation": "明确墙体与门洞分隔",
+            "evidence": "旧记录楼梯门厅与有门房间相连，AI focus明确按摩房间之间内厅/水疗入口。"
+          }
+        ],
+        "status": "备选",
+        "note": "理论上来说也是oos,不是传统的oos,是非正交的墙面但是我估摸着标注基本是一致的"
+      },
+      "has_user_input": true,
+      "changed_fields": [
+        "status",
+        "note"
+      ]
+    },
+    {
+      "image_id": "yqstnuAEVhm_9de98503fd994452b627cdcc7a7d47b2",
+      "building": "yqstnuAEVhm",
+      "number": 25,
+      "initial_ai": {
+        "functional_regions": [
+          "工作学习",
+          "起居休闲"
+        ],
+        "main_space": "书房与客厅双门",
+        "relations": [
+          {
+            "region_a": "工作学习",
+            "region_b": "起居休闲",
+            "relation": "明确墙体与门洞分隔",
+            "evidence": "旧原图记录实际沙发起居室由玻璃门与狭长书房分隔。"
+          }
+        ],
+        "status": "未复核",
+        "note": ""
+      },
+      "current": {
+        "functional_regions": [
+          "工作学习",
+          "起居休闲"
+        ],
+        "main_space": "书房与客厅双门",
+        "relations": [
+          {
+            "region_a": "工作学习",
+            "region_b": "起居休闲",
+            "relation": "明确墙体与门洞分隔",
+            "evidence": "旧原图记录实际沙发起居室由玻璃门与狭长书房分隔。"
+          }
+        ],
+        "status": "采用",
+        "note": ""
+      },
+      "has_user_input": true,
+      "changed_fields": [
+        "status"
+      ]
+    },
+    {
+      "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+      "building": "yqstnuAEVhm",
+      "number": 31,
+      "initial_ai": {
+        "functional_regions": [
+          "卧室",
+          "起居休闲",
+          "通行"
+        ],
+        "main_space": "壁炉会客区与卧室入口并呈，门外走道可见",
+        "relations": [
+          {
+            "region_a": "卧室",
+            "region_b": "起居休闲",
+            "relation": "无明显建筑分隔",
+            "evidence": "本轮原图床区与壁炉前成对扶手椅、独立茶几和圆地毯座区在连续地面内相接；两区之间未见建筑隔断。"
+          },
+          {
+            "region_a": "起居休闲",
+            "region_b": "通行",
+            "relation": "明确墙体与门洞分隔",
+            "evidence": "主房右侧白色完整门框与打开门扇通向长走道。"
+          }
+        ],
+        "status": "未复核",
+        "note": ""
+      },
+      "current": {
+        "functional_regions": [
+          "卧室",
+          "起居休闲",
+          "通行"
+        ],
+        "main_space": "壁炉会客区与卧室入口并呈，门外走道可见",
+        "relations": [
+          {
+            "region_a": "卧室",
+            "region_b": "起居休闲",
+            "relation": "无明显建筑分隔",
+            "evidence": "本轮原图床区与壁炉前成对扶手椅、独立茶几和圆地毯座区在连续地面内相接；两区之间未见建筑隔断。"
+          },
+          {
+            "region_a": "起居休闲",
+            "region_b": "通行",
+            "relation": "明确墙体与门洞分隔",
+            "evidence": "主房右侧白色完整门框与打开门扇通向长走道。"
+          }
+        ],
+        "status": "采用",
+        "note": ""
+      },
+      "has_user_input": true,
+      "changed_fields": [
+        "status"
+      ]
+    },
+    {
+      "image_id": "wc2JMjhGNzB_dda6efcba51c40de8552408953719515",
+      "building": "wc2JMjhGNzB",
+      "number": 60,
+      "initial_ai": {
+        "functional_regions": [
+          "储藏家务"
+        ],
+        "main_space": "空房小衣帽间",
+        "relations": [],
+        "status": "未复核",
+        "note": ""
+      },
+      "current": {
+        "functional_regions": [
+          "储藏家务"
+        ],
+        "main_space": "空房小衣帽间",
+        "relations": [],
+        "status": "采用",
+        "note": ""
+      },
+      "has_user_input": true,
+      "changed_fields": [
+        "status"
+      ]
+    }
+  ]
+}

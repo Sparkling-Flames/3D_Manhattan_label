@@ -1,0 +1,459 @@
+[
+  {
+    "image_id": "rPc6DW4iMge_0dfe61800cc540db8e25c1738bc4b8ff",
+    "code": "rPc6DW4iMge-05",
+    "observer": "visual_review_last19",
+    "original_viewed": true,
+    "overlay_coverage": [],
+    "observations": "右侧透明玻璃淋浴围护明显；中心偏右有窄墙面转折；左侧洗手台及大镜面遮挡真实墙角。支持双方关于结构复杂、玻璃和遮挡影响判断的描述。",
+    "limits": "只看原图，未逐份查看点叠加；无法认定各簇语义、永久不收敛或新增人员必要性。",
+    "category": [
+      "complement"
+    ],
+    "issues": []
+  },
+  {
+    "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+    "code": "rPc6DW4iMge-06",
+    "observer": "visual_review_last19",
+    "original_viewed": true,
+    "overlay_coverage": [],
+    "observations": "同一卫浴另一视角，玻璃淋浴在左；中央洗手台大镜面、右侧较大连续墙面，左右仍有门洞。玻璃区内外与是否省略是可定位的问题。",
+    "limits": "未看各簇点叠加，不能确认用户对每个簇的映射；一正所说相对05容易与用户称未收敛典型不直接矛盾。",
+    "category": [
+      "complement"
+    ],
+    "issues": []
+  },
+  {
+    "image_id": "rPc6DW4iMge_4350d36797324601adba7351d09602d2",
+    "code": "rPc6DW4iMge-13",
+    "observer": "visual_review_last19",
+    "original_viewed": true,
+    "overlay_coverage": [],
+    "observations": "左右开门通向不同房间，中部为长走廊，近处连接区边界可见。",
+    "limits": "只看原图；潜在范围风险不等于现有标注已经产生范围分歧。既有5人同簇不构成语义正确性证明。",
+    "category": [
+      "complement"
+    ],
+    "issues": []
+  },
+  {
+    "image_id": "rPc6DW4iMge_9d3eb9f5d38844bfb4e5fb2cd05fd3fd",
+    "code": "rPc6DW4iMge-15",
+    "observer": "visual_review_last19",
+    "original_viewed": true,
+    "overlay_coverage": [],
+    "observations": "卧室主体较规整，床和家具遮挡底部，右边是大衣柜双门及边缘墙体、门框。",
+    "limits": "未看W037点叠加，不能判其额外4点是真实布局细节还是过度解析。不同点数仍按用户要求分开，问题是额外结构是否合规。",
+    "category": [
+      "disagreement"
+    ],
+    "issues": [
+      {
+        "title": "W037额外结构是否应标",
+        "location": "右侧衣柜双门及邻近墙体、门框",
+        "condition": "manual",
+        "workers": [
+          "W037"
+        ],
+        "question": "W037增加的局部结构属于哪一种？",
+        "options": [
+          "规定应标的真实布局结构",
+          "不应纳入的门框或柜体细节",
+          "现有图像证据不足，继续核对"
+        ]
+      }
+    ]
+  },
+  {
+    "image_id": "rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a",
+    "code": "rPc6DW4iMge-17",
+    "observer": "visual_review_last19",
+    "original_viewed": true,
+    "overlay_coverage": [],
+    "observations": "深色小厕所与右侧明亮外部区域之间有明确门框；左洗手台下方被柜体遮挡，右门打开。范围选择与下边界定位应分别理解。",
+    "limits": "原图已看，Semi点集未叠加；奇数点与恢复问题应另行按原始点复核，不能据文字自动增删。",
+    "category": [
+      "complement"
+    ],
+    "issues": [
+      {
+        "title": "右门外范围",
+        "location": "右侧打开的门及门外明亮连通区",
+        "condition": "semi",
+        "workers": [],
+        "question": "该图允许的主空间范围如何确定？",
+        "options": [
+          "应在厕所门处截止",
+          "可包含右侧连通区",
+          "当前范围规则或图像证据不足"
+        ]
+      }
+    ]
+  },
+  {
+    "image_id": "rPc6DW4iMge_cc15fb105d86466faafdd633f89148de",
+    "code": "rPc6DW4iMge-20",
+    "observer": "visual_review_last19",
+    "original_viewed": true,
+    "overlay_coverage": [
+      {
+        "condition": "manual",
+        "workers": [
+          "W034",
+          "W037",
+          "W002"
+        ],
+        "coverage": "指定三人的旧有效点散点叠加，非全组；未重算聚类"
+      }
+    ],
+    "observations": "原图及W034、W037、W002旧有效点叠加均已看。W034最左一组落左侧旁支开口，未保留W037和W002最右走廊位置那组；W037多数点接近W002，并另加中央浴室门框。现有同簇W034与W037包含这些局部差异。",
+    "limits": "叠加只用旧data.json。确认局部差异不等于已经证明算法错误；是否属于应拆分的语义方案交用户裁决。",
+    "category": [
+      "algorithm"
+    ],
+    "issues": [
+      {
+        "title": "同点数但端点选择不同",
+        "location": "左右走廊端点与中央浴室门框",
+        "condition": "manual",
+        "workers": [
+          "W034",
+          "W037"
+        ],
+        "question": "W034和W037的局部端点差异应如何解释？",
+        "options": [
+          "不同空间范围方案，应在语义上区分",
+          "同一范围方案内的定位误差",
+          "至少一份是错误标注，先判错再比较",
+          "证据不足，暂不裁决"
+        ]
+      }
+    ]
+  },
+  {
+    "image_id": "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+    "code": "rPc6DW4iMge-22",
+    "observer": "visual_review_last19",
+    "original_viewed": true,
+    "overlay_coverage": [],
+    "observations": "原图与05同一卫浴；左侧打开门内的深色地板走廊在此视角更清楚，右透明淋浴围护仍明显。",
+    "limits": "只看原图。既有簇来自旧快照；新project28修正已由主代理核实，但本次未代入修正点、未重算受影响结果、未解释修正后簇。",
+    "category": [
+      "complement"
+    ],
+    "issues": []
+  },
+  {
+    "image_id": "uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d",
+    "code": "uNb9QFRL6hY-36",
+    "observer": "visual_review_last19",
+    "original_viewed": true,
+    "overlay_coverage": [],
+    "observations": "长走廊两端存在不同截止候选；左近处上方有明显低顶或梁，右远处可见台阶。用户所说左侧小楼梯在当前整图预览中不够清楚。",
+    "limits": "不能把台阶位置完全归到左侧，也不能只凭整图自动认定OOS；未看Manual或Semi各簇叠加。",
+    "category": [
+      "disagreement"
+    ],
+    "issues": [
+      {
+        "title": "楼梯截止与适用性",
+        "location": "走廊两端截止、低顶以及远处台阶",
+        "condition": "image",
+        "workers": [],
+        "question": "按现有范围规则，该图能否形成合规主空间？",
+        "options": [
+          "可在台阶前的明确位置截止并保持适用",
+          "无法合理排除层差，应判OOS",
+          "台阶位置或规则依据不足，需补充核对"
+        ]
+      }
+    ]
+  },
+  {
+    "image_id": "uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2",
+    "code": "uNb9QFRL6hY-52",
+    "observer": "visual_review_last19",
+    "original_viewed": true,
+    "overlay_coverage": [],
+    "observations": "左拱口内有台阶；跑步机后方梁下低顶、右电视上方低顶或梁与中间高顶形成层次；中央大植物遮挡墙体。支持用户关于存在多层结构的事实描述。",
+    "limits": "存在梁和层差不自动等同OOS；是否允许简化须依据现有规则由用户判断。未看各簇叠加。",
+    "category": [
+      "disagreement"
+    ],
+    "issues": [
+      {
+        "title": "多层顶面是否超出适用范围",
+        "location": "左拱口台阶、跑步机后方低顶、右电视上方低顶",
+        "condition": "image",
+        "workers": [],
+        "question": "这些层次按现有规则应如何处理？",
+        "options": [
+          "可作为允许简化的局部结构，图像适用",
+          "属于必须保留的主空间层差，图像OOS",
+          "规则或证据不足，暂缓适用性结论"
+        ]
+      }
+    ]
+  },
+  {
+    "image_id": "uNb9QFRL6hY_aed830f085ee4ad88ef6bed7f66f1359",
+    "code": "uNb9QFRL6hY-56",
+    "observer": "visual_review_last19",
+    "original_viewed": true,
+    "overlay_coverage": [],
+    "observations": "小衣帽空间，中央密集架板和横杆遮挡；左右开门通向外侧，右门外另有明亮台面区域。应区分柜内构件与跨门空间。",
+    "limits": "未看Semi点叠加；W012归簇、W011三点与预标注因果尚未视觉核实。不能把所有架板当作布局角点。",
+    "category": [
+      "disagreement",
+      "algorithm"
+    ],
+    "issues": [
+      {
+        "title": "右门外是否属于标注范围",
+        "location": "右侧木门外明亮台面区域",
+        "condition": "semi",
+        "workers": [
+          "W031",
+          "W037"
+        ],
+        "question": "右门外区域应如何处理？",
+        "options": [
+          "应在门处截止，门外不属于主空间",
+          "允许纳入右侧连通空间",
+          "范围规则或图像证据不足"
+        ]
+      }
+    ]
+  },
+  {
+    "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+    "code": "uNb9QFRL6hY-63",
+    "observer": "visual_review_last19",
+    "original_viewed": true,
+    "overlay_coverage": [
+      {
+        "condition": "manual",
+        "workers": [
+          "W010",
+          "W006"
+        ],
+        "coverage": "指定两人的旧有效点散点叠加，非全组；未重算聚类"
+      }
+    ],
+    "observations": "原图及W010、W006旧有效点叠加已看。左门内显见台阶，右为长走廊。W010右截止落较深处；W006右截止明显靠前。两人现同属显示簇1。",
+    "limits": "确能看见同簇内的局部截止差异；是否代表不同有效范围或一方错误，不能单凭距离或多数票决定。",
+    "category": [
+      "algorithm"
+    ],
+    "issues": [
+      {
+        "title": "同簇中的走廊深浅截止",
+        "location": "右侧长走廊末端",
+        "condition": "manual",
+        "workers": [
+          "W010",
+          "W006"
+        ],
+        "question": "这两份标注的右侧深浅截止应如何解释？",
+        "options": [
+          "不同但均可接受的范围方案",
+          "同一范围方案的定位偏差",
+          "至少一份截止不合规，应先判错",
+          "证据不足，暂缓裁决"
+        ]
+      }
+    ]
+  },
+  {
+    "image_id": "uNb9QFRL6hY_d02f87bbb0414146a7a15070110a0384",
+    "code": "uNb9QFRL6hY-70",
+    "observer": "visual_review_last19",
+    "original_viewed": true,
+    "overlay_coverage": [],
+    "observations": "较规整衣帽间，柜架遮挡底部；右侧打开门后可见走廊，主房间和门外是明确可定位的审查区域。",
+    "limits": "未看各人点叠加，不能确认簇1与簇2是否仅小偏差，也不能代判W035跨门标法。",
+    "category": [
+      "complement"
+    ],
+    "issues": []
+  },
+  {
+    "image_id": "wc2JMjhGNzB_55b45b0f19c2460bbcd1fb1c86c6610d",
+    "code": "wc2JMjhGNzB-30",
+    "observer": "visual_review_last19",
+    "original_viewed": true,
+    "overlay_coverage": [],
+    "observations": "左侧大露台开口；右半靠壁炉周围可见墙面转折与遮挡，中央偏右有门洞。支持把漏掉转折与注意到但定位不准分别记录。",
+    "limits": "未看各簇点集，不能证实簇2最正确或逐一归因；Manual与Semi显示结果不得混合。",
+    "category": [
+      "complement"
+    ],
+    "issues": []
+  },
+  {
+    "image_id": "wc2JMjhGNzB_dc4a9f470b834de1983c7e605ff06b2e",
+    "code": "wc2JMjhGNzB-59",
+    "observer": "visual_review_last19",
+    "original_viewed": true,
+    "overlay_coverage": [],
+    "observations": "中央透明玻璃围护有明显竖向门缝、上部夹件及右铰链；中央后方连续可见马桶、洗手台、门洞。后方墙上另有小矩形镜子。视觉更支持用户关于中央透玻璃的描述，不支持将中央整片当作镜中反射。",
+    "limits": "材质观察不自动决定主空间范围；未看W032点叠加，也未证实簇1与簇2仅定位差。最终材质和范围仍由用户裁决。",
+    "category": [
+      "disagreement",
+      "algorithm"
+    ],
+    "issues": [
+      {
+        "title": "中央可见区域的成因",
+        "location": "中央玻璃门缝、夹件、铰链及后方马桶",
+        "condition": "image",
+        "workers": [],
+        "question": "中央后方区域应按什么成因解释？",
+        "options": [
+          "透过透明玻璃看到实际区域",
+          "主要是镜面反射的区域",
+          "图像证据不足，暂缓判断"
+        ]
+      },
+      {
+        "title": "玻璃后区域的范围",
+        "location": "玻璃后马桶、洗手台及门洞区域",
+        "condition": "manual",
+        "workers": [
+          "W032"
+        ],
+        "question": "若确认中央为透明玻璃，玻璃后的区域是否属于本图主空间？",
+        "options": [
+          "应排除，标注在玻璃围护处截止",
+          "应纳入，玻璃只是内部隔断",
+          "现有规则不足以决定，暂缓裁决"
+        ]
+      }
+    ]
+  },
+  {
+    "image_id": "wc2JMjhGNzB_dda6efcba51c40de8552408953719515",
+    "code": "wc2JMjhGNzB-60",
+    "observer": "visual_review_last19",
+    "original_viewed": true,
+    "overlay_coverage": [],
+    "observations": "小衣帽空间，左开门连外室，中间柜架挡住墙和底部，右墙大致连续。柜体与布局边界易混淆。",
+    "limits": "只看原图，未看W001或W037点叠加；不能证实W001被错误并入或W037误标柜体，不能据原图判簇错误。",
+    "category": [
+      "algorithm"
+    ],
+    "issues": [
+      {
+        "title": "W037额外点的结构性质",
+        "location": "中间柜架及其邻近墙体",
+        "condition": "manual",
+        "workers": [
+          "W037"
+        ],
+        "question": "W037额外点对应的结构应如何处理？",
+        "options": [
+          "属于应标的真实布局转折",
+          "属于不应作为布局角点的柜体细节",
+          "需点叠加进一步定位后再决定"
+        ]
+      }
+    ]
+  },
+  {
+    "image_id": "wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f",
+    "code": "wc2JMjhGNzB-67",
+    "observer": "visual_review_last19",
+    "original_viewed": true,
+    "overlay_coverage": [],
+    "observations": "左侧浴室门内可见淋浴和马桶，中间窗、右侧衣帽间门，左右另通卧室；顶部两边可见下降的梁或顶面边界。支持将天花结构、缺点和门框增点分别核对。",
+    "limits": "未看W034与W037点叠加，不能自动将其恢复成8点或把差异认定为合理范围方案。",
+    "category": [
+      "disagreement"
+    ],
+    "issues": [
+      {
+        "title": "W034疑似缺失一组点",
+        "location": "右侧墙体或开口附近",
+        "condition": "manual",
+        "workers": [
+          "W034"
+        ],
+        "question": "W034较主组少的一组应如何判定？",
+        "options": [
+          "确为漏标，应提交具体补点复核",
+          "允许的结构简化，不应补点",
+          "定位证据不足，先看点叠加"
+        ]
+      },
+      {
+        "title": "W037门框额外点",
+        "location": "左侧浴室门框",
+        "condition": "manual",
+        "workers": [
+          "W037"
+        ],
+        "question": "W037增加的门框结构应如何判定？",
+        "options": [
+          "确属不应标的额外结构",
+          "属于应保留的真实布局结构",
+          "定位证据不足，先看点叠加"
+        ]
+      }
+    ]
+  },
+  {
+    "image_id": "yqstnuAEVhm_66ecc07f3cda4d8ebaf84288325669f5",
+    "code": "yqstnuAEVhm-15",
+    "observer": "visual_review_last19",
+    "original_viewed": true,
+    "overlay_coverage": [],
+    "observations": "楼梯下降、栏杆围合，近远地板明显处于不同高度，右门进入另一房间。双方不适用意见有可见结构依据。",
+    "limits": "只看原图；未将OOS几何簇数作为正常任务难度或不收敛证据。",
+    "category": [
+      "complement"
+    ],
+    "issues": []
+  },
+  {
+    "image_id": "yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65",
+    "code": "yqstnuAEVhm-32",
+    "observer": "visual_review_last19",
+    "original_viewed": true,
+    "overlay_coverage": [],
+    "observations": "大卧室兼起居区域，中央壁炉墙突出；家具密集遮挡底部，右侧多个门口或壁龛，顶面有层次。支持双方关于复杂结构的描述。",
+    "limits": "未看逐簇点叠加；壁炉、隔间、门口应分开核对。不能把簇2相对最正确升级为GT或证明永久不收敛。",
+    "category": [
+      "complement",
+      "algorithm"
+    ],
+    "issues": []
+  },
+  {
+    "image_id": "yqstnuAEVhm_e9b4d8e951cb4712b3905c8f4c4dabb5",
+    "code": "yqstnuAEVhm-34",
+    "observer": "visual_review_last19",
+    "original_viewed": true,
+    "overlay_coverage": [],
+    "observations": "走廊右侧有打开的透明玻璃门，门后可见楼梯栏杆和另一片区域；左侧延伸到远处开口。玻璃门截止是明确可定位的审查点。",
+    "limits": "未看W001/W012点叠加；不能凭多数标注自动确定边界正确性。",
+    "category": [
+      "complement"
+    ],
+    "issues": [
+      {
+        "title": "右侧玻璃门截止",
+        "location": "右侧透明玻璃门及门后楼梯栏杆区域",
+        "condition": "manual",
+        "workers": [],
+        "question": "本图主空间应在哪里截止？",
+        "options": [
+          "在玻璃门处截止",
+          "可进入玻璃门后的连通区域",
+          "现有规则或证据不足"
+        ]
+      }
+    ]
+  }
+]

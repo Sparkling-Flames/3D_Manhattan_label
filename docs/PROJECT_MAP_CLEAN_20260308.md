@@ -1,5 +1,17 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
+**研究包更新：**`analysis_results/pro_cluster_review_20260918/`新增用户原话与全39图裁决索引，`data.json`增量保存最新裁决；原始附件归档在`human_review_reconciliation_20260918/`。沿用生成器`--adjudication`，不新增研究算法，不改变历史计算。
+
+
+**39图裁决补充：**复用本地key39页面，审核扩展源码`tools/thesis_main/analysis/key39_adjudication.js`，生成入口沿用`prepare_pro_cluster_review_20260918.py --supplement-export`；视觉观察与裁决依据位于`analysis_results/human_review_reconciliation_20260918/`，交互测试`tests/test_key39_adjudication.cjs`。本地页面为可再生成工件，运行时标注及正式协议不变。
+
+
+**2026-09-18分簇资料整理：**`analysis_results/pro_cluster_review_20260918/`保存无图JSON与Pro说明；[问题1与3处理结论](../analysis_results/human_review_reconciliation_20260918/问题1与3_处理结论.md)记录高人数历史优先复用和意见处置。生成／核验脚本`tools/thesis_main/analysis/prepare_pro_cluster_review_20260918.py`，测试`tests/test_prepare_pro_cluster_review_20260918.py`；不改变生产分簇、任务或协议。
+
+**2026-09-18更新：**[39图双方文字对照与选图处理](../analysis_results/human_review_reconciliation_20260918/审核对照与选图处理说明.md)已记录。11图旧选项不构成最终决定，全部按文字及新增必要性重审；撤回22张高人数图统一追加15人的默认建议，922份保留为待重排的历史候选快照。用户39条文字均为实质审核意见；分簇研究留待后续Pro。
+
+11图[既有审查界面](../analysis_results/full_history_coverage_20260916/11图采集采用审核.html)保留供查阅；其历史“采用”选项不自动更改分配。
+
 2026-09-16 main接续：`docs/thesis_main/新线程交接_研究主线与采集现状_20260916.md`为当前入口，`全历史覆盖方案独立复核_20260916.md`记录检查与待处理项。完整实验留在研究分支，main不整体合并假说模型及实验输出。
 
 采集工件：`analysis_results/full_history_coverage_20260916/`、`worker_sample_budget_20260916/`、`unassigned_room_inventory_20260915/`与较早`english_followup_pool_20260915/`。工具位于`tools/thesis_main/analysis/`：`build_full_history_coverage_20260916.py`、`build_full_history_coverage_workbook_20260916.mjs`、`plan_worker_sample_budget_20260916.py`、`audit_unassigned_rooms_20260915.py`；覆盖测试`tests/test_full_history_coverage_20260916.py`。候选准备不等于派发或已完成数据。

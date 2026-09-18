@@ -1,10 +1,24 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
+**最新研究定位：**OOS、漏标、多标、定位偏差均有研究价值；规范偏好不作为排除指令。用户26项新回答（4项暂缓）已原文归档，点数分簇允许讨论。见[开放式Pro研究入口](../analysis_results/pro_cluster_review_20260918/README.md)。
+
+
+**39图裁决已准备：**[逐图视觉报告与审核入口](../analysis_results/human_review_reconciliation_20260918/39图视觉复核与裁决说明.md)。39张原图已实际核查，26项问题由用户裁决，8份旧奇数点单列；两项新版导出更正仅待应用，历史分簇和收敛结果冻结。
+
+
+**候选整理状态：**用户确认原480份进度尚未核实，先整理候选；77张旧候选已给出逐图处理，新增量未定。[查看清单](../analysis_results/human_review_reconciliation_20260918/问题1与3_处理结论.md)。
+
+**本次接续：**[原疑问1与3的处理结论](../analysis_results/human_review_reconciliation_20260918/问题1与3_处理结论.md)与[Pro分簇数据入口](../analysis_results/pro_cluster_review_20260918/README.md)已准备。39图843份作答原始核对、45个分区复现通过；本界面实际为d_mask完整链接0.10，旧0.95不直接适用。
+
+**2026-09-18更新：**[39图双方文字对照与选图处理](../analysis_results/human_review_reconciliation_20260918/审核对照与选图处理说明.md)已记录。11图旧选项不构成最终决定，全部按文字及新增必要性重审；撤回22张高人数图统一追加15人的默认建议，922份保留为待重排的历史候选快照。用户39条文字均为实质审核意见；分簇研究留待后续Pro。
+
+11图[既有审查界面](../analysis_results/full_history_coverage_20260916/11图采集采用审核.html)保留供查阅；其历史“采用”选项不自动更改分配。
+
 **当前入口（2026-09-16，main）：[研究主线与采集交接](thesis_main/新线程交接_研究主线与采集现状_20260916.md)。**独立真人采集、人员组合及不确定性／收敛为主线；更多人手尚未确认，不扩大既有922份候选。假说研究暂停，完整实验保留在`codex/image-portrait-20260914`与`codex/simulated-annotators`。
 
-本轮准备：[覆盖执行说明](../analysis_results/full_history_coverage_20260916/执行说明.md)、[人员×图片工作簿](../analysis_results/full_history_coverage_20260916/图片名单与人员覆盖.xlsx)、[独立复核](thesis_main/全历史覆盖方案独立复核_20260916.md)。11图待复核涉及首批165份，新人身份为空，未派发；原480份进度须按最新导出另核对。
+9月16日候选快照（现待重排）：[覆盖执行说明](../analysis_results/full_history_coverage_20260916/执行说明.md)、[人员×图片工作簿](../analysis_results/full_history_coverage_20260916/图片名单与人员覆盖.xlsx)、[独立复核](thesis_main/全历史覆盖方案独立复核_20260916.md)。11图待复核涉及首批165份，新人身份为空，未派发；原480份进度须按最新导出另核对。
 
-支撑资料：[人员预算](../analysis_results/worker_sample_budget_20260916/人员样本量与耗时建议.md)、[池外库存](../analysis_results/unassigned_room_inventory_20260915/盘点说明.md)、[较早英文追加候选](../analysis_results/english_followup_pool_20260915/追加候选说明.md)。较早候选不自动成为本轮新增英文任务。[39图审核入口](../analysis_results/image_portrait_20260914_v1/review_workflow_20260915/key39/README.md)继续由用户处理；[历史研究导航](../analysis_results/image_portrait_20260914_v1/PRO_START_HERE.md)用于查阅，不作为续跑指令。
+支撑资料：[人员预算](../analysis_results/worker_sample_budget_20260916/人员样本量与耗时建议.md)、[池外库存](../analysis_results/unassigned_room_inventory_20260915/盘点说明.md)、[较早英文追加候选](../analysis_results/english_followup_pool_20260915/追加候选说明.md)。较早候选不自动成为本轮新增英文任务。[39图审核入口](../analysis_results/image_portrait_20260914_v1/review_workflow_20260915/key39/README.md)保留回查；用户39条文字意见与一正意见已完成对照整理；[历史研究导航](../analysis_results/image_portrait_20260914_v1/PRO_START_HERE.md)用于查阅，不作为续跑指令。
 
 ## 以下保留既有阶段索引，旧计划状态须据最新交接核对
 
