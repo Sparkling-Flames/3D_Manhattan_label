@@ -1,0 +1,24 @@
+name: Export pinned clustering release inputs
+on:
+  push:
+    branches: [research/clustering-release-20260920]
+    paths: [.github/workflows/clustering-release-inputs-20260920.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Download immutable research package
+        run: |
+          mkdir -p release_input
+          curl --fail --location --retry 2 'https://raw.githubusercontent.com/Sparkling-Flames/3D_Manhattan_label/f4a6f4a3b85c08d8873c8a56066219844dc7c88b/analysis_results/pro_next_round_20260920/pro_next_round_20260920.zip' -o release_input/pro_next_round_20260920.zip
+          sha256sum release_input/pro_next_round_20260920.zip > release_input/SHA256SUMS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: clustering-release-pinned-inputs-20260920
+          path: release_input/
+          retention-days: 14
+          if-no-files-found: error
