@@ -1,0 +1,591 @@
+[
+  {
+    "table": "compatibility_graph.csv",
+    "rows": 1195,
+    "matches_at_1e_9": false,
+    "differences": {
+      "compatible_pairs": {
+        "cells": 2,
+        "first_rows": [
+          385,
+          389
+        ]
+      },
+      "compatible_pairs_split": {
+        "cells": 2,
+        "first_rows": [
+          385,
+          389
+        ]
+      },
+      "open_triangles": {
+        "cells": 2,
+        "first_rows": [
+          385,
+          389
+        ]
+      }
+    }
+  },
+  {
+    "table": "coverage.csv",
+    "rows": 2501,
+    "matches_at_1e_9": true,
+    "differences": {}
+  },
+  {
+    "table": "exemplar_centres.csv",
+    "rows": 3312,
+    "matches_at_1e_9": false,
+    "differences": {
+      "N": {
+        "cells": 2,
+        "first_rows": [
+          1066,
+          1067
+        ]
+      },
+      "representative": {
+        "cells": 43,
+        "first_rows": [
+          125,
+          130,
+          294,
+          295,
+          337,
+          487,
+          874,
+          1064,
+          1065,
+          1066
+        ]
+      },
+      "diameter": {
+        "cells": 39,
+        "first_rows": [
+          88,
+          147,
+          185,
+          321,
+          542,
+          858,
+          1066,
+          1067,
+          1383,
+          1417
+        ]
+      },
+      "radius": {
+        "cells": 40,
+        "first_rows": [
+          88,
+          147,
+          185,
+          321,
+          478,
+          542,
+          858,
+          1066,
+          1067,
+          1383
+        ]
+      },
+      "all_pairwise_within_r": {
+        "cells": 1,
+        "first_rows": [
+          1066
+        ]
+      }
+    }
+  },
+  {
+    "table": "exemplar_memberships.csv",
+    "rows": 9524,
+    "matches_at_1e_9": false,
+    "differences": {
+      "cluster": {
+        "cells": 10,
+        "first_rows": [
+          3214,
+          3217,
+          6085,
+          6089,
+          6092,
+          6095,
+          6108,
+          6112,
+          6115,
+          6118
+        ]
+      },
+      "representative_id": {
+        "cells": 752,
+        "first_rows": [
+          384,
+          385,
+          386,
+          388,
+          390,
+          391,
+          392,
+          393,
+          394,
+          395
+        ]
+      },
+      "distance_to_representative": {
+        "cells": 399,
+        "first_rows": [
+          44,
+          131,
+          244,
+          247,
+          268,
+          271,
+          393,
+          396,
+          409,
+          410
+        ]
+      }
+    }
+  },
+  {
+    "table": "exemplar_summary.csv",
+    "rows": 956,
+    "matches_at_1e_9": false,
+    "differences": {
+      "supported": {
+        "cells": 1,
+        "first_rows": [
+          311
+        ]
+      },
+      "singletons": {
+        "cells": 1,
+        "first_rows": [
+          311
+        ]
+      },
+      "singleton_mass": {
+        "cells": 1,
+        "first_rows": [
+          311
+        ]
+      },
+      "largest_share": {
+        "cells": 1,
+        "first_rows": [
+          311
+        ]
+      },
+      "sizes": {
+        "cells": 1,
+        "first_rows": [
+          311
+        ]
+      },
+      "within_pairs_over_radius": {
+        "cells": 1,
+        "first_rows": [
+          311
+        ]
+      },
+      "near_pairs_separated": {
+        "cells": 1,
+        "first_rows": [
+          311
+        ]
+      }
+    }
+  },
+  {
+    "table": "exemplar_user24.csv",
+    "rows": 24,
+    "matches_at_1e_9": false,
+    "differences": {
+      "ospa1": {
+        "cells": 1,
+        "first_rows": [
+          0
+        ]
+      },
+      "nn_mean": {
+        "cells": 1,
+        "first_rows": [
+          0
+        ]
+      }
+    }
+  },
+  {
+    "table": "group_summary.csv",
+    "rows": 4302,
+    "matches_at_1e_9": true,
+    "differences": {}
+  },
+  {
+    "table": "leave_one_out.csv",
+    "rows": 11575,
+    "matches_at_1e_9": true,
+    "differences": {}
+  },
+  {
+    "table": "local_strata.csv",
+    "rows": 36,
+    "matches_at_1e_9": false,
+    "differences": {
+      "pairs": {
+        "cells": 6,
+        "first_rows": [
+          1,
+          7,
+          13,
+          19,
+          25,
+          31
+        ]
+      }
+    }
+  },
+  {
+    "table": "memberships.csv",
+    "rows": 42858,
+    "matches_at_1e_9": true,
+    "differences": {}
+  },
+  {
+    "table": "next_person_diagnostics.csv",
+    "rows": 1719,
+    "matches_at_1e_9": false,
+    "differences": {
+      "ospa_uncovered": {
+        "cells": 15,
+        "first_rows": [
+          576,
+          577,
+          578,
+          579,
+          580,
+          581,
+          582,
+          583,
+          584,
+          585
+        ]
+      },
+      "local_covered_but_ospa_uncovered": {
+        "cells": 15,
+        "first_rows": [
+          576,
+          577,
+          578,
+          579,
+          580,
+          581,
+          582,
+          583,
+          584,
+          585
+        ]
+      }
+    }
+  },
+  {
+    "table": "no_borrowed_changed_memberships.csv",
+    "rows": 864,
+    "matches_at_1e_9": true,
+    "differences": {}
+  },
+  {
+    "table": "no_borrowed_changes.csv",
+    "rows": 2,
+    "matches_at_1e_9": true,
+    "differences": {}
+  },
+  {
+    "table": "no_borrowed_next_person.csv",
+    "rows": 1719,
+    "matches_at_1e_9": false,
+    "differences": {
+      "ospa_uncovered": {
+        "cells": 15,
+        "first_rows": [
+          576,
+          577,
+          578,
+          579,
+          580,
+          581,
+          582,
+          583,
+          584,
+          585
+        ]
+      },
+      "local_covered_but_ospa_uncovered": {
+        "cells": 15,
+        "first_rows": [
+          576,
+          577,
+          578,
+          579,
+          580,
+          581,
+          582,
+          583,
+          584,
+          585
+        ]
+      }
+    }
+  },
+  {
+    "table": "pairwise.csv",
+    "rows": 20672,
+    "matches_at_1e_9": false,
+    "differences": {
+      "ospa1": {
+        "cells": 1170,
+        "first_rows": [
+          6,
+          48,
+          65,
+          66,
+          67,
+          68,
+          127,
+          156,
+          157,
+          158
+        ]
+      },
+      "ospa2": {
+        "cells": 288,
+        "first_rows": [
+          6,
+          48,
+          65,
+          66,
+          127,
+          156,
+          187,
+          614,
+          617,
+          656
+        ]
+      },
+      "hausdorff": {
+        "cells": 203,
+        "first_rows": [
+          65,
+          66,
+          127,
+          156,
+          187,
+          614,
+          617,
+          656,
+          1333,
+          3734
+        ]
+      },
+      "directed_a": {
+        "cells": 208,
+        "first_rows": [
+          65,
+          66,
+          127,
+          156,
+          187,
+          614,
+          617,
+          656,
+          1333,
+          3734
+        ]
+      },
+      "directed_b": {
+        "cells": 219,
+        "first_rows": [
+          65,
+          66,
+          127,
+          156,
+          187,
+          614,
+          617,
+          656,
+          1333,
+          3734
+        ]
+      },
+      "nn_mean": {
+        "cells": 1170,
+        "first_rows": [
+          6,
+          48,
+          65,
+          66,
+          67,
+          68,
+          127,
+          156,
+          157,
+          158
+        ]
+      },
+      "sum_assignment_max": {
+        "cells": 225,
+        "first_rows": [
+          65,
+          66,
+          127,
+          156,
+          187,
+          614,
+          617,
+          656,
+          1333,
+          3734
+        ]
+      },
+      "bottleneck": {
+        "cells": 203,
+        "first_rows": [
+          65,
+          66,
+          127,
+          156,
+          187,
+          614,
+          617,
+          656,
+          1333,
+          3734
+        ]
+      }
+    }
+  },
+  {
+    "table": "precision_pairwise.csv",
+    "rows": 20672,
+    "matches_at_1e_9": false,
+    "differences": {
+      "legacy": {
+        "cells": 1170,
+        "first_rows": [
+          6,
+          48,
+          65,
+          66,
+          67,
+          68,
+          127,
+          156,
+          157,
+          158
+        ]
+      },
+      "delta": {
+        "cells": 1170,
+        "first_rows": [
+          6,
+          48,
+          65,
+          66,
+          67,
+          68,
+          127,
+          156,
+          157,
+          158
+        ]
+      }
+    }
+  },
+  {
+    "table": "precision_partition_impact.csv",
+    "rows": 717,
+    "matches_at_1e_9": false,
+    "differences": {
+      "threshold_flips": {
+        "cells": 1,
+        "first_rows": [
+          232
+        ]
+      }
+    }
+  },
+  {
+    "table": "previous29_multimethod.csv",
+    "rows": 29,
+    "matches_at_1e_9": true,
+    "differences": {}
+  },
+  {
+    "table": "reviewed_point_witnesses.csv",
+    "rows": 488,
+    "matches_at_1e_9": false,
+    "differences": {
+      "nearest_deg": {
+        "cells": 4,
+        "first_rows": [
+          208,
+          209,
+          216,
+          217
+        ]
+      }
+    }
+  },
+  {
+    "table": "same_person_time_loo.csv",
+    "rows": 334,
+    "matches_at_1e_9": true,
+    "differences": {}
+  },
+  {
+    "table": "same_person_time_pair_summary.csv",
+    "rows": 31,
+    "matches_at_1e_9": true,
+    "differences": {}
+  },
+  {
+    "table": "same_person_time_ratios.csv",
+    "rows": 229,
+    "matches_at_1e_9": true,
+    "differences": {}
+  },
+  {
+    "table": "synthetic_stress.csv",
+    "rows": 4762,
+    "matches_at_1e_9": true,
+    "differences": {}
+  },
+  {
+    "table": "user24_multitarget_relations.csv",
+    "rows": 24,
+    "matches_at_1e_9": false,
+    "differences": {
+      "ospa1": {
+        "cells": 1,
+        "first_rows": [
+          0
+        ]
+      },
+      "nn_mean": {
+        "cells": 1,
+        "first_rows": [
+          0
+        ]
+      }
+    }
+  },
+  {
+    "table": "user24_summary.csv",
+    "rows": 18,
+    "matches_at_1e_9": true,
+    "differences": {}
+  }
+]

@@ -1,7 +1,19 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
+**Pro分析准备交付：**[下一轮统一任务](thesis_main/Pro下一轮_分簇定稿与分析准备_20260920.md)与[自包含资料](../analysis_results/pro_next_round_20260920/README.md)记录导师原话核对、用户uNb-21局部对应和轻量方案边界；`tools/thesis_main/analysis/paired_split_research/pro_package.py`生成白名单数值包并验证脱离本地目录的输入/确认关系。
+
+**历史全量复核：**`tools/thesis_main/analysis/paired_split_research/history_review.py`复用冻结数值与Studio图片，输出[214图/239单元队列及新增8图叠加](../analysis_results/paired_split_research_received_20260920/history_visual_review/README.md)，内置覆盖/身份/旧图排除检查；不改旧审核页面或数据真源。
+
+**2026-09-20 Pro返回接入：**`tools/thesis_main/analysis/paired_split_research/`提供按x绑定/分开、对应敏感性与人员描述的可复算模块；[接收数据及本地复核](../analysis_results/paired_split_research_received_20260920/README.md)保留原件、独立输出和审查结论。独立检查为`tests/test_paired_split_research.py`；不覆盖旧快照或原始导出。
+
+**2026-09-20 Pro续研：**`tools/thesis_main/analysis/local_point_research/pro_followup.py`与`pro_followup_panel.js`复用Studio基础生成[独立六图复核与云端资料](../analysis_results/local_point_research_received_20260919/pro_followup_20260920/README.md)，不修改旧页；只读验收为输出目录`verify.py`，浏览器检查为`tests/pro_followup_browser.cjs`。
+
 **当前研究入口：**[真人标注不确定性研究：当前状态](thesis_main/真人标注不确定性研究_当前状态.md)。两份旧线程交接已移入`docs/thesis_main/archive_20260918/`，仅作历史追溯。
 **2026-09-18研究接收与视觉复核：**`analysis_results/cluster_visual_20260918_v2/`保存指定研究分支的39图代码与结果；`analysis_results/full_corpus_research_received_20260918/`保存全量自包含数值包、图册及[本轮复核入口](../analysis_results/full_corpus_research_received_20260918/仓库接收与视觉复核.md)。来源/人员/条件连接检查为`tests/test_received_research_visual_audit.py`；研究代码保持交付快照，不改变生产分析和正式协议。
+
+**2026-09-19局部点研究：**`tools/thesis_main/analysis/local_point_research/`为接收研究的数值入口；[数据、审查和输出口径](../analysis_results/local_point_research_received_20260919/README.md)，检查`tests/test_local_point_research.py`。原数据与正式方法合同不变，跨环境差异单列。
+
+同目录`pair_pilot.py`/`pair_pilot_panel.js`生成[六图点对初验](../analysis_results/local_point_research_received_20260919/pair_pilot/README.md)，历史实现接入原Studio；同目录新增`用户_六图点对审核_原始.json`保存已完成裁决。检查`tests/test_point_pair_pilot.py`及`tests/point_pair_pilot_browser.cjs`。该六图历史实现未包含按x顺序；9月20日按序研究另见paired_split_research模块。候选配对不回写原数据；后续沿用示范基础制作专用审核页。
 
 **2026-09-19补充视觉复核：**[39图之外12图审核](../analysis_results/cluster_review_extra_20260919/README.md)，24组点集对照、局部方法核对及待用户裁决页面；发现配对伪差异，未修改冻结结果。
 

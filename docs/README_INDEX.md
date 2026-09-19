@@ -1,7 +1,19 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
+**当前Pro任务：**[尽快形成可用分簇、轻量人工复核与分析成稿准备](thesis_main/Pro下一轮_分簇定稿与分析准备_20260920.md)，已核对导师书面交流与用户最新要求。[云端资料](../analysis_results/pro_next_round_20260920/README.md)含明确的用户局部确认、视觉文字、冻结数值与代码。
+
+**历史全量视觉验证范围：**[214图筛查队列与新增8图初核](../analysis_results/paired_split_research_received_20260920/history_visual_review/README.md)。不再局限39图；8图已查看指定作答对，余下保留状态与优先级，用户裁决空白。
+
+**2026-09-20 Pro返回已核验：**[按x绑定/分开研究的独立审查](../analysis_results/paired_split_research_received_20260920/独立审查与研究方向.md)、[数据与复算入口](../analysis_results/paired_split_research_received_20260920/README.md)。25表复现一致，独立核验237416条端点距离；保留对应歧义与中点并列边界，尚未冻结最终分簇或人员判断。
+
+**2026-09-20 Pro续研：**[按序局部比较、分区与人员诊断任务](../analysis_results/local_point_research_received_20260919/pro_followup_20260920/README.md)，6张补充视觉证据、独立专项复核页及云端数值资料；两个子代理独立复核，新增裁决留空。
+
 **当前研究入口：**[真人标注不确定性研究：当前状态](thesis_main/真人标注不确定性研究_当前状态.md)。两份旧线程交接已移入`docs/thesis_main/archive_20260918/`，仅作历史追溯。
 **2026-09-18两轮研究接收：**[仓库接收与当前视觉复核](../analysis_results/full_corpus_research_received_20260918/仓库接收与视觉复核.md)串联全量报告、239单元图册、复算输入和前序39图研究；本轮复看39原图、29组作答对与B6-22全部24份Semi，未冻结新算法或应用待确认修正。
+
+**2026-09-19局部点研究复核：**[数值接收与本地执行](../analysis_results/local_point_research_received_20260919/README.md)，包括前轮配对/时间诊断、局部比较、有限池事件含义和跨环境差异；不冻结分簇或停止规则。
+
+**六图点对审核已完成：**[用户原件、结论与按x顺序澄清](../analysis_results/local_point_research_received_20260919/pair_pilot/README.md)；自由匹配初验不等于按序方案验证，不改历史分区。[探索SOP](thesis_main/相似场景标注稳定性分析SOP.md)补充单人支持讨论及审核流程；以后复用示范基础制作专用页。
 
 **2026-09-19补充视觉复核：**[39图之外12图审核](../analysis_results/cluster_review_extra_20260919/README.md)，24组点集对照、局部方法核对及待用户裁决页面；发现配对伪差异，未修改冻结结果。
 
