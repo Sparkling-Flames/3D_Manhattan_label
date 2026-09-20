@@ -28,7 +28,7 @@ def table(p):
         return list(csv.DictReader(stream))
 
 
-def verify_run(run_root):
+def verify_run(run_root, *, numerical_only=False):
     manifest = read(run_root/'RUN_MANIFEST.json')
     run_id = manifest['run_id']
     result_manifest = read(run_root/'results/RESULT_MANIFEST.json')
@@ -41,7 +41,13 @@ def verify_run(run_root):
     for base, entries in [(run_root, manifest['input_files']), (run_root/'results', result_manifest['files'])]:
         for name, expected in entries.items():
             path = (base/name).resolve()
-            if not path.is_relative_to(base.resolve()) or not path.is_file():
+            if not path.is_relative_to(base.resolve()):
+                raise ValueError('运行清单文件缺失或越界: '+name)
+            display_prefix = 'input/source/analysis_results/paired_split_research_received_20260920/'
+            if (numerical_only and base == run_root and name.endswith('.jpg')
+                    and any(name.startswith(display_prefix+sub+'/') for sub in ('history_visual_review', 'visual_checked'))):
+                continue  # Display-only dependencies; numerical consumers never load these photos.
+            if not path.is_file():
                 raise ValueError('运行清单文件缺失或越界: '+name)
             if hashlib.sha256(path.read_bytes()).hexdigest() != expected:
                 raise ValueError('运行清单内容不一致: '+name)

@@ -67,6 +67,19 @@ def test_run_rejects_missing_stale_and_mixed_files(tmp_path):
     result_manifest = {'run_id': 'one', 'files': hashes}
     write(results/'RESULT_MANIFEST.json', result_manifest)
     assert verify_run(tmp_path) == manifest
+    photo = 'input/source/analysis_results/paired_split_research_received_20260920/history_visual_review/example.jpg'
+    manifest['input_files'][photo] = 'display-only-not-present'
+    write(tmp_path/'RUN_MANIFEST.json', manifest)
+    with pytest.raises(ValueError):
+        verify_run(tmp_path)
+    assert verify_run(tmp_path, numerical_only=True) == manifest
+    manifest['input_files']['inputs/missing_numeric.json'] = 'must-not-ignore'
+    write(tmp_path/'RUN_MANIFEST.json', manifest)
+    with pytest.raises(ValueError):
+        verify_run(tmp_path, numerical_only=True)
+    del manifest['input_files'][photo]
+    del manifest['input_files']['inputs/missing_numeric.json']
+    write(tmp_path/'RUN_MANIFEST.json', manifest)
     write(results/'RESULT_MANIFEST.json', dict(result_manifest, run_id='old'))
     with pytest.raises(ValueError):
         verify_run(tmp_path)
