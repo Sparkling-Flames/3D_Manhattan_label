@@ -1,0 +1,29 @@
+name: RC2 pinned audit inputs
+on:
+  push:
+    branches: [research/rc2-pairing-audit-20260920]
+    paths: [.github/workflows/rc2-audit-inputs-20260920.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Copy pinned research package
+        run: |
+          python - <<'PY'
+          import pathlib,urllib.request,hashlib,json
+          ref='c67a0925ea0cc3247b2f65a4df351b58f01f1c15'
+          p='analysis_results/clustering_release_local_20260920/pro_consistency_20260920.zip'
+          b=urllib.request.urlopen('https://raw.githubusercontent.com/Sparkling-Flames/3D_Manhattan_label/'+ref+'/'+p,timeout=120).read()
+          assert hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()=='769ddf3aa5415d604a749c0d227398c94ee54b61'
+          r=pathlib.Path('audit_source');r.mkdir();(r/'pro_consistency_20260920.zip').write_bytes(b)
+          (r/'SOURCE.json').write_text(json.dumps({'ref':ref,'path':p,'sha256':hashlib.sha256(b).hexdigest(),'bytes':len(b),'operation':'copy_only_no_analysis_no_data_change'},indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rc2-pinned-inputs
+          path: audit_source/
+          retention-days: 14
