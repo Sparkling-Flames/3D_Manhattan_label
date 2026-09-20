@@ -5,6 +5,8 @@
 
 **当前局部点位研究：**`clustering_release/local_points.py`运行四组局部距离/成簇对照，`local_points_review.py`复用Studio生成独立12图争议页；[新Pro任务](thesis_main/Pro新对话_局部点位分簇与影响核查_20260920.md)、[数值包与全历史验收清单](../analysis_results/local_point_clustering_20260920/README.md)。旧Pro包保留历史用途；当前214图/239单元全部列入方法确定后的视觉验收范围。
 
+**最新数值研究接收：**`tools/thesis_main/analysis/clustering_numeric_research/run_all.py`复算固定历史输入上的逐端点、前缀重聚、人员与3D分析；[原始证据及本地审查](../analysis_results/clustering_numeric_received_20260920/README.md)、[本地验收](../analysis_results/clustering_numeric_local_20260920/README.md)。测试为`tests/test_clustering_numeric_research.py`；不替换正式合同、新批次入口或现有人工裁决。
+
 **历史全量复核：**`tools/thesis_main/analysis/paired_split_research/history_review.py`复用冻结数值与Studio图片，输出[214图/239单元队列及新增8图叠加](../analysis_results/paired_split_research_received_20260920/history_visual_review/README.md)，内置覆盖/身份/旧图排除检查；不改旧审核页面或数据真源。
 
 **2026-09-20 Pro返回接入：**`tools/thesis_main/analysis/paired_split_research/`提供按x绑定/分开、对应敏感性与人员描述的可复算模块；[接收数据及本地复核](../analysis_results/paired_split_research_received_20260920/README.md)保留原件、独立输出和审查结论。独立检查为`tests/test_paired_split_research.py`；不覆盖旧快照或原始导出。

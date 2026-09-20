@@ -1,0 +1,31 @@
+{
+  "schema": "local_point_comparison_v1",
+  "source_run_id": "9998c09698eea1a4",
+  "source_manifest_sha": "6af82bab0ed1af0130377f58ed4fecd78922a8803f2ca23f77c5776e65f8f5c6",
+  "evidence": {
+    "latest_decisions.json": "5b1116a7b9465fb523451b5ef5635ca5aba97b3b5429cd137d96a7419ee8ce32",
+    "review_manifest_16.json": "18dca1c1c86494b47d693e603a2d469123aef15801805836cdf5b8d0d5f75a11",
+    "user_review_16.json": "09a9e0aea82ea906f8b96043a418e8f9ac3e0f8aea20191e6122c3079be1a22b"
+  },
+  "code": {
+    "local_points.py": "104eb346738e864243306a7c67bcab04194767c5c11dbbe9a01e118d26da77f5",
+    "study.py": "182d8bfb46f7e4531dce237c40e14697f159092e7492b82b8ca4e9a4edfd8b09",
+    "release.py": "dcfc5a651ff7433e392beaacf05fe93d830b5d03cfab0bafe280e40a51ded13f"
+  },
+  "files": {
+    "CHECKS.json": "d6c8e730886d5773898c7e04c4a2e95fc4d6728be2c02a880e26e574514c6014",
+    "eligibility.csv": "7e895d495f02b07b6b59efb34492e44e4bdf22454e8e4d4e0a534ed81d409400",
+    "endpoint_residuals.csv.gz": "2c9cf0c6b91ed15c74dd20ce8c33f9acf3f723dbff68472c0d8cfc5d37ce1462",
+    "exact_curves.csv.gz": "e71fe66360e5c4fb35ccf68f03da00ded55ed6203d4c55f03907530f582af9d9",
+    "full_history_visual_coverage.csv": "62b6aa2d6bada9160946e59b6df8367dd9cb646b58aebb0dd210390f0d1711b1",
+    "groups.json": "804fc308c91b83bee1261f62cee4034c94ad438caffb6fce9b38aaa4a3e8b8df",
+    "memberships.csv.gz": "11537773cf562a2d1a767d30904713881ae37e33fb7be2795ac790355e3c67da",
+    "pairwise.csv.gz": "dc4aa0ec2decdfc24017ac8362e461898cb4b580ee8f3c5a836fafac4acad465",
+    "partition_summary.csv": "8b59b8c5edd113e92c952fc43a673f5c0320caebee3e0a4ad50abf363d4cc76a",
+    "worker_observations.csv.gz": "1929256a72c2d8602fad5ccce4c3d712eb856b17580b3c68aff36fab7689c7c0"
+  },
+  "primary_measurement": "local original endpoints; no IoU or 3D weighting",
+  "coordinate_convention": "1024x512; sphere retains existing +0.5 y pixel-centre; image uses differences",
+  "thresholds": "6/9/12 degrees and 17.0667/25.6/34.1333 pixels are probes, not confirmed semantic thresholds",
+  "manual_view": "retrospective only; unchanged automatic entries retained for unreviewed pairs"
+}

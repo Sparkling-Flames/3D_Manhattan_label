@@ -1,0 +1,2203 @@
+[
+  {
+    "case": 1,
+    "key": "7y3sRwLe3Va_b47475370e824b9e923a4a96bc98e1e3|manual",
+    "code": "7y3sRwLe3Va-21",
+    "condition": "manual",
+    "id_a": "a25753564e8d0fb8f8d6",
+    "id_b": "517087c6def062efa361",
+    "worker_a": "W002",
+    "worker_b": "W033",
+    "original_answer": {
+      "relation": "",
+      "comment": "这主要是 p6,p7和p15,16的区别,其实两位都是想标完全看不见的墙角的位置,但是w02偏左,33偏右,但是x坐标相差的还蛮大的,导致如果计算x坐标的话,顺序差异有点大.\n其实001也和002,033的状态是差不多的,都是想标这个地方,但是标的有偏差\n而且这图疑似oos.\n实质上这图的顺序是,我拿002举例(只取bottom):15,12,11,8,7,2,20,5,17,19\n",
+      "defer": true
+    },
+    "numeric_reply": "原文说明的是同一隐藏墙角的作答意图及明显位置漂移，不能据此自动补齐跨人员对应。所给W002 bottom连接序列属于单份作答内墙体连接顺序，不直接替代跨人员点位映射。当前数值对应可计算，但“唯一最优横向绑定”不等于物理对应已确认。保持暂缓；需核对W001/W002/W033这一局部的完整上下对应。",
+    "specified_pair_bound_available": true,
+    "raw_source": "evidence/user_review_16.json; evidence/latest_decisions.json",
+    "new_visual_review": false,
+    "all_record_coverage": [
+      {
+        "id": "d22e8df3dcff4100efb5",
+        "worker": "W001",
+        "raw_count": 20,
+        "effective_count": 20,
+        "processing": "unchanged",
+        "bound_available": false
+      },
+      {
+        "id": "a25753564e8d0fb8f8d6",
+        "worker": "W002",
+        "raw_count": 20,
+        "effective_count": 20,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "517087c6def062efa361",
+        "worker": "W033",
+        "raw_count": 20,
+        "effective_count": 20,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "84ac11f23b306b7457b4",
+        "worker": "W034",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "8125fd4575ecfc155a63",
+        "worker": "W037",
+        "raw_count": 16,
+        "effective_count": 16,
+        "processing": "unchanged",
+        "bound_available": true
+      }
+    ],
+    "old_cluster3_ids": [
+      "517087c6def062efa361"
+    ]
+  },
+  {
+    "case": 2,
+    "key": "S9hNv5qa7GM_8b55e4f095374cfe8ddb0fda0f0dfa02|manual",
+    "code": "S9hNv5qa7GM-12",
+    "condition": "manual",
+    "id_a": "d711e00e26b4b1b32c9d",
+    "id_b": "75507c55b020fe0f933f",
+    "worker_a": "W011",
+    "worker_b": "W012",
+    "original_answer": {
+      "relation": "",
+      "comment": "12确实标p12,11的时候有点偏差,但是你这配对是对的,这细节每个点的细节上相差不是很多,但是你把他们分簇的原因,是不是多个点的偏差累计了?",
+      "defer": true
+    },
+    "numeric_reply": "不是多个点偏差累加：当前距离取所有端点中的最大值。更直接的障碍是W012的数值上下绑定仍有并列最优解，不能把角色分开视图中的可比较，直接升级为唯一绑定可计算。本项给出角色分开固定顺序的残差，但不擅自选择一组绑定。原文“配对是对的”保留；仍需把所指审核候选明确绑定到原点号后才可机器应用。",
+    "specified_pair_bound_available": false,
+    "raw_source": "evidence/user_review_16.json; evidence/latest_decisions.json",
+    "new_visual_review": false,
+    "all_record_coverage": [
+      {
+        "id": "d711e00e26b4b1b32c9d",
+        "worker": "W011",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "75507c55b020fe0f933f",
+        "worker": "W012",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": false
+      }
+    ],
+    "old_cluster3_ids": [],
+    "coverage_note": "指定对不具有唯一绑定；保留角色分开诊断，不填零距离，不新造单人簇。"
+  },
+  {
+    "case": 3,
+    "key": "b8cTxDM8gDG_f339391e9479496e8652c972953f0ce4|manual",
+    "code": "b8cTxDM8gDG-17",
+    "condition": "manual",
+    "id_a": "bc31ca44876dc589ed4b",
+    "id_b": "23b3ba219c2ea42e2857",
+    "worker_a": "W027",
+    "worker_b": "W029",
+    "original_answer": {
+      "relation": "",
+      "comment": "这还是同一个问题,w29 的p11,12 和w27 的p5,p6实质上还是想标同一个点位,但是确实被完全遮挡,x 轴的偏差确实有点大.w31是完全没标这个地方",
+      "defer": true
+    },
+    "numeric_reply": "文字已指出W027/W029试图标同一被完全遮挡的位置，但位置差不为零；这与W031遗漏该处不是同一种观测。当前严格整份表达仍受有效点数硬门约束。没有完整人工跨人映射时只报告固定/循环/自由诊断，不以自由匹配更小自动纠正。保持暂缓。",
+    "specified_pair_bound_available": true,
+    "raw_source": "evidence/user_review_16.json; evidence/latest_decisions.json",
+    "new_visual_review": false,
+    "all_record_coverage": [
+      {
+        "id": "bc31ca44876dc589ed4b",
+        "worker": "W027",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "7cd383c42cfa1fb813df",
+        "worker": "W028",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "23b3ba219c2ea42e2857",
+        "worker": "W029",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "34724d21eb0d44dfc22d",
+        "worker": "W031",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "07d7b8e9b47e3b57f09b",
+        "worker": "W036",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      }
+    ],
+    "old_cluster3_ids": [
+      "34724d21eb0d44dfc22d"
+    ]
+  },
+  {
+    "case": 4,
+    "key": "jtcxE69GiFV_dce110162b244b2ab76a0804fc830a9e|manual",
+    "code": "jtcxE69GiFV-28",
+    "condition": "manual",
+    "id_a": "f178c36ff75fc890f24f",
+    "id_b": "adb6425249fda2c7f4fb",
+    "worker_a": "W002",
+    "worker_b": "W036",
+    "original_answer": {
+      "relation": "",
+      "comment": "还是之前提到的那个问题,就是p12,p18都是想标同一个点位,但是被挡住,导致有偏差,而且这偏差确实有一定距离",
+      "defer": true
+    },
+    "numeric_reply": "该例不能仅凭“想标同一点”把实际坐标差清零。应分别记录意图解释、对应和定位残差；是否把这种残差容许在同组内仍由用户裁决。本轮保留原点与原暂缓状态。",
+    "specified_pair_bound_available": true,
+    "raw_source": "evidence/user_review_16.json; evidence/latest_decisions.json",
+    "new_visual_review": false,
+    "all_record_coverage": [
+      {
+        "id": "f178c36ff75fc890f24f",
+        "worker": "W002",
+        "raw_count": 24,
+        "effective_count": 24,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "15f271d72bbfaefc7da7",
+        "worker": "W028",
+        "raw_count": 16,
+        "effective_count": 16,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "93b8e1407946dee6d8e3",
+        "worker": "W029",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "adb6425249fda2c7f4fb",
+        "worker": "W036",
+        "raw_count": 24,
+        "effective_count": 24,
+        "processing": "unchanged",
+        "bound_available": true
+      }
+    ],
+    "old_cluster3_ids": [
+      "15f271d72bbfaefc7da7"
+    ]
+  },
+  {
+    "case": 5,
+    "key": "wc2JMjhGNzB_9087f0358178420a8b9ac7b17a8919c7|manual",
+    "code": "wc2JMjhGNzB-46",
+    "condition": "manual",
+    "id_a": "a59dbe372c746bd7a7ac",
+    "id_b": "846f35a4fc23776b55a2",
+    "worker_a": "W006",
+    "worker_b": "W008",
+    "original_answer": {
+      "relation": "",
+      "comment": "还是和前面同样的问题,w08的p8的点对和w06的p11",
+      "defer": true
+    },
+    "numeric_reply": "W008存在上下绑定歧义；仅给出W008 p8与W006 p11的局部文字关联，尚不能授权完整整份绑定。采用角色分开诊断而不是把不可计算填成零、单人簇或不存在。保持暂缓。",
+    "specified_pair_bound_available": false,
+    "raw_source": "evidence/user_review_16.json; evidence/latest_decisions.json",
+    "new_visual_review": false,
+    "all_record_coverage": [
+      {
+        "id": "a59dbe372c746bd7a7ac",
+        "worker": "W006",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "846f35a4fc23776b55a2",
+        "worker": "W008",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": false
+      },
+      {
+        "id": "383c4d3f2da8086009f3",
+        "worker": "W010",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "19607f73ad540646568e",
+        "worker": "W017",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "d0bcda333eddee24fe3c",
+        "worker": "W018",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "7827115ee28a13736728",
+        "worker": "W031",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "12de7c2bb761564cdeed",
+        "worker": "W034",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      }
+    ],
+    "old_cluster3_ids": [
+      "846f35a4fc23776b55a2",
+      "19607f73ad540646568e"
+    ],
+    "coverage_note": "指定对不具有唯一绑定；保留角色分开诊断，不填零距离，不新造单人簇。"
+  },
+  {
+    "case": 6,
+    "key": "zsNo4HB9uLZ_faad06c7cb2b4a6f9220e7f6f87c800b|manual",
+    "code": "zsNo4HB9uLZ-16",
+    "condition": "manual",
+    "id_a": "689916ee7ab74788c194",
+    "id_b": "68dfb0359f4ee26ffa9d",
+    "worker_a": "W032",
+    "worker_b": "W033",
+    "original_answer": {
+      "relation": "",
+      "comment": "w32的p12点对和w33的p6",
+      "defer": true
+    },
+    "numeric_reply": "原文指定了W032 p12点对与W033 p6，应核对该局部的上下点号及整份跨人对应；当前两个端点最大差异不由平均值掩盖。保持暂缓，数值超阈值不自动推翻遮挡解释。",
+    "specified_pair_bound_available": true,
+    "raw_source": "evidence/user_review_16.json; evidence/latest_decisions.json",
+    "new_visual_review": false,
+    "all_record_coverage": [
+      {
+        "id": "689916ee7ab74788c194",
+        "worker": "W032",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "68dfb0359f4ee26ffa9d",
+        "worker": "W033",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      }
+    ],
+    "old_cluster3_ids": []
+  },
+  {
+    "case": 7,
+    "key": "X7HyMhZNoso_987fd31155514f6facb131bd5c14881d|manual",
+    "code": "X7HyMhZNoso-13",
+    "condition": "manual",
+    "id_a": "6d60091b52a8a93c",
+    "id_b": "699e590cdc0187eb",
+    "worker_a": "W002",
+    "worker_b": "W030",
+    "original_answer": {
+      "relation": "可视为相近",
+      "comment": "很接近,其实簇2 和簇1 我个人没看到很大差别",
+      "defer": false
+    },
+    "numeric_reply": "两份指定作答本身近；完整链接拆分需查看所属两组中的其他成员，不能用两份之间的距离解释整组关系。代表半径可以保留它们在一组，但同时必须检查代表组内最远成员。原文对“簇1与簇2”的更广泛意见仍绑定旧审核版本，不能仅用指定对符合就称两整个旧簇已通过。",
+    "specified_pair_bound_available": true,
+    "raw_source": "evidence/user_review_16.json; evidence/latest_decisions.json",
+    "new_visual_review": false,
+    "all_record_coverage": [
+      {
+        "id": "2b75349a0d747440",
+        "worker": "W001",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "6d60091b52a8a93c",
+        "worker": "W002",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "d51ae1a5831a491f",
+        "worker": "W006",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "b38098dbc883b897",
+        "worker": "W008",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "b3d91348061353b4",
+        "worker": "W010",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "d54323b15af787a3",
+        "worker": "W011",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "b2be1df92c78eded",
+        "worker": "W012",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "00e1f0475f32cb49",
+        "worker": "W013",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "d90b8277604eeace",
+        "worker": "W014",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "7834e8d354a01da4",
+        "worker": "W015",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "0fff707ce84d6609",
+        "worker": "W017",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "62836cb5439d47d2",
+        "worker": "W018",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "5436c4f88262ddc5",
+        "worker": "W021",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "0c054ac3932985cb",
+        "worker": "W027",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "121644cf341ee37d",
+        "worker": "W028",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "fb8ee4635680f271",
+        "worker": "W029",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "699e590cdc0187eb",
+        "worker": "W030",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "6f9679a3058624e4",
+        "worker": "W031",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "bc1cd87a35fe5e07",
+        "worker": "W032",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "67cd0f7506bc51c3",
+        "worker": "W033",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "fe443220e5338d14",
+        "worker": "W034",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "0f871667c1e1a335",
+        "worker": "W035",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "94d4b4a63d7f84cc",
+        "worker": "W036",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "5e3a87e01e8c7a68",
+        "worker": "W037",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "6c4763b8a94746c7",
+        "worker": "W019",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": false
+      },
+      {
+        "id": "6c8724da46881482",
+        "worker": "W026",
+        "raw_count": 0,
+        "effective_count": 0,
+        "processing": "unchanged",
+        "bound_available": false
+      }
+    ],
+    "old_cluster3_ids": [
+      "5e3a87e01e8c7a68"
+    ]
+  },
+  {
+    "case": 8,
+    "key": "b8cTxDM8gDG_51c90ec9afc4495ab3788c6badc303df|semi",
+    "code": "b8cTxDM8gDG-07",
+    "condition": "semi",
+    "id_a": "7129ad7e523aa525",
+    "id_b": "3b710fb59e47c8d6",
+    "worker_a": "W029",
+    "worker_b": "W031",
+    "original_answer": {
+      "relation": "可视为相近",
+      "comment": "只是p6的bottom标的偏差稍大,但是还好",
+      "defer": false
+    },
+    "numeric_reply": "原文已接受p6 bottom略有偏差。最大端点指标会保留这个偏差，但当前探针下指定对仍相近；完整链接的分开主要需解释整簇跨成员约束，而不是再把这两份判成不相近。",
+    "specified_pair_bound_available": true,
+    "raw_source": "evidence/user_review_16.json; evidence/latest_decisions.json",
+    "new_visual_review": false,
+    "all_record_coverage": [
+      {
+        "id": "d2965a4546dd5bd3",
+        "worker": "W001",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "39008f0fe7a1d27b",
+        "worker": "W002",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "1260b5763825ac73",
+        "worker": "W006",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "3e32b8564185e9c7",
+        "worker": "W008",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "62376c3351699bc6",
+        "worker": "W010",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "b49eaa7455fb1edf",
+        "worker": "W011",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "9ae9084968b32229",
+        "worker": "W012",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "517e0e79ed73ad98",
+        "worker": "W013",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "c9609d6092bb0730",
+        "worker": "W014",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "5c8fc29a99324dd7",
+        "worker": "W015",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "db6e2e902a7635ad",
+        "worker": "W017",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "0a435ae2b35d25c7",
+        "worker": "W018",
+        "raw_count": 10,
+        "effective_count": 10,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "ffdffd1443b1cef9",
+        "worker": "W021",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "ea4ba198f1b90c5a",
+        "worker": "W027",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "afda73e02ce84841",
+        "worker": "W028",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "7129ad7e523aa525",
+        "worker": "W029",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "3c2427034d519a1a",
+        "worker": "W030",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "3b710fb59e47c8d6",
+        "worker": "W031",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "1aaa93ec5fa02d67",
+        "worker": "W032",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "0225fd516c992f7f",
+        "worker": "W033",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "b1ac17483ad1c04e",
+        "worker": "W034",
+        "raw_count": 10,
+        "effective_count": 10,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "33a4dc1fd6be1bdd",
+        "worker": "W035",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "ca291f0b645de9fa",
+        "worker": "W036",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "2ac783e03ad61d1a",
+        "worker": "W037",
+        "raw_count": 10,
+        "effective_count": 10,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "9f36f0aa4f6aed02",
+        "worker": "W026",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": false
+      },
+      {
+        "id": "a68b2eed7b0c771f",
+        "worker": "W019",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": false
+      }
+    ],
+    "old_cluster3_ids": [
+      "39008f0fe7a1d27b",
+      "3e32b8564185e9c7",
+      "62376c3351699bc6",
+      "517e0e79ed73ad98",
+      "c9609d6092bb0730",
+      "5c8fc29a99324dd7",
+      "db6e2e902a7635ad",
+      "ffdffd1443b1cef9",
+      "afda73e02ce84841",
+      "7129ad7e523aa525",
+      "3c2427034d519a1a",
+      "0225fd516c992f7f",
+      "ca291f0b645de9fa"
+    ]
+  },
+  {
+    "case": 9,
+    "key": "wc2JMjhGNzB_2195c5a9b9fd451b927b0050f23fac31|manual",
+    "code": "wc2JMjhGNzB-15",
+    "condition": "manual",
+    "id_a": "842c3091ac075c7f",
+    "id_b": "e8abf5fd61098d96",
+    "worker_a": "W017",
+    "worker_b": "W029",
+    "original_answer": {
+      "relation": "可视为相近",
+      "comment": "",
+      "defer": false
+    },
+    "numeric_reply": "指定对相近已确认；无文字理由不补造视觉解释。距离改变可能改变其他成员的合并顺序，因此图上完整链接是否合在一起不能简化成“所有距离都更小”。完整组成员同时输出。",
+    "specified_pair_bound_available": true,
+    "raw_source": "evidence/user_review_16.json; evidence/latest_decisions.json",
+    "new_visual_review": false,
+    "all_record_coverage": [
+      {
+        "id": "38c831d7706e9046",
+        "worker": "W001",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "82cd729ad5975e4a",
+        "worker": "W002",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "b39330c925be7bca",
+        "worker": "W006",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "718f9a7977eee15c",
+        "worker": "W008",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "841caf4abb7eaa52",
+        "worker": "W010",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "71c3fbe3be68835e",
+        "worker": "W011",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "4c4912b0914f2ee7",
+        "worker": "W012",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "d6079c1a5e69171f",
+        "worker": "W013",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "2d417fac9115ecf1",
+        "worker": "W014",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "14fd2cc7ba5cecd1",
+        "worker": "W015",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "842c3091ac075c7f",
+        "worker": "W017",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "a68bd1f57ea06d4c",
+        "worker": "W018",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "f88ad9a4b345473b",
+        "worker": "W021",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "7b3dcabd7dc4a947",
+        "worker": "W027",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "770a076dd37bf7a2",
+        "worker": "W028",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "e8abf5fd61098d96",
+        "worker": "W029",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "f06d4161c6ebe577",
+        "worker": "W030",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "7afc4772ffea5f6e",
+        "worker": "W031",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "41f3d9bdae59e491",
+        "worker": "W032",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "99856c3553ce2669",
+        "worker": "W033",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "98f2bdce782afe53",
+        "worker": "W034",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "dd12b2d997381039",
+        "worker": "W035",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "b92cd1db2b605d45",
+        "worker": "W036",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "8646037ff7da90bd",
+        "worker": "W037",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "4cf9d0226b6f407d",
+        "worker": "W026",
+        "raw_count": 0,
+        "effective_count": 0,
+        "processing": "unchanged",
+        "bound_available": false
+      },
+      {
+        "id": "e6701d3b7c423a86",
+        "worker": "W019",
+        "raw_count": 9,
+        "effective_count": null,
+        "processing": "confirmed_response_excluded",
+        "bound_available": false
+      }
+    ],
+    "old_cluster3_ids": []
+  },
+  {
+    "case": 10,
+    "key": "b8cTxDM8gDG_f63819c407e64c2897b703080766cb60|oos",
+    "code": "b8cTxDM8gDG-19",
+    "condition": "oos",
+    "id_a": "8027f25bb7a20f48",
+    "id_b": "710745da69e1f9af",
+    "worker_a": "W028",
+    "worker_b": "W032",
+    "original_answer": {
+      "relation": "",
+      "comment": "主要是32的p4和28的p3 差异较大,但看部分点的差异确实有,但是这图又是oos. 而且我发现簇2 的18 也是这个地方top y 标的靠下,但是好像还是分到同一簇了",
+      "defer": true
+    },
+    "numeric_reply": "OOS只是研究条件，不把该处top差异删除。W018在旧组中的归属不能作为W028/W032必同组或必异组的推理依据；本轮列出三人各自逐端点差异及所在整组。原关系空白且暂缓，保持未决。",
+    "specified_pair_bound_available": true,
+    "raw_source": "evidence/user_review_16.json; evidence/latest_decisions.json",
+    "new_visual_review": false,
+    "all_record_coverage": [
+      {
+        "id": "ed5e4f015fa0d901",
+        "worker": "W001",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "87ae4a7914c286d3",
+        "worker": "W002",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "85294dbf7076ca4e",
+        "worker": "W006",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "261aed6164dd9545",
+        "worker": "W008",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "869aad6dd78196cb",
+        "worker": "W010",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "211b575736ba7cb9",
+        "worker": "W011",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "763a991b9dfc8696",
+        "worker": "W012",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "6681edbb9d5aa59e",
+        "worker": "W013",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "6529ecbbe65e0c15",
+        "worker": "W014",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "0e38d607092eec6b",
+        "worker": "W015",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "8da7070a8e45a7f6",
+        "worker": "W017",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "62163345e9e1cb8c",
+        "worker": "W018",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "3217ba603e509151",
+        "worker": "W021",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "231407e1e3c26cd5",
+        "worker": "W027",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "8027f25bb7a20f48",
+        "worker": "W028",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "903b5a5e0659aed8",
+        "worker": "W029",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "8b23be1612a348e0",
+        "worker": "W030",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "a90f0bb541345d69",
+        "worker": "W031",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "710745da69e1f9af",
+        "worker": "W032",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "180879c05acf67a9",
+        "worker": "W033",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "98fd9fa5115fc41a",
+        "worker": "W034",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "8de2872c37caa579",
+        "worker": "W035",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "1b673a15fccbeffc",
+        "worker": "W036",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "cd5abe0f20e47f74",
+        "worker": "W037",
+        "raw_count": 9,
+        "effective_count": 9,
+        "processing": "unconfirmed_odd_unchanged",
+        "bound_available": false
+      },
+      {
+        "id": "6e9a9a4c4050aede",
+        "worker": "W019",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": false
+      },
+      {
+        "id": "eeb76b73caacc511",
+        "worker": "W026",
+        "raw_count": 0,
+        "effective_count": 0,
+        "processing": "unchanged",
+        "bound_available": false
+      }
+    ],
+    "old_cluster3_ids": [
+      "261aed6164dd9545",
+      "231407e1e3c26cd5",
+      "8de2872c37caa579"
+    ]
+  },
+  {
+    "case": 11,
+    "key": "x8F5xyUWy9e_a51a0e2811f342a599ae4cdb9b84ff23|manual",
+    "code": "x8F5xyUWy9e-09",
+    "condition": "manual",
+    "id_a": "5bf8c2e0f81a9c55",
+    "id_b": "7868a55c4ce8d574",
+    "worker_a": "W031",
+    "worker_b": "W032",
+    "original_answer": {
+      "relation": "应分开保留差异",
+      "comment": "这两个确实都不是正确的标法,截止位置确实也不同,有差异.但是我好奇的是簇3为什么会被单拎出来呢?",
+      "defer": false
+    },
+    "numeric_reply": "用户明确要求保留W031/W032差异，即使二者都不正确。球面与平面距离对此指定对的结论可不同，原因是投影测量而非错误更正。原“簇3为何单拎”另按旧成员身份回接新方法，不能把新簇号3误当旧簇3。",
+    "specified_pair_bound_available": true,
+    "raw_source": "evidence/user_review_16.json; evidence/latest_decisions.json",
+    "new_visual_review": false,
+    "all_record_coverage": [
+      {
+        "id": "6dc291d26b23c7a0",
+        "worker": "W001",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "fdb24e021d7276da",
+        "worker": "W002",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "6fa6d51306c03bbc",
+        "worker": "W006",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "bc7f69b7de20d465",
+        "worker": "W008",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "2e8c554ea9e95aff",
+        "worker": "W010",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "89ea3bf16992c32f",
+        "worker": "W011",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "83002b37a7cdd49c",
+        "worker": "W012",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "8646d4fb710de663",
+        "worker": "W013",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "ed55b02b6c5f0bad",
+        "worker": "W014",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "05d46cc3f94689c9",
+        "worker": "W015",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "11fd9f274cd93897",
+        "worker": "W017",
+        "raw_count": 14,
+        "effective_count": 14,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "04f3914eba8431cf",
+        "worker": "W018",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "7bff8374d694912a",
+        "worker": "W021",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "d309618967a8e3f1",
+        "worker": "W027",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "2e2eab60b2d63268",
+        "worker": "W028",
+        "raw_count": 16,
+        "effective_count": 16,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "aa0b5f36f550db58",
+        "worker": "W029",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "6ba0a04969949b56",
+        "worker": "W030",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "5bf8c2e0f81a9c55",
+        "worker": "W031",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "7868a55c4ce8d574",
+        "worker": "W032",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "ec4fcec59bb24432",
+        "worker": "W033",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "2c1bffcf13c7df13",
+        "worker": "W034",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "30372dbccd1a586f",
+        "worker": "W035",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "95863205019b7150",
+        "worker": "W036",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "e72b6e8a76676529",
+        "worker": "W037",
+        "raw_count": 10,
+        "effective_count": 10,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "2da0deeeb2d81a3f",
+        "worker": "W026",
+        "raw_count": 1,
+        "effective_count": null,
+        "processing": "confirmed_response_excluded",
+        "bound_available": false
+      },
+      {
+        "id": "bf715e62b25484d6",
+        "worker": "W019",
+        "raw_count": 11,
+        "effective_count": 10,
+        "processing": "confirmed_point_removed",
+        "bound_available": false
+      }
+    ],
+    "old_cluster3_ids": [
+      "11fd9f274cd93897"
+    ]
+  },
+  {
+    "case": 12,
+    "key": "yqstnuAEVhm_66ecc07f3cda4d8ebaf84288325669f5|oos",
+    "code": "yqstnuAEVhm-15",
+    "condition": "oos",
+    "id_a": "ec7d0001d6230fed",
+    "id_b": "1d46ee3a30918343",
+    "worker_a": "W017",
+    "worker_b": "W018",
+    "original_answer": {
+      "relation": "应分开保留差异",
+      "comment": "oos,这里也主要是w18的p6和w08 的p10的差异.但是只是一个点的差异,不确定要不要单拎出来",
+      "defer": true
+    },
+    "numeric_reply": "原关系虽填“应分开”，但defer=true优先，本项仍未裁决。后续澄清为W017 p10与W018 p6，不覆盖旧文字的W008。一个局部端点是否足以形成独立整份表达组，不能由点的数量少直接否定；应结合该端点差和整组约束判断。",
+    "specified_pair_bound_available": true,
+    "raw_source": "evidence/user_review_16.json; evidence/latest_decisions.json",
+    "new_visual_review": false,
+    "all_record_coverage": [
+      {
+        "id": "db7fe64b7313a46c",
+        "worker": "W001",
+        "raw_count": 10,
+        "effective_count": 10,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "4bd3e31c9163b33e",
+        "worker": "W002",
+        "raw_count": 10,
+        "effective_count": 10,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "c0a0ce605d24562d",
+        "worker": "W006",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "af3a3ae0ae425dc4",
+        "worker": "W008",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "0efd0a0c1939749b",
+        "worker": "W010",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "f28720a75aaab159",
+        "worker": "W011",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "6699db74821a919e",
+        "worker": "W012",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "645c492a9b5d25b7",
+        "worker": "W013",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "5ca409caedd3314a",
+        "worker": "W014",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "6023152b323bf630",
+        "worker": "W015",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "ec7d0001d6230fed",
+        "worker": "W017",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "1d46ee3a30918343",
+        "worker": "W018",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "30ecdd5e143c3161",
+        "worker": "W021",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "cea51349a3124994",
+        "worker": "W027",
+        "raw_count": 16,
+        "effective_count": 16,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "58edb835d70cc5d5",
+        "worker": "W028",
+        "raw_count": 18,
+        "effective_count": 18,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "5f22a20aed0c1249",
+        "worker": "W029",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "7960004dcebf26f0",
+        "worker": "W030",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "ab49c95c36db8e18",
+        "worker": "W031",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "5fcc3f74a0e93344",
+        "worker": "W032",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "9a6969085af7949d",
+        "worker": "W033",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "291c09a624cd8f99",
+        "worker": "W034",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "a66f7b0846ec88b0",
+        "worker": "W035",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "58575767b314c57c",
+        "worker": "W036",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "30c6234c4303f3ef",
+        "worker": "W037",
+        "raw_count": 10,
+        "effective_count": 10,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "1dd3bfc47096510e",
+        "worker": "W026",
+        "raw_count": 18,
+        "effective_count": 18,
+        "processing": "unchanged",
+        "bound_available": false
+      },
+      {
+        "id": "9c069dd1b22d34b9",
+        "worker": "W019",
+        "raw_count": 6,
+        "effective_count": 6,
+        "processing": "unchanged",
+        "bound_available": false
+      }
+    ],
+    "old_cluster3_ids": [
+      "58575767b314c57c"
+    ]
+  },
+  {
+    "case": 13,
+    "key": "B6ByNegPMKs_5b5bd1eac4e6462d8c6677b90a4cf9a9|manual",
+    "code": "B6ByNegPMKs-18",
+    "condition": "manual",
+    "id_a": "8a2600447847d5ab7f5f",
+    "id_b": "9378da78037a5091f22e",
+    "worker_a": "W011",
+    "worker_b": "W033",
+    "original_answer": {
+      "relation": "可视为相近",
+      "comment": "",
+      "defer": false
+    },
+    "numeric_reply": "已确认相近，原文字空白；保留该指定对作为开发约束，不推断全图或整个当前簇都已验收。",
+    "specified_pair_bound_available": true,
+    "raw_source": "evidence/user_review_16.json; evidence/latest_decisions.json",
+    "new_visual_review": false,
+    "all_record_coverage": [
+      {
+        "id": "8a2600447847d5ab7f5f",
+        "worker": "W011",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "ad005008336266edcd64",
+        "worker": "W015",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "9378da78037a5091f22e",
+        "worker": "W033",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "260cf962d9bea8512f9e",
+        "worker": "W034",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "ecd4e736ab99493cf8bd",
+        "worker": "W037",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      }
+    ],
+    "old_cluster3_ids": []
+  },
+  {
+    "case": 14,
+    "key": "B6ByNegPMKs_e52609aae11f42a79f6cf50360180fd5|manual",
+    "code": "B6ByNegPMKs-48",
+    "condition": "manual",
+    "id_a": "381c007b1df27d00b6ab",
+    "id_b": "d102c6b86a1606f32bd3",
+    "worker_a": "W032",
+    "worker_b": "W034",
+    "original_answer": {
+      "relation": "可视为相近",
+      "comment": "",
+      "defer": false
+    },
+    "numeric_reply": "已确认相近，原文字空白；报告数值和当前整簇范围，不额外制造视觉理由。",
+    "specified_pair_bound_available": true,
+    "raw_source": "evidence/user_review_16.json; evidence/latest_decisions.json",
+    "new_visual_review": false,
+    "all_record_coverage": [
+      {
+        "id": "f8d2cd60e9a8ecf91058",
+        "worker": "W013",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "56c9aa0348514ab3cc5b",
+        "worker": "W014",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "0cb5a7c23d9bc70208b1",
+        "worker": "W018",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "22dcfad23c6ac14bd521",
+        "worker": "W031",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "381c007b1df27d00b6ab",
+        "worker": "W032",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "d102c6b86a1606f32bd3",
+        "worker": "W034",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      }
+    ],
+    "old_cluster3_ids": []
+  },
+  {
+    "case": 15,
+    "key": "e9zR4mvMWw7_1d316dfbe35f41dd9203eaf88be5aae8|manual",
+    "code": "e9zR4mvMWw7-09",
+    "condition": "manual",
+    "id_a": "eabfca08cf8ed118e1e7",
+    "id_b": "2421466da1f7d0800380",
+    "worker_a": "W014",
+    "worker_b": "W034",
+    "original_answer": {
+      "relation": "可视为相近",
+      "comment": "",
+      "defer": false
+    },
+    "numeric_reply": "已确认相近，原文字空白；维持已有判断，同时保留整组内端点极值与成员检查。",
+    "specified_pair_bound_available": true,
+    "raw_source": "evidence/user_review_16.json; evidence/latest_decisions.json",
+    "new_visual_review": false,
+    "all_record_coverage": [
+      {
+        "id": "0fe7898050e5c65aa163",
+        "worker": "W006",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "230418a93ba734601d15",
+        "worker": "W010",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "a7f130f489209fd66673",
+        "worker": "W013",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "eabfca08cf8ed118e1e7",
+        "worker": "W014",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "d64ce5b326b6015ae8bf",
+        "worker": "W018",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "2421466da1f7d0800380",
+        "worker": "W034",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      }
+    ],
+    "old_cluster3_ids": []
+  },
+  {
+    "case": 16,
+    "key": "q9vSo1VnCiC_f7452776f0604b508bb2b0263238deb0|manual",
+    "code": "q9vSo1VnCiC-34",
+    "condition": "manual",
+    "id_a": "3a163ca0abb6cc5d8ebc",
+    "id_b": "6228485ada8f90d32777",
+    "worker_a": "W015",
+    "worker_b": "W030",
+    "original_answer": {
+      "relation": "可视为相近",
+      "comment": "",
+      "defer": false
+    },
+    "numeric_reply": "已确认相近，原文字空白；当前一致仅属于开发案例符合，不能称独立验证准确率。",
+    "specified_pair_bound_available": true,
+    "raw_source": "evidence/user_review_16.json; evidence/latest_decisions.json",
+    "new_visual_review": false,
+    "all_record_coverage": [
+      {
+        "id": "30ae9e7207f0bf746fc4",
+        "worker": "W011",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "497bb847657d8053449f",
+        "worker": "W012",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "3a163ca0abb6cc5d8ebc",
+        "worker": "W015",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "7568b98692b00ff8ff63",
+        "worker": "W027",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "6228485ada8f90d32777",
+        "worker": "W030",
+        "raw_count": 8,
+        "effective_count": 8,
+        "processing": "unchanged",
+        "bound_available": true
+      }
+    ],
+    "old_cluster3_ids": []
+  },
+  {
+    "case": 17,
+    "key": "uNb9QFRL6hY_3b9e548b46af4410b97e1d12781ec3c9|manual",
+    "code": "uNb9QFRL6hY-21",
+    "condition": "manual",
+    "id_a": "8178591994d42ce3",
+    "id_b": "a4e0cac5adec2e1e",
+    "worker_a": "W006",
+    "worker_b": "W013",
+    "original_answer": {
+      "relation": "可视为相近",
+      "defer": false,
+      "comment": "后续完整对应确认；原点不改；不设统一容差。"
+    },
+    "numeric_reply": "完整人工对应和相近判断已经确认，不再询问。映射变化不强制合并所属整簇。",
+    "specified_pair_bound_available": true,
+    "raw_source": "evidence/user_review_16.json; evidence/latest_decisions.json",
+    "new_visual_review": false,
+    "all_record_coverage": [
+      {
+        "id": "1eff38d64ebf8ebb",
+        "worker": "W030",
+        "raw_count": 10,
+        "effective_count": 10,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "268e43366ea0bcb8",
+        "worker": "W033",
+        "raw_count": 14,
+        "effective_count": 14,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "39f32d3182a9a449",
+        "worker": "W028",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "43b2e89e9fd7c38f",
+        "worker": "W036",
+        "raw_count": 16,
+        "effective_count": 16,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "523c33883ac9489a",
+        "worker": "W018",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "74051761f655b31b",
+        "worker": "W017",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "75be39df2c1c14a3",
+        "worker": "W002",
+        "raw_count": 16,
+        "effective_count": 16,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "7693891481ff5386",
+        "worker": "W010",
+        "raw_count": 18,
+        "effective_count": 18,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "79a20413d834e832",
+        "worker": "W037",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "7ad8feb020087113",
+        "worker": "W035",
+        "raw_count": 16,
+        "effective_count": 16,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "8178591994d42ce3",
+        "worker": "W006",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "88a80bacfd70139f",
+        "worker": "W011",
+        "raw_count": 14,
+        "effective_count": 14,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "8b3be018ff673d1f",
+        "worker": "W032",
+        "raw_count": 10,
+        "effective_count": 10,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "9ab5ef47f1224afd",
+        "worker": "W034",
+        "raw_count": 10,
+        "effective_count": 10,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "a4e0cac5adec2e1e",
+        "worker": "W013",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "c0243fb04589828e",
+        "worker": "W021",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "d7eb6edddcc78db9",
+        "worker": "W027",
+        "raw_count": 16,
+        "effective_count": 16,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "edbb02694073d0f8",
+        "worker": "W008",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "f4e3004912779c48",
+        "worker": "W015",
+        "raw_count": 12,
+        "effective_count": 12,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "f79d8e8c15022fce",
+        "worker": "W031",
+        "raw_count": 10,
+        "effective_count": 10,
+        "processing": "unchanged",
+        "bound_available": true
+      },
+      {
+        "id": "f9f3e8e273c243a5",
+        "worker": "W029",
+        "raw_count": 14,
+        "effective_count": 14,
+        "processing": "unchanged",
+        "bound_available": true
+      }
+    ],
+    "old_cluster3_ids": []
+  }
+]

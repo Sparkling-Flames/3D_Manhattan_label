@@ -1,0 +1,86 @@
+{
+  "schema": "local_point_followup_decisions_v1",
+  "source_run_id": "9998c09698eea1a4",
+  "source": "2026-09-20 当前研究对话；原16图审核另存原件，不覆盖旧局部确认文件",
+  "user_quotes": [
+    "点位为主,因为3d 的差异有可能是 角点顺序导致的,但是3d 也可以作为辅助信号",
+    "后续这个容差,只是起辅助判断的作用,我还是希望最后人工介入核验",
+    "我还是想看 哪种方法 哪种方法能更合理的分类, 我也要看看对曲线和 人员的分类的影响",
+    "其实这被挡住的是5,6这点,这差异确实明显小很多,可以视为相近. 其实这种情况我在comment里都说: 就是被完全挡住的点造成的标注差异.但是这个最大4.59度,我不同意直接定下来筛选的条件",
+    "可以执行计划,但是查验图片的时候,我认为应扩大范围,应该是所有历史标注图片中都得核验(但是不一定现在做,可以晚点做,等彻底确认分簇后进行)"
+  ],
+  "interpretation": {
+    "primary": "全景图上局部点位差异；3D仅辅助，不把重建敏感性直接作为分簇权重",
+    "review_scope": "工作方法确定后逐图核验所有历史标注图片的分簇；先做争议，不以异常筛查替代全量验收",
+    "tolerance": "辅助；4.59度及6/9/12度均不是已确认语义阈值",
+    "odd_points": "已由用户确认补删的记录按有效点集计算；保留原点和处理来源",
+    "unresolved": "16图defer=true保持暂缓，即使relation有值；文字不被空下拉框覆盖",
+    "research_value": "遗漏、定位差错、OOS及单人表达保留；不同有效总点数硬门不变"
+  },
+  "confirmed_correspondences": [
+    {
+      "code": "uNb9QFRL6hY-21",
+      "condition": "manual",
+      "id_a": "8178591994d42ce3",
+      "worker_a": "W006",
+      "id_b": "a4e0cac5adec2e1e",
+      "worker_b": "W013",
+      "pair_order_b_1based": [
+        1,
+        2,
+        4,
+        3,
+        5,
+        6
+      ],
+      "roles": [
+        "top",
+        "bottom"
+      ],
+      "status": "用户看过叠加后确认两组交叉对应；其余四组坐标相同。相近判断已确认",
+      "numbering": "按x排序的点对序号；不是原始点数组的点号",
+      "source": "当前对话uNb-21复核：完整对应确认及后续叠加图的相近判断",
+      "same_cluster_for_all_workers": null,
+      "threshold_confirmed": false,
+      "raw_points_changed": false,
+      "point_payload_sha_a": "393a22c9655ead6d3471bdd2366bd710b8d8994f23567a70596876438f7835c4",
+      "point_payload_sha_b": "f0a5db617bcca54f6675812363e454540f1ec85a65603a288552a7a9c1a5c8ae"
+    }
+  ],
+  "confirmed_correspondence_summary": {
+    "code": "uNb9QFRL6hY-21",
+    "condition": "manual",
+    "id_a": "8178591994d42ce3",
+    "worker_a": "W006",
+    "id_b": "a4e0cac5adec2e1e",
+    "worker_b": "W013",
+    "pair_order_b_1based": [
+      1,
+      2,
+      4,
+      3,
+      5,
+      6
+    ],
+    "roles": [
+      "top",
+      "bottom"
+    ],
+    "status": "用户看过叠加后确认两组交叉对应；其余四组坐标相同。相近判断已确认",
+    "numbering": "按x排序的点对序号；不是原始点数组的点号",
+    "source": "当前对话uNb-21复核：完整对应确认及后续叠加图的相近判断",
+    "same_cluster_for_all_workers": null,
+    "threshold_confirmed": false,
+    "raw_points_changed": false
+  },
+  "comment_clarifications": [
+    {
+      "code": "yqstnuAEVhm-15",
+      "original": "原16图文字写W018 p6与W008 p10",
+      "clarification": "后续用户澄清为W017 p10与W018 p6",
+      "source": "当前对话的点号澄清",
+      "final_relation": null,
+      "defer": true
+    }
+  ]
+}

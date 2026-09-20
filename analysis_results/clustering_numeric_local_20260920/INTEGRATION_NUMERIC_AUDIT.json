@@ -1,0 +1,44 @@
+{
+  "source_commit": "457081270c88b719f70d96a721ec0c810a76a2d1",
+  "raw_records": 2501,
+  "retained_records": 2388,
+  "split_available": 2381,
+  "bound_available": 2343,
+  "historical_units": 239,
+  "bound_units": 238,
+  "all_bound_person_pairs": 20169,
+  "equal_count_bound_pairs": 13341,
+  "count_incompatible_pairs": 6828,
+  "endpoints": 119046,
+  "endpoint_sphere_max_absolute_error": 4.985594159734319e-10,
+  "endpoint_pixel_max_absolute_error": 4.995399649487808e-10,
+  "full_matrix_max_error": 1.1368683772161603e-13,
+  "changed_coclustering_relations": 0,
+  "partitions_verified": 5712,
+  "source_result_files_reproduced": 10,
+  "independent_binding_solver": "exact subset dynamic programming; inherited 51.2px admissibility, 1e-8 tie tolerance",
+  "original_points_changed": 0,
+  "effective_version_changes": [
+    {
+      "id": "8ffe08f072e2b12e",
+      "worker": "W002",
+      "image_id": "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+      "old_count": 28,
+      "new_count": 28,
+      "processing_status": "researcher_coordinate_correction",
+      "raw_points_equal": true
+    },
+    {
+      "id": "9b8f8bec4da82b48",
+      "worker": "W018",
+      "image_id": "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+      "old_count": 21,
+      "new_count": 20,
+      "processing_status": "researcher_confirmed_point_removed",
+      "raw_points_equal": true
+    }
+  ],
+  "human_pair_overrides": 1,
+  "new_visual_adjudications": 0,
+  "source_scope": "frozen packaged records and existing source lineage; original runtime logs not re-parsed"
+}

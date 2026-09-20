@@ -1,0 +1,139 @@
+{
+  "source_sha256": "47e446e38021acb38008ccf6594f60671852712252a7a966c5c1a72b81dd7158",
+  "source_git_blob": "9cf824b5a77deeccd45b569d5f8727b29810a36a",
+  "mode": "full",
+  "steps": [
+    {
+      "step": "source_replay",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-X",
+        "utf8",
+        "-B",
+        "-m",
+        "tools.thesis_main.analysis.clustering_release.local_points",
+        "--root",
+        "/mnt/data/isolation_source_20260920/rc2_received/sources/current/study",
+        "--evidence",
+        "/mnt/data/isolation_source_20260920/evidence",
+        "--out",
+        "/mnt/data/isolation_recompute_20260920/source_replay"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 17.265086814999904
+    },
+    {
+      "step": "audit_numeric",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-X",
+        "utf8",
+        "-B",
+        "/mnt/data/clustering_numeric_20260920/code/audit_numeric.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 35.02618872999983
+    },
+    {
+      "step": "prefix_replay",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-X",
+        "utf8",
+        "-B",
+        "/mnt/data/clustering_numeric_20260920/code/prefix_replay.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 389.36201957000003
+    },
+    {
+      "step": "personnel_effects",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-X",
+        "utf8",
+        "-B",
+        "/mnt/data/clustering_numeric_20260920/code/personnel_effects.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 71.8517889030004
+    },
+    {
+      "step": "review_cases",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-X",
+        "utf8",
+        "-B",
+        "/mnt/data/clustering_numeric_20260920/code/review_cases.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.3632209649999822
+    },
+    {
+      "step": "sensitivity_3d",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-X",
+        "utf8",
+        "-B",
+        "/mnt/data/clustering_numeric_20260920/code/sensitivity_3d.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 27.15155439499995
+    },
+    {
+      "step": "diagnostics",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-X",
+        "utf8",
+        "-B",
+        "/mnt/data/clustering_numeric_20260920/code/diagnostics.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 5.610114686000088
+    },
+    {
+      "step": "model_bridge",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-X",
+        "utf8",
+        "-B",
+        "/mnt/data/clustering_numeric_20260920/code/model_bridge.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.7813430259998313
+    },
+    {
+      "step": "personnel_prefix",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-X",
+        "utf8",
+        "-B",
+        "/mnt/data/clustering_numeric_20260920/code/personnel_prefix.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 244.67882081200014
+    },
+    {
+      "step": "tests_run",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-X",
+        "utf8",
+        "-B",
+        "-m",
+        "pytest",
+        "/mnt/data/clustering_numeric_20260920/tests",
+        "/mnt/data/isolation_source_20260920/tests/test_local_point_comparison.py",
+        "/mnt/data/isolation_source_20260920/tests/test_clustering_release_review.py",
+        "-q"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 3.3822275219999938
+    }
+  ]
+}

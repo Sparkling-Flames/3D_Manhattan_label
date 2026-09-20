@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "reference_numerical_files": 100,
+  "rerun_numerical_files": 100,
+  "status_counts": {
+    "payload_identical": 98,
+    "floating_point_equivalent": 1,
+    "gzip_metadata_correctly_bound": 1
+  },
+  "absolute_tolerance": 1e-12,
+  "relative_tolerance": 1e-12,
+  "maximum_csv_difference": 3.552713678800501e-15,
+  "interpretation": "98 decoded numerical payloads are identical; rounding and gzip metadata are checked explicitly, not ignored.",
+  "logs_and_RUN_EXECUTION_are_execution_metadata_not_numerical_results": true
+}

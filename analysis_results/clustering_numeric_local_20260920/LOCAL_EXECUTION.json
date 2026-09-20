@@ -1,0 +1,41 @@
+{
+  "numerical_steps_completed": [
+    "source_replay",
+    "audit_numeric",
+    "prefix_replay",
+    "personnel_effects",
+    "review_cases",
+    "sensitivity_3d",
+    "diagnostics",
+    "model_bridge",
+    "personnel_prefix"
+  ],
+  "original_run_all_exit_code": 1,
+  "original_failure_stage": "tests_run: pytest collection tried the common ancestor C:/Users/ASUS across drives, denied by local filesystem permissions; no numerical step failed",
+  "tests_after_repository_integration": {
+    "passed": 50,
+    "failed": 0,
+    "output_log": "LOCAL_TESTS.log",
+    "tested_results": "recomputed/ (not the received result tables)"
+  },
+  "regenerated_figures": 9,
+  "comparison": "comparison/ISOLATED_REPRODUCTION.json",
+  "review_of_remaining_precision_flags": "LOCAL_PLATFORM_DIFFERENCES.json",
+  "source_snapshot_matches_previous_repository_delivery": true,
+  "code_files": {
+    "audit_numeric.py": "14d2dc3a68fe449206510281fa90d088ff4ed0d20af32ecacdf393dd1bc954dc",
+    "common.py": "5d7f82acd2e19d5a05f871c846a880041c2435e30196d37a1d7c598f26966a04",
+    "compare_runs.py": "2ea772009849bc760c1b43d792d9c1bb7875f0e80e93c0e941e94e1bbe7ff518",
+    "diagnostics.py": "b2df7fb557628b0e501cb1b281ac4ed3f83c7a7f694b96ddc6cd43ad2bca015f",
+    "make_figures.py": "d9ae1abc112ac7409756f8c5bd6e91d441f46e9e4c3f1fa3caff749e1f103aae",
+    "model_bridge.py": "13bca74ecf0c79ccbe0a0684f8db728a4e5c7e8069ce957adb7f52071ab13221",
+    "personnel_effects.py": "bd60beddf1bda56e17733f66f1a274d2e7c90f2519927f7313ce718a72399be6",
+    "personnel_prefix.py": "acf35c8bb22ba811a048e9d82994668506478fb483c79b463efa04d9456de0c2",
+    "prefix_replay.py": "f4f31b080f546b31c8eb79d2a2079ada9d6fffcfe48805e544bd866a924e605e",
+    "review_cases.py": "9339f5b27d5c98978e675fddd0c257cc17047d6f55e951d2f1be1e870684366d",
+    "run_all.py": "e9da5c55c8500c8f717bdc9576e92061c7621cedfec274561720b814a339f689",
+    "sensitivity_3d.py": "62246c8968615122df69939f2d5d0ec0fa2e976de003788765569f9390671ee7"
+  },
+  "default_clustering_changed": false,
+  "new_visual_decisions": 0
+}

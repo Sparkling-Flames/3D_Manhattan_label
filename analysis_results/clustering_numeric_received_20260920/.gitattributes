@@ -1,0 +1,9 @@
+# 原交付数值、JSON和报告保持原始字节，便于清单验收。
+results/** -text
+evidence/** -text
+reports/** -text
+*.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+*.csv -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# 原答复引用中的空行保留“> ”，不为格式检查改写原件。
+reports/COMMENT_REPLIES_ZH.md whitespace=-blank-at-eol
+results/review/COMMENT_REPLIES_ZH.md whitespace=-blank-at-eol

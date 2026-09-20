@@ -3,7 +3,7 @@
 **分簇工作版与一致性入口：**[统一数据入口](thesis_main/分簇工作版_统一数据入口_20260920.md)及[本地审核与云端数值包](../analysis_results/clustering_release_local_20260920/README.md)。已确认奇数点补删按有效点集计算；正式合同不变，人工验收待完成。
 
 
-**当前Pro新对话：**[局部点位分簇、曲线与人员影响](thesis_main/Pro新对话_局部点位分簇与影响核查_20260920.md)及[自包含资料与独立审核页](../analysis_results/local_point_clustering_20260920/README.md)。16图原文与uNb最新确认保留；方法确定后逐图验收全部214张历史图片（239条件单元）。
+**最新局部点位数值返回：**[接收、审查与复算入口](../analysis_results/clustering_numeric_received_20260920/README.md)、[本地验收](../analysis_results/clustering_numeric_local_20260920/README.md)。[原云端任务](thesis_main/Pro新对话_局部点位分簇与影响核查_20260920.md)及[独立审核页](../analysis_results/local_point_clustering_20260920/README.md)保留；方法和容差未冻结，方法确定后逐图验收全部214张历史图片（239条件单元）。
 
 **历史全量视觉验证范围：**[214图筛查队列与新增8图初核](../analysis_results/paired_split_research_received_20260920/history_visual_review/README.md)。不再局限39图；8图已查看指定作答对，余下保留状态与优先级，用户裁决空白。
 
