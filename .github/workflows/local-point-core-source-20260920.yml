@@ -1,0 +1,23 @@
+name: Local point core ZIP export
+on:
+  push:
+    branches: [research/local-point-audit-20260920]
+    paths: [.github/workflows/local-point-core-source-20260920.yml]
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Download exact public immutable source ZIP
+        run: |
+          mkdir export
+          curl --fail --location --retry 2 'https://raw.githubusercontent.com/Sparkling-Flames/3D_Manhattan_label/457081270c88b719f70d96a721ec0c810a76a2d1/analysis_results/local_point_clustering_20260920/pro_local_points_20260920.zip' -o export/pro_local_points_20260920.zip
+          sha256sum export/pro_local_points_20260920.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pro-local-point-core-4570812
+          path: export/pro_local_points_20260920.zip
+          if-no-files-found: error
+          retention-days: 14
