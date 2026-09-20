@@ -1,5 +1,9 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
+**分簇工作版与一致性入口：**[统一数据入口](thesis_main/分簇工作版_统一数据入口_20260920.md)及[本地审核与云端数值包](../analysis_results/clustering_release_local_20260920/README.md)。已确认奇数点补删按有效点集计算；正式合同不变，人工验收待完成。
+
+**分簇工作版与一致性入口：**[统一数据入口](thesis_main/分簇工作版_统一数据入口_20260920.md)及[本地审核与云端数值包](../analysis_results/clustering_release_local_20260920/README.md)。已确认奇数点补删按有效点集计算；正式合同不变，人工验收待完成。
+
 **当前Pro任务：**[尽快形成可用分簇、轻量人工复核与分析成稿准备](thesis_main/Pro下一轮_分簇定稿与分析准备_20260920.md)，已核对导师书面交流与用户最新要求。[云端资料](../analysis_results/pro_next_round_20260920/README.md)含明确的用户局部确认、视觉文字、冻结数值与代码。
 
 **历史全量视觉验证范围：**[214图筛查队列与新增8图初核](../analysis_results/paired_split_research_received_20260920/history_visual_review/README.md)。不再局限39图；8图已查看指定作答对，余下保留状态与优先级，用户裁决空白。

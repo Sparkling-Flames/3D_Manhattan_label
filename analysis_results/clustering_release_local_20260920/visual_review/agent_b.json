@@ -1,0 +1,523 @@
+[
+  {
+    "image_id": "b8cTxDM8gDG_f63819c407e64c2897b703080766cb60",
+    "code": "b8cTxDM8gDG-19",
+    "condition": "oos",
+    "id_a": "8027f25bb7a20f48",
+    "id_b": "710745da69e1f9af",
+    "worker_a": "W028",
+    "worker_b": "W032",
+    "count_a": 8,
+    "count_b": 8,
+    "split_cyclic": 8.43674953431,
+    "split_fixed": 8.43674953431,
+    "split_free": 8.43674953431,
+    "bound_cyclic": 8.43674953431,
+    "reasons": "within_cluster_local_concentration",
+    "pair_has_prior_evidence": false,
+    "image_has_prior_evidence": false,
+    "priority": 3,
+    "gap": 0.0,
+    "physical_judgment": "unconfirmed",
+    "final_cluster_decision": null,
+    "reviewed_ids": [
+      "ed5e4f015fa0d901",
+      "87ae4a7914c286d3",
+      "85294dbf7076ca4e",
+      "869aad6dd78196cb",
+      "211b575736ba7cb9",
+      "763a991b9dfc8696",
+      "6529ecbbe65e0c15",
+      "0e38d607092eec6b",
+      "8da7070a8e45a7f6",
+      "62163345e9e1cb8c",
+      "3217ba603e509151",
+      "8027f25bb7a20f48",
+      "903b5a5e0659aed8",
+      "a90f0bb541345d69",
+      "710745da69e1f9af",
+      "98fd9fa5115fc41a"
+    ],
+    "cluster_a": 2,
+    "cluster_b": 2,
+    "evidence_paths": [
+      "analysis_results/clustering_release_local_20260920/visual_review/b1_1.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b1_2.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b1_3.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b1_4.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b1_5.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b1_6.jpg"
+    ],
+    "selected_reason": "within_cluster_local_concentration",
+    "coverage": {
+      "original_panorama_with_points": true,
+      "all_members_of_selected_clusters_viewed": true,
+      "reviewed_response_count": 16,
+      "all_image_responses_reviewed": false,
+      "scope": "所选簇全部成员；不宣称该图片全部其他簇均已检查"
+    },
+    "observations": [
+      "查看所选16人簇全部成员；四处角点组总体一致。主要差异集中于左玻璃区右上方梁与墙转折，W028与W032选取不同高度，不能把该差异自动解释为不同空间或错误。"
+    ],
+    "positions": [
+      "x约291，top y180至204；W028 p3／W032 p4",
+      "玻璃区与家具遮挡的bottom整体较接近"
+    ],
+    "questions": [
+      "梁附近上下两个位置是否代表需要分开的局部表达，还是本研究可容忍的定位差异？"
+    ],
+    "user_decision": null,
+    "reviewer": "Codex视觉子代理B",
+    "point_display_note": "p为有效点集1起始序号；颜色按y<256区分，仅作显示，不视为人工角色确认。",
+    "numeric_snapshot": "RC1 results/final_run；待主入口重算核对所选成员关系。"
+  },
+  {
+    "image_id": "x8F5xyUWy9e_a51a0e2811f342a599ae4cdb9b84ff23",
+    "code": "x8F5xyUWy9e-09",
+    "condition": "manual",
+    "id_a": "5bf8c2e0f81a9c55",
+    "id_b": "7868a55c4ce8d574",
+    "worker_a": "W031",
+    "worker_b": "W032",
+    "count_a": 12,
+    "count_b": 12,
+    "split_cyclic": 8.16237755555,
+    "split_fixed": 8.16237755555,
+    "split_free": 8.16237755555,
+    "bound_cyclic": 8.16237755555,
+    "reasons": "within_cluster_local_concentration",
+    "pair_has_prior_evidence": false,
+    "image_has_prior_evidence": false,
+    "priority": 3,
+    "gap": 0.0,
+    "physical_judgment": "unconfirmed",
+    "final_cluster_decision": null,
+    "reviewed_ids": [
+      "5bf8c2e0f81a9c55",
+      "7868a55c4ce8d574",
+      "2c1bffcf13c7df13"
+    ],
+    "cluster_a": 2,
+    "cluster_b": 2,
+    "evidence_paths": [
+      "analysis_results/clustering_release_local_20260920/visual_review/b2_1.jpg"
+    ],
+    "selected_reason": "within_cluster_local_concentration",
+    "coverage": {
+      "original_panorama_with_points": true,
+      "all_members_of_selected_clusters_viewed": true,
+      "reviewed_response_count": 3,
+      "all_image_responses_reviewed": false,
+      "scope": "所选簇全部成员；不宣称该图片全部其他簇均已检查"
+    },
+    "observations": [
+      "查看所选3人簇全部成员。右侧双门末端处W031选择门框右缘，W032、W034偏向右侧窄柱外缘；其余主要角点位置相近。该簇可能容纳了局部结构选择差异，值得用户确认。"
+    ],
+    "positions": [
+      "右双门右端：W031 top p11 (876,193)、bottom p12 (874,368)；W032 top p9 (899,197)、bottom p10 (900,358)"
+    ],
+    "questions": [
+      "门框边与柱子外缘是否应作为不同表达？如需区分，当前9度簇是否过宽？"
+    ],
+    "user_decision": null,
+    "reviewer": "Codex视觉子代理B",
+    "point_display_note": "p为有效点集1起始序号；颜色按y<256区分，仅作显示，不视为人工角色确认。",
+    "numeric_snapshot": "RC1 results/final_run；待主入口重算核对所选成员关系。"
+  },
+  {
+    "image_id": "yqstnuAEVhm_66ecc07f3cda4d8ebaf84288325669f5",
+    "code": "yqstnuAEVhm-15",
+    "condition": "oos",
+    "id_a": "ec7d0001d6230fed",
+    "id_b": "1d46ee3a30918343",
+    "worker_a": "W017",
+    "worker_b": "W018",
+    "count_a": 12,
+    "count_b": 12,
+    "split_cyclic": 8.00121231656,
+    "split_fixed": 8.00121231656,
+    "split_free": 8.00121231656,
+    "bound_cyclic": 8.00121231656,
+    "reasons": "within_cluster_local_concentration",
+    "pair_has_prior_evidence": false,
+    "image_has_prior_evidence": false,
+    "priority": 3,
+    "gap": 0.0,
+    "physical_judgment": "unconfirmed",
+    "final_cluster_decision": null,
+    "reviewed_ids": [
+      "c0a0ce605d24562d",
+      "645c492a9b5d25b7",
+      "6023152b323bf630",
+      "ec7d0001d6230fed",
+      "1d46ee3a30918343",
+      "9a6969085af7949d"
+    ],
+    "cluster_a": 6,
+    "cluster_b": 6,
+    "evidence_paths": [
+      "analysis_results/clustering_release_local_20260920/visual_review/b3_1.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b3_2.jpg"
+    ],
+    "selected_reason": "within_cluster_local_concentration",
+    "coverage": {
+      "original_panorama_with_points": true,
+      "all_members_of_selected_clusters_viewed": true,
+      "reviewed_response_count": 6,
+      "all_image_responses_reviewed": false,
+      "scope": "所选簇全部成员；不宣称该图片全部其他簇均已检查"
+    },
+    "observations": [
+      "查看所选6人簇全部成员。走廊、右侧门口及楼梯口主要角点组一致。楼梯栏杆遮挡处bottom高度变化集中，无法仅凭原图确定墙脚真实投影。"
+    ],
+    "positions": [
+      "楼梯栏杆附近x约330：W017 p10 (332,356)、W018 p6 (327,334)"
+    ],
+    "questions": [
+      "遮挡处约23像素的高度差是否需要单独记为表达差异，还是保留同簇并记录局部不确定性？"
+    ],
+    "user_decision": null,
+    "reviewer": "Codex视觉子代理B",
+    "point_display_note": "p为有效点集1起始序号；颜色按y<256区分，仅作显示，不视为人工角色确认。",
+    "numeric_snapshot": "RC1 results/final_run；待主入口重算核对所选成员关系。"
+  },
+  {
+    "image_id": "X7HyMhZNoso_987fd31155514f6facb131bd5c14881d",
+    "code": "X7HyMhZNoso-13",
+    "condition": "manual",
+    "id_a": "6d60091b52a8a93c",
+    "id_b": "699e590cdc0187eb",
+    "worker_a": "W002",
+    "worker_b": "W030",
+    "count_a": 8,
+    "count_b": 8,
+    "split_cyclic": 2.08094073324,
+    "split_fixed": 2.08094073324,
+    "split_free": 2.08094073324,
+    "bound_cyclic": 2.08094073324,
+    "reasons": "close_pair_split_by_partition",
+    "pair_has_prior_evidence": true,
+    "image_has_prior_evidence": true,
+    "priority": 2,
+    "gap": 0.0,
+    "physical_judgment": "unconfirmed",
+    "final_cluster_decision": null,
+    "reviewed_ids": [
+      "2b75349a0d747440",
+      "6d60091b52a8a93c",
+      "d51ae1a5831a491f",
+      "b38098dbc883b897",
+      "b3d91348061353b4",
+      "d54323b15af787a3",
+      "b2be1df92c78eded",
+      "00e1f0475f32cb49",
+      "d90b8277604eeace",
+      "7834e8d354a01da4",
+      "0fff707ce84d6609",
+      "62836cb5439d47d2",
+      "5436c4f88262ddc5",
+      "0c054ac3932985cb",
+      "121644cf341ee37d",
+      "fb8ee4635680f271",
+      "699e590cdc0187eb",
+      "6f9679a3058624e4",
+      "bc1cd87a35fe5e07",
+      "67cd0f7506bc51c3",
+      "fe443220e5338d14",
+      "0f871667c1e1a335",
+      "94d4b4a63d7f84cc"
+    ],
+    "cluster_a": 1,
+    "cluster_b": 2,
+    "blocker_ids": [
+      "7834e8d354a01da4",
+      "b2be1df92c78eded"
+    ],
+    "blocker_distance": 11.107191769808443,
+    "evidence_paths": [
+      "analysis_results/clustering_release_local_20260920/visual_review/b4_1.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b4_2.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b4_3.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b4_4.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b4_5.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b4_6.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b4_7.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b4_8.jpg"
+    ],
+    "selected_reason": "close_pair_split_by_partition",
+    "coverage": {
+      "original_panorama_with_points": true,
+      "all_members_of_selected_clusters_viewed": true,
+      "reviewed_response_count": 23,
+      "all_image_responses_reviewed": false,
+      "scope": "所选簇全部成员；不宣称该图片全部其他簇均已检查"
+    },
+    "observations": [
+      "查看所涉两簇全部23名成员。W002与W030四处角点组相近，未见不同点序或明显范围变化。跨簇最大差异W015/W012主要为左窗旁上角高度；完整链接使相近作答分开，不是该相近对自身超过9度。"
+    ],
+    "positions": [
+      "近似对W002／W030为2.081度",
+      "阻碍对W015／W012为11.107度；左窗旁top (102,136)与(108,167)"
+    ],
+    "questions": [
+      "两簇反映值得保留的顶点高度差异，还是把连续定位散布切成了两组？原先相似判断仍保留，不自动强制合簇。"
+    ],
+    "user_decision": null,
+    "reviewer": "Codex视觉子代理B",
+    "point_display_note": "p为有效点集1起始序号；颜色按y<256区分，仅作显示，不视为人工角色确认。",
+    "numeric_snapshot": "RC1 results/final_run；待主入口重算核对所选成员关系。"
+  },
+  {
+    "image_id": "b8cTxDM8gDG_51c90ec9afc4495ab3788c6badc303df",
+    "code": "b8cTxDM8gDG-07",
+    "condition": "semi",
+    "id_a": "7129ad7e523aa525",
+    "id_b": "3b710fb59e47c8d6",
+    "worker_a": "W029",
+    "worker_b": "W031",
+    "count_a": 12,
+    "count_b": 12,
+    "split_cyclic": 4.13109817508,
+    "split_fixed": 4.13109817508,
+    "split_free": 4.13109817508,
+    "bound_cyclic": 4.13109817508,
+    "reasons": "close_pair_split_by_partition",
+    "pair_has_prior_evidence": true,
+    "image_has_prior_evidence": true,
+    "priority": 2,
+    "gap": 0.0,
+    "physical_judgment": "unconfirmed",
+    "final_cluster_decision": null,
+    "reviewed_ids": [
+      "39008f0fe7a1d27b",
+      "3e32b8564185e9c7",
+      "62376c3351699bc6",
+      "517e0e79ed73ad98",
+      "c9609d6092bb0730",
+      "5c8fc29a99324dd7",
+      "db6e2e902a7635ad",
+      "ffdffd1443b1cef9",
+      "afda73e02ce84841",
+      "7129ad7e523aa525",
+      "3c2427034d519a1a",
+      "3b710fb59e47c8d6",
+      "1aaa93ec5fa02d67",
+      "0225fd516c992f7f",
+      "33a4dc1fd6be1bdd",
+      "ca291f0b645de9fa"
+    ],
+    "cluster_a": 3,
+    "cluster_b": 2,
+    "blocker_ids": [
+      "3c2427034d519a1a",
+      "33a4dc1fd6be1bdd"
+    ],
+    "blocker_distance": 10.640940493322354,
+    "evidence_paths": [
+      "analysis_results/clustering_release_local_20260920/visual_review/b5_1.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b5_2.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b5_3.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b5_4.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b5_5.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b5_6.jpg"
+    ],
+    "selected_reason": "close_pair_split_by_partition",
+    "coverage": {
+      "original_panorama_with_points": true,
+      "all_members_of_selected_clusters_viewed": true,
+      "reviewed_response_count": 16,
+      "all_image_responses_reviewed": false,
+      "scope": "所选簇全部成员；不宣称该图片全部其他簇均已检查"
+    },
+    "observations": [
+      "查看所涉两簇全部16名成员。W029/W031选择同样的六处角点组，差异集中于家具遮挡的bottom。W035等人床右bottom位置更低，造成跨簇最大距离；未见顺序交换。"
+    ],
+    "positions": [
+      "近似对W029／W031为4.131度",
+      "阻碍对W030／W035为10.641度：床右bottom (543,328)与(558,355)"
+    ],
+    "questions": [
+      "床右被遮挡角点的不同定位是否足以拆簇？相近对与整簇直径要求不一致时，研究应如何解释？"
+    ],
+    "user_decision": null,
+    "reviewer": "Codex视觉子代理B",
+    "point_display_note": "p为有效点集1起始序号；颜色按y<256区分，仅作显示，不视为人工角色确认。",
+    "numeric_snapshot": "RC1 results/final_run；待主入口重算核对所选成员关系。"
+  },
+  {
+    "image_id": "wc2JMjhGNzB_2195c5a9b9fd451b927b0050f23fac31",
+    "code": "wc2JMjhGNzB-15",
+    "condition": "manual",
+    "id_a": "842c3091ac075c7f",
+    "id_b": "e8abf5fd61098d96",
+    "worker_a": "W017",
+    "worker_b": "W029",
+    "count_a": 8,
+    "count_b": 8,
+    "split_cyclic": 1.70142197101,
+    "split_fixed": 1.70142197101,
+    "split_free": 1.70142197101,
+    "bound_cyclic": 1.70142197101,
+    "reasons": "close_pair_split_by_partition",
+    "pair_has_prior_evidence": false,
+    "image_has_prior_evidence": true,
+    "priority": 2,
+    "gap": 0.0,
+    "physical_judgment": "unconfirmed",
+    "final_cluster_decision": null,
+    "reviewed_ids": [
+      "38c831d7706e9046",
+      "82cd729ad5975e4a",
+      "b39330c925be7bca",
+      "718f9a7977eee15c",
+      "841caf4abb7eaa52",
+      "71c3fbe3be68835e",
+      "4c4912b0914f2ee7",
+      "d6079c1a5e69171f",
+      "2d417fac9115ecf1",
+      "14fd2cc7ba5cecd1",
+      "842c3091ac075c7f",
+      "a68bd1f57ea06d4c",
+      "f88ad9a4b345473b",
+      "7b3dcabd7dc4a947",
+      "770a076dd37bf7a2",
+      "e8abf5fd61098d96",
+      "f06d4161c6ebe577",
+      "7afc4772ffea5f6e",
+      "41f3d9bdae59e491",
+      "99856c3553ce2669",
+      "98f2bdce782afe53",
+      "dd12b2d997381039",
+      "b92cd1db2b605d45",
+      "8646037ff7da90bd"
+    ],
+    "cluster_a": 2,
+    "cluster_b": 1,
+    "blocker_ids": [
+      "718f9a7977eee15c",
+      "841caf4abb7eaa52"
+    ],
+    "blocker_distance": 11.441116399990864,
+    "evidence_paths": [
+      "analysis_results/clustering_release_local_20260920/visual_review/b6_1.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b6_2.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b6_3.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b6_4.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b6_5.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b6_6.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b6_7.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b6_8.jpg"
+    ],
+    "selected_reason": "close_pair_split_by_partition",
+    "coverage": {
+      "original_panorama_with_points": true,
+      "all_members_of_selected_clusters_viewed": true,
+      "reviewed_response_count": 24,
+      "all_image_responses_reviewed": false,
+      "scope": "所选簇全部成员；不宣称该图片全部其他簇均已检查"
+    },
+    "observations": [
+      "查看所涉两簇全部24名成员。W017/W029四处角点组非常接近；多数人差异表现为卫生间门口右下方及其他墙角的连续位置变化。最大阻碍对W008/W010在右下角高度不同，未见不同范围或角色交换的直接证据。"
+    ],
+    "positions": [
+      "近似对W017／W029为1.701度",
+      "阻碍对W008／W010为11.441度：卫生间门右bottom (652,454)与(645,421)"
+    ],
+    "questions": [
+      "该高度变化应当形成不同表达簇，还是只报告簇内外距离与连续差异？"
+    ],
+    "user_decision": null,
+    "reviewer": "Codex视觉子代理B",
+    "point_display_note": "p为有效点集1起始序号；颜色按y<256区分，仅作显示，不视为人工角色确认。",
+    "numeric_snapshot": "RC1 results/final_run；待主入口重算核对所选成员关系。"
+  },
+  {
+    "image_id": "B6ByNegPMKs_5b5bd1eac4e6462d8c6677b90a4cf9a9",
+    "code": "B6ByNegPMKs-18",
+    "condition": "manual",
+    "id_a": "9378da78037a5091f22e",
+    "id_b": "8a2600447847d5ab7f5f",
+    "worker_a": "W033",
+    "worker_b": "W011",
+    "split_cyclic": 1.5488427016014361,
+    "reasons": "non_alert_control",
+    "reviewed_ids": [
+      "8a2600447847d5ab7f5f",
+      "ad005008336266edcd64",
+      "9378da78037a5091f22e",
+      "260cf962d9bea8512f9e"
+    ],
+    "cluster_a": 1,
+    "cluster_b": 1,
+    "evidence_paths": [
+      "analysis_results/clustering_release_local_20260920/visual_review/b7_1.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b7_2.jpg"
+    ],
+    "selected_reason": "non_alert_control",
+    "coverage": {
+      "original_panorama_with_points": true,
+      "all_members_of_selected_clusters_viewed": true,
+      "reviewed_response_count": 4,
+      "all_image_responses_reviewed": false,
+      "scope": "所选簇全部成员；不宣称该图片全部其他簇均已检查"
+    },
+    "observations": [
+      "查看所选4人簇全部成员。所选W033/W011在左侧休息区与远走廊角点基本一致，未见错位对应；W015远走廊两侧横向位置略不同。相似的稀疏表达本身不能证明对近处玻璃与柱体的处理完整或正确。"
+    ],
+    "positions": [
+      "所选近似对1.549度；左侧x222/300与走廊x760至790附近",
+      "近处中央玻璃隔断并未单独增加点"
+    ],
+    "questions": [
+      "这4份可否作为相似表达对照？对近处玻璃/柱体的简化是否另记内容解释，而非自动否定同簇？"
+    ],
+    "user_decision": null,
+    "reviewer": "Codex视觉子代理B",
+    "point_display_note": "p为有效点集1起始序号；颜色按y<256区分，仅作显示，不视为人工角色确认。",
+    "numeric_snapshot": "RC1 results/final_run；待主入口重算核对所选成员关系。"
+  },
+  {
+    "image_id": "e9zR4mvMWw7_1d316dfbe35f41dd9203eaf88be5aae8",
+    "code": "e9zR4mvMWw7-09",
+    "condition": "manual",
+    "id_a": "2421466da1f7d0800380",
+    "id_b": "eabfca08cf8ed118e1e7",
+    "worker_a": "W034",
+    "worker_b": "W014",
+    "split_cyclic": 2.630564994346793,
+    "reasons": "non_alert_control",
+    "reviewed_ids": [
+      "230418a93ba734601d15",
+      "a7f130f489209fd66673",
+      "eabfca08cf8ed118e1e7",
+      "2421466da1f7d0800380"
+    ],
+    "cluster_a": 1,
+    "cluster_b": 1,
+    "evidence_paths": [
+      "analysis_results/clustering_release_local_20260920/visual_review/b8_1.jpg",
+      "analysis_results/clustering_release_local_20260920/visual_review/b8_2.jpg"
+    ],
+    "selected_reason": "non_alert_control",
+    "coverage": {
+      "original_panorama_with_points": true,
+      "all_members_of_selected_clusters_viewed": true,
+      "reviewed_response_count": 4,
+      "all_image_responses_reviewed": false,
+      "scope": "所选簇全部成员；不宣称该图片全部其他簇均已检查"
+    },
+    "observations": [
+      "查看所选4人簇全部成员。餐区四处主要角点位置相近，W034部分top较其他人略高；未见明显局部顺序交换或范围变化。"
+    ],
+    "positions": [
+      "所选W034／W014为2.631度；中右转角top (551,194)与(552,201)"
+    ],
+    "questions": [
+      "能否接受该簇作为相近定位对照？是否有AI未识别的细节遗漏？"
+    ],
+    "user_decision": null,
+    "reviewer": "Codex视觉子代理B",
+    "point_display_note": "p为有效点集1起始序号；颜色按y<256区分，仅作显示，不视为人工角色确认。",
+    "numeric_snapshot": "RC1 results/final_run；待主入口重算核对所选成员关系。"
+  }
+]
