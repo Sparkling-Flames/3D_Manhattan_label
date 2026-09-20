@@ -1,0 +1,30 @@
+name: RC2 existing personnel measurements
+on:
+  push:
+    branches: [research/rc2-pairing-audit-20260920]
+    paths: [.github/workflows/rc2-personnel-source-20260920.yml]
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - run: |
+          python - <<'PY'
+          import pathlib,urllib.request,hashlib,json
+          ref='c67a0925ea0cc3247b2f65a4df351b58f01f1c15';root=pathlib.Path('personnel_source');root.mkdir()
+          paths=['analysis_results/worker_four_block_exploration_20260910_v1/axes_primary.csv.gz','analysis_results/worker_four_block_exploration_20260910_v1/manual_with_time.csv.gz','analysis_results/worker_rule_triad_20260910_v1/semi.csv.gz','tools/thesis_main/analysis/fit_worker_evidence_strata_20260908.py']
+          manifest=[]
+          for p in paths:
+              try:
+                  b=urllib.request.urlopen('https://raw.githubusercontent.com/Sparkling-Flames/3D_Manhattan_label/'+ref+'/'+p,timeout=100).read();t=root/pathlib.Path(p).name;t.write_bytes(b)
+                  manifest.append({'source_path':p,'local':t.name,'sha256':hashlib.sha256(b).hexdigest(),'bytes':len(b),'status':'copied'})
+              except Exception as e:manifest.append({'source_path':p,'status':'unavailable','error':str(e)})
+          (root/'MANIFEST.json').write_text(json.dumps({'ref':ref,'operation':'copy_only','files':manifest},indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rc2-existing-personnel-inputs
+          path: personnel_source/
+          retention-days: 14
