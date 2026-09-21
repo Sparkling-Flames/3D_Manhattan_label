@@ -1,0 +1,33 @@
+name: Pro cluster pinned source export 20260922
+on:
+  push:
+    branches: [codex/pro-cluster-validation-20260922]
+    paths: [.github/workflows/pro-cluster-source-export-20260922.yml]
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 1c26ef786195496806cb50a140cfffb6566fa1d6
+          fetch-depth: 1
+          persist-credentials: false
+          sparse-checkout: |
+            analysis_results/pro_cluster_handoff_20260922
+            tools/thesis_main/analysis/pro_cluster_handoff_20260922.py
+            docs/thesis_main/Pro云端资料入口_分簇核验_20260922.md
+      - name: Source checksums
+        run: sha256sum analysis_results/pro_cluster_handoff_20260922/*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pro-cluster-pinned-source-1c26ef78
+          path: |
+            analysis_results/pro_cluster_handoff_20260922/
+            tools/thesis_main/analysis/pro_cluster_handoff_20260922.py
+            docs/thesis_main/Pro云端资料入口_分簇核验_20260922.md
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: error
