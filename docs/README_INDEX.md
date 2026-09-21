@@ -1,5 +1,7 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
+**2026-09-21新Pro研究交接：**[当前资料与分支说明](thesis_main/Pro云端资料入口_20260921.md)、[开放研究提示词](thesis_main/Pro提示词_人员构成与顺序重放_20260921.md)。`tools/thesis_main/analysis/pro_research_handoff_20260921.py`打包／验证`analysis_results/pro_research_handoff_20260921/`中的最新终审数据和必要历史证据；原分支及正式合同保留。
+
 **当前研究入口：**[真人标注不确定性研究：当前状态](thesis_main/真人标注不确定性研究_当前状态.md)。两份旧线程交接已移入`docs/thesis_main/archive_20260918/`，仅作历史追溯。
 **2026-09-18两轮研究接收：**[仓库接收与当前视觉复核](../analysis_results/full_corpus_research_received_20260918/仓库接收与视觉复核.md)串联全量报告、239单元图册、复算输入和前序39图研究；本轮复看39原图、29组作答对与B6-22全部24份Semi，未冻结新算法或应用待确认修正。
 
