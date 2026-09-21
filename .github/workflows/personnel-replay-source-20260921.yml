@@ -1,0 +1,95 @@
+name: Personnel replay fixed source export
+on:
+  push:
+    branches: [research/personnel-replay-20260921]
+    paths: [.github/workflows/personnel-replay-source-20260921.yml]
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Export selected files at immutable source commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import concurrent.futures, hashlib, json, os, pathlib, time, urllib.parse, urllib.request, zipfile
+          REPO='Sparkling-Flames/3D_Manhattan_label'
+          REF='f39c908efd136e7d14e8f9a4ff90864b8fec3fca'
+          API='https://api.github.com/repos/'+REPO
+          def get(url, api=False):
+              headers={'User-Agent':'personnel-replay-source-export'}
+              if api: headers['Authorization']='Bearer '+os.environ['GH_TOKEN']
+              for attempt in range(5):
+                  try:
+                      with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=90) as f: return f.read()
+                  except Exception:
+                      if attempt==4: raise
+                      time.sleep(2**attempt)
+          tree=json.loads(get(API+'/git/trees/'+REF+'?recursive=1',True))
+          if tree.get('truncated'):
+              records=[]
+              roots=json.loads(get(API+'/git/trees/'+REF,True))['tree']
+              for root in roots:
+                  if root['type']=='blob': records.append(root); continue
+                  if root['path'] not in ['analysis_results','docs','tools','tests','import_json','export_label','config']: continue
+                  sub=json.loads(get(API+'/git/trees/'+root['sha']+'?recursive=1',True))
+                  assert not sub.get('truncated'), root['path']
+                  records.extend(dict(x,path=root['path']+'/'+x['path']) for x in sub['tree'])
+          else: records=tree['tree']
+          prefixes=[
+            'analysis_results/new_manual_analysis_20260921/',
+            'analysis_results/clustering_release_local_20260920/current/inputs/',
+            'analysis_results/clustering_numeric_received_20260920/results/personnel/',
+            'analysis_results/clustering_numeric_received_20260920/results/sensitivity3d/',
+            'analysis_results/clustering_numeric_received_20260920/code/',
+            'analysis_results/worker_four_block_exploration_20260910_v1/',
+            'analysis_results/local_point_clustering_20260920/evidence/',
+            'analysis_results/local_point_research_received_20260919/pair_pilot/',
+            'analysis_results/cluster_review_extra_20260919/',
+            'analysis_results/scene_image_exploration_20260910_v1/',
+            'analysis_results/spatial_dimensions_review_20260913_v2/',
+            'analysis_results/collection_review_20260921/',
+            'import_json/scene_stability_stage1_20260913_v2/',
+            'docs/thesis_main/'
+          ]
+          exact={
+            'export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json',
+            'export_label/新增英文30+20图/project-94-at-2026-09-20-13-45-d09d9d53.json',
+            'export_label/新增英文30+20图/project-95-at-2026-09-20-13-44-3fe72103.json',
+            'tools/__init__.py','tools/thesis_main/__init__.py',
+            'RESEARCH_ANALYSIS_INDEX.md','docs/README_INDEX.md'
+          }
+          def wanted(x):
+              if x['type']!='blob': return False
+              p=x['path']
+              if p in exact: return True
+              if p.startswith('tools/thesis_main/') and p.endswith(('.py','.json','.yaml','.yml')): return True
+              if p.startswith('tools/label_studio/') and p.endswith(('.py','.js','.html','.css','.json')): return True
+              if p.startswith('tests/') and p.endswith('.py'): return True
+              return any(p.startswith(a) for a in prefixes) and p.endswith(('.md','.txt','.json','.csv','.jsonl','.jsonl.gz','.csv.gz','.npz','.npy'))
+          selected=sorted((x for x in records if wanted(x)),key=lambda x:x['path'])
+          root=pathlib.Path('fixed_source'); root.mkdir()
+          print('Selected',len(selected),'files;',sum(x.get('size',0) for x in selected),'bytes',flush=True)
+          def download(x):
+              p=x['path']; b=get('https://raw.githubusercontent.com/'+REPO+'/'+REF+'/'+urllib.parse.quote(p,safe='/'))
+              blob=hashlib.sha1(b'blob '+str(len(b)).encode()+b'\x00'+b).hexdigest()
+              assert blob==x['sha'],p
+              dest=root/p; dest.parent.mkdir(parents=True,exist_ok=True); dest.write_bytes(b)
+              return {'path':p,'bytes':len(b),'git_blob':blob,'sha256':hashlib.sha256(b).hexdigest()}
+          with concurrent.futures.ThreadPoolExecutor(max_workers=12) as pool: manifest=list(pool.map(download,selected))
+          (root/'SOURCE_MANIFEST.json').write_text(json.dumps({'repository':REPO,'source_commit':REF,'files':manifest,'excluded':'Original images, active logs, credentials and unselected historical output are not exported.'},ensure_ascii=False,indent=2),encoding='utf8')
+          (root/'REPOSITORY_FILE_INDEX.json').write_text(json.dumps(records,ensure_ascii=False),encoding='utf8')
+          with zipfile.ZipFile('personnel_replay_source_f39c908.zip','w',zipfile.ZIP_DEFLATED,compresslevel=6) as z:
+              for f in sorted(root.rglob('*')):
+                  if f.is_file(): z.write(f,f.relative_to(root).as_posix())
+          print('ZIP bytes',pathlib.Path('personnel_replay_source_f39c908.zip').stat().st_size,flush=True)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: personnel-replay-source-f39c908
+          path: personnel_replay_source_f39c908.zip
+          retention-days: 14
+          compression-level: 0
