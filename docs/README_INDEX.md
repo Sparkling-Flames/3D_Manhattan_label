@@ -1,5 +1,23 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
+**2026-09-21研究讨论交接：**[交接与必读资料](thesis_main/研究讨论线程交接_20260921.md)、[可复制Pro提示词](thesis_main/Pro提示词_人员构成与顺序重放_20260921.md)。按人独立采集，研究全部可用人员的类别／配比／成员／顺序重放；AABC非固定目标。保留top y／bottom y的3D职能研究；可视化与导师汇报等待用户通知。
+
+**2026-09-21研究讨论交接：**[交接与必读资料](thesis_main/研究讨论线程交接_20260921.md)、[可复制Pro提示词](thesis_main/Pro提示词_人员构成与顺序重放_20260921.md)。按人独立采集，研究全部可用人员的类别／配比／成员／顺序重放；AABC非固定目标。保留top y／bottom y的3D职能研究；可视化与导师汇报等待用户通知。
+
+**同房收敛人数与人员组合澄清：**[2026-09-21报告](../analysis_results/new_manual_analysis_20260921/convergence_and_composition/报告.md)穷举同房历史／预测图拆分，报告起点删失及六组未冻结上限；真实AABC覆盖与具体子类持续稳定分别检查。早先U(k)分析不能替代收敛人数预测。
+
+**2026-09-21同房／同场景／人员综合：**[详细汇报](../analysis_results/new_manual_analysis_20260921/详细汇报.md)与[新增数据审核](../analysis_results/new_manual_analysis_20260921/审核/index.html)。用途粗类跨建筑均值预测未优于总体基线；同房支持为探索线索；人员旧留建筑名单接回新几何，未冻结最终类型。
+
+**2026-09-21同房／同场景／人员综合：**[详细汇报](../analysis_results/new_manual_analysis_20260921/详细汇报.md)与[新增数据审核](../analysis_results/new_manual_analysis_20260921/审核/index.html)。用途粗类跨建筑均值预测未优于总体基线；同房支持为探索线索；人员旧留建筑名单接回新几何，未冻结最终类型。
+
+**2026-09-21新增数据复算：**[分簇／同房预测探索报告](../analysis_results/new_manual_analysis_20260921/复算报告.md)。649条新导出包含分配外作答，父记录独立性另做敏感性；八组审核原文归档，G180条件暂缓，G234/G235视觉上倾向不同房间。未冻结停止规则。
+
+**2026-09-21新增数据复算：**[分簇／同房预测探索报告](../analysis_results/new_manual_analysis_20260921/复算报告.md)。649条新导出包含分配外作答，父记录独立性另做敏感性；八组审核原文归档，G180条件暂缓，G234/G235视觉上倾向不同房间。未冻结停止规则。
+
+**2026-09-21最新采集讨论：**[英文3—6人、人员分类与两批备选](../analysis_results/collection_plan_20260921_v4/英文人数分档与两批备选_初步测算.md)。旧图提前补12、新图首轮15、原6图仍20，首批新人15张；三批主方案另有两批备选，最新逐人名单待重排。[原v4](../analysis_results/collection_plan_20260921_v4/说明.md)保留历史，不再将其1052份及十月206份当作最新承诺。
+
+**2026-09-21新增候选审核：**[八组39图采用审核](../analysis_results/collection_review_20260921/index.html)，复用 Panorama Studio 样式，按用途待定优先；既有原文只读，本轮决定默认留空，支持逐图例外和JSON备份。覆盖核算见[独立审查](../analysis_results/collection_plan_20260921_audit/审查与待审核事项.md)，不自动派发。
+
 **分簇工作版与一致性入口：**[统一数据入口](thesis_main/分簇工作版_统一数据入口_20260920.md)及[本地审核与云端数值包](../analysis_results/clustering_release_local_20260920/README.md)。已确认奇数点补删按有效点集计算；正式合同不变，人工验收待完成。
 
 

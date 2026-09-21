@@ -1,0 +1,1193 @@
+{
+  "note": "按非取消、非GT、非空提交核对；不等于质量通过；空提交不算完成；同人同图重复不算新增独立作答。两份历史额外提交已获用户允许进入可计算候选，未自动批准新额外记录，未重算几何。",
+  "approved_extra_annotation_ids": [
+    6844,
+    7137
+  ],
+  "projects": [
+    {
+      "source": "export_label\\新增中文20图\\project-93-at-2026-09-20-13-45-758fe187.json",
+      "project_key": "zh_required",
+      "annotations": 182,
+      "summary": [
+        {
+          "worker_id": 1,
+          "planned": 20,
+          "submitted_images": 20,
+          "nonempty_images": 20,
+          "matched_nonempty": 20,
+          "missing": 0,
+          "extra": 0
+        },
+        {
+          "worker_id": 2,
+          "planned": 20,
+          "submitted_images": 21,
+          "nonempty_images": 21,
+          "matched_nonempty": 20,
+          "missing": 0,
+          "extra": 1
+        },
+        {
+          "worker_id": 6,
+          "planned": 20,
+          "submitted_images": 18,
+          "nonempty_images": 18,
+          "matched_nonempty": 18,
+          "missing": 2,
+          "extra": 0
+        },
+        {
+          "worker_id": 8,
+          "planned": 20,
+          "submitted_images": 20,
+          "nonempty_images": 20,
+          "matched_nonempty": 20,
+          "missing": 0,
+          "extra": 0
+        },
+        {
+          "worker_id": 10,
+          "planned": 20,
+          "submitted_images": 20,
+          "nonempty_images": 20,
+          "matched_nonempty": 20,
+          "missing": 0,
+          "extra": 0
+        },
+        {
+          "worker_id": 12,
+          "planned": 20,
+          "submitted_images": 21,
+          "nonempty_images": 21,
+          "matched_nonempty": 20,
+          "missing": 0,
+          "extra": 1
+        },
+        {
+          "worker_id": 13,
+          "planned": 20,
+          "submitted_images": 20,
+          "nonempty_images": 20,
+          "matched_nonempty": 20,
+          "missing": 0,
+          "extra": 0
+        },
+        {
+          "worker_id": 15,
+          "planned": 20,
+          "submitted_images": 20,
+          "nonempty_images": 20,
+          "matched_nonempty": 20,
+          "missing": 0,
+          "extra": 0
+        },
+        {
+          "worker_id": 17,
+          "planned": 20,
+          "submitted_images": 20,
+          "nonempty_images": 20,
+          "matched_nonempty": 20,
+          "missing": 0,
+          "extra": 0
+        },
+        {
+          "worker_id": 22,
+          "planned": 0,
+          "submitted_images": 2,
+          "nonempty_images": 2,
+          "matched_nonempty": 0,
+          "missing": 0,
+          "extra": 2
+        }
+      ],
+      "missing": [
+        {
+          "worker_id": 6,
+          "task_code": "025",
+          "image_code": "uNb9QFRL6hY-66",
+          "image_id": "uNb9QFRL6hY_c6410f47ad754d6cbd890ba7dff8b449"
+        },
+        {
+          "worker_id": 6,
+          "task_code": "026",
+          "image_code": "uNb9QFRL6hY-67",
+          "image_id": "uNb9QFRL6hY_ca08ebfb2da647f68db41630637e400b"
+        }
+      ],
+      "extras": [
+        {
+          "worker_id": 2,
+          "image_id": "S9hNv5qa7GM_3c496aedd9d645a5b8d7a7b1b53f0636",
+          "task_id": 3575,
+          "task_code": "001",
+          "annotation_id": 6844,
+          "point_count": 8,
+          "flags": [],
+          "assigned": false,
+          "extra_inclusion": "user_approved_candidate",
+          "parent_annotation": null,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 22,
+          "image_id": "S9hNv5qa7GM_3c496aedd9d645a5b8d7a7b1b53f0636",
+          "task_id": 3575,
+          "task_code": "001",
+          "annotation_id": 7493,
+          "point_count": 8,
+          "flags": [],
+          "assigned": false,
+          "extra_inclusion": "not_approved",
+          "parent_annotation": null,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 22,
+          "image_id": "S9hNv5qa7GM_674b3b6705604a4c8b89182edee11e54",
+          "task_id": 3576,
+          "task_code": "002",
+          "annotation_id": 7494,
+          "point_count": 8,
+          "flags": [],
+          "assigned": false,
+          "extra_inclusion": "not_approved",
+          "parent_annotation": null,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 12,
+          "image_id": "uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14",
+          "task_id": 3608,
+          "task_code": "034",
+          "annotation_id": 7137,
+          "point_count": 22,
+          "flags": [],
+          "assigned": false,
+          "extra_inclusion": "user_approved_candidate",
+          "parent_annotation": null,
+          "cancelled": false,
+          "ground_truth": false
+        }
+      ],
+      "issues": [
+        {
+          "worker_id": 6,
+          "image_id": "uNb9QFRL6hY_fd411e4f6035431593833d9d0beb4d32",
+          "task_id": 3607,
+          "task_code": "033",
+          "annotation_id": 7111,
+          "point_count": 9,
+          "flags": [
+            "odd_points"
+          ],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": null,
+          "cancelled": false,
+          "ground_truth": false
+        }
+      ],
+      "duplicates": [],
+      "parent_links": [
+        {
+          "worker_id": 6,
+          "image_id": "S9hNv5qa7GM_3c496aedd9d645a5b8d7a7b1b53f0636",
+          "task_id": 3575,
+          "task_code": "001",
+          "annotation_id": 7064,
+          "point_count": 8,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 6844,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 13,
+          "image_id": "S9hNv5qa7GM_3c496aedd9d645a5b8d7a7b1b53f0636",
+          "task_id": 3575,
+          "task_code": "001",
+          "annotation_id": 7292,
+          "point_count": 8,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7064,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 2,
+          "image_id": "uNb9QFRL6hY_00b4950b469b4520b29f895aa029419c",
+          "task_id": 3579,
+          "task_code": "005",
+          "annotation_id": 7375,
+          "point_count": 12,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7118,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 15,
+          "image_id": "uNb9QFRL6hY_05285f9bc0234526bf0f6362679e38d0",
+          "task_id": 3580,
+          "task_code": "006",
+          "annotation_id": 7193,
+          "point_count": 12,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 6914,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 13,
+          "image_id": "uNb9QFRL6hY_05285f9bc0234526bf0f6362679e38d0",
+          "task_id": 3580,
+          "task_code": "006",
+          "annotation_id": 7291,
+          "point_count": 12,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7193,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 13,
+          "image_id": "uNb9QFRL6hY_068fb0d52d01455c96fa23659c373bf8",
+          "task_id": 3581,
+          "task_code": "007",
+          "annotation_id": 7288,
+          "point_count": 8,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7192,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 6,
+          "image_id": "uNb9QFRL6hY_104d12b732794414a42edd37ac554bff",
+          "task_id": 3582,
+          "task_code": "008",
+          "annotation_id": 7067,
+          "point_count": 8,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 6915,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 13,
+          "image_id": "uNb9QFRL6hY_104d12b732794414a42edd37ac554bff",
+          "task_id": 3582,
+          "task_code": "008",
+          "annotation_id": 7293,
+          "point_count": 8,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7067,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 13,
+          "image_id": "uNb9QFRL6hY_13a430466eb64e2087e7fb5acde7a398",
+          "task_id": 3583,
+          "task_code": "009",
+          "annotation_id": 7290,
+          "point_count": 8,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7252,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 13,
+          "image_id": "uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f",
+          "task_id": 3584,
+          "task_code": "010",
+          "annotation_id": 7289,
+          "point_count": 8,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7245,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 6,
+          "image_id": "uNb9QFRL6hY_2ed0e171a7c34f17a85363923a26ab98",
+          "task_id": 3586,
+          "task_code": "012",
+          "annotation_id": 7075,
+          "point_count": 20,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 6901,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 15,
+          "image_id": "uNb9QFRL6hY_2ed0e171a7c34f17a85363923a26ab98",
+          "task_id": 3586,
+          "task_code": "012",
+          "annotation_id": 7187,
+          "point_count": 16,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 6901,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 13,
+          "image_id": "uNb9QFRL6hY_2ed0e171a7c34f17a85363923a26ab98",
+          "task_id": 3586,
+          "task_code": "012",
+          "annotation_id": 7280,
+          "point_count": 16,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7258,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 6,
+          "image_id": "uNb9QFRL6hY_33dd9892d10e474ead8f7ad38a8da562",
+          "task_id": 3587,
+          "task_code": "013",
+          "annotation_id": 7077,
+          "point_count": 12,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 6845,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 15,
+          "image_id": "uNb9QFRL6hY_3450b3accb584493bf13be8e9554dbea",
+          "task_id": 3588,
+          "task_code": "014",
+          "annotation_id": 7195,
+          "point_count": 12,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 6909,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 13,
+          "image_id": "uNb9QFRL6hY_5b62816d9cf94f17ae166291822ea9ab",
+          "task_id": 3589,
+          "task_code": "015",
+          "annotation_id": 7283,
+          "point_count": 16,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7247,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 6,
+          "image_id": "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+          "task_id": 3590,
+          "task_code": "016",
+          "annotation_id": 7078,
+          "point_count": 12,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 6898,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 15,
+          "image_id": "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+          "task_id": 3590,
+          "task_code": "016",
+          "annotation_id": 7176,
+          "point_count": 12,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7078,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 13,
+          "image_id": "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+          "task_id": 3590,
+          "task_code": "016",
+          "annotation_id": 7491,
+          "point_count": 12,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7242,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 13,
+          "image_id": "uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62",
+          "task_id": 3591,
+          "task_code": "017",
+          "annotation_id": 7285,
+          "point_count": 8,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7249,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 15,
+          "image_id": "uNb9QFRL6hY_76ba70b55bde4313939a4a0cd78a49d3",
+          "task_id": 3592,
+          "task_code": "018",
+          "annotation_id": 7179,
+          "point_count": 16,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 6906,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 13,
+          "image_id": "uNb9QFRL6hY_76ba70b55bde4313939a4a0cd78a49d3",
+          "task_id": 3592,
+          "task_code": "018",
+          "annotation_id": 7281,
+          "point_count": 16,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7248,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 6,
+          "image_id": "uNb9QFRL6hY_84722e58b32f4646acc12614994f835b",
+          "task_id": 3593,
+          "task_code": "019",
+          "annotation_id": 7082,
+          "point_count": 12,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 6865,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 2,
+          "image_id": "uNb9QFRL6hY_84722e58b32f4646acc12614994f835b",
+          "task_id": 3593,
+          "task_code": "019",
+          "annotation_id": 7372,
+          "point_count": 8,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7250,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 13,
+          "image_id": "uNb9QFRL6hY_a728d2eef41b449f82357899de802dd3",
+          "task_id": 3595,
+          "task_code": "021",
+          "annotation_id": 7294,
+          "point_count": 8,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7253,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 15,
+          "image_id": "uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78",
+          "task_id": 3596,
+          "task_code": "022",
+          "annotation_id": 7180,
+          "point_count": 8,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 6900,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 6,
+          "image_id": "uNb9QFRL6hY_b73ae36f994747e196380b1cb71cf407",
+          "task_id": 3597,
+          "task_code": "023",
+          "annotation_id": 7085,
+          "point_count": 12,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 6905,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 13,
+          "image_id": "uNb9QFRL6hY_b73ae36f994747e196380b1cb71cf407",
+          "task_id": 3597,
+          "task_code": "023",
+          "annotation_id": 7278,
+          "point_count": 8,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7190,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 6,
+          "image_id": "uNb9QFRL6hY_b98c9460586e4f138658181461df9f51",
+          "task_id": 3598,
+          "task_code": "024",
+          "annotation_id": 7086,
+          "point_count": 12,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 6850,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 13,
+          "image_id": "uNb9QFRL6hY_b98c9460586e4f138658181461df9f51",
+          "task_id": 3598,
+          "task_code": "024",
+          "annotation_id": 7279,
+          "point_count": 8,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7246,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 13,
+          "image_id": "uNb9QFRL6hY_c6410f47ad754d6cbd890ba7dff8b449",
+          "task_id": 3599,
+          "task_code": "025",
+          "annotation_id": 7284,
+          "point_count": 12,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7251,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 13,
+          "image_id": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+          "task_id": 3601,
+          "task_code": "027",
+          "annotation_id": 7277,
+          "point_count": 8,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7181,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 2,
+          "image_id": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+          "task_id": 3601,
+          "task_code": "027",
+          "annotation_id": 7364,
+          "point_count": 8,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 6899,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 6,
+          "image_id": "uNb9QFRL6hY_e24473d2b8a24568b89c1c4c2a4a9bf1",
+          "task_id": 3604,
+          "task_code": "030",
+          "annotation_id": 7108,
+          "point_count": 8,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 6919,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 13,
+          "image_id": "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+          "task_id": 3605,
+          "task_code": "031",
+          "annotation_id": 7287,
+          "point_count": 8,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7119,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 2,
+          "image_id": "uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269",
+          "task_id": 3606,
+          "task_code": "032",
+          "annotation_id": 7367,
+          "point_count": 8,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7197,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 15,
+          "image_id": "uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14",
+          "task_id": 3608,
+          "task_code": "034",
+          "annotation_id": 7186,
+          "point_count": 16,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 6903,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 13,
+          "image_id": "uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14",
+          "task_id": 3608,
+          "task_code": "034",
+          "annotation_id": 7282,
+          "point_count": 16,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7186,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 6,
+          "image_id": "yqstnuAEVhm_19e4188fa39244378481dcdb18c42dbe",
+          "task_id": 3609,
+          "task_code": "035",
+          "annotation_id": 7114,
+          "point_count": 8,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 6916,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 13,
+          "image_id": "yqstnuAEVhm_2b3fb4746d414cc6a31729b222ed79b2",
+          "task_id": 3610,
+          "task_code": "036",
+          "annotation_id": 7286,
+          "point_count": 8,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 7256,
+          "cancelled": false,
+          "ground_truth": false
+        }
+      ]
+    },
+    {
+      "source": "export_label\\新增英文30+20图\\project-94-at-2026-09-20-13-45-d09d9d53.json",
+      "project_key": "en_required",
+      "annotations": 301,
+      "summary": [
+        {
+          "worker_id": 28,
+          "planned": 30,
+          "submitted_images": 30,
+          "nonempty_images": 30,
+          "matched_nonempty": 30,
+          "missing": 0,
+          "extra": 0
+        },
+        {
+          "worker_id": 29,
+          "planned": 30,
+          "submitted_images": 27,
+          "nonempty_images": 27,
+          "matched_nonempty": 27,
+          "missing": 3,
+          "extra": 0
+        },
+        {
+          "worker_id": 30,
+          "planned": 30,
+          "submitted_images": 30,
+          "nonempty_images": 30,
+          "matched_nonempty": 30,
+          "missing": 0,
+          "extra": 0
+        },
+        {
+          "worker_id": 31,
+          "planned": 30,
+          "submitted_images": 31,
+          "nonempty_images": 31,
+          "matched_nonempty": 30,
+          "missing": 0,
+          "extra": 1
+        },
+        {
+          "worker_id": 32,
+          "planned": 30,
+          "submitted_images": 30,
+          "nonempty_images": 30,
+          "matched_nonempty": 30,
+          "missing": 0,
+          "extra": 0
+        },
+        {
+          "worker_id": 33,
+          "planned": 30,
+          "submitted_images": 30,
+          "nonempty_images": 30,
+          "matched_nonempty": 30,
+          "missing": 0,
+          "extra": 0
+        },
+        {
+          "worker_id": 34,
+          "planned": 30,
+          "submitted_images": 30,
+          "nonempty_images": 30,
+          "matched_nonempty": 30,
+          "missing": 0,
+          "extra": 0
+        },
+        {
+          "worker_id": 35,
+          "planned": 30,
+          "submitted_images": 30,
+          "nonempty_images": 30,
+          "matched_nonempty": 30,
+          "missing": 0,
+          "extra": 0
+        },
+        {
+          "worker_id": 36,
+          "planned": 30,
+          "submitted_images": 30,
+          "nonempty_images": 30,
+          "matched_nonempty": 30,
+          "missing": 0,
+          "extra": 0
+        },
+        {
+          "worker_id": 37,
+          "planned": 30,
+          "submitted_images": 30,
+          "nonempty_images": 30,
+          "matched_nonempty": 30,
+          "missing": 0,
+          "extra": 0
+        }
+      ],
+      "missing": [
+        {
+          "worker_id": 29,
+          "task_code": "018",
+          "image_code": "uNb9QFRL6hY-41",
+          "image_id": "uNb9QFRL6hY_76ba70b55bde4313939a4a0cd78a49d3"
+        },
+        {
+          "worker_id": 29,
+          "task_code": "022",
+          "image_code": "uNb9QFRL6hY-55",
+          "image_id": "uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78"
+        },
+        {
+          "worker_id": 29,
+          "task_code": "033",
+          "image_code": "uNb9QFRL6hY-87",
+          "image_id": "uNb9QFRL6hY_fd411e4f6035431593833d9d0beb4d32"
+        }
+      ],
+      "extras": [
+        {
+          "worker_id": 31,
+          "image_id": "uNb9QFRL6hY_c6410f47ad754d6cbd890ba7dff8b449",
+          "task_id": 3636,
+          "task_code": "025",
+          "annotation_id": 6926,
+          "point_count": 14,
+          "flags": [],
+          "assigned": false,
+          "extra_inclusion": "not_approved",
+          "parent_annotation": null,
+          "cancelled": false,
+          "ground_truth": false
+        }
+      ],
+      "issues": [
+        {
+          "worker_id": 29,
+          "image_id": "uNb9QFRL6hY_a728d2eef41b449f82357899de802dd3",
+          "task_id": 3632,
+          "task_code": "021",
+          "annotation_id": 6950,
+          "point_count": 0,
+          "flags": [
+            "empty_result"
+          ],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": null,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 29,
+          "image_id": "uNb9QFRL6hY_a728d2eef41b449f82357899de802dd3",
+          "task_id": 3632,
+          "task_code": "021",
+          "annotation_id": 6951,
+          "point_count": 0,
+          "flags": [
+            "empty_result"
+          ],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": null,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 29,
+          "image_id": "uNb9QFRL6hY_a728d2eef41b449f82357899de802dd3",
+          "task_id": 3632,
+          "task_code": "021",
+          "annotation_id": 6952,
+          "point_count": 0,
+          "flags": [
+            "empty_result"
+          ],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": null,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 31,
+          "image_id": "uNb9QFRL6hY_b98c9460586e4f138658181461df9f51",
+          "task_id": 3635,
+          "task_code": "024",
+          "annotation_id": 6925,
+          "point_count": 13,
+          "flags": [
+            "odd_points"
+          ],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": null,
+          "cancelled": false,
+          "ground_truth": false
+        }
+      ],
+      "duplicates": [
+        {
+          "worker_id": 29,
+          "image_id": "uNb9QFRL6hY_a728d2eef41b449f82357899de802dd3",
+          "task_code": "021",
+          "annotation_ids": [
+            6950,
+            6951,
+            6952,
+            7209
+          ],
+          "nonempty_count": 1,
+          "same_result": false
+        }
+      ],
+      "parent_links": [
+        {
+          "worker_id": 31,
+          "image_id": "S9hNv5qa7GM_674b3b6705604a4c8b89182edee11e54",
+          "task_id": 3613,
+          "task_code": "002",
+          "annotation_id": 6883,
+          "point_count": 8,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 6855,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 31,
+          "image_id": "uNb9QFRL6hY_13a430466eb64e2087e7fb5acde7a398",
+          "task_id": 3620,
+          "task_code": "009",
+          "annotation_id": 6890,
+          "point_count": 12,
+          "flags": [],
+          "assigned": true,
+          "extra_inclusion": null,
+          "parent_annotation": 6859,
+          "cancelled": false,
+          "ground_truth": false
+        }
+      ]
+    },
+    {
+      "source": "export_label\\新增英文30+20图\\project-95-at-2026-09-20-13-44-3fe72103.json",
+      "project_key": "en_optional",
+      "annotations": 161,
+      "summary": [
+        {
+          "worker_id": 28,
+          "planned": null,
+          "submitted_images": 20,
+          "nonempty_images": 20,
+          "matched_nonempty": null,
+          "missing": null,
+          "extra": null
+        },
+        {
+          "worker_id": 29,
+          "planned": null,
+          "submitted_images": 0,
+          "nonempty_images": 0,
+          "matched_nonempty": null,
+          "missing": null,
+          "extra": null
+        },
+        {
+          "worker_id": 30,
+          "planned": null,
+          "submitted_images": 20,
+          "nonempty_images": 20,
+          "matched_nonempty": null,
+          "missing": null,
+          "extra": null
+        },
+        {
+          "worker_id": 31,
+          "planned": null,
+          "submitted_images": 20,
+          "nonempty_images": 20,
+          "matched_nonempty": null,
+          "missing": null,
+          "extra": null
+        },
+        {
+          "worker_id": 32,
+          "planned": null,
+          "submitted_images": 20,
+          "nonempty_images": 20,
+          "matched_nonempty": null,
+          "missing": null,
+          "extra": null
+        },
+        {
+          "worker_id": 33,
+          "planned": null,
+          "submitted_images": 0,
+          "nonempty_images": 0,
+          "matched_nonempty": null,
+          "missing": null,
+          "extra": null
+        },
+        {
+          "worker_id": 34,
+          "planned": null,
+          "submitted_images": 20,
+          "nonempty_images": 19,
+          "matched_nonempty": null,
+          "missing": null,
+          "extra": null
+        },
+        {
+          "worker_id": 35,
+          "planned": null,
+          "submitted_images": 20,
+          "nonempty_images": 20,
+          "matched_nonempty": null,
+          "missing": null,
+          "extra": null
+        },
+        {
+          "worker_id": 36,
+          "planned": null,
+          "submitted_images": 20,
+          "nonempty_images": 20,
+          "matched_nonempty": null,
+          "missing": null,
+          "extra": null
+        },
+        {
+          "worker_id": 37,
+          "planned": null,
+          "submitted_images": 20,
+          "nonempty_images": 20,
+          "matched_nonempty": null,
+          "missing": null,
+          "extra": null
+        }
+      ],
+      "missing": [],
+      "extras": [],
+      "issues": [
+        {
+          "worker_id": 34,
+          "image_id": "e9zR4mvMWw7_83347153d2184d33869626c6c83318f9",
+          "task_id": 3660,
+          "task_code": "012",
+          "annotation_id": 7273,
+          "point_count": 7,
+          "flags": [
+            "odd_points"
+          ],
+          "assigned": null,
+          "extra_inclusion": null,
+          "parent_annotation": null,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 34,
+          "image_id": "e9zR4mvMWw7_891cb55a08dd4aea9ee76656f6b4850d",
+          "task_id": 3661,
+          "task_code": "013",
+          "annotation_id": 7265,
+          "point_count": 0,
+          "flags": [
+            "empty_result"
+          ],
+          "assigned": null,
+          "extra_inclusion": null,
+          "parent_annotation": null,
+          "cancelled": false,
+          "ground_truth": false
+        }
+      ],
+      "duplicates": [
+        {
+          "worker_id": 34,
+          "image_id": "wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366",
+          "task_code": "019",
+          "annotation_ids": [
+            7271,
+            7272
+          ],
+          "nonempty_count": 2,
+          "same_result": false
+        }
+      ],
+      "parent_links": [
+        {
+          "worker_id": 31,
+          "image_id": "B6ByNegPMKs_d19d2ae4bddf4445a3c623edc0346937",
+          "task_id": 3654,
+          "task_code": "006",
+          "annotation_id": 7027,
+          "point_count": 8,
+          "flags": [],
+          "assigned": null,
+          "extra_inclusion": null,
+          "parent_annotation": 6981,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 31,
+          "image_id": "S9hNv5qa7GM_5a89e430e6fb471189468fb44bbea75c",
+          "task_id": 3656,
+          "task_code": "008",
+          "annotation_id": 7029,
+          "point_count": 10,
+          "flags": [],
+          "assigned": null,
+          "extra_inclusion": null,
+          "parent_annotation": 6983,
+          "cancelled": false,
+          "ground_truth": false
+        },
+        {
+          "worker_id": 31,
+          "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+          "task_id": 3663,
+          "task_code": "015",
+          "annotation_id": 7073,
+          "point_count": 14,
+          "flags": [],
+          "assigned": null,
+          "extra_inclusion": null,
+          "parent_annotation": 6990,
+          "cancelled": false,
+          "ground_truth": false
+        }
+      ]
+    }
+  ]
+}

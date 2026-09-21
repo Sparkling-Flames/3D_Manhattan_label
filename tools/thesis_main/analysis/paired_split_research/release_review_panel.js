@@ -1,10 +1,10 @@
 /* Reuses Studio geometry/case navigation; numerical decisions belong to this run. */
-function validateReleaseReview(value,binding,keys){
+function validateReleaseReview(value,binding,keys,optionsByKey={}){
   const stable=v=>JSON.stringify(v&&typeof v==='object'&&!Array.isArray(v)?Object.fromEntries(Object.keys(v).sort().map(k=>[k,JSON.parse(stable(v[k]))])):Array.isArray(v)?v.map(x=>JSON.parse(stable(x))):v);
   if(value?.schema!=='clustering_release_visual_review_v1'||stable(value.binding)!==stable(binding))throw Error('运行版本或点集不匹配，禁止载入为本轮裁决');
   if(!value.decisions||typeof value.decisions!=='object'||Array.isArray(value.decisions))throw Error('缺少裁决对象');
   for(const [key,d] of Object.entries(value.decisions)){
-    if(!keys.includes(key)||!d||typeof d!=='object'||!['','可视为相近','应分开保留差异','暂不能判断'].includes(d.relation)||typeof d.comment!=='string'||typeof d.defer!=='boolean')throw Error('未知图片或裁决字段无效');
+    if(!keys.includes(key)||!d||typeof d!=='object'||!['',...(optionsByKey[key]||['可视为相近','应分开保留差异','暂不能判断'])].includes(d.relation)||typeof d.comment!=='string'||typeof d.defer!=='boolean')throw Error('未知图片或裁决字段无效');
   }
   return value.decisions;
 }
@@ -21,7 +21,7 @@ if(typeof document!=='undefined')(()=>{
   $('rr-method').append(opt('ospa_gate_6','OSPA 6° · 同点数点集平均距离对照'));
   if(dataset.method_options)$('rr-method').replaceChildren(...dataset.method_options.map(m=>opt(m.value,m.label)));
   let answers={};
-  const validate=v=>validateReleaseReview(v,binding,keys);
+  const validate=v=>validateReleaseReview(v,binding,keys,Object.fromEntries(dataset.cases.map(c=>[c.followup.key,c.followup.decision_options])));
   try{const s=localStorage.getItem(storageKey);if(s)answers=validate(JSON.parse(s));}catch(e){$('rr-status').textContent='未载入浏览器记录：'+e.message;}
   const envelope=()=>({schema,binding,decisions:answers,evidence:dataset.cases.map(c=>c.followup)});
   function save(){
@@ -66,6 +66,8 @@ if(typeof document!=='undefined')(()=>{
   }
   function render(){
     const r=dataset.cases[currentCase].followup;$('rr-question').textContent=`${r.code} · ${r.condition} · ${r.reasons}；${r.coverage}`;
+    $('rr-relation').replaceChildren(opt('','未填写'),...(r.decision_options||['可视为相近','应分开保留差异','暂不能判断']).map(v=>opt(v)));
+    if(dataset.decision_instructions)panel.querySelectorAll('p')[2].textContent=dataset.decision_instructions;
     $('rr-evidence').textContent=JSON.stringify({点号说明:r.point_numbering,AI:r.ai,既有用户原文:r.user_original.length?r.user_original:'指定运行输入中没有匹配原文',指定点:r.point_focus||null,本轮建议与待裁决:r.research_notes||null},null,2);
     pairOptions();
     const d=answers[r.key]||{relation:'',comment:'',defer:false};$('rr-relation').value=d.relation;$('rr-comment').value=d.comment;$('rr-defer').checked=d.defer;focus();clusters();

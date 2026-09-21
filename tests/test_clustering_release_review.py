@@ -49,7 +49,10 @@ def test_browser_validator_same_contract():
       assert.throws(()=>validate(v,{...b,manifest:'wrong'},['image|manual']));
       assert.throws(()=>validate(v,{...b,point_sets:{a:'changed'}},['image|manual']));
       assert.throws(()=>validate(v,{...b,review_content:'changed-question'},['image|manual']));
-      assert.throws(()=>validate(v,b,['wrong']));'''
+      assert.throws(()=>validate(v,b,['wrong']));
+      const custom={...v,decisions:{'image|manual':{relation:'多标需删点',comment:'p7',defer:false}}};
+      assert.deepStrictEqual(validate(custom,b,['image|manual'],{'image|manual':['多标需删点']}),custom.decisions);
+      assert.throws(()=>validate(custom,b,['image|manual']));'''
     subprocess.run([node, '-e', code, str(script)], check=True)
 
 

@@ -1,5 +1,23 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
+**研究线程交接（2026-09-21）：**`docs/thesis_main/研究讨论线程交接_20260921.md`登记原话、阅读顺序、当前数据与方法断点、线程分工；`docs/thesis_main/Pro提示词_人员构成与顺序重放_20260921.md`提供云端任务及待准备输入清单。仅文档，不修改计算或正式合同，未提交新云端包。
+
+**研究线程交接（2026-09-21）：**`docs/thesis_main/研究讨论线程交接_20260921.md`登记原话、阅读顺序、当前数据与方法断点、线程分工；`docs/thesis_main/Pro提示词_人员构成与顺序重放_20260921.md`提供云端任务及待准备输入清单。仅文档，不修改计算或正式合同，未提交新云端包。
+
+**收敛人数与组合：**`tools/thesis_main/analysis/room_convergence_20260921.py`复用当前计算视图、分簇及旧持续阶段比较器，输出`analysis_results/new_manual_analysis_20260921/convergence_and_composition/`的同房穷举留图、AABC和同人数子类对照。测试`tests/test_room_convergence_20260921.py`覆盖稳定多簇、未决、删失和末段／完整曲线一致性；不改变正式方法合同。
+
+**同房、同场景与人员接续：**`room_scene_personnel_20260921.py`位于`tools/thesis_main/analysis/`，输出同目录已有`analysis_results/new_manual_analysis_20260921/`的详细汇报和数值表；`build_new_manual_review_20260921.py`复用Studio基础和既有审核导入导出，生成独立`审核/`。共享审核模块仅增加逐项选项支持，旧文件兼容；验证`tests/test_new_manual_20260921.py`和`tests/test_clustering_release_review.py`。探索输出，不改变正式方法合同。
+
+**同房、同场景与人员接续：**`room_scene_personnel_20260921.py`位于`tools/thesis_main/analysis/`，输出同目录已有`analysis_results/new_manual_analysis_20260921/`的详细汇报和数值表；`build_new_manual_review_20260921.py`复用Studio基础和既有审核导入导出，生成独立`审核/`。共享审核模块仅增加逐项选项支持，旧文件兼容；验证`tests/test_new_manual_20260921.py`和`tests/test_clustering_release_review.py`。探索输出，不改变正式方法合同。
+
+**新增数据分析：**`tools/thesis_main/analysis/analyze_new_manual_20260921.py`及`summarize_new_manual_20260921.py`复用点对、分组、有限池覆盖模块，输出`analysis_results/new_manual_analysis_20260921/`；包括严格/父关联敏感性、逐前缀重分簇、留图/历史源预测及八组审核回读。验证见`tests/test_new_manual_20260921.py`，不改正式合同或原始导出。
+
+**新增数据分析：**`tools/thesis_main/analysis/analyze_new_manual_20260921.py`及`summarize_new_manual_20260921.py`复用点对、分组、有限池覆盖模块，输出`analysis_results/new_manual_analysis_20260921/`；包括严格/父关联敏感性、逐前缀重分簇、留图/历史源预测及八组审核回读。验证见`tests/test_new_manual_20260921.py`，不改正式合同或原始导出。
+
+**采集覆盖更新：**`tools/thesis_main/analysis/build_collection_plan_20260921.py`生成覆盖基线；`extend_collection_plan_20260921.py`生成[v4历史候选](../analysis_results/collection_plan_20260921_v4/说明.md)。最新[英文3—6人分类与两批备选测算](../analysis_results/collection_plan_20260921_v4/英文人数分档与两批备选_初步测算.md)尚未接入生成器，逐人计划待重排。验证见`tests/test_collection_plan_20260921.py`；历史版本与外部审计保留，不修改原始导出或正式分配。
+
+**采集采用审核：**`tools/thesis_main/analysis/build_collection_review_20260921.py`生成[八组39图独立审核页](../analysis_results/collection_review_20260921/index.html)，复用 Panorama Studio CSS；模板与交互位于同目录`collection_review.html`、`collection_review.js`。`tests/test_collection_review_20260921.cjs`检查文字、暂缓、逐图例外及输入版本；不改旧审核或自动派发。
+
 **分簇工作候选：**`tools/thesis_main/analysis/clustering_release/`复用RC1数值模块，统一来源与版本检查；`paired_split_research/release_review.py`生成独立16图审核页。输入、结果与云端包说明见[本地入口](../analysis_results/clustering_release_local_20260920/README.md)，规则见[一致性说明](thesis_main/分簇工作版_统一数据入口_20260920.md)。不修改正式协议或原始导出。
 
 

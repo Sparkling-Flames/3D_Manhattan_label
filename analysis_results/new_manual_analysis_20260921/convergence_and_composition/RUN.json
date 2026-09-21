@@ -1,0 +1,59 @@
+{
+  "orders": 200,
+  "seed": 20260921,
+  "unique_pools": 283,
+  "image_views": 675,
+  "methods": [
+    "image_max_endpoint_complete",
+    "image_max_endpoint_representative"
+  ],
+  "pixel_probe": 25.6,
+  "profiles": [
+    [
+      null,
+      null
+    ],
+    [
+      2,
+      0.1
+    ],
+    [
+      2,
+      0.2
+    ],
+    [
+      3,
+      0.1
+    ],
+    [
+      3,
+      0.2
+    ],
+    [
+      4,
+      0.1
+    ],
+    [
+      4,
+      0.2
+    ]
+  ],
+  "tails": [
+    2,
+    3,
+    5
+  ],
+  "epsilon": 0.1,
+  "repeated_support": 2,
+  "order_probability": 0.8,
+  "no_frozen_caps": true,
+  "historical_frozen_time_changed": false,
+  "classification_target_building_excluded": true,
+  "team_validation": "fixed four disjoint responses; same classified team universe across six configurations",
+  "inputs": [
+    "../responses.jsonl.gz",
+    "../distances.json",
+    "analysis_results\\clustering_numeric_received_20260920\\results\\personnel\\refitted_lobo_rosters.csv"
+  ],
+  "limitation": "finite observed pools; deterministic partitions conditional on candidate method; not prospective stopping validation"
+}

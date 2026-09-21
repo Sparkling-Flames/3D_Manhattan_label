@@ -67,7 +67,7 @@ def check_ordinals(coords, records):
             raise ValueError('结果坐标与当前计算点版本不一致')
 
 
-def validate_review(value, binding, keys):
+def validate_review(value, binding, keys, options_by_key=None):
     """Same checks as the browser importer; never reinterpret legacy answers."""
     if value.get('schema') != SCHEMA or value.get('binding') != binding:
         raise ValueError('审核版本或点集不匹配')
@@ -77,7 +77,8 @@ def validate_review(value, binding, keys):
     for key, decision in decisions.items():
         if key not in keys or not isinstance(decision, dict):
             raise ValueError('未知图片或答案')
-        if (decision.get('relation') not in ['', '可视为相近', '应分开保留差异', '暂不能判断']
+        options=(options_by_key or {}).get(key) or ['可视为相近', '应分开保留差异', '暂不能判断']
+        if (decision.get('relation') not in ['', *options]
                 or not isinstance(decision.get('comment'), str)
                 or not isinstance(decision.get('defer'), bool)):
             raise ValueError('裁决字段无效')
