@@ -1,3 +1,5 @@
+**Pro分簇核验交接（2026-09-22）：**[资料与隔离复算](thesis_main/Pro云端资料入口_分簇核验_20260922.md)、[最新提示词](thesis_main/Pro提示词_分簇核验与不确定性_20260922.md)。工具为`tools/thesis_main/analysis/pro_cluster_handoff_20260922.py`，增量包与检查在`analysis_results/pro_cluster_handoff_20260922/`；未改变正式协议。
+
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
 **2026-09-21新Pro研究交接：**[当前资料与分支说明](thesis_main/Pro云端资料入口_20260921.md)、[开放研究提示词](thesis_main/Pro提示词_人员构成与顺序重放_20260921.md)。`tools/thesis_main/analysis/pro_research_handoff_20260921.py`打包／验证`analysis_results/pro_research_handoff_20260921/`中的最新终审数据和必要历史证据；原分支及正式合同保留。

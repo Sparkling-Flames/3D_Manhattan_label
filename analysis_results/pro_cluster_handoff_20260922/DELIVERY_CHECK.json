@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "isolated_directory": true,
+  "tests": "10 passed",
+  "audit_json_equal": [
+    "SUMMARY.json",
+    "上下点x偏差.json",
+    "用户审核_原始.json",
+    "逐项接收.json",
+    "阈值核对.json"
+  ],
+  "source_reproduction": {
+    "compared_json": [
+      "distances.json",
+      "eligibility.json",
+      "intake.json",
+      "memberships.json",
+      "partitions.json",
+      "per_image.json",
+      "per_worker.json",
+      "review_applied.json",
+      "SUMMARY.json"
+    ],
+    "response_rows_equal": true,
+    "tests": "....                                                                     [100%]\n4 passed in 2.45s",
+    "source_reference_unchanged": true,
+    "raw_logs_required": false
+  },
+  "original_review_bytes_equal": true,
+  "package_files": 804,
+  "limitations": "交付与既有结果复现检查；不是分簇语义验证。未重跑全部历史人员重放或全库视觉审查。Windows展开路径需足够短以避免路径长度限制。"
+}
