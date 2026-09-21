@@ -1,0 +1,31 @@
+name: Pro research source export 20260921
+on:
+  push:
+    branches: [codex/pro-research-20260921]
+    paths: [.github/workflows/pro-research-source-export-20260921.yml]
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ce43b2883f63ec1538cffdfe5feca8e2b24518dc
+          fetch-depth: 1
+          persist-credentials: false
+          sparse-checkout: analysis_results/pro_research_handoff_20260921
+      - name: Verify original source blob
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object analysis_results/pro_research_handoff_20260921/pro_research_20260921.zip)" = "4e6fda7851e27bfeb0a650663c185bf03f879527"
+          sha256sum analysis_results/pro_research_handoff_20260921/pro_research_20260921.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pro-research-pinned-source-ce43b288
+          path: analysis_results/pro_research_handoff_20260921/
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: error
