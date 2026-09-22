@@ -19,29 +19,33 @@ jobs:
             data/mp3d_layout
             lib
             analysis_results
+            import_json
       - name: Export only research geometry and inventory
         shell: bash
         run: |
-          python - <<'PY'
+          python -u - <<'PY'
           import subprocess,json,pathlib,zipfile,hashlib
           root=pathlib.Path('.');out=pathlib.Path('/tmp/supervisor_geometry');out.mkdir()
           entries=[];selected=[]
-          for line in subprocess.check_output(['git','-c','core.quotepath=false','ls-tree','-rl','HEAD'],text=True).splitlines():
-              meta,path=line.split('\t',1);mode,typ,sha,size=meta.split()
+          for line in subprocess.check_output(['git','-c','core.quotepath=false','ls-tree','-r','HEAD'],text=True).splitlines():
+              meta,path=line.split('\t',1);mode,typ,sha=meta.split()
               if typ!='blob':continue
-              size=int(size);entries.append(dict(path=path,size=size,sha=sha))
+              entries.append(dict(path=path,sha=sha))
               low=path.lower()
               want=('/label_cor/' in low and low.endswith('.txt')) or low.startswith('lib/')
               if low.startswith('analysis_results/') and low.endswith(('.json','.jsonl','.csv','.npz')):
                   want=want or any(t in low for t in ['final_gold_records','reference_registry','reference_manifest','reference_audit','predictions','model_outputs','model_geometry','model_candidates','hohonet','model_bank','model_cache','model_pool'])
-              if want and size<25000000 and (root/path).is_file():selected.append(path)
+              if low.startswith('import_json/') and low.endswith(('.json','.jsonl')):
+                  want=want or any(t in low for t in ['groudtruth_458','mp3d_validation_gt_audit','hohonet','prediction'])
+              if want and (root/path).is_file() and (root/path).stat().st_size<25000000:selected.append(path)
+          print('inventory',len(entries),'selected',len(selected),flush=True)
           (out/'tree_inventory.json').write_text(json.dumps(entries,ensure_ascii=False))
           manifest=[]
-          with zipfile.ZipFile(out/'geometry_source.zip','w',zipfile.ZIP_DEFLATED) as z:
+          with zipfile.ZipFile(out/'geometry_source.zip','w',zipfile.ZIP_DEFLATED,compresslevel=1) as z:
               for path in selected:
                   b=(root/path).read_bytes();z.writestr(path,b);manifest.append(dict(path=path,bytes=len(b),sha256=hashlib.sha256(b).hexdigest()))
           (out/'MANIFEST.json').write_text(json.dumps(dict(source_commit='1c26ef786195496806cb50a140cfffb6566fa1d6',files=manifest),ensure_ascii=False,indent=2))
-          print(json.dumps(dict(inventory=len(entries),selected=len(selected),archive_bytes=(out/'geometry_source.zip').stat().st_size)))
+          print(json.dumps(dict(inventory=len(entries),selected=len(selected),archive_bytes=(out/'geometry_source.zip').stat().st_size)),flush=True)
           PY
       - uses: actions/upload-artifact@v4
         with:
