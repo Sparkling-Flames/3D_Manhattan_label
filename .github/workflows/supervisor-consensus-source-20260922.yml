@@ -1,0 +1,54 @@
+name: Supervisor consensus frozen geometry export
+on:
+  push:
+    branches: [research/supervisor-consensus-20260922]
+    paths: [.github/workflows/supervisor-consensus-source-20260922.yml]
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 1c26ef786195496806cb50a140cfffb6566fa1d6
+          fetch-depth: 1
+          persist-credentials: false
+          sparse-checkout: |
+            data/mp3d_layout
+            lib
+            analysis_results
+      - name: Export only research geometry and inventory
+        shell: bash
+        run: |
+          python - <<'PY'
+          import subprocess,json,pathlib,zipfile,hashlib,urllib.request
+          root=pathlib.Path('.');out=pathlib.Path('/tmp/supervisor_geometry');out.mkdir()
+          entries=[];selected=[]
+          for line in subprocess.check_output(['git','ls-tree','-rl','HEAD'],text=True).splitlines():
+              meta,path=line.split('\t',1);mode,typ,sha,size=meta.split()
+              if typ!='blob':continue
+              size=int(size);entries.append(dict(path=path,size=size,sha=sha))
+              low=path.lower()
+              want=('/label_cor/' in low and low.endswith('.txt')) or low.startswith('lib/')
+              if low.startswith('analysis_results/') and low.endswith(('.json','.jsonl','.csv','.npz')):
+                  want=want or any(t in low for t in ['final_gold_records','reference_registry','reference_manifest','reference_audit','predictions','model_outputs','model_geometry','model_candidates','hohonet','model_bank','model_cache','model_pool'])
+              if want and size<25000000 and (root/path).is_file():selected.append(path)
+          (out/'tree_inventory.json').write_text(json.dumps(entries,ensure_ascii=False))
+          manifest=[]
+          with zipfile.ZipFile(out/'geometry_source.zip','w',zipfile.ZIP_DEFLATED) as z:
+              for path in selected:
+                  b=(root/path).read_bytes();z.writestr(path,b);manifest.append(dict(path=path,bytes=len(b),sha256=hashlib.sha256(b).hexdigest()))
+          (out/'MANIFEST.json').write_text(json.dumps(dict(source_commit='1c26ef786195496806cb50a140cfffb6566fa1d6',files=manifest),ensure_ascii=False,indent=2))
+          try:urllib.request.urlretrieve('https://ceur-ws.org/Vol-2173/paper10.pdf',out/'lee2018.pdf')
+          except Exception as e:(out/'paper_download_error.txt').write_text(repr(e))
+          print(json.dumps(dict(inventory=len(entries),selected=len(selected),archive_bytes=(out/'geometry_source.zip').stat().st_size)))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: supervisor-consensus-geometry-1c26ef78
+          path: /tmp/supervisor_geometry/
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: error
