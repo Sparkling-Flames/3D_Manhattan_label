@@ -15,11 +15,24 @@ jobs:
           ref: 1c26ef786195496806cb50a140cfffb6566fa1d6
           fetch-depth: 1
           persist-credentials: false
+          sparse-checkout-cone-mode: false
           sparse-checkout: |
-            data/mp3d_layout
-            lib
-            analysis_results
-            import_json
+            /lib/
+            /data/mp3d_layout/test/label_cor/
+            /data/mp3d_layout/valid/label_cor/
+            /analysis_results/
+            !*.zip
+            !*.png
+            !*.jpg
+            !*.jpeg
+            !*.html
+            !*.gz
+            !*.npz
+            !*.npy
+            !*.pt
+            !*.pth
+            /import_json/groudTruth_458_tasks_import_from_updated_gt_20260701.json
+            /import_json/mp3d_validation_gt_audit_20260809/
       - name: Export only research geometry and inventory
         shell: bash
         run: |
