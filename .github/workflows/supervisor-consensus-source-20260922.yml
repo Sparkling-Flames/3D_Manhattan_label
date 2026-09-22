@@ -23,10 +23,10 @@ jobs:
         shell: bash
         run: |
           python - <<'PY'
-          import subprocess,json,pathlib,zipfile,hashlib,urllib.request
+          import subprocess,json,pathlib,zipfile,hashlib
           root=pathlib.Path('.');out=pathlib.Path('/tmp/supervisor_geometry');out.mkdir()
           entries=[];selected=[]
-          for line in subprocess.check_output(['git','ls-tree','-rl','HEAD'],text=True).splitlines():
+          for line in subprocess.check_output(['git','-c','core.quotepath=false','ls-tree','-rl','HEAD'],text=True).splitlines():
               meta,path=line.split('\t',1);mode,typ,sha,size=meta.split()
               if typ!='blob':continue
               size=int(size);entries.append(dict(path=path,size=size,sha=sha))
@@ -41,8 +41,6 @@ jobs:
               for path in selected:
                   b=(root/path).read_bytes();z.writestr(path,b);manifest.append(dict(path=path,bytes=len(b),sha256=hashlib.sha256(b).hexdigest()))
           (out/'MANIFEST.json').write_text(json.dumps(dict(source_commit='1c26ef786195496806cb50a140cfffb6566fa1d6',files=manifest),ensure_ascii=False,indent=2))
-          try:urllib.request.urlretrieve('https://ceur-ws.org/Vol-2173/paper10.pdf',out/'lee2018.pdf')
-          except Exception as e:(out/'paper_download_error.txt').write_text(repr(e))
           print(json.dumps(dict(inventory=len(entries),selected=len(selected),archive_bytes=(out/'geometry_source.zip').stat().st_size)))
           PY
       - uses: actions/upload-artifact@v4
