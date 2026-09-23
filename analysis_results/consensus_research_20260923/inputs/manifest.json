@@ -1,0 +1,31 @@
+{
+  "schema": "consensus_inputs_v1",
+  "raw_rows": 3152,
+  "accepted": 3019,
+  "images": 259,
+  "conditions": {
+    "manual": 2265,
+    "semi": 538,
+    "oos": 216
+  },
+  "paired": 2978,
+  "known_wrong_ids": [
+    "new_95_3654_7089_W037",
+    "new_95_3654_7259_W034"
+  ],
+  "raw_verified": 3019,
+  "original_points": "raw_points_1024x512",
+  "computed_points": "pairs_shared_x",
+  "semantics": "初始纳入标志不是新视觉裁决；known_wrong只承接明确case14；所有未决原件另附",
+  "dependencies": [
+    "numpy",
+    "scipy",
+    "pandas",
+    "shapely",
+    "scikit-learn"
+  ],
+  "optional": [
+    "SimpleITK for standard STAPLE"
+  ],
+  "manual_gt_changed_images": 28
+}

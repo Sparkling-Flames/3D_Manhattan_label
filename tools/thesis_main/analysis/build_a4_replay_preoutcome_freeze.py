@@ -34,7 +34,7 @@ SUMMARY = FORMAL / "c1_canonicalization_summary.json"
 PAIRWISE = FORMAL / "geometry_pairwise_similarity_C1.csv"
 ALIGNMENT = ROOT / "analysis_results/a4_image_evidence_substrate_20260817_v2/DEVELOPMENT_CANDIDATE_IMAGE_ALIGNMENT.csv"
 RULE = ROOT / "docs/thesis_main/geometry_peer_candidate_rule_manifest_v1.json"
-CONTRACT = ROOT / "docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json"
+CONTRACT = ROOT / "docs/thesis_main/PAPER_A_METHOD_CONTRACT_20260811_v23.json"
 SPLIT = ROOT / "analysis_results/aggregation_preflight_readiness_20260817_v1/DEVELOPMENT_HOLDOUT_SPLIT_MANIFEST.csv"
 
 DENY_PATHS = (

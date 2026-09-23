@@ -10,7 +10,7 @@ from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 DOCS = PROJECT_ROOT / "docs" / "thesis_main"
-METHOD_CONTRACT = DOCS / "PAPER_A_METHOD_CONTRACT_CURRENT.json"
+METHOD_CONTRACT = DOCS / "PAPER_A_METHOD_CONTRACT_20260811_v23.json"
 
 def sha256_file(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()

@@ -1,0 +1,553 @@
+{
+  "schema": "consensus_review_source_index_v1",
+  "created_date": "2026-09-23",
+  "repo_paths_relative_to": "repository root",
+  "policy": "保留原件；此索引不新增或改写任何裁决。未决不能自动排除。",
+  "sources": [
+    {
+      "path": "export_label/RAW_DATA_AND_GROUND_TRUTH_SCOPE_NOTE_20260817.md",
+      "exists": true,
+      "role": "scope",
+      "interpretation_guard": "历史提交范围说明，不自动决定当前纳入",
+      "count_semantics": "结构计数，不代表独立作答数",
+      "bytes": 3051,
+      "top_level_type": "text",
+      "line_count": 42
+    },
+    {
+      "path": "docs/thesis_main/TEST_MANUAL_GT_CORRECTIONS_20260823.md",
+      "exists": true,
+      "role": "GT",
+      "interpretation_guard": "30张实质修订，不能推断其余已人工验证",
+      "count_semantics": "结构计数，不代表独立作答数",
+      "bytes": 5264,
+      "top_level_type": "text",
+      "line_count": 64
+    },
+    {
+      "path": "export_label/groudTruth.json",
+      "exists": true,
+      "role": "GT",
+      "interpretation_guard": "当前人工参考快照；只按修订清单构造修订GT版本",
+      "count_semantics": "结构计数，不代表独立作答数",
+      "bytes": 1865730,
+      "top_level_type": "list",
+      "top_level_count": 458,
+      "unresolved_text_mentions": [],
+      "unresolved_text_warning": "仅索引选定文本中的原话，不是自动判定；证据内的可选选项不算已作裁决。"
+    },
+    {
+      "path": "analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_scope_adjudication.csv",
+      "exists": true,
+      "role": "scope",
+      "interpretation_guard": "任务scope裁决不等于逐作答错误裁决",
+      "count_semantics": "结构计数，不代表独立作答数",
+      "bytes": 25962,
+      "top_level_type": "csv_rows",
+      "top_level_count": 114,
+      "columns": [
+        "task_id",
+        "project_id",
+        "dataset_group",
+        "condition",
+        "image_id",
+        "data_title",
+        "task_final_scope",
+        "task_scope_adjudication_source",
+        "final_gold_scope",
+        "final_gold_ref",
+        "worker_scope_values_seen",
+        "n_worker_in_scope",
+        "n_worker_oos",
+        "n_worker_scope_missing",
+        "mixed_scope_flag",
+        "unresolved_scope_flag",
+        "geometry_primary_possible",
+        "notes"
+      ]
+    },
+    {
+      "path": "analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_final_gold_v2_correction_audit.json",
+      "exists": true,
+      "role": "GT_and_scope",
+      "interpretation_guard": "历史两项更正，不将旧final-gold覆盖当前原始/修订GT",
+      "count_semantics": "结构计数，不代表独立作答数",
+      "bytes": 1016,
+      "top_level_type": "dict",
+      "top_level_count": 4,
+      "top_level_structure": {
+        "status": {
+          "type": "str",
+          "count": null
+        },
+        "source_final_gold_sha256": {
+          "type": "str",
+          "count": null
+        },
+        "corrected_final_gold_v2_sha256": {
+          "type": "str",
+          "count": null
+        },
+        "corrections": {
+          "type": "list",
+          "count": 2
+        }
+      },
+      "unresolved_text_mentions": [],
+      "unresolved_text_warning": "仅索引选定文本中的原话，不是自动判定；证据内的可选选项不算已作裁决。"
+    },
+    {
+      "path": "analysis_results/c2b_closeout_20260806_final/researcher_scope_gt_review_notes_20260807.md",
+      "exists": true,
+      "role": "GT_and_scope",
+      "interpretation_guard": "非盲审，有待关闭reference事项，保留原文",
+      "count_semantics": "结构计数，不代表独立作答数",
+      "bytes": 5572,
+      "top_level_type": "text",
+      "line_count": 64
+    },
+    {
+      "path": "analysis_results/c2a_rp_local_launch_20260807_inputs_v2/reference_conflict_review_record_post_c2_local.csv",
+      "exists": true,
+      "role": "GT_and_scope",
+      "interpretation_guard": "按字段与具体任务解释，不批量转作答排除",
+      "count_semantics": "结构计数，不代表独立作答数",
+      "bytes": 3121,
+      "top_level_type": "csv_rows",
+      "top_level_count": 3,
+      "columns": [
+        "schema_version",
+        "stage",
+        "batch_id",
+        "selected_design_id",
+        "base_task_id",
+        "issue_type",
+        "declared_at",
+        "declared_by",
+        "original_reference_path",
+        "original_reference_sha256",
+        "registry_status_before_review",
+        "reference_status_before_review",
+        "reference_normalizer_status_before_review",
+        "geometry_reference_ready_before_review",
+        "review_status",
+        "reviewer_blinding",
+        "review_evidence",
+        "review_disposition",
+        "reviewed_by",
+        "reviewed_at",
+        "method_contract_sha256",
+        "assignment_sha256",
+        "reference_registry_sha256",
+        "notes"
+      ]
+    },
+    {
+      "path": "analysis_results/human_review_reconciliation_20260907_v1/原始问卷备份.json",
+      "exists": true,
+      "role": "annotation_review",
+      "interpretation_guard": "原问卷与最终应用不同层级",
+      "count_semantics": "结构计数，不代表独立作答数",
+      "bytes": 31559,
+      "top_level_type": "dict",
+      "top_level_count": 4,
+      "top_level_structure": {
+        "schema": {
+          "type": "str",
+          "count": null
+        },
+        "exported_at": {
+          "type": "str",
+          "count": null
+        },
+        "meaning": {
+          "type": "str",
+          "count": null
+        },
+        "records": {
+          "type": "list",
+          "count": 50
+        }
+      },
+      "unresolved_text_mentions": [],
+      "unresolved_text_warning": "仅索引选定文本中的原话，不是自动判定；证据内的可选选项不算已作裁决。"
+    },
+    {
+      "path": "analysis_results/human_review_reconciliation_20260918/用户_39图文字审核_原始.json",
+      "exists": true,
+      "role": "annotation_review",
+      "interpretation_guard": "reviews与image_notes分别计数，不相加为独立图",
+      "count_semantics": "结构计数，不代表独立作答数",
+      "bytes": 20903,
+      "top_level_type": "dict",
+      "top_level_count": 6,
+      "top_level_structure": {
+        "schema": {
+          "type": "str",
+          "count": null
+        },
+        "source_v1": {
+          "type": "str",
+          "count": null
+        },
+        "source_v2": {
+          "type": "str",
+          "count": null
+        },
+        "saved_at": {
+          "type": "str",
+          "count": null
+        },
+        "reviews": {
+          "type": "list",
+          "count": 36
+        },
+        "image_notes": {
+          "type": "list",
+          "count": 39
+        }
+      },
+      "unresolved_text_mentions": [],
+      "unresolved_text_warning": "仅索引选定文本中的原话，不是自动判定；证据内的可选选项不算已作裁决。"
+    },
+    {
+      "path": "analysis_results/human_review_reconciliation_20260918/用户_39图最终裁决_原始.json",
+      "exists": true,
+      "role": "annotation_review",
+      "interpretation_guard": "26项decisions及8项point_decisions；暂缓不可自动排除",
+      "count_semantics": "结构计数，不代表独立作答数",
+      "bytes": 275782,
+      "top_level_type": "dict",
+      "top_level_count": 9,
+      "top_level_structure": {
+        "schema": {
+          "type": "str",
+          "count": null
+        },
+        "evidence_schema": {
+          "type": "str",
+          "count": null
+        },
+        "source_v2": {
+          "type": "str",
+          "count": null
+        },
+        "decisions": {
+          "type": "list",
+          "count": 26
+        },
+        "point_decisions": {
+          "type": "list",
+          "count": 8
+        },
+        "legacy_review": {
+          "type": "NoneType",
+          "count": null
+        },
+        "saved_at": {
+          "type": "str",
+          "count": null
+        },
+        "evidence": {
+          "type": "dict",
+          "count": 4
+        },
+        "confirmed_point_repair_instructions": {
+          "type": "list",
+          "count": 0
+        }
+      },
+      "unresolved_text_mentions": [
+        {
+          "json_pointer": "/decisions/7/answer",
+          "verbatim": "暂缓"
+        },
+        {
+          "json_pointer": "/decisions/15/answer",
+          "verbatim": "暂缓"
+        },
+        {
+          "json_pointer": "/decisions/16/answer",
+          "verbatim": "暂缓"
+        },
+        {
+          "json_pointer": "/decisions/19/answer",
+          "verbatim": "暂缓"
+        }
+      ],
+      "unresolved_text_warning": "仅索引选定文本中的原话，不是自动判定；证据内的可选选项不算已作裁决。"
+    },
+    {
+      "path": "analysis_results/cluster_review_extra_20260919/用户_12图审核_原始.json",
+      "exists": true,
+      "role": "annotation_review",
+      "interpretation_guard": "24个问题不是24张图；分簇差异不等于错标",
+      "count_semantics": "结构计数，不代表独立作答数",
+      "bytes": 84873,
+      "top_level_type": "dict",
+      "top_level_count": 4,
+      "top_level_structure": {
+        "schema": {
+          "type": "str",
+          "count": null
+        },
+        "exported_at": {
+          "type": "str",
+          "count": null
+        },
+        "decisions": {
+          "type": "dict",
+          "count": 24
+        },
+        "evidence": {
+          "type": "list",
+          "count": 24
+        }
+      },
+      "unresolved_text_mentions": [],
+      "unresolved_text_warning": "仅索引选定文本中的原话，不是自动判定；证据内的可选选项不算已作裁决。"
+    },
+    {
+      "path": "analysis_results/cluster_screen_reviewed_20260922/用户审核_原始.json",
+      "exists": true,
+      "role": "annotation_review",
+      "interpretation_guard": "整体错标、局部差异与分簇判断分别保留",
+      "count_semantics": "结构计数，不代表独立作答数",
+      "bytes": 252985,
+      "top_level_type": "dict",
+      "top_level_count": 5,
+      "top_level_structure": {
+        "schema": {
+          "type": "str",
+          "count": null
+        },
+        "binding": {
+          "type": "dict",
+          "count": 4
+        },
+        "decisions": {
+          "type": "dict",
+          "count": 24
+        },
+        "evidence": {
+          "type": "list",
+          "count": 24
+        },
+        "exported_at": {
+          "type": "str",
+          "count": null
+        }
+      },
+      "unresolved_text_mentions": [
+        {
+          "json_pointer": "/decisions/B6ByNegPMKs_d19d2ae4bddf4445a3c623edc0346937|cluster_screen_20260921/comment",
+          "verbatim": "但是他们两个都是错误标注,他们虽然大体都是标注了一个区间,但是他们俩的的p3,4,5,6还是有差别,不确定"
+        },
+        {
+          "json_pointer": "/decisions/yqstnuAEVhm_2b3fb4746d414cc6a31729b222ed79b2|cluster_screen_20260921/comment",
+          "verbatim": "这是定位偏差,但是差别的不是特别大,不确定"
+        }
+      ],
+      "unresolved_text_warning": "仅索引选定文本中的原话，不是自动判定；证据内的可选选项不算已作裁决。"
+    },
+    {
+      "path": "analysis_results/new_manual_reviewed_20260921/evidence/用户审核_原始.json",
+      "exists": true,
+      "role": "annotation_review",
+      "interpretation_guard": "39个evidence不等于39项已回答；48份parent相关作答独立性已由后续确认关闭",
+      "count_semantics": "结构计数，不代表独立作答数",
+      "bytes": 173546,
+      "top_level_type": "dict",
+      "top_level_count": 5,
+      "top_level_structure": {
+        "schema": {
+          "type": "str",
+          "count": null
+        },
+        "binding": {
+          "type": "dict",
+          "count": 4
+        },
+        "decisions": {
+          "type": "dict",
+          "count": 11
+        },
+        "evidence": {
+          "type": "list",
+          "count": 39
+        },
+        "exported_at": {
+          "type": "str",
+          "count": null
+        }
+      },
+      "unresolved_text_mentions": [],
+      "unresolved_text_warning": "仅索引选定文本中的原话，不是自动判定；证据内的可选选项不算已作裁决。"
+    },
+    {
+      "path": "analysis_results/new_manual_reviewed_20260921/review_applied.json",
+      "exists": true,
+      "role": "annotation_applied",
+      "interpretation_guard": "2处借用补点、3项配对；保存donor；不得变成独立预测票",
+      "count_semantics": "结构计数，不代表独立作答数",
+      "bytes": 9964,
+      "top_level_type": "dict",
+      "top_level_count": 6,
+      "top_level_structure": {
+        "independence_confirmation": {
+          "type": "str",
+          "count": null
+        },
+        "repairs": {
+          "type": "list",
+          "count": 2
+        },
+        "pairing_overrides": {
+          "type": "list",
+          "count": 3
+        },
+        "selected_version": {
+          "type": "int",
+          "count": null
+        },
+        "preserved_unpaired": {
+          "type": "int",
+          "count": null
+        },
+        "uNb40": {
+          "type": "str",
+          "count": null
+        }
+      },
+      "unresolved_text_mentions": [],
+      "unresolved_text_warning": "仅索引选定文本中的原话，不是自动判定；证据内的可选选项不算已作裁决。"
+    },
+    {
+      "path": "analysis_results/new_manual_reviewed_20260921/汇总说明.md",
+      "exists": true,
+      "role": "annotation_intake",
+      "interpretation_guard": "3019/259是当前起点；7502替7111、7272替7271；7036描述性保留",
+      "count_semantics": "结构计数，不代表独立作答数",
+      "bytes": 2651,
+      "top_level_type": "text",
+      "line_count": 38
+    },
+    {
+      "path": "analysis_results/candidate_selection_review_20260913_v2/用户审查原始记录.json",
+      "exists": true,
+      "role": "selection",
+      "interpretation_guard": "112图选用审核；不选用不等于删除历史作答",
+      "count_semantics": "结构计数，不代表独立作答数",
+      "bytes": 44721,
+      "top_level_type": "dict",
+      "top_level_count": 10,
+      "top_level_structure": {
+        "schema": {
+          "type": "str",
+          "count": null
+        },
+        "commit": {
+          "type": "str",
+          "count": null
+        },
+        "registry_blob": {
+          "type": "str",
+          "count": null
+        },
+        "participants": {
+          "type": "list",
+          "count": 19
+        },
+        "budget_basis": {
+          "type": "str",
+          "count": null
+        },
+        "budget": {
+          "type": "NoneType",
+          "count": null
+        },
+        "created_at": {
+          "type": "str",
+          "count": null
+        },
+        "status": {
+          "type": "str",
+          "count": null
+        },
+        "groups": {
+          "type": "list",
+          "count": 22
+        },
+        "decisions": {
+          "type": "list",
+          "count": 112
+        }
+      },
+      "unresolved_text_mentions": [],
+      "unresolved_text_warning": "仅索引选定文本中的原话，不是自动判定；证据内的可选选项不算已作裁决。"
+    },
+    {
+      "path": "analysis_results/new_manual_analysis_20260921/用户_八组采集采用_原始.json",
+      "exists": true,
+      "role": "selection",
+      "interpretation_guard": "采集采用决策不等于删除历史作答",
+      "count_semantics": "结构计数，不代表独立作答数",
+      "bytes": 71055,
+      "top_level_type": "dict",
+      "top_level_count": 5,
+      "top_level_structure": {
+        "schema": {
+          "type": "str",
+          "count": null
+        },
+        "binding": {
+          "type": "dict",
+          "count": 3
+        },
+        "decisions": {
+          "type": "dict",
+          "count": 8
+        },
+        "source_evidence": {
+          "type": "list",
+          "count": 8
+        },
+        "exported_at": {
+          "type": "str",
+          "count": null
+        }
+      },
+      "unresolved_text_mentions": [],
+      "unresolved_text_warning": "仅索引选定文本中的原话，不是自动判定；证据内的可选选项不算已作裁决。"
+    }
+  ],
+  "external_context_sources": [
+    {
+      "external_path": "C:/Users/ASUS/Desktop/与导师交流.txt",
+      "exists": true,
+      "role": "user_context_not_adjudication",
+      "bytes": 8878,
+      "line_count": 71
+    },
+    {
+      "external_path": "C:/Users/ASUS/.codex/attachments/87d02513-2f4f-400c-8a7d-6e82c8b353f5/已粘贴的文本.txt",
+      "exists": true,
+      "role": "user_context_not_adjudication",
+      "bytes": 16419,
+      "line_count": 210
+    },
+    {
+      "external_path": "C:/Users/ASUS/.codex/attachments/b2a07d66-911a-4823-91a4-22702ad6c317/已粘贴的文本.txt",
+      "exists": true,
+      "role": "user_context_not_adjudication",
+      "bytes": 25538,
+      "line_count": 265
+    }
+  ],
+  "output_schema_contract": {
+    "exists": "boolean",
+    "top_level_count": "number of root entries, JSON keys or CSV data rows; not independent responses",
+    "top_level_structure": "JSON object child type and list/dict length",
+    "unresolved_text_mentions": "original selected leaf text, not an exclusion classifier"
+  }
+}

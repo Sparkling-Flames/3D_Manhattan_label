@@ -1,3 +1,6 @@
+<!-- CURRENT_RESEARCH: consensus_research_20260923_v1 -->
+当前研究规范：`docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`；2026-09-23的区域共识、人员组合、难度与同房预测使用新版研究SOP。下列旧Calibration/T1/V1材料仅解释历史流程，其机器合同已绑定 `PAPER_A_METHOD_CONTRACT_20260811_v23.json`。
+
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 <!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260811_v23 SHA-256 f3c1ea58d0857a40aa2240b4680b674c76fe2cec8f048f61a643d9e4b74b0588 -->
 # Agent 上下文索引

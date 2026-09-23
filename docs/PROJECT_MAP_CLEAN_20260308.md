@@ -1,4 +1,48 @@
+本轮追加：[Pro质心与区域文献调研纯文字提示词](thesis_main/PRO_CENTROID_LITERATURE_PROMPT_20260923.md)，不提供ZIP。
+
+
+本轮入口：[执行与交付说明](../analysis_results/consensus_research_20260923/README.md)、[Pro任务书](thesis_main/PRO_CONSENSUS_RESEARCH_TASK_20260923.md)、[保留的v23合同](thesis_main/PAPER_A_METHOD_CONTRACT_20260811_v23.json)。新数值工具：`tools/thesis_main/analysis/{consensus_region,build_consensus_handoff,summarize_consensus_pilot}_20260923.py`；对应检查位于`tests/test_consensus_*20260923.py`。
+**当前人工清查页：**[多通道审核入口](../analysis_results/consensus_visual_review_20260923/index.html)，由`build_consensus_visual_review_20260923.py`构建；角点数量、3D诊断、顺序、单人/小簇独立召回，IoU仅辅助。字段和边界见同目录README，测试`test_consensus_visual_review_20260923.py`。
+<!-- CURRENT_RESEARCH: consensus_research_20260923_v1 -->
+当前研究规范：`docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`；2026-09-23的区域共识、人员组合、难度与同房预测使用新版研究SOP。下列旧Calibration/T1/V1材料仅解释历史流程，其机器合同已绑定 `PAPER_A_METHOD_CONTRACT_20260811_v23.json`。
+
 <!-- PAPER_A_MACHINE_STATUS: normative -->
+
+**导师新方向独立研究（2026-09-22，探索）：**`tools/thesis_main/analysis/audit_supervisor_gt_sensitivity_20260922.py`输出`analysis_results/supervisor_independent_20260922/`，含二维/地面区域定义、原始MP3D与人工GT配对敏感性、共识曲线及难度诊断；检查`tests/test_supervisor_gt_sensitivity_20260922.py`。[独立报告](../analysis_results/supervisor_independent_20260922/独立研究判断.md)不替代正式协议或冻结参数。
+
+**任务8导入／工作簿（2026-09-22）：**`tools/thesis_main/data_prep/build_cn_first10_import_20260922.py`与`build_cn_first10_workbook_20260922.mjs`将已核对首批清单生成至`import_json/cn_first10_20260922/`；仅`label_studio_import/任务8.json`导入LS，其余为分配真源／管理资料。测试`tests/test_cn_first10_import_20260922.py`；工作簿复用任务7模板并逐表重读核对，不修改线上状态。
+
+**中文首批采集准备（2026-09-22）：**`tools/thesis_main/analysis/plan_cn_first10_20260922.py`生成[9人各10图候选](../analysis_results/cn_first10_20260922/分配说明.md)，输出JSON、说明及原图预览；`tests/test_plan_cn_first10_20260922.py`验证负载、历史暴露及独立预测人数缺口。不修改原导出、正式分配或线上状态。
+
+**共享x探索复算（2026-09-22）：**`tools/thesis_main/analysis/shared_x_reanalysis_20260922.py`输出`analysis_results/shared_x_reanalysis_20260922/`，含四条件分簇、同房预测、完整人数重放与误差／尾部诊断；`tests/test_shared_x_reanalysis_20260922.py`覆盖几何规整、保留例外、稳定判据和归因。展示用`tools/thesis_main/analysis/research_dashboard/shared_x.py`接入独立版本；两份导师讲稿同步解释，历史分类不冒充新复验。原始数据及正式合同不变。
+
+**导师口头讲稿：**`docs/thesis_main/导师汇报简明讲稿_20260922.md`为完整通俗版，保留全部主题；详细问答另补历史分类、子类和跨版本解释。`analysis_results/presentation_inventory_20260922/展示完整性复核_20260922.md`登记六模块遗漏、来源和验收边界，不改研究计算。
+
+**导师展示供数（2026-09-22）：**`tools/thesis_main/analysis/audit_presentation_inventory_20260922.py`只读盘点人工、参考和五类模型资产，输出`analysis_results/presentation_inventory_20260922/`；检查`tests/test_audit_presentation_inventory_20260922.py`。`research_dashboard/connect_20260922.py`接入已审计结果，输出`analysis_results/research_dashboard_20260922/`及ZIP；检查`tests/test_research_dashboard_real.py`与`tests/research_dashboard_real_browser.cjs`。[讲解与问答](thesis_main/导师汇报讲解与问答_20260922.md)另行解释计算、瓶颈与稳定及证据限制；不改正式方法。
+
+**展示历史证据：**同目录`research_dashboard/history.py`只读接入H/L/U、303配置、子类稳定与配比、同房起点、同场景及修正特征对照；旧数据、旧方法与当前结果用独立版本切片，检查仍复用`tests/test_research_dashboard_real.py`。本轮增补未作新浏览器访问，静态与数值检查不等于最新视觉验收。
+
+**新分簇同房对照：**`tools/thesis_main/analysis/compare_room_partitions_20260922.py`复用已审计Pro同房计算，固定25.6px，仅替换分区；检查`tests/test_compare_room_partitions_20260922.py`。[结果、字段和边界](../analysis_results/room_partition_comparison_20260922/README.md)位于`analysis_results/room_partition_comparison_20260922/`，不修改正式协议或原始点。
+
+**分簇核验返回独立复核：**`tools/thesis_main/analysis/audit_cluster_validation_return_20260922.py`核对数据、穷举小图最优目标、检查候选扰动与单人簇下界；最小测试为`tests/test_audit_cluster_validation_return_20260922.py`。[原件与本地复算入口](../analysis_results/cluster_validation_received_20260922/README.md)，不改正式分簇或原始点。
+
+**Pro分簇核验交接（2026-09-22）：**`tools/thesis_main/analysis/pro_cluster_handoff_20260922.py`打包研究增量并展开到独立目录；检查`tests/test_pro_cluster_handoff_20260922.py`。[云端资料入口](thesis_main/Pro云端资料入口_分簇核验_20260922.md)及[提示词](thesis_main/Pro提示词_分簇核验与不确定性_20260922.md)，输出`analysis_results/pro_cluster_handoff_20260922/`。不改变分簇参数、原坐标或正式协议。
+
+**24图审核接收工具：**`tools/thesis_main/analysis/audit_cluster_screen_20260922.py`校验原审核绑定，保存逐项原话、阈值对照、GT资产与同人上下点x差；[结果](../analysis_results/cluster_screen_reviewed_20260922/README.md)，检查`tests/test_audit_cluster_screen_20260922.py`。不修正原点、不冻结参数。
+
+**24图分簇筛查：**`tools/thesis_main/analysis/build_cluster_screen_20260921.py`复用Studio和已有审核面板；[输出与填写说明](../analysis_results/cluster_screen_20260921/README.md)。测试为`tests/test_build_cluster_screen_20260921.py`和`tests/cluster_screen_browser.cjs`；结构增减应分簇，奇数点另审，本轮答案未预填。
+
+**人员与阈值敏感性：**`tools/thesis_main/analysis/worker_cluster_sensitivity_20260921.py`复算全员逐一删除及预选人员的200顺序重放；`cluster_threshold_audit_20260921.py`复用现有分簇做阈值和单人簇机制检查。对应两份同名测试；[独立结果与视觉证据](../analysis_results/worker_cluster_sensitivity_20260921/README.md)保留全员基线，不改变原始标注、正式人员资格或冻结阈值。
+
+**人员与阈值敏感性：**`tools/thesis_main/analysis/worker_cluster_sensitivity_20260921.py`复算全员逐一删除及预选人员的200顺序重放；`cluster_threshold_audit_20260921.py`复用现有分簇做阈值和单人簇机制检查。对应两份同名测试；[独立结果与视觉证据](../analysis_results/worker_cluster_sensitivity_20260921/README.md)保留全员基线，不改变原始标注、正式人员资格或冻结阈值。
+
+**Pro研究返回审查：**`tools/thesis_main/analysis/audit_pro_research_20260921.py`复核有限池覆盖、同栋对照并修正人员特征外层留建筑隔离；`tests/test_audit_pro_research_20260921.py`检查隔离。原返回代码仅作接收证据，原件、八组本地复算、差异与采用边界见[审查入口](../analysis_results/panorama_research_received_20260921/README.md)。不改正式合同、导出或采集安排。
+
+**新Pro资料交接：**`tools/thesis_main/analysis/pro_research_handoff_20260921.py`打包选定研究资料并隔离复算，输出`analysis_results/pro_research_handoff_20260921/`；[云端入口](thesis_main/Pro云端资料入口_20260921.md)、[开放提示词](thesis_main/Pro提示词_人员构成与顺序重放_20260921.md)。旧分支与研究结果保留，不改正式合同。
+
+**新增数据终审汇总：**`tools/thesis_main/analysis/reviewed_manual_20260921.py`应用用户确认、补点及当前版本，输出[审核后汇总](../analysis_results/new_manual_reviewed_20260921/汇总说明.md)；检查`tests/test_reviewed_manual_20260921.py`。原导出与旧数值结果不改；48份父关联独立性事项已关闭，不再列待核查。 W006补交原分配的uNb-66／67／87已接入，原480份必做均已有非空提交并纳入；7502替代7111，不重复计票。
+
+**离线研究仪表盘：**`tools/thesis_main/analysis/research_dashboard/build.py`读取展示清单，输出六模块静态包；模板、样式、交互与空清单同目录。[展示接口](thesis_main/OFFLINE_RESEARCH_DASHBOARD.md)；检查 `tests/test_research_dashboard.py`、`tests/research_dashboard_browser.cjs`。首版 `analysis_results/research_dashboard_structure_20260921/`及同名 ZIP 仅有结构与空状态，测试数据不进入交付；不改协议或研究计算。
 
 **研究线程交接（2026-09-21）：**`docs/thesis_main/研究讨论线程交接_20260921.md`登记原话、阅读顺序、当前数据与方法断点、线程分工；`docs/thesis_main/Pro提示词_人员构成与顺序重放_20260921.md`提供云端任务及待准备输入清单。仅文档，不修改计算或正式合同，未提交新云端包。
 

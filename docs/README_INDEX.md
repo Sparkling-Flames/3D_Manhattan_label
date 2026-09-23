@@ -1,4 +1,46 @@
+本轮追加：[Pro质心与区域文献调研纯文字提示词](thesis_main/PRO_CENTROID_LITERATURE_PROMPT_20260923.md)，不提供ZIP。
+
+
+本轮入口：[执行与交付说明](../analysis_results/consensus_research_20260923/README.md)、[Pro任务书](thesis_main/PRO_CONSENSUS_RESEARCH_TASK_20260923.md)、[保留的v23合同](thesis_main/PAPER_A_METHOD_CONTRACT_20260811_v23.json)。新数值工具：`tools/thesis_main/analysis/{consensus_region,build_consensus_handoff,summarize_consensus_pilot}_20260923.py`；对应检查位于`tests/test_consensus_*20260923.py`。
+**当前人工清查页：**[多通道审核入口](../analysis_results/consensus_visual_review_20260923/index.html)，由`build_consensus_visual_review_20260923.py`构建；角点数量、3D诊断、顺序、单人/小簇独立召回，IoU仅辅助。字段和边界见同目录README，测试`test_consensus_visual_review_20260923.py`。
+<!-- CURRENT_RESEARCH: consensus_research_20260923_v1 -->
+当前研究规范：`docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`；2026-09-23的区域共识、人员组合、难度与同房预测使用新版研究SOP。下列旧Calibration/T1/V1材料仅解释历史流程，其机器合同已绑定 `PAPER_A_METHOD_CONTRACT_20260811_v23.json`。
+
 <!-- PAPER_A_MACHINE_STATUS: normative -->
+
+**导师新方向独立研究（2026-09-22，探索）：**[独立判断与GT敏感性](../analysis_results/supervisor_independent_20260922/独立研究判断.md)、[复算及字段](../analysis_results/supervisor_independent_20260922/README.md)。分开二维墙带/地面表示、原始MP3D/人工修订GT，含固定人员聚合曲线、人员排序和模型难度诊断；不要求二维研究先恢复三维顺序，不修改正式方法。
+
+**任务8准备文件（2026-09-22）：**[中文9人首批10图导入与分发表](../import_json/cn_first10_20260922/使用说明.md)，19张导入图、90份分配；9姓名sheet沿用任务7格式，尚待线上导入和运行时绑定。
+
+**中文9人首批10图（2026-09-22）：**[具体安排与缺口](../analysis_results/cn_first10_20260922/分配说明.md)、[逐人原图预览](../analysis_results/cn_first10_20260922/分配预览.html)。90份包含74份旧图补标、16份新图，使用最新终审人数与接触排除；候选未派发。
+
+**共享x四条件复算（2026-09-22）：**[完整结果与原因诊断](../analysis_results/shared_x_reanalysis_20260922/README.md)比较原始／共享x×完整链接／全局亲近度，同房预测、人数稳定及强主簇／少量尾部单列；[通俗讲稿](thesis_main/导师汇报简明讲稿_20260922.md)和[详细问答](thesis_main/导师汇报讲解与问答_20260922.md)已同步。新入口`tools/thesis_main/analysis/shared_x_reanalysis_20260922.py`，检查`tests/test_shared_x_reanalysis_20260922.py`；展示适配`research_dashboard/shared_x.py`保留独立版本，不改原始点或正式方法。
+
+**导师口头讲稿：**[完整通俗版](thesis_main/导师汇报简明讲稿_20260922.md)保留ABC、瓶颈、全资产、分簇、各种人员分类与子类稳定、配比和删人、同房／同场景、难度及后续采集，逐项用口头语言解释；[详细问答](thesis_main/导师汇报讲解与问答_20260922.md)补计算及版本边界。[展示完整性复核](../analysis_results/presentation_inventory_20260922/展示完整性复核_20260922.md)登记已发现遗漏和数值依据。
+
+**导师汇报准备（2026-09-22）：**[真实数据展示](../analysis_results/research_dashboard_20260922/index.html)、[离线包](../analysis_results/research_dashboard_20260922.zip)与[讲解及问答](thesis_main/导师汇报讲解与问答_20260922.md)分开交付。后者单列导师“迭代瓶颈/质量上限”与当前人数重放、分布稳定的对应边界；[全资产盘点](../analysis_results/presentation_inventory_20260922/README.md)纳入Manual/OOS/Semi、GT、HoHoNet/Bi/uLayout/DINOv3/DA3。展示接口见[说明](thesis_main/OFFLINE_RESEARCH_DASHBOARD.md)。
+
+**新分簇同房预测对照（2026-09-22）：**[固定人员、阈值和同房面板的复算](../analysis_results/room_partition_comparison_20260922/README.md)。全局亲近度分区未改善预测MAE，覆盖指标仍有同房信息，成对分歧完全不变；保持探索，不替换默认方法。
+
+**分簇核验Pro返回（2026-09-22）：**[原件、全阶段独立复算与采用意见](../analysis_results/cluster_validation_received_20260922/README.md)，补查单人簇下界、新候选共享x敏感性及重放抽样误差；保持探索身份，不替换现行方法。
+
+**Pro分簇核验新交接（2026-09-22）：**[资料与隔离复算](thesis_main/Pro云端资料入口_分簇核验_20260922.md)、[可复制提示词](thesis_main/Pro提示词_分簇核验与不确定性_20260922.md)。保留人工判断可误差、阈值待研究、GT／模型仅辅助的最新边界。
+
+**24图审核接收（2026-09-22）：**[用户原件、未决项及GT/阈值/x对齐分析](../analysis_results/cluster_screen_reviewed_20260922/README.md)，保留9同簇／12分开／3未决；未自动改点或合簇。
+
+**分簇工作版人工筛查：**[24图离线审核](../analysis_results/cluster_screen_20260921/README.md)，沿用结构增减应分簇规则，核对定位与整簇问题；导出独立审核JSON，不覆盖既有裁决。
+
+**人员移除与分簇敏感性（探索）：**[全员逐人对照、联合移除、阈值扫描与视觉核验](../analysis_results/worker_cluster_sensitivity_20260921/README.md)。保留全员基线，分开报告人员影响、几何孤立及分区造成的单人簇；不据改善收敛修改资格或冻结阈值。
+
+**人员移除与分簇敏感性（探索）：**[全员逐人对照、联合移除、阈值扫描与视觉核验](../analysis_results/worker_cluster_sensitivity_20260921/README.md)。保留全员基线，分开报告人员影响、几何孤立及分区造成的单人簇；不据改善收敛修改资格或冻结阈值。
+
+**Pro最新研究返回复核：**[原件、本地复算与独立审查](../analysis_results/panorama_research_received_20260921/README.md)。纳入探索证据，另存人员配比模型外层隔离修正；人工候选并列排序问题与数值复现差异显式保留，不替换正式方法或采集计划。
+
+**新Pro开放研究入口：**[资料、分支与复算](thesis_main/Pro云端资料入口_20260921.md)、[可复制提示词](thesis_main/Pro提示词_人员构成与顺序重放_20260921.md)。最新终审数据与必要历史证据独立打包，研究执行顺序和方法保持开放。
+
+**新增数据终审汇总：**[当前汇总](../analysis_results/new_manual_reviewed_20260921/汇总说明.md)已落实全批独立作答确认、两份补点、7272版本及三份上下对应；新增纳入636份，不借用补点预测视图240图2444份。旧父关联待定事项关闭，旧研究报告保留历史身份。 W006补交原分配的uNb-66／67／87已接入，原480份必做均已有非空提交并纳入；7502替代7111，不重复计票。
+
+**离线研究仪表盘（结构版）：**[使用与展示接口](thesis_main/OFFLINE_RESEARCH_DASHBOARD.md)。`tools/thesis_main/analysis/research_dashboard/`按明确清单打包六模块离线网页，复用 Studio 与本机 Plotly；首版为空数据，不接入暂定结论，不修改研究方法。交付位于 `analysis_results/research_dashboard_structure_20260921/`，同名 ZIP 可独立发送。
 
 **2026-09-21研究讨论交接：**[交接与必读资料](thesis_main/研究讨论线程交接_20260921.md)、[可复制Pro提示词](thesis_main/Pro提示词_人员构成与顺序重放_20260921.md)。按人独立采集，研究全部可用人员的类别／配比／成员／顺序重放；AABC非固定目标。保留top y／bottom y的3D职能研究；可视化与导师汇报等待用户通知。
 

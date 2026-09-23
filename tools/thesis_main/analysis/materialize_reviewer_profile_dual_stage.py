@@ -74,7 +74,7 @@ def _paths(root: Path) -> dict[str, Path]:
     return {
         "processing_script": root / "tools/thesis_main/analysis/materialize_reviewer_profile_dual_stage.py",
         "processing_test": root / "tests/test_materialize_reviewer_profile_dual_stage.py",
-        "method_contract": root / "docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json",
+        "method_contract": root / "docs/thesis_main/PAPER_A_METHOD_CONTRACT_20260811_v23.json",
         "p1_canonical": p1 / "prescreen_canonical_annotations.csv",
         "p1_duplicates": p1 / "prescreen_duplicate_annotation_audit.csv",
         "p1_admission": p1 / "prescreen_worker_admission.csv",

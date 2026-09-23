@@ -1,4 +1,6 @@
-<!-- PAPER_A_MACHINE_STATUS: normative -->
+> 2026-09-23范围声明：本文保留历史v23阶段说明；当前研究见 [执行SOP](ROUND_BASED_ASSIGNMENT_SOP_v1.md) 和 [研究SOP](相似场景标注稳定性分析SOP.md)。本文中的旧CURRENT引用按 `PAPER_A_METHOD_CONTRACT_20260811_v23.json` 解释。
+
+<!-- PAPER_A_MACHINE_STATUS: superseded -->
 <!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260811_v23 SHA-256 f3c1ea58d0857a40aa2240b4680b674c76fe2cec8f048f61a643d9e4b74b0588 -->
 # Paper A 本地分析数据流
 

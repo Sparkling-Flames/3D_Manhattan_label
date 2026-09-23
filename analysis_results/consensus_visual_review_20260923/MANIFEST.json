@@ -1,0 +1,32 @@
+{
+  "schema": "consensus_visual_review_v1",
+  "contract_version": "consensus_research_20260923_v1",
+  "accepted": 3019,
+  "images": 259,
+  "modes": [
+    "curve",
+    "linear"
+  ],
+  "representable_rows": 5861,
+  "quality_rows": 12076,
+  "source": "analysis_results/consensus_research_20260923",
+  "notice": "只读研究复核；排序不是无效裁决，输出裁决不自动应用",
+  "screening": {
+    "schema": "annotation_screening_v1",
+    "candidate_count": 1529,
+    "priority_count": 91,
+    "by_channel": {
+      "singleton": 726,
+      "geometry": 47,
+      "representation": 89,
+      "order": 806,
+      "count": 698,
+      "small_cluster": 255,
+      "pairing": 41,
+      "iou": 37,
+      "known": 2
+    },
+    "cluster_covered": 2444,
+    "guard": "通道取并集且可重叠；角点数、单人/二人簇、顺序、几何失败均非无效裁决；未命中不等于正确。3D仅验证现有配对环，未执行曼哈顿优化。"
+  }
+}

@@ -830,7 +830,7 @@ def materialize(
     dependency_contracts = [
         Path("docs/thesis_main/geometry_loo_candidate_rule_manifest_v1.json"),
         Path("docs/thesis_main/c1_geometry_parser_amendment_v1.json"),
-        Path("docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json"),
+        Path("docs/thesis_main/PAPER_A_METHOD_CONTRACT_20260811_v23.json"),
     ]
     dependency_rows = _manifest_rows([
         *pipeline_files, *fixed_snapshots.values(), *snapshot_exports, *snapshot_active,

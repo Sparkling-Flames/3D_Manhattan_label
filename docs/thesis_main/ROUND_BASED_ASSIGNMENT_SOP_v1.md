@@ -1,56 +1,34 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260811_v23 SHA-256 f3c1ea58d0857a40aa2240b4680b674c76fe2cec8f048f61a643d9e4b74b0588 -->
-# Paper A Round-Based Assignment SOP v1
+# 区域共识与人员组合研究执行 SOP
 
-本 SOP 只消费当前方法合同，不定义独立的机器字段、eligibility 或统计语义。正式机器真源为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`。
+当前合同：`PAPER_A_METHOD_CONTRACT_CURRENT.json`，版本 `consensus_research_20260923_v1`。2026-09-23起当前研究按下述流程执行，取代旧Calibration→T1/V1作为本轮研究的默认主线。历史流程及机器消费者使用 `PAPER_A_METHOD_CONTRACT_20260811_v23.json`；旧SOP原件见 [归档](history/research_before_20260923/docs/thesis_main/ROUND_BASED_ASSIGNMENT_SOP_v1.md)。本轮不启动线上派发，不改已有任务的运营状态。
 
-## 1. 正式阶段与输入
+## 1. 对账与全量清查
 
-正式链路为：
+复用已接入canonical数据，逐份回查原始点和来源；起点3019份/259图，其中Manual/OOS 2481份、Semi 538份。此数不是清洗后强制保留的分母。W019/W026既有排除、7502替代7111、7272替代7271、人工配对、补点来源和7036保留观察均承接。
 
-```text
-Pilot -> P1 -> C1-A Batch A -> C2-B Batch A -> C1-B/C2-B Batch B -> C2-A-RP -> T1 -> V1
-```
+原始导出、planned import和active日志不写回；计算产物落入analysis_results。图像选用不等于作答删除，未决意见不等于错误。全量清查针对非墙角、乱标等明显无效标注：角点数量、配对、现有环序3D诊断、顺序线索、异常/单人小簇、墙带失败与IoU辅助通道取并集。旧分簇仅在有效点及共享x配对与当前数据一致时复用；未覆盖显式保留。原始点击顺序不是已确认的墙体连接顺序；机器失败、少数解释和空间范围不同均需看图裁决。数值程序不自动认定无效标注。用户已关闭的父关联独立性问题不重新开启。
 
-`export_label/`、`active_logs/` 和 `import_json/` 分别是运行时标注、active-time 和 planned assignment 真源。分析输出只能进入 `analysis_results/`，不得反向覆盖原始证据。
+## 2. 坐标、区域与参考
 
-所有 primary estimand 先验证 `formal_assignment_eligible`。outside、duplicate/revision、非独立或未登记证据不得进入 GT、peer、LOO、structural 或 timing；不能证明时保留 `not_evaluable`，不补零、不估算。
+按已审核上下对应取周期共享x，y保持。无配对保留待审，不猜配对补点。曲线墙带为主候选，直线墙带为敏感性；统一像素中心、全幅画布和左右周期边界。表示失败与人员错误分开。
 
-## 2. C1-A 与 rolling enrollment
+GT为原始MP3D及人工修订两版。HoHoNet与BiLayout两头用于模型参考及难度候选，不能当GT。人工GT配对/区域不可表示者显式登记，不能通过自动改环序静默修复。
 
-C1-A Batch A 的正式范围是 original cohort 加冻结的授权 repair set。Batch A 不等待 late-entry worker，也不关闭整个 rolling enrollment。
+## 3. 数值任务与视觉裁决
 
-未来新人必须先通过 P1，再完成 C1-B；他们只进入 Batch B。Batch B 复用 Batch A 的 `selected_design_sha`、task pool、common anchor 和 bridge generator，只追加新的 worker-task 行，不重新选择 D8/D10/D12、阈值或 task identity。
+按 [Pro任务书](PRO_CONSENSUS_RESEARCH_TASK_20260923.md) 交接清洗、IoU＋质心、Lee及替代共识三部分。Pro返回可执行代码、逐项来源、失败清单；本地复算后用户与助手审查原图，记录保留/排除/待定及证据。借用其他作答的补点保留描述用途，不作为独立人员票。
 
-所有 worker ID 在跨文件连接前规范化为无前导零、无 `W` 前缀的形式，例如 `W034`、`034` 和 `34` 均为 `34`。
+当前步骤是方法比较，不预定加质心、分簇或新算法一定更好。算法/指标最终选择、人员分类和平台阈值须通过审查后更新合同，不能把待验证参数写成完成结果。
 
-## 3. C2-B
+## 4. 核心实验
 
-C2-B 正式任务设计固定消费 D8、D10、D12。C2-B roster 只来自 `worker_profile_v2.c2_risk_model_eligible`，正式三轴为 `Q_GT`、`R_peer`、`F_struct`；LOO 和 timing 只作为独立 sensitivity/tie-break 状态。
+Lee小区域/像素投票为起点；比较MV两种平票、真实medoid、明确适配的EM/greedy、标准STAPLE及经核验的扩展方法。标准实现未就绪给unavailable，不伪装为已跑。全体聚合与最大簇聚合并行，原始人群支持保留。
 
-设计、审批、assignment manifest 和 runtime mapping 必须绑定方法合同版本与 SHA。任务包只在本地产生，不自动调用 Label Studio API；人工导入后必须完成一对一 runtime mapping 和 private assignment list audit。该本地审计不声称已验证 Label Studio UI 的 worker visibility。
+人员分类、真实人员组成/比例及进入顺序仍重点；不复制一人模拟多个A。GT校准用外建筑，当前前缀不读取未来作答。分别测GT质量、增人变化、同人数成员差异，固定图片面板避免分母变化冒充改进。
 
-## 4. C2-A-RP
+HoHoNet错误/结构与BiLayout两头差异用于难度分层；同房预测继续做，简单基线及不明确结果均留档。论文是否展开不改变研究记录。
 
-每个 C2-A-RP block 固定包含 1 张 ordinary task 和 1 张 stress task。每名 worker 最多 5 个 block，即最多 10 张图；只有上一 block 完成并按正式证据重估后，才可决定是否派发下一 block，不得预分配 Block 2--5。
+## 5. 交付
 
-## 5. active-time 与删失
-
-C1 active time 的正式测量层级为 `project_id`–`runtime_task_id`–`worker_id`。它只接受 formal assignment 上的累计型日志：同一 session 取正的累计秒数最大值，再对合格 session 求和；`active_seconds_fragment` 不得相加。annotation-exact identity 仅保留为 forensic audit，不再是 task-worker timing 的前提。
-
-task-worker context 无日志、仅有明确的他人工人选中事件、页面/提交桥接不合格或其他合同排除原因时，统一写入：
-
-```text
-task_worker_time_analysis_eligible=false
-timing_status=not_evaluable
-```
-
-W034 的 17 张 authorized replacement 须通过原 sentinel，或通过 SHA 绑定的事前人工确认回溯声明并逐项通过统一 task-worker 日志审计。回溯路径只能标为 `eligible_with_protocol_deviation`，不得伪装成 fully verified sentinel；无日期证据时记录 `time_basis=operator_recollection`、`timestamp_precision=unavailable`。Timing 是 worker profile 的辅助 operational 字段，不影响 `Q_GT`、`R_peer`、`F_struct`、正式 worker eligibility/rank、C2-B roster、T1 分配或 V1 路由；不得补零、估算或以 `lead_time` 作逐行 fallback。每次 rehearsal 的具体 worker、行数和原因以当次 audit 输出为准，不在 SOP 中硬编码。
-
-Independence 按异常例外审计：正式 assignment、canonical 有效、非 outside、非 W014 且 duplicate 已解决的行默认 `independent` / `protocol_assumption`。机器只能生成 `pending_manual_review`，不得自动判定复制或排除；几何完全相同单独只是诊断标记。普通 completion 直接由冻结 assignment/export 计算，仅例外需人工处置。Public GT 默认按现有 SHA 版本使用，只在研究者明确声明 GT 问题时启动 amendment。
-
-## 6. closeout 与 Stage 3
-
-`C1_EVIDENCE_FROZEN` 只证明 C1 证据已按依赖闭包冻结；它不等于最终 pooled Calibration profile。`FINAL_POOLED_PROFILE_FROZEN` 必须由 C1+C2 最终 profile materializer 单独产生。
-
-Stage 3 之前才要求 `CALIBRATION_ENROLLMENT_CLOSED`、`ALL_CALIBRATION_WORKERS_TERMINAL` 和 `FINAL_POOLED_PROFILE_FROZEN` 同时成立。T1、V1 和 Stage 3 在这些全局条件满足前保持关闭。
+入口为 [结果与待审状态](../../analysis_results/consensus_research_20260923/README.md)。交付须说明已运行范围、未运行方法、原始/修订GT、每层人数、失败与排除、人工审查状态。运行相应测试和当前合同渲染检查；旧v23回归测试验证历史消费者没有被新schema污染。

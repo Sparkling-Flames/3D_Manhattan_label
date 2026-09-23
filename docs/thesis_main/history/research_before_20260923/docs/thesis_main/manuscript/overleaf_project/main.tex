@@ -1,0 +1,108 @@
+% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260807_v19 SHA-256 60e60f01d762ee89d788979ad9ef243db1887f6ef81f4d5bb8ae2e6f29b5af38
+% !TeX program = xelatex
+\documentclass[preprint,12pt]{elsarticle}
+
+\usepackage{iftex}
+\ifPDFTeX
+  \PackageError{paper-a-outline}
+    {This project requires XeLaTeX}
+    {In Overleaf, open Menu and set Compiler to XeLaTeX.}
+\fi
+
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage[strings]{underscore}
+\usepackage{booktabs,longtable,tabularx,array,multirow}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{fontspec}
+\usepackage{xeCJK}
+
+\setmainfont{TeX Gyre Termes}
+\setCJKmainfont{FandolSong-Regular}
+\setCJKsansfont{FandolHei-Regular}
+\setCJKmonofont{FandolFang-Regular}
+\hypersetup{
+  hidelinks,
+  pdftitle={可审计的自适应全景布局标注：从三轴测量到支持度感知前瞻政策}
+}
+\graphicspath{{figures/}}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
+
+\begin{document}
+
+\begin{frontmatter}
+\title{可审计的自适应全景布局标注：\\
+从三轴测量到支持度感知前瞻政策\\
+\large 论文提纲与方法合同}
+\author{匿名作者}
+
+\begin{abstract}
+本文研究全景布局标注中的模型辅助收益是否具有可测量的任务--工人异质性，
+以及经 Calibration 支持的条件画像能否改善实际标注政策。
+执行主线固定为
+\(\mathrm{Pilot}\rightarrow\mathrm{P1}\rightarrow\mathrm{C1}\rightarrow\mathrm{C2\text{-}B}
+\rightarrow\mathrm{C2\text{-}A\text{-}RP}\rightarrow\mathrm{T1}\rightarrow\mathrm{V1}\)。
+C1/C2 将外部正确性、同行兼容性和结构可靠性分开测量，并以部分收缩控制小样本画像的不稳定性。
+T1 采用 Manual/Semi-Auto 与普通/辅助风险的 $2\times2$ 设计；
+V1 在共享工人池和对称容量约束下，前瞻比较 Strong Global 与 Support-aware Full。
+协议显式区分工人失败、政策失败和外部系统事故，并以不可变证据、一次重跑和行政删失规则防止结果可见后的选择性归因。
+V2 仅作为可选的外部支持与安全退化审计，不承担主要因果贡献。
+本文不把尚未生成的数据、dry-run 工件或事后人工修订写成正式结果。
+\end{abstract}
+
+\begin{keyword}
+全景布局标注 \sep 半自动标注 \sep 工人画像 \sep
+自适应路由 \sep 前瞻政策试验 \sep 可审计协议
+\end{keyword}
+\end{frontmatter}
+
+\tableofcontents
+\clearpage
+
+\part{简洁主文叙事}
+\input{sections/00_研究总览}
+
+\clearpage
+\part{完整方法与分析合同}
+\input{sections/01_引言与研究问题}
+\input{sections/02_相关工作_完整}
+\input{sections/03_总体协议与数据生命周期_完整}
+\input{sections/04_数据来源与OperationalReference}
+\input{sections/05_证据共识与三状态观测}
+\input{sections/06_P1高信息诊断与预测}
+\input{sections/07_C1三轨工人测量}
+\input{sections/08_HoHoNet任务风险}
+\input{sections/09_C2桥接收缩与精度补齐}
+\input{sections/10_StrongGlobal与FullIntegrated}
+\input{sections/11_T1条件效应}
+\input{sections/12_V1政策试验}
+\input{sections/13_试验分布与生产标准化}
+\input{sections/14_V2外部支持审计}
+\input{sections/15_统计分析与功效}
+\input{sections/16_结果章节结构}
+\input{sections/17_讨论_完整}
+\input{sections/18_结论_完整}
+
+\clearpage
+\appendix
+\part{完整方法附录}
+\input{appendix/A_ReferenceRegistry}
+\input{appendix/B_LOO诊断}
+\input{appendix/C_P1预测模型}
+\input{appendix/D_C2桥接仿真}
+\input{appendix/E_Global与Full合同}
+\input{appendix/F_V1调度器}
+\input{appendix/G_V1聚合器}
+\input{appendix/H_统计分析计划}
+\input{appendix/I_机器可读字段合同}
+
+\clearpage
+\nocite{sun2019horizonnet,dumitrache2018crowdtruth,li2017optimalstopping}
+\bibliographystyle{elsarticle-num}
+\bibliography{refs/references}
+
+\end{document}

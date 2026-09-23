@@ -184,7 +184,7 @@ def fit_manhattan(floor,ceiling,pairs,w,h,frame):
             "axis_assignment":direction.tolist(),"iterations":int(result.nit)}
 
 
-def analyze(payload):
+def analyze(payload, *, compute_fit=True):
     w,h,pairs=normalize(payload)
     floor,ceiling,issues=[],[],[]
     for pair in pairs:
@@ -212,7 +212,8 @@ def analyze(payload):
     raw["issues"]=list(dict.fromkeys(issues))
     blockers=[i for i in raw["issues"] if i!="vertical_pair_mismatch"]
     raw["surface_valid"]=not any(i!="camera_visibility_unresolved" for i in blockers)
-    fit={"status":"blocked","reasons":blockers} if blockers else fit_manhattan(floor,ceiling,pairs,w,h,frame)
+    fit=({"status":"not_requested"} if not compute_fit else
+         {"status":"blocked","reasons":blockers} if blockers else fit_manhattan(floor,ceiling,pairs,w,h,frame))
     return {"schema_version":SCHEMA,"width":w,"height":h,"pairs":pairs,"raw":raw,"fit":fit,
             "camera_height":1,"scale_unit":"relative",
             "assumptions":["horizontal_floor","ceiling_range_from_paired_floor","no_annotation_writeback"],

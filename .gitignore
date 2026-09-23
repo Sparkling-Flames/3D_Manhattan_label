@@ -124,6 +124,7 @@ docs/*
 !docs/agent/REPO_PATH_MAP.md
 !docs/thesis_main/
 docs/thesis_main/*
+!docs/thesis_main/OFFLINE_RESEARCH_DASHBOARD.md
 !docs/thesis_main/新线程交接_研究主线与采集现状_20260916.md
 !docs/thesis_main/全历史覆盖方案独立复核_20260916.md
 !docs/thesis_main/Pro收敛续研复核_20260915.md
@@ -316,7 +317,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 \.stfolder/
- 
+
 # Ignore specific top-level files that should not be uploaded
 /clamp_occ_corners.py
 /compare_checkpoints.py
@@ -483,3 +484,14 @@ docs/label_studio/*
 /analysis_results/candidate_review_20260912_v2/results/审查页预览.png
 /analysis_results/candidate_review_20260912_v2/results/逐图填写预览.png
 /analysis_results/candidate_selection_review_20260913_v1/门洞预览检查.png
+
+# 2026-09-23: retain current research task and the exact historical contract boundary.
+!docs/thesis_main/PAPER_A_METHOD_CONTRACT_20260811_v23.json
+!docs/thesis_main/PAPER_A_METHOD_CONTRACT_20260811_v23.md
+!docs/thesis_main/PRO_CONSENSUS_RESEARCH_TASK_20260923.md
+!docs/thesis_main/history/
+docs/thesis_main/history/*
+!docs/thesis_main/history/research_before_20260923/
+!docs/thesis_main/history/research_before_20260923/**
+
+!docs/thesis_main/PRO_CENTROID_LITERATURE_PROMPT_20260923.md

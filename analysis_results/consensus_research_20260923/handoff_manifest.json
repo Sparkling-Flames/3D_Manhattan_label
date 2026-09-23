@@ -1,0 +1,220 @@
+{
+  "schema": "consensus_pro_handoff_v1",
+  "contract_version": "consensus_research_20260923_v1",
+  "command": "python code/run_numeric.py --out . --numeric-only",
+  "required_packages": [
+    "numpy",
+    "scipy"
+  ],
+  "optional_packages": [
+    "SimpleITK for STAPLE",
+    "pandas and matplotlib for summary plots"
+  ],
+  "excludes": "原图、active日志、账号和无关原始导出不入包；已有数值输入逐份回查来源",
+  "files": [
+    {
+      "path": "inputs/annotations.jsonl.gz",
+      "bytes": 1160470
+    },
+    {
+      "path": "inputs/manifest.json",
+      "bytes": 690
+    },
+    {
+      "path": "inputs/references.json.gz",
+      "bytes": 169171
+    },
+    {
+      "path": "inputs/room_registry.json.gz",
+      "bytes": 686620
+    },
+    {
+      "path": "README.md",
+      "bytes": 7766
+    },
+    {
+      "path": "review_sources.json",
+      "bytes": 18112
+    },
+    {
+      "path": "source_verification.json",
+      "bytes": 744384
+    },
+    {
+      "path": "numeric_summary.json",
+      "bytes": 786
+    },
+    {
+      "path": "review_queue.csv",
+      "bytes": 7289405
+    },
+    {
+      "path": "individual_quality.csv",
+      "bytes": 3361493
+    },
+    {
+      "path": "endpoint_pilot.csv",
+      "bytes": 2445958
+    },
+    {
+      "path": "representation_failures.json",
+      "bytes": 52750
+    },
+    {
+      "path": "model_difficulty.csv",
+      "bytes": 18412
+    },
+    {
+      "path": "centroid_summary.csv",
+      "bytes": 9121
+    },
+    {
+      "path": "centroid_findings.md",
+      "bytes": 2844
+    },
+    {
+      "path": "centroid_diagnostics.png",
+      "bytes": 286226
+    },
+    {
+      "path": "gt_sensitivity_summary.csv",
+      "bytes": 1272
+    },
+    {
+      "path": "source/export_label/RAW_DATA_AND_GROUND_TRUTH_SCOPE_NOTE_20260817.md",
+      "bytes": 3051
+    },
+    {
+      "path": "source/docs/thesis_main/TEST_MANUAL_GT_CORRECTIONS_20260823.md",
+      "bytes": 5264
+    },
+    {
+      "path": "source/export_label/groudTruth.json",
+      "bytes": 1865730
+    },
+    {
+      "path": "source/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_scope_adjudication.csv",
+      "bytes": 25962
+    },
+    {
+      "path": "source/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_final_gold_v2_correction_audit.json",
+      "bytes": 1016
+    },
+    {
+      "path": "source/analysis_results/c2b_closeout_20260806_final/researcher_scope_gt_review_notes_20260807.md",
+      "bytes": 5572
+    },
+    {
+      "path": "source/analysis_results/c2a_rp_local_launch_20260807_inputs_v2/reference_conflict_review_record_post_c2_local.csv",
+      "bytes": 3121
+    },
+    {
+      "path": "source/analysis_results/human_review_reconciliation_20260907_v1/原始问卷备份.json",
+      "bytes": 31559
+    },
+    {
+      "path": "source/analysis_results/human_review_reconciliation_20260918/用户_39图文字审核_原始.json",
+      "bytes": 20903
+    },
+    {
+      "path": "source/analysis_results/human_review_reconciliation_20260918/用户_39图最终裁决_原始.json",
+      "bytes": 275782
+    },
+    {
+      "path": "source/analysis_results/cluster_review_extra_20260919/用户_12图审核_原始.json",
+      "bytes": 84873
+    },
+    {
+      "path": "source/analysis_results/cluster_screen_reviewed_20260922/用户审核_原始.json",
+      "bytes": 252985
+    },
+    {
+      "path": "source/analysis_results/new_manual_reviewed_20260921/evidence/用户审核_原始.json",
+      "bytes": 173546
+    },
+    {
+      "path": "source/analysis_results/new_manual_reviewed_20260921/review_applied.json",
+      "bytes": 9964
+    },
+    {
+      "path": "source/analysis_results/new_manual_reviewed_20260921/汇总说明.md",
+      "bytes": 2651
+    },
+    {
+      "path": "source/analysis_results/candidate_selection_review_20260913_v2/用户审查原始记录.json",
+      "bytes": 44721
+    },
+    {
+      "path": "source/analysis_results/new_manual_analysis_20260921/用户_八组采集采用_原始.json",
+      "bytes": 71055
+    },
+    {
+      "path": "context/1_与导师交流.txt",
+      "bytes": 8878
+    },
+    {
+      "path": "context/2_已粘贴的文本.txt",
+      "bytes": 16419
+    },
+    {
+      "path": "context/3_已粘贴的文本.txt",
+      "bytes": 25538
+    },
+    {
+      "path": "source/docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json",
+      "bytes": 6471
+    },
+    {
+      "path": "source/docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.md",
+      "bytes": 6491
+    },
+    {
+      "path": "source/analysis_results/cluster_screen_reviewed_20260922/逐项接收.json",
+      "bytes": 25138
+    },
+    {
+      "path": "source/docs/thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md",
+      "bytes": 5056
+    },
+    {
+      "path": "source/docs/thesis_main/ROUND_BASED_ASSIGNMENT_SOP_v1.md",
+      "bytes": 3418
+    },
+    {
+      "path": "source/docs/thesis_main/相似场景标注稳定性分析SOP.md",
+      "bytes": 9743
+    },
+    {
+      "path": "source/docs/thesis_main/图片分类与同房间收敛预测研究SOP.md",
+      "bytes": 6229
+    },
+    {
+      "path": "source/docs/thesis_main/PRO_CONSENSUS_RESEARCH_TASK_20260923.md",
+      "bytes": 12052
+    },
+    {
+      "path": "code/run_numeric.py",
+      "bytes": 20397
+    },
+    {
+      "path": "code/consensus_region_20260923.py",
+      "bytes": 10253
+    },
+    {
+      "path": "code/summarize_consensus_pilot.py",
+      "bytes": 12066
+    },
+    {
+      "path": "lib/__init__.py",
+      "bytes": 21
+    },
+    {
+      "path": "lib/misc/__init__.py",
+      "bytes": 0
+    },
+    {
+      "path": "lib/misc/panostretch.py",
+      "bytes": 5688
+    }
+  ]
+}

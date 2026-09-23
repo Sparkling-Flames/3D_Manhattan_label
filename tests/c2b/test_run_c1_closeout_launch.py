@@ -363,7 +363,7 @@ def test_fresh_checkout_keeps_both_numeric_threshold_contracts():
 def test_c2b_threshold_formula_contract_keeps_v18_binding_through_capacity_only_amendments():
     path = Path("docs/thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json")
     payload = json.loads(path.read_text(encoding="utf-8"))
-    method_path = Path("docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json")
+    method_path = Path("docs/thesis_main/PAPER_A_METHOD_CONTRACT_20260811_v23.json")
     method = json.loads(method_path.read_text(encoding="utf-8"))
     extension_path = Path(method["c2a_rp_precision_cap_extension"]["path"])
     extension = json.loads(extension_path.read_text(encoding="utf-8"))

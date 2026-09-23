@@ -30,7 +30,7 @@ def dump(name,value):
     (OUT/name).write_text(json.dumps(clean(value),ensure_ascii=False,indent=2,allow_nan=False)+'\n',encoding='utf8')
 
 
-def intake(history,registry):
+def intake(history,registry,sources=None):
     """历史首次作答保留；重复新作答未决不选优，父关联仅进条件敏感性池。"""
     images={i['image_id']:i for i in registry['images']}
     history_exposure={(r['image_id'],r['worker_id']) for r in history}
@@ -38,7 +38,7 @@ def intake(history,registry):
         history_exposure.add((r['image_id'],f"W{r['worker_id']:03d}"))
     required={(r['image_id'],f"W{r['worker_id']:03d}") for r in read('import_json/scene_stability_stage1_20260913_v2/required_assignments.json')}
     receipts=[];new=[];raw_annotations={}
-    for source in SOURCES:
+    for source in SOURCES if sources is None else sources:
         for task in read(source):
             meta=task['data'];iid=meta['base_task_id']
             assert iid in images and meta['condition']=='manual' and meta['annotation_form_version']=='manual_scope_only_v1'

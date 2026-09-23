@@ -61,8 +61,8 @@ def collect_entries() -> list[dict[str, Any]]:
 
     support = [
         (RAW_MANIFEST, "source_manifests/RAW_DATA_PACKAGE_MANIFEST_20260817.json", "source_manifest"),
-        (ROOT / "docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json", "contracts/PAPER_A_METHOD_CONTRACT_CURRENT.json", "method_contract"),
-        (ROOT / "docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.md", "contracts/PAPER_A_METHOD_CONTRACT_CURRENT.md", "method_contract_render"),
+        (ROOT / "docs/thesis_main/PAPER_A_METHOD_CONTRACT_20260811_v23.json", "contracts/PAPER_A_METHOD_CONTRACT_20260811_v23.json", "method_contract"),
+        (ROOT / "docs/thesis_main/PAPER_A_METHOD_CONTRACT_20260811_v23.md", "contracts/PAPER_A_METHOD_CONTRACT_20260811_v23.md", "method_contract_render"),
         (ROOT / "docs/thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md", "contracts/STATISTICAL_ANALYSIS_PLAN_v1.md", "statistical_plan"),
         (Path(__file__), "reproduction/build_paper_a_data_mining_package.py", "package_builder"),
         (ROOT / "tools/thesis_main/analysis/materialize_paper_a_data_discovery.py", "reproduction/materialize_paper_a_data_discovery.py", "materializer"),

@@ -48,7 +48,7 @@ from tools.thesis_main.analysis import materialize_persistent_disagreement_diagn
 ROOT = legacy.ROOT
 DEFAULT_OUTPUT = ROOT / "analysis_results" / "full_uncertainty_data_mining_20260821_v5"
 SEED = 20260821
-METHOD_CONTRACT = ROOT / "docs" / "thesis_main" / "PAPER_A_METHOD_CONTRACT_CURRENT.json"
+METHOD_CONTRACT = ROOT / "docs" / "thesis_main" / "PAPER_A_METHOD_CONTRACT_20260811_v23.json"
 TERMINAL = ROOT / "analysis_results" / "c2a_rp_terminal_reestimate_20260817_v1"
 RESTRICTED_TOKENS = ("ad" + "visor", "\u5bfc\u5e08", "har" + "mful", "har" + "med")
 SUPPLEMENT_TABLES = (

@@ -62,7 +62,7 @@ RAW_CANONICAL = ROOT / "analysis_results" / "rq1_raw_recompute_20260826" / "inde
 FULL_CLUSTER_SENSITIVITY = (
     ROOT / "analysis_results" / "rq1_raw_recompute_20260826" / "high_density_cluster_threshold_sensitivity.csv"
 )
-METHOD_CONTRACT = ROOT / "docs" / "thesis_main" / "PAPER_A_METHOD_CONTRACT_CURRENT.json"
+METHOD_CONTRACT = ROOT / "docs" / "thesis_main" / "PAPER_A_METHOD_CONTRACT_20260811_v23.json"
 
 
 def truth(value: Any) -> bool:

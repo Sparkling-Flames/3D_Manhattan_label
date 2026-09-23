@@ -22,6 +22,13 @@ RECT = [(-2, -3), (3, -3), (3, 2), (-2, 2)]
 CONCAVE = [(-3, -3), (1, -3), (1, -1), (3, -1), (3, 3), (-3, 3)]
 
 
+def test_raw_screening_skips_fit_without_changing_geometry():
+    payload = room(RECT)
+    raw_only = analyze(payload, compute_fit=False)
+    assert raw_only['fit']['status'] == 'not_requested'
+    assert raw_only['raw'] == analyze(payload)['raw']
+
+
 @pytest.mark.parametrize("points", [RECT, CONCAVE, [(-2,-3),(0,-3),(3,-3),(3,2),(-2,2)]])
 def test_exact_manhattan_recovery_and_area(points):
     result = analyze(room(points))

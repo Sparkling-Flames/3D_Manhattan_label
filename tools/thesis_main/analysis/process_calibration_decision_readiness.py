@@ -31,7 +31,7 @@ PATHS={
  "risk_readiness":P("analysis_results","full_materialization_pre_v1_audit_20260810_v1","worker_risk_component_readiness.csv"),
  "v3_oof":P("analysis_results","calibration_dual_track_processing_20260815_v3","conditional_out_of_fold_predictions.csv"),
  "procedure":P("docs","thesis_main","FULL_MATERIALIZATION_PROCEDURE_v1.json"),
- "contract":P("docs","thesis_main","PAPER_A_METHOD_CONTRACT_CURRENT.json"),
+ "contract":P("docs","thesis_main","PAPER_A_METHOD_CONTRACT_20260811_v23.json"),
 }
 def tag(row:dict[str,Any])->dict[str,Any]: return {**ROLE,**row}
 def sha(path:Path)->str: return base.sha256_file(path)

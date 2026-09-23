@@ -9,6 +9,43 @@ import re
 
 from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, PROJECT_ROOT, sha256_file
 
+CURRENT_METHOD_CONTRACT = PROJECT_ROOT / "docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json"
+RESEARCH_REFERENCES = tuple(PROJECT_ROOT / name for name in (
+    "docs/thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md",
+    "docs/thesis_main/ROUND_BASED_ASSIGNMENT_SOP_v1.md",
+    "docs/thesis_main/相似场景标注稳定性分析SOP.md",
+    "docs/thesis_main/图片分类与同房间收敛预测研究SOP.md",
+    "AGENTS.md", "docs/README_INDEX.md", "docs/PROJECT_MAP_CLEAN_20260308.md",
+))
+
+
+def _render_research(data: dict, contract_path: Path) -> str:
+    """当前研究摘要由 JSON 生成；待比较方法不冒充已验证结果。"""
+    lines = ["<!-- PAPER_A_MACHINE_STATUS: generated -->",
+             "# 当前共识研究方法合同（自动生成）", "",
+             f"来源：`{contract_path.name}`；合同版本：`{data['contract_version']}`。",
+             f"状态：`{data['status']}`；方法选择：`{data['method_selection_status']}`。", "",
+             data["purpose"], "", "## 研究问题", ""]
+    lines.extend(f"- {item}" for item in data["research_questions"])
+    sections = (
+        ("数据与清洗", ("data", "cleaning")),
+        ("区域、参考与人员质量", ("representation", "references", "quality")),
+        ("共识构造与算法比较", ("consensus",)),
+        ("真实人员组合与重放", ("replay",)),
+        ("交付与复核", ("delivery",)),
+    )
+    for title, groups in sections:
+        lines += ["", f"## {title}", ""]
+        for group in groups:
+            for key, value in data[group].items():
+                shown = "；".join(map(str, value)) if isinstance(value, list) else str(value)
+                lines.append(f"- `{group}.{key}`：{shown}")
+    lines += ["", "## 验收与历史边界", "",
+              "；".join(data["acceptance"]), "",
+              f"历史合同：`{data['legacy_contract']}`。{data['legacy_scope']}。",
+              "历史合同内容与历史脚本绑定保持独立；本合同不追溯改写既往裁决。", ""]
+    return "\n".join(lines)
+
 
 NORMATIVE_REFERENCES = (
     PROJECT_ROOT / "docs/thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md",
@@ -106,8 +143,12 @@ def _legacy_render(contract_path: Path = METHOD_CONTRACT) -> str:
 """
 
 
-def render(contract_path: Path = METHOD_CONTRACT) -> str:
+def render(contract_path: Path = CURRENT_METHOD_CONTRACT) -> str:
     data = json.loads(contract_path.read_text(encoding="utf-8"))
+    if data.get("schema_version") == "consensus_research_contract_v1":
+        return _render_research(data, contract_path)
+    if data.get("schema_version") != "paper_a_method_contract_v9":
+        raise ValueError("unsupported_method_contract_schema")
     digest = sha256_file(contract_path)
     c2 = data["c2"]
     c2b_launch = data["c2b_launch"]
@@ -116,9 +157,9 @@ def render(contract_path: Path = METHOD_CONTRACT) -> str:
     t1_roles = ", ".join(stage3["required_roles"])
     v1_roles = ", ".join(stage3["v1_required_roles"])
     return f"""<!-- PAPER_A_MACHINE_STATUS: generated -->
-# Paper A current method contract (generated)
+# Paper A historical method contract (generated)
 
-This file is generated from `PAPER_A_METHOD_CONTRACT_CURRENT.json`; normative fields are not defined by hand.
+This file is generated from `{contract_path.name}`; normative fields are not defined by hand.
 - contract_version: `{data['contract_version']}`
 - JSON SHA-256: `{digest}`
 - formal_launch_default: `{str(data['formal_launch_default']).lower()}`
@@ -156,7 +197,26 @@ This file is generated from `PAPER_A_METHOD_CONTRACT_CURRENT.json`; normative fi
 """
 
 
-def check_references(contract_path: Path = METHOD_CONTRACT) -> None:
+def check_references(contract_path: Path = CURRENT_METHOD_CONTRACT) -> None:
+    data = json.loads(contract_path.read_text(encoding="utf-8"))
+    if data.get("schema_version") == "consensus_research_contract_v1":
+        stale = [str(path) for path in RESEARCH_REFERENCES
+                 if not path.is_file() or any(token not in path.read_text(encoding="utf-8")
+                    for token in (data["contract_version"], CURRENT_METHOD_CONTRACT.name))]
+        if stale:
+            raise ValueError("Current research references are stale: " + ";".join(stale))
+        return
+    if data.get("schema_version") == "paper_a_method_contract_v9":
+        # 历史引用核查限定归档；新规范正文不再被要求重复旧版本/SHA。
+        archive = contract_path.with_suffix(".md")
+        if not archive.is_file() or archive.read_text(encoding="utf-8") != render(contract_path):
+            raise ValueError("Historical generated contract is stale: " + str(archive))
+        return
+    raise ValueError("unsupported_method_contract_schema")
+
+
+def _check_legacy_normative_references(contract_path: Path = METHOD_CONTRACT) -> None:
+    """保留迁移前全量检查，仅供历史工作区审计，不由当前 CLI 自动调用。"""
     data = json.loads(contract_path.read_text(encoding="utf-8"))
     version, digest = data["contract_version"], sha256_file(contract_path)
     stale: list[str] = []
@@ -199,10 +259,18 @@ def check_references(contract_path: Path = METHOD_CONTRACT) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--contract", type=Path, default=METHOD_CONTRACT)
-    parser.add_argument("--output", type=Path, default=METHOD_CONTRACT.with_suffix(".md"))
+    parser.add_argument("--contract", type=Path, default=CURRENT_METHOD_CONTRACT)
+    parser.add_argument("--output", type=Path)
     parser.add_argument("--check", action="store_true")
+    parser.add_argument("--render", action="store_true", help="生成与所选合同同名的 Markdown")
     args = parser.parse_args()
+    if args.check and args.render:
+        parser.error("--check and --render are mutually exclusive")
+    args.output = args.output or args.contract.with_suffix(".md")
+    schema = json.loads(args.contract.read_text(encoding="utf-8")).get("schema_version")
+    if (schema == "paper_a_method_contract_v9"
+            and args.output.resolve() == CURRENT_METHOD_CONTRACT.with_suffix(".md").resolve()):
+        parser.error("historical contract must not overwrite current research Markdown")
     expected = render(args.contract)
     if args.check:
         if not args.output.exists() or args.output.read_text(encoding="utf-8") != expected:

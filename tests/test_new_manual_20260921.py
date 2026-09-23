@@ -17,14 +17,15 @@ def test_new_person_can_change_old_groups_without_changing_old_distances():
 def test_intake_keeps_extra_and_repairs_without_duplicate_votes():
     history=rows_at(HIST/'responses.jsonl.gz')
     registry=read('analysis_results/scene_image_exploration_20260910_v1/same_room_selection_registry_v2_20260912.json')
-    new,receipts=intake(history,registry)
+    from tools.thesis_main.analysis.reviewed_manual_20260921 import SOURCES
+    new,receipts=intake(history,registry,SOURCES)
     by={r['annotation']:r for r in receipts}
     assert by[7498]['assignment']=='outside_required' and by[7498]['strict_include']
-    assert by[7111]['point_count']==8 and by[7111]['strict_include']
+    assert by[7502]['point_count']==8 and by[7502]['conditional_include']
     assert not by[7137]['conditional_include']  # 已有同人同图，不增加票。
     assert not by[7271]['strict_include'] and not by[7272]['strict_include']
     assert all(not r['strict_include'] for r in receipts if r['parent_annotation'])
-    assert len(new)==len(receipts)==649
+    assert len(new)==len(receipts)==651
 
 
 def test_scene_holdout_and_review_roundtrip():

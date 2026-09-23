@@ -89,7 +89,7 @@ def interval_overlap(left: str, right: str) -> str:
 
 
 SOURCES = {
-    "method_contract": ROOT / "docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json",
+    "method_contract": ROOT / "docs/thesis_main/PAPER_A_METHOD_CONTRACT_20260811_v23.json",
     "c1_canonical": ROOT / "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_canonical_annotations.csv",
     "c1_reference": ROOT / "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_task_outcome_reference.csv",
     "c1_building": ROOT / "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_task_building_binding.csv",
