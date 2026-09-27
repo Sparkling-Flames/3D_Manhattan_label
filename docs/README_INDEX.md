@@ -1,3 +1,5 @@
+**历史分支归档（2026-09-27）：**[历史文件入口与恢复方法](agent/REPOSITORY_ARCHIVE_20260927.md)。19个旧远程分支保留为归档标签，当前仅保留main和最新Pro研究分支。
+
 **Pro全景研究展开目录（2026-09-27，探索）：**[入口与运行说明](../research/pro_layout_20260927/README.md)，含局部整体投票、搜索式减法及GT质量衡量任务；未完成筛选与排序，不改变正式协议。
 
 <!-- PAPER_A_MACHINE_STATUS: normative -->
