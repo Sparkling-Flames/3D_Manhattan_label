@@ -1,3 +1,5 @@
+**Pro全景研究展开目录（2026-09-27，探索）：**[入口与运行说明](../research/pro_layout_20260927/README.md)，含局部整体投票、搜索式减法及GT质量衡量任务；未完成筛选与排序，不改变正式协议。
+
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
 **当前研究入口：**[真人标注不确定性研究：当前状态](thesis_main/真人标注不确定性研究_当前状态.md)。两份旧线程交接已移入`docs/thesis_main/archive_20260918/`，仅作历史追溯。

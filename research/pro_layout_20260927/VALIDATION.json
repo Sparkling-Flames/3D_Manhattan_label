@@ -1,0 +1,85 @@
+{
+  "date": "2026-09-27",
+  "status": "passed",
+  "bundle_check": {
+    "status": "passed",
+    "meaning": "portable_inputs_and_existing_core_only_not_new_search_validation",
+    "counts": {
+      "images": 8,
+      "annotations": 160,
+      "independent_computable": 153,
+      "workers": 24
+    },
+    "image_checks": [
+      {
+        "code": "7y3sRwLe3Va-12",
+        "input": 24,
+        "computable": 23,
+        "branches_at_5deg": 17,
+        "max_support": 4
+      },
+      {
+        "code": "7y3sRwLe3Va-08",
+        "input": 24,
+        "computable": 24,
+        "branches_at_5deg": 21,
+        "max_support": 2
+      },
+      {
+        "code": "uNb9QFRL6hY-52",
+        "input": 24,
+        "computable": 23,
+        "branches_at_5deg": 18,
+        "max_support": 2
+      },
+      {
+        "code": "pRbA3pwrgk9-11",
+        "input": 20,
+        "computable": 17,
+        "branches_at_5deg": 16,
+        "max_support": 2
+      },
+      {
+        "code": "q9vSo1VnCiC-04",
+        "input": 9,
+        "computable": 9,
+        "branches_at_5deg": 9,
+        "max_support": 1
+      },
+      {
+        "code": "uNb9QFRL6hY-66",
+        "input": 21,
+        "computable": 21,
+        "branches_at_5deg": 18,
+        "max_support": 3
+      },
+      {
+        "code": "uNb9QFRL6hY-59",
+        "input": 19,
+        "computable": 17,
+        "branches_at_5deg": 14,
+        "max_support": 2
+      },
+      {
+        "code": "uNb9QFRL6hY-41",
+        "input": 19,
+        "computable": 19,
+        "branches_at_5deg": 17,
+        "max_support": 2
+      }
+    ],
+    "versions": {
+      "numpy": "1.26.4",
+      "scipy": "1.11.4",
+      "shapely": "2.0.4",
+      "pytest": "9.1.1",
+      "matplotlib": "3.8.0"
+    }
+  },
+  "tests": {
+    "command": "python -B -m pytest -q -p no:cacheprovider tests",
+    "exit_code": 0,
+    "result": "...............                                                          [100%]\r\n15 passed in 3.20s"
+  },
+  "scope": "Existing core reproduced on eight coordinate-only cases. New heuristic/annealing search NOT implemented or validated. No full historical replay, no visual image verification."
+}
