@@ -1,3 +1,5 @@
+**历史分支归档（2026-09-27）：**[历史文件入口与恢复方法](agent/REPOSITORY_ARCHIVE_20260927.md)。19个旧远程分支保留为归档标签，当前仅保留main和最新Pro研究分支。
+
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
 **当前研究入口：**[真人标注不确定性研究：当前状态](thesis_main/真人标注不确定性研究_当前状态.md)。两份旧线程交接已移入`docs/thesis_main/archive_20260918/`，仅作历史追溯。
