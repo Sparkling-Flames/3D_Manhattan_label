@@ -6,7 +6,7 @@ queueControls.append($('image-search').parentElement,$('worker-search').parentEl
 const queueNotice=document.createElement('p');queueNotice.id='queue-notice';queueControls.after(queueNotice);
 const queueEntries=dataset.cases.flatMap((c,ci)=>c.variants.map((v,vi)=>({ci,vi,source:v.source})));
 const queueSources=new Map([...(window.ORDER_HISTORY_SOURCES||[]).map(s=>[sourceId(s),s]),...queueEntries.map(e=>[sourceId(e.source),e.source])]);
-let queueValid=true;
+let queueValid=true,heldReviewId=null;
 function validQueueRecord(s,r){return s&&r&&r.binding===sourceBinding(s)&&['draft','pending','confirmed','pairing'].includes(r.status)&&Array.isArray(r.order)&&r.order.length===s.links_zero_based.length&&[...r.order].sort((a,b)=>a-b).every((v,i)=>Number.isInteger(v)&&v===i);}
 try{if(reviewLoadError)throw reviewLoadError;for(const [id,r] of Object.entries(saved))if(!validQueueRecord(queueSources.get(id),r))throw Error(id);}catch(e){queueValid=false;queueNotice.textContent='本地记录校验失败，已停止编辑，请导出备份检查：'+e.message;}
 function reviewState(s){return s.object_kind==='gt_original'?'reference':saved[sourceId(s)]?.status==='confirmed'?'confirmed':saved[sourceId(s)]?.status==='pairing'?'pairing':'pending';}
@@ -14,15 +14,16 @@ function readOnlyOrder(){return !queueValid||reviewState(activeSource())!=='pend
 function visibleQueue(){const image=$('image-search').value.trim().toLowerCase(),worker=$('worker-search').value.trim().toLowerCase();return queueEntries.filter(e=>{const c=dataset.cases[e.ci],s=e.source;return reviewState(s)===$('queue-mode').value&&`${c.title} ${c.image_id} ${c.room_id}`.toLowerCase().includes(image)&&`${s.worker_id||''} ${s.raw_condition||''} ${s.reference_name||''}`.toLowerCase().includes(worker);});}
 updateProgress=function(){const counts={pending:0,confirmed:0,pairing:0};queueEntries.forEach(e=>{const state=reviewState(e.source);if(state in counts)counts[state]++;});$('object-progress').textContent=`待审 ${counts.pending} · 已确认 ${counts.confirmed} · 本页新增配对问题 ${counts.pairing} · 生成时配对待处理 ${dataset.summary.pairing_deferred}`;};
 function updateQueueUI(){
- const visible=visibleQueue(),match=visible.some(e=>e.ci===currentCase&&e.vi===currentVariant),readonly=readOnlyOrder()||!match;
- for(const option of $('case-select').options)option.hidden=!visible.some(e=>e.ci===Number(option.value));
- for(const option of $('variant-select').options)option.hidden=!visible.some(e=>e.ci===currentCase&&e.vi===Number(option.value));
+ const visible=visibleQueue(),held=heldReviewId===sourceId(activeSource()),match=held||visible.some(e=>e.ci===currentCase&&e.vi===currentVariant),readonly=readOnlyOrder()||!match;
+ for(const option of $('case-select').options)option.hidden=!(held&&Number(option.value)===currentCase)&&!visible.some(e=>e.ci===Number(option.value));
+ for(const option of $('variant-select').options)option.hidden=!(held&&Number(option.value)===currentVariant)&&!visible.some(e=>e.ci===currentCase&&e.vi===Number(option.value));
  for(const id of ['confirm-order','pending-order','pairing-problem','pairing-note','order-restore','order-apply','order-permutation'])if($(id))$(id).disabled=readonly;
  dragArea.querySelectorAll('button').forEach(b=>b.setAttribute('aria-disabled',String(readonly)));
  for(const id of ['panorama-panel','compare-grid','pair-drag-list'])$(id).hidden=!match;
- $('case-select').disabled=$('variant-select').disabled=!visible.length;
- if(queueValid)queueNotice.textContent=visible.length?`${visible.length} 份符合当前筛选 · ${readonly?'只读查看，确认结果直接沿用':'待审；确认或报告配对错误后自动前进'} · 原图号 ${dataset.cases[currentCase].original_slot||'新增'}`:'当前筛选下没有对象。';
- $('order-status').textContent=readonly?'只读 · '+(reviewState(activeSource())==='reference'?'原始GT':'已确认'):'待审核';
+ $('case-select').disabled=$('variant-select').disabled=!match&&!visible.length;
+ $('next-order').disabled=!visible.some(e=>e.ci!==currentCase||e.vi!==currentVariant);
+ if(queueValid)queueNotice.textContent=match?`${visible.length} 份符合当前筛选 · ${held?'已保存，保留当前图；点击“下一份”继续':readonly?'只读查看，确认结果直接沿用':'待审；确认只保存，点击“下一份”切换'} · 原图号 ${dataset.cases[currentCase].original_slot||'新增'}`:'当前筛选下没有对象。';
+ $('order-status').textContent=readonly?'只读 · '+({reference:'原始GT',pairing:'配对待后续处理',confirmed:'已确认'}[reviewState(activeSource())]||'不可编辑'):'待审核';
  updateProgress();
 }
 const queueDrawDrag=drawDrag;drawDrag=function(){queueDrawDrag();updateQueueUI();};
@@ -32,12 +33,12 @@ const queueStartDrag=startPairDrag;startPairDrag=function(...args){if(!readOnlyO
 const queueSaveReview=saveReview;saveReview=function(status='draft'){if(readOnlyOrder()||restoring)return false;return queueSaveReview(status);};
 const queueChooseCase=chooseCase;chooseCase=async function(index){await queueChooseCase(index);const visible=visibleQueue().filter(e=>e.ci===currentCase);if(visible.length&&!visible.some(e=>e.vi===currentVariant)){const entry=visible[0];$('variant-select').value=entry.vi;chooseVariant(entry.vi);}updateQueueUI();};
 async function showQueueEntry(e){if(!e){updateQueueUI();return;}if(currentCase!==e.ci)await chooseCase(e.ci);$('variant-select').value=e.vi;chooseVariant(e.vi);}
-async function applyQueueFilter(){const list=visibleQueue();if(!list.some(e=>e.ci===currentCase&&e.vi===currentVariant))await showQueueEntry(list[0]);updateQueueUI();}
+async function applyQueueFilter(){heldReviewId=null;const list=visibleQueue();if(!list.some(e=>e.ci===currentCase&&e.vi===currentVariant))await showQueueEntry(list[0]);updateQueueUI();}
 async function nextQueue(delta=1,imageOnly=false){const allIndex=queueEntries.findIndex(e=>e.ci===currentCase&&e.vi===currentVariant),list=visibleQueue().filter(e=>!imageOnly||e.ci!==currentCase);const ordered=delta>0?list:[...list].reverse();await showQueueEntry(ordered.find(e=>delta>0?queueEntries.indexOf(e)>allIndex:queueEntries.indexOf(e)<allIndex)||ordered[0]);}
 for(const id of ['image-search','worker-search'])$(id).oninput=applyQueueFilter;
 $('queue-mode').onchange=applyQueueFilter;
 $('previous').onclick=()=>nextQueue(-1,true);$('next').onclick=()=>nextQueue(1,true);$('next-order').onclick=()=>nextQueue();
-for(const [id,status] of [['confirm-order','confirmed'],['pairing-problem','pairing']])$(id).onclick=async()=>{if(geometry&&saveReview(status))await nextQueue();updateQueueUI();};
+for(const [id,status] of [['confirm-order','confirmed'],['pairing-problem','pairing']])$(id).onclick=()=>{if(geometry&&saveReview(status))heldReviewId=sourceId(activeSource());updateQueueUI();};
 const queueImport=$('import-orders').onchange;$('import-orders').onchange=async e=>{await queueImport(e);await applyQueueFilter();};
 if(!queueValid){$('import-orders').disabled=true;$('download-orders').onclick=()=>downloadQueueFile('角点顺序审核_损坏记录备份.txt',localStorage.getItem(storageKey)||'','text/plain');}
 $('order-restore').textContent='恢复默认排列';
