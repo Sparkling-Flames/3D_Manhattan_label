@@ -142,7 +142,8 @@ def candidate_workspace():
             reference_name=name if not is_ann else None,reference_source=provenance if not is_ann else None,
             points=processed,effective_points=processed,before_preprocessing_points=before,effective_point_labels=labels,
             original_point_ids_1based=original_ids(raw,before),links_zero_based=links,preprocessing=record['preprocessing'],
-            processing_status='预处理基线：上下点共享x',screening=json.loads(r['metrics']),queue=r['queue'],review=r,
+            processing_status='预处理基线：上下点共享x',screening=json.loads(r['metrics']),queue=r['queue'],
+            review={**r, **({k: row[k] for k in ('model_edit_status','trap_status','current_decision_comment')} if is_ann else {})},
             ring_confirmed=False,raw_points_1024x512=raw)
         variant=geometry_variant(name,source,processed,links)
         if 'geometry' not in variant:raise ValueError('candidate_geometry_unavailable:'+oid+':'+variant.get('error',''))

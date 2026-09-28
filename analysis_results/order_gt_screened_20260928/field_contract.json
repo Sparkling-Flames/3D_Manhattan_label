@@ -1,0 +1,18 @@
+{
+  "schema": "gt_screened_order_review_v1",
+  "primary_key": "object_id",
+  "screening": "全259图；GT循环起点/反向不敏感；局部回退或同x候选，加明确人员顺序例外；不采用稠密/锐角单项召回",
+  "queue_states": [
+    "excluded",
+    "pairing_deferred",
+    "not_selected",
+    "pending",
+    "confirmed"
+  ],
+  "default_preview_order": "固定点对索引的零基排列；仅人工修订GT初始按共享x升序；不属于源绑定，已有确认优先",
+  "history": "双人原件和派生配对解释保留；已确认只读；旧原始GT记录仅历史，不计审核任务",
+  "binding": "order_review_20260928_v3沿用object_id/points/labels/links/preprocessing；未知身份或冲突拒绝覆盖",
+  "connection_export": "matterport_connection_order_v1：依确认环序逐对上/下交替点数组，末对连首对；保存原点和点对索引",
+  "eligibility": "队列选择不更改清洗和分析资格；未筛入不等于人工验收",
+  "raw_mutation": false
+}

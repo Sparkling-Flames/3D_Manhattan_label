@@ -1,0 +1,16 @@
+{
+  "schema": "same_room_order_review_summary_v1",
+  "received_layer": "保留两个来源的原始记录；仅相同status/order/note/cause允许合并，时间戳取较新；冲突拒绝自动选择",
+  "pairing_note": "a3975721377143bb明确评论优先；派生状态pairing，原confirmed保留在history",
+  "order": "完整固定点对索引的零基排列；绑定共享x坐标、标签、配对、方法和object_id",
+  "new_round": "全部114图待人工复审；上轮排列用于预览，状态重置draft或保留pairing，不算本轮确认",
+  "unpaired": "preprocessed_points=null；平均前点仅二维展示，无几何，无顺序确认",
+  "scope": "全部有证据同房视角+无已确认同房关系的原候选；所有尚保留人员及现存GT；排除和历史未纳入对象仅列表",
+  "qualification": "原清洗、图片与分析资格保留；此层不接入正式分析，不扩展正式研究样本",
+  "csv_keys": {
+    "同房复核范围.csv": "image_id",
+    "逐对象复核.csv": "object_id",
+    "未召回排除对象.csv": "object_id"
+  },
+  "raw_mutation": false
+}

@@ -19,6 +19,7 @@
 - [修复交付与完成度](../analysis_results/review_closeout_20260928/README.md)。
 - [共享 x 全研究预处理基线](../analysis_results/shared_x_baseline_20260928/README.md)：本目录及相关输入禁止移动；后续读取与资格边界按其字段合同执行。
 - [排序工作台](../analysis_results/order_studio_20260926/index.html)、[全量排序初筛](../analysis_results/order_candidates_20260928/)。
+- [双人排序接收与114图同房复核](../analysis_results/order_same_room_review_20260928/README.md)、[扩展工作台](../analysis_results/order_same_room_review_20260928/index.html)：上轮排列保留，本轮待复审。
 - [二审归并](../analysis_results/review_reconciliation_20260925/README.md)、[定向补审](../analysis_results/review_return_20260927/index.html)、[初始清查](../analysis_results/consensus_visual_review_20260923/index.html)。这些页面对应不同阶段，以最新台账解释状态。
 
 ## 当前研究与探索
@@ -45,4 +46,6 @@
 - [历史 v23 机器合同](thesis_main/PAPER_A_METHOD_CONTRACT_20260811_v23.json)保持原路径和原字节，旧程序仍读取它；旧 Calibration → T1/V1 不是当前默认主线。
 - [Git 历史归档与恢复](agent/REPOSITORY_ARCHIVE_20260927.md)、[9/27 工作区盘点快照](agent/WORKSPACE_NAVIGATION_20260927.md)。后者保留当日路径快照，不作为今天的目录地图。
 
+- [原始GT主筛顺序复核](../analysis_results/order_gt_screened_20260928/index.html)：当前入口，1098份待审、63份确认沿用；[清单与保存说明](../analysis_results/order_gt_screened_20260928/README.md)。
+- [原始GT主筛顺序复核](../analysis_results/order_gt_screened_20260928/index.html)：当前入口，1098份待审、63份确认沿用；[清单与保存说明](../analysis_results/order_gt_screened_20260928/README.md)。
 - [2026-09-28研究交接：清洗与角点重排](thesis_main/研究交接_清洗与角点重排_20260928.md)：当前进度、用户意图、必读输入及后续未开展方向。

@@ -8,6 +8,7 @@ controls.className = 'order-controls';
 controls.innerHTML = '<label>查找图片 <input id="image-search" placeholder="如 B6ByNegPMKs-11"></label><label>查找人员 / 来源 <input id="worker-search" placeholder="如 W021"></label><label><input id="show-points" type="checkbox" checked>标注点</label><label><input id="show-point-ids" type="checkbox" checked>原点号</label><label><input id="show-edges" type="checkbox">连接线</label><span id="filter-note" role="status"></span>';
 document.querySelector('.study-heading').after(controls);
 const identity = document.createElement('p');identity.id = 'order-identity';controls.after(identity);
+const sourceBadge=document.createElement('span');sourceBadge.id='source-badge';document.querySelector('.source-label').append(sourceBadge);
 document.querySelector('h1').textContent = '独立角点顺序工作台';
 document.querySelector('.inspector-title h3').textContent = '点位与顺序';
 document.querySelector('#panorama-panel summary').innerHTML = '<span>原图与单份标注 <small>点击点位查看局部；左右接缝相连</small></span>';
@@ -33,6 +34,10 @@ function describeSource(){
     ? `${source.worker_id} · ${source.raw_condition} · canonical ${source.canonical_annotation_id} · ${source.processing_status}`
     : `参考来源：${source.reference_name} · ${source.reference_source}`;
   identity.textContent+='｜P=原点号；E*=有效点，不能唯一追溯原点。上下配对沿用现状，环序待核验。';
+  if(source.review?.model_edit_status==='unchanged_coordinates')identity.textContent+='｜模型预标注坐标未修改';
+  if(source.review?.trap_status==='confirmed_trap')identity.textContent+='｜历史预设 Trap';
+  if(source.object_kind==='gt_original')identity.textContent+='｜原始GT自带连接次序，不按横坐标强制重排';
+  sourceBadge.textContent=source.object_kind==='gt_original'?'原始GT自带连接次序':source.review?.model_edit_status==='unchanged_coordinates'?'模型预标注坐标未改'+(source.review?.trap_status==='confirmed_trap'?' · 历史Trap':''):'';
   if(!geometry)$('order-map').textContent='上下配对或投影不可用；二维点仍可查看。此状态不等于标注无效。';
 }
 
@@ -43,6 +48,27 @@ updateOrderEditor=function(){
   baseUpdateOrderEditor();
   $('order-status').textContent=!geometry?'无可核对点组':previewOrder.some((v,i)=>v!==i)?'预览顺序 · 待核验':'当前顺序 · 待核验';
 };
+
+function placePointLabel(point,width,height,occupied,points){
+ const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
+ let best=null;
+ // ponytail: 有限近邻搜索，极密集时取最少遮挡；若仍难辨识再增加局部放大布局。
+ for(const offset of [0,24,48,72,96,120]){
+  const gap=6+offset;
+  for(const [x,y] of [[point[0]+gap,point[1]-height-gap],[point[0]+gap,point[1]+gap],
+      [point[0]-width-gap,point[1]-height-gap],[point[0]-width-gap,point[1]+gap],
+      [point[0]+gap,point[1]-height/2],[point[0]-width-gap,point[1]-height/2],
+      [point[0]-width/2,point[1]-height-gap],[point[0]-width/2,point[1]+gap]]){
+   const left=clamp(x,2,1022-width),top=clamp(y,2,510-height),right=left+width,bottom=top+height;
+   const overlaps=occupied.filter(b=>left<b.right+3&&right>b.left-3&&top<b.bottom+3&&bottom>b.top-3).length;
+   const hits=points.filter(p=>p[0]>left-4&&p[0]<right+4&&p[1]>top-4&&p[1]<bottom+4).length;
+   const distance=Math.hypot(point[0]-clamp(point[0],left,right),point[1]-clamp(point[1],top,bottom));
+   const score=overlaps*1e6+hits*1e5+distance;
+   if(!best||score<best.score)best={left,top,right,bottom,score};
+  }
+ }
+ return best;
+}
 
 // Draw one source, never consensus fills, fitted geometry or other workers.
 drawPanorama=function(){
@@ -66,21 +92,21 @@ drawPanorama=function(){
     if(($('show-point-ids').checked||active)&&($('show-sequence')?.checked!==false||$('show-pair-labels')?.checked!==false)){
       if(fixed==null||fixed<0)return;
       const position=previewOrder.indexOf(fixed)+1;
-      const x=Math.max(12,Math.min(960,point[0]+15));let y=Math.max(12,Math.min(500,point[1]-14));
-      for(const shift of [0,-28,28,-56,56,-84,84,-112,112]){
-        const candidate=Math.max(12,Math.min(500,point[1]-14+shift));
-        if(!labelBoxes.some(b=>Math.abs(b.y-candidate)<25&&x<b.x+66&&x+66>b.x)){y=candidate;break;}
-      }
-      labelBoxes.push({x,y});ctx.beginPath();ctx.moveTo(...point);ctx.lineTo(x,y);ctx.strokeStyle=active?'#17649b':'#ffffffaa';ctx.lineWidth=1;ctx.stroke();
-      const sequenceVisible=$('show-sequence')?.checked!==false;
-      if(sequenceVisible){ctx.beginPath();ctx.arc(x,y,11,0,Math.PI*2);ctx.fillStyle='#fff1dc';ctx.fill();
+      const sequenceVisible=$('show-sequence')?.checked!==false,pairVisible=$('show-pair-labels')?.checked!==false;
+      ctx.font='12px Segoe UI';const label=`对${fixed+1}`,pairWidth=pairVisible?ctx.measureText(label).width+10:0;
+      const width=(sequenceVisible?22:0)+(sequenceVisible&&pairVisible?4:0)+pairWidth;
+      const box=placePointLabel(point,width,22,labelBoxes,source.points);labelBoxes.push(box);
+      const x=box.left,y=box.top+11;
+      ctx.beginPath();ctx.moveTo(...point);ctx.lineTo(Math.max(box.left,Math.min(box.right,point[0])),Math.max(box.top,Math.min(box.bottom,point[1])));
+      ctx.strokeStyle=active?'#17649b':'#ffffffaa';ctx.lineWidth=1;ctx.stroke();
+      if(sequenceVisible){ctx.beginPath();ctx.arc(x+11,y,11,0,Math.PI*2);ctx.fillStyle='#fff1dc';ctx.fill();
       ctx.lineWidth=2;ctx.strokeStyle='#b95a00';ctx.stroke();
-      ctx.font='bold 14px Segoe UI';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='#954400';ctx.fillText(String(position),x,y);}
+      ctx.font='bold 14px Segoe UI';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='#954400';ctx.fillText(String(position),x+11,y);}
       ctx.textBaseline='middle';
-      ctx.font='12px Segoe UI';const label=`对${fixed+1}`,width=ctx.measureText(label).width+10;
-      if($('show-pair-labels')?.checked!==false){ctx.fillStyle=active?'#d4edff33':'#f1f8ff33';ctx.fillRect(x+15,y-10,width,20);
-      ctx.strokeStyle='#17649b';ctx.lineWidth=1.5;ctx.strokeRect(x+15,y-10,width,20);
-      ctx.textAlign='left';ctx.fillStyle='#125384';ctx.fillText(label,x+20,y);}
+      ctx.font='12px Segoe UI';const pairX=x+(sequenceVisible?26:0);
+      if(pairVisible){ctx.fillStyle=active?'#d4edff33':'#f1f8ff33';ctx.fillRect(pairX,y-10,pairWidth,20);
+      ctx.strokeStyle='#17649b';ctx.lineWidth=1.5;ctx.strokeRect(pairX,y-10,pairWidth,20);
+      ctx.textAlign='left';ctx.fillStyle='#125384';ctx.fillText(label,pairX+5,y);}
     }
   });
 };
@@ -145,7 +171,7 @@ function filterWorkers(selectMatch=false){
 $('worker-search').oninput=()=>filterWorkers(true);
 $('image-search').oninput=()=>{
   const text=$('image-search').value.trim().toLowerCase(),options=[...$('case-select').options];
-  for(const option of options)option.hidden=!`${dataset.cases[Number(option.value)].title} ${dataset.cases[Number(option.value)].image_id}`.toLowerCase().includes(text);
+  for(const option of options)option.hidden=!`${dataset.cases[Number(option.value)].title} ${dataset.cases[Number(option.value)].image_id} ${dataset.cases[Number(option.value)].room_id||''}`.toLowerCase().includes(text);
   const visible=options.filter(o=>!o.hidden);
   if(visible.length&&!visible.some(o=>Number(o.value)===currentCase))chooseCase(Number(visible[0].value));
   if(!visible.length)$('filter-note').textContent='没有匹配图片；当前图片未改变';
@@ -172,8 +198,8 @@ const reviewSchema=dataset.manifest.export_schema||'order_review_20260928_v2';
 const storageKey=reviewSchema+':'+location.pathname;
 const sourceId=s=>s?.object_id||s?.canonical_annotation_id;
 function sourceBinding(s){return sourceId(s)?JSON.stringify({id:sourceId(s),points:s.effective_points||s.points,labels:s.effective_point_labels,links:s.links_zero_based,...(s.preprocessing?{preprocessing:s.preprocessing}:{})}):null;}
-let saved={},demoOrder=[0,1,2,3,4,5],pointerDrag=null,restoring=false;
-try{saved=JSON.parse(localStorage.getItem(storageKey)||'{}');}catch(e){$('save-state').textContent='本地记录读取失败，请先导出备份，勿覆盖。';}
+let saved={},demoOrder=[0,1,2,3,4,5],pointerDrag=null,restoring=false,reviewLoadError=null;
+try{saved=JSON.parse(localStorage.getItem(storageKey)||JSON.stringify(window.ORDER_REVIEW_SEED||{}));if(!saved||typeof saved!=='object'||Array.isArray(saved))throw Error('审核记录必须为对象');}catch(e){saved={};reviewLoadError=e;$('save-state').textContent='本地记录读取失败，请先备份本地记录，勿覆盖。';}
 function inputBinding(){return sourceBinding(activeSource());}
 function updateProgress(){const all=dataset.cases.flatMap(c=>c.variants.map(v=>v.source)),index=all.findIndex(s=>sourceId(s)===sourceId(activeSource()));if($('object-progress'))$('object-progress').textContent=`第 ${index+1} / ${all.length} 份 · 已确认 ${Object.values(saved).filter(r=>r.status==='confirmed').length} · 匹配错误 ${Object.values(saved).filter(r=>r.status==='pairing').length}`;}
 function drawDrag(){
@@ -249,9 +275,10 @@ function movePair(from,to){
  if(empty){demoOrder=order;drawDrag();}else setPreviewOrder(order,'drag_pair');
 }
 function saveReview(status='draft'){
- const binding=inputBinding(),s=activeSource();if(!binding||restoring)return;
+ const binding=inputBinding(),s=activeSource();if(!binding||restoring)return false;
+ const previous=saved[sourceId(s)];
  saved[sourceId(s)]={binding,status,note:$('pairing-note')?.value||'',order:[...previewOrder],cause:$('example-cause').value,updated_at:new Date().toISOString()};
- try{localStorage.setItem(storageKey,JSON.stringify(saved));updateProgress();$('save-state').textContent=({draft:'草稿已保存',confirmed:'已确认顺序',pending:'已记录：尚不能确定',pairing:'点位匹配错误 · 待单独审核'})[status];}catch(e){$('save-state').textContent='本地保存失败，请立即导出记录。';}
+ try{localStorage.setItem(storageKey,JSON.stringify(saved));updateProgress();$('save-state').textContent=({draft:'草稿已保存',confirmed:'已确认顺序',pending:'已记录：尚不能确定',pairing:'点位匹配错误 · 待单独审核'})[status];return true;}catch(e){if(previous)saved[sourceId(s)]=previous;else delete saved[sourceId(s)];$('save-state').textContent='本地保存失败，本次状态未提交；请导出当前预览排列。';return false;}
 }
 const dragSetOrder=setPreviewOrder;
 setPreviewOrder=function(order,action){dragSetOrder(order,action);drawDrag();saveReview();};
@@ -261,6 +288,7 @@ chooseVariant=function(index,reset=false){
  finishPairDrag(true);hoveredPair=null;
  restoring=true;dragChooseVariant(index,reset);const s=activeSource(),record=saved[sourceId(s)];
  $('example-cause').value='';$('save-state').textContent='未确认';
+ if(geometry&&s.default_preview_order)setPreviewOrder(s.default_preview_order,'default_order');
  if(record){if(record.binding!==inputBinding())$('save-state').textContent='输入点版本改变：旧记录未套用，请先导出。';
  else{if(geometry)setPreviewOrder(record.order,'restore_draft');$('example-cause').value=record.cause||'';$('save-state').textContent=record.status==='confirmed'?'已确认顺序':record.status==='draft'?'已恢复草稿':record.status==='pairing'?'点位匹配错误 · 待单独审核':'已记录，仍待判断';}}
  if($('pairing-note'))$('pairing-note').value=record?.note||'';restoring=false;drawDrag();updateProgress();
@@ -268,13 +296,13 @@ chooseVariant=function(index,reset=false){
 $('confirm-order').onclick=()=>{if(geometry)saveReview('confirmed');else $('save-state').textContent='无可用点对，不能确认顺序。';};
 $('pending-order').onclick=()=>saveReview('pending');$('pairing-problem').onclick=()=>saveReview('pairing');
 $('example-cause').onchange=()=>saveReview();
-$('order-restore').onclick=()=>{if(activeSource()?.role==='empty'){demoOrder=[0,1,2,3,4,5];drawDrag();}else setPreviewOrder(previewOrder.map((_,i)=>i),'restore_default');};
+$('order-restore').onclick=()=>{if(activeSource()?.role==='empty'){demoOrder=[0,1,2,3,4,5];drawDrag();}else setPreviewOrder(activeSource().default_preview_order||previewOrder.map((_,i)=>i),'restore_default');};
 $('download-orders').onclick=()=>{const url=URL.createObjectURL(new Blob([JSON.stringify({schema:reviewSchema,examples_only:!!dataset.manifest.examples_only,records:saved},null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='角点顺序审核.json';a.click();URL.revokeObjectURL(url);};
 $('import-orders').onchange=async e=>{try{
  const doc=JSON.parse(await e.target.files[0].text());
  const legacy=doc.schema==='order_review_20260928_v2'&&reviewSchema==='order_review_20260928_v3';
  if((doc.schema!==reviewSchema&&!legacy)||(!legacy&&doc.examples_only!==!!dataset.manifest.examples_only)||!doc.records||typeof doc.records!=='object'||Array.isArray(doc.records))throw Error('文件版本或用途不匹配');
- const merged={...saved},sources=new Map(dataset.cases.flatMap(c=>c.variants.map(v=>[sourceId(v.source),v.source])));
+ const merged={...saved},sources=new Map([...(window.ORDER_HISTORY_SOURCES||[]).map(s=>[sourceId(s),s]),...dataset.cases.flatMap(c=>c.variants.map(v=>[sourceId(v.source),v.source]))]);
  for(const [id,originalRecord] of Object.entries(doc.records)){
   let r={...originalRecord};const binding=JSON.parse(r.binding),s=sources.get(id),n=binding.links?.length||0;
   if(!s||binding.id!==id||!['draft','confirmed','pending','pairing'].includes(r.status)||!Array.isArray(r.order)||r.order.length!==n||[...r.order].sort((a,b)=>a-b).some((v,i)=>v!==i))throw Error('对象或顺序记录不完整');
@@ -319,3 +347,10 @@ const progress=document.createElement('span');progress.id='object-progress';acti
 const downloadPairing=document.createElement('button');downloadPairing.textContent='导出匹配错误清单';more.append(downloadPairing);
 downloadPairing.onclick=()=>{const records=Object.fromEntries(Object.entries(saved).filter(([,r])=>r.status==='pairing'));const url=URL.createObjectURL(new Blob([JSON.stringify({schema:reviewSchema,examples_only:!!dataset.manifest.examples_only,records},null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='点位匹配错误_待单独审核.json';a.click();URL.revokeObjectURL(url);};
 if(activeSource())$('pairing-note').value=saved[sourceId(activeSource())]?.note||'';
+if(dataset.manifest.review_round==='same_room_expansion_20260928'){
+ const roomButton=document.createElement('button');roomButton.textContent='筛选本图同房';
+ roomButton.onclick=()=>{$('image-search').value=dataset.cases[currentCase].room_id||dataset.cases[currentCase].title;$('image-search').oninput();};
+ const clearRoom=document.createElement('button');clearRoom.textContent='显示全部图片';clearRoom.onclick=()=>{$('image-search').value='';$('image-search').oninput();};
+ $('order-display-options').append($('image-search').parentElement,roomButton,clearRoom);$('image-search').placeholder='图片编号或同房组，如 G184';
+ $('order-legend').append(' 本轮全部待复审；上轮排列已载入预览，不计为本轮确认。');
+}

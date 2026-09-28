@@ -12,6 +12,7 @@
 | 确认修复交付 | `analysis_results/review_closeout_20260928/` |
 | 全研究共享 x 输入 | `analysis_results/shared_x_baseline_20260928/`，本目录及其原始/复核/修复/GT输入链禁止移动 |
 | 排序工作台与初筛 | `analysis_results/order_studio_20260926/`；`order_candidates_20260928/` |
+| 双人排序接收与同房扩展复核 | `analysis_results/order_same_room_review_20260928/`，114图独立复审层 |
 | 共识研究包 | `analysis_results/consensus_research_20260923/` |
 | 新 Pro 研究与独立审查 | `research/pro_layout_20260927/`；`analysis_results/pro_return_audit_20260928/` |
 
@@ -50,4 +51,6 @@
 
 参见 [Agent 上下文](agent/AGENT_CONTEXT_INDEX.md)、[文档同步](agent/playbooks/docs_sync.md)、[代码验证](agent/playbooks/code_change_verification.md)。协议与统计变更须分别检查 protocol_guard 和 statistical_plan_guard。Label Studio 运营先读 CE-only SOP。部署兼容路由 `/tools/vis_3d.html` 不代表源码位于 tools 根目录。
 
+- [原始GT主筛顺序复核](../analysis_results/order_gt_screened_20260928/README.md)：当前入口；构建器`tools/thesis_main/analysis/build_order_gt_screened_20260928.py`与独立队列JS复用原工作台，逐对象筛选与GT差异可审计。
+- [原始GT主筛顺序复核](../analysis_results/order_gt_screened_20260928/README.md)：当前入口；构建器`tools/thesis_main/analysis/build_order_gt_screened_20260928.py`与独立队列JS复用原工作台，逐对象筛选与GT差异可审计。
 - [2026-09-28研究交接：清洗与角点重排](thesis_main/研究交接_清洗与角点重排_20260928.md)：当前进度、用户意图、必读输入及后续未开展方向。
