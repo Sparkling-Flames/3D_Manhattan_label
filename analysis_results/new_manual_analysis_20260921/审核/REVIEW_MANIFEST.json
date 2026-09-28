@@ -1,0 +1,5826 @@
+{
+  "binding": {
+    "input": "d56cba5f4012ba75332804d32205b0b874a1c4b924c7aa4357b887af6278313e",
+    "points": "08a61d47080dbcfec7e4d10f890055ebe6d901b8e0270ba94bd88625f0360ea4",
+    "review_content": "0e80c92b637c4990e8433bfd2e0ec276fb0f8b4a5462b3abcf68223fdeb565d1",
+    "id": "ba835287bf8c1533ecf45e0eeca4d9e64bd0379e71bb7d508184e0379a4bfc53"
+  },
+  "cases": [
+    {
+      "key": "uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62|点位对应|0",
+      "code": "uNb9QFRL6hY-40",
+      "condition": "Manual",
+      "reasons": "先核对W002与W033/W028的接缝处上下角点。换起点仅是候选，不自动合簇；请分别写两对作答的原点号对应及是否相近。",
+      "ids": [
+        "5d58f3bc4858f0d343be",
+        "92084aa32f538179d158",
+        "d2c9465ce508ba7c1195",
+        "f2a65213a0368b751984",
+        "f8b24f616d167c27b810",
+        "new_93_3591_7249_W010",
+        "new_93_3591_7285_W013",
+        "new_93_3591_7366_W002",
+        "new_94_3628_6947_W035",
+        "new_94_3628_7000_W036",
+        "new_94_3628_7006_W033",
+        "new_94_3628_7046_W037",
+        "new_94_3628_7202_W029",
+        "new_94_3628_7305_W028",
+        "new_94_3628_7333_W030"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          1,
+          1,
+          1,
+          3,
+          1,
+          "unavailable",
+          4,
+          1,
+          2,
+          2,
+          5,
+          6,
+          2,
+          1
+        ],
+        "complete": [
+          1,
+          1,
+          1,
+          1,
+          2,
+          3,
+          "unavailable",
+          4,
+          1,
+          5,
+          5,
+          6,
+          7,
+          5,
+          1
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3591_7366_W002",
+              "new_94_3628_7006_W033"
+            ],
+            "workers": [
+              "W002／7366",
+              "W033／7006"
+            ],
+            "distance": 459.7646105991327,
+            "unit": "像素",
+            "kind": "点位对应",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3591_7366_W002",
+              "new_94_3628_7305_W028"
+            ],
+            "workers": [
+              "W002／7366",
+              "W028／7305"
+            ],
+            "distance": 456.41733329408726,
+            "unit": "像素",
+            "kind": "点位对应",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3591_7366_W002",
+              "new_94_3628_7006_W033"
+            ],
+            "workers": [
+              "W002／7366",
+              "W033／7006"
+            ],
+            "distance": 459.7646105991327,
+            "unit": "像素",
+            "kind": "点位对应",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3591_7366_W002",
+              "new_94_3628_7305_W028"
+            ],
+            "workers": [
+              "W002／7366",
+              "W028／7305"
+            ],
+            "distance": 456.41733329408726,
+            "unit": "像素",
+            "kind": "点位对应",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "确认候选对应且可视为相近",
+        "确认对应但仍保留差异",
+        "候选对应不成立",
+        "暂不能判断"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "image_id": "uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62",
+          "a": "new_93_3591_7366_W002",
+          "b": "new_94_3628_7006_W033",
+          "fixed_px": 459.7646105991327,
+          "free_px": 19.87160941723956,
+          "mapping_b_1based": [
+            6,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "status": "仅预警，不自动改对应",
+          "candidate_mapping_original_point_ids_top_bottom": [
+            {
+              "left": [
+                11,
+                12
+              ],
+              "right": [
+                11,
+                12
+              ]
+            },
+            {
+              "left": [
+                10,
+                9
+              ],
+              "right": [
+                3,
+                1
+              ]
+            },
+            {
+              "left": [
+                7,
+                8
+              ],
+              "right": [
+                4,
+                2
+              ]
+            },
+            {
+              "left": [
+                1,
+                2
+              ],
+              "right": [
+                6,
+                5
+              ]
+            },
+            {
+              "left": [
+                3,
+                4
+              ],
+              "right": [
+                7,
+                8
+              ]
+            },
+            {
+              "left": [
+                5,
+                6
+              ],
+              "right": [
+                9,
+                10
+              ]
+            }
+          ]
+        },
+        {
+          "image_id": "uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62",
+          "a": "new_93_3591_7366_W002",
+          "b": "new_94_3628_7305_W028",
+          "fixed_px": 456.41733329408726,
+          "free_px": 24.838179600685404,
+          "mapping_b_1based": [
+            6,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "status": "仅预警，不自动改对应",
+          "candidate_mapping_original_point_ids_top_bottom": [
+            {
+              "left": [
+                11,
+                12
+              ],
+              "right": [
+                11,
+                12
+              ]
+            },
+            {
+              "left": [
+                10,
+                9
+              ],
+              "right": [
+                1,
+                2
+              ]
+            },
+            {
+              "left": [
+                7,
+                8
+              ],
+              "right": [
+                3,
+                4
+              ]
+            },
+            {
+              "left": [
+                1,
+                2
+              ],
+              "right": [
+                5,
+                6
+              ]
+            },
+            {
+              "left": [
+                3,
+                4
+              ],
+              "right": [
+                7,
+                8
+              ]
+            },
+            {
+              "left": [
+                5,
+                6
+              ],
+              "right": [
+                9,
+                10
+              ]
+            }
+          ]
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_b98c9460586e4f138658181461df9f51|奇数点|1",
+      "code": "uNb9QFRL6hY-59",
+      "condition": "Manual",
+      "reasons": "W031／annotation 6925共13点。请明确多标/漏标及原点号；补点需给位置，不因奇数自动删。",
+      "ids": [
+        "new_93_3598_6850_W001",
+        "new_93_3598_6912_W017",
+        "new_93_3598_7086_W006",
+        "new_93_3598_7121_W012",
+        "new_93_3598_7177_W015",
+        "new_93_3598_7246_W010",
+        "new_93_3598_7279_W013",
+        "new_93_3598_7369_W002",
+        "new_93_3598_7409_W008",
+        "new_94_3635_6925_W031",
+        "new_94_3635_6960_W035",
+        "new_94_3635_7015_W033",
+        "new_94_3635_7036_W037",
+        "new_94_3635_7044_W029",
+        "new_94_3635_7115_W036",
+        "new_94_3635_7145_W034",
+        "new_94_3635_7323_W030",
+        "new_94_3635_7357_W032",
+        "new_94_3635_7420_W028"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          1,
+          "unavailable",
+          3,
+          1,
+          2,
+          "unavailable",
+          4,
+          1,
+          "unavailable",
+          5,
+          6,
+          "unavailable",
+          7,
+          8,
+          9,
+          2,
+          10,
+          1
+        ],
+        "complete": [
+          1,
+          1,
+          "unavailable",
+          2,
+          1,
+          3,
+          "unavailable",
+          4,
+          1,
+          "unavailable",
+          5,
+          6,
+          "unavailable",
+          7,
+          8,
+          9,
+          3,
+          10,
+          1
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_94_3635_6925_W031"
+            ],
+            "workers": [
+              "W031／6925"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "奇数点",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_94_3635_6925_W031"
+            ],
+            "workers": [
+              "W031／6925"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "奇数点",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "多标需删点（见文字）",
+        "漏标需补点（见文字）",
+        "原样保留观察",
+        "暂不能判断"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": {
+        "id": "new_94_3635_6925_W031",
+        "source": "export_label/新增英文30+20图/project-94-at-2026-09-20-13-45-d09d9d53.json",
+        "project": 94,
+        "task": 3635,
+        "annotation": 6925,
+        "worker": "W031",
+        "image_id": "uNb9QFRL6hY_b98c9460586e4f138658181461df9f51",
+        "code": "uNb9QFRL6hY-59",
+        "point_count": 13,
+        "parent_annotation": null,
+        "flags": [
+          "odd_unconfirmed"
+        ],
+        "assignment": "required",
+        "created_at": "2026-09-14T12:53:08.958908Z",
+        "updated_at": "2026-09-14T12:53:08.958931Z",
+        "conditional_include": false,
+        "strict_include": false
+      },
+      "user_decision": null
+    },
+    {
+      "key": "e9zR4mvMWw7_83347153d2184d33869626c6c83318f9|奇数点|2",
+      "code": "e9zR4mvMWw7-26",
+      "condition": "Manual",
+      "reasons": "W034／annotation 7273共7点。请明确多标/漏标及原点号；补点需给位置，不因奇数自动删。",
+      "ids": [
+        "new_95_3660_6987_W035",
+        "new_95_3660_7062_W031",
+        "new_95_3660_7096_W037",
+        "new_95_3660_7273_W034",
+        "new_95_3660_7342_W036",
+        "new_95_3660_7431_W028",
+        "new_95_3660_7471_W032",
+        "new_95_3660_7472_W030"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          1,
+          1,
+          "unavailable",
+          1,
+          1,
+          1,
+          1
+        ],
+        "complete": [
+          1,
+          1,
+          1,
+          "unavailable",
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_95_3660_7273_W034"
+            ],
+            "workers": [
+              "W034／7273"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "奇数点",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_95_3660_7273_W034"
+            ],
+            "workers": [
+              "W034／7273"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "奇数点",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "多标需删点（见文字）",
+        "漏标需补点（见文字）",
+        "原样保留观察",
+        "暂不能判断"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": {
+        "id": "new_95_3660_7273_W034",
+        "source": "export_label/新增英文30+20图/project-95-at-2026-09-20-13-44-3fe72103.json",
+        "project": 95,
+        "task": 3660,
+        "annotation": 7273,
+        "worker": "W034",
+        "image_id": "e9zR4mvMWw7_83347153d2184d33869626c6c83318f9",
+        "code": "e9zR4mvMWw7-26",
+        "point_count": 7,
+        "parent_annotation": null,
+        "flags": [
+          "odd_unconfirmed"
+        ],
+        "assignment": "optional",
+        "created_at": "2026-09-18T03:36:15.286185Z",
+        "updated_at": "2026-09-18T03:36:15.286234Z",
+        "conditional_include": false,
+        "strict_include": false
+      },
+      "user_decision": null
+    },
+    {
+      "key": "wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366|同人重复版本|3",
+      "code": "wc2JMjhGNzB-29",
+      "condition": "Manual",
+      "reasons": "W034／7271和7272是同人同图，不能算两人。请结合来源决定当前版本，不按哪个更像其他人来选。",
+      "ids": [
+        "new_95_3667_6994_W035",
+        "new_95_3667_7080_W031",
+        "new_95_3667_7104_W037",
+        "new_95_3667_7271_W034",
+        "new_95_3667_7272_W034",
+        "new_95_3667_7350_W036",
+        "new_95_3667_7447_W028",
+        "new_95_3667_7483_W030",
+        "new_95_3667_7487_W032"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          1,
+          1,
+          "unavailable",
+          "unavailable",
+          1,
+          1,
+          1,
+          1
+        ],
+        "complete": [
+          1,
+          1,
+          1,
+          "unavailable",
+          "unavailable",
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_95_3667_7271_W034",
+              "new_95_3667_7272_W034"
+            ],
+            "workers": [
+              "W034／7271",
+              "W034／7272"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "同人重复版本",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_95_3667_7271_W034",
+              "new_95_3667_7272_W034"
+            ],
+            "workers": [
+              "W034／7271",
+              "W034／7272"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "同人重复版本",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "采用7271作为当前版本",
+        "采用7272作为当前版本",
+        "两份均暂不采用",
+        "暂不能判断"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_95_3667_7271_W034",
+          "source": "export_label/新增英文30+20图/project-95-at-2026-09-20-13-44-3fe72103.json",
+          "project": 95,
+          "task": 3667,
+          "annotation": 7271,
+          "worker": "W034",
+          "image_id": "wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366",
+          "code": "wc2JMjhGNzB-29",
+          "point_count": 8,
+          "parent_annotation": null,
+          "flags": [
+            "multiple_submissions_version_pending"
+          ],
+          "assignment": "optional",
+          "created_at": "2026-09-18T03:32:38.122027Z",
+          "updated_at": "2026-09-18T03:32:38.122046Z",
+          "conditional_include": false,
+          "strict_include": false
+        },
+        {
+          "id": "new_95_3667_7272_W034",
+          "source": "export_label/新增英文30+20图/project-95-at-2026-09-20-13-44-3fe72103.json",
+          "project": 95,
+          "task": 3667,
+          "annotation": 7272,
+          "worker": "W034",
+          "image_id": "wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366",
+          "code": "wc2JMjhGNzB-29",
+          "point_count": 8,
+          "parent_annotation": null,
+          "flags": [
+            "multiple_submissions_version_pending"
+          ],
+          "assignment": "optional",
+          "created_at": "2026-09-18T03:34:23.168329Z",
+          "updated_at": "2026-09-18T03:34:23.168350Z",
+          "conditional_include": false,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_33dd9892d10e474ead8f7ad38a8da562|上下绑定|4",
+      "code": "uNb9QFRL6hY-19",
+      "condition": "Manual",
+      "reasons": "W010上下角色/配对未唯一确定。请按p原点号写top-bottom对应，尤其检查地平线附近；局部确认不补成完整映射。",
+      "ids": [
+        "new_93_3587_6845_W001",
+        "new_93_3587_7077_W006",
+        "new_93_3587_7129_W012",
+        "new_93_3587_7182_W010",
+        "new_93_3587_7378_W002",
+        "new_94_3624_6880_W033",
+        "new_94_3624_6894_W031",
+        "new_94_3624_6940_W035",
+        "new_94_3624_6965_W029",
+        "new_94_3624_6997_W036",
+        "new_94_3624_7018_W034",
+        "new_94_3624_7034_W037",
+        "new_94_3624_7302_W028",
+        "new_94_3624_7315_W030",
+        "new_94_3624_7349_W032"
+      ],
+      "labels": {
+        "representative": [
+          2,
+          "unavailable",
+          2,
+          "unavailable",
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          3,
+          1,
+          2,
+          1,
+          1
+        ],
+        "complete": [
+          1,
+          "unavailable",
+          1,
+          "unavailable",
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          3,
+          2,
+          1,
+          2,
+          2
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3587_7182_W010"
+            ],
+            "workers": [
+              "W010／7182"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "上下绑定",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3587_7182_W010"
+            ],
+            "workers": [
+              "W010／7182"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "上下绑定",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "确认上下对应（见文字）",
+        "点集需要修复（见文字）",
+        "原样保留观察",
+        "暂不能判断"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": {
+        "id": "new_93_3587_7182_W010",
+        "code": "uNb9QFRL6hY-19",
+        "image_id": "uNb9QFRL6hY_33dd9892d10e474ead8f7ad38a8da562",
+        "worker": "W010",
+        "condition": "manual",
+        "stage": "scene_stability_stage1",
+        "block": 0,
+        "exposure": "none",
+        "excluded_worker": false,
+        "pointset_available": true,
+        "raw_count": 12,
+        "effective_count": 12.0,
+        "processing_status": "latest_export_unmodified",
+        "imputed_point": false,
+        "split_available": true,
+        "bound_available": false,
+        "role_source": "horizon_255_5_conditional_roles",
+        "role_status": "available_conditionally",
+        "n_top": 4.0,
+        "n_bottom": 8.0,
+        "pairing_source": "unbalanced_top_bottom",
+        "exact_x_ties": 0.0,
+        "near_x_gaps_le1px": 1.0,
+        "minimum_role_x_gap_px": 0.7145236844482383,
+        "paired_role_order_inversion": false,
+        "pair_cost_px": null,
+        "second_pair_cost_px": null,
+        "pair_margin_px": null
+      },
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f|上下绑定|5",
+      "code": "uNb9QFRL6hY-12",
+      "condition": "Manual",
+      "reasons": "W033上下角色/配对未唯一确定。请按p原点号写top-bottom对应，尤其检查地平线附近；局部确认不补成完整映射。",
+      "ids": [
+        "new_93_3584_6853_W001",
+        "new_93_3584_7130_W012",
+        "new_93_3584_7194_W015",
+        "new_93_3584_7245_W010",
+        "new_93_3584_7289_W013",
+        "new_94_3621_6860_W036",
+        "new_94_3621_6877_W033",
+        "new_94_3621_6891_W031",
+        "new_94_3621_6935_W035",
+        "new_94_3621_7020_W034",
+        "new_94_3621_7048_W037",
+        "new_94_3621_7203_W029",
+        "new_94_3621_7299_W028",
+        "new_94_3621_7326_W030",
+        "new_94_3621_7352_W032"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          1,
+          1,
+          1,
+          "unavailable",
+          3,
+          "unavailable",
+          2,
+          1,
+          1,
+          4,
+          1,
+          1,
+          1,
+          2
+        ],
+        "complete": [
+          1,
+          1,
+          1,
+          1,
+          "unavailable",
+          2,
+          "unavailable",
+          3,
+          1,
+          1,
+          4,
+          1,
+          1,
+          1,
+          3
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_94_3621_6877_W033"
+            ],
+            "workers": [
+              "W033／6877"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "上下绑定",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_94_3621_6877_W033"
+            ],
+            "workers": [
+              "W033／6877"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "上下绑定",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "确认上下对应（见文字）",
+        "点集需要修复（见文字）",
+        "原样保留观察",
+        "暂不能判断"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": {
+        "id": "new_94_3621_6877_W033",
+        "code": "uNb9QFRL6hY-12",
+        "image_id": "uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f",
+        "worker": "W033",
+        "condition": "manual",
+        "stage": "scene_stability_stage1",
+        "block": 0,
+        "exposure": "none",
+        "excluded_worker": false,
+        "pointset_available": true,
+        "raw_count": 12,
+        "effective_count": 12.0,
+        "processing_status": "latest_export_unmodified",
+        "imputed_point": false,
+        "split_available": true,
+        "bound_available": false,
+        "role_source": "horizon_255_5_conditional_roles",
+        "role_status": "available_conditionally",
+        "n_top": 6.0,
+        "n_bottom": 6.0,
+        "pairing_source": "ambiguous_horizontal_assignment",
+        "exact_x_ties": 1.0,
+        "near_x_gaps_le1px": 2.0,
+        "minimum_role_x_gap_px": 0.0,
+        "paired_role_order_inversion": false,
+        "pair_cost_px": 2.982305405491843,
+        "second_pair_cost_px": 2.982305405491843,
+        "pair_margin_px": 0.0
+      },
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_b98c9460586e4f138658181461df9f51|上下绑定|6",
+      "code": "uNb9QFRL6hY-59",
+      "condition": "Manual",
+      "reasons": "W037上下角色/配对未唯一确定。请按p原点号写top-bottom对应，尤其检查地平线附近；局部确认不补成完整映射。",
+      "ids": [
+        "new_93_3598_6850_W001",
+        "new_93_3598_6912_W017",
+        "new_93_3598_7086_W006",
+        "new_93_3598_7121_W012",
+        "new_93_3598_7177_W015",
+        "new_93_3598_7246_W010",
+        "new_93_3598_7279_W013",
+        "new_93_3598_7369_W002",
+        "new_93_3598_7409_W008",
+        "new_94_3635_6925_W031",
+        "new_94_3635_6960_W035",
+        "new_94_3635_7015_W033",
+        "new_94_3635_7036_W037",
+        "new_94_3635_7044_W029",
+        "new_94_3635_7115_W036",
+        "new_94_3635_7145_W034",
+        "new_94_3635_7323_W030",
+        "new_94_3635_7357_W032",
+        "new_94_3635_7420_W028"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          1,
+          "unavailable",
+          3,
+          1,
+          2,
+          "unavailable",
+          4,
+          1,
+          "unavailable",
+          5,
+          6,
+          "unavailable",
+          7,
+          8,
+          9,
+          2,
+          10,
+          1
+        ],
+        "complete": [
+          1,
+          1,
+          "unavailable",
+          2,
+          1,
+          3,
+          "unavailable",
+          4,
+          1,
+          "unavailable",
+          5,
+          6,
+          "unavailable",
+          7,
+          8,
+          9,
+          3,
+          10,
+          1
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_94_3635_7036_W037"
+            ],
+            "workers": [
+              "W037／7036"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "上下绑定",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_94_3635_7036_W037"
+            ],
+            "workers": [
+              "W037／7036"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "上下绑定",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "确认上下对应（见文字）",
+        "点集需要修复（见文字）",
+        "原样保留观察",
+        "暂不能判断"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": {
+        "id": "new_94_3635_7036_W037",
+        "code": "uNb9QFRL6hY-59",
+        "image_id": "uNb9QFRL6hY_b98c9460586e4f138658181461df9f51",
+        "worker": "W037",
+        "condition": "manual",
+        "stage": "scene_stability_stage1",
+        "block": 0,
+        "exposure": "none",
+        "excluded_worker": false,
+        "pointset_available": true,
+        "raw_count": 20,
+        "effective_count": 20.0,
+        "processing_status": "latest_export_unmodified",
+        "imputed_point": false,
+        "split_available": true,
+        "bound_available": false,
+        "role_source": "horizon_255_5_conditional_roles",
+        "role_status": "available_conditionally",
+        "n_top": 11.0,
+        "n_bottom": 9.0,
+        "pairing_source": "unbalanced_top_bottom",
+        "exact_x_ties": 0.0,
+        "near_x_gaps_le1px": 0.0,
+        "minimum_role_x_gap_px": 10.858960763520713,
+        "paired_role_order_inversion": false,
+        "pair_cost_px": null,
+        "second_pair_cost_px": null,
+        "pair_margin_px": null
+      },
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14|上下绑定|7",
+      "code": "uNb9QFRL6hY-88",
+      "condition": "Manual",
+      "reasons": "W028上下角色/配对未唯一确定。请按p原点号写top-bottom对应，尤其检查地平线附近；局部确认不补成完整映射。",
+      "ids": [
+        "16f88794bfabdd24c227",
+        "6bcb7c06bee48a668fc1",
+        "8f3735d531f44f7b44c8",
+        "9e5409147dcedaf906b7",
+        "b593f337fea5cb8bf3f2",
+        "new_93_3608_6903_W017",
+        "new_93_3608_7113_W006",
+        "new_93_3608_7137_W012",
+        "new_93_3608_7186_W015",
+        "new_93_3608_7282_W013",
+        "new_93_3608_7399_W008",
+        "new_93_3608_7489_W010",
+        "new_94_3645_6949_W031",
+        "new_94_3645_6972_W035",
+        "new_94_3645_7092_W029",
+        "new_94_3645_7161_W033",
+        "new_94_3645_7223_W036",
+        "new_94_3645_7320_W030",
+        "new_94_3645_7358_W032",
+        "new_94_3645_7433_W028"
+      ],
+      "labels": {
+        "representative": [
+          3,
+          4,
+          5,
+          1,
+          "unavailable",
+          1,
+          6,
+          "unavailable",
+          "unavailable",
+          "unavailable",
+          1,
+          1,
+          7,
+          2,
+          2,
+          8,
+          9,
+          10,
+          11,
+          "unavailable"
+        ],
+        "complete": [
+          1,
+          2,
+          3,
+          4,
+          "unavailable",
+          5,
+          6,
+          "unavailable",
+          "unavailable",
+          "unavailable",
+          5,
+          5,
+          7,
+          8,
+          8,
+          9,
+          10,
+          11,
+          12,
+          "unavailable"
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_94_3645_7433_W028"
+            ],
+            "workers": [
+              "W028／7433"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "上下绑定",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_94_3645_7433_W028"
+            ],
+            "workers": [
+              "W028／7433"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "上下绑定",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "确认上下对应（见文字）",
+        "点集需要修复（见文字）",
+        "原样保留观察",
+        "暂不能判断"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": {
+        "id": "new_94_3645_7433_W028",
+        "code": "uNb9QFRL6hY-88",
+        "image_id": "uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14",
+        "worker": "W028",
+        "condition": "manual",
+        "stage": "scene_stability_stage1",
+        "block": 0,
+        "exposure": "none",
+        "excluded_worker": false,
+        "pointset_available": true,
+        "raw_count": 16,
+        "effective_count": 16.0,
+        "processing_status": "latest_export_unmodified",
+        "imputed_point": false,
+        "split_available": true,
+        "bound_available": false,
+        "role_source": "horizon_255_5_conditional_roles",
+        "role_status": "available_conditionally",
+        "n_top": 8.0,
+        "n_bottom": 8.0,
+        "pairing_source": "ambiguous_horizontal_assignment",
+        "exact_x_ties": 2.0,
+        "near_x_gaps_le1px": 2.0,
+        "minimum_role_x_gap_px": 0.0,
+        "paired_role_order_inversion": false,
+        "pair_cost_px": 0.0,
+        "second_pair_cost_px": 0.0,
+        "pair_margin_px": 0.0
+      },
+      "user_decision": null
+    },
+    {
+      "key": "B6ByNegPMKs_d19d2ae4bddf4445a3c623edc0346937|父记录来源|8",
+      "code": "B6ByNegPMKs-42",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_95_3654_6981_W035",
+        "new_95_3654_7027_W031",
+        "new_95_3654_7089_W037",
+        "new_95_3654_7226_W036",
+        "new_95_3654_7259_W034",
+        "new_95_3654_7429_W028",
+        "new_95_3654_7454_W032",
+        "new_95_3654_7463_W030"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          "unavailable",
+          2,
+          3,
+          2,
+          1,
+          4,
+          5
+        ],
+        "complete": [
+          1,
+          "unavailable",
+          2,
+          3,
+          2,
+          1,
+          4,
+          5
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_95_3654_7027_W031",
+              "new_95_3654_6981_W035"
+            ],
+            "workers": [
+              "W031／7027",
+              "W035／6981"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_95_3654_7027_W031",
+              "new_95_3654_6981_W035"
+            ],
+            "workers": [
+              "W031／7027",
+              "W035／6981"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_95_3654_7027_W031",
+          "source": "export_label/新增英文30+20图/project-95-at-2026-09-20-13-44-3fe72103.json",
+          "project": 95,
+          "task": 3654,
+          "annotation": 7027,
+          "worker": "W031",
+          "image_id": "B6ByNegPMKs_d19d2ae4bddf4445a3c623edc0346937",
+          "code": "B6ByNegPMKs-42",
+          "point_count": 8,
+          "parent_annotation": 6981,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "optional",
+          "created_at": "2026-09-15T05:26:35.503269Z",
+          "updated_at": "2026-09-15T05:26:35.503290Z",
+          "parent_present": true,
+          "points_identical_to_parent": false,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "S9hNv5qa7GM_3c496aedd9d645a5b8d7a7b1b53f0636|父记录来源|9",
+      "code": "S9hNv5qa7GM-06",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_93_3575_6844_W002",
+        "new_93_3575_7064_W006",
+        "new_93_3575_7292_W013",
+        "new_93_3575_7493_W022",
+        "new_94_3612_6854_W036",
+        "new_94_3612_6882_W031",
+        "new_94_3612_6927_W035",
+        "new_94_3612_7210_W029",
+        "new_94_3612_7239_W028",
+        "new_94_3612_7389_W032"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          "unavailable",
+          "unavailable",
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "complete": [
+          1,
+          "unavailable",
+          "unavailable",
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3575_7064_W006",
+              "new_93_3575_6844_W002"
+            ],
+            "workers": [
+              "W006／7064",
+              "W002／6844"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3575_7292_W013",
+              "new_93_3575_7064_W006"
+            ],
+            "workers": [
+              "W013／7292",
+              "W006／7064"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3575_7064_W006",
+              "new_93_3575_6844_W002"
+            ],
+            "workers": [
+              "W006／7064",
+              "W002／6844"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3575_7292_W013",
+              "new_93_3575_7064_W006"
+            ],
+            "workers": [
+              "W013／7292",
+              "W006／7064"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3575_7064_W006",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3575,
+          "annotation": 7064,
+          "worker": "W006",
+          "image_id": "S9hNv5qa7GM_3c496aedd9d645a5b8d7a7b1b53f0636",
+          "code": "S9hNv5qa7GM-06",
+          "point_count": 8,
+          "parent_annotation": 6844,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-15T11:28:04.185272Z",
+          "updated_at": "2026-09-15T11:28:04.185289Z",
+          "parent_present": true,
+          "points_identical_to_parent": false,
+          "conditional_include": true,
+          "strict_include": false
+        },
+        {
+          "id": "new_93_3575_7292_W013",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3575,
+          "annotation": 7292,
+          "worker": "W013",
+          "image_id": "S9hNv5qa7GM_3c496aedd9d645a5b8d7a7b1b53f0636",
+          "code": "S9hNv5qa7GM-06",
+          "point_count": 8,
+          "parent_annotation": 7064,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-18T08:14:26.087533Z",
+          "updated_at": "2026-09-18T08:14:26.087554Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "S9hNv5qa7GM_5a89e430e6fb471189468fb44bbea75c|父记录来源|10",
+      "code": "S9hNv5qa7GM-08",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_95_3656_6983_W035",
+        "new_95_3656_7029_W031",
+        "new_95_3656_7091_W037",
+        "new_95_3656_7227_W036",
+        "new_95_3656_7261_W034",
+        "new_95_3656_7439_W028",
+        "new_95_3656_7456_W032",
+        "new_95_3656_7466_W030"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          "unavailable",
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "complete": [
+          1,
+          "unavailable",
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_95_3656_7029_W031",
+              "new_95_3656_6983_W035"
+            ],
+            "workers": [
+              "W031／7029",
+              "W035／6983"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_95_3656_7029_W031",
+              "new_95_3656_6983_W035"
+            ],
+            "workers": [
+              "W031／7029",
+              "W035／6983"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_95_3656_7029_W031",
+          "source": "export_label/新增英文30+20图/project-95-at-2026-09-20-13-44-3fe72103.json",
+          "project": 95,
+          "task": 3656,
+          "annotation": 7029,
+          "worker": "W031",
+          "image_id": "S9hNv5qa7GM_5a89e430e6fb471189468fb44bbea75c",
+          "code": "S9hNv5qa7GM-08",
+          "point_count": 10,
+          "parent_annotation": 6983,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "optional",
+          "created_at": "2026-09-15T05:36:14.464900Z",
+          "updated_at": "2026-09-15T05:36:14.464961Z",
+          "parent_present": true,
+          "points_identical_to_parent": false,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "S9hNv5qa7GM_674b3b6705604a4c8b89182edee11e54|父记录来源|11",
+      "code": "S9hNv5qa7GM-10",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_93_3576_7066_W006",
+        "new_93_3576_7134_W012",
+        "new_93_3576_7196_W015",
+        "new_93_3576_7494_W022",
+        "new_94_3613_6855_W036",
+        "new_94_3613_6883_W031",
+        "new_94_3613_6930_W035",
+        "new_94_3613_7052_W037",
+        "new_94_3613_7334_W030"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          2,
+          1,
+          1,
+          1,
+          "unavailable",
+          1,
+          1,
+          1
+        ],
+        "complete": [
+          1,
+          2,
+          1,
+          1,
+          1,
+          "unavailable",
+          1,
+          1,
+          1
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_94_3613_6883_W031",
+              "new_94_3613_6855_W036"
+            ],
+            "workers": [
+              "W031／6883",
+              "W036／6855"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_94_3613_6883_W031",
+              "new_94_3613_6855_W036"
+            ],
+            "workers": [
+              "W031／6883",
+              "W036／6855"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_94_3613_6883_W031",
+          "source": "export_label/新增英文30+20图/project-94-at-2026-09-20-13-45-d09d9d53.json",
+          "project": 94,
+          "task": 3613,
+          "annotation": 6883,
+          "worker": "W031",
+          "image_id": "S9hNv5qa7GM_674b3b6705604a4c8b89182edee11e54",
+          "code": "S9hNv5qa7GM-10",
+          "point_count": 8,
+          "parent_annotation": 6855,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-14T09:48:24.385899Z",
+          "updated_at": "2026-09-14T09:48:24.385920Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e|父记录来源|12",
+      "code": "jtcxE69GiFV-12",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "53a31503b6f3890f4f96",
+        "new_95_3663_6990_W035",
+        "new_95_3663_7073_W031",
+        "new_95_3663_7099_W037",
+        "new_95_3663_7235_W036",
+        "new_95_3663_7267_W034",
+        "new_95_3663_7443_W028",
+        "new_95_3663_7476_W030",
+        "new_95_3663_7478_W032"
+      ],
+      "labels": {
+        "representative": [
+          2,
+          3,
+          "unavailable",
+          4,
+          5,
+          1,
+          6,
+          7,
+          1
+        ],
+        "complete": [
+          1,
+          2,
+          "unavailable",
+          3,
+          4,
+          5,
+          6,
+          7,
+          5
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_95_3663_7073_W031",
+              "new_95_3663_6990_W035"
+            ],
+            "workers": [
+              "W031／7073",
+              "W035／6990"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_95_3663_7073_W031",
+              "new_95_3663_6990_W035"
+            ],
+            "workers": [
+              "W031／7073",
+              "W035／6990"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_95_3663_7073_W031",
+          "source": "export_label/新增英文30+20图/project-95-at-2026-09-20-13-44-3fe72103.json",
+          "project": 95,
+          "task": 3663,
+          "annotation": 7073,
+          "worker": "W031",
+          "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+          "code": "jtcxE69GiFV-12",
+          "point_count": 14,
+          "parent_annotation": 6990,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "optional",
+          "created_at": "2026-09-15T11:39:46.507015Z",
+          "updated_at": "2026-09-15T11:39:46.507034Z",
+          "parent_present": true,
+          "points_identical_to_parent": false,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_00b4950b469b4520b29f895aa029419c|父记录来源|13",
+      "code": "uNb9QFRL6hY-01",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_93_3579_6864_W001",
+        "new_93_3579_7118_W012",
+        "new_93_3579_7191_W015",
+        "new_93_3579_7254_W010",
+        "new_93_3579_7375_W002",
+        "new_93_3579_7393_W008",
+        "new_94_3616_6856_W036",
+        "new_94_3616_6872_W033",
+        "new_94_3616_6886_W031",
+        "new_94_3616_6932_W035",
+        "new_94_3616_7150_W034",
+        "new_94_3616_7204_W029",
+        "new_94_3616_7275_W028",
+        "new_94_3616_7329_W030",
+        "new_94_3616_7385_W032"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          1,
+          1,
+          1,
+          "unavailable",
+          1,
+          2,
+          2,
+          1,
+          1,
+          1,
+          3,
+          1,
+          1,
+          1
+        ],
+        "complete": [
+          1,
+          2,
+          1,
+          2,
+          "unavailable",
+          2,
+          3,
+          3,
+          2,
+          2,
+          2,
+          4,
+          1,
+          2,
+          2
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3579_7375_W002",
+              "new_93_3579_7118_W012"
+            ],
+            "workers": [
+              "W002／7375",
+              "W012／7118"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3579_7375_W002",
+              "new_93_3579_7118_W012"
+            ],
+            "workers": [
+              "W002／7375",
+              "W012／7118"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3579_7375_W002",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3579,
+          "annotation": 7375,
+          "worker": "W002",
+          "image_id": "uNb9QFRL6hY_00b4950b469b4520b29f895aa029419c",
+          "code": "uNb9QFRL6hY-01",
+          "point_count": 12,
+          "parent_annotation": 7118,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-18T15:48:38.938997Z",
+          "updated_at": "2026-09-18T15:48:38.939018Z",
+          "parent_present": true,
+          "points_identical_to_parent": false,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_05285f9bc0234526bf0f6362679e38d0|父记录来源|14",
+      "code": "uNb9QFRL6hY-03",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_93_3580_6914_W017",
+        "new_93_3580_7127_W012",
+        "new_93_3580_7193_W015",
+        "new_93_3580_7291_W013",
+        "new_93_3580_7379_W002",
+        "new_93_3580_7405_W008",
+        "new_94_3617_6857_W036",
+        "new_94_3617_6873_W033",
+        "new_94_3617_6887_W031",
+        "new_94_3617_7021_W034",
+        "new_94_3617_7051_W037",
+        "new_94_3617_7205_W029",
+        "new_94_3617_7295_W028",
+        "new_94_3617_7325_W030",
+        "new_94_3617_7368_W032"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          1,
+          "unavailable",
+          "unavailable",
+          1,
+          3,
+          1,
+          1,
+          2,
+          2,
+          2,
+          1,
+          1,
+          3,
+          1
+        ],
+        "complete": [
+          1,
+          1,
+          "unavailable",
+          "unavailable",
+          1,
+          2,
+          1,
+          1,
+          3,
+          3,
+          3,
+          1,
+          1,
+          2,
+          1
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3580_7193_W015",
+              "new_93_3580_6914_W017"
+            ],
+            "workers": [
+              "W015／7193",
+              "W017／6914"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3580_7291_W013",
+              "new_93_3580_7193_W015"
+            ],
+            "workers": [
+              "W013／7291",
+              "W015／7193"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3580_7193_W015",
+              "new_93_3580_6914_W017"
+            ],
+            "workers": [
+              "W015／7193",
+              "W017／6914"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3580_7291_W013",
+              "new_93_3580_7193_W015"
+            ],
+            "workers": [
+              "W013／7291",
+              "W015／7193"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3580_7193_W015",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3580,
+          "annotation": 7193,
+          "worker": "W015",
+          "image_id": "uNb9QFRL6hY_05285f9bc0234526bf0f6362679e38d0",
+          "code": "uNb9QFRL6hY-03",
+          "point_count": 12,
+          "parent_annotation": 6914,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-17T07:07:35.319273Z",
+          "updated_at": "2026-09-17T07:07:35.319295Z",
+          "parent_present": true,
+          "points_identical_to_parent": false,
+          "conditional_include": true,
+          "strict_include": false
+        },
+        {
+          "id": "new_93_3580_7291_W013",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3580,
+          "annotation": 7291,
+          "worker": "W013",
+          "image_id": "uNb9QFRL6hY_05285f9bc0234526bf0f6362679e38d0",
+          "code": "uNb9QFRL6hY-03",
+          "point_count": 12,
+          "parent_annotation": 7193,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-18T08:14:18.957398Z",
+          "updated_at": "2026-09-18T08:14:18.957417Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_068fb0d52d01455c96fa23659c373bf8|父记录来源|15",
+      "code": "uNb9QFRL6hY-04",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_93_3581_6852_W001",
+        "new_93_3581_6910_W017",
+        "new_93_3581_7192_W015",
+        "new_93_3581_7288_W013",
+        "new_93_3581_7377_W002",
+        "new_93_3581_7404_W008",
+        "new_94_3618_6874_W033",
+        "new_94_3618_6888_W031",
+        "new_94_3618_6933_W035",
+        "new_94_3618_7047_W037",
+        "new_94_3618_7151_W034",
+        "new_94_3618_7200_W029",
+        "new_94_3618_7296_W028",
+        "new_94_3618_7331_W030",
+        "new_94_3618_7383_W032"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          3,
+          2,
+          "unavailable",
+          3,
+          1,
+          1,
+          2,
+          2,
+          2,
+          1,
+          5,
+          4,
+          1,
+          4
+        ],
+        "complete": [
+          1,
+          2,
+          3,
+          "unavailable",
+          2,
+          1,
+          1,
+          3,
+          3,
+          4,
+          1,
+          5,
+          6,
+          1,
+          6
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3581_7288_W013",
+              "new_93_3581_7192_W015"
+            ],
+            "workers": [
+              "W013／7288",
+              "W015／7192"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3581_7288_W013",
+              "new_93_3581_7192_W015"
+            ],
+            "workers": [
+              "W013／7288",
+              "W015／7192"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3581_7288_W013",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3581,
+          "annotation": 7288,
+          "worker": "W013",
+          "image_id": "uNb9QFRL6hY_068fb0d52d01455c96fa23659c373bf8",
+          "code": "uNb9QFRL6hY-04",
+          "point_count": 8,
+          "parent_annotation": 7192,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-18T08:13:34.692727Z",
+          "updated_at": "2026-09-18T08:13:34.692750Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_104d12b732794414a42edd37ac554bff|父记录来源|16",
+      "code": "uNb9QFRL6hY-07",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_93_3582_6915_W017",
+        "new_93_3582_7067_W006",
+        "new_93_3582_7293_W013",
+        "new_93_3582_7380_W002",
+        "new_93_3582_7397_W008",
+        "new_94_3619_6858_W036",
+        "new_94_3619_6875_W033",
+        "new_94_3619_6889_W031",
+        "new_94_3619_7168_W034",
+        "new_94_3619_7297_W028",
+        "new_94_3619_7343_W030",
+        "new_94_3619_7414_W032"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          "unavailable",
+          "unavailable",
+          2,
+          2,
+          3,
+          4,
+          1,
+          1,
+          5,
+          1,
+          1
+        ],
+        "complete": [
+          1,
+          "unavailable",
+          "unavailable",
+          2,
+          2,
+          3,
+          4,
+          1,
+          1,
+          5,
+          6,
+          6
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3582_7067_W006",
+              "new_93_3582_6915_W017"
+            ],
+            "workers": [
+              "W006／7067",
+              "W017／6915"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3582_7293_W013",
+              "new_93_3582_7067_W006"
+            ],
+            "workers": [
+              "W013／7293",
+              "W006／7067"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3582_7067_W006",
+              "new_93_3582_6915_W017"
+            ],
+            "workers": [
+              "W006／7067",
+              "W017／6915"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3582_7293_W013",
+              "new_93_3582_7067_W006"
+            ],
+            "workers": [
+              "W013／7293",
+              "W006／7067"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3582_7067_W006",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3582,
+          "annotation": 7067,
+          "worker": "W006",
+          "image_id": "uNb9QFRL6hY_104d12b732794414a42edd37ac554bff",
+          "code": "uNb9QFRL6hY-07",
+          "point_count": 8,
+          "parent_annotation": 6915,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-15T11:30:32.962628Z",
+          "updated_at": "2026-09-15T11:30:32.962648Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        },
+        {
+          "id": "new_93_3582_7293_W013",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3582,
+          "annotation": 7293,
+          "worker": "W013",
+          "image_id": "uNb9QFRL6hY_104d12b732794414a42edd37ac554bff",
+          "code": "uNb9QFRL6hY-07",
+          "point_count": 8,
+          "parent_annotation": 7067,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-18T08:14:37.527366Z",
+          "updated_at": "2026-09-18T08:14:37.527385Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_13a430466eb64e2087e7fb5acde7a398|父记录来源|17",
+      "code": "uNb9QFRL6hY-09",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_93_3583_6849_W001",
+        "new_93_3583_6911_W017",
+        "new_93_3583_7072_W006",
+        "new_93_3583_7136_W012",
+        "new_93_3583_7189_W015",
+        "new_93_3583_7252_W010",
+        "new_93_3583_7290_W013",
+        "new_94_3620_6859_W036",
+        "new_94_3620_6876_W033",
+        "new_94_3620_6890_W031",
+        "new_94_3620_7037_W037",
+        "new_94_3620_7148_W034",
+        "new_94_3620_7201_W029",
+        "new_94_3620_7298_W028",
+        "new_94_3620_7387_W032"
+      ],
+      "labels": {
+        "representative": [
+          3,
+          2,
+          4,
+          5,
+          2,
+          2,
+          "unavailable",
+          1,
+          1,
+          "unavailable",
+          2,
+          6,
+          1,
+          1,
+          1
+        ],
+        "complete": [
+          1,
+          2,
+          3,
+          4,
+          2,
+          2,
+          "unavailable",
+          5,
+          5,
+          "unavailable",
+          2,
+          6,
+          5,
+          5,
+          5
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3583_7290_W013",
+              "new_93_3583_7252_W010"
+            ],
+            "workers": [
+              "W013／7290",
+              "W010／7252"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_94_3620_6890_W031",
+              "new_94_3620_6859_W036"
+            ],
+            "workers": [
+              "W031／6890",
+              "W036／6859"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3583_7290_W013",
+              "new_93_3583_7252_W010"
+            ],
+            "workers": [
+              "W013／7290",
+              "W010／7252"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_94_3620_6890_W031",
+              "new_94_3620_6859_W036"
+            ],
+            "workers": [
+              "W031／6890",
+              "W036／6859"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3583_7290_W013",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3583,
+          "annotation": 7290,
+          "worker": "W013",
+          "image_id": "uNb9QFRL6hY_13a430466eb64e2087e7fb5acde7a398",
+          "code": "uNb9QFRL6hY-09",
+          "point_count": 8,
+          "parent_annotation": 7252,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-18T08:14:02.914300Z",
+          "updated_at": "2026-09-18T08:14:02.914320Z",
+          "parent_present": true,
+          "points_identical_to_parent": false,
+          "conditional_include": true,
+          "strict_include": false
+        },
+        {
+          "id": "new_94_3620_6890_W031",
+          "source": "export_label/新增英文30+20图/project-94-at-2026-09-20-13-45-d09d9d53.json",
+          "project": 94,
+          "task": 3620,
+          "annotation": 6890,
+          "worker": "W031",
+          "image_id": "uNb9QFRL6hY_13a430466eb64e2087e7fb5acde7a398",
+          "code": "uNb9QFRL6hY-09",
+          "point_count": 12,
+          "parent_annotation": 6859,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-14T10:19:31.704470Z",
+          "updated_at": "2026-09-14T10:19:31.704490Z",
+          "parent_present": true,
+          "points_identical_to_parent": false,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f|父记录来源|18",
+      "code": "uNb9QFRL6hY-12",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_93_3584_6853_W001",
+        "new_93_3584_7130_W012",
+        "new_93_3584_7194_W015",
+        "new_93_3584_7245_W010",
+        "new_93_3584_7289_W013",
+        "new_94_3621_6860_W036",
+        "new_94_3621_6877_W033",
+        "new_94_3621_6891_W031",
+        "new_94_3621_6935_W035",
+        "new_94_3621_7020_W034",
+        "new_94_3621_7048_W037",
+        "new_94_3621_7203_W029",
+        "new_94_3621_7299_W028",
+        "new_94_3621_7326_W030",
+        "new_94_3621_7352_W032"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          1,
+          1,
+          1,
+          "unavailable",
+          3,
+          "unavailable",
+          2,
+          1,
+          1,
+          4,
+          1,
+          1,
+          1,
+          2
+        ],
+        "complete": [
+          1,
+          1,
+          1,
+          1,
+          "unavailable",
+          2,
+          "unavailable",
+          3,
+          1,
+          1,
+          4,
+          1,
+          1,
+          1,
+          3
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3584_7289_W013",
+              "new_93_3584_7245_W010"
+            ],
+            "workers": [
+              "W013／7289",
+              "W010／7245"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3584_7289_W013",
+              "new_93_3584_7245_W010"
+            ],
+            "workers": [
+              "W013／7289",
+              "W010／7245"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3584_7289_W013",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3584,
+          "annotation": 7289,
+          "worker": "W013",
+          "image_id": "uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f",
+          "code": "uNb9QFRL6hY-12",
+          "point_count": 8,
+          "parent_annotation": 7245,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-18T08:13:45.117002Z",
+          "updated_at": "2026-09-18T08:13:45.117021Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_2ed0e171a7c34f17a85363923a26ab98|父记录来源|19",
+      "code": "uNb9QFRL6hY-18",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_93_3586_6870_W001",
+        "new_93_3586_6901_W017",
+        "new_93_3586_7075_W006",
+        "new_93_3586_7124_W012",
+        "new_93_3586_7187_W015",
+        "new_93_3586_7258_W010",
+        "new_93_3586_7280_W013",
+        "new_93_3586_7374_W002",
+        "new_93_3586_7400_W008",
+        "new_94_3623_6879_W033",
+        "new_94_3623_6893_W031",
+        "new_94_3623_6939_W035",
+        "new_94_3623_6996_W036",
+        "new_94_3623_7017_W034",
+        "new_94_3623_7061_W037",
+        "new_94_3623_7218_W029",
+        "new_94_3623_7301_W028",
+        "new_94_3623_7321_W030",
+        "new_94_3623_7359_W032"
+      ],
+      "labels": {
+        "representative": [
+          2,
+          1,
+          "unavailable",
+          3,
+          "unavailable",
+          1,
+          "unavailable",
+          1,
+          1,
+          1,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          1,
+          10,
+          11
+        ],
+        "complete": [
+          1,
+          2,
+          "unavailable",
+          3,
+          "unavailable",
+          2,
+          "unavailable",
+          4,
+          2,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          4,
+          11,
+          12
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3586_7075_W006",
+              "new_93_3586_6901_W017"
+            ],
+            "workers": [
+              "W006／7075",
+              "W017／6901"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3586_7187_W015",
+              "new_93_3586_6901_W017"
+            ],
+            "workers": [
+              "W015／7187",
+              "W017／6901"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3586_7280_W013",
+              "new_93_3586_7258_W010"
+            ],
+            "workers": [
+              "W013／7280",
+              "W010／7258"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3586_7075_W006",
+              "new_93_3586_6901_W017"
+            ],
+            "workers": [
+              "W006／7075",
+              "W017／6901"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3586_7187_W015",
+              "new_93_3586_6901_W017"
+            ],
+            "workers": [
+              "W015／7187",
+              "W017／6901"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3586_7280_W013",
+              "new_93_3586_7258_W010"
+            ],
+            "workers": [
+              "W013／7280",
+              "W010／7258"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3586_7075_W006",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3586,
+          "annotation": 7075,
+          "worker": "W006",
+          "image_id": "uNb9QFRL6hY_2ed0e171a7c34f17a85363923a26ab98",
+          "code": "uNb9QFRL6hY-18",
+          "point_count": 20,
+          "parent_annotation": 6901,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-15T11:44:36.129049Z",
+          "updated_at": "2026-09-15T11:44:36.129069Z",
+          "parent_present": true,
+          "points_identical_to_parent": false,
+          "conditional_include": true,
+          "strict_include": false
+        },
+        {
+          "id": "new_93_3586_7187_W015",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3586,
+          "annotation": 7187,
+          "worker": "W015",
+          "image_id": "uNb9QFRL6hY_2ed0e171a7c34f17a85363923a26ab98",
+          "code": "uNb9QFRL6hY-18",
+          "point_count": 16,
+          "parent_annotation": 6901,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-17T06:53:10.204469Z",
+          "updated_at": "2026-09-17T06:53:10.204489Z",
+          "parent_present": true,
+          "points_identical_to_parent": false,
+          "conditional_include": true,
+          "strict_include": false
+        },
+        {
+          "id": "new_93_3586_7280_W013",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3586,
+          "annotation": 7280,
+          "worker": "W013",
+          "image_id": "uNb9QFRL6hY_2ed0e171a7c34f17a85363923a26ab98",
+          "code": "uNb9QFRL6hY-18",
+          "point_count": 16,
+          "parent_annotation": 7258,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-18T08:07:51.007270Z",
+          "updated_at": "2026-09-18T08:07:51.007289Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_33dd9892d10e474ead8f7ad38a8da562|父记录来源|20",
+      "code": "uNb9QFRL6hY-19",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_93_3587_6845_W001",
+        "new_93_3587_7077_W006",
+        "new_93_3587_7129_W012",
+        "new_93_3587_7182_W010",
+        "new_93_3587_7378_W002",
+        "new_94_3624_6880_W033",
+        "new_94_3624_6894_W031",
+        "new_94_3624_6940_W035",
+        "new_94_3624_6965_W029",
+        "new_94_3624_6997_W036",
+        "new_94_3624_7018_W034",
+        "new_94_3624_7034_W037",
+        "new_94_3624_7302_W028",
+        "new_94_3624_7315_W030",
+        "new_94_3624_7349_W032"
+      ],
+      "labels": {
+        "representative": [
+          2,
+          "unavailable",
+          2,
+          "unavailable",
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          3,
+          1,
+          2,
+          1,
+          1
+        ],
+        "complete": [
+          1,
+          "unavailable",
+          1,
+          "unavailable",
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          3,
+          2,
+          1,
+          2,
+          2
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3587_7077_W006",
+              "new_93_3587_6845_W001"
+            ],
+            "workers": [
+              "W006／7077",
+              "W001／6845"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3587_7077_W006",
+              "new_93_3587_6845_W001"
+            ],
+            "workers": [
+              "W006／7077",
+              "W001／6845"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3587_7077_W006",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3587,
+          "annotation": 7077,
+          "worker": "W006",
+          "image_id": "uNb9QFRL6hY_33dd9892d10e474ead8f7ad38a8da562",
+          "code": "uNb9QFRL6hY-19",
+          "point_count": 12,
+          "parent_annotation": 6845,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-15T11:46:38.146125Z",
+          "updated_at": "2026-09-15T11:46:38.146152Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_3450b3accb584493bf13be8e9554dbea|父记录来源|21",
+      "code": "uNb9QFRL6hY-20",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_93_3588_6866_W001",
+        "new_93_3588_6909_W017",
+        "new_93_3588_7132_W012",
+        "new_93_3588_7195_W015",
+        "new_93_3588_7401_W008",
+        "new_94_3625_6881_W033",
+        "new_94_3625_6895_W031",
+        "new_94_3625_6943_W035",
+        "new_94_3625_6998_W036",
+        "new_94_3625_7019_W034",
+        "new_94_3625_7043_W037",
+        "new_94_3625_7207_W029",
+        "new_94_3625_7303_W028",
+        "new_94_3625_7330_W030",
+        "new_94_3625_7388_W032"
+      ],
+      "labels": {
+        "representative": [
+          4,
+          1,
+          3,
+          "unavailable",
+          2,
+          1,
+          1,
+          2,
+          2,
+          3,
+          3,
+          1,
+          1,
+          2,
+          5
+        ],
+        "complete": [
+          1,
+          2,
+          3,
+          "unavailable",
+          4,
+          2,
+          2,
+          4,
+          4,
+          3,
+          3,
+          2,
+          2,
+          4,
+          5
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3588_7195_W015",
+              "new_93_3588_6909_W017"
+            ],
+            "workers": [
+              "W015／7195",
+              "W017／6909"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3588_7195_W015",
+              "new_93_3588_6909_W017"
+            ],
+            "workers": [
+              "W015／7195",
+              "W017／6909"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3588_7195_W015",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3588,
+          "annotation": 7195,
+          "worker": "W015",
+          "image_id": "uNb9QFRL6hY_3450b3accb584493bf13be8e9554dbea",
+          "code": "uNb9QFRL6hY-20",
+          "point_count": 12,
+          "parent_annotation": 6909,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-17T07:12:10.939981Z",
+          "updated_at": "2026-09-17T07:12:10.940001Z",
+          "parent_present": true,
+          "points_identical_to_parent": false,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_5b62816d9cf94f17ae166291822ea9ab|父记录来源|22",
+      "code": "uNb9QFRL6hY-26",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "0dfa885b59782e4c1c1b",
+        "35b93ebcf170b657802a",
+        "3bf751765858f968e01b",
+        "740b26f3c0809cbeadad",
+        "fe7b820ed43008b5a057",
+        "new_93_3589_6847_W001",
+        "new_93_3589_7123_W012",
+        "new_93_3589_7184_W015",
+        "new_93_3589_7247_W010",
+        "new_93_3589_7283_W013",
+        "new_93_3589_7371_W002",
+        "new_93_3589_7398_W008",
+        "new_94_3626_6896_W031",
+        "new_94_3626_6945_W035",
+        "new_94_3626_7004_W033",
+        "new_94_3626_7040_W037",
+        "new_94_3626_7152_W034",
+        "new_94_3626_7322_W030",
+        "new_94_3626_7356_W032"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          3,
+          1,
+          1,
+          4,
+          5,
+          6,
+          1,
+          1,
+          "unavailable",
+          2,
+          1,
+          1,
+          7,
+          2,
+          8,
+          9,
+          10,
+          11
+        ],
+        "complete": [
+          1,
+          2,
+          3,
+          1,
+          4,
+          5,
+          6,
+          3,
+          3,
+          "unavailable",
+          7,
+          3,
+          1,
+          8,
+          7,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3589_7283_W013",
+              "new_93_3589_7247_W010"
+            ],
+            "workers": [
+              "W013／7283",
+              "W010／7247"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3589_7283_W013",
+              "new_93_3589_7247_W010"
+            ],
+            "workers": [
+              "W013／7283",
+              "W010／7247"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3589_7283_W013",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3589,
+          "annotation": 7283,
+          "worker": "W013",
+          "image_id": "uNb9QFRL6hY_5b62816d9cf94f17ae166291822ea9ab",
+          "code": "uNb9QFRL6hY-26",
+          "point_count": 16,
+          "parent_annotation": 7247,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-18T08:09:37.716038Z",
+          "updated_at": "2026-09-18T08:09:37.716068Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd|父记录来源|23",
+      "code": "uNb9QFRL6hY-29",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "1d0597eb333ea3d5fed7",
+        "4f5e2f801a33ddacfbff",
+        "8f895f66411f68620317",
+        "e377c53531a08df384d9",
+        "f0b7c25018d49988f041",
+        "new_93_3590_6898_W017",
+        "new_93_3590_7078_W006",
+        "new_93_3590_7176_W015",
+        "new_93_3590_7242_W010",
+        "new_93_3590_7402_W008",
+        "new_93_3590_7491_W013",
+        "new_94_3627_6897_W031",
+        "new_94_3627_6946_W035",
+        "new_94_3627_6961_W029",
+        "new_94_3627_6999_W036",
+        "new_94_3627_7005_W033",
+        "new_94_3627_7031_W037",
+        "new_94_3627_7142_W034",
+        "new_94_3627_7304_W028",
+        "new_94_3627_7353_W032"
+      ],
+      "labels": {
+        "representative": [
+          3,
+          4,
+          5,
+          1,
+          1,
+          1,
+          "unavailable",
+          "unavailable",
+          1,
+          1,
+          "unavailable",
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          2,
+          1,
+          1
+        ],
+        "complete": [
+          1,
+          2,
+          3,
+          4,
+          4,
+          5,
+          "unavailable",
+          "unavailable",
+          5,
+          5,
+          "unavailable",
+          5,
+          5,
+          4,
+          4,
+          5,
+          6,
+          6,
+          4,
+          4
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3590_7078_W006",
+              "new_93_3590_6898_W017"
+            ],
+            "workers": [
+              "W006／7078",
+              "W017／6898"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3590_7176_W015",
+              "new_93_3590_7078_W006"
+            ],
+            "workers": [
+              "W015／7176",
+              "W006／7078"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3590_7491_W013",
+              "new_93_3590_7242_W010"
+            ],
+            "workers": [
+              "W013／7491",
+              "W010／7242"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3590_7078_W006",
+              "new_93_3590_6898_W017"
+            ],
+            "workers": [
+              "W006／7078",
+              "W017／6898"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3590_7176_W015",
+              "new_93_3590_7078_W006"
+            ],
+            "workers": [
+              "W015／7176",
+              "W006／7078"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3590_7491_W013",
+              "new_93_3590_7242_W010"
+            ],
+            "workers": [
+              "W013／7491",
+              "W010／7242"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3590_7078_W006",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3590,
+          "annotation": 7078,
+          "worker": "W006",
+          "image_id": "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+          "code": "uNb9QFRL6hY-29",
+          "point_count": 12,
+          "parent_annotation": 6898,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-15T11:46:55.980554Z",
+          "updated_at": "2026-09-15T11:46:55.980571Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        },
+        {
+          "id": "new_93_3590_7176_W015",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3590,
+          "annotation": 7176,
+          "worker": "W015",
+          "image_id": "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+          "code": "uNb9QFRL6hY-29",
+          "point_count": 12,
+          "parent_annotation": 7078,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-17T06:24:16.098086Z",
+          "updated_at": "2026-09-17T06:24:16.098106Z",
+          "parent_present": true,
+          "points_identical_to_parent": false,
+          "conditional_include": true,
+          "strict_include": false
+        },
+        {
+          "id": "new_93_3590_7491_W013",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3590,
+          "annotation": 7491,
+          "worker": "W013",
+          "image_id": "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+          "code": "uNb9QFRL6hY-29",
+          "point_count": 12,
+          "parent_annotation": 7242,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-20T04:08:23.956219Z",
+          "updated_at": "2026-09-20T04:08:23.956246Z",
+          "parent_present": true,
+          "points_identical_to_parent": false,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62|父记录来源|24",
+      "code": "uNb9QFRL6hY-40",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "5d58f3bc4858f0d343be",
+        "92084aa32f538179d158",
+        "d2c9465ce508ba7c1195",
+        "f2a65213a0368b751984",
+        "f8b24f616d167c27b810",
+        "new_93_3591_7249_W010",
+        "new_93_3591_7285_W013",
+        "new_93_3591_7366_W002",
+        "new_94_3628_6947_W035",
+        "new_94_3628_7000_W036",
+        "new_94_3628_7006_W033",
+        "new_94_3628_7046_W037",
+        "new_94_3628_7202_W029",
+        "new_94_3628_7305_W028",
+        "new_94_3628_7333_W030"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          1,
+          1,
+          1,
+          3,
+          1,
+          "unavailable",
+          4,
+          1,
+          2,
+          2,
+          5,
+          6,
+          2,
+          1
+        ],
+        "complete": [
+          1,
+          1,
+          1,
+          1,
+          2,
+          3,
+          "unavailable",
+          4,
+          1,
+          5,
+          5,
+          6,
+          7,
+          5,
+          1
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3591_7285_W013",
+              "new_93_3591_7249_W010"
+            ],
+            "workers": [
+              "W013／7285",
+              "W010／7249"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3591_7285_W013",
+              "new_93_3591_7249_W010"
+            ],
+            "workers": [
+              "W013／7285",
+              "W010／7249"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3591_7285_W013",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3591,
+          "annotation": 7285,
+          "worker": "W013",
+          "image_id": "uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62",
+          "code": "uNb9QFRL6hY-40",
+          "point_count": 8,
+          "parent_annotation": 7249,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-18T08:10:31.847574Z",
+          "updated_at": "2026-09-18T08:10:31.847593Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_76ba70b55bde4313939a4a0cd78a49d3|父记录来源|25",
+      "code": "uNb9QFRL6hY-41",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_93_3592_6848_W001",
+        "new_93_3592_6906_W017",
+        "new_93_3592_7081_W006",
+        "new_93_3592_7120_W012",
+        "new_93_3592_7179_W015",
+        "new_93_3592_7248_W010",
+        "new_93_3592_7281_W013",
+        "new_93_3592_7373_W002",
+        "new_93_3592_7396_W008",
+        "new_94_3629_6908_W031",
+        "new_94_3629_6948_W035",
+        "new_94_3629_7001_W036",
+        "new_94_3629_7007_W033",
+        "new_94_3629_7045_W037",
+        "new_94_3629_7143_W034",
+        "new_94_3629_7307_W028",
+        "new_94_3629_7317_W030",
+        "new_94_3629_7355_W032",
+        "new_94_3629_7495_W029"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          1,
+          3,
+          1,
+          "unavailable",
+          1,
+          "unavailable",
+          2,
+          1,
+          4,
+          5,
+          6,
+          2,
+          7,
+          8,
+          1,
+          9,
+          10,
+          11
+        ],
+        "complete": [
+          1,
+          1,
+          2,
+          3,
+          "unavailable",
+          4,
+          "unavailable",
+          5,
+          4,
+          6,
+          7,
+          8,
+          5,
+          9,
+          10,
+          1,
+          11,
+          12,
+          13
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3592_7179_W015",
+              "new_93_3592_6906_W017"
+            ],
+            "workers": [
+              "W015／7179",
+              "W017／6906"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3592_7281_W013",
+              "new_93_3592_7248_W010"
+            ],
+            "workers": [
+              "W013／7281",
+              "W010／7248"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3592_7179_W015",
+              "new_93_3592_6906_W017"
+            ],
+            "workers": [
+              "W015／7179",
+              "W017／6906"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3592_7281_W013",
+              "new_93_3592_7248_W010"
+            ],
+            "workers": [
+              "W013／7281",
+              "W010／7248"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3592_7179_W015",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3592,
+          "annotation": 7179,
+          "worker": "W015",
+          "image_id": "uNb9QFRL6hY_76ba70b55bde4313939a4a0cd78a49d3",
+          "code": "uNb9QFRL6hY-41",
+          "point_count": 16,
+          "parent_annotation": 6906,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-17T06:35:49.428262Z",
+          "updated_at": "2026-09-17T06:35:49.428282Z",
+          "parent_present": true,
+          "points_identical_to_parent": false,
+          "conditional_include": true,
+          "strict_include": false
+        },
+        {
+          "id": "new_93_3592_7281_W013",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3592,
+          "annotation": 7281,
+          "worker": "W013",
+          "image_id": "uNb9QFRL6hY_76ba70b55bde4313939a4a0cd78a49d3",
+          "code": "uNb9QFRL6hY-41",
+          "point_count": 16,
+          "parent_annotation": 7248,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-18T08:08:06.276585Z",
+          "updated_at": "2026-09-18T08:08:06.276603Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_84722e58b32f4646acc12614994f835b|父记录来源|26",
+      "code": "uNb9QFRL6hY-43",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_93_3593_6865_W001",
+        "new_93_3593_7082_W006",
+        "new_93_3593_7131_W012",
+        "new_93_3593_7188_W015",
+        "new_93_3593_7250_W010",
+        "new_93_3593_7372_W002",
+        "new_94_3630_6913_W031",
+        "new_94_3630_7002_W036",
+        "new_94_3630_7008_W033",
+        "new_94_3630_7049_W037",
+        "new_94_3630_7146_W034",
+        "new_94_3630_7216_W029",
+        "new_94_3630_7308_W028",
+        "new_94_3630_7324_W030",
+        "new_94_3630_7361_W032"
+      ],
+      "labels": {
+        "representative": [
+          3,
+          "unavailable",
+          3,
+          1,
+          1,
+          "unavailable",
+          2,
+          2,
+          2,
+          1,
+          1,
+          2,
+          2,
+          1,
+          4
+        ],
+        "complete": [
+          1,
+          "unavailable",
+          1,
+          2,
+          2,
+          "unavailable",
+          3,
+          3,
+          4,
+          2,
+          2,
+          3,
+          3,
+          2,
+          5
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3593_7082_W006",
+              "new_93_3593_6865_W001"
+            ],
+            "workers": [
+              "W006／7082",
+              "W001／6865"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3593_7372_W002",
+              "new_93_3593_7250_W010"
+            ],
+            "workers": [
+              "W002／7372",
+              "W010／7250"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3593_7082_W006",
+              "new_93_3593_6865_W001"
+            ],
+            "workers": [
+              "W006／7082",
+              "W001／6865"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3593_7372_W002",
+              "new_93_3593_7250_W010"
+            ],
+            "workers": [
+              "W002／7372",
+              "W010／7250"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3593_7082_W006",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3593,
+          "annotation": 7082,
+          "worker": "W006",
+          "image_id": "uNb9QFRL6hY_84722e58b32f4646acc12614994f835b",
+          "code": "uNb9QFRL6hY-43",
+          "point_count": 12,
+          "parent_annotation": 6865,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-15T11:51:18.195089Z",
+          "updated_at": "2026-09-15T11:51:18.195107Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        },
+        {
+          "id": "new_93_3593_7372_W002",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3593,
+          "annotation": 7372,
+          "worker": "W002",
+          "image_id": "uNb9QFRL6hY_84722e58b32f4646acc12614994f835b",
+          "code": "uNb9QFRL6hY-43",
+          "point_count": 8,
+          "parent_annotation": 7250,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-18T15:41:06.745079Z",
+          "updated_at": "2026-09-18T15:41:06.745102Z",
+          "parent_present": true,
+          "points_identical_to_parent": false,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_a728d2eef41b449f82357899de802dd3|父记录来源|27",
+      "code": "uNb9QFRL6hY-53",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_93_3595_6851_W001",
+        "new_93_3595_6907_W017",
+        "new_93_3595_7126_W012",
+        "new_93_3595_7253_W010",
+        "new_93_3595_7294_W013",
+        "new_94_3632_6922_W031",
+        "new_94_3632_6950_W029",
+        "new_94_3632_6951_W029",
+        "new_94_3632_6952_W029",
+        "new_94_3632_6955_W035",
+        "new_94_3632_7012_W033",
+        "new_94_3632_7050_W037",
+        "new_94_3632_7101_W036",
+        "new_94_3632_7153_W034",
+        "new_94_3632_7209_W029",
+        "new_94_3632_7310_W028",
+        "new_94_3632_7332_W030",
+        "new_94_3632_7386_W032"
+      ],
+      "labels": {
+        "representative": [
+          2,
+          2,
+          3,
+          2,
+          "unavailable",
+          1,
+          "unavailable",
+          "unavailable",
+          "unavailable",
+          2,
+          1,
+          3,
+          1,
+          3,
+          1,
+          4,
+          2,
+          1
+        ],
+        "complete": [
+          1,
+          1,
+          2,
+          1,
+          "unavailable",
+          3,
+          "unavailable",
+          "unavailable",
+          "unavailable",
+          1,
+          3,
+          2,
+          3,
+          2,
+          3,
+          4,
+          1,
+          3
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3595_7294_W013",
+              "new_93_3595_7253_W010"
+            ],
+            "workers": [
+              "W013／7294",
+              "W010／7253"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3595_7294_W013",
+              "new_93_3595_7253_W010"
+            ],
+            "workers": [
+              "W013／7294",
+              "W010／7253"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3595_7294_W013",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3595,
+          "annotation": 7294,
+          "worker": "W013",
+          "image_id": "uNb9QFRL6hY_a728d2eef41b449f82357899de802dd3",
+          "code": "uNb9QFRL6hY-53",
+          "point_count": 8,
+          "parent_annotation": 7253,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-18T08:14:44.512267Z",
+          "updated_at": "2026-09-18T08:14:44.512291Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78|父记录来源|28",
+      "code": "uNb9QFRL6hY-55",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_93_3596_6900_W017",
+        "new_93_3596_7180_W015",
+        "new_93_3596_7276_W013",
+        "new_93_3596_7362_W002",
+        "new_93_3596_7394_W008",
+        "new_94_3633_6923_W031",
+        "new_94_3633_6957_W035",
+        "new_94_3633_7013_W033",
+        "new_94_3633_7056_W037",
+        "new_94_3633_7106_W036",
+        "new_94_3633_7141_W034",
+        "new_94_3633_7311_W028",
+        "new_94_3633_7312_W030",
+        "new_94_3633_7418_W032",
+        "new_94_3633_7496_W029"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          "unavailable",
+          1,
+          1,
+          1,
+          2,
+          1,
+          1,
+          1,
+          1,
+          3,
+          4,
+          1,
+          2,
+          1
+        ],
+        "complete": [
+          1,
+          "unavailable",
+          1,
+          1,
+          1,
+          2,
+          1,
+          3,
+          3,
+          1,
+          4,
+          5,
+          1,
+          2,
+          1
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3596_7180_W015",
+              "new_93_3596_6900_W017"
+            ],
+            "workers": [
+              "W015／7180",
+              "W017／6900"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3596_7180_W015",
+              "new_93_3596_6900_W017"
+            ],
+            "workers": [
+              "W015／7180",
+              "W017／6900"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3596_7180_W015",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3596,
+          "annotation": 7180,
+          "worker": "W015",
+          "image_id": "uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78",
+          "code": "uNb9QFRL6hY-55",
+          "point_count": 8,
+          "parent_annotation": 6900,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-17T06:37:27.503756Z",
+          "updated_at": "2026-09-17T06:37:27.503777Z",
+          "parent_present": true,
+          "points_identical_to_parent": false,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_b73ae36f994747e196380b1cb71cf407|父记录来源|29",
+      "code": "uNb9QFRL6hY-58",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_93_3597_6905_W017",
+        "new_93_3597_7085_W006",
+        "new_93_3597_7190_W015",
+        "new_93_3597_7278_W013",
+        "new_93_3597_7403_W008",
+        "new_94_3634_6924_W031",
+        "new_94_3634_6959_W035",
+        "new_94_3634_7014_W033",
+        "new_94_3634_7042_W037",
+        "new_94_3634_7112_W036",
+        "new_94_3634_7149_W034",
+        "new_94_3634_7206_W029",
+        "new_94_3634_7328_W030",
+        "new_94_3634_7360_W032",
+        "new_94_3634_7419_W028"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          "unavailable",
+          2,
+          "unavailable",
+          2,
+          1,
+          2,
+          1,
+          3,
+          1,
+          2,
+          1,
+          2,
+          4,
+          1
+        ],
+        "complete": [
+          1,
+          "unavailable",
+          2,
+          "unavailable",
+          2,
+          1,
+          2,
+          1,
+          3,
+          1,
+          2,
+          1,
+          2,
+          4,
+          1
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3597_7085_W006",
+              "new_93_3597_6905_W017"
+            ],
+            "workers": [
+              "W006／7085",
+              "W017／6905"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3597_7278_W013",
+              "new_93_3597_7190_W015"
+            ],
+            "workers": [
+              "W013／7278",
+              "W015／7190"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3597_7085_W006",
+              "new_93_3597_6905_W017"
+            ],
+            "workers": [
+              "W006／7085",
+              "W017／6905"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3597_7278_W013",
+              "new_93_3597_7190_W015"
+            ],
+            "workers": [
+              "W013／7278",
+              "W015／7190"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3597_7085_W006",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3597,
+          "annotation": 7085,
+          "worker": "W006",
+          "image_id": "uNb9QFRL6hY_b73ae36f994747e196380b1cb71cf407",
+          "code": "uNb9QFRL6hY-58",
+          "point_count": 12,
+          "parent_annotation": 6905,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-15T11:52:39.151686Z",
+          "updated_at": "2026-09-15T11:52:39.151704Z",
+          "parent_present": true,
+          "points_identical_to_parent": false,
+          "conditional_include": true,
+          "strict_include": false
+        },
+        {
+          "id": "new_93_3597_7278_W013",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3597,
+          "annotation": 7278,
+          "worker": "W013",
+          "image_id": "uNb9QFRL6hY_b73ae36f994747e196380b1cb71cf407",
+          "code": "uNb9QFRL6hY-58",
+          "point_count": 8,
+          "parent_annotation": 7190,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-18T08:06:40.470628Z",
+          "updated_at": "2026-09-18T08:06:40.470648Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_b98c9460586e4f138658181461df9f51|父记录来源|30",
+      "code": "uNb9QFRL6hY-59",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_93_3598_6850_W001",
+        "new_93_3598_6912_W017",
+        "new_93_3598_7086_W006",
+        "new_93_3598_7121_W012",
+        "new_93_3598_7177_W015",
+        "new_93_3598_7246_W010",
+        "new_93_3598_7279_W013",
+        "new_93_3598_7369_W002",
+        "new_93_3598_7409_W008",
+        "new_94_3635_6925_W031",
+        "new_94_3635_6960_W035",
+        "new_94_3635_7015_W033",
+        "new_94_3635_7036_W037",
+        "new_94_3635_7044_W029",
+        "new_94_3635_7115_W036",
+        "new_94_3635_7145_W034",
+        "new_94_3635_7323_W030",
+        "new_94_3635_7357_W032",
+        "new_94_3635_7420_W028"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          1,
+          "unavailable",
+          3,
+          1,
+          2,
+          "unavailable",
+          4,
+          1,
+          "unavailable",
+          5,
+          6,
+          "unavailable",
+          7,
+          8,
+          9,
+          2,
+          10,
+          1
+        ],
+        "complete": [
+          1,
+          1,
+          "unavailable",
+          2,
+          1,
+          3,
+          "unavailable",
+          4,
+          1,
+          "unavailable",
+          5,
+          6,
+          "unavailable",
+          7,
+          8,
+          9,
+          3,
+          10,
+          1
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3598_7086_W006",
+              "new_93_3598_6850_W001"
+            ],
+            "workers": [
+              "W006／7086",
+              "W001／6850"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3598_7279_W013",
+              "new_93_3598_7246_W010"
+            ],
+            "workers": [
+              "W013／7279",
+              "W010／7246"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3598_7086_W006",
+              "new_93_3598_6850_W001"
+            ],
+            "workers": [
+              "W006／7086",
+              "W001／6850"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3598_7279_W013",
+              "new_93_3598_7246_W010"
+            ],
+            "workers": [
+              "W013／7279",
+              "W010／7246"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3598_7086_W006",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3598,
+          "annotation": 7086,
+          "worker": "W006",
+          "image_id": "uNb9QFRL6hY_b98c9460586e4f138658181461df9f51",
+          "code": "uNb9QFRL6hY-59",
+          "point_count": 12,
+          "parent_annotation": 6850,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-15T11:53:37.590210Z",
+          "updated_at": "2026-09-15T11:53:37.590231Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        },
+        {
+          "id": "new_93_3598_7279_W013",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3598,
+          "annotation": 7279,
+          "worker": "W013",
+          "image_id": "uNb9QFRL6hY_b98c9460586e4f138658181461df9f51",
+          "code": "uNb9QFRL6hY-59",
+          "point_count": 8,
+          "parent_annotation": 7246,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-18T08:07:32.554653Z",
+          "updated_at": "2026-09-18T08:07:32.554672Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_c6410f47ad754d6cbd890ba7dff8b449|父记录来源|31",
+      "code": "uNb9QFRL6hY-66",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "63597564c489c761152b",
+        "81702024cb6333973ce6",
+        "9013342fd86225b281ba",
+        "c3008da1d11064bd3531",
+        "f78931e744dcb44323b8",
+        "new_93_3599_6862_W001",
+        "new_93_3599_6904_W017",
+        "new_93_3599_7125_W012",
+        "new_93_3599_7251_W010",
+        "new_93_3599_7284_W013",
+        "new_93_3599_7370_W002",
+        "new_93_3599_7395_W008",
+        "new_93_3599_7498_W018",
+        "new_94_3636_6926_W031",
+        "new_94_3636_6962_W035",
+        "new_94_3636_7039_W037",
+        "new_94_3636_7116_W036",
+        "new_94_3636_7166_W034",
+        "new_94_3636_7199_W029",
+        "new_94_3636_7319_W030",
+        "new_94_3636_7421_W028"
+      ],
+      "labels": {
+        "representative": [
+          3,
+          4,
+          2,
+          5,
+          1,
+          1,
+          1,
+          6,
+          1,
+          "unavailable",
+          1,
+          1,
+          1,
+          "unavailable",
+          3,
+          7,
+          8,
+          2,
+          1,
+          2,
+          9
+        ],
+        "complete": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          5,
+          5,
+          6,
+          5,
+          "unavailable",
+          7,
+          7,
+          5,
+          "unavailable",
+          1,
+          8,
+          9,
+          3,
+          5,
+          3,
+          10
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3599_7284_W013",
+              "new_93_3599_7251_W010"
+            ],
+            "workers": [
+              "W013／7284",
+              "W010／7251"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3599_7284_W013",
+              "new_93_3599_7251_W010"
+            ],
+            "workers": [
+              "W013／7284",
+              "W010／7251"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3599_7284_W013",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3599,
+          "annotation": 7284,
+          "worker": "W013",
+          "image_id": "uNb9QFRL6hY_c6410f47ad754d6cbd890ba7dff8b449",
+          "code": "uNb9QFRL6hY-66",
+          "point_count": 12,
+          "parent_annotation": 7251,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-18T08:10:12.928661Z",
+          "updated_at": "2026-09-18T08:10:12.928683Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d|父记录来源|32",
+      "code": "uNb9QFRL6hY-68",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "063a04f15b4aa1089409",
+        "7a0778c91977ce16bfb0",
+        "99a8d85e0a09165ed320",
+        "adafd30448bdc86059f9",
+        "bcadc37ee0819d4ead2d",
+        "new_93_3601_6899_W017",
+        "new_93_3601_7181_W010",
+        "new_93_3601_7277_W013",
+        "new_93_3601_7364_W002",
+        "new_94_3638_6956_W029",
+        "new_94_3638_6964_W035",
+        "new_94_3638_7138_W036",
+        "new_94_3638_7340_W030",
+        "new_94_3638_7365_W032",
+        "new_94_3638_7423_W028"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          1,
+          1,
+          1,
+          2,
+          1,
+          1,
+          "unavailable",
+          "unavailable",
+          1,
+          1,
+          3,
+          1,
+          1,
+          4
+        ],
+        "complete": [
+          1,
+          1,
+          1,
+          1,
+          2,
+          1,
+          1,
+          "unavailable",
+          "unavailable",
+          1,
+          1,
+          3,
+          1,
+          1,
+          4
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3601_7277_W013",
+              "new_93_3601_7181_W010"
+            ],
+            "workers": [
+              "W013／7277",
+              "W010／7181"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3601_7364_W002",
+              "new_93_3601_6899_W017"
+            ],
+            "workers": [
+              "W002／7364",
+              "W017／6899"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3601_7277_W013",
+              "new_93_3601_7181_W010"
+            ],
+            "workers": [
+              "W013／7277",
+              "W010／7181"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3601_7364_W002",
+              "new_93_3601_6899_W017"
+            ],
+            "workers": [
+              "W002／7364",
+              "W017／6899"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3601_7277_W013",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3601,
+          "annotation": 7277,
+          "worker": "W013",
+          "image_id": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+          "code": "uNb9QFRL6hY-68",
+          "point_count": 8,
+          "parent_annotation": 7181,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-18T08:06:26.308080Z",
+          "updated_at": "2026-09-18T08:06:26.308102Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        },
+        {
+          "id": "new_93_3601_7364_W002",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3601,
+          "annotation": 7364,
+          "worker": "W002",
+          "image_id": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+          "code": "uNb9QFRL6hY-68",
+          "point_count": 8,
+          "parent_annotation": 6899,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-18T15:29:43.529363Z",
+          "updated_at": "2026-09-18T15:30:20.374545Z",
+          "parent_present": true,
+          "points_identical_to_parent": false,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_e24473d2b8a24568b89c1c4c2a4a9bf1|父记录来源|33",
+      "code": "uNb9QFRL6hY-79",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_93_3604_6919_W017",
+        "new_93_3604_7108_W006",
+        "new_93_3604_7257_W010",
+        "new_93_3604_7408_W008",
+        "new_93_3604_7492_W001",
+        "new_94_3641_6938_W031",
+        "new_94_3641_7157_W033",
+        "new_94_3641_7171_W034",
+        "new_94_3641_7211_W029",
+        "new_94_3641_7335_W036",
+        "new_94_3641_7354_W032",
+        "new_94_3641_7425_W028"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          "unavailable",
+          1,
+          2,
+          1,
+          1,
+          1,
+          1,
+          1,
+          3,
+          4,
+          5
+        ],
+        "complete": [
+          1,
+          "unavailable",
+          1,
+          2,
+          1,
+          1,
+          3,
+          1,
+          1,
+          4,
+          5,
+          6
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3604_7108_W006",
+              "new_93_3604_6919_W017"
+            ],
+            "workers": [
+              "W006／7108",
+              "W017／6919"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3604_7108_W006",
+              "new_93_3604_6919_W017"
+            ],
+            "workers": [
+              "W006／7108",
+              "W017／6919"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3604_7108_W006",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3604,
+          "annotation": 7108,
+          "worker": "W006",
+          "image_id": "uNb9QFRL6hY_e24473d2b8a24568b89c1c4c2a4a9bf1",
+          "code": "uNb9QFRL6hY-79",
+          "point_count": 8,
+          "parent_annotation": 6919,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-15T12:56:23.180328Z",
+          "updated_at": "2026-09-15T12:56:23.180349Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd|父记录来源|34",
+      "code": "uNb9QFRL6hY-81",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_93_3605_7109_W006",
+        "new_93_3605_7119_W012",
+        "new_93_3605_7287_W013",
+        "new_93_3605_7363_W002",
+        "new_93_3605_7392_W008",
+        "new_94_3642_6941_W031",
+        "new_94_3642_6967_W029",
+        "new_94_3642_6969_W035",
+        "new_94_3642_7022_W034",
+        "new_94_3642_7035_W037",
+        "new_94_3642_7139_W036",
+        "new_94_3642_7158_W033",
+        "new_94_3642_7341_W030",
+        "new_94_3642_7347_W032",
+        "new_94_3642_7426_W028"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          1,
+          "unavailable",
+          1,
+          1,
+          2,
+          1,
+          1,
+          3,
+          4,
+          1,
+          1,
+          1,
+          5,
+          6
+        ],
+        "complete": [
+          1,
+          2,
+          "unavailable",
+          2,
+          2,
+          3,
+          1,
+          1,
+          4,
+          5,
+          1,
+          1,
+          1,
+          6,
+          7
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3605_7287_W013",
+              "new_93_3605_7119_W012"
+            ],
+            "workers": [
+              "W013／7287",
+              "W012／7119"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3605_7287_W013",
+              "new_93_3605_7119_W012"
+            ],
+            "workers": [
+              "W013／7287",
+              "W012／7119"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3605_7287_W013",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3605,
+          "annotation": 7287,
+          "worker": "W013",
+          "image_id": "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+          "code": "uNb9QFRL6hY-81",
+          "point_count": 8,
+          "parent_annotation": 7119,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-18T08:13:24.013794Z",
+          "updated_at": "2026-09-18T08:13:24.013819Z",
+          "parent_present": true,
+          "points_identical_to_parent": false,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269|父记录来源|35",
+      "code": "uNb9QFRL6hY-86",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_93_3606_7110_W006",
+        "new_93_3606_7117_W012",
+        "new_93_3606_7197_W015",
+        "new_93_3606_7367_W002",
+        "new_93_3606_7391_W008",
+        "new_94_3643_6942_W031",
+        "new_94_3643_6958_W029",
+        "new_94_3643_6970_W035",
+        "new_94_3643_7033_W037",
+        "new_94_3643_7159_W033",
+        "new_94_3643_7164_W034",
+        "new_94_3643_7220_W036",
+        "new_94_3643_7344_W030",
+        "new_94_3643_7413_W032",
+        "new_94_3643_7427_W028"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          2,
+          1,
+          "unavailable",
+          1,
+          2,
+          1,
+          1,
+          3,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2
+        ],
+        "complete": [
+          1,
+          2,
+          1,
+          "unavailable",
+          1,
+          3,
+          1,
+          1,
+          4,
+          1,
+          1,
+          1,
+          1,
+          1,
+          3
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3606_7367_W002",
+              "new_93_3606_7197_W015"
+            ],
+            "workers": [
+              "W002／7367",
+              "W015／7197"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3606_7367_W002",
+              "new_93_3606_7197_W015"
+            ],
+            "workers": [
+              "W002／7367",
+              "W015／7197"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3606_7367_W002",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3606,
+          "annotation": 7367,
+          "worker": "W002",
+          "image_id": "uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269",
+          "code": "uNb9QFRL6hY-86",
+          "point_count": 8,
+          "parent_annotation": 7197,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-18T15:34:17.966436Z",
+          "updated_at": "2026-09-18T15:34:17.966456Z",
+          "parent_present": true,
+          "points_identical_to_parent": false,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14|父记录来源|36",
+      "code": "uNb9QFRL6hY-88",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "16f88794bfabdd24c227",
+        "6bcb7c06bee48a668fc1",
+        "8f3735d531f44f7b44c8",
+        "9e5409147dcedaf906b7",
+        "b593f337fea5cb8bf3f2",
+        "new_93_3608_6903_W017",
+        "new_93_3608_7113_W006",
+        "new_93_3608_7137_W012",
+        "new_93_3608_7186_W015",
+        "new_93_3608_7282_W013",
+        "new_93_3608_7399_W008",
+        "new_93_3608_7489_W010",
+        "new_94_3645_6949_W031",
+        "new_94_3645_6972_W035",
+        "new_94_3645_7092_W029",
+        "new_94_3645_7161_W033",
+        "new_94_3645_7223_W036",
+        "new_94_3645_7320_W030",
+        "new_94_3645_7358_W032",
+        "new_94_3645_7433_W028"
+      ],
+      "labels": {
+        "representative": [
+          3,
+          4,
+          5,
+          1,
+          "unavailable",
+          1,
+          6,
+          "unavailable",
+          "unavailable",
+          "unavailable",
+          1,
+          1,
+          7,
+          2,
+          2,
+          8,
+          9,
+          10,
+          11,
+          "unavailable"
+        ],
+        "complete": [
+          1,
+          2,
+          3,
+          4,
+          "unavailable",
+          5,
+          6,
+          "unavailable",
+          "unavailable",
+          "unavailable",
+          5,
+          5,
+          7,
+          8,
+          8,
+          9,
+          10,
+          11,
+          12,
+          "unavailable"
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3608_7186_W015",
+              "new_93_3608_6903_W017"
+            ],
+            "workers": [
+              "W015／7186",
+              "W017／6903"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3608_7282_W013",
+              "new_93_3608_7186_W015"
+            ],
+            "workers": [
+              "W013／7282",
+              "W015／7186"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3608_7186_W015",
+              "new_93_3608_6903_W017"
+            ],
+            "workers": [
+              "W015／7186",
+              "W017／6903"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          },
+          {
+            "ids": [
+              "new_93_3608_7282_W013",
+              "new_93_3608_7186_W015"
+            ],
+            "workers": [
+              "W013／7282",
+              "W015／7186"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3608_7186_W015",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3608,
+          "annotation": 7186,
+          "worker": "W015",
+          "image_id": "uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14",
+          "code": "uNb9QFRL6hY-88",
+          "point_count": 16,
+          "parent_annotation": 6903,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-17T06:49:56.895658Z",
+          "updated_at": "2026-09-17T06:49:56.895679Z",
+          "parent_present": true,
+          "points_identical_to_parent": false,
+          "conditional_include": true,
+          "strict_include": false
+        },
+        {
+          "id": "new_93_3608_7282_W013",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3608,
+          "annotation": 7282,
+          "worker": "W013",
+          "image_id": "uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14",
+          "code": "uNb9QFRL6hY-88",
+          "point_count": 16,
+          "parent_annotation": 7186,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-18T08:09:22.011544Z",
+          "updated_at": "2026-09-18T08:09:22.011564Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "yqstnuAEVhm_19e4188fa39244378481dcdb18c42dbe|父记录来源|37",
+      "code": "yqstnuAEVhm-02",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_93_3609_6916_W017",
+        "new_93_3609_7114_W006",
+        "new_93_3609_7406_W008",
+        "new_94_3646_6973_W035",
+        "new_94_3646_7032_W037",
+        "new_94_3646_7144_W034",
+        "new_94_3646_7162_W033",
+        "new_94_3646_7411_W032"
+      ],
+      "labels": {
+        "representative": [
+          2,
+          "unavailable",
+          1,
+          1,
+          3,
+          4,
+          1,
+          1
+        ],
+        "complete": [
+          1,
+          "unavailable",
+          2,
+          2,
+          3,
+          4,
+          2,
+          2
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3609_7114_W006",
+              "new_93_3609_6916_W017"
+            ],
+            "workers": [
+              "W006／7114",
+              "W017／6916"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3609_7114_W006",
+              "new_93_3609_6916_W017"
+            ],
+            "workers": [
+              "W006／7114",
+              "W017／6916"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3609_7114_W006",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3609,
+          "annotation": 7114,
+          "worker": "W006",
+          "image_id": "yqstnuAEVhm_19e4188fa39244378481dcdb18c42dbe",
+          "code": "yqstnuAEVhm-02",
+          "point_count": 8,
+          "parent_annotation": 6916,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-15T13:03:17.221550Z",
+          "updated_at": "2026-09-15T13:03:17.221577Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    },
+    {
+      "key": "yqstnuAEVhm_2b3fb4746d414cc6a31729b222ed79b2|父记录来源|38",
+      "code": "yqstnuAEVhm-05",
+      "condition": "Manual",
+      "reasons": "父记录关联是来源问题，不能单凭图像判断独立性。逐对切换核对人员/annotation，写明是否复制或编辑已有答案、代录或系统操作；点相同不能证明动机。",
+      "ids": [
+        "new_93_3610_6869_W001",
+        "new_93_3610_7135_W012",
+        "new_93_3610_7256_W010",
+        "new_93_3610_7286_W013",
+        "new_94_3647_6974_W035",
+        "new_94_3647_7163_W033",
+        "new_94_3647_7222_W036",
+        "new_94_3647_7412_W032"
+      ],
+      "labels": {
+        "representative": [
+          1,
+          1,
+          1,
+          "unavailable",
+          1,
+          1,
+          1,
+          1
+        ],
+        "complete": [
+          1,
+          1,
+          1,
+          "unavailable",
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "pairs_by_method": {
+        "representative": [
+          {
+            "ids": [
+              "new_93_3610_7286_W013",
+              "new_93_3610_7256_W010"
+            ],
+            "workers": [
+              "W013／7286",
+              "W010／7256"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ],
+        "complete": [
+          {
+            "ids": [
+              "new_93_3610_7286_W013",
+              "new_93_3610_7256_W010"
+            ],
+            "workers": [
+              "W013／7286",
+              "W010／7256"
+            ],
+            "distance": null,
+            "unit": "像素",
+            "kind": "父记录来源",
+            "reason": "来源或点集资格待确认；未用距离作裁决"
+          }
+        ]
+      },
+      "decision_options": [
+        "已核实均独立作答（见依据）",
+        "存在复用或编辑父记录（见文字）",
+        "逐份情况不同（见文字）",
+        "来源仍不确定"
+      ],
+      "coverage": "本轮数值预警；具体AI目视意见未补造",
+      "point_numbering": "p为当前计算数组原点号；本轮新记录与导出顺序一致。图上点击可放大；原点/来源随导出保存。",
+      "ai": [],
+      "user_original": [],
+      "research_notes": [
+        {
+          "id": "new_93_3610_7286_W013",
+          "source": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+          "project": 93,
+          "task": 3610,
+          "annotation": 7286,
+          "worker": "W013",
+          "image_id": "yqstnuAEVhm_2b3fb4746d414cc6a31729b222ed79b2",
+          "code": "yqstnuAEVhm-05",
+          "point_count": 8,
+          "parent_annotation": 7256,
+          "flags": [
+            "parent_annotation_independence_pending"
+          ],
+          "assignment": "required",
+          "created_at": "2026-09-18T08:10:57.301269Z",
+          "updated_at": "2026-09-18T08:10:57.301287Z",
+          "parent_present": true,
+          "points_identical_to_parent": true,
+          "conditional_include": true,
+          "strict_include": false
+        }
+      ],
+      "user_decision": null
+    }
+  ]
+}

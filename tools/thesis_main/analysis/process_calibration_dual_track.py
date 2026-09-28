@@ -184,7 +184,7 @@ def meta_rows_for_submission(identity: dict[str, Any], labels: dict[str, list[st
 
 def load_inputs() -> dict[str, Path | list[Path]]:
     result: dict[str, Path | list[Path]] = {
-        "contract": ROOT / "docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json",
+        "contract": ROOT / "docs/thesis_main/PAPER_A_METHOD_CONTRACT_20260811_v23.json",
         "p1_canonical": ROOT / "analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_canonical_annotations.csv",
         "p1_summary": ROOT / "analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_canonicalize_summary.json",
         "c1_eligibility": ROOT / "analysis_results/c1_a_batch_freeze_20260802_v17/c1_a_batch_inputs/c1_row_analysis_eligibility.csv",

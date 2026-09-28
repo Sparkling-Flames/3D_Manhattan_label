@@ -1,0 +1,1282 @@
+{
+  "package": "C:\\Users\\ASUS\\Downloads\\panorama_layout_research_20260927\\panorama_layout_research_20260927",
+  "original_zip": "D:\\Work\\HOHONET\\analysis_results\\pro_cloud_layout_research_20260927\\pro_layout_current_branch.zip",
+  "input_byte_checks": [
+    {
+      "path": "MANIFEST.json",
+      "byte_identical": true
+    },
+    {
+      "path": "README.md",
+      "byte_identical": true
+    },
+    {
+      "path": "VALIDATION.json",
+      "byte_identical": true
+    },
+    {
+      "path": "docs/thesis_main/PANORAMA_CONSENSUS_RESEARCH_DISCUSSION_20260927.md",
+      "byte_identical": true
+    },
+    {
+      "path": "docs/thesis_main/PRO_CLOUD_LAYOUT_GEOMETRY_QUALITY_TASK_20260927.md",
+      "byte_identical": true
+    },
+    {
+      "path": "inputs/eight_image_panel.json",
+      "byte_identical": true
+    },
+    {
+      "path": "lib/__init__.py",
+      "byte_identical": true
+    },
+    {
+      "path": "lib/misc/__init__.py",
+      "byte_identical": true
+    },
+    {
+      "path": "lib/misc/panostretch.py",
+      "byte_identical": true
+    },
+    {
+      "path": "requirements.txt",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/test_consensus_region_20260923.py",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/test_layout_metric_probe_20260926.py",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/test_structural_consensus_20260926.py",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/test_union_branch_consensus_20260926.py",
+      "byte_identical": true
+    },
+    {
+      "path": "tools/label_studio/panorama_studio/geometry.py",
+      "byte_identical": true
+    },
+    {
+      "path": "tools/thesis_main/__init__.py",
+      "byte_identical": true
+    },
+    {
+      "path": "tools/thesis_main/analysis/__init__.py",
+      "byte_identical": true
+    },
+    {
+      "path": "tools/thesis_main/analysis/consensus_region_20260923.py",
+      "byte_identical": true
+    },
+    {
+      "path": "tools/thesis_main/analysis/layout_metric_probe_20260926.py",
+      "byte_identical": true
+    },
+    {
+      "path": "tools/thesis_main/analysis/structural_consensus_20260926.py",
+      "byte_identical": true
+    },
+    {
+      "path": "tools/thesis_main/analysis/union_branch_consensus_20260926.py",
+      "byte_identical": true
+    },
+    {
+      "path": "verify_bundle.py",
+      "byte_identical": true
+    }
+  ],
+  "input_all_identical": true,
+  "denominators": [
+    {
+      "code": "7y3sRwLe3Va-12",
+      "n_all": 24,
+      "n_core": 23,
+      "n_valid": 23,
+      "n_camera_outside": 0
+    },
+    {
+      "code": "7y3sRwLe3Va-08",
+      "n_all": 24,
+      "n_core": 24,
+      "n_valid": 24,
+      "n_camera_outside": 0
+    },
+    {
+      "code": "uNb9QFRL6hY-52",
+      "n_all": 24,
+      "n_core": 23,
+      "n_valid": 23,
+      "n_camera_outside": 0
+    },
+    {
+      "code": "pRbA3pwrgk9-11",
+      "n_all": 20,
+      "n_core": 17,
+      "n_valid": 17,
+      "n_camera_outside": 5
+    },
+    {
+      "code": "q9vSo1VnCiC-04",
+      "n_all": 9,
+      "n_core": 9,
+      "n_valid": 9,
+      "n_camera_outside": 0
+    },
+    {
+      "code": "uNb9QFRL6hY-66",
+      "n_all": 21,
+      "n_core": 21,
+      "n_valid": 21,
+      "n_camera_outside": 0
+    },
+    {
+      "code": "uNb9QFRL6hY-59",
+      "n_all": 19,
+      "n_core": 17,
+      "n_valid": 17,
+      "n_camera_outside": 0
+    },
+    {
+      "code": "uNb9QFRL6hY-41",
+      "n_all": 19,
+      "n_core": 19,
+      "n_valid": 19,
+      "n_camera_outside": 0
+    }
+  ],
+  "redundancy": [
+    {
+      "epsilon_h": 0.0,
+      "distance": {
+        "distance": 0.0,
+        "unmatched": 0.0,
+        "adjacency": 0.0,
+        "angle": 0.0,
+        "boundary": 0.0,
+        "matched": 4,
+        "n_a": 4,
+        "n_b": 4,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ]
+      },
+      "comparison": {
+        "bev_iou": 1.0,
+        "prism_surrogate_iou": 1.0,
+        "centroid_distance": 0.0,
+        "boundary_mean": 0.0,
+        "boundary_p95": 0.0,
+        "boundary_sampled_max": 0.0,
+        "missed_fraction": 0.0,
+        "extra_fraction": 0.0
+      }
+    },
+    {
+      "epsilon_h": 1e-09,
+      "distance": {
+        "distance": 0.0,
+        "unmatched": 0.0,
+        "adjacency": 0.0,
+        "angle": 0.0,
+        "boundary": 0.0,
+        "matched": 4,
+        "n_a": 4,
+        "n_b": 4,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ]
+      },
+      "comparison": {
+        "bev_iou": 0.999999999875,
+        "prism_surrogate_iou": 0.9999999998749998,
+        "centroid_distance": 2.5000002065384275e-10,
+        "boundary_mean": 1.666666804567285e-10,
+        "boundary_p95": 8.437499587898856e-10,
+        "boundary_sampled_max": 1.000000082740371e-09,
+        "missed_fraction": 1.2500001032692137e-10,
+        "extra_fraction": 0.0
+      }
+    },
+    {
+      "epsilon_h": 1e-07,
+      "distance": {
+        "distance": 0.13888889772772364,
+        "unmatched": 0.1111111111111111,
+        "adjacency": 0.33333333333333337,
+        "angle": 0.0,
+        "boundary": 5.8925564958828956e-08,
+        "matched": 4,
+        "n_a": 4,
+        "n_b": 5,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ]
+      },
+      "comparison": {
+        "bev_iou": 0.9999999875,
+        "prism_surrogate_iou": 0.9999999875000001,
+        "centroid_distance": 2.5000000053667305e-08,
+        "boundary_mean": 1.6666666637848383e-08,
+        "boundary_p95": 8.437499987579155e-08,
+        "boundary_sampled_max": 9.999999983634223e-08,
+        "missed_fraction": 1.2499999823292767e-08,
+        "extra_fraction": 0.0
+      }
+    },
+    {
+      "epsilon_h": 1e-05,
+      "distance": {
+        "distance": 0.13888977277236536,
+        "unmatched": 0.1111111111111111,
+        "adjacency": 0.33333333333333337,
+        "angle": 0.0,
+        "boundary": 5.892556509842016e-06,
+        "matched": 4,
+        "n_a": 4,
+        "n_b": 5,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ]
+      },
+      "comparison": {
+        "bev_iou": 0.9999987500015626,
+        "prism_surrogate_iou": 0.9999987500015624,
+        "centroid_distance": 2.50000104164508e-06,
+        "boundary_mean": 1.666666666671423e-06,
+        "boundary_p95": 8.437500000119112e-06,
+        "boundary_sampled_max": 1.0000000000065512e-05,
+        "missed_fraction": 1.2499984375101422e-06,
+        "extra_fraction": 0.0
+      }
+    },
+    {
+      "epsilon_h": 0.001,
+      "distance": {
+        "distance": 0.13897727723285436,
+        "unmatched": 0.1111111111111111,
+        "adjacency": 0.33333333333333337,
+        "angle": 0.0,
+        "boundary": 0.0005892556264363941,
+        "matched": 4,
+        "n_a": 4,
+        "n_b": 5,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ]
+      },
+      "comparison": {
+        "bev_iou": 0.9998750156230474,
+        "prism_surrogate_iou": 0.9998750156230473,
+        "centroid_distance": 0.0002500104153647244,
+        "boundary_mean": 0.0001666666597222021,
+        "boundary_p95": 0.000843750000000032,
+        "boundary_sampled_max": 0.0009999999999998899,
+        "missed_fraction": 0.00012498437695286714,
+        "extra_fraction": 0.0
+      }
+    },
+    {
+      "epsilon_h": 0.01,
+      "distance": {
+        "distance": 0.1397727686825933,
+        "unmatched": 0.1111111111111111,
+        "adjacency": 0.33333333333333337,
+        "angle": 0.0,
+        "boundary": 0.005892531958029327,
+        "matched": 4,
+        "n_a": 4,
+        "n_b": 5,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ]
+      },
+      "comparison": {
+        "bev_iou": 0.9987515605493136,
+        "prism_surrogate_iou": 0.9987515605493134,
+        "centroid_distance": 0.0025010403662088427,
+        "boundary_mean": 0.0016666597223523897,
+        "boundary_p95": 0.008437499999999876,
+        "boundary_sampled_max": 0.009999999999999787,
+        "missed_fraction": 0.001248439450686615,
+        "extra_fraction": 0.0
+      }
+    }
+  ],
+  "splice_checks": [
+    {
+      "epsilon_h": 1e-06,
+      "window": {
+        "entry_deg": 125.0,
+        "exit_deg": 145.0,
+        "width_deg": 20.0
+      },
+      "original_distance": {
+        "distance": 3.892850713178918e-07,
+        "unmatched": 0.0,
+        "adjacency": 0.0,
+        "angle": 1.2663509647306462e-06,
+        "boundary": 9.067658558117505e-07,
+        "matched": 4,
+        "n_a": 4,
+        "n_b": 4,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ]
+      },
+      "splice_distance": {
+        "distance": 0.2500003178802734,
+        "unmatched": 0.2,
+        "adjacency": 0.6,
+        "angle": 1.2663509647306462e-06,
+        "boundary": 4.3073386951959537e-07,
+        "matched": 4,
+        "n_a": 4,
+        "n_b": 6,
+        "matches": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            5
+          ]
+        ]
+      },
+      "comparison": {
+        "bev_iou": 0.9999999625259424,
+        "prism_surrogate_iou": 0.9999999625259426,
+        "centroid_distance": 1.006966615820676e-07,
+        "boundary_mean": 1.1567615294043869e-07,
+        "boundary_p95": 7.817636881846659e-07,
+        "boundary_sampled_max": 1.4142135622567524e-06,
+        "missed_fraction": 0.0,
+        "extra_fraction": 3.7474057720703426e-08
+      },
+      "hard_support": 0,
+      "vertex_count": 6
+    },
+    {
+      "epsilon_h": 0.001,
+      "window": {
+        "entry_deg": 125.0,
+        "exit_deg": 145.0,
+        "width_deg": 20.0
+      },
+      "original_distance": {
+        "distance": 0.00038910376323434976,
+        "unmatched": 0.0,
+        "adjacency": 0.0,
+        "angle": 0.0012653719816421662,
+        "boundary": 0.0009068624460394434,
+        "matched": 4,
+        "n_a": 4,
+        "n_b": 4,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ]
+      },
+      "splice_distance": {
+        "distance": 0.2503176962184271,
+        "unmatched": 0.2,
+        "adjacency": 0.6,
+        "angle": 0.0012653719816421662,
+        "boundary": 0.00043081214732428166,
+        "matched": 4,
+        "n_a": 4,
+        "n_b": 6,
+        "matches": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            5
+          ]
+        ]
+      },
+      "comparison": {
+        "bev_iou": 0.9999625259422762,
+        "prism_surrogate_iou": 0.9999625259422761,
+        "centroid_distance": 0.000100682783079292,
+        "boundary_mean": 0.000115698608745843,
+        "boundary_p95": 0.0007818296829735288,
+        "boundary_sampled_max": 0.0014142135623729393,
+        "missed_fraction": 0.0,
+        "extra_fraction": 3.747405772378216e-05
+      },
+      "hard_support": 0,
+      "vertex_count": 6
+    },
+    {
+      "epsilon_h": 0.01,
+      "window": {
+        "entry_deg": 125.0,
+        "exit_deg": 145.0,
+        "width_deg": 20.0
+      },
+      "original_distance": {
+        "distance": 0.0039007373595775557,
+        "unmatched": 0.0,
+        "adjacency": 0.0,
+        "angle": 0.012695683956806907,
+        "boundary": 0.009077337121441159,
+        "matched": 4,
+        "n_a": 4,
+        "n_b": 4,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ]
+      },
+      "splice_distance": {
+        "distance": 0.2531864168509896,
+        "unmatched": 0.2,
+        "adjacency": 0.6,
+        "angle": 0.012695683956806907,
+        "boundary": 0.004315200397521399,
+        "matched": 4,
+        "n_a": 4,
+        "n_b": 6,
+        "matches": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            5
+          ]
+        ]
+      },
+      "comparison": {
+        "bev_iou": 0.9996252594227621,
+        "prism_surrogate_iou": 0.9996252594227621,
+        "centroid_distance": 0.001005577041769587,
+        "boundary_mean": 0.0011590256617063925,
+        "boundary_p95": 0.007820312499999997,
+        "boundary_sampled_max": 0.014142135623730963,
+        "missed_fraction": 0.0,
+        "extra_fraction": 0.00037474057723786323
+      },
+      "hard_support": 0,
+      "vertex_count": 6
+    }
+  ],
+  "real_splices": [
+    {
+      "id": "image_01_annotation_006__small_window__image_01_annotation_008",
+      "code": "7y3sRwLe3Va-12",
+      "distance_to_base": {
+        "distance": 0.28729525667553374,
+        "unmatched": 0.2857142857142857,
+        "adjacency": 0.5714285714285714,
+        "angle": 0.038064265022220996,
+        "boundary": 0.055025548283454365,
+        "matched": 5,
+        "n_a": 9,
+        "n_b": 5,
+        "matches": [
+          [
+            3,
+            1
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            8,
+            0
+          ]
+        ]
+      },
+      "structural_penalty": 0.2714285714285714,
+      "comparison_to_base": {
+        "bev_iou": 0.9872469972442873,
+        "prism_surrogate_iou": 0.9781454002103463,
+        "centroid_distance": 0.031202608728460098,
+        "boundary_mean": 0.009669503717618173,
+        "boundary_p95": 0.06793081452507736,
+        "boundary_sampled_max": 0.15455083251952995,
+        "missed_fraction": 4.399656133182188e-18,
+        "extra_fraction": 0.012753002755712601
+      },
+      "hard_support_recomputed": 0
+    },
+    {
+      "id": "image_01_annotation_010__small_window__image_01_annotation_011",
+      "code": "7y3sRwLe3Va-12",
+      "distance_to_base": {
+        "distance": 0.19519277376176714,
+        "unmatched": 0.17647058823529413,
+        "adjacency": 0.4117647058823529,
+        "angle": 0.030518222863402666,
+        "boundary": 0.025300076946851876,
+        "matched": 7,
+        "n_a": 10,
+        "n_b": 7,
+        "matches": [
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            8,
+            6
+          ],
+          [
+            9,
+            0
+          ]
+        ]
+      },
+      "structural_penalty": 0.18529411764705883,
+      "comparison_to_base": {
+        "bev_iou": 0.9955409454116714,
+        "prism_surrogate_iou": 0.9911189887042375,
+        "centroid_distance": 0.013748415755247729,
+        "boundary_mean": 0.007577929367981129,
+        "boundary_p95": 0.06727835176907261,
+        "boundary_sampled_max": 0.17358808766165254,
+        "missed_fraction": 7.672316360071291e-18,
+        "extra_fraction": 0.004459054588329068
+      },
+      "hard_support_recomputed": 0
+    },
+    {
+      "id": "image_01_annotation_018__small_window__image_01_annotation_011",
+      "code": "7y3sRwLe3Va-12",
+      "distance_to_base": {
+        "distance": 0.19527302640582347,
+        "unmatched": 0.17647058823529413,
+        "adjacency": 0.4117647058823529,
+        "angle": 0.030518222863402666,
+        "boundary": 0.025835094573893984,
+        "matched": 7,
+        "n_a": 10,
+        "n_b": 7,
+        "matches": [
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            8,
+            6
+          ],
+          [
+            9,
+            0
+          ]
+        ]
+      },
+      "structural_penalty": 0.18529411764705883,
+      "comparison_to_base": {
+        "bev_iou": 0.9951877417930581,
+        "prism_surrogate_iou": 0.9948347122988421,
+        "centroid_distance": 0.014382531362908832,
+        "boundary_mean": 0.007743120652476898,
+        "boundary_p95": 0.06727835176907261,
+        "boundary_sampled_max": 0.17358808766165254,
+        "missed_fraction": 4.331705260479824e-18,
+        "extra_fraction": 0.0048122582069417
+      },
+      "hard_support_recomputed": 0
+    },
+    {
+      "id": "image_01_annotation_023__small_window__image_01_annotation_011",
+      "code": "7y3sRwLe3Va-12",
+      "distance_to_base": {
+        "distance": 0.31140512642768803,
+        "unmatched": 0.2727272727272727,
+        "adjacency": 0.6363636363636364,
+        "angle": 0.07762712342753014,
+        "boundary": 0.06344043585697129,
+        "matched": 4,
+        "n_a": 7,
+        "n_b": 4,
+        "matches": [
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            6,
+            0
+          ]
+        ]
+      },
+      "structural_penalty": 0.2863636363636363,
+      "comparison_to_base": {
+        "bev_iou": 0.9608783412559867,
+        "prism_surrogate_iou": 0.9564940397748617,
+        "centroid_distance": 0.06338218126735279,
+        "boundary_mean": 0.018598393298733765,
+        "boundary_p95": 0.0812854608710924,
+        "boundary_sampled_max": 0.15261938943272252,
+        "missed_fraction": 3.0455084831184165e-18,
+        "extra_fraction": 0.039121658744013195
+      },
+      "hard_support_recomputed": 0
+    },
+    {
+      "id": "image_01_annotation_024__small_window__image_01_annotation_011",
+      "code": "7y3sRwLe3Va-12",
+      "distance_to_base": {
+        "distance": 0.30350784734731007,
+        "unmatched": 0.2727272727272727,
+        "adjacency": 0.6363636363636364,
+        "angle": 0.06583466163215834,
+        "boundary": 0.026515191048280325,
+        "matched": 4,
+        "n_a": 7,
+        "n_b": 4,
+        "matches": [
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            6,
+            0
+          ]
+        ]
+      },
+      "structural_penalty": 0.2863636363636363,
+      "comparison_to_base": {
+        "bev_iou": 0.9905858788925327,
+        "prism_surrogate_iou": 0.9846914973503516,
+        "centroid_distance": 0.002078181248872445,
+        "boundary_mean": 0.007534848110962732,
+        "boundary_p95": 0.05141118491837902,
+        "boundary_sampled_max": 0.10068341438164151,
+        "missed_fraction": 0.003447266359170812,
+        "extra_fraction": 0.006008082690776948
+      },
+      "hard_support_recomputed": 0
+    },
+    {
+      "id": "image_01_annotation_024__small_window__image_01_annotation_020",
+      "code": "7y3sRwLe3Va-12",
+      "distance_to_base": {
+        "distance": 0.3143264755031229,
+        "unmatched": 0.2727272727272727,
+        "adjacency": 0.6363636363636364,
+        "angle": 0.10059499896183968,
+        "boundary": 0.05229226231412454,
+        "matched": 4,
+        "n_a": 7,
+        "n_b": 4,
+        "matches": [
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            6,
+            0
+          ]
+        ]
+      },
+      "structural_penalty": 0.2863636363636363,
+      "comparison_to_base": {
+        "bev_iou": 0.9716803880641837,
+        "prism_surrogate_iou": 0.9660229376494376,
+        "centroid_distance": 0.036657425069256185,
+        "boundary_mean": 0.015856496986780894,
+        "boundary_p95": 0.07722404424642725,
+        "boundary_sampled_max": 0.12801571528221115,
+        "missed_fraction": 0.025083430667890178,
+        "extra_fraction": 0.0034045588615665245
+      },
+      "hard_support_recomputed": 0
+    },
+    {
+      "id": "image_01_annotation_011__small_window__image_01_annotation_018",
+      "code": "7y3sRwLe3Va-12",
+      "distance_to_base": {
+        "distance": 0.19603176134896824,
+        "unmatched": 0.17647058823529413,
+        "adjacency": 0.4117647058823529,
+        "angle": 0.030518222863675636,
+        "boundary": 0.030893327527828637,
+        "matched": 7,
+        "n_a": 9,
+        "n_b": 8,
+        "matches": [
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            7,
+            7
+          ],
+          [
+            8,
+            0
+          ]
+        ]
+      },
+      "structural_penalty": 0.18529411764705883,
+      "comparison_to_base": {
+        "bev_iou": 0.9936172233700143,
+        "prism_surrogate_iou": 0.9926470722197622,
+        "centroid_distance": 0.01584671950655748,
+        "boundary_mean": 0.006132094242486145,
+        "boundary_p95": 0.055823763470450725,
+        "boundary_sampled_max": 0.1539492604713434,
+        "missed_fraction": 0.005504767509618331,
+        "extra_fraction": 0.0008877516615970061
+      },
+      "hard_support_recomputed": 0
+    },
+    {
+      "id": "image_01_annotation_011__small_window__image_01_annotation_023",
+      "code": "7y3sRwLe3Va-12",
+      "distance_to_base": {
+        "distance": 0.20512210564783223,
+        "unmatched": 0.17647058823529413,
+        "adjacency": 0.4117647058823529,
+        "angle": 0.05868058959512381,
+        "boundary": 0.05394580054499095,
+        "matched": 7,
+        "n_a": 9,
+        "n_b": 8,
+        "matches": [
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            7,
+            7
+          ],
+          [
+            8,
+            0
+          ]
+        ]
+      },
+      "structural_penalty": 0.18529411764705883,
+      "comparison_to_base": {
+        "bev_iou": 0.9783484202493204,
+        "prism_surrogate_iou": 0.972805999198016,
+        "centroid_distance": 0.04841739736486795,
+        "boundary_mean": 0.010802595935823608,
+        "boundary_p95": 0.06811301391234245,
+        "boundary_sampled_max": 0.1519800097624331,
+        "missed_fraction": 0.021651579750679644,
+        "extra_fraction": 5.030335929894239e-19
+      },
+      "hard_support_recomputed": 0
+    },
+    {
+      "id": "image_01_annotation_011__small_window__image_01_annotation_024",
+      "code": "7y3sRwLe3Va-12",
+      "distance_to_base": {
+        "distance": 0.19891657477388847,
+        "unmatched": 0.17647058823529413,
+        "adjacency": 0.4117647058823529,
+        "angle": 0.04976632637920458,
+        "boundary": 0.02446127900659142,
+        "matched": 7,
+        "n_a": 9,
+        "n_b": 8,
+        "matches": [
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            7,
+            7
+          ],
+          [
+            8,
+            0
+          ]
+        ]
+      },
+      "structural_penalty": 0.18529411764705883,
+      "comparison_to_base": {
+        "bev_iou": 0.9947996483381262,
+        "prism_surrogate_iou": 0.9891806919558379,
+        "centroid_distance": 0.004058942142772274,
+        "boundary_mean": 0.004686400692930269,
+        "boundary_p95": 0.03831717981519571,
+        "boundary_sampled_max": 0.10236766254043343,
+        "missed_fraction": 0.0022336152286248656,
+        "extra_fraction": 0.0029800142289683564
+      },
+      "hard_support_recomputed": 0
+    },
+    {
+      "id": "image_01_annotation_020__small_window__image_01_annotation_024",
+      "code": "7y3sRwLe3Va-12",
+      "distance_to_base": {
+        "distance": 0.20465726919632263,
+        "unmatched": 0.17647058823529413,
+        "adjacency": 0.4117647058823529,
+        "angle": 0.07604267153997837,
+        "boundary": 0.02769744827512077,
+        "matched": 7,
+        "n_a": 9,
+        "n_b": 8,
+        "matches": [
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            7,
+            7
+          ],
+          [
+            8,
+            0
+          ]
+        ]
+      },
+      "structural_penalty": 0.18529411764705883,
+      "comparison_to_base": {
+        "bev_iou": 0.9880307702832011,
+        "prism_surrogate_iou": 0.9768947462978644,
+        "centroid_distance": 0.025169710841851708,
+        "boundary_mean": 0.008483256978963363,
+        "boundary_p95": 0.06050738187621045,
+        "boundary_sampled_max": 0.0916250958833046,
+        "missed_fraction": 0.0011674594632773022,
+        "extra_fraction": 0.010826898894013677
+      },
+      "hard_support_recomputed": 0
+    },
+    {
+      "id": "image_01_annotation_008__small_window__image_01_annotation_006",
+      "code": "7y3sRwLe3Va-12",
+      "distance_to_base": {
+        "distance": 0.24906296353829105,
+        "unmatched": 0.25,
+        "adjacency": 0.5,
+        "angle": 0.0347477609792788,
+        "boundary": 0.03075607561623526,
+        "matched": 6,
+        "n_a": 8,
+        "n_b": 8,
+        "matches": [
+          [
+            1,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            7,
+            0
+          ]
+        ]
+      },
+      "structural_penalty": 0.2375,
+      "comparison_to_base": {
+        "bev_iou": 0.9906874723254141,
+        "prism_surrogate_iou": 0.9797386932756262,
+        "centroid_distance": 0.02839350967916405,
+        "boundary_mean": 0.00777600346333281,
+        "boundary_p95": 0.05916854424008928,
+        "boundary_sampled_max": 0.15146455136168607,
+        "missed_fraction": 0.009065406058340646,
+        "extra_fraction": 0.00025166322909466994
+      },
+      "hard_support_recomputed": 0
+    }
+  ],
+  "unknown_mode_probe": {
+    "one_mode": {
+      "alpha": [
+        20.5,
+        1.0
+      ],
+      "probability": [
+        0.9534883720930233,
+        0.046511627906976744
+      ],
+      "unknown_index": 1,
+      "real_people": 20,
+      "interpretation": "posterior_predictive_not_support_count"
+    },
+    "twenty_singletons": {
+      "alpha": [
+        1.5,
+        1.5,
+        1.5,
+        1.5,
+        1.5,
+        1.5,
+        1.5,
+        1.5,
+        1.5,
+        1.5,
+        1.5,
+        1.5,
+        1.5,
+        1.5,
+        1.5,
+        1.5,
+        1.5,
+        1.5,
+        1.5,
+        1.5,
+        1.0
+      ],
+      "probability": [
+        0.04838709677419355,
+        0.04838709677419355,
+        0.04838709677419355,
+        0.04838709677419355,
+        0.04838709677419355,
+        0.04838709677419355,
+        0.04838709677419355,
+        0.04838709677419355,
+        0.04838709677419355,
+        0.04838709677419355,
+        0.04838709677419355,
+        0.04838709677419355,
+        0.04838709677419355,
+        0.04838709677419355,
+        0.04838709677419355,
+        0.04838709677419355,
+        0.04838709677419355,
+        0.04838709677419355,
+        0.04838709677419355,
+        0.04838709677419355,
+        0.03225806451612903
+      ],
+      "unknown_index": 20,
+      "real_people": 20,
+      "interpretation": "posterior_predictive_not_support_count"
+    }
+  },
+  "height_outlier": {
+    "valid": true,
+    "reason": null,
+    "loss": 0.0,
+    "direction_deg": 0.0,
+    "height_mad_relative": 0.0,
+    "height_range_relative": 1.9629629629629628,
+    "median_height": 2.7,
+    "area": 16.0,
+    "camera_inside": true,
+    "camera_in_visibility_kernel": true,
+    "nonplanar_ceiling": true,
+    "short_edges": 0
+  },
+  "interpretation": "Independent targeted checks; not a rerun of all search and replay experiments."
+}

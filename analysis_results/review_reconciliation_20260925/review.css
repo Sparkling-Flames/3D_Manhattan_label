@@ -1,0 +1,78 @@
+.reconciliation-review .order-editor,.reconciliation-review .case-nav{display:none!important}
+.reconciliation-review [hidden]{display:none!important}
+#reconciliation-panel{margin-bottom:24px;color:#303c35}
+#reconciliation-panel h3{margin:18px 0 8px;font-size:18px}
+#reconciliation-panel h4{margin:0 0 8px;font-size:14px}
+#reconciliation-panel p{margin:6px 0;line-height:1.8}
+#reconciliation-panel section{margin:18px 0}
+#reconciliation-panel details{border:1px solid #dce2dc;background:#fafbf8;border-radius:7px;padding:10px 13px;margin:10px 0}
+#reconciliation-panel summary{font-weight:500;list-style:revert}
+#reconciliation-panel pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.7 Consolas,monospace;max-height:420px;overflow:auto}
+#reconciliation-panel small{display:block;color:#68776d;overflow-wrap:anywhere}
+#reconciliation-panel button{border:1px solid #bdcabc;background:white;margin:3px 4px 3px 0}
+#reconciliation-panel button:disabled{opacity:.45;cursor:default}
+#reconciliation-panel button.active{background:#dcebdc;border-color:#4d785a}
+#reconciliation-panel label{display:flex;flex-direction:column;gap:5px;font-size:13px}
+#reconciliation-panel input,#reconciliation-panel textarea{font:inherit;border:1px solid #becbbb;border-radius:5px;padding:7px;background:white;color:inherit}
+#reconciliation-panel textarea{resize:vertical;min-height:92px}
+#reconciliation-panel input[type=checkbox]{accent-color:#47715e}
+#reconciliation-panel .recon-check{flex-direction:row;align-items:center;white-space:nowrap}
+.recon-heading{display:flex;justify-content:space-between;gap:24px;align-items:center}
+.recon-heading h2{font-size:25px}
+#recon-count{font-size:13px;white-space:nowrap;color:#58715d}
+.recon-nav{display:flex;flex-wrap:wrap;gap:12px;align-items:end;background:#e8eee3;padding:15px;border-radius:9px;margin:15px 0}
+.recon-nav>label{flex:1;min-width:150px}
+.recon-image-nav{display:flex;align-items:end;width:100%;gap:6px}
+.recon-image-nav>label{flex:1}
+.recon-image-nav button{height:38px}
+#recon-empty{padding:20px;background:#f4efde}
+.recon-muted{font-size:12px;color:#637368}
+.recon-points-panel{padding:14px;background:white;border:1px solid #dce2dc;border-radius:9px}
+.recon-point-controls{display:flex;gap:12px;align-items:end;flex-wrap:wrap}
+.recon-point-controls>label:first-child{flex:1;min-width:240px}
+#recon-canvas{display:block;width:100%;height:auto;aspect-ratio:2;background:#edf0e8;cursor:crosshair;border-radius:5px}
+#recon-zoom{display:block;width:min(800px,100%);height:auto;margin:12px auto;border:2px solid #bbcab5;border-radius:5px}
+#recon-legend{display:flex;gap:8px 16px;flex-wrap:wrap;font-size:12px}
+#recon-legend span{padding-left:6px}
+#recon-geometry-note{color:#675632;background:#f4f0e6;padding:7px 10px;border-radius:5px}
+#recon-rule-advice{border-left:4px solid #7b8750;background:#f2f1df;padding:10px 12px;font-size:13px}
+#recon-repair-summary{font-size:12px;color:#5d6248}
+#recon-point-warning{color:#842e20;background:#fff0e8;border-left:4px solid #c05a3b;padding:10px 12px;overflow-wrap:anywhere}
+#recon-point-changes table{border-collapse:collapse;width:100%;font-size:12px}
+#recon-point-changes th,#recon-point-changes td{border-bottom:1px solid #dce2dc;padding:7px;text-align:left;overflow-wrap:anywhere}
+#recon-references{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:7px;margin-top:10px}
+#recon-references label{flex-direction:row;align-items:center}
+.recon-event-columns{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.recon-event-columns>div{min-width:0}
+.recon-event{border:1px solid #dce2dc;background:white;border-radius:7px;padding:12px;margin-bottom:10px}
+.recon-event strong{font-size:13px}
+.recon-original{white-space:pre-wrap;font-size:14px;overflow-wrap:anywhere}
+.recon-interpretation{font-size:12px;color:#536f50;background:#eef4e8;padding:7px 9px;border-radius:4px}
+.recon-final{background:#edf3e9;border:1px solid #d0dec8;padding:4px 16px 15px;border-radius:9px}
+.recon-decision-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.recon-decision-grid fieldset{min-width:0;border:1px solid #c7d4c0;border-radius:7px;padding:12px;background:#fff}
+.recon-decision-grid legend{font-size:14px;font-weight:500;padding:0 6px}
+.recon-decision-grid label{margin-bottom:10px}
+#recon-ann-state,#recon-image-state{font-size:12px;color:#52694f}
+.recon-cluster-heading{display:flex;justify-content:space-between;align-items:center;gap:15px}
+#recon-clusters{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr));gap:18px;margin-top:12px}
+.recon-cluster-canvas{display:block;width:100%;height:auto;aspect-ratio:2;background:#eef0e8;border-radius:5px;cursor:zoom-in}
+.recon-individuals{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.recon-individuals figure{margin:0}.recon-individuals figcaption{font-size:12px;margin-bottom:5px}
+.recon-semantics{font-size:13px}#recon-gallery{border-bottom:1px solid #ced9c8;padding-bottom:20px}
+.recon-cluster{border:1px solid #dce2dc;padding:12px;background:white;border-radius:8px}
+.recon-cluster h4 button{font-size:11px;padding:3px 6px}
+.recon-member{display:flex;gap:8px;justify-content:space-between;align-items:center;border-top:1px solid #edf0e9;padding:5px 0}
+.recon-member label{flex-direction:row!important;align-items:center;font-size:12px!important}
+.recon-member button{font-size:12px;white-space:nowrap;padding:4px 7px}
+.recon-member-state{font-size:11px;white-space:nowrap;border-radius:4px;background:#f1f1eb;padding:2px 5px;color:#686f61}
+.recon-member-state[data-state=pending]{background:#f8edce;color:#795d20}
+.recon-member-state[data-state=resolved]{background:#deeedf;color:#396f43}
+.recon-file-controls{display:flex;gap:16px;flex-wrap:wrap;align-items:center;border-top:1px solid #ced9c8;margin-top:22px;padding-top:16px}
+#recon-status{position:sticky;bottom:0;padding:10px 14px;background:#e4ecdc;border:1px solid #c7d4bb;border-radius:6px;z-index:4;font-size:13px;min-height:42px}
+#recon-status:empty{display:none}
+.reconciliation-review .study-heading{border-top:1px solid #cbd8c6;padding-top:22px}
+.reconciliation-review .compare-grid{grid-template-columns:1fr}
+.reconciliation-review #card-fit,.reconciliation-review .metric-hero{display:none}
+.reconciliation-review .model-card .viewport{height:430px}
+@media(max-width:850px){.recon-heading,.recon-cluster-heading{align-items:flex-start;flex-direction:column;gap:5px}.recon-event-columns,.recon-decision-grid{grid-template-columns:1fr}.recon-nav>label{min-width:130px}.recon-point-controls>label:first-child{min-width:180px}#recon-clusters{grid-template-columns:1fr}}

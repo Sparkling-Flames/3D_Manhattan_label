@@ -1,0 +1,19 @@
+{
+  "images": 240,
+  "responses": 2444,
+  "cuts": [
+    12.8,
+    17.066666666666666,
+    25.6,
+    34.13333333333333,
+    51.2
+  ],
+  "baseline_reproduced": true,
+  "source": "analysis_results\\panorama_research_received_20260921\\local_recompute\\source_work",
+  "unit": "1024x512周期横坐标的成对端点最大欧氏距离；点数不同为不相容哨兵",
+  "selection": "复用已有12.8/25.6/51.2和早期6/12度的像素探针；并非优化搜索",
+  "singleton_reasons": "只有自己的点数/有同点数但无近邻/有近邻但被分区孤立，互斥且穷尽；N=1也归只有自己的点数，主要解释N>=8",
+  "limitations": "近邻拆分与远邻同簇是几何定义的代价，不等于人工语义错误率；图均值与作答加权值分列；U8只在N>8有定义。",
+  "formal_threshold_selected": false,
+  "raw_data_changed": false
+}

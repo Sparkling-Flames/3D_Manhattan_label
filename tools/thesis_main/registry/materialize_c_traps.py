@@ -107,8 +107,8 @@ NATURAL_FAILURE_PRIORITY_FAMILIES = [
 EXTENSION_ONLY_TRAP_FAMILIES = ["underextend", "topology_failure"]
 
 SOURCE_OF_TRUTH_DOCS = [
-    "docs/thesis_main/实验集设定与用途.md",
-    "docs/thesis_main/实验设置执行细则_20260213.md",
+    "docs/legacy/paper_a_before_consensus_20260928/historical_discussion/实验集设定与用途.md",
+    "docs/legacy/paper_a_before_consensus_20260928/historical_discussion/实验设置执行细则_20260213.md",
 ]
 
 

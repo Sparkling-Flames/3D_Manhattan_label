@@ -1,0 +1,284 @@
+{
+  "schema": "threshold_visual_mechanism_audit_v1",
+  "status": "exploratory_visual_review_not_semantic_ground_truth",
+  "reviewer": "Codex sub-agent; actual view_image inspection of all eight full panoramas and zooms",
+  "sample_design": "Purposive mechanism sample: two immediately below and above 25.6; closest complete-link split; farthest representative join; greatest partial match count mismatch; largest fixed/free discrepancy. Distinct images prioritized outside explicitly enumerated previous development cases.",
+  "not_population_error_rate": true,
+  "not_independent_validation_of_threshold": true,
+  "panels_temporary": true,
+  "temporary_panels_removed": true,
+  "point_numbering": "Effective point-array indices, 1-based. The original pair-diagnostic CSV names these columns raw_point, but its implementation indexes prepared effective arrays.",
+  "conclusions": [
+    "25.6px是测量容差探针；本8例不证明统一语义阈值。",
+    "相近作答不必同簇；代表同簇不保证任意两份在同一距离阈值内。",
+    "点数门、对应关系、全局分区和局部像素容差分别造成不同效应。",
+    "未经人工确认，scope/topology与遮挡定位差异保持区分且允许未知。"
+  ],
+  "findings": [
+    {
+      "case_number": 1,
+      "code": "S9hNv5qa7GM-01",
+      "ids": [
+        "39827a17d6d532fc4d52",
+        "f77e64bc8bb82e6f5f03"
+      ],
+      "workers": [
+        "W013",
+        "W034"
+      ],
+      "reviewed_panels": [
+        "tmp_01_S9hNv5qa7GM-01.png"
+      ],
+      "actual_view_image_used": true,
+      "observed": "两份均以四组上下点表达同一浴室近处范围；最大差异位于镜柜下方遮挡区域，W013 p8与W034 p6。其余端点多数更接近，没有目视到新增另一房间范围。",
+      "provisional_assessment": "局部遮挡定位为主，语义相近尚待人工",
+      "mechanism": "local_occluded_endpoint",
+      "threshold_implication": "改为25.5px会把这对从相容改为不相容；底图和作答含义未因此改变。不能据此定哪一份更正确。",
+      "fixed_max_px": 25.576600879062852,
+      "cyclic_max_px": 25.576600879062852,
+      "free_max_px": 25.576600879062852,
+      "bottleneck_effective_point_numbers": [
+        8.0,
+        6.0
+      ],
+      "previous_development_image": false,
+      "scope_topology_final_decision": null,
+      "user_adjudication": null,
+      "source_metadata": "cases.json",
+      "prior_user_decisions_overridden": false
+    },
+    {
+      "case_number": 2,
+      "code": "uNb9QFRL6hY-66",
+      "ids": [
+        "f78931e744dcb44323b8",
+        "new_93_3599_7395_W008"
+      ],
+      "workers": [
+        "W015",
+        "W008"
+      ],
+      "reviewed_panels": [
+        "tmp_02_uNb9QFRL6hY-66.png"
+      ],
+      "actual_view_image_used": true,
+      "observed": "两份均有六组点，窗、淋浴区、盥洗区和右侧两处门框位置大致一一对应。最大差异在右侧门口相邻点组中的底点（W015 p8/W008 p11），没有观察到整图范围更换。近邻点组的实际墙面连接含义仍需人工。",
+      "provisional_assessment": "局部门框/墙脚高度差，整图结构大致一致",
+      "mechanism": "local_door_base",
+      "threshold_implication": "25.5与25.6之间会改变这一对的阈值相容性，不能据此认定表达模式改变。",
+      "fixed_max_px": 25.526765825818888,
+      "cyclic_max_px": 25.526765825818888,
+      "free_max_px": 25.526765825818888,
+      "bottleneck_effective_point_numbers": [
+        8.0,
+        11.0
+      ],
+      "previous_development_image": false,
+      "scope_topology_final_decision": null,
+      "user_adjudication": null,
+      "source_metadata": "cases.json",
+      "prior_user_decisions_overridden": false
+    },
+    {
+      "case_number": 3,
+      "code": "q9vSo1VnCiC-02",
+      "ids": [
+        "632220d24507015a",
+        "81dea2dc73f99d91"
+      ],
+      "workers": [
+        "W001",
+        "W030"
+      ],
+      "reviewed_panels": [
+        "tmp_03_q9vSo1VnCiC-02.png"
+      ],
+      "actual_view_image_used": true,
+      "observed": "两份均用四组点框定近处门口空间，未把门后远处房间增为额外角点。瓶颈是右侧木门附近顶点W001 p5/W030 p3；一个更靠门面，另一个更靠门框/上沿，几何与可见边界选择均可能参与。",
+      "provisional_assessment": "局部门扇遮挡处顶点选择，未见整图范围变化",
+      "mechanism": "local_occluded_top",
+      "threshold_implication": "只高于25.6约0.0205px；调至25.7会变为相容，但现有目视不能把这种数值翻转解释成语义突变。",
+      "fixed_max_px": 25.620534391517563,
+      "cyclic_max_px": 25.620534391517563,
+      "free_max_px": 25.620534391517563,
+      "bottleneck_effective_point_numbers": [
+        5.0,
+        3.0
+      ],
+      "previous_development_image": false,
+      "scope_topology_final_decision": null,
+      "user_adjudication": null,
+      "source_metadata": "cases.json",
+      "prior_user_decisions_overridden": false
+    },
+    {
+      "case_number": 4,
+      "code": "B6ByNegPMKs-40",
+      "ids": [
+        "07ee953d1535b28d",
+        "2c474f6a00577ed6"
+      ],
+      "workers": [
+        "W036",
+        "W027"
+      ],
+      "reviewed_panels": [
+        "tmp_04_B6ByNegPMKs-40.png"
+      ],
+      "actual_view_image_used": true,
+      "observed": "两份都把四组点放在左右走廊深处，但红色点框更大、蓝色更小，八个端点中位距离约19.98px。目视提示可能选择了不同进深的截面；不是仅一个遮挡点移动。全景不足以确定墙面拓扑或实际三维落点，保留人工问题。",
+      "provisional_assessment": "可能涉及走廊截断深度，不能按纯点击噪声解释",
+      "mechanism": "scope_depth_suspected_unresolved",
+      "threshold_implication": "虽仅高于25.6约0.0281px，25.7会接受这一对；它与其他阈值附近案例的差异机制并不相同。",
+      "fixed_max_px": 25.62813794191026,
+      "cyclic_max_px": 25.62813794191026,
+      "free_max_px": 25.62813794191026,
+      "bottleneck_effective_point_numbers": [
+        1.0,
+        2.0
+      ],
+      "previous_development_image": false,
+      "scope_topology_final_decision": null,
+      "user_adjudication": null,
+      "source_metadata": "cases.json",
+      "prior_user_decisions_overridden": false
+    },
+    {
+      "case_number": 5,
+      "code": "uNb9QFRL6hY-29",
+      "ids": [
+        "new_94_3627_6897_W031",
+        "new_94_3627_6946_W035"
+      ],
+      "workers": [
+        "W031",
+        "W035"
+      ],
+      "reviewed_panels": [
+        "tmp_05_uNb9QFRL6hY-29.png"
+      ],
+      "actual_view_image_used": true,
+      "observed": "六组上下点分别落在相同卧室与走廊结构上，最大差异仅W031 p1/W035 p9的6.79px。全图与局部都显示近重合；当前完整链接分到不同簇，代表法同簇。",
+      "provisional_assessment": "两份表达在目视上非常接近；完整链接分开不能当作不同语义证据",
+      "mechanism": "partition_near_pair_split",
+      "threshold_implication": "这一现象不是25.6相容判定出了错，而是簇内所有两两距离限制及合并历史造成的全局分区结果；不能由不同簇直接推断这两份表达不同。",
+      "fixed_max_px": 6.791097536738932,
+      "cyclic_max_px": 6.791097536738932,
+      "free_max_px": 6.791097536738932,
+      "bottleneck_effective_point_numbers": [
+        1.0,
+        9.0
+      ],
+      "previous_development_image": false,
+      "scope_topology_final_decision": null,
+      "user_adjudication": null,
+      "source_metadata": "cases.json",
+      "prior_user_decisions_overridden": false
+    },
+    {
+      "case_number": 6,
+      "code": "uNb9QFRL6hY-06",
+      "ids": [
+        "aace08a205b2832f",
+        "ffe8dc0a7734bb67"
+      ],
+      "workers": [
+        "W028",
+        "W011"
+      ],
+      "reviewed_panels": [
+        "tmp_06_uNb9QFRL6hY-06.png"
+      ],
+      "actual_view_image_used": true,
+      "observed": "两份均以四组点表达近处浴室，最大差异为镜台处两份p4，红点在花盆/后沿附近、蓝点更靠台面前下方。其余端点中位距离7.53px，暂未看到不同房间范围。遮挡下的真实墙脚不可见，不能把任一落点判作真值。",
+      "provisional_assessment": "遮挡底点较大偏移；代表同簇不保证任意两份相近",
+      "mechanism": "representative_radius_not_diameter",
+      "threshold_implication": "W028与W011相距46.75px但共享代表W031；距代表分别24.89和21.93px。代表同簇仅是共同参考范围关系，不等价于二者在25.6内。",
+      "fixed_max_px": 46.751287289769614,
+      "cyclic_max_px": 46.751287289769614,
+      "free_max_px": 46.751287289769614,
+      "bottleneck_effective_point_numbers": [
+        4.0,
+        4.0
+      ],
+      "previous_development_image": false,
+      "scope_topology_final_decision": null,
+      "user_adjudication": null,
+      "source_metadata": "cases.json",
+      "prior_user_decisions_overridden": false
+    },
+    {
+      "case_number": 7,
+      "code": "pRbA3pwrgk9-16",
+      "ids": [
+        "3dada1d9550343f0f06a",
+        "c26ee2572b19b332d923"
+      ],
+      "workers": [
+        "W015",
+        "W013"
+      ],
+      "reviewed_panels": [
+        "tmp_07_pRbA3pwrgk9-16.png"
+      ],
+      "actual_view_image_used": true,
+      "observed": "W015有20点、W013有18点；九组点可在25.6内一对一局部匹配。目视多出的W015 p19/p20位于近处中间白墙面，未观察到它对应独立可见墙角；不能仅据此删除或宣判误标。",
+      "provisional_assessment": "多一个局部点对与其余大部分点相同同时存在",
+      "mechanism": "count_gate_with_shared_structure",
+      "threshold_implication": "硬点数门保留了完整表达差异，但若仅输出不同簇，会丢失九组共享结构的信息。是否额外点表达合理局部结构仍需人工。",
+      "fixed_max_px": null,
+      "cyclic_max_px": null,
+      "free_max_px": null,
+      "bottleneck_effective_point_numbers": [
+        null,
+        null
+      ],
+      "previous_development_image": false,
+      "scope_topology_final_decision": null,
+      "user_adjudication": null,
+      "source_metadata": "cases.json",
+      "prior_user_decisions_overridden": false
+    },
+    {
+      "case_number": 8,
+      "code": "uNb9QFRL6hY-40",
+      "ids": [
+        "new_93_3591_7366_W002",
+        "new_94_3628_7006_W033"
+      ],
+      "workers": [
+        "W002",
+        "W033"
+      ],
+      "reviewed_panels": [
+        "tmp_08_uNb9QFRL6hY-40.png"
+      ],
+      "actual_view_image_used": true,
+      "observed": "W002的一组点在左接缝附近，W033的对应组在右接缝附近；环移一组后其他角点随之对应。固定起点最大459.76px，保持环序的cyclic已降至19.87px，自由匹配无额外收益。",
+      "provisional_assessment": "明显接缝起点对应问题；不是需要数百像素容差",
+      "mechanism": "seam_start_correspondence",
+      "threshold_implication": "应核对接缝起点与环序，而非增大几何阈值。本例图像属于既有开发审核集，仅用于复查机制；不覆盖既有人工裁决，也不作为独立验证。",
+      "fixed_max_px": 459.7646105991327,
+      "cyclic_max_px": 19.87160941723956,
+      "free_max_px": 19.87160941723956,
+      "bottleneck_effective_point_numbers": [
+        7.0,
+        6.0
+      ],
+      "previous_development_image": true,
+      "scope_topology_final_decision": null,
+      "user_adjudication": null,
+      "source_metadata": "cases.json",
+      "prior_user_decisions_overridden": false
+    }
+  ],
+  "overlap_review": {
+    "reviewer": "root agent",
+    "case_numbers": [
+      5,
+      8
+    ],
+    "actual_view_image_used": true,
+    "assessment": "同意两例所示近邻拆分和接缝起点错位；对应优化仍仅诊断，不普遍自动修复。"
+  }
+}

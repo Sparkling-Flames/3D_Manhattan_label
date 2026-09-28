@@ -1,0 +1,4074 @@
+{
+  "threshold_px": 25.6,
+  "image_space": [
+    1024,
+    512
+  ],
+  "panel_note": "Points and verified within-answer vertical pairs only; no inferred wall adjacency. Labels use effective source point indices.",
+  "development_evidence_paths": [
+    "analysis_results\\panorama_research_received_20260921\\local_recompute\\source_work\\analysis_results\\clustering_release_local_20260920\\current\\inputs\\key39_source.json",
+    "analysis_results\\panorama_research_received_20260921\\local_recompute\\source_work\\analysis_results\\clustering_release_local_20260920\\current\\inputs\\pilot_evidence.json",
+    "analysis_results\\panorama_research_received_20260921\\local_recompute\\source_work\\analysis_results\\clustering_release_local_20260920\\current\\inputs\\new_six_evidence.json",
+    "analysis_results\\panorama_research_received_20260921\\local_recompute\\source_work\\analysis_results\\local_point_clustering_20260920\\evidence\\review_manifest_16.json",
+    "analysis_results\\panorama_research_received_20260921\\local_recompute\\source_work\\analysis_results\\local_point_clustering_20260920\\evidence\\latest_decisions.json",
+    "analysis_results\\cluster_review_extra_20260919\\evidence.json"
+  ],
+  "development_image_count": 87,
+  "cases": [
+    {
+      "image_id": "S9hNv5qa7GM_0c2a97f049db4a429776940850fedf2e",
+      "code": "S9hNv5qa7GM-01",
+      "building": "S9hNv5qa7GM",
+      "N": 19,
+      "a_id": "39827a17d6d532fc4d52",
+      "b_id": "f77e64bc8bb82e6f5f03",
+      "a_worker": "W013",
+      "b_worker": "W034",
+      "a_pairs": 4,
+      "b_pairs": 4,
+      "same_count": true,
+      "partial_matching_fraction": 1.0,
+      "partial_matched": 4,
+      "fixed_max": 25.576600879062852,
+      "endpoint_median": 6.532361705928761,
+      "endpoint_q90": 23.60260493741718,
+      "endpoint_rms": 13.144495007777715,
+      "n_endpoint_fail": 0.0,
+      "n_corner_fail": 0.0,
+      "corner_near_share": 1.0,
+      "top_max": 8.948481281893793,
+      "bottom_max": 25.576600879062852,
+      "max_dx": 22.442249333115114,
+      "max_dy": 22.639205386522576,
+      "bottleneck_role": "bottom",
+      "bottleneck_a_raw_point": 8.0,
+      "bottleneck_b_raw_point": 6.0,
+      "cyclic_max": 25.576600879062852,
+      "cyclic_shift": 0.0,
+      "free_max": 25.576600879062852,
+      "free_mapping_1based": "1;2;3;4",
+      "diagnostic_case": "fixed_near",
+      "complete_same": false,
+      "representative_same": true,
+      "previous_development_image": false,
+      "threshold_gap": 0.023399120937149576,
+      "case_number": 1,
+      "selection_reason": "just_below",
+      "selection_order": "not previous development, threshold_gap ascending, code, ids",
+      "candidate_pair_count": 247,
+      "prior_user_decisions_overridden": false,
+      "partitions_recomputed": {
+        "complete": {
+          "labels_by_id": {
+            "029d6835bddda35f5e84": 1,
+            "077afa302e6fd9f894ce": 2,
+            "10c2be55dfd377d1f4ca": 3,
+            "32e17fb3edf0dc56817f": 1,
+            "39827a17d6d532fc4d52": 4,
+            "4ae36274a9f6a2b97a64": 5,
+            "4f08770787663224f0ab": 5,
+            "7b1866a3eeaa6930d596": 6,
+            "816083c4a02fed75db9a": 4,
+            "84c763a74fbfe8b41553": 7,
+            "86fc3ae9363a9f67b104": 8,
+            "93e9f86d9eab9e11871e": 5,
+            "a30b88572c63c71c10f3": 2,
+            "a4c50e340e62a015a85e": 5,
+            "a7f6ca98246198df8a79": 9,
+            "b505f83196ae0e6e3cc8": 10,
+            "f1f1b71b8c500b8fdf5a": 7,
+            "f77e64bc8bb82e6f5f03": 2,
+            "fdec7694d0b91e5316fe": 11
+          },
+          "centers": [
+            "029d6835bddda35f5e84",
+            "077afa302e6fd9f894ce",
+            "10c2be55dfd377d1f4ca",
+            "39827a17d6d532fc4d52",
+            "93e9f86d9eab9e11871e",
+            "7b1866a3eeaa6930d596",
+            "84c763a74fbfe8b41553",
+            "86fc3ae9363a9f67b104",
+            "a7f6ca98246198df8a79",
+            "b505f83196ae0e6e3cc8",
+            "fdec7694d0b91e5316fe"
+          ],
+          "between_selected_clusters_max": 30.24127909757066,
+          "between_selected_clusters_max_ids": [
+            "816083c4a02fed75db9a",
+            "f77e64bc8bb82e6f5f03"
+          ],
+          "member_distances_to_selected": [
+            {
+              "id": "029d6835bddda35f5e84",
+              "worker": "W029",
+              "to_a": 21.879708178248382,
+              "to_b": 44.63532566283395
+            },
+            {
+              "id": "077afa302e6fd9f894ce",
+              "worker": "W033",
+              "to_a": 21.62106291716386,
+              "to_b": 20.769674439458953
+            },
+            {
+              "id": "10c2be55dfd377d1f4ca",
+              "worker": "W030",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "32e17fb3edf0dc56817f",
+              "worker": "W037",
+              "to_a": 28.52382700651569,
+              "to_b": 40.739274079247764
+            },
+            {
+              "id": "39827a17d6d532fc4d52",
+              "worker": "W013",
+              "to_a": 0.0,
+              "to_b": 25.576600879062855
+            },
+            {
+              "id": "4ae36274a9f6a2b97a64",
+              "worker": "W017",
+              "to_a": 17.39338074847261,
+              "to_b": 38.83624095368747
+            },
+            {
+              "id": "4f08770787663224f0ab",
+              "worker": "W035",
+              "to_a": 24.086530183786547,
+              "to_b": 46.83866755638419
+            },
+            {
+              "id": "7b1866a3eeaa6930d596",
+              "worker": "W011",
+              "to_a": 37.0620951655647,
+              "to_b": 40.178864607827975
+            },
+            {
+              "id": "816083c4a02fed75db9a",
+              "worker": "W001",
+              "to_a": 12.983964794923164,
+              "to_b": 30.24127909757066
+            },
+            {
+              "id": "84c763a74fbfe8b41553",
+              "worker": "W032",
+              "to_a": 26.355566133726846,
+              "to_b": 29.454225817064362
+            },
+            {
+              "id": "86fc3ae9363a9f67b104",
+              "worker": "W010",
+              "to_a": 46.64494250944465,
+              "to_b": 54.608606127790495
+            },
+            {
+              "id": "93e9f86d9eab9e11871e",
+              "worker": "W028",
+              "to_a": 12.403435937046464,
+              "to_b": 34.96942655797909
+            },
+            {
+              "id": "a30b88572c63c71c10f3",
+              "worker": "W031",
+              "to_a": 21.525900365265358,
+              "to_b": 21.56514499059856
+            },
+            {
+              "id": "a4c50e340e62a015a85e",
+              "worker": "W008",
+              "to_a": 15.42870576790365,
+              "to_b": 38.05298629612659
+            },
+            {
+              "id": "a7f6ca98246198df8a79",
+              "worker": "W036",
+              "to_a": 102.17609684886298,
+              "to_b": 110.0340849954497
+            },
+            {
+              "id": "b505f83196ae0e6e3cc8",
+              "worker": "W006",
+              "to_a": 38.08282951487715,
+              "to_b": 44.21185739448618
+            },
+            {
+              "id": "f1f1b71b8c500b8fdf5a",
+              "worker": "W015",
+              "to_a": 33.436734693877554,
+              "to_b": 36.000587929111234
+            },
+            {
+              "id": "f77e64bc8bb82e6f5f03",
+              "worker": "W034",
+              "to_a": 25.576600879062855,
+              "to_b": 0.0
+            },
+            {
+              "id": "fdec7694d0b91e5316fe",
+              "worker": "W012",
+              "to_a": 52.174296010991625,
+              "to_b": 54.45428439544109
+            }
+          ]
+        },
+        "representative": {
+          "labels_by_id": {
+            "029d6835bddda35f5e84": 1,
+            "077afa302e6fd9f894ce": 1,
+            "10c2be55dfd377d1f4ca": 3,
+            "32e17fb3edf0dc56817f": 4,
+            "39827a17d6d532fc4d52": 1,
+            "4ae36274a9f6a2b97a64": 1,
+            "4f08770787663224f0ab": 1,
+            "7b1866a3eeaa6930d596": 5,
+            "816083c4a02fed75db9a": 1,
+            "84c763a74fbfe8b41553": 2,
+            "86fc3ae9363a9f67b104": 6,
+            "93e9f86d9eab9e11871e": 1,
+            "a30b88572c63c71c10f3": 1,
+            "a4c50e340e62a015a85e": 1,
+            "a7f6ca98246198df8a79": 7,
+            "b505f83196ae0e6e3cc8": 8,
+            "f1f1b71b8c500b8fdf5a": 2,
+            "f77e64bc8bb82e6f5f03": 1,
+            "fdec7694d0b91e5316fe": 9
+          },
+          "centers": [
+            "39827a17d6d532fc4d52",
+            "84c763a74fbfe8b41553",
+            "10c2be55dfd377d1f4ca",
+            "32e17fb3edf0dc56817f",
+            "7b1866a3eeaa6930d596",
+            "86fc3ae9363a9f67b104",
+            "a7f6ca98246198df8a79",
+            "b505f83196ae0e6e3cc8",
+            "fdec7694d0b91e5316fe"
+          ],
+          "between_selected_clusters_max": 46.83866755638419,
+          "between_selected_clusters_max_ids": [
+            "4f08770787663224f0ab",
+            "f77e64bc8bb82e6f5f03"
+          ],
+          "member_distances_to_selected": [
+            {
+              "id": "029d6835bddda35f5e84",
+              "worker": "W029",
+              "to_a": 21.879708178248382,
+              "to_b": 44.63532566283395
+            },
+            {
+              "id": "077afa302e6fd9f894ce",
+              "worker": "W033",
+              "to_a": 21.62106291716386,
+              "to_b": 20.769674439458953
+            },
+            {
+              "id": "10c2be55dfd377d1f4ca",
+              "worker": "W030",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "32e17fb3edf0dc56817f",
+              "worker": "W037",
+              "to_a": 28.52382700651569,
+              "to_b": 40.739274079247764
+            },
+            {
+              "id": "39827a17d6d532fc4d52",
+              "worker": "W013",
+              "to_a": 0.0,
+              "to_b": 25.576600879062855
+            },
+            {
+              "id": "4ae36274a9f6a2b97a64",
+              "worker": "W017",
+              "to_a": 17.39338074847261,
+              "to_b": 38.83624095368747
+            },
+            {
+              "id": "4f08770787663224f0ab",
+              "worker": "W035",
+              "to_a": 24.086530183786547,
+              "to_b": 46.83866755638419
+            },
+            {
+              "id": "7b1866a3eeaa6930d596",
+              "worker": "W011",
+              "to_a": 37.0620951655647,
+              "to_b": 40.178864607827975
+            },
+            {
+              "id": "816083c4a02fed75db9a",
+              "worker": "W001",
+              "to_a": 12.983964794923164,
+              "to_b": 30.24127909757066
+            },
+            {
+              "id": "84c763a74fbfe8b41553",
+              "worker": "W032",
+              "to_a": 26.355566133726846,
+              "to_b": 29.454225817064362
+            },
+            {
+              "id": "86fc3ae9363a9f67b104",
+              "worker": "W010",
+              "to_a": 46.64494250944465,
+              "to_b": 54.608606127790495
+            },
+            {
+              "id": "93e9f86d9eab9e11871e",
+              "worker": "W028",
+              "to_a": 12.403435937046464,
+              "to_b": 34.96942655797909
+            },
+            {
+              "id": "a30b88572c63c71c10f3",
+              "worker": "W031",
+              "to_a": 21.525900365265358,
+              "to_b": 21.56514499059856
+            },
+            {
+              "id": "a4c50e340e62a015a85e",
+              "worker": "W008",
+              "to_a": 15.42870576790365,
+              "to_b": 38.05298629612659
+            },
+            {
+              "id": "a7f6ca98246198df8a79",
+              "worker": "W036",
+              "to_a": 102.17609684886298,
+              "to_b": 110.0340849954497
+            },
+            {
+              "id": "b505f83196ae0e6e3cc8",
+              "worker": "W006",
+              "to_a": 38.08282951487715,
+              "to_b": 44.21185739448618
+            },
+            {
+              "id": "f1f1b71b8c500b8fdf5a",
+              "worker": "W015",
+              "to_a": 33.436734693877554,
+              "to_b": 36.000587929111234
+            },
+            {
+              "id": "f77e64bc8bb82e6f5f03",
+              "worker": "W034",
+              "to_a": 25.576600879062855,
+              "to_b": 0.0
+            },
+            {
+              "id": "fdec7694d0b91e5316fe",
+              "worker": "W012",
+              "to_a": 52.174296010991625,
+              "to_b": 54.45428439544109
+            }
+          ]
+        }
+      },
+      "annotations": [
+        {
+          "canonical_id": "39827a17d6d532fc4d52",
+          "worker": "W013",
+          "raw_annotation_id": "6728",
+          "project_id": "77",
+          "runtime_task_id": "3452",
+          "raw_export_path": "export_label/c2B_Chinese/project-77-at-2026-08-06-14-39-a247e8c0.json",
+          "points_1024x512": [
+            [
+              434.06290516206485,
+              189.3109243697479
+            ],
+            [
+              614.768787515006,
+              187.22112845138057
+            ],
+            [
+              941.7603841536614,
+              200.2516206482593
+            ],
+            [
+              75.47851140456183,
+              202.71020408163267
+            ],
+            [
+              68.84033613445378,
+              376.16326530612247
+            ],
+            [
+              433.6941176470588,
+              388.94789915966385
+            ],
+            [
+              943.1126050420168,
+              382.8014405762305
+            ],
+            [
+              614.0299831932774,
+              388.90487394957984
+            ]
+          ],
+          "pairs_effective_1based": [
+            [
+              4,
+              5
+            ],
+            [
+              1,
+              6
+            ],
+            [
+              2,
+              8
+            ],
+            [
+              3,
+              7
+            ]
+          ],
+          "imputed_point": false
+        },
+        {
+          "canonical_id": "f77e64bc8bb82e6f5f03",
+          "worker": "W034",
+          "raw_annotation_id": "6606",
+          "project_id": "76",
+          "runtime_task_id": "3406",
+          "raw_export_path": "export_label/c2B_English/project-76-at-2026-08-06-14-41-45400e98.json",
+          "points_1024x512": [
+            [
+              66.53175932061039,
+              202.88611428802912
+            ],
+            [
+              66.53175932061039,
+              353.5240599195999
+            ],
+            [
+              430.76104720321234,
+              190.8800667537146
+            ],
+            [
+              432.68315113889855,
+              392.0602786888651
+            ],
+            [
+              613.1702474904412,
+              193.196092882834
+            ],
+            [
+              591.5877338601623,
+              401.1730424109751
+            ],
+            [
+              946.9741393107674,
+              385.1575946220584
+            ],
+            [
+              937.2168135803419,
+              205.41738379843116
+            ]
+          ],
+          "pairs_effective_1based": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              8,
+              7
+            ]
+          ],
+          "imputed_point": false
+        }
+      ],
+      "pair_compatible_at_px": {
+        "25.5": false,
+        "25.6": true,
+        "25.7": true
+      }
+    },
+    {
+      "image_id": "uNb9QFRL6hY_c6410f47ad754d6cbd890ba7dff8b449",
+      "code": "uNb9QFRL6hY-66",
+      "building": "uNb9QFRL6hY",
+      "N": 21,
+      "a_id": "f78931e744dcb44323b8",
+      "b_id": "new_93_3599_7395_W008",
+      "a_worker": "W015",
+      "b_worker": "W008",
+      "a_pairs": 6,
+      "b_pairs": 6,
+      "same_count": true,
+      "partial_matching_fraction": 1.0,
+      "partial_matched": 6,
+      "fixed_max": 25.526765825818888,
+      "endpoint_median": 4.817494712946012,
+      "endpoint_q90": 16.40187321296863,
+      "endpoint_rms": 10.702199195420818,
+      "n_endpoint_fail": 0.0,
+      "n_corner_fail": 0.0,
+      "corner_near_share": 1.0,
+      "top_max": 12.080341358420466,
+      "bottom_max": 25.526765825818888,
+      "max_dx": 15.99828469068757,
+      "max_dy": 25.41240562744781,
+      "bottleneck_role": "bottom",
+      "bottleneck_a_raw_point": 8.0,
+      "bottleneck_b_raw_point": 11.0,
+      "cyclic_max": 25.526765825818888,
+      "cyclic_shift": 0.0,
+      "free_max": 25.526765825818888,
+      "free_mapping_1based": "1;2;3;4;5;6",
+      "diagnostic_case": "fixed_near",
+      "complete_same": false,
+      "representative_same": true,
+      "previous_development_image": false,
+      "threshold_gap": 0.07323417418111333,
+      "case_number": 2,
+      "selection_reason": "just_below",
+      "selection_order": "not previous development, threshold_gap ascending, code, ids",
+      "candidate_pair_count": 247,
+      "prior_user_decisions_overridden": false,
+      "partitions_recomputed": {
+        "complete": {
+          "labels_by_id": {
+            "63597564c489c761152b": 1,
+            "81702024cb6333973ce6": 2,
+            "9013342fd86225b281ba": 3,
+            "c3008da1d11064bd3531": 4,
+            "f78931e744dcb44323b8": 5,
+            "new_93_3599_6862_W001": 5,
+            "new_93_3599_6904_W017": 5,
+            "new_93_3599_7125_W012": 6,
+            "new_93_3599_7251_W010": 5,
+            "new_93_3599_7284_W013": 5,
+            "new_93_3599_7370_W002": 7,
+            "new_93_3599_7395_W008": 7,
+            "new_93_3599_7498_W018": 5,
+            "new_93_3599_7500_W006": 5,
+            "new_94_3636_6962_W035": 1,
+            "new_94_3636_7039_W037": 8,
+            "new_94_3636_7116_W036": 9,
+            "new_94_3636_7166_W034": 3,
+            "new_94_3636_7199_W029": 5,
+            "new_94_3636_7319_W030": 3,
+            "new_94_3636_7421_W028": 10
+          },
+          "centers": [
+            "63597564c489c761152b",
+            "81702024cb6333973ce6",
+            "new_94_3636_7166_W034",
+            "c3008da1d11064bd3531",
+            "new_93_3599_7251_W010",
+            "new_93_3599_7125_W012",
+            "new_93_3599_7370_W002",
+            "new_94_3636_7039_W037",
+            "new_94_3636_7116_W036",
+            "new_94_3636_7421_W028"
+          ],
+          "between_selected_clusters_max": 26.436891239536024,
+          "between_selected_clusters_max_ids": [
+            "new_93_3599_6862_W001",
+            "new_93_3599_7395_W008"
+          ],
+          "member_distances_to_selected": [
+            {
+              "id": "63597564c489c761152b",
+              "worker": "W031",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "81702024cb6333973ce6",
+              "worker": "W011",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "9013342fd86225b281ba",
+              "worker": "W033",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "c3008da1d11064bd3531",
+              "worker": "W032",
+              "to_a": 155.1077445420325,
+              "to_b": 160.39755698500534
+            },
+            {
+              "id": "f78931e744dcb44323b8",
+              "worker": "W015",
+              "to_a": 0.0,
+              "to_b": 25.526765825818888
+            },
+            {
+              "id": "new_93_3599_6862_W001",
+              "worker": "W001",
+              "to_a": 12.473383585436068,
+              "to_b": 26.436891239536024
+            },
+            {
+              "id": "new_93_3599_6904_W017",
+              "worker": "W017",
+              "to_a": 8.030763700105632,
+              "to_b": 18.41859135358872
+            },
+            {
+              "id": "new_93_3599_7125_W012",
+              "worker": "W012",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_93_3599_7251_W010",
+              "worker": "W010",
+              "to_a": 12.950605350418817,
+              "to_b": 21.225000884129123
+            },
+            {
+              "id": "new_93_3599_7284_W013",
+              "worker": "W013",
+              "to_a": 12.950605350418817,
+              "to_b": 21.225000884129123
+            },
+            {
+              "id": "new_93_3599_7370_W002",
+              "worker": "W002",
+              "to_a": 18.970313513947804,
+              "to_b": 7.280425232683165
+            },
+            {
+              "id": "new_93_3599_7395_W008",
+              "worker": "W008",
+              "to_a": 25.526765825818888,
+              "to_b": 0.0
+            },
+            {
+              "id": "new_93_3599_7498_W018",
+              "worker": "W018",
+              "to_a": 20.06897626275704,
+              "to_b": 23.300179829624557
+            },
+            {
+              "id": "new_93_3599_7500_W006",
+              "worker": "W006",
+              "to_a": 20.06897626275704,
+              "to_b": 23.300179829624557
+            },
+            {
+              "id": "new_94_3636_6962_W035",
+              "worker": "W035",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_94_3636_7039_W037",
+              "worker": "W037",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_94_3636_7116_W036",
+              "worker": "W036",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_94_3636_7166_W034",
+              "worker": "W034",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_94_3636_7199_W029",
+              "worker": "W029",
+              "to_a": 12.461923013274198,
+              "to_b": 17.17807784553679
+            },
+            {
+              "id": "new_94_3636_7319_W030",
+              "worker": "W030",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_94_3636_7421_W028",
+              "worker": "W028",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            }
+          ]
+        },
+        "representative": {
+          "labels_by_id": {
+            "63597564c489c761152b": 3,
+            "81702024cb6333973ce6": 4,
+            "9013342fd86225b281ba": 2,
+            "c3008da1d11064bd3531": 5,
+            "f78931e744dcb44323b8": 1,
+            "new_93_3599_6862_W001": 1,
+            "new_93_3599_6904_W017": 1,
+            "new_93_3599_7125_W012": 6,
+            "new_93_3599_7251_W010": 1,
+            "new_93_3599_7284_W013": 1,
+            "new_93_3599_7370_W002": 1,
+            "new_93_3599_7395_W008": 1,
+            "new_93_3599_7498_W018": 1,
+            "new_93_3599_7500_W006": 1,
+            "new_94_3636_6962_W035": 3,
+            "new_94_3636_7039_W037": 7,
+            "new_94_3636_7116_W036": 8,
+            "new_94_3636_7166_W034": 2,
+            "new_94_3636_7199_W029": 1,
+            "new_94_3636_7319_W030": 2,
+            "new_94_3636_7421_W028": 9
+          },
+          "centers": [
+            "new_93_3599_6904_W017",
+            "new_94_3636_7166_W034",
+            "63597564c489c761152b",
+            "81702024cb6333973ce6",
+            "c3008da1d11064bd3531",
+            "new_93_3599_7125_W012",
+            "new_94_3636_7039_W037",
+            "new_94_3636_7116_W036",
+            "new_94_3636_7421_W028"
+          ],
+          "between_selected_clusters_max": 26.436891239536024,
+          "between_selected_clusters_max_ids": [
+            "new_93_3599_6862_W001",
+            "new_93_3599_7395_W008"
+          ],
+          "member_distances_to_selected": [
+            {
+              "id": "63597564c489c761152b",
+              "worker": "W031",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "81702024cb6333973ce6",
+              "worker": "W011",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "9013342fd86225b281ba",
+              "worker": "W033",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "c3008da1d11064bd3531",
+              "worker": "W032",
+              "to_a": 155.1077445420325,
+              "to_b": 160.39755698500534
+            },
+            {
+              "id": "f78931e744dcb44323b8",
+              "worker": "W015",
+              "to_a": 0.0,
+              "to_b": 25.526765825818888
+            },
+            {
+              "id": "new_93_3599_6862_W001",
+              "worker": "W001",
+              "to_a": 12.473383585436068,
+              "to_b": 26.436891239536024
+            },
+            {
+              "id": "new_93_3599_6904_W017",
+              "worker": "W017",
+              "to_a": 8.030763700105632,
+              "to_b": 18.41859135358872
+            },
+            {
+              "id": "new_93_3599_7125_W012",
+              "worker": "W012",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_93_3599_7251_W010",
+              "worker": "W010",
+              "to_a": 12.950605350418817,
+              "to_b": 21.225000884129123
+            },
+            {
+              "id": "new_93_3599_7284_W013",
+              "worker": "W013",
+              "to_a": 12.950605350418817,
+              "to_b": 21.225000884129123
+            },
+            {
+              "id": "new_93_3599_7370_W002",
+              "worker": "W002",
+              "to_a": 18.970313513947804,
+              "to_b": 7.280425232683165
+            },
+            {
+              "id": "new_93_3599_7395_W008",
+              "worker": "W008",
+              "to_a": 25.526765825818888,
+              "to_b": 0.0
+            },
+            {
+              "id": "new_93_3599_7498_W018",
+              "worker": "W018",
+              "to_a": 20.06897626275704,
+              "to_b": 23.300179829624557
+            },
+            {
+              "id": "new_93_3599_7500_W006",
+              "worker": "W006",
+              "to_a": 20.06897626275704,
+              "to_b": 23.300179829624557
+            },
+            {
+              "id": "new_94_3636_6962_W035",
+              "worker": "W035",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_94_3636_7039_W037",
+              "worker": "W037",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_94_3636_7116_W036",
+              "worker": "W036",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_94_3636_7166_W034",
+              "worker": "W034",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_94_3636_7199_W029",
+              "worker": "W029",
+              "to_a": 12.461923013274198,
+              "to_b": 17.17807784553679
+            },
+            {
+              "id": "new_94_3636_7319_W030",
+              "worker": "W030",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_94_3636_7421_W028",
+              "worker": "W028",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            }
+          ]
+        }
+      },
+      "annotations": [
+        {
+          "canonical_id": "f78931e744dcb44323b8",
+          "worker": "W015",
+          "raw_annotation_id": "6470",
+          "project_id": "71",
+          "runtime_task_id": "3353",
+          "raw_export_path": "export_label/stage2_Chinese/project-71-at-2026-07-30-14-18-54a73158.json",
+          "points_1024x512": [
+            [
+              209.96302521008403,
+              149.72773109243698
+            ],
+            [
+              209.96302521008403,
+              364.85378151260505
+            ],
+            [
+              440.5781512605042,
+              199.636974789916
+            ],
+            [
+              444.0201680672269,
+              309.781512605042
+            ],
+            [
+              638.4941176470588,
+              208.2420168067227
+            ],
+            [
+              641.9361344537815,
+              306.3394957983193
+            ],
+            [
+              793.38487394958,
+              192.75294117647059
+            ],
+            [
+              795.1058823529413,
+              314.94453781512607
+            ],
+            [
+              803.710924369748,
+              340.75966386554614
+            ],
+            [
+              801.9899159663867,
+              173.8218487394958
+            ],
+            [
+              869.109243697479,
+              330.4336134453781
+            ],
+            [
+              867.3882352941176,
+              184.14789915966387
+            ]
+          ],
+          "pairs_effective_1based": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              10,
+              9
+            ],
+            [
+              12,
+              11
+            ]
+          ],
+          "imputed_point": false
+        },
+        {
+          "canonical_id": "new_93_3599_7395_W008",
+          "worker": "W008",
+          "raw_annotation_id": 7395,
+          "project_id": 93,
+          "runtime_task_id": 3599,
+          "raw_export_path": "export_label/新增中文20图/project-93-at-2026-09-21-09-42-4609125d.json",
+          "points_1024x512": [
+            [
+              210.46611698899895,
+              153.39048063970432
+            ],
+            [
+              209.3145563961001,
+              373.2604404698928
+            ],
+            [
+              443.2926970912538,
+              199.6397764939495
+            ],
+            [
+              444.1893221261719,
+              312.55760837414783
+            ],
+            [
+              626.5019791058548,
+              209.69915802998622
+            ],
+            [
+              625.9378497630939,
+              311.730068769508
+            ],
+            [
+              868.8614861710048,
+              180.76972945766684
+            ],
+            [
+              868.0284409332033,
+              334.0493328351387
+            ],
+            [
+              801.99049891641,
+              170.45791091951568
+            ],
+            [
+              802.5493773128675,
+              346.50460580360567
+            ],
+            [
+              797.5194717447505,
+              340.3569434425739
+            ],
+            [
+              795.2839581589209,
+              182.0326127139346
+            ]
+          ],
+          "pairs_effective_1based": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              12,
+              11
+            ],
+            [
+              9,
+              10
+            ],
+            [
+              7,
+              8
+            ]
+          ],
+          "imputed_point": false
+        }
+      ],
+      "pair_compatible_at_px": {
+        "25.5": false,
+        "25.6": true,
+        "25.7": true
+      }
+    },
+    {
+      "image_id": "q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e",
+      "code": "q9vSo1VnCiC-02",
+      "building": "q9vSo1VnCiC",
+      "N": 24,
+      "a_id": "632220d24507015a",
+      "b_id": "81dea2dc73f99d91",
+      "a_worker": "W001",
+      "b_worker": "W030",
+      "a_pairs": 4,
+      "b_pairs": 4,
+      "same_count": true,
+      "partial_matching_fraction": 0.75,
+      "partial_matched": 3,
+      "fixed_max": 25.620534391517563,
+      "endpoint_median": 7.410347603564864,
+      "endpoint_q90": 20.369442200980043,
+      "endpoint_rms": 12.702567252949368,
+      "n_endpoint_fail": 1.0,
+      "n_corner_fail": 1.0,
+      "corner_near_share": 0.75,
+      "top_max": 25.620534391517563,
+      "bottom_max": 18.118974119321106,
+      "max_dx": 22.098160865103864,
+      "max_dy": 16.327097639908516,
+      "bottleneck_role": "top",
+      "bottleneck_a_raw_point": 5.0,
+      "bottleneck_b_raw_point": 3.0,
+      "cyclic_max": 25.620534391517563,
+      "cyclic_shift": 0.0,
+      "free_max": 25.620534391517563,
+      "free_mapping_1based": "1;2;3;4",
+      "diagnostic_case": "still_far",
+      "complete_same": false,
+      "representative_same": true,
+      "previous_development_image": false,
+      "threshold_gap": 0.02053439151756109,
+      "case_number": 3,
+      "selection_reason": "just_above",
+      "selection_order": "not previous development, threshold_gap ascending, code, ids",
+      "candidate_pair_count": 245,
+      "prior_user_decisions_overridden": false,
+      "partitions_recomputed": {
+        "complete": {
+          "labels_by_id": {
+            "028464efb23f49f4": 1,
+            "05eb948b2ffa3e8a": 1,
+            "0bc7f316c3bc455b": 1,
+            "2363f1899a906f6f": 2,
+            "2d47294ca7fcec72": 1,
+            "32386fcf9fb30375": 2,
+            "3a06d95fdf379816": 3,
+            "3c0d7a12c8c88472": 1,
+            "531bf7a7ee88f707": 1,
+            "56f8882bd06575e0": 1,
+            "5f11cf7a5e9e864a": 1,
+            "5f13962e564d0d52": 3,
+            "632220d24507015a": 3,
+            "69b748f6eb971312": 1,
+            "70be44b69fb2f4ff": 1,
+            "71729ab9c7569f1c": 1,
+            "79e12393ae798c89": 1,
+            "81dea2dc73f99d91": 2,
+            "983982d4bd6a6054": 1,
+            "a0b9d67c00beeed2": 2,
+            "adef48d62993c490": 1,
+            "ea568321af4d7ba2": 2,
+            "f37fb82e6c7c602f": 2,
+            "fb4d8560e355af7e": 1
+          },
+          "centers": [
+            "028464efb23f49f4",
+            "32386fcf9fb30375",
+            "3a06d95fdf379816"
+          ],
+          "between_selected_clusters_max": 34.14088075623325,
+          "between_selected_clusters_max_ids": [
+            "632220d24507015a",
+            "ea568321af4d7ba2"
+          ],
+          "member_distances_to_selected": [
+            {
+              "id": "028464efb23f49f4",
+              "worker": "W036",
+              "to_a": 25.22108139480299,
+              "to_b": 14.691552950497908
+            },
+            {
+              "id": "05eb948b2ffa3e8a",
+              "worker": "W035",
+              "to_a": 25.82879603016937,
+              "to_b": 17.888408927812524
+            },
+            {
+              "id": "0bc7f316c3bc455b",
+              "worker": "W033",
+              "to_a": 25.128948079865697,
+              "to_b": 13.435975293812561
+            },
+            {
+              "id": "2363f1899a906f6f",
+              "worker": "W012",
+              "to_a": 30.74173501353377,
+              "to_b": 12.530549523417372
+            },
+            {
+              "id": "2d47294ca7fcec72",
+              "worker": "W031",
+              "to_a": 23.63783563122617,
+              "to_b": 6.846645209171223
+            },
+            {
+              "id": "32386fcf9fb30375",
+              "worker": "W015",
+              "to_a": 23.111423139485673,
+              "to_b": 9.70399230389556
+            },
+            {
+              "id": "3a06d95fdf379816",
+              "worker": "W010",
+              "to_a": 23.801243679778782,
+              "to_b": 29.631092716493523
+            },
+            {
+              "id": "3c0d7a12c8c88472",
+              "worker": "W027",
+              "to_a": 22.405022947290917,
+              "to_b": 16.72032531473961
+            },
+            {
+              "id": "531bf7a7ee88f707",
+              "worker": "W029",
+              "to_a": 21.965228187385517,
+              "to_b": 9.038311047061189
+            },
+            {
+              "id": "56f8882bd06575e0",
+              "worker": "W002",
+              "to_a": 24.809840377589182,
+              "to_b": 19.894776373069316
+            },
+            {
+              "id": "5f11cf7a5e9e864a",
+              "worker": "W028",
+              "to_a": 24.76459484703192,
+              "to_b": 16.493652892142173
+            },
+            {
+              "id": "5f13962e564d0d52",
+              "worker": "W013",
+              "to_a": 23.801243679778782,
+              "to_b": 29.631092716493523
+            },
+            {
+              "id": "632220d24507015a",
+              "worker": "W001",
+              "to_a": 0.0,
+              "to_b": 25.620534391517563
+            },
+            {
+              "id": "69b748f6eb971312",
+              "worker": "W018",
+              "to_a": 24.809840377589182,
+              "to_b": 19.894776373069316
+            },
+            {
+              "id": "70be44b69fb2f4ff",
+              "worker": "W008",
+              "to_a": 21.65121151227561,
+              "to_b": 13.317675276041482
+            },
+            {
+              "id": "71729ab9c7569f1c",
+              "worker": "W017",
+              "to_a": 23.78459918225833,
+              "to_b": 16.59082298707057
+            },
+            {
+              "id": "79e12393ae798c89",
+              "worker": "W006",
+              "to_a": 20.530626197459203,
+              "to_b": 23.581291645216115
+            },
+            {
+              "id": "81dea2dc73f99d91",
+              "worker": "W030",
+              "to_a": 25.620534391517563,
+              "to_b": 0.0
+            },
+            {
+              "id": "983982d4bd6a6054",
+              "worker": "W032",
+              "to_a": 23.341578815053733,
+              "to_b": 16.377834341881027
+            },
+            {
+              "id": "a0b9d67c00beeed2",
+              "worker": "W021",
+              "to_a": 23.111423139485673,
+              "to_b": 9.70399230389556
+            },
+            {
+              "id": "adef48d62993c490",
+              "worker": "W014",
+              "to_a": 19.25430244284238,
+              "to_b": 15.178137066287368
+            },
+            {
+              "id": "ea568321af4d7ba2",
+              "worker": "W034",
+              "to_a": 34.14088075623325,
+              "to_b": 16.32114507113816
+            },
+            {
+              "id": "f37fb82e6c7c602f",
+              "worker": "W037",
+              "to_a": 24.28043203357404,
+              "to_b": 10.021255910702626
+            },
+            {
+              "id": "fb4d8560e355af7e",
+              "worker": "W011",
+              "to_a": 20.77380991486177,
+              "to_b": 20.023310172293044
+            }
+          ]
+        },
+        "representative": {
+          "labels_by_id": {
+            "028464efb23f49f4": 1,
+            "05eb948b2ffa3e8a": 1,
+            "0bc7f316c3bc455b": 1,
+            "2363f1899a906f6f": 1,
+            "2d47294ca7fcec72": 1,
+            "32386fcf9fb30375": 1,
+            "3a06d95fdf379816": 1,
+            "3c0d7a12c8c88472": 1,
+            "531bf7a7ee88f707": 1,
+            "56f8882bd06575e0": 1,
+            "5f11cf7a5e9e864a": 1,
+            "5f13962e564d0d52": 1,
+            "632220d24507015a": 1,
+            "69b748f6eb971312": 1,
+            "70be44b69fb2f4ff": 1,
+            "71729ab9c7569f1c": 1,
+            "79e12393ae798c89": 1,
+            "81dea2dc73f99d91": 1,
+            "983982d4bd6a6054": 1,
+            "a0b9d67c00beeed2": 1,
+            "adef48d62993c490": 1,
+            "ea568321af4d7ba2": 1,
+            "f37fb82e6c7c602f": 1,
+            "fb4d8560e355af7e": 1
+          },
+          "centers": [
+            "028464efb23f49f4"
+          ],
+          "between_selected_clusters_max": 34.14088075623325,
+          "between_selected_clusters_max_ids": [
+            "632220d24507015a",
+            "ea568321af4d7ba2"
+          ],
+          "member_distances_to_selected": [
+            {
+              "id": "028464efb23f49f4",
+              "worker": "W036",
+              "to_a": 25.22108139480299,
+              "to_b": 14.691552950497908
+            },
+            {
+              "id": "05eb948b2ffa3e8a",
+              "worker": "W035",
+              "to_a": 25.82879603016937,
+              "to_b": 17.888408927812524
+            },
+            {
+              "id": "0bc7f316c3bc455b",
+              "worker": "W033",
+              "to_a": 25.128948079865697,
+              "to_b": 13.435975293812561
+            },
+            {
+              "id": "2363f1899a906f6f",
+              "worker": "W012",
+              "to_a": 30.74173501353377,
+              "to_b": 12.530549523417372
+            },
+            {
+              "id": "2d47294ca7fcec72",
+              "worker": "W031",
+              "to_a": 23.63783563122617,
+              "to_b": 6.846645209171223
+            },
+            {
+              "id": "32386fcf9fb30375",
+              "worker": "W015",
+              "to_a": 23.111423139485673,
+              "to_b": 9.70399230389556
+            },
+            {
+              "id": "3a06d95fdf379816",
+              "worker": "W010",
+              "to_a": 23.801243679778782,
+              "to_b": 29.631092716493523
+            },
+            {
+              "id": "3c0d7a12c8c88472",
+              "worker": "W027",
+              "to_a": 22.405022947290917,
+              "to_b": 16.72032531473961
+            },
+            {
+              "id": "531bf7a7ee88f707",
+              "worker": "W029",
+              "to_a": 21.965228187385517,
+              "to_b": 9.038311047061189
+            },
+            {
+              "id": "56f8882bd06575e0",
+              "worker": "W002",
+              "to_a": 24.809840377589182,
+              "to_b": 19.894776373069316
+            },
+            {
+              "id": "5f11cf7a5e9e864a",
+              "worker": "W028",
+              "to_a": 24.76459484703192,
+              "to_b": 16.493652892142173
+            },
+            {
+              "id": "5f13962e564d0d52",
+              "worker": "W013",
+              "to_a": 23.801243679778782,
+              "to_b": 29.631092716493523
+            },
+            {
+              "id": "632220d24507015a",
+              "worker": "W001",
+              "to_a": 0.0,
+              "to_b": 25.620534391517563
+            },
+            {
+              "id": "69b748f6eb971312",
+              "worker": "W018",
+              "to_a": 24.809840377589182,
+              "to_b": 19.894776373069316
+            },
+            {
+              "id": "70be44b69fb2f4ff",
+              "worker": "W008",
+              "to_a": 21.65121151227561,
+              "to_b": 13.317675276041482
+            },
+            {
+              "id": "71729ab9c7569f1c",
+              "worker": "W017",
+              "to_a": 23.78459918225833,
+              "to_b": 16.59082298707057
+            },
+            {
+              "id": "79e12393ae798c89",
+              "worker": "W006",
+              "to_a": 20.530626197459203,
+              "to_b": 23.581291645216115
+            },
+            {
+              "id": "81dea2dc73f99d91",
+              "worker": "W030",
+              "to_a": 25.620534391517563,
+              "to_b": 0.0
+            },
+            {
+              "id": "983982d4bd6a6054",
+              "worker": "W032",
+              "to_a": 23.341578815053733,
+              "to_b": 16.377834341881027
+            },
+            {
+              "id": "a0b9d67c00beeed2",
+              "worker": "W021",
+              "to_a": 23.111423139485673,
+              "to_b": 9.70399230389556
+            },
+            {
+              "id": "adef48d62993c490",
+              "worker": "W014",
+              "to_a": 19.25430244284238,
+              "to_b": 15.178137066287368
+            },
+            {
+              "id": "ea568321af4d7ba2",
+              "worker": "W034",
+              "to_a": 34.14088075623325,
+              "to_b": 16.32114507113816
+            },
+            {
+              "id": "f37fb82e6c7c602f",
+              "worker": "W037",
+              "to_a": 24.28043203357404,
+              "to_b": 10.021255910702626
+            },
+            {
+              "id": "fb4d8560e355af7e",
+              "worker": "W011",
+              "to_a": 20.77380991486177,
+              "to_b": 20.023310172293044
+            }
+          ]
+        }
+      },
+      "annotations": [
+        {
+          "canonical_id": "632220d24507015a",
+          "worker": "W001",
+          "raw_annotation_id": "4822",
+          "project_id": "28",
+          "runtime_task_id": "3062",
+          "raw_export_path": "analysis_results/prescreen_closeout_final_gold_v2_20260701/raw_inputs/project-28-at-2026-07-01-07-14-56a198ba.json",
+          "points_1024x512": [
+            [
+              71.58058252427185,
+              151.1145631067961
+            ],
+            [
+              75.55728155339806,
+              369.8330097087379
+            ],
+            [
+              395.6815533980582,
+              125.26601941747573
+            ],
+            [
+              395.6815533980582,
+              401.6466019417476
+            ],
+            [
+              658.1436893203884,
+              141.17281553398058
+            ],
+            [
+              642.2368932038835,
+              407.61165048543694
+            ],
+            [
+              954.4077669902913,
+              161.05631067961164
+            ],
+            [
+              948.4427184466019,
+              363.86796116504854
+            ]
+          ],
+          "pairs_effective_1based": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              7,
+              8
+            ]
+          ],
+          "imputed_point": false
+        },
+        {
+          "canonical_id": "81dea2dc73f99d91",
+          "worker": "W030",
+          "raw_annotation_id": "4202",
+          "project_id": "39",
+          "runtime_task_id": "3134",
+          "raw_export_path": "analysis_results/prescreen_closeout_final_gold_v2_20260701/raw_inputs/project-39-at-2026-06-28-05-14-65ca3316.json",
+          "points_1024x512": [
+            [
+              947.4081300813008,
+              163.1739837398374
+            ],
+            [
+              947.4081300813008,
+              371.30406504065036
+            ],
+            [
+              636.0455284552845,
+              128.20813008130082
+            ],
+            [
+              634.380487804878,
+              391.2845528455284
+            ],
+            [
+              392.94959349593495,
+              123.2130081300813
+            ],
+            [
+              71.59674796747967,
+              371.30406504065036
+            ],
+            [
+              74.92682926829268,
+              156.51382113821137
+            ],
+            [
+              384.62439024390244,
+              399.609756097561
+            ]
+          ],
+          "pairs_effective_1based": [
+            [
+              7,
+              6
+            ],
+            [
+              5,
+              8
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "imputed_point": false
+        }
+      ],
+      "pair_compatible_at_px": {
+        "25.5": false,
+        "25.6": false,
+        "25.7": true
+      }
+    },
+    {
+      "image_id": "B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624",
+      "code": "B6ByNegPMKs-40",
+      "building": "B6ByNegPMKs",
+      "N": 24,
+      "a_id": "07ee953d1535b28d",
+      "b_id": "2c474f6a00577ed6",
+      "a_worker": "W036",
+      "b_worker": "W027",
+      "a_pairs": 4,
+      "b_pairs": 4,
+      "same_count": true,
+      "partial_matching_fraction": 0.75,
+      "partial_matched": 3,
+      "fixed_max": 25.62813794191026,
+      "endpoint_median": 19.984812747269,
+      "endpoint_q90": 24.87454929110828,
+      "endpoint_rms": 20.644894277216093,
+      "n_endpoint_fail": 1.0,
+      "n_corner_fail": 1.0,
+      "corner_near_share": 0.75,
+      "top_max": 17.654912411668988,
+      "bottom_max": 25.62813794191026,
+      "max_dx": 13.060115518407317,
+      "max_dy": 22.790679801568277,
+      "bottleneck_role": "bottom",
+      "bottleneck_a_raw_point": 1.0,
+      "bottleneck_b_raw_point": 2.0,
+      "cyclic_max": 25.62813794191026,
+      "cyclic_shift": 0.0,
+      "free_max": 25.62813794191026,
+      "free_mapping_1based": "1;2;3;4",
+      "diagnostic_case": "still_far",
+      "complete_same": false,
+      "representative_same": true,
+      "previous_development_image": false,
+      "threshold_gap": 0.0281379419102592,
+      "case_number": 4,
+      "selection_reason": "just_above",
+      "selection_order": "not previous development, threshold_gap ascending, code, ids",
+      "candidate_pair_count": 245,
+      "prior_user_decisions_overridden": false,
+      "partitions_recomputed": {
+        "complete": {
+          "labels_by_id": {
+            "07ee953d1535b28d": 1,
+            "1614c0e2e49fb8a1": 2,
+            "1bb726e611007d9d": 2,
+            "25a1d0d06f3c7ffa": 2,
+            "26f5958a9b8dbc72": 2,
+            "2c474f6a00577ed6": 2,
+            "4a3402faafe5ac31": 2,
+            "60f415b63bc6abc8": 1,
+            "645a19e0d1eff33f": 2,
+            "6b6025969bfa55d0": 2,
+            "6ef72d6a7373d51d": 2,
+            "723bcf1f4f6f7bf5": 3,
+            "786190bfb0e48244": 2,
+            "78a68354a388042f": 4,
+            "86bcdfbf6785b83b": 4,
+            "901942d47886d494": 2,
+            "90218eb4d8649c74": 2,
+            "902c7685cf8d8d7f": 2,
+            "a10544ac2d404470": 2,
+            "aff097a10b8a446c": 1,
+            "b9d7de702dfef712": 1,
+            "c87d232365323163": 4,
+            "cede48245acaf369": 2,
+            "dd72228423710274": 5
+          },
+          "centers": [
+            "60f415b63bc6abc8",
+            "6ef72d6a7373d51d",
+            "723bcf1f4f6f7bf5",
+            "c87d232365323163",
+            "dd72228423710274"
+          ],
+          "between_selected_clusters_max": 33.749386703315075,
+          "between_selected_clusters_max_ids": [
+            "b9d7de702dfef712",
+            "1bb726e611007d9d"
+          ],
+          "member_distances_to_selected": [
+            {
+              "id": "07ee953d1535b28d",
+              "worker": "W036",
+              "to_a": 0.0,
+              "to_b": 25.62813794191026
+            },
+            {
+              "id": "1614c0e2e49fb8a1",
+              "worker": "W029",
+              "to_a": 29.255235449212392,
+              "to_b": 12.290866301799973
+            },
+            {
+              "id": "1bb726e611007d9d",
+              "worker": "W028",
+              "to_a": 31.49493570194215,
+              "to_b": 9.24170983190029
+            },
+            {
+              "id": "25a1d0d06f3c7ffa",
+              "worker": "W031",
+              "to_a": 28.67428627015316,
+              "to_b": 8.900615445381515
+            },
+            {
+              "id": "26f5958a9b8dbc72",
+              "worker": "W021",
+              "to_a": 24.77100501651466,
+              "to_b": 10.60844577704294
+            },
+            {
+              "id": "2c474f6a00577ed6",
+              "worker": "W027",
+              "to_a": 25.62813794191026,
+              "to_b": 0.0
+            },
+            {
+              "id": "4a3402faafe5ac31",
+              "worker": "W033",
+              "to_a": 27.873420720936622,
+              "to_b": 10.165667369916259
+            },
+            {
+              "id": "60f415b63bc6abc8",
+              "worker": "W002",
+              "to_a": 22.76868585867739,
+              "to_b": 23.463454419847185
+            },
+            {
+              "id": "645a19e0d1eff33f",
+              "worker": "W014",
+              "to_a": 22.929793750314968,
+              "to_b": 8.38413794248366
+            },
+            {
+              "id": "6b6025969bfa55d0",
+              "worker": "W011",
+              "to_a": 29.030073038952196,
+              "to_b": 9.201869133274295
+            },
+            {
+              "id": "6ef72d6a7373d51d",
+              "worker": "W010",
+              "to_a": 27.140248922600374,
+              "to_b": 4.948407658615832
+            },
+            {
+              "id": "723bcf1f4f6f7bf5",
+              "worker": "W034",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "786190bfb0e48244",
+              "worker": "W035",
+              "to_a": 29.596932146897483,
+              "to_b": 8.619217806597424
+            },
+            {
+              "id": "78a68354a388042f",
+              "worker": "W030",
+              "to_a": 25.77259422624418,
+              "to_b": 20.526230358196095
+            },
+            {
+              "id": "86bcdfbf6785b83b",
+              "worker": "W012",
+              "to_a": 19.143281907349035,
+              "to_b": 21.152853077104716
+            },
+            {
+              "id": "901942d47886d494",
+              "worker": "W013",
+              "to_a": 22.929793750314968,
+              "to_b": 8.38413794248366
+            },
+            {
+              "id": "90218eb4d8649c74",
+              "worker": "W037",
+              "to_a": 29.135153735163957,
+              "to_b": 7.425397117781144
+            },
+            {
+              "id": "902c7685cf8d8d7f",
+              "worker": "W006",
+              "to_a": 24.77100501651466,
+              "to_b": 10.60844577704294
+            },
+            {
+              "id": "a10544ac2d404470",
+              "worker": "W017",
+              "to_a": 24.77100501651466,
+              "to_b": 10.60844577704294
+            },
+            {
+              "id": "aff097a10b8a446c",
+              "worker": "W018",
+              "to_a": 22.76868585867739,
+              "to_b": 23.463454419847185
+            },
+            {
+              "id": "b9d7de702dfef712",
+              "worker": "W008",
+              "to_a": 5.485503546975148,
+              "to_b": 26.216819927573262
+            },
+            {
+              "id": "c87d232365323163",
+              "worker": "W001",
+              "to_a": 29.103288726826985,
+              "to_b": 19.622255152993514
+            },
+            {
+              "id": "cede48245acaf369",
+              "worker": "W015",
+              "to_a": 24.77100501651466,
+              "to_b": 10.60844577704294
+            },
+            {
+              "id": "dd72228423710274",
+              "worker": "W032",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            }
+          ]
+        },
+        "representative": {
+          "labels_by_id": {
+            "07ee953d1535b28d": 1,
+            "1614c0e2e49fb8a1": 1,
+            "1bb726e611007d9d": 1,
+            "25a1d0d06f3c7ffa": 1,
+            "26f5958a9b8dbc72": 1,
+            "2c474f6a00577ed6": 1,
+            "4a3402faafe5ac31": 1,
+            "60f415b63bc6abc8": 1,
+            "645a19e0d1eff33f": 1,
+            "6b6025969bfa55d0": 1,
+            "6ef72d6a7373d51d": 1,
+            "723bcf1f4f6f7bf5": 2,
+            "786190bfb0e48244": 1,
+            "78a68354a388042f": 1,
+            "86bcdfbf6785b83b": 1,
+            "901942d47886d494": 1,
+            "90218eb4d8649c74": 1,
+            "902c7685cf8d8d7f": 1,
+            "a10544ac2d404470": 1,
+            "aff097a10b8a446c": 1,
+            "b9d7de702dfef712": 1,
+            "c87d232365323163": 1,
+            "cede48245acaf369": 1,
+            "dd72228423710274": 3
+          },
+          "centers": [
+            "645a19e0d1eff33f",
+            "723bcf1f4f6f7bf5",
+            "dd72228423710274"
+          ],
+          "between_selected_clusters_max": 33.749386703315075,
+          "between_selected_clusters_max_ids": [
+            "1bb726e611007d9d",
+            "b9d7de702dfef712"
+          ],
+          "member_distances_to_selected": [
+            {
+              "id": "07ee953d1535b28d",
+              "worker": "W036",
+              "to_a": 0.0,
+              "to_b": 25.62813794191026
+            },
+            {
+              "id": "1614c0e2e49fb8a1",
+              "worker": "W029",
+              "to_a": 29.255235449212392,
+              "to_b": 12.290866301799973
+            },
+            {
+              "id": "1bb726e611007d9d",
+              "worker": "W028",
+              "to_a": 31.49493570194215,
+              "to_b": 9.24170983190029
+            },
+            {
+              "id": "25a1d0d06f3c7ffa",
+              "worker": "W031",
+              "to_a": 28.67428627015316,
+              "to_b": 8.900615445381515
+            },
+            {
+              "id": "26f5958a9b8dbc72",
+              "worker": "W021",
+              "to_a": 24.77100501651466,
+              "to_b": 10.60844577704294
+            },
+            {
+              "id": "2c474f6a00577ed6",
+              "worker": "W027",
+              "to_a": 25.62813794191026,
+              "to_b": 0.0
+            },
+            {
+              "id": "4a3402faafe5ac31",
+              "worker": "W033",
+              "to_a": 27.873420720936622,
+              "to_b": 10.165667369916259
+            },
+            {
+              "id": "60f415b63bc6abc8",
+              "worker": "W002",
+              "to_a": 22.76868585867739,
+              "to_b": 23.463454419847185
+            },
+            {
+              "id": "645a19e0d1eff33f",
+              "worker": "W014",
+              "to_a": 22.929793750314968,
+              "to_b": 8.38413794248366
+            },
+            {
+              "id": "6b6025969bfa55d0",
+              "worker": "W011",
+              "to_a": 29.030073038952196,
+              "to_b": 9.201869133274295
+            },
+            {
+              "id": "6ef72d6a7373d51d",
+              "worker": "W010",
+              "to_a": 27.140248922600374,
+              "to_b": 4.948407658615832
+            },
+            {
+              "id": "723bcf1f4f6f7bf5",
+              "worker": "W034",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "786190bfb0e48244",
+              "worker": "W035",
+              "to_a": 29.596932146897483,
+              "to_b": 8.619217806597424
+            },
+            {
+              "id": "78a68354a388042f",
+              "worker": "W030",
+              "to_a": 25.77259422624418,
+              "to_b": 20.526230358196095
+            },
+            {
+              "id": "86bcdfbf6785b83b",
+              "worker": "W012",
+              "to_a": 19.143281907349035,
+              "to_b": 21.152853077104716
+            },
+            {
+              "id": "901942d47886d494",
+              "worker": "W013",
+              "to_a": 22.929793750314968,
+              "to_b": 8.38413794248366
+            },
+            {
+              "id": "90218eb4d8649c74",
+              "worker": "W037",
+              "to_a": 29.135153735163957,
+              "to_b": 7.425397117781144
+            },
+            {
+              "id": "902c7685cf8d8d7f",
+              "worker": "W006",
+              "to_a": 24.77100501651466,
+              "to_b": 10.60844577704294
+            },
+            {
+              "id": "a10544ac2d404470",
+              "worker": "W017",
+              "to_a": 24.77100501651466,
+              "to_b": 10.60844577704294
+            },
+            {
+              "id": "aff097a10b8a446c",
+              "worker": "W018",
+              "to_a": 22.76868585867739,
+              "to_b": 23.463454419847185
+            },
+            {
+              "id": "b9d7de702dfef712",
+              "worker": "W008",
+              "to_a": 5.485503546975148,
+              "to_b": 26.216819927573262
+            },
+            {
+              "id": "c87d232365323163",
+              "worker": "W001",
+              "to_a": 29.103288726826985,
+              "to_b": 19.622255152993514
+            },
+            {
+              "id": "cede48245acaf369",
+              "worker": "W015",
+              "to_a": 24.77100501651466,
+              "to_b": 10.60844577704294
+            },
+            {
+              "id": "dd72228423710274",
+              "worker": "W032",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            }
+          ]
+        }
+      },
+      "annotations": [
+        {
+          "canonical_id": "07ee953d1535b28d",
+          "worker": "W036",
+          "raw_annotation_id": "4605",
+          "project_id": "39",
+          "runtime_task_id": "3140",
+          "raw_export_path": "analysis_results/prescreen_closeout_final_gold_v2_20260701/raw_inputs/project-39-at-2026-06-28-05-14-65ca3316.json",
+          "points_1024x512": [
+            [
+              236.7123432132498,
+              293.87532177953307
+            ],
+            [
+              235.94534896246702,
+              230.13114298263437
+            ],
+            [
+              272.12498614094727,
+              294.1786579436448
+            ],
+            [
+              273.94826913016624,
+              230.18947738890841
+            ],
+            [
+              751.0638182588738,
+              292.76462511725214
+            ],
+            [
+              750.0585248979867,
+              229.54437049309396
+            ],
+            [
+              789.2559577223788,
+              293.03760682944534
+            ],
+            [
+              787.2850283624294,
+              228.60172597367594
+            ]
+          ],
+          "pairs_effective_1based": [
+            [
+              2,
+              1
+            ],
+            [
+              4,
+              3
+            ],
+            [
+              6,
+              5
+            ],
+            [
+              8,
+              7
+            ]
+          ],
+          "imputed_point": false
+        },
+        {
+          "canonical_id": "2c474f6a00577ed6",
+          "worker": "W027",
+          "raw_annotation_id": "4015",
+          "project_id": "39",
+          "runtime_task_id": "3140",
+          "raw_export_path": "analysis_results/prescreen_closeout_final_gold_v2_20260701/raw_inputs/project-39-at-2026-06-28-05-14-65ca3316.json",
+          "points_1024x512": [
+            [
+              249.00546448087434,
+              242.01092896174865
+            ],
+            [
+              249.00546448087434,
+              271.3879781420765
+            ],
+            [
+              262.9945355191257,
+              242.01092896174865
+            ],
+            [
+              262.9945355191257,
+              271.3879781420765
+            ],
+            [
+              761.0054644808744,
+              240.6120218579235
+            ],
+            [
+              761.0054644808744,
+              272.78688524590166
+            ],
+            [
+              776.3934426229508,
+              240.6120218579235
+            ],
+            [
+              776.3934426229508,
+              272.78688524590166
+            ]
+          ],
+          "pairs_effective_1based": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              7,
+              8
+            ]
+          ],
+          "imputed_point": false
+        }
+      ],
+      "pair_compatible_at_px": {
+        "25.5": false,
+        "25.6": false,
+        "25.7": true
+      }
+    },
+    {
+      "image_id": "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+      "code": "uNb9QFRL6hY-29",
+      "building": "uNb9QFRL6hY",
+      "N": 20,
+      "a_id": "new_94_3627_6897_W031",
+      "b_id": "new_94_3627_6946_W035",
+      "a_worker": "W031",
+      "b_worker": "W035",
+      "a_pairs": 6,
+      "b_pairs": 6,
+      "same_count": true,
+      "partial_matching_fraction": 1.0,
+      "partial_matched": 6,
+      "fixed_max": 6.791097536738932,
+      "endpoint_median": 3.4866075686547293,
+      "endpoint_q90": 6.260858703117826,
+      "endpoint_rms": 4.130489524430963,
+      "n_endpoint_fail": 0.0,
+      "n_corner_fail": 0.0,
+      "corner_near_share": 1.0,
+      "top_max": 6.791097536738932,
+      "bottom_max": 5.75320456126758,
+      "max_dx": 5.745230560548009,
+      "max_dy": 6.292834858128629,
+      "bottleneck_role": "top",
+      "bottleneck_a_raw_point": 1.0,
+      "bottleneck_b_raw_point": 9.0,
+      "cyclic_max": 6.791097536738932,
+      "cyclic_shift": 0.0,
+      "free_max": 6.791097536738932,
+      "free_mapping_1based": "1;2;3;4;5;6",
+      "diagnostic_case": "fixed_near",
+      "complete_same": false,
+      "representative_same": true,
+      "previous_development_image": false,
+      "threshold_gap": 18.80890246326107,
+      "case_number": 5,
+      "selection_reason": "complete_near_split",
+      "selection_order": "not previous development, fixed_max ascending, code, ids",
+      "candidate_pair_count": 1489,
+      "prior_user_decisions_overridden": false,
+      "partitions_recomputed": {
+        "complete": {
+          "labels_by_id": {
+            "1d0597eb333ea3d5fed7": 1,
+            "4f5e2f801a33ddacfbff": 2,
+            "8f895f66411f68620317": 3,
+            "e377c53531a08df384d9": 4,
+            "f0b7c25018d49988f041": 4,
+            "new_93_3590_6898_W017": 5,
+            "new_93_3590_7078_W006": 5,
+            "new_93_3590_7176_W015": 4,
+            "new_93_3590_7242_W010": 5,
+            "new_93_3590_7402_W008": 5,
+            "new_93_3590_7491_W013": 5,
+            "new_94_3627_6897_W031": 4,
+            "new_94_3627_6946_W035": 5,
+            "new_94_3627_6961_W029": 4,
+            "new_94_3627_6999_W036": 4,
+            "new_94_3627_7005_W033": 5,
+            "new_94_3627_7031_W037": 6,
+            "new_94_3627_7142_W034": 6,
+            "new_94_3627_7304_W028": 7,
+            "new_94_3627_7353_W032": 7
+          },
+          "centers": [
+            "1d0597eb333ea3d5fed7",
+            "4f5e2f801a33ddacfbff",
+            "8f895f66411f68620317",
+            "new_93_3590_7176_W015",
+            "new_93_3590_6898_W017",
+            "new_94_3627_7031_W037",
+            "new_94_3627_7304_W028"
+          ],
+          "between_selected_clusters_max": 26.52978055171707,
+          "between_selected_clusters_max_ids": [
+            "new_94_3627_6999_W036",
+            "new_93_3590_7402_W008"
+          ],
+          "member_distances_to_selected": [
+            {
+              "id": "1d0597eb333ea3d5fed7",
+              "worker": "W002",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "4f5e2f801a33ddacfbff",
+              "worker": "W027",
+              "to_a": 34.90525439483457,
+              "to_b": 32.88817855569873
+            },
+            {
+              "id": "8f895f66411f68620317",
+              "worker": "W012",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "e377c53531a08df384d9",
+              "worker": "W030",
+              "to_a": 8.919410056192897,
+              "to_b": 7.581404412031351
+            },
+            {
+              "id": "f0b7c25018d49988f041",
+              "worker": "W001",
+              "to_a": 14.392270509538719,
+              "to_b": 12.531859694047412
+            },
+            {
+              "id": "new_93_3590_6898_W017",
+              "worker": "W017",
+              "to_a": 7.287191460968021,
+              "to_b": 9.338964401217616
+            },
+            {
+              "id": "new_93_3590_7078_W006",
+              "worker": "W006",
+              "to_a": 7.287191460968021,
+              "to_b": 9.338964401217616
+            },
+            {
+              "id": "new_93_3590_7176_W015",
+              "worker": "W015",
+              "to_a": 5.518592190427687,
+              "to_b": 10.195021673077347
+            },
+            {
+              "id": "new_93_3590_7242_W010",
+              "worker": "W010",
+              "to_a": 13.793117325960367,
+              "to_b": 12.424831300171421
+            },
+            {
+              "id": "new_93_3590_7402_W008",
+              "worker": "W008",
+              "to_a": 15.804893564732165,
+              "to_b": 11.037892247272795
+            },
+            {
+              "id": "new_93_3590_7491_W013",
+              "worker": "W013",
+              "to_a": 13.793117325960367,
+              "to_b": 12.424831300171421
+            },
+            {
+              "id": "new_94_3627_6897_W031",
+              "worker": "W031",
+              "to_a": 0.0,
+              "to_b": 6.791097536738932
+            },
+            {
+              "id": "new_94_3627_6946_W035",
+              "worker": "W035",
+              "to_a": 6.791097536738932,
+              "to_b": 0.0
+            },
+            {
+              "id": "new_94_3627_6961_W029",
+              "worker": "W029",
+              "to_a": 8.77769263606811,
+              "to_b": 11.819778764215535
+            },
+            {
+              "id": "new_94_3627_6999_W036",
+              "worker": "W036",
+              "to_a": 11.288531788710387,
+              "to_b": 16.09842744198372
+            },
+            {
+              "id": "new_94_3627_7005_W033",
+              "worker": "W033",
+              "to_a": 13.332135434361565,
+              "to_b": 7.536345860402716
+            },
+            {
+              "id": "new_94_3627_7031_W037",
+              "worker": "W037",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_94_3627_7142_W034",
+              "worker": "W034",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_94_3627_7304_W028",
+              "worker": "W028",
+              "to_a": 25.778472059953458,
+              "to_b": 30.21972354188853
+            },
+            {
+              "id": "new_94_3627_7353_W032",
+              "worker": "W032",
+              "to_a": 21.724429772713624,
+              "to_b": 26.10413402744401
+            }
+          ]
+        },
+        "representative": {
+          "labels_by_id": {
+            "1d0597eb333ea3d5fed7": 3,
+            "4f5e2f801a33ddacfbff": 4,
+            "8f895f66411f68620317": 5,
+            "e377c53531a08df384d9": 1,
+            "f0b7c25018d49988f041": 1,
+            "new_93_3590_6898_W017": 1,
+            "new_93_3590_7078_W006": 1,
+            "new_93_3590_7176_W015": 1,
+            "new_93_3590_7242_W010": 1,
+            "new_93_3590_7402_W008": 1,
+            "new_93_3590_7491_W013": 1,
+            "new_94_3627_6897_W031": 1,
+            "new_94_3627_6946_W035": 1,
+            "new_94_3627_6961_W029": 1,
+            "new_94_3627_6999_W036": 1,
+            "new_94_3627_7005_W033": 1,
+            "new_94_3627_7031_W037": 2,
+            "new_94_3627_7142_W034": 2,
+            "new_94_3627_7304_W028": 1,
+            "new_94_3627_7353_W032": 1
+          },
+          "centers": [
+            "new_93_3590_7176_W015",
+            "new_94_3627_7031_W037",
+            "1d0597eb333ea3d5fed7",
+            "4f5e2f801a33ddacfbff",
+            "8f895f66411f68620317"
+          ],
+          "between_selected_clusters_max": 39.45110164735365,
+          "between_selected_clusters_max_ids": [
+            "new_93_3590_7402_W008",
+            "new_94_3627_7304_W028"
+          ],
+          "member_distances_to_selected": [
+            {
+              "id": "1d0597eb333ea3d5fed7",
+              "worker": "W002",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "4f5e2f801a33ddacfbff",
+              "worker": "W027",
+              "to_a": 34.90525439483457,
+              "to_b": 32.88817855569873
+            },
+            {
+              "id": "8f895f66411f68620317",
+              "worker": "W012",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "e377c53531a08df384d9",
+              "worker": "W030",
+              "to_a": 8.919410056192897,
+              "to_b": 7.581404412031351
+            },
+            {
+              "id": "f0b7c25018d49988f041",
+              "worker": "W001",
+              "to_a": 14.392270509538719,
+              "to_b": 12.531859694047412
+            },
+            {
+              "id": "new_93_3590_6898_W017",
+              "worker": "W017",
+              "to_a": 7.287191460968021,
+              "to_b": 9.338964401217616
+            },
+            {
+              "id": "new_93_3590_7078_W006",
+              "worker": "W006",
+              "to_a": 7.287191460968021,
+              "to_b": 9.338964401217616
+            },
+            {
+              "id": "new_93_3590_7176_W015",
+              "worker": "W015",
+              "to_a": 5.518592190427687,
+              "to_b": 10.195021673077347
+            },
+            {
+              "id": "new_93_3590_7242_W010",
+              "worker": "W010",
+              "to_a": 13.793117325960367,
+              "to_b": 12.424831300171421
+            },
+            {
+              "id": "new_93_3590_7402_W008",
+              "worker": "W008",
+              "to_a": 15.804893564732165,
+              "to_b": 11.037892247272795
+            },
+            {
+              "id": "new_93_3590_7491_W013",
+              "worker": "W013",
+              "to_a": 13.793117325960367,
+              "to_b": 12.424831300171421
+            },
+            {
+              "id": "new_94_3627_6897_W031",
+              "worker": "W031",
+              "to_a": 0.0,
+              "to_b": 6.791097536738932
+            },
+            {
+              "id": "new_94_3627_6946_W035",
+              "worker": "W035",
+              "to_a": 6.791097536738932,
+              "to_b": 0.0
+            },
+            {
+              "id": "new_94_3627_6961_W029",
+              "worker": "W029",
+              "to_a": 8.77769263606811,
+              "to_b": 11.819778764215535
+            },
+            {
+              "id": "new_94_3627_6999_W036",
+              "worker": "W036",
+              "to_a": 11.288531788710387,
+              "to_b": 16.09842744198372
+            },
+            {
+              "id": "new_94_3627_7005_W033",
+              "worker": "W033",
+              "to_a": 13.332135434361565,
+              "to_b": 7.536345860402716
+            },
+            {
+              "id": "new_94_3627_7031_W037",
+              "worker": "W037",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_94_3627_7142_W034",
+              "worker": "W034",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_94_3627_7304_W028",
+              "worker": "W028",
+              "to_a": 25.778472059953458,
+              "to_b": 30.21972354188853
+            },
+            {
+              "id": "new_94_3627_7353_W032",
+              "worker": "W032",
+              "to_a": 21.724429772713624,
+              "to_b": 26.10413402744401
+            }
+          ]
+        }
+      },
+      "annotations": [
+        {
+          "canonical_id": "new_94_3627_6897_W031",
+          "worker": "W031",
+          "raw_annotation_id": 6897,
+          "project_id": 94,
+          "runtime_task_id": 3627,
+          "raw_export_path": "export_label/新增英文30+20图/project-94-at-2026-09-20-13-45-d09d9d53.json",
+          "points_1024x512": [
+            [
+              519.777769099446,
+              215.747981468402
+            ],
+            [
+              519.2446297811466,
+              321.8427058099649
+            ],
+            [
+              376.39635871931364,
+              229.2499068687038
+            ],
+            [
+              376.39635871931364,
+              303.88941143060737
+            ],
+            [
+              234.5813000516969,
+              221.25281709421412
+            ],
+            [
+              234.5813000516969,
+              323.61556620768187
+            ],
+            [
+              565.6720313179644,
+              108.90300130491514
+            ],
+            [
+              565.6720313179644,
+              469.9086559373642
+            ],
+            [
+              738.6645623396666,
+              216.83361787629315
+            ],
+            [
+              799.3038284030303,
+              216.188519301151
+            ],
+            [
+              740.573164263207,
+              358.0297092039025
+            ],
+            [
+              799.2771346011443,
+              358.0297092039025
+            ]
+          ],
+          "pairs_effective_1based": [
+            [
+              5,
+              6
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              9,
+              11
+            ],
+            [
+              10,
+              12
+            ]
+          ],
+          "imputed_point": false
+        },
+        {
+          "canonical_id": "new_94_3627_6946_W035",
+          "worker": "W035",
+          "raw_annotation_id": 6946,
+          "project_id": 94,
+          "runtime_task_id": 3627,
+          "raw_export_path": "export_label/新增英文30+20图/project-94-at-2026-09-20-13-45-d09d9d53.json",
+          "points_1024x512": [
+            [
+              739.2653061224489,
+              218.12244897959184
+            ],
+            [
+              740.5714285714286,
+              359.18367346938777
+            ],
+            [
+              800.6530612244898,
+              218.12244897959184
+            ],
+            [
+              800.1312363877494,
+              359.01181233331323
+            ],
+            [
+              237.71428571428572,
+              224.6530612244898
+            ],
+            [
+              240.3265306122449,
+              323.9183673469388
+            ],
+            [
+              378.7755102040817,
+              235.10204081632656
+            ],
+            [
+              380.0816326530613,
+              305.6326530612245
+            ],
+            [
+              517.2244897959183,
+              222.04081632653063
+            ],
+            [
+              517.2244897959183,
+              323.9183673469388
+            ],
+            [
+              566.8571428571429,
+              107.10204081632654
+            ],
+            [
+              568.1632653061224,
+              474.1224489795918
+            ]
+          ],
+          "pairs_effective_1based": [
+            [
+              5,
+              6
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              9,
+              10
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ]
+          ],
+          "imputed_point": false
+        }
+      ],
+      "pair_compatible_at_px": {
+        "25.5": true,
+        "25.6": true,
+        "25.7": true
+      }
+    },
+    {
+      "image_id": "uNb9QFRL6hY_07a43087f1e54e3f828851d8e457a283",
+      "code": "uNb9QFRL6hY-06",
+      "building": "uNb9QFRL6hY",
+      "N": 24,
+      "a_id": "aace08a205b2832f",
+      "b_id": "ffe8dc0a7734bb67",
+      "a_worker": "W028",
+      "b_worker": "W011",
+      "a_pairs": 4,
+      "b_pairs": 4,
+      "same_count": true,
+      "partial_matching_fraction": 0.75,
+      "partial_matched": 3,
+      "fixed_max": 46.751287289769614,
+      "endpoint_median": 7.528043524807533,
+      "endpoint_q90": 27.91824689234556,
+      "endpoint_rms": 19.395355601358176,
+      "n_endpoint_fail": 1.0,
+      "n_corner_fail": 1.0,
+      "corner_near_share": 0.75,
+      "top_max": 8.41079887802096,
+      "bottom_max": 46.751287289769614,
+      "max_dx": 16.230217898127876,
+      "max_dy": 46.34125746886224,
+      "bottleneck_role": "bottom",
+      "bottleneck_a_raw_point": 4.0,
+      "bottleneck_b_raw_point": 4.0,
+      "cyclic_max": 46.751287289769614,
+      "cyclic_shift": 0.0,
+      "free_max": 46.751287289769614,
+      "free_mapping_1based": "1;2;3;4",
+      "diagnostic_case": "still_far",
+      "complete_same": false,
+      "representative_same": true,
+      "previous_development_image": false,
+      "threshold_gap": 21.151287289769613,
+      "case_number": 6,
+      "selection_reason": "representative_far_join",
+      "selection_order": "not previous development, fixed_max descending, code, ids",
+      "candidate_pair_count": 585,
+      "prior_user_decisions_overridden": false,
+      "partitions_recomputed": {
+        "complete": {
+          "labels_by_id": {
+            "02b2f811d06c0d60": 1,
+            "0d381f2d08c46911": 2,
+            "150c1b0751d57269": 3,
+            "19dc0eef1b87efe1": 4,
+            "1cab585050248758": 4,
+            "42efcf39926698bd": 1,
+            "4972d6f4f5d2d78d": 5,
+            "61d84185b252c0f8": 5,
+            "69d99cc09c509dfa": 4,
+            "69f291bfde35be75": 5,
+            "7b781342e0d9bbd1": 6,
+            "7d9ff49fec9b94f2": 4,
+            "8529e6df2a7dc649": 3,
+            "88a863e1ccc6cf85": 5,
+            "933ed826bcd64c2f": 7,
+            "a4aaab9c8a4ea858": 5,
+            "aace08a205b2832f": 1,
+            "b3148aad54f8399d": 8,
+            "c53d37eb3dacd306": 8,
+            "e697a5da5e4a62fe": 9,
+            "e762621e27807d7c": 4,
+            "ee080d64f931dc3f": 4,
+            "f1c6623b59a93276": 4,
+            "ffe8dc0a7734bb67": 4
+          },
+          "centers": [
+            "02b2f811d06c0d60",
+            "0d381f2d08c46911",
+            "150c1b0751d57269",
+            "19dc0eef1b87efe1",
+            "4972d6f4f5d2d78d",
+            "7b781342e0d9bbd1",
+            "933ed826bcd64c2f",
+            "b3148aad54f8399d",
+            "e697a5da5e4a62fe"
+          ],
+          "between_selected_clusters_max": 53.16581643061633,
+          "between_selected_clusters_max_ids": [
+            "02b2f811d06c0d60",
+            "ffe8dc0a7734bb67"
+          ],
+          "member_distances_to_selected": [
+            {
+              "id": "02b2f811d06c0d60",
+              "worker": "W001",
+              "to_a": 21.068386654296738,
+              "to_b": 53.16581643061633
+            },
+            {
+              "id": "0d381f2d08c46911",
+              "worker": "W027",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "150c1b0751d57269",
+              "worker": "W030",
+              "to_a": 53.93008663828125,
+              "to_b": 16.21362383590299
+            },
+            {
+              "id": "19dc0eef1b87efe1",
+              "worker": "W021",
+              "to_a": 31.75536943083731,
+              "to_b": 17.190696716483487
+            },
+            {
+              "id": "1cab585050248758",
+              "worker": "W031",
+              "to_a": 24.888114978811615,
+              "to_b": 21.93336431931144
+            },
+            {
+              "id": "42efcf39926698bd",
+              "worker": "W034",
+              "to_a": 23.999955974452583,
+              "to_b": 45.98379302550157
+            },
+            {
+              "id": "4972d6f4f5d2d78d",
+              "worker": "W017",
+              "to_a": 157.5799033014281,
+              "to_b": 154.4492316152489
+            },
+            {
+              "id": "61d84185b252c0f8",
+              "worker": "W013",
+              "to_a": 157.5799033014281,
+              "to_b": 154.4492316152489
+            },
+            {
+              "id": "69d99cc09c509dfa",
+              "worker": "W008",
+              "to_a": 44.253472035609576,
+              "to_b": 10.98304537651359
+            },
+            {
+              "id": "69f291bfde35be75",
+              "worker": "W010",
+              "to_a": 157.22146988641316,
+              "to_b": 154.09925954852227
+            },
+            {
+              "id": "7b781342e0d9bbd1",
+              "worker": "W037",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "7d9ff49fec9b94f2",
+              "worker": "W035",
+              "to_a": 34.15798305315966,
+              "to_b": 18.912304134535496
+            },
+            {
+              "id": "8529e6df2a7dc649",
+              "worker": "W029",
+              "to_a": 36.24967628196135,
+              "to_b": 23.06330385407472
+            },
+            {
+              "id": "88a863e1ccc6cf85",
+              "worker": "W014",
+              "to_a": 157.5799033014281,
+              "to_b": 154.4492316152489
+            },
+            {
+              "id": "933ed826bcd64c2f",
+              "worker": "W033",
+              "to_a": 33.43891533185806,
+              "to_b": 24.778568420398464
+            },
+            {
+              "id": "a4aaab9c8a4ea858",
+              "worker": "W006",
+              "to_a": 157.5799033014281,
+              "to_b": 154.4492316152489
+            },
+            {
+              "id": "aace08a205b2832f",
+              "worker": "W028",
+              "to_a": 0.0,
+              "to_b": 46.751287289769614
+            },
+            {
+              "id": "b3148aad54f8399d",
+              "worker": "W018",
+              "to_a": 28.48072117288097,
+              "to_b": 38.49226897214271
+            },
+            {
+              "id": "c53d37eb3dacd306",
+              "worker": "W032",
+              "to_a": 24.388158629880852,
+              "to_b": 32.2780184890048
+            },
+            {
+              "id": "e697a5da5e4a62fe",
+              "worker": "W012",
+              "to_a": 159.67928149836277,
+              "to_b": 156.28630649911202
+            },
+            {
+              "id": "e762621e27807d7c",
+              "worker": "W002",
+              "to_a": 39.6183063310684,
+              "to_b": 13.406098013099557
+            },
+            {
+              "id": "ee080d64f931dc3f",
+              "worker": "W015",
+              "to_a": 31.755369430837316,
+              "to_b": 17.190696716483487
+            },
+            {
+              "id": "f1c6623b59a93276",
+              "worker": "W036",
+              "to_a": 27.669802494309653,
+              "to_b": 19.719635187436843
+            },
+            {
+              "id": "ffe8dc0a7734bb67",
+              "worker": "W011",
+              "to_a": 46.751287289769614,
+              "to_b": 0.0
+            }
+          ]
+        },
+        "representative": {
+          "labels_by_id": {
+            "02b2f811d06c0d60": 3,
+            "0d381f2d08c46911": 4,
+            "150c1b0751d57269": 5,
+            "19dc0eef1b87efe1": 1,
+            "1cab585050248758": 1,
+            "42efcf39926698bd": 1,
+            "4972d6f4f5d2d78d": 2,
+            "61d84185b252c0f8": 2,
+            "69d99cc09c509dfa": 1,
+            "69f291bfde35be75": 2,
+            "7b781342e0d9bbd1": 6,
+            "7d9ff49fec9b94f2": 1,
+            "8529e6df2a7dc649": 1,
+            "88a863e1ccc6cf85": 2,
+            "933ed826bcd64c2f": 7,
+            "a4aaab9c8a4ea858": 2,
+            "aace08a205b2832f": 1,
+            "b3148aad54f8399d": 8,
+            "c53d37eb3dacd306": 1,
+            "e697a5da5e4a62fe": 9,
+            "e762621e27807d7c": 1,
+            "ee080d64f931dc3f": 1,
+            "f1c6623b59a93276": 1,
+            "ffe8dc0a7734bb67": 1
+          },
+          "centers": [
+            "1cab585050248758",
+            "4972d6f4f5d2d78d",
+            "02b2f811d06c0d60",
+            "0d381f2d08c46911",
+            "150c1b0751d57269",
+            "7b781342e0d9bbd1",
+            "933ed826bcd64c2f",
+            "b3148aad54f8399d",
+            "e697a5da5e4a62fe"
+          ],
+          "between_selected_clusters_max": 46.751287289769614,
+          "between_selected_clusters_max_ids": [
+            "aace08a205b2832f",
+            "ffe8dc0a7734bb67"
+          ],
+          "member_distances_to_selected": [
+            {
+              "id": "02b2f811d06c0d60",
+              "worker": "W001",
+              "to_a": 21.068386654296738,
+              "to_b": 53.16581643061633
+            },
+            {
+              "id": "0d381f2d08c46911",
+              "worker": "W027",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "150c1b0751d57269",
+              "worker": "W030",
+              "to_a": 53.93008663828125,
+              "to_b": 16.21362383590299
+            },
+            {
+              "id": "19dc0eef1b87efe1",
+              "worker": "W021",
+              "to_a": 31.75536943083731,
+              "to_b": 17.190696716483487
+            },
+            {
+              "id": "1cab585050248758",
+              "worker": "W031",
+              "to_a": 24.888114978811615,
+              "to_b": 21.93336431931144
+            },
+            {
+              "id": "42efcf39926698bd",
+              "worker": "W034",
+              "to_a": 23.999955974452583,
+              "to_b": 45.98379302550157
+            },
+            {
+              "id": "4972d6f4f5d2d78d",
+              "worker": "W017",
+              "to_a": 157.5799033014281,
+              "to_b": 154.4492316152489
+            },
+            {
+              "id": "61d84185b252c0f8",
+              "worker": "W013",
+              "to_a": 157.5799033014281,
+              "to_b": 154.4492316152489
+            },
+            {
+              "id": "69d99cc09c509dfa",
+              "worker": "W008",
+              "to_a": 44.253472035609576,
+              "to_b": 10.98304537651359
+            },
+            {
+              "id": "69f291bfde35be75",
+              "worker": "W010",
+              "to_a": 157.22146988641316,
+              "to_b": 154.09925954852227
+            },
+            {
+              "id": "7b781342e0d9bbd1",
+              "worker": "W037",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "7d9ff49fec9b94f2",
+              "worker": "W035",
+              "to_a": 34.15798305315966,
+              "to_b": 18.912304134535496
+            },
+            {
+              "id": "8529e6df2a7dc649",
+              "worker": "W029",
+              "to_a": 36.24967628196135,
+              "to_b": 23.06330385407472
+            },
+            {
+              "id": "88a863e1ccc6cf85",
+              "worker": "W014",
+              "to_a": 157.5799033014281,
+              "to_b": 154.4492316152489
+            },
+            {
+              "id": "933ed826bcd64c2f",
+              "worker": "W033",
+              "to_a": 33.43891533185806,
+              "to_b": 24.778568420398464
+            },
+            {
+              "id": "a4aaab9c8a4ea858",
+              "worker": "W006",
+              "to_a": 157.5799033014281,
+              "to_b": 154.4492316152489
+            },
+            {
+              "id": "aace08a205b2832f",
+              "worker": "W028",
+              "to_a": 0.0,
+              "to_b": 46.751287289769614
+            },
+            {
+              "id": "b3148aad54f8399d",
+              "worker": "W018",
+              "to_a": 28.48072117288097,
+              "to_b": 38.49226897214271
+            },
+            {
+              "id": "c53d37eb3dacd306",
+              "worker": "W032",
+              "to_a": 24.388158629880852,
+              "to_b": 32.2780184890048
+            },
+            {
+              "id": "e697a5da5e4a62fe",
+              "worker": "W012",
+              "to_a": 159.67928149836277,
+              "to_b": 156.28630649911202
+            },
+            {
+              "id": "e762621e27807d7c",
+              "worker": "W002",
+              "to_a": 39.6183063310684,
+              "to_b": 13.406098013099557
+            },
+            {
+              "id": "ee080d64f931dc3f",
+              "worker": "W015",
+              "to_a": 31.755369430837316,
+              "to_b": 17.190696716483487
+            },
+            {
+              "id": "f1c6623b59a93276",
+              "worker": "W036",
+              "to_a": 27.669802494309653,
+              "to_b": 19.719635187436843
+            },
+            {
+              "id": "ffe8dc0a7734bb67",
+              "worker": "W011",
+              "to_a": 46.751287289769614,
+              "to_b": 0.0
+            }
+          ]
+        }
+      },
+      "annotations": [
+        {
+          "canonical_id": "aace08a205b2832f",
+          "worker": "W028",
+          "raw_annotation_id": "3968",
+          "project_id": "39",
+          "runtime_task_id": "3137",
+          "raw_export_path": "analysis_results/prescreen_closeout_final_gold_v2_20260701/raw_inputs/project-39-at-2026-06-28-05-14-65ca3316.json",
+          "points_1024x512": [
+            [
+              48.82564755645412,
+              102.24965434747918
+            ],
+            [
+              47.5889118862264,
+              439.58578693308414
+            ],
+            [
+              483.70631979927236,
+              141.49218028066275
+            ],
+            [
+              483.70631979927236,
+              375.65701414176743
+            ],
+            [
+              658.7465900410377,
+              174.8822312586552
+            ],
+            [
+              658.7465900410377,
+              361.50752711420137
+            ],
+            [
+              846.4428378746263,
+              160.74054033440075
+            ],
+            [
+              846.4428378746263,
+              394.5120772946859
+            ]
+          ],
+          "pairs_effective_1based": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              7,
+              8
+            ]
+          ],
+          "imputed_point": false
+        },
+        {
+          "canonical_id": "ffe8dc0a7734bb67",
+          "worker": "W011",
+          "raw_annotation_id": "3579",
+          "project_id": "28",
+          "runtime_task_id": "3065",
+          "raw_export_path": "analysis_results/prescreen_closeout_final_gold_v2_20260701/raw_inputs/project-28-at-2026-07-01-07-14-56a198ba.json",
+          "points_1024x512": [
+            [
+              49.255696202531645,
+              108.88101265822785
+            ],
+            [
+              46.663291139240506,
+              440.7088607594937
+            ],
+            [
+              483.64399111752726,
+              146.78200751674075
+            ],
+            [
+              477.52807413766305,
+              421.9982716106297
+            ],
+            [
+              658.9669445403009,
+              179.4002314093498
+            ],
+            [
+              661.005583533589,
+              381.22549174486835
+            ],
+            [
+              838.3671759496508,
+              163.0911194630453
+            ],
+            [
+              830.2126199764984,
+              395.4959646978848
+            ]
+          ],
+          "pairs_effective_1based": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              7,
+              8
+            ]
+          ],
+          "imputed_point": false
+        }
+      ],
+      "pair_compatible_at_px": {
+        "25.5": false,
+        "25.6": false,
+        "25.7": false
+      }
+    },
+    {
+      "image_id": "pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad",
+      "code": "pRbA3pwrgk9-16",
+      "building": "pRbA3pwrgk9",
+      "N": 2,
+      "a_id": "3dada1d9550343f0f06a",
+      "b_id": "c26ee2572b19b332d923",
+      "a_worker": "W015",
+      "b_worker": "W013",
+      "a_pairs": 10,
+      "b_pairs": 9,
+      "same_count": false,
+      "partial_matching_fraction": 0.9,
+      "partial_matched": 9,
+      "fixed_max": null,
+      "endpoint_median": null,
+      "endpoint_q90": null,
+      "endpoint_rms": null,
+      "n_endpoint_fail": null,
+      "n_corner_fail": null,
+      "corner_near_share": null,
+      "top_max": null,
+      "bottom_max": null,
+      "max_dx": null,
+      "max_dy": null,
+      "bottleneck_role": null,
+      "bottleneck_a_raw_point": null,
+      "bottleneck_b_raw_point": null,
+      "cyclic_max": null,
+      "cyclic_shift": null,
+      "free_max": null,
+      "free_mapping_1based": null,
+      "diagnostic_case": "count_gate",
+      "complete_same": false,
+      "representative_same": false,
+      "previous_development_image": false,
+      "threshold_gap": null,
+      "case_number": 7,
+      "selection_reason": "different_count_partial",
+      "selection_order": "not previous development, partial_matching_fraction descending, code, ids",
+      "candidate_pair_count": 1085,
+      "prior_user_decisions_overridden": false,
+      "partitions_recomputed": {
+        "complete": {
+          "labels_by_id": {
+            "3dada1d9550343f0f06a": 1,
+            "c26ee2572b19b332d923": 2
+          },
+          "centers": [
+            "3dada1d9550343f0f06a",
+            "c26ee2572b19b332d923"
+          ],
+          "between_selected_clusters_max": 1000000.0,
+          "between_selected_clusters_max_ids": [
+            "3dada1d9550343f0f06a",
+            "c26ee2572b19b332d923"
+          ],
+          "member_distances_to_selected": [
+            {
+              "id": "3dada1d9550343f0f06a",
+              "worker": "W015",
+              "to_a": 0.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "c26ee2572b19b332d923",
+              "worker": "W013",
+              "to_a": 1000000.0,
+              "to_b": 0.0
+            }
+          ]
+        },
+        "representative": {
+          "labels_by_id": {
+            "3dada1d9550343f0f06a": 1,
+            "c26ee2572b19b332d923": 2
+          },
+          "centers": [
+            "3dada1d9550343f0f06a",
+            "c26ee2572b19b332d923"
+          ],
+          "between_selected_clusters_max": 1000000.0,
+          "between_selected_clusters_max_ids": [
+            "3dada1d9550343f0f06a",
+            "c26ee2572b19b332d923"
+          ],
+          "member_distances_to_selected": [
+            {
+              "id": "3dada1d9550343f0f06a",
+              "worker": "W015",
+              "to_a": 0.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "c26ee2572b19b332d923",
+              "worker": "W013",
+              "to_a": 1000000.0,
+              "to_b": 0.0
+            }
+          ]
+        }
+      },
+      "annotations": [
+        {
+          "canonical_id": "3dada1d9550343f0f06a",
+          "worker": "W015",
+          "raw_annotation_id": "6724",
+          "project_id": "77",
+          "runtime_task_id": "3488",
+          "raw_export_path": "export_label/c2B_Chinese/project-77-at-2026-08-06-14-39-a247e8c0.json",
+          "points_1024x512": [
+            [
+              30.9781512605042,
+              216.8470588235294
+            ],
+            [
+              30.9781512605042,
+              354.52773109243697
+            ],
+            [
+              378.6218487394958,
+              130.79663865546217
+            ],
+            [
+              382.0638655462185,
+              452.6252100840336
+            ],
+            [
+              641.9361344537815,
+              129.07563025210084
+            ],
+            [
+              643.6571428571428,
+              447.4621848739496
+            ],
+            [
+              994.7428571428571,
+              213.40504201680673
+            ],
+            [
+              994.7428571428571,
+              351.0857142857143
+            ],
+            [
+              1008.510924369748,
+              225.45210084033613
+            ],
+            [
+              1008.510924369748,
+              330.4336134453781
+            ],
+            [
+              898.3663865546218,
+              234.05714285714285
+            ],
+            [
+              870.8302521008403,
+              227.21613445378154
+            ],
+            [
+              870.8302521008403,
+              318.4128
+            ],
+            [
+              898.3663865546218,
+              308.1035294117647
+            ],
+            [
+              849.92,
+              235.7781512605042
+            ],
+            [
+              849.92,
+              301.1764705882353
+            ],
+            [
+              704.9250420168067,
+              240.9411764705882
+            ],
+            [
+              701.4830252100841,
+              302.89747899159664
+            ],
+            [
+              544.8712605042017,
+              194.47394957983192
+            ],
+            [
+              543.2363025210084,
+              378.6218487394958
+            ]
+          ],
+          "pairs_effective_1based": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              19,
+              20
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              17,
+              18
+            ],
+            [
+              15,
+              16
+            ],
+            [
+              12,
+              13
+            ],
+            [
+              11,
+              14
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              9,
+              10
+            ]
+          ],
+          "imputed_point": false
+        },
+        {
+          "canonical_id": "c26ee2572b19b332d923",
+          "worker": "W013",
+          "raw_annotation_id": "6732",
+          "project_id": "77",
+          "runtime_task_id": "3488",
+          "raw_export_path": "export_label/c2B_Chinese/project-77-at-2026-08-06-14-39-a247e8c0.json",
+          "points_1024x512": [
+            [
+              30.9781512605042,
+              216.8470588235294
+            ],
+            [
+              30.9781512605042,
+              354.52773109243697
+            ],
+            [
+              378.6218487394958,
+              130.79663865546217
+            ],
+            [
+              382.0638655462185,
+              452.6252100840336
+            ],
+            [
+              641.9361344537815,
+              129.07563025210084
+            ],
+            [
+              643.6571428571428,
+              447.4621848739496
+            ],
+            [
+              994.7428571428571,
+              213.40504201680673
+            ],
+            [
+              994.7428571428571,
+              351.0857142857143
+            ],
+            [
+              1008.510924369748,
+              225.45210084033613
+            ],
+            [
+              1008.510924369748,
+              330.4336134453781
+            ],
+            [
+              898.3663865546218,
+              234.05714285714285
+            ],
+            [
+              870.8302521008403,
+              227.21613445378154
+            ],
+            [
+              870.8302521008403,
+              318.4128
+            ],
+            [
+              898.3663865546218,
+              308.1035294117647
+            ],
+            [
+              849.92,
+              235.7781512605042
+            ],
+            [
+              849.92,
+              301.1764705882353
+            ],
+            [
+              701.4830252100841,
+              302.89747899159664
+            ],
+            [
+              704.9250420168067,
+              240.9411764705882
+            ]
+          ],
+          "pairs_effective_1based": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              18,
+              17
+            ],
+            [
+              15,
+              16
+            ],
+            [
+              12,
+              13
+            ],
+            [
+              11,
+              14
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              9,
+              10
+            ]
+          ],
+          "imputed_point": false
+        }
+      ]
+    },
+    {
+      "image_id": "uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62",
+      "code": "uNb9QFRL6hY-40",
+      "building": "uNb9QFRL6hY",
+      "N": 15,
+      "a_id": "new_93_3591_7366_W002",
+      "b_id": "new_94_3628_7006_W033",
+      "a_worker": "W002",
+      "b_worker": "W033",
+      "a_pairs": 6,
+      "b_pairs": 6,
+      "same_count": true,
+      "partial_matching_fraction": 1.0,
+      "partial_matched": 6,
+      "fixed_max": 459.7646105991327,
+      "endpoint_median": 153.61136652315153,
+      "endpoint_q90": 434.8789879713294,
+      "endpoint_rms": 227.48676834184087,
+      "n_endpoint_fail": 12.0,
+      "n_corner_fail": 6.0,
+      "corner_near_share": 0.0,
+      "top_max": 459.7646105991327,
+      "bottom_max": 458.5922059857888,
+      "max_dx": 455.5348040619137,
+      "max_dy": 62.221695956040975,
+      "bottleneck_role": "top",
+      "bottleneck_a_raw_point": 7.0,
+      "bottleneck_b_raw_point": 6.0,
+      "cyclic_max": 19.87160941723956,
+      "cyclic_shift": 5.0,
+      "free_max": 19.87160941723956,
+      "free_mapping_1based": "6;1;2;3;4;5",
+      "diagnostic_case": "cyclic_rescue",
+      "complete_same": false,
+      "representative_same": false,
+      "previous_development_image": true,
+      "threshold_gap": 434.1646105991327,
+      "case_number": 8,
+      "selection_reason": "free_correspondence_flip",
+      "selection_order": "not previous development, fixed_max descending, code, ids",
+      "candidate_pair_count": 16,
+      "prior_user_decisions_overridden": false,
+      "partitions_recomputed": {
+        "complete": {
+          "labels_by_id": {
+            "5d58f3bc4858f0d343be": 1,
+            "92084aa32f538179d158": 1,
+            "d2c9465ce508ba7c1195": 1,
+            "f2a65213a0368b751984": 1,
+            "f8b24f616d167c27b810": 2,
+            "new_93_3591_7249_W010": 3,
+            "new_93_3591_7285_W013": 3,
+            "new_93_3591_7366_W002": 4,
+            "new_94_3628_6947_W035": 1,
+            "new_94_3628_7000_W036": 5,
+            "new_94_3628_7006_W033": 5,
+            "new_94_3628_7046_W037": 6,
+            "new_94_3628_7202_W029": 7,
+            "new_94_3628_7305_W028": 5,
+            "new_94_3628_7333_W030": 1
+          },
+          "centers": [
+            "d2c9465ce508ba7c1195",
+            "f8b24f616d167c27b810",
+            "new_93_3591_7249_W010",
+            "new_93_3591_7366_W002",
+            "new_94_3628_7000_W036",
+            "new_94_3628_7046_W037",
+            "new_94_3628_7202_W029"
+          ],
+          "between_selected_clusters_max": 460.3448782061414,
+          "between_selected_clusters_max_ids": [
+            "new_93_3591_7366_W002",
+            "new_94_3628_7000_W036"
+          ],
+          "member_distances_to_selected": [
+            {
+              "id": "5d58f3bc4858f0d343be",
+              "worker": "W031",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "92084aa32f538179d158",
+              "worker": "W017",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "d2c9465ce508ba7c1195",
+              "worker": "W032",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "f2a65213a0368b751984",
+              "worker": "W008",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "f8b24f616d167c27b810",
+              "worker": "W006",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_93_3591_7249_W010",
+              "worker": "W010",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_93_3591_7285_W013",
+              "worker": "W013",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_93_3591_7366_W002",
+              "worker": "W002",
+              "to_a": 0.0,
+              "to_b": 459.7646105991327
+            },
+            {
+              "id": "new_94_3628_6947_W035",
+              "worker": "W035",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_94_3628_7000_W036",
+              "worker": "W036",
+              "to_a": 460.3448782061414,
+              "to_b": 9.107499520612585
+            },
+            {
+              "id": "new_94_3628_7006_W033",
+              "worker": "W033",
+              "to_a": 459.7646105991327,
+              "to_b": 0.0
+            },
+            {
+              "id": "new_94_3628_7046_W037",
+              "worker": "W037",
+              "to_a": 489.23951767177283,
+              "to_b": 455.6724421723393
+            },
+            {
+              "id": "new_94_3628_7202_W029",
+              "worker": "W029",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_94_3628_7305_W028",
+              "worker": "W028",
+              "to_a": 456.41733329408726,
+              "to_b": 13.462208699627908
+            },
+            {
+              "id": "new_94_3628_7333_W030",
+              "worker": "W030",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            }
+          ]
+        },
+        "representative": {
+          "labels_by_id": {
+            "5d58f3bc4858f0d343be": 1,
+            "92084aa32f538179d158": 1,
+            "d2c9465ce508ba7c1195": 1,
+            "f2a65213a0368b751984": 1,
+            "f8b24f616d167c27b810": 3,
+            "new_93_3591_7249_W010": 1,
+            "new_93_3591_7285_W013": 1,
+            "new_93_3591_7366_W002": 4,
+            "new_94_3628_6947_W035": 1,
+            "new_94_3628_7000_W036": 2,
+            "new_94_3628_7006_W033": 2,
+            "new_94_3628_7046_W037": 5,
+            "new_94_3628_7202_W029": 6,
+            "new_94_3628_7305_W028": 2,
+            "new_94_3628_7333_W030": 1
+          },
+          "centers": [
+            "d2c9465ce508ba7c1195",
+            "new_94_3628_7000_W036",
+            "f8b24f616d167c27b810",
+            "new_93_3591_7366_W002",
+            "new_94_3628_7046_W037",
+            "new_94_3628_7202_W029"
+          ],
+          "between_selected_clusters_max": 460.3448782061414,
+          "between_selected_clusters_max_ids": [
+            "new_93_3591_7366_W002",
+            "new_94_3628_7000_W036"
+          ],
+          "member_distances_to_selected": [
+            {
+              "id": "5d58f3bc4858f0d343be",
+              "worker": "W031",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "92084aa32f538179d158",
+              "worker": "W017",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "d2c9465ce508ba7c1195",
+              "worker": "W032",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "f2a65213a0368b751984",
+              "worker": "W008",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "f8b24f616d167c27b810",
+              "worker": "W006",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_93_3591_7249_W010",
+              "worker": "W010",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_93_3591_7285_W013",
+              "worker": "W013",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_93_3591_7366_W002",
+              "worker": "W002",
+              "to_a": 0.0,
+              "to_b": 459.7646105991327
+            },
+            {
+              "id": "new_94_3628_6947_W035",
+              "worker": "W035",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_94_3628_7000_W036",
+              "worker": "W036",
+              "to_a": 460.3448782061414,
+              "to_b": 9.107499520612585
+            },
+            {
+              "id": "new_94_3628_7006_W033",
+              "worker": "W033",
+              "to_a": 459.7646105991327,
+              "to_b": 0.0
+            },
+            {
+              "id": "new_94_3628_7046_W037",
+              "worker": "W037",
+              "to_a": 489.23951767177283,
+              "to_b": 455.6724421723393
+            },
+            {
+              "id": "new_94_3628_7202_W029",
+              "worker": "W029",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            },
+            {
+              "id": "new_94_3628_7305_W028",
+              "worker": "W028",
+              "to_a": 456.41733329408726,
+              "to_b": 13.462208699627908
+            },
+            {
+              "id": "new_94_3628_7333_W030",
+              "worker": "W030",
+              "to_a": 1000000.0,
+              "to_b": 1000000.0
+            }
+          ]
+        }
+      },
+      "annotations": [
+        {
+          "canonical_id": "new_93_3591_7366_W002",
+          "worker": "W002",
+          "raw_annotation_id": 7366,
+          "project_id": 93,
+          "runtime_task_id": 3591,
+          "raw_export_path": "export_label/新增中文20图/project-93-at-2026-09-21-09-42-4609125d.json",
+          "points_1024x512": [
+            [
+              492.35805626598466,
+              187.25319693094627
+            ],
+            [
+              496.28644501278774,
+              318.1994884910486
+            ],
+            [
+              665.2071611253197,
+              208.20460358056266
+            ],
+            [
+              663.8976982097187,
+              297.2480818414322
+            ],
+            [
+              885.1969309462916,
+              212.13299232736574
+            ],
+            [
+              882.5780051150895,
+              299.86700767263426
+            ],
+            [
+              40.593350383631716,
+              127.01790281329923
+            ],
+            [
+              40.593350383631716,
+              381.0537084398977
+            ],
+            [
+              6.547314578005115,
+              381.45412271987493
+            ],
+            [
+              6.525577493606138,
+              124.39897698209717
+            ],
+            [
+              3.2908873568647614,
+              164.25902257251073
+            ],
+            [
+              3.2908873568647614,
+              341.83787918387463
+            ]
+          ],
+          "pairs_effective_1based": [
+            [
+              11,
+              12
+            ],
+            [
+              10,
+              9
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              5,
+              6
+            ]
+          ],
+          "imputed_point": false
+        },
+        {
+          "canonical_id": "new_94_3628_7006_W033",
+          "worker": "W033",
+          "raw_annotation_id": 7006,
+          "project_id": 94,
+          "runtime_task_id": 3628,
+          "raw_export_path": "export_label/新增英文30+20图/project-94-at-2026-09-20-13-45-d09d9d53.json",
+          "points_1024x512": [
+            [
+              7.6992481203007515,
+              381.6627282491944
+            ],
+            [
+              39.59613319011815,
+              380.56283566058005
+            ],
+            [
+              8.799140708915145,
+              124.2878625134264
+            ],
+            [
+              42.89581095596133,
+              125.38775510204079
+            ],
+            [
+              494.9591743843645,
+              318.936807591197
+            ],
+            [
+              496.1281544455454,
+              189.2395987693402
+            ],
+            [
+              662.3385956926908,
+              210.76685471400066
+            ],
+            [
+              662.3385956926908,
+              299.37904778853294
+            ],
+            [
+              885.8215960041324,
+              210.54031545191685
+            ],
+            [
+              885.3565519652498,
+              297.9685947618218
+            ],
+            [
+              1019.6004296455425,
+              182.58216970998924
+            ],
+            [
+              1020.7003222341568,
+              323.36842105263156
+            ]
+          ],
+          "pairs_effective_1based": [
+            [
+              3,
+              1
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              6,
+              5
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              9,
+              10
+            ],
+            [
+              11,
+              12
+            ]
+          ],
+          "imputed_point": false
+        }
+      ],
+      "pair_compatible_at_px": {
+        "25.5": false,
+        "25.6": false,
+        "25.7": false
+      }
+    }
+  ]
+}

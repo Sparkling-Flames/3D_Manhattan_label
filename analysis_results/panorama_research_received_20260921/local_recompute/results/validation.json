@@ -1,0 +1,51 @@
+{
+  "pinned_commit": "ce43b2883f63ec1538cffdfe5feca8e2b24518dc",
+  "archive_sha256": "61995e05bfb57994491edc62e9fe74c525d61cd558d0121f77b24d498c1ddcf0",
+  "checks": {
+    "distances.json": {
+      "exact_equal": true
+    },
+    "eligibility.json": {
+      "exact_equal": true
+    },
+    "intake.json": {
+      "exact_equal": true
+    },
+    "memberships.json": {
+      "exact_equal": true
+    },
+    "partitions.json": {
+      "exact_equal": true
+    },
+    "per_image.json": {
+      "exact_equal": true
+    },
+    "per_worker.json": {
+      "exact_equal": true
+    },
+    "review_applied.json": {
+      "exact_equal": true
+    },
+    "SUMMARY.json": {
+      "exact_equal": true
+    },
+    "responses.jsonl.gz": {
+      "parsed_exact_equal": true
+    }
+  },
+  "n_scalar_roundoff": 0,
+  "max_absolute_error": 0.0,
+  "recommended_tolerance": {
+    "rtol": 1e-12,
+    "atol": 1e-10
+  },
+  "all_differences_within_tolerance": true,
+  "shipped_strict_verify": "exact JSON comparison passed",
+  "tests": "see logs/tests_source.log for the separately executed source test suite",
+  "main_view": {
+    "images": 240,
+    "responses": 2444,
+    "workers": 25,
+    "buildings": 22
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "strict_comparison_passed": false,
+  "explained_files": [
+    "source_replay/EXPERIMENT_MANIFEST.json",
+    "source_replay/endpoint_residuals.csv.gz",
+    "source_replay/pairwise.csv.gz",
+    "source_replay_comparison.csv"
+  ],
+  "unexpected_differences": 0,
+  "case_code": "uNb9QFRL6hY-52",
+  "condition": "oos",
+  "ids": [
+    "3785ebbd5dc8b7ea",
+    "87273c75a3b5848a"
+  ],
+  "source_unrounded_reference": 45.825787226749995,
+  "source_unrounded_local": 45.82578722675,
+  "unrounded_absolute_difference": 7.105427357601002e-15,
+  "source_csv_reference": 45.8257872267,
+  "source_csv_local": 45.8257872268,
+  "source_export_format": "%.12g in clustering_release/release.py:39",
+  "same_value_used_by_partition_after_8_decimal_rounding": 45.82578723,
+  "all_source_members_and_representatives_exact": true,
+  "both_manifests_bind_correct_payloads": true,
+  "diagnostic_table_difference": "Source-replay error to the frozen input is 1.000017846308765e-10 in two cloud rows and 0 locally, following the two rounded CSVs; all match flags true.",
+  "interpretation": "One IEEE floating-point rounding boundary appears in two %.12g CSVs, their diagnostic error table, and their correctly rebound manifest. Strict comparator remains failed; acceptance is explicit review of these four files, not a global tolerance increase.",
+  "numerical_research_accepted_with_documented_platform_difference": true,
+  "semantic_clustering_accepted": false,
+  "new_visual_decisions": 0
+}

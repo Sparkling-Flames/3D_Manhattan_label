@@ -1,0 +1,16 @@
+独立审查测试记录（2026-09-28）
+包目录：C:/Users/ASUS/Downloads/panorama_layout_research_20260927/panorama_layout_research_20260927
+
+工作目录：包目录
+命令：D:/anaconda/python.exe -B -m pytest -q -p no:cacheprovider new_tests
+....................................                                     [100%]
+36 passed in 0.98s
+
+工作目录：包目录/input_snapshot
+命令：D:/anaconda/python.exe -B -m pytest -q -p no:cacheprovider tests
+...............                                                          [100%]
+15 passed in 3.52s
+
+另执行本目录 audit_checks.py：所有反例断言通过；重新计算 11 个真实拼接候选的硬支持均为 0。
+这不是完整搜索和全部重放的再次复算；这些部分以源代码、已保存结果及局部独立检查为审查依据。
+

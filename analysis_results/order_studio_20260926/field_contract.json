@@ -1,0 +1,14 @@
+{
+  "schema": "order_review_20260928_v3",
+  "source_schema": "order_preprocessed_source_v1",
+  "primary_key": "object_id",
+  "states": [
+    "draft",
+    "confirmed",
+    "pending",
+    "pairing"
+  ],
+  "pairing": "点位匹配错误；独立后续审核，不作无效或已确认顺序",
+  "binding": "object_id + preprocessed points + fixed point labels + complete links + preprocessing method",
+  "raw_mutation": false
+}

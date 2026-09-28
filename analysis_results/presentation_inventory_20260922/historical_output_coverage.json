@@ -1,0 +1,71 @@
+{
+  "schema": "image_portrait_output_audit_v1",
+  "expected_images": 648,
+  "models": {
+    "hohonet": {
+      "numerical_image_count": 648,
+      "missing_image_ids": [],
+      "file_count": 648,
+      "bytes": 920019633,
+      "status_counts": {
+        "ok": 648
+      },
+      "errors": []
+    },
+    "bilayout": {
+      "numerical_image_count": 648,
+      "missing_image_ids": [],
+      "file_count": 648,
+      "bytes": 474476476,
+      "status_counts": {
+        "ok": 648
+      },
+      "errors": []
+    },
+    "ulayout": {
+      "numerical_image_count": 648,
+      "missing_image_ids": [],
+      "file_count": 1296,
+      "bytes": 648863060,
+      "status_counts": {
+        "reused": 1,
+        "ok": 647
+      },
+      "errors": [],
+      "complete_payload_image_count": 648,
+      "incomplete_payload_image_ids": []
+    },
+    "dinov3": {
+      "numerical_image_count": 648,
+      "missing_image_ids": [],
+      "file_count": 1296,
+      "bytes": 2201024232,
+      "status_counts": {
+        "reused": 155,
+        "ok": 493
+      },
+      "errors": [],
+      "complete_payload_image_count": 648,
+      "incomplete_payload_image_ids": []
+    },
+    "da3": {
+      "numerical_image_count": 648,
+      "missing_image_ids": [],
+      "file_count": 1296,
+      "bytes": 1623474916,
+      "status_counts": {
+        "reused": 96,
+        "ok": 552
+      },
+      "errors": [],
+      "complete_payload_image_count": 648,
+      "incomplete_payload_image_ids": []
+    }
+  },
+  "da3_multiview": {
+    "expected_pairs": 316,
+    "complete_payload_pair_count": 316,
+    "incomplete_pair_ids": [],
+    "bytes": 1876369847
+  }
+}

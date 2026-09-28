@@ -1,0 +1,1 @@
+window.STUDIO_IMAGES[0]=window.DASHBOARD_IMAGE;

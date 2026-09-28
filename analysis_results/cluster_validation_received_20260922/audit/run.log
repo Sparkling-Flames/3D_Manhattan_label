@@ -1,0 +1,99 @@
+{
+  "source_effective_points_and_workers_equal": 2444,
+  "results_inventory_equal": 53,
+  "explicit_differences": [
+    {
+      "file": "affinity_corpus_memberships.json",
+      "pass": false,
+      "error": "JSON values differ; inspect rather than overwrite reference"
+    },
+    {
+      "file": "affinity_partition_memberships.json",
+      "pass": false,
+      "error": "JSON values differ; inspect rather than overwrite reference"
+    },
+    {
+      "file": "distance_variants.json.gz",
+      "pass": false,
+      "error": "JSON values differ; inspect rather than overwrite reference"
+    },
+    {
+      "file": "nontransitivity_per_image.json",
+      "pass": false,
+      "error": "JSON values differ; inspect rather than overwrite reference"
+    },
+    {
+      "file": "preview_mechanism_summary.json",
+      "pass": false,
+      "error": "JSON values differ; inspect rather than overwrite reference"
+    }
+  ],
+  "preview_metadata_differences": {
+    "preview_mechanism_summary.json": {
+      "node_version": {
+        "original": "v22.16.0",
+        "local": "v24.18.0"
+      }
+    }
+  },
+  "difference_details": {
+    "affinity_corpus_memberships.json": {
+      "float_differences": 58,
+      "max_absolute_float_difference": 2.842170943040401e-14,
+      "other": []
+    },
+    "affinity_partition_memberships.json": {
+      "float_differences": 12,
+      "max_absolute_float_difference": 1.4210854715202004e-14,
+      "other": []
+    },
+    "distance_variants.json.gz": {
+      "float_differences": 28872,
+      "max_absolute_float_difference": 5.684341886080802e-14,
+      "other": []
+    },
+    "nontransitivity_per_image.json": {
+      "float_differences": 286,
+      "max_absolute_float_difference": 7.105427357601002e-15,
+      "other": []
+    },
+    "preview_mechanism_summary.json": {
+      "float_differences": 0,
+      "max_absolute_float_difference": 0.0,
+      "other": [
+        {
+          "path": "/node_version",
+          "original": "v22.16.0",
+          "local": "v24.18.0"
+        }
+      ]
+    }
+  },
+  "exhaustive_small_images": 148,
+  "feasible_partitions_enumerated": 26457,
+  "diameter_lower_bound": {
+    "images": 110,
+    "responses": 1940,
+    "forced_singletons": 481,
+    "count_unique": 123,
+    "geometry_isolated": 358,
+    "complete_singletons": 515,
+    "partition_singletons": 34,
+    "images_cannot_reach90": 69,
+    "scope": "固定当前点对应、点数硬门和25.6两两直径条件；是图论下界，不说明这些作答语义错误或人员质量差"
+  },
+  "candidate_snap02": {
+    "images_changed": 1,
+    "coassignment_changes": 16,
+    "members": 17,
+    "images_changed_without_edge_changes": 0
+  },
+  "mc_only": {
+    "images": 110,
+    "point_estimate_ge80": 14,
+    "lower95_ge80": 11,
+    "upper95_ge80": 15,
+    "scope": "逐图Wilson区间只针对固定人群下80次顺序抽样；不反映新人员泛化或方法误差，也不是同时置信带"
+  },
+  "limitations": "新候选共享x敏感性仍是开发探针；最优目标不等于语义正确。未更改原始数据、算法默认值或人工审核。"
+}

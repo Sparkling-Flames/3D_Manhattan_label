@@ -1,0 +1,52 @@
+{
+  "source_sha256": "47e446e38021acb38008ccf6594f60671852712252a7a966c5c1a72b81dd7158",
+  "source_git_blob": "9cf824b5a77deeccd45b569d5f8727b29810a36a",
+  "code_files": {
+    "audit_numeric.py": "14d2dc3a68fe449206510281fa90d088ff4ed0d20af32ecacdf393dd1bc954dc",
+    "common.py": "5d7f82acd2e19d5a05f871c846a880041c2435e30196d37a1d7c598f26966a04",
+    "compare_runs.py": "4677058c121fe21683360a1cc02c447f6908f1d536d76cba455945a83d6e0cb0",
+    "diagnostics.py": "b2df7fb557628b0e501cb1b281ac4ed3f83c7a7f694b96ddc6cd43ad2bca015f",
+    "make_figures.py": "8080bc95bde30d467b72891fb8cff40e975c8a52d94d1c890ed86ed65bc5b303",
+    "model_bridge.py": "13bca74ecf0c79ccbe0a0684f8db728a4e5c7e8069ce957adb7f52071ab13221",
+    "personnel_effects.py": "bd60beddf1bda56e17733f66f1a274d2e7c90f2519927f7313ce718a72399be6",
+    "personnel_prefix.py": "acf35c8bb22ba811a048e9d82994668506478fb483c79b463efa04d9456de0c2",
+    "prefix_replay.py": "f4f31b080f546b31c8eb79d2a2079ada9d6fffcfe48805e544bd866a924e605e",
+    "review_cases.py": "9339f5b27d5c98978e675fddd0c257cc17047d6f55e951d2f1be1e870684366d",
+    "run_all.py": "e9da5c55c8500c8f717bdc9576e92061c7621cedfec274561720b814a339f689",
+    "sensitivity_3d.py": "62246c8968615122df69939f2d5d0ec0fa2e976de003788765569f9390671ee7"
+  },
+  "mode": "audit-only",
+  "steps": [
+    {
+      "step": "source_replay",
+      "command": [
+        "D:\\anaconda\\python.exe",
+        "-X",
+        "utf8",
+        "-B",
+        "-m",
+        "tools.thesis_main.analysis.clustering_release.local_points",
+        "--root",
+        "D:\\Work\\HOHONET\\analysis_results\\clustering_numeric_local_20260920\\work\\source\\rc2_received\\sources\\current\\study",
+        "--evidence",
+        "D:\\Work\\HOHONET\\analysis_results\\clustering_numeric_local_20260920\\work\\source\\evidence",
+        "--out",
+        "D:\\Work\\HOHONET\\analysis_results\\clustering_numeric_local_20260920\\integration_audit\\source_replay"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 28.54699999999866
+    },
+    {
+      "step": "audit_numeric",
+      "command": [
+        "D:\\anaconda\\python.exe",
+        "-X",
+        "utf8",
+        "-B",
+        "D:\\Work\\HOHONET\\tools\\thesis_main\\analysis\\clustering_numeric_research\\audit_numeric.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 77.03100000000268
+    }
+  ]
+}

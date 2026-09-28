@@ -815,7 +815,7 @@ def main() -> int:
     profile_producer = ROOT / "tools" / "thesis_main" / "analysis" / "materialize_final_pooled_profile_freeze.py"
     cluster_producer = ROOT / "tools" / "thesis_main" / "analysis" / "geometry_cluster_v2.py"
     cluster_materializer = ROOT / "tools" / "thesis_main" / "analysis" / "geometry_consensus" / "materialize.py"
-    method_path = ROOT / "docs" / "thesis_main" / "PAPER_A_METHOD_CONTRACT_CURRENT.json"
+    method_path = ROOT / "docs" / "thesis_main" / "PAPER_A_METHOD_CONTRACT_20260811_v23.json"
     method = load_method_contract(method_path)
     historical_binding = load_c1_historical_binding(c1_sources, method_path)
 

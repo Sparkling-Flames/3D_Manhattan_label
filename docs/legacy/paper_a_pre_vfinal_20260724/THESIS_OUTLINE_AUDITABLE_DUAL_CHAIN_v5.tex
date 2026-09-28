@@ -1,0 +1,160 @@
+% Paper A standalone outline, v5
+% Version: 2026-07-16
+% Status: formal outline contract; not the manuscript source and not a result/PDF claim.
+% Boundary: does not rewrite protocol, assignment, routing, SAP, code, tests, data, or artifacts.
+\documentclass[UTF8,a4paper,12pt]{ctexart}
+\usepackage[a4paper,margin=2.4cm]{geometry}
+\usepackage{amsmath,amssymb,booktabs,enumitem,hyperref}
+\usepackage[strings]{underscore}
+\hypersetup{hidelinks}
+\setlist{nosep}
+\newcommand{\card}[5]{%
+  \begin{description}[leftmargin=3.3cm,style=nextline]
+    \item[回答什么问题：]#1
+    \item[使用什么证据：]#2
+    \item[Primary：]#3
+    \item[Sensitivity / audit：]#4
+    \item[禁止主张：]#5
+  \end{description}}
+\title{Paper A 正式论文提纲 v5：可审计的自适应全景布局标注}
+\author{写作合同 v5}
+\date{2026-07-16}
+
+\begin{document}
+\maketitle
+
+\begin{quote}
+Paper A 的定位是面向全景布局数据生产的、阶段化、可审计的自适应标注基础设施。正式主线固定为
+\texttt{Pilot -> PreScreen -> Calibration -> Main(Test + Validation)} 与
+\texttt{P1 -> C1 -> C2 -> T1 -> V1}。本文建立 evidence ledger、worker state、task-condition map 和 counterexample/challenge bank 的合同与评价路径，但不宣称这些资产全部已经生成。正式 $R_u$ 只来自 eligible C1/C2 \texttt{Calibration\_manual}；Semi 只形成 gated diagnostic evidence。本文不回写历史 protocol、assignment、SAP、代码、测试、数据或原始工件。
+\end{quote}
+
+\section*{核心主轴与贡献}
+\[
+\text{协议证据}\to\text{validity gate}\to
+\{R_u,D_u\}\to\text{C2 frozen state}\to
+\text{predictive validity}\to\text{Random/Global/Full}.
+\]
+\begin{enumerate}
+  \item 阶段化、可审计的证据协议；
+  \item 来源分离且 support-aware 的 worker state；
+  \item 只读取当时证据的时序预算路由。
+\end{enumerate}
+三状态 task-condition evidence、Semi correction feasibility、failure-family/counterexample、active-time integrity、weighted consensus 和 refresh contract 为二级或审计性创新。模型重训练、Bi-Layout、A-line Manhattan、自动 OOS 与 worker-facing Manhattan correction 不属于一级贡献。
+
+\section{引言}
+\subsection{数据生产背景与现实约束}
+\card{为什么全景布局生产同时需要效率、质量和审计性}{任务成本、模型初始化、worker 行为和 provenance}{问题定义}{工程限制与 missingness}{模型重训练是本文核心}
+\subsection{Manual/Semi 识别设计与研究缺口}
+\card{为什么 Manual ability 与 Semi correction ability 必须分开}{同图双条件、automation bias、issue/correction evidence}{识别路线}{小样本 Semi feasibility}{已完成全面 Semi-specific routing}
+\subsection{四项基础资产与方法路线}
+\card{证据账本、worker state、task-condition map 和 bank 如何形成生产资产}{artifact contract、validity gate、freeze point}{资产来源与边界}{refresh、challenge 和 future pool}{pending artifact 已经生成}
+\subsection{RQ、贡献层级与研究边界}
+\card{RQ1/RQ2/RQ3 如何对应结果}{RQ contract}{三项一级贡献}{二级创新}{增加生命周期一级 RQ}
+
+\section{相关工作}
+\subsection{全景布局估计与布局标注}
+\card{本文任务与布局标注文献的关系}{任务定义与几何文献}{任务定位}{metric compatibility}{A-line 工具是主实验}
+\subsection{模型辅助标注与 automation bias}
+\card{为什么 issue recognition、correction、blind trust 和 over-correction 分开}{assisted annotation 文献}{RQ2 机制}{行为审计}{少编辑等于高质量}
+\subsection{众包可靠度、worker modeling 与共识}
+\card{为什么拆分 $R_u$、$D_u$ 和 raw risk}{reliability/disagreement 文献}{双链路}{weighted consensus}{单一 confidence 是 truth probability}
+\subsection{自适应冗余、路由与预算评价}
+\card{为什么首次发放、追加、停止和冲突解决必须时序化}{sequential routing/stopping 文献}{RQ3b}{arrival-order sensitivity}{固定 $k_0/k_{\max}$ 是当前事实}
+\subsection{Provenance、数据审计与挑战集}
+\card{为什么状态需要版本、适用域、support 和失效标志}{provenance、dataset audit、challenge set 文献}{生命周期设计边界}{future bridge/refresh}{未来维护机制已有实证结果}
+
+\section{研究协议、证据类型与数据生命周期}
+\subsection{阶段、轮次与冻结点}
+\card{各阶段何时冻结什么}{正式 protocol/SOP}{P1/C1/C2/T1/V1 职责}{launched/valid 状态}{回写历史 freeze}
+\subsection{Manual/Semi 角色、四类 evidence 与三类 consensus}
+\card{不同 evidence 如何进入不同 estimand}{Scope/OOS、Difficulty、Model Issue、Geometry；任务描述/评价参考/停止共识}{来源分离}{历史 harmonization}{一个多数阈值承担三种功能}
+\subsection{任务池、condition、assignment 与 provenance}
+\card{task/image/stage/pool 如何隔离}{manifest、artifact path、SHA、rule version}{数据生命周期}{system collection audit}{planned/launched/valid 混写}
+\subsection{Scope、reference、active-time 与 validity gate}
+\card{哪些提交可以进入哪个分析}{independence、owner-valid time、scope/reference、process、missingness}{estimand-specific inclusion}{forensic audit}{missing = success}
+\subsection{P1 integrity 与当前 C1 状态}
+\card{历史 P1 如何审计而不改写执行}{P1 audit、C1 status}{保守状态说明}{legacy bridge}{C1 closeout 已完成}
+
+\section{测量模型与双链路工人画像}
+\subsection{符号、方向与 inclusion}
+\card{$R_u$、$D_u$ 与风险率如何区分}{artifact contract、CI/LCB/support}{方向合同}{legacy aliases}{混用 failure rate 与 reliability}
+\subsection{三状态 task-tag 观测模型}
+\card{如何表示 positive、explicit negative、unasserted 和 NA}{$Y_{tus}\in\{+,-,0,NA\}$、$a/e/u/k$}{三状态 evidence}{LOO pivotality}{未选中 = 反对；confidence = truth probability}
+\subsection{Difficulty 分析合同}
+\card{Difficulty 如何表示 worker 报告阈值}{raw response、trivial harmonization、UI/instruction version}{trivial/specific/multi-select 指标}{组合分布}{trivial = 客观无困难}
+\subsection{Model Issue 分析合同}
+\card{如何分离 recognition、correction、blind trust 和 over-correction}{raw issue、behavior harmonization、model provenance}{recognition/correction}{legacy schema}{issue label = correction success}
+\subsection{三层 task-condition map 与 worker-scene profile}
+\card{objective condition、worker Difficulty 和 model-version failure 如何共存}{task condition、worker tag、task-model issue}{global profile 与 support gate}{broad/strict、family-specific、fallback}{LOO 生成不同正式 task set}
+\subsection{Geometry LOO 与指标层级}
+\card{如何保持 reference 独立并处理 metric compatibility}{worker-excluded LOO、seam-aware candidate、stability sidecar}{当前 $R_u$ primary}{legacy medoid、条件 2D/3D metric}{pending metric = 已有结果}
+\subsection{$R_u$、$D_u$、版本与失效状态}
+\card{如何形成可复用但可失效的 worker state}{Calibration、Semi diagnostic、domain/model/UI/version/support}{C2 freeze candidate}{active/watch/refresh/suspended/re-admission}{P1 直接成为 routing profile}
+\subsection{Failure-family 与四层 counterexample bank}
+\card{如何解释平均指标掩盖的系统失败}{五个 failure family、candidate/adjudication/provenance}{candidate 与 adjudicated case}{challenge/retraining pool}{反例估计 prevalence 或自动改 GT}
+
+\section{路由策略与统计分析}
+\subsection{C2 冻结 worker state 与 task-side risk}
+\card{哪些状态可以进入 routing}{C2 state、LCB/support、task/model risk}{frozen state}{cross-fitted shadow state}{P1 后见之明路由}
+\subsection{首次发放、追加与冲突解决}
+\card{响应到达后如何更新决策}{snapshot、event batch、arrival order}{信息时序}{排序置换}{最终 scene 回填首次路由}
+\subsection{动态冗余、停止与专家成本}
+\card{何时 stop、continue、escalate 或 unresolved}{$k_{dispatch\_initial}$、$k_{min\_for\_stop}$、$standard\_cap$、$escalation\_cap$}{候选 stop contract}{$k_{used}$、专家 time/cost}{singleton acceptance 或无限加票}
+\subsection{Random、Global、Full 与数据隔离}
+\card{三种 policy 使用哪些信息}{Calibration replay、T1、V1 separation}{Random/Global/Full}{V1 deployment audit}{V1 临时重调参}
+\subsection{Image-level cross-fitted replay 与 RQ3b}
+\card{如何避免 image leakage 和 annotation-row averaging}{同 image 同 fold、当时 snapshot、实际 $U_t$}{task-level policy outcome}{arrival/reference sensitivity}{完整 worker pool 无偏在线效果}
+\subsection{RQ1、RQ2、RQ3a、RQ3b 统计合同}
+\card{RQ、数据、estimand、方法和降级如何对应}{SAP v1 与 additive amendment}{冻结统计口径}{weighted/failure/counterexample audit}{用 v5 覆写 SAP v1}
+
+\section{实验结果}
+\subsection{Evidence completeness 与 gate 流量}
+\card{证据在各 gate 的流量是什么}{planned/received/valid/not evaluable/unresolved}{完整性主表}{原因分解}{把 $23\times18$ 写成正式独立样本量}
+\subsection{RQ1：效率}
+\card{Semi 是否降低 owner-valid active time}{exact log、质量与风险}{primary time}{fallback/fast-low-quality audit}{更快 = 更可靠}
+\subsection{RQ2：质量、纠错与行为影响}
+\card{Semi 如何影响 quality、recognition、correction 和 risk}{paired Manual/Semi task/image evidence}{SAP primary}{global Semi feasibility、failure-family}{weighted consensus 主轴}
+\subsection{RQ3a：画像 predictive association}
+\card{P1 evidence 是否解释独立后续行为}{gated cross-stage predictor/target}{support-complete association}{bootstrap/discrepancy}{P1 自证}
+\subsection{RQ3b：routing utility}
+\card{Full 是否优于 Random/Global}{cross-fitted replay、V1 audit}{quality/budget estimands}{fallback、escalation、reference unavailable}{临时 online tuning}
+\subsection{二级创新与 counterexample 审计}
+\card{失败模式如何解释平均结果}{failure-family、adjudicated cases、provenance}{描述性案例}{challenge/retraining layers}{反例替代 primary endpoint}
+
+\section{讨论与局限}
+\subsection{基础设施意义与 Manual/Semi 分工}
+\card{Paper A 真正建立了什么}{各 RQ primary evidence}{协议、state、routing}{Semi 小样本限制}{GT/model paper claim}
+\subsection{三状态 map、Geometry 与 support 局限}
+\card{条件证据和 LOO metric 的可解释边界是什么}{三层 condition、LOO、metric gates}{measurement boundary}{legacy/pending}{标签等于客观真值}
+\subsection{生命周期、refresh、missingness 与外部效度}
+\card{何时复用、bridge、watch 或失效}{version/domain/support/validity}{未来生命周期合同}{drift/domain shift}{当前已完成长期部署}
+\subsection{Counterexample/challenge bank 与 Paper B}
+\card{反例如何连接未来 GT 修正和重训练}{四层 bank、adjudication、split/provenance}{当前可审计层}{future challenge/retraining}{自动 GT/retraining}
+
+\section{结论}
+\subsection{三个一级 RQ 的证据边界}
+\card{哪些结论属于 primary、sensitivity、audit、not evaluable 或 unresolved}{各 RQ gated evidence}{分层结论}{support/missing audit}{超出证据}
+\subsection{三项一级贡献}
+\card{论文贡献如何收束}{协议、来源分离 state、时序路由}{三项一级贡献}{二级创新}{将二级内容升为一级}
+\subsection{不超出证据的结论}
+\card{哪些内容必须保留为 pending 或 future}{C1/C2 status、C2b amendment boundary、artifact status}{安全结论}{future work}{把未生成结果写成完成}
+
+\appendix
+\section{Machine-readable artifact contracts}
+定义 worker-task-tag observation、task-tag three-state evidence、worker-scene profile、online routing evidence、geometry stability 和四层 counterexample bank 的字段、provenance、inclusion flags 与状态；字段全集不机械塞入主文。
+
+\section*{统一符号}
+\[
+R_u=\text{Calibration-only protocol reliability},\qquad
+D_u=(G_u,S_u,C_u,V_u,P_u),
+\]
+五维均 higher-is-better，且
+\[
+C_u=1-\text{semi correction failure rate},\quad
+V_u=1-\text{undercoverage failure rate},\quad
+P_u=1-\text{process failure rate}.
+\]
+不引入未定义的 $B_u/F_u/Q_u$；旧字段仅作 legacy alias。
+
+\end{document}

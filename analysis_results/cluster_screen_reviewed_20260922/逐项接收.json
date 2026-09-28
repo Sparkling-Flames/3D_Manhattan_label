@@ -1,0 +1,942 @@
+[
+  {
+    "case": 1,
+    "code": "uNb9QFRL6hY-55",
+    "image_id": "uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78",
+    "original_decision": {
+      "relation": "同一表达，可同簇",
+      "comment": "",
+      "defer": false
+    },
+    "target_same": true,
+    "fixed_max_px": 6.597217883339255,
+    "workers": [
+      "W033",
+      "W029"
+    ],
+    "ids": [
+      "new_94_3633_7013_W033",
+      "new_94_3633_7496_W029"
+    ],
+    "gt_path": "data\\mp3d_layout\\test\\label_cor\\uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "new_94_3633_7013_W033": [
+        0.07848237654748402,
+        0.21482277121375182,
+        0.03756849230637238,
+        0.16519939552369634
+      ],
+      "new_94_3633_7496_W029": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "gt_point_count": 12
+  },
+  {
+    "case": 2,
+    "code": "uNb9QFRL6hY-29",
+    "image_id": "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+    "original_decision": {
+      "relation": "同一表达，可同簇",
+      "comment": "",
+      "defer": false
+    },
+    "target_same": true,
+    "fixed_max_px": 6.791097536738932,
+    "workers": [
+      "W031",
+      "W035"
+    ],
+    "ids": [
+      "new_94_3627_6897_W031",
+      "new_94_3627_6946_W035"
+    ],
+    "gt_path": "data\\mp3d_layout\\test\\label_cor\\uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "new_94_3627_6897_W031": [
+        0.0,
+        0.0,
+        0.05206438655267487,
+        0.0,
+        0.18638690659573687,
+        0.0026068165904225005
+      ],
+      "new_94_3627_6946_W035": [
+        0.25510204081632404,
+        0.12755102040816757,
+        0.0,
+        0.12755102040815647,
+        0.12755102040816757,
+        0.05095945671292901
+      ]
+    },
+    "gt_point_count": 12
+  },
+  {
+    "case": 3,
+    "code": "q9vSo1VnCiC-02",
+    "image_id": "q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e",
+    "original_decision": {
+      "relation": "同一表达，可同簇",
+      "comment": "",
+      "defer": false
+    },
+    "target_same": true,
+    "fixed_max_px": 6.846645209171223,
+    "workers": [
+      "W031",
+      "W030"
+    ],
+    "ids": [
+      "2d47294ca7fcec72",
+      "81dea2dc73f99d91"
+    ],
+    "gt_path": "data\\mp3d_layout\\test\\label_cor\\q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "2d47294ca7fcec72": [
+        0.2767057101168868,
+        0.09223523670562894,
+        0.10923864780323367,
+        0.0
+      ],
+      "81dea2dc73f99d91": [
+        0.3252032520325243,
+        0.8130081300812941,
+        0.1626016260162566,
+        0.0
+      ]
+    },
+    "gt_point_count": 8
+  },
+  {
+    "case": 4,
+    "code": "rPc6DW4iMge-09",
+    "image_id": "rPc6DW4iMge_1f14902595544e389c9c910c444e79e7",
+    "original_decision": {
+      "relation": "同一表达，可同簇",
+      "comment": "",
+      "defer": false
+    },
+    "target_same": true,
+    "fixed_max_px": 9.282458482646604,
+    "workers": [
+      "W021",
+      "W008"
+    ],
+    "ids": [
+      "65d0b345e89f50ac",
+      "7fdf325e88fb2ace"
+    ],
+    "gt_path": "data\\mp3d_layout\\test\\label_cor\\rPc6DW4iMge_1f14902595544e389c9c910c444e79e7.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "65d0b345e89f50ac": [
+        0.28490028490028574,
+        0.1424501424501401,
+        0.0,
+        0.42735042735043693
+      ],
+      "7fdf325e88fb2ace": [
+        0.1641154615105167,
+        0.12292090485555018,
+        0.0,
+        0.2944881309792313
+      ]
+    },
+    "gt_point_count": 8
+  },
+  {
+    "case": 5,
+    "code": "S9hNv5qa7GM-01",
+    "image_id": "S9hNv5qa7GM_0c2a97f049db4a429776940850fedf2e",
+    "original_decision": {
+      "relation": "不同表达，应分开",
+      "comment": "主要是p2相差很大了,虽然这图是oos. 如果这图的正确标注/共识标注在这两个p2点的正中,或许勉强算同簇.\n他们都是想标同一个地方",
+      "defer": false
+    },
+    "target_same": false,
+    "fixed_max_px": 46.83866755638419,
+    "workers": [
+      "W035",
+      "W034"
+    ],
+    "ids": [
+      "4f08770787663224f0ab",
+      "f77e64bc8bb82e6f5f03"
+    ],
+    "gt_path": "data\\mp3d_layout\\valid\\label_cor\\S9hNv5qa7GM_0c2a97f049db4a429776940850fedf2e.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "4f08770787663224f0ab": [
+        0.25542784163473664,
+        0.12771392081737387,
+        0.5108556832694844,
+        0.638569604086836
+      ],
+      "f77e64bc8bb82e6f5f03": [
+        0.0,
+        0.18770546246935638,
+        2.1076673467069207,
+        0.9528638408618728
+      ]
+    },
+    "gt_point_count": 8
+  },
+  {
+    "case": 6,
+    "code": "uNb9QFRL6hY-06",
+    "image_id": "uNb9QFRL6hY_07a43087f1e54e3f828851d8e457a283",
+    "original_decision": {
+      "relation": "不同表达，应分开",
+      "comment": "虽然都是想标同一个地方,但是这p4和p6相差的也比较大",
+      "defer": false
+    },
+    "target_same": false,
+    "fixed_max_px": 46.751287289769614,
+    "workers": [
+      "W028",
+      "W011"
+    ],
+    "ids": [
+      "aace08a205b2832f",
+      "ffe8dc0a7734bb67"
+    ],
+    "gt_path": "data\\mp3d_layout\\test\\label_cor\\uNb9QFRL6hY_07a43087f1e54e3f828851d8e457a283.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "aace08a205b2832f": [
+        0.1207749677956782,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "ffe8dc0a7734bb67": [
+        0.25316455696202667,
+        0.5972575175648642,
+        0.19908583918828437,
+        0.7963433567531597
+      ]
+    },
+    "gt_point_count": 16
+  },
+  {
+    "case": 7,
+    "code": "UwV83HsGsw3-17",
+    "image_id": "UwV83HsGsw3_bc29294428a647038f70e0ea31ea8972",
+    "original_decision": {
+      "relation": "不同表达，应分开",
+      "comment": "这最后一对点,p7和p8相差较大,虽然都是想标注同一个位置",
+      "defer": false
+    },
+    "target_same": false,
+    "fixed_max_px": 43.77933532402555,
+    "workers": [
+      "W014",
+      "W001"
+    ],
+    "ids": [
+      "5370cc8259dd087bb93c",
+      "c71f04cf03f04f83010c"
+    ],
+    "gt_path": "data\\mp3d_layout\\test\\label_cor\\UwV83HsGsw3_bc29294428a647038f70e0ea31ea8972.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "5370cc8259dd087bb93c": [
+        0.0,
+        0.1680672268907557,
+        0.1680672268907557,
+        0.1680672268907557
+      ],
+      "c71f04cf03f04f83010c": [
+        0.1923983000973739,
+        0.3847966001947256,
+        0.18706892854483126,
+        0.1923983000973517
+      ]
+    },
+    "gt_point_count": 8
+  },
+  {
+    "case": 8,
+    "code": "S9hNv5qa7GM-17",
+    "image_id": "S9hNv5qa7GM_dbcf0a37c275473094e1160770291679",
+    "original_decision": {
+      "relation": "不同表达，应分开",
+      "comment": "w032的p2和w037的p4相差很大",
+      "defer": false
+    },
+    "target_same": false,
+    "fixed_max_px": 43.05139105320771,
+    "workers": [
+      "W037",
+      "W032"
+    ],
+    "ids": [
+      "new_94_3614_7054_W037",
+      "new_94_3614_7390_W032"
+    ],
+    "gt_path": "data\\mp3d_layout\\valid\\label_cor\\S9hNv5qa7GM_dbcf0a37c275473094e1160770291679.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "new_94_3614_7054_W037": [
+        0.10604453870625141,
+        0.0,
+        0.7423117709437821,
+        0.21208907741251393
+      ],
+      "new_94_3614_7390_W032": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "gt_point_count": 8
+  },
+  {
+    "case": 9,
+    "code": "B6ByNegPMKs-40",
+    "image_id": "B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624",
+    "original_decision": {
+      "relation": "不同表达，应分开",
+      "comment": "这是两种标注的边界",
+      "defer": false
+    },
+    "target_same": false,
+    "fixed_max_px": 25.62813794191026,
+    "workers": [
+      "W036",
+      "W027"
+    ],
+    "ids": [
+      "07ee953d1535b28d",
+      "2c474f6a00577ed6"
+    ],
+    "gt_path": "data\\mp3d_layout\\test\\label_cor\\B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "07ee953d1535b28d": [
+        0.07490178230300515,
+        0.1780549794159203,
+        0.09817317977413031,
+        0.19247357030754975
+      ],
+      "2c474f6a00577ed6": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "gt_point_count": 8
+  },
+  {
+    "case": 10,
+    "code": "yqstnuAEVhm-04",
+    "image_id": "yqstnuAEVhm_26b2e92ccd314a2da1a4fc8dfc6e6f56",
+    "original_decision": {
+      "relation": "同一表达，可同簇",
+      "comment": "虽然有差别,但是还在可接受范围内",
+      "defer": false
+    },
+    "target_same": true,
+    "fixed_max_px": 26.00658445733888,
+    "workers": [
+      "W031",
+      "W036"
+    ],
+    "ids": [
+      "87633c987c28cc7b24da",
+      "ad5f99c1a3eb5c22dcef"
+    ],
+    "gt_path": "data\\mp3d_layout\\test\\label_cor\\yqstnuAEVhm_26b2e92ccd314a2da1a4fc8dfc6e6f56.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "87633c987c28cc7b24da": [
+        0.0,
+        0.05727082520792237,
+        0.0,
+        0.028696072054712474
+      ],
+      "ad5f99c1a3eb5c22dcef": [
+        0.06399854576253361,
+        0.031999272881266805,
+        0.2341041829438062,
+        0.3960584314506521
+      ]
+    },
+    "gt_point_count": 16
+  },
+  {
+    "case": 11,
+    "code": "UwV83HsGsw3-10",
+    "image_id": "UwV83HsGsw3_8e9c912f525744eeaea21083a20a1596",
+    "original_decision": {
+      "relation": "暂不能判断",
+      "comment": "差别主要在w11的p2,p4 和 w08的p7和p8,但是差别也没有特别大",
+      "defer": false
+    },
+    "target_same": null,
+    "fixed_max_px": 26.721410814764187,
+    "workers": [
+      "W008",
+      "W011"
+    ],
+    "ids": [
+      "0e52fffeabd5cf25",
+      "538db2a79188e4ef"
+    ],
+    "gt_path": "data\\mp3d_layout\\test\\label_cor\\UwV83HsGsw3_8e9c912f525744eeaea21083a20a1596.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "0e52fffeabd5cf25": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "538db2a79188e4ef": [
+        0.12785855501155075,
+        0.4414167189251972,
+        0.352012914295452,
+        2.9920962596463596e-06
+      ]
+    },
+    "gt_point_count": 8
+  },
+  {
+    "case": 12,
+    "code": "S9hNv5qa7GM-19",
+    "image_id": "S9hNv5qa7GM_e5e6c99e38014827b50ad33cd22e3c9d",
+    "original_decision": {
+      "relation": "同一表达，可同簇",
+      "comment": "",
+      "defer": false
+    },
+    "target_same": true,
+    "fixed_max_px": 24.134653849392954,
+    "workers": [
+      "W017",
+      "W034"
+    ],
+    "ids": [
+      "new_93_3578_6920_W017",
+      "new_94_3615_7154_W034"
+    ],
+    "gt_path": "data\\mp3d_layout\\valid\\label_cor\\S9hNv5qa7GM_e5e6c99e38014827b50ad33cd22e3c9d.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "new_93_3578_6920_W017": [
+        0.0,
+        0.2700270027002738,
+        0.09000900090009312,
+        0.0
+      ],
+      "new_94_3615_7154_W034": [
+        0.33523658743204177,
+        0.09812832242609981,
+        0.0,
+        2.220446049250313e-14
+      ]
+    },
+    "gt_point_count": 8
+  },
+  {
+    "case": 13,
+    "code": "2t7WUuJeko7-07",
+    "image_id": "2t7WUuJeko7_53937db036374126830e0f1203b04ead",
+    "original_decision": {
+      "relation": "同一表达，可同簇",
+      "comment": "这里主要在p8 的一点偏移,我觉得偏差不算大",
+      "defer": false
+    },
+    "target_same": true,
+    "fixed_max_px": 23.08018111515772,
+    "workers": [
+      "W035",
+      "W034"
+    ],
+    "ids": [
+      "new_95_3649_6976_W035",
+      "new_95_3649_7172_W034"
+    ],
+    "gt_path": "data\\mp3d_layout\\valid\\label_cor\\2t7WUuJeko7_53937db036374126830e0f1203b04ead.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "new_95_3649_6976_W035": [
+        0.12755102040815092,
+        0.38265306122448606,
+        0.12755102040816757,
+        0.7653061224489832
+      ],
+      "new_95_3649_7172_W034": [
+        0.1751278199771833,
+        0.3805277345504121,
+        0.084561718788978,
+        0.5716372190134877
+      ]
+    },
+    "gt_point_count": 12
+  },
+  {
+    "case": 14,
+    "code": "B6ByNegPMKs-42",
+    "image_id": "B6ByNegPMKs_d19d2ae4bddf4445a3c623edc0346937",
+    "original_decision": {
+      "relation": "暂不能判断",
+      "comment": "但是他们两个都是错误标注,他们虽然大体都是标注了一个区间,但是他们俩的的p3,4,5,6还是有差别,不确定",
+      "defer": false
+    },
+    "target_same": null,
+    "fixed_max_px": 22.79819762845709,
+    "workers": [
+      "W037",
+      "W034"
+    ],
+    "ids": [
+      "new_95_3654_7089_W037",
+      "new_95_3654_7259_W034"
+    ],
+    "gt_path": "data\\mp3d_layout\\test\\label_cor\\B6ByNegPMKs_d19d2ae4bddf4445a3c623edc0346937.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "new_95_3654_7089_W037": [
+        0.0,
+        0.10604453870625696,
+        0.21208907741250282,
+        0.21208907741251393,
+        0.0,
+        0.0,
+        0.10604453870626251
+      ],
+      "new_95_3654_7259_W034": [
+        0.32780722862921774,
+        0.0336358078129706,
+        0.0,
+        0.14292692971140109,
+        0.09528461980761183,
+        0.06737355320720617,
+        0.09907388598158207
+      ]
+    },
+    "gt_point_count": 16
+  },
+  {
+    "case": 15,
+    "code": "7y3sRwLe3Va-06",
+    "image_id": "7y3sRwLe3Va_1679b5de39e548d38ba240f2fd99cae9",
+    "original_decision": {
+      "relation": "不同表达，应分开",
+      "comment": "这明显是差别很大的标注",
+      "defer": false
+    },
+    "target_same": false,
+    "fixed_max_px": 510.64460250810004,
+    "workers": [
+      "W036",
+      "W030"
+    ],
+    "ids": [
+      "new_95_3650_7224_W036",
+      "new_95_3650_7458_W030"
+    ],
+    "gt_path": "data\\mp3d_layout\\test\\label_cor\\7y3sRwLe3Va_1679b5de39e548d38ba240f2fd99cae9.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "new_95_3650_7224_W036": [
+        0.11379439942764691,
+        0.3413831982829407,
+        0.11379439942764691,
+        0.0
+      ],
+      "new_95_3650_7458_W030": [
+        0.31250000000000444,
+        0.31250000000000444,
+        0.15624999999999667,
+        1.0937500000000044
+      ]
+    },
+    "gt_point_count": 16
+  },
+  {
+    "case": 16,
+    "code": "7y3sRwLe3Va-18",
+    "image_id": "7y3sRwLe3Va_a775c7668ca9419daaf506e76851821e",
+    "original_decision": {
+      "relation": "不同表达，应分开",
+      "comment": "明显红色多标了p7 p8",
+      "defer": false
+    },
+    "target_same": false,
+    "fixed_max_px": 199.847665746331,
+    "workers": [
+      "W034",
+      "W032"
+    ],
+    "ids": [
+      "new_95_3653_7241_W034",
+      "new_95_3653_7453_W032"
+    ],
+    "gt_path": "data\\mp3d_layout\\test\\label_cor\\7y3sRwLe3Va_a775c7668ca9419daaf506e76851821e.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "new_95_3653_7241_W034": [
+        0.0,
+        0.16267806747344293,
+        0.22036230088141595,
+        0.03213451348245133,
+        0.35951852911632054
+      ],
+      "new_95_3653_7453_W032": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "gt_point_count": 24
+  },
+  {
+    "case": 17,
+    "code": "yqstnuAEVhm-05",
+    "image_id": "yqstnuAEVhm_2b3fb4746d414cc6a31729b222ed79b2",
+    "original_decision": {
+      "relation": "暂不能判断",
+      "comment": "这是定位偏差,但是差别的不是特别大,不确定",
+      "defer": false
+    },
+    "target_same": null,
+    "fixed_max_px": 18.215835148792788,
+    "workers": [
+      "W012",
+      "W010"
+    ],
+    "ids": [
+      "new_93_3610_7135_W012",
+      "new_93_3610_7256_W010"
+    ],
+    "gt_path": "data\\mp3d_layout\\test\\label_cor\\yqstnuAEVhm_2b3fb4746d414cc6a31729b222ed79b2.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "new_93_3610_7135_W012": [
+        0.20325203252032908,
+        0.20325203252031798,
+        0.0,
+        0.20325203252032908
+      ],
+      "new_93_3610_7256_W010": [
+        0.9018812861684045,
+        0.26177724536496916,
+        0.7075471698113178,
+        0.33030924211865376
+      ]
+    },
+    "gt_point_count": 8
+  },
+  {
+    "case": 18,
+    "code": "yqstnuAEVhm-10",
+    "image_id": "yqstnuAEVhm_4ab11dce32f346b2becac29e0ac6e526",
+    "original_decision": {
+      "relation": "同一表达，可同簇",
+      "comment": "w31的p8 和w34的p2 略有差别,但是不大",
+      "defer": false
+    },
+    "target_same": true,
+    "fixed_max_px": 13.448392577599817,
+    "workers": [
+      "W031",
+      "W034"
+    ],
+    "ids": [
+      "new_94_3648_6954_W031",
+      "new_94_3648_7165_W034"
+    ],
+    "gt_path": "data\\mp3d_layout\\test\\label_cor\\yqstnuAEVhm_4ab11dce32f346b2becac29e0ac6e526.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "new_94_3648_6954_W031": [
+        0.0,
+        0.06341025366386477,
+        0.4784688995215336,
+        0.0
+      ],
+      "new_94_3648_7165_W034": [
+        0.3610240172345125,
+        0.22273571598304676,
+        0.253095730041486,
+        0.2209544347764658
+      ]
+    },
+    "gt_point_count": 8
+  },
+  {
+    "case": 19,
+    "code": "jh4fc5c5qoQ-09",
+    "image_id": "jh4fc5c5qoQ_77e6cfabf32d46fc9398ce824843adaa",
+    "original_decision": {
+      "relation": "不同表达，应分开",
+      "comment": "明显标的位置不一样",
+      "defer": false
+    },
+    "target_same": false,
+    "fixed_max_px": 281.31715814764385,
+    "workers": [
+      "W029",
+      "W036"
+    ],
+    "ids": [
+      "c5cc1e8de92285cfd6fb",
+      "new_95_3662_7238_W036"
+    ],
+    "gt_path": "data\\mp3d_layout\\valid\\label_cor\\jh4fc5c5qoQ_77e6cfabf32d46fc9398ce824843adaa.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "c5cc1e8de92285cfd6fb": [
+        0.0,
+        0.12894424395637483,
+        0.0,
+        0.0
+      ],
+      "new_95_3662_7238_W036": [
+        0.3603603603603567,
+        0.5405405405405406,
+        0.540540540540535,
+        0.9009009009009028
+      ]
+    },
+    "gt_point_count": 24
+  },
+  {
+    "case": 20,
+    "code": "7y3sRwLe3Va-10",
+    "image_id": "7y3sRwLe3Va_5c39473b25b74307858764d1a2045b9e",
+    "original_decision": {
+      "relation": "不同表达，应分开",
+      "comment": "差别挺大,门洞交界",
+      "defer": false
+    },
+    "target_same": false,
+    "fixed_max_px": 278.02602322801624,
+    "workers": [
+      "W034",
+      "W028"
+    ],
+    "ids": [
+      "new_95_3651_7174_W034",
+      "new_95_3651_7435_W028"
+    ],
+    "gt_path": "data\\mp3d_layout\\test\\label_cor\\7y3sRwLe3Va_5c39473b25b74307858764d1a2045b9e.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "new_95_3651_7174_W034": [
+        0.004689835204896298,
+        0.0,
+        0.13550859431356588,
+        0.020469685088331246,
+        0.029860985632157444,
+        0.36227508754981264
+      ],
+      "new_95_3651_7435_W028": [
+        0.0,
+        0.0,
+        0.2277953008645972,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "gt_point_count": 12
+  },
+  {
+    "case": 21,
+    "code": "jtcxE69GiFV-12",
+    "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+    "original_decision": {
+      "relation": "不同表达，应分开",
+      "comment": "明显差别挺大的,门洞交界",
+      "defer": false
+    },
+    "target_same": false,
+    "fixed_max_px": 250.02276646670464,
+    "workers": [
+      "W031",
+      "W028"
+    ],
+    "ids": [
+      "new_95_3663_7073_W031",
+      "new_95_3663_7443_W028"
+    ],
+    "gt_path": "data\\mp3d_layout\\valid\\label_cor\\jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "new_95_3663_7073_W031": [
+        0.12755102040816202,
+        0.0,
+        0.4784688995215336,
+        0.23923444976076125,
+        0.13609505606891892,
+        0.06804752803450942,
+        0.0
+      ],
+      "new_95_3663_7443_W028": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "gt_point_count": 12
+  },
+  {
+    "case": 22,
+    "code": "q9vSo1VnCiC-04",
+    "image_id": "q9vSo1VnCiC_3e7f67e8969f434b9a4aec0c68668b20",
+    "original_decision": {
+      "relation": "不同表达，应分开",
+      "comment": "差别挺大的,门洞交界",
+      "defer": false
+    },
+    "target_same": false,
+    "fixed_max_px": 223.82876453123163,
+    "workers": [
+      "W035",
+      "W036"
+    ],
+    "ids": [
+      "new_95_3664_6991_W035",
+      "new_95_3664_7230_W036"
+    ],
+    "gt_path": "data\\mp3d_layout\\test\\label_cor\\q9vSo1VnCiC_3e7f67e8969f434b9a4aec0c68668b20.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "new_95_3664_6991_W035": [
+        0.25510204081632404,
+        0.0688105044250209,
+        0.3826530612244805,
+        0.25510204081632404
+      ],
+      "new_95_3664_7230_W036": [
+        0.36036036036036223,
+        0.0,
+        0.7207207207207245,
+        0.9009009009009028
+      ]
+    },
+    "gt_point_count": 20
+  },
+  {
+    "case": 23,
+    "code": "B6ByNegPMKs-43",
+    "image_id": "B6ByNegPMKs_d2dcbd73533446dcaf50e6be98c30386",
+    "original_decision": {
+      "relation": "同一表达，可同簇",
+      "comment": "差别不算大,门洞交界",
+      "defer": false
+    },
+    "target_same": true,
+    "fixed_max_px": 16.529263495384335,
+    "workers": [
+      "W032",
+      "W030"
+    ],
+    "ids": [
+      "new_95_3655_7455_W032",
+      "new_95_3655_7464_W030"
+    ],
+    "gt_path": "data\\mp3d_layout\\test\\label_cor\\B6ByNegPMKs_d2dcbd73533446dcaf50e6be98c30386.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "new_95_3655_7455_W032": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "new_95_3655_7464_W030": [
+        0.0,
+        0.15625000000000222,
+        0.6249999999999978,
+        0.6249999999999978,
+        0.0,
+        0.07603205559265636
+      ]
+    },
+    "gt_point_count": 20
+  },
+  {
+    "case": 24,
+    "code": "b8cTxDM8gDG-08",
+    "image_id": "b8cTxDM8gDG_8316e9313299447bb1f574aaf8cbec73",
+    "original_decision": {
+      "relation": "不同表达，应分开",
+      "comment": "差别很大",
+      "defer": false
+    },
+    "target_same": false,
+    "fixed_max_px": 329.940132362448,
+    "workers": [
+      "W036",
+      "W034"
+    ],
+    "ids": [
+      "new_95_3658_7228_W036",
+      "new_95_3658_7263_W034"
+    ],
+    "gt_path": "data\\mp3d_layout\\test\\label_cor\\b8cTxDM8gDG_8316e9313299447bb1f574aaf8cbec73.txt",
+    "gt_exists": true,
+    "gt_semantic_comparability": "not_adjudicated",
+    "pairing_x_gap_percent": {
+      "new_95_3658_7228_W036": [
+        0.18018018018017834,
+        0.0,
+        0.06132160290113764,
+        0.1801801801801839,
+        0.14170296809701277
+      ],
+      "new_95_3658_7263_W034": [
+        0.02501825999674523,
+        0.20430526527276394,
+        0.1489649153958439,
+        0.019244815382113423,
+        0.24401710121015885
+      ]
+    },
+    "gt_point_count": 20
+  }
+]

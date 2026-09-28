@@ -1,0 +1,339 @@
+{
+  "schema": "full_review_csv_20260928_v4",
+  "rows": 3152,
+  "primary_key": "canonical_annotation_id",
+  "precedence": [
+    "explicit_current_user_clarification",
+    "coverage_followup_image_only",
+    "continuation_issue",
+    "continuation_annotation",
+    "latest",
+    "second",
+    "historical_user",
+    "historical_yizheng_separate"
+  ],
+  "fields": {
+    "canonical_annotation_id": {
+      "type": "string"
+    },
+    "image_id": {
+      "type": "string"
+    },
+    "image_code": {
+      "type": "string"
+    },
+    "worker_id": {
+      "type": "string"
+    },
+    "condition": {
+      "type": "string"
+    },
+    "stage": {
+      "type": "string"
+    },
+    "room_id": {
+      "type": "string"
+    },
+    "accepted_before_review": {
+      "type": "json"
+    },
+    "historical_exclusion_reason": {
+      "type": "string"
+    },
+    "raw_verified": {
+      "type": "json"
+    },
+    "raw_verification_error": {
+      "type": "string"
+    },
+    "raw_source": {
+      "type": "json"
+    },
+    "latest_decision_source": {
+      "type": "string"
+    },
+    "verdict": {
+      "type": "string"
+    },
+    "raw_review_status": {
+      "type": "string"
+    },
+    "semantic_status": {
+      "type": "string"
+    },
+    "semantic_annotation_evidence": {
+      "type": "json"
+    },
+    "semantic_image_evidence": {
+      "type": "json"
+    },
+    "needs_user_review": {
+      "type": "json"
+    },
+    "pending_history_verification": {
+      "type": "json"
+    },
+    "current_comment": {
+      "type": "string"
+    },
+    "review_followup_reasons": {
+      "type": "json"
+    },
+    "continuation_issue": {
+      "type": "json"
+    },
+    "current_decision_comment": {
+      "type": "string"
+    },
+    "scene_category": {
+      "type": "string"
+    },
+    "scene_status": {
+      "type": "string"
+    },
+    "image_comment": {
+      "type": "string"
+    },
+    "original_scene_category": {
+      "type": "string"
+    },
+    "individual_review_covered": {
+      "type": "json"
+    },
+    "structured_image_review_covered": {
+      "type": "json"
+    },
+    "scene_classification_source": {
+      "type": "string"
+    },
+    "coverage_review": {
+      "type": "json"
+    },
+    "scene_oos_status": {
+      "type": "string"
+    },
+    "scene_doorway_status": {
+      "type": "string"
+    },
+    "scene_dimension_evidence": {
+      "type": "json"
+    },
+    "scope_policy": {
+      "type": "string"
+    },
+    "inner_scope_exemplar_ids": {
+      "type": "json"
+    },
+    "repeated_error_group": {
+      "type": "string"
+    },
+    "image_traits": {
+      "type": "json"
+    },
+    "annotation_traits": {
+      "type": "json"
+    },
+    "difficulty": {
+      "type": "string"
+    },
+    "gt_substantive_error": {
+      "type": "json"
+    },
+    "gt_detail_omission": {
+      "type": "json"
+    },
+    "gt_version_note": {
+      "type": "string"
+    },
+    "scope_difference_image": {
+      "type": "json"
+    },
+    "detail_difference_image": {
+      "type": "json"
+    },
+    "scope_difference_annotation": {
+      "type": "json"
+    },
+    "detail_difference_annotation": {
+      "type": "json"
+    },
+    "raw_point_count": {
+      "type": "integer"
+    },
+    "effective_point_count": {
+      "type": "integer"
+    },
+    "effective_points_1024x512": {
+      "type": "json"
+    },
+    "effective_point_labels": {
+      "type": "json"
+    },
+    "repair_status": {
+      "type": "string"
+    },
+    "repair_evidence": {
+      "type": "json"
+    },
+    "historical_repair_evidence": {
+      "type": "json"
+    },
+    "pairing_status": {
+      "type": "string"
+    },
+    "geometry_status": {
+      "type": "string"
+    },
+    "cleaning_disposition": {
+      "type": "string"
+    },
+    "worker_quality_gate": {
+      "type": "string"
+    },
+    "analysis_gate_reasons": {
+      "type": "json"
+    },
+    "consensus_group": {
+      "type": "string"
+    },
+    "points_without_imputation": {
+      "type": "json"
+    },
+    "trap_status": {
+      "type": "string"
+    },
+    "trap_origin": {
+      "type": "string"
+    },
+    "model_edit_status": {
+      "type": "string"
+    },
+    "trap_model_evidence": {
+      "type": "json"
+    },
+    "review_history": {
+      "type": "json"
+    },
+    "image_review_history": {
+      "type": "json"
+    },
+    "old_comment_interpretations": {
+      "type": "json"
+    },
+    "second_comment_interpretations": {
+      "type": "json"
+    },
+    "frozen_cluster_references": {
+      "type": "json"
+    },
+    "same_image_comment_context": {
+      "type": "json"
+    },
+    "room_evidence": {
+      "type": "json"
+    }
+  },
+  "reports": {
+    "标注者排除统计.csv": {
+      "primary_key": "worker_id",
+      "fields": {
+        "worker_id": "string",
+        "total_responses": "integer",
+        "individually_reviewed": "integer",
+        "explicitly_excluded": "integer",
+        "excluded_manual": "integer",
+        "excluded_semi": "integer",
+        "excluded_condition_oos": "integer",
+        "normal_total": "integer",
+        "normal_excluded": "integer",
+        "oos_difficult_doorway_total": "integer",
+        "oos_difficult_doorway_excluded": "integer",
+        "other_or_unclassified_total": "integer",
+        "other_or_unclassified_excluded": "integer",
+        "historical_not_accepted": "integer",
+        "scene_or_analysis_restricted": "integer",
+        "awaiting_decision": "integer",
+        "retained_representation_or_history": "integer",
+        "repair_needed_not_applied": "integer",
+        "excluded_annotation_ids": "json"
+      }
+    },
+    "明确排除作答明细.csv": {
+      "primary_key": "canonical_annotation_id",
+      "fields": {
+        "worker_id": "string",
+        "image_code": "string",
+        "canonical_annotation_id": "string",
+        "condition": "string",
+        "scene_category": "string",
+        "scene_oos_status": "string",
+        "scene_doorway_status": "string",
+        "current_decision_comment": "string",
+        "image_comment": "string",
+        "latest_decision_source": "string",
+        "raw_source": "json"
+      }
+    },
+    "同房图片复核对照.csv": {
+      "primary_key": "image_id",
+      "fields": {
+        "room_id": "string",
+        "image_id": "string",
+        "image_code": "string",
+        "new_coverage_review": "json",
+        "comparison_group": "string",
+        "scene_category": "string",
+        "oos_status": "string",
+        "doorway_status": "string",
+        "scope_difference": "json",
+        "detail_difference": "json",
+        "gt_version_note": "string",
+        "image_comment": "string",
+        "previous_image_comments": "json",
+        "same_image_comments": "json",
+        "current_quality_gates": "json",
+        "comparison_note": "string",
+        "needs_new_review": "json",
+        "room_evidence_source": "string",
+        "historical_room_oos_status": "string",
+        "historical_room_status_is_current_image_verdict": "json"
+      }
+    }
+  },
+  "enum_descriptions": {
+    "individual_review_covered": "当前各轮上传文件中是否有本份作答的审核记录，不等于所有问题已解决",
+    "structured_image_review_covered": "当前上传文件中是否有图片级审核记录",
+    "original_scene_category": "原结构化选项；不被历史评论回填覆盖",
+    "scene_classification_source": "coverage_followup / structured_review / explicit_historical_comment / not_recorded；缺记录不自动进复审",
+    "coverage_review": "本次图片补审原始记录、有效标签及用户wc-61漏选更正；view_context不是个人裁决",
+    "scene_oos_status": {
+      "confirmed": "明确确认OOS",
+      "not_oos": "本次明确合规",
+      "pending": "尚不能确定",
+      "not_recorded": "未明确记录，不是否定"
+    },
+    "scene_doorway_status": {
+      "difficult": "确认难标门洞",
+      "annotatable": "门洞可标",
+      "confirmed_unspecified": "门洞但可标性未分",
+      "none": "明确非门洞",
+      "pending": "门洞属性待定",
+      "not_recorded": "未明确记录"
+    },
+    "scope_policy": {
+      "inner_space_only": "用户明确仅内侧空间；具体示例见inner_scope_exemplar_ids",
+      "retain_scope_variation": "无额外范围限制，保留空间差异"
+    },
+    "hold_main_analysis": "暂不进入人员主质量与主共识面板，仍保留资料",
+    "current_decision_comment": "当前个人结论原话；具体续审issue优先于旧表单",
+    "continuation_issue": "原始最新问题卡，不把旧pending当作当前未决",
+    "points_without_imputation": "只描述是否有补入点，不是独立性或分析资格保证"
+  },
+  "constraints": [
+    "false GT flags mean no explicit structured tag, not proof GT correct",
+    "unrecorded difficulty is allowed",
+    "main_candidate is not computed-region eligibility",
+    "raw_review_status is never overwritten",
+    "historical_yizheng_only is not auto-invalid"
+  ]
+}

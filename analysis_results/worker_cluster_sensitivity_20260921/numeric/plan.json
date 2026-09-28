@@ -1,0 +1,12 @@
+{
+  "source": "D:\\Work\\HOHONET\\analysis_results\\panorama_research_received_20260921\\local_recompute\\source_work",
+  "cut": 25.6,
+  "seed": 20260921,
+  "orders": 200,
+  "epsilon": 0.1,
+  "tail": 3,
+  "selection": "Top 3 complete-linkage singleton fractions on original N>=8 images, minimum 20 observations; include W037 if absent.",
+  "controls": "Endpoint: exact mean of deleting every other worker on identical images. Replay: one seeded uniform other-worker deletion per target/image, 200 shared worker orders.",
+  "panels": "Original N>=8 fixed panel; target-present panel also reported. U8 comparisons restricted to original N>=10 so all deletions retain N>8.",
+  "limitation": "Exploratory conditional finite-pool sensitivity, no prospective stopping claim; singleton count is not a quality verdict; does not modify eligibility."
+}

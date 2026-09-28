@@ -1,0 +1,2848 @@
+{
+  "schema": "independent_review_semantics_20260928_v1",
+  "sources": [
+    "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json",
+    "C:/Users/ASUS/Downloads/全历史标注_二次复核_20260925(2).json"
+  ],
+  "coverage": {
+    "latest": {
+      "image_decisions": 142,
+      "annotation_decisions": 273,
+      "traits": 20
+    },
+    "second": {
+      "image_decisions": 141,
+      "annotation_decisions": 265,
+      "traits": 0
+    }
+  },
+  "coverage_method": "阅读最新全部非空原话；二审390条与最新同对象原话一致，16条不同逐条对照。已读两审合计841条含重复，独立原话记录451条。最初两份9/23评论未全量重读，不声称全历史逐条覆盖。",
+  "precedence": "本轮明确对话 > 最新定向补审明确涉及字段 > 二次复核 > 最初审核历史；traits只补其主题，不自动覆盖作答或图片状态。",
+  "findings": [
+    {
+      "kind": "image",
+      "id": "S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e",
+      "code": "S9hNv5qa7GM-04",
+      "state": "image_scope_uncertain",
+      "explanation": "确实存在明示尚不能确定；traits记录scope/view_unobservable不等于后来已确定范围歧义。保留普通图片原选项及范围未确定，不自动OOS，不排除该作答。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e",
+      "record": {
+        "status": "pending",
+        "category": "ordinary",
+        "comment": "目前只有一个标注结果,尚不能完全确定有没有标注空间范围的歧义",
+        "updated_at": "2026-09-27T14:45:19.850Z"
+      },
+      "traits": {
+        "status": "resolved",
+        "tags": [
+          "scope",
+          "view_unobservable"
+        ],
+        "difficulty": "easy",
+        "comment": "",
+        "updated_at": "2026-09-27T14:49:58.198Z"
+      }
+    },
+    {
+      "kind": "image",
+      "id": "uNb9QFRL6hY_6a500a9a43a340eb817c58bb084327fe",
+      "code": "uNb9QFRL6hY-32",
+      "state": "analysis_use_unresolved",
+      "explanation": "GT错误/范围说明已补；但是否纳入分析原话仍待确定，resolved traits没有解决这个用途问题。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_6a500a9a43a340eb817c58bb084327fe",
+      "record": {
+        "status": "pending",
+        "category": "reference_concern",
+        "comment": "离门框下很近,gt是标了门框里的区域和右边阶梯下的区域(阶梯下的区域不太应该标),而且有些区域标的也不太对,这是否纳入考分析还有待确定",
+        "updated_at": "2026-09-27T07:15:28.342Z"
+      },
+      "traits": {
+        "status": "resolved",
+        "tags": [
+          "reference_error",
+          "scope"
+        ],
+        "difficulty": "medium",
+        "comment": "图像右边完全不知道标的什么",
+        "updated_at": "2026-09-27T15:32:06.940Z"
+      }
+    },
+    {
+      "kind": "image",
+      "id": "uNb9QFRL6hY_a372582c11864f31a9dd174e4a0ae6ad",
+      "code": "uNb9QFRL6hY-51",
+      "state": "scene_use_unresolved",
+      "explanation": "用户明确GT漂浮点错误、外扩玻璃斜顶不适用；内侧空间仍有较好标注。场景/用途pending未被GT标签自动解决。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_a372582c11864f31a9dd174e4a0ae6ad",
+      "record": {
+        "status": "pending",
+        "category": "reference_concern",
+        "comment": "这个房间比较奇怪,他有个向外的玻璃区域,这个玻璃区域的顶部是斜着的,肯定不符合曼哈顿世界约束,所以gt肯定不对.但是这个东西本身就具有很大的迷惑性,拍摄的相机位置正好处在玻璃外扩区域和客厅之间,簇1是只标内侧空间标的比较好的",
+        "updated_at": "2026-09-27T08:16:42.834Z"
+      },
+      "traits": {
+        "status": "resolved",
+        "tags": [
+          "reference_error"
+        ],
+        "difficulty": "medium",
+        "comment": "外面的玻璃区域是斜的,完全不能标,gt直接把点标在\"虚空\"里了,漂浮的点.  ",
+        "updated_at": "2026-09-27T15:39:38.083Z"
+      }
+    },
+    {
+      "kind": "image",
+      "id": "x8F5xyUWy9e_a51a0e2811f342a599ae4cdb9b84ff23",
+      "code": "x8F5xyUWy9e-09",
+      "state": "resolved_by_conversation",
+      "explanation": "尽管image状态pending，用户后续已明确稳定非正交；无需重问，保留原始状态作为来源。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/x8F5xyUWy9e_a51a0e2811f342a599ae4cdb9b84ff23",
+      "record": {
+        "status": "pending",
+        "category": "oos",
+        "comment": "这图和同房的那个图片那样,严格来说都算是oos ,因为墙面不正交,但是这图的标注共识出奇的好",
+        "updated_at": "2026-09-27T09:16:38.326Z"
+      },
+      "traits": {
+        "status": "resolved",
+        "tags": [
+          "nonorthogonal"
+        ],
+        "difficulty": "medium",
+        "comment": "",
+        "updated_at": "2026-09-27T15:53:25.075Z"
+      }
+    },
+    {
+      "kind": "image",
+      "id": "x8F5xyUWy9e_1be9a97aada84e4795f64583ac0e3b76",
+      "code": "x8F5xyUWy9e-01",
+      "state": "stable_nonorthogonal",
+      "explanation": "用户后续明确此图与09同类，稳定非正交，不等于无法标注OOS。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/x8F5xyUWy9e_1be9a97aada84e4795f64583ac0e3b76",
+      "record": {
+        "status": "resolved",
+        "category": "oos",
+        "comment": "严格来说算oos,因为有斜的墙面,墙与墙之间不是正交",
+        "updated_at": "2026-09-27T09:12:45.572Z"
+      },
+      "traits": null
+    },
+    {
+      "kind": "image",
+      "id": "jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8",
+      "code": "jtcxE69GiFV-11",
+      "state": "all_analysis_hold_by_user",
+      "explanation": "用户明确暂不纳入分析；不是未完成审核，也不需强制其判断GT。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8",
+      "record": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "这个图片的标注空间有点奇怪的,gt是把所有走廊都标了,目前只有两个人的标注,不能准确反映这个东西",
+        "updated_at": "2026-09-26T05:16:42.466Z"
+      },
+      "traits": {
+        "status": "resolved",
+        "tags": [
+          "reference_uncertain",
+          "scope"
+        ],
+        "difficulty": "medium",
+        "comment": "",
+        "updated_at": "2026-09-27T15:17:50.532Z"
+      }
+    },
+    {
+      "kind": "image",
+      "id": "b8cTxDM8gDG_298a2386166a43c8a04e1c24433f7d15",
+      "code": "b8cTxDM8gDG-04",
+      "state": "resolved_latest",
+      "explanation": "二审pending/undetermined，最新resolved/oos并补有楼梯。使用最新，旧不确定不用再召回。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/b8cTxDM8gDG_298a2386166a43c8a04e1c24433f7d15",
+      "record": {
+        "status": "resolved",
+        "category": "oos",
+        "comment": "这图我也不确定到底是什么情况,原有的gt标的也怪,我改过后的gt标注的也不是特别好\n有楼梯",
+        "updated_at": "2026-09-27T15:03:51.889Z"
+      },
+      "traits": null
+    },
+    {
+      "kind": "image",
+      "id": "UwV83HsGsw3_16af52545aff47afb4d7b330a49091a2",
+      "code": "UwV83HsGsw3-03",
+      "state": "resolved_latest",
+      "explanation": "最新明确oos，仍可保留勉强可标的解释；不能用旧暂定词重开问题。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/UwV83HsGsw3_16af52545aff47afb4d7b330a49091a2",
+      "record": {
+        "status": "resolved",
+        "category": "oos",
+        "comment": "oos,或许勉强或许也可以标,但是gt标的也不算特别好",
+        "updated_at": "2026-09-27T14:47:27.827Z"
+      },
+      "traits": null
+    },
+    {
+      "kind": "annotation",
+      "id": "6c4eb5c014ae5538",
+      "code": "B6ByNegPMKs-10",
+      "state": "missed_review_completed",
+      "explanation": "三份已补审，最新usable；uNb40仍pending但traits resolved/detail且用户明确已补，不再记漏审。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/6c4eb5c014ae5538",
+      "record": {
+        "status": "resolved",
+        "verdict": "usable",
+        "comment": "这好像是没有改动模型的预标注",
+        "repair_confirmation": "unreviewed",
+        "updated_at": "2026-09-27T16:21:42.321Z",
+        "view_context": {
+          "point_mode": "effective",
+          "reference_ids": [
+            "reference:gt_revised"
+          ],
+          "cluster_method": "affinity"
+        }
+      },
+      "traits": {
+        "status": "resolved",
+        "tags": [
+          "model_unchanged"
+        ],
+        "difficulty": "unrecorded",
+        "comment": "",
+        "updated_at": "2026-09-27T16:21:41.469Z"
+      }
+    },
+    {
+      "kind": "annotation",
+      "id": "d0df2148541db2cf",
+      "code": "q9vSo1VnCiC-15",
+      "state": "missed_review_completed",
+      "explanation": "三份已补审，最新usable；uNb40仍pending但traits resolved/detail且用户明确已补，不再记漏审。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/d0df2148541db2cf",
+      "record": {
+        "status": "resolved",
+        "verdict": "usable",
+        "comment": "这可能是我当时的semi trap,他没有修正",
+        "repair_confirmation": "unreviewed",
+        "updated_at": "2026-09-27T16:22:12.184Z",
+        "view_context": {
+          "point_mode": "effective",
+          "reference_ids": [
+            "reference:gt_revised"
+          ],
+          "cluster_method": "affinity"
+        }
+      },
+      "traits": {
+        "status": "resolved",
+        "tags": [
+          "model_unchanged"
+        ],
+        "difficulty": "unrecorded",
+        "comment": "",
+        "updated_at": "2026-09-27T16:22:13.234Z"
+      }
+    },
+    {
+      "kind": "annotation",
+      "id": "new_94_3628_7046_W037",
+      "code": "uNb9QFRL6hY-40",
+      "state": "missed_review_completed",
+      "explanation": "三份已补审，最新usable；uNb40仍pending但traits resolved/detail且用户明确已补，不再记漏审。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/new_94_3628_7046_W037",
+      "record": {
+        "status": "pending",
+        "verdict": "usable",
+        "comment": "",
+        "repair_confirmation": "unreviewed",
+        "updated_at": "2026-09-27T16:22:29.531Z",
+        "view_context": {
+          "point_mode": "effective",
+          "reference_ids": [
+            "reference:gt_revised"
+          ],
+          "cluster_method": "affinity"
+        }
+      },
+      "traits": {
+        "status": "resolved",
+        "tags": [
+          "detail"
+        ],
+        "difficulty": "unrecorded",
+        "comment": "",
+        "updated_at": "2026-09-27T16:22:32.162Z"
+      }
+    },
+    {
+      "kind": "annotation",
+      "id": "b62a4df9e1645fe7",
+      "code": "B6ByNegPMKs-10",
+      "state": "possible_status_not_synchronized",
+      "explanation": "pending+usable但后来resolved traits已补解释；保留原pending和usable，不凭状态要求重看。模型改动或局部错误不自动无效。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/b62a4df9e1645fe7",
+      "record": {
+        "status": "pending",
+        "verdict": "usable",
+        "comment": "这个改了一点模型的预标注,但是还是不太对",
+        "repair_confirmation": "unreviewed",
+        "updated_at": "2026-09-27T14:35:24.604Z",
+        "view_context": {
+          "point_mode": "effective",
+          "reference_ids": [
+            "reference:gt_revised"
+          ],
+          "cluster_method": "affinity"
+        }
+      },
+      "traits": {
+        "status": "resolved",
+        "tags": [],
+        "difficulty": "unrecorded",
+        "comment": "模型的错误预标注的影响",
+        "updated_at": "2026-09-27T14:36:09.887Z"
+      }
+    },
+    {
+      "kind": "annotation",
+      "id": "726df974bcd4c84b",
+      "code": "B6ByNegPMKs-10",
+      "state": "possible_status_not_synchronized",
+      "explanation": "pending+usable但后来resolved traits已补解释；保留原pending和usable，不凭状态要求重看。模型改动或局部错误不自动无效。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/726df974bcd4c84b",
+      "record": {
+        "status": "pending",
+        "verdict": "usable",
+        "comment": "这好像是没有改动模型的预标注",
+        "repair_confirmation": "unreviewed",
+        "updated_at": "2026-09-27T14:36:47.000Z",
+        "view_context": {
+          "point_mode": "effective",
+          "reference_ids": [
+            "reference:gt_revised"
+          ],
+          "cluster_method": "affinity"
+        }
+      },
+      "traits": {
+        "status": "resolved",
+        "tags": [],
+        "difficulty": "unrecorded",
+        "comment": "模型错误的预标注的影响",
+        "updated_at": "2026-09-27T14:36:54.543Z"
+      }
+    },
+    {
+      "kind": "annotation",
+      "id": "717840fe8221eba6",
+      "code": "B6ByNegPMKs-10",
+      "state": "possible_status_not_synchronized",
+      "explanation": "pending+usable但后来resolved traits已补解释；保留原pending和usable，不凭状态要求重看。模型改动或局部错误不自动无效。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/717840fe8221eba6",
+      "record": {
+        "status": "pending",
+        "verdict": "usable",
+        "comment": "这个改了一点模型的预标注,但是还是不太对",
+        "repair_confirmation": "unreviewed",
+        "updated_at": "2026-09-27T14:36:25.449Z",
+        "view_context": {
+          "point_mode": "effective",
+          "reference_ids": [
+            "reference:gt_revised"
+          ],
+          "cluster_method": "affinity"
+        }
+      },
+      "traits": {
+        "status": "resolved",
+        "tags": [],
+        "difficulty": "unrecorded",
+        "comment": "模型的错误预标注的影响",
+        "updated_at": "2026-09-27T14:36:32.022Z"
+      }
+    },
+    {
+      "kind": "annotation",
+      "id": "5da232bc43b7c975",
+      "code": "UwV83HsGsw3-10",
+      "state": "possible_status_not_synchronized",
+      "explanation": "pending+usable但后来resolved traits已补解释；保留原pending和usable，不凭状态要求重看。模型改动或局部错误不自动无效。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/5da232bc43b7c975",
+      "record": {
+        "status": "pending",
+        "verdict": "usable",
+        "comment": "把门识别成了墙角,而在门框那里进行看不懂的标注",
+        "repair_confirmation": "unreviewed",
+        "updated_at": "2026-09-27T14:51:33.842Z",
+        "view_context": {
+          "point_mode": "effective",
+          "reference_ids": [
+            "reference:gt_revised"
+          ],
+          "cluster_method": "affinity"
+        }
+      },
+      "traits": {
+        "status": "resolved",
+        "tags": [
+          "detail",
+          "scope",
+          "execution"
+        ],
+        "difficulty": "unrecorded",
+        "comment": "在马桶处停止",
+        "updated_at": "2026-09-27T14:53:28.306Z"
+      }
+    },
+    {
+      "kind": "annotation",
+      "id": "738a28459a248984",
+      "code": "UwV83HsGsw3-10",
+      "state": "possible_status_not_synchronized",
+      "explanation": "pending+usable但后来resolved traits已补解释；保留原pending和usable，不凭状态要求重看。模型改动或局部错误不自动无效。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/738a28459a248984",
+      "record": {
+        "status": "pending",
+        "verdict": "usable",
+        "comment": "把门识别成了墙角,而在门框那里进行看不懂的标注",
+        "repair_confirmation": "unreviewed",
+        "updated_at": "2026-09-27T14:52:32.389Z",
+        "view_context": {
+          "point_mode": "effective",
+          "reference_ids": [
+            "reference:gt_revised"
+          ],
+          "cluster_method": "affinity"
+        }
+      },
+      "traits": {
+        "status": "resolved",
+        "tags": [
+          "detail",
+          "scope",
+          "execution"
+        ],
+        "difficulty": "unrecorded",
+        "comment": "在马桶处停止",
+        "updated_at": "2026-09-27T14:53:35.537Z"
+      }
+    },
+    {
+      "kind": "annotation",
+      "id": "92e4a4cf1ae73f69",
+      "code": "Z6MFQCViBuw-10",
+      "state": "possible_status_not_synchronized",
+      "explanation": "pending+usable但后来resolved traits已补解释；保留原pending和usable，不凭状态要求重看。模型改动或局部错误不自动无效。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/92e4a4cf1ae73f69",
+      "record": {
+        "status": "pending",
+        "verdict": "usable",
+        "comment": "不确定为啥会标两个点在同一位置,可能是模型预标注没改? 还是我当时专门做的trap预标注,特地模拟模型预标注角点重复的情况",
+        "repair_confirmation": "unreviewed",
+        "updated_at": "2026-09-27T15:00:04.908Z",
+        "view_context": {
+          "point_mode": "effective",
+          "reference_ids": [
+            "reference:gt_revised"
+          ],
+          "cluster_method": "affinity"
+        }
+      },
+      "traits": {
+        "status": "resolved",
+        "tags": [
+          "model_unchanged"
+        ],
+        "difficulty": "unrecorded",
+        "comment": "",
+        "updated_at": "2026-09-27T15:00:10.101Z"
+      }
+    },
+    {
+      "kind": "annotation",
+      "id": "28935ccbb578589d",
+      "code": "e9zR4mvMWw7-39",
+      "state": "possible_status_not_synchronized",
+      "explanation": "pending+usable但后来resolved traits已补解释；保留原pending和usable，不凭状态要求重看。模型改动或局部错误不自动无效。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/28935ccbb578589d",
+      "record": {
+        "status": "pending",
+        "verdict": "usable",
+        "comment": "这错误预标注他也没改对",
+        "repair_confirmation": "unreviewed",
+        "updated_at": "2026-09-27T15:16:07.504Z",
+        "view_context": {
+          "point_mode": "effective",
+          "reference_ids": [
+            "reference:gt_revised"
+          ],
+          "cluster_method": "affinity"
+        }
+      },
+      "traits": {
+        "status": "resolved",
+        "tags": [
+          "scope",
+          "execution"
+        ],
+        "difficulty": "unrecorded",
+        "comment": "被模型误导了标注的空间",
+        "updated_at": "2026-09-27T15:16:29.441Z"
+      }
+    },
+    {
+      "kind": "annotation",
+      "id": "0b276bc0087988e64912",
+      "code": "yqstnuAEVhm-04",
+      "state": "resolved_verdict_optional_traits_pending",
+      "explanation": "作答resolved/usable；空可选traits pending不构成漏审。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/0b276bc0087988e64912",
+      "record": {
+        "status": "resolved",
+        "verdict": "usable",
+        "comment": "",
+        "repair_confirmation": "unreviewed",
+        "updated_at": "2026-09-27T15:57:13.144Z",
+        "view_context": {
+          "point_mode": "effective",
+          "reference_ids": [
+            "reference:gt_revised"
+          ],
+          "cluster_method": "affinity"
+        }
+      },
+      "traits": {
+        "status": "pending",
+        "tags": [],
+        "difficulty": "unrecorded",
+        "comment": "",
+        "updated_at": "2026-09-27T15:56:35.931Z"
+      }
+    },
+    {
+      "kind": "annotation",
+      "id": "84b588165daf52f3",
+      "code": "e9zR4mvMWw7-19",
+      "state": "resolved_latest",
+      "explanation": "二审undetermined已被最新usable和scope解释接替。评论仍说明显错，不可因负面措辞推翻明确保留。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/84b588165daf52f3",
+      "record": {
+        "status": "resolved",
+        "verdict": "usable",
+        "comment": "不知道他想标啥,明显是错的",
+        "repair_confirmation": "unreviewed",
+        "updated_at": "2026-09-27T15:13:10.767Z",
+        "view_context": {
+          "point_mode": "effective",
+          "reference_ids": [
+            "reference:gt_revised"
+          ],
+          "cluster_method": "affinity"
+        }
+      },
+      "traits": {
+        "status": "resolved",
+        "tags": [
+          "scope"
+        ],
+        "difficulty": "unrecorded",
+        "comment": "",
+        "updated_at": "2026-09-27T15:12:12.411Z"
+      }
+    },
+    {
+      "kind": "annotation",
+      "id": "f8c20f06811c7321e708",
+      "code": "jtcxE69GiFV-30",
+      "state": "improvement_not_repair",
+      "explanation": "用户本次明确：只是去掉会更完美的改善建议，未选修复后再审；保留点集。jtcx30须撤销此前删p9/p10派生操作。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/f8c20f06811c7321e708",
+      "record": {
+        "status": "resolved",
+        "verdict": "usable",
+        "comment": "标的空间和gt不一致,gt的是较小空间,这个人的标法个人认为更好,但是p9 p10 这对多余的点去掉就更好了",
+        "repair_confirmation": "unreviewed",
+        "updated_at": "2026-09-26T06:15:53.280Z",
+        "view_context": {
+          "point_mode": "effective",
+          "reference_ids": [
+            "reference:gt_revised"
+          ],
+          "cluster_method": "affinity"
+        }
+      },
+      "traits": {
+        "status": "resolved",
+        "tags": [
+          "scope"
+        ],
+        "difficulty": "unrecorded",
+        "comment": "",
+        "updated_at": "2026-09-27T15:25:40.126Z"
+      }
+    },
+    {
+      "kind": "annotation",
+      "id": "new_95_3663_7443_W028",
+      "code": "jtcxE69GiFV-12",
+      "state": "improvement_not_repair",
+      "explanation": "用户本次明确：只是去掉会更完美的改善建议，未选修复后再审；保留点集。jtcx30须撤销此前删p9/p10派生操作。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/new_95_3663_7443_W028",
+      "record": {
+        "status": "resolved",
+        "verdict": "usable",
+        "comment": "想标全房,但是标的不太好,但是他最右边的点和最左边的点是重复了的,去掉一对就是很好的标注了",
+        "repair_confirmation": "unreviewed",
+        "updated_at": "2026-09-26T05:24:28.072Z",
+        "view_context": {
+          "point_mode": "effective",
+          "reference_ids": [
+            "new_95_3663_7099_W037"
+          ],
+          "cluster_method": "affinity"
+        }
+      },
+      "traits": {
+        "status": "resolved",
+        "tags": [
+          "detail",
+          "execution"
+        ],
+        "difficulty": "unrecorded",
+        "comment": "",
+        "updated_at": "2026-09-27T15:19:59.298Z"
+      }
+    },
+    {
+      "kind": "annotation",
+      "id": "1623fbedf957f0be9421",
+      "code": "UwV83HsGsw3-17",
+      "state": "improvement_not_repair",
+      "explanation": "用户本次明确：只是去掉会更完美的改善建议，未选修复后再审；保留点集。jtcx30须撤销此前删p9/p10派生操作。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/1623fbedf957f0be9421",
+      "record": {
+        "status": "resolved",
+        "verdict": "usable",
+        "comment": "其实是p9 p10 p11 p12 和p1 p2 p3 p4是应该2选1 的",
+        "repair_confirmation": "unreviewed",
+        "updated_at": "2026-09-25T15:24:17.762Z",
+        "view_context": {
+          "point_mode": "raw",
+          "reference_ids": [],
+          "cluster_method": "affinity"
+        }
+      },
+      "traits": {
+        "status": "resolved",
+        "tags": [
+          "detail",
+          "execution"
+        ],
+        "difficulty": "unrecorded",
+        "comment": "",
+        "updated_at": "2026-09-27T14:54:16.026Z"
+      }
+    },
+    {
+      "kind": "annotation",
+      "id": "2559d23544f7b937",
+      "code": "uNb9QFRL6hY-47",
+      "state": "repair_explicit_choice",
+      "explanation": "用户本次明确删除p14，p17保留；无需再次选择。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/2559d23544f7b937",
+      "record": {
+        "status": "pending",
+        "verdict": "repair_needed",
+        "comment": "删除一个点(p17/p14),尚未完成",
+        "repair_confirmation": "needs_followup",
+        "updated_at": "2026-09-27T15:33:53.362Z",
+        "view_context": {
+          "point_mode": "effective",
+          "reference_ids": [
+            "reference:gt_revised"
+          ],
+          "cluster_method": "affinity"
+        }
+      },
+      "traits": null
+    },
+    {
+      "kind": "annotation",
+      "id": "4a1158da9bd83ef9",
+      "code": "rPc6DW4iMge-09",
+      "state": "conditional_exclusion_history_check",
+      "explanation": "有条件指令：没有历史补点才排除。此处三份为冻结旧簇成员；查旧修复入口及有效坐标，未找到记录不能自动证明从未补过。此代理未完成全仓历史执行事实核验，留主代理核对。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/4a1158da9bd83ef9",
+      "record": {
+        "status": "pending",
+        "verdict": "undetermined",
+        "comment": "不知道以前有没有补过点,如果没有补的话,这一簇都直接排除,不知道是否有没有补点记录",
+        "repair_confirmation": "needs_followup",
+        "updated_at": "2026-09-27T15:29:41.193Z",
+        "view_context": {
+          "point_mode": "effective",
+          "reference_ids": [
+            "reference:gt_revised"
+          ],
+          "cluster_method": "affinity"
+        }
+      },
+      "traits": null
+    },
+    {
+      "kind": "annotation",
+      "id": "6aed1eb1185c1318",
+      "code": "rPc6DW4iMge-09",
+      "state": "conditional_exclusion_history_check",
+      "explanation": "有条件指令：没有历史补点才排除。此处三份为冻结旧簇成员；查旧修复入口及有效坐标，未找到记录不能自动证明从未补过。此代理未完成全仓历史执行事实核验，留主代理核对。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/6aed1eb1185c1318",
+      "record": {
+        "status": "pending",
+        "verdict": "undetermined",
+        "comment": "不知道以前有没有补过点,如果没有补的话,这一簇都直接排除,不知道是否有没有补点记录",
+        "repair_confirmation": "needs_followup",
+        "updated_at": "2026-09-27T15:29:51.917Z",
+        "view_context": {
+          "point_mode": "effective",
+          "reference_ids": [
+            "reference:gt_revised"
+          ],
+          "cluster_method": "affinity"
+        }
+      },
+      "traits": null
+    },
+    {
+      "kind": "annotation",
+      "id": "6d192755ca096a2c",
+      "code": "rPc6DW4iMge-09",
+      "state": "conditional_exclusion_history_check",
+      "explanation": "有条件指令：没有历史补点才排除。此处三份为冻结旧簇成员；查旧修复入口及有效坐标，未找到记录不能自动证明从未补过。此代理未完成全仓历史执行事实核验，留主代理核对。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/6d192755ca096a2c",
+      "record": {
+        "status": "pending",
+        "verdict": "undetermined",
+        "comment": "不知道以前有没有补过点,如果没有补的话,这一簇都直接排除,不知道是否有没有补点记录",
+        "repair_confirmation": "needs_followup",
+        "updated_at": "2026-09-27T15:29:59.196Z",
+        "view_context": {
+          "point_mode": "effective",
+          "reference_ids": [
+            "reference:gt_revised"
+          ],
+          "cluster_method": "affinity"
+        }
+      },
+      "traits": null
+    },
+    {
+      "kind": "annotation",
+      "id": "032cd152706166629e82",
+      "code": "wc2JMjhGNzB-67",
+      "state": "conditional_repair_history_check",
+      "explanation": "原话是有历史修复记录则修了纳入、无记录排除；已知旧补点提议≠执行。仍需追具体补点来源和可执行坐标，不能套用新簇。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/032cd152706166629e82",
+      "record": {
+        "status": "pending",
+        "verdict": "repair_needed",
+        "comment": "只有6点,如果历史有修复记录,修了就纳入,没有的话就直接排除,尚未修复",
+        "repair_confirmation": "needs_followup",
+        "updated_at": "2026-09-27T15:51:35.290Z",
+        "view_context": {
+          "point_mode": "effective",
+          "reference_ids": [
+            "reference:gt_revised"
+          ],
+          "cluster_method": "affinity"
+        }
+      },
+      "traits": null
+    },
+    {
+      "kind": "image",
+      "id": "jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037",
+      "code": "jtcxE69GiFV-05",
+      "state": "explicit_gt_error_statement",
+      "explanation": "用户明确陈述参考实质错误，保留其证据原话；不得泛化为所有标注无效，也不能退化为仅有合理范围差异。pRb12同时有细节遗漏。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037",
+      "record": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "gt是错误的,不是空间的问题,是完全错误.而且这图可以标细节的墙角,但是目前标注者都没有标注.\n三个模型的预标注也都是错误的",
+        "updated_at": "2026-09-26T03:25:12.087Z"
+      },
+      "traits": null
+    },
+    {
+      "kind": "image",
+      "id": "jtcxE69GiFV_6723e18211d244f8b17ced91aae64d99",
+      "code": "jtcxE69GiFV-17",
+      "state": "explicit_gt_error_statement",
+      "explanation": "用户明确陈述参考实质错误，保留其证据原话；不得泛化为所有标注无效，也不能退化为仅有合理范围差异。pRb12同时有细节遗漏。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/jtcxE69GiFV_6723e18211d244f8b17ced91aae64d99",
+      "record": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "这图遮挡较多,较难,而且gt标的是错误的,包括模型标的p3,p4这对点,是错误把门当成墙了,而且他们都忽略了墙面的的柱子凸起",
+        "updated_at": "2026-09-26T05:29:01.443Z"
+      },
+      "traits": null
+    },
+    {
+      "kind": "image",
+      "id": "pRbA3pwrgk9_8caa90fc5528451f9e9f45634676499b",
+      "code": "pRbA3pwrgk9-12",
+      "state": "explicit_gt_error_statement",
+      "explanation": "用户明确陈述参考实质错误，保留其证据原话；不得泛化为所有标注无效，也不能退化为仅有合理范围差异。pRb12同时有细节遗漏。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/pRbA3pwrgk9_8caa90fc5528451f9e9f45634676499b",
+      "record": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "这个gt直接忽略了左边的墙面凸起,而且我认为它标的高度也有问题,是错误的,比较标准的是BiLayout enclosed的标法.",
+        "updated_at": "2026-09-26T06:28:30.446Z"
+      },
+      "traits": null
+    },
+    {
+      "kind": "image",
+      "id": "zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b",
+      "code": "zsNo4HB9uLZ-05",
+      "state": "explicit_gt_error_statement",
+      "explanation": "用户明确陈述参考实质错误，保留其证据原话；不得泛化为所有标注无效，也不能退化为仅有合理范围差异。pRb12同时有细节遗漏。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b",
+      "record": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "gt是肯定错的,但是因为这个门挡住了太多空间细节,标注有难度",
+        "updated_at": "2026-09-27T10:23:30.364Z"
+      },
+      "traits": null
+    },
+    {
+      "kind": "image",
+      "id": "7y3sRwLe3Va_606f9842b8af48daa28f10df8b69d861",
+      "code": "7y3sRwLe3Va-11",
+      "state": "gt_detail_omission_not_global_error",
+      "explanation": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/7y3sRwLe3Va_606f9842b8af48daa28f10df8b69d861",
+      "record": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "这图的gt是没有标壁炉的.可以标的更细",
+        "updated_at": "2026-09-25T12:03:18.238Z"
+      },
+      "traits": null
+    },
+    {
+      "kind": "image",
+      "id": "X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9",
+      "code": "X7HyMhZNoso-19",
+      "state": "gt_detail_omission_not_global_error",
+      "explanation": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9",
+      "record": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "中间有个隔断的墙,gt忽略了",
+        "updated_at": "2026-09-25T17:14:51.040Z"
+      },
+      "traits": null
+    },
+    {
+      "kind": "image",
+      "id": "pa4otMbVnkk_64ba4f267872432abdcb00af002649d5",
+      "code": "pa4otMbVnkk-18",
+      "state": "gt_detail_omission_not_global_error",
+      "explanation": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/pa4otMbVnkk_64ba4f267872432abdcb00af002649d5",
+      "record": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "gt在右边的墙角处是有遗漏的",
+        "updated_at": "2026-09-27T02:02:50.477Z"
+      },
+      "traits": null
+    },
+    {
+      "kind": "image",
+      "id": "q9vSo1VnCiC_dc873df7717c43888a1cff13713fe146",
+      "code": "q9vSo1VnCiC-30",
+      "state": "gt_detail_omission_not_global_error",
+      "explanation": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/q9vSo1VnCiC_dc873df7717c43888a1cff13713fe146",
+      "record": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "存在不同的标注空间,gt是标注了连廊的空间,但是墙角的细节没标注.簇1是最简单的标注,簇2的连廊的细节空间是标注的最好的,其余的或多或少都有点问题",
+        "updated_at": "2026-09-27T02:29:00.843Z"
+      },
+      "traits": null
+    },
+    {
+      "kind": "image",
+      "id": "uNb9QFRL6hY_00b4950b469b4520b29f895aa029419c",
+      "code": "uNb9QFRL6hY-01",
+      "state": "gt_detail_omission_not_global_error",
+      "explanation": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_00b4950b469b4520b29f895aa029419c",
+      "record": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "这图gt是直接忽略掉了最左边的凸起,最精确细节的标法应该是类似簇2 的标法,甚至可以把簇2最右边的一对点,移动到最左边来(不过考虑到3对点挨得太近不好标,所以一般就放在在最左边了)",
+        "updated_at": "2026-09-27T03:42:31.235Z"
+      },
+      "traits": null
+    },
+    {
+      "kind": "image",
+      "id": "uNb9QFRL6hY_068fb0d52d01455c96fa23659c373bf8",
+      "code": "uNb9QFRL6hY-04",
+      "state": "gt_detail_omission_not_global_error",
+      "explanation": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_068fb0d52d01455c96fa23659c373bf8",
+      "record": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "gt没有标注右边墙面的变化,直接忽略了 .这图标注者也出现了一个罕见的现象,在壁炉那里停止,标注空间缩小",
+        "updated_at": "2026-09-27T03:45:27.548Z"
+      },
+      "traits": null
+    },
+    {
+      "kind": "image",
+      "id": "uNb9QFRL6hY_13a430466eb64e2087e7fb5acde7a398",
+      "code": "uNb9QFRL6hY-09",
+      "state": "gt_detail_omission_not_global_error",
+      "explanation": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_13a430466eb64e2087e7fb5acde7a398",
+      "record": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "这图gt是没有标右边墙面变化的细节的,标注者有时会在壁炉那莫名其妙多标点(簇1,3,4,6),簇5是最正确的标法",
+        "updated_at": "2026-09-27T04:34:12.712Z"
+      },
+      "traits": null
+    },
+    {
+      "kind": "image",
+      "id": "uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f",
+      "code": "uNb9QFRL6hY-12",
+      "state": "gt_detail_omission_not_global_error",
+      "explanation": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f",
+      "record": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "左边墙面的变化,gt还是没标",
+        "updated_at": "2026-09-27T04:35:09.786Z"
+      },
+      "traits": null
+    },
+    {
+      "kind": "image",
+      "id": "uNb9QFRL6hY_3450b3accb584493bf13be8e9554dbea",
+      "code": "uNb9QFRL6hY-20",
+      "state": "gt_detail_omission_not_global_error",
+      "explanation": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_3450b3accb584493bf13be8e9554dbea",
+      "record": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "gt还是没有标注右边墙面的变化,有些人还是标注了壁炉但是又没标好",
+        "updated_at": "2026-09-27T04:44:14.288Z"
+      },
+      "traits": null
+    },
+    {
+      "kind": "image",
+      "id": "uNb9QFRL6hY_a728d2eef41b449f82357899de802dd3",
+      "code": "uNb9QFRL6hY-53",
+      "state": "gt_detail_omission_not_global_error",
+      "explanation": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_a728d2eef41b449f82357899de802dd3",
+      "record": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "gt没有注意到右边墙面的变化",
+        "updated_at": "2026-09-27T08:20:06.653Z"
+      },
+      "traits": null
+    },
+    {
+      "kind": "image",
+      "id": "x8F5xyUWy9e_9926b38bd87e44e292d9c375050dd17d",
+      "code": "x8F5xyUWy9e-08",
+      "state": "gt_detail_omission_not_global_error",
+      "explanation": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/x8F5xyUWy9e_9926b38bd87e44e292d9c375050dd17d",
+      "record": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "gt是直接忽略了左侧的墙面变化",
+        "updated_at": "2026-09-27T09:15:06.005Z"
+      },
+      "traits": {
+        "status": "resolved",
+        "tags": [
+          "reference_omission",
+          "detail"
+        ],
+        "difficulty": "easy",
+        "comment": "",
+        "updated_at": "2026-09-27T15:52:39.727Z"
+      }
+    },
+    {
+      "kind": "image",
+      "id": "zsNo4HB9uLZ_2caadd7bc71c43d5ad10f4e7f10a3455",
+      "code": "zsNo4HB9uLZ-02",
+      "state": "gt_detail_omission_not_global_error",
+      "explanation": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/zsNo4HB9uLZ_2caadd7bc71c43d5ad10f4e7f10a3455",
+      "record": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "这gt凸出的墙面没有标注,直接忽略了,但是目前由于样本量太少,我也不确定这会不会有人标这个凸出的墙面(我觉得是有这种标法的)",
+        "updated_at": "2026-09-27T10:22:32.713Z"
+      },
+      "traits": null
+    },
+    {
+      "kind": "image",
+      "id": "uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d",
+      "code": "uNb9QFRL6hY-36",
+      "state": "conditional_standard_not_global_gt_error",
+      "explanation": "原话以最严格曼哈顿标准为条件质疑所有人的停止点；需保留条件，不自动升格为无条件GT完全错误或全体无效。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d",
+      "record": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "这图在走廊,如果按照最严格的曼哈顿世界约束,目前所有人的标注都是错的,,包括gt,停止的位置都不太对",
+        "updated_at": "2026-09-27T07:17:36.137Z"
+      },
+      "traits": null
+    },
+    {
+      "kind": "image",
+      "id": "yqstnuAEVhm_26b2e92ccd314a2da1a4fc8dfc6e6f56",
+      "code": "yqstnuAEVhm-04",
+      "state": "reference_version_wording_unresolved",
+      "explanation": "范围选择已有清楚解释；原始gt与MP3D原始同时指代不同内容，需由原始/修订/模型来源核对，非让用户重做范围判断。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/yqstnuAEVhm_26b2e92ccd314a2da1a4fc8dfc6e6f56",
+      "record": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "这图确实存在不同的标注范围,我修正过后的gt是在玻璃门处停止,原始gt是标了外面的区域,但是外面的区域包括了楼梯(虽然MP3d原始标注是没标这块的).之后在玻璃门停止这里,有些人会稍微再往外一点停止(w028,001)",
+        "updated_at": "2026-09-27T09:33:31.781Z"
+      },
+      "traits": {
+        "status": "resolved",
+        "tags": [
+          "scope"
+        ],
+        "difficulty": "medium",
+        "comment": "如果只标门内空间,就算简单,标门外的就比较难",
+        "updated_at": "2026-09-27T15:56:57.482Z"
+      }
+    },
+    {
+      "kind": "image",
+      "id": "7y3sRwLe3Va_b47475370e824b9e923a4a96bc98e1e3",
+      "code": "7y3sRwLe3Va-21",
+      "state": "explicit_not_oos",
+      "explanation": "虽然描述多天花板高度，用户明确只用走廊高度可标且暂不归OOS；不能命中oos字样就逆转为OOS。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/7y3sRwLe3Va_b47475370e824b9e923a4a96bc98e1e3",
+      "record": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "这图严格来说应该算oos,因为卧室的天花板是往上凸的,存在多个平面,但是这里可以只标注站在走廊区域的天花板平面高度,这样是完全可以标注的,而且目前所有标注者都是按照这个标准来标,所以暂时不归入oos. 这图是难图,同时存在只标注走廊这个区域的可能性(我印象里是见到这种标注的,但是目前的标注结果里没有)",
+        "updated_at": "2026-09-25T12:23:54.767Z"
+      },
+      "traits": null
+    },
+    {
+      "kind": "image",
+      "id": "pRbA3pwrgk9_285b697fed754f86a09602c93628cfb4",
+      "code": "pRbA3pwrgk9-06",
+      "state": "explicit_inscope",
+      "explanation": "用户明确不标窗台即可inscope；不能因历史OOS线索保留为OOS。",
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/pRbA3pwrgk9_285b697fed754f86a09602c93628cfb4",
+      "record": {
+        "status": "resolved",
+        "category": "ordinary",
+        "comment": "我觉得还是可以标注的,可以算到inscope,只要不标注窗台",
+        "updated_at": "2026-09-26T06:20:32.753Z"
+      },
+      "traits": null
+    }
+  ],
+  "global_interpretations": [
+    "usable不等于几何正确：最新许多评论直接说错、没标好但仍选usable；符合研究保留误差原意，不自动升级排除。",
+    "OOS/难标门洞GT空是有意不填；难度空不阻断审核。",
+    "image reference_concern类别本身无法区分实质错误、细节或范围，须保留评论与traits证据；不要全部当成参考失效。",
+    "同房机位差异不自动冲突；本代理未做视觉同房核验。",
+    "明确无效与模型未改可同时保留各自属性；模型未改不是低质量结论。",
+    "评论中的旧簇编号须冻结至当时affinity版本具体成员，主代理尚需绑定。"
+  ],
+  "annotation_overrides": {
+    "6c4eb5c014ae5538": {
+      "semantic_status": "missed_review_completed",
+      "summary": "三份已补审，最新usable；uNb40仍pending但traits resolved/detail且用户明确已补，不再记漏审。",
+      "reason": "三份已补审，最新usable；uNb40仍pending但traits resolved/detail且用户明确已补，不再记漏审。",
+      "needs_user_review": false,
+      "tags": [],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/6c4eb5c014ae5538",
+      "conditional_history": false
+    },
+    "d0df2148541db2cf": {
+      "semantic_status": "missed_review_completed",
+      "summary": "三份已补审，最新usable；uNb40仍pending但traits resolved/detail且用户明确已补，不再记漏审。",
+      "reason": "三份已补审，最新usable；uNb40仍pending但traits resolved/detail且用户明确已补，不再记漏审。",
+      "needs_user_review": false,
+      "tags": [],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/d0df2148541db2cf",
+      "conditional_history": false
+    },
+    "new_94_3628_7046_W037": {
+      "semantic_status": "missed_review_completed",
+      "summary": "三份已补审，最新usable；uNb40仍pending但traits resolved/detail且用户明确已补，不再记漏审。",
+      "reason": "三份已补审，最新usable；uNb40仍pending但traits resolved/detail且用户明确已补，不再记漏审。",
+      "needs_user_review": false,
+      "tags": [],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/new_94_3628_7046_W037",
+      "conditional_history": false
+    },
+    "b62a4df9e1645fe7": {
+      "semantic_status": "possible_status_not_synchronized",
+      "summary": "pending+usable但后来resolved traits已补解释；保留原pending和usable，不凭状态要求重看。模型改动或局部错误不自动无效。",
+      "reason": "pending+usable但后来resolved traits已补解释；保留原pending和usable，不凭状态要求重看。模型改动或局部错误不自动无效。",
+      "needs_user_review": false,
+      "tags": [],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/b62a4df9e1645fe7",
+      "conditional_history": false
+    },
+    "726df974bcd4c84b": {
+      "semantic_status": "possible_status_not_synchronized",
+      "summary": "pending+usable但后来resolved traits已补解释；保留原pending和usable，不凭状态要求重看。模型改动或局部错误不自动无效。",
+      "reason": "pending+usable但后来resolved traits已补解释；保留原pending和usable，不凭状态要求重看。模型改动或局部错误不自动无效。",
+      "needs_user_review": false,
+      "tags": [],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/726df974bcd4c84b",
+      "conditional_history": false
+    },
+    "717840fe8221eba6": {
+      "semantic_status": "possible_status_not_synchronized",
+      "summary": "pending+usable但后来resolved traits已补解释；保留原pending和usable，不凭状态要求重看。模型改动或局部错误不自动无效。",
+      "reason": "pending+usable但后来resolved traits已补解释；保留原pending和usable，不凭状态要求重看。模型改动或局部错误不自动无效。",
+      "needs_user_review": false,
+      "tags": [],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/717840fe8221eba6",
+      "conditional_history": false
+    },
+    "5da232bc43b7c975": {
+      "semantic_status": "possible_status_not_synchronized",
+      "summary": "pending+usable但后来resolved traits已补解释；保留原pending和usable，不凭状态要求重看。模型改动或局部错误不自动无效。",
+      "reason": "pending+usable但后来resolved traits已补解释；保留原pending和usable，不凭状态要求重看。模型改动或局部错误不自动无效。",
+      "needs_user_review": false,
+      "tags": [],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/5da232bc43b7c975",
+      "conditional_history": false
+    },
+    "738a28459a248984": {
+      "semantic_status": "possible_status_not_synchronized",
+      "summary": "pending+usable但后来resolved traits已补解释；保留原pending和usable，不凭状态要求重看。模型改动或局部错误不自动无效。",
+      "reason": "pending+usable但后来resolved traits已补解释；保留原pending和usable，不凭状态要求重看。模型改动或局部错误不自动无效。",
+      "needs_user_review": false,
+      "tags": [],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/738a28459a248984",
+      "conditional_history": false
+    },
+    "92e4a4cf1ae73f69": {
+      "semantic_status": "possible_status_not_synchronized",
+      "summary": "pending+usable但后来resolved traits已补解释；保留原pending和usable，不凭状态要求重看。模型改动或局部错误不自动无效。",
+      "reason": "pending+usable但后来resolved traits已补解释；保留原pending和usable，不凭状态要求重看。模型改动或局部错误不自动无效。",
+      "needs_user_review": false,
+      "tags": [],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/92e4a4cf1ae73f69",
+      "conditional_history": false
+    },
+    "28935ccbb578589d": {
+      "semantic_status": "possible_status_not_synchronized",
+      "summary": "pending+usable但后来resolved traits已补解释；保留原pending和usable，不凭状态要求重看。模型改动或局部错误不自动无效。",
+      "reason": "pending+usable但后来resolved traits已补解释；保留原pending和usable，不凭状态要求重看。模型改动或局部错误不自动无效。",
+      "needs_user_review": false,
+      "tags": [],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/28935ccbb578589d",
+      "conditional_history": false
+    },
+    "0b276bc0087988e64912": {
+      "semantic_status": "resolved_verdict_optional_traits_pending",
+      "summary": "作答resolved/usable；空可选traits pending不构成漏审。",
+      "reason": "作答resolved/usable；空可选traits pending不构成漏审。",
+      "needs_user_review": false,
+      "tags": [],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/0b276bc0087988e64912",
+      "conditional_history": false
+    },
+    "84b588165daf52f3": {
+      "semantic_status": "resolved_latest",
+      "summary": "二审undetermined已被最新usable和scope解释接替。评论仍说明显错，不可因负面措辞推翻明确保留。",
+      "reason": "二审undetermined已被最新usable和scope解释接替。评论仍说明显错，不可因负面措辞推翻明确保留。",
+      "needs_user_review": false,
+      "tags": [],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/84b588165daf52f3",
+      "conditional_history": false
+    },
+    "f8c20f06811c7321e708": {
+      "semantic_status": "improvement_not_repair",
+      "summary": "用户本次明确：只是去掉会更完美的改善建议，未选修复后再审；保留点集。jtcx30须撤销此前删p9/p10派生操作。",
+      "reason": "用户本次明确：只是去掉会更完美的改善建议，未选修复后再审；保留点集。jtcx30须撤销此前删p9/p10派生操作。",
+      "needs_user_review": false,
+      "tags": [],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/f8c20f06811c7321e708",
+      "conditional_history": false
+    },
+    "new_95_3663_7443_W028": {
+      "semantic_status": "improvement_not_repair",
+      "summary": "用户本次明确：只是去掉会更完美的改善建议，未选修复后再审；保留点集。jtcx30须撤销此前删p9/p10派生操作。",
+      "reason": "用户本次明确：只是去掉会更完美的改善建议，未选修复后再审；保留点集。jtcx30须撤销此前删p9/p10派生操作。",
+      "needs_user_review": false,
+      "tags": [],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/new_95_3663_7443_W028",
+      "conditional_history": false
+    },
+    "1623fbedf957f0be9421": {
+      "semantic_status": "improvement_not_repair",
+      "summary": "用户本次明确：只是去掉会更完美的改善建议，未选修复后再审；保留点集。jtcx30须撤销此前删p9/p10派生操作。",
+      "reason": "用户本次明确：只是去掉会更完美的改善建议，未选修复后再审；保留点集。jtcx30须撤销此前删p9/p10派生操作。",
+      "needs_user_review": false,
+      "tags": [],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/1623fbedf957f0be9421",
+      "conditional_history": false
+    },
+    "2559d23544f7b937": {
+      "semantic_status": "repair_explicit_choice",
+      "summary": "用户本次明确删除p14，p17保留；无需再次选择。",
+      "reason": "用户本次明确删除p14，p17保留；无需再次选择。",
+      "needs_user_review": false,
+      "tags": [],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/annotation_decisions/2559d23544f7b937",
+      "conditional_history": false
+    },
+    "4a1158da9bd83ef9": {
+      "semantic_status": "excluded_by_explicit_continuation",
+      "summary": "最新问题卡直接排除当前作答；不再以历史补点为前置条件。",
+      "reason": "用户明确排除",
+      "needs_user_review": false,
+      "conditional_history": false,
+      "tags": [],
+      "source": "evidence/continuation.json#/issue_decisions"
+    },
+    "6aed1eb1185c1318": {
+      "semantic_status": "excluded_by_explicit_continuation",
+      "summary": "最新问题卡直接排除当前作答；不再以历史补点为前置条件。",
+      "reason": "用户明确排除",
+      "needs_user_review": false,
+      "conditional_history": false,
+      "tags": [],
+      "source": "evidence/continuation.json#/issue_decisions"
+    },
+    "6d192755ca096a2c": {
+      "semantic_status": "excluded_by_explicit_continuation",
+      "summary": "最新问题卡直接排除当前作答；不再以历史补点为前置条件。",
+      "reason": "用户明确排除",
+      "needs_user_review": false,
+      "conditional_history": false,
+      "tags": [],
+      "source": "evidence/continuation.json#/issue_decisions"
+    },
+    "032cd152706166629e82": {
+      "semantic_status": "excluded_by_explicit_continuation",
+      "summary": "最新问题卡直接排除当前作答；不再以历史补点为前置条件。",
+      "reason": "用户明确排除",
+      "needs_user_review": false,
+      "conditional_history": false,
+      "tags": [],
+      "source": "evidence/continuation.json#/issue_decisions"
+    },
+    "5e3a87e01e8c7a68": {
+      "semantic_status": "approved_repair_execution_followup",
+      "summary": "明确修复操作，执行状态由修复层核验；不是漏审。",
+      "reason": "用户已明确批准其余方案；尚未修复文字属于执行前记录。",
+      "needs_user_review": false,
+      "tags": [],
+      "conditional_history": false
+    },
+    "80a4655a847e5a65": {
+      "semantic_status": "approved_repair_execution_followup",
+      "summary": "明确修复操作，执行状态由修复层核验；不是漏审。",
+      "reason": "用户已明确批准其余方案；尚未修复文字属于执行前记录。",
+      "needs_user_review": false,
+      "tags": [],
+      "conditional_history": false
+    },
+    "f11e6b976a498838f79c": {
+      "semantic_status": "all_analysis_hold_by_user",
+      "summary": "jtcx11用户明确暂停全部分析。",
+      "reason": "不要求用户现在判断GT。",
+      "needs_user_review": false,
+      "tags": [
+        "reference_uncertain"
+      ],
+      "conditional_history": false
+    },
+    "acf40c242b1e8bb29e98": {
+      "semantic_status": "approved_repair_execution_followup",
+      "summary": "明确修复操作，执行状态由修复层核验；不是漏审。",
+      "reason": "用户已明确批准其余方案；尚未修复文字属于执行前记录。",
+      "needs_user_review": false,
+      "tags": [],
+      "conditional_history": false
+    },
+    "3d1c6d9fda198b1b": {
+      "semantic_status": "approved_repair_execution_followup",
+      "summary": "明确修复操作，执行状态由修复层核验；不是漏审。",
+      "reason": "用户已明确批准其余方案；尚未修复文字属于执行前记录。",
+      "needs_user_review": false,
+      "tags": [],
+      "conditional_history": false
+    },
+    "adb443cf2cd44a01": {
+      "semantic_status": "approved_repair_execution_followup",
+      "summary": "明确修复操作，执行状态由修复层核验；不是漏审。",
+      "reason": "用户已明确批准其余方案；尚未修复文字属于执行前记录。",
+      "needs_user_review": false,
+      "tags": [],
+      "conditional_history": false
+    },
+    "9117118c1ce15fc9": {
+      "semantic_status": "approved_repair_execution_followup",
+      "summary": "明确修复操作，执行状态由修复层核验；不是漏审。",
+      "reason": "用户已明确批准其余方案；尚未修复文字属于执行前记录。",
+      "needs_user_review": false,
+      "tags": [],
+      "conditional_history": false
+    },
+    "af1ada91e5648762": {
+      "semantic_status": "approved_repair_execution_followup",
+      "summary": "明确修复操作，执行状态由修复层核验；不是漏审。",
+      "reason": "用户已明确批准其余方案；尚未修复文字属于执行前记录。",
+      "needs_user_review": false,
+      "tags": [],
+      "conditional_history": false
+    },
+    "ef46460f29fb4a76": {
+      "semantic_status": "approved_repair_execution_followup",
+      "summary": "明确修复操作，执行状态由修复层核验；不是漏审。",
+      "reason": "用户已明确批准其余方案；尚未修复文字属于执行前记录。",
+      "needs_user_review": false,
+      "tags": [],
+      "conditional_history": false
+    },
+    "75507c55b020fe0f933f": {
+      "semantic_status": "representation_deferred",
+      "summary": "评论指向配对/整圈顺序，按用户要求本轮搁置顺序；不是脏数据排除或本轮漏审。",
+      "reason": "保留用户点对说明，计算资格等待表示核验，不自动宣布配对已解决。",
+      "needs_user_review": false,
+      "tags": [],
+      "conditional_history": false
+    },
+    "fba833f7e946e03406f0": {
+      "semantic_status": "representation_deferred",
+      "summary": "评论指向配对/整圈顺序，按用户要求本轮搁置顺序；不是脏数据排除或本轮漏审。",
+      "reason": "保留用户点对说明，计算资格等待表示核验，不自动宣布配对已解决。",
+      "needs_user_review": false,
+      "tags": [],
+      "conditional_history": false
+    },
+    "81cd8395dbe20dc23478": {
+      "semantic_status": "representation_deferred",
+      "summary": "评论指向配对/整圈顺序，按用户要求本轮搁置顺序；不是脏数据排除或本轮漏审。",
+      "reason": "保留用户点对说明，计算资格等待表示核验，不自动宣布配对已解决。",
+      "needs_user_review": false,
+      "tags": [],
+      "conditional_history": false
+    },
+    "b593f337fea5cb8bf3f2": {
+      "semantic_status": "representation_deferred",
+      "summary": "评论指向配对/整圈顺序，按用户要求本轮搁置顺序；不是脏数据排除或本轮漏审。",
+      "reason": "保留用户点对说明，计算资格等待表示核验，不自动宣布配对已解决。",
+      "needs_user_review": false,
+      "tags": [],
+      "conditional_history": false
+    },
+    "2293abd04e66d525f147": {
+      "semantic_status": "representation_deferred",
+      "summary": "评论指向配对/整圈顺序，按用户要求本轮搁置顺序；不是脏数据排除或本轮漏审。",
+      "reason": "保留用户点对说明，计算资格等待表示核验，不自动宣布配对已解决。",
+      "needs_user_review": false,
+      "tags": [],
+      "conditional_history": false
+    },
+    "846f35a4fc23776b55a2": {
+      "semantic_status": "representation_deferred",
+      "summary": "评论指向配对/整圈顺序，按用户要求本轮搁置顺序；不是脏数据排除或本轮漏审。",
+      "reason": "保留用户点对说明，计算资格等待表示核验，不自动宣布配对已解决。",
+      "needs_user_review": false,
+      "tags": [],
+      "conditional_history": false
+    },
+    "1f27c10411477390": {
+      "semantic_status": "representation_deferred",
+      "summary": "评论指向配对/整圈顺序，按用户要求本轮搁置顺序；不是脏数据排除或本轮漏审。",
+      "reason": "保留用户点对说明，计算资格等待表示核验，不自动宣布配对已解决。",
+      "needs_user_review": false,
+      "tags": [],
+      "conditional_history": false
+    },
+    "78a68354a388042f": {
+      "semantic_status": "retained_context_geometry_deferred",
+      "summary": "最新已给resolved scope；旧评论为x对齐建议。本轮不选repair_needed，不能自动改单点。",
+      "reason": "沿用图片范围背景及最新scope，旧pending不构成需要用户重新排除裁决；共享x预处理/表示核验另行记录。",
+      "needs_user_review": false,
+      "tags": [
+        "scope"
+      ],
+      "conditional_history": false
+    },
+    "e367c19601f2d8e7823e": {
+      "semantic_status": "retained_scene_context",
+      "summary": "旧疑问在门洞/范围，新图片已明确doorway_difficult；按用户其余供比较沿用本图看法保留研究记录。",
+      "reason": "不是确认普通图有效；不进入人员主质量评价。",
+      "needs_user_review": false,
+      "tags": [
+        "scope"
+      ],
+      "conditional_history": false
+    }
+  },
+  "image_overrides": {
+    "S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e": {
+      "semantic_status": "resolved_by_continuation_issue",
+      "summary": "最终确定存在空间范围的歧义",
+      "reason": "最终确定存在空间范围的歧义",
+      "needs_user_review": false,
+      "tags": [
+        "scope"
+      ],
+      "source": "evidence/continuation.json#/issue_decisions/S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e:continue",
+      "classification_resolved": true
+    },
+    "uNb9QFRL6hY_6a500a9a43a340eb817c58bb084327fe": {
+      "semantic_status": "resolved_by_continuation_issue",
+      "summary": "先不进入主分析,因为gt也不太对,这图也很怪",
+      "reason": "先不进入主分析,因为gt也不太对,这图也很怪",
+      "needs_user_review": false,
+      "tags": [
+        "scope",
+        "reference_error"
+      ],
+      "source": "evidence/continuation.json#/issue_decisions/uNb9QFRL6hY_6a500a9a43a340eb817c58bb084327fe:continue",
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_a372582c11864f31a9dd174e4a0ae6ad": {
+      "semantic_status": "resolved_by_continuation_issue",
+      "summary": "只标内侧空间,类似簇1",
+      "reason": "只标内侧空间,类似簇1",
+      "needs_user_review": false,
+      "tags": [
+        "scope",
+        "reference_error"
+      ],
+      "source": "evidence/continuation.json#/issue_decisions/uNb9QFRL6hY_a372582c11864f31a9dd174e4a0ae6ad:continue",
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "x8F5xyUWy9e_a51a0e2811f342a599ae4cdb9b84ff23": {
+      "semantic_status": "resolved_by_conversation",
+      "summary": "尽管image状态pending，用户后续已明确稳定非正交；无需重问，保留原始状态作为来源。",
+      "reason": "尽管image状态pending，用户后续已明确稳定非正交；无需重问，保留原始状态作为来源。",
+      "needs_user_review": false,
+      "tags": [],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/x8F5xyUWy9e_a51a0e2811f342a599ae4cdb9b84ff23"
+    },
+    "x8F5xyUWy9e_1be9a97aada84e4795f64583ac0e3b76": {
+      "semantic_status": "stable_nonorthogonal",
+      "summary": "用户后续明确此图与09同类，稳定非正交，不等于无法标注OOS。",
+      "reason": "用户后续明确此图与09同类，稳定非正交，不等于无法标注OOS。",
+      "needs_user_review": false,
+      "tags": [],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/x8F5xyUWy9e_1be9a97aada84e4795f64583ac0e3b76"
+    },
+    "jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8": {
+      "semantic_status": "all_analysis_hold_by_user",
+      "summary": "用户明确暂不纳入分析；不是未完成审核，也不需强制其判断GT。",
+      "reason": "用户明确暂不纳入分析；不是未完成审核，也不需强制其判断GT。",
+      "needs_user_review": false,
+      "tags": [
+        "scope",
+        "reference_uncertain"
+      ],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8",
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "b8cTxDM8gDG_298a2386166a43c8a04e1c24433f7d15": {
+      "semantic_status": "resolved_latest",
+      "summary": "二审pending/undetermined，最新resolved/oos并补有楼梯。使用最新，旧不确定不用再召回。",
+      "reason": "二审pending/undetermined，最新resolved/oos并补有楼梯。使用最新，旧不确定不用再召回。",
+      "needs_user_review": false,
+      "tags": [],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/b8cTxDM8gDG_298a2386166a43c8a04e1c24433f7d15"
+    },
+    "UwV83HsGsw3_16af52545aff47afb4d7b330a49091a2": {
+      "semantic_status": "resolved_latest",
+      "summary": "最新明确oos，仍可保留勉强可标的解释；不能用旧暂定词重开问题。",
+      "reason": "最新明确oos，仍可保留勉强可标的解释；不能用旧暂定词重开问题。",
+      "needs_user_review": false,
+      "tags": [],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/UwV83HsGsw3_16af52545aff47afb4d7b330a49091a2"
+    },
+    "jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037": {
+      "semantic_status": "explicit_gt_error_statement",
+      "summary": "用户明确陈述参考实质错误，保留其证据原话；不得泛化为所有标注无效，也不能退化为仅有合理范围差异。pRb12同时有细节遗漏。",
+      "reason": "用户明确陈述参考实质错误，保留其证据原话；不得泛化为所有标注无效，也不能退化为仅有合理范围差异。pRb12同时有细节遗漏。",
+      "needs_user_review": false,
+      "tags": [
+        "detail",
+        "reference_error"
+      ],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037",
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "jtcxE69GiFV_6723e18211d244f8b17ced91aae64d99": {
+      "semantic_status": "explicit_gt_error_statement",
+      "summary": "用户明确陈述参考实质错误，保留其证据原话；不得泛化为所有标注无效，也不能退化为仅有合理范围差异。pRb12同时有细节遗漏。",
+      "reason": "用户明确陈述参考实质错误，保留其证据原话；不得泛化为所有标注无效，也不能退化为仅有合理范围差异。pRb12同时有细节遗漏。",
+      "needs_user_review": false,
+      "tags": [
+        "detail",
+        "reference_omission",
+        "reference_error"
+      ],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/jtcxE69GiFV_6723e18211d244f8b17ced91aae64d99",
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "pRbA3pwrgk9_8caa90fc5528451f9e9f45634676499b": {
+      "semantic_status": "explicit_gt_error_statement",
+      "summary": "用户明确陈述参考实质错误，保留其证据原话；不得泛化为所有标注无效，也不能退化为仅有合理范围差异。pRb12同时有细节遗漏。",
+      "reason": "用户明确陈述参考实质错误，保留其证据原话；不得泛化为所有标注无效，也不能退化为仅有合理范围差异。pRb12同时有细节遗漏。",
+      "needs_user_review": false,
+      "tags": [
+        "detail",
+        "reference_omission",
+        "reference_error"
+      ],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/pRbA3pwrgk9_8caa90fc5528451f9e9f45634676499b",
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b": {
+      "semantic_status": "explicit_gt_error_statement",
+      "summary": "用户明确陈述参考实质错误，保留其证据原话；不得泛化为所有标注无效，也不能退化为仅有合理范围差异。pRb12同时有细节遗漏。",
+      "reason": "用户明确陈述参考实质错误，保留其证据原话；不得泛化为所有标注无效，也不能退化为仅有合理范围差异。pRb12同时有细节遗漏。",
+      "needs_user_review": false,
+      "tags": [
+        "reference_error"
+      ],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b",
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "7y3sRwLe3Va_606f9842b8af48daa28f10df8b69d861": {
+      "semantic_status": "gt_detail_omission_not_global_error",
+      "summary": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "reason": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "needs_user_review": false,
+      "tags": [
+        "detail",
+        "reference_omission"
+      ],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/7y3sRwLe3Va_606f9842b8af48daa28f10df8b69d861",
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9": {
+      "semantic_status": "gt_detail_omission_not_global_error",
+      "summary": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "reason": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "needs_user_review": false,
+      "tags": [
+        "detail",
+        "reference_omission"
+      ],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9",
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "pa4otMbVnkk_64ba4f267872432abdcb00af002649d5": {
+      "semantic_status": "gt_detail_omission_not_global_error",
+      "summary": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "reason": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "needs_user_review": false,
+      "tags": [
+        "detail",
+        "reference_omission"
+      ],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/pa4otMbVnkk_64ba4f267872432abdcb00af002649d5",
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "q9vSo1VnCiC_dc873df7717c43888a1cff13713fe146": {
+      "semantic_status": "gt_detail_omission_not_global_error",
+      "summary": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "reason": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "needs_user_review": false,
+      "tags": [
+        "scope",
+        "detail",
+        "reference_omission"
+      ],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/q9vSo1VnCiC_dc873df7717c43888a1cff13713fe146",
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_00b4950b469b4520b29f895aa029419c": {
+      "semantic_status": "gt_detail_omission_not_global_error",
+      "summary": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "reason": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "needs_user_review": false,
+      "tags": [
+        "detail",
+        "reference_omission"
+      ],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_00b4950b469b4520b29f895aa029419c",
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_068fb0d52d01455c96fa23659c373bf8": {
+      "semantic_status": "gt_detail_omission_not_global_error",
+      "summary": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "reason": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "needs_user_review": false,
+      "tags": [
+        "scope",
+        "detail",
+        "reference_omission"
+      ],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_068fb0d52d01455c96fa23659c373bf8",
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_13a430466eb64e2087e7fb5acde7a398": {
+      "semantic_status": "gt_detail_omission_not_global_error",
+      "summary": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "reason": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "needs_user_review": false,
+      "tags": [
+        "detail",
+        "reference_omission"
+      ],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_13a430466eb64e2087e7fb5acde7a398",
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f": {
+      "semantic_status": "gt_detail_omission_not_global_error",
+      "summary": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "reason": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "needs_user_review": false,
+      "tags": [
+        "detail",
+        "reference_omission"
+      ],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f",
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_3450b3accb584493bf13be8e9554dbea": {
+      "semantic_status": "gt_detail_omission_not_global_error",
+      "summary": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "reason": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "needs_user_review": false,
+      "tags": [
+        "detail",
+        "reference_omission"
+      ],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_3450b3accb584493bf13be8e9554dbea",
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_a728d2eef41b449f82357899de802dd3": {
+      "semantic_status": "gt_detail_omission_not_global_error",
+      "summary": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "reason": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "needs_user_review": false,
+      "tags": [
+        "detail",
+        "reference_omission"
+      ],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_a728d2eef41b449f82357899de802dd3",
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "x8F5xyUWy9e_9926b38bd87e44e292d9c375050dd17d": {
+      "semantic_status": "gt_detail_omission_not_global_error",
+      "summary": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "reason": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "needs_user_review": false,
+      "tags": [
+        "detail",
+        "reference_omission"
+      ],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/x8F5xyUWy9e_9926b38bd87e44e292d9c375050dd17d",
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "zsNo4HB9uLZ_2caadd7bc71c43d5ad10f4e7f10a3455": {
+      "semantic_status": "gt_detail_omission_not_global_error",
+      "summary": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "reason": "细节简化/遗漏属于同空间表达差异；可能与scope并存，不因这条评论阻断主分析。保留用户评价，不替其宣布GT完全错误。",
+      "needs_user_review": false,
+      "tags": [
+        "detail",
+        "reference_omission"
+      ],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/zsNo4HB9uLZ_2caadd7bc71c43d5ad10f4e7f10a3455",
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d": {
+      "semantic_status": "conditional_standard_not_global_gt_error",
+      "summary": "原话以最严格曼哈顿标准为条件质疑所有人的停止点；需保留条件，不自动升格为无条件GT完全错误或全体无效。",
+      "reason": "最严格曼哈顿标准下的停止区域质疑，记录scope；非无条件GT完全错误，不直接排除。",
+      "needs_user_review": false,
+      "tags": [
+        "scope"
+      ],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d",
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "yqstnuAEVhm_26b2e92ccd314a2da1a4fc8dfc6e6f56": {
+      "semantic_status": "reference_version_wording_unresolved",
+      "summary": "范围选择已有清楚解释；原始gt与MP3D原始同时指代不同内容，需由原始/修订/模型来源核对，非让用户重做范围判断。",
+      "reason": "范围选择已有清楚解释；原始gt与MP3D原始同时指代不同内容，需由原始/修订/模型来源核对，非让用户重做范围判断。",
+      "needs_user_review": false,
+      "tags": [
+        "scope"
+      ],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/yqstnuAEVhm_26b2e92ccd314a2da1a4fc8dfc6e6f56",
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "7y3sRwLe3Va_b47475370e824b9e923a4a96bc98e1e3": {
+      "semantic_status": "explicit_not_oos",
+      "summary": "虽然描述多天花板高度，用户明确只用走廊高度可标且暂不归OOS；不能命中oos字样就逆转为OOS。",
+      "reason": "虽然描述多天花板高度，用户明确只用走廊高度可标且暂不归OOS；不能命中oos字样就逆转为OOS。",
+      "needs_user_review": false,
+      "tags": [
+        "scope"
+      ],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/7y3sRwLe3Va_b47475370e824b9e923a4a96bc98e1e3",
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "pRbA3pwrgk9_285b697fed754f86a09602c93628cfb4": {
+      "semantic_status": "explicit_inscope",
+      "summary": "用户明确不标窗台即可inscope；不能因历史OOS线索保留为OOS。",
+      "reason": "用户明确不标窗台即可inscope；不能因历史OOS线索保留为OOS。",
+      "needs_user_review": false,
+      "tags": [],
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/pRbA3pwrgk9_285b697fed754f86a09602c93628cfb4"
+    },
+    "7y3sRwLe3Va_112edb40f34e470da3a5b04599e71211": {
+      "semantic_status": "image_comment_classified",
+      "summary": "gt标注是在中间偏右那里,把门给标进去了,但是其余标注者没有这样标,就当成了一段延续的墙面",
+      "reason": "已逐条读原话：gt标注是在中间偏右那里,把门给标进去了,但是其余标注者没有这样标,就当成了一段延续的墙面",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/7y3sRwLe3Va_112edb40f34e470da3a5b04599e71211",
+      "tags": [
+        "scope",
+        "detail"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "B6ByNegPMKs_75327de9719945aa8b893a6404667884": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这图在走廊,所以存在停止区域的不同",
+      "reason": "已逐条读原话：这图在走廊,所以存在停止区域的不同",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/B6ByNegPMKs_75327de9719945aa8b893a6404667884",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993": {
+      "semantic_status": "image_comment_classified",
+      "summary": "本图是走廊,存在不同的停止点",
+      "reason": "已逐条读原话：本图是走廊,存在不同的停止点",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "B6ByNegPMKs_c946db5792df4f90bea20f06a0030c37": {
+      "semantic_status": "image_comment_classified",
+      "summary": "本图是走廊,存在不同的停止点.gt 的标注区域有点奇怪",
+      "reason": "停止范围选择受到质疑，但未明确断言GT实质错误；记录scope，不以reference_concern类目统一暂停。",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/B6ByNegPMKs_c946db5792df4f90bea20f06a0030c37",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624": {
+      "semantic_status": "image_comment_classified",
+      "summary": "走廊,存在不同的停止位置",
+      "reason": "已逐条读原话：走廊,存在不同的停止位置",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "B6ByNegPMKs_e52609aae11f42a79f6cf50360180fd5": {
+      "semantic_status": "image_comment_classified",
+      "summary": "处于走廊,标注停止位置有不同. 这图虽然截止位置有点不同,但是都归为了一簇.gt停止的位置比较靠前",
+      "reason": "已逐条读原话：处于走廊,标注停止位置有不同. 这图虽然截止位置有点不同,但是都归为了一簇.gt停止的位置比较靠前",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/B6ByNegPMKs_e52609aae11f42a79f6cf50360180fd5",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "S9hNv5qa7GM_625eb179629b45f280c01d3f6ec74b4f": {
+      "semantic_status": "image_comment_classified",
+      "summary": "走廊,存在不同的停止位置,不过gt的停止位置较为奇怪",
+      "reason": "停止范围选择受到质疑，但未明确断言GT实质错误；记录scope，不以reference_concern类目统一暂停。",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/S9hNv5qa7GM_625eb179629b45f280c01d3f6ec74b4f",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65": {
+      "semantic_status": "image_comment_classified",
+      "summary": "属于很难的图片,gt的标注范围是最全的,但是包含了很大块完全看不见的地方.簇1的标注都是错的;簇4是最小的标注区域(但是可能不是完全的正交,有点小问题);簇6是最正确和gt最像的,其次是簇8",
+      "reason": "已逐条读原话：属于很难的图片,gt的标注范围是最全的,但是包含了很大块完全看不见的地方.簇1的标注都是错的;簇4是最小的标注区域(但是可能不是完全的正交,有点小问题);簇6是最正确和gt最像的,其次是簇8",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "UwV83HsGsw3_8e9c912f525744eeaea21083a20a1596": {
+      "semantic_status": "image_comment_classified",
+      "summary": "存在不同的停止区域,gt是在浴缸里停止,有些人是在浴缸外就停止",
+      "reason": "已逐条读原话：存在不同的停止区域,gt是在浴缸里停止,有些人是在浴缸外就停止",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/UwV83HsGsw3_8e9c912f525744eeaea21083a20a1596",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "UwV83HsGsw3_bc29294428a647038f70e0ea31ea8972": {
+      "semantic_status": "image_comment_classified",
+      "summary": "存在两种标注范围",
+      "reason": "已逐条读原话：存在两种标注范围",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/UwV83HsGsw3_bc29294428a647038f70e0ea31ea8972",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "VFuaQ6m2Qom_381ce3cd69b846c3b920be16d29ed48e": {
+      "semantic_status": "image_comment_classified",
+      "summary": "gt细节标的不是很好",
+      "reason": "仅说明GT细节标得不好，不足以断言细节遗漏或完全错误；记录detail。",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/VFuaQ6m2Qom_381ce3cd69b846c3b920be16d29ed48e",
+      "tags": [
+        "detail"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "X7HyMhZNoso_2b16acff0dc042a1a75816a1fbd0a302": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这图有歧义,有不同的标法,甚至有些人认为是oos.",
+      "reason": "用户记不同标法并说有人认为OOS，自己未选择OOS；保留其参考争议分类，记录scope，不传播他人OOS看法。",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/X7HyMhZNoso_2b16acff0dc042a1a75816a1fbd0a302",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "b8cTxDM8gDG_f3748786c3704532abb2358581488f3f": {
+      "semantic_status": "image_comment_classified",
+      "summary": "gt是标了里面的房间的区域,这图很多人是只标外面的区域的.簇2,4其实挺相近的",
+      "reason": "已逐条读原话：gt是标了里面的房间的区域,这图很多人是只标外面的区域的.簇2,4其实挺相近的",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/b8cTxDM8gDG_f3748786c3704532abb2358581488f3f",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "e9zR4mvMWw7_1d316dfbe35f41dd9203eaf88be5aae8": {
+      "semantic_status": "image_comment_classified",
+      "summary": "gt标注了整个视觉内的房间,但是标注者一般只标最小空间,和gt不同",
+      "reason": "已逐条读原话：gt标注了整个视觉内的房间,但是标注者一般只标最小空间,和gt不同",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/e9zR4mvMWw7_1d316dfbe35f41dd9203eaf88be5aae8",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "e9zR4mvMWw7_4273c4dd97974531b5256f96204fee47": {
+      "semantic_status": "image_comment_classified",
+      "summary": "gt的标注范围是标了里面的房间,目前标注者都没有标这个区域的,标注的空间范围不同",
+      "reason": "已逐条读原话：gt的标注范围是标了里面的房间,目前标注者都没有标这个区域的,标注的空间范围不同",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/e9zR4mvMWw7_4273c4dd97974531b5256f96204fee47",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "e9zR4mvMWw7_4fb8c9be319e4784b4b66f9ca5d839ab": {
+      "semantic_status": "image_comment_classified",
+      "summary": "本图中等偏难,簇2,4,6,8的标注方法是对的,但是我不知道为啥分了这么多簇.大部分人想标的空间是和gt一致的,但是很多人都漏标了gt 的p3,p4整个位置.簇3给出了一个很奇怪的标注空间,标的特别小",
+      "reason": "已逐条读原话：本图中等偏难,簇2,4,6,8的标注方法是对的,但是我不知道为啥分了这么多簇.大部分人想标的空间是和gt一致的,但是很多人都漏标了gt 的p3,p4整个位置.簇3给出了一个很奇怪的标注空间,标的特别小",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/e9zR4mvMWw7_4fb8c9be319e4784b4b66f9ca5d839ab",
+      "tags": [
+        "scope",
+        "detail"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "jtcxE69GiFV_f473cf5a09a64090acec3bfe8fccaacd": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这图存在多个标注空间",
+      "reason": "已逐条读原话：这图存在多个标注空间",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/jtcxE69GiFV_f473cf5a09a64090acec3bfe8fccaacd",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "pRbA3pwrgk9_9c9bed9bf7d94ac0bcea18e3bf521930": {
+      "semantic_status": "image_comment_classified",
+      "summary": "和gt的标注空间有些偏差,gt是标了玻璃门后的马桶和洗手台的位置",
+      "reason": "已逐条读原话：和gt的标注空间有些偏差,gt是标了玻璃门后的马桶和洗手台的位置",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/pRbA3pwrgk9_9c9bed9bf7d94ac0bcea18e3bf521930",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e": {
+      "semantic_status": "image_comment_classified",
+      "summary": "gt标注的空间是把右侧里面的空间也纳入了,但是实质上不标注那个区域也是可以的.",
+      "reason": "已逐条读原话：gt标注的空间是把右侧里面的空间也纳入了,但是实质上不标注那个区域也是可以的.",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这图里门框下很近,而且存在不同的标注范围.有些人会标上房间里的空间,但是最好的还是像gt那样的标法.",
+      "reason": "已逐条读原话：这图里门框下很近,而且存在不同的标注范围.有些人会标上房间里的空间,但是最好的还是像gt那样的标法.",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d": {
+      "semantic_status": "image_comment_classified",
+      "summary": "gt是没有标右边的门里的区域,HOHONET是在这个区域有角点重复.有几个标注者是标了这里面的区域的.gt的标法是相对更好的",
+      "reason": "已逐条读原话：gt是没有标右边的门里的区域,HOHONET是在这个区域有角点重复.有几个标注者是标了这里面的区域的.gt的标法是相对更好的",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "q9vSo1VnCiC_a424533651804a38a55b1252daccc81e": {
+      "semantic_status": "image_comment_classified",
+      "summary": "gt是标了两个主标注区域外的空间,不一定好",
+      "reason": "停止范围选择受到质疑，但未明确断言GT实质错误；记录scope，不以reference_concern类目统一暂停。",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/q9vSo1VnCiC_a424533651804a38a55b1252daccc81e",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "q9vSo1VnCiC_e74e843601574864a14517f990c748a0": {
+      "semantic_status": "image_comment_classified",
+      "summary": "存在不同空间的标法,但是如果要标马桶所在的空间会很难标",
+      "reason": "已逐条读原话：存在不同空间的标法,但是如果要标马桶所在的空间会很难标",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/q9vSo1VnCiC_e74e843601574864a14517f990c748a0",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "rPc6DW4iMge_0dfe61800cc540db8e25c1738bc4b8ff": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这图很难很难标,而且图右边玻璃洗澡的区域存在不同的标法",
+      "reason": "已逐条读原话：这图很难很难标,而且图右边玻璃洗澡的区域存在不同的标法",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/rPc6DW4iMge_0dfe61800cc540db8e25c1738bc4b8ff",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这图很难标,而且左边的玻璃浴室处存在不同的标法,gt标的也不是完美,他标的是玻璃浴室里面的区域,但是梳妆台和玻璃连接的区域忽略了部分细节",
+      "reason": "已逐条读原话：这图很难标,而且左边的玻璃浴室处存在不同的标法,gt标的也不是完美,他标的是玻璃浴室里面的区域,但是梳妆台和玻璃连接的区域忽略了部分细节",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+      "tags": [
+        "scope",
+        "detail",
+        "reference_omission"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a": {
+      "semantic_status": "image_comment_classified",
+      "summary": "有些人会标门外的空间",
+      "reason": "已逐条读原话：有些人会标门外的空间",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这图很难,而且右边的玻璃浴室 存在不同的标注方法,gt是标里面的墙角,有些人会标外面的玻璃",
+      "reason": "已逐条读原话：这图很难,而且右边的玻璃浴室 存在不同的标注方法,gt是标里面的墙角,有些人会标外面的玻璃",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_104d12b732794414a42edd37ac554bff": {
+      "semantic_status": "image_comment_classified",
+      "summary": "中等难度,存在右边柜子停止点的问题,有些人把柜子当成墙角,有些人 是标完全被挡住的实际墙角.簇1,4是柜子处就停止了",
+      "reason": "已逐条读原话：中等难度,存在右边柜子停止点的问题,有些人把柜子当成墙角,有些人 是标完全被挡住的实际墙角.簇1,4是柜子处就停止了",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_104d12b732794414a42edd37ac554bff",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_23ed105b1f0f48bbb6ec025df9d313e7": {
+      "semantic_status": "image_comment_classified",
+      "summary": "确实可以标门外的空间,但是现在的两个标门外区域的,都标的太过奇怪了",
+      "reason": "已逐条读原话：确实可以标门外的空间,但是现在的两个标门外区域的,都标的太过奇怪了",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_23ed105b1f0f48bbb6ec025df9d313e7",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_2ed0e171a7c34f17a85363923a26ab98": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这图很难,而且左侧玻璃洗澡区域存在不同的标法,gt是标玻璃外围,一些人是标玻璃内实际的墙角,还有有些人没有正确标注这个地方,直接忽略了部分玻璃区域",
+      "reason": "已逐条读原话：这图很难,而且左侧玻璃洗澡区域存在不同的标法,gt是标玻璃外围,一些人是标玻璃内实际的墙角,还有有些人没有正确标注这个地方,直接忽略了部分玻璃区域",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_2ed0e171a7c34f17a85363923a26ab98",
+      "tags": [
+        "scope",
+        "detail"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_5b62816d9cf94f17ae166291822ea9ab": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这图属于困难图,一些人会标漏细节,主要空间歧义是在右侧的玻璃浴室处,有些人标内侧的墙角,gt是标外侧的玻璃",
+      "reason": "已逐条读原话：这图属于困难图,一些人会标漏细节,主要空间歧义是在右侧的玻璃浴室处,有些人标内侧的墙角,gt是标外侧的玻璃",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_5b62816d9cf94f17ae166291822ea9ab",
+      "tags": [
+        "scope",
+        "detail"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这图存在标注空间的歧义,gt和很多标注者是标了门口有往下的阶梯的区域,严格来说不应该标那,因为有阶梯意味着不属于曼哈顿约束了,应该类似w002是最好的",
+      "reason": "已逐条读原话：这图存在标注空间的歧义,gt和很多标注者是标了门口有往下的阶梯的区域,严格来说不应该标那,因为有阶梯意味着不属于曼哈顿约束了,应该类似w002是最好的",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62": {
+      "semantic_status": "image_comment_classified",
+      "summary": "gt的是对的,这次的gt终于注意到了左边墙面的变化,但是还有些标注者对这里是采取忽略的标法",
+      "reason": "已逐条读原话：gt的是对的,这次的gt终于注意到了左边墙面的变化,但是还有些标注者对这里是采取忽略的标法",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62",
+      "tags": [
+        "detail"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_76ba70b55bde4313939a4a0cd78a49d3": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这图存在标注空间的不同,主要在左边的玻璃洗澡区域,gt是标玻璃外围,有些人是标玻璃里的墙角",
+      "reason": "已逐条读原话：这图存在标注空间的不同,主要在左边的玻璃洗澡区域,gt是标玻璃外围,有些人是标玻璃里的墙角",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_76ba70b55bde4313939a4a0cd78a49d3",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_84722e58b32f4646acc12614994f835b": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这里gt也注意到了左侧墙面的变化,但是还是有很多标注者选择忽略,而且簇1标注中间4个点我没有理解是什么意思",
+      "reason": "已逐条读原话：这里gt也注意到了左侧墙面的变化,但是还是有很多标注者选择忽略,而且簇1标注中间4个点我没有理解是什么意思",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_84722e58b32f4646acc12614994f835b",
+      "tags": [
+        "detail"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13": {
+      "semantic_status": "image_comment_classified",
+      "summary": "gt是标了门口台阶那块区域,严格按照曼哈顿世界约束来说是不需要标的.",
+      "reason": "已逐条读原话：gt是标了门口台阶那块区域,严格按照曼哈顿世界约束来说是不需要标的.",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97": {
+      "semantic_status": "image_comment_classified",
+      "summary": "gt是注意到了右侧 墙面的变化的,但是很多人还是对此忽略. 壁炉不太应该去标",
+      "reason": "已逐条读原话：gt是注意到了右侧 墙面的变化的,但是很多人还是对此忽略. 壁炉不太应该去标",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97",
+      "tags": [
+        "detail"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_9b675f28ab5f4345bf06ed5c77097426": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这个房间的图片,理论上是存在不同的标注范围的,gt和大部分人把柜子当成墙角,还有人会标完全被遮挡的区域的墙角(簇3)",
+      "reason": "已逐条读原话：这个房间的图片,理论上是存在不同的标注范围的,gt和大部分人把柜子当成墙角,还有人会标完全被遮挡的区域的墙角(簇3)",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_9b675f28ab5f4345bf06ed5c77097426",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_9f199750b00c4f5484a546d79e06a0f8": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这图很难,存在不同的标法,主要还是在玻璃洗澡区域,这次gt是标注到了里面的墙角,有些人会标注外面的玻璃. 还有一个歧义点是,有些人会标注马桶所在的区域,还有遗漏完全被墙遮挡住的浴缸所在区域的墙角,还有梳妆台所在的地方的墙面变化也容易被简化/忽略",
+      "reason": "已逐条读原话：这图很难,存在不同的标法,主要还是在玻璃洗澡区域,这次gt是标注到了里面的墙角,有些人会标注外面的玻璃. 还有一个歧义点是,有些人会标注马桶所在的区域,还有遗漏完全被墙遮挡住的浴缸所在区域的墙角,还有梳妆台所在的地方的墙面变化也容易被简化/忽略",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_9f199750b00c4f5484a546d79e06a0f8",
+      "tags": [
+        "scope",
+        "detail"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_a7ab19b1a9f044f0905592de1414e8b3": {
+      "semantic_status": "image_comment_classified",
+      "summary": "gt是标了台阶里面空间的,严格来说不能这样,因为有台阶,头顶也是低一点的,标到那边就算oos了",
+      "reason": "已逐条读原话：gt是标了台阶里面空间的,严格来说不能这样,因为有台阶,头顶也是低一点的,标到那边就算oos了",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_a7ab19b1a9f044f0905592de1414e8b3",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_b98c9460586e4f138658181461df9f51": {
+      "semantic_status": "image_comment_classified",
+      "summary": "存在不同的标注范围,主要是中间偏左的玻璃洗澡区域,gt是标玻璃外侧,有些人是标玻璃里面的墙角的",
+      "reason": "已逐条读原话：存在不同的标注范围,主要是中间偏左的玻璃洗澡区域,gt是标玻璃外侧,有些人是标玻璃里面的墙角的",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_b98c9460586e4f138658181461df9f51",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_ba24e5a57ef34c6dbc0458ed4c1e701d": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这图较难,图片左右两边连着的其实是玻璃洗澡区域,很多人都忽略了,存在不同的标注范围",
+      "reason": "已逐条读原话：这图较难,图片左右两边连着的其实是玻璃洗澡区域,很多人都忽略了,存在不同的标注范围",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_ba24e5a57ef34c6dbc0458ed4c1e701d",
+      "tags": [
+        "scope",
+        "detail"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这图是有人标到房间里了",
+      "reason": "已逐条读原话：这图是有人标到房间里了",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_c1ebb8b34eb846ba9b5ce23b30b299a7": {
+      "semantic_status": "image_comment_classified",
+      "summary": "有些人会把门口的区域标注上,比如簇3",
+      "reason": "已逐条读原话：有些人会把门口的区域标注上,比如簇3",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_c1ebb8b34eb846ba9b5ce23b30b299a7",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_c6410f47ad754d6cbd890ba7dff8b449": {
+      "semantic_status": "image_comment_classified",
+      "summary": "存在不同的标注范围,gt是标了玻璃洗澡区域的外侧,有些会标注里面的墙角",
+      "reason": "已逐条读原话：存在不同的标注范围,gt是标了玻璃洗澡区域的外侧,有些会标注里面的墙角",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_c6410f47ad754d6cbd890ba7dff8b449",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_ca08ebfb2da647f68db41630637e400b": {
+      "semantic_status": "image_comment_classified",
+      "summary": "存在不同的标注范围,相机是在玻璃洗澡区域的里面拍摄的,大部分人只标了这个玻璃区域,gt和小部分人是吧洗澡区域外的房间给标了",
+      "reason": "已逐条读原话：存在不同的标注范围,相机是在玻璃洗澡区域的里面拍摄的,大部分人只标了这个玻璃区域,gt和小部分人是吧洗澡区域外的房间给标了",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_ca08ebfb2da647f68db41630637e400b",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d": {
+      "semantic_status": "image_comment_classified",
+      "summary": "存在不同的标注范围,gt是标了门口的区域, 很多人是选择不标这个区域(我觉得更好)",
+      "reason": "已逐条读原话：存在不同的标注范围,gt是标了门口的区域, 很多人是选择不标这个区域(我觉得更好)",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_d5c47aa99b274a67b305aa601234f1f1": {
+      "semantic_status": "image_comment_classified",
+      "summary": "我记得同房间这图,我是写了有不同的标注范围的,就是说是否把柜子当做墙角去停止",
+      "reason": "已逐条读原话：我记得同房间这图,我是写了有不同的标注范围的,就是说是否把柜子当做墙角去停止",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_d5c47aa99b274a67b305aa601234f1f1",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_e0b8950793b447bd8b9f916e98e849d1": {
+      "semantic_status": "image_comment_classified",
+      "summary": "同图,是否把柜子当做墙角去停止",
+      "reason": "已逐条读原话：同图,是否把柜子当做墙角去停止",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_e0b8950793b447bd8b9f916e98e849d1",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_e24473d2b8a24568b89c1c4c2a4a9bf1": {
+      "semantic_status": "image_comment_classified",
+      "summary": "同图,是否把柜子当做墙角去停止",
+      "reason": "已逐条读原话：同图,是否把柜子当做墙角去停止",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_e24473d2b8a24568b89c1c4c2a4a9bf1",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd": {
+      "semantic_status": "image_comment_classified",
+      "summary": "存在不同的标注范围,gt是标了门口的区域,标注者大部分都没标",
+      "reason": "已逐条读原话：存在不同的标注范围,gt是标了门口的区域,标注者大部分都没标",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269": {
+      "semantic_status": "image_comment_classified",
+      "summary": "存在不同的标注区域,gt是把门口的区域标了",
+      "reason": "已逐条读原话：存在不同的标注区域,gt是把门口的区域标了",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_fd411e4f6035431593833d9d0beb4d32": {
+      "semantic_status": "image_comment_classified",
+      "summary": "同图,是否把柜子当做墙角去停止",
+      "reason": "已逐条读原话：同图,是否把柜子当做墙角去停止",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_fd411e4f6035431593833d9d0beb4d32",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这图很困难,存在不同的标注区域,主要还是玻璃洗澡区域,标外面还是标里面的墙角,还有是否标马桶区域,这个gt标的范围很大,把左右两侧的走廊都标了,目前没有标注者这样标",
+      "reason": "已逐条读原话：这图很困难,存在不同的标注区域,主要还是玻璃洗澡区域,标外面还是标里面的墙角,还有是否标马桶区域,这个gt标的范围很大,把左右两侧的走廊都标了,目前没有标注者这样标",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "wc2JMjhGNzB_03c1aca95e254bf4b0db303a28d79aee": {
+      "semantic_status": "image_comment_classified",
+      "summary": "存在不同的标注范围,gt是把门口的区域标注进来了(我觉得不标更好,因为门口的区域天花板高度略低)",
+      "reason": "已逐条读原话：存在不同的标注范围,gt是把门口的区域标注进来了(我觉得不标更好,因为门口的区域天花板高度略低)",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/wc2JMjhGNzB_03c1aca95e254bf4b0db303a28d79aee",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这图较难,存在不同的标注空间范围,有些人是会把走廊区域标注,但是我觉得没必要,gt是没有标的;还有很多人忽略了左侧墙面的变化",
+      "reason": "已逐条读原话：这图较难,存在不同的标注空间范围,有些人是会把走廊区域标注,但是我觉得没必要,gt是没有标的;还有很多人忽略了左侧墙面的变化",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+      "tags": [
+        "scope",
+        "detail"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "wc2JMjhGNzB_b41b10699d614f24851b56a9a0e743c6": {
+      "semantic_status": "image_comment_classified",
+      "summary": "存在不同的标注空间范围,一个是是否标马桶的区域(我觉得不用),一个是右边的停止点,有些人是在玻璃处停止,,gt是在最后面停止.左侧的墙面凸起很多人也忽略了",
+      "reason": "已逐条读原话：存在不同的标注空间范围,一个是是否标马桶的区域(我觉得不用),一个是右边的停止点,有些人是在玻璃处停止,,gt是在最后面停止.左侧的墙面凸起很多人也忽略了",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/wc2JMjhGNzB_b41b10699d614f24851b56a9a0e743c6",
+      "tags": [
+        "scope",
+        "detail"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "wc2JMjhGNzB_c7c84bf01a834489ad11d8450a7dc2bc": {
+      "semantic_status": "image_comment_classified",
+      "summary": "标注范围可以不同,gt是标了门口的区域(同图,我觉得可以不用)",
+      "reason": "已逐条读原话：标注范围可以不同,gt是标了门口的区域(同图,我觉得可以不用)",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/wc2JMjhGNzB_c7c84bf01a834489ad11d8450a7dc2bc",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "wc2JMjhGNzB_cae8fb3d40314ecea16654062030571b": {
+      "semantic_status": "image_comment_classified",
+      "summary": "确实存在不同的标注范围,有些人把走廊门里面的区域也标了(可以不标)",
+      "reason": "已逐条读原话：确实存在不同的标注范围,有些人把走廊门里面的区域也标了(可以不标)",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/wc2JMjhGNzB_cae8fb3d40314ecea16654062030571b",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "x8F5xyUWy9e_3a127fd2c5f34d978cba253145dae7d6": {
+      "semantic_status": "image_comment_classified",
+      "summary": "很多人没注意到左侧墙面的变化,目前的标注中没有人注意到,标注的细节范围不同",
+      "reason": "已逐条读原话：很多人没注意到左侧墙面的变化,目前的标注中没有人注意到,标注的细节范围不同",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/x8F5xyUWy9e_3a127fd2c5f34d978cba253145dae7d6",
+      "tags": [
+        "detail"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "yqstnuAEVhm_08e2145b15fc4d2497c084af41dc7089": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这图还是有点难度的,因为左边的墙面变化和最右边很不显眼的墙面变化,目前的5个标注者都没有发现,gt的是对的",
+      "reason": "已逐条读原话：这图还是有点难度的,因为左边的墙面变化和最右边很不显眼的墙面变化,目前的5个标注者都没有发现,gt的是对的",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/yqstnuAEVhm_08e2145b15fc4d2497c084af41dc7089",
+      "tags": [
+        "detail"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "yqstnuAEVhm_4642492bb42d40debb1a3bad0ea7a24f": {
+      "semantic_status": "image_comment_classified",
+      "summary": "标注的空间细节有不同,gt是忽略了左边墙角的变化的,他的标注区域是靠外了一点,没有纳入那个拐角,是把柜子当成 了墙,正好不会纳入那个地方.砖砌的墙那里他也标了拐角. 其他标注者 是把中间砖砌的墙忽略掉了(确实很隐蔽,不好标),直接标整个房间(簇2),簇3是左边墙角没标好(和簇2空间类似)",
+      "reason": "已逐条读原话：标注的空间细节有不同,gt是忽略了左边墙角的变化的,他的标注区域是靠外了一点,没有纳入那个拐角,是把柜子当成 了墙,正好不会纳入那个地方.砖砌的墙那里他也标了拐角. 其他标注者 是把中间砖砌的墙忽略掉了(确实很隐蔽,不好标),直接标整个房间(簇2),簇3是左边墙角没标好(和簇2空间类似)",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/yqstnuAEVhm_4642492bb42d40debb1a3bad0ea7a24f",
+      "tags": [
+        "scope",
+        "detail",
+        "reference_omission"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "yqstnuAEVhm_48447297e8444171a5db34ccf38bc229": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这图较难,壁炉那里有些人是选择不标的,gt的标法肯定是最严谨的",
+      "reason": "已逐条读原话：这图较难,壁炉那里有些人是选择不标的,gt的标法肯定是最严谨的",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/yqstnuAEVhm_48447297e8444171a5db34ccf38bc229",
+      "tags": [
+        "detail"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "yqstnuAEVhm_9de98503fd994452b627cdcc7a7d47b2": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这图确实有些人会忽略右边凸起的地方,但是因为右边的凸起把后面的墙角给挡住了,有点难标的.gt的范围还是最准确的.簇9是错的标注",
+      "reason": "已逐条读原话：这图确实有些人会忽略右边凸起的地方,但是因为右边的凸起把后面的墙角给挡住了,有点难标的.gt的范围还是最准确的.簇9是错的标注",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/yqstnuAEVhm_9de98503fd994452b627cdcc7a7d47b2",
+      "tags": [
+        "detail"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这个视角标注很难,标注者中也存在标注最小空间的情况(簇2).但是标注这个最小空间几乎没有标房间里的大部分区域.\ngt的标注是最严谨完美的,有些人也会忽略壁炉所在的墙角.左侧墙角被完全遮挡,这特别难标,所以就算像标注完整房间,也会出现歧义,mp3d原始的gt是标注这个地方有些遗漏的,直接忽略这折叠的墙面",
+      "reason": "已逐条读原话：这个视角标注很难,标注者中也存在标注最小空间的情况(簇2).但是标注这个最小空间几乎没有标房间里的大部分区域.\ngt的标注是最严谨完美的,有些人也会忽略壁炉所在的墙角.左侧墙角被完全遮挡,这特别难标,所以就算像标注完整房间,也会出现歧义,mp3d原始的gt是标注这个地方有些遗漏的,直接忽略这折叠的墙面",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+      "tags": [
+        "scope",
+        "detail",
+        "reference_omission"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": "reference_omission仅指MP3D原始版；用户称当前GT最严谨，不将原始版遗漏转为修订GT错误。"
+    },
+    "yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65": {
+      "semantic_status": "image_comment_classified",
+      "summary": "这图很难,标注空间范围不同,原始MP3d的是标了小隔间的区域(目前没有标注者标那里),之后壁炉有很多标注者会忽略,右边那复杂的墙角部分人也会简化/忽略.我修改过后的gt,我也忽略了最靠近门口的那一小块区域,提前停止了",
+      "reason": "已逐条读原话：这图很难,标注空间范围不同,原始MP3d的是标了小隔间的区域(目前没有标注者标那里),之后壁炉有很多标注者会忽略,右边那复杂的墙角部分人也会简化/忽略.我修改过后的gt,我也忽略了最靠近门口的那一小块区域,提前停止了",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65",
+      "tags": [
+        "scope",
+        "detail",
+        "reference_omission"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": "原始MP3D含小隔间；修订GT提前停止省略门口小块；分版本保留。"
+    },
+    "yqstnuAEVhm_e9b4d8e951cb4712b3905c8f4c4dabb5": {
+      "semantic_status": "image_comment_classified",
+      "summary": "同房间的图,这次来说,没有人标注门外的空间了(包括楼梯),但是停止位置有区别,大部分人还是在玻璃处停止(包括gt),w012是在稍微往外一点的地方才停止",
+      "reason": "已逐条读原话：同房间的图,这次来说,没有人标注门外的空间了(包括楼梯),但是停止位置有区别,大部分人还是在玻璃处停止(包括gt),w012是在稍微往外一点的地方才停止",
+      "needs_user_review": false,
+      "source": "C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927(1).json#/image_decisions/yqstnuAEVhm_e9b4d8e951cb4712b3905c8f4c4dabb5",
+      "tags": [
+        "scope"
+      ],
+      "classification_resolved": true,
+      "gt_version_note": ""
+    },
+    "rPc6DW4iMge_1f14902595544e389c9c910c444e79e7": {
+      "semantic_status": "resolved_by_continuation_issue",
+      "summary": "直接排除,这些都是错误的标注,但是竟然有三个人是出现了同一个问题,得额外记录",
+      "reason": "直接排除,这些都是错误的标注,但是竟然有三个人是出现了同一个问题,得额外记录",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "source": "evidence/continuation.json#/issue_decisions/rPc6DW4iMge_1f14902595544e389c9c910c444e79e7:continue"
+    },
+    "wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f": {
+      "semantic_status": "resolved_by_continuation_issue",
+      "summary": "直接排除",
+      "reason": "直接排除",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "source": "evidence/continuation.json#/issue_decisions/wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f:continue"
+    },
+    "7y3sRwLe3Va_b564162b2c7d4033bfe6ef3dfb959c9e": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [],
+      "source": "evidence/coverage.json#/decisions/7y3sRwLe3Va_b564162b2c7d4033bfe6ef3dfb959c9e",
+      "gt_version_note": "本次未记录参考来源；不推断GT版本"
+    },
+    "7y3sRwLe3Va_fdab6422162e49db822a37178ab70481": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "gt在门框那里多了一对点,我觉得没啥必要",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [
+        "detail"
+      ],
+      "source": "evidence/coverage.json#/decisions/7y3sRwLe3Va_fdab6422162e49db822a37178ab70481",
+      "gt_version_note": "当前查看来源为原始Matterport标签：data/mp3d_layout/test/label_cor/7y3sRwLe3Va_fdab6422162e49db822a37178ab70481.txt"
+    },
+    "pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "不太确定是不是oos,而且这图很难,暂时先不搞,而且如果真的能标,gt也有点问题.先排除吧",
+      "reason": "本次图片补审；pRb-16按原话暂缓全部分析",
+      "needs_user_review": false,
+      "classification_resolved": false,
+      "tags": [],
+      "source": "evidence/coverage.json#/decisions/pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad",
+      "gt_version_note": "当前查看来源为原始Matterport标签：data/mp3d_layout/valid/label_cor/pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad.txt"
+    },
+    "q9vSo1VnCiC_f7452776f0604b508bb2b0263238deb0": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [
+        "scope"
+      ],
+      "source": "evidence/coverage.json#/decisions/q9vSo1VnCiC_f7452776f0604b508bb2b0263238deb0",
+      "gt_version_note": "当前查看来源为原始Matterport标签：data/mp3d_layout/test/label_cor/q9vSo1VnCiC_f7452776f0604b508bb2b0263238deb0.txt"
+    },
+    "2t7WUuJeko7_3be66dc4f0fb46449d63b07d92c74f3f": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [],
+      "source": "evidence/coverage.json#/decisions/2t7WUuJeko7_3be66dc4f0fb46449d63b07d92c74f3f",
+      "gt_version_note": "当前查看来源为原始Matterport标签：data/mp3d_layout/valid/label_cor/2t7WUuJeko7_3be66dc4f0fb46449d63b07d92c74f3f.txt"
+    },
+    "7y3sRwLe3Va_1410b021e1c14f529188eb026fbb369a": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [],
+      "source": "evidence/coverage.json#/decisions/7y3sRwLe3Va_1410b021e1c14f529188eb026fbb369a",
+      "gt_version_note": "当前查看来源为原始Matterport标签：data/mp3d_layout/test/label_cor/7y3sRwLe3Va_1410b021e1c14f529188eb026fbb369a.txt"
+    },
+    "S9hNv5qa7GM_3c496aedd9d645a5b8d7a7b1b53f0636": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [],
+      "source": "evidence/coverage.json#/decisions/S9hNv5qa7GM_3c496aedd9d645a5b8d7a7b1b53f0636",
+      "gt_version_note": "当前查看来源为原始Matterport标签：data/mp3d_layout/valid/label_cor/S9hNv5qa7GM_3c496aedd9d645a5b8d7a7b1b53f0636.txt"
+    },
+    "Z6MFQCViBuw_59aed460238643f48f593e9b9ba1c17d": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [],
+      "source": "evidence/coverage.json#/decisions/Z6MFQCViBuw_59aed460238643f48f593e9b9ba1c17d",
+      "gt_version_note": "本次未记录参考来源；不推断GT版本"
+    },
+    "Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [],
+      "source": "evidence/coverage.json#/decisions/Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45",
+      "gt_version_note": "本次未记录参考来源；不推断GT版本"
+    },
+    "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "原始matterport gt是标的空间不同 ,但是我人工修正过后的旧没问题了",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [],
+      "source": "evidence/coverage.json#/decisions/e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45",
+      "gt_version_note": "当前查看来源为人工修订文件：export_label/groudTruth.json；用户明确原始GT采用不同空间，人工修订GT没有该问题。"
+    },
+    "jtcxE69GiFV_0aa01000f1934e73b35c348fa8d15040": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [],
+      "source": "evidence/coverage.json#/decisions/jtcxE69GiFV_0aa01000f1934e73b35c348fa8d15040",
+      "gt_version_note": "当前查看来源为原始Matterport标签：data/mp3d_layout/valid/label_cor/jtcxE69GiFV_0aa01000f1934e73b35c348fa8d15040.txt"
+    },
+    "jtcxE69GiFV_9f0e2562fcf447f5a7c5e44e85978148": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [],
+      "source": "evidence/coverage.json#/decisions/jtcxE69GiFV_9f0e2562fcf447f5a7c5e44e85978148",
+      "gt_version_note": "当前查看来源为原始Matterport标签：data/mp3d_layout/valid/label_cor/jtcxE69GiFV_9f0e2562fcf447f5a7c5e44e85978148.txt"
+    },
+    "pRbA3pwrgk9_03de6e2562bb4f56a88db3ceb681af78": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "gt是 标了玻璃门后的空间区域,目前的标注者都没有标后面的区域",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [
+        "scope"
+      ],
+      "source": "evidence/coverage.json#/decisions/pRbA3pwrgk9_03de6e2562bb4f56a88db3ceb681af78",
+      "gt_version_note": "当前查看来源为原始Matterport标签：data/mp3d_layout/valid/label_cor/pRbA3pwrgk9_03de6e2562bb4f56a88db3ceb681af78.txt"
+    },
+    "pRbA3pwrgk9_2a3810bc7ecc491e81ff1e8a17692ec1": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [],
+      "source": "evidence/coverage.json#/decisions/pRbA3pwrgk9_2a3810bc7ecc491e81ff1e8a17692ec1",
+      "gt_version_note": "当前查看来源为原始Matterport标签：data/mp3d_layout/valid/label_cor/pRbA3pwrgk9_2a3810bc7ecc491e81ff1e8a17692ec1.txt"
+    },
+    "pRbA3pwrgk9_4fe4474e9bf9429ea92d202bdea4dce5": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [],
+      "source": "evidence/coverage.json#/decisions/pRbA3pwrgk9_4fe4474e9bf9429ea92d202bdea4dce5",
+      "gt_version_note": "当前查看来源为原始Matterport标签：data/mp3d_layout/valid/label_cor/pRbA3pwrgk9_4fe4474e9bf9429ea92d202bdea4dce5.txt"
+    },
+    "pa4otMbVnkk_447755d931aa401097d8c0952a22b17e": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [],
+      "source": "evidence/coverage.json#/decisions/pa4otMbVnkk_447755d931aa401097d8c0952a22b17e",
+      "gt_version_note": "当前查看来源为原始Matterport标签：data/mp3d_layout/valid/label_cor/pa4otMbVnkk_447755d931aa401097d8c0952a22b17e.txt"
+    },
+    "q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "gt标了右边门洞后的区域(我觉得可以不标的),空间范围不同",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [
+        "scope"
+      ],
+      "source": "evidence/coverage.json#/decisions/q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd",
+      "gt_version_note": "本次未记录参考来源；不推断GT版本"
+    },
+    "rPc6DW4iMge_4350d36797324601adba7351d09602d2": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [],
+      "source": "evidence/coverage.json#/decisions/rPc6DW4iMge_4350d36797324601adba7351d09602d2",
+      "gt_version_note": "当前查看来源为原始Matterport标签：data/mp3d_layout/test/label_cor/rPc6DW4iMge_4350d36797324601adba7351d09602d2.txt"
+    },
+    "uNb9QFRL6hY_f4eb9862530a4f909b46f51d1887d05f": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [],
+      "source": "evidence/coverage.json#/decisions/uNb9QFRL6hY_f4eb9862530a4f909b46f51d1887d05f",
+      "gt_version_note": "当前查看来源为原始Matterport标签：data/mp3d_layout/test/label_cor/uNb9QFRL6hY_f4eb9862530a4f909b46f51d1887d05f.txt"
+    },
+    "wc2JMjhGNzB_3504ff17bcae4d6c85bdc61fc3a5bf0c": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [],
+      "source": "evidence/coverage.json#/decisions/wc2JMjhGNzB_3504ff17bcae4d6c85bdc61fc3a5bf0c",
+      "gt_version_note": "当前查看来源为原始Matterport标签：data/mp3d_layout/test/label_cor/wc2JMjhGNzB_3504ff17bcae4d6c85bdc61fc3a5bf0c.txt"
+    },
+    "wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "gt标了门口的那块区域,目前所有标注者都没标,空间范围不同",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [
+        "scope"
+      ],
+      "source": "evidence/coverage.json#/decisions/wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366",
+      "gt_version_note": "本次未记录参考来源；不推断GT版本"
+    },
+    "wc2JMjhGNzB_77962388887942148ee65c2892600e02": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [],
+      "source": "evidence/coverage.json#/decisions/wc2JMjhGNzB_77962388887942148ee65c2892600e02",
+      "gt_version_note": "当前查看来源为原始Matterport标签：data/mp3d_layout/test/label_cor/wc2JMjhGNzB_77962388887942148ee65c2892600e02.txt"
+    },
+    "wc2JMjhGNzB_e6693f97b36545f7a76e03c3fe32ba8c": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "gt还是标了 门口的那块区域,标注者都是没有标注的,空间范围不同.   ",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [
+        "scope"
+      ],
+      "source": "evidence/coverage.json#/decisions/wc2JMjhGNzB_e6693f97b36545f7a76e03c3fe32ba8c",
+      "gt_version_note": "本次未记录参考来源；不推断GT版本"
+    },
+    "zsNo4HB9uLZ_935e0f6088a54fba87990835d1997d9a": {
+      "semantic_status": "resolved_by_coverage_followup",
+      "summary": "",
+      "reason": "最新图片补审明确选项",
+      "needs_user_review": false,
+      "classification_resolved": true,
+      "tags": [],
+      "source": "evidence/coverage.json#/decisions/zsNo4HB9uLZ_935e0f6088a54fba87990835d1997d9a",
+      "gt_version_note": "当前查看来源为原始Matterport标签：data/mp3d_layout/valid/label_cor/zsNo4HB9uLZ_935e0f6088a54fba87990835d1997d9a.txt"
+    }
+  },
+  "historical_yizheng_rule": "若无更新个人裁决，历史一正retain/gt_scope按其原义保留，结合最新resolved图背景及用户其余旧审核保留/供比较沿用本图看法，不一概标未决；仍标来源为一正且非用户逐份新确认。有具体未解决执行错误、invalid、pending、repair或冲突者须单独核验，不凭图级意见消除。"
+}

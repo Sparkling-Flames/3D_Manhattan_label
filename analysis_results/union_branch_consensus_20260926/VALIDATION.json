@@ -1,0 +1,48 @@
+{
+  "schema": "union_branch_validation_20260926_v1",
+  "passed": true,
+  "images": 8,
+  "input_annotations": 160,
+  "independent_geometry": 153,
+  "full_default_branches": 130,
+  "prefix_rows": 4000,
+  "disjoint_pairs": 1000,
+  "recomputed_prefixes": 8,
+  "pytest": {
+    "passed": 14,
+    "seconds": 3.4,
+    "files": [
+      "test_union_branch_consensus_20260926.py",
+      "test_union_branch_panel_20260926.py",
+      "test_run_union_branch_consensus_20260926.py",
+      "test_structural_consensus_20260926.py",
+      "test_layout_consensus_probe_20260926.py"
+    ]
+  },
+  "checks": [
+    "strict_finite_JSON",
+    "branch_vote_partition",
+    "union_minus_branch_identity",
+    "shared_point_votes_not_whole_ring_votes",
+    "prefix_workers_exact",
+    "disjoint_workers",
+    "unknown_mass_bounds",
+    "eight_prefix_exact_reproduction"
+  ],
+  "browser": {
+    "engine": "existing_Playwright_headless_Chromium",
+    "sections": 8,
+    "cards": 130,
+    "decoded_images": 10,
+    "navigation": "passed",
+    "page_errors": []
+  },
+  "visual": [
+    "curves.png",
+    "disjoint_stability.png",
+    "temporary_page_screenshot_reviewed_and_removed"
+  ],
+  "scope": "no_raw_annotations_GT_decisions_protocol_or_sort_order_modified; exploratory_only",
+  "documentation": "README_INDEX_and_PROJECT_MAP_registered_exploratory_entry",
+  "skipped": "full_repository_training_and_Label_Studio_checks_not_relevant_to_changed_paths"
+}

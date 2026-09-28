@@ -1,0 +1,231 @@
+[
+  {
+    "image_id": "7y3sRwLe3Va_4291cbfde1024467b1548934653f07ce",
+    "building": "7y3sRwLe3Va",
+    "number": 8,
+    "main_visual_space": "楼梯挑空侧的上层平台",
+    "expected_annotation_extent": "栏杆内侧可站立的平台与连通走道",
+    "ambiguity_and_information": "楼梯洞和下层不可当作同一地面",
+    "note": "原评论为空。 交界沿用人工结果，配对为AI建议。",
+    "current_coarse_review": {
+      "value": "通行与连接",
+      "source": "既有采用分类（历史开放复合值待按分维度表达）",
+      "human_accepted": null
+    },
+    "spatial_prior_user": {
+      "image_id": "7y3sRwLe3Va_4291cbfde1024467b1548934653f07ce",
+      "building": "7y3sRwLe3Va",
+      "split": "test",
+      "user_room": "r5",
+      "user_type": "通行与连接",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": ""
+    },
+    "specific_user_issues": []
+  },
+  {
+    "image_id": "q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e",
+    "building": "q9vSo1VnCiC",
+    "number": 2,
+    "main_visual_space": "卧室外短前室",
+    "expected_annotation_extent": "前室悬台墙与双门围合",
+    "ambiguity_and_information": "卧室和大厅经不同开口可见，跨门范围有选择",
+    "note": "历史关系依据：B13：13／02／01同房，分别保留交界、右侧、左侧区域。本图交界本条未另定。不把拍摄重点差异改写成不同房；同房采集优先级与交界候选优先级分别记录。\nB14：22与B13所述13／02／01同房；29与22分开；29与27同房。本图交界本条未另定。按用户将床区与左侧小空间分组；“29是22的交界处”描述两空间关系，不足以单独确定29相机位于交界。撤回此前将27直接判为不同房的结论：两图的左右结构关系仍有镜像疑点，尚未查明成因，不能作为已确认不同房证据；用户同房判断及原图疑点并存。；仅按图像判断预期，不读取收敛或质量。",
+    "current_coarse_review": {
+      "value": "通行与连接",
+      "source": "既有采用分类（历史开放复合值待按分维度表达）",
+      "human_accepted": null
+    },
+    "spatial_prior_user": {
+      "image_id": "q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e",
+      "building": "q9vSo1VnCiC",
+      "split": "test",
+      "user_room": "r9",
+      "user_type": "通行与连接",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": ""
+    },
+    "specific_user_issues": []
+  },
+  {
+    "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+    "building": "q9vSo1VnCiC",
+    "number": 13,
+    "main_visual_space": "卧室和前室交接",
+    "expected_annotation_extent": "两区范围均有选择",
+    "ambiguity_and_information": "门墙挡住卧室部分信息；保留B13历史同房",
+    "note": "原评论已阅读；这个房间分为了两个区域,他是在两个区域正中间拍摄,这图标注结果我记得确实差异很大,而且gt也不对；历史关系依据：B13：13／02／01同房，分别保留交界、右侧、左侧区域。本图交界：低优先级候选。不把拍摄重点差异改写成不同房；同房采集优先级与交界候选优先级分别记录。\nB14：22与B13所述13／02／01同房；29与22分开；29与27同房。本图交界本条未另定。按用户将床区与左侧小空间分组；“29是22的交界处”描述两空间关系，不足以单独确定29相机位于交界。撤回此前将27直接判为不同房的结论：两图的左右结构关系仍有镜像疑点，尚未查明成因，不能作为已确认不同房证据；用户同房判断及原图疑点并存。；仅按图像判断预期，不读取收敛或质量。",
+    "current_coarse_review": {
+      "value": "通行与连接",
+      "source": "既有采用分类（历史开放复合值待按分维度表达）",
+      "human_accepted": null
+    },
+    "spatial_prior_user": {
+      "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+      "building": "q9vSo1VnCiC",
+      "split": "test",
+      "user_room": "r9",
+      "user_type": "通行与连接",
+      "user_boundary": "",
+      "user_doorway": "确认",
+      "user_artifact": "未见明显异常",
+      "user_status": "需讨论",
+      "user_note": "这个房间分为了两个区域,他是在两个区域正中间拍摄,这图标注结果我记得确实差异很大,而且gt也不对",
+      "user_audit_status": "仍需讨论"
+    },
+    "specific_user_issues": []
+  },
+  {
+    "image_id": "uNb9QFRL6hY_3b9e548b46af4410b97e1d12781ec3c9",
+    "building": "uNb9QFRL6hY",
+    "number": 21,
+    "main_visual_space": "小浴室及衣橱入口",
+    "expected_annotation_extent": "宽弧镜洗手台、中央窗、淋浴厕位",
+    "ambiguity_and_information": "原用户交界选项保持，本轮只看配对",
+    "note": "已查看本楼全量大图；无候选不代表排除所有同房可能。",
+    "current_coarse_review": {
+      "value": "卫浴",
+      "source": "既有采用分类（历史开放复合值待按分维度表达）",
+      "human_accepted": null
+    },
+    "spatial_prior_user": {
+      "image_id": "uNb9QFRL6hY_3b9e548b46af4410b97e1d12781ec3c9",
+      "building": "uNb9QFRL6hY",
+      "split": "test",
+      "user_room": "r4",
+      "user_type": "卫浴",
+      "user_boundary": "",
+      "user_doorway": "确认",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": ""
+    },
+    "specific_user_issues": []
+  },
+  {
+    "image_id": "uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5",
+    "building": "uNb9QFRL6hY",
+    "number": 47,
+    "main_visual_space": "小浴室内部",
+    "expected_annotation_extent": "窄高镜台、中央窗与淋浴厕位",
+    "ambiguity_and_information": "窗外暗墙；台上花仅辅助，固定设施为主",
+    "note": "已查看本楼全量大图；无候选不代表排除所有同房可能。",
+    "current_coarse_review": {
+      "value": "卫浴",
+      "source": "既有采用分类（历史开放复合值待按分维度表达）",
+      "human_accepted": null
+    },
+    "spatial_prior_user": {
+      "image_id": "uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5",
+      "building": "uNb9QFRL6hY",
+      "split": "test",
+      "user_room": "r4",
+      "user_type": "卫浴",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": ""
+    },
+    "specific_user_issues": [
+      {
+        "group_code": "G197",
+        "note": "47不好标,有误导性,我记得这张图他们以前标的不好",
+        "interpretation": "47不好标、有误导性；用户回忆历史标注不好，不作已验证质量结论。"
+      }
+    ]
+  },
+  {
+    "image_id": "uNb9QFRL6hY_ba24e5a57ef34c6dbc0458ed4c1e701d",
+    "building": "uNb9QFRL6hY",
+    "number": 60,
+    "main_visual_space": "大主浴室外门阶旁",
+    "expected_annotation_extent": "双外门、台阶、浴缸和长台",
+    "ambiguity_and_information": "近淋浴玻璃，仍主要呈现主厅",
+    "note": "已查看本楼全量大图；无候选不代表排除所有同房可能。",
+    "current_coarse_review": {
+      "value": "卫浴",
+      "source": "既有采用分类（历史开放复合值待按分维度表达）",
+      "human_accepted": null
+    },
+    "spatial_prior_user": {
+      "image_id": "uNb9QFRL6hY_ba24e5a57ef34c6dbc0458ed4c1e701d",
+      "building": "uNb9QFRL6hY",
+      "split": "test",
+      "user_room": "r5",
+      "user_type": "卫浴",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": ""
+    },
+    "specific_user_issues": []
+  },
+  {
+    "image_id": "yqstnuAEVhm_9de98503fd994452b627cdcc7a7d47b2",
+    "building": "yqstnuAEVhm",
+    "number": 25,
+    "main_visual_space": "木地书房靠两内门",
+    "expected_annotation_extent": "壁炉书房及分别通餐厅/客厅的门",
+    "ambiguity_and_information": "两门极近，邻空间明显增加范围多解",
+    "note": "全楼原图检索后记录直接比较关系；空候选不表示不存在同房图。交界结果沿用人工结果。",
+    "current_coarse_review": {
+      "value": "工作与学习",
+      "source": "既有采用分类（历史开放复合值待按分维度表达）",
+      "human_accepted": null
+    },
+    "spatial_prior_user": {
+      "image_id": "yqstnuAEVhm_9de98503fd994452b627cdcc7a7d47b2",
+      "building": "yqstnuAEVhm",
+      "split": "test",
+      "user_room": "r6",
+      "user_type": "起居与休闲",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": ""
+    },
+    "specific_user_issues": [
+      {
+        "group_code": "G243",
+        "note": "略有难度,特别是25 的视角,信息不太全",
+        "interpretation": "略难，尤其25视角信息不全；主空间仍待定。"
+      }
+    ]
+  },
+  {
+    "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+    "building": "yqstnuAEVhm",
+    "number": 31,
+    "main_visual_space": "主卧入口与会客区",
+    "expected_annotation_extent": "入口内凹位通壁炉会客区",
+    "ambiguity_and_information": "长走廊同时显著，床区不完整",
+    "note": "已读“为啥这张ai待确认”；现以具体主空间/范围差异解释，非默认接受旧疑点。",
+    "current_coarse_review": {
+      "value": "起居与休闲",
+      "source": "既有采用分类（历史开放复合值待按分维度表达）",
+      "human_accepted": null
+    },
+    "spatial_prior_user": {
+      "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+      "building": "yqstnuAEVhm",
+      "split": "test",
+      "user_room": "r2",
+      "user_type": "客厅",
+      "user_boundary": "",
+      "user_doorway": "否",
+      "user_artifact": "未见明显异常",
+      "user_status": "已复核",
+      "user_note": "为啥这张ai待确认"
+    },
+    "specific_user_issues": []
+  }
+]

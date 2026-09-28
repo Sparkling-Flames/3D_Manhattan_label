@@ -1,68 +1,32 @@
-# analysis_results
+# 分析结果与研究入口
 
-这个目录只存放分析产物、freeze 输出、registry、图表和审计结果，不存放代码。
+当前研究合同为 `consensus_research_20260923_v1`，真源见 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`。本目录保存输出、审计、图表与固定输入快照；不存放新代码。
 
-## 先看哪些目录
+## 当前复核与共享输入
 
-- `final_gold_layer_20260325/`
-  - 当前 final gold 主层。
-  - Stage 1 主合同入口看这里。
+- [全量复核台账](review_final_20260928/README.md)：当前清洗、资格与修复证据。
+- [未决续审](review_continue_20260928/index.html)、[覆盖补审](review_coverage_followup_20260928/index.html)、[修复交付](review_closeout_20260928/README.md)。
+- [全研究共享 x 基线](shared_x_baseline_20260928/README.md)：未来分簇、区域质量、共识和排序的共享预处理源；本目录及相关原始/复核/修复/GT输入链禁止移动。ready不代表分析资格恢复。
+- [排序工作台](order_studio_20260926/index.html)、[全量排序初筛](order_candidates_20260928/)。
+- [二审归并](review_reconciliation_20260925/README.md)、[定向补审](review_return_20260927/index.html)、[初始全量清查](consensus_visual_review_20260923/index.html)：保留不同阶段证据，状态以最新台账为准。
 
-- `phase1_progress_20260324/`
-  - 当前 Stage 1 / prescreen 的主 freeze 与 binding 审计目录。
-  - `stage1_final_binding_audit_v6.json` 是当前 machine-readable go/no-go 核心文件。
+## 当前研究与展示
 
-- `truth_layer_extraction_20260324/`
-  - current truth-layer / manual annotation extraction 输出。
-  - 是 final-gold preflight 与 rebinding 的上游之一。
+- [共识研究交付](consensus_research_20260923/README.md)。
+- [Pro 返回包独立审查](pro_return_audit_20260928/README.md)；配套新研究在仓库 `research/pro_layout_20260927/`。
+- [数学与算法初探](layout_algorithm_exploration_20260926/README.md)、[结构共识](structural_consensus_20260926/README.md)、[并集分支](union_branch_consensus_20260926/README.md)：独立探索，不代替正式方法。
+- [共享 x 四条件历史对照](shared_x_reanalysis_20260922/README.md)、[9/22 实数研究展示](research_dashboard_20260922/index.html)。
 
-- `trap_collection_freeze_20260320/`
-  - `trap集/` 的 staged freeze 输出。
-  - 仍有方法学价值，但不是当前最核心的 go/no-go 审计目录。
+## 历史与归档
 
-- `mp3d_txt_smoke_test_20260328/`
-  - 当前 smoke-test 输出目录。
-  - 用于验证 `.txt` 导入/渲染链，不是论文主结果目录。
+- [2026-09-28 归档索引](legacy/research_cleanup_20260928/README.md)、[逐文件清理与验证](repo_cleanup/research_cleanup_20260928/SUMMARY.md)。
+- 旧 superseded 结果、纠正前 readiness、空结构仪表盘与封闭独立研究压缩保存；已有 ZIP 原样收拢。
+- 历史原始输入/日志/人工原件副本保留原路径；压缩包可能附带同一份历史快照。
+- `clustering_numeric_local_20260920/` 保留验收记录，旧临时解压与独立复算输出见归档；重新执行历史复算前先恢复。
+- `clustering_release_local_20260920/current/`、旧人工审核及测试读取的数据继续在原路径。
+- 旧 March final-gold、PreScreen 与 Calibration freeze 是历史阶段证据，不作为当前研究默认入口；仍需机器读取的文件保留。
+- 其他 `legacy/` 历史材料不改变其证据身份；状态或依赖不明确的目录继续保留。
 
-## 仍保留在根目录、但偏历史/支撑的目录
+## 使用边界
 
-- `c_manifests_20260310/`, `c_manifests_20260311/`
-  - C 线 manifest / trap-side bundle 历史输出。
-
-- `phase1_progress_20260311/`
-  - Phase 1 较早期的 progress / readiness 审计。
-
-- `selection_freeze_20260317/`
-  - 显式 selection freeze 历史输出。
-
-- `stage_aware_analysis_freeze_v1_20260316/`
-- `stage_aware_analysis_freeze_v2_20260317/`
-- `stage_aware_analysis_freeze_v2_1_20260317/`
-- `stage_aware_analysis_freeze_v2_1_selection_v1_20260317/`
-- `stage_aware_analysis_freeze_v2_1_main_facing_v1_20260317/`
-  - stage-aware freeze / rerun 历史链路，主要用于回溯和 blocker 审计。
-
-- `registry_20260308/`, `registry_20260308_march7_check/`, `rerun_20260308/`
-  - 更早期的 registry / rerun 输出，主要保留为可追溯历史。
-
-- `export_inventory_20260309/`
-  - export 真源审计输出。
-
-- `pooled_qa/`
-  - pooled QA 图包与最小审计表。
-
-## 已归档
-
-- `legacy/20260329_pre_p1_cleanup/`
-  - 2026-03-29 做过一次根目录清理。
-  - 这里存放早期数值命名目录、文献提取目录、`devcheck`、旧图表目录、旧 March 7 formal check、以及散落在根目录的临时文件/日志/预览文件。
-
-## 使用约定
-
-- 新的正式结果不要直接散落在根目录，优先创建带日期或 round 名称的子目录。
-- 如果某个目录已经不再承担当前主链入口职责，优先移动到 `legacy/`，不要继续堆在根目录。
-- 如果不确定一个结果目录是不是当前主链，先看：
-  1. `phase1_progress_20260324/`
-  2. `final_gold_layer_20260325/`
-  3. `truth_layer_extraction_20260324/`
-  4. `docs/PROJECT_MAP_CLEAN_20260308.md`
+原始导出、导入计划、active-time日志与GT资产不属于本次清理。不能仅因存在新版本、没有固定字符串引用或位于 analysis_results 就删除文件。新结果按主题/日期落盘，方法与执行依据见 [文档索引](../docs/README_INDEX.md)。恢复历史包须在独立历史工作区进行，避免覆盖当前合同和人工裁决。

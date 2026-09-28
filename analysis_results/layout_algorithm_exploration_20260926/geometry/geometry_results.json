@@ -1,0 +1,3600 @@
+{
+  "schema_version": "layout_metric_probe_20260926_v1",
+  "scope": "synthetic_diagnostic_only",
+  "lambda_grid": [
+    0,
+    0.25,
+    0.5,
+    1,
+    2
+  ],
+  "cases": {
+    "l_order": {
+      "points_a": [
+        [
+          -1.0,
+          0.7
+        ],
+        [
+          -1.0,
+          -3.3
+        ],
+        [
+          1.0,
+          -1.3
+        ],
+        [
+          3.0,
+          -3.3
+        ],
+        [
+          3.0,
+          -1.3
+        ],
+        [
+          1.0,
+          0.7
+        ]
+      ],
+      "points_b": [
+        [
+          -1.0,
+          -3.3
+        ],
+        [
+          3.0,
+          -3.3
+        ],
+        [
+          3.0,
+          -1.3
+        ],
+        [
+          1.0,
+          -1.3
+        ],
+        [
+          1.0,
+          0.7
+        ],
+        [
+          -1.0,
+          0.7
+        ]
+      ],
+      "height_a": 2.7,
+      "height_b": 2.7,
+      "bev": {
+        "status": "ok",
+        "iou": 0.5714285714285714,
+        "volume_iou": 0.5714285714285714,
+        "area_a": 10.0,
+        "area_b": 12.0,
+        "intersection_area": 8.0,
+        "centroid_a": [
+          0.7333333333333333,
+          -1.0333333333333332
+        ],
+        "centroid_b": [
+          0.6666666666666666,
+          -1.633333333333333
+        ],
+        "centroid_distance": 0.6036923425424943,
+        "normalizer_sqrt_reference_area": 3.4641016151377544,
+        "camera_inside_a": true,
+        "camera_inside_b": true,
+        "boundary_mean_distance": 0.272405923824638,
+        "boundary_p95_distance": 0.9987233387523313,
+        "boundary_sampled_max": 1.414213562373095,
+        "boundary_samples_per_side": 512,
+        "scores": [
+          0.4285714285714286,
+          0.4721391706307567,
+          0.5157069126900848,
+          0.6028423968087411,
+          0.7771133650460534
+        ]
+      },
+      "point_correspondence": {
+        "status": "explicit_synthetic_correspondence",
+        "source_labels_a": [
+          "L5",
+          "L0",
+          "L3",
+          "L1",
+          "L2",
+          "L4"
+        ],
+        "source_labels_b": [
+          "L0",
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ],
+        "matched_labels": [
+          "L5",
+          "L0",
+          "L3",
+          "L1",
+          "L2",
+          "L4"
+        ],
+        "matched_corners": 6,
+        "unmatched_a": 0,
+        "unmatched_b": 0,
+        "floor_rmse": 0.0,
+        "top_rmse": 0.0,
+        "combined_rmse": 0.0,
+        "definition": "sqrt(mean(squared Euclidean distance per matched 3D endpoint)); unmatched corners retained separately"
+      },
+      "manhattan": {
+        "a": {
+          "status": "ok",
+          "frame_deg": 23.162337815692254,
+          "mean_deg": 22.5,
+          "length_weighted_mean_deg": 22.480502595126367,
+          "max_deg": 23.16233781569227,
+          "per_edge_deg": [
+            23.162337815692254,
+            21.837662184307746,
+            21.837662184307746,
+            23.162337815692254,
+            21.83766218430773,
+            23.16233781569227
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        },
+        "b": {
+          "status": "ok",
+          "frame_deg": 6.957463365701443e-16,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        }
+      },
+      "erp_sorted_curve": {
+        "status": "ok",
+        "iou": 1.0,
+        "erp_dx_px": 0.0,
+        "dy_px": 0.0,
+        "erp_distance_px": 0.0,
+        "circular_dx_px": 0.0,
+        "moment_distance": 0.0,
+        "circular_R_a": 0.18211166078354163,
+        "circular_R_b": 0.18211166078354163,
+        "area_pixels_a": 64003,
+        "area_pixels_b": 64003,
+        "spherical_iou": 1.0,
+        "spherical_angle_rad": 2.1073424255447017e-08,
+        "spherical_resultant_a": 0.13753220008153816,
+        "spherical_resultant_b": 0.13753220008153816,
+        "spherical_direction_a": [
+          -0.3687588452855534,
+          0.5832668181273434,
+          0.7237518448303049
+        ],
+        "spherical_direction_b": [
+          -0.3687588452855534,
+          0.5832668181273434,
+          0.7237518448303049
+        ],
+        "scores_erp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scores_circular": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scores_spherical": [
+          0.0,
+          1.6769698190635185e-09,
+          3.353939638127037e-09,
+          6.707879276254074e-09,
+          1.3415758552508148e-08
+        ]
+      },
+      "erp_sorted_linear": {
+        "status": "ok",
+        "iou": 1.0,
+        "erp_dx_px": 0.0,
+        "dy_px": 0.0,
+        "erp_distance_px": 0.0,
+        "circular_dx_px": 0.0,
+        "moment_distance": 0.0,
+        "circular_R_a": 0.16685076879255423,
+        "circular_R_b": 0.16685076879255423,
+        "area_pixels_a": 52885,
+        "area_pixels_b": 52885,
+        "spherical_iou": 1.0,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.14678514727189274,
+        "spherical_resultant_b": 0.14678514727189274,
+        "spherical_direction_a": [
+          -0.15744833175072398,
+          0.605975522058476,
+          0.7797459134197956
+        ],
+        "spherical_direction_b": [
+          -0.15744833175072398,
+          0.605975522058476,
+          0.7797459134197956
+        ],
+        "scores_erp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scores_circular": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scores_spherical": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "erp_visible": {
+        "status": "ok",
+        "iou": 0.8810560696788242,
+        "erp_dx_px": -16.055698016699807,
+        "dy_px": 0.10024594588034574,
+        "erp_distance_px": 16.05601096328486,
+        "circular_dx_px": 62.82953396384867,
+        "moment_distance": 0.06864916449564445,
+        "circular_R_a": 0.18211166078354163,
+        "circular_R_b": 0.16394300922469648,
+        "area_pixels_a": 64003,
+        "area_pixels_b": 67306,
+        "spherical_iou": 0.8904475748604781,
+        "spherical_angle_rad": 0.3330516216502638,
+        "spherical_resultant_a": 0.13753220008153816,
+        "spherical_resultant_b": 0.12914270335242642,
+        "spherical_direction_a": [
+          -0.3687588452855534,
+          0.5832668181273434,
+          0.7237518448303049
+        ],
+        "spherical_direction_b": [
+          -0.04667364963535184,
+          0.5967129252725022,
+          0.8010962833782524
+        ],
+        "scores_erp": [
+          0.11894393032117578,
+          0.12245001742677997,
+          0.12595610453238415,
+          0.13296827874359252,
+          0.14699262716600925
+        ],
+        "scores_circular": [
+          0.11894393032117578,
+          0.13266378264161247,
+          0.14638363496204912,
+          0.17382333960292246,
+          0.22870274888466913
+        ],
+        "scores_spherical": [
+          0.1095524251395219,
+          0.1360558310847275,
+          0.1625592370299331,
+          0.2155660489203443,
+          0.3215796727011667
+        ]
+      }
+    },
+    "same_centroid_different_shape": {
+      "points_a": [
+        [
+          -4,
+          -1
+        ],
+        [
+          4,
+          -1
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          -4,
+          1
+        ]
+      ],
+      "points_b": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "height_a": 2.7,
+      "height_b": 2.7,
+      "bev": {
+        "status": "ok",
+        "iou": 0.3333333333333333,
+        "volume_iou": 0.3333333333333333,
+        "area_a": 16.0,
+        "area_b": 16.0,
+        "intersection_area": 8.0,
+        "centroid_a": [
+          -0.0,
+          -0.0
+        ],
+        "centroid_b": [
+          -0.0,
+          -0.0
+        ],
+        "centroid_distance": 0.0,
+        "normalizer_sqrt_reference_area": 4.0,
+        "camera_inside_a": true,
+        "camera_inside_b": true,
+        "boundary_mean_distance": 0.925018310546875,
+        "boundary_p95_distance": 2.0,
+        "boundary_sampled_max": 2.0,
+        "boundary_samples_per_side": 512,
+        "scores": [
+          0.6666666666666667,
+          0.6666666666666667,
+          0.6666666666666667,
+          0.6666666666666667,
+          0.6666666666666667
+        ]
+      },
+      "point_correspondence": {
+        "status": "explicit_synthetic_correspondence",
+        "source_labels_a": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "source_labels_b": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "matched_labels": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "matched_corners": 4,
+        "unmatched_a": 0,
+        "unmatched_b": 0,
+        "floor_rmse": 2.23606797749979,
+        "top_rmse": 2.23606797749979,
+        "combined_rmse": 2.23606797749979,
+        "definition": "sqrt(mean(squared Euclidean distance per matched 3D endpoint)); unmatched corners retained separately"
+      },
+      "manhattan": {
+        "a": {
+          "status": "ok",
+          "frame_deg": 1.1430118386509513e-15,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        },
+        "b": {
+          "status": "ok",
+          "frame_deg": 6.957463365701443e-16,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        }
+      },
+      "erp_sorted_curve": {
+        "status": "ok",
+        "iou": 0.6559344262295081,
+        "erp_dx_px": 0.0,
+        "dy_px": -1.2248251517215465,
+        "erp_distance_px": 1.2248251517215465,
+        "circular_dx_px": null,
+        "moment_distance": 4.004256700951133e-17,
+        "circular_R_a": 2.665399653354618e-17,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 56212,
+        "area_pixels_b": 44800,
+        "spherical_iou": 0.6967108268899096,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.08674027054628163,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          -5.2308671169084157e-17,
+          1.0,
+          -3.7893374579464453e-16
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.34406557377049185,
+          0.3443330339560193,
+          0.3446004941415467,
+          0.34513541451260155,
+          0.3462052552547113
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.3032891731100904,
+          0.3032891731100904,
+          0.3032891731100904,
+          0.3032891731100904,
+          0.3032891731100904
+        ]
+      },
+      "erp_sorted_linear": {
+        "status": "ok",
+        "iou": 0.7083333333333334,
+        "erp_dx_px": 0.0,
+        "dy_px": 3.0,
+        "erp_distance_px": 3.0,
+        "circular_dx_px": null,
+        "moment_distance": 6.443745143766157e-17,
+        "circular_R_a": 1.9330258903054257e-17,
+        "circular_R_b": 7.489020662153683e-17,
+        "area_pixels_a": 26112,
+        "area_pixels_b": 36864,
+        "spherical_iou": 0.7212066736974637,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.07581408922101378,
+        "spherical_resultant_b": 0.08860811342319527,
+        "spherical_direction_a": [
+          -7.320183694538227e-17,
+          1.0,
+          -4.904523075340612e-16
+        ],
+        "spherical_direction_b": [
+          -9.485875996791167e-17,
+          1.0,
+          -4.3589858747159416e-16
+        ],
+        "scores_erp": [
+          0.29166666666666663,
+          0.29232176470694976,
+          0.2929768627472329,
+          0.2942870588277992,
+          0.2969074509889318
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.2787933263025363,
+          0.2787933263025363,
+          0.2787933263025363,
+          0.2787933263025363,
+          0.2787933263025363
+        ]
+      },
+      "erp_visible": {
+        "status": "ok",
+        "iou": 0.6559344262295081,
+        "erp_dx_px": 0.0,
+        "dy_px": -1.2248251517215465,
+        "erp_distance_px": 1.2248251517215465,
+        "circular_dx_px": null,
+        "moment_distance": 4.004256700951133e-17,
+        "circular_R_a": 2.665399653354618e-17,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 56212,
+        "area_pixels_b": 44800,
+        "spherical_iou": 0.6967108268899096,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.08674027054628163,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          -5.2308671169084157e-17,
+          1.0,
+          -3.7893374579464453e-16
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.34406557377049185,
+          0.3443330339560193,
+          0.3446004941415467,
+          0.34513541451260155,
+          0.3462052552547113
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.3032891731100904,
+          0.3032891731100904,
+          0.3032891731100904,
+          0.3032891731100904,
+          0.3032891731100904
+        ]
+      }
+    },
+    "symmetric_expansion": {
+      "points_a": [
+        [
+          -3.0,
+          -3.0
+        ],
+        [
+          3.0,
+          -3.0
+        ],
+        [
+          3.0,
+          3.0
+        ],
+        [
+          -3.0,
+          3.0
+        ]
+      ],
+      "points_b": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "height_a": 2.7,
+      "height_b": 2.7,
+      "bev": {
+        "status": "ok",
+        "iou": 0.4444444444444444,
+        "volume_iou": 0.4444444444444445,
+        "area_a": 36.0,
+        "area_b": 16.0,
+        "intersection_area": 16.0,
+        "centroid_a": [
+          -0.0,
+          -0.0
+        ],
+        "centroid_b": [
+          -0.0,
+          -0.0
+        ],
+        "centroid_distance": 0.0,
+        "normalizer_sqrt_reference_area": 4.0,
+        "camera_inside_a": true,
+        "camera_inside_b": true,
+        "boundary_mean_distance": 1.0246537362452433,
+        "boundary_p95_distance": 1.2274903062426545,
+        "boundary_sampled_max": 1.4142135623730951,
+        "boundary_samples_per_side": 512,
+        "scores": [
+          0.5555555555555556,
+          0.5555555555555556,
+          0.5555555555555556,
+          0.5555555555555556,
+          0.5555555555555556
+        ]
+      },
+      "point_correspondence": {
+        "status": "explicit_synthetic_correspondence",
+        "source_labels_a": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "source_labels_b": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "matched_labels": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "matched_corners": 4,
+        "unmatched_a": 0,
+        "unmatched_b": 0,
+        "floor_rmse": 1.4142135623730951,
+        "top_rmse": 1.4142135623730951,
+        "combined_rmse": 1.4142135623730951,
+        "definition": "sqrt(mean(squared Euclidean distance per matched 3D endpoint)); unmatched corners retained separately"
+      },
+      "manhattan": {
+        "a": {
+          "status": "ok",
+          "frame_deg": 6.957463365701443e-16,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        },
+        "b": {
+          "status": "ok",
+          "frame_deg": 6.957463365701443e-16,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        }
+      },
+      "erp_sorted_curve": {
+        "status": "ok",
+        "iou": 0.71,
+        "erp_dx_px": 0.0,
+        "dy_px": 3.937776659959752,
+        "erp_distance_px": 3.937776659959752,
+        "circular_dx_px": null,
+        "moment_distance": 3.33411300711609e-17,
+        "circular_R_a": 1.7781582077358144e-17,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 31808,
+        "area_pixels_b": 44800,
+        "spherical_iou": 0.7294252962075707,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.08365712283353001,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          -4.673049096118894e-17,
+          1.0,
+          -4.3844195931233153e-16
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.29000000000000004,
+          0.29085987659100415,
+          0.29171975318200827,
+          0.2934395063640165,
+          0.2968790127280329
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.2705747037924293,
+          0.2705747037924293,
+          0.2705747037924293,
+          0.2705747037924293,
+          0.2705747037924293
+        ]
+      },
+      "erp_sorted_linear": {
+        "status": "ok",
+        "iou": 0.6944444444444444,
+        "erp_dx_px": 0.0,
+        "dy_px": 4.0,
+        "erp_distance_px": 4.0,
+        "circular_dx_px": null,
+        "moment_distance": 2.4118778771422448e-17,
+        "circular_R_a": 6.19760967770991e-17,
+        "circular_R_b": 7.489020662153683e-17,
+        "area_pixels_a": 25600,
+        "area_pixels_b": 36864,
+        "spherical_iou": 0.7078502256560799,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.07013086302926068,
+        "spherical_resultant_b": 0.08860811342319527,
+        "spherical_direction_a": [
+          -8.062710757078786e-17,
+          1.0,
+          -5.240761992101211e-16
+        ],
+        "spherical_direction_b": [
+          -9.485875996791167e-17,
+          1.0,
+          -4.3589858747159416e-16
+        ],
+        "scores_erp": [
+          0.3055555555555556,
+          0.30642901960926644,
+          0.3073024836629773,
+          0.309049411770399,
+          0.3125432679852424
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.2921497743439201,
+          0.2921497743439201,
+          0.2921497743439201,
+          0.2921497743439201,
+          0.2921497743439201
+        ]
+      },
+      "erp_visible": {
+        "status": "ok",
+        "iou": 0.71,
+        "erp_dx_px": 0.0,
+        "dy_px": 3.937776659959752,
+        "erp_distance_px": 3.937776659959752,
+        "circular_dx_px": null,
+        "moment_distance": 3.33411300711609e-17,
+        "circular_R_a": 1.7781582077358144e-17,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 31808,
+        "area_pixels_b": 44800,
+        "spherical_iou": 0.7294252962075707,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.08365712283353001,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          -4.673049096118894e-17,
+          1.0,
+          -4.3844195931233153e-16
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.29000000000000004,
+          0.29085987659100415,
+          0.29171975318200827,
+          0.2934395063640165,
+          0.2968790127280329
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.2705747037924293,
+          0.2705747037924293,
+          0.2705747037924293,
+          0.2705747037924293,
+          0.2705747037924293
+        ]
+      }
+    },
+    "same_summary_horizontal": {
+      "points_a": [
+        [
+          -3,
+          -1
+        ],
+        [
+          3,
+          -1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          -3,
+          1
+        ]
+      ],
+      "points_b": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "height_a": 2.7,
+      "height_b": 2.7,
+      "bev": {
+        "status": "ok",
+        "iou": 0.4,
+        "volume_iou": 0.39999999999999997,
+        "area_a": 12.0,
+        "area_b": 16.0,
+        "intersection_area": 8.0,
+        "centroid_a": [
+          -0.0,
+          -0.0
+        ],
+        "centroid_b": [
+          -0.0,
+          -0.0
+        ],
+        "centroid_distance": 0.0,
+        "normalizer_sqrt_reference_area": 4.0,
+        "camera_inside_a": true,
+        "camera_inside_b": true,
+        "boundary_mean_distance": 0.75,
+        "boundary_p95_distance": 1.0,
+        "boundary_sampled_max": 1.0,
+        "boundary_samples_per_side": 512,
+        "scores": [
+          0.6,
+          0.6,
+          0.6,
+          0.6,
+          0.6
+        ]
+      },
+      "point_correspondence": {
+        "status": "explicit_synthetic_correspondence",
+        "source_labels_a": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "source_labels_b": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "matched_labels": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "matched_corners": 4,
+        "unmatched_a": 0,
+        "unmatched_b": 0,
+        "floor_rmse": 1.4142135623730951,
+        "top_rmse": 1.4142135623730951,
+        "combined_rmse": 1.4142135623730951,
+        "definition": "sqrt(mean(squared Euclidean distance per matched 3D endpoint)); unmatched corners retained separately"
+      },
+      "manhattan": {
+        "a": {
+          "status": "ok",
+          "frame_deg": 1.0933156717530838e-15,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        },
+        "b": {
+          "status": "ok",
+          "frame_deg": 6.957463365701443e-16,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        }
+      },
+      "erp_sorted_curve": {
+        "status": "ok",
+        "iou": 0.6788852459016393,
+        "erp_dx_px": 0.0,
+        "dy_px": -1.3878509933446423,
+        "erp_distance_px": 1.3878509933446423,
+        "circular_dx_px": null,
+        "moment_distance": 3.1295441444976013e-17,
+        "circular_R_a": 1.984954888484126e-17,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 57612,
+        "area_pixels_b": 44800,
+        "spherical_iou": 0.7202987861205694,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.08814819205667535,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          -5.952790866426406e-17,
+          1.0,
+          -4.071631138375969e-16
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.32111475409836066,
+          0.321417813587009,
+          0.3217208730756574,
+          0.3223269920529541,
+          0.32353923000754753
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.2797012138794306,
+          0.2797012138794306,
+          0.2797012138794306,
+          0.2797012138794306,
+          0.2797012138794306
+        ]
+      },
+      "erp_sorted_linear": {
+        "status": "ok",
+        "iou": 0.9027777777777778,
+        "erp_dx_px": 0.0,
+        "dy_px": 1.0,
+        "erp_distance_px": 1.0,
+        "circular_dx_px": null,
+        "moment_distance": 2.506763086226417e-17,
+        "circular_R_a": 5.060466834155813e-17,
+        "circular_R_b": 7.489020662153683e-17,
+        "area_pixels_a": 33280,
+        "area_pixels_b": 36864,
+        "spherical_iou": 0.9088242228424015,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.08469698815025124,
+        "spherical_resultant_b": 0.08860811342319527,
+        "spherical_direction_a": [
+          -9.35957831885645e-17,
+          1.0,
+          -4.679789159428225e-16
+        ],
+        "spherical_direction_b": [
+          -9.485875996791167e-17,
+          1.0,
+          -4.3589858747159416e-16
+        ],
+        "scores_erp": [
+          0.09722222222222221,
+          0.09744058823564992,
+          0.09765895424907764,
+          0.09809568627593307,
+          0.09896915032964392
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.0911757771575985,
+          0.0911757771575985,
+          0.0911757771575985,
+          0.0911757771575985,
+          0.0911757771575985
+        ]
+      },
+      "erp_visible": {
+        "status": "ok",
+        "iou": 0.6788852459016393,
+        "erp_dx_px": 0.0,
+        "dy_px": -1.3878509933446423,
+        "erp_distance_px": 1.3878509933446423,
+        "circular_dx_px": null,
+        "moment_distance": 3.1295441444976013e-17,
+        "circular_R_a": 1.984954888484126e-17,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 57612,
+        "area_pixels_b": 44800,
+        "spherical_iou": 0.7202987861205694,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.08814819205667535,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          -5.952790866426406e-17,
+          1.0,
+          -4.071631138375969e-16
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.32111475409836066,
+          0.321417813587009,
+          0.3217208730756574,
+          0.3223269920529541,
+          0.32353923000754753
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.2797012138794306,
+          0.2797012138794306,
+          0.2797012138794306,
+          0.2797012138794306,
+          0.2797012138794306
+        ]
+      }
+    },
+    "same_summary_vertical": {
+      "points_a": [
+        [
+          -1,
+          -3
+        ],
+        [
+          1,
+          -3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          -1,
+          3
+        ]
+      ],
+      "points_b": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "height_a": 2.7,
+      "height_b": 2.7,
+      "bev": {
+        "status": "ok",
+        "iou": 0.4,
+        "volume_iou": 0.39999999999999997,
+        "area_a": 12.0,
+        "area_b": 16.0,
+        "intersection_area": 8.0,
+        "centroid_a": [
+          -0.0,
+          -0.0
+        ],
+        "centroid_b": [
+          -0.0,
+          -0.0
+        ],
+        "centroid_distance": 0.0,
+        "normalizer_sqrt_reference_area": 4.0,
+        "camera_inside_a": true,
+        "camera_inside_b": true,
+        "boundary_mean_distance": 0.75,
+        "boundary_p95_distance": 1.0,
+        "boundary_sampled_max": 1.0,
+        "boundary_samples_per_side": 512,
+        "scores": [
+          0.6,
+          0.6,
+          0.6,
+          0.6,
+          0.6
+        ]
+      },
+      "point_correspondence": {
+        "status": "explicit_synthetic_correspondence",
+        "source_labels_a": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "source_labels_b": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "matched_labels": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "matched_corners": 4,
+        "unmatched_a": 0,
+        "unmatched_b": 0,
+        "floor_rmse": 1.4142135623730951,
+        "top_rmse": 1.4142135623730951,
+        "combined_rmse": 1.4142135623730951,
+        "definition": "sqrt(mean(squared Euclidean distance per matched 3D endpoint)); unmatched corners retained separately"
+      },
+      "manhattan": {
+        "a": {
+          "status": "ok",
+          "frame_deg": 3.4787316828507215e-16,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        },
+        "b": {
+          "status": "ok",
+          "frame_deg": 6.957463365701443e-16,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        }
+      },
+      "erp_sorted_curve": {
+        "status": "ok",
+        "iou": 0.6788852459016393,
+        "erp_dx_px": 0.0,
+        "dy_px": -1.3878509933446423,
+        "erp_distance_px": 1.3878509933446423,
+        "circular_dx_px": null,
+        "moment_distance": 8.605014966639939e-18,
+        "circular_R_a": 5.655615848033705e-17,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 57612,
+        "area_pixels_b": 44800,
+        "spherical_iou": 0.7202987861205694,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.08814819205667535,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          -5.758255217196783e-17,
+          1.0,
+          -4.4493950522237405e-16
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.32111475409836066,
+          0.321417813587009,
+          0.3217208730756574,
+          0.3223269920529541,
+          0.32353923000754753
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.2797012138794306,
+          0.2797012138794306,
+          0.2797012138794306,
+          0.2797012138794306,
+          0.2797012138794306
+        ]
+      },
+      "erp_sorted_linear": {
+        "status": "ok",
+        "iou": 0.9027777777777778,
+        "erp_dx_px": 0.0,
+        "dy_px": 1.0,
+        "erp_distance_px": 1.0,
+        "circular_dx_px": null,
+        "moment_distance": 2.506763086226417e-17,
+        "circular_R_a": 5.060466834155813e-17,
+        "circular_R_b": 7.489020662153683e-17,
+        "area_pixels_a": 33280,
+        "area_pixels_b": 36864,
+        "spherical_iou": 0.9088242228424015,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.08469698815025124,
+        "spherical_resultant_b": 0.08860811342319527,
+        "spherical_direction_a": [
+          -9.35957831885645e-17,
+          1.0,
+          -4.679789159428225e-16
+        ],
+        "spherical_direction_b": [
+          -9.485875996791167e-17,
+          1.0,
+          -4.3589858747159416e-16
+        ],
+        "scores_erp": [
+          0.09722222222222221,
+          0.09744058823564992,
+          0.09765895424907764,
+          0.09809568627593307,
+          0.09896915032964392
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.0911757771575985,
+          0.0911757771575985,
+          0.0911757771575985,
+          0.0911757771575985,
+          0.0911757771575985
+        ]
+      },
+      "erp_visible": {
+        "status": "ok",
+        "iou": 0.6788852459016393,
+        "erp_dx_px": 0.0,
+        "dy_px": -1.3878509933446423,
+        "erp_distance_px": 1.3878509933446423,
+        "circular_dx_px": null,
+        "moment_distance": 8.605014966639939e-18,
+        "circular_R_a": 5.655615848033705e-17,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 57612,
+        "area_pixels_b": 44800,
+        "spherical_iou": 0.7202987861205694,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.08814819205667535,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          -5.758255217196783e-17,
+          1.0,
+          -4.4493950522237405e-16
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.32111475409836066,
+          0.321417813587009,
+          0.3217208730756574,
+          0.3223269920529541,
+          0.32353923000754753
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.2797012138794306,
+          0.2797012138794306,
+          0.2797012138794306,
+          0.2797012138794306,
+          0.2797012138794306
+        ]
+      }
+    },
+    "insert_collinear": {
+      "points_a": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          0.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "points_b": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "height_a": 2.7,
+      "height_b": 2.7,
+      "bev": {
+        "status": "ok",
+        "iou": 1.0,
+        "volume_iou": 1.0,
+        "area_a": 16.0,
+        "area_b": 16.0,
+        "intersection_area": 16.0,
+        "centroid_a": [
+          -0.0,
+          -0.0
+        ],
+        "centroid_b": [
+          -0.0,
+          -0.0
+        ],
+        "centroid_distance": 0.0,
+        "normalizer_sqrt_reference_area": 4.0,
+        "camera_inside_a": true,
+        "camera_inside_b": true,
+        "boundary_mean_distance": 0.0,
+        "boundary_p95_distance": 0.0,
+        "boundary_sampled_max": 0.0,
+        "boundary_samples_per_side": 512,
+        "scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "point_correspondence": {
+        "status": "explicit_synthetic_correspondence",
+        "source_labels_a": [
+          "SW",
+          "south_midpoint",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "source_labels_b": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "matched_labels": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "matched_corners": 4,
+        "unmatched_a": 1,
+        "unmatched_b": 0,
+        "floor_rmse": 0.0,
+        "top_rmse": 0.0,
+        "combined_rmse": 0.0,
+        "definition": "sqrt(mean(squared Euclidean distance per matched 3D endpoint)); unmatched corners retained separately"
+      },
+      "manhattan": {
+        "a": {
+          "status": "ok",
+          "frame_deg": 6.957463365701443e-16,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        },
+        "b": {
+          "status": "ok",
+          "frame_deg": 6.957463365701443e-16,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        }
+      },
+      "erp_sorted_curve": {
+        "status": "ok",
+        "iou": 1.0,
+        "erp_dx_px": 0.0,
+        "dy_px": 0.0,
+        "erp_distance_px": 0.0,
+        "circular_dx_px": null,
+        "moment_distance": 0.0,
+        "circular_R_a": 4.9936628076311044e-17,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 44800,
+        "area_pixels_b": 44800,
+        "spherical_iou": 1.0,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.09793012879658787,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "erp_sorted_linear": {
+        "status": "ok",
+        "iou": 0.9616528408201597,
+        "erp_dx_px": 0.0,
+        "dy_px": -0.5743726196066063,
+        "erp_distance_px": 0.5743726196066063,
+        "circular_dx_px": null,
+        "moment_distance": 0.036450053393958584,
+        "circular_R_a": 0.03645005339395866,
+        "circular_R_b": 7.489020662153683e-17,
+        "area_pixels_a": 38334,
+        "area_pixels_b": 36864,
+        "spherical_iou": 0.9652822340618864,
+        "spherical_angle_rad": 0.30706530200185245,
+        "spherical_resultant_a": 0.09509496753590005,
+        "spherical_resultant_b": 0.08860811342319527,
+        "spherical_direction_a": [
+          -8.646205441251824e-17,
+          0.9532247226095472,
+          -0.30226251538348586
+        ],
+        "spherical_direction_b": [
+          -9.485875996791167e-17,
+          1.0,
+          -4.3589858747159416e-16
+        ],
+        "scores_erp": [
+          0.03834715917984033,
+          0.03847258263900585,
+          0.038598006098171385,
+          0.03884885301650244,
+          0.039350546853164546
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.0347177659381136,
+          0.05915324627091384,
+          0.08358872660371408,
+          0.13245968726931456,
+          0.23020160860051553
+        ]
+      },
+      "erp_visible": {
+        "status": "ok",
+        "iou": 1.0,
+        "erp_dx_px": 0.0,
+        "dy_px": 0.0,
+        "erp_distance_px": 0.0,
+        "circular_dx_px": null,
+        "moment_distance": 0.0,
+        "circular_R_a": 4.9936628076311044e-17,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 44800,
+        "area_pixels_b": 44800,
+        "spherical_iou": 1.0,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.09793012879658787,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "cyclic_shift": {
+      "points_a": [
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ]
+      ],
+      "points_b": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "height_a": 2.7,
+      "height_b": 2.7,
+      "bev": {
+        "status": "ok",
+        "iou": 1.0,
+        "volume_iou": 1.0,
+        "area_a": 16.0,
+        "area_b": 16.0,
+        "intersection_area": 16.0,
+        "centroid_a": [
+          -0.0,
+          -0.0
+        ],
+        "centroid_b": [
+          -0.0,
+          -0.0
+        ],
+        "centroid_distance": 0.0,
+        "normalizer_sqrt_reference_area": 4.0,
+        "camera_inside_a": true,
+        "camera_inside_b": true,
+        "boundary_mean_distance": 0.0,
+        "boundary_p95_distance": 0.0,
+        "boundary_sampled_max": 0.0,
+        "boundary_samples_per_side": 512,
+        "scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "point_correspondence": {
+        "status": "explicit_synthetic_correspondence",
+        "source_labels_a": [
+          "NE",
+          "NW",
+          "SW",
+          "SE"
+        ],
+        "source_labels_b": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "matched_labels": [
+          "NE",
+          "NW",
+          "SW",
+          "SE"
+        ],
+        "matched_corners": 4,
+        "unmatched_a": 0,
+        "unmatched_b": 0,
+        "floor_rmse": 0.0,
+        "top_rmse": 0.0,
+        "combined_rmse": 0.0,
+        "definition": "sqrt(mean(squared Euclidean distance per matched 3D endpoint)); unmatched corners retained separately"
+      },
+      "manhattan": {
+        "a": {
+          "status": "ok",
+          "frame_deg": 6.957463365701443e-16,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        },
+        "b": {
+          "status": "ok",
+          "frame_deg": 6.957463365701443e-16,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        }
+      },
+      "erp_sorted_curve": {
+        "status": "ok",
+        "iou": 1.0,
+        "erp_dx_px": 0.0,
+        "dy_px": 0.0,
+        "erp_distance_px": 0.0,
+        "circular_dx_px": null,
+        "moment_distance": 0.0,
+        "circular_R_a": 4.9936628076311044e-17,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 44800,
+        "area_pixels_b": 44800,
+        "spherical_iou": 1.0,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.09793012879658787,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "erp_sorted_linear": {
+        "status": "ok",
+        "iou": 1.0,
+        "erp_dx_px": 0.0,
+        "dy_px": 0.0,
+        "erp_distance_px": 0.0,
+        "circular_dx_px": null,
+        "moment_distance": 0.0,
+        "circular_R_a": 7.489020662153683e-17,
+        "circular_R_b": 7.489020662153683e-17,
+        "area_pixels_a": 36864,
+        "area_pixels_b": 36864,
+        "spherical_iou": 1.0,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.08860811342319527,
+        "spherical_resultant_b": 0.08860811342319527,
+        "spherical_direction_a": [
+          -9.485875996791167e-17,
+          1.0,
+          -4.3589858747159416e-16
+        ],
+        "spherical_direction_b": [
+          -9.485875996791167e-17,
+          1.0,
+          -4.3589858747159416e-16
+        ],
+        "scores_erp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "erp_visible": {
+        "status": "ok",
+        "iou": 1.0,
+        "erp_dx_px": 0.0,
+        "dy_px": 0.0,
+        "erp_distance_px": 0.0,
+        "circular_dx_px": null,
+        "moment_distance": 0.0,
+        "circular_R_a": 4.9936628076311044e-17,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 44800,
+        "area_pixels_b": 44800,
+        "spherical_iou": 1.0,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.09793012879658787,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "reverse_ring": {
+      "points_a": [
+        [
+          -2.0,
+          2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          -2.0,
+          -2.0
+        ]
+      ],
+      "points_b": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "height_a": 2.7,
+      "height_b": 2.7,
+      "bev": {
+        "status": "ok",
+        "iou": 1.0,
+        "volume_iou": 1.0,
+        "area_a": 16.0,
+        "area_b": 16.0,
+        "intersection_area": 16.0,
+        "centroid_a": [
+          -0.0,
+          -0.0
+        ],
+        "centroid_b": [
+          -0.0,
+          -0.0
+        ],
+        "centroid_distance": 0.0,
+        "normalizer_sqrt_reference_area": 4.0,
+        "camera_inside_a": true,
+        "camera_inside_b": true,
+        "boundary_mean_distance": 0.0,
+        "boundary_p95_distance": 0.0,
+        "boundary_sampled_max": 0.0,
+        "boundary_samples_per_side": 512,
+        "scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "point_correspondence": {
+        "status": "explicit_synthetic_correspondence",
+        "source_labels_a": [
+          "NW",
+          "NE",
+          "SE",
+          "SW"
+        ],
+        "source_labels_b": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "matched_labels": [
+          "NW",
+          "NE",
+          "SE",
+          "SW"
+        ],
+        "matched_corners": 4,
+        "unmatched_a": 0,
+        "unmatched_b": 0,
+        "floor_rmse": 0.0,
+        "top_rmse": 0.0,
+        "combined_rmse": 0.0,
+        "definition": "sqrt(mean(squared Euclidean distance per matched 3D endpoint)); unmatched corners retained separately"
+      },
+      "manhattan": {
+        "a": {
+          "status": "ok",
+          "frame_deg": 6.957463365701443e-16,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        },
+        "b": {
+          "status": "ok",
+          "frame_deg": 6.957463365701443e-16,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        }
+      },
+      "erp_sorted_curve": {
+        "status": "ok",
+        "iou": 1.0,
+        "erp_dx_px": 0.0,
+        "dy_px": 0.0,
+        "erp_distance_px": 0.0,
+        "circular_dx_px": null,
+        "moment_distance": 0.0,
+        "circular_R_a": 4.9936628076311044e-17,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 44800,
+        "area_pixels_b": 44800,
+        "spherical_iou": 1.0,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.09793012879658787,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "erp_sorted_linear": {
+        "status": "ok",
+        "iou": 1.0,
+        "erp_dx_px": 0.0,
+        "dy_px": 0.0,
+        "erp_distance_px": 0.0,
+        "circular_dx_px": null,
+        "moment_distance": 0.0,
+        "circular_R_a": 7.489020662153683e-17,
+        "circular_R_b": 7.489020662153683e-17,
+        "area_pixels_a": 36864,
+        "area_pixels_b": 36864,
+        "spherical_iou": 1.0,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.08860811342319527,
+        "spherical_resultant_b": 0.08860811342319527,
+        "spherical_direction_a": [
+          -9.485875996791167e-17,
+          1.0,
+          -4.3589858747159416e-16
+        ],
+        "spherical_direction_b": [
+          -9.485875996791167e-17,
+          1.0,
+          -4.3589858747159416e-16
+        ],
+        "scores_erp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "erp_visible": {
+        "status": "ok",
+        "iou": 1.0,
+        "erp_dx_px": 0.0,
+        "dy_px": 0.0,
+        "erp_distance_px": 0.0,
+        "circular_dx_px": null,
+        "moment_distance": 0.0,
+        "circular_R_a": 4.9936628076311044e-17,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 44800,
+        "area_pixels_b": 44800,
+        "spherical_iou": 1.0,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.09793012879658787,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "small_bump": {
+      "points_a": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -0.1
+        ],
+        [
+          2.05,
+          -0.1
+        ],
+        [
+          2.05,
+          0.1
+        ],
+        [
+          2.0,
+          0.1
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "points_b": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "height_a": 2.7,
+      "height_b": 2.7,
+      "bev": {
+        "status": "ok",
+        "iou": 0.999375390381012,
+        "volume_iou": 0.9993753903810122,
+        "area_a": 16.009999999999998,
+        "area_b": 16.0,
+        "intersection_area": 16.0,
+        "centroid_a": [
+          0.001264834478451016,
+          3.698431895482511e-17
+        ],
+        "centroid_b": [
+          -0.0,
+          -0.0
+        ],
+        "centroid_distance": 0.001264834478451016,
+        "normalizer_sqrt_reference_area": 4.0,
+        "camera_inside_a": true,
+        "camera_inside_b": true,
+        "boundary_mean_distance": 0.0006195068359374974,
+        "boundary_p95_distance": 0.0,
+        "boundary_sampled_max": 0.04999999999999982,
+        "boundary_samples_per_side": 512,
+        "scores": [
+          0.0006246096189880257,
+          0.0007036617738912142,
+          0.0007827139287944027,
+          0.0009408182386007797,
+          0.0012570268582135337
+        ]
+      },
+      "point_correspondence": {
+        "status": "explicit_synthetic_correspondence",
+        "source_labels_a": [
+          "SW",
+          "SE",
+          "bump0",
+          "bump1",
+          "bump2",
+          "bump3",
+          "NE",
+          "NW"
+        ],
+        "source_labels_b": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "matched_labels": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "matched_corners": 4,
+        "unmatched_a": 4,
+        "unmatched_b": 0,
+        "floor_rmse": 0.0,
+        "top_rmse": 0.0,
+        "combined_rmse": 0.0,
+        "definition": "sqrt(mean(squared Euclidean distance per matched 3D endpoint)); unmatched corners retained separately"
+      },
+      "manhattan": {
+        "a": {
+          "status": "ok",
+          "frame_deg": 6.957463365701443e-16,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        },
+        "b": {
+          "status": "ok",
+          "frame_deg": 6.957463365701443e-16,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        }
+      },
+      "erp_sorted_curve": {
+        "status": "ok",
+        "iou": 0.9996428571428572,
+        "erp_dx_px": -0.09146123615579427,
+        "dy_px": 0.00011100903384431149,
+        "erp_distance_px": 0.09146130352313793,
+        "circular_dx_px": null,
+        "moment_distance": 0.0003571292338631748,
+        "circular_R_a": 0.00035712923386316384,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 44784,
+        "area_pixels_b": 44800,
+        "spherical_iou": 0.9996855386035897,
+        "spherical_angle_rad": 0.002688270046352163,
+        "spherical_resultant_a": 0.09794359850778288,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          -0.002688266808420322,
+          0.999996386604255,
+          -3.8417416215309233e-16
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.00035714285714283367,
+          0.0003771148973760834,
+          0.00039708693760933316,
+          0.00043703101807583266,
+          0.0005169191790088316
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.0003144613964103371,
+          0.0005283871295317498,
+          0.0007423128626531624,
+          0.0011701643288959877,
+          0.0020258672613816383
+        ]
+      },
+      "erp_sorted_linear": {
+        "status": "ok",
+        "iou": 0.9599000104155817,
+        "erp_dx_px": 10.265597333611026,
+        "dy_px": -0.6161858139777223,
+        "erp_distance_px": 10.284073782951443,
+        "circular_dx_px": null,
+        "moment_distance": 0.03808897052486717,
+        "circular_R_a": 0.038088970524867184,
+        "circular_R_b": 7.489020662153683e-17,
+        "area_pixels_a": 38404,
+        "area_pixels_b": 36864,
+        "spherical_iou": 0.9637330975642673,
+        "spherical_angle_rad": 0.31878492251664947,
+        "spherical_resultant_a": 0.09562493607460382,
+        "spherical_resultant_b": 0.08860811342319527,
+        "spherical_direction_a": [
+          0.31341293410192456,
+          0.9496169400014001,
+          -4.0872041707118876e-16
+        ],
+        "spherical_direction_b": [
+          -9.485875996791167e-17,
+          1.0,
+          -4.3589858747159416e-16
+        ],
+        "scores_erp": [
+          0.040099989584418294,
+          0.04234568177819787,
+          0.04459137397197745,
+          0.04908275835953659,
+          0.05806552713465489
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.03626690243573272,
+          0.06163500053657853,
+          0.08700309863742434,
+          0.13773929483911596,
+          0.23921168724249917
+        ]
+      },
+      "erp_visible": {
+        "status": "ok",
+        "iou": 0.9996428571428572,
+        "erp_dx_px": -0.09146123615579427,
+        "dy_px": 0.00011100903384431149,
+        "erp_distance_px": 0.09146130352313793,
+        "circular_dx_px": null,
+        "moment_distance": 0.0003571292338631748,
+        "circular_R_a": 0.00035712923386316384,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 44784,
+        "area_pixels_b": 44800,
+        "spherical_iou": 0.9996855386035897,
+        "spherical_angle_rad": 0.002688270046352163,
+        "spherical_resultant_a": 0.09794359850778288,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          -0.002688266808420322,
+          0.999996386604255,
+          -3.8417416215309233e-16
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.00035714285714283367,
+          0.0003771148973760834,
+          0.00039708693760933316,
+          0.00043703101807583266,
+          0.0005169191790088316
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.0003144613964103371,
+          0.0005283871295317498,
+          0.0007423128626531624,
+          0.0011701643288959877,
+          0.0020258672613816383
+        ]
+      }
+    },
+    "omit_block": {
+      "points_a": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          0.5,
+          -2.0
+        ],
+        [
+          0.5,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "points_b": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "height_a": 2.7,
+      "height_b": 2.7,
+      "bev": {
+        "status": "ok",
+        "iou": 0.625,
+        "volume_iou": 0.625,
+        "area_a": 10.0,
+        "area_b": 16.0,
+        "intersection_area": 10.0,
+        "centroid_a": [
+          -0.75,
+          -0.0
+        ],
+        "centroid_b": [
+          -0.0,
+          -0.0
+        ],
+        "centroid_distance": 0.75,
+        "normalizer_sqrt_reference_area": 4.0,
+        "camera_inside_a": true,
+        "camera_inside_b": true,
+        "boundary_mean_distance": 0.4020423889160156,
+        "boundary_p95_distance": 1.5,
+        "boundary_sampled_max": 1.5,
+        "boundary_samples_per_side": 512,
+        "scores": [
+          0.375,
+          0.421875,
+          0.46875,
+          0.5625,
+          0.75
+        ]
+      },
+      "point_correspondence": {
+        "status": "explicit_synthetic_correspondence",
+        "source_labels_a": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "source_labels_b": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "matched_labels": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "matched_corners": 4,
+        "unmatched_a": 0,
+        "unmatched_b": 0,
+        "floor_rmse": 1.0606601717798212,
+        "top_rmse": 1.0606601717798212,
+        "combined_rmse": 1.0606601717798212,
+        "definition": "sqrt(mean(squared Euclidean distance per matched 3D endpoint)); unmatched corners retained separately"
+      },
+      "manhattan": {
+        "a": {
+          "status": "ok",
+          "frame_deg": 4.969616689786745e-16,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        },
+        "b": {
+          "status": "ok",
+          "frame_deg": 6.957463365701443e-16,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        }
+      },
+      "erp_sorted_curve": {
+        "status": "ok",
+        "iou": 0.7124455329028975,
+        "erp_dx_px": 73.61394357685822,
+        "dy_px": 0.8635486194096131,
+        "erp_distance_px": 73.61900844995775,
+        "circular_dx_px": null,
+        "moment_distance": 0.23026037148275283,
+        "circular_R_a": 0.23026037148275283,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 62882,
+        "area_pixels_b": 44800,
+        "spherical_iou": 0.77643587939084,
+        "spherical_angle_rad": 1.0350849101455812,
+        "spherical_resultant_a": 0.14329227800122107,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          0.859905702204559,
+          0.5104529197840723,
+          -2.5800799924229293e-16
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.28755446709710253,
+          0.30363035648482095,
+          0.31970624587253943,
+          0.35185802464797633,
+          0.41616158219885013
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.22356412060915998,
+          0.30593356059390975,
+          0.3883030005786596,
+          0.5530418805481592,
+          0.8825196404871584
+        ]
+      },
+      "erp_sorted_linear": {
+        "status": "ok",
+        "iou": 0.8543617317141003,
+        "erp_dx_px": 25.34606470751828,
+        "dy_px": -2.0294799295448342,
+        "erp_distance_px": 25.427185942257335,
+        "circular_dx_px": null,
+        "moment_distance": 0.07330883624056296,
+        "circular_R_a": 0.07330883624056297,
+        "circular_R_b": 7.489020662153683e-17,
+        "area_pixels_a": 43148,
+        "area_pixels_b": 36864,
+        "spherical_iou": 0.8673667547582132,
+        "spherical_angle_rad": 0.5425140412152917,
+        "spherical_resultant_a": 0.11122029019509319,
+        "spherical_resultant_b": 0.08860811342319527,
+        "spherical_direction_a": [
+          0.5162906795847765,
+          0.856413413121192,
+          -3.425744076334851e-16
+        ],
+        "spherical_direction_b": [
+          -9.485875996791167e-17,
+          1.0,
+          -4.3589858747159416e-16
+        ],
+        "scores_erp": [
+          0.14563826828589965,
+          0.1511907015127956,
+          0.15674313473969154,
+          0.16784800119348342,
+          0.1900577341010672
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.13263324524178677,
+          0.17580514091987373,
+          0.2189770365979607,
+          0.3053208279541346,
+          0.4780084106664824
+        ]
+      },
+      "erp_visible": {
+        "status": "ok",
+        "iou": 0.7124455329028975,
+        "erp_dx_px": 73.61394357685822,
+        "dy_px": 0.8635486194096131,
+        "erp_distance_px": 73.61900844995775,
+        "circular_dx_px": null,
+        "moment_distance": 0.23026037148275283,
+        "circular_R_a": 0.23026037148275283,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 62882,
+        "area_pixels_b": 44800,
+        "spherical_iou": 0.77643587939084,
+        "spherical_angle_rad": 1.0350849101455812,
+        "spherical_resultant_a": 0.14329227800122107,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          0.859905702204559,
+          0.5104529197840723,
+          -2.5800799924229293e-16
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.28755446709710253,
+          0.30363035648482095,
+          0.31970624587253943,
+          0.35185802464797633,
+          0.41616158219885013
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.22356412060915998,
+          0.30593356059390975,
+          0.3883030005786596,
+          0.5530418805481592,
+          0.8825196404871584
+        ]
+      }
+    },
+    "top_only": {
+      "points_a": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "points_b": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "height_a": 3.4,
+      "height_b": 2.7,
+      "bev": {
+        "status": "ok",
+        "iou": 1.0,
+        "volume_iou": 0.7941176470588237,
+        "area_a": 16.0,
+        "area_b": 16.0,
+        "intersection_area": 16.0,
+        "centroid_a": [
+          -0.0,
+          -0.0
+        ],
+        "centroid_b": [
+          -0.0,
+          -0.0
+        ],
+        "centroid_distance": 0.0,
+        "normalizer_sqrt_reference_area": 4.0,
+        "camera_inside_a": true,
+        "camera_inside_b": true,
+        "boundary_mean_distance": 0.0,
+        "boundary_p95_distance": 0.0,
+        "boundary_sampled_max": 0.0,
+        "boundary_samples_per_side": 512,
+        "scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "point_correspondence": {
+        "status": "explicit_synthetic_correspondence",
+        "source_labels_a": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "source_labels_b": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "matched_labels": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "matched_corners": 4,
+        "unmatched_a": 0,
+        "unmatched_b": 0,
+        "floor_rmse": 0.0,
+        "top_rmse": 0.6999999999999997,
+        "combined_rmse": 0.49497474683058307,
+        "definition": "sqrt(mean(squared Euclidean distance per matched 3D endpoint)); unmatched corners retained separately"
+      },
+      "manhattan": {
+        "a": {
+          "status": "ok",
+          "frame_deg": 6.957463365701443e-16,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        },
+        "b": {
+          "status": "ok",
+          "frame_deg": 6.957463365701443e-16,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        }
+      },
+      "erp_sorted_curve": {
+        "status": "ok",
+        "iou": 0.8635312259059368,
+        "erp_dx_px": 0.0,
+        "dy_px": -13.832996475382743,
+        "erp_distance_px": 13.832996475382743,
+        "circular_dx_px": null,
+        "moment_distance": 4.17375649411815e-17,
+        "circular_R_a": 1.3368994749830568e-17,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 51880,
+        "area_pixels_b": 44800,
+        "spherical_iou": 0.8900676704975846,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.16049353751641846,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          -3.814033477154614e-17,
+          1.0,
+          -2.3930734438976203e-16
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.13646877409406322,
+          0.13948943038815217,
+          0.1425100866822411,
+          0.148551399270419,
+          0.16063402444677477
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.10993232950241538,
+          0.10993232950241538,
+          0.10993232950241538,
+          0.10993232950241538,
+          0.10993232950241538
+        ]
+      },
+      "erp_sorted_linear": {
+        "status": "ok",
+        "iou": 0.8470588235294118,
+        "erp_dx_px": 0.0,
+        "dy_px": -13.0,
+        "erp_distance_px": 13.0,
+        "circular_dx_px": null,
+        "moment_distance": 6.014308521086476e-17,
+        "circular_R_a": 1.648099932659675e-17,
+        "circular_R_b": 7.489020662153683e-17,
+        "area_pixels_a": 43520,
+        "area_pixels_b": 36864,
+        "spherical_iou": 0.8677210478038092,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.15347373384845356,
+        "spherical_resultant_b": 0.08860811342319527,
+        "spherical_direction_a": [
+          -4.7522251230482473e-17,
+          1.0,
+          -2.5232052439041886e-16
+        ],
+        "spherical_direction_b": [
+          -9.485875996791167e-17,
+          1.0,
+          -4.3589858747159416e-16
+        ],
+        "scores_erp": [
+          0.15294117647058825,
+          0.15577993464514853,
+          0.1586186928197088,
+          0.16429620916882937,
+          0.17565124186707048
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.1322789521961908,
+          0.1322789521961908,
+          0.1322789521961908,
+          0.1322789521961908,
+          0.1322789521961908
+        ]
+      },
+      "erp_visible": {
+        "status": "ok",
+        "iou": 0.8635312259059368,
+        "erp_dx_px": 0.0,
+        "dy_px": -13.832996475382743,
+        "erp_distance_px": 13.832996475382743,
+        "circular_dx_px": null,
+        "moment_distance": 4.17375649411815e-17,
+        "circular_R_a": 1.3368994749830568e-17,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 51880,
+        "area_pixels_b": 44800,
+        "spherical_iou": 0.8900676704975846,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.16049353751641846,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          -3.814033477154614e-17,
+          1.0,
+          -2.3930734438976203e-16
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.13646877409406322,
+          0.13948943038815217,
+          0.1425100866822411,
+          0.148551399270419,
+          0.16063402444677477
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.10993232950241538,
+          0.10993232950241538,
+          0.10993232950241538,
+          0.10993232950241538,
+          0.10993232950241538
+        ]
+      }
+    },
+    "known_corner_deformation": {
+      "points_a": [
+        [
+          -1.98,
+          -1.98
+        ],
+        [
+          2.03,
+          -2.01
+        ],
+        [
+          1.96,
+          2.02
+        ],
+        [
+          -2.0,
+          2.03
+        ]
+      ],
+      "points_b": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "height_a": 2.7,
+      "height_b": 2.7,
+      "bev": {
+        "status": "ok",
+        "iou": 0.9848875455270041,
+        "volume_iou": 0.984887545527004,
+        "area_a": 16.0188,
+        "area_b": 16.0,
+        "intersection_area": 15.887508294253141,
+        "centroid_a": [
+          0.004178361258854136,
+          0.010807134949767422
+        ],
+        "centroid_b": [
+          -0.0,
+          -0.0
+        ],
+        "centroid_distance": 0.011586754016202192,
+        "normalizer_sqrt_reference_area": 4.0,
+        "camera_inside_a": true,
+        "camera_inside_b": true,
+        "boundary_mean_distance": 0.015247340813493973,
+        "boundary_p95_distance": 0.029438406246586172,
+        "boundary_sampled_max": 0.039646625069670066,
+        "boundary_samples_per_side": 512,
+        "scores": [
+          0.015112454472995918,
+          0.015836626599008554,
+          0.01656079872502119,
+          0.018009142977046467,
+          0.020905831481097013
+        ]
+      },
+      "point_correspondence": {
+        "status": "explicit_synthetic_correspondence",
+        "source_labels_a": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "source_labels_b": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "matched_labels": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "matched_corners": 4,
+        "unmatched_a": 0,
+        "unmatched_b": 0,
+        "floor_rmse": 0.03427827300200514,
+        "top_rmse": 0.03427827300200514,
+        "combined_rmse": 0.03427827300200514,
+        "definition": "sqrt(mean(squared Euclidean distance per matched 3D endpoint)); unmatched corners retained separately"
+      },
+      "manhattan": {
+        "a": {
+          "status": "ok",
+          "frame_deg": 0.17894058265905022,
+          "mean_deg": 0.4635497088805598,
+          "length_weighted_mean_deg": 0.46444033060936113,
+          "max_deg": 0.8161713989317316,
+          "per_edge_deg": [
+            0.6075793153611577,
+            0.8161713989317316,
+            0.3236265870118661,
+            0.10682153421748357
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        },
+        "b": {
+          "status": "ok",
+          "frame_deg": 6.957463365701443e-16,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        }
+      },
+      "erp_sorted_curve": {
+        "status": "ok",
+        "iou": 0.9940129089695081,
+        "erp_dx_px": 0.034180973856337005,
+        "dy_px": -0.03954373805962064,
+        "erp_distance_px": 0.05226897926586556,
+        "circular_dx_px": null,
+        "moment_distance": 0.002415668178897747,
+        "circular_R_a": 0.002415668178897789,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 44791,
+        "area_pixels_b": 44800,
+        "spherical_iou": 0.9946252723915759,
+        "spherical_angle_rad": 0.018684053746658366,
+        "spherical_resultant_a": 0.09814419946454267,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          -0.006262997801315763,
+          0.9998254581455088,
+          -0.01760193462844392
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.005987091030491887,
+          0.0059985047991201095,
+          0.006009918567748332,
+          0.006032746105004779,
+          0.00607840117951767
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.005374727608424057,
+          0.00686155736381172,
+          0.008348387119199384,
+          0.01132204662997471,
+          0.017269365651525363
+        ]
+      },
+      "erp_sorted_linear": {
+        "status": "ok",
+        "iou": 0.9990234375,
+        "erp_dx_px": -0.1309872922776094,
+        "dy_px": -0.06940371456499861,
+        "erp_distance_px": 0.14823814061718285,
+        "circular_dx_px": null,
+        "moment_distance": 0.000969593096666877,
+        "circular_R_a": 0.0009695930966668162,
+        "circular_R_b": 7.489020662153683e-17,
+        "area_pixels_a": 36828,
+        "area_pixels_b": 36864,
+        "spherical_iou": 0.9990432491407193,
+        "spherical_angle_rad": 0.010069568668924027,
+        "spherical_resultant_a": 0.08901457294942125,
+        "spherical_resultant_b": 0.08860811342319527,
+        "spherical_direction_a": [
+          -0.007377387824524751,
+          0.9999493023217925,
+          0.006853242666604183
+        ],
+        "spherical_direction_b": [
+          -9.485875996791167e-17,
+          1.0,
+          -4.3589858747159416e-16
+        ],
+        "scores_erp": [
+          0.0009765625,
+          0.001008932671804511,
+          0.001041302843609022,
+          0.0011060431872180444,
+          0.0012355238744360887
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.0009567508592807084,
+          0.0017580616735119762,
+          0.002559372487743244,
+          0.00416199411620578,
+          0.007367237373130851
+        ]
+      },
+      "erp_visible": {
+        "status": "ok",
+        "iou": 0.9940129089695081,
+        "erp_dx_px": 0.034180973856337005,
+        "dy_px": -0.03954373805962064,
+        "erp_distance_px": 0.05226897926586556,
+        "circular_dx_px": null,
+        "moment_distance": 0.002415668178897747,
+        "circular_R_a": 0.002415668178897789,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 44791,
+        "area_pixels_b": 44800,
+        "spherical_iou": 0.9946252723915759,
+        "spherical_angle_rad": 0.018684053746658366,
+        "spherical_resultant_a": 0.09814419946454267,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          -0.006262997801315763,
+          0.9998254581455088,
+          -0.01760193462844392
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.005987091030491887,
+          0.0059985047991201095,
+          0.006009918567748332,
+          0.006032746105004779,
+          0.00607840117951767
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.005374727608424057,
+          0.00686155736381172,
+          0.008348387119199384,
+          0.01132204662997471,
+          0.017269365651525363
+        ]
+      }
+    },
+    "invalid": {
+      "points_a": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "points_b": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "height_a": 2.7,
+      "height_b": 2.7,
+      "bev": {
+        "status": "invalid_a",
+        "reason": "Self-intersection[0 0]",
+        "iou": null,
+        "volume_iou": null,
+        "centroid_distance": null,
+        "scores": null
+      },
+      "point_correspondence": {
+        "status": "explicit_synthetic_correspondence",
+        "source_labels_a": [
+          "SW",
+          "NE",
+          "SE",
+          "NW"
+        ],
+        "source_labels_b": [
+          "SW",
+          "SE",
+          "NE",
+          "NW"
+        ],
+        "matched_labels": [
+          "SW",
+          "NE",
+          "SE",
+          "NW"
+        ],
+        "matched_corners": 4,
+        "unmatched_a": 0,
+        "unmatched_b": 0,
+        "floor_rmse": 0.0,
+        "top_rmse": 0.0,
+        "combined_rmse": 0.0,
+        "definition": "sqrt(mean(squared Euclidean distance per matched 3D endpoint)); unmatched corners retained separately"
+      },
+      "manhattan": {
+        "a": {
+          "status": "invalid_polygon",
+          "reason": "Self-intersection[0 0]",
+          "frame_deg": null,
+          "mean_deg": null,
+          "max_deg": null
+        },
+        "b": {
+          "status": "ok",
+          "frame_deg": 6.957463365701443e-16,
+          "mean_deg": 0.0,
+          "length_weighted_mean_deg": 0.0,
+          "max_deg": 0.0,
+          "per_edge_deg": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "definition": "one common Manhattan frame independently fitted per layout using existing heading_frame; self-consistency only"
+        }
+      },
+      "erp_sorted_curve": {
+        "status": "ok",
+        "iou": 1.0,
+        "erp_dx_px": 0.0,
+        "dy_px": 0.0,
+        "erp_distance_px": 0.0,
+        "circular_dx_px": null,
+        "moment_distance": 0.0,
+        "circular_R_a": 4.9936628076311044e-17,
+        "circular_R_b": 4.9936628076311044e-17,
+        "area_pixels_a": 44800,
+        "area_pixels_b": 44800,
+        "spherical_iou": 1.0,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.09793012879658787,
+        "spherical_resultant_b": 0.09793012879658787,
+        "spherical_direction_a": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "spherical_direction_b": [
+          -8.307313113203787e-17,
+          1.0,
+          -3.845343904977836e-16
+        ],
+        "scores_erp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "erp_sorted_linear": {
+        "status": "ok",
+        "iou": 1.0,
+        "erp_dx_px": 0.0,
+        "dy_px": 0.0,
+        "erp_distance_px": 0.0,
+        "circular_dx_px": null,
+        "moment_distance": 0.0,
+        "circular_R_a": 7.489020662153683e-17,
+        "circular_R_b": 7.489020662153683e-17,
+        "area_pixels_a": 36864,
+        "area_pixels_b": 36864,
+        "spherical_iou": 1.0,
+        "spherical_angle_rad": 0.0,
+        "spherical_resultant_a": 0.08860811342319527,
+        "spherical_resultant_b": 0.08860811342319527,
+        "spherical_direction_a": [
+          -9.485875996791167e-17,
+          1.0,
+          -4.3589858747159416e-16
+        ],
+        "spherical_direction_b": [
+          -9.485875996791167e-17,
+          1.0,
+          -4.3589858747159416e-16
+        ],
+        "scores_erp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scores_circular": null,
+        "scores_spherical": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "erp_visible": {
+        "status": "not_computable",
+        "reason": "Self-intersection[0 0]",
+        "iou": null
+      }
+    }
+  },
+  "sensitivities": {
+    "seam": [
+      {
+        "roll_columns": 0,
+        "iou": 0.3333333333333333,
+        "erp_dx_px": -64.0,
+        "dy_px": 0.0,
+        "erp_distance_px": 64.0,
+        "circular_dx_px": -64.0,
+        "moment_distance": 0.38023877035662673,
+        "circular_R_a": 0.9745198183772339,
+        "circular_R_b": 0.9745198183772339,
+        "area_pixels_a": 1760,
+        "area_pixels_b": 1760,
+        "spherical_iou": 0.33333333333333337,
+        "spherical_angle_rad": 0.3924992394742071,
+        "spherical_resultant_a": 0.906797468519653,
+        "spherical_resultant_b": 0.906797468519653,
+        "spherical_direction_a": [
+          -0.38249119427227046,
+          0.0316927806011682,
+          0.9234154287003973
+        ],
+        "spherical_direction_b": [
+          -0.7067515715078977,
+          0.0316927806011682,
+          0.7067515715078977
+        ],
+        "scores_erp": [
+          0.6666666666666667,
+          0.6806420915260404,
+          0.6946175163854141,
+          0.7225683661041615,
+          0.7784700655416562
+        ],
+        "scores_circular": [
+          0.6666666666666667,
+          0.6806420915260404,
+          0.6946175163854141,
+          0.7225683661041615,
+          0.7784700655416562
+        ],
+        "scores_spherical": [
+          0.6666666666666666,
+          0.6979007637277315,
+          0.7291348607887963,
+          0.7916030549109259,
+          0.9165394431551852
+        ]
+      },
+      {
+        "roll_columns": 240,
+        "iou": 0.3333333333333333,
+        "erp_dx_px": 448.0,
+        "dy_px": 0.0,
+        "erp_distance_px": 448.0,
+        "circular_dx_px": -64.0,
+        "moment_distance": 0.38023877035662684,
+        "circular_R_a": 0.9745198183772338,
+        "circular_R_b": 0.9745198183772339,
+        "area_pixels_a": 1760,
+        "area_pixels_b": 1760,
+        "spherical_iou": 0.33333333333333337,
+        "spherical_angle_rad": 0.3924992394742071,
+        "spherical_resultant_a": 0.906797468519653,
+        "spherical_resultant_b": 0.906797468519653,
+        "spherical_direction_a": [
+          0.0,
+          0.0316927806011682,
+          0.9994976576549673
+        ],
+        "spherical_direction_b": [
+          -0.38249119427227046,
+          0.0316927806011682,
+          0.9234154287003973
+        ],
+        "scores_erp": [
+          0.6666666666666667,
+          0.7644946406822826,
+          0.8623226146978984,
+          1.0579785627291298,
+          1.4492904587915931
+        ],
+        "scores_circular": [
+          0.6666666666666667,
+          0.6806420915260404,
+          0.6946175163854141,
+          0.7225683661041615,
+          0.7784700655416562
+        ],
+        "scores_spherical": [
+          0.6666666666666666,
+          0.6979007637277315,
+          0.7291348607887963,
+          0.7916030549109259,
+          0.9165394431551852
+        ]
+      }
+    ],
+    "near_horizon": [
+      {
+        "floor_depression_deg": 0.5,
+        "radius": 114.58865012930961,
+        "depth_change_one_px": 47.31048716570045,
+        "relative_depth_change_one_px": 0.4128723666114583
+      },
+      {
+        "floor_depression_deg": 1,
+        "radius": 57.28996163075943,
+        "depth_change_one_px": 14.905571944217876,
+        "relative_depth_change_one_px": 0.26017772607854145
+      },
+      {
+        "floor_depression_deg": 5,
+        "radius": 11.430052302761343,
+        "depth_change_one_px": 0.7548399150830978,
+        "relative_depth_change_one_px": 0.0660399353466422
+      },
+      {
+        "floor_depression_deg": 15,
+        "radius": 3.7320508075688776,
+        "depth_change_one_px": 0.08954880195706494,
+        "relative_depth_change_one_px": 0.02399452916757009
+      },
+      {
+        "floor_depression_deg": 45,
+        "radius": 1.0000000000000002,
+        "depth_change_one_px": 0.012197158548471032,
+        "relative_depth_change_one_px": 0.012197158548471029
+      }
+    ],
+    "short_edge": [
+      {
+        "edge_length": 0.02,
+        "perpendicular_endpoint_error": 0.01,
+        "angle_error_deg": 26.56505117707799
+      },
+      {
+        "edge_length": 0.1,
+        "perpendicular_endpoint_error": 0.01,
+        "angle_error_deg": 5.710593137499642
+      },
+      {
+        "edge_length": 1,
+        "perpendicular_endpoint_error": 0.01,
+        "angle_error_deg": 0.5729386976834859
+      },
+      {
+        "edge_length": 5,
+        "perpendicular_endpoint_error": 0.01,
+        "angle_error_deg": 0.11459140623778596
+      }
+    ],
+    "height_only": {
+      "status": "controlled_height_only",
+      "bev_iou": 1.0,
+      "height_a": 3.4,
+      "height_b": 2.7,
+      "volume_iou": 0.7941176470588236
+    }
+  },
+  "definitions": {
+    "camera_height": 1,
+    "camera_origin": [
+      0,
+      0,
+      0
+    ],
+    "floor_y": -1,
+    "scale": "shared_camera_height_not_individual_normalization",
+    "erp_shape": [
+      256,
+      512
+    ],
+    "reported_erp_pixels": [
+      1024,
+      512
+    ],
+    "boundary_distance": "symmetric_uniform_arclength_512_samples_each_direction",
+    "bev_scores": "(1-BEV_IoU)+lambda*centroid_distance/sqrt(reference_area)",
+    "erp_scores": "(1-ERP_IoU)+lambda*ERP_centroid_distance/hypot(1024,512)",
+    "circular_scores": "(1-ERP_IoU)+lambda*hypot(circular_dx,dy)/hypot(1024,512)",
+    "spherical_scores": "(1-solid_angle_IoU)+lambda*direction_angle/pi",
+    "spherical_degenerate": "resultant<=1e-12 returns no direction or direction score",
+    "adjacency": "fixed_explicit_synthetic_rings_no_search",
+    "invalid_policy": "explicit_state_no_repair_no_zero_substitution"
+  },
+  "limitations": [
+    "Synthetic known geometry does not validate human annotation quality.",
+    "ERP x-sorted curves and straight segments intentionally ignore source adjacency.",
+    "Nearest-ray mask measures visible wall rays, not complete footprint.",
+    "Spherical moments can cancel; a direction is not a room centroid.",
+    "Heights are controlled constants; no general nonplanar volume is claimed.",
+    "Point RMSE uses declared synthetic identities; missing/extra points remain unmatched, never silently matched by array position.",
+    "Manhattan residual is internal geometric conformity; zero residual or zero point RMSE does not establish correct scope or topology.",
+    "Boundary summaries are numerical quadrature, not exact continuous Hausdorff.",
+    "Weights are a sensitivity grid; none is selected or calibrated."
+  ],
+  "summary": {
+    "order_information_loss": {
+      "analytic_bev_iou": 0.5714285714285714,
+      "measured_bev_iou": 0.5714285714285714,
+      "sorted_erp_iou": 1.0,
+      "visible_erp_iou": 0.8810560696788242
+    },
+    "nonidentifiability": {
+      "reference_square": [
+        [
+          -2,
+          -2
+        ],
+        [
+          2,
+          -2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          -2,
+          2
+        ]
+      ],
+      "candidate_areas": [
+        12,
+        12
+      ],
+      "intersection_areas": [
+        8,
+        8
+      ],
+      "union_areas": [
+        20,
+        20
+      ],
+      "ious": [
+        0.4,
+        0.4
+      ],
+      "centroids": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "all_lambda_scores_equal": true,
+      "meaning": "Different horizontal/vertical local errors have identical IoU and centroid summaries."
+    },
+    "same_center_expansion_iou": 0.4444444444444444,
+    "small_bump": {
+      "iou": 0.999375390381012,
+      "centroid_distance": 0.001264834478451016
+    },
+    "scope": "Mathematical counterexamples and implementation checks; not human-quality validation.",
+    "sensitivity_only": "Short-edge and horizon probes quantify propagation; no rejection or relaxation threshold is set."
+  },
+  "figures": [
+    "order_representation.png",
+    "centroid_counterexamples.png"
+  ]
+}

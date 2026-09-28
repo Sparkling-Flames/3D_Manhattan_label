@@ -1,0 +1,389 @@
+{
+  "source_effective_points_and_workers_equal": 2444,
+  "results_inventory_equal": 53,
+  "reproduction": {
+    "all_pass": false,
+    "stages": [
+      {
+        "stage": "00_assets",
+        "returncode": 0,
+        "seconds": 8.034,
+        "log": "logs\\00_assets.log"
+      },
+      {
+        "stage": "01_measurement",
+        "returncode": 0,
+        "seconds": 21.887,
+        "log": "logs\\01_measurement.log"
+      },
+      {
+        "stage": "03_preview",
+        "returncode": 0,
+        "seconds": 2.99,
+        "log": "logs\\03_preview.log"
+      },
+      {
+        "stage": "06_consensus_replay",
+        "returncode": 0,
+        "seconds": 169.235,
+        "log": "logs\\06_consensus_replay.log"
+      },
+      {
+        "stage": "04_people",
+        "returncode": 0,
+        "seconds": 11.316,
+        "log": "logs\\04_people.log"
+      },
+      {
+        "stage": "02_partition",
+        "returncode": 0,
+        "seconds": 3.78,
+        "log": "logs\\02_partition.log"
+      },
+      {
+        "stage": "05_affinity_corpus",
+        "returncode": 0,
+        "seconds": 3.139,
+        "log": "logs\\05_affinity_corpus.log"
+      },
+      {
+        "stage": "07_rooms_and_collection",
+        "returncode": 0,
+        "seconds": 20.3,
+        "log": "logs\\07_rooms_and_collection.log"
+      },
+      {
+        "stage": "08_case_evidence",
+        "returncode": 0,
+        "seconds": 5.267,
+        "log": "logs\\08_case_evidence.log"
+      },
+      {
+        "stage": "09_synthesis",
+        "returncode": 0,
+        "seconds": 2.839,
+        "log": "logs\\09_synthesis.log"
+      },
+      {
+        "stage": "new_tests",
+        "returncode": 0
+      }
+    ],
+    "comparison": [
+      {
+        "file": "affinity_corpus.csv",
+        "pass": true
+      },
+      {
+        "file": "affinity_corpus_memberships.json",
+        "pass": false,
+        "error": "JSON values differ; inspect rather than overwrite reference"
+      },
+      {
+        "file": "affinity_partition_development.csv",
+        "pass": true
+      },
+      {
+        "file": "affinity_partition_memberships.json",
+        "pass": false,
+        "error": "JSON values differ; inspect rather than overwrite reference"
+      },
+      {
+        "file": "affinity_partition_objectives.csv",
+        "pass": true
+      },
+      {
+        "file": "asset_manifest.json",
+        "pass": true
+      },
+      {
+        "file": "consensus_replay_orders.json",
+        "pass": true
+      },
+      {
+        "file": "consensus_replay_per_image.csv",
+        "pass": true
+      },
+      {
+        "file": "consensus_replay_per_order.csv.gz",
+        "pass": true
+      },
+      {
+        "file": "consensus_replay_prefixes.csv.gz",
+        "pass": true
+      },
+      {
+        "file": "consensus_replay_summary.csv",
+        "pass": true
+      },
+      {
+        "file": "cyclic_candidates.csv",
+        "pass": true
+      },
+      {
+        "file": "distance_variants.json.gz",
+        "pass": false,
+        "error": "JSON values differ; inspect rather than overwrite reference"
+      },
+      {
+        "file": "doorway_descriptive_images.csv",
+        "pass": true
+      },
+      {
+        "file": "doorway_identical_workers_pairs.csv",
+        "pass": true
+      },
+      {
+        "file": "full_member_context24.csv",
+        "pass": true
+      },
+      {
+        "file": "image_partition_sensitivity.csv.gz",
+        "pass": true
+      },
+      {
+        "file": "large_within_pair_x_review_candidates.csv",
+        "pass": true
+      },
+      {
+        "file": "leave_one_member_repartition.csv.gz",
+        "pass": true
+      },
+      {
+        "file": "manual_review_queue_new.json",
+        "pass": true
+      },
+      {
+        "file": "measurement_summary.json",
+        "pass": true
+      },
+      {
+        "file": "nontransitivity_per_image.json",
+        "pass": false,
+        "error": "JSON values differ; inspect rather than overwrite reference"
+      },
+      {
+        "file": "optional_collection_assignments_new.csv",
+        "pass": true
+      },
+      {
+        "file": "optional_collection_costs_new.csv",
+        "pass": true
+      },
+      {
+        "file": "optional_W022_cross_building_bridge.csv",
+        "pass": true
+      },
+      {
+        "file": "partition_memberships.json.gz",
+        "pass": true
+      },
+      {
+        "file": "partition_sensitivity_summary.csv",
+        "pass": true
+      },
+      {
+        "file": "preview_mechanism_summary.json",
+        "pass": false,
+        "error": "JSON values differ; inspect rather than overwrite reference"
+      },
+      {
+        "file": "preview_order_check.json",
+        "pass": true
+      },
+      {
+        "file": "preview_pairing_comparison.csv",
+        "pass": true
+      },
+      {
+        "file": "preview_pairing_discrepancies.json",
+        "pass": true
+      },
+      {
+        "file": "preview_projection_pairs.csv.gz",
+        "pass": true
+      },
+      {
+        "file": "recommended_15_first_responses.csv",
+        "pass": true
+      },
+      {
+        "file": "report_partition_comparison.csv",
+        "pass": true
+      },
+      {
+        "file": "RESEARCH_SUMMARY.json",
+        "pass": true
+      },
+      {
+        "file": "review24_comparisons.csv",
+        "pass": true
+      },
+      {
+        "file": "review24_development_agreement.csv",
+        "pass": true
+      },
+      {
+        "file": "review24_original_decisions.json",
+        "pass": true
+      },
+      {
+        "file": "room_identical_workers_new.csv",
+        "pass": true
+      },
+      {
+        "file": "room_matched_n8_current_consensus.csv",
+        "pass": true
+      },
+      {
+        "file": "room_predictions_new.csv",
+        "pass": true
+      },
+      {
+        "file": "room_summary_new.json",
+        "pass": true
+      },
+      {
+        "file": "same_room_n8_counterexamples.csv",
+        "pass": true
+      },
+      {
+        "file": "teams_n8_ranges.csv",
+        "pass": true
+      },
+      {
+        "file": "teams_n8_summary.json",
+        "pass": true
+      },
+      {
+        "file": "teams_n8_variance.csv",
+        "pass": true
+      },
+      {
+        "file": "within_response_x_pairs.csv.gz",
+        "pass": true
+      },
+      {
+        "file": "within_response_x_responses.csv",
+        "pass": true
+      },
+      {
+        "file": "worker_prediction_summary_new.json",
+        "pass": true
+      },
+      {
+        "file": "worker_predictions_new.csv.gz",
+        "pass": true
+      },
+      {
+        "file": "worker_profiles_new.csv.gz",
+        "pass": true
+      },
+      {
+        "file": "worker_x_summary.csv",
+        "pass": true
+      },
+      {
+        "file": "x_effect_on_memberships.csv.gz",
+        "pass": true
+      }
+    ],
+    "comparison_count": 53,
+    "source": "Trimmed original pinned inputs; delivered reference results left unchanged"
+  },
+  "explicit_differences": [
+    {
+      "file": "affinity_corpus_memberships.json",
+      "pass": false,
+      "error": "JSON values differ; inspect rather than overwrite reference"
+    },
+    {
+      "file": "affinity_partition_memberships.json",
+      "pass": false,
+      "error": "JSON values differ; inspect rather than overwrite reference"
+    },
+    {
+      "file": "distance_variants.json.gz",
+      "pass": false,
+      "error": "JSON values differ; inspect rather than overwrite reference"
+    },
+    {
+      "file": "nontransitivity_per_image.json",
+      "pass": false,
+      "error": "JSON values differ; inspect rather than overwrite reference"
+    },
+    {
+      "file": "preview_mechanism_summary.json",
+      "pass": false,
+      "error": "JSON values differ; inspect rather than overwrite reference"
+    }
+  ],
+  "preview_metadata_differences": {
+    "preview_mechanism_summary.json": {
+      "node_version": {
+        "original": "v22.16.0",
+        "local": "v24.18.0"
+      }
+    }
+  },
+  "difference_details": {
+    "affinity_corpus_memberships.json": {
+      "float_differences": 58,
+      "max_absolute_float_difference": 2.842170943040401e-14,
+      "other": []
+    },
+    "affinity_partition_memberships.json": {
+      "float_differences": 12,
+      "max_absolute_float_difference": 1.4210854715202004e-14,
+      "other": []
+    },
+    "distance_variants.json.gz": {
+      "float_differences": 28872,
+      "max_absolute_float_difference": 5.684341886080802e-14,
+      "other": []
+    },
+    "nontransitivity_per_image.json": {
+      "float_differences": 286,
+      "max_absolute_float_difference": 7.105427357601002e-15,
+      "other": []
+    },
+    "preview_mechanism_summary.json": {
+      "float_differences": 0,
+      "max_absolute_float_difference": 0.0,
+      "other": [
+        {
+          "path": "/node_version",
+          "original": "v22.16.0",
+          "local": "v24.18.0"
+        }
+      ]
+    }
+  },
+  "exhaustive_small_images": 148,
+  "feasible_partitions_enumerated": 26457,
+  "diameter_lower_bound": {
+    "images": 110,
+    "responses": 1940,
+    "forced_singletons": 481,
+    "count_unique": 123,
+    "geometry_isolated": 358,
+    "complete_singletons": 515,
+    "partition_singletons": 34,
+    "images_cannot_reach90": 69,
+    "scope": "固定当前点对应、点数硬门和25.6两两直径条件；是图论下界，不说明这些作答语义错误或人员质量差"
+  },
+  "candidate_snap02": {
+    "images_changed": 1,
+    "coassignment_changes": 16,
+    "members": 17,
+    "images_changed_without_edge_changes": 0
+  },
+  "mc_only": {
+    "images": 110,
+    "point_estimate_ge80": 14,
+    "lower95_ge80": 11,
+    "upper95_ge80": 15,
+    "scope": "逐图Wilson区间只针对固定人群下80次顺序抽样；不反映新人员泛化或方法误差，也不是同时置信带"
+  },
+  "limitations": "新候选共享x敏感性仍是开发探针；最优目标不等于语义正确。未更改原始数据、算法默认值或人工审核。"
+}

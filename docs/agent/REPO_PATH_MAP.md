@@ -16,7 +16,7 @@
 ## 主线 Thesis Main
 
 - `docs/thesis_main/`：正式执行协议、SOP、统计计划、字段合同、PreScreen、Calibration、Main(Test + Validation)、论文主线材料。
-- `docs/thesis_main/manuscript/`：论文主线写作资产和 Overleaf 项目。
+- `docs/legacy/paper_a_before_consensus_20260928/source_snapshots/manuscript/`：旧T1/V1写作资产和 Overleaf 项目，仅供历史回溯。
 - `tools/thesis_main/analysis/`：质量分析、active-time audit、stage-aware 分析、统计汇总、图表。
 - `tools/thesis_main/analysis/quality_core/`：分析核心 helper，例如 active-time loader。
 - `tools/thesis_main/registry/`：registry、assignment manifest、freeze、final-gold、risk-rule、`d_t/g_t` 相关工具。

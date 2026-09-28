@@ -1,0 +1,38 @@
+[
+  {
+    "file": "01_coverage_manual.png",
+    "caption": "manual固定高人数面板的精确有限池成对未覆盖；分组规则不改变此量，N>=19，k<=18。"
+  },
+  {
+    "file": "01_coverage_semi.png",
+    "caption": "semi固定高人数面板的精确有限池成对未覆盖；分组规则不改变此量，N>=19，k<=18。"
+  },
+  {
+    "file": "01_coverage_oos.png",
+    "caption": "oos固定高人数面板的精确有限池成对未覆盖；分组规则不改变此量，N>=19，k<=18。"
+  },
+  {
+    "file": "02_prefix_cluster_count.png",
+    "caption": "相同人员、顺序和图像下，四方案的前缀重新分簇；不可用簇少、主簇大单独判断正确。"
+  },
+  {
+    "file": "03_prefix_largest_share.png",
+    "caption": "相同人员、顺序和图像下，四方案的前缀重新分簇；不可用簇少、主簇大单独判断正确。"
+  },
+  {
+    "file": "04_prefix_vs_hindsight.png",
+    "caption": "图上完整链接：同一前缀采用后见全池标签和重新分簇的差别，不把后见标签当在线信息。"
+  },
+  {
+    "file": "05_fixed_personnel_subtypes.png",
+    "caption": "固定留建筑QTSB三组，同一图片交集且每组至少5人；人员名单不是按目标图稳定性选择。此图不支持任意外推到8人或20人。"
+  },
+  {
+    "file": "06_model_bridge.png",
+    "caption": "可选最小基线：45图14楼，目标是有限池k=5未覆盖，不是未来收敛人数；更多模型特征并未优于仅点数。"
+  },
+  {
+    "file": "07_depth_sensitivity.png",
+    "caption": "条件性原始投影的bottom-y敏感性及正负非对称；不进入分簇权重。"
+  }
+]

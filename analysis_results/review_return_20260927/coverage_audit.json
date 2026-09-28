@@ -1,0 +1,418 @@
+{
+  "schema": "review_return_queue_coverage_audit_v1",
+  "inputs": [
+    "data.js",
+    "audit.json",
+    "comment_pending.json",
+    "旧cases原始/有效点层"
+  ],
+  "current_queue_images": 38,
+  "checks": {
+    "repair_needed": {
+      "expected": 11,
+      "covered": 11,
+      "missing_annotation_ids": []
+    },
+    "undetermined": {
+      "expected": 27,
+      "covered": 27,
+      "missing_annotation_ids": []
+    },
+    "pending_images": {
+      "expected": 11,
+      "covered": 11,
+      "missing_image_ids": []
+    },
+    "old_exclusions_unreviewed": {
+      "expected": 6,
+      "covered": 6,
+      "missing_annotation_ids": []
+    }
+  },
+  "mapping_errors": [],
+  "confirmed_missing_repair_questions": [
+    {
+      "kind": "conditional_deletion_not_reviewed",
+      "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+      "code": "jtcxE69GiFV-12",
+      "annotation_id": "new_95_3663_7443_W028",
+      "worker": "W028",
+      "original_decision": {
+        "status": "resolved",
+        "verdict": "usable",
+        "comment": "想标全房,但是标的不太好,但是他最右边的点和最左边的点是重复了的,去掉一对就是很好的标注了",
+        "repair_confirmation": "unreviewed",
+        "updated_at": "2026-09-26T05:24:28.072Z",
+        "view_context": {
+          "point_mode": "effective",
+          "reference_ids": [
+            "new_95_3663_7099_W037"
+          ],
+          "cluster_method": "affinity"
+        }
+      },
+      "in_current_queue": false,
+      "raw_points": [
+        [
+          213.53531947110486,
+          195.4178830798787
+        ],
+        [
+          213.53531947110486,
+          349.19462145225725
+        ],
+        [
+          287.842341115595,
+          193.0948962659534
+        ],
+        [
+          287.842341115595,
+          349.0108181297349
+        ],
+        [
+          745.5062761506276,
+          212.08368200836819
+        ],
+        [
+          745.5062761506276,
+          312.76987447698747
+        ],
+        [
+          908.2960522431691,
+          220.15542537218525
+        ],
+        [
+          908.2960522431691,
+          292.79917883592327
+        ],
+        [
+          972.5857740585774,
+          211.01255230125523
+        ],
+        [
+          972.5857740585774,
+          308.4853556485356
+        ],
+        [
+          1017.5732217573221,
+          116.75313807531381
+        ],
+        [
+          1017.5732217573221,
+          477.72384937238496
+        ],
+        [
+          4.2845188284518825,
+          94.25941422594141
+        ],
+        [
+          4.2845188284518825,
+          456.30125523012555
+        ]
+      ],
+      "effective_points": [
+        [
+          213.53531947110486,
+          195.4178830798787
+        ],
+        [
+          213.53531947110486,
+          349.19462145225725
+        ],
+        [
+          287.842341115595,
+          193.0948962659534
+        ],
+        [
+          287.842341115595,
+          349.0108181297349
+        ],
+        [
+          745.5062761506276,
+          212.08368200836819
+        ],
+        [
+          745.5062761506276,
+          312.76987447698747
+        ],
+        [
+          908.2960522431691,
+          220.15542537218525
+        ],
+        [
+          908.2960522431691,
+          292.79917883592327
+        ],
+        [
+          972.5857740585774,
+          211.01255230125523
+        ],
+        [
+          972.5857740585774,
+          308.4853556485356
+        ],
+        [
+          1017.5732217573221,
+          116.75313807531381
+        ],
+        [
+          1017.5732217573221,
+          477.72384937238496
+        ],
+        [
+          4.2845188284518825,
+          94.25941422594141
+        ],
+        [
+          4.2845188284518825,
+          456.30125523012555
+        ]
+      ],
+      "raw_equals_effective": true,
+      "repairs": [],
+      "required_question": "原保留结论继续保留；确认是否落实删点及具体删除哪一对，不能自动删点或改判。"
+    },
+    {
+      "kind": "conditional_deletion_not_reviewed",
+      "image_id": "jtcxE69GiFV_f473cf5a09a64090acec3bfe8fccaacd",
+      "code": "jtcxE69GiFV-30",
+      "annotation_id": "f8c20f06811c7321e708",
+      "worker": "W028",
+      "original_decision": {
+        "status": "resolved",
+        "verdict": "usable",
+        "comment": "标的空间和gt不一致,gt的是较小空间,这个人的标法个人认为更好,但是p9 p10 这对多余的点去掉就更好了",
+        "repair_confirmation": "unreviewed",
+        "updated_at": "2026-09-26T06:15:53.280Z",
+        "view_context": {
+          "point_mode": "effective",
+          "reference_ids": [
+            "reference:gt_revised"
+          ],
+          "cluster_method": "affinity"
+        }
+      },
+      "in_current_queue": false,
+      "raw_points": [
+        [
+          153.91369119950906,
+          187.75405536897716
+        ],
+        [
+          153.91369119950906,
+          363.52906996947036
+        ],
+        [
+          238.75994466234152,
+          175.1048562088436
+        ],
+        [
+          238.75994466234152,
+          379.4707754927071
+        ],
+        [
+          248.0977413710272,
+          203.0164731324498
+        ],
+        [
+          248.0977413710272,
+          343.2980172390827
+        ],
+        [
+          301.32886445221675,
+          204.26267106509533
+        ],
+        [
+          301.32886445221675,
+          340.43288493117274
+        ],
+        [
+          415.84423723315854,
+          130.46032164551113
+        ],
+        [
+          415.84423723315854,
+          427.2416127916599
+        ],
+        [
+          661.9104076970077,
+          156.05451507762612
+        ],
+        [
+          661.9104076970077,
+          400.5718515035954
+        ],
+        [
+          929.6059212115159,
+          174.30434421671652
+        ],
+        [
+          929.6059212115159,
+          387.33201338478807
+        ]
+      ],
+      "effective_points": [
+        [
+          153.91369119950906,
+          187.75405536897716
+        ],
+        [
+          153.91369119950906,
+          363.52906996947036
+        ],
+        [
+          238.75994466234152,
+          175.1048562088436
+        ],
+        [
+          238.75994466234152,
+          379.4707754927071
+        ],
+        [
+          248.0977413710272,
+          203.0164731324498
+        ],
+        [
+          248.0977413710272,
+          343.2980172390827
+        ],
+        [
+          301.32886445221675,
+          204.26267106509533
+        ],
+        [
+          301.32886445221675,
+          340.43288493117274
+        ],
+        [
+          415.84423723315854,
+          130.46032164551113
+        ],
+        [
+          415.84423723315854,
+          427.2416127916599
+        ],
+        [
+          661.9104076970077,
+          156.05451507762612
+        ],
+        [
+          661.9104076970077,
+          400.5718515035954
+        ],
+        [
+          929.6059212115159,
+          174.30434421671652
+        ],
+        [
+          929.6059212115159,
+          387.33201338478807
+        ]
+      ],
+      "raw_equals_effective": true,
+      "repairs": [],
+      "required_question": "原保留结论继续保留；确认是否落实删点及具体删除哪一对，不能自动删点或改判。"
+    }
+  ],
+  "same_comment_different_verdict": [
+    {
+      "image_id": "Z6MFQCViBuw_fbef2c9afec642c88d01cf09c90aec12",
+      "code": "Z6MFQCViBuw-10",
+      "comment": "不确定为啥会标两个点在同一位置,可能是模型预标注没改? 还是我当时专门做的trap预标注,特地模拟模型预标注角点重复的情况",
+      "annotation_ids": [
+        "1445e3889419575a",
+        "f0a357dcd7d8d4c6",
+        "eb2fd1fd3f466605",
+        "92e4a4cf1ae73f69"
+      ],
+      "all_covered": true,
+      "interpretation": "相同理由不同处置是复核线索，不自动证明裁决矛盾。"
+    },
+    {
+      "image_id": "x8F5xyUWy9e_9926b38bd87e44e292d9c375050dd17d",
+      "code": "x8F5xyUWy9e-08",
+      "comment": "注意到了墙面变化,但是没标好",
+      "annotation_ids": [
+        "618c40c186d398910f88",
+        "f275128bcb79fb1efea6"
+      ],
+      "all_covered": true,
+      "interpretation": "相同理由不同处置是复核线索，不自动证明裁决矛盾。"
+    }
+  ],
+  "resolved_but_comment_pending": [
+    {
+      "comment_id": "image:UwV83HsGsw3_16af52545aff47afb4d7b330a49091a2",
+      "image_id": "UwV83HsGsw3_16af52545aff47afb4d7b330a49091a2",
+      "annotation_id": null,
+      "code": "UwV83HsGsw3-03",
+      "raw_comment": "暂定oos,确实勉强或许也可以标,但是gt标的也不好",
+      "reason": "虽按钮为已确认OOS，评论仍是暂定，并怀疑勉强可标；属于当前分类犹豫，不能以resolved隐藏。",
+      "kind": "scene",
+      "already_pending": false,
+      "changes_user_decision": false,
+      "covered": true
+    }
+  ],
+  "reference_background_work": [
+    {
+      "image_id": "jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037",
+      "code": "jtcxE69GiFV-05",
+      "original_decision": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "gt是错误的,不是空间的问题,是完全错误.而且这图可以标细节的墙角,但是目前标注者都没有标注.\n三个模型的预标注也都是错误的",
+        "updated_at": "2026-09-26T03:25:12.087Z"
+      },
+      "current_user_queue": false,
+      "action": "后台先核对当时参考版本及原始/修订GT具体位置；不重复询问用户是否认为GT错误。只有版本或位置无法溯源才定向问。",
+      "blocking_main_gt_analysis": true,
+      "automatic_extra_user_review": false
+    },
+    {
+      "image_id": "jtcxE69GiFV_6723e18211d244f8b17ced91aae64d99",
+      "code": "jtcxE69GiFV-17",
+      "original_decision": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "这图遮挡较多,较难,而且gt标的是错误的,包括模型标的p3,p4这对点,是错误把门当成墙了,而且他们都忽略了墙面的的柱子凸起",
+        "updated_at": "2026-09-26T05:29:01.443Z"
+      },
+      "current_user_queue": false,
+      "action": "后台先核对当时参考版本及原始/修订GT具体位置；不重复询问用户是否认为GT错误。只有版本或位置无法溯源才定向问。",
+      "blocking_main_gt_analysis": true,
+      "automatic_extra_user_review": false
+    },
+    {
+      "image_id": "pRbA3pwrgk9_8caa90fc5528451f9e9f45634676499b",
+      "code": "pRbA3pwrgk9-12",
+      "original_decision": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "这个gt直接忽略了左边的墙面凸起,而且我认为它标的高度也有问题,是错误的,比较标准的是BiLayout enclosed的标法.",
+        "updated_at": "2026-09-26T06:28:30.446Z"
+      },
+      "current_user_queue": false,
+      "action": "后台先核对当时参考版本及原始/修订GT具体位置；不重复询问用户是否认为GT错误。只有版本或位置无法溯源才定向问。",
+      "blocking_main_gt_analysis": true,
+      "automatic_extra_user_review": false
+    },
+    {
+      "image_id": "zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b",
+      "code": "zsNo4HB9uLZ-05",
+      "original_decision": {
+        "status": "resolved",
+        "category": "reference_concern",
+        "comment": "gt是肯定错的,但是因为这个门挡住了太多空间细节,标注有难度",
+        "updated_at": "2026-09-27T10:23:30.364Z"
+      },
+      "current_user_queue": false,
+      "action": "后台先核对当时参考版本及原始/修订GT具体位置；不重复询问用户是否认为GT错误。只有版本或位置无法溯源才定向问。",
+      "blocking_main_gt_analysis": true,
+      "automatic_extra_user_review": false
+    }
+  ],
+  "conclusion": "38图覆盖显式11待修复、27个人未定、11图片待定和6旧排除；未发现合并丢作答ID或跨图绑定。另漏两份已选保留但有删点建议的作答，建议定向补入两图。四图明确GT实质错误仍需后台版本核验，不机械新增四张用户复审图。",
+  "recommended_queue_images_after_two_repairs": 40,
+  "scope_limit": "文本及数据覆盖核验，不宣称视觉穷尽所有相似标法矛盾；不把保留但有误差自动召回，也不扩全部不同空间或同房分类。"
+}

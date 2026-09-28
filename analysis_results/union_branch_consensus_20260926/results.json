@@ -1,0 +1,683 @@
+{
+  "schema": "union_branch_experiment_20260926_v1",
+  "seed": 20260926,
+  "repeats": 25,
+  "case_files": [
+    "cases/7y3sRwLe3Va-12.json.gz",
+    "cases/7y3sRwLe3Va-08.json.gz",
+    "cases/uNb9QFRL6hY-52.json.gz",
+    "cases/pRbA3pwrgk9-11.json.gz",
+    "cases/q9vSo1VnCiC-04.json.gz",
+    "cases/uNb9QFRL6hY-66.json.gz",
+    "cases/uNb9QFRL6hY-59.json.gz",
+    "cases/uNb9QFRL6hY-41.json.gz"
+  ],
+  "images": [
+    {
+      "code": "7y3sRwLe3Va-12",
+      "strata": [
+        "oos"
+      ],
+      "n": 24,
+      "n_computable": 23,
+      "mode_count": 17,
+      "top_support": [
+        0.16666666666666666,
+        0.125,
+        0.08333333333333333
+      ],
+      "singleton_mass": 0.5833333333333334,
+      "missing_mass": 0.041666666666666664,
+      "geometry_unusable_mass": 0.0,
+      "reference": {
+        "gt_original": {
+          "weighted_iou_lower": 0.4595186134783973,
+          "weighted_iou_upper": 0.5011852801450639,
+          "unknown_mass": 0.041666666666666664,
+          "dominant_iou": 0.3302934644606455,
+          "dominant_tie_count": 1,
+          "tied_dominant_iou_range": [
+            0.3302934644606455,
+            0.3302934644606455
+          ],
+          "tied_dominant_unknown_count": 0,
+          "tied_dominant_bounds": [
+            0.3302934644606455,
+            0.3302934644606455
+          ]
+        },
+        "gt_revised": {
+          "weighted_iou_lower": 0.4595186134783973,
+          "weighted_iou_upper": 0.5011852801450639,
+          "unknown_mass": 0.041666666666666664,
+          "dominant_iou": 0.3302934644606455,
+          "dominant_tie_count": 1,
+          "tied_dominant_iou_range": [
+            0.3302934644606455,
+            0.3302934644606455
+          ],
+          "tied_dominant_unknown_count": 0,
+          "tied_dominant_bounds": [
+            0.3302934644606455,
+            0.3302934644606455
+          ]
+        }
+      },
+      "mode_counts": {
+        "2.5": 20,
+        "5.0": 17,
+        "10.0": 15
+      },
+      "top_counts": [
+        4,
+        3,
+        2,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "union_count": 21,
+      "unavailable": [
+        {
+          "worker": "W037",
+          "id": "4d3e4911d8f07aa2",
+          "reason": "existing_pairing_unavailable"
+        }
+      ],
+      "fitted_subsets": 703
+    },
+    {
+      "code": "7y3sRwLe3Va-08",
+      "strata": [
+        "oos"
+      ],
+      "n": 24,
+      "n_computable": 24,
+      "mode_count": 21,
+      "top_support": [
+        0.08333333333333333,
+        0.08333333333333333,
+        0.08333333333333333
+      ],
+      "singleton_mass": 0.75,
+      "missing_mass": 0.0,
+      "geometry_unusable_mass": 0.0,
+      "reference": {
+        "gt_original": {
+          "weighted_iou_lower": 0.5401610733688126,
+          "weighted_iou_upper": 0.5401610733688126,
+          "unknown_mass": 0.0,
+          "dominant_iou": 0.660685420160015,
+          "dominant_tie_count": 3,
+          "tied_dominant_iou_range": [
+            0.3365183811041535,
+            0.660685420160015
+          ],
+          "tied_dominant_unknown_count": 0,
+          "tied_dominant_bounds": [
+            0.3365183811041535,
+            0.660685420160015
+          ]
+        },
+        "gt_revised": {
+          "weighted_iou_lower": 0.5401610733688126,
+          "weighted_iou_upper": 0.5401610733688126,
+          "unknown_mass": 0.0,
+          "dominant_iou": 0.660685420160015,
+          "dominant_tie_count": 3,
+          "tied_dominant_iou_range": [
+            0.3365183811041535,
+            0.660685420160015
+          ],
+          "tied_dominant_unknown_count": 0,
+          "tied_dominant_bounds": [
+            0.3365183811041535,
+            0.660685420160015
+          ]
+        }
+      },
+      "mode_counts": {
+        "2.5": 24,
+        "5.0": 21,
+        "10.0": 15
+      },
+      "top_counts": [
+        2,
+        2,
+        2,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "union_count": 40,
+      "unavailable": [],
+      "fitted_subsets": 703
+    },
+    {
+      "code": "uNb9QFRL6hY-52",
+      "strata": [
+        "oos"
+      ],
+      "n": 24,
+      "n_computable": 23,
+      "mode_count": 18,
+      "top_support": [
+        0.08333333333333333,
+        0.08333333333333333,
+        0.08333333333333333
+      ],
+      "singleton_mass": 0.5416666666666666,
+      "missing_mass": 0.041666666666666664,
+      "geometry_unusable_mass": 0.0,
+      "reference": {
+        "gt_original": {
+          "weighted_iou_lower": 0.840754121714738,
+          "weighted_iou_upper": 0.8824207883814046,
+          "unknown_mass": 0.041666666666666664,
+          "dominant_iou": 0.8762034150841462,
+          "dominant_tie_count": 5,
+          "tied_dominant_iou_range": [
+            0.8170123633008101,
+            0.9591252186513921
+          ],
+          "tied_dominant_unknown_count": 0,
+          "tied_dominant_bounds": [
+            0.8170123633008101,
+            0.9591252186513921
+          ]
+        },
+        "gt_revised": {
+          "weighted_iou_lower": 0.840754121714738,
+          "weighted_iou_upper": 0.8824207883814046,
+          "unknown_mass": 0.041666666666666664,
+          "dominant_iou": 0.8762034150841462,
+          "dominant_tie_count": 5,
+          "tied_dominant_iou_range": [
+            0.8170123633008101,
+            0.9591252186513921
+          ],
+          "tied_dominant_unknown_count": 0,
+          "tied_dominant_bounds": [
+            0.8170123633008101,
+            0.9591252186513921
+          ]
+        }
+      },
+      "mode_counts": {
+        "2.5": 23,
+        "5.0": 18,
+        "10.0": 8
+      },
+      "top_counts": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "union_count": 29,
+      "unavailable": [
+        {
+          "worker": "W037",
+          "id": "9117118c1ce15fc9",
+          "reason": "existing_pairing_unavailable"
+        }
+      ],
+      "fitted_subsets": 703
+    },
+    {
+      "code": "pRbA3pwrgk9-11",
+      "strata": [
+        "doorway",
+        "oos"
+      ],
+      "n": 20,
+      "n_computable": 17,
+      "mode_count": 16,
+      "top_support": [
+        0.1,
+        0.05,
+        0.05
+      ],
+      "singleton_mass": 0.75,
+      "missing_mass": 0.15,
+      "geometry_unusable_mass": 0.25,
+      "reference": {
+        "gt_original": {
+          "weighted_iou_lower": 0.3644431443404816,
+          "weighted_iou_upper": 0.5144431443404816,
+          "unknown_mass": 0.15,
+          "dominant_iou": 0.5635394880002121,
+          "dominant_tie_count": 1,
+          "tied_dominant_iou_range": [
+            0.5635394880002121,
+            0.5635394880002121
+          ],
+          "tied_dominant_unknown_count": 0,
+          "tied_dominant_bounds": [
+            0.5635394880002121,
+            0.5635394880002121
+          ]
+        },
+        "gt_revised": {
+          "weighted_iou_lower": 0.3644431443404816,
+          "weighted_iou_upper": 0.5144431443404816,
+          "unknown_mass": 0.15,
+          "dominant_iou": 0.5635394880002121,
+          "dominant_tie_count": 1,
+          "tied_dominant_iou_range": [
+            0.5635394880002121,
+            0.5635394880002121
+          ],
+          "tied_dominant_unknown_count": 0,
+          "tied_dominant_bounds": [
+            0.5635394880002121,
+            0.5635394880002121
+          ]
+        }
+      },
+      "mode_counts": {
+        "2.5": 16,
+        "5.0": 16,
+        "10.0": 11
+      },
+      "top_counts": [
+        2,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "union_count": 29,
+      "unavailable": [
+        {
+          "worker": "W001",
+          "id": "082bd5bd0d332eff07b8",
+          "reason": "existing_pairing_unavailable"
+        },
+        {
+          "worker": "W032",
+          "id": "ae6d60e1ea8424ce2357",
+          "reason": "existing_pairing_unavailable"
+        },
+        {
+          "worker": "W012",
+          "id": "e350ecfeaafde6028fcd",
+          "reason": "existing_pairing_unavailable"
+        }
+      ],
+      "fitted_subsets": 570
+    },
+    {
+      "code": "q9vSo1VnCiC-04",
+      "strata": [
+        "doorway"
+      ],
+      "n": 9,
+      "n_computable": 9,
+      "mode_count": 9,
+      "top_support": [
+        0.1111111111111111,
+        0.1111111111111111,
+        0.1111111111111111
+      ],
+      "singleton_mass": 1.0,
+      "missing_mass": 0.0,
+      "geometry_unusable_mass": 0.0,
+      "reference": {
+        "gt_original": {
+          "weighted_iou_lower": 0.6411533946369687,
+          "weighted_iou_upper": 0.6411533946369687,
+          "unknown_mass": 0.0,
+          "dominant_iou": 0.7425342920715258,
+          "dominant_tie_count": 9,
+          "tied_dominant_iou_range": [
+            0.01558918224295942,
+            0.865739073182116
+          ],
+          "tied_dominant_unknown_count": 0,
+          "tied_dominant_bounds": [
+            0.01558918224295942,
+            0.865739073182116
+          ]
+        },
+        "gt_revised": {
+          "weighted_iou_lower": 0,
+          "weighted_iou_upper": 1.0,
+          "unknown_mass": 1.0,
+          "dominant_iou": null,
+          "dominant_tie_count": 9,
+          "tied_dominant_iou_range": null,
+          "tied_dominant_unknown_count": 9,
+          "tied_dominant_bounds": [
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "mode_counts": {
+        "2.5": 9,
+        "5.0": 9,
+        "10.0": 9
+      },
+      "top_counts": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "union_count": 21,
+      "unavailable": [],
+      "fitted_subsets": 176
+    },
+    {
+      "code": "uNb9QFRL6hY-66",
+      "strata": [
+        "difficult"
+      ],
+      "n": 21,
+      "n_computable": 21,
+      "mode_count": 18,
+      "top_support": [
+        0.14285714285714285,
+        0.09523809523809523,
+        0.047619047619047616
+      ],
+      "singleton_mass": 0.7619047619047619,
+      "missing_mass": 0.0,
+      "geometry_unusable_mass": 0.0,
+      "reference": {
+        "gt_original": {
+          "weighted_iou_lower": 0.7176997155414134,
+          "weighted_iou_upper": 0.7176997155414134,
+          "unknown_mass": 0.0,
+          "dominant_iou": 0.7925701657580032,
+          "dominant_tie_count": 1,
+          "tied_dominant_iou_range": [
+            0.7925701657580032,
+            0.7925701657580032
+          ],
+          "tied_dominant_unknown_count": 0,
+          "tied_dominant_bounds": [
+            0.7925701657580032,
+            0.7925701657580032
+          ]
+        },
+        "gt_revised": {
+          "weighted_iou_lower": 0.7176997155414134,
+          "weighted_iou_upper": 0.7176997155414134,
+          "unknown_mass": 0.0,
+          "dominant_iou": 0.7925701657580032,
+          "dominant_tie_count": 1,
+          "tied_dominant_iou_range": [
+            0.7925701657580032,
+            0.7925701657580032
+          ],
+          "tied_dominant_unknown_count": 0,
+          "tied_dominant_bounds": [
+            0.7925701657580032,
+            0.7925701657580032
+          ]
+        }
+      },
+      "mode_counts": {
+        "2.5": 19,
+        "5.0": 18,
+        "10.0": 11
+      },
+      "top_counts": [
+        3,
+        2,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "union_count": 33,
+      "unavailable": [],
+      "fitted_subsets": 596
+    },
+    {
+      "code": "uNb9QFRL6hY-59",
+      "strata": [
+        "difficult"
+      ],
+      "n": 19,
+      "n_computable": 17,
+      "mode_count": 14,
+      "top_support": [
+        0.10526315789473684,
+        0.10526315789473684,
+        0.10526315789473684
+      ],
+      "singleton_mass": 0.5789473684210527,
+      "missing_mass": 0.10526315789473684,
+      "geometry_unusable_mass": 0.0,
+      "reference": {
+        "gt_original": {
+          "weighted_iou_lower": 0.6756375670799747,
+          "weighted_iou_upper": 0.7809007249747115,
+          "unknown_mass": 0.10526315789473684,
+          "dominant_iou": 0.7366687232308445,
+          "dominant_tie_count": 3,
+          "tied_dominant_iou_range": [
+            0.7314699979901208,
+            0.7366687232308445
+          ],
+          "tied_dominant_unknown_count": 0,
+          "tied_dominant_bounds": [
+            0.7314699979901208,
+            0.7366687232308445
+          ]
+        },
+        "gt_revised": {
+          "weighted_iou_lower": 0.6756375670799747,
+          "weighted_iou_upper": 0.7809007249747115,
+          "unknown_mass": 0.10526315789473684,
+          "dominant_iou": 0.7366687232308445,
+          "dominant_tie_count": 3,
+          "tied_dominant_iou_range": [
+            0.7314699979901208,
+            0.7366687232308445
+          ],
+          "tied_dominant_unknown_count": 0,
+          "tied_dominant_bounds": [
+            0.7314699979901208,
+            0.7366687232308445
+          ]
+        }
+      },
+      "mode_counts": {
+        "2.5": 15,
+        "5.0": 14,
+        "10.0": 10
+      },
+      "top_counts": [
+        2,
+        2,
+        2,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "union_count": 23,
+      "unavailable": [
+        {
+          "worker": "W031",
+          "id": "new_94_3635_6925_W031",
+          "reason": "borrowed_point_not_independent_geometric_vote"
+        },
+        {
+          "worker": "W037",
+          "id": "new_94_3635_7036_W037",
+          "reason": "existing_pairing_unavailable"
+        }
+      ],
+      "fitted_subsets": 547
+    },
+    {
+      "code": "uNb9QFRL6hY-41",
+      "strata": [
+        "difficult"
+      ],
+      "n": 19,
+      "n_computable": 19,
+      "mode_count": 17,
+      "top_support": [
+        0.10526315789473684,
+        0.10526315789473684,
+        0.05263157894736842
+      ],
+      "singleton_mass": 0.7894736842105263,
+      "missing_mass": 0.0,
+      "geometry_unusable_mass": 0.0,
+      "reference": {
+        "gt_original": {
+          "weighted_iou_lower": 0.7960644986889648,
+          "weighted_iou_upper": 0.7960644986889648,
+          "unknown_mass": 0.0,
+          "dominant_iou": 0.8715295963739165,
+          "dominant_tie_count": 2,
+          "tied_dominant_iou_range": [
+            0.8474691946514605,
+            0.8715295963739165
+          ],
+          "tied_dominant_unknown_count": 0,
+          "tied_dominant_bounds": [
+            0.8474691946514605,
+            0.8715295963739165
+          ]
+        },
+        "gt_revised": {
+          "weighted_iou_lower": 0.7960644986889648,
+          "weighted_iou_upper": 0.7960644986889648,
+          "unknown_mass": 0.0,
+          "dominant_iou": 0.8715295963739165,
+          "dominant_tie_count": 2,
+          "tied_dominant_iou_range": [
+            0.8474691946514605,
+            0.8715295963739165
+          ],
+          "tied_dominant_unknown_count": 0,
+          "tied_dominant_bounds": [
+            0.8474691946514605,
+            0.8715295963739165
+          ]
+        }
+      },
+      "mode_counts": {
+        "2.5": 18,
+        "5.0": 17,
+        "10.0": 13
+      },
+      "top_counts": [
+        2,
+        2,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "union_count": 34,
+      "unavailable": [],
+      "fitted_subsets": 547
+    }
+  ],
+  "construction": "current prefix only; independent feature union; observed ring branches; within-branch median",
+  "evaluation": "GT only evaluation; median/medoid/tile baselines; spatial OT bounds for disjoint groups",
+  "support_denominator": "all accepted manual/oos inventory in prefix; missing geometry mass retained",
+  "tolerance_deg": [
+    2.5,
+    5.0,
+    10.0
+  ],
+  "default_tolerance_deg": 5.0,
+  "calibrated": false,
+  "status": "exploratory_user_named_eight_images_not_formal_adjudication"
+}

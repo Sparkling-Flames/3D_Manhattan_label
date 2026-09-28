@@ -1,0 +1,30 @@
+{
+  "release": "RC1-20260920",
+  "source_commit": "f4a6f4a3b85c08d8873c8a56066219844dc7c88b",
+  "primary_metric": "split_cyclic",
+  "clustering": "complete",
+  "primary_cut_deg": 9.0,
+  "sensitivity_cut_deg": [
+    6.0,
+    12.0
+  ],
+  "equal_total_count_gate": true,
+  "equal_role_counts_gate": true,
+  "coordinate_rotation": false,
+  "distance_round_decimals": 8,
+  "rounding_is_not_coordinate_edit": true,
+  "exclude_workers": [
+    "W019",
+    "W026"
+  ],
+  "pointset_unavailable_is_not_singleton": true,
+  "top_bottom_role_inference": "accepted supplied roles, otherwise horizon255.5 conditional",
+  "automatic_correspondence_correction": false,
+  "primary_manual_partial_override": false,
+  "population": "frozen canonical independent initial responses per image x original condition",
+  "stop_threshold": "NOT_FROZEN",
+  "window_tail_n": 5,
+  "window_min_total": 8,
+  "bootstrap_seed": 20260920,
+  "primary_scope": "strict equal-count annotation-expression grouping; not physical-room semantics"
+}

@@ -1,0 +1,47 @@
+....F.......                                                             [100%]
+=================================== FAILURES ===================================
+________________ test_comparison_implementation_equals_original ________________
+
+    def test_comparison_implementation_equals_original():
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('replay',c.ROOT/'code/02_replay.py');mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
+>       from tools.thesis_main.analysis.worker_four_block_exploration_20260910 import compare_bits
+
+../panorama_research_20260921/code/test_research.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/thesis_main/analysis/worker_four_block_exploration_20260910.py:14: in <module>
+    from tools.thesis_main.analysis import worker_rule_triad_20260910 as triad
+tools/thesis_main/analysis/worker_rule_triad_20260910.py:10: in <module>
+    from tools.thesis_main.analysis import validate_worker_reuse_20260909 as reuse
+tools/thesis_main/analysis/validate_worker_reuse_20260909.py:17: in <module>
+    from tools.thesis_main.analysis.worker_reference_feasibility_20260909 import (
+tools/thesis_main/analysis/worker_reference_feasibility_20260909.py:12: in <module>
+    from tools.thesis_main.analysis.order_free_cluster_holdout_20260908 import unit_points, point_distances
+tools/thesis_main/analysis/order_free_cluster_holdout_20260908.py:19: in <module>
+    from tools.thesis_main.analysis.geometry_cluster_v2 import _maximum_clique_partitions
+tools/thesis_main/analysis/geometry_cluster_v2.py:11: in <module>
+    from tools.thesis_main.analysis.geometry_consensus.pairwise import pairwise_similarity
+tools/thesis_main/analysis/geometry_consensus/__init__.py:3: in <module>
+    from .representation import normalize_geometry
+tools/thesis_main/analysis/geometry_consensus/representation.py:9: in <module>
+    from tools.thesis_main.analysis.quality_core.geometry_metrics import analyze_layout_pairing
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    """Diagnostic geometry metrics for analyze_quality.
+    
+    These metrics are analysis diagnostics, not admission or routing decisions.
+    """
+    
+    import numpy as np
+    from scipy.optimize import linear_sum_assignment
+    from scipy.signal import savgol_filter
+    from shapely.geometry import Polygon
+    from shapely.validation import make_valid
+    
+>   from lib.misc import panostretch
+E   ModuleNotFoundError: No module named 'lib'
+
+tools/thesis_main/analysis/quality_core/geometry_metrics.py:12: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED ../panorama_research_20260921/code/test_research.py::test_comparison_implementation_equals_original - ModuleNotFoundError: No module named 'lib'
+1 failed, 11 passed in 4.14s

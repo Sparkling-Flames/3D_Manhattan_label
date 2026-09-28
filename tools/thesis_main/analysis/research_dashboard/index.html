@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'none'; object-src 'none'; base-uri 'none'">
+<title>Panorama · 研究仪表盘</title>
+<link rel="stylesheet" href="assets/dashboard.css">
+<script defer src="assets/plotly.min.js"></script><script defer src="assets/data.js"></script><script defer src="assets/dashboard.js"></script>
+</head>
+<body>
+<aside class="sidebar">
+  <a class="brand" href="index.html"><span class="brandmark">◈</span><span>PANORAMA<small>RESEARCH ATLAS</small></span></a>
+  <div class="nav-caption">研究视图 <span>01 — 06</span></div><nav id="navigation" aria-label="研究模块"></nav>
+  <div class="side-note"><span class="online-dot"></span> 离线研究包<p>统计覆盖全部接入数据<br>图像仅包含精选案例</p><span id="side-release"></span></div>
+</aside>
+<div class="page">
+  <header class="topbar"><span>空间标注研究 <span class="slash">/</span> <span id="breadcrumb">数据全景</span></span><button id="definitions">定义与来源 ↗</button></header>
+  <main>
+    <div class="heading"><div><p class="eyebrow" id="eyebrow">01 / DATA LANDSCAPE</p><h1 id="title">数据全景</h1><p id="subtitle" class="subtitle"></p></div><span class="badge" id="release-state">待接入结果</span></div>
+    <section class="filter-panel" aria-label="筛选结果"><div class="panel-label"><strong>查看范围</strong><button id="reset">↺ 重置筛选</button></div><div class="filters" id="filters"></div><div class="compare-bar"><label><input type="checkbox" id="compare"> 明确选择另一组结果进行对照</label><select id="compare-view" aria-label="对照结果切片" hidden></select></div><p id="scope" role="status"></p></section>
+    <div id="results"></div>
+    <section class="image-section"><div class="section-title"><h2>图片与案例索引</h2><span id="image-count"></span></div><p class="muted">所有接入图片均可查询统计；图像、点集与 3D 仅随精选清单发布。</p><label class="search-label">查找图片 <input id="image-search" type="search" placeholder="图片、建筑、房间或场景" autocomplete="off"></label><div id="image-list"></div></section>
+    <section class="definitions"><div class="section-title"><h2>理解本模块</h2><span>定义 · 边界 · 接入位置</span></div><div id="definition-cards"></div></section>
+    <footer><span>Panorama Studio / Research Atlas</span><span id="footer-release"></span></footer>
+  </main>
+</div>
+<aside id="drawer" class="drawer" aria-label="案例与说明" hidden><div class="drawer-top"><strong id="drawer-title">案例详情</strong><div><button id="detail-reset">↺ 重置详情</button><button id="close-drawer" aria-label="关闭详情">✕</button></div></div><div id="drawer-content"></div></aside>
+<div id="fatal" role="alert" hidden></div>
+</body>
+</html>

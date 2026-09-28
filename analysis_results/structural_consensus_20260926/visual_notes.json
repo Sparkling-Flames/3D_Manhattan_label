@@ -1,0 +1,61 @@
+{
+  "schema": "structural_consensus_visual_observations_20260926_v1",
+  "method": "直接只读查看仓库原始全景图；未查看算法输出后修改标签，不修改标注或排序。",
+  "purpose": "记录可见的结构和范围歧义线索，不作为共识模式的真假裁决。",
+  "observations": [
+    {
+      "code": "B6ByNegPMKs-11",
+      "image_id": "B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086",
+      "image_path": "data/mp3d_layout/test/img/B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086.png",
+      "visible_facts": "可见多处门口、玻璃围合的走廊/房间及近处圆柱；圆柱遮挡后方结构。",
+      "interpretation": "圆柱表面不能直接用标准直角墙代替；柱子是否纳入目标边界需要标注定义。",
+      "limitations": "不能由可见圆柱和门口推断完整墙环，也不能确认用户所说的旧簇2是否正确。",
+      "verdict": "not_adjudicated"
+    },
+    {
+      "code": "B6ByNegPMKs-43",
+      "image_id": "B6ByNegPMKs_d2dcbd73533446dcaf50e6be98c30386",
+      "image_path": "data/mp3d_layout/test/img/B6ByNegPMKs_d2dcbd73533446dcaf50e6be98c30386.png",
+      "visible_facts": "左侧小房间、中央入口墙体、右侧长走廊和玻璃隔断均可见。",
+      "interpretation": "小房间与相连走廊是否合并为目标空间，可能产生不同范围选择。",
+      "limitations": "可见范围歧义不等于任意连接都合理；未裁定单个模式。",
+      "verdict": "not_adjudicated"
+    },
+    {
+      "code": "7y3sRwLe3Va-12",
+      "image_id": "7y3sRwLe3Va_6376b741b50a4418b3dc3fde791c3c09",
+      "image_path": "data/mp3d_layout/test/img/7y3sRwLe3Va_6376b741b50a4418b3dc3fde791c3c09.png",
+      "visible_facts": "可见上层走廊、栏杆、向下的挑空区域及相连门口。",
+      "interpretation": "把栏杆或挑空区域同时纳入单一地板与统一墙高模型会遇到表示问题。",
+      "limitations": "未判定整图正式OOS，也未判定各人的边界选择。",
+      "verdict": "not_adjudicated"
+    },
+    {
+      "code": "UwV83HsGsw3-06",
+      "image_id": "UwV83HsGsw3_528d342bf5494b3b94983545d6a1a282",
+      "image_path": "data/mp3d_layout/test/img/UwV83HsGsw3_528d342bf5494b3b94983545d6a1a282.png",
+      "visible_facts": "可见开放厨房/餐区与整面通透玻璃外边界；部分玻璃门开启，室外平台可见。",
+      "interpretation": "透过玻璃看到的区域与应标注的室内范围需要区分。",
+      "limitations": "仅凭通透玻璃不能断言不可标注，也不证明某个共识模式可靠。",
+      "verdict": "not_adjudicated"
+    },
+    {
+      "code": "pRbA3pwrgk9-01",
+      "image_id": "pRbA3pwrgk9_0350fc96e88c4a52886d4eb50b2d52c6",
+      "image_path": "data/mp3d_layout/valid/img/pRbA3pwrgk9_0350fc96e88c4a52886d4eb50b2d52c6.png",
+      "visible_facts": "浴室和卧室分别可见，隔墙及开启门扇遮挡部分连接位置。",
+      "interpretation": "入口处可能有浴室、卧室或两者合并等目标范围解释；遮挡限制完整结构判断。",
+      "limitations": "仅3份当前accepted标注；多模式支持不足与视觉合理性要分别解释。",
+      "verdict": "not_adjudicated"
+    },
+    {
+      "code": "uNb9QFRL6hY-51",
+      "image_id": "uNb9QFRL6hY_a372582c11864f31a9dd174e4a0ae6ad",
+      "image_path": "data/mp3d_layout/test/img/uNb9QFRL6hY_a372582c11864f31a9dd174e4a0ae6ad.png",
+      "visible_facts": "可见玻璃围合餐区、相连开放厨房、柱/梁和上方玻璃区域。",
+      "interpretation": "不同顶部结构并存时，统一墙高的取值与目标空间定义需要先说明。",
+      "limitations": "未确认顶部具体几何或完整墙环，未将图片暂缓标签升级为正式OOS。",
+      "verdict": "not_adjudicated"
+    }
+  ]
+}

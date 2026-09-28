@@ -1,0 +1,132 @@
+{
+  "status": "validated_all_five_models_648_images",
+  "human_outcomes_used_for_model_selection": false,
+  "visual_checks": [
+    {
+      "model": "hohonet",
+      "image_id": "2t7WUuJeko7_073656b4030d4389ba7f304298be1d73",
+      "check": "Four restored yaw boundary overlays on the same panorama",
+      "result": "Coordinate alignment visually consistent; no physical correctness claim",
+      "temporary_screenshot_cleaned": true
+    },
+    {
+      "model": "hohonet",
+      "image_id": "B6ByNegPMKs_bdc0695537064383b5cc5dbcff2a0b99",
+      "check": "Official fallback warning investigated using 0/90 degree corner overlays",
+      "corner_counts_by_yaw": {
+        "0": 12,
+        "90": 8,
+        "180": 12,
+        "270": 12
+      },
+      "result": "90 degree phase invokes official cuboid fallback; separate postprocessing-induced topology change from raw prediction differences",
+      "temporary_screenshot_cleaned": true
+    },
+    {
+      "model": "bilayout",
+      "image_id": "2t7WUuJeko7_073656b4030d4389ba7f304298be1d73",
+      "check": "90 degree phase both predicted heads floating corner overlays",
+      "result": "Restored overlay aligns with source panorama; no physical correctness claim",
+      "temporary_screenshot_cleaned": true
+    },
+    {
+      "model": "ulayout",
+      "image_id": "2t7WUuJeko7_073656b4030d4389ba7f304298be1d73",
+      "check": "90 degree phase continuous predicted ceiling/floor boundaries",
+      "result": "Restored overlay aligns with source panorama; no physical correctness claim",
+      "temporary_screenshot_cleaned": true
+    },
+    {
+      "model": "da3",
+      "image_id": "2t7WUuJeko7_073656b4030d4389ba7f304298be1d73",
+      "check": "Front/up/down cubefaces and single-face depth",
+      "result": "Projection orientation visually consistent. Nadir blur also produces predicted depth; fixed nadir mask supplied for sensitivity, not observed visibility.",
+      "temporary_screenshot_cleaned": true
+    }
+  ],
+  "visual_traits": "648 thumbnail first pass plus fixed 21 original-resolution reviews; limitations in visual/FIELDS_ZH.md",
+  "protocol_boundary": "No original export, normative method contract, collection plan or Label Studio state changed",
+  "da3_pair_numeric_review": {
+    "pair_id": "pair0000",
+    "max_same_capture_rotation_degrees": 108.15,
+    "interpretation": "Camera consistency failure candidate; projectability and 5% predicted depth agreement do not establish physical matches"
+  },
+  "layout_runtime_versions": {
+    "hohonet": {
+      "python": "3.11.7",
+      "torch": "2.11.0+cu128",
+      "numpy": "1.26.4",
+      "opencv": "4.11.0"
+    },
+    "bilayout": {
+      "python": "3.11.7",
+      "torch": "2.10.0+cu130",
+      "numpy": "1.26.4",
+      "opencv": "4.10.0"
+    }
+  },
+  "verification": {
+    "unit_tests": "14 passed: common, bundle, layout, output audit, modern, visual traits",
+    "bundle_check": {
+      "images": 648,
+      "responses": 2501,
+      "original_images_required": false,
+      "status": "passed"
+    },
+    "modern_complete_payload_images": {
+      "ulayout": 648,
+      "da3": 648,
+      "dinov3": 648
+    },
+    "da3_multiview": {
+      "expected_pairs": 316,
+      "validated_pairs": 316,
+      "invalid_pairs": [],
+      "main_room_relation_eligible_pairs": 180,
+      "overlap_pending_or_unsupported_pairs": 136,
+      "max_within_capture_rotation_degrees_per_pair": {
+        "min": 37.81,
+        "median": 138.31,
+        "max": 179.97
+      },
+      "interpretation": "Widespread inconsistency with known rigid six-face geometry. Numeric projectability is not physically validated correspondence."
+    },
+    "layout_complete_payload_images": {
+      "hohonet": 648,
+      "bilayout": 648,
+      "invalid_image_ids": []
+    },
+    "dinov3": {
+      "status": "passed",
+      "checkpoint": "dinov3_vitb16_pretrain_lvd1689m-73cec8be.pth",
+      "checkpoint_bytes": 342860279,
+      "source": "User-provided Meta official licensed download; earlier HF access rejection resolved through Meta download",
+      "strict_state_dict_load": true,
+      "restricted_weights_only_load": true,
+      "frozen": true,
+      "architecture": {
+        "blocks": 12,
+        "channels": 768,
+        "patch_size": 16
+      },
+      "selected_one_based_blocks": [
+        3,
+        6,
+        9,
+        11,
+        12
+      ],
+      "official_final_patch_and_cls_exact_match": true,
+      "official_equivalence_input": "Deterministic 64x64 RGB numeric fixture; CPU float32; not an outcome-based layer selection",
+      "first_image_raw_shape_and_finite_check": "2t7WUuJeko7_073656b4030d4389ba7f304298be1d73",
+      "raw_dtype": "float16",
+      "pooled_dtype": "float32",
+      "normalization": "RGB/255 then ImageNet mean (.485,.456,.406), std (.229,.224,.225); official norm=True intermediate outputs; CLS/register tokens excluded from patch grid",
+      "scope": "Extraction validation only; no statistical relationship with human uncertainty or convergence established",
+      "complete_payload_images": 648,
+      "failed_images": 0
+    }
+  },
+  "map_and_index": "Registered exploratory package and tools in docs/README_INDEX.md and docs/PROJECT_MAP_CLEAN_20260308.md; no formal protocol change.",
+  "tests_not_run": "Unrelated formal Paper A / Label Studio operational suites: this change does not modify those workflows."
+}

@@ -1,0 +1,21 @@
+ERROR: found no collectors for C:\Users\ASUS\Downloads\clustering_numeric_full_20260920\clustering_numeric_20260920\tests
+
+
+=================================== ERRORS ====================================
+________________________ ERROR collecting test session ________________________
+D:\anaconda\Lib\site-packages\_pytest\runner.py:361: in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+D:\anaconda\Lib\site-packages\_pytest\runner.py:406: in collect
+    return list(collector.collect())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\anaconda\Lib\site-packages\_pytest\main.py:569: in collect
+    for direntry in scandir(self.path):
+                    ^^^^^^^^^^^^^^^^^^
+D:\anaconda\Lib\site-packages\_pytest\pathlib.py:954: in scandir
+    scandir_iter = os.scandir(path)
+                   ^^^^^^^^^^^^^^^^
+E   PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\ASUS'
+=========================== short test summary info ===========================
+ERROR D:\Work\HOHONET::::Users::ASUS - PermissionError: [WinError 5] 拒绝访问...
+1 error in 0.33s

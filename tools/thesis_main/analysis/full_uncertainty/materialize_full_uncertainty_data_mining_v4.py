@@ -1997,7 +1997,7 @@ def input_provenance() -> pd.DataFrame:
         PACKAGE / "raw_active_event_fact.csv",
         PACKAGE / "semi_review_fact.csv",
         C1_AUDIT / "c1_canonical_geometry.jsonl",
-        ROOT / "docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json",
+        ROOT / "docs/thesis_main/PAPER_A_METHOD_CONTRACT_20260811_v23.json",
         ROOT / "docs/thesis_main/ROUND_BASED_ASSIGNMENT_SOP_v1.md",
         ROOT / "docs/thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md",
     ]

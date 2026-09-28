@@ -199,7 +199,7 @@ def main():
         user_decisions=dict(new_worker_id=None,low_n='真实低人数观察结论＋15人以上待验证预测',priority='补齐预测、已有高人数历史、按研究用途安排'))
     (OUT/'全历史覆盖机器表.json').write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
     report=['# 全历史图片与人员覆盖准备方案','',
-        '独立复核结论及使用限制见[审查记录](../../docs/thesis_main/全历史覆盖方案独立复核_20260916.md)；本生成说明不替代人工采用复核和派发前检查。',
+        '独立复核结论及使用限制见[审查记录](../../docs/legacy/paper_a_before_consensus_20260928/historical_discussion/全历史覆盖方案独立复核_20260916.md)；本生成说明不替代人工采用复核和派发前检查。',
         f'覆盖全部648张分类图片、{stats["history_images"]}张可纳入手工历史图、{stats["history_pairs"]}份手工历史；26人历史身份保留，W019/W026不计主数量。',
         f'具体拟安排{stats["proposed_pairs"]}份，涉及{stats["proposed_images"]}张图片：新人{stats["new_pairs"]}份、旧中文{stats["existing_pairs"]}份。新人实际ID全部为空，“新人安排01—15”仅为安排位置。',
         f'共同历史图22张，其中{stats["core_review_needed"]}张尚需本次复核。其余592份用于已采用图片补缺。共同历史选择优先不同房间及已采用组，再平衡场景/building及旧中文连接；未按收敛结果筛选。',

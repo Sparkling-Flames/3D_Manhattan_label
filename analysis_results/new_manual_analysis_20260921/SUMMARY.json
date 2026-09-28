@@ -1,0 +1,62 @@
+{
+  "raw_history": 2501,
+  "raw_new": 649,
+  "sources": [
+    "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+    "export_label/新增英文30+20图/project-94-at-2026-09-20-13-45-d09d9d53.json",
+    "export_label/新增英文30+20图/project-95-at-2026-09-20-13-44-3fe72103.json"
+  ],
+  "flags": {
+    "parent_annotation_independence_pending": 45,
+    "prior_exposure_not_new_independent_vote": 10,
+    "empty_points": 4,
+    "odd_unconfirmed": 2,
+    "multiple_submissions_version_pending": 2
+  },
+  "strict_new": 586,
+  "conditional_new": 631,
+  "assignments": {
+    "outside_required": 7,
+    "required": 481,
+    "optional": 161
+  },
+  "strict_assignment_counts": {
+    "outside_required": 5,
+    "required": 435,
+    "optional": 146
+  },
+  "binding_eligible": {
+    "historical": 2343,
+    "strict": 2925,
+    "conditional": 2970
+  },
+  "units": {
+    "historical": 238,
+    "strict": 283,
+    "conditional": 283
+  },
+  "new_pairing_alerts": 2,
+  "historical_point_payloads_preserved": true,
+  "parent_exact_point_copies": 24,
+  "new_time_status": "未冻结，不以lead_time替代",
+  "methods": "原有min_horizontal点对＋按固定起点环序逐端点最大距离；6/9/12°及等值像素探针；完整链接与真实代表半径。不同有效点数硬分开。无IoU。",
+  "review_status": "7组35图采用；G180四图条件暂缓；子图未填，无冲突。用途空白不补成无用途。",
+  "prediction_scope": "探索性同图留出／有限人员池覆盖预测，不是前瞻冻结停止人数验证。借用点补全作答不进入transfer。",
+  "source_versions": [
+    {
+      "path": "export_label/新增中文20图/project-93-at-2026-09-21-04-34-9e224397.json",
+      "size": 687317,
+      "sha256": "5cf910094dcb0cac6f2456c4927d4147d9062beee8951b955257ff19239127f9"
+    },
+    {
+      "path": "export_label/新增英文30+20图/project-94-at-2026-09-20-13-45-d09d9d53.json",
+      "size": 1077697,
+      "sha256": "219f040672ffc92ca6f76c01ed9180ff317bf872200b202fe6de0f7bd00fea86"
+    },
+    {
+      "path": "export_label/新增英文30+20图/project-95-at-2026-09-20-13-44-3fe72103.json",
+      "size": 534287,
+      "sha256": "4da21e1659e9b28e31e21400d7ef06b617e36c01d867c551088cbde15a8ed701"
+    }
+  ]
+}

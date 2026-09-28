@@ -1,0 +1,27 @@
+{
+  "schema": "consensus_numeric_pilot_v2",
+  "groups": 284,
+  "audit_rows": 6038,
+  "quality_rows": 12076,
+  "quality_status": {
+    "ok": 11590,
+    "not_evaluable": 486
+  },
+  "endpoint_rows": 3408,
+  "endpoint_status": {
+    "ok": 2808,
+    "unavailable": 562,
+    "not_evaluable": 36,
+    "max_iterations": 2
+  },
+  "representation_failures": {
+    "longitude_span_at_least_half_circle": 92,
+    "duplicate_longitude_envelope_unresolved": 62,
+    "pairing_unavailable": 82,
+    "degenerate": 12,
+    "curve_requires_ceiling_above_and_floor_below_horizon": 1,
+    "insufficient_or_invalid_pairs": 2
+  },
+  "scope": "全量两种边界个体诊断及曲线全成员端点；不是完整前缀、分类或同房预测实验",
+  "new_visual_exclusions": 0
+}

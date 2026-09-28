@@ -1,0 +1,118 @@
+{
+  "distance_reconstruction_max_error": 0.0,
+  "verified_source_pairs": 19196,
+  "response_N_distribution": {
+    "1": 21,
+    "2": 20,
+    "3": 11,
+    "4": 8,
+    "5": 45,
+    "6": 22,
+    "7": 3,
+    "8": 18,
+    "9": 4,
+    "10": 1,
+    "11": 2,
+    "12": 7,
+    "15": 15,
+    "16": 1,
+    "17": 2,
+    "18": 1,
+    "19": 5,
+    "20": 3,
+    "21": 3,
+    "22": 1,
+    "23": 17,
+    "24": 30
+  },
+  "n_images_at_least": {
+    "2": 219,
+    "4": 188,
+    "5": 180,
+    "8": 110,
+    "10": 88,
+    "12": 85,
+    "15": 78,
+    "18": 60,
+    "20": 54,
+    "24": 30
+  },
+  "n_pairs": 19196,
+  "diagnostic_case_counts": {
+    "count_gate": 7748,
+    "fixed_near": 7569,
+    "still_far": 3861,
+    "free_only_rescue": 15,
+    "cyclic_rescue": 3
+  },
+  "same_count_pairs": 11448,
+  "far_same_count_single_endpoint": 1038,
+  "far_same_count_single_corner": 1654,
+  "far_same_count_most_80pct_corners_near": 445,
+  "different_count_partial80": 1163,
+  "bottleneck_role": {
+    "bottom": 2024,
+    "top": 1855
+  },
+  "n_ge8_images": 110,
+  "methods": {
+    "complete": {
+      "12.8": {
+        "median_K_ge8": 9.5,
+        "mean_single_mass_ge8": 0.446851321152677,
+        "unified_ge8": 2
+      },
+      "25.6": {
+        "median_K_ge8": 6.0,
+        "mean_single_mass_ge8": 0.28170028274751474,
+        "unified_ge8": 7
+      },
+      "51.2": {
+        "median_K_ge8": 4.0,
+        "mean_single_mass_ge8": 0.2109610799675381,
+        "unified_ge8": 15
+      },
+      "near_split_count": 1864,
+      "far_join_count": 0
+    },
+    "representative": {
+      "12.8": {
+        "median_K_ge8": 8.0,
+        "mean_single_mass_ge8": 0.4272746511878323,
+        "unified_ge8": 5
+      },
+      "25.6": {
+        "median_K_ge8": 5.0,
+        "mean_single_mass_ge8": 0.27445310743709833,
+        "unified_ge8": 14
+      },
+      "51.2": {
+        "median_K_ge8": 4.0,
+        "mean_single_mass_ge8": 0.20724723042572932,
+        "unified_ge8": 18
+      },
+      "near_split_count": 103,
+      "far_join_count": 766
+    }
+  },
+  "local_at8": {
+    "pools": 72,
+    "locally_mean_le02_joint_ge05": 1,
+    "all_corners_le02_joint_ge05": 0
+  },
+  "qualifications": "Count mismatches and optimal matching rescues are measurable sensitivities, not adjudicated error fractions. Local pools exclude other point counts.",
+  "uNb21_approved_mapping": {
+    "a": "8178591994d42ce3",
+    "b": "a4e0cac5adec2e1e",
+    "fixed_max": 92.5672821008675,
+    "reviewed_max": 14.435625032737509,
+    "mapping": [
+      1,
+      2,
+      4,
+      3,
+      5,
+      6
+    ]
+  }
+}

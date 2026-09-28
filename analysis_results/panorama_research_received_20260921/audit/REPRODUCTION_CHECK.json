@@ -1,0 +1,337 @@
+{
+  "tolerance": {
+    "atol": 1e-09,
+    "rtol": 1e-09
+  },
+  "files": [
+    {
+      "file": "case_spatial_source_excerpts.json",
+      "local_exists": true,
+      "equal": false,
+      "disposition": "随人工候选替换而变化。"
+    },
+    {
+      "file": "common_worker_control_summary.json",
+      "local_exists": true,
+      "equal": true
+    },
+    {
+      "file": "composition_summary.json",
+      "local_exists": true,
+      "equal": true
+    },
+    {
+      "file": "current_memberships.csv",
+      "local_exists": true,
+      "equal": true,
+      "rows": 4888
+    },
+    {
+      "file": "eligibility_reconstructed.csv.gz",
+      "local_exists": true,
+      "equal": true,
+      "rows": 3152
+    },
+    {
+      "file": "floating_roundoff.csv.gz",
+      "local_exists": true,
+      "equal": false,
+      "reason": "No columns to parse from file",
+      "disposition": "本机没有源距离尾差，因此原脚本写出无列空表。"
+    },
+    {
+      "file": "frozen_time_panel.csv",
+      "local_exists": true,
+      "equal": true,
+      "rows": 1426
+    },
+    {
+      "file": "geometry_summary.json",
+      "local_exists": true,
+      "equal": false,
+      "disposition": "3D拟合数值随依赖环境变化，成功/失败状态一致。"
+    },
+    {
+      "file": "image_metrics.csv",
+      "local_exists": true,
+      "equal": true,
+      "rows": 240
+    },
+    {
+      "file": "image_person_variance_description.json",
+      "local_exists": true,
+      "equal": true
+    },
+    {
+      "file": "js_projector_inputs.json",
+      "local_exists": true,
+      "equal": true
+    },
+    {
+      "file": "js_projector_validation.json",
+      "local_exists": true,
+      "equal": true
+    },
+    {
+      "file": "local_vs_joint.csv",
+      "local_exists": true,
+      "equal": true,
+      "rows": 505
+    },
+    {
+      "file": "manual_semantic_case_queue.csv",
+      "local_exists": true,
+      "equal": false,
+      "reason": "DataFrame.iloc[:, 0] (column name=\"image_id\") are different\n\nDataFrame.iloc[:, 0] (column name=\"image_id\") values are different (16.66667 %)\n[index]: [0, 1, 2, 3, 4, 5]\n[left]:  [uNb9QFRL6hY_3b9e548b46af4410b97e1d12781ec3c9, yqstnuAEVhm_e3face7b2196414d95ed97151aa13058, yqstnuAEVhm_9de98503fd994452b627cdcc7a7d47b2, uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5, 7y3sRwLe3Va_4291cbfde1024467b1548934653f07ce, rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5]\n[right]: [uNb9QFRL6hY_3b9e548b46af4410b97e1d12781ec3c9, yqstnuAEVhm_e3face7b2196414d95ed97151aa13058, yqstnuAEVhm_9de98503fd994452b627cdcc7a7d47b2, uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5, 7y3sRwLe3Va_4291cbfde1024467b1548934653f07ce, uNb9Q",
+      "disposition": "并列排序缺少固定第二排序键，人工候选发生替换。"
+    },
+    {
+      "file": "measurement_summary.json",
+      "local_exists": true,
+      "equal": true
+    },
+    {
+      "file": "model_feature_lobo_predictions.csv",
+      "local_exists": true,
+      "equal": true,
+      "rows": 548
+    },
+    {
+      "file": "model_feature_summary.json",
+      "local_exists": true,
+      "equal": true
+    },
+    {
+      "file": "model_N_roster_controls.csv",
+      "local_exists": true,
+      "equal": true,
+      "rows": 1370
+    },
+    {
+      "file": "model_N_roster_controls_summary.json",
+      "local_exists": true,
+      "equal": true
+    },
+    {
+      "file": "oos_retention_summary.json",
+      "local_exists": true,
+      "equal": true
+    },
+    {
+      "file": "optional_new_common_panel_costs.csv",
+      "local_exists": true,
+      "equal": true,
+      "rows": 41
+    },
+    {
+      "file": "order_variability.csv",
+      "local_exists": true,
+      "equal": true,
+      "rows": 876
+    },
+    {
+      "file": "pair_diagnostics.csv.gz",
+      "local_exists": true,
+      "equal": true,
+      "rows": 19196
+    },
+    {
+      "file": "permutation_MC_precision.csv",
+      "local_exists": true,
+      "equal": true,
+      "rows": 220
+    },
+    {
+      "file": "permutation_MC_precision_summary.json",
+      "local_exists": true,
+      "equal": true
+    },
+    {
+      "file": "q9_preexisting_range_review.json",
+      "local_exists": true,
+      "equal": true
+    },
+    {
+      "file": "ray_derivative_probes.csv.gz",
+      "local_exists": true,
+      "equal": true,
+      "rows": 12781
+    },
+    {
+      "file": "regularization_mechanism_inputs_outputs.json",
+      "local_exists": true,
+      "equal": false,
+      "disposition": "同一输入的拟合输出有数值差异，原件与本机值均保留。"
+    },
+    {
+      "file": "regularization_mechanism_panel.csv",
+      "local_exists": true,
+      "equal": false,
+      "reason": "DataFrame.iloc[:, 10] (column name=\"fit_residual_mean_deg\") are different\n\nDataFrame.iloc[:, 10] (column name=\"fit_residual_mean_deg\") values are different (47.82609 %)\n[index]: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45]\n[left]:  [0.756493552226852, 0.7942652212829644, 0.6654132034274425, 1.2087914302851277, 2.23350463183914, nan, 5.616213025970717, 1.600484396965796, 0.2075227600042347, 0.2090441639051344, 4.97168335628873, 2.9593577010008705, 2.1595245914304355, nan, 8.43414128935369, 11.113242353045951, 1.4648018448973184, 0.7988994041537338, 0.78578271523942",
+      "disposition": "拟合残差最大差约0.00000263度，未改状态。"
+    },
+    {
+      "file": "replay_cache_manifest.json",
+      "local_exists": true,
+      "equal": true
+    },
+    {
+      "file": "replay_curves.json",
+      "local_exists": true,
+      "equal": true
+    },
+    {
+      "file": "replay_failure_reasons.json",
+      "local_exists": true,
+      "equal": true
+    },
+    {
+      "file": "replay_onsets.csv",
+      "local_exists": true,
+      "equal": true,
+      "rows": 10512
+    },
+    {
+      "file": "replay_order_onsets.csv.gz",
+      "local_exists": true,
+      "equal": true,
+      "rows": 175200
+    },
+    {
+      "file": "replay_orders.json",
+      "local_exists": true,
+      "equal": true
+    },
+    {
+      "file": "replay_prefixes.csv.gz",
+      "local_exists": true,
+      "equal": true,
+      "rows": 266400
+    },
+    {
+      "file": "replay_reasons.csv.gz",
+      "local_exists": true,
+      "equal": true,
+      "rows": 266400
+    },
+    {
+      "file": "replay_summary.json",
+      "local_exists": true,
+      "equal": true
+    },
+    {
+      "file": "response_metrics.csv",
+      "local_exists": true,
+      "equal": true,
+      "rows": 2444
+    },
+    {
+      "file": "retained_oos_lane.csv",
+      "local_exists": true,
+      "equal": true,
+      "rows": 240
+    },
+    {
+      "file": "room_inventory.csv",
+      "local_exists": true,
+      "equal": true,
+      "rows": 155
+    },
+    {
+      "file": "room_scene_predictions.csv",
+      "local_exists": true,
+      "equal": true,
+      "rows": 1506
+    },
+    {
+      "file": "room_scene_summary.json",
+      "local_exists": true,
+      "equal": true
+    },
+    {
+      "file": "same_composition_member_examples.csv",
+      "local_exists": true,
+      "equal": true,
+      "rows": 201
+    },
+    {
+      "file": "same_room_identical_workers.csv",
+      "local_exists": true,
+      "equal": true,
+      "rows": 563
+    },
+    {
+      "file": "same_room_onset_transfer.csv",
+      "local_exists": true,
+      "equal": true,
+      "rows": 510
+    },
+    {
+      "file": "same_room_onset_transfer_summary.json",
+      "local_exists": true,
+      "equal": true
+    },
+    {
+      "file": "team_composition_variance.csv.gz",
+      "local_exists": true,
+      "equal": true,
+      "rows": 2778
+    },
+    {
+      "file": "team_panels.csv",
+      "local_exists": true,
+      "equal": true,
+      "rows": 463
+    },
+    {
+      "file": "time_summary.json",
+      "local_exists": true,
+      "equal": true
+    },
+    {
+      "file": "uNb21_endpoint_before_after.json",
+      "local_exists": true,
+      "equal": true
+    },
+    {
+      "file": "uNb47_local_coverage_curve.csv",
+      "local_exists": true,
+      "equal": true,
+      "rows": 88
+    },
+    {
+      "file": "uNb47_local_stage_case.json",
+      "local_exists": true,
+      "equal": true
+    },
+    {
+      "file": "validation.json",
+      "local_exists": true,
+      "equal": false,
+      "disposition": "本机源严格校验通过；Pro环境有浮点尾差。"
+    },
+    {
+      "file": "worker_image_dependence.csv",
+      "local_exists": true,
+      "equal": true,
+      "rows": 25
+    },
+    {
+      "file": "worker_lobo_predictions.csv.gz",
+      "local_exists": true,
+      "equal": true,
+      "rows": 42300
+    },
+    {
+      "file": "worker_lobo_profiles.csv",
+      "local_exists": true,
+      "equal": true,
+      "rows": 1050
+    },
+    {
+      "file": "worker_prediction_summary.json",
+      "local_exists": true,
+      "equal": true
+    }
+  ]
+}

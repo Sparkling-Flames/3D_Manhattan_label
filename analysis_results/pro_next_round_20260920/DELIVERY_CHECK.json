@@ -1,0 +1,16 @@
+{
+  "date": "2026-09-20",
+  "environment": "Windows, Python 3.11.7, numpy 1.26.4, pandas 2.3.1, scipy 1.11.4",
+  "isolated_extraction": true,
+  "requires_original_repository_paths": false,
+  "supported_scope": "数值复算；不含未打包Studio原图库的界面生成",
+  "input_and_user_anchor_verification": "passed",
+  "paired_split_full_run": {"exit_code": 0, "compared_tables": 25, "different_tables": 0},
+  "local_point_nine_stages": {"exit_code": 0, "compared_tables": 25, "different_tables": 13, "interpretation": "旧包浮点阈值与代表选择差异已记录，不宣称全表一致"},
+  "independent_tests": {"passed": 8, "failed": 0},
+  "new_task_and_delivery_links": "passed",
+  "formal_protocol_contract_changed": false,
+  "raw_exports_or_time_logs_changed": false,
+  "new_human_cluster_decision_inferred": false,
+  "cleanup": "验收临时解压目录在Git上传前删除；保留交付证据和可再生成输入"
+}

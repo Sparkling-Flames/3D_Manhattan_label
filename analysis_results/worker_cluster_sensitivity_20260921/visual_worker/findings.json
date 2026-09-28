@@ -1,0 +1,701 @@
+{
+  "scope": "8个人工目的性挑选作答对；W037六例、W012及W034各一例；非随机质量率估计",
+  "source": "固定的20260921独立复算快照，2444作答/240图；不改变原始标注与既有人工作答裁决",
+  "method": "按完整链接单人簇分类筛选，限定N>=8且基础全景可读取；覆盖无同点数伙伴、同点数远邻和阈内近邻仍单簇。无同点数时对比最大簇中canonical id最小成员，非语义最近人。所有8张双层面板均以view_image实际检查。",
+  "limitations": [
+    "AI初核不是人工GT；未按整图全员逐份验收",
+    "目的性选例不能估计W037或其他工人的错误率",
+    "固定对应下的距离不保证角点语义相同",
+    "未重新裁决uNb21既有映射或W037的7036原样观察决定"
+  ],
+  "cases": [
+    {
+      "case": 1,
+      "code": "B6ByNegPMKs-33",
+      "image_id": "B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993",
+      "workers": [
+        "W037",
+        "W014"
+      ],
+      "ids": [
+        "10a21bed4417e7b9",
+        "0d9906c4c8bb57f8"
+      ],
+      "N": 23,
+      "point_counts": [
+        6,
+        8
+      ],
+      "distance_px": null,
+      "comparison": "canonical-first member of largest complete cluster; no same-count peer",
+      "pairs_1based": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            8,
+            7
+          ]
+        ]
+      ],
+      "visual_reviewed": true,
+      "reviewer": "AI visual_worker",
+      "user_decision": null,
+      "category": "疑似遗漏；不能仅据单簇定错",
+      "visual_observation": "W037仅3对角点；左侧p1/p2标走廊尽头，右侧p3–p6标另一端。W014还在玻璃隔断左端立边设置p3/p4，W037没有对应角点。可见透明/磨砂隔断确有边界，但玻璃是否作为布局边界需协议解释，不能自动判为粗心。",
+      "recommendation": "优先核查玻璃隔断范围规则；点数硬门槛导致分开，调25.6无法解决。",
+      "focus_worker_point_indices_1based": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "case": 2,
+      "code": "uNb9QFRL6hY-26",
+      "image_id": "uNb9QFRL6hY_5b62816d9cf94f17ae166291822ea9ab",
+      "workers": [
+        "W037",
+        "W028"
+      ],
+      "ids": [
+        "new_94_3626_7040_W037",
+        "3bf751765858f968e01b"
+      ],
+      "N": 19,
+      "point_counts": [
+        26,
+        16
+      ],
+      "distance_px": null,
+      "comparison": "canonical-first member of largest complete cluster; no same-count peer",
+      "pairs_1based": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            9,
+            12
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            13,
+            14
+          ],
+          [
+            15,
+            16
+          ],
+          [
+            17,
+            19
+          ],
+          [
+            18,
+            20
+          ],
+          [
+            26,
+            25
+          ],
+          [
+            21,
+            24
+          ],
+          [
+            22,
+            23
+          ]
+        ],
+        [
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            9,
+            10
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            13,
+            14
+          ],
+          [
+            15,
+            16
+          ]
+        ]
+      ],
+      "visual_reviewed": true,
+      "reviewer": "AI visual_worker",
+      "user_decision": null,
+      "category": "疑似不符合房间包络的质量问题",
+      "visual_observation": "W037的p21–p24围绕右侧窗框而非该处完整墙角；p2/p4/p6落洗手台台面附近，p14/p16/p19/p20落浴缸上沿附近。p7/p8选择左侧凸柱附近但较W028的完整外角位置偏左。多个物体边缘被当作布局端点的迹象明显；同时此图有门洞和转折，不能把26点整体简单称为乱标。",
+      "recommendation": "该作答值得按墙顶/墙地边界定义做独立质量复审；不能直接据此取消W037全部作答资格。",
+      "focus_worker_point_indices_1based": [
+        2,
+        4,
+        6,
+        7,
+        8,
+        14,
+        16,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24
+      ],
+      "overlap_review_by_root": "根智能体实际查看同一面板，同意为质量复审线索（案例2）或同结构局部定位差（案例5、8），不是人工裁决。",
+      "comparison_caveat": "根重叠核验注意到W028也有部分底点落台面附近；对照只是最大簇成员，不能当标准真值。质量疑点来自与图像边界关系，而不是偏离W028。"
+    },
+    {
+      "case": 3,
+      "code": "q9vSo1VnCiC-09",
+      "image_id": "q9vSo1VnCiC_69591068e5614642b710a8fb7733bdeb",
+      "workers": [
+        "W037",
+        "W036"
+      ],
+      "ids": [
+        "208a71d158c92f4e",
+        "16f25622c221fa4c"
+      ],
+      "N": 24,
+      "point_counts": [
+        12,
+        12
+      ],
+      "distance_px": 28.805814138119644,
+      "comparison": "nearest same-count response",
+      "pairs_1based": [
+        [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            9,
+            10
+          ],
+          [
+            11,
+            12
+          ]
+        ],
+        [
+          [
+            1,
+            2
+          ],
+          [
+            9,
+            10
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            3,
+            4
+          ]
+        ]
+      ],
+      "max_distance_point_pair_1based": [
+        6,
+        6
+      ],
+      "visual_reviewed": true,
+      "reviewer": "AI visual_worker",
+      "user_decision": null,
+      "category": "同结构局部定位差异；无足够证据判低质量",
+      "visual_observation": "两者都表达左侧开口、中央转折、右侧开口，同为6对角点。最大差异是p6对p6，W037落在沙发遮挡后墙脚延长方向较低处，W036较高；其余多数点相近。遮挡使该底角缺少直接可见真值。",
+      "recommendation": "28.806px超过阈值3.206px，不宜由此称为独特结构；需要允许遮挡下连续几何误差的语义解释。",
+      "focus_worker_point_indices_1based": [
+        6
+      ]
+    },
+    {
+      "case": 4,
+      "code": "UwV83HsGsw3-06",
+      "image_id": "UwV83HsGsw3_528d342bf5494b3b94983545d6a1a282",
+      "workers": [
+        "W037",
+        "W030"
+      ],
+      "ids": [
+        "b73a313e28bc8976",
+        "c683a325ea5ee59a"
+      ],
+      "N": 24,
+      "point_counts": [
+        14,
+        14
+      ],
+      "distance_px": 182.84556682630583,
+      "comparison": "nearest same-count response",
+      "pairs_1based": [
+        [
+          [
+            13,
+            14
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            9,
+            10
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            13,
+            14
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            9,
+            10
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            2,
+            1
+          ]
+        ]
+      ],
+      "max_distance_point_pair_1based": [
+        3,
+        3
+      ],
+      "visual_reviewed": true,
+      "reviewer": "AI visual_worker",
+      "user_decision": null,
+      "category": "范围/结构选择不同，兼有固定对应风险；无法裁决谁错",
+      "visual_observation": "W037在右侧高柜两边附近设p3/p4和p5/p6，W030在圆弧墙左边与玻璃转折设p3/p4和p5/p6。二者14点但角点身份不同，固定序号距离把W037柜边p3与W030圆弧墙左边p3比较，产生182.846px。W037没有W030玻璃转折那一对。",
+      "recommendation": "应先核查柜体是否被当房间边界以及玻璃转折选择；不是单纯将阈值增大即可解决。不能把同点数视为同语义对应。",
+      "focus_worker_point_indices_1based": [
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "case": 5,
+      "code": "rPc6DW4iMge-01",
+      "image_id": "rPc6DW4iMge_0012f6dcce9645778ac459e189cf0db3",
+      "workers": [
+        "W037",
+        "W013"
+      ],
+      "ids": [
+        "73e2d1fca7e2ec1b2b59",
+        "75727d4b2511f36fa2ce"
+      ],
+      "N": 23,
+      "point_counts": [
+        8,
+        8
+      ],
+      "distance_px": 16.687975389805693,
+      "comparison": "nearest same-count response",
+      "pairs_1based": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            5,
+            6
+          ]
+        ],
+        [
+          [
+            1,
+            2
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            5,
+            6
+          ]
+        ]
+      ],
+      "max_distance_point_pair_1based": [
+        7,
+        7
+      ],
+      "visual_reviewed": true,
+      "reviewer": "AI visual_worker",
+      "user_decision": null,
+      "category": "疑似整图分簇过拆；视觉同结构",
+      "visual_observation": "两人都选4对相同房间角点，门洞未延伸；p7对p7是最大差异16.688px，门边底点存在少量水平/垂直偏移。未见W037表达额外结构或明显脱离图像。",
+      "recommendation": "W037虽complete单簇，但已有阈内近邻，应检查整个簇的直径约束及阻挡成员，不能按孤立标签判坏人。",
+      "focus_worker_point_indices_1based": [
+        7
+      ],
+      "overlap_review_by_root": "根智能体实际查看同一面板，同意为质量复审线索（案例2）或同结构局部定位差（案例5、8），不是人工裁决。"
+    },
+    {
+      "case": 6,
+      "code": "X7HyMhZNoso-13",
+      "image_id": "X7HyMhZNoso_987fd31155514f6facb131bd5c14881d",
+      "workers": [
+        "W037",
+        "W021"
+      ],
+      "ids": [
+        "5e3a87e01e8c7a68",
+        "5436c4f88262ddc5"
+      ],
+      "N": 24,
+      "point_counts": [
+        8,
+        8
+      ],
+      "distance_px": 22.686761117925425,
+      "comparison": "nearest same-count response",
+      "pairs_1based": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            7,
+            8
+          ]
+        ],
+        [
+          [
+            2,
+            3
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            8,
+            4
+          ]
+        ]
+      ],
+      "max_distance_point_pair_1based": [
+        8,
+        4
+      ],
+      "visual_reviewed": true,
+      "reviewer": "AI visual_worker",
+      "user_decision": null,
+      "category": "疑似整图分簇过拆；视觉同结构",
+      "visual_observation": "两人都是4对相同浴室角点。W037的p8与W021的p4都在洗手柜遮挡区域，横向定位约22.687px差异；其余角点相近。柜后真实墙地角不可直接看清。",
+      "recommendation": "已有阈内近邻却complete单簇；不能据此判W037创造了新结构。遮挡区域可保留几何不确定性。",
+      "focus_worker_point_indices_1based": [
+        8
+      ]
+    },
+    {
+      "case": 7,
+      "code": "UwV83HsGsw3-23",
+      "image_id": "UwV83HsGsw3_fcd79f4b6a6642e99227caffb51bf407",
+      "workers": [
+        "W012",
+        "W036"
+      ],
+      "ids": [
+        "3f3f55f16eac83df",
+        "1d83c0fba980b573"
+      ],
+      "N": 24,
+      "point_counts": [
+        12,
+        12
+      ],
+      "distance_px": 14.63829821549775,
+      "comparison": "nearest same-count response",
+      "pairs_1based": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            9,
+            10
+          ],
+          [
+            11,
+            12
+          ]
+        ],
+        [
+          [
+            8,
+            7
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            10,
+            9
+          ]
+        ]
+      ],
+      "max_distance_point_pair_1based": [
+        4,
+        1
+      ],
+      "visual_reviewed": true,
+      "reviewer": "AI visual_worker",
+      "user_decision": null,
+      "category": "对照：疑似整图分簇过拆；视觉同结构",
+      "visual_observation": "W012与W036同为6对角点，近处墙柱和远处起居区范围一致。最大差异W012 p4与W036 p1为14.638px，均指近处左侧柱底；没有可见范围改变。",
+      "recommendation": "另一高单人簇人员同样出现近邻被complete隔离，说明该现象并非W037特有。",
+      "focus_worker_point_indices_1based": [
+        4
+      ]
+    },
+    {
+      "case": 8,
+      "code": "q9vSo1VnCiC-13",
+      "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+      "workers": [
+        "W034",
+        "W035"
+      ],
+      "ids": [
+        "2385c7af67eeea4e",
+        "3d53a4f071f870cb"
+      ],
+      "N": 23,
+      "point_counts": [
+        8,
+        8
+      ],
+      "distance_px": 25.679159433061706,
+      "comparison": "nearest same-count response",
+      "pairs_1based": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            8,
+            7
+          ]
+        ],
+        [
+          [
+            7,
+            8
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      ],
+      "max_distance_point_pair_1based": [
+        2,
+        8
+      ],
+      "visual_reviewed": true,
+      "reviewer": "AI visual_worker",
+      "user_decision": null,
+      "category": "对照：阈值边缘连续差异；无足够证据判结构不同",
+      "visual_observation": "W034与W035同为4对角点，覆盖左右两个可见区域，范围选择一致。最大差异W034 p2与W035 p8位于左侧被家具遮挡的底角，25.679px只比阈值高0.079px；不能从这一像素差给出两种结构的视觉证据。",
+      "recommendation": "用于阈值标定边界案例，不能以略增阈值改善收敛作为独立有效性证据。",
+      "focus_worker_point_indices_1based": [
+        2
+      ],
+      "overlap_review_by_root": "根智能体实际查看同一面板，同意为质量复审线索（案例2）或同结构局部定位差（案例5、8），不是人工裁决。"
+    }
+  ]
+}

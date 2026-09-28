@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "checks": [
+    "file:// loads actual WebGL and texture; single-source clean default",
+    "pair move, JSON export identity, unchanged coordinates, exact restore",
+    "BEV, texture and line controls preserve geometry; worker search selects the requested source",
+    "cross-case deep links select exact canonical; missing geometry retains inspectable 2D points",
+    "390px layout has no horizontal overflow; no browser errors"
+  ],
+  "errors": []
+}

@@ -113,7 +113,7 @@ def materialize(
     method_contract: Path | None = None,
     reference_conflict_review_record: Path | None = None,
 ) -> dict:
-    method_path = method_contract or Path(__file__).resolve().parents[3] / "docs" / "thesis_main" / "PAPER_A_METHOD_CONTRACT_CURRENT.json"
+    method_path = method_contract or Path(__file__).resolve().parents[3] / "docs" / "thesis_main" / "PAPER_A_METHOD_CONTRACT_20260811_v23.json"
     method = load_method_contract(method_path)
     method_sha = sha256_file(method_path)
     if reference_conflict_review_record is None:

@@ -1,0 +1,2626 @@
+{
+  "026b9a1fe7ba6a07": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "ambiguous_horizontal_assignment",
+      "description": "水平距离总和存在等价最优配对，算法保留歧义并未存入links；候选需要人工确认。",
+      "candidates": [
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p7",
+              "p8"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p12"
+            ],
+            [
+              "p13",
+              "p14"
+            ],
+            [
+              "p15",
+              "p16"
+            ],
+            [
+              "p18",
+              "p17"
+            ],
+            [
+              "p20",
+              "p19"
+            ]
+          ],
+          "total_horizontal_cost_px": 45.78861788617894
+        },
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p5",
+              "p8"
+            ],
+            [
+              "p7",
+              "p6"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p12"
+            ],
+            [
+              "p13",
+              "p14"
+            ],
+            [
+              "p15",
+              "p16"
+            ],
+            [
+              "p18",
+              "p17"
+            ],
+            [
+              "p20",
+              "p19"
+            ]
+          ],
+          "total_horizontal_cost_px": 45.78861788617894
+        }
+      ],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 10,
+      "n_bottom": 10,
+      "on_horizon": 0,
+      "pair_cost_px": 45.78861788617894,
+      "second_pair_cost_px": 45.78861788617894,
+      "pair_margin_px": 0.0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "032cd152706166629e82": {
+    "repairs": [
+      {
+        "status": "proposed_not_applied",
+        "description": "确为漏标，应提交具体补点复核；按照簇1的第4对点 补充",
+        "evidence_source": "analysis_results/human_review_reconciliation_20260918/用户_39图最终裁决_原始.json",
+        "limitation": "旧簇1尚未绑定具体供体、点号和坐标；不能自动补点。"
+      }
+    ],
+    "pairing": {
+      "status": "existing_accepted_pairing",
+      "reason": "conditional_unique_x_assignment",
+      "description": "已有可用配对；是否经人工确认以pairing_source和原始审核记录为准。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。"
+    },
+    "history": [
+      {
+        "source": "analysis_results/human_review_reconciliation_20260918/用户_39图最终裁决_原始.json",
+        "quote": "确为漏标，应提交具体补点复核；按照簇1的第4对点 补充",
+        "interpretation": "曾提出补点，但当前仍是6点。"
+      },
+      {
+        "source": "evidence/user_review.json",
+        "quote": "这个他只标了三对点,但是我记得我是不是给这张图补充了第四对点的?",
+        "interpretation": "本轮修复询问或建议；请对照已执行修复记录确认，不重复修复、不自动应用。",
+        "event_id": "user:032cd152706166629e82"
+      }
+    ],
+    "current_review_questions": [
+      {
+        "event_id": "user:032cd152706166629e82",
+        "comment": "这个他只标了三对点,但是我记得我是不是给这张图补充了第四对点的?"
+      }
+    ]
+  },
+  "082bd5bd0d332eff07b8": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到12个top、8个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 12,
+      "n_bottom": 8,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "1f27c10411477390": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "ambiguous_horizontal_assignment",
+      "description": "水平距离总和存在等价最优配对，算法保留歧义并未存入links；候选需要人工确认。",
+      "candidates": [
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p5"
+            ],
+            [
+              "p6",
+              "p4"
+            ],
+            [
+              "p7",
+              "p8"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p12"
+            ],
+            [
+              "p13",
+              "p14"
+            ],
+            [
+              "p15",
+              "p16"
+            ],
+            [
+              "p17",
+              "p18"
+            ],
+            [
+              "p19",
+              "p20"
+            ]
+          ],
+          "total_horizontal_cost_px": 45.73203883495137
+        },
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p6",
+              "p5"
+            ],
+            [
+              "p7",
+              "p8"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p12"
+            ],
+            [
+              "p13",
+              "p14"
+            ],
+            [
+              "p15",
+              "p16"
+            ],
+            [
+              "p17",
+              "p18"
+            ],
+            [
+              "p19",
+              "p20"
+            ]
+          ],
+          "total_horizontal_cost_px": 45.732038834951425
+        }
+      ],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 10,
+      "n_bottom": 10,
+      "on_horizon": 0,
+      "pair_cost_px": 45.73203883495137,
+      "second_pair_cost_px": 45.732038834951425,
+      "pair_margin_px": 5.684341886080802e-14,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "2293abd04e66d525f147": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "ambiguous_horizontal_assignment",
+      "description": "水平距离总和存在等价最优配对，算法保留歧义并未存入links；候选需要人工确认。",
+      "candidates": [
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p7",
+              "p10"
+            ],
+            [
+              "p9",
+              "p8"
+            ],
+            [
+              "p11",
+              "p12"
+            ]
+          ],
+          "total_horizontal_cost_px": 31.813592233009558
+        },
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p7",
+              "p8"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p12"
+            ]
+          ],
+          "total_horizontal_cost_px": 31.813592233009558
+        }
+      ],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 6,
+      "n_bottom": 6,
+      "on_horizon": 0,
+      "pair_cost_px": 31.813592233009558,
+      "second_pair_cost_px": 31.813592233009558,
+      "pair_margin_px": 0.0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "2559d23544f7b937": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到8个top、9个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 8,
+      "n_bottom": 9,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [
+      {
+        "source": "evidence/user_review.json",
+        "quote": "手滑多点了一个p17,删去后就可以",
+        "interpretation": "本轮修复询问或建议；请对照已执行修复记录确认，不重复修复、不自动应用。",
+        "event_id": "user:2559d23544f7b937"
+      }
+    ],
+    "current_review_questions": [
+      {
+        "event_id": "user:2559d23544f7b937",
+        "comment": "手滑多点了一个p17,删去后就可以"
+      }
+    ]
+  },
+  "2a11d537c790512c": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "ambiguous_horizontal_assignment",
+      "description": "水平距离总和存在等价最优配对，算法保留歧义并未存入links；候选需要人工确认。",
+      "candidates": [
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p7",
+              "p8"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p12"
+            ],
+            [
+              "p13",
+              "p14"
+            ],
+            [
+              "p15",
+              "p16"
+            ]
+          ],
+          "total_horizontal_cost_px": 55.67378640776701
+        },
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p4"
+            ],
+            [
+              "p3",
+              "p2"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p7",
+              "p8"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p12"
+            ],
+            [
+              "p13",
+              "p14"
+            ],
+            [
+              "p15",
+              "p16"
+            ]
+          ],
+          "total_horizontal_cost_px": 55.67378640776701
+        }
+      ],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 8,
+      "n_bottom": 8,
+      "on_horizon": 0,
+      "pair_cost_px": 55.67378640776701,
+      "second_pair_cost_px": 55.67378640776701,
+      "pair_margin_px": 0.0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "2b1b6e2ee0285eb02c88": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "empty_role_or_point_on_horizon",
+      "description": "现有地平线角色规则未获得完整上下两组；这是表示规则的限制，不能自动归为人员错误。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 0,
+      "n_bottom": 8,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "3a2d7700bd5753ff0789": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "ambiguous_horizontal_assignment",
+      "description": "水平距离总和存在等价最优配对，算法保留歧义并未存入links；候选需要人工确认。",
+      "candidates": [
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p7",
+              "p8"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p12"
+            ],
+            [
+              "p13",
+              "p14"
+            ],
+            [
+              "p15",
+              "p16"
+            ],
+            [
+              "p17",
+              "p18"
+            ],
+            [
+              "p19",
+              "p20"
+            ]
+          ],
+          "total_horizontal_cost_px": 51.697087378641015
+        },
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p7",
+              "p8"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p12"
+            ],
+            [
+              "p13",
+              "p16"
+            ],
+            [
+              "p15",
+              "p14"
+            ],
+            [
+              "p17",
+              "p18"
+            ],
+            [
+              "p19",
+              "p20"
+            ]
+          ],
+          "total_horizontal_cost_px": 51.697087378641015
+        }
+      ],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 10,
+      "n_bottom": 10,
+      "on_horizon": 0,
+      "pair_cost_px": 51.697087378641015,
+      "second_pair_cost_px": 51.697087378641015,
+      "pair_margin_px": 0.0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "3a3dec28a207f0a0": {
+    "repairs": [
+      {
+        "status": "proposed_not_applied",
+        "description": "历史逐点复核：confirmed=false，pending_not_applied；具体操作未确认。",
+        "evidence_source": "analysis_results/human_review_reconciliation_20260918/用户_39图最终裁决_原始.json"
+      }
+    ],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到8个top、9个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 8,
+      "n_bottom": 9,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [
+      {
+        "source": "analysis_results/human_review_reconciliation_20260918/用户_39图最终裁决_原始.json",
+        "quote": "历史逐点复核：confirmed=false，pending_not_applied；具体操作未确认。",
+        "interpretation": "该条是历史状态；当前是否已执行以有效点和后续修复记录为准。"
+      }
+    ],
+    "current_review_questions": []
+  },
+  "3a772c253f77d4b7": {
+    "repairs": [
+      {
+        "status": "applied",
+        "description": "原始9点→有效10点；confirmed_point_added。原始点保留。",
+        "evidence_source": "analysis_results/confirmed_point_calculation_view_20260909_v1/reviewed/confirmed_user_decisions.json",
+        "confirmation_source": "user_review_20260909",
+        "raw_count": 9,
+        "effective_count": 10,
+        "provenance": {
+          "action": "add_confirmed_point",
+          "added_coordinate_1024x512": [
+            654.3609756097561,
+            352.76014517
+          ],
+          "preserve_all_original_points": true,
+          "append_to_calculation_copy_only": true,
+          "imputed_not_original_worker_response": true,
+          "reference_evidence": "ADD_POINT_PROPOSALS.json",
+          "user_words": "对的,完全正确! 非常棒",
+          "application_status": "confirmed_pending_next_calculation_view_build",
+          "date": "2026-09-09"
+        }
+      }
+    ],
+    "pairing": {
+      "status": "existing_accepted_pairing",
+      "reason": "conditional_unique_x_assignment",
+      "description": "已有可用配对；是否经人工确认以pairing_source和原始审核记录为准。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。"
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "3d1c6d9fda198b1b": {
+    "repairs": [
+      {
+        "status": "proposed_not_applied",
+        "description": "历史逐点复核：confirmed=false，pending_not_applied；具体操作未确认。",
+        "evidence_source": "analysis_results/human_review_reconciliation_20260918/用户_39图最终裁决_原始.json"
+      }
+    ],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到6个top、7个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 6,
+      "n_bottom": 7,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [
+      {
+        "source": "analysis_results/human_review_reconciliation_20260918/用户_39图最终裁决_原始.json",
+        "quote": "历史逐点复核：confirmed=false，pending_not_applied；具体操作未确认。",
+        "interpretation": "该条是历史状态；当前是否已执行以有效点和后续修复记录为准。"
+      },
+      {
+        "source": "evidence/user_review.json",
+        "quote": "这我记得有补了一个点的,补上就没问题",
+        "interpretation": "本轮修复询问或建议；请对照已执行修复记录确认，不重复修复、不自动应用。",
+        "event_id": "user:3d1c6d9fda198b1b"
+      }
+    ],
+    "current_review_questions": [
+      {
+        "event_id": "user:3d1c6d9fda198b1b",
+        "comment": "这我记得有补了一个点的,补上就没问题"
+      }
+    ]
+  },
+  "40ac299ba105fdef": {
+    "repairs": [
+      {
+        "status": "applied",
+        "description": "原始11点→有效12点；confirmed_point_added。原始点保留。",
+        "evidence_source": "analysis_results/confirmed_point_calculation_view_20260909_v1/reviewed/confirmed_user_decisions.json",
+        "confirmation_source": "user_review_20260909",
+        "raw_count": 11,
+        "effective_count": 12,
+        "provenance": {
+          "action": "add_confirmed_point",
+          "added_coordinate_1024x512": [
+            990.0247019565802,
+            379.165331243
+          ],
+          "preserve_all_original_points": true,
+          "append_to_calculation_copy_only": true,
+          "imputed_not_original_worker_response": true,
+          "reference_evidence": "ADD_POINT_PROPOSALS.json",
+          "user_words": "对的,完全正确! 非常棒",
+          "application_status": "confirmed_pending_next_calculation_view_build",
+          "date": "2026-09-09"
+        }
+      }
+    ],
+    "pairing": {
+      "status": "existing_accepted_pairing",
+      "reason": "conditional_unique_x_assignment",
+      "description": "已有可用配对；是否经人工确认以pairing_source和原始审核记录为准。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。"
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "4a1158da9bd83ef9": {
+    "repairs": [],
+    "pairing": {
+      "status": "existing_accepted_pairing",
+      "reason": "conditional_unique_x_assignment",
+      "description": "已有可用配对；是否经人工确认以pairing_source和原始审核记录为准。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。"
+    },
+    "history": [
+      {
+        "source": "evidence/user_review.json",
+        "quote": "漏标了一对点,我记得是不是 补了的?",
+        "interpretation": "本轮修复询问或建议；请对照已执行修复记录确认，不重复修复、不自动应用。",
+        "event_id": "user:4a1158da9bd83ef9"
+      }
+    ],
+    "current_review_questions": [
+      {
+        "event_id": "user:4a1158da9bd83ef9",
+        "comment": "漏标了一对点,我记得是不是 补了的?"
+      }
+    ]
+  },
+  "4d3e4911d8f07aa2": {
+    "repairs": [
+      {
+        "status": "proposed_not_applied",
+        "description": "历史逐点复核：confirmed=false，pending_not_applied；具体操作未确认。",
+        "evidence_source": "analysis_results/human_review_reconciliation_20260918/用户_39图最终裁决_原始.json"
+      }
+    ],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到5个top、6个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 5,
+      "n_bottom": 6,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [
+      {
+        "source": "analysis_results/human_review_reconciliation_20260918/用户_39图最终裁决_原始.json",
+        "quote": "历史逐点复核：confirmed=false，pending_not_applied；具体操作未确认。",
+        "interpretation": "该条是历史状态；当前是否已执行以有效点和后续修复记录为准。"
+      }
+    ],
+    "current_review_questions": []
+  },
+  "4df387c7c1aa91d86cee": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到2个top、8个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 2,
+      "n_bottom": 8,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "5a980411975e48d1": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "ambiguous_horizontal_assignment",
+      "description": "水平距离总和存在等价最优配对，算法保留歧义并未存入links；候选需要人工确认。",
+      "candidates": [
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p8",
+              "p7"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p12"
+            ]
+          ],
+          "total_horizontal_cost_px": 16.75398817515429
+        },
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p5",
+              "p7"
+            ],
+            [
+              "p8",
+              "p6"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p12"
+            ]
+          ],
+          "total_horizontal_cost_px": 16.753988175154518
+        }
+      ],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 6,
+      "n_bottom": 6,
+      "on_horizon": 0,
+      "pair_cost_px": 16.75398817515429,
+      "second_pair_cost_px": 16.753988175154518,
+      "pair_margin_px": 2.2737367544323206e-13,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "63001f819a4a6b408ae2": {
+    "repairs": [
+      {
+        "status": "applied",
+        "description": "原始9点→有效8点；confirmed_point_removed。原始点保留。",
+        "evidence_source": "analysis_results/rq1_corrections_20260826/c1_geometry_repair_audit.csv",
+        "confirmation_source": "user_explicit_four_record_table_20260909",
+        "raw_count": 9,
+        "effective_count": 8,
+        "removed_labels": [
+          "p5"
+        ]
+      }
+    ],
+    "pairing": {
+      "status": "existing_accepted_pairing",
+      "reason": "conditional_unique_x_assignment",
+      "description": "已有可用配对；是否经人工确认以pairing_source和原始审核记录为准。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。"
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "6aed1eb1185c1318": {
+    "repairs": [],
+    "pairing": {
+      "status": "existing_accepted_pairing",
+      "reason": "conditional_unique_x_assignment",
+      "description": "已有可用配对；是否经人工确认以pairing_source和原始审核记录为准。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。"
+    },
+    "history": [
+      {
+        "source": "evidence/user_review.json",
+        "quote": "漏了一对点,有没有补?",
+        "interpretation": "本轮修复询问或建议；请对照已执行修复记录确认，不重复修复、不自动应用。",
+        "event_id": "user:6aed1eb1185c1318"
+      }
+    ],
+    "current_review_questions": [
+      {
+        "event_id": "user:6aed1eb1185c1318",
+        "comment": "漏了一对点,有没有补?"
+      }
+    ]
+  },
+  "6d192755ca096a2c": {
+    "repairs": [],
+    "pairing": {
+      "status": "existing_accepted_pairing",
+      "reason": "conditional_unique_x_assignment",
+      "description": "已有可用配对；是否经人工确认以pairing_source和原始审核记录为准。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。"
+    },
+    "history": [
+      {
+        "source": "evidence/user_review.json",
+        "quote": "这是否要补点",
+        "interpretation": "本轮修复询问或建议；请对照已执行修复记录确认，不重复修复、不自动应用。",
+        "event_id": "user:6d192755ca096a2c"
+      }
+    ],
+    "current_review_questions": [
+      {
+        "event_id": "user:6d192755ca096a2c",
+        "comment": "这是否要补点"
+      }
+    ]
+  },
+  "72c13a6178d8de165b2b": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "empty_role_or_point_on_horizon",
+      "description": "现有地平线角色规则未获得完整上下两组；这是表示规则的限制，不能自动归为人员错误。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 0,
+      "n_bottom": 8,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "75507c55b020fe0f933f": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "ambiguous_horizontal_assignment",
+      "description": "水平距离总和存在等价最优配对，算法保留歧义并未存入links；候选需要人工确认。",
+      "candidates": [
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p7",
+              "p8"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p12"
+            ]
+          ],
+          "total_horizontal_cost_px": 20.855397148676275
+        },
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p12"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p7",
+              "p8"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p4"
+            ]
+          ],
+          "total_horizontal_cost_px": 20.855397148676275
+        }
+      ],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 6,
+      "n_bottom": 6,
+      "on_horizon": 0,
+      "pair_cost_px": 20.855397148676275,
+      "second_pair_cost_px": 20.855397148676275,
+      "pair_margin_px": 0.0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "78a68354a388042f": {
+    "repairs": [],
+    "pairing": {
+      "status": "existing_accepted_pairing",
+      "reason": "conditional_unique_x_assignment",
+      "description": "已有可用配对；是否经人工确认以pairing_source和原始审核记录为准。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。"
+    },
+    "history": [
+      {
+        "source": "evidence/user_review.json",
+        "quote": "把p5 p6统一一下x 坐标就行.他标歪了",
+        "interpretation": "本轮修复询问或建议；请对照已执行修复记录确认，不重复修复、不自动应用。",
+        "event_id": "user:78a68354a388042f"
+      }
+    ],
+    "current_review_questions": [
+      {
+        "event_id": "user:78a68354a388042f",
+        "comment": "把p5 p6统一一下x 坐标就行.他标歪了"
+      }
+    ]
+  },
+  "7bed161c9c3ed689c7ae": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到12个top、14个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 12,
+      "n_bottom": 14,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "80a4655a847e5a65": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到4个top、5个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 4,
+      "n_bottom": 5,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [
+      {
+        "source": "evidence/user_review.json",
+        "quote": "去掉p7就行",
+        "interpretation": "本轮修复询问或建议；请对照已执行修复记录确认，不重复修复、不自动应用。",
+        "event_id": "user:80a4655a847e5a65"
+      }
+    ],
+    "current_review_questions": [
+      {
+        "event_id": "user:80a4655a847e5a65",
+        "comment": "去掉p7就行"
+      }
+    ]
+  },
+  "81cd8395dbe20dc23478": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "ambiguous_horizontal_assignment",
+      "description": "水平距离总和存在等价最优配对，算法保留歧义并未存入links；候选需要人工确认。",
+      "candidates": [
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p7",
+              "p8"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p12",
+              "p11"
+            ],
+            [
+              "p13",
+              "p14"
+            ],
+            [
+              "p16",
+              "p15"
+            ]
+          ],
+          "total_horizontal_cost_px": 18.483649339499607
+        },
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p7",
+              "p8"
+            ],
+            [
+              "p9",
+              "p11"
+            ],
+            [
+              "p12",
+              "p10"
+            ],
+            [
+              "p13",
+              "p14"
+            ],
+            [
+              "p16",
+              "p15"
+            ]
+          ],
+          "total_horizontal_cost_px": 18.483649339499607
+        }
+      ],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 8,
+      "n_bottom": 8,
+      "on_horizon": 0,
+      "pair_cost_px": 18.483649339499607,
+      "second_pair_cost_px": 18.483649339499607,
+      "pair_margin_px": 0.0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "846f35a4fc23776b55a2": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "ambiguous_horizontal_assignment",
+      "description": "水平距离总和存在等价最优配对，算法保留歧义并未存入links；候选需要人工确认。",
+      "candidates": [
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p4",
+              "p3"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p7",
+              "p8"
+            ],
+            [
+              "p10",
+              "p9"
+            ],
+            [
+              "p11",
+              "p12"
+            ]
+          ],
+          "total_horizontal_cost_px": 13.169641293218376
+        },
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p4",
+              "p3"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p7",
+              "p9"
+            ],
+            [
+              "p10",
+              "p8"
+            ],
+            [
+              "p11",
+              "p12"
+            ]
+          ],
+          "total_horizontal_cost_px": 13.169641293218376
+        }
+      ],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 6,
+      "n_bottom": 6,
+      "on_horizon": 0,
+      "pair_cost_px": 13.169641293218376,
+      "second_pair_cost_px": 13.169641293218376,
+      "pair_margin_px": 0.0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "8487d3e12302f924": {
+    "repairs": [
+      {
+        "status": "applied",
+        "description": "原始9点→有效8点；confirmed_point_removed。原始点保留。",
+        "evidence_source": "analysis_results/confirmed_point_calculation_view_20260909_v1/reviewed/confirmed_user_decisions.json",
+        "confirmation_source": "user_review_20260909",
+        "raw_count": 9,
+        "effective_count": 8,
+        "removed_labels": [
+          "p4"
+        ]
+      }
+    ],
+    "pairing": {
+      "status": "existing_accepted_pairing",
+      "reason": "conditional_unique_x_assignment",
+      "description": "已有可用配对；是否经人工确认以pairing_source和原始审核记录为准。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。"
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "8ffe08f072e2b12e": {
+    "repairs": [
+      {
+        "status": "applied",
+        "description": "原始28点→有效28点；researcher_coordinate_correction。原始点保留。",
+        "evidence_source": "analysis_results/clustering_numeric_received_20260920/results/effective_version_changes.csv",
+        "confirmation_source": "user_explicit_apply_Project28_20260920",
+        "raw_count": 28,
+        "effective_count": 28,
+        "changed_points": [
+          {
+            "label": "p8",
+            "before": [
+              191.39,
+              3897.2824060150374
+            ],
+            "after": [
+              191.39,
+              389.7282406015037
+            ]
+          }
+        ]
+      }
+    ],
+    "pairing": {
+      "status": "existing_accepted_pairing",
+      "reason": "conditional_unique_x_assignment",
+      "description": "已有可用配对；是否经人工确认以pairing_source和原始审核记录为准。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。"
+    },
+    "history": [
+      {
+        "source": "evidence/user_review.json",
+        "quote": "我记得p7 底下对应的bottomy 是补过点的,补完了后就是完全正确的",
+        "interpretation": "本轮修复询问或建议；请对照已执行修复记录确认，不重复修复、不自动应用。",
+        "event_id": "user:8ffe08f072e2b12e"
+      }
+    ],
+    "current_review_questions": [
+      {
+        "event_id": "user:8ffe08f072e2b12e",
+        "comment": "我记得p7 底下对应的bottomy 是补过点的,补完了后就是完全正确的"
+      }
+    ]
+  },
+  "9117118c1ce15fc9": {
+    "repairs": [
+      {
+        "status": "proposed_not_applied",
+        "description": "我不太确认1和6,哪个点和 4的x坐标更接近,这个删除离4更远的就行",
+        "evidence_source": "analysis_results/human_review_reconciliation_20260918/用户_39图最终裁决_原始.json"
+      }
+    ],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到6个top、5个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 6,
+      "n_bottom": 5,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [
+      {
+        "source": "analysis_results/human_review_reconciliation_20260918/用户_39图最终裁决_原始.json",
+        "quote": "我不太确认1和6,哪个点和 4的x坐标更接近,这个删除离4更远的就行",
+        "interpretation": "该条是历史状态；当前是否已执行以有效点和后续修复记录为准。"
+      },
+      {
+        "source": "evidence/user_review.json",
+        "quote": "oos,去掉p1,不过这人标的也有问题",
+        "interpretation": "本轮修复询问或建议；请对照已执行修复记录确认，不重复修复、不自动应用。",
+        "event_id": "user:9117118c1ce15fc9"
+      }
+    ],
+    "current_review_questions": [
+      {
+        "event_id": "user:9117118c1ce15fc9",
+        "comment": "oos,去掉p1,不过这人标的也有问题"
+      }
+    ]
+  },
+  "93b27e06e9f3739effd4": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到2个top、6个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 2,
+      "n_bottom": 6,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "9b37138fe91ff43e": {
+    "repairs": [],
+    "pairing": {
+      "status": "existing_accepted_pairing",
+      "reason": "conditional_unique_x_assignment",
+      "description": "已有可用配对；是否经人工确认以pairing_source和原始审核记录为准。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。"
+    },
+    "history": [
+      {
+        "source": "evidence/user_review.json",
+        "quote": "这个漏了最左边的一组角点, 这有没有说明或补充修订的?",
+        "interpretation": "本轮修复询问或建议；请对照已执行修复记录确认，不重复修复、不自动应用。",
+        "event_id": "user:9b37138fe91ff43e"
+      }
+    ],
+    "current_review_questions": [
+      {
+        "event_id": "user:9b37138fe91ff43e",
+        "comment": "这个漏了最左边的一组角点, 这有没有说明或补充修订的?"
+      }
+    ]
+  },
+  "9b8f8bec4da82b48": {
+    "repairs": [
+      {
+        "status": "applied",
+        "description": "原始21点→有效20点；researcher_confirmed_point_removed。原始点保留。",
+        "evidence_source": "analysis_results/clustering_numeric_received_20260920/results/effective_version_changes.csv",
+        "confirmation_source": "user_explicit_apply_Project28_20260920",
+        "raw_count": 21,
+        "effective_count": 20,
+        "removed_labels": [
+          "p7"
+        ]
+      }
+    ],
+    "pairing": {
+      "status": "existing_accepted_pairing",
+      "reason": "conditional_unique_x_assignment",
+      "description": "已有可用配对；是否经人工确认以pairing_source和原始审核记录为准。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。"
+    },
+    "history": [
+      {
+        "source": "analysis_results/human_review_reconciliation_20260918/用户_39图最终裁决_原始.json",
+        "quote": "历史逐点复核：confirmed=false，pending_not_applied；具体操作未确认。",
+        "interpretation": "该条是历史状态；当前是否已执行以有效点和后续修复记录为准。"
+      }
+    ],
+    "current_review_questions": []
+  },
+  "9d1304afc9e057789d7d": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到4个top、12个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 4,
+      "n_bottom": 12,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "9d5019675a6c9add": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "ambiguous_horizontal_assignment",
+      "description": "水平距离总和存在等价最优配对，算法保留歧义并未存入links；候选需要人工确认。",
+      "candidates": [
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p7",
+              "p8"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p12"
+            ]
+          ],
+          "total_horizontal_cost_px": 16.68431771894126
+        },
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p5",
+              "p8"
+            ],
+            [
+              "p7",
+              "p6"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p12"
+            ]
+          ],
+          "total_horizontal_cost_px": 16.68431771894126
+        }
+      ],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 6,
+      "n_bottom": 6,
+      "on_horizon": 0,
+      "pair_cost_px": 16.68431771894126,
+      "second_pair_cost_px": 16.68431771894126,
+      "pair_margin_px": 0.0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "9e3ad1f70d2c02b5d41f": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到2个top、6个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 2,
+      "n_bottom": 6,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "9e5409147dcedaf906b7": {
+    "repairs": [
+      {
+        "status": "applied",
+        "description": "原始17点→有效16点；confirmed_point_removed。原始点保留。",
+        "evidence_source": "analysis_results/rq1_corrections_20260826/c1_geometry_repair_audit.csv",
+        "confirmation_source": "user_explicit_four_record_table_20260909",
+        "raw_count": 17,
+        "effective_count": 16,
+        "removed_labels": [
+          "p11"
+        ]
+      }
+    ],
+    "pairing": {
+      "status": "existing_accepted_pairing",
+      "reason": "conditional_unique_x_assignment",
+      "description": "已有可用配对；是否经人工确认以pairing_source和原始审核记录为准。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。"
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "9e9998c2efb5ea77": {
+    "repairs": [],
+    "pairing": {
+      "status": "existing_accepted_pairing",
+      "reason": "conditional_unique_x_assignment",
+      "description": "已有可用配对；是否经人工确认以pairing_source和原始审核记录为准。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。"
+    },
+    "history": [
+      {
+        "source": "evidence/user_review.json",
+        "quote": "p14标歪了点,p14和p13是配对的,把p14的x坐标变成13统一就行,他估计手滑了,这个跟gt 很像了",
+        "interpretation": "本轮修复询问或建议；请对照已执行修复记录确认，不重复修复、不自动应用。",
+        "event_id": "user:9e9998c2efb5ea77"
+      }
+    ],
+    "current_review_questions": [
+      {
+        "event_id": "user:9e9998c2efb5ea77",
+        "comment": "p14标歪了点,p14和p13是配对的,把p14的x坐标变成13统一就行,他估计手滑了,这个跟gt 很像了"
+      }
+    ]
+  },
+  "aa07e998c7330ad3d3eb": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "ambiguous_horizontal_assignment",
+      "description": "水平距离总和存在等价最优配对，算法保留歧义并未存入links；候选需要人工确认。",
+      "candidates": [
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p7",
+              "p8"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p12"
+            ],
+            [
+              "p13",
+              "p14"
+            ],
+            [
+              "p15",
+              "p16"
+            ]
+          ],
+          "total_horizontal_cost_px": 20.85539714867616
+        },
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p7",
+              "p16"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p12"
+            ],
+            [
+              "p13",
+              "p14"
+            ],
+            [
+              "p15",
+              "p8"
+            ]
+          ],
+          "total_horizontal_cost_px": 20.85539714867616
+        }
+      ],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 8,
+      "n_bottom": 8,
+      "on_horizon": 0,
+      "pair_cost_px": 20.85539714867616,
+      "second_pair_cost_px": 20.85539714867616,
+      "pair_margin_px": 0.0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "acf40c242b1e8bb29e98": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到6个top、7个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 6,
+      "n_bottom": 7,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [
+      {
+        "source": "evidence/user_review.json",
+        "quote": "p12和p13去掉其中一个就行,估计是手滑了,但是这图的gt 也不太对",
+        "interpretation": "本轮修复询问或建议；请对照已执行修复记录确认，不重复修复、不自动应用。",
+        "event_id": "user:acf40c242b1e8bb29e98"
+      }
+    ],
+    "current_review_questions": [
+      {
+        "event_id": "user:acf40c242b1e8bb29e98",
+        "comment": "p12和p13去掉其中一个就行,估计是手滑了,但是这图的gt 也不太对"
+      }
+    ]
+  },
+  "adb443cf2cd44a01": {
+    "repairs": [
+      {
+        "status": "proposed_not_applied",
+        "description": "历史逐点复核：confirmed=false，pending_not_applied；具体操作未确认。",
+        "evidence_source": "analysis_results/human_review_reconciliation_20260918/用户_39图最终裁决_原始.json"
+      }
+    ],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到8个top、7个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 8,
+      "n_bottom": 7,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [
+      {
+        "source": "analysis_results/human_review_reconciliation_20260918/用户_39图最终裁决_原始.json",
+        "quote": "历史逐点复核：confirmed=false，pending_not_applied；具体操作未确认。",
+        "interpretation": "该条是历史状态；当前是否已执行以有效点和后续修复记录为准。"
+      },
+      {
+        "source": "evidence/user_review.json",
+        "quote": "去掉p13",
+        "interpretation": "本轮修复询问或建议；请对照已执行修复记录确认，不重复修复、不自动应用。",
+        "event_id": "user:adb443cf2cd44a01"
+      }
+    ],
+    "current_review_questions": [
+      {
+        "event_id": "user:adb443cf2cd44a01",
+        "comment": "去掉p13"
+      }
+    ]
+  },
+  "ae6d60e1ea8424ce2357": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "ambiguous_horizontal_assignment",
+      "description": "水平距离总和存在等价最优配对，算法保留歧义并未存入links；候选需要人工确认。",
+      "candidates": [
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p7",
+              "p8"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p12"
+            ],
+            [
+              "p13",
+              "p14"
+            ],
+            [
+              "p15",
+              "p16"
+            ],
+            [
+              "p17",
+              "p18"
+            ]
+          ],
+          "total_horizontal_cost_px": 9.14285714285711
+        },
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p12"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p7",
+              "p8"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p2"
+            ],
+            [
+              "p13",
+              "p14"
+            ],
+            [
+              "p15",
+              "p16"
+            ],
+            [
+              "p17",
+              "p18"
+            ]
+          ],
+          "total_horizontal_cost_px": 9.14285714285711
+        }
+      ],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 9,
+      "n_bottom": 9,
+      "on_horizon": 0,
+      "pair_cost_px": 9.14285714285711,
+      "second_pair_cost_px": 9.14285714285711,
+      "pair_margin_px": 0.0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "af1ada91e5648762": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到6个top、5个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 6,
+      "n_bottom": 5,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [
+      {
+        "source": "evidence/user_review.json",
+        "quote": "p9和p11配对,之后p10下方补一个点",
+        "interpretation": "本轮修复询问或建议；请对照已执行修复记录确认，不重复修复、不自动应用。",
+        "event_id": "user:af1ada91e5648762"
+      }
+    ],
+    "current_review_questions": [
+      {
+        "event_id": "user:af1ada91e5648762",
+        "comment": "p9和p11配对,之后p10下方补一个点"
+      }
+    ]
+  },
+  "b593f337fea5cb8bf3f2": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "ambiguous_horizontal_assignment",
+      "description": "水平距离总和存在等价最优配对，算法保留歧义并未存入links；候选需要人工确认。",
+      "candidates": [
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p7",
+              "p8"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p12"
+            ],
+            [
+              "p13",
+              "p14"
+            ],
+            [
+              "p15",
+              "p16"
+            ],
+            [
+              "p17",
+              "p18"
+            ],
+            [
+              "p19",
+              "p20"
+            ]
+          ],
+          "total_horizontal_cost_px": 33.801941747572755
+        },
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p10"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p7",
+              "p8"
+            ],
+            [
+              "p9",
+              "p4"
+            ],
+            [
+              "p11",
+              "p12"
+            ],
+            [
+              "p13",
+              "p14"
+            ],
+            [
+              "p15",
+              "p16"
+            ],
+            [
+              "p17",
+              "p18"
+            ],
+            [
+              "p19",
+              "p20"
+            ]
+          ],
+          "total_horizontal_cost_px": 33.801941747572755
+        }
+      ],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 10,
+      "n_bottom": 10,
+      "on_horizon": 0,
+      "pair_cost_px": 33.801941747572755,
+      "second_pair_cost_px": 33.801941747572755,
+      "pair_margin_px": 0.0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "b5c368a4140e7de4": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到6个top、8个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 6,
+      "n_bottom": 8,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "ba5291230a2bbae1658b": {
+    "repairs": [
+      {
+        "status": "applied",
+        "description": "原始9点→有效8点；confirmed_point_removed。原始点保留。",
+        "evidence_source": "analysis_results/rq1_corrections_20260826/c1_geometry_repair_audit.csv",
+        "confirmation_source": "user_explicit_four_record_table_20260909",
+        "raw_count": 9,
+        "effective_count": 8,
+        "removed_labels": [
+          "p7"
+        ]
+      }
+    ],
+    "pairing": {
+      "status": "existing_accepted_pairing",
+      "reason": "conditional_unique_x_assignment",
+      "description": "已有可用配对；是否经人工确认以pairing_source和原始审核记录为准。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。"
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "c87d232365323163": {
+    "repairs": [],
+    "pairing": {
+      "status": "existing_accepted_pairing",
+      "reason": "conditional_unique_x_assignment",
+      "description": "已有可用配对；是否经人工确认以pairing_source和原始审核记录为准。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。"
+    },
+    "history": [
+      {
+        "source": "evidence/user_review.json",
+        "quote": "把p5 的x 对齐到p6 就没问题,估计是手滑了",
+        "interpretation": "本轮修复询问或建议；请对照已执行修复记录确认，不重复修复、不自动应用。",
+        "event_id": "user:c87d232365323163"
+      }
+    ],
+    "current_review_questions": [
+      {
+        "event_id": "user:c87d232365323163",
+        "comment": "把p5 的x 对齐到p6 就没问题,估计是手滑了"
+      }
+    ]
+  },
+  "cd5abe0f20e47f74": {
+    "repairs": [
+      {
+        "status": "proposed_not_applied",
+        "description": "历史逐点复核：confirmed=false，pending_not_applied；具体操作未确认。",
+        "evidence_source": "analysis_results/human_review_reconciliation_20260918/用户_39图最终裁决_原始.json"
+      }
+    ],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到5个top、4个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 5,
+      "n_bottom": 4,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [
+      {
+        "source": "analysis_results/human_review_reconciliation_20260918/用户_39图最终裁决_原始.json",
+        "quote": "历史逐点复核：confirmed=false，pending_not_applied；具体操作未确认。",
+        "interpretation": "该条是历史状态；当前是否已执行以有效点和后续修复记录为准。"
+      }
+    ],
+    "current_review_questions": []
+  },
+  "d22e8df3dcff4100efb5": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "ambiguous_horizontal_assignment",
+      "description": "水平距离总和存在等价最优配对，算法保留歧义并未存入links；候选需要人工确认。",
+      "candidates": [
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p7"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p8",
+              "p4"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p12"
+            ],
+            [
+              "p13",
+              "p14"
+            ],
+            [
+              "p15",
+              "p16"
+            ],
+            [
+              "p17",
+              "p18"
+            ],
+            [
+              "p19",
+              "p20"
+            ]
+          ],
+          "total_horizontal_cost_px": 25.848543689320252
+        },
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p8",
+              "p7"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p12"
+            ],
+            [
+              "p13",
+              "p14"
+            ],
+            [
+              "p15",
+              "p16"
+            ],
+            [
+              "p17",
+              "p18"
+            ],
+            [
+              "p19",
+              "p20"
+            ]
+          ],
+          "total_horizontal_cost_px": 25.848543689320252
+        }
+      ],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 10,
+      "n_bottom": 10,
+      "on_horizon": 0,
+      "pair_cost_px": 25.848543689320252,
+      "second_pair_cost_px": 25.848543689320252,
+      "pair_margin_px": 0.0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "df8caafef388df6a815e": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到12个top、14个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 12,
+      "n_bottom": 14,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "e350ecfeaafde6028fcd": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到9个top、7个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 9,
+      "n_bottom": 7,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "ef46460f29fb4a76": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到4个top、5个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 4,
+      "n_bottom": 5,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [
+      {
+        "source": "evidence/user_review.json",
+        "quote": "去掉p9",
+        "interpretation": "本轮修复询问或建议；请对照已执行修复记录确认，不重复修复、不自动应用。",
+        "event_id": "user:ef46460f29fb4a76"
+      }
+    ],
+    "current_review_questions": [
+      {
+        "event_id": "user:ef46460f29fb4a76",
+        "comment": "去掉p9"
+      }
+    ]
+  },
+  "f57527778ab111cb3df8": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到6个top、4个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 6,
+      "n_bottom": 4,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "f6bfdcf15004e457": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到5个top、4个bottom，无法完整一一配对；不能据此判定漏点或无效。存在相距不足1px的点，视觉上可能重叠；未自动删点。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 5,
+      "n_bottom": 4,
+      "on_horizon": 0,
+      "near_overlapping_points": [
+        {
+          "labels": [
+            "p1",
+            "p3"
+          ],
+          "distance_px": 0.7601986527345161
+        }
+      ]
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "fba833f7e946e03406f0": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "ambiguous_horizontal_assignment",
+      "description": "水平距离总和存在等价最优配对，算法保留歧义并未存入links；候选需要人工确认。",
+      "candidates": [
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p7",
+              "p8"
+            ],
+            [
+              "p9",
+              "p10"
+            ],
+            [
+              "p11",
+              "p12"
+            ],
+            [
+              "p13",
+              "p14"
+            ],
+            [
+              "p15",
+              "p16"
+            ]
+          ],
+          "total_horizontal_cost_px": 21.871844660194085
+        },
+        {
+          "diagnostic_only": true,
+          "pairs": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p7",
+              "p8"
+            ],
+            [
+              "p9",
+              "p12"
+            ],
+            [
+              "p11",
+              "p10"
+            ],
+            [
+              "p13",
+              "p14"
+            ],
+            [
+              "p15",
+              "p16"
+            ]
+          ],
+          "total_horizontal_cost_px": 21.871844660194085
+        }
+      ],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 8,
+      "n_bottom": 8,
+      "on_horizon": 0,
+      "pair_cost_px": 21.871844660194085,
+      "second_pair_cost_px": 21.871844660194085,
+      "pair_margin_px": 0.0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "fd8bf72140d024b7cca4": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到2个top、6个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 2,
+      "n_bottom": 6,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "new_94_3635_6925_W031": {
+    "repairs": [
+      {
+        "status": "applied",
+        "description": "原始13点→有效14点；user_confirmed_add_point。原始点保留。",
+        "evidence_source": "analysis_results/new_manual_reviewed_20260921/review_applied.json",
+        "confirmation_source": null,
+        "raw_count": 13,
+        "effective_count": 14,
+        "provenance": {
+          "donor_id": "new_94_3635_7015_W033",
+          "donor_raw_point_1based": 10,
+          "added_point_1based": 14,
+          "coordinate_1024x512": [
+            893.7241805008432,
+            194.33008883849953
+          ],
+          "source": "evidence/用户审核_原始.json",
+          "selection": "用户指定W033 p10",
+          "borrowed_other_response": true
+        },
+        "donor_id": "new_94_3635_7015_W033",
+        "donor_raw_point_1based": 10
+      }
+    ],
+    "pairing": {
+      "status": "existing_accepted_pairing",
+      "reason": "conditional_unique_x_assignment",
+      "description": "已有可用配对；是否经人工确认以pairing_source和原始审核记录为准。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。"
+    },
+    "history": [
+      {
+        "source": "evidence/user_review.json",
+        "quote": "p13少了topy,补齐就行,标注区域的区别还是和gt在玻璃处不同",
+        "interpretation": "本轮修复询问或建议；请对照已执行修复记录确认，不重复修复、不自动应用。",
+        "event_id": "user:new_94_3635_6925_W031"
+      }
+    ],
+    "current_review_questions": [
+      {
+        "event_id": "user:new_94_3635_6925_W031",
+        "comment": "p13少了topy,补齐就行,标注区域的区别还是和gt在玻璃处不同"
+      }
+    ]
+  },
+  "new_94_3635_7036_W037": {
+    "repairs": [],
+    "pairing": {
+      "status": "unavailable",
+      "reason": "unbalanced_top_bottom",
+      "description": "按现有地平线规则识别到11个top、9个bottom，无法完整一一配对；不能据此判定漏点或无效。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。",
+      "n_top": 11,
+      "n_bottom": 9,
+      "on_horizon": 0,
+      "near_overlapping_points": []
+    },
+    "history": [],
+    "current_review_questions": []
+  },
+  "new_95_3660_7273_W034": {
+    "repairs": [
+      {
+        "status": "applied",
+        "description": "原始7点→有效8点；user_confirmed_add_point。原始点保留。",
+        "evidence_source": "analysis_results/new_manual_reviewed_20260921/review_applied.json",
+        "confirmation_source": null,
+        "raw_count": 7,
+        "effective_count": 8,
+        "provenance": {
+          "donor_id": "new_95_3660_6987_W035",
+          "donor_raw_point_1based": 8,
+          "added_point_1based": 8,
+          "coordinate_1024x512": [
+            939.1020408163265,
+            314.7755102040816
+          ],
+          "source": "evidence/用户审核_原始.json",
+          "selection": "用户允许簇1任一作答；固定取W035/6987 p8",
+          "borrowed_other_response": true
+        },
+        "donor_id": "new_95_3660_6987_W035",
+        "donor_raw_point_1based": 8
+      }
+    ],
+    "pairing": {
+      "status": "existing_accepted_pairing",
+      "reason": "conditional_unique_x_assignment",
+      "description": "已有可用配对；是否经人工确认以pairing_source和原始审核记录为准。",
+      "candidates": [],
+      "evidence_source": "analysis_results/new_manual_reviewed_20260921/eligibility.json",
+      "semantics": "候选中的每项仅表示一对上下点；列表排列不是墙体连接顺序，未自动采用。"
+    },
+    "history": [],
+    "current_review_questions": []
+  }
+}

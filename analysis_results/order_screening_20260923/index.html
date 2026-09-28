@@ -1,0 +1,29 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>全量顺序风险筛选</title>
+<style>body{font:15px/1.5 system-ui;margin:auto;max-width:1400px;padding:24px;color:#17212c;background:#f6f8f8}h1{margin-bottom:8px}
+.bar{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}.bar label{display:grid;gap:3px}select,input{padding:7px;min-width:180px}
+table{width:100%;border-collapse:collapse;background:white}th,td{padding:9px;border:1px solid #dce2e3;vertical-align:top;text-align:left}
+small{color:#5e6b72}pre{white-space:pre-wrap;max-width:650px}button{margin:12px 8px 0 0;padding:8px}</style>
+<h1>3019份作答 · 顺序风险机器筛选</h1><p>候选仅供人工复核；二维曲线尖角、交叉和3D极端形状可由真实遮挡或墙角造成。检测的是<b>当前计算配对环（真实邻接未确认）</b>，未知真实连接仍未知；原点击先后仅为低优先线索。这里不提供自动修序。</p>
+<p><a href="screening.json">下载完整数值、触发原因和空白人工修序字段</a> · 进入独立排序工作台查看单份作答的原图、俯视与3D，并导出预览顺序。</p>
+<div class="bar"><label>队列<select id="level"><option value="priority">优先候选</option><option value="candidate">宽筛候选</option><option value="all">全部3019份</option></select></label>
+<label>原因类型<select id="channel"><option value="all">全部类型</option><option value="geometry_construction">几何构造</option><option value="curve_construction">曲线接头/极区</option><option value="point_or_pairing">点位/配对</option><option value="low_priority_order_hint">低优先点击线索</option></select></label>
+<label>图片/人员/canonical ID<input id="search" type="search" autocomplete="off"></label></div><p id="count"></p>
+<table><thead><tr><th>图片/人员</th><th>对象</th><th>触发原因与数值</th><th>人工审查</th></tr></thead><tbody id="rows"></tbody></table>
+<button id="prev">上一页</button><button id="next">下一页</button><span id="page"></span>
+<script src="data.js"></script><script>
+const all=window.ORDER_SCREENING.rows, $=id=>document.getElementById(id);let page=0;
+function filtered(){const q=$('search').value.trim().toLowerCase(),level=$('level').value,ch=$('channel').value;
+ return all.filter(r=>(level==='all'||(level==='priority'?r.priority_candidate:r.candidate))&&(ch==='all'||r.reasons.some(x=>x.channel===ch))&&
+ (!q||[r.code,r.worker_id,r.canonical_annotation_id].some(x=>x.toLowerCase().includes(q))));}
+function td(tr,value){const e=document.createElement('td');e.textContent=value;tr.append(e);return e;}
+function render(){const rows=filtered();page=Math.min(page,Math.max(0,Math.ceil(rows.length/50)-1));$('count').textContent=`显示${rows.length}份；优先${window.ORDER_SCREENING.coverage.priority_candidates}份，宽筛${window.ORDER_SCREENING.coverage.primary_candidates}份。`;
+ $('rows').replaceChildren();for(const r of rows.slice(page*50,(page+1)*50)){const tr=document.createElement('tr');td(tr,`${r.code} · ${r.worker_id}`);
+ td(tr,r.canonical_annotation_id);const reasons=td(tr,r.reasons.map(x=>`${x.note}（${x.code}: ${x.value===null?'missing':x.value}${x.threshold?' / '+x.threshold:''}）`).join('；')||'未触发');
+ const detail=document.createElement('details'),summary=document.createElement('summary'),pre=document.createElement('pre');summary.textContent='查看原始量与解释';
+ pre.textContent=JSON.stringify({curve:r.curve,raw_3d:r.raw_3d,raw_3d_issues:r.raw_3d_issues,reasons:r.reasons,current_pair_original_point_ids_1based:r.current_pair_original_point_ids_1based},null,2);
+ detail.append(summary,pre);reasons.append(detail);const cell=td(tr,'');const link=document.createElement('a');link.href='../order_studio_20260926/index.html?annotation='+encodeURIComponent(r.canonical_annotation_id);
+ link.textContent='打开独立3D排序';cell.append(link);$('rows').append(tr);} $('page').textContent=`第${page+1}/${Math.max(1,Math.ceil(rows.length/50))}页`;}
+for(const id of ['level','channel','search'])$(id).addEventListener(id==='search'?'input':'change',()=>{page=0;render()});
+$('prev').onclick=()=>{if(page>0){page--;render()}};$('next').onclick=()=>{if((page+1)*50<filtered().length){page++;render()}};render();
+</script></html>

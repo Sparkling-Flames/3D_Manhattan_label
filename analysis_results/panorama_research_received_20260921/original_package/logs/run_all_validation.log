@@ -1,0 +1,12 @@
+RUN: /opt/pyvenv/bin/python -B -m tools.thesis_main.analysis.pro_research_handoff_20260921 --verify
+  exit=1; log=/mnt/data/panorama_research_20260921/logs/source_strict_verify.log
+RUN: /opt/pyvenv/bin/python -B -m pytest tests/test_reviewed_manual_20260921.py tests/test_new_manual_20260921.py -q
+  exit=0; log=/mnt/data/panorama_research_20260921/logs/tests_source.log
+RUN: /opt/pyvenv/bin/python -B /mnt/data/panorama_research_20260921/code/01_measurements.py --source-root /mnt/data/research_source
+  exit=0; log=/mnt/data/panorama_research_20260921/logs/01_measurements.log
+Strict source verify returned nonzero; independent checks confirm only tolerated floating differences. This is NOT a verbatim strict-verify pass.
+RUN: /opt/pyvenv/bin/python -B /mnt/data/panorama_research_20260921/code/02_replay.py --source-root /mnt/data/research_source --jobs 4 --start 0 --end 240
+  exit=0; log=/mnt/data/panorama_research_20260921/logs/02_replay_fresh_or_resume.log
+RUN: /opt/pyvenv/bin/python -B /mnt/data/panorama_research_20260921/code/02_replay.py --source-root /mnt/data/research_source --aggregate
+  exit=0; log=/mnt/data/panorama_research_20260921/logs/02_replay_aggregate.log
+RUN: /opt/pyvenv/bin/python -B /mnt/data/panorama_research_20260921/code/03_workers.py --source-root /mnt/data/research_source

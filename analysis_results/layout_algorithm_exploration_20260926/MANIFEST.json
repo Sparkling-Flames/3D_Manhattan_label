@@ -1,0 +1,27 @@
+{
+  "schema": "layout_algorithm_exploration_manifest_v1",
+  "contract_version": "consensus_research_20260923_v1",
+  "status": "exploratory_not_protocol_change",
+  "versions": {
+    "numpy": "1.26.4",
+    "scipy": "1.11.4",
+    "shapely": "2.0.4",
+    "matplotlib": "3.8.0"
+  },
+  "outputs": {
+    "geometry": "geometry/geometry_results.json",
+    "consensus": "consensus/results.json",
+    "real": "real/real_case_probe.json",
+    "effects": "effects/results.json",
+    "report": "README.md"
+  },
+  "geometry_cases": 13,
+  "consensus_prefix_rows": 12744,
+  "real_selected_images": 4,
+  "real_formally_confirmed_orders": 0,
+  "no_source_writeback": true,
+  "no_protocol_change": true,
+  "no_worker_ranking": true,
+  "no_automatic_ordering": true,
+  "weight_selection": "sensitivity_only_no_best_weight_selected"
+}

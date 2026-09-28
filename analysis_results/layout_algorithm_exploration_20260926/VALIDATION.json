@@ -1,0 +1,54 @@
+{
+  "schema": "layout_algorithm_exploration_validation_v1",
+  "date": "2026-09-26",
+  "test_command": "D:/anaconda/python.exe -m pytest tests/test_explore_layout_metrics_20260926.py tests/test_layout_metric_probe_20260926.py tests/test_layout_consensus_probe_20260926.py tests/test_layout_real_case_probe_20260926.py tests/test_consensus_region_20260923.py tests/test_panorama_studio.py -q -p no:cacheprovider --basetemp D:/Work/HOHONET/analysis_results/layout_algorithm_exploration_20260926/_test_tmp",
+  "test_result": {
+    "passed": 28,
+    "failed": 0,
+    "seconds": 13.78
+  },
+  "runner_command": "D:/anaconda/python.exe -m tools.thesis_main.analysis.explore_layout_metrics_20260926",
+  "runner_exit_code": 0,
+  "final_report_regenerated_from_saved_results": true,
+  "checks": {
+    "manifest_targets_exist": true,
+    "report_local_links_exist": true,
+    "json_nonfinite_rejected": true,
+    "python_syntax_valid": true,
+    "git_diff_check_passed": true,
+    "original_export_coordinate_verifications": 252
+  },
+  "visual_qa": {
+    "research_figures_retained": 13,
+    "scope": "主代理和分工代理目视检查正式图示；图示是交付内容。",
+    "new_temporary_browser_screenshots": 0,
+    "experiment_test_directory_removed": true
+  },
+  "changed_source_files": [
+    "tools/thesis_main/analysis/explore_layout_metrics_20260926.py",
+    "tools/thesis_main/analysis/layout_metric_probe_20260926.py",
+    "tools/thesis_main/analysis/layout_consensus_probe_20260926.py",
+    "tools/thesis_main/analysis/layout_real_case_probe_20260926.py",
+    "tests/test_explore_layout_metrics_20260926.py",
+    "tests/test_layout_metric_probe_20260926.py",
+    "tests/test_layout_consensus_probe_20260926.py",
+    "tests/test_layout_real_case_probe_20260926.py",
+    "docs/README_INDEX.md",
+    "docs/PROJECT_MAP_CLEAN_20260308.md"
+  ],
+  "output_directory": "analysis_results/layout_algorithm_exploration_20260926",
+  "protocol_guard": "独立探索；本轮未修改正式合同、SOP、原始标注、GT、人员排除或二审裁决。工作区原有相关修改保持原样。",
+  "label_studio_guard": "未涉及运营、分发、权限或运行时变更。",
+  "documentation_sync": "README_INDEX 与 PROJECT_MAP 登记实验入口，并注明排序及风险筛选暂缓至二次复核完成。",
+  "not_run": {
+    "full_repository_suite": "本轮独立探索只运行相关几何、共识、来源与字段检查；未改变正式运行核心。"
+  },
+  "remaining_limits": [
+    "四份真实候选均非终审确认，不形成总体人员质量结论。",
+    "合成模式身份已知；未实现或验证现实的完整多模式共识。",
+    "真实GT入口在本面板实际相同，未验证实质GT修订效果。",
+    "固定栅格和边界采样未做分辨率收敛研究。",
+    "理想ERP投影不等于已重建Matterport原始拼接流程。"
+  ],
+  "next_safe_step": "等待用户二次复核，再基于确认的邻接及合理范围扩大真实面板。"
+}

@@ -1,0 +1,3409 @@
+{
+  "schema": "review_comment_pending_20260927_v1",
+  "source": "tools/thesis_main/analysis/review_return_notes_20260927.json",
+  "method": "重新逐条核对406条评论；人工区分未决判断、既有工作裁决、场景边界歧义、分簇研究问题和保留误差。没有根据关键词自动改判。",
+  "rows": [
+    {
+      "comment_id": "image:S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e",
+      "image_id": "S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e",
+      "annotation_id": null,
+      "code": "S9hNv5qa7GM-04",
+      "raw_comment": "目前只有一个标注结果,尚不能完全确定有没有标注空间范围的歧义",
+      "reason": "目前仅一份作答，用户明确尚不能确定空间范围是否有歧义。",
+      "kind": "scene",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "image:UwV83HsGsw3_16af52545aff47afb4d7b330a49091a2",
+      "image_id": "UwV83HsGsw3_16af52545aff47afb4d7b330a49091a2",
+      "annotation_id": null,
+      "code": "UwV83HsGsw3-03",
+      "raw_comment": "暂定oos,确实勉强或许也可以标,但是gt标的也不好",
+      "reason": "虽按钮为已确认OOS，评论仍是暂定，并怀疑勉强可标；属于当前分类犹豫，不能以resolved隐藏。",
+      "kind": "scene",
+      "already_pending": false,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "image:b8cTxDM8gDG_298a2386166a43c8a04e1c24433f7d15",
+      "image_id": "b8cTxDM8gDG_298a2386166a43c8a04e1c24433f7d15",
+      "annotation_id": null,
+      "code": "b8cTxDM8gDG-04",
+      "raw_comment": "这图我也不确定到底是什么情况,原有的gt标的也怪,我改过后的gt标注的也不是特别好",
+      "reason": "用户直接表示不确定图片情况，且原始/修订参考均存疑。",
+      "kind": "scene",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_6a500a9a43a340eb817c58bb084327fe",
+      "image_id": "uNb9QFRL6hY_6a500a9a43a340eb817c58bb084327fe",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-32",
+      "raw_comment": "离门框下很近,gt是标了门框里的区域和右边阶梯下的区域(阶梯下的区域不太应该标),而且有些区域标的也不太对,这是否纳入考分析还有待确定",
+      "reason": "明确写是否纳入分析还有待确定。",
+      "kind": "scene",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5",
+      "image_id": "uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-47",
+      "raw_comment": "这图很接近门洞交界,其实相机的位置是在门框下略前一点,理论上可以标注的话是只标浴室的空间,但是没有一个人这样标,都是标了左右两侧(也就是相机正后方的区域),如果按照这个标准来的话,连gt都是不太对的,gt的标法是忽略了略低一点的门框,我暂时列入门洞交界(可标),因为整体的标注还行",
+      "reason": "用户暂列可标门洞，评论仍在比较相机位置、目标范围和GT；分类状态也待定。",
+      "kind": "scene",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_a372582c11864f31a9dd174e4a0ae6ad",
+      "image_id": "uNb9QFRL6hY_a372582c11864f31a9dd174e4a0ae6ad",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-51",
+      "raw_comment": "这个房间比较奇怪,他有个向外的玻璃区域,这个玻璃区域的顶部是斜着的,肯定不符合曼哈顿世界约束,所以gt肯定不对.但是这个东西本身就具有很大的迷惑性,拍摄的相机位置正好处在玻璃外扩区域和客厅之间,簇1是只标内侧空间标的比较好的",
+      "reason": "评论对任务约束与内外空间给出不同解释，整体仍待定，尚未确定最终场景归类。",
+      "kind": "scene",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2",
+      "image_id": "uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-52",
+      "raw_comment": "这是oos",
+      "reason": "评论断言OOS但未确认图片状态；需区分忘记确认与仍有保留。",
+      "kind": "scene",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "image:x8F5xyUWy9e_a51a0e2811f342a599ae4cdb9b84ff23",
+      "image_id": "x8F5xyUWy9e_a51a0e2811f342a599ae4cdb9b84ff23",
+      "annotation_id": null,
+      "code": "x8F5xyUWy9e-09",
+      "raw_comment": "这图和同房的那个图片那样,严格来说都算是oos ,因为墙面不正交,但是这图的标注共识出奇的好",
+      "reason": "非正交且共识好，原状态待定；用户后续明确可稳定标注OOS子类，应保留到新子类落实而非自动改写原文件。",
+      "kind": "scene",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:b11846422ee8df2c",
+      "image_id": "7y3sRwLe3Va_92fb09a83f8949619b9dc5bda2855456",
+      "annotation_id": "b11846422ee8df2c",
+      "code": "7y3sRwLe3Va-13",
+      "worker": "W011",
+      "raw_comment": "这好像是预标注出现了问题,但是他没改",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:43fca0253b1b4fff",
+      "image_id": "B6ByNegPMKs_48ee619d38b142f88914e7e2582bc1d8",
+      "annotation_id": "43fca0253b1b4fff",
+      "code": "B6ByNegPMKs-10",
+      "worker": "W036",
+      "raw_comment": "这好像是没有改动模型的预标注",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:726df974bcd4c84b",
+      "image_id": "B6ByNegPMKs_48ee619d38b142f88914e7e2582bc1d8",
+      "annotation_id": "726df974bcd4c84b",
+      "code": "B6ByNegPMKs-10",
+      "worker": "W021",
+      "raw_comment": "这好像是没有改动模型的预标注",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:6c4eb5c014ae5538",
+      "image_id": "B6ByNegPMKs_48ee619d38b142f88914e7e2582bc1d8",
+      "annotation_id": "6c4eb5c014ae5538",
+      "code": "B6ByNegPMKs-10",
+      "worker": "W011",
+      "raw_comment": "这好像是没有改动模型的预标注",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:1445e3889419575a",
+      "image_id": "Z6MFQCViBuw_fbef2c9afec642c88d01cf09c90aec12",
+      "annotation_id": "1445e3889419575a",
+      "code": "Z6MFQCViBuw-10",
+      "worker": "W017",
+      "raw_comment": "不确定为啥会标两个点在同一位置,可能是模型预标注没改? 还是我当时专门做的trap预标注,特地模拟模型预标注角点重复的情况",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:f0a357dcd7d8d4c6",
+      "image_id": "Z6MFQCViBuw_fbef2c9afec642c88d01cf09c90aec12",
+      "annotation_id": "f0a357dcd7d8d4c6",
+      "code": "Z6MFQCViBuw-10",
+      "worker": "W010",
+      "raw_comment": "不确定为啥会标两个点在同一位置,可能是模型预标注没改? 还是我当时专门做的trap预标注,特地模拟模型预标注角点重复的情况",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:eb2fd1fd3f466605",
+      "image_id": "Z6MFQCViBuw_fbef2c9afec642c88d01cf09c90aec12",
+      "annotation_id": "eb2fd1fd3f466605",
+      "code": "Z6MFQCViBuw-10",
+      "worker": "W006",
+      "raw_comment": "不确定为啥会标两个点在同一位置,可能是模型预标注没改? 还是我当时专门做的trap预标注,特地模拟模型预标注角点重复的情况",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:92e4a4cf1ae73f69",
+      "image_id": "Z6MFQCViBuw_fbef2c9afec642c88d01cf09c90aec12",
+      "annotation_id": "92e4a4cf1ae73f69",
+      "code": "Z6MFQCViBuw-10",
+      "worker": "W011",
+      "raw_comment": "不确定为啥会标两个点在同一位置,可能是模型预标注没改? 还是我当时专门做的trap预标注,特地模拟模型预标注角点重复的情况",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:1260b5763825ac73",
+      "image_id": "b8cTxDM8gDG_51c90ec9afc4495ab3788c6badc303df",
+      "annotation_id": "1260b5763825ac73",
+      "code": "b8cTxDM8gDG-07",
+      "worker": "W006",
+      "raw_comment": "不知道他左边标的那3对角点为什么偏离这么大,而且还不止一个人出现这种情况,是不是trap?",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:b49eaa7455fb1edf",
+      "image_id": "b8cTxDM8gDG_51c90ec9afc4495ab3788c6badc303df",
+      "annotation_id": "b49eaa7455fb1edf",
+      "code": "b8cTxDM8gDG-07",
+      "worker": "W011",
+      "raw_comment": "不知道他左边标的那3对角点为什么偏离这么大,而且还不止一个人出现这种情况,是不是trap?",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:50a0f95f8fc38be2",
+      "image_id": "e9zR4mvMWw7_12c84e77f6564013a032220e8f9037e8",
+      "annotation_id": "50a0f95f8fc38be2",
+      "code": "e9zR4mvMWw7-03",
+      "worker": "W006",
+      "raw_comment": "这好像是我的semi trap,我造了一个角点重复的情况",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:df7f18116de27c41",
+      "image_id": "e9zR4mvMWw7_12c84e77f6564013a032220e8f9037e8",
+      "annotation_id": "df7f18116de27c41",
+      "code": "e9zR4mvMWw7-03",
+      "worker": "W010",
+      "raw_comment": "这好像是我的semi trap,我造了一个角点重复的情况",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:5d6bb8dddcf527e1",
+      "image_id": "e9zR4mvMWw7_12c84e77f6564013a032220e8f9037e8",
+      "annotation_id": "5d6bb8dddcf527e1",
+      "code": "e9zR4mvMWw7-03",
+      "worker": "W011",
+      "raw_comment": "这好像是我的semi trap,我造了一个角点重复的情况",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:84b588165daf52f3",
+      "image_id": "e9zR4mvMWw7_4fb8c9be319e4784b4b66f9ca5d839ab",
+      "annotation_id": "84b588165daf52f3",
+      "code": "e9zR4mvMWw7-19",
+      "worker": "W031",
+      "raw_comment": "不知道他想标啥",
+      "reason": "当前作答判断尚未确定，评论未给出能直接执行的确定裁决。",
+      "kind": "annotation",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:7e2290dbca4fb383",
+      "image_id": "e9zR4mvMWw7_ac03b99e3f3642be80b4d24fde0af03a",
+      "annotation_id": "7e2290dbca4fb383",
+      "code": "e9zR4mvMWw7-32",
+      "worker": "W006",
+      "raw_comment": "这好像是我之前的semi trap ,构造的角点重复",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:1d9605edabc41fe8",
+      "image_id": "e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814",
+      "annotation_id": "1d9605edabc41fe8",
+      "code": "e9zR4mvMWw7-39",
+      "worker": "W006",
+      "raw_comment": "这是模型的错误预标注,他没有进行改动",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:28935ccbb578589d",
+      "image_id": "e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814",
+      "annotation_id": "28935ccbb578589d",
+      "code": "e9zR4mvMWw7-39",
+      "worker": "W037",
+      "raw_comment": "这错误预标注他也没改对",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:f2652a9524294607",
+      "image_id": "e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814",
+      "annotation_id": "f2652a9524294607",
+      "code": "e9zR4mvMWw7-39",
+      "worker": "W011",
+      "raw_comment": "没有改动模型错误的预标注",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:31d3caf93d1b2b79",
+      "image_id": "e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814",
+      "annotation_id": "31d3caf93d1b2b79",
+      "code": "e9zR4mvMWw7-39",
+      "worker": "W021",
+      "raw_comment": "没有改动模型错误的预标注",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:f11e6b976a498838f79c",
+      "image_id": "jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8",
+      "annotation_id": "f11e6b976a498838f79c",
+      "code": "jtcxE69GiFV-11",
+      "worker": "W015",
+      "raw_comment": "这个标的很奇怪,但是这图的标注样本太少",
+      "reason": "标法奇怪但样本太少，用户明确保留判断，尚未形成排除或可用结论。",
+      "kind": "annotation",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:293c9fb9a238349a",
+      "image_id": "q9vSo1VnCiC_a412536ff52747d3b078f66e764cf103",
+      "annotation_id": "293c9fb9a238349a",
+      "code": "q9vSo1VnCiC-15",
+      "worker": "W011",
+      "raw_comment": "这可能是我当时的semi trap,他没有修正",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:d0df2148541db2cf",
+      "image_id": "q9vSo1VnCiC_a412536ff52747d3b078f66e764cf103",
+      "annotation_id": "d0df2148541db2cf",
+      "code": "q9vSo1VnCiC-15",
+      "worker": "W006",
+      "raw_comment": "这可能是我当时的semi trap,他没有修正",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:4a1158da9bd83ef9",
+      "image_id": "rPc6DW4iMge_1f14902595544e389c9c910c444e79e7",
+      "annotation_id": "4a1158da9bd83ef9",
+      "code": "rPc6DW4iMge-09",
+      "worker": "W029",
+      "raw_comment": "不知道以前有没有补过点,如果没有补的话,这一簇都直接排除",
+      "reason": "裁决明确依赖历史补点是否已执行；条件未核验前不能按已有选项完成。",
+      "kind": "repair",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:6aed1eb1185c1318",
+      "image_id": "rPc6DW4iMge_1f14902595544e389c9c910c444e79e7",
+      "annotation_id": "6aed1eb1185c1318",
+      "code": "rPc6DW4iMge-09",
+      "worker": "W032",
+      "raw_comment": "不知道以前有没有补过点,如果没有补的话,这一簇都直接排除",
+      "reason": "裁决明确依赖历史补点是否已执行；条件未核验前不能按已有选项完成。",
+      "kind": "repair",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:6d192755ca096a2c",
+      "image_id": "rPc6DW4iMge_1f14902595544e389c9c910c444e79e7",
+      "annotation_id": "6d192755ca096a2c",
+      "code": "rPc6DW4iMge-09",
+      "worker": "W037",
+      "raw_comment": "不知道以前有没有补过点,如果没有补的话,这一簇都直接排除",
+      "reason": "裁决明确依赖历史补点是否已执行；条件未核验前不能按已有选项完成。",
+      "kind": "repair",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:917375ed9bf4c232",
+      "image_id": "uNb9QFRL6hY_aed830f085ee4ad88ef6bed7f66f1359",
+      "annotation_id": "917375ed9bf4c232",
+      "code": "uNb9QFRL6hY-56",
+      "worker": "W011",
+      "raw_comment": "这可能是我当时设置的trap",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:1b768d94b7e12113",
+      "image_id": "wc2JMjhGNzB_cae8fb3d40314ecea16654062030571b",
+      "annotation_id": "1b768d94b7e12113",
+      "code": "wc2JMjhGNzB-56",
+      "worker": "W011",
+      "raw_comment": "没改 模型预标注的错误标法",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:1fc40a12c31384b6",
+      "image_id": "wc2JMjhGNzB_cae8fb3d40314ecea16654062030571b",
+      "annotation_id": "1fc40a12c31384b6",
+      "code": "wc2JMjhGNzB-56",
+      "worker": "W013",
+      "raw_comment": "没改 模型预标注的错误标法",
+      "reason": "当前作答仍未决，评论中的模型/trap来源或是否纠正尚需溯源；没有已解决证据。",
+      "kind": "model",
+      "already_pending": true,
+      "changes_user_decision": false
+    },
+    {
+      "comment_id": "annotation:032cd152706166629e82",
+      "image_id": "wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f",
+      "annotation_id": "032cd152706166629e82",
+      "code": "wc2JMjhGNzB-67",
+      "worker": "W034",
+      "raw_comment": "只有6点,如果历史有修复记录,修了就纳入,没有的话就直接排除",
+      "reason": "裁决明确依赖历史补点是否已执行；条件未核验前不能按已有选项完成。",
+      "kind": "repair",
+      "already_pending": true,
+      "changes_user_decision": false
+    }
+  ],
+  "not_included": [
+    {
+      "comment_id": "image:2t7WUuJeko7_7b017f053981438a9c075e599f2c5866",
+      "image_id": "2t7WUuJeko7_7b017f053981438a9c075e599f2c5866",
+      "annotation_id": null,
+      "code": "2t7WUuJeko7-09",
+      "raw_comment": "但是这个分类为什么不是同一簇?感觉簇1和簇2没什么差别",
+      "reason": "属于当前分簇方法的开放问题，应保留分簇问题队列；不自动把图片或个人有效性改为待定。"
+    },
+    {
+      "comment_id": "image:7y3sRwLe3Va_112edb40f34e470da3a5b04599e71211",
+      "image_id": "7y3sRwLe3Va_112edb40f34e470da3a5b04599e71211",
+      "annotation_id": null,
+      "code": "7y3sRwLe3Va-03",
+      "raw_comment": "gt标注是在中间偏右那里,把门给标进去了,但是其余标注者没有这样标,就当成了一段延续的墙面",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:7y3sRwLe3Va_606f9842b8af48daa28f10df8b69d861",
+      "image_id": "7y3sRwLe3Va_606f9842b8af48daa28f10df8b69d861",
+      "annotation_id": null,
+      "code": "7y3sRwLe3Va-11",
+      "raw_comment": "这图的gt是没有标壁炉的.可以标的更细",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:7y3sRwLe3Va_92fb09a83f8949619b9dc5bda2855456",
+      "image_id": "7y3sRwLe3Va_92fb09a83f8949619b9dc5bda2855456",
+      "annotation_id": null,
+      "code": "7y3sRwLe3Va-13",
+      "raw_comment": "这图在走廊,所以w008出现了标注的停止范围不同的情况",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:7y3sRwLe3Va_a775c7668ca9419daaf506e76851821e",
+      "image_id": "7y3sRwLe3Va_a775c7668ca9419daaf506e76851821e",
+      "annotation_id": null,
+      "code": "7y3sRwLe3Va-18",
+      "raw_comment": "gt是标注了整个空间,簇1是只标注了会客厅,这种标法勉强可以标,但是其他的标注者的看法都不同,标注范围也不同,gt标的也不好,所以归入门洞交界且难标的类别",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:7y3sRwLe3Va_b47475370e824b9e923a4a96bc98e1e3",
+      "image_id": "7y3sRwLe3Va_b47475370e824b9e923a4a96bc98e1e3",
+      "annotation_id": null,
+      "code": "7y3sRwLe3Va-21",
+      "raw_comment": "这图严格来说应该算oos,因为卧室的天花板是往上凸的,存在多个平面,但是这里可以只标注站在走廊区域的天花板平面高度,这样是完全可以标注的,而且目前所有标注者都是按照这个标准来标,所以暂时不归入oos. 这图是难图,同时存在只标注走廊这个区域的可能性(我印象里是见到这种标注的,但是目前的标注结果里没有)",
+      "reason": "虽然使用“暂时”，但后文明确给出采用走廊高度、目前不归OOS的工作裁决；另一范围是未观察到的可能性。保留任务约束问题，不因一个暂字自动改成待定。"
+    },
+    {
+      "comment_id": "image:B6ByNegPMKs_48ee619d38b142f88914e7e2582bc1d8",
+      "image_id": "B6ByNegPMKs_48ee619d38b142f88914e7e2582bc1d8",
+      "annotation_id": null,
+      "code": "B6ByNegPMKs-10",
+      "raw_comment": "有个凸出的圆柱,有些人对他进行了标注,这些我都归为无效",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086",
+      "image_id": "B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086",
+      "annotation_id": null,
+      "code": "B6ByNegPMKs-11",
+      "raw_comment": "簇1和簇3为什么进行了分离?",
+      "reason": "属于当前分簇方法的开放问题，应保留分簇问题队列；不自动把图片或个人有效性改为待定。"
+    },
+    {
+      "comment_id": "image:B6ByNegPMKs_75327de9719945aa8b893a6404667884",
+      "image_id": "B6ByNegPMKs_75327de9719945aa8b893a6404667884",
+      "annotation_id": null,
+      "code": "B6ByNegPMKs-22",
+      "raw_comment": "这图在走廊,所以存在停止区域的不同",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993",
+      "image_id": "B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993",
+      "annotation_id": null,
+      "code": "B6ByNegPMKs-33",
+      "raw_comment": "本图是走廊,存在不同的停止点",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:B6ByNegPMKs_c946db5792df4f90bea20f06a0030c37",
+      "image_id": "B6ByNegPMKs_c946db5792df4f90bea20f06a0030c37",
+      "annotation_id": null,
+      "code": "B6ByNegPMKs-37",
+      "raw_comment": "本图是走廊,存在不同的停止点.gt 的标注区域有点奇怪",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624",
+      "image_id": "B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624",
+      "annotation_id": null,
+      "code": "B6ByNegPMKs-40",
+      "raw_comment": "走廊,存在不同的停止位置",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:B6ByNegPMKs_d19d2ae4bddf4445a3c623edc0346937",
+      "image_id": "B6ByNegPMKs_d19d2ae4bddf4445a3c623edc0346937",
+      "annotation_id": null,
+      "code": "B6ByNegPMKs-42",
+      "raw_comment": "这图在门框正下方",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:B6ByNegPMKs_d2dcbd73533446dcaf50e6be98c30386",
+      "image_id": "B6ByNegPMKs_d2dcbd73533446dcaf50e6be98c30386",
+      "annotation_id": null,
+      "code": "B6ByNegPMKs-43",
+      "raw_comment": "处于门框正下方",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+      "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+      "annotation_id": null,
+      "code": "B6ByNegPMKs-47",
+      "raw_comment": "这图很难,处于走廊的位置,且空间细节较难标",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:B6ByNegPMKs_e52609aae11f42a79f6cf50360180fd5",
+      "image_id": "B6ByNegPMKs_e52609aae11f42a79f6cf50360180fd5",
+      "annotation_id": null,
+      "code": "B6ByNegPMKs-48",
+      "raw_comment": "处于走廊,标注停止位置有不同. 这图虽然截止位置有点不同,但是都归为了一簇.gt停止的位置比较靠前",
+      "reason": "属于当前分簇方法的开放问题，应保留分簇问题队列；不自动把图片或个人有效性改为待定。"
+    },
+    {
+      "comment_id": "image:B6ByNegPMKs_ee063d1562c147f586ebb9f6fdb05ca6",
+      "image_id": "B6ByNegPMKs_ee063d1562c147f586ebb9f6fdb05ca6",
+      "annotation_id": null,
+      "code": "B6ByNegPMKs-50",
+      "raw_comment": "但是这图分了这么多簇,感觉簇3和簇1差的不是很多",
+      "reason": "属于当前分簇方法的开放问题，应保留分簇问题队列；不自动把图片或个人有效性改为待定。"
+    },
+    {
+      "comment_id": "image:S9hNv5qa7GM_0c2a97f049db4a429776940850fedf2e",
+      "image_id": "S9hNv5qa7GM_0c2a97f049db4a429776940850fedf2e",
+      "annotation_id": null,
+      "code": "S9hNv5qa7GM-01",
+      "raw_comment": "天花板存在凸起,不是同一平面,gt也不太对",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:S9hNv5qa7GM_53d54b73e58940019b731673e65c1902",
+      "image_id": "S9hNv5qa7GM_53d54b73e58940019b731673e65c1902",
+      "annotation_id": null,
+      "code": "S9hNv5qa7GM-07",
+      "raw_comment": "天花板向上凸起",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:S9hNv5qa7GM_5a89e430e6fb471189468fb44bbea75c",
+      "image_id": "S9hNv5qa7GM_5a89e430e6fb471189468fb44bbea75c",
+      "annotation_id": null,
+      "code": "S9hNv5qa7GM-08",
+      "raw_comment": "门框正下方,gt是标注了整个区域",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:S9hNv5qa7GM_625eb179629b45f280c01d3f6ec74b4f",
+      "image_id": "S9hNv5qa7GM_625eb179629b45f280c01d3f6ec74b4f",
+      "annotation_id": null,
+      "code": "S9hNv5qa7GM-09",
+      "raw_comment": "走廊,存在不同的停止位置,不过gt的停止位置较为奇怪",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:S9hNv5qa7GM_dbcf0a37c275473094e1160770291679",
+      "image_id": "S9hNv5qa7GM_dbcf0a37c275473094e1160770291679",
+      "annotation_id": null,
+      "code": "S9hNv5qa7GM-17",
+      "raw_comment": "w032其实和w031也没差的太多,分为了两个簇",
+      "reason": "属于当前分簇方法的开放问题，应保留分簇问题队列；不自动把图片或个人有效性改为待定。"
+    },
+    {
+      "comment_id": "image:S9hNv5qa7GM_e5e6c99e38014827b50ad33cd22e3c9d",
+      "image_id": "S9hNv5qa7GM_e5e6c99e38014827b50ad33cd22e3c9d",
+      "annotation_id": null,
+      "code": "S9hNv5qa7GM-19",
+      "raw_comment": "037明明和簇1特别接近,却分为了另外一个簇",
+      "reason": "属于当前分簇方法的开放问题，应保留分簇问题队列；不自动把图片或个人有效性改为待定。"
+    },
+    {
+      "comment_id": "image:S9hNv5qa7GM_eba5ca774e2a41dfa6e22fbff7fe66d2",
+      "image_id": "S9hNv5qa7GM_eba5ca774e2a41dfa6e22fbff7fe66d2",
+      "annotation_id": null,
+      "code": "S9hNv5qa7GM-20",
+      "raw_comment": "天花板凸起",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:S9hNv5qa7GM_ed36c0b595de42f0a4e13ba5d332814a",
+      "image_id": "S9hNv5qa7GM_ed36c0b595de42f0a4e13ba5d332814a",
+      "annotation_id": null,
+      "code": "S9hNv5qa7GM-21",
+      "raw_comment": "这图角落有点难标",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:UwV83HsGsw3_528d342bf5494b3b94983545d6a1a282",
+      "image_id": "UwV83HsGsw3_528d342bf5494b3b94983545d6a1a282",
+      "annotation_id": null,
+      "code": "UwV83HsGsw3-06",
+      "raw_comment": "停止区域不确定,gt标的范围也有歧义",
+      "reason": "“停止位置不确定”描述场景本身的边界歧义，已有OOS工作裁决；不是用户未决定分类。"
+    },
+    {
+      "comment_id": "image:UwV83HsGsw3_71ada030981d4468b76dcebc1b6fb940",
+      "image_id": "UwV83HsGsw3_71ada030981d4468b76dcebc1b6fb940",
+      "annotation_id": null,
+      "code": "UwV83HsGsw3-08",
+      "raw_comment": "玻璃是有弧度的,弯曲的",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+      "image_id": "UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+      "annotation_id": null,
+      "code": "UwV83HsGsw3-09",
+      "raw_comment": "属于很难的图片,gt的标注范围是最全的,但是包含了很大块完全看不见的地方.簇1的标注都是错的;簇4是最小的标注区域(但是可能不是完全的正交,有点小问题);簇6是最正确和gt最像的,其次是簇8",
+      "reason": "“可能不正交”指某个冻结簇的局部标法性质，图级已作范围比较；归具体簇诊断，不自动重开整图。"
+    },
+    {
+      "comment_id": "image:UwV83HsGsw3_8e9c912f525744eeaea21083a20a1596",
+      "image_id": "UwV83HsGsw3_8e9c912f525744eeaea21083a20a1596",
+      "annotation_id": null,
+      "code": "UwV83HsGsw3-10",
+      "raw_comment": "存在不同的停止区域,gt是在浴缸里停止,有些人是在浴缸外就停止",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:UwV83HsGsw3_b979526475874ad68ae33f02d407a1fc",
+      "image_id": "UwV83HsGsw3_b979526475874ad68ae33f02d407a1fc",
+      "annotation_id": null,
+      "code": "UwV83HsGsw3-16",
+      "raw_comment": "远端的位置玻璃是弯曲的",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:UwV83HsGsw3_bc29294428a647038f70e0ea31ea8972",
+      "image_id": "UwV83HsGsw3_bc29294428a647038f70e0ea31ea8972",
+      "annotation_id": null,
+      "code": "UwV83HsGsw3-17",
+      "raw_comment": "存在两种标注范围",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:UwV83HsGsw3_fcd79f4b6a6642e99227caffb51bf407",
+      "image_id": "UwV83HsGsw3_fcd79f4b6a6642e99227caffb51bf407",
+      "annotation_id": null,
+      "code": "UwV83HsGsw3-23",
+      "raw_comment": "遮挡太过严重,边界不可知",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:VFuaQ6m2Qom_381ce3cd69b846c3b920be16d29ed48e",
+      "image_id": "VFuaQ6m2Qom_381ce3cd69b846c3b920be16d29ed48e",
+      "annotation_id": null,
+      "code": "VFuaQ6m2Qom-03",
+      "raw_comment": "gt细节标的不是很好",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:VFuaQ6m2Qom_ad4c387f8175498491966703c8441e0d",
+      "image_id": "VFuaQ6m2Qom_ad4c387f8175498491966703c8441e0d",
+      "annotation_id": null,
+      "code": "VFuaQ6m2Qom-07",
+      "raw_comment": "属于较难的图片",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:VFuaQ6m2Qom_5fb269a812f349b4bc2ad5dfac000b85",
+      "image_id": "VFuaQ6m2Qom_5fb269a812f349b4bc2ad5dfac000b85",
+      "annotation_id": null,
+      "code": "VFuaQ6m2Qom-04",
+      "raw_comment": "属于较难的图片",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:VFuaQ6m2Qom_f0be18aa2f1d4aa2b6adf355a86f34b8",
+      "image_id": "VFuaQ6m2Qom_f0be18aa2f1d4aa2b6adf355a86f34b8",
+      "annotation_id": null,
+      "code": "VFuaQ6m2Qom-10",
+      "raw_comment": "属于较难的图片",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:X7HyMhZNoso_2b16acff0dc042a1a75816a1fbd0a302",
+      "image_id": "X7HyMhZNoso_2b16acff0dc042a1a75816a1fbd0a302",
+      "annotation_id": null,
+      "code": "X7HyMhZNoso-07",
+      "raw_comment": "这图有歧义,有不同的标法,甚至有些人认为是oos.",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9",
+      "image_id": "X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9",
+      "annotation_id": null,
+      "code": "X7HyMhZNoso-19",
+      "raw_comment": "中间有个隔断的墙,gt忽略了",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:b8cTxDM8gDG_8316e9313299447bb1f574aaf8cbec73",
+      "image_id": "b8cTxDM8gDG_8316e9313299447bb1f574aaf8cbec73",
+      "annotation_id": null,
+      "code": "b8cTxDM8gDG-08",
+      "raw_comment": "门框正下方,而且左边的区域停止位置有歧义",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:b8cTxDM8gDG_f3748786c3704532abb2358581488f3f",
+      "image_id": "b8cTxDM8gDG_f3748786c3704532abb2358581488f3f",
+      "annotation_id": null,
+      "code": "b8cTxDM8gDG-18",
+      "raw_comment": "gt是标了里面的房间的区域,这图很多人是只标外面的区域的.簇2,4其实挺相近的",
+      "reason": "属于当前分簇方法的开放问题，应保留分簇问题队列；不自动把图片或个人有效性改为待定。"
+    },
+    {
+      "comment_id": "image:b8cTxDM8gDG_f63819c407e64c2897b703080766cb60",
+      "image_id": "b8cTxDM8gDG_f63819c407e64c2897b703080766cb60",
+      "annotation_id": null,
+      "code": "b8cTxDM8gDG-19",
+      "raw_comment": "右边的墙有一段是斜的,且边界停止的位置不确定",
+      "reason": "“停止位置不确定”描述场景本身的边界歧义，已有OOS工作裁决；不是用户未决定分类。"
+    },
+    {
+      "comment_id": "image:e9zR4mvMWw7_1d316dfbe35f41dd9203eaf88be5aae8",
+      "image_id": "e9zR4mvMWw7_1d316dfbe35f41dd9203eaf88be5aae8",
+      "annotation_id": null,
+      "code": "e9zR4mvMWw7-09",
+      "raw_comment": "gt标注了整个视觉内的房间,但是标注者一般只标最小空间,和gt不同",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:e9zR4mvMWw7_4273c4dd97974531b5256f96204fee47",
+      "image_id": "e9zR4mvMWw7_4273c4dd97974531b5256f96204fee47",
+      "annotation_id": null,
+      "code": "e9zR4mvMWw7-17",
+      "raw_comment": "gt的标注范围是标了里面的房间,目前标注者都没有标这个区域的,标注的空间范围不同",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:e9zR4mvMWw7_4fb8c9be319e4784b4b66f9ca5d839ab",
+      "image_id": "e9zR4mvMWw7_4fb8c9be319e4784b4b66f9ca5d839ab",
+      "annotation_id": null,
+      "code": "e9zR4mvMWw7-19",
+      "raw_comment": "本图中等偏难,簇2,4,6,8的标注方法是对的,但是我不知道为啥分了这么多簇.大部分人想标的空间是和gt一致的,但是很多人都漏标了gt 的p3,p4整个位置.簇3给出了一个很奇怪的标注空间,标的特别小",
+      "reason": "属于当前分簇方法的开放问题，应保留分簇问题队列；不自动把图片或个人有效性改为待定。"
+    },
+    {
+      "comment_id": "image:jh4fc5c5qoQ_77e6cfabf32d46fc9398ce824843adaa",
+      "image_id": "jh4fc5c5qoQ_77e6cfabf32d46fc9398ce824843adaa",
+      "annotation_id": null,
+      "code": "jh4fc5c5qoQ-09",
+      "raw_comment": "在门框正下方",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6",
+      "image_id": "jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6",
+      "annotation_id": null,
+      "code": "jh4fc5c5qoQ-14",
+      "raw_comment": "门框正下方",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:jtcxE69GiFV_1df105f34ccf4844877be7e8e2d90fad",
+      "image_id": "jtcxE69GiFV_1df105f34ccf4844877be7e8e2d90fad",
+      "annotation_id": null,
+      "code": "jtcxE69GiFV-04",
+      "raw_comment": "不过为什么这簇1 簇2 是分开的 ?我感觉标注挺接近的",
+      "reason": "属于当前分簇方法的开放问题，应保留分簇问题队列；不自动把图片或个人有效性改为待定。"
+    },
+    {
+      "comment_id": "image:jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037",
+      "image_id": "jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037",
+      "annotation_id": null,
+      "code": "jtcxE69GiFV-05",
+      "raw_comment": "gt是错误的,不是空间的问题,是完全错误.而且这图可以标细节的墙角,但是目前标注者都没有标注.\n三个模型的预标注也都是错误的",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8",
+      "image_id": "jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8",
+      "annotation_id": null,
+      "code": "jtcxE69GiFV-11",
+      "raw_comment": "这个图片的标注空间有点奇怪的,gt是把所有走廊都标了,目前只有两个人的标注,不能准确反映这个东西",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+      "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+      "annotation_id": null,
+      "code": "jtcxE69GiFV-12",
+      "raw_comment": "这图虽然处在床所在的区域和连通卧室门的交界处,但是按照gt来标,是可以标注的,但是确实会存在不同的标注空间的范围.目前的标注情况来看,有的人只标了左边的区域,有的人标完整个卧室,但是大多标的不是很好",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:jtcxE69GiFV_6723e18211d244f8b17ced91aae64d99",
+      "image_id": "jtcxE69GiFV_6723e18211d244f8b17ced91aae64d99",
+      "annotation_id": null,
+      "code": "jtcxE69GiFV-17",
+      "raw_comment": "这图遮挡较多,较难,而且gt标的是错误的,包括模型标的p3,p4这对点,是错误把门当成墙了,而且他们都忽略了墙面的的柱子凸起",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:jtcxE69GiFV_f473cf5a09a64090acec3bfe8fccaacd",
+      "image_id": "jtcxE69GiFV_f473cf5a09a64090acec3bfe8fccaacd",
+      "annotation_id": null,
+      "code": "jtcxE69GiFV-30",
+      "raw_comment": "这图存在多个标注空间",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:pRbA3pwrgk9_0350fc96e88c4a52886d4eb50b2d52c6",
+      "image_id": "pRbA3pwrgk9_0350fc96e88c4a52886d4eb50b2d52c6",
+      "annotation_id": null,
+      "code": "pRbA3pwrgk9-01",
+      "raw_comment": "严格来说也是oos,gt的标注空间是整个房间,簇2只标了 左边的厕所区域",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:pRbA3pwrgk9_285b697fed754f86a09602c93628cfb4",
+      "image_id": "pRbA3pwrgk9_285b697fed754f86a09602c93628cfb4",
+      "annotation_id": null,
+      "code": "pRbA3pwrgk9-06",
+      "raw_comment": "我觉得还是可以标注的,可以算到inscope,只要不标注窗台",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:pRbA3pwrgk9_8b07a4b08cf447abb246769d8dce8494",
+      "image_id": "pRbA3pwrgk9_8b07a4b08cf447abb246769d8dce8494",
+      "annotation_id": null,
+      "code": "pRbA3pwrgk9-11",
+      "raw_comment": "门洞交界且oos",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:pRbA3pwrgk9_8caa90fc5528451f9e9f45634676499b",
+      "image_id": "pRbA3pwrgk9_8caa90fc5528451f9e9f45634676499b",
+      "annotation_id": null,
+      "code": "pRbA3pwrgk9-12",
+      "raw_comment": "这个gt直接忽略了左边的墙面凸起,而且我认为它标的高度也有问题,是错误的,比较标准的是BiLayout enclosed的标法.",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:pRbA3pwrgk9_9c9bed9bf7d94ac0bcea18e3bf521930",
+      "image_id": "pRbA3pwrgk9_9c9bed9bf7d94ac0bcea18e3bf521930",
+      "annotation_id": null,
+      "code": "pRbA3pwrgk9-14",
+      "raw_comment": "和gt的标注空间有些偏差,gt是标了玻璃门后的马桶和洗手台的位置",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e",
+      "image_id": "pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e",
+      "annotation_id": null,
+      "code": "pa4otMbVnkk-11",
+      "raw_comment": "gt标注的空间是把右侧里面的空间也纳入了,但是实质上不标注那个区域也是可以的.",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+      "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+      "annotation_id": null,
+      "code": "pa4otMbVnkk-14",
+      "raw_comment": "这图里门框下很近,而且存在不同的标注范围.有些人会标上房间里的空间,但是最好的还是像gt那样的标法.",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:pa4otMbVnkk_64ba4f267872432abdcb00af002649d5",
+      "image_id": "pa4otMbVnkk_64ba4f267872432abdcb00af002649d5",
+      "annotation_id": null,
+      "code": "pa4otMbVnkk-18",
+      "raw_comment": "gt在右边的墙角处是有遗漏的",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+      "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+      "annotation_id": null,
+      "code": "q9vSo1VnCiC-01",
+      "raw_comment": "gt是没有标右边的门里的区域,HOHONET是在这个区域有角点重复.有几个标注者是标了这里面的区域的.gt的标法是相对更好的",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e",
+      "image_id": "q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e",
+      "annotation_id": null,
+      "code": "q9vSo1VnCiC-02",
+      "raw_comment": "我觉得w001的标注,在取了x坐标平均值后是可以归为一簇的",
+      "reason": "属于当前分簇方法的开放问题，应保留分簇问题队列；不自动把图片或个人有效性改为待定。"
+    },
+    {
+      "comment_id": "image:q9vSo1VnCiC_3e7f67e8969f434b9a4aec0c68668b20",
+      "image_id": "q9vSo1VnCiC_3e7f67e8969f434b9a4aec0c68668b20",
+      "annotation_id": null,
+      "code": "q9vSo1VnCiC-04",
+      "raw_comment": "在门框正下方",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:q9vSo1VnCiC_69591068e5614642b710a8fb7733bdeb",
+      "image_id": "q9vSo1VnCiC_69591068e5614642b710a8fb7733bdeb",
+      "annotation_id": null,
+      "code": "q9vSo1VnCiC-09",
+      "raw_comment": "这图严格意义上来说是oos,但是如果进行勉强的标注是可以的,要么就是标注实际墙角,但是3D效果不好,要么就是3D效果不错,但远离实际的墙角",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+      "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+      "annotation_id": null,
+      "code": "q9vSo1VnCiC-13",
+      "raw_comment": "在主卧和门口区域的交界处,且被墙体遮挡了左边关键的很多信息,我修订后的gt是勉强可以标,但是标注的效果不是很好",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:q9vSo1VnCiC_a424533651804a38a55b1252daccc81e",
+      "image_id": "q9vSo1VnCiC_a424533651804a38a55b1252daccc81e",
+      "annotation_id": null,
+      "code": "q9vSo1VnCiC-16",
+      "raw_comment": "gt是标了两个主标注区域外的空间,不一定好",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:q9vSo1VnCiC_dc873df7717c43888a1cff13713fe146",
+      "image_id": "q9vSo1VnCiC_dc873df7717c43888a1cff13713fe146",
+      "annotation_id": null,
+      "code": "q9vSo1VnCiC-30",
+      "raw_comment": "存在不同的标注空间,gt是标注了连廊的空间,但是墙角的细节没标注.簇1是最简单的标注,簇2的连廊的细节空间是标注的最好的,其余的或多或少都有点问题",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:q9vSo1VnCiC_e74e843601574864a14517f990c748a0",
+      "image_id": "q9vSo1VnCiC_e74e843601574864a14517f990c748a0",
+      "annotation_id": null,
+      "code": "q9vSo1VnCiC-32",
+      "raw_comment": "存在不同空间的标法,但是如果要标马桶所在的空间会很难标",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:rPc6DW4iMge_0012f6dcce9645778ac459e189cf0db3",
+      "image_id": "rPc6DW4iMge_0012f6dcce9645778ac459e189cf0db3",
+      "annotation_id": null,
+      "code": "rPc6DW4iMge-01",
+      "raw_comment": "簇1,2,3感觉没啥区别",
+      "reason": "属于当前分簇方法的开放问题，应保留分簇问题队列；不自动把图片或个人有效性改为待定。"
+    },
+    {
+      "comment_id": "image:rPc6DW4iMge_0dfe61800cc540db8e25c1738bc4b8ff",
+      "image_id": "rPc6DW4iMge_0dfe61800cc540db8e25c1738bc4b8ff",
+      "annotation_id": null,
+      "code": "rPc6DW4iMge-05",
+      "raw_comment": "这图很难很难标,而且图右边玻璃洗澡的区域存在不同的标法",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+      "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+      "annotation_id": null,
+      "code": "rPc6DW4iMge-06",
+      "raw_comment": "这图很难标,而且左边的玻璃浴室处存在不同的标法,gt标的也不是完美,他标的是玻璃浴室里面的区域,但是梳妆台和玻璃连接的区域忽略了部分细节",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:rPc6DW4iMge_1f14902595544e389c9c910c444e79e7",
+      "image_id": "rPc6DW4iMge_1f14902595544e389c9c910c444e79e7",
+      "annotation_id": null,
+      "code": "rPc6DW4iMge-09",
+      "raw_comment": "感觉簇1,2没啥大差别",
+      "reason": "属于当前分簇方法的开放问题，应保留分簇问题队列；不自动把图片或个人有效性改为待定。"
+    },
+    {
+      "comment_id": "image:rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a",
+      "image_id": "rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a",
+      "annotation_id": null,
+      "code": "rPc6DW4iMge-17",
+      "raw_comment": "有些人会标门外的空间",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+      "image_id": "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+      "annotation_id": null,
+      "code": "rPc6DW4iMge-22",
+      "raw_comment": "这图很难,而且右边的玻璃浴室 存在不同的标注方法,gt是标里面的墙角,有些人会标外面的玻璃",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_00b4950b469b4520b29f895aa029419c",
+      "image_id": "uNb9QFRL6hY_00b4950b469b4520b29f895aa029419c",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-01",
+      "raw_comment": "这图gt是直接忽略掉了最左边的凸起,最精确细节的标法应该是类似簇2 的标法,甚至可以把簇2最右边的一对点,移动到最左边来(不过考虑到3对点挨得太近不好标,所以一般就放在在最左边了)",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_068fb0d52d01455c96fa23659c373bf8",
+      "image_id": "uNb9QFRL6hY_068fb0d52d01455c96fa23659c373bf8",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-04",
+      "raw_comment": "gt没有标注右边墙面的变化,直接忽略了 .这图标注者也出现了一个罕见的现象,在壁炉那里停止,标注空间缩小",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_104d12b732794414a42edd37ac554bff",
+      "image_id": "uNb9QFRL6hY_104d12b732794414a42edd37ac554bff",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-07",
+      "raw_comment": "中等难度,存在右边柜子停止点的问题,有些人把柜子当成墙角,有些人 是标完全被挡住的实际墙角.簇1,4是柜子处就停止了",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_13a430466eb64e2087e7fb5acde7a398",
+      "image_id": "uNb9QFRL6hY_13a430466eb64e2087e7fb5acde7a398",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-09",
+      "raw_comment": "这图gt是没有标右边墙面变化的细节的,标注者有时会在壁炉那莫名其妙多标点(簇1,3,4,6),簇5是最正确的标法",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f",
+      "image_id": "uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-12",
+      "raw_comment": "左边墙面的变化,gt还是没标",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_23ed105b1f0f48bbb6ec025df9d313e7",
+      "image_id": "uNb9QFRL6hY_23ed105b1f0f48bbb6ec025df9d313e7",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-14",
+      "raw_comment": "确实可以标门外的空间,但是现在的两个标门外区域的,都标的太过奇怪了",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_2ed0e171a7c34f17a85363923a26ab98",
+      "image_id": "uNb9QFRL6hY_2ed0e171a7c34f17a85363923a26ab98",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-18",
+      "raw_comment": "这图很难,而且左侧玻璃洗澡区域存在不同的标法,gt是标玻璃外围,一些人是标玻璃内实际的墙角,还有有些人没有正确标注这个地方,直接忽略了部分玻璃区域",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_3450b3accb584493bf13be8e9554dbea",
+      "image_id": "uNb9QFRL6hY_3450b3accb584493bf13be8e9554dbea",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-20",
+      "raw_comment": "gt还是没有标注右边墙面的变化,有些人还是标注了壁炉但是又没标好",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_3b9e548b46af4410b97e1d12781ec3c9",
+      "image_id": "uNb9QFRL6hY_3b9e548b46af4410b97e1d12781ec3c9",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-21",
+      "raw_comment": "如果 按照严格标准的话,gt标的也有瑕疵,而且就在门框下,不好标",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_5948424345f541b9a570b48f1cfcf622",
+      "image_id": "uNb9QFRL6hY_5948424345f541b9a570b48f1cfcf622",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-25",
+      "raw_comment": "还是站在两个区域的连接处正下方",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_5b62816d9cf94f17ae166291822ea9ab",
+      "image_id": "uNb9QFRL6hY_5b62816d9cf94f17ae166291822ea9ab",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-26",
+      "raw_comment": "这图属于困难图,一些人会标漏细节,主要空间歧义是在右侧的玻璃浴室处,有些人标内侧的墙角,gt是标外侧的玻璃",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+      "image_id": "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-29",
+      "raw_comment": "这图存在标注空间的歧义,gt和很多标注者是标了门口有往下的阶梯的区域,严格来说不应该标那,因为有阶梯意味着不属于曼哈顿约束了,应该类似w002是最好的",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d",
+      "image_id": "uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-36",
+      "raw_comment": "这图在走廊,如果按照最严格的曼哈顿世界约束,目前所有人的标注都是错的,,包括gt,停止的位置都不太对",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62",
+      "image_id": "uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-40",
+      "raw_comment": "gt的是对的,这次的gt终于注意到了左边墙面的变化,但是还有些标注者对这里是采取忽略的标法",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_76ba70b55bde4313939a4a0cd78a49d3",
+      "image_id": "uNb9QFRL6hY_76ba70b55bde4313939a4a0cd78a49d3",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-41",
+      "raw_comment": "这图存在标注空间的不同,主要在左边的玻璃洗澡区域,gt是标玻璃外围,有些人是标玻璃里的墙角",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_84722e58b32f4646acc12614994f835b",
+      "image_id": "uNb9QFRL6hY_84722e58b32f4646acc12614994f835b",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-43",
+      "raw_comment": "这里gt也注意到了左侧墙面的变化,但是还是有很多标注者选择忽略,而且簇1标注中间4个点我没有理解是什么意思",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+      "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-44",
+      "raw_comment": "gt是标了门口台阶那块区域,严格按照曼哈顿世界约束来说是不需要标的.",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97",
+      "image_id": "uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-45",
+      "raw_comment": "gt是注意到了右侧 墙面的变化的,但是很多人还是对此忽略. 壁炉不太应该去标",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_9b675f28ab5f4345bf06ed5c77097426",
+      "image_id": "uNb9QFRL6hY_9b675f28ab5f4345bf06ed5c77097426",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-48",
+      "raw_comment": "这个房间的图片,理论上是存在不同的标注范围的,gt和大部分人把柜子当成墙角,还有人会标完全被遮挡的区域的墙角(簇3)",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_9f199750b00c4f5484a546d79e06a0f8",
+      "image_id": "uNb9QFRL6hY_9f199750b00c4f5484a546d79e06a0f8",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-50",
+      "raw_comment": "这图很难,存在不同的标法,主要还是在玻璃洗澡区域,这次gt是标注到了里面的墙角,有些人会标注外面的玻璃. 还有一个歧义点是,有些人会标注马桶所在的区域,还有遗漏完全被墙遮挡住的浴缸所在区域的墙角,还有梳妆台所在的地方的墙面变化也容易被简化/忽略",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_a728d2eef41b449f82357899de802dd3",
+      "image_id": "uNb9QFRL6hY_a728d2eef41b449f82357899de802dd3",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-53",
+      "raw_comment": "gt没有注意到右边墙面的变化",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_a7ab19b1a9f044f0905592de1414e8b3",
+      "image_id": "uNb9QFRL6hY_a7ab19b1a9f044f0905592de1414e8b3",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-54",
+      "raw_comment": "gt是标了台阶里面空间的,严格来说不能这样,因为有台阶,头顶也是低一点的,标到那边就算oos了",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_b98c9460586e4f138658181461df9f51",
+      "image_id": "uNb9QFRL6hY_b98c9460586e4f138658181461df9f51",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-59",
+      "raw_comment": "存在不同的标注范围,主要是中间偏左的玻璃洗澡区域,gt是标玻璃外侧,有些人是标玻璃里面的墙角的",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_ba24e5a57ef34c6dbc0458ed4c1e701d",
+      "image_id": "uNb9QFRL6hY_ba24e5a57ef34c6dbc0458ed4c1e701d",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-60",
+      "raw_comment": "这图较难,图片左右两边连着的其实是玻璃洗澡区域,很多人都忽略了,存在不同的标注范围",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-63",
+      "raw_comment": "这图是有人标到房间里了",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_c1ebb8b34eb846ba9b5ce23b30b299a7",
+      "image_id": "uNb9QFRL6hY_c1ebb8b34eb846ba9b5ce23b30b299a7",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-65",
+      "raw_comment": "有些人会把门口的区域标注上,比如簇3",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_c6410f47ad754d6cbd890ba7dff8b449",
+      "image_id": "uNb9QFRL6hY_c6410f47ad754d6cbd890ba7dff8b449",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-66",
+      "raw_comment": "存在不同的标注范围,gt是标了玻璃洗澡区域的外侧,有些会标注里面的墙角",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_ca08ebfb2da647f68db41630637e400b",
+      "image_id": "uNb9QFRL6hY_ca08ebfb2da647f68db41630637e400b",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-67",
+      "raw_comment": "存在不同的标注范围,相机是在玻璃洗澡区域的里面拍摄的,大部分人只标了这个玻璃区域,gt和小部分人是吧洗澡区域外的房间给标了",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+      "image_id": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-68",
+      "raw_comment": "存在不同的标注范围,gt是标了门口的区域, 很多人是选择不标这个区域(我觉得更好)",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_ce88ee8b7ee84fca92c13ab16599d90e",
+      "image_id": "uNb9QFRL6hY_ce88ee8b7ee84fca92c13ab16599d90e",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-69",
+      "raw_comment": "这图严格来说是oos,因为有台阶,头顶天花板是下凹的",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_d5c47aa99b274a67b305aa601234f1f1",
+      "image_id": "uNb9QFRL6hY_d5c47aa99b274a67b305aa601234f1f1",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-72",
+      "raw_comment": "我记得同房间这图,我是写了有不同的标注范围的,就是说是否把柜子当做墙角去停止",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_e0b8950793b447bd8b9f916e98e849d1",
+      "image_id": "uNb9QFRL6hY_e0b8950793b447bd8b9f916e98e849d1",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-78",
+      "raw_comment": "同图,是否把柜子当做墙角去停止",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_e24473d2b8a24568b89c1c4c2a4a9bf1",
+      "image_id": "uNb9QFRL6hY_e24473d2b8a24568b89c1c4c2a4a9bf1",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-79",
+      "raw_comment": "同图,是否把柜子当做墙角去停止",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+      "image_id": "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-81",
+      "raw_comment": "存在不同的标注范围,gt是标了门口的区域,标注者大部分都没标",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_f7944295a76541b186e6a557ebdbba14",
+      "image_id": "uNb9QFRL6hY_f7944295a76541b186e6a557ebdbba14",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-83",
+      "raw_comment": "在门框正下方",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269",
+      "image_id": "uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-86",
+      "raw_comment": "存在不同的标注区域,gt是把门口的区域标了",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_fd411e4f6035431593833d9d0beb4d32",
+      "image_id": "uNb9QFRL6hY_fd411e4f6035431593833d9d0beb4d32",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-87",
+      "raw_comment": "同图,是否把柜子当做墙角去停止",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14",
+      "image_id": "uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14",
+      "annotation_id": null,
+      "code": "uNb9QFRL6hY-88",
+      "raw_comment": "这图很困难,存在不同的标注区域,主要还是玻璃洗澡区域,标外面还是标里面的墙角,还有是否标马桶区域,这个gt标的范围很大,把左右两侧的走廊都标了,目前没有标注者这样标",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:wc2JMjhGNzB_03c1aca95e254bf4b0db303a28d79aee",
+      "image_id": "wc2JMjhGNzB_03c1aca95e254bf4b0db303a28d79aee",
+      "annotation_id": null,
+      "code": "wc2JMjhGNzB-03",
+      "raw_comment": "存在不同的标注范围,gt是把门口的区域标注进来了(我觉得不标更好,因为门口的区域天花板高度略低)",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:wc2JMjhGNzB_2195c5a9b9fd451b927b0050f23fac31",
+      "image_id": "wc2JMjhGNzB_2195c5a9b9fd451b927b0050f23fac31",
+      "annotation_id": null,
+      "code": "wc2JMjhGNzB-15",
+      "raw_comment": "这簇1,簇2为什么分开来了",
+      "reason": "属于当前分簇方法的开放问题，应保留分簇问题队列；不自动把图片或个人有效性改为待定。"
+    },
+    {
+      "comment_id": "image:wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+      "image_id": "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+      "annotation_id": null,
+      "code": "wc2JMjhGNzB-26",
+      "raw_comment": "这图较难,存在不同的标注空间范围,有些人是会把走廊区域标注,但是我觉得没必要,gt是没有标的;还有很多人忽略了左侧墙面的变化",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:wc2JMjhGNzB_b41b10699d614f24851b56a9a0e743c6",
+      "image_id": "wc2JMjhGNzB_b41b10699d614f24851b56a9a0e743c6",
+      "annotation_id": null,
+      "code": "wc2JMjhGNzB-53",
+      "raw_comment": "存在不同的标注空间范围,一个是是否标马桶的区域(我觉得不用),一个是右边的停止点,有些人是在玻璃处停止,,gt是在最后面停止.左侧的墙面凸起很多人也忽略了",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:wc2JMjhGNzB_c7c84bf01a834489ad11d8450a7dc2bc",
+      "image_id": "wc2JMjhGNzB_c7c84bf01a834489ad11d8450a7dc2bc",
+      "annotation_id": null,
+      "code": "wc2JMjhGNzB-54",
+      "raw_comment": "标注范围可以不同,gt是标了门口的区域(同图,我觉得可以不用)",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:wc2JMjhGNzB_cae8fb3d40314ecea16654062030571b",
+      "image_id": "wc2JMjhGNzB_cae8fb3d40314ecea16654062030571b",
+      "annotation_id": null,
+      "code": "wc2JMjhGNzB-56",
+      "raw_comment": "确实存在不同的标注范围,有些人把走廊门里面的区域也标了(可以不标)",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:wc2JMjhGNzB_dc4a9f470b834de1983c7e605ff06b2e",
+      "image_id": "wc2JMjhGNzB_dc4a9f470b834de1983c7e605ff06b2e",
+      "annotation_id": null,
+      "code": "wc2JMjhGNzB-59",
+      "raw_comment": "好多簇感觉都很相近",
+      "reason": "属于当前分簇方法的开放问题，应保留分簇问题队列；不自动把图片或个人有效性改为待定。"
+    },
+    {
+      "comment_id": "image:x8F5xyUWy9e_1be9a97aada84e4795f64583ac0e3b76",
+      "image_id": "x8F5xyUWy9e_1be9a97aada84e4795f64583ac0e3b76",
+      "annotation_id": null,
+      "code": "x8F5xyUWy9e-01",
+      "raw_comment": "严格来说算oos,因为有斜的墙面,墙与墙之间不是正交",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:x8F5xyUWy9e_3a127fd2c5f34d978cba253145dae7d6",
+      "image_id": "x8F5xyUWy9e_3a127fd2c5f34d978cba253145dae7d6",
+      "annotation_id": null,
+      "code": "x8F5xyUWy9e-03",
+      "raw_comment": "很多人没注意到左侧墙面的变化,目前的标注中没有人注意到,标注的细节范围不同",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:x8F5xyUWy9e_9926b38bd87e44e292d9c375050dd17d",
+      "image_id": "x8F5xyUWy9e_9926b38bd87e44e292d9c375050dd17d",
+      "annotation_id": null,
+      "code": "x8F5xyUWy9e-08",
+      "raw_comment": "gt是直接忽略了左侧的墙面变化",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:yqstnuAEVhm_08e2145b15fc4d2497c084af41dc7089",
+      "image_id": "yqstnuAEVhm_08e2145b15fc4d2497c084af41dc7089",
+      "annotation_id": null,
+      "code": "yqstnuAEVhm-01",
+      "raw_comment": "这图还是有点难度的,因为左边的墙面变化和最右边很不显眼的墙面变化,目前的5个标注者都没有发现,gt的是对的",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:yqstnuAEVhm_26b2e92ccd314a2da1a4fc8dfc6e6f56",
+      "image_id": "yqstnuAEVhm_26b2e92ccd314a2da1a4fc8dfc6e6f56",
+      "annotation_id": null,
+      "code": "yqstnuAEVhm-04",
+      "raw_comment": "这图确实存在不同的标注范围,我修正过后的gt是在玻璃门处停止,原始gt是标了外面的区域,但是外面的区域包括了楼梯(虽然MP3d原始标注是没标这块的).之后在玻璃门停止这里,有些人会稍微再往外一点停止(w028,001)",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:yqstnuAEVhm_4642492bb42d40debb1a3bad0ea7a24f",
+      "image_id": "yqstnuAEVhm_4642492bb42d40debb1a3bad0ea7a24f",
+      "annotation_id": null,
+      "code": "yqstnuAEVhm-08",
+      "raw_comment": "标注的空间细节有不同,gt是忽略了左边墙角的变化的,他的标注区域是靠外了一点,没有纳入那个拐角,是把柜子当成 了墙,正好不会纳入那个地方.砖砌的墙那里他也标了拐角. 其他标注者 是把中间砖砌的墙忽略掉了(确实很隐蔽,不好标),直接标整个房间(簇2),簇3是左边墙角没标好(和簇2空间类似)",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:yqstnuAEVhm_48447297e8444171a5db34ccf38bc229",
+      "image_id": "yqstnuAEVhm_48447297e8444171a5db34ccf38bc229",
+      "annotation_id": null,
+      "code": "yqstnuAEVhm-09",
+      "raw_comment": "这图较难,壁炉那里有些人是选择不标的,gt的标法肯定是最严谨的",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:yqstnuAEVhm_66ecc07f3cda4d8ebaf84288325669f5",
+      "image_id": "yqstnuAEVhm_66ecc07f3cda4d8ebaf84288325669f5",
+      "annotation_id": null,
+      "code": "yqstnuAEVhm-15",
+      "raw_comment": "oos,有楼梯,存在不同平面",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:yqstnuAEVhm_9de98503fd994452b627cdcc7a7d47b2",
+      "image_id": "yqstnuAEVhm_9de98503fd994452b627cdcc7a7d47b2",
+      "annotation_id": null,
+      "code": "yqstnuAEVhm-25",
+      "raw_comment": "这图确实有些人会忽略右边凸起的地方,但是因为右边的凸起把后面的墙角给挡住了,有点难标的.gt的范围还是最准确的.簇9是错的标注",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+      "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+      "annotation_id": null,
+      "code": "yqstnuAEVhm-31",
+      "raw_comment": "这个视角标注很难,标注者中也存在标注最小空间的情况(簇2).但是标注这个最小空间几乎没有标房间里的大部分区域.\ngt的标注是最严谨完美的,有些人也会忽略壁炉所在的墙角.左侧墙角被完全遮挡,这特别难标,所以就算像标注完整房间,也会出现歧义,mp3d原始的gt是标注这个地方有些遗漏的,直接忽略这折叠的墙面",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65",
+      "image_id": "yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65",
+      "annotation_id": null,
+      "code": "yqstnuAEVhm-32",
+      "raw_comment": "这图很难,标注空间范围不同,原始MP3d的是标了小隔间的区域(目前没有标注者标那里),之后壁炉有很多标注者会忽略,右边那复杂的墙角部分人也会简化/忽略.我修改过后的gt,我也忽略了最靠近门口的那一小块区域,提前停止了",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:yqstnuAEVhm_e9b4d8e951cb4712b3905c8f4c4dabb5",
+      "image_id": "yqstnuAEVhm_e9b4d8e951cb4712b3905c8f4c4dabb5",
+      "annotation_id": null,
+      "code": "yqstnuAEVhm-34",
+      "raw_comment": "同房间的图,这次来说,没有人标注门外的空间了(包括楼梯),但是停止位置有区别,大部分人还是在玻璃处停止(包括gt),w012是在稍微往外一点的地方才停止",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "image:zsNo4HB9uLZ_2caadd7bc71c43d5ad10f4e7f10a3455",
+      "image_id": "zsNo4HB9uLZ_2caadd7bc71c43d5ad10f4e7f10a3455",
+      "annotation_id": null,
+      "code": "zsNo4HB9uLZ-02",
+      "raw_comment": "这gt凸出的墙面没有标注,直接忽略了,但是目前由于样本量太少,我也不确定这会不会有人标这个凸出的墙面(我觉得是有这种标法的)",
+      "reason": "不确定的是未来是否有人采用凸墙细节方案，不是当前参考省略细节的事实或作答有效性。"
+    },
+    {
+      "comment_id": "image:zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b",
+      "image_id": "zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b",
+      "annotation_id": null,
+      "code": "zsNo4HB9uLZ-05",
+      "raw_comment": "gt是肯定错的,但是因为这个门挡住了太多空间细节,标注有难度",
+      "reason": "本条是明确的场景、范围或执行质量观察，没有表示当前裁决拿不准；不由负面措辞自动重新召回。"
+    },
+    {
+      "comment_id": "annotation:new_95_3650_7450_W032",
+      "image_id": "7y3sRwLe3Va_1679b5de39e548d38ba240f2fd99cae9",
+      "annotation_id": "new_95_3650_7450_W032",
+      "code": "7y3sRwLe3Va-06",
+      "raw_comment": "这只有6个点",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:new_95_3651_7451_W032",
+      "image_id": "7y3sRwLe3Va_5c39473b25b74307858764d1a2045b9e",
+      "annotation_id": "new_95_3651_7451_W032",
+      "code": "7y3sRwLe3Va-10",
+      "raw_comment": "只有6点",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:new_95_3652_7087_W037",
+      "image_id": "7y3sRwLe3Va_606f9842b8af48daa28f10df8b69d861",
+      "annotation_id": "new_95_3652_7087_W037",
+      "code": "7y3sRwLe3Va-11",
+      "raw_comment": "不理解她标的什么",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:1bbc73c77d272720",
+      "image_id": "7y3sRwLe3Va_92fb09a83f8949619b9dc5bda2855456",
+      "annotation_id": "1bbc73c77d272720",
+      "code": "7y3sRwLe3Va-13",
+      "raw_comment": "不理解他标的什么",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:5ff7ca831e9c5ad8",
+      "image_id": "7y3sRwLe3Va_92fb09a83f8949619b9dc5bda2855456",
+      "annotation_id": "5ff7ca831e9c5ad8",
+      "code": "7y3sRwLe3Va-13",
+      "raw_comment": "这图他标的太歪了",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:e805d3344d24834a",
+      "image_id": "7y3sRwLe3Va_92fb09a83f8949619b9dc5bda2855456",
+      "annotation_id": "e805d3344d24834a",
+      "code": "7y3sRwLe3Va-13",
+      "raw_comment": "不理解她标的什么",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:b8541e4707e39e94",
+      "image_id": "7y3sRwLe3Va_92fb09a83f8949619b9dc5bda2855456",
+      "annotation_id": "b8541e4707e39e94",
+      "code": "7y3sRwLe3Va-13",
+      "raw_comment": "只有6个点",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:c4bc31bc73053a93",
+      "image_id": "7y3sRwLe3Va_92fb09a83f8949619b9dc5bda2855456",
+      "annotation_id": "c4bc31bc73053a93",
+      "code": "7y3sRwLe3Va-13",
+      "raw_comment": "和w031一样,不知道标的什么",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:8a6c9350ded9f505",
+      "image_id": "7y3sRwLe3Va_92fb09a83f8949619b9dc5bda2855456",
+      "annotation_id": "8a6c9350ded9f505",
+      "code": "7y3sRwLe3Va-13",
+      "raw_comment": "停止范围不同,在楼梯处就停止了",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:d22e8df3dcff4100efb5",
+      "image_id": "7y3sRwLe3Va_b47475370e824b9e923a4a96bc98e1e3",
+      "annotation_id": "d22e8df3dcff4100efb5",
+      "code": "7y3sRwLe3Va-21",
+      "raw_comment": "这个基本上 算是严谨且标准的全屋manual标注,除了p3略微有点偏差. 只是需要调整角点顺序",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:e8a846d937e3ed039131",
+      "image_id": "7y3sRwLe3Va_b47475370e824b9e923a4a96bc98e1e3",
+      "annotation_id": "e8a846d937e3ed039131",
+      "code": "7y3sRwLe3Va-21",
+      "raw_comment": "基本上算是最正确的标注",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:b62a4df9e1645fe7",
+      "image_id": "B6ByNegPMKs_48ee619d38b142f88914e7e2582bc1d8",
+      "annotation_id": "b62a4df9e1645fe7",
+      "code": "B6ByNegPMKs-10",
+      "raw_comment": "这个改了一点模型的预标注,但是还是不太对",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:717840fe8221eba6",
+      "image_id": "B6ByNegPMKs_48ee619d38b142f88914e7e2582bc1d8",
+      "annotation_id": "717840fe8221eba6",
+      "code": "B6ByNegPMKs-10",
+      "raw_comment": "这个改了一点模型的预标注,但是还是不太对",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:d709cefe9dcba87b",
+      "image_id": "B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086",
+      "annotation_id": "d709cefe9dcba87b",
+      "code": "B6ByNegPMKs-11",
+      "raw_comment": "把凸起的圆柱标注了",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:ecd4e736ab99493cf8bd",
+      "image_id": "B6ByNegPMKs_5b5bd1eac4e6462d8c6677b90a4cf9a9",
+      "annotation_id": "ecd4e736ab99493cf8bd",
+      "code": "B6ByNegPMKs-18",
+      "raw_comment": "不理解她为啥这样标",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:10a21bed4417e7b9",
+      "image_id": "B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993",
+      "annotation_id": "10a21bed4417e7b9",
+      "code": "B6ByNegPMKs-33",
+      "raw_comment": "只有6点",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:83822f0c9ce15f483174",
+      "image_id": "B6ByNegPMKs_c946db5792df4f90bea20f06a0030c37",
+      "annotation_id": "83822f0c9ce15f483174",
+      "code": "B6ByNegPMKs-37",
+      "raw_comment": "把圆柱给标了",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:5ba67a30243635c3cbe3",
+      "image_id": "B6ByNegPMKs_c946db5792df4f90bea20f06a0030c37",
+      "annotation_id": "5ba67a30243635c3cbe3",
+      "code": "B6ByNegPMKs-37",
+      "raw_comment": "好像是gt的标法,标注的空间区域确实不同",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:723bcf1f4f6f7bf5",
+      "image_id": "B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624",
+      "annotation_id": "723bcf1f4f6f7bf5",
+      "code": "B6ByNegPMKs-40",
+      "raw_comment": "不理解标的什么",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:dd72228423710274",
+      "image_id": "B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624",
+      "annotation_id": "dd72228423710274",
+      "code": "B6ByNegPMKs-40",
+      "raw_comment": "标了两个停止区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:f4b7f477de2247b38b2d",
+      "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+      "annotation_id": "f4b7f477de2247b38b2d",
+      "code": "B6ByNegPMKs-47",
+      "raw_comment": "这个他是忽略了中间所有的空间细节",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:4283c99baaf5b8a1dd84",
+      "image_id": "S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e",
+      "annotation_id": "4283c99baaf5b8a1dd84",
+      "code": "S9hNv5qa7GM-04",
+      "raw_comment": "标注的空间略有不同,gt是标注在了被柜子挡住的墙角,而他是在柜子处停止",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_93_3576_7134_W012",
+      "image_id": "S9hNv5qa7GM_674b3b6705604a4c8b89182edee11e54",
+      "annotation_id": "new_93_3576_7134_W012",
+      "code": "S9hNv5qa7GM-10",
+      "raw_comment": "不理解为什么标注了门框",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:new_94_3614_7390_W032",
+      "image_id": "S9hNv5qa7GM_dbcf0a37c275473094e1160770291679",
+      "annotation_id": "new_94_3614_7390_W032",
+      "code": "S9hNv5qa7GM-17",
+      "raw_comment": "主要是p2 标的有点歪",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:d936055bdc90a99f",
+      "image_id": "UwV83HsGsw3_528d342bf5494b3b94983545d6a1a282",
+      "annotation_id": "d936055bdc90a99f",
+      "code": "UwV83HsGsw3-06",
+      "raw_comment": "只有6点",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:064662f606e21c49",
+      "image_id": "UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+      "annotation_id": "064662f606e21c49",
+      "code": "UwV83HsGsw3-09",
+      "raw_comment": "被玻璃误导了",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:0dbe8bc50012ed82",
+      "image_id": "UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+      "annotation_id": "0dbe8bc50012ed82",
+      "code": "UwV83HsGsw3-09",
+      "raw_comment": "被玻璃误导了",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:44aaf075e056aa2a",
+      "image_id": "UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+      "annotation_id": "44aaf075e056aa2a",
+      "code": "UwV83HsGsw3-09",
+      "raw_comment": "被玻璃误导了",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:10bc0a8001ac87ac",
+      "image_id": "UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+      "annotation_id": "10bc0a8001ac87ac",
+      "code": "UwV83HsGsw3-09",
+      "raw_comment": "被玻璃误导了",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:174759c006c73ec0",
+      "image_id": "UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+      "annotation_id": "174759c006c73ec0",
+      "code": "UwV83HsGsw3-09",
+      "raw_comment": "标注的是错的,比较奇怪",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:1a1637b695381c15",
+      "image_id": "UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+      "annotation_id": "1a1637b695381c15",
+      "code": "UwV83HsGsw3-09",
+      "raw_comment": "标注的有些问题",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:1e50979e05536fe2",
+      "image_id": "UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+      "annotation_id": "1e50979e05536fe2",
+      "code": "UwV83HsGsw3-09",
+      "raw_comment": "标注的有些问题",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:2794795e8c4e927b",
+      "image_id": "UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+      "annotation_id": "2794795e8c4e927b",
+      "code": "UwV83HsGsw3-09",
+      "raw_comment": "标注了中等大小的空间",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:305e3cb3e8b1c4f1",
+      "image_id": "UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+      "annotation_id": "305e3cb3e8b1c4f1",
+      "code": "UwV83HsGsw3-09",
+      "raw_comment": "标注了中等大小的空间",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:da2dc314ea17aad4",
+      "image_id": "UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+      "annotation_id": "da2dc314ea17aad4",
+      "code": "UwV83HsGsw3-09",
+      "raw_comment": "标注了中等大小的空间,有点小问题",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:5d1661993b2e0edc",
+      "image_id": "UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+      "annotation_id": "5d1661993b2e0edc",
+      "code": "UwV83HsGsw3-09",
+      "raw_comment": "被玻璃误导了",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:b2e9ff3491b30070",
+      "image_id": "UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+      "annotation_id": "b2e9ff3491b30070",
+      "code": "UwV83HsGsw3-09",
+      "raw_comment": "被玻璃误导了,但是标的不错,是标的中等大小的空间",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:f40efaca8c5d3bf1",
+      "image_id": "UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+      "annotation_id": "f40efaca8c5d3bf1",
+      "code": "UwV83HsGsw3-09",
+      "raw_comment": "有些小问题,标的是中等空间",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:58a8d69137385a19",
+      "image_id": "UwV83HsGsw3_8e9c912f525744eeaea21083a20a1596",
+      "annotation_id": "58a8d69137385a19",
+      "code": "UwV83HsGsw3-10",
+      "raw_comment": "偏得离谱",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:5da232bc43b7c975",
+      "image_id": "UwV83HsGsw3_8e9c912f525744eeaea21083a20a1596",
+      "annotation_id": "5da232bc43b7c975",
+      "code": "UwV83HsGsw3-10",
+      "raw_comment": "把门识别成了墙角,而在门框那里进行看不懂的标注",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:738a28459a248984",
+      "image_id": "UwV83HsGsw3_8e9c912f525744eeaea21083a20a1596",
+      "annotation_id": "738a28459a248984",
+      "code": "UwV83HsGsw3-10",
+      "raw_comment": "把门识别成了墙角,而在门框那里进行看不懂的标注",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:9eb205969fffe5f7",
+      "image_id": "UwV83HsGsw3_8e9c912f525744eeaea21083a20a1596",
+      "annotation_id": "9eb205969fffe5f7",
+      "code": "UwV83HsGsw3-10",
+      "raw_comment": "是错的,在门框进行标注",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:3fbcb7812c80e839",
+      "image_id": "UwV83HsGsw3_8e9c912f525744eeaea21083a20a1596",
+      "annotation_id": "3fbcb7812c80e839",
+      "code": "UwV83HsGsw3-10",
+      "raw_comment": "是错的,在门框进行标注是不对的位置",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:1623fbedf957f0be9421",
+      "image_id": "UwV83HsGsw3_bc29294428a647038f70e0ea31ea8972",
+      "annotation_id": "1623fbedf957f0be9421",
+      "code": "UwV83HsGsw3-17",
+      "raw_comment": "其实是p9 p10 p11 p12 和p1 p2 p3 p4是应该2选1 的",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:4b3c843c997026d73acc",
+      "image_id": "VFuaQ6m2Qom_381ce3cd69b846c3b920be16d29ed48e",
+      "annotation_id": "4b3c843c997026d73acc",
+      "code": "VFuaQ6m2Qom-03",
+      "raw_comment": "墙角细节和gt一样没有标注,而且还遗漏了gt p5,p6这个位置",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:f864f814213350fc3e6a",
+      "image_id": "VFuaQ6m2Qom_5fb269a812f349b4bc2ad5dfac000b85",
+      "annotation_id": "f864f814213350fc3e6a",
+      "code": "VFuaQ6m2Qom-04",
+      "raw_comment": "标的忽略了很多细节,不太好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:12fdc91e2fd278aac0c7",
+      "image_id": "VFuaQ6m2Qom_ad4c387f8175498491966703c8441e0d",
+      "annotation_id": "12fdc91e2fd278aac0c7",
+      "code": "VFuaQ6m2Qom-07",
+      "raw_comment": "被玻璃误导了",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:7234128122016861cabd",
+      "image_id": "VFuaQ6m2Qom_ad4c387f8175498491966703c8441e0d",
+      "annotation_id": "7234128122016861cabd",
+      "code": "VFuaQ6m2Qom-07",
+      "raw_comment": "对细节忽略了很多,标注的不是很好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:9f1b2668af9bbb8c27ab",
+      "image_id": "VFuaQ6m2Qom_ad4c387f8175498491966703c8441e0d",
+      "annotation_id": "9f1b2668af9bbb8c27ab",
+      "code": "VFuaQ6m2Qom-07",
+      "raw_comment": "对细节忽略了很多,标注的不是很好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:4f5b58a8268243d50888",
+      "image_id": "VFuaQ6m2Qom_f0be18aa2f1d4aa2b6adf355a86f34b8",
+      "annotation_id": "4f5b58a8268243d50888",
+      "code": "VFuaQ6m2Qom-10",
+      "raw_comment": "细节忽略了一些,没标好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:e1491370f166c6c5a7d6",
+      "image_id": "VFuaQ6m2Qom_f0be18aa2f1d4aa2b6adf355a86f34b8",
+      "annotation_id": "e1491370f166c6c5a7d6",
+      "code": "VFuaQ6m2Qom-10",
+      "raw_comment": "不知道她标的什么",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:4651933458778c15",
+      "image_id": "X7HyMhZNoso_28ada927582d4d6ea7cf44cabf31527a",
+      "annotation_id": "4651933458778c15",
+      "code": "X7HyMhZNoso-05",
+      "raw_comment": "标了门外的空间",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:90520932aee1bf49",
+      "image_id": "X7HyMhZNoso_28ada927582d4d6ea7cf44cabf31527a",
+      "annotation_id": "90520932aee1bf49",
+      "code": "X7HyMhZNoso-05",
+      "raw_comment": "不知道标的什么",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:9b288798a70abf19",
+      "image_id": "X7HyMhZNoso_28ada927582d4d6ea7cf44cabf31527a",
+      "annotation_id": "9b288798a70abf19",
+      "code": "X7HyMhZNoso-05",
+      "raw_comment": "不知道标的什么",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:4e299dc6bda4eef4",
+      "image_id": "X7HyMhZNoso_28ada927582d4d6ea7cf44cabf31527a",
+      "annotation_id": "4e299dc6bda4eef4",
+      "code": "X7HyMhZNoso-05",
+      "raw_comment": "标的门外的空间",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:11f19b08afaff69c9e6a",
+      "image_id": "X7HyMhZNoso_2b16acff0dc042a1a75816a1fbd0a302",
+      "annotation_id": "11f19b08afaff69c9e6a",
+      "code": "X7HyMhZNoso-07",
+      "raw_comment": "标的空间大体是对的,但是标的不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:385caf3701dee7042d51",
+      "image_id": "X7HyMhZNoso_2b16acff0dc042a1a75816a1fbd0a302",
+      "annotation_id": "385caf3701dee7042d51",
+      "code": "X7HyMhZNoso-07",
+      "raw_comment": "标的太奇怪了",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:5e3a87e01e8c7a68",
+      "image_id": "X7HyMhZNoso_987fd31155514f6facb131bd5c14881d",
+      "annotation_id": "5e3a87e01e8c7a68",
+      "code": "X7HyMhZNoso-13",
+      "raw_comment": "p8 移动到p7的 x坐标位置",
+      "reason": "本条提出具体待修复操作；修复队列继续保留，但不是隐藏在已确认选项下的分类犹豫。"
+    },
+    {
+      "comment_id": "annotation:b2be1df92c78eded",
+      "image_id": "X7HyMhZNoso_987fd31155514f6facb131bd5c14881d",
+      "annotation_id": "b2be1df92c78eded",
+      "code": "X7HyMhZNoso-13",
+      "raw_comment": "整体的top y标注的有偏差",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:5f7815f3a489b8007a97",
+      "image_id": "X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9",
+      "annotation_id": "5f7815f3a489b8007a97",
+      "code": "X7HyMhZNoso-19",
+      "raw_comment": "没有标隔断的墙",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:a68c32790d01e6b27d0d",
+      "image_id": "X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9",
+      "annotation_id": "a68c32790d01e6b27d0d",
+      "code": "X7HyMhZNoso-19",
+      "raw_comment": "标了隔断的墙",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:ae929aa9e6dd3cd587ac",
+      "image_id": "X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9",
+      "annotation_id": "ae929aa9e6dd3cd587ac",
+      "code": "X7HyMhZNoso-19",
+      "raw_comment": "想标隔断的墙,但是没标好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:0a435ae2b35d25c7",
+      "image_id": "b8cTxDM8gDG_51c90ec9afc4495ab3788c6badc303df",
+      "annotation_id": "0a435ae2b35d25c7",
+      "code": "b8cTxDM8gDG-07",
+      "raw_comment": "错误,标漏了角点",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:2ac783e03ad61d1a",
+      "image_id": "b8cTxDM8gDG_51c90ec9afc4495ab3788c6badc303df",
+      "annotation_id": "2ac783e03ad61d1a",
+      "code": "b8cTxDM8gDG-07",
+      "raw_comment": "错误,标漏了角点",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:b1ac17483ad1c04e",
+      "image_id": "b8cTxDM8gDG_51c90ec9afc4495ab3788c6badc303df",
+      "annotation_id": "b1ac17483ad1c04e",
+      "code": "b8cTxDM8gDG-07",
+      "raw_comment": "错误,标漏了角点",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:ea4ba198f1b90c5a",
+      "image_id": "b8cTxDM8gDG_51c90ec9afc4495ab3788c6badc303df",
+      "annotation_id": "ea4ba198f1b90c5a",
+      "code": "b8cTxDM8gDG-07",
+      "raw_comment": "错误,标漏了角点,空间标小了",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:74ff4434b6db6c57c2ee",
+      "image_id": "b8cTxDM8gDG_f3748786c3704532abb2358581488f3f",
+      "annotation_id": "74ff4434b6db6c57c2ee",
+      "code": "b8cTxDM8gDG-18",
+      "raw_comment": "想标里面的区域,但是标的很差",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:a47e8b2c8b897117f071",
+      "image_id": "b8cTxDM8gDG_f3748786c3704532abb2358581488f3f",
+      "annotation_id": "a47e8b2c8b897117f071",
+      "code": "b8cTxDM8gDG-18",
+      "raw_comment": "想标里面的区域,但是标的很差",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:cd5abe0f20e47f74",
+      "image_id": "b8cTxDM8gDG_f63819c407e64c2897b703080766cb60",
+      "annotation_id": "cd5abe0f20e47f74",
+      "code": "b8cTxDM8gDG-19",
+      "raw_comment": "奇数点",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:new_95_3659_7060_W031",
+      "image_id": "e9zR4mvMWw7_2e52341d21b940b5b38a9e26c4cf4200",
+      "annotation_id": "new_95_3659_7060_W031",
+      "code": "e9zR4mvMWw7-15",
+      "raw_comment": "错的,不知道为什么标到了最左边",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_95_3659_6986_W035",
+      "image_id": "e9zR4mvMWw7_2e52341d21b940b5b38a9e26c4cf4200",
+      "annotation_id": "new_95_3659_6986_W035",
+      "code": "e9zR4mvMWw7-15",
+      "raw_comment": "错的,不知道为什么标到了最左边",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_95_3659_7095_W037",
+      "image_id": "e9zR4mvMWw7_2e52341d21b940b5b38a9e26c4cf4200",
+      "annotation_id": "new_95_3659_7095_W037",
+      "code": "e9zR4mvMWw7-15",
+      "raw_comment": "错的,不知道为什么标到了最左边",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:0798eb2f1686b13f",
+      "image_id": "e9zR4mvMWw7_4fb8c9be319e4784b4b66f9ca5d839ab",
+      "annotation_id": "0798eb2f1686b13f",
+      "code": "e9zR4mvMWw7-19",
+      "raw_comment": "这是一个很奇怪的标注空间,标的空间特别小",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:80a4655a847e5a65",
+      "image_id": "e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814",
+      "annotation_id": "80a4655a847e5a65",
+      "code": "e9zR4mvMWw7-39",
+      "raw_comment": "去掉p7",
+      "reason": "本条提出具体待修复操作；修复队列继续保留，但不是隐藏在已确认选项下的分类犹豫。"
+    },
+    {
+      "comment_id": "annotation:2926abff9dbf4e375b92",
+      "image_id": "jh4fc5c5qoQ_30cdb6fe9aa6449788e271f2e24d76ec",
+      "annotation_id": "2926abff9dbf4e375b92",
+      "code": "jh4fc5c5qoQ-02",
+      "raw_comment": "确实不知道为什么标了p9 p10,错误的标注",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:f562e6b9f3dd0f546812",
+      "image_id": "jh4fc5c5qoQ_abbdc7ac89204f23a935fcb9ccae887c",
+      "annotation_id": "f562e6b9f3dd0f546812",
+      "code": "jh4fc5c5qoQ-13",
+      "raw_comment": "她这标的也太随意了",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:53a31503b6f3890f4f96",
+      "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+      "annotation_id": "53a31503b6f3890f4f96",
+      "code": "jtcxE69GiFV-12",
+      "raw_comment": "这个算是标的比较准确的了,只是把gt的p7 p8 移动到了最左边变成p12,p11,实质上标注的空间范围和细节是比较准确的",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_95_3663_6990_W035",
+      "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+      "annotation_id": "new_95_3663_6990_W035",
+      "code": "jtcxE69GiFV-12",
+      "raw_comment": "想标全房,但是标的不太好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_95_3663_7073_W031",
+      "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+      "annotation_id": "new_95_3663_7073_W031",
+      "code": "jtcxE69GiFV-12",
+      "raw_comment": "想标全房,但是标的不太好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_95_3663_7099_W037",
+      "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+      "annotation_id": "new_95_3663_7099_W037",
+      "code": "jtcxE69GiFV-12",
+      "raw_comment": "想标全房,但是标的不太好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_95_3663_7235_W036",
+      "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+      "annotation_id": "new_95_3663_7235_W036",
+      "code": "jtcxE69GiFV-12",
+      "raw_comment": "只标了左侧区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_95_3663_7267_W034",
+      "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+      "annotation_id": "new_95_3663_7267_W034",
+      "code": "jtcxE69GiFV-12",
+      "raw_comment": "想标全房,但是标的不太好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_95_3663_7478_W032",
+      "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+      "annotation_id": "new_95_3663_7478_W032",
+      "code": "jtcxE69GiFV-12",
+      "raw_comment": "想标全房,但是标的不太好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_95_3663_7443_W028",
+      "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+      "annotation_id": "new_95_3663_7443_W028",
+      "code": "jtcxE69GiFV-12",
+      "raw_comment": "想标全房,但是标的不太好,但是他最右边的点和最左边的点是重复了的,去掉一对就是很好的标注了",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:d28639fd7c1c8d01c280",
+      "image_id": "jtcxE69GiFV_5d3af9ad575b4be88587967ff8114c36",
+      "annotation_id": "d28639fd7c1c8d01c280",
+      "code": "jtcxE69GiFV-13",
+      "raw_comment": "没有注意到gt p3 p5那里墙面的变化凸起",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:61b8048903e56202028a",
+      "image_id": "jtcxE69GiFV_6723e18211d244f8b17ced91aae64d99",
+      "annotation_id": "61b8048903e56202028a",
+      "code": "jtcxE69GiFV-17",
+      "raw_comment": "粗略来看,标注的细节和空间都是蛮正确的",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:f8c20f06811c7321e708",
+      "image_id": "jtcxE69GiFV_f473cf5a09a64090acec3bfe8fccaacd",
+      "annotation_id": "f8c20f06811c7321e708",
+      "code": "jtcxE69GiFV-30",
+      "raw_comment": "标的空间和gt不一致,gt的是较小空间,这个人的标法个人认为更好,但是p9 p10 这对多余的点去掉就更好了",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:acf40c242b1e8bb29e98",
+      "image_id": "pRbA3pwrgk9_16beb21e65a84850a509972190038d0e",
+      "annotation_id": "acf40c242b1e8bb29e98",
+      "code": "pRbA3pwrgk9-05",
+      "raw_comment": "估计是手滑,p12,p13多了一个点,任意去掉一个就行",
+      "reason": "本条提出具体待修复操作；修复队列继续保留，但不是隐藏在已确认选项下的分类犹豫。"
+    },
+    {
+      "comment_id": "annotation:291127d705ad112ccb7b",
+      "image_id": "pRbA3pwrgk9_285b697fed754f86a09602c93628cfb4",
+      "annotation_id": "291127d705ad112ccb7b",
+      "code": "pRbA3pwrgk9-06",
+      "raw_comment": "标注了窗台,右边的门处也标错地方了,很奇怪",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:07de0151fed348e0316c",
+      "image_id": "pRbA3pwrgk9_9c9bed9bf7d94ac0bcea18e3bf521930",
+      "annotation_id": "07de0151fed348e0316c",
+      "code": "pRbA3pwrgk9-14",
+      "raw_comment": "不知道标的什么",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:c4bf6d8c68c322df6d88",
+      "image_id": "pRbA3pwrgk9_9c9bed9bf7d94ac0bcea18e3bf521930",
+      "annotation_id": "c4bf6d8c68c322df6d88",
+      "code": "pRbA3pwrgk9-14",
+      "raw_comment": "标注空间和gt不一样,在玻璃门处停止",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:b42da87603a316cd9f46",
+      "image_id": "pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e",
+      "annotation_id": "b42da87603a316cd9f46",
+      "code": "pa4otMbVnkk-11",
+      "raw_comment": "和gt的空间范围一致,不过p12标的偏矮了",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:3bb435208d6ac7f802e0",
+      "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+      "annotation_id": "3bb435208d6ac7f802e0",
+      "code": "pa4otMbVnkk-14",
+      "raw_comment": "只有6点",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:356ed9fcc445e03fdd8d",
+      "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+      "annotation_id": "356ed9fcc445e03fdd8d",
+      "code": "pa4otMbVnkk-14",
+      "raw_comment": "标了房间里的空间,但没标好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:ed0dcc14c4c690d68ad7",
+      "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+      "annotation_id": "ed0dcc14c4c690d68ad7",
+      "code": "pa4otMbVnkk-14",
+      "raw_comment": "标了房间里的空间,标的勉强还行",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:d4c32c0ed0a64d300a38",
+      "image_id": "pa4otMbVnkk_64ba4f267872432abdcb00af002649d5",
+      "annotation_id": "d4c32c0ed0a64d300a38",
+      "code": "pa4otMbVnkk-18",
+      "raw_comment": "p13,p17标的有点歪,不过把空间细节标全了,比gt更加细节",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:66e0b1d35ac694679c09",
+      "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+      "annotation_id": "66e0b1d35ac694679c09",
+      "code": "q9vSo1VnCiC-01",
+      "raw_comment": "标了门里的区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:8f2310bf731d94b43254",
+      "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+      "annotation_id": "8f2310bf731d94b43254",
+      "code": "q9vSo1VnCiC-01",
+      "raw_comment": "标了门里的区域,但是最左边和最右边的2对点不知道标的什么",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:973098cfe5081c1c74ec",
+      "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+      "annotation_id": "973098cfe5081c1c74ec",
+      "code": "q9vSo1VnCiC-01",
+      "raw_comment": "标的门里的区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:0ffa405d9cace672",
+      "image_id": "q9vSo1VnCiC_69591068e5614642b710a8fb7733bdeb",
+      "annotation_id": "0ffa405d9cace672",
+      "code": "q9vSo1VnCiC-09",
+      "raw_comment": "标注了其他房间和很多细节,标的非常不错",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:4256a770bc409d70",
+      "image_id": "q9vSo1VnCiC_69591068e5614642b710a8fb7733bdeb",
+      "annotation_id": "4256a770bc409d70",
+      "code": "q9vSo1VnCiC-09",
+      "raw_comment": "这就是类似gt的勉强标法",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:589afb1182c4df73",
+      "image_id": "q9vSo1VnCiC_69591068e5614642b710a8fb7733bdeb",
+      "annotation_id": "589afb1182c4df73",
+      "code": "q9vSo1VnCiC-09",
+      "raw_comment": "这也是另一种勉强的标法",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:68f273f5934bd5d6",
+      "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+      "annotation_id": "68f273f5934bd5d6",
+      "code": "q9vSo1VnCiC-13",
+      "raw_comment": "这个算标的很不错的",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:ac643d623a147394d526",
+      "image_id": "q9vSo1VnCiC_a424533651804a38a55b1252daccc81e",
+      "annotation_id": "ac643d623a147394d526",
+      "code": "q9vSo1VnCiC-16",
+      "raw_comment": "p9 p10不知道标的什么,错误的标注",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:370095f69c5b170678fa",
+      "image_id": "q9vSo1VnCiC_dc873df7717c43888a1cff13713fe146",
+      "annotation_id": "370095f69c5b170678fa",
+      "code": "q9vSo1VnCiC-30",
+      "raw_comment": "连廊区域标的好,但是不理解左边为什么标注了这么多点",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:8e9619af766e40a0d49d",
+      "image_id": "q9vSo1VnCiC_dc873df7717c43888a1cff13713fe146",
+      "annotation_id": "8e9619af766e40a0d49d",
+      "code": "q9vSo1VnCiC-30",
+      "raw_comment": "标注了连廊,但是标的一般",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:93435790a37ab2290bc6",
+      "image_id": "q9vSo1VnCiC_dc873df7717c43888a1cff13713fe146",
+      "annotation_id": "93435790a37ab2290bc6",
+      "code": "q9vSo1VnCiC-30",
+      "raw_comment": "标了连廊,但是跟gt的标法忽略了大部分细节",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:f5dab722031206b00450",
+      "image_id": "q9vSo1VnCiC_dc873df7717c43888a1cff13713fe146",
+      "annotation_id": "f5dab722031206b00450",
+      "code": "q9vSo1VnCiC-30",
+      "raw_comment": "标了连廊,但是跟gt的标法忽略了大部分细节",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:15f4bf968e467bdc",
+      "image_id": "q9vSo1VnCiC_e74e843601574864a14517f990c748a0",
+      "annotation_id": "15f4bf968e467bdc",
+      "code": "q9vSo1VnCiC-32",
+      "raw_comment": "想标马桶的空间,但是没标好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:7485c5f92ef686bc",
+      "image_id": "q9vSo1VnCiC_e74e843601574864a14517f990c748a0",
+      "annotation_id": "7485c5f92ef686bc",
+      "code": "q9vSo1VnCiC-32",
+      "raw_comment": "直接忽略了洗手台的空间,没有标实际的墙角",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:a135a4aaf615d5db",
+      "image_id": "q9vSo1VnCiC_e74e843601574864a14517f990c748a0",
+      "annotation_id": "a135a4aaf615d5db",
+      "code": "q9vSo1VnCiC-32",
+      "raw_comment": "直接忽略了洗手台的空间,没有标实际的墙角",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:8cc976464d74ba775b9e",
+      "image_id": "rPc6DW4iMge_0012f6dcce9645778ac459e189cf0db3",
+      "annotation_id": "8cc976464d74ba775b9e",
+      "code": "rPc6DW4iMge-01",
+      "raw_comment": "不知道为什么在门框那里多标一对点",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:9a0a83ba9247dbf61861",
+      "image_id": "rPc6DW4iMge_0012f6dcce9645778ac459e189cf0db3",
+      "annotation_id": "9a0a83ba9247dbf61861",
+      "code": "rPc6DW4iMge-01",
+      "raw_comment": "不知道为什么在门框那里多标一对点",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:3440c00bbde5bf789734",
+      "image_id": "rPc6DW4iMge_0dfe61800cc540db8e25c1738bc4b8ff",
+      "annotation_id": "3440c00bbde5bf789734",
+      "code": "rPc6DW4iMge-05",
+      "raw_comment": "标的不好,缺失太多空间和细节",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:3266c87d109f70bf",
+      "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+      "annotation_id": "3266c87d109f70bf",
+      "code": "rPc6DW4iMge-06",
+      "raw_comment": "忽略了梳妆台和玻璃处部分区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:3e9e6ac471e7da2a",
+      "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+      "annotation_id": "3e9e6ac471e7da2a",
+      "code": "rPc6DW4iMge-06",
+      "raw_comment": "忽略了梳妆台和玻璃处部分区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:9589363fea90baba",
+      "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+      "annotation_id": "9589363fea90baba",
+      "code": "rPc6DW4iMge-06",
+      "raw_comment": "忽略了梳妆台和玻璃处部分区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:352ec6e68a3da904",
+      "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+      "annotation_id": "352ec6e68a3da904",
+      "code": "rPc6DW4iMge-06",
+      "raw_comment": "忽略了梳妆台,玻璃处没标好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:384c1de2ec90820f",
+      "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+      "annotation_id": "384c1de2ec90820f",
+      "code": "rPc6DW4iMge-06",
+      "raw_comment": "忽略了梳妆台,玻璃处没标好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:886e3f4cfcd0e0b8",
+      "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+      "annotation_id": "886e3f4cfcd0e0b8",
+      "code": "rPc6DW4iMge-06",
+      "raw_comment": "忽略了梳妆台,玻璃处没标好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:b49af842e8a9a5d6",
+      "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+      "annotation_id": "b49af842e8a9a5d6",
+      "code": "rPc6DW4iMge-06",
+      "raw_comment": "忽略了梳妆台,玻璃处没标好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:f659d3608c54a9ef",
+      "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+      "annotation_id": "f659d3608c54a9ef",
+      "code": "rPc6DW4iMge-06",
+      "raw_comment": "忽略了梳妆台,玻璃处没标好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:fb86982f536c3aaa",
+      "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+      "annotation_id": "fb86982f536c3aaa",
+      "code": "rPc6DW4iMge-06",
+      "raw_comment": "忽略了梳妆台,玻璃处没标好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:9cab10e73212c27f",
+      "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+      "annotation_id": "9cab10e73212c27f",
+      "code": "rPc6DW4iMge-06",
+      "raw_comment": "忽略了梳妆台的区域,但是玻璃处标的比gt还好,但他标的是玻璃外围",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:a819fde1949e375b",
+      "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+      "annotation_id": "a819fde1949e375b",
+      "code": "rPc6DW4iMge-06",
+      "raw_comment": "标的不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:d5f398bdf9e24194",
+      "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+      "annotation_id": "d5f398bdf9e24194",
+      "code": "rPc6DW4iMge-06",
+      "raw_comment": "标的很差",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:fbc606f95f59c132",
+      "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+      "annotation_id": "fbc606f95f59c132",
+      "code": "rPc6DW4iMge-06",
+      "raw_comment": "忽略了右边墙角的凸起,梳妆台和玻璃处部分区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:abff623d76a69986",
+      "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+      "annotation_id": "abff623d76a69986",
+      "code": "rPc6DW4iMge-06",
+      "raw_comment": "忽略了右边墙角,梳妆台和玻璃部分区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:40a13dc4d685b575",
+      "image_id": "rPc6DW4iMge_1f14902595544e389c9c910c444e79e7",
+      "annotation_id": "40a13dc4d685b575",
+      "code": "rPc6DW4iMge-09",
+      "raw_comment": "不理解标门框的原因, p9 p10",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:454169e6fe8a9b1ba08c",
+      "image_id": "rPc6DW4iMge_9d3eb9f5d38844bfb4e5fb2cd05fd3fd",
+      "annotation_id": "454169e6fe8a9b1ba08c",
+      "code": "rPc6DW4iMge-15",
+      "raw_comment": "不知道为什么标了p7 p9 这两对,完全不知道在标啥",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:12ee1becbe448d45",
+      "image_id": "rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a",
+      "annotation_id": "12ee1becbe448d45",
+      "code": "rPc6DW4iMge-17",
+      "raw_comment": "标门外的空间,但是完全不知道在标啥",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:bc770062117c9834",
+      "image_id": "rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a",
+      "annotation_id": "bc770062117c9834",
+      "code": "rPc6DW4iMge-17",
+      "raw_comment": "这多标的一对点不知道是什么意思",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:3d1c6d9fda198b1b",
+      "image_id": "rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a",
+      "annotation_id": "3d1c6d9fda198b1b",
+      "code": "rPc6DW4iMge-17",
+      "raw_comment": "补点",
+      "reason": "本条提出具体待修复操作；修复队列继续保留，但不是隐藏在已确认选项下的分类犹豫。"
+    },
+    {
+      "comment_id": "annotation:adb443cf2cd44a01",
+      "image_id": "rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a",
+      "annotation_id": "adb443cf2cd44a01",
+      "code": "rPc6DW4iMge-17",
+      "raw_comment": "去掉p13",
+      "reason": "本条提出具体待修复操作；修复队列继续保留，但不是隐藏在已确认选项下的分类犹豫。"
+    },
+    {
+      "comment_id": "annotation:60b3a58f097c620f",
+      "image_id": "rPc6DW4iMge_cc15fb105d86466faafdd633f89148de",
+      "annotation_id": "60b3a58f097c620f",
+      "code": "rPc6DW4iMge-20",
+      "raw_comment": "完全不知道标门框是什么意思",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:d10e31caaec1101e",
+      "image_id": "rPc6DW4iMge_cc15fb105d86466faafdd633f89148de",
+      "annotation_id": "d10e31caaec1101e",
+      "code": "rPc6DW4iMge-20",
+      "raw_comment": "更离谱",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:317e5971cdfd0288",
+      "image_id": "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+      "annotation_id": "317e5971cdfd0288",
+      "code": "rPc6DW4iMge-22",
+      "raw_comment": "忽略了左边的梳妆台和部分玻璃区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:3f6b62e3295e009a",
+      "image_id": "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+      "annotation_id": "3f6b62e3295e009a",
+      "code": "rPc6DW4iMge-22",
+      "raw_comment": "忽略了左边的梳妆台和部分玻璃区域,右边的洗手台区域也没标好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:ef971c0766ea37de",
+      "image_id": "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+      "annotation_id": "ef971c0766ea37de",
+      "code": "rPc6DW4iMge-22",
+      "raw_comment": "标的不好,忽略了大部分细节",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:8d6f18bc98ea1938",
+      "image_id": "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+      "annotation_id": "8d6f18bc98ea1938",
+      "code": "rPc6DW4iMge-22",
+      "raw_comment": "标的不太好,洗手台,梳妆台都忽略了,而且玻璃区域也没标好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:9b8f8bec4da82b48",
+      "image_id": "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+      "annotation_id": "9b8f8bec4da82b48",
+      "code": "rPc6DW4iMge-22",
+      "raw_comment": "梳妆台和洗手台区域也没标好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:65e6380997e850f1",
+      "image_id": "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+      "annotation_id": "65e6380997e850f1",
+      "code": "rPc6DW4iMge-22",
+      "raw_comment": "忽略了梳妆台,洗手台和部分玻璃区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:53b22edb56cc554f",
+      "image_id": "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+      "annotation_id": "53b22edb56cc554f",
+      "code": "rPc6DW4iMge-22",
+      "raw_comment": "忽略了梳妆台和洗手台区域,没标好,玻璃区域标了但是没标完整",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:6ab629e7746273bd",
+      "image_id": "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+      "annotation_id": "6ab629e7746273bd",
+      "code": "rPc6DW4iMge-22",
+      "raw_comment": "忽略了大部分区域,标的不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_94_3618_7047_W037",
+      "image_id": "uNb9QFRL6hY_068fb0d52d01455c96fa23659c373bf8",
+      "annotation_id": "new_94_3618_7047_W037",
+      "code": "uNb9QFRL6hY-04",
+      "raw_comment": "缩小了标注空间",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_94_3618_7200_W029",
+      "image_id": "uNb9QFRL6hY_068fb0d52d01455c96fa23659c373bf8",
+      "annotation_id": "new_94_3618_7200_W029",
+      "code": "uNb9QFRL6hY-04",
+      "raw_comment": "缩小了标注空间",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_94_3618_7296_W028",
+      "image_id": "uNb9QFRL6hY_068fb0d52d01455c96fa23659c373bf8",
+      "annotation_id": "new_94_3618_7296_W028",
+      "code": "uNb9QFRL6hY-04",
+      "raw_comment": "注意到了右边墙面的变化,但是没标好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_94_3618_7383_W032",
+      "image_id": "uNb9QFRL6hY_068fb0d52d01455c96fa23659c373bf8",
+      "annotation_id": "new_94_3618_7383_W032",
+      "code": "uNb9QFRL6hY-04",
+      "raw_comment": "注意到了右边墙面的变化,但是没标好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_94_3619_6858_W036",
+      "image_id": "uNb9QFRL6hY_104d12b732794414a42edd37ac554bff",
+      "annotation_id": "new_94_3619_6858_W036",
+      "code": "uNb9QFRL6hY-07",
+      "raw_comment": "标的不知是啥",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:new_93_3583_6849_W001",
+      "image_id": "uNb9QFRL6hY_13a430466eb64e2087e7fb5acde7a398",
+      "annotation_id": "new_93_3583_6849_W001",
+      "code": "uNb9QFRL6hY-09",
+      "raw_comment": "墙面细节没标好,壁炉多标一个点,最左边的一对点也不知道是干嘛的",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_93_3583_7072_W006",
+      "image_id": "uNb9QFRL6hY_13a430466eb64e2087e7fb5acde7a398",
+      "annotation_id": "new_93_3583_7072_W006",
+      "code": "uNb9QFRL6hY-09",
+      "raw_comment": "壁炉一侧标了2对点,但是想标的话,另一侧也得多标2个点,他没有做到.右侧墙面那里他标的不错",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_94_3621_7048_W037",
+      "image_id": "uNb9QFRL6hY_1b7bf6673ca74809a141b57da1d6357f",
+      "annotation_id": "new_94_3621_7048_W037",
+      "code": "uNb9QFRL6hY-12",
+      "raw_comment": "不知道标的什么",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:new_93_3586_6870_W001",
+      "image_id": "uNb9QFRL6hY_2ed0e171a7c34f17a85363923a26ab98",
+      "annotation_id": "new_93_3586_6870_W001",
+      "code": "uNb9QFRL6hY-18",
+      "raw_comment": "p21,p23,p25那里不知道标的什么",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:new_94_3623_6996_W036",
+      "image_id": "uNb9QFRL6hY_2ed0e171a7c34f17a85363923a26ab98",
+      "annotation_id": "new_94_3623_6996_W036",
+      "code": "uNb9QFRL6hY-18",
+      "raw_comment": "忽略部分玻璃区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_94_3623_7061_W037",
+      "image_id": "uNb9QFRL6hY_2ed0e171a7c34f17a85363923a26ab98",
+      "annotation_id": "new_94_3623_7061_W037",
+      "code": "uNb9QFRL6hY-18",
+      "raw_comment": "完全不知道标的什么",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:new_94_3623_7017_W034",
+      "image_id": "uNb9QFRL6hY_2ed0e171a7c34f17a85363923a26ab98",
+      "annotation_id": "new_94_3623_7017_W034",
+      "code": "uNb9QFRL6hY-18",
+      "raw_comment": "漏标了很多墙角",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_93_3588_6866_W001",
+      "image_id": "uNb9QFRL6hY_3450b3accb584493bf13be8e9554dbea",
+      "annotation_id": "new_93_3588_6866_W001",
+      "code": "uNb9QFRL6hY-20",
+      "raw_comment": "标了壁炉,墙面变化处也没标好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:fe7b820ed43008b5a057",
+      "image_id": "uNb9QFRL6hY_5b62816d9cf94f17ae166291822ea9ab",
+      "annotation_id": "fe7b820ed43008b5a057",
+      "code": "uNb9QFRL6hY-26",
+      "raw_comment": "忽略了很多空间,标的不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_94_3626_7152_W034",
+      "image_id": "uNb9QFRL6hY_5b62816d9cf94f17ae166291822ea9ab",
+      "annotation_id": "new_94_3626_7152_W034",
+      "code": "uNb9QFRL6hY-26",
+      "raw_comment": "忽略了很多墙角,标的不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_94_3626_7040_W037",
+      "image_id": "uNb9QFRL6hY_5b62816d9cf94f17ae166291822ea9ab",
+      "annotation_id": "new_94_3626_7040_W037",
+      "code": "uNb9QFRL6hY-26",
+      "raw_comment": "完全不知道标的什么",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:new_94_3627_7031_W037",
+      "image_id": "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+      "annotation_id": "new_94_3627_7031_W037",
+      "code": "uNb9QFRL6hY-29",
+      "raw_comment": "标的不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_94_3627_7142_W034",
+      "image_id": "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+      "annotation_id": "new_94_3627_7142_W034",
+      "code": "uNb9QFRL6hY-29",
+      "raw_comment": "标的不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:77b05f21e38a4a6a984c",
+      "image_id": "uNb9QFRL6hY_6a500a9a43a340eb817c58bb084327fe",
+      "annotation_id": "77b05f21e38a4a6a984c",
+      "code": "uNb9QFRL6hY-32",
+      "raw_comment": "标了个走廊的最小空间",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:aa9565bd4989480666d5",
+      "image_id": "uNb9QFRL6hY_6a500a9a43a340eb817c58bb084327fe",
+      "annotation_id": "aa9565bd4989480666d5",
+      "code": "uNb9QFRL6hY-32",
+      "raw_comment": "标了门框内的",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:c0e23bd981313dc96d38",
+      "image_id": "uNb9QFRL6hY_6a500a9a43a340eb817c58bb084327fe",
+      "annotation_id": "c0e23bd981313dc96d38",
+      "code": "uNb9QFRL6hY-32",
+      "raw_comment": "标了门框内的",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:c018c01538024335ba14",
+      "image_id": "uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d",
+      "annotation_id": "c018c01538024335ba14",
+      "code": "uNb9QFRL6hY-36",
+      "raw_comment": "p9 p10 p11 p12这里的停止位置是对的,但是她还多标了p1 p2 p3 p4",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_94_3628_7202_W029",
+      "image_id": "uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62",
+      "annotation_id": "new_94_3628_7202_W029",
+      "code": "uNb9QFRL6hY-40",
+      "raw_comment": "p7 p8 标的是错的,.停止的位置不同,标的空间范围小了一截,在壁炉这停止了",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_94_3629_7045_W037",
+      "image_id": "uNb9QFRL6hY_76ba70b55bde4313939a4a0cd78a49d3",
+      "annotation_id": "new_94_3629_7045_W037",
+      "code": "uNb9QFRL6hY-41",
+      "raw_comment": "不知道标的什么",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:new_94_3629_7143_W034",
+      "image_id": "uNb9QFRL6hY_76ba70b55bde4313939a4a0cd78a49d3",
+      "annotation_id": "new_94_3629_7143_W034",
+      "code": "uNb9QFRL6hY-41",
+      "raw_comment": "标的很差,很多墙角都没标",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_93_3593_6865_W001",
+      "image_id": "uNb9QFRL6hY_84722e58b32f4646acc12614994f835b",
+      "annotation_id": "new_93_3593_6865_W001",
+      "code": "uNb9QFRL6hY-43",
+      "raw_comment": "不理解p9,p10,p11,p12是干啥的,也没有标注左边的墙面变化",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_93_3593_7082_W006",
+      "image_id": "uNb9QFRL6hY_84722e58b32f4646acc12614994f835b",
+      "annotation_id": "new_93_3593_7082_W006",
+      "code": "uNb9QFRL6hY-43",
+      "raw_comment": "不理解p9,p10,p11,p12是干啥的,也没有标注左边的墙面变化",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_93_3593_7131_W012",
+      "image_id": "uNb9QFRL6hY_84722e58b32f4646acc12614994f835b",
+      "annotation_id": "new_93_3593_7131_W012",
+      "code": "uNb9QFRL6hY-43",
+      "raw_comment": "不理解p9,p10,p11,p12是干啥的,也没有标注左边的墙面变化",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:9b6b9dee2aafeae77550",
+      "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+      "annotation_id": "9b6b9dee2aafeae77550",
+      "code": "uNb9QFRL6hY-44",
+      "raw_comment": "标的不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:cc8da8c5dab40220ed0e",
+      "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+      "annotation_id": "cc8da8c5dab40220ed0e",
+      "code": "uNb9QFRL6hY-44",
+      "raw_comment": "标的不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:d0c65178d1ddfcac1748",
+      "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+      "annotation_id": "d0c65178d1ddfcac1748",
+      "code": "uNb9QFRL6hY-44",
+      "raw_comment": "标了门口的台阶区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:432c6ebaa6bb7a54b3a9",
+      "image_id": "uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97",
+      "annotation_id": "432c6ebaa6bb7a54b3a9",
+      "code": "uNb9QFRL6hY-45",
+      "raw_comment": "标了壁炉,也标了右侧墙面的变化",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:b7393a16aa19bd7f1989",
+      "image_id": "uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97",
+      "annotation_id": "b7393a16aa19bd7f1989",
+      "code": "uNb9QFRL6hY-45",
+      "raw_comment": "标了壁炉,也标了右侧墙面的变化",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:2559d23544f7b937",
+      "image_id": "uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5",
+      "annotation_id": "2559d23544f7b937",
+      "code": "uNb9QFRL6hY-47",
+      "raw_comment": "删除一个点(p17/p14)",
+      "reason": "本条提出具体待修复操作；修复队列继续保留，但不是隐藏在已确认选项下的分类犹豫。"
+    },
+    {
+      "comment_id": "annotation:40ac299ba105fdef",
+      "image_id": "uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5",
+      "annotation_id": "40ac299ba105fdef",
+      "code": "uNb9QFRL6hY-47",
+      "raw_comment": "不知道标的什么",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:new_93_3594_6846_W001",
+      "image_id": "uNb9QFRL6hY_9b675f28ab5f4345bf06ed5c77097426",
+      "annotation_id": "new_93_3594_6846_W001",
+      "code": "uNb9QFRL6hY-48",
+      "raw_comment": "不知道右边p9 p10 标的什么,但是整体效果还行",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_94_3631_7041_W037",
+      "image_id": "uNb9QFRL6hY_9b675f28ab5f4345bf06ed5c77097426",
+      "annotation_id": "new_94_3631_7041_W037",
+      "code": "uNb9QFRL6hY-48",
+      "raw_comment": "不知道这个窗这里标的什么",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:1892d2228413184cfbd6",
+      "image_id": "uNb9QFRL6hY_9f199750b00c4f5484a546d79e06a0f8",
+      "annotation_id": "1892d2228413184cfbd6",
+      "code": "uNb9QFRL6hY-50",
+      "raw_comment": "这个标注遗漏了大部分的细节",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:2e29af366c8b907df0ba",
+      "image_id": "uNb9QFRL6hY_9f199750b00c4f5484a546d79e06a0f8",
+      "annotation_id": "2e29af366c8b907df0ba",
+      "code": "uNb9QFRL6hY-50",
+      "raw_comment": "标注了马桶的区域,没有遗漏浴缸的区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:b341f546633829a990db",
+      "image_id": "uNb9QFRL6hY_9f199750b00c4f5484a546d79e06a0f8",
+      "annotation_id": "b341f546633829a990db",
+      "code": "uNb9QFRL6hY-50",
+      "raw_comment": "标注了马桶所在的区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:f0749422e452eec8ab7d",
+      "image_id": "uNb9QFRL6hY_9f199750b00c4f5484a546d79e06a0f8",
+      "annotation_id": "f0749422e452eec8ab7d",
+      "code": "uNb9QFRL6hY-50",
+      "raw_comment": "标注了马桶的区域,没有遗漏浴缸的区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:dc3b60d3ab46195c79f2",
+      "image_id": "uNb9QFRL6hY_9f199750b00c4f5484a546d79e06a0f8",
+      "annotation_id": "dc3b60d3ab46195c79f2",
+      "code": "uNb9QFRL6hY-50",
+      "raw_comment": "标了个最小的空间,里面的大部分区域都没标",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:f155c5b328bfdbe59187",
+      "image_id": "uNb9QFRL6hY_9f199750b00c4f5484a546d79e06a0f8",
+      "annotation_id": "f155c5b328bfdbe59187",
+      "code": "uNb9QFRL6hY-50",
+      "raw_comment": "标了马桶的区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:20ff4e6c277a22cf5399",
+      "image_id": "uNb9QFRL6hY_a372582c11864f31a9dd174e4a0ae6ad",
+      "annotation_id": "20ff4e6c277a22cf5399",
+      "code": "uNb9QFRL6hY-51",
+      "raw_comment": "不知道标的什么",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:6c0f921d12fdfaa633d5",
+      "image_id": "uNb9QFRL6hY_a372582c11864f31a9dd174e4a0ae6ad",
+      "annotation_id": "6c0f921d12fdfaa633d5",
+      "code": "uNb9QFRL6hY-51",
+      "raw_comment": "不知道标的什么",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:9117118c1ce15fc9",
+      "image_id": "uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2",
+      "annotation_id": "9117118c1ce15fc9",
+      "code": "uNb9QFRL6hY-52",
+      "raw_comment": "去掉p1后,可保留",
+      "reason": "本条提出具体待修复操作；修复队列继续保留，但不是隐藏在已确认选项下的分类犹豫。"
+    },
+    {
+      "comment_id": "annotation:new_94_3632_7310_W028",
+      "image_id": "uNb9QFRL6hY_a728d2eef41b449f82357899de802dd3",
+      "annotation_id": "new_94_3632_7310_W028",
+      "code": "uNb9QFRL6hY-53",
+      "raw_comment": "多标了壁炉",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:3aa58d4d74ec42ed12a4",
+      "image_id": "uNb9QFRL6hY_a7ab19b1a9f044f0905592de1414e8b3",
+      "annotation_id": "3aa58d4d74ec42ed12a4",
+      "code": "uNb9QFRL6hY-54",
+      "raw_comment": "标跨门",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:c2c137240a2b4b27591e",
+      "image_id": "uNb9QFRL6hY_a7ab19b1a9f044f0905592de1414e8b3",
+      "annotation_id": "c2c137240a2b4b27591e",
+      "code": "uNb9QFRL6hY-54",
+      "raw_comment": "标跨门",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:e5e1284390ee6b73",
+      "image_id": "uNb9QFRL6hY_aed830f085ee4ad88ef6bed7f66f1359",
+      "annotation_id": "e5e1284390ee6b73",
+      "code": "uNb9QFRL6hY-56",
+      "raw_comment": "p7,p8标的其他空间去了",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:new_94_3635_7323_W030",
+      "image_id": "uNb9QFRL6hY_b98c9460586e4f138658181461df9f51",
+      "annotation_id": "new_94_3635_7323_W030",
+      "code": "uNb9QFRL6hY-59",
+      "raw_comment": "忽略了部分细节",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:aaa2559a6db59dcb28a0",
+      "image_id": "uNb9QFRL6hY_ba24e5a57ef34c6dbc0458ed4c1e701d",
+      "annotation_id": "aaa2559a6db59dcb28a0",
+      "code": "uNb9QFRL6hY-60",
+      "raw_comment": "标的不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:84737c49b7cb43cb",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "annotation_id": "84737c49b7cb43cb",
+      "code": "uNb9QFRL6hY-63",
+      "raw_comment": "标的空间范围不同,",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:b5310b5a5c856240",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "annotation_id": "b5310b5a5c856240",
+      "code": "uNb9QFRL6hY-63",
+      "raw_comment": "不知道标的什么",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:9b37138fe91ff43e",
+      "image_id": "uNb9QFRL6hY_c1ebb8b34eb846ba9b5ce23b30b299a7",
+      "annotation_id": "9b37138fe91ff43e",
+      "code": "uNb9QFRL6hY-65",
+      "raw_comment": "只有6点",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:81702024cb6333973ce6",
+      "image_id": "uNb9QFRL6hY_c6410f47ad754d6cbd890ba7dff8b449",
+      "annotation_id": "81702024cb6333973ce6",
+      "code": "uNb9QFRL6hY-66",
+      "raw_comment": "严格来说不算错,只是玻璃洗澡区域那标的特别细致",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_94_3637_6963_W035",
+      "image_id": "uNb9QFRL6hY_ca08ebfb2da647f68db41630637e400b",
+      "annotation_id": "new_94_3637_6963_W035",
+      "code": "uNb9QFRL6hY-67",
+      "raw_comment": "标外面,但是标的是较小的区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_94_3637_7147_W034",
+      "image_id": "uNb9QFRL6hY_ca08ebfb2da647f68db41630637e400b",
+      "annotation_id": "new_94_3637_7147_W034",
+      "code": "uNb9QFRL6hY-67",
+      "raw_comment": "标了外面的区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:bcadc37ee0819d4ead2d",
+      "image_id": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+      "annotation_id": "bcadc37ee0819d4ead2d",
+      "code": "uNb9QFRL6hY-68",
+      "raw_comment": "只有4点",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:new_94_3638_7138_W036",
+      "image_id": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+      "annotation_id": "new_94_3638_7138_W036",
+      "code": "uNb9QFRL6hY-68",
+      "raw_comment": "标了门口的区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_94_3639_7063_W037",
+      "image_id": "uNb9QFRL6hY_d5c47aa99b274a67b305aa601234f1f1",
+      "annotation_id": "new_94_3639_7063_W037",
+      "code": "uNb9QFRL6hY-72",
+      "raw_comment": "多标了p9 p10 处",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_94_3645_7320_W030",
+      "image_id": "uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14",
+      "annotation_id": "new_94_3645_7320_W030",
+      "code": "uNb9QFRL6hY-88",
+      "raw_comment": "这忽略了大部分区域细节,只标了最小的范围",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:3996cdc86335a9c6d126",
+      "image_id": "wc2JMjhGNzB_1d8917d25abb4a77a0da9583dc82c17c",
+      "annotation_id": "3996cdc86335a9c6d126",
+      "code": "wc2JMjhGNzB-14",
+      "raw_comment": "完全不知道标的什么",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:b1ce4141a47902a64e35",
+      "image_id": "wc2JMjhGNzB_b41b10699d614f24851b56a9a0e743c6",
+      "annotation_id": "b1ce4141a47902a64e35",
+      "code": "wc2JMjhGNzB-53",
+      "raw_comment": "标了马桶的空间",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:64a7b681289e1d9e5c28",
+      "image_id": "wc2JMjhGNzB_b41b10699d614f24851b56a9a0e743c6",
+      "annotation_id": "64a7b681289e1d9e5c28",
+      "code": "wc2JMjhGNzB-53",
+      "raw_comment": "标了马桶的区域,在玻璃处停止,且忽略了左侧的墙面变化,标的不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:8f784855d8bd4f3a9024",
+      "image_id": "wc2JMjhGNzB_b41b10699d614f24851b56a9a0e743c6",
+      "annotation_id": "8f784855d8bd4f3a9024",
+      "code": "wc2JMjhGNzB-53",
+      "raw_comment": "标了马桶的区域,在玻璃处停止,且忽略了左侧的墙面变化,标的不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:ae7096d6a5b271deaac2",
+      "image_id": "wc2JMjhGNzB_b41b10699d614f24851b56a9a0e743c6",
+      "annotation_id": "ae7096d6a5b271deaac2",
+      "code": "wc2JMjhGNzB-53",
+      "raw_comment": "标了马桶的区域,在玻璃处停止,且忽略了左侧的墙面变化,标的不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:f235b3c540b6882e63cb",
+      "image_id": "wc2JMjhGNzB_b41b10699d614f24851b56a9a0e743c6",
+      "annotation_id": "f235b3c540b6882e63cb",
+      "code": "wc2JMjhGNzB-53",
+      "raw_comment": "标了马桶的区域,在玻璃处停止,且忽略了左侧的墙面变化,标的不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:c6c2970a6c0a7eb457e5",
+      "image_id": "wc2JMjhGNzB_c7c84bf01a834489ad11d8450a7dc2bc",
+      "annotation_id": "c6c2970a6c0a7eb457e5",
+      "code": "wc2JMjhGNzB-54",
+      "raw_comment": "标了门口区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:af1ada91e5648762",
+      "image_id": "wc2JMjhGNzB_cae8fb3d40314ecea16654062030571b",
+      "annotation_id": "af1ada91e5648762",
+      "code": "wc2JMjhGNzB-56",
+      "raw_comment": "p10 下面补一个点,大概和p11的y轴坐标差不多",
+      "reason": "本条提出具体待修复操作；修复队列继续保留，但不是隐藏在已确认选项下的分类犹豫。"
+    },
+    {
+      "comment_id": "annotation:618c40c186d398910f88",
+      "image_id": "x8F5xyUWy9e_9926b38bd87e44e292d9c375050dd17d",
+      "annotation_id": "618c40c186d398910f88",
+      "code": "x8F5xyUWy9e-08",
+      "raw_comment": "注意到了墙面变化,但是没标好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:f275128bcb79fb1efea6",
+      "image_id": "x8F5xyUWy9e_9926b38bd87e44e292d9c375050dd17d",
+      "annotation_id": "f275128bcb79fb1efea6",
+      "code": "x8F5xyUWy9e-08",
+      "raw_comment": "注意到了墙面变化,但是没标好",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:1348b48c5c9e762ca204",
+      "image_id": "yqstnuAEVhm_26b2e92ccd314a2da1a4fc8dfc6e6f56",
+      "annotation_id": "1348b48c5c9e762ca204",
+      "code": "yqstnuAEVhm-04",
+      "raw_comment": "标外面的区域标的还行,但是飙到了楼梯区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:e41654f88d1993dc3e61",
+      "image_id": "yqstnuAEVhm_26b2e92ccd314a2da1a4fc8dfc6e6f56",
+      "annotation_id": "e41654f88d1993dc3e61",
+      "code": "yqstnuAEVhm-04",
+      "raw_comment": "标到了楼梯区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:563395851b939361bf06",
+      "image_id": "yqstnuAEVhm_26b2e92ccd314a2da1a4fc8dfc6e6f56",
+      "annotation_id": "563395851b939361bf06",
+      "code": "yqstnuAEVhm-04",
+      "raw_comment": "标了楼梯区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:5c4bc2c80ab7d3766846",
+      "image_id": "yqstnuAEVhm_2f8c1f8ea7364f67b1c5fe2be2750257",
+      "annotation_id": "5c4bc2c80ab7d3766846",
+      "code": "yqstnuAEVhm-06",
+      "raw_comment": "p2的点偏的有点大",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:cfe1fe54f5de49278b0a",
+      "image_id": "yqstnuAEVhm_48447297e8444171a5db34ccf38bc229",
+      "annotation_id": "cfe1fe54f5de49278b0a",
+      "code": "yqstnuAEVhm-09",
+      "raw_comment": "标的不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:new_94_3648_7055_W037",
+      "image_id": "yqstnuAEVhm_4ab11dce32f346b2becac29e0ac6e526",
+      "annotation_id": "new_94_3648_7055_W037",
+      "code": "yqstnuAEVhm-10",
+      "raw_comment": "完全不理解这p7 p8 ",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:new_94_3648_7306_W028",
+      "image_id": "yqstnuAEVhm_4ab11dce32f346b2becac29e0ac6e526",
+      "annotation_id": "new_94_3648_7306_W028",
+      "code": "yqstnuAEVhm-10",
+      "raw_comment": "完全不理解这p7 p8 ",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:0657f6415220d28c",
+      "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+      "annotation_id": "0657f6415220d28c",
+      "code": "yqstnuAEVhm-31",
+      "raw_comment": "标的不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:b5c368a4140e7de4",
+      "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+      "annotation_id": "b5c368a4140e7de4",
+      "code": "yqstnuAEVhm-31",
+      "raw_comment": "上面的对应点都没了",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    },
+    {
+      "comment_id": "annotation:ef46460f29fb4a76",
+      "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+      "annotation_id": "ef46460f29fb4a76",
+      "code": "yqstnuAEVhm-31",
+      "raw_comment": "去掉p9,之后他标的是最小空间",
+      "reason": "本条提出具体待修复操作；修复队列继续保留，但不是隐藏在已确认选项下的分类犹豫。"
+    },
+    {
+      "comment_id": "annotation:4d26dca68df3a0a4",
+      "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+      "annotation_id": "4d26dca68df3a0a4",
+      "code": "yqstnuAEVhm-31",
+      "raw_comment": "标的不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:45ab7471668e03d9",
+      "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+      "annotation_id": "45ab7471668e03d9",
+      "code": "yqstnuAEVhm-31",
+      "raw_comment": "标的不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:a1fe8ddab1fe7c86",
+      "image_id": "yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65",
+      "annotation_id": "a1fe8ddab1fe7c86",
+      "code": "yqstnuAEVhm-32",
+      "raw_comment": "标的不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:b66f79e3d5607ae9",
+      "image_id": "yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65",
+      "annotation_id": "b66f79e3d5607ae9",
+      "code": "yqstnuAEVhm-32",
+      "raw_comment": "标的不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:90ea86e7d48174ff",
+      "image_id": "yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65",
+      "annotation_id": "90ea86e7d48174ff",
+      "code": "yqstnuAEVhm-32",
+      "raw_comment": "极简标注,忽略了很多区域",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:db91666fae7b3b76",
+      "image_id": "yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65",
+      "annotation_id": "db91666fae7b3b76",
+      "code": "yqstnuAEVhm-32",
+      "raw_comment": "极简标注,不过在壁炉多标了一对点,标的不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:b9f7aa260a402700",
+      "image_id": "yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65",
+      "annotation_id": "b9f7aa260a402700",
+      "code": "yqstnuAEVhm-32",
+      "raw_comment": "标的不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:682625e3d592552bf5a1",
+      "image_id": "zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b",
+      "annotation_id": "682625e3d592552bf5a1",
+      "code": "zsNo4HB9uLZ-05",
+      "raw_comment": "这应该是相对合理的标注,尽管3d效果不好",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:970482034011870740d6",
+      "image_id": "zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b",
+      "annotation_id": "970482034011870740d6",
+      "code": "zsNo4HB9uLZ-05",
+      "raw_comment": "相对合理的标注",
+      "reason": "已明确保留，允许质量误差；“不知道为什么这样标”不能自动当作撤回保留或待定。"
+    },
+    {
+      "comment_id": "annotation:0671823b060edef4c4ef",
+      "image_id": "zsNo4HB9uLZ_65eefaf93e6249908e6389eb4eabf0f5",
+      "annotation_id": "0671823b060edef4c4ef",
+      "code": "zsNo4HB9uLZ-09",
+      "raw_comment": "只有6点",
+      "reason": "已明确排除；“不理解/不知道标什么”是排除理由，不是尚未作判断。"
+    }
+  ],
+  "summary": {
+    "reviewed_comments": 406,
+    "pending_comment_rows": 37,
+    "newly_exposed_resolved_rows": 1,
+    "already_pending_rows": 36,
+    "not_included": 369
+  },
+  "notes": [
+    "本清单补足评论语义，不替代页面已有pending/repair状态队列。",
+    "只有UwV83HsGsw3-03明确暴露resolved按钮下的当前分类犹豫；其他选入记录与原pending状态一致。",
+    "分簇疑问应继续作为方法问题展示，其存在不自动推翻图片或作答裁决。"
+  ]
+}

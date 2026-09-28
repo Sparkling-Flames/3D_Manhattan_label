@@ -1,0 +1,119 @@
+{
+  "decisions": 24,
+  "counts": {
+    "同一表达，可同簇": 9,
+    "不同表达，应分开": 12,
+    "暂不能判断": 3
+  },
+  "binding_validated": true,
+  "original_bytes_preserved": true,
+  "maximum_user_same": {
+    "case": 10,
+    "code": "yqstnuAEVhm-04",
+    "distance": 26.00658445733888
+  },
+  "minimum_user_different": {
+    "case": 9,
+    "code": "B6ByNegPMKs-40",
+    "distance": 25.62813794191026
+  },
+  "no_scalar_distance_cut_satisfies_all": true,
+  "development_constraint_checks": [
+    {
+      "method": "complete",
+      "cut": 12.8,
+      "decided": 21,
+      "matches": 12,
+      "split_user_same": 9,
+      "joined_user_different": 0
+    },
+    {
+      "method": "representative",
+      "cut": 12.8,
+      "decided": 21,
+      "matches": 14,
+      "split_user_same": 7,
+      "joined_user_different": 0
+    },
+    {
+      "method": "complete",
+      "cut": 17.066666666666666,
+      "decided": 21,
+      "matches": 14,
+      "split_user_same": 7,
+      "joined_user_different": 0
+    },
+    {
+      "method": "representative",
+      "cut": 17.066666666666666,
+      "decided": 21,
+      "matches": 19,
+      "split_user_same": 2,
+      "joined_user_different": 0
+    },
+    {
+      "method": "complete",
+      "cut": 25.6,
+      "decided": 21,
+      "matches": 15,
+      "split_user_same": 6,
+      "joined_user_different": 0
+    },
+    {
+      "method": "representative",
+      "cut": 25.6,
+      "decided": 21,
+      "matches": 15,
+      "split_user_same": 1,
+      "joined_user_different": 5
+    },
+    {
+      "method": "complete",
+      "cut": 34.13333333333333,
+      "decided": 21,
+      "matches": 18,
+      "split_user_same": 2,
+      "joined_user_different": 1
+    },
+    {
+      "method": "representative",
+      "cut": 34.13333333333333,
+      "decided": 21,
+      "matches": 16,
+      "split_user_same": 0,
+      "joined_user_different": 5
+    },
+    {
+      "method": "complete",
+      "cut": 51.2,
+      "decided": 21,
+      "matches": 18,
+      "split_user_same": 0,
+      "joined_user_different": 3
+    },
+    {
+      "method": "representative",
+      "cut": 51.2,
+      "decided": 21,
+      "matches": 16,
+      "split_user_same": 0,
+      "joined_user_different": 5
+    }
+  ],
+  "gt_available": 24,
+  "x_gap": {
+    "unit": "0–100百分比坐标的百分点；左右接缝取短距离",
+    "responses": 2444,
+    "pairs": 12781,
+    "quantiles": {
+      "p50": 0.12787723785165905,
+      "p90": 0.5309734513274322,
+      "p95": 0.7518796992481258,
+      "p99": 1.238390092879249,
+      "max": 3.4482758620689613
+    },
+    "pairs_above_0_2_percent": 4537,
+    "responses_above_0_2_percent": 1771
+  },
+  "limitations": "目的性开发案例，非总体准确率；3项暂不能判断不计错。未以审核优化阈值；未修正坐标；GT只核查资产存在和格式。"
+}

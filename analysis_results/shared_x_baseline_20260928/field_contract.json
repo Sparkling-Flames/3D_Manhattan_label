@@ -1,0 +1,14 @@
+{
+  "schema": "research_preprocessed_source_v1",
+  "primary_key": "object_id",
+  "ready": "完整配对共享x，y保持",
+  "unavailable": "preprocessed_points=null；原因见pairing_basis，不回退到未处理点",
+  "consumers": [
+    "clustering",
+    "quality",
+    "consensus",
+    "order_review"
+  ],
+  "eligibility": "按cleaning_disposition、worker_quality_gate及用途单独筛选",
+  "raw_mutation": false
+}

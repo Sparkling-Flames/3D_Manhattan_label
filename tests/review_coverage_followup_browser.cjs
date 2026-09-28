@@ -1,0 +1,24 @@
+const assert=require('node:assert/strict'),path=require('node:path');
+const {pathToFileURL}=require('node:url');
+const {chromium}=require('C:/Users/ASUS/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{const browser=await chromium.launch({headless:true});try{
+ const page=await browser.newPage({viewport:{width:1400,height:1000}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(pathToFileURL(path.resolve('analysis_results/review_coverage_followup_20260928/index.html')).href);
+ assert.equal(await page.locator('#case option').count(),4);
+ await page.waitForFunction(()=>img.complete&&img.naturalWidth>0);
+ assert.ok(await page.locator('#gt option').count()>=2);
+ await page.locator('#gt').selectOption('gt_original');
+ assert.ok(await page.evaluate(()=>current().references.every(r=>['gt_original','gt_revised'].includes(r.name))));
+ await page.locator('#oos').selectOption('oos');await page.locator('#doorway').selectOption('difficult');
+ await page.locator('#comment').fill('测试同时OOS与难标门洞');await page.locator('#confirm').click();
+ await page.reload();assert.equal(await page.locator('#oos').inputValue(),'oos');assert.equal(await page.locator('#doorway').inputValue(),'difficult');
+ const saved=await page.evaluate(()=>window.coverageReview.payload());assert.equal(Object.keys(saved.decisions).length,24);
+ assert.equal(await page.evaluate(x=>Object.keys(window.coverageReview.validate(x)).length,saved),24);
+ const download=page.waitForEvent('download');await page.locator('#export').click();assert.match((await download).suggestedFilename(),/图片覆盖补审/);
+ await page.locator('#group').selectOption('coverage');assert.equal(await page.locator('#case option').count(),20);
+ await page.waitForFunction(()=>img.complete&&img.naturalWidth>0);
+ assert.ok(await page.locator('#worker option').count()>0);
+ await page.locator('#worker').selectOption({index:0});await page.locator('#all').uncheck();
+ await page.screenshot({path:'analysis_results/review_coverage_followup_20260928/qa-temporary.png'});
+ await page.locator('#case').selectOption('wc2JMjhGNzB_e6693f97b36545f7a76e03c3fe32ba8c');assert.deepEqual(await page.locator('.tag:checked').evaluateAll(es=>es.map(e=>e.value)),['scope']);assert.deepEqual(errors,[]);console.log('PASS 4+20 queues, image, worker, OOS+doorway, reload, JSON validation/export');
+ }finally{await browser.close();}})().catch(e=>{console.error(e);process.exit(1)});

@@ -1,0 +1,561 @@
+{
+  "n_tracked_scanned": 1689,
+  "n_keep_tracked": 572,
+  "n_git_rm_cached_keep_local": 150,
+  "n_archive_outside_repo_then_git_rm": 16,
+  "n_manual_review_required": 951,
+  "total_size_bytes_by_action": {
+    "archive_outside_repo_then_git_rm": 589066,
+    "git_rm_cached_keep_local": 16749550,
+    "keep_tracked": 32063775,
+    "manual_review_required": 345977614
+  },
+  "top_30_git_rm_cached_candidates": [
+    {
+      "relative_path": "active_logs/new_server/active_times_2026-06-17.jsonl",
+      "git_status": "clean",
+      "size_bytes": 1048268,
+      "reason": "active_logs are local runtime logs; keep local but remove Git tracking later",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "analysis_results/prescreen_closeout/raw_inputs/new_server/active_times_2026-06-17.jsonl",
+      "git_status": "clean",
+      "size_bytes": 1048268,
+      "reason": "prescreen_closeout local output copy; later remove from Git while retaining local file",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "active_logs/new_server/active_times_2026-05-26.jsonl",
+      "git_status": "clean",
+      "size_bytes": 673963,
+      "reason": "active_logs are local runtime logs; keep local but remove Git tracking later",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "analysis_results/prescreen_closeout/raw_inputs/new_server/active_times_2026-05-26.jsonl",
+      "git_status": "clean",
+      "size_bytes": 673963,
+      "reason": "prescreen_closeout local output copy; later remove from Git while retaining local file",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "active_logs/new_server/active_times_2026-06-23.jsonl",
+      "git_status": "clean",
+      "size_bytes": 647103,
+      "reason": "active_logs are local runtime logs; keep local but remove Git tracking later",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "analysis_results/prescreen_closeout/raw_inputs/new_server/active_times_2026-06-23.jsonl",
+      "git_status": "clean",
+      "size_bytes": 647103,
+      "reason": "prescreen_closeout local output copy; later remove from Git while retaining local file",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "active_logs/new_server/active_times_2026-06-21.jsonl",
+      "git_status": "clean",
+      "size_bytes": 599756,
+      "reason": "active_logs are local runtime logs; keep local but remove Git tracking later",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "analysis_results/prescreen_closeout/raw_inputs/new_server/active_times_2026-06-21.jsonl",
+      "git_status": "clean",
+      "size_bytes": 599756,
+      "reason": "prescreen_closeout local output copy; later remove from Git while retaining local file",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "active_logs/new_server/active_times_2026-06-16.jsonl",
+      "git_status": "clean",
+      "size_bytes": 486143,
+      "reason": "active_logs are local runtime logs; keep local but remove Git tracking later",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "analysis_results/prescreen_closeout/raw_inputs/new_server/active_times_2026-06-16.jsonl",
+      "git_status": "clean",
+      "size_bytes": 486143,
+      "reason": "prescreen_closeout local output copy; later remove from Git while retaining local file",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "active_logs/new_server/active_times_2026-06-22.jsonl",
+      "git_status": "clean",
+      "size_bytes": 458053,
+      "reason": "active_logs are local runtime logs; keep local but remove Git tracking later",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "analysis_results/prescreen_closeout/raw_inputs/new_server/active_times_2026-06-22.jsonl",
+      "git_status": "clean",
+      "size_bytes": 458053,
+      "reason": "prescreen_closeout local output copy; later remove from Git while retaining local file",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "active_logs/new_server/active_times_2026-06-20.jsonl",
+      "git_status": "clean",
+      "size_bytes": 421852,
+      "reason": "active_logs are local runtime logs; keep local but remove Git tracking later",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "analysis_results/prescreen_closeout/raw_inputs/new_server/active_times_2026-06-20.jsonl",
+      "git_status": "clean",
+      "size_bytes": 421852,
+      "reason": "prescreen_closeout local output copy; later remove from Git while retaining local file",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "active_logs/new_server/active_times_2026-05-25.jsonl",
+      "git_status": "clean",
+      "size_bytes": 268780,
+      "reason": "active_logs are local runtime logs; keep local but remove Git tracking later",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "analysis_results/prescreen_closeout/raw_inputs/new_server/active_times_2026-05-25.jsonl",
+      "git_status": "clean",
+      "size_bytes": 268780,
+      "reason": "prescreen_closeout local output copy; later remove from Git while retaining local file",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "active_logs/new_server/active_times_2026-05-31.jsonl",
+      "git_status": "clean",
+      "size_bytes": 234386,
+      "reason": "active_logs are local runtime logs; keep local but remove Git tracking later",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "analysis_results/prescreen_closeout/raw_inputs/new_server/active_times_2026-05-31.jsonl",
+      "git_status": "clean",
+      "size_bytes": 234386,
+      "reason": "prescreen_closeout local output copy; later remove from Git while retaining local file",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "active_logs/new_server/active_times_2026-06-25.jsonl",
+      "git_status": "clean",
+      "size_bytes": 230487,
+      "reason": "active_logs are local runtime logs; keep local but remove Git tracking later",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "analysis_results/prescreen_closeout/raw_inputs/new_server/active_times_2026-06-25.jsonl",
+      "git_status": "clean",
+      "size_bytes": 230487,
+      "reason": "prescreen_closeout local output copy; later remove from Git while retaining local file",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "active_logs/new_server/active_times_2026-05-21.jsonl",
+      "git_status": "clean",
+      "size_bytes": 220859,
+      "reason": "active_logs are local runtime logs; keep local but remove Git tracking later",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "analysis_results/prescreen_closeout/raw_inputs/new_server/active_times_2026-05-21.jsonl",
+      "git_status": "clean",
+      "size_bytes": 220859,
+      "reason": "prescreen_closeout local output copy; later remove from Git while retaining local file",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "active_logs/new_server/active_times_2026-05-19.jsonl",
+      "git_status": "clean",
+      "size_bytes": 220545,
+      "reason": "active_logs are local runtime logs; keep local but remove Git tracking later",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "analysis_results/prescreen_closeout/raw_inputs/new_server/active_times_2026-05-19.jsonl",
+      "git_status": "clean",
+      "size_bytes": 220545,
+      "reason": "prescreen_closeout local output copy; later remove from Git while retaining local file",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "active_logs/new_server/active_times_2026-05-01.jsonl",
+      "git_status": "clean",
+      "size_bytes": 178119,
+      "reason": "active_logs are local runtime logs; keep local but remove Git tracking later",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "analysis_results/prescreen_closeout/raw_inputs/new_server/active_times_2026-05-01.jsonl",
+      "git_status": "clean",
+      "size_bytes": 178119,
+      "reason": "prescreen_closeout local output copy; later remove from Git while retaining local file",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "analysis_results/prescreen_closeout/raw_inputs/new_server/active_times_2026-05-06.jsonl",
+      "git_status": "clean",
+      "size_bytes": 151033,
+      "reason": "prescreen_closeout local output copy; later remove from Git while retaining local file",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "active_logs/new_server/active_times_2026-06-24.jsonl",
+      "git_status": "clean",
+      "size_bytes": 138440,
+      "reason": "active_logs are local runtime logs; keep local but remove Git tracking later",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "analysis_results/prescreen_closeout/raw_inputs/new_server/active_times_2026-06-24.jsonl",
+      "git_status": "clean",
+      "size_bytes": 138440,
+      "reason": "prescreen_closeout local output copy; later remove from Git while retaining local file",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "active_logs/new_server/active_times_2026-06-04.jsonl",
+      "git_status": "clean",
+      "size_bytes": 129383,
+      "reason": "active_logs are local runtime logs; keep local but remove Git tracking later",
+      "risk_level": "medium"
+    }
+  ],
+  "top_30_archive_outside_candidates": [
+    {
+      "relative_path": "tools/legacy/visualize_output1.ipynb",
+      "git_status": "D",
+      "size_bytes": 180630,
+      "reason": "round2 external archive verified; later remove tracked legacy artifact from Git index/history-facing tree",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "tools/legacy/ls_userscript_debug.20260321_prescreen_wall_cleanup.js",
+      "git_status": "D",
+      "size_bytes": 97296,
+      "reason": "round2 external archive verified; later remove tracked legacy artifact from Git index/history-facing tree",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "tools/legacy/research_prototypes/noniid_split_generator.py",
+      "git_status": "D",
+      "size_bytes": 56605,
+      "reason": "round2 external archive verified; later remove tracked legacy artifact from Git index/history-facing tree",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "tools/legacy/visualize_output.backup_20260120_195344_before_restore.ipynb",
+      "git_status": "D",
+      "size_bytes": 50073,
+      "reason": "round2 external archive verified; later remove tracked legacy artifact from Git index/history-facing tree",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "tools/legacy/visualize_output.backup_20260120_before_revert.ipynb",
+      "git_status": "D",
+      "size_bytes": 50058,
+      "reason": "round2 external archive verified; later remove tracked legacy artifact from Git index/history-facing tree",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "tools/legacy/ls_userscript_bak.js",
+      "git_status": "D",
+      "size_bytes": 45888,
+      "reason": "round2 external archive verified; later remove tracked legacy artifact from Git index/history-facing tree",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "tools/legacy/research_prototypes/ls_userscript_bak.js",
+      "git_status": "D",
+      "size_bytes": 16894,
+      "reason": "round2 external archive verified; later remove tracked legacy artifact from Git index/history-facing tree",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "tools/legacy/research_prototypes/worker_classification_consensus.py",
+      "git_status": "D",
+      "size_bytes": 14549,
+      "reason": "round2 external archive verified; later remove tracked legacy artifact from Git index/history-facing tree",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "tools/legacy/data_cleaning_bool_fields.py",
+      "git_status": "D",
+      "size_bytes": 8908,
+      "reason": "round2 external archive verified; later remove tracked legacy artifact from Git index/history-facing tree",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "tools/legacy/research_prototypes/extract_pdf_text.py",
+      "git_status": "D",
+      "size_bytes": 2650,
+      "reason": "round2 external archive verified; later remove tracked legacy artifact from Git index/history-facing tree",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "tools/legacy/fix_visibility.py",
+      "git_status": "D",
+      "size_bytes": 2386,
+      "reason": "round2 external archive verified; later remove tracked legacy artifact from Git index/history-facing tree",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "tools/legacy/research_prototypes/export_layout_json.py",
+      "git_status": "D",
+      "size_bytes": 2169,
+      "reason": "round2 external archive verified; later remove tracked legacy artifact from Git index/history-facing tree",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "tools/legacy_server/start_log_server_old_token_20251222.sh",
+      "git_status": "D",
+      "size_bytes": 922,
+      "reason": "round2 external archive verified; later remove tracked legacy artifact from Git index/history-facing tree",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "tools/legacy/README.md",
+      "git_status": "D",
+      "size_bytes": 339,
+      "reason": "round2 external archive verified; later remove tracked legacy artifact from Git index/history-facing tree",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "tools/legacy_server/README.md",
+      "git_status": "D",
+      "size_bytes": 265,
+      "reason": "round2 external archive verified; later remove tracked legacy artifact from Git index/history-facing tree",
+      "risk_level": "medium"
+    },
+    {
+      "relative_path": "tools/legacy/ls_userscript_updated.js",
+      "git_status": "clean",
+      "size_bytes": 59434,
+      "reason": "tracked legacy material should be archived outside repo before removing from Git",
+      "risk_level": "medium"
+    }
+  ],
+  "top_30_manual_review_required": [
+    {
+      "relative_path": "export_label/project-2-at-2026-03-25-10-52-c04c6496.json",
+      "git_status": "clean",
+      "size_bytes": 4480511,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "analysis_results/prescreen_closeout/raw_inputs/groudTruth.json",
+      "git_status": "clean",
+      "size_bytes": 3413015,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "export_label/groudTruth.json",
+      "git_status": "clean",
+      "size_bytes": 3413015,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "export_label/人工精标/project-20-at-2026-03-25-01-17-926f4b7f.json",
+      "git_status": "clean",
+      "size_bytes": 3409197,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "export_label/人工精标/project-20-at-2026-03-27-10-01-6cfd5abe.json",
+      "git_status": "clean",
+      "size_bytes": 3402040,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "export_label/人工精标/project-20-at-2026-03-27-14-57-e66c6481.json",
+      "git_status": "clean",
+      "size_bytes": 3387004,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/task218_ann3741/hypothesis_ranking_core.json",
+      "git_status": "clean",
+      "size_bytes": 3196090,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "export_label/project-2-at-2026-02-22-11-22-ee6c4607.json",
+      "git_status": "clean",
+      "size_bytes": 2765133,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "analysis_results/rerun_20260308/export_filtered_from_20260101.json",
+      "git_status": "clean",
+      "size_bytes": 2581021,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "trap集/semi/过度解析/task574/wc2JMjhGNzB_e7d38d204e374f6b8300c5a559a768e9.png",
+      "git_status": "clean",
+      "size_bytes": 2475363,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "trap集/manual/玻璃/task509(可能有歧义)/wc2JMjhGNzB_dc4a9f470b834de1983c7e605ff06b2e.png",
+      "git_status": "clean",
+      "size_bytes": 2375892,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "trap集/semi/跨门扩张/task580(同时是漏标和角点重复)/wc2JMjhGNzB_b41b10699d614f24851b56a9a0e743c6.png",
+      "git_status": "clean",
+      "size_bytes": 2222649,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "trap集/manual/遮挡明显/task707/yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65.png",
+      "git_status": "clean",
+      "size_bytes": 2176998,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "analysis_results/bi_layout_prediction_vs_hohonet_20260515/images/contact_sheet_highest_g_score_hohonet_txt_vs_bilayout_origin_head_prediction.png",
+      "git_status": "clean",
+      "size_bytes": 2175751,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "analysis_results/bi_layout_prediction_vs_hohonet_20260515/images/contact_sheet_hard_prediction_failure_hohonet_txt_vs_bilayout_origin_head_prediction.png",
+      "git_status": "clean",
+      "size_bytes": 2175695,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "analysis_results/bi_layout_prediction_vs_hohonet_20260515/images/contact_sheet_highest_g_score_hohonet_txt_vs_bilayout_new_head_prediction.png",
+      "git_status": "clean",
+      "size_bytes": 2174783,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "analysis_results/bi_layout_prediction_vs_hohonet_20260515/images/contact_sheet_hard_prediction_failure_hohonet_txt_vs_bilayout_new_head_prediction.png",
+      "git_status": "clean",
+      "size_bytes": 2174634,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "trap集/manual/遮挡明显/task562/q9vSo1VnCiC_c421f07780004647a7198c4ac5371e8a.png",
+      "git_status": "clean",
+      "size_bytes": 2162016,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "trap集/OOS/错层,天花板下凸/task661/q9vSo1VnCiC_69591068e5614642b710a8fb7733bdeb.png",
+      "git_status": "clean",
+      "size_bytes": 2154705,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "trap集/semi/跨门扩张/task499/q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d.png",
+      "git_status": "clean",
+      "size_bytes": 2120623,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "analysis_results/g_t_diagnostic_dryrun_20260512/contact_sheets/contact_sheet_highest_g_score.png",
+      "git_status": "clean",
+      "size_bytes": 2114555,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "analysis_results/g_t_diagnostic_dryrun_20260512/contact_sheets/contact_sheet_hard_prediction_failure.png",
+      "git_status": "clean",
+      "size_bytes": 2114336,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "analysis_results/bi_layout_prediction_vs_hohonet_20260515/images/contact_sheet_nominal_prediction_structure_hohonet_txt_vs_bilayout_origin_head_prediction.png",
+      "git_status": "clean",
+      "size_bytes": 2094883,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "analysis_results/bi_layout_prediction_vs_hohonet_20260515/images/contact_sheet_nominal_prediction_structure_hohonet_txt_vs_bilayout_new_head_prediction.png",
+      "git_status": "clean",
+      "size_bytes": 2092381,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "trap集/manual/拼接缝及拉伸/task670/x8F5xyUWy9e_a51a0e2811f342a599ae4cdb9b84ff23.png",
+      "git_status": "clean",
+      "size_bytes": 2089517,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "analysis_results/bi_layout_prediction_vs_hohonet_20260515/images/contact_sheet_soft_prediction_complexity_hohonet_txt_vs_bilayout_new_head_prediction.png",
+      "git_status": "clean",
+      "size_bytes": 2088902,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "analysis_results/bi_layout_prediction_vs_hohonet_20260515/images/contact_sheet_soft_prediction_complexity_hohonet_txt_vs_bilayout_origin_head_prediction.png",
+      "git_status": "clean",
+      "size_bytes": 2086836,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "trap集/semi/跨门扩张/task668/rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a.png",
+      "git_status": "clean",
+      "size_bytes": 2081420,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "trap集/semi/角点错位/task474/uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97.png",
+      "git_status": "clean",
+      "size_bytes": 2068404,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    },
+    {
+      "relative_path": "trap集/manual/遮挡明显/task635(低优先,有歧义,尽量不考虑)/q9vSo1VnCiC_e74e843601574864a14517f990c748a0.png",
+      "git_status": "clean",
+      "size_bytes": 2043861,
+      "reason": "tracked artifact is referenced by current code/test/docs/manifest",
+      "risk_level": "high"
+    }
+  ],
+  "policy_notes": [
+    "This pass scanned git tracked files from git ls-files only; untracked files were not primary objects.",
+    "No delete, move, git rm, or git rm --cached was executed by this planning pass.",
+    "Rows referenced by current code/tests/docs/manifests are kept out of automatic de-tracking unless they are current source/config/docs already forced keep_tracked.",
+    "analysis_results/paper_a_manhattan remains an active branch; tracked artifacts inside it are manual_review_required rather than automatically detached.",
+    "analysis_results/prescreen_closeout is never archived by this plan; only manual_review_required or git_rm_cached_keep_local is used.",
+    "active_logs is only classified as git_rm_cached_keep_local or manual_review_required.",
+    ".gitignore nonstandard pycache rule present: True; rule(s): ['**pycache**/']",
+    ".gitignore missing requested ignore rules in this read-only pass: []"
+  ]
+}

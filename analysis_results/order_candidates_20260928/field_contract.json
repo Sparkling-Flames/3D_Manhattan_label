@@ -1,0 +1,51 @@
+{
+  "schema": "order_candidate_inventory_v1",
+  "primary_key": "object_id",
+  "fields": [
+    "object_id",
+    "object_kind",
+    "image_id",
+    "image_code",
+    "worker_id",
+    "condition",
+    "source",
+    "reference_aliases",
+    "source_verified",
+    "queue",
+    "triggers",
+    "point_count",
+    "pair_count",
+    "links_zero_based",
+    "point_version",
+    "pairing_basis",
+    "geometry_status",
+    "metrics",
+    "explicit_order_evidence",
+    "scene_category",
+    "scene_oos_status",
+    "scene_doorway_status",
+    "cleaning_disposition",
+    "worker_quality_gate",
+    "individual_review_covered",
+    "image_comment",
+    "order_confirmed"
+  ],
+  "queues": {
+    "priority": "明确排序意见或>4对自交",
+    "weak": ">4对连续锐角或周期密集",
+    "geometry": "四对异常或投影失败，不能认定换序可修复",
+    "pairing": "先核验配对",
+    "later": "OOS/难标门洞后续队列",
+    "hold": "图片明确暂缓",
+    "excluded": "当前明确排除或历史未纳入",
+    "source_check": "GT源或绑定需核对",
+    "normal": "本轮初筛未命中，不证明顺序正确"
+  },
+  "limits": [
+    "固定现有完整点对，仅对显示副本shared-x",
+    "GT原始源环序保留；人工修订GT唯一水平配对仅作诊断，连接顺序仍未知",
+    "自交/锐角不是排序错误真值",
+    "GT版本未指明的评论不擅自指定一版",
+    "不含HoHoNet模型GT"
+  ]
+}

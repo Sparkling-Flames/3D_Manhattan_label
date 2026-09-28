@@ -1,0 +1,69 @@
+{
+  "schema": "structural_consensus_validation_20260926_v1",
+  "date": "2026-09-26",
+  "test_command": "D:/anaconda/python.exe -m pytest tests/test_structural_consensus_20260926.py tests/test_local_structure_edits_20260926.py tests/test_structural_consensus_panel_20260926.py tests/test_run_structural_consensus_20260926.py tests/test_consensus_region_20260923.py tests/test_layout_metric_probe_20260926.py -q -p no:cacheprovider",
+  "tests": {
+    "passed": 20,
+    "failed": 0,
+    "seconds": 5.77,
+    "compression_io_rerun": "3 passed in 0.52 seconds"
+  },
+  "runner": "D:/anaconda/python.exe -m tools.thesis_main.analysis.run_structural_consensus_20260926",
+  "runner_exit_code": 0,
+  "full_final_three_route_run": true,
+  "case_files": 43,
+  "images": 40,
+  "primary_images": 39,
+  "primary_holdout_evaluable_images": 37,
+  "source_verified_annotations": 605,
+  "checks": {
+    "disjoint_worker_splits": true,
+    "pool_train_only": true,
+    "summary_recomputed_equal": true,
+    "strict_finite_json": true,
+    "report_links": true,
+    "python_syntax": true,
+    "git_diff_check": true
+  },
+  "browser": {
+    "sections": 43,
+    "loaded_panoramas": 43,
+    "svg_count": 1587,
+    "page_errors": [],
+    "native_image_navigation": true,
+    "chinese_diagnostic_labels": true
+  },
+  "cleanup": {
+    "qa_screenshots_removed": 2,
+    "task_test_directories_removed": 2,
+    "duplicate_plain_json_removed": 43,
+    "compressed_case_roundtrips_verified": 43,
+    "research_figures_retained": 2
+  },
+  "changed_source_files": [
+    "tools/thesis_main/analysis/structural_consensus_20260926.py",
+    "tools/thesis_main/analysis/local_structure_edits_20260926.py",
+    "tools/thesis_main/analysis/structural_consensus_panel_20260926.py",
+    "tools/thesis_main/analysis/run_structural_consensus_20260926.py",
+    "tests/test_structural_consensus_20260926.py",
+    "tests/test_local_structure_edits_20260926.py",
+    "tests/test_structural_consensus_panel_20260926.py",
+    "tests/test_run_structural_consensus_20260926.py",
+    "docs/README_INDEX.md",
+    "docs/PROJECT_MAP_CLEAN_20260308.md"
+  ],
+  "protocol_guard": "本轮独立探索；未修改原始导出、GT、正式合同、SOP、人员资格或人工裁决；既有工作区修改保留。",
+  "label_studio_guard": "未涉及运营、派发、权限或运行时变更。",
+  "docs_sync": "README_INDEX与PROJECT_MAP登记三路线实验，排序与风险筛选仍暂缓。",
+  "not_run": "未运行全仓库测试；相关独立核心、输入来源、字段、留出隔离与图示已定向验证。",
+  "remaining_limits": [
+    "已有环未终审，不证明真实邻接。",
+    "37张图的重划分不是外建筑泛化验证。",
+    "精确点数与绝对距离门限会碎裂同一空间。",
+    "C的稀有原作答保留与真正搜索生成分开报告。",
+    "局部增删仍可能产生折返或窄条，尚不可作为可靠共识。",
+    "6份有实质变化的修订GT缺确认配对，不能声称完成其GT版本敏感性验证。",
+    "B/C未生成高度，局部搜索深度与提案上限有截断。"
+  ],
+  "next_safe_step": "先研究保持完整边界一致性的候选约束、按模式条件定义误差及独立范围证据；待二次复核后开展已确认环和外建筑验证。"
+}

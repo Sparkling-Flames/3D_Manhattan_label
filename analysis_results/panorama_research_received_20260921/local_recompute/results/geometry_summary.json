@@ -1,0 +1,55 @@
+{
+  "responses": 2444,
+  "bound_pairs": 12781,
+  "raw_range_invalid_pairs": 2,
+  "top_bottom_x_not_identical": 8804,
+  "top_bottom_x_gap_gt1px": 7135,
+  "legacy_floor_clamped_pairs": 4,
+  "legacy_top_clamped_pairs": 3,
+  "relative_range_quantiles": {
+    "0.5": 1.7968118563186641,
+    "0.9": 3.809129582067566,
+    "0.99": 8.344162471788504
+  },
+  "sensitivity": {
+    "top_x_sensitivity": {
+      "0.5": 0.011025030286604424,
+      "0.9": 0.023372379729248573,
+      "0.99": 0.05119881842069775
+    },
+    "top_y_sensitivity": {
+      "0.5": 0.013822534850373214,
+      "0.9": 0.025340416419764773,
+      "0.99": 0.05134074979628611
+    },
+    "bottom_x_sensitivity": {
+      "0.5": 0.011025030286604452,
+      "0.9": 0.02337237972924851,
+      "0.99": 0.05119881842069774
+    },
+    "bottom_y_sensitivity": {
+      "0.5": 0.02863495965713987,
+      "0.9": 0.09826749961631434,
+      "0.99": 0.4350498057929057
+    }
+  },
+  "bottom_y_greater_than_top_y_share": 0.9978868278938718,
+  "fit_panel": {
+    "responses": 46,
+    "buildings": 22,
+    "statuses": {
+      "ok": 39,
+      "blocked": 7
+    },
+    "blocked_reasons": {
+      "camera_visibility_unresolved": 3,
+      "ambiguous_axis_assignment": 2,
+      "duplicate_or_zero_edge;invalid_footprint": 1,
+      "invalid_footprint": 1
+    },
+    "selection": "2 response IDs per building ordered by SHA256, plus two approved uNb21 cases; not selected for successful fit",
+    "median_residual_mean_deg_successful": 1.631204526222561,
+    "max_residual_max_deg_successful": 20.016174685607282
+  },
+  "scope": "Numerical counterfactual sensitivity, not generated annotators. Relative camera-height units. Raw ceiling range borrowed from paired floor, not independently measured ceiling depth. Correct geometry not adjudicated."
+}
