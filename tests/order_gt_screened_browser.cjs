@@ -79,6 +79,26 @@ const root=path.resolve('analysis_results/order_gt_screened_20260928');
   for(const b of dense)assert.ok(b.left>=2&&b.top>=2&&b.right<=1022&&b.bottom<=510);
   const failure=await page.evaluate(()=>{const before=JSON.stringify(saved),set=Storage.prototype.setItem;let result;try{Storage.prototype.setItem=()=>{throw Error('test quota failure');};result=saveReview('confirmed');}finally{Storage.prototype.setItem=set;}return {result,unchanged:JSON.stringify(saved)===before,message:$('save-state').textContent};});
   assert.equal(failure.result,false);assert.equal(failure.unchanged,true);assert.match(failure.message,/保存失败/);
+  await page.locator('#queue-mode').selectOption('current');await ready();
+  assert.ok(await page.evaluate(id=>visibleQueue().some(e=>sourceId(e.source)===id),ids.pending));
+  await page.locator('#queue-mode').selectOption('previous');await ready();
+  assert.equal(await page.evaluate(()=>visibleQueue().length),summary.confirmed);
+  const correction=await page.evaluate(()=>queueEntries.find(e=>dataset.cases[e.ci].title==='rPc6DW4iMge-06'&&confirmationRound(e.source)==='previous')?.source.object_id);
+  assert.ok(correction,'rPc6DW4iMge-06 has a previous confirmation available to correct');await select(correction);
+  const oldRecord=await page.evaluate(()=>JSON.stringify(saved[sourceId(activeSource())]));
+  const oldOrder=await page.evaluate(()=>[...previewOrder]);
+  await page.locator('#reopen-order').click();
+  assert.equal(await page.locator('#confirm-order').isDisabled(),false);
+  assert.deepEqual(await page.evaluate(()=>previewOrder),oldOrder);
+  assert.equal(await page.evaluate(()=>reviewState(activeSource())),'pending');
+  assert.equal(await page.evaluate(()=>JSON.stringify(JSON.parse(localStorage.getItem(storageKey+':reopened-history')).at(-1).record)),oldRecord);
+  await page.reload();await ready();await select(correction);
+  assert.equal(await page.locator('#confirm-order').isDisabled(),false);
+  await page.locator('#pair-drag-list .pair-token').first().press('Alt+ArrowRight');
+  await page.locator('#confirm-order').click();
+  assert.equal(await page.evaluate(()=>confirmationRound(activeSource())),'current');
+  assert.equal(await page.evaluate(id=>JSON.stringify(window.ORDER_REVIEW_SEED[id]),correction),oldRecord);
+  await page.locator('#queue-mode').selectOption('pending');await ready();
   // 最后一份符合筛选的对象确认后，队列虽空，当前图仍保留。
   const last=await page.evaluate(async()=>{
    const list=visibleQueue(),key=e=>`${e.ci}|${e.source.worker_id} ${e.source.raw_condition}`;

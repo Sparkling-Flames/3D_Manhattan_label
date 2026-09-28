@@ -10,7 +10,9 @@
     "confirmed"
   ],
   "default_preview_order": "固定点对索引的零基排列；仅人工修订GT初始按共享x升序；不属于源绑定，已有确认优先",
-  "history": "双人原件和派生配对解释保留；已确认只读；旧原始GT记录仅历史，不计审核任务",
+  "history": "双人原件和派生配对解释保留；确认默认锁定，可逐对象撤销后编辑，保留排列和撤销前记录；原始GT始终只读且不计任务",
+  "review_rounds": "previous：当前确认与ORDER_REVIEW_SEED原记录各绑定/状态/排列/备注/原因/时间字段一致；current：新增或更新的确认，不自动推断误点",
+  "review_export_extensions": "previous_round_records为原审核快照；reopened_history为本页撤销前记录；v3 records继续表示当前状态",
   "binding": "order_review_20260928_v3沿用object_id/points/labels/links/preprocessing；未知身份或冲突拒绝覆盖",
   "connection_export": "matterport_connection_order_v1：依确认环序逐对上/下交替点数组，末对连首对；保存原点和点对索引",
   "eligibility": "队列选择不更改清洗和分析资格；未筛入不等于人工验收",

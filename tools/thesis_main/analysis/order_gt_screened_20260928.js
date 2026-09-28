@@ -1,7 +1,7 @@
 'use strict';
 // 本轮导航独立于旧114图页面；绑定和保存格式沿用共同工作台。
 const queueControls=document.createElement('div');queueControls.id='queue-controls';
-queueControls.innerHTML='<label>查看 <select id="queue-mode"><option value="pending">待审核</option><option value="confirmed">已确认（只读）</option><option value="reference">原始GT对照（只读）</option></select></label>';
+queueControls.innerHTML='<label>查看 <select id="queue-mode"><option value="pending">待审核</option><option value="previous">上次审核确认</option><option value="current">本次点击确认</option><option value="confirmed">全部已确认</option><option value="reference">原始GT对照（只读）</option></select></label>';
 queueControls.append($('image-search').parentElement,$('worker-search').parentElement);controls.after(queueControls);
 const queueNotice=document.createElement('p');queueNotice.id='queue-notice';queueControls.after(queueNotice);
 const queueEntries=dataset.cases.flatMap((c,ci)=>c.variants.map((v,vi)=>({ci,vi,source:v.source})));
@@ -11,10 +11,24 @@ function validQueueRecord(s,r){return s&&r&&r.binding===sourceBinding(s)&&['draf
 try{if(reviewLoadError)throw reviewLoadError;for(const [id,r] of Object.entries(saved))if(!validQueueRecord(queueSources.get(id),r))throw Error(id);}catch(e){queueValid=false;queueNotice.textContent='本地记录校验失败，已停止编辑，请导出备份检查：'+e.message;}
 function reviewState(s){return s.object_kind==='gt_original'?'reference':saved[sourceId(s)]?.status==='confirmed'?'confirmed':saved[sourceId(s)]?.status==='pairing'?'pairing':'pending';}
 function readOnlyOrder(){return !queueValid||reviewState(activeSource())!=='pending';}
-function visibleQueue(){const image=$('image-search').value.trim().toLowerCase(),worker=$('worker-search').value.trim().toLowerCase();return queueEntries.filter(e=>{const c=dataset.cases[e.ci],s=e.source;return reviewState(s)===$('queue-mode').value&&`${c.title} ${c.image_id} ${c.room_id}`.toLowerCase().includes(image)&&`${s.worker_id||''} ${s.raw_condition||''} ${s.reference_name||''}`.toLowerCase().includes(worker);});}
-updateProgress=function(){const counts={pending:0,confirmed:0,pairing:0};queueEntries.forEach(e=>{const state=reviewState(e.source);if(state in counts)counts[state]++;});$('object-progress').textContent=`待审 ${counts.pending} · 已确认 ${counts.confirmed} · 本页新增配对问题 ${counts.pairing} · 生成时配对待处理 ${dataset.summary.pairing_deferred}`;};
+function confirmationRound(s){const id=sourceId(s),r=saved[id],prior=window.ORDER_REVIEW_SEED?.[id];if(reviewState(s)!=='confirmed')return null;return prior?.status==='confirmed'&&['binding','status','order','note','cause','updated_at'].every(k=>JSON.stringify(r[k])===JSON.stringify(prior[k]))?'previous':'current';}
+function visibleQueue(){const image=$('image-search').value.trim().toLowerCase(),worker=$('worker-search').value.trim().toLowerCase(),mode=$('queue-mode').value;return queueEntries.filter(e=>{const c=dataset.cases[e.ci],s=e.source;return (['previous','current'].includes(mode)?confirmationRound(s)===mode:reviewState(s)===mode)&&`${c.title} ${c.image_id} ${c.room_id}`.toLowerCase().includes(image)&&`${s.worker_id||''} ${s.raw_condition||''} ${s.reference_name||''}`.toLowerCase().includes(worker);});}
+updateProgress=function(){const counts={pending:0,previous:0,current:0,pairing:0};queueEntries.forEach(e=>{const state=confirmationRound(e.source)||reviewState(e.source);if(state in counts)counts[state]++;});$('object-progress').textContent=`待审 ${counts.pending} · 上次确认沿用 ${counts.previous} · 本次点击确认 ${counts.current} · 本页配对问题 ${counts.pairing}`;};
+const reopenOrder=document.createElement('button');reopenOrder.id='reopen-order';reopenOrder.textContent='撤销确认，重新编辑';$('confirm-order').after(reopenOrder);
+reopenOrder.onclick=()=>{
+ if(!queueValid||reviewState(activeSource())!=='confirmed')return;
+ const id=sourceId(activeSource()),prior=saved[id],historyKey=storageKey+':reopened-history';
+ try{
+  const history=JSON.parse(localStorage.getItem(historyKey)||'[]');if(!Array.isArray(history))throw Error('撤销历史格式错误');
+  history.push({object_id:id,record:prior,reopened_at:new Date().toISOString()});
+  const next={...saved,[id]:{...prior,status:'pending',updated_at:new Date().toISOString()}};
+  localStorage.setItem(historyKey,JSON.stringify(history));localStorage.setItem(storageKey,JSON.stringify(next));saved=next;
+  $('queue-mode').value='pending';heldReviewId=id;chooseVariant(currentVariant);$('save-state').textContent='已撤销确认，原排列保留，可重新编辑；旧确认已留档';
+ }catch(e){$('save-state').textContent='撤销未应用：'+e.message;}
+};
 function updateQueueUI(){
  const visible=visibleQueue(),held=heldReviewId===sourceId(activeSource()),match=held||visible.some(e=>e.ci===currentCase&&e.vi===currentVariant),readonly=readOnlyOrder()||!match;
+ reopenOrder.hidden=reviewState(activeSource())!=='confirmed'||!match;reopenOrder.disabled=!queueValid;
  for(const option of $('case-select').options)option.hidden=!(held&&Number(option.value)===currentCase)&&!visible.some(e=>e.ci===Number(option.value));
  for(const option of $('variant-select').options)option.hidden=!(held&&Number(option.value)===currentVariant)&&!visible.some(e=>e.ci===currentCase&&e.vi===Number(option.value));
  for(const id of ['confirm-order','pending-order','pairing-problem','pairing-note','order-restore','order-apply','order-permutation'])if($(id))$(id).disabled=readonly;
@@ -25,6 +39,7 @@ function updateQueueUI(){
  if(queueValid)queueNotice.textContent=match?`${visible.length} 份符合当前筛选 · ${held?'已保存，保留当前图；点击“下一份”继续':readonly?'只读查看，确认结果直接沿用':'待审；确认只保存，点击“下一份”切换'} · 原图号 ${dataset.cases[currentCase].original_slot||'新增'}`:'当前筛选下没有对象。';
  $('order-status').textContent=readonly?'只读 · '+({reference:'原始GT',pairing:'配对待后续处理',confirmed:'已确认'}[reviewState(activeSource())]||'不可编辑'):'待审核';
  updateProgress();
+ if(match&&confirmationRound(activeSource()))$('order-status').textContent=confirmationRound(activeSource())==='previous'?'上次审核确认 · 可撤销后编辑':'本次点击确认 · 可撤销后编辑';
 }
 const queueDrawDrag=drawDrag;drawDrag=function(){queueDrawDrag();updateQueueUI();};
 const queueChooseVariant=chooseVariant;chooseVariant=function(index,reset=false){queueChooseVariant(index,reset);updateQueueUI();};
@@ -40,6 +55,7 @@ $('queue-mode').onchange=applyQueueFilter;
 $('previous').onclick=()=>nextQueue(-1,true);$('next').onclick=()=>nextQueue(1,true);$('next-order').onclick=()=>nextQueue();
 for(const [id,status] of [['confirm-order','confirmed'],['pairing-problem','pairing']])$(id).onclick=()=>{if(geometry&&saveReview(status))heldReviewId=sourceId(activeSource());updateQueueUI();};
 const queueImport=$('import-orders').onchange;$('import-orders').onchange=async e=>{await queueImport(e);await applyQueueFilter();};
+$('download-orders').onclick=()=>{try{downloadQueueFile('角点顺序审核.json',JSON.stringify({schema:reviewSchema,examples_only:false,records:saved,previous_round_records:window.ORDER_REVIEW_SEED,reopened_history:JSON.parse(localStorage.getItem(storageKey+':reopened-history')||'[]')},null,2));}catch(e){$('save-state').textContent='导出失败：'+e.message;}};
 if(!queueValid){$('import-orders').disabled=true;$('download-orders').onclick=()=>downloadQueueFile('角点顺序审核_损坏记录备份.txt',localStorage.getItem(storageKey)||'','text/plain');}
 $('order-restore').textContent='恢复默认排列';
 $('order-legend').append(' 已确认结果直接沿用；人工修订GT未确认时默认按共享x升序，固定点对编号不变。');
