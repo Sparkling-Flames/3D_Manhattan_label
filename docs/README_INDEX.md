@@ -44,3 +44,5 @@
 - [旧结果 ZIP 归档](../analysis_results/legacy/research_cleanup_20260928/README.md)、[本次处理与验证](../analysis_results/repo_cleanup/research_cleanup_20260928/SUMMARY.md)。
 - [历史 v23 机器合同](thesis_main/PAPER_A_METHOD_CONTRACT_20260811_v23.json)保持原路径和原字节，旧程序仍读取它；旧 Calibration → T1/V1 不是当前默认主线。
 - [Git 历史归档与恢复](agent/REPOSITORY_ARCHIVE_20260927.md)、[9/27 工作区盘点快照](agent/WORKSPACE_NAVIGATION_20260927.md)。后者保留当日路径快照，不作为今天的目录地图。
+
+- [2026-09-28研究交接：清洗与角点重排](thesis_main/研究交接_清洗与角点重排_20260928.md)：当前进度、用户意图、必读输入及后续未开展方向。

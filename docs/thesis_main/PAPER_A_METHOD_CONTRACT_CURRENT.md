@@ -4,7 +4,7 @@
 来源：`PAPER_A_METHOD_CONTRACT_CURRENT.json`；合同版本：`consensus_research_20260923_v1`。
 状态：`current_research_protocol`；方法选择：`comparison_protocol_not_final_algorithm`。
 
-真实人员构成、进入顺序与区域共识接近GT；图片难度及同房预测继续研究
+分离图片与人员因素，研究多人区域共识与参考GT的偏差；当前清洗与角点重排，人员分类/真实组合/进入顺序、难度及同房预测为后续方向
 
 ## 研究问题
 
@@ -31,7 +31,7 @@
 - `cleaning.review_continuation_20260928`：明确后续说明与续审issue优先于旧表单pending；仅覆盖涉及对象。原件保留，机器全量台账3152份含133份历史未纳入，不自动恢复资格。改善建议不授权修复。
 - `cleaning.review_sop`：docs/thesis_main/两人审核归并与二次复核SOP_20260925.md
 - `cleaning.review_scope_20260925`：两份用户JSON为主；一正独审图和任一作者全部排除作答必须复核；补点请求、同图图片背景和相似标法处理差异保留来源。作者选项含义分开，不直接合并。
-- `cleaning.review_return_20260927`：二审JSON独立保存，图级场景可由同图未重填成员共享，但不覆盖个人问题；待定不等于漏审或排除。旧簇评论按当时默认affinity固定到worker、canonical作答ID、条件与点位版本，不随重分簇改指。
+- `cleaning.review_return_20260927`：二审JSON独立保存，图级场景可由同图未重填成员共享，但不覆盖个人问题；待定不等于漏审或排除。旧簇评论按用户更正的当时默认“直径约束全局亲近度”（affinity）固定到worker、canonical作答ID、条件与点位版本，不随重分簇改指。
 - `cleaning.retained_variation`：本轮仅用户明确确认排除者作清洗剔除，既有排除另保留来源；保留的执行误差、局部结构简化与大块空间取舍进入主研究，不预拆簇改善曲线。待定和待修复不自动排除。
 - `cleaning.confirmed_oos_point_rule`：仅已确认OOS的当前有效点少于8默认建议排除，用户确认后应用；跨8点的已修复版本先核验，未应用提案不计点数。门洞不自动套用此阈值。
 - `cleaning.difficult_scene_review`：确认OOS或难标门洞，偶数且可配对不只因场景难/范围不同而排除；奇数或疑似完全不能配对须核查修复。等价解、角色限制或顺序失败不等于完全无法配对。
@@ -53,6 +53,7 @@
 - `representation.horizontal_boundary`：periodic
 - `representation.failure`：同方位多边界、退化、非法曲线明确记录，不等同人员错误
 - `representation.postprocessing`：首轮不几何规整；后处理作为单独比较，不强制Manhattan
+- `representation.order_dependency`：逐列按x排序墙带可能忽略物理环序；确认排列作为独立层，邻接敏感表示/3D须显式消费并验证，不能声称只改数组即修复IoU/质心。
 - `references.original`：data/mp3d_layout/test/label_cor；data/mp3d_layout/valid/label_cor
 - `references.manual_revision`：export_label/groudTruth.json
 - `references.revision_comparison`：原始与人工修订版本分别报告；点集变化审计沿既有1px实质修订定义
@@ -82,6 +83,7 @@
 - `consensus.clustering`：全体与最大簇聚合的额外对照；不作为共识前提；保留全部簇支持
 - `consensus.outputs_distinct`：观察到的人员支持率；模型后验或优化软场(注明含义)；聚合区域；GT质量
 - `consensus.unavailable_method`：显式unavailable，不替换算法、不伪造结果
+- `consensus.research_tracks`：固定聚合的共识人数曲线允许稳定偏离GT；多空间候选提取另行研究。已观测整模式人数、候选兼容人数和局部融合证据分开；融合不必等于任何一份完整原作答。
 
 ## 真实人员组合与重放
 
@@ -99,6 +101,8 @@
 - `delivery.results`：analysis_results/consensus_research_20260923
 - `delivery.pro_role`：数值清查、指标比较、共识实验；不得替代视觉错误裁决
 - `delivery.final_review`：用户与本地助手复算并查看原图后确认清洗与方法
+- `delivery.execution_stage_20260928`：清洗收尾与人工角点重排；全量3152人员/287GT共享x源已生成，45图90候选已接入。人员分类、AABC等真实组合/进入顺序、难度及同房预测尚未在当前版本开展；历史探索不等于新研究完成。
+- `delivery.handoff`：docs/thesis_main/研究交接_清洗与角点重排_20260928.md
 
 ## 验收与历史边界
 
