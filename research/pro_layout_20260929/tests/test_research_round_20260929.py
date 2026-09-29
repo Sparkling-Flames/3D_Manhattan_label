@@ -79,7 +79,7 @@ def test_wrong_hemisphere_and_height_outlier_are_visible():
 
 def test_public_projection_keeps_reference_only_images_and_no_private_fields():
     import json
-    from tools.thesis_main.data_prep.project_public_research_20260929 import project
+    from tools.thesis_main.data_prep.project_public_research_20260929 import project, project_bundle, IMAGE_REVIEW_FIELDS, ANNOTATION_REVIEW_FIELDS
     im=dict(image_code='B-01',building_id='B',room_id='',annotations=1,population='research_annotation_image',
             oos_status='not_recorded',doorway_status='not_recorded',coverage='incomplete',comment='PRIVATE_CANARY')
     o=dict(object_id='PRIVATE_OBJECT',object_kind='annotation',image_code='B-01',worker_id='PRIVATE_WORKER',
@@ -98,3 +98,18 @@ def test_public_projection_keeps_reference_only_images_and_no_private_fields():
     assert mapping['workers']['PRIVATE_WORKER']=='P001'
     assert len(panel['images'])==2 and len(panel['images'][1]['references'])==1
     assert not panel['images'][0]['annotations'][0]['independent']
+    ri=dict(image_code='B-01',**{k:False for k in IMAGE_REVIEW_FIELDS})
+    ra=dict(object_id='PRIVATE_OBJECT',**{k:False for k in ANNOTATION_REVIEW_FIELDS})
+    ri['gt_detail_omission_mark']=True
+    bundle=dict(data=src,manifest={'schema':'research_analysis_bundle_v1'},validation={'status':'passed'},
+                research={'images':[ri],'annotations':[ra]},
+                comments={'summary':{'occurrences':3},'comments':[{'text_role':'recorded_text','text':'PRIVATE_CANARY'}]})
+    enriched,_=project_bundle(bundle)
+    assert enriched['images'][0]['review']['gt_detail_omission_mark'] is True
+    assert enriched['images'][0]['annotations'][0]['review']['detail_annotation'] is False
+    assert enriched['images'][1]['review'] is None
+    assert 'partial' in enriched['review_context']['mark_coverage']
+    assert 'PRIVATE_' not in json.dumps(enriched)
+    assert enriched['images'][0]['annotations'][0]['points']==panel['images'][0]['annotations'][0]['points']
+    bundle['research']['annotations']=[]
+    with pytest.raises(ValueError,match='public_context_population_mismatch'):project_bundle(bundle)

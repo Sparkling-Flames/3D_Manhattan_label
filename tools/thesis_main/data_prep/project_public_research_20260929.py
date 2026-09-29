@@ -6,6 +6,13 @@ from pathlib import Path
 
 from tools.thesis_main.analysis.research_round_20260929 import validate_panel, write_json
 
+IMAGE_REVIEW_FIELDS=('gt_substantive_error_mark','gt_detail_omission_mark','gt_uncertainty_explicit_tag',
+    'stable_nonorthogonal','scope_explicit_tag','scope_existing_ledger','scope_comment_candidate',
+    'detail_explicit_tag','detail_existing_ledger','detail_comment_candidate')
+ANNOTATION_REVIEW_FIELDS=('scope_annotation','detail_annotation','execution_tag','gt_substantive_error_mark',
+    'gt_detail_omission_mark','gt_uncertainty_explicit_tag','explicit_model_influence',
+    'trap_status','model_edit_status','model_outcome','order_change')
+
 
 def project(source):
     objects=source['objects']
@@ -48,10 +55,42 @@ def project(source):
     return panel,dict(workers=workers,records=ids)
 
 
+def project_bundle(bundle):
+    """Project a validated manifest bundle, including incomplete review evidence."""
+    if bundle['manifest']['schema']!='research_analysis_bundle_v1' or bundle['validation']['status']!='passed':
+        raise ValueError('validated_bundle_required')
+    panel,mapping=project(bundle['data']);research=bundle['research']
+    anns={r['object_id']:r for r in research['annotations']}
+    ims={r['image_code']:r for r in research['images']}
+    expected={o['object_id'] for o in bundle['data']['objects'] if o['object_kind']=='annotation'}
+    if set(anns)!=expected or len(anns)!=len(research['annotations']) or set(ims)!={i['code'] for i in panel['images'] if i['annotations']}:
+        raise ValueError('public_context_population_mismatch')
+    reverse={alias:oid for oid,alias in mapping['records'].items()}
+    for im in panel['images']:
+        im['review']={k:ims[im['code']][k] for k in IMAGE_REVIEW_FIELDS} if im['annotations'] else None
+        for r in im['annotations']:r['review']={k:anns[reverse[r['id']]][k] for k in ANNOTATION_REVIEW_FIELDS}
+    panel['source_manifest'].update(source_entry='analysis_results/research_input_20260929/manifest.json',
+                                    bundle_schema=bundle['manifest']['schema'],review_context_revision='20260930')
+    panel['review_context']=dict(
+        mark_coverage='partial review: false means no recorded mark, not verified absence; not prevalence or a negative training label',
+        priorities='clustering, consensus, reference-relative worker quality; GT detail omission discovery is tertiary',
+        gt_policy='consume existing substantive-error decisions and gates; no new GT adjudication',
+        difference_axes=['space_extent','detail_representation','localization_within_matched_structure'],
+        comment_summary=bundle['comments']['summary'],
+        unique_recorded_texts=len({c['text'] for c in bundle['comments']['comments'] if c['text_role']=='recorded_text'}),
+        privacy='Local full comments were reviewed; public package contains only allowlisted structured evidence, not original comments or internal identity',
+        interpretation='Scope/detail evidence can coexist; no automatic semantic classification from metrics, point count, keywords or missing marks')
+    return panel,mapping
+
+
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--input',type=Path,required=True);p.add_argument('--out',type=Path,required=True)
+    p.add_argument('--out',type=Path,required=True)
     p.add_argument('--private-map',type=Path,required=True)
-    a=p.parse_args();panel,mapping=project(json.loads(a.input.read_text(encoding='utf-8')))
+    a=p.parse_args()
+    # Local-only producer: standalone consumers read the published panel, not private sources.
+    from tools.thesis_main.data_prep.consolidate_research_input import load_current_bundle
+    panel,mapping=project_bundle(load_current_bundle())
     a.out.parent.mkdir(parents=True,exist_ok=True);a.private_map.parent.mkdir(parents=True,exist_ok=True)
-    write_json(a.out,panel);write_json(a.private_map,mapping)
+    a.out.write_bytes((json.dumps(panel,ensure_ascii=False,indent=2,allow_nan=False)+'\n').encode('utf-8'))
+    write_json(a.private_map,mapping)

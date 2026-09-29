@@ -31,5 +31,21 @@
     "worker-image variance decomposition",
     "semantic correctness review"
   ],
-  "boundaries": "Numerical baseline only; does not change raw data, GT, order, eligibility or formal protocol"
+  "boundaries": "Numerical baseline only; does not change raw data, GT, order, eligibility or formal protocol",
+  "context_revision": {
+    "date": "2026-09-30",
+    "source_entry": "analysis_results/research_input_20260929/manifest.json",
+    "source_bundle_tests_passed": 9,
+    "public_tests_passed": 7,
+    "numerical_projection_unchanged": true,
+    "baseline_rerun": false,
+    "change": "Manifest-based projection plus partial review evidence and corrected research priorities; no new clustering, consensus or GT-omission experiment",
+    "reviewed": {
+      "additional_tables": 27,
+      "comment_groups": 3121,
+      "historical_occurrences": 32462,
+      "unique_recorded_texts": 856
+    },
+    "gt_detail_marks": "20 partially reviewed image marks; unmarked images are not negative labels; discovery remains tertiary"
+  }
 }

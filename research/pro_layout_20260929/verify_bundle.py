@@ -11,6 +11,10 @@ counts=Counter(r['version'] for i in panel['images'] for r in i['references'])
 summary,_,_=coverage(panel)
 assert summary['annotations']==3152 and summary['images']==259 and summary['reference_only_images']==2
 assert counts=={'original':259,'manual_revision':30}
+assert panel['source_manifest']['source_entry'].endswith('/manifest.json')
+assert panel['source_manifest']['review_context_revision']=='20260930'
+assert 'partial' in panel['review_context']['mark_coverage']
+assert sum(bool(i['review'] and i['review']['gt_detail_omission_mark']) for i in panel['images'])==20
 for i in panel['images']:
     for r in i['annotations']:
         assert r['worker'].startswith('P') and r['id'].startswith('R')
