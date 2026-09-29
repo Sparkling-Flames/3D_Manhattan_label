@@ -14,6 +14,7 @@
 | 排序工作台与初筛 | `analysis_results/order_studio_20260926/`；`order_candidates_20260928/` |
 | 双人排序接收与同房扩展复核 | `analysis_results/order_same_room_review_20260928/`，114图独立复审层 |
 | 共识研究包 | `analysis_results/consensus_research_20260923/` |
+| 9/29 全量数值探索与 Pro 交接 | `research/pro_layout_20260929/`；本地结果 `analysis_results/research_round_20260929/`；工具 `tools/thesis_main/analysis/research_round_20260929.py` |
 | 新 Pro 研究与独立审查 | `research/pro_layout_20260927/`；`analysis_results/pro_return_audit_20260928/` |
 
 完整可点击入口见 [文档索引](README_INDEX.md)，历史材料集中见 [文档归档](legacy/paper_a_before_consensus_20260928/README.md) 和 [结果归档](../analysis_results/legacy/research_cleanup_20260928/README.md)。

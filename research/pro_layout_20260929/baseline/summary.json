@@ -1,0 +1,71 @@
+{
+  "annotations": 3152,
+  "images": 259,
+  "reference_only_images": 2,
+  "workers": 27,
+  "buildings": 22,
+  "cleaning": {
+    "retained": 2923,
+    "excluded_by_review": 85,
+    "historical_not_accepted": 133,
+    "retained_pending": 11
+  },
+  "conditions": {
+    "manual": 2344,
+    "oos": 234,
+    "semi": 574
+  },
+  "independent_consensus": 2909,
+  "quality_candidates": 2030,
+  "schema": "research_round_baseline_v1",
+  "raster": [
+    512,
+    256
+  ],
+  "replay_seeds": 100,
+  "quality_rows": 10455,
+  "endpoint_rows": 3684,
+  "replay_rows": 10365,
+  "quality_status": {
+    "explicit_visible:ok": 3439,
+    "legacy_x_envelope:ok": 3404,
+    "bev_and_prism_proxy:ok": 3472,
+    "explicit_visible:unavailable": 46,
+    "legacy_x_envelope:unavailable": 81,
+    "bev_and_prism_proxy:unavailable": 13
+  },
+  "endpoint_status": {
+    "ok": 3060,
+    "unavailable": 624
+  },
+  "failures": {
+    "explicit_visible:camera_not_strictly_inside": 31,
+    "legacy_x_envelope:longitude_span_at_least_half_circle": 31,
+    "legacy_x_envelope:duplicate_longitude_envelope_unresolved": 4,
+    "explicit_visible:pairing_unavailable": 5,
+    "legacy_x_envelope:pairing_unavailable": 5,
+    "explicit_visible:wrong_hemisphere": 7,
+    "legacy_x_envelope:curve_requires_ceiling_above_and_floor_below_horizon": 7,
+    "explicit_visible:coordinates outside declared image bounds": 1,
+    "legacy_x_envelope:vertical_coordinates_outside_image": 1
+  },
+  "interpretation": "GT-relative diagnostics; not worker ability, semantic correctness, difficulty labels or an identified noise decomposition",
+  "coordinate_conventions": {
+    "explicit_visible": "continuous x/W as reviewed viewer; raster rays at cell centres",
+    "legacy_x_envelope": "historical +0.5 pixel-centre convention and x sorting"
+  },
+  "source_manifest": {
+    "source_entry": "analysis_results/research_input_20260929/preprocessed_source.json",
+    "source_schema": "final_review_research_input_v1",
+    "contract_version": "consensus_research_20260923_v1",
+    "coordinate_frame": "1024x512",
+    "preprocessing": "shared_x_periodic_shortest_arc_v1",
+    "object_counts": {
+      "annotation": 3152,
+      "gt_original": 259,
+      "gt_manual_revision": 30
+    },
+    "consensus_inclusion": "Upstream main_candidate, oos_doorway_exploratory and stable_nonorthogonal_separate; report separately",
+    "privacy": "New participant and record aliases; no raw IDs, comments, photographs, task URLs or private mappings"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "date": "2026-09-29",
+  "status": "local_exploratory_baseline_executed",
+  "environment": {
+    "numpy": "1.26.4",
+    "scipy": "1.11.4",
+    "shapely": "2.0.4",
+    "pytest": "9.1.1",
+    "pandas": "2.3.1",
+    "matplotlib": "3.8.0"
+  },
+  "python": "3.11.7",
+  "tests": {
+    "command": "python -B -m pytest -q -p no:cacheprovider tests",
+    "passed": 7
+  },
+  "standalone_input_verification": true,
+  "final_integrated_projection_matches_used_input": true,
+  "baseline": {
+    "width": 512,
+    "height": 256,
+    "permutation_seeds": 100,
+    "seed_start": 290929,
+    "summary": "baseline/summary.json"
+  },
+  "not_executed": [
+    "STAPLE: SimpleITK unavailable",
+    "point or pair fusion",
+    "local path voting",
+    "free deletion search",
+    "worker-image variance decomposition",
+    "semantic correctness review"
+  ],
+  "boundaries": "Numerical baseline only; does not change raw data, GT, order, eligibility or formal protocol"
+}

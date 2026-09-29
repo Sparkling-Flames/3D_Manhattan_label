@@ -24,6 +24,8 @@
 
 ## 当前研究与探索
 
+- [9/29 全量数值基线与 Pro 交接](../research/pro_layout_20260929/README.md)、[本轮研究任务书](../research/pro_layout_20260929/PROMPT.md)：探索性快照，人员质量与多模式算法尚待验证。
+
 - [共识研究交付](../analysis_results/consensus_research_20260923/README.md)、[Pro 研究任务书](thesis_main/PRO_CONSENSUS_RESEARCH_TASK_20260923.md)。
 - [连线、质量、GT 与减法任务书](thesis_main/PRO_CLOUD_LAYOUT_GEOMETRY_QUALITY_TASK_20260927.md)、[返回包独立审查](../analysis_results/pro_return_audit_20260928/README.md)。
 - [共识讨论纪要](thesis_main/PANORAMA_CONSENSUS_RESEARCH_DISCUSSION_20260927.md)、[多标法研究任务书](thesis_main/PRO_MULTIMODAL_LAYOUT_RESEARCH_20260926.md)、[质心文献提示词](thesis_main/PRO_CENTROID_LITERATURE_PROMPT_20260923.md)。
