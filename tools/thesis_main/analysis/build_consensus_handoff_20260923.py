@@ -264,7 +264,7 @@ def bundle(out):
                  'analysis_results/cluster_screen_reviewed_20260922/逐项接收.json',
                  'docs/thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md','docs/thesis_main/ROUND_BASED_ASSIGNMENT_SOP_v1.md',
                  'docs/thesis_main/相似场景标注稳定性分析SOP.md','docs/thesis_main/图片分类与同房间收敛预测研究SOP.md',
-                 'docs/thesis_main/PRO_CONSENSUS_RESEARCH_TASK_20260923.md']:
+                 'docs/thesis_main/研究方向_空间差异与共识_20260930.md']:
         files[ROOT/path]='source/'+path
     files[Path(__file__) ]='code/run_numeric.py'
     files[Path(region.__file__) ]='code/consensus_region_20260923.py'

@@ -1,7 +1,7 @@
 # HOHONET 文档入口
 
 <!-- CURRENT_RESEARCH: consensus_research_20260923_v1 -->
-当前研究规范为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`，版本 `consensus_research_20260923_v1`。当前方向：全量清查 → 区域质量与人员/图片差异 → 共识比较 → 人员组合及进入顺序 → 难度与同房预测。探索性结果不代替正式方法选择或既有裁决。
+当前研究规范为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`，版本 `consensus_research_20260923_v1`。当前方向：连线与表示 → 空间差异等指标 → 分簇/工人融合/合理候选 → 人员与难度 → 人数、组合及同房检验。探索性结果不代替正式方法选择或既有裁决。
 
 ## 规范与执行
 
@@ -14,6 +14,11 @@
 
 ## 当前复核、预处理与排序
 
+- [最终审核数据接入及读取示例](thesis_main/最终审核数据接入_20260929.md)。
+- **后续分析统一入口：[合包 manifest](../analysis_results/research_input_20260929/manifest.json)**，预处理、全部最终统计、研究解释与评论同目录；下列历史生成目录用于追溯。
+- [研究解释与交叉机器表](../analysis_results/review_research_tables_20260929/field_contract.json)：供AI读取，含六项证据、原话、交叉分母及解释限制。
+- [合规、排序与配对评论独立机器表](../analysis_results/review_comments_20260929/README.md)：保留原文及每次出现的来源，含聊天澄清和冻结簇关联。
+
 - [全量复核台账](../analysis_results/review_final_20260928/README.md)。
 - [未决续审](../analysis_results/review_continue_20260928/index.html)、[图片覆盖补审](../analysis_results/review_coverage_followup_20260928/index.html)。
 - [修复交付与完成度](../analysis_results/review_closeout_20260928/README.md)。
@@ -24,11 +29,12 @@
 
 ## 当前研究与探索
 
-- [9/29 全量数值基线与 Pro 交接](../research/pro_layout_20260929/README.md)、[本轮研究任务书](../research/pro_layout_20260929/PROMPT.md)：探索性快照，人员质量与多模式算法尚待验证。
+- [当前研究方向：空间差异、分簇、共识与人员差异](thesis_main/研究方向_空间差异与共识_20260930.md)：方向确定，算法、权重与阈值待验证；替代旧任务书的冲突要求。
 
-- [共识研究交付](../analysis_results/consensus_research_20260923/README.md)、[Pro 研究任务书](thesis_main/PRO_CONSENSUS_RESEARCH_TASK_20260923.md)。
-- [连线、质量、GT 与减法任务书](thesis_main/PRO_CLOUD_LAYOUT_GEOMETRY_QUALITY_TASK_20260927.md)、[返回包独立审查](../analysis_results/pro_return_audit_20260928/README.md)。
-- [共识讨论纪要](thesis_main/PANORAMA_CONSENSUS_RESEARCH_DISCUSSION_20260927.md)、[多标法研究任务书](thesis_main/PRO_MULTIMODAL_LAYOUT_RESEARCH_20260926.md)、[质心文献提示词](thesis_main/PRO_CENTROID_LITERATURE_PROMPT_20260923.md)。
+- [全量数值研究包](../research/pro_layout_20260929/README.md)：最新公开输入、源码和历史基线。提示词由对话提供，当前只先核验连线、表示与IoU。
+
+- [历史共识研究交付](../analysis_results/consensus_research_20260923/README.md)、[返回包独立审查](../analysis_results/pro_return_audit_20260928/README.md)。
+- [历史共识讨论纪要](thesis_main/PANORAMA_CONSENSUS_RESEARCH_DISCUSSION_20260927.md)。当前提示词已移除，历史任务书和执行记录不作为当前任务。
 - [算法与数学初探](../analysis_results/layout_algorithm_exploration_20260926/README.md)、[结构共识](../analysis_results/structural_consensus_20260926/README.md)、[并集分支共识](../analysis_results/union_branch_consensus_20260926/README.md)。均为探索，不声明算法已验证。
 - [共享 x 历史对照](../analysis_results/shared_x_reanalysis_20260922/README.md)、[研究展示](../analysis_results/research_dashboard_20260922/index.html)、[展示接口](thesis_main/OFFLINE_RESEARCH_DASHBOARD.md)。
 - [导师讲稿](thesis_main/导师汇报简明讲稿_20260922.md)、[问答与边界](thesis_main/导师汇报讲解与问答_20260922.md)：解释 9/22 历史结果。
@@ -48,6 +54,14 @@
 - [历史 v23 机器合同](thesis_main/PAPER_A_METHOD_CONTRACT_20260811_v23.json)保持原路径和原字节，旧程序仍读取它；旧 Calibration → T1/V1 不是当前默认主线。
 - [Git 历史归档与恢复](agent/REPOSITORY_ARCHIVE_20260927.md)、[9/27 工作区盘点快照](agent/WORKSPACE_NAVIGATION_20260927.md)。后者保留当日路径快照，不作为今天的目录地图。
 
-- [原始GT主筛顺序复核](../analysis_results/order_gt_screened_20260928/index.html)：当前入口，1098份待审、63份确认沿用；[清单与保存说明](../analysis_results/order_gt_screened_20260928/README.md)。
-- [原始GT主筛顺序复核](../analysis_results/order_gt_screened_20260928/index.html)：当前入口，1098份待审、63份确认沿用；[清单与保存说明](../analysis_results/order_gt_screened_20260928/README.md)。
+- [原始GT主筛顺序复核](../analysis_results/order_gt_screened_20260928/index.html)：本轮已接收1160份确认，1份配对问题；历史队列保留。
+- [本轮审核接收与改序规律补查](../analysis_results/order_pattern_recall_20260929/README.md)：77份候选、24图；接收与研究工具位于tools/thesis_main/analysis/receive_order_results_20260929.py及order_pattern_recall_20260929.py。
+- [新一轮77份顺序补查入口](../analysis_results/order_followup_20260929/index.html)：仅待审候选；[同房汇集与Matterport格式说明](../analysis_results/order_pattern_recall_20260929/同房数据整理说明.md)。
+- [77份已接收及模型评语汇总](../analysis_results/order_model_same_image_20260929/README.md)：6份改序、71份不变；用户comment明确模型影响4份，坐标未改100份；[当前35份同图续审](../analysis_results/order_same_image_followup_20260929/index.html)。
+- [全批次排序完成性审计](../analysis_results/order_completion_audit_20260929/README.md)：35份已接收；既定顺序队列缺漏0、剩余0，1272份确认；下一阶段33份配对＋1份表示核查。
+- [当前34份配对入口](../analysis_results/pairing_review_20260929/index.html)：只配上下点，暂不排序；[操作与保存说明](../analysis_results/pairing_review_20260929/README.md)。
+- [全量x配对来源审计](../analysis_results/x_pairing_audit_20260929/README.md)：3152份原始核对；2986份旧完整配对与x候选一致；uNb36旧地平线角色限制及本轮未自动补配缺口，34份返回独立保留。
 - [2026-09-28研究交接：清洗与角点重排](thesis_main/研究交接_清洗与角点重排_20260928.md)：当前进度、用户意图、必读输入及后续未开展方向。
+- [当前15份补齐配对复核](../analysis_results/pairing_completion_review_20260929/index.html)：6份角色限制、6份x补齐、3份删点预览；完整配对独立确认，暂不排序。生成器build_pairing_completion_review_20260929.py复用配对界面。
+- [当前配对后排序：23份、18图](../analysis_results/order_after_pairing_20260929/index.html)：apply_pairing_preprocessing_20260929.py接收15份，原导出坐标直接共享x；[新预处理基线及去向](../analysis_results/pairing_applied_20260929/README.md)，1272份历史连接环沿用。
+- [最终审核统计与同房分类](../analysis_results/final_review_summary_20260929/index.html)：final_review_summary_20260929.py；1295份确认、3152份闭合台账、同房原260组与候选259组、OOS/门洞、空间/细节评语分层收集及Matterport数据包。

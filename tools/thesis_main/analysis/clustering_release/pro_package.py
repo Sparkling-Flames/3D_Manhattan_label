@@ -20,7 +20,6 @@ def main():
     for p in (BASE/'visual_review').glob('*.json'):
         files[p]='visual_review/'+p.name
     files[BASE/'README.md']='README.md'
-    files[BASE/'PRO_TASK.md']='PRO_TASK.md'
     # Historical hypotheses/results, not freshly validated classifications.
     for folder in ['worker_four_block_exploration_20260910_v1','worker_rule_triad_20260910_v1','worker_coarse_validation_20260910_v1']:
         for p in (REPO/'analysis_results'/folder).rglob('*'):

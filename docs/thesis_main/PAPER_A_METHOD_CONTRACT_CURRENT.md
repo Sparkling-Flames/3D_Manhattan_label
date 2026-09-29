@@ -4,7 +4,7 @@
 来源：`PAPER_A_METHOD_CONTRACT_CURRENT.json`；合同版本：`consensus_research_20260923_v1`。
 状态：`current_research_protocol`；方法选择：`comparison_protocol_not_final_algorithm`。
 
-分离图片与人员因素，研究多人区域共识与参考GT的偏差；当前清洗与角点重排，人员分类/真实组合/进入顺序、难度及同房预测为后续方向
+先验证连线与空间表示，再研究空间差异、点位/细节分簇、工人融合共识与几何合理候选；随后检验人员质量/分类、图片难度及人数/组合/同房规律。方向已确定，算法和权重待验证。
 
 ## 研究问题
 
@@ -26,8 +26,15 @@
 - `data.borrowed_points`：保留来源和描述用途，独立组合/预测不计为独立票
 - `data.unbound`：保留，列为待审/不可评价，不猜配对或补点
 - `data.raw_mutation`：False
-- `data.preprocessed_source`：analysis_results/shared_x_baseline_20260928/preprocessed_source.json
-- `data.preprocessed_source_scope`：全量3152份人员标注及287份去重GT来源；后续分簇、质量、共识及排序共用。当前有效点完整配对后周期共享x，y不变；无可用配对者preprocessed_points=null，不回退到未平均点；分析资格与预处理状态分开。历史结果不追改。
+- `data.preprocessed_source`：analysis_results/research_input_20260929/preprocessed_source.json
+- `data.preprocessed_source_scope`：最终审核接入：3152份人员/259研究图、259份原始GT及30份人工GT（其中2份为研究图外参考）。原导出点经已确认删补及最终配对后共享周期平均x，y不变；1295份确认环独立保存，默认未审不冒充确认。不可配对为null，不回退原点。2923保留、11保留待定、85排除、133历史未纳入；历史结果不追改。
+- `data.analysis_input_schema`：final_review_research_input_v1
+- `data.analysis_bundle`：analysis_results/research_input_20260929/manifest.json
+- `data.analysis_bundle_loader`：tools.thesis_main.data_prep.consolidate_research_input.load_current_bundle
+- `data.analysis_bundle_rule`：后续分析统一从manifest读取同目录的预处理输入、研究解释、评论及最终统计；preprocessed_source是包内坐标及最终状态视图。来源目录只用于追溯，不混读不同批次。
+- `data.current_input_loader`：tools.thesis_main.data_prep.materialize_current_research_input.load_current_input
+- `data.accepted_snapshot_role`：3019及2481为清洗前历史输入计数，不是当前分析分母。当前数量读取接入summary并按方法报告资格/失败。
+- `data.final_input_eligibility`：main_quality_gate、main_consensus_gate承接现有裁决；candidate不是最终可评价。独立票候选另检查清洗、借用点和真人去重；每方法可计算性另核验。近180度中间点不自动删除，可能表达停止区域。
 - `cleaning.review_continuation_20260928`：明确后续说明与续审issue优先于旧表单pending；仅覆盖涉及对象。原件保留，机器全量台账3152份含133份历史未纳入，不自动恢复资格。改善建议不授权修复。
 - `cleaning.review_sop`：docs/thesis_main/两人审核归并与二次复核SOP_20260925.md
 - `cleaning.review_scope_20260925`：两份用户JSON为主；一正独审图和任一作者全部排除作答必须复核；补点请求、同图图片背景和相似标法处理差异保留来源。作者选项含义分开，不直接合并。
@@ -41,12 +48,12 @@
 - `cleaning.order_review_correction_20260929`：上次审核确认与本次新增/更新确认分开显示和计数。已确认默认锁定，用户可逐对象撤销后编辑，保留排列与撤销前记录；原始GT始终只读。确认只保存、不自动前进。原审核快照独立保留，不能按未拖动点对推断误确认，不批量清空已复核记录。此补充取代旧描述中已确认永久只读的操作限制，不改变清洗与分析资格。
 - `cleaning.exclusion`：按明确人工证据裁决；不由单人簇、低IoU、模型失败、未知GT或未决意见自动排除
 - `cleaning.outputs`：纳入前后口径；逐人无效作答数量与比例；历史裁决及有效点版本；完整排序及缺失参考状态
-- `cleaning.order_review_20260928`：当前入口analysis_results/order_gt_screened_20260928/index.html：扫描259图3152人员标注，以原始GT完整点对连接环筛选，忽略循环起点和反向，局部x回退及不同点对同x入候选，另保留明确人员顺序问题。排除/历史未纳入、配对不可用或已报告配对问题不进入顺序队列；B6ByNegPMKs-40、X7HyMhZNoso-05不重复召回。原始GT只读对照，审核任务0。人工GT以1px点集差异确认30份实质修改：6确认沿用、24待审，另1份仅次序不同仅审计。待审1074人员及24人工GT；已有57人员及6人工GT确认直接沿用、只读。共享x坐标展示，固定点对ID不变；人工GT未确认时默认共享x升序，默认排列不参与源绑定。v3审核记录独立保存，确认结果另导出Matterport式上/下交替、首尾闭环的连接数组及来源索引；不覆盖原数据、不改变清洗或分析资格。保留旧45图及114图页面和记录；新导航仅遍历待审，新增配对问题立即移出。标签按实际显隐重排、避让并保留引线。
+- `cleaning.order_review_20260928`：历史初筛快照：当时入口analysis_results/order_gt_screened_20260928/index.html：扫描259图3152人员标注，以原始GT完整点对连接环筛选，忽略循环起点和反向，局部x回退及不同点对同x入候选，另保留明确人员顺序问题。排除/历史未纳入、配对不可用或已报告配对问题不进入顺序队列；B6ByNegPMKs-40、X7HyMhZNoso-05不重复召回。原始GT只读对照，审核任务0。人工GT以1px点集差异确认30份实质修改：6确认沿用、24待审，另1份仅次序不同仅审计。待审1074人员及24人工GT；已有57人员及6人工GT确认直接沿用、只读。共享x坐标展示，固定点对ID不变；人工GT未确认时默认共享x升序，默认排列不参与源绑定。v3审核记录独立保存，确认结果另导出Matterport式上/下交替、首尾闭环的连接数组及来源索引；不覆盖原数据、不改变清洗或分析资格。保留旧45图及114图页面和记录；新导航仅遍历待审，新增配对问题立即移出。标签按实际显隐重排、避让并保留引线。
 - `cleaning.review_coverage_20260928`：24张覆盖补审仅更新图片维度；原件及wc-61只勾选scope的用户更正分别留存。最新明确分类优先，同房仅比较不自动传播。pRb-16按原话暂缓全部分析，不作人员无效。排除统计区分明确个人排除、历史未纳入与图片分析资格限制；GT下拉别名不替代实际参考来源。
 
 ## 区域、参考与人员质量
 
-- `representation.primary_candidate`：ERP二维顶底曲线所夹墙带；空间直线的全景投影
+- `representation.primary_candidate`：先核验中心投影曲线、确认邻接、周期接缝及遮挡；ERP可见墙带、BEV完整足迹和有效封闭体积分别定义，不预定ERP为全部空间研究主表示
 - `representation.sensitivity`：周期二维直线墙带
 - `representation.coordinate_frame`：1024x512像素中心坐标；改变栅格用(x+0.5)*scale-0.5
 - `representation.pilot_raster`：512；256
@@ -65,11 +72,11 @@
 - `quality.review_use_separation`：清洗裁决、场景适用性、参考状态、范围政策和几何可计算性分开。明确暂不进主分析同时限制主共识面板与人员主质量；明确仅内侧空间须披露事后人工范围政策，不自动恢复GT质量，也不由簇号批量改判。
 - `quality.manual_scene_exclusions`：确认OOS与确认难标门洞不纳入人员主质量分析；可标门洞单列核对GT/范围后决定恢复，历史疑似分类不自动等于确认。保留场景分歧、可用表示上的分簇/共识探索。
 - `quality.scene_subtypes`：OOS区分非正交但稳定可标、结构/高度等约束不适用、拍摄/遮挡导致边界难定，允许共存且门洞另记；非正交稳定组共识单列，人员主质量暂不纳入。保留不等于分析资格，难度缺失记未记录。
-- `quality.primary`：GT区域IoU
-- `quality.centroid`：面积质心；ERP坐标均值与圆周质心/R分别报告，低R角度不得直接作位移权重
+- `quality.primary`：GT-IoU保留为指定参考一致性基线，不直接等于人员质量；空间差异优先比较BEV IoU、BEV面积质心位移及墙面/边界差异，体积有效时增加3D IoU，ERP IoU作投影对照
+- `quality.centroid`：区域面积质心而非角点均值；实际空间位移优先研究BEV质心。ERP受接缝影响，圆周方向低R不稳定，作为辅助报告适用性
 - `quality.centroid_role`：整体位置诊断，不能代替局部结构，也不先验保证改善IoU
-- `quality.worker_adjustment`：同图比较及人员/图片效应；按建筑留出检验，不从单图STAPLE参数推出跨图人员能力
-- `quality.combination_weights`：待数值和视觉审查；IoU-only与IoU+centroid分开比较
+- `quality.worker_adjustment`：同图比较及人员/图片效应；按建筑留出检验，不从单图STAPLE参数推出跨图人员能力。质量、active time、规则、Semi及审核排除率分别研究；报告作答/审核分母、原因与场景，历史未纳入不等于人员错误，交互与随机波动不声称完全分离
+- `quality.combination_weights`：不预设空间或人员质量总分；参考差距、条件定位误差、未对应部分及几何自洽性分开，依受控案例与留出证据决定是否组合，不先验给质心正权重
 - `quality.failure_denominator`：按方法保留失败行/覆盖；共同可评价集比较及全范围失败率并报
 
 ## 共识构造与算法比较
@@ -81,10 +88,10 @@
 - `consensus.extended_methods`：MACCHIatO-Jaccard(源码及周期适配待核)；MAP-STAPLE(实现和先验待核)
 - `consensus.calibrated_methods`：GT-IoU人员加权；GT-IoU+质心人员加权；外建筑GT性能先验
 - `consensus.information_sets`：当前k份标注独立一组；外建筑校准另组；目标GT仅评价，oracle单列
-- `consensus.clustering`：全体与最大簇聚合的额外对照；不作为共识前提；保留全部簇支持
+- `consensus.clustering`：独立研究点位、细节与邻接相似模式，簇不直接等于合理空间类型；全体/最大簇聚合仅作额外对照，不作为共识前提，保留全部簇支持
 - `consensus.outputs_distinct`：观察到的人员支持率；模型后验或优化软场(注明含义)；聚合区域；GT质量
 - `consensus.unavailable_method`：显式unavailable，不替换算法、不伪造结果
-- `consensus.research_tracks`：固定聚合的共识人数曲线允许稳定偏离GT；多空间候选提取另行研究。已观测整模式人数、候选兼容人数和局部融合证据分开；融合不必等于任何一份完整原作答。
+- `consensus.research_tracks`：工人融合共识允许稳定偏离GT；减法及局部重组独立用于几何合理空间候选生成，以适用几何约束和观测保留为核心，人数另报。已观测整模式人数、候选兼容人数和局部融合证据分开，融合不必等于完整原作答。原始融合与恢复合法layout后的输出分开。
 
 ## 真实人员组合与重放
 
@@ -98,12 +105,13 @@
 
 ## 交付与复核
 
-- `delivery.pro_task`：docs/thesis_main/PRO_CONSENSUS_RESEARCH_TASK_20260923.md
+- `delivery.pro_task`：本轮提示词由对话提供；研究目的见docs/thesis_main/研究方向_空间差异与共识_20260930.md，先核验连线、空间表示与IoU
 - `delivery.results`：analysis_results/consensus_research_20260923
-- `delivery.pro_role`：数值清查、指标比较、共识实验；不得替代视觉错误裁决
+- `delivery.pro_role`：先完成连线与表示核验，再依研究方向分阶段比较指标和算法；无原图不得替代视觉裁决，不按旧任务书同时全量推进全部路线
 - `delivery.final_review`：用户与本地助手复算并查看原图后确认清洗与方法
-- `delivery.execution_stage_20260928`：清洗收尾与人工角点重排；全量3152人员/287GT共享x源已生成，当前原始GT主筛队列1098份待审、63份确认沿用。队列层补充人工修订GT不扩展正式研究样本。人员分类、AABC等真实组合/进入顺序、难度及同房预测尚未在当前版本开展；历史探索不等于新研究完成。
-- `delivery.handoff`：docs/thesis_main/研究交接_清洗与角点重排_20260928.md
+- `delivery.execution_stage_20260928`：历史阶段描述：清洗收尾与人工角点重排；全量3152人员/287GT共享x源已生成，当前原始GT主筛队列1098份待审、63份确认沿用。队列层补充人工修订GT不扩展正式研究样本。人员分类、AABC等真实组合/进入顺序、难度及同房预测尚未在当前版本开展；历史探索不等于新研究完成。
+- `delivery.handoff`：docs/thesis_main/研究方向_空间差异与共识_20260930.md
+- `delivery.final_input_20260929`：当前数据已接入：analysis_results/research_input_20260929/preprocessed_source.json；1295确认环、3152人员、259原始GT、30人工GT。说明docs/thesis_main/最终审核数据接入_20260929.md。仅接入，不宣称新质量或共识实验完成。
 
 ## 验收与历史边界
 

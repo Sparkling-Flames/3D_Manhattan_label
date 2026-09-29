@@ -31,7 +31,6 @@ def build(folder):
         files['tools/thesis_main/analysis/paired_split_research/'+name]=REPO/'tools/thesis_main/analysis/paired_split_research'/name
     for name in ('README.md','LOCAL_REVIEW.md','RC2_COMPARISON.json'):
         files[name]=folder/name
-    files['PRO_TASK.md']=REPO/'docs/legacy/paper_a_before_consensus_20260928/historical_discussion/Pro新对话_局部点位分簇与影响核查_20260920.md'
     files['MENTOR_AND_USER_CONTEXT.md']=REPO/'analysis_results/pro_next_round_20260920/来源核对与最新要求.md'
     files['tests/test_local_point_comparison.py']=REPO/'tests/test_local_point_comparison.py'
     files['tests/test_clustering_release_review.py']=REPO/'tests/test_clustering_release_review.py'

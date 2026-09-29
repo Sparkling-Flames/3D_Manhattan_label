@@ -73,7 +73,7 @@ def project_bundle(bundle):
                                     bundle_schema=bundle['manifest']['schema'],review_context_revision='20260930')
     panel['review_context']=dict(
         mark_coverage='partial review: false means no recorded mark, not verified absence; not prevalence or a negative training label',
-        priorities='clustering, consensus, reference-relative worker quality; GT detail omission discovery is tertiary',
+        priorities='connection and representation first; then spatial metrics, point/detail clustering, worker fusion and geometrically plausible candidates; worker profiles and difficulty later; GT detail omission discovery is tertiary',
         gt_policy='consume existing substantive-error decisions and gates; no new GT adjudication',
         difference_axes=['space_extent','detail_representation','localization_within_matched_structure'],
         comment_summary=bundle['comments']['summary'],

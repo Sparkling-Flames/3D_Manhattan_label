@@ -2,11 +2,11 @@
 
 日期：2026-09-27。状态：探索性交接，非正式分析发布。
 
-先读 `docs/thesis_main/PRO_CLOUD_LAYOUT_GEOMETRY_QUALITY_TASK_20260927.md`，再读同目录讨论纪要。最新任务书优先于历史讨论，包括启发式／退火搜索减法及两对／三对点的局部整体投票。当前交付是展开的分支目录，不需要下载ZIP。
+本目录仅作历史实验记录，旧提示词已删除；当前使用 research/pro_layout_20260929/ 完整公开输入，任务由对话提供。
 
 当前目录：https://github.com/Sparkling-Flames/3D_Manhattan_label/tree/main/research/pro_layout_20260927
 
-[直接阅读完整提示词](docs/thesis_main/PRO_CLOUD_LAYOUT_GEOMETRY_QUALITY_TASK_20260927.md)。旧Release仅作为历史快照保留。
+直接阅读完整提示词（旧提示词已删除，历史版本可从Git恢复）。旧Release仅作为历史快照保留。
 
 ## 内容及边界
 

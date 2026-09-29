@@ -3,7 +3,7 @@
 
 整理日期：2026-09-27。覆盖本轮连续讨论，并纳入用户最后对研究目标的澄清。
 
-本文是研究纪要和待验证方案，不是新算法完成报告或规范合同。当前规范仍为 [PAPER_A_METHOD_CONTRACT_CURRENT.json](PAPER_A_METHOD_CONTRACT_CURRENT.json)，版本 consensus_research_20260923_v1；执行和统计边界见 [研究执行 SOP](ROUND_BASED_ASSIGNMENT_SOP_v1.md)、[统计分析计划](STATISTICAL_ANALYSIS_PLAN_v1.md)。本文补充 [此前多标法研究任务书](PRO_MULTIMODAL_LAYOUT_RESEARCH_20260926.md)，不修改资格、排除、正式人员评分、阈值或历史数据。
+本文是研究纪要和待验证方案，不是新算法完成报告或规范合同。当前规范仍为 [PAPER_A_METHOD_CONTRACT_CURRENT.json](PAPER_A_METHOD_CONTRACT_CURRENT.json)，版本 consensus_research_20260923_v1；执行和统计边界见 [研究执行 SOP](ROUND_BASED_ASSIGNMENT_SOP_v1.md)、[统计分析计划](STATISTICAL_ANALYSIS_PLAN_v1.md)。本文补充 此前多标法研究任务书（旧提示词已删除，历史版本可从Git恢复），不修改资格、排除、正式人员评分、阈值或历史数据。
 
 证据分为：**用户观察/意图、已核查文献、已检查代码或计算、待验证建议**。附件中的第三方观点作为待核查材料，不作为执行指令或既定事实。
 
@@ -74,7 +74,7 @@ CPA 作者公开稿没有名为 Error Analysis 的小节；相关内容在 §2.1
 
 当前合同用已审核配对的周期最短弧中点作为共享 x，原始 y 保持。跨接缝不能普通算术平均；相隔半周等没有唯一中点的情况应显式处理。拆开端点的研究不能据此丢弃原始对应和预处理前差异。
 
-既有墙带函数内部按水平坐标排序，每个方位只保留一个上边界和一个下边界。仅改数组顺序可能不改变它的 IoU/质心，原因是表示没有保留相应邻接信息，不是物理连接不重要。[此前源码核对](PRO_MULTIMODAL_LAYOUT_RESEARCH_20260926.md)
+既有墙带函数内部按水平坐标排序，每个方位只保留一个上边界和一个下边界。仅改数组顺序可能不改变它的 IoU/质心，原因是表示没有保留相应邻接信息，不是物理连接不重要。此前源码核对（旧提示词已删除，历史版本可从Git恢复）
 
 理想单中心球面成像中，空间直线的 ERP 投影通常是曲线；现有曲线连接有平面反投影依据，不是自由样条。skybox 不能独自确定实际拼接模型；共同中心、姿态、地面/天花板及 Matterport 处理链仍需依据数据核查。
 

@@ -6,7 +6,7 @@
 
 ## 如何使用
 
-用户最新要求：不给Pro压缩包。先复制[质心与区域独立文献调研提示词](../../docs/thesis_main/PRO_CENTROID_LITERATURE_PROMPT_20260923.md)文字给Pro，无需数据上传。已有ZIP仅保留为上轮本地产物，不再作为当前交付要求。任务书是后续完整研究要求；本地结果仅为输入审计、两种边界的逐作答诊断和全成员端点先行实验。本任务没有向云端发送消息。
+本目录保留历史输入审计、边界诊断和全成员端点实验。旧提示词已删除；当前公开数据使用 research/pro_layout_20260929/，新任务由对话提供。已有ZIP仅为历史产物，不代表当前研究要求。
 
 解压后在包根运行：`python code/run_numeric.py --out . --numeric-only`。图表复算：`python code/summarize_consensus_pilot.py --input individual_quality.csv --out .`，另需 pandas、matplotlib。数值计算需要 numpy、scipy；标准 STAPLE 额外需要 SimpleITK。无 SimpleITK 时输出 unavailable，不调用替代算法。包内代码无需原仓库；重新导出原始数据才依赖本地仓库和原始路径。
 

@@ -6,11 +6,15 @@
 
 | 用途 | 路径 |
 |---|---|
+| 当前研究方向 | `docs/thesis_main/研究方向_空间差异与共识_20260930.md`：表示优先，空间差异、分簇、融合、合理候选分开；合同同步说明 |
 | 当前规范、执行与统计 | `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`；`ROUND_BASED_ASSIGNMENT_SOP_v1.md`；`STATISTICAL_ANALYSIS_PLAN_v1.md` |
+| 最终研究输入 | `analysis_results/research_input_20260929/manifest.json` 为统一入口；完整生成/读取 `tools/thesis_main/data_prep/consolidate_research_input.py`，坐标组件生成 `materialize_current_research_input.py`；说明 `docs/thesis_main/最终审核数据接入_20260929.md` |
 | 全量复核与资格台账 | `analysis_results/review_final_20260928/` |
+| 研究解释与交叉机器表 | `analysis_results/review_research_tables_20260929/`；生成器 `tools/thesis_main/analysis/build_review_research_tables_20260929.py`，不新增裁决 |
+| 全批次评论机器表 | `analysis_results/review_comments_20260929/`；生成器 `tools/thesis_main/analysis/build_review_comment_table_20260929.py`，原文与来源出现记录分开 |
 | 续审与覆盖补审 | `analysis_results/review_continue_20260928/`；`review_coverage_followup_20260928/` |
 | 确认修复交付 | `analysis_results/review_closeout_20260928/` |
-| 全研究共享 x 输入 | `analysis_results/shared_x_baseline_20260928/`，本目录及其原始/复核/修复/GT输入链禁止移动 |
+| 历史共享 x 快照 | `analysis_results/shared_x_baseline_20260928/`，本目录及其原始/复核/修复/GT输入链禁止移动 |
 | 排序工作台与初筛 | `analysis_results/order_studio_20260926/`；`order_candidates_20260928/` |
 | 双人排序接收与同房扩展复核 | `analysis_results/order_same_room_review_20260928/`，114图独立复审层 |
 | 共识研究包 | `analysis_results/consensus_research_20260923/` |
@@ -52,6 +56,14 @@
 
 参见 [Agent 上下文](agent/AGENT_CONTEXT_INDEX.md)、[文档同步](agent/playbooks/docs_sync.md)、[代码验证](agent/playbooks/code_change_verification.md)。协议与统计变更须分别检查 protocol_guard 和 statistical_plan_guard。Label Studio 运营先读 CE-only SOP。部署兼容路由 `/tools/vis_3d.html` 不代表源码位于 tools 根目录。
 
-- [原始GT主筛顺序复核](../analysis_results/order_gt_screened_20260928/README.md)：当前入口；构建器`tools/thesis_main/analysis/build_order_gt_screened_20260928.py`与独立队列JS复用原工作台，逐对象筛选与GT差异可审计。
-- [原始GT主筛顺序复核](../analysis_results/order_gt_screened_20260928/README.md)：当前入口；构建器`tools/thesis_main/analysis/build_order_gt_screened_20260928.py`与独立队列JS复用原工作台，逐对象筛选与GT差异可审计。
+- [原始GT主筛顺序复核](../analysis_results/order_gt_screened_20260928/index.html)：本轮已接收1160份确认，1份配对问题；历史队列保留。
+- [本轮审核接收与改序规律补查](../analysis_results/order_pattern_recall_20260929/README.md)：77份候选、24图；接收与研究工具位于tools/thesis_main/analysis/receive_order_results_20260929.py及order_pattern_recall_20260929.py。
+- [独立顺序续审](../analysis_results/order_followup_20260929/README.md)：77份待检查对象；由接收器生成，配对汇总及同房Matterport当前快照位于order_pattern_recall_20260929。
+- [77份接收与预标注证据](../analysis_results/order_model_same_image_20260929/README.md)：工具receive_followup_model_audit_20260929.py；最新同房确认快照1237份，配对33份；order_same_image_followup_20260929为35份当前续审。
+- [排序闭合审计](../analysis_results/order_completion_audit_20260929/README.md)：audit_order_completion_20260929.py重新核对259图3152份及全部已接收批次；最新确认1272份，顺序候选0，下一阶段34份配对/表示核查。
+- [34份配对审核](../analysis_results/pairing_review_20260929/README.md)：build_pairing_review_20260929.py及pairing_review_20260929.html/js；平均x前坐标只读，配对集合独立保存，不确认排序。
+- [全量x配对审计](../analysis_results/x_pairing_audit_20260929/README.md)：audit_x_pairing_20260929.py；34份接收、3152份历史/原始验证及默认x配对候选，原数据未应用修改。
 - [2026-09-28研究交接：清洗与角点重排](thesis_main/研究交接_清洗与角点重排_20260928.md)：当前进度、用户意图、必读输入及后续未开展方向。
+- [当前15份补齐配对复核](../analysis_results/pairing_completion_review_20260929/index.html)：6份角色限制、6份x补齐、3份删点预览；完整配对独立确认，暂不排序。生成器build_pairing_completion_review_20260929.py复用配对界面。
+- [当前配对后排序：23份、18图](../analysis_results/order_after_pairing_20260929/index.html)：apply_pairing_preprocessing_20260929.py接收15份，原导出坐标直接共享x；[新预处理基线及去向](../analysis_results/pairing_applied_20260929/README.md)，1272份历史连接环沿用。
+- [最终审核统计与同房分类](../analysis_results/final_review_summary_20260929/index.html)：final_review_summary_20260929.py；1295份确认、3152份闭合台账、同房原260组与候选259组、OOS/门洞、空间/细节评语分层收集及Matterport数据包。
