@@ -1,0 +1,13 @@
+{
+  "schema": "final_review_summary_v1",
+  "primary_keys": [
+    "object_id",
+    "image_id",
+    "candidate_id"
+  ],
+  "population": "3152份/259图；同房全库使用自己的组数分母；历史未纳入与本轮排除分开。",
+  "scope_detail": "explicit_tag仅结构化标签；existing_ledger保留既有语义归纳；comment_candidate仅历史评语检索线索，不是新增人工裁决。无记录不等于无差异，图片线索不传播给同房其他图。",
+  "ring": "各轮实际初始顺序对比最终环；起点/方向等价不算邻接改变；本轮配对改变与旧点对不直接比较。",
+  "geometry": "表示限制独立于配对、排序、清洗资格；uNb19/W010第2/3对wrong_hemisphere，不自动判OOS。",
+  "export": "默认未审环与人工确认环分开；不可配对无数组；完整JSON保留同房原分类、raw_current和证据。"
+}

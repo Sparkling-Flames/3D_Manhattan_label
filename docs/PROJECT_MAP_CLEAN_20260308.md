@@ -7,6 +7,7 @@
 | 用途 | 路径 |
 |---|---|
 | 当前研究方向 | `docs/thesis_main/研究方向_空间差异与共识_20260930.md`：表示优先，空间差异、分簇、融合、合理候选分开；合同同步说明 |
+| 连线与表示阶段1 | `docs/thesis_main/布局表示地基与坐标核验_20260930.md`；工具 `tools/thesis_main/analysis/layout_foundation_20260930.py`；全量表示清点 `analysis_results/layout_foundation_20260930/`，不修改资格或选择权重 |
 | 当前规范、执行与统计 | `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`；`ROUND_BASED_ASSIGNMENT_SOP_v1.md`；`STATISTICAL_ANALYSIS_PLAN_v1.md` |
 | 最终研究输入 | `analysis_results/research_input_20260929/manifest.json` 为统一入口；完整生成/读取 `tools/thesis_main/data_prep/consolidate_research_input.py`，坐标组件生成 `materialize_current_research_input.py`；说明 `docs/thesis_main/最终审核数据接入_20260929.md` |
 | 全量复核与资格台账 | `analysis_results/review_final_20260928/` |

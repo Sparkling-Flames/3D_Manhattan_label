@@ -1,0 +1,127 @@
+{
+  "schema": "layout_foundation_census_v1",
+  "raster": [
+    512,
+    256
+  ],
+  "records": 3441,
+  "annotations": 3152,
+  "workers": 27,
+  "images": 261,
+  "bev_range_available": 3296,
+  "declared_column_wall_band_available": 3244,
+  "legacy_x_envelope_continuous_available": 3240,
+  "legacy_x_envelope_pixel_center_available": 3240,
+  "failures": {
+    "bev_range": {
+      "pairing_unavailable": 143,
+      "coordinates outside declared image bounds": 1,
+      "invalid_point_array": 1
+    },
+    "declared_column_wall_band": {
+      "camera_not_strictly_inside": 45,
+      "pairing_unavailable": 143,
+      "wrong_hemisphere": 7,
+      "coordinates outside declared image bounds": 1,
+      "invalid_point_array": 1
+    },
+    "legacy_x_envelope_continuous": {
+      "longitude_span_at_least_half_circle": 45,
+      "pairing_unavailable": 143,
+      "duplicate_longitude_envelope_unresolved": 4,
+      "curve_requires_ceiling_above_and_floor_below_horizon": 7,
+      "vertical_coordinates_outside_image": 1,
+      "insufficient_or_invalid_pairs": 1
+    },
+    "legacy_x_envelope_pixel_center": {
+      "longitude_span_at_least_half_circle": 45,
+      "pairing_unavailable": 143,
+      "duplicate_longitude_envelope_unresolved": 4,
+      "curve_requires_ceiling_above_and_floor_below_horizon": 7,
+      "vertical_coordinates_outside_image": 1,
+      "insufficient_or_invalid_pairs": 1
+    }
+  },
+  "ring_review": {
+    "default_unreviewed": 1887,
+    "original_gt_reference": 259,
+    "human_confirmed": 1295
+  },
+  "camera_relation": {
+    "inside": 3251,
+    "outside": 45,
+    "unavailable": 145
+  },
+  "camera_in_visible_kernel": {
+    "True": 2955,
+    "False": 341,
+    "None": 145
+  },
+  "annotation_population": {
+    "records": 3152,
+    "annotations": 3152,
+    "workers": 27,
+    "images": 259,
+    "bev_range_available": 3007,
+    "declared_column_wall_band_available": 2955,
+    "legacy_x_envelope_continuous_available": 2953,
+    "legacy_x_envelope_pixel_center_available": 2953,
+    "failures": {
+      "bev_range": {
+        "pairing_unavailable": 143,
+        "coordinates outside declared image bounds": 1,
+        "invalid_point_array": 1
+      },
+      "declared_column_wall_band": {
+        "camera_not_strictly_inside": 45,
+        "pairing_unavailable": 143,
+        "wrong_hemisphere": 7,
+        "coordinates outside declared image bounds": 1,
+        "invalid_point_array": 1
+      },
+      "legacy_x_envelope_continuous": {
+        "longitude_span_at_least_half_circle": 45,
+        "pairing_unavailable": 143,
+        "curve_requires_ceiling_above_and_floor_below_horizon": 7,
+        "vertical_coordinates_outside_image": 1,
+        "duplicate_longitude_envelope_unresolved": 2,
+        "insufficient_or_invalid_pairs": 1
+      },
+      "legacy_x_envelope_pixel_center": {
+        "longitude_span_at_least_half_circle": 45,
+        "pairing_unavailable": 143,
+        "curve_requires_ceiling_above_and_floor_below_horizon": 7,
+        "vertical_coordinates_outside_image": 1,
+        "duplicate_longitude_envelope_unresolved": 2,
+        "insufficient_or_invalid_pairs": 1
+      }
+    }
+  },
+  "mark_semantics": "no_recorded_mark means unknown/absence of recorded mark, never verified negative",
+  "scope": "representation computability only; no quality, clustering, consensus, search or weights",
+  "coordinate_status": "continuous viewer candidate; pixel-center legacy envelope separately reported; source calibration unresolved",
+  "source_entry": "analysis_results/research_input_20260929/manifest.json",
+  "source_validation": {
+    "status": "passed",
+    "objects": 3441,
+    "annotations": 3152,
+    "ready_coordinate_objects": 3298,
+    "confirmed_orders": 1295,
+    "research_images": 259,
+    "reference_only_images": 2,
+    "comment_occurrences": 32462,
+    "unresolved_comment_occurrences": 1,
+    "checks": [
+      "完整配对",
+      "周期平均x及y不变",
+      "Matterport数组源点身份",
+      "确认环绑定",
+      "人员/GT/图片引用",
+      "清洗及研究表字段一致",
+      "交叉表ID及计数",
+      "评论来源覆盖"
+    ],
+    "limitation": "机器一致性验证，不宣称所有标注人工确认或方法可计算；人工未决和未知来源继续保留。"
+  },
+  "contract_version": "consensus_research_20260923_v1"
+}

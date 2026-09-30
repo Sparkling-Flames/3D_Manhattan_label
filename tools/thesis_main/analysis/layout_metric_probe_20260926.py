@@ -36,6 +36,20 @@ def _scores(iou, distance, length):
     return [float(1-iou + weight*distance/length) for weight in LAMBDAS]
 
 
+def bev_range_metrics(a, b):
+    """声明环 BEV 范围；共同相机高度单位，不附带高度代理或总分。"""
+    try:
+        p,q=_polygon(a),_polygon(b)
+    except ValueError as exc:
+        return dict(status='unavailable',reason=str(exc),bev_range_iou=None)
+    inter=p.intersection(q).area
+    return dict(status='ok',reason=None,bev_range_iou=float(inter/(p.area+q.area-inter)),
+                area_a_h2=float(p.area),area_b_h2=float(q.area),
+                coverage_of_a=float(inter/p.area),coverage_of_b=float(inter/q.area),
+                symmetric_difference_h2=float(p.area+q.area-2*inter),
+                centroid_distance_h=float(p.centroid.distance(q.centroid)))
+
+
 def polygon_metrics(a, b, height_a=2.7, height_b=2.7):
     """a 相对 b；保留顶点邻接，失败显式返回，禁止修复无效多边形。"""
     polygons = []

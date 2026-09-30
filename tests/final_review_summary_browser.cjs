@@ -1,0 +1,21 @@
+const {chromium}=require('C:/Users/ASUS/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const {pathToFileURL}=require('node:url'),path=require('node:path'),assert=require('node:assert/strict');
+(async()=>{const browser=await chromium.launch({headless:true,args:['--use-angle=swiftshader']});try{
+ const page=await browser.newPage({viewport:{width:1440,height:1050}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(pathToFileURL(path.resolve('analysis_results/final_review_summary_20260929/index.html')).href);
+ assert.equal(await page.locator('details.image').count(),519);
+ await page.locator('#search').fill('uNb9QFRL6hY-60');assert.equal(await page.locator('details.image:visible').count(),1);
+ await page.locator('details.image:visible summary').click();assert.match(await page.locator('details.image:visible').innerText(),/玻璃/);
+ await page.locator('#search').fill('');
+ await page.evaluate(()=>window.scrollTo(0,0));
+ if(process.env.FINAL_QA)await page.screenshot({path:process.env.FINAL_QA,fullPage:false});
+ await page.goto(pathToFileURL(path.resolve('analysis_results/order_after_pairing_20260929/index.html')).href);
+ const ready=()=>page.waitForFunction(()=>STUDIO.snapshot().imageReady&&document.getElementById('texture-state').textContent==='原图与纹理已载入');await ready();
+ assert.equal(await page.evaluate(()=>visibleQueue().length),0);assert.equal(await page.evaluate(()=>confirmedConnections().length),23);
+ await page.locator('#queue-mode').selectOption('confirmed');
+ await page.evaluate(async()=>{const e=queueEntries.find(e=>e.source.object_id==='new_93_3587_7182_W010');await chooseCase(e.ci);chooseVariant(e.vi);});await ready();
+ assert.equal(await page.locator('#geometry-limitation').isVisible(),true);
+ assert.match(await page.locator('#geometry-limitation').innerText(),/地平线下方/);
+ assert.equal(await page.locator('#panorama').isVisible(),true);assert.deepEqual(errors,[]);
+ console.log('PASS 最终519分类条目、评语搜索、23确认接收、几何限制提示');
+}finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

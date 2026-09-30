@@ -1,0 +1,54 @@
+{
+  "schema": "review_research_interpretation_v1",
+  "entry": "research_tables.json",
+  "read_first": [
+    "purpose",
+    "rules",
+    "summary"
+  ],
+  "tables": {
+    "annotations": "3152人员记录；object_id唯一；原话和已有裁决分开，source及review_evidence追溯。",
+    "images": "259研究图；image_id唯一；不含2张仅参考GT图；references绑定当前输入GT版本。",
+    "cross_tables": "每行dimensions为交叉维度，n为去重ID数，ids为明细索引。每张表内部互斥分组，不跨表相加。",
+    "focus_worker_exclusions": "W034/W037的46份明确排除记录；词面命中不是新的排除原因判定。",
+    "pairing_representation_transitions": "34份配对复核前后，同一诊断器；历史确认校验绑定，默认环注明未审；联合变化非单因果。",
+    "curve_order_examples": "用户曲线异常但顺序正确的例子；第三张无法绑定图片，保留null。"
+  },
+  "cross_table_denominators": {
+    "gt_marks": {
+      "unit": "image_id",
+      "n": 259
+    },
+    "scene_images": {
+      "unit": "image_id",
+      "n": 259
+    },
+    "scene_retention_quality_geometry": {
+      "unit": "object_id",
+      "n": 3152
+    },
+    "trap_model_outcomes": {
+      "unit": "object_id",
+      "n": 3152
+    },
+    "scope_detail_execution": {
+      "unit": "object_id",
+      "n": 3152
+    },
+    "order_representation": {
+      "unit": "object_id",
+      "n": 3152
+    },
+    "focus_worker_exclusion": {
+      "unit": "object_id",
+      "n": 46
+    },
+    "order_changes_by_kind": {
+      "unit": "object_id",
+      "n": 1295
+    }
+  },
+  "unknown": "not_marked、unknown、not_recorded均不得改写为正常/不存在。明确GT不确定标签与没有标记不同。",
+  "semantic_limits": "current_comment_mentions仅关键词命中，可能否定/疑问；改后排除不证明模型同一错误持续；scope/detail标签不证明同空间。",
+  "scene_subtype_coverage": "稳定非正交和门洞可标沿已有category；拍摄/遮挡仅保留评语线索，没有全量人工子类型裁决。"
+}

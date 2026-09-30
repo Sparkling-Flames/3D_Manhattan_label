@@ -1,0 +1,57 @@
+{
+  "input_records": 77,
+  "input_statuses": {
+    "confirmed": 77
+  },
+  "followup_changes": {
+    "unchanged": 71,
+    "adjacency_changed": 6
+  },
+  "model_status_full_population": {
+    "not_checked": 308,
+    "not_checked_non_semi": 2378,
+    "changed_coordinates": 366,
+    "unchanged_coordinates": 100
+  },
+  "model_evidence_rows": 105,
+  "unchanged_rows": 100,
+  "comment_mention_rows": 14,
+  "same_image_changed_images": 52,
+  "user_comment_explicit_influence_rows": 4,
+  "same_image_screen_counts": {
+    "no_other_same_image_change": 2407,
+    "four_pairs_default_skip": 29,
+    "already_confirmed": 612,
+    "excluded": 52,
+    "pairing_deferred": 17,
+    "candidate": 35
+  },
+  "continuation": {
+    "previous_queue_states": {
+      "pending": {
+        "confirmed": 1097,
+        "pairing": 1
+      },
+      "confirmed": {
+        "confirmed": 63
+      }
+    },
+    "missing": [],
+    "previous_pending_without_current_reviewer": [],
+    "pairing_deferred": 33,
+    "next_round_objects": 35,
+    "next_round_images": 5
+  },
+  "prospective_77_by_prior_same_image": {
+    "previously_changed_image": {
+      "reviewed": 3,
+      "changed": 1
+    },
+    "no_previous_change_image": {
+      "reviewed": 74,
+      "changed": 5
+    }
+  },
+  "hypothesis": "同图历史改序为补查线索，尚无独立样本证实提高概率；排除本对象自身作为同图证据",
+  "formal_analysis_connected": false
+}

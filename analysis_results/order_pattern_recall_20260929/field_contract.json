@@ -1,0 +1,12 @@
+{
+  "schema": "order_results_and_recall_v1",
+  "primary_key": "object_id",
+  "merge": "各文件仅相对原89份基线的实际改动参与合并；相同决定保留双方归属；不同决定停止，不按时间静默覆盖",
+  "round_change": "最终排列对本轮初始排列；既有确认优先，否则页面default；循环起点/反向等价单列",
+  "cumulative_change": "最终排列对固定源点对identity；人工GT单列，不把初始x升序当作人工修改",
+  "confirmations": "本次1160份有效确认，原始GT20份仅历史；其余配对/草稿不纳入确认数组",
+  "coverage": "上一轮coverage逐对象保留previous_state/current_status/current_reviewers；待审有结果但无本轮审核人必须单列",
+  "continuation": "独立order_followup_20260929入口仅含候选；配对汇总按object_id合并历史队列与本轮报告",
+  "room_export": "room_grouped_matterport_order_v1：既有physical_same_supported房间→image_id→annotations；未知逐图单列；complete=false直到续审和配对完成",
+  "scope": "候选不是错误裁决；4对点默认跳过自动召回；门洞与OOS分别统计，原始和清洗裁决不覆写"
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "pairing_only_review_20260929_v1",
+  "primary_key": "object_id",
+  "coordinate_source": "平均x前有效点；原坐标与标签不改",
+  "pairs": "corrections_only仅记录用户修正的零基[上端点,下端点]，允许局部或空集合，不表达完整配对或环序；legacy_full_pairing保留旧版完整/草稿记录语义",
+  "statuses": [
+    "draft",
+    "checked",
+    "paired",
+    "deferred"
+  ],
+  "confirmation": "checked表示本图检查完成，untouched_points=accepted_without_correction；未出现在修正中的点无需逐一配对。未审/草稿不作无问题判定；旧paired仍要求完整覆盖",
+  "scope": "pairing_only；order_confirmed=false；坐标修订、删除补点和连接顺序留后续；保存不自动跳转",
+  "binding": "object_id、points、labels、coordinate_source的完整JSON绑定；未知身份、坐标漂移、冲突导入拒绝覆盖"
+}

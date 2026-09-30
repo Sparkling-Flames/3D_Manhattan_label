@@ -1,0 +1,275 @@
+{
+  "schema": "order_results_and_recall_v1",
+  "received_records": 1186,
+  "statuses": {
+    "confirmed": 1180,
+    "pairing": 5,
+    "draft": 1
+  },
+  "current_objects": 1161,
+  "current_states": {
+    "confirmed": 1160,
+    "pairing": 1
+  },
+  "current_kind_status": {
+    "annotation:confirmed": 1130,
+    "annotation:pairing": 1,
+    "gt_manual_revision:confirmed": 30
+  },
+  "patterns": {
+    "schema": "order_pattern_recall_20260929_v1",
+    "feature_coordinate_source": "preprocessed_shared_x_before_this_round",
+    "primary_user": {
+      "unchanged": 865,
+      "adjacency_changed": 113,
+      "equivalent": 1
+    },
+    "primary_user_images": 93,
+    "primary_changed_images": 32,
+    "yizheng_crosscheck": {
+      "unchanged": 84,
+      "adjacency_changed": 15
+    },
+    "historical_user_changed_supplement": 29,
+    "gt_current_by_reviewer": {
+      "user": {
+        "adjacency_changed": 6,
+        "unchanged": 14
+      },
+      "yizheng": {
+        "unchanged": 4
+      }
+    },
+    "object_count": 3441,
+    "annotation_count": 3152,
+    "feature_status_counts": {
+      "ok": 3274,
+      "pairing_unavailable": 166,
+      "invalid_top_bottom_roles": 1
+    },
+    "candidate_count": 77,
+    "candidate_not_in_previous_queue": 77,
+    "candidate_counts_by_scene_group": {
+      "scene_not_confirmed_ordinary": 52,
+      "oos": 11,
+      "ordinary": 6,
+      "doorway": 8
+    },
+    "candidate_counts_by_doorway": {
+      "not_recorded": 69,
+      "difficult": 1,
+      "annotatable": 7
+    },
+    "candidate_counts_by_oos": {
+      "not_recorded": 66,
+      "confirmed": 11
+    },
+    "skip_counts": {
+      "four_pairs_without_human_order_evidence": 1302,
+      "excluded": 218,
+      "already_confirmed": 1130,
+      "no_rule_hit": 347,
+      "pairing_deferred": 33,
+      "user_no_recall_image": 44,
+      "candidate": 77,
+      "gt_separate_analysis": 289,
+      "geometry_unavailable": 1
+    },
+    "parameters": {
+      "acute_degrees": 45,
+      "periodic_window_px": 24,
+      "minimum_depth_ratio": 1.5,
+      "image_groups": 5,
+      "automatic_recall_min_pair_count": 5,
+      "four_pair_override": "explicit_human_order_evidence_only"
+    },
+    "rules_selected_using_outcomes": false,
+    "formal_analysis_connected": false,
+    "primary_rule_results": [
+      {
+        "cohort": "user_current",
+        "stratum": "all",
+        "rule": "any_acute",
+        "image_count": 93,
+        "changed": 113,
+        "unchanged_or_equivalent": 866,
+        "changed_hit": 60,
+        "unchanged_hit": 61,
+        "observed_changed_coverage": 0.5309734513274337,
+        "observed_unchanged_hit_rate": 0.07043879907621248,
+        "observed_hit_changed_fraction": 0.49586776859504134
+      },
+      {
+        "cohort": "user_current",
+        "stratum": "all",
+        "rule": "consecutive_acute",
+        "image_count": 93,
+        "changed": 113,
+        "unchanged_or_equivalent": 866,
+        "changed_hit": 17,
+        "unchanged_hit": 1,
+        "observed_changed_coverage": 0.1504424778761062,
+        "observed_unchanged_hit_rate": 0.0011547344110854503,
+        "observed_hit_changed_fraction": 0.9444444444444444
+      },
+      {
+        "cohort": "user_current",
+        "stratum": "all",
+        "rule": "dense_two_pairs_24px",
+        "image_count": 93,
+        "changed": 113,
+        "unchanged_or_equivalent": 866,
+        "changed_hit": 78,
+        "unchanged_hit": 138,
+        "observed_changed_coverage": 0.6902654867256637,
+        "observed_unchanged_hit_rate": 0.15935334872979215,
+        "observed_hit_changed_fraction": 0.3611111111111111
+      },
+      {
+        "cohort": "user_current",
+        "stratum": "all",
+        "rule": "dense_three_pairs_24px",
+        "image_count": 93,
+        "changed": 113,
+        "unchanged_or_equivalent": 866,
+        "changed_hit": 3,
+        "unchanged_hit": 1,
+        "observed_changed_coverage": 0.02654867256637168,
+        "observed_unchanged_hit_rate": 0.0011547344110854503,
+        "observed_hit_changed_fraction": 0.75
+      },
+      {
+        "cohort": "user_current",
+        "stratum": "all",
+        "rule": "near_bearing_depth_jump",
+        "image_count": 93,
+        "changed": 113,
+        "unchanged_or_equivalent": 866,
+        "changed_hit": 56,
+        "unchanged_hit": 80,
+        "observed_changed_coverage": 0.49557522123893805,
+        "observed_unchanged_hit_rate": 0.09237875288683603,
+        "observed_hit_changed_fraction": 0.4117647058823529
+      },
+      {
+        "cohort": "user_current",
+        "stratum": "all",
+        "rule": "recall_union",
+        "image_count": 93,
+        "changed": 113,
+        "unchanged_or_equivalent": 866,
+        "changed_hit": 77,
+        "unchanged_hit": 134,
+        "observed_changed_coverage": 0.6814159292035398,
+        "observed_unchanged_hit_rate": 0.15473441108545036,
+        "observed_hit_changed_fraction": 0.36492890995260663
+      }
+    ],
+    "same_image_pair_count_rule_results": [
+      {
+        "cohort": "user_current",
+        "stratum": "same_image_and_pair_count_matched",
+        "rule": "any_acute",
+        "image_count": 32,
+        "changed": 113,
+        "unchanged_or_equivalent": 55,
+        "changed_hit": 60,
+        "unchanged_hit": 5,
+        "observed_changed_coverage": 0.5309734513274337,
+        "observed_unchanged_hit_rate": 0.09090909090909091,
+        "observed_hit_changed_fraction": 0.9230769230769231
+      },
+      {
+        "cohort": "user_current",
+        "stratum": "same_image_and_pair_count_matched",
+        "rule": "consecutive_acute",
+        "image_count": 32,
+        "changed": 113,
+        "unchanged_or_equivalent": 55,
+        "changed_hit": 17,
+        "unchanged_hit": 0,
+        "observed_changed_coverage": 0.1504424778761062,
+        "observed_unchanged_hit_rate": 0.0,
+        "observed_hit_changed_fraction": 1.0
+      },
+      {
+        "cohort": "user_current",
+        "stratum": "same_image_and_pair_count_matched",
+        "rule": "dense_two_pairs_24px",
+        "image_count": 32,
+        "changed": 113,
+        "unchanged_or_equivalent": 55,
+        "changed_hit": 78,
+        "unchanged_hit": 27,
+        "observed_changed_coverage": 0.6902654867256637,
+        "observed_unchanged_hit_rate": 0.4909090909090909,
+        "observed_hit_changed_fraction": 0.7428571428571429
+      },
+      {
+        "cohort": "user_current",
+        "stratum": "same_image_and_pair_count_matched",
+        "rule": "dense_three_pairs_24px",
+        "image_count": 32,
+        "changed": 113,
+        "unchanged_or_equivalent": 55,
+        "changed_hit": 3,
+        "unchanged_hit": 0,
+        "observed_changed_coverage": 0.02654867256637168,
+        "observed_unchanged_hit_rate": 0.0,
+        "observed_hit_changed_fraction": 1.0
+      },
+      {
+        "cohort": "user_current",
+        "stratum": "same_image_and_pair_count_matched",
+        "rule": "near_bearing_depth_jump",
+        "image_count": 32,
+        "changed": 113,
+        "unchanged_or_equivalent": 55,
+        "changed_hit": 56,
+        "unchanged_hit": 17,
+        "observed_changed_coverage": 0.49557522123893805,
+        "observed_unchanged_hit_rate": 0.3090909090909091,
+        "observed_hit_changed_fraction": 0.7671232876712328
+      },
+      {
+        "cohort": "user_current",
+        "stratum": "same_image_and_pair_count_matched",
+        "rule": "recall_union",
+        "image_count": 32,
+        "changed": 113,
+        "unchanged_or_equivalent": 55,
+        "changed_hit": 77,
+        "unchanged_hit": 20,
+        "observed_changed_coverage": 0.6814159292035398,
+        "observed_unchanged_hit_rate": 0.36363636363636365,
+        "observed_hit_changed_fraction": 0.7938144329896907
+      }
+    ],
+    "limitations": [
+      "已确认未改序是操作对照，不等于独立证实的真阴性。",
+      "样本来自原始GT预筛；覆盖率只描述已审核样本，不能估计全3152份漏检率。",
+      "固定阈值为探索性规则；图片分组只检查跨图片稳定性，没有训练或自动选阈值。",
+      "一正记录单列交叉核对，不视为独立验证集。",
+      "3D及曲线共享相机高度1、水平地面、顶部借用地面深度等假设，不是独立几何真值。",
+      "曲线极点、camera_visibility_unresolved、门洞和OOS均不能自动判定顺序错误。"
+    ]
+  },
+  "comparison_cases": 265,
+  "continuation": {
+    "previous_queue_states": {
+      "pending": {
+        "confirmed": 1097,
+        "pairing": 1
+      },
+      "confirmed": {
+        "confirmed": 63
+      }
+    },
+    "missing": [],
+    "previous_pending_without_current_reviewer": [],
+    "pairing_deferred": 33,
+    "next_round_objects": 77,
+    "next_round_images": 24
+  },
+  "formal_analysis_connected": false
+}

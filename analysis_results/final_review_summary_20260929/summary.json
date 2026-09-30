@@ -1,0 +1,111 @@
+{
+  "annotations": 3152,
+  "images": 259,
+  "confirmed_orders": 1295,
+  "annotation_order_states": {
+    "four_pairs_default_skip": 1308,
+    "confirmed": 1265,
+    "excluded": 218,
+    "not_triggered": 312,
+    "user_no_recall": 44,
+    "pairing_deferred": 5
+  },
+  "cleaning": {
+    "retained": 2923,
+    "excluded_by_review": 85,
+    "historical_not_accepted": 133,
+    "retained_pending": 11
+  },
+  "geometry": {
+    "surface_valid": 3000,
+    "pairing_unavailable": 143,
+    "representation_limited": 9
+  },
+  "retained_geometry": {
+    "surface_valid": 2921,
+    "pairing_unavailable": 5,
+    "representation_limited": 8
+  },
+  "manual_gt_confirmed": 30,
+  "batches": [
+    {
+      "batch": "after_pairing23",
+      "objects": 23,
+      "images": 18,
+      "changes": {
+        "unchanged": 10,
+        "adjacency_changed": 13
+      }
+    },
+    {
+      "batch": "first_merged",
+      "objects": 1160,
+      "images": 121,
+      "changes": {
+        "unchanged": 1025,
+        "adjacency_changed": 134,
+        "equivalent": 1
+      }
+    },
+    {
+      "batch": "followup77",
+      "objects": 77,
+      "images": 24,
+      "changes": {
+        "adjacency_changed": 6,
+        "unchanged": 71
+      }
+    },
+    {
+      "batch": "same_image35",
+      "objects": 35,
+      "images": 5,
+      "changes": {
+        "unchanged": 34,
+        "adjacency_changed": 1
+      }
+    }
+  ],
+  "scene_images": {
+    "oos": {
+      "not_oos": 22,
+      "not_recorded": 212,
+      "confirmed": 24,
+      "pending": 1
+    },
+    "doorway": {
+      "none": 23,
+      "difficult": 17,
+      "not_recorded": 217,
+      "annotatable": 2
+    },
+    "both": 2
+  },
+  "scope_detail": {
+    "scope_explicit_tag": 24,
+    "detail_explicit_tag": 15,
+    "scope_existing_ledger": 79,
+    "detail_existing_ledger": 46,
+    "scope_comment_candidate": 107,
+    "detail_comment_candidate": 75
+  },
+  "scope_collected_images": 118,
+  "detail_collected_images": 86,
+  "room_registry_groups": 260,
+  "room_candidates": 259,
+  "supported_room_candidates": 155,
+  "original_room_classification": {
+    "优先候选": 63,
+    "不支持": 67,
+    "待定": 58,
+    "基础候选": 51,
+    "对照候选": 21
+  },
+  "research_supported_rooms": 102,
+  "research_images_with_room": 204,
+  "unchanged_model_coordinates": 100,
+  "user_comment_model_influence": 4,
+  "order_queue_complete": true,
+  "all_annotations_individually_confirmed": false,
+  "formal_analysis_connected": false
+}

@@ -1,0 +1,157 @@
+{
+  "schema": "manifest_reaudit_v1",
+  "date": "2026-09-30",
+  "entry": "analysis_results\\research_input_20260929\\manifest.json",
+  "validation": {
+    "status": "passed",
+    "objects": 3441,
+    "annotations": 3152,
+    "ready_coordinate_objects": 3298,
+    "confirmed_orders": 1295,
+    "research_images": 259,
+    "reference_only_images": 2,
+    "comment_occurrences": 32462,
+    "unresolved_comment_occurrences": 1,
+    "checks": [
+      "完整配对",
+      "周期平均x及y不变",
+      "Matterport数组源点身份",
+      "确认环绑定",
+      "人员/GT/图片引用",
+      "清洗及研究表字段一致",
+      "交叉表ID及计数",
+      "评论来源覆盖"
+    ],
+    "limitation": "机器一致性验证，不宣称所有标注人工确认或方法可计算；人工未决和未知来源继续保留。"
+  },
+  "additional_tables_read": [
+    {
+      "path": "final_review/field_contract.json",
+      "rows_or_top_level_items": 7
+    },
+    {
+      "path": "final_review/OOS_图片清单.csv",
+      "rows_or_top_level_items": 25
+    },
+    {
+      "path": "final_review/received_orders.json",
+      "rows_or_top_level_items": 4
+    },
+    {
+      "path": "final_review/summary.json",
+      "rows_or_top_level_items": 24
+    },
+    {
+      "path": "final_review/不可计算及表示限制.csv",
+      "rows_or_top_level_items": 152
+    },
+    {
+      "path": "final_review/全量3152份最终台账.csv",
+      "rows_or_top_level_items": 3152
+    },
+    {
+      "path": "final_review/历史本人改序补充.csv",
+      "rows_or_top_level_items": 29
+    },
+    {
+      "path": "final_review/历史评语_去重来源索引.csv",
+      "rows_or_top_level_items": 1157
+    },
+    {
+      "path": "final_review/原始与人工GT审计.csv",
+      "rows_or_top_level_items": 648
+    },
+    {
+      "path": "final_review/同图历史改序_补查统计.json",
+      "rows_or_top_level_items": 14
+    },
+    {
+      "path": "final_review/同房分类_全部候选组.csv",
+      "rows_or_top_level_items": 259
+    },
+    {
+      "path": "final_review/同房分类_原始完整记录.json",
+      "rows_or_top_level_items": 4
+    },
+    {
+      "path": "final_review/同房原分组_完整分类.csv",
+      "rows_or_top_level_items": 260
+    },
+    {
+      "path": "final_review/同房汇集_Matterport.json",
+      "rows_or_top_level_items": 5
+    },
+    {
+      "path": "final_review/改前特征与最终改序.csv",
+      "rows_or_top_level_items": 1265
+    },
+    {
+      "path": "final_review/改序共性_按批次描述.csv",
+      "rows_or_top_level_items": 24
+    },
+    {
+      "path": "final_review/用户comment明确记录_模型误导影响.csv",
+      "rows_or_top_level_items": 4
+    },
+    {
+      "path": "final_review/空间不同_图片收集.csv",
+      "rows_or_top_level_items": 118
+    },
+    {
+      "path": "final_review/空间与细节_评语候选明细.csv",
+      "rows_or_top_level_items": 411
+    },
+    {
+      "path": "final_review/细节不同_图片收集.csv",
+      "rows_or_top_level_items": 86
+    },
+    {
+      "path": "final_review/逐人统计.csv",
+      "rows_or_top_level_items": 27
+    },
+    {
+      "path": "final_review/逐图分类及覆盖.csv",
+      "rows_or_top_level_items": 259
+    },
+    {
+      "path": "final_review/逐对象改序及审核来源.csv",
+      "rows_or_top_level_items": 1295
+    },
+    {
+      "path": "final_review/门洞交界_图片清单.csv",
+      "rows_or_top_level_items": 19
+    },
+    {
+      "path": "final_review/预标注未改动与影响评语汇总.csv",
+      "rows_or_top_level_items": 105
+    },
+    {
+      "path": "final_review/首轮改序共性_规则评估.csv",
+      "rows_or_top_level_items": 252
+    },
+    {
+      "path": "final_review/首轮本人及一正_统计.json",
+      "rows_or_top_level_items": 23
+    }
+  ],
+  "comment_groups": 3121,
+  "unique_recorded_texts": 856,
+  "derived_only_texts": 0,
+  "annotation_marks": {
+    "scope_annotation": 18,
+    "detail_annotation": 15,
+    "execution_tag": 11
+  },
+  "image_mark_counts": {
+    "gt_substantive_error_mark": 6,
+    "gt_detail_omission_mark": 20,
+    "scope_explicit_tag": 24,
+    "scope_existing_ledger": 79,
+    "scope_comment_candidate": 107,
+    "detail_explicit_tag": 15,
+    "detail_existing_ledger": 46,
+    "detail_comment_candidate": 75
+  },
+  "interpretation": "Counts describe recorded evidence, not exhaustively audited rates. Existing GT decisions are inputs, not a new research question. GT-detail discovery is tertiary.",
+  "historical_baseline": "Numerical projection exactly matched current data at recheck; previous baseline did not consume complete manifest research/comments context."
+}

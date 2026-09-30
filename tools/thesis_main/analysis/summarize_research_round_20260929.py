@@ -11,6 +11,8 @@ import matplotlib.pyplot as plt
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--input',type=Path,required=True)
     p.add_argument('--results',type=Path,required=True);a=p.parse_args();out=a.results
+    if json.loads((out/'summary.json').read_text(encoding='utf-8'))['schema']!='research_round_baseline_v1':
+        raise ValueError('historical_v1_summary_only; use the stage-1 representation census for new outputs')
     panel=json.loads(a.input.read_text(encoding='utf-8'))
     strata={}
     for im in panel['images']:

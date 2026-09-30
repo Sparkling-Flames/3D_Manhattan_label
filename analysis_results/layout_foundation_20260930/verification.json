@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "tests": 44,
+  "pytest_runtime_warnings": "treated_as_errors; final_run_none",
+  "source_bundle_validation": "passed",
+  "record_count": 3441,
+  "unique_record_aliases": 3441,
+  "all_stratum_denominators_reconciled": true,
+  "unavailable_reasons_complete": true,
+  "documentation_links_exist": true,
+  "method_contract_render_check": "passed",
+  "git_diff_check": "passed",
+  "not_run": [
+    "full research algorithms",
+    "full repository tests",
+    "Label Studio runtime/browser tests"
+  ],
+  "reason": "only geometry, source loading and output contracts changed; no UI/runtime/algorithm experiment",
+  "screenshots": "none; delivered PNGs are scientific figures",
+  "seam_review_correction": {
+    "status": "passed",
+    "targeted_tests": 35,
+    "command": "python -B -m pytest tests/test_layout_foundation_20260930.py tests/test_panorama_studio.py tests/test_research_round_20260929.py -q -p no:cacheprovider -W error::RuntimeWarning",
+    "tdd": "seam reinput regression failed before the one-line projection fix; passes after fix",
+    "projection_interval": "pixel_center x in [-0.5, W-0.5); continuous unchanged; no relaxed validation",
+    "invalid_top_boundary": "out-of-bounds or nonfinite top rejects the whole input, including BEV",
+    "gitignore_duplicate_removed": true,
+    "contract_render_check": "passed",
+    "git_diff_check": "passed",
+    "census_rerun": false,
+    "census_impact": "none: inspect_panel reconstruction uses continuous and compute_fit=False, does not call project_pixel; legacy envelope unchanged",
+    "previous_counts_retained": {
+      "annotations": 3152,
+      "bev_range_available": 3007,
+      "declared_column_wall_band_available": 2955
+    }
+  }
+}

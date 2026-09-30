@@ -1,0 +1,44 @@
+const {chromium}=require('C:/Users/ASUS/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const {pathToFileURL}=require('node:url'),path=require('node:path'),assert=require('node:assert/strict');
+(async()=>{const browser=await chromium.launch({headless:true,args:['--use-angle=swiftshader']});try{
+ const page=await browser.newPage({viewport:{width:1366,height:1000}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
+ const ready=()=>page.waitForFunction(()=>STUDIO.snapshot().imageReady&&document.getElementById('texture-state').textContent==='原图与纹理已载入');
+ await page.goto(pathToFileURL(path.resolve('analysis_results/order_gt_screened_20260928/index.html')).href);await ready();
+ assert.equal(await page.evaluate(()=>confirmedConnections().length),1160);
+ assert.equal(await page.evaluate(()=>visibleQueue().length),0);
+ await page.locator('#queue-mode').selectOption('confirmed');await ready();
+ assert.equal(await page.locator('#panorama-panel').isVisible(),true);
+ // A stale exported browser snapshot must not overwrite the newer accepted merge.
+ await page.evaluate(()=>localStorage.setItem(storageKey,JSON.stringify(window.ORDER_ACCEPTED_REVIEW.snapshots[2])));
+ await page.reload();await ready();assert.equal(await page.evaluate(()=>confirmedConnections().length),1160);
+ assert.equal(await page.evaluate(()=>saved['9cab10e73212c27f'].order.join(',')),await page.evaluate(()=>window.ORDER_ACCEPTED_REVIEW.records['9cab10e73212c27f'].order.join(',')));
+ // A genuinely unreceived local edit is preserved, not silently overwritten.
+ await page.evaluate(()=>{const x=JSON.parse(JSON.stringify(saved));x['9cab10e73212c27f'].status='pending';x['9cab10e73212c27f'].updated_at='2099-01-01';localStorage.setItem(storageKey,JSON.stringify(x));});
+ await page.reload();await ready();assert.equal(await page.evaluate(()=>saved['9cab10e73212c27f'].status),'pending');
+ assert.ok(await page.evaluate(()=>window.ORDER_LOCAL_UNRECEIVED.includes('9cab10e73212c27f')));
+ await page.goto(pathToFileURL(path.resolve('analysis_results/order_pattern_recall_20260929/index.html')).href);await ready();
+ assert.equal(await page.locator('.order-editor').isVisible(),false);
+ const n=await page.evaluate(()=>dataset.cases.findIndex(c=>c.annotation_ids.includes('new_95_3649_7457_W030')));
+ await page.evaluate(async n=>{await chooseCase(n);chooseVariant(1);},n);await ready();
+ assert.equal(await page.evaluate(()=>dataset.cases[currentCase].variants[currentVariant].source.scene_doorway_status),'difficult');
+ assert.equal(await page.locator('#panorama').isVisible(),true);
+ if(process.env.ORDER_REVIEW_QA) await page.screenshot({path:process.env.ORDER_REVIEW_QA,fullPage:true});
+ assert.deepEqual(errors,[]);
+ await page.goto(pathToFileURL(path.resolve('analysis_results/order_followup_20260929/index.html')).href);await ready();
+ assert.equal(await page.evaluate(()=>visibleQueue().length),0);
+ assert.equal(await page.evaluate(()=>confirmedConnections().length),77);
+ await page.goto(pathToFileURL(path.resolve('analysis_results/order_same_image_followup_20260929/index.html')).href);await ready();
+ assert.equal(await page.evaluate(()=>visibleQueue().length),0);
+ assert.equal(await page.evaluate(()=>confirmedConnections().length),35);
+ assert.equal(await page.evaluate(()=>queueValid),true);
+ await page.locator('#queue-mode').selectOption('confirmed');await ready();
+ await page.locator('#reopen-order').click();
+ assert.equal(await page.evaluate(()=>visibleQueue().length),1);
+ await page.locator('#confirm-order').click();
+ assert.equal(await page.evaluate(()=>visibleQueue().length),0);
+ assert.equal(await page.locator('#panorama').isVisible(),true);
+ await page.reload();await ready();
+ assert.equal(await page.evaluate(()=>confirmedConnections().length),35);
+ assert.deepEqual(errors,[]);
+ console.log('PASS: 接收1160确认、旧快照合并、本地新修改保留、门洞标签、只读几何对照');
+}finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

@@ -39,6 +39,7 @@ function updateQueueUI(){
  if(queueValid)queueNotice.textContent=match?`${visible.length} 份符合当前筛选 · ${held?'已保存，保留当前图；点击“下一份”继续':readonly?'只读查看，确认结果直接沿用':'待审；确认只保存，点击“下一份”切换'} · 原图号 ${dataset.cases[currentCase].original_slot||'新增'}`:'当前筛选下没有对象。';
  $('order-status').textContent=readonly?'只读 · '+({reference:'原始GT',pairing:'配对待后续处理',confirmed:'已确认'}[reviewState(activeSource())]||'不可编辑'):'待审核';
  updateProgress();
+ if(window.ORDER_LOCAL_UNRECEIVED?.length)queueNotice.textContent+=' · 保留 '+window.ORDER_LOCAL_UNRECEIVED.length+' 份尚未接收的本地记录，请导出核对';
  if(match&&confirmationRound(activeSource()))$('order-status').textContent=confirmationRound(activeSource())==='previous'?'上次审核确认 · 可撤销后编辑':'本次点击确认 · 可撤销后编辑';
 }
 const queueDrawDrag=drawDrag;drawDrag=function(){queueDrawDrag();updateQueueUI();};
@@ -59,7 +60,7 @@ $('download-orders').onclick=()=>{try{downloadQueueFile('角点顺序审核.json
 if(!queueValid){$('import-orders').disabled=true;$('download-orders').onclick=()=>downloadQueueFile('角点顺序审核_损坏记录备份.txt',localStorage.getItem(storageKey)||'','text/plain');}
 $('order-restore').textContent='恢复默认排列';
 $('order-legend').append(' 已确认结果直接沿用；人工修订GT未确认时默认按共享x升序，固定点对编号不变。');
-detail.textContent='本轮依据原始GT连接环筛选；原始GT仅作只读对照，配对问题另行处理。';
+detail.textContent=dataset.manifest.review_round==='followup_20260929'?'本轮只含尚需检查顺序的补查候选；已有确认不重复加入，配对问题收集后单独处理。':'本轮依据原始GT连接环筛选；原始GT仅作只读对照，配对问题另行处理。';
 function connectionLayout(s,r){
  if(s.object_kind==='gt_original'||r?.status!=='confirmed'||!validQueueRecord(s,r))throw Error('必须是绑定有效的已确认对象');
  const indices=r.order.flatMap(i=>s.links_zero_based[i]);if([...indices].sort((a,b)=>a-b).some((v,i)=>v!==i)||indices.length!==s.points.length)throw Error('点对未完整覆盖点集');

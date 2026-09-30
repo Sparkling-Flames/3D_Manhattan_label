@@ -1,0 +1,45 @@
+{
+  "schema": "order_review_clarifications_20260929_v1",
+  "source": "用户本轮明确意见",
+  "annotations": {
+    "8f2f8f8bfdaec3360646": {
+      "image_code": "uNb9QFRL6hY-60",
+      "worker_id": "W028",
+      "cleaning_disposition": "retained",
+      "comment": "用户明确认可：正确标注玻璃内墙角，不能因少数标法排除。",
+      "unique_glass_corner_basis": "用户说明，非算法独立认定"
+    }
+  },
+  "images": {
+    "2t7WUuJeko7_53937db036374126830e0f1203b04ead": {
+      "image_code": "2t7WUuJeko7-07",
+      "doorway_status": "difficult",
+      "oos_status": "not_recorded",
+      "comment": "原台账已有难标门洞记录，补充展示；曲线异常而点序正确。"
+    }
+  },
+  "counterexamples": [
+    {
+      "file": "screenshot_1.png",
+      "order_correct": true,
+      "geometry_curve_odd": true,
+      "object_id": "new_95_3649_7457_W030"
+    },
+    {
+      "file": "screenshot_2.png",
+      "order_correct": true,
+      "geometry_curve_odd": true,
+      "object_id": "new_95_3649_7231_W036"
+    },
+    {
+      "file": "screenshot_3.png",
+      "order_correct": true,
+      "geometry_curve_odd": true,
+      "object_id": null
+    }
+  ],
+  "third_screenshot_identity": "未显示图片编号，不推断归属",
+  "four_pair_policy": "4对点默认不自动召回；明确人工顺序证据单列例外",
+  "scene_policy": "门洞/OOS独立字段，可重叠；几何显示异常不判顺序错误",
+  "raw_mutation": false
+}

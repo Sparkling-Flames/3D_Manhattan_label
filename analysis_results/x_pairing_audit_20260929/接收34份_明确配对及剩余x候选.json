@@ -1,0 +1,2045 @@
+{
+  "schema": "pairing_return_x_interpretation_v1",
+  "records": [
+    {
+      "object_id": "4d3e4911d8f07aa2",
+      "image_code": "7y3sRwLe3Va-12",
+      "worker_id": "W037",
+      "status": "deferred",
+      "review_mode": "legacy_full_pairing",
+      "explicit_pairs": [],
+      "note": "删除p7",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "odd_remaining_points",
+        "pairs": null
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "d22e8df3dcff4100efb5",
+      "image_code": "7y3sRwLe3Va-21",
+      "worker_id": "W001",
+      "status": "checked",
+      "review_mode": "legacy_full_pairing",
+      "explicit_pairs": [
+        [
+          2,
+          3
+        ],
+        [
+          7,
+          6
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            2,
+            3
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            12,
+            13
+          ],
+          [
+            14,
+            15
+          ],
+          [
+            16,
+            17
+          ],
+          [
+            18,
+            19
+          ]
+        ],
+        "max_dx": 3.97669902912628,
+        "cost": 17.895145631067805,
+        "same_horizon_side_pairs": []
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "f6bfdcf15004e457",
+      "image_code": "B6ByNegPMKs-33",
+      "worker_id": "W032",
+      "status": "deferred",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [],
+      "note": "p3 p1好像重叠了,删掉一个就行",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "odd_remaining_points",
+        "pairs": null
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "79f3478ea5e43fc1f95a",
+      "image_code": "B6ByNegPMKs-47",
+      "worker_id": "W001",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          12,
+          13
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            12,
+            13
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            14,
+            15
+          ],
+          [
+            16,
+            17
+          ],
+          [
+            18,
+            19
+          ]
+        ],
+        "max_dx": 13.91844660194181,
+        "cost": 25.84854368932048,
+        "same_horizon_side_pairs": []
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "f57527778ab111cb3df8",
+      "image_code": "S9hNv5qa7GM-01",
+      "worker_id": "W002",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [],
+      "note": "这属于oos,这无法配对就认为是无法计算",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "wide_x_candidate",
+        "pairs": [
+          [
+            8,
+            9
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            6,
+            7
+          ]
+        ],
+        "max_dx": 178.31498079385415,
+        "cost": 233.38284250960317,
+        "same_horizon_side_pairs": [
+          [
+            1,
+            0
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            5,
+            2
+          ]
+        ]
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "2b1b6e2ee0285eb02c88",
+      "image_code": "S9hNv5qa7GM-07",
+      "worker_id": "W010",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [],
+      "note": "为什么这配对不可用? 我看不是没问题吗",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            7,
+            6
+          ]
+        ],
+        "max_dx": 1.3393414849508645,
+        "cost": 3.639109685474068,
+        "same_horizon_side_pairs": [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            7,
+            6
+          ]
+        ]
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "72c13a6178d8de165b2b",
+      "image_code": "S9hNv5qa7GM-07",
+      "worker_id": "W028",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [],
+      "note": "没问题",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            6,
+            7
+          ]
+        ],
+        "max_dx": 0.0,
+        "cost": 0.0,
+        "same_horizon_side_pairs": [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            6,
+            7
+          ]
+        ]
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "9d1304afc9e057789d7d",
+      "image_code": "S9hNv5qa7GM-07",
+      "worker_id": "W030",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [],
+      "note": "配对没问题,这是这图是oos导致很奇怪",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            2,
+            3
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            12,
+            13
+          ],
+          [
+            14,
+            15
+          ]
+        ],
+        "max_dx": 13.320325203252025,
+        "cost": 23.31056910569083,
+        "same_horizon_side_pairs": [
+          [
+            0,
+            1
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            12,
+            13
+          ]
+        ]
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "4df387c7c1aa91d86cee",
+      "image_code": "S9hNv5qa7GM-07",
+      "worker_id": "W037",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [],
+      "note": "这属于oos,这无法配对就认为是无法计算",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "wide_x_candidate",
+        "pairs": [
+          [
+            2,
+            4
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            3,
+            9
+          ]
+        ],
+        "max_dx": 278.98452012383905,
+        "cost": 282.15479876160975,
+        "same_horizon_side_pairs": [
+          [
+            2,
+            4
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            3,
+            9
+          ]
+        ]
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "75507c55b020fe0f933f",
+      "image_code": "S9hNv5qa7GM-12",
+      "worker_id": "W012",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [
+        [
+          2,
+          3
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            2,
+            3
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            8,
+            9
+          ]
+        ],
+        "max_dx": 4.1710794297353,
+        "cost": 8.3421588594706,
+        "same_horizon_side_pairs": []
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "3a2d7700bd5753ff0789",
+      "image_code": "UwV83HsGsw3-01",
+      "worker_id": "W001",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [
+        [
+          12,
+          13
+        ],
+        [
+          14,
+          15
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            12,
+            13
+          ],
+          [
+            14,
+            15
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            16,
+            17
+          ],
+          [
+            18,
+            19
+          ]
+        ],
+        "max_dx": 5.965048543689363,
+        "cost": 29.82524271844676,
+        "same_horizon_side_pairs": []
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "3a3dec28a207f0a0",
+      "image_code": "UwV83HsGsw3-08",
+      "worker_id": "W028",
+      "status": "deferred",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [],
+      "note": "去掉p11就行",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "odd_remaining_points",
+        "pairs": null
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "9e9998c2efb5ea77",
+      "image_code": "UwV83HsGsw3-09",
+      "worker_id": "W001",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [
+        [
+          8,
+          9
+        ],
+        [
+          12,
+          13
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            8,
+            9
+          ],
+          [
+            12,
+            13
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            14,
+            15
+          ]
+        ],
+        "max_dx": 9.94174757281553,
+        "cost": 35.79029126213595,
+        "same_horizon_side_pairs": []
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "fba833f7e946e03406f0",
+      "image_code": "X7HyMhZNoso-19",
+      "worker_id": "W001",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [
+        [
+          4,
+          5
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            4,
+            5
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            12,
+            13
+          ],
+          [
+            14,
+            15
+          ]
+        ],
+        "max_dx": 9.94174757281553,
+        "cost": 13.918446601941696,
+        "same_horizon_side_pairs": []
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "082bd5bd0d332eff07b8",
+      "image_code": "pRbA3pwrgk9-11",
+      "worker_id": "W001",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [],
+      "note": "这属于oos,这无法配对就认为是无法计算",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            13,
+            14
+          ],
+          [
+            12,
+            15
+          ],
+          [
+            16,
+            17
+          ],
+          [
+            18,
+            19
+          ]
+        ],
+        "max_dx": 13.918446601941753,
+        "cost": 59.65048543689335,
+        "same_horizon_side_pairs": [
+          [
+            5,
+            4
+          ],
+          [
+            6,
+            7
+          ]
+        ]
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "e350ecfeaafde6028fcd",
+      "image_code": "pRbA3pwrgk9-11",
+      "worker_id": "W012",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [],
+      "note": "这属于oos,这无法配对就认为是无法计算",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "wide_x_candidate",
+        "pairs": [
+          [
+            6,
+            8
+          ],
+          [
+            12,
+            10
+          ],
+          [
+            15,
+            13
+          ],
+          [
+            14,
+            7
+          ],
+          [
+            11,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        "max_dx": 98.02036659877797,
+        "cost": 137.64562118126275,
+        "same_horizon_side_pairs": [
+          [
+            15,
+            13
+          ]
+        ]
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "ae6d60e1ea8424ce2357",
+      "image_code": "pRbA3pwrgk9-11",
+      "worker_id": "W032",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [],
+      "note": "这属于oos,这无法配对就认为是无法计算",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            12,
+            13
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            14,
+            15
+          ],
+          [
+            16,
+            17
+          ]
+        ],
+        "max_dx": 3.047619047619037,
+        "cost": 9.14285714285711,
+        "same_horizon_side_pairs": []
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "a1d5efe386cf76ad",
+      "image_code": "rPc6DW4iMge-22",
+      "worker_id": "W001",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            12,
+            13
+          ],
+          [
+            14,
+            15
+          ],
+          [
+            16,
+            17
+          ],
+          [
+            18,
+            19
+          ],
+          [
+            20,
+            21
+          ],
+          [
+            22,
+            23
+          ],
+          [
+            24,
+            25
+          ]
+        ],
+        "max_dx": 13.91844660194181,
+        "cost": 73.56893203883493,
+        "same_horizon_side_pairs": []
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "new_93_3587_7182_W010",
+      "image_code": "uNb9QFRL6hY-19",
+      "worker_id": "W010",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            9,
+            8
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            6,
+            7
+          ]
+        ],
+        "max_dx": 16.96066252587991,
+        "cost": 20.509724471807203,
+        "same_horizon_side_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            10,
+            11
+          ]
+        ]
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "2a11d537c790512c",
+      "image_code": "uNb9QFRL6hY-21",
+      "worker_id": "W001",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            12,
+            13
+          ],
+          [
+            14,
+            15
+          ]
+        ],
+        "max_dx": 9.94174757281553,
+        "cost": 19.88349514563106,
+        "same_horizon_side_pairs": []
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "9d5019675a6c9add",
+      "image_code": "uNb9QFRL6hY-21",
+      "worker_id": "W012",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [
+        [
+          4,
+          5
+        ],
+        [
+          6,
+          7
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            4,
+            5
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            10,
+            11
+          ]
+        ],
+        "max_dx": 4.171079429735414,
+        "cost": 8.342158859470771,
+        "same_horizon_side_pairs": []
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "5a980411975e48d1",
+      "image_code": "uNb9QFRL6hY-21",
+      "worker_id": "W014",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [
+        [
+          4,
+          5
+        ],
+        [
+          7,
+          6
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            4,
+            5
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            10,
+            11
+          ]
+        ],
+        "max_dx": 6.589446589446652,
+        "cost": 7.9073359073358915,
+        "same_horizon_side_pairs": []
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "9e3ad1f70d2c02b5d41f",
+      "image_code": "uNb9QFRL6hY-36",
+      "worker_id": "W010",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [
+        [
+          4,
+          7
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            4,
+            7
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "max_dx": 3.846897679884819,
+        "cost": 4.396454491296936,
+        "same_horizon_side_pairs": [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ]
+      },
+      "case_recheck_requested": true,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "fd8bf72140d024b7cca4",
+      "image_code": "uNb9QFRL6hY-36",
+      "worker_id": "W013",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [
+        [
+          4,
+          7
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            4,
+            7
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "max_dx": 3.846897679884819,
+        "cost": 4.396454491296936,
+        "same_horizon_side_pairs": [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ]
+      },
+      "case_recheck_requested": true,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "93b27e06e9f3739effd4",
+      "image_code": "uNb9QFRL6hY-36",
+      "worker_id": "W014",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "explicit_complete",
+        "pairs": [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            5,
+            6
+          ]
+        ],
+        "max_dx": 0,
+        "same_horizon_side_pairs": [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ]
+      },
+      "case_recheck_requested": true,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "d0c65178d1ddfcac1748",
+      "image_code": "uNb9QFRL6hY-44",
+      "worker_id": "W032",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [
+        [
+          6,
+          7
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            6,
+            7
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        "max_dx": 0.0,
+        "cost": 0.0,
+        "same_horizon_side_pairs": []
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "aa07e998c7330ad3d3eb",
+      "image_code": "uNb9QFRL6hY-60",
+      "worker_id": "W012",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [
+        [
+          6,
+          15
+        ],
+        [
+          14,
+          7
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            6,
+            15
+          ],
+          [
+            14,
+            7
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            12,
+            13
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            8,
+            9
+          ]
+        ],
+        "max_dx": 4.171079429735244,
+        "cost": 12.513238289205788,
+        "same_horizon_side_pairs": []
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "81cd8395dbe20dc23478",
+      "image_code": "uNb9QFRL6hY-60",
+      "worker_id": "W032",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [
+        [
+          8,
+          9
+        ],
+        [
+          11,
+          10
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            8,
+            9
+          ],
+          [
+            11,
+            10
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            12,
+            13
+          ],
+          [
+            15,
+            14
+          ]
+        ],
+        "max_dx": 6.486900135946144,
+        "cost": 14.246987836156222,
+        "same_horizon_side_pairs": []
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "b593f337fea5cb8bf3f2",
+      "image_code": "uNb9QFRL6hY-88",
+      "worker_id": "W001",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [
+        [
+          2,
+          3
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            2,
+            3
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            12,
+            13
+          ],
+          [
+            16,
+            17
+          ],
+          [
+            14,
+            15
+          ],
+          [
+            18,
+            19
+          ]
+        ],
+        "max_dx": 7.953398058252446,
+        "cost": 21.871844660194142,
+        "same_horizon_side_pairs": []
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "2293abd04e66d525f147",
+      "image_code": "wc2JMjhGNzB-46",
+      "worker_id": "W001",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [
+        [
+          6,
+          7
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            6,
+            7
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            10,
+            11
+          ]
+        ],
+        "max_dx": 11.930097087378613,
+        "cost": 25.84854368932031,
+        "same_horizon_side_pairs": []
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "846f35a4fc23776b55a2",
+      "image_code": "wc2JMjhGNzB-46",
+      "worker_id": "W008",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [
+        [
+          6,
+          7
+        ],
+        [
+          9,
+          8
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            6,
+            7
+          ],
+          [
+            9,
+            8
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            10,
+            11
+          ]
+        ],
+        "max_dx": 6.05917159763311,
+        "cost": 9.672688983914043,
+        "same_horizon_side_pairs": []
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "1f27c10411477390",
+      "image_code": "yqstnuAEVhm-31",
+      "worker_id": "W001",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [
+        [
+          2,
+          3
+        ],
+        [
+          5,
+          4
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            2,
+            3
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            12,
+            13
+          ],
+          [
+            14,
+            15
+          ],
+          [
+            16,
+            17
+          ],
+          [
+            18,
+            19
+          ]
+        ],
+        "max_dx": 9.94174757281553,
+        "cost": 31.813592233009672,
+        "same_horizon_side_pairs": []
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "026b9a1fe7ba6a07",
+      "image_code": "yqstnuAEVhm-31",
+      "worker_id": "W006",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            17,
+            16
+          ],
+          [
+            19,
+            18
+          ],
+          [
+            14,
+            15
+          ],
+          [
+            12,
+            13
+          ]
+        ],
+        "max_dx": 8.325203252032452,
+        "cost": 24.97560975609764,
+        "same_horizon_side_pairs": []
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    },
+    {
+      "object_id": "a3975721377143bb",
+      "image_code": "yqstnuAEVhm-32",
+      "worker_id": "W001",
+      "status": "checked",
+      "review_mode": "corrections_only",
+      "explicit_pairs": [
+        [
+          4,
+          5
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          18,
+          19
+        ],
+        [
+          20,
+          21
+        ],
+        [
+          22,
+          23
+        ],
+        [
+          24,
+          25
+        ]
+      ],
+      "note": "",
+      "implicit_rule": "未修改部分按x重新配对（用户本轮澄清）",
+      "candidate": {
+        "status": "x_candidate",
+        "pairs": [
+          [
+            4,
+            5
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            18,
+            19
+          ],
+          [
+            20,
+            21
+          ],
+          [
+            22,
+            23
+          ],
+          [
+            24,
+            25
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            12,
+            13
+          ],
+          [
+            14,
+            15
+          ],
+          [
+            16,
+            17
+          ]
+        ],
+        "max_dx": 11.93009708737867,
+        "cost": 23.860194174757396,
+        "same_horizon_side_pairs": []
+      },
+      "case_recheck_requested": false,
+      "applied": false,
+      "order_confirmed": false
+    }
+  ],
+  "applied": false
+}

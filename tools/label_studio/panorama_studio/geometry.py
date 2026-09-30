@@ -16,15 +16,21 @@ SCHEMA = "panorama_studio_v1"
 HORIZON_DEG = 0.5  # Numerical guard, not an annotation-quality threshold.
 
 
-def pixel_ray(x, y, width, height):
+def pixel_ray(x, y, width, height, *, coordinate_convention="continuous"):
+    if coordinate_convention not in {"continuous", "pixel_center"}:
+        raise ValueError("unknown_coordinate_convention")
+    if coordinate_convention == "pixel_center": x,y=x+.5,y+.5
     u, v = 2*math.pi*(x/width-.5), math.pi*(.5-y/height)
     return np.array([math.cos(v)*math.sin(u), math.sin(v), -math.cos(v)*math.cos(u)])
 
 
-def project_pixel(point, width, height):
+def project_pixel(point, width, height, *, coordinate_convention="continuous"):
+    if coordinate_convention not in {"continuous", "pixel_center"}:
+        raise ValueError("unknown_coordinate_convention")
+    offset=.5 if coordinate_convention=="pixel_center" else 0
     x,y,z = point
-    return [(math.atan2(x,-z)/(2*math.pi)+.5)*width % width,
-            (.5-math.atan2(y,math.hypot(x,z))/math.pi)*height]
+    return [((math.atan2(x,-z)/(2*math.pi)+.5)*width % width)-offset,
+            (.5-math.atan2(y,math.hypot(x,z))/math.pi)*height-offset]
 
 
 def read_layout(path, width=1024, height=512):
@@ -43,7 +49,7 @@ def read_layout(path, width=1024, height=512):
                 "bottom":dict(zip(("x","y"),points[i+1].tolist()))} for i in range(0,len(points),2)]}
 
 
-def normalize(payload):
+def normalize(payload, *, coordinate_convention="continuous"):
     w,h = float(payload["width"]),float(payload["height"])
     if not all(math.isfinite(v) and v>0 for v in [w,h]):
         raise ValueError("width and height must be finite and positive")
@@ -57,7 +63,8 @@ def normalize(payload):
             x,y = float(item[endpoint]["x"]),float(item[endpoint]["y"])
             if mode=="ls_percent": x,y=x*w/100,y*h/100
             if not all(math.isfinite(v) for v in [x,y]): raise ValueError("coordinates must be finite")
-            if not (0<=x<=w and 0<=y<=h): raise ValueError("coordinates outside declared image bounds")
+            offset=.5 if coordinate_convention=="pixel_center" else 0
+            if not (0<=x+offset<=w and 0<=y+offset<=h): raise ValueError("coordinates outside declared image bounds")
             pair[endpoint]=[x,y]
         pairs.append(pair)
     if len(pairs)<3: raise ValueError("at least three ordered pairs required")
@@ -96,17 +103,35 @@ def triangulate(points):
     return triangles
 
 
-def geometry_issues(points):
+def footprint_state(points, *, boundary_tolerance=1e-12):
+    """几何、相机位置和可见核分别诊断；数值 guard 不作为审核裁决。"""
     p=np.asarray(points,float)
     issues=[]
+    if p.ndim!=2 or p.shape[1:]!=(2,) or len(p)<3 or not np.isfinite(p).all():
+        return dict(polygon_valid=False,issues=["invalid_footprint"],
+                    camera_relation="unavailable",camera_in_visible_kernel=None)
     if np.min(np.linalg.norm(p-np.roll(p,1,axis=0),axis=1))<1e-7:
         issues.append("duplicate_or_zero_edge")
     poly=Polygon(p)
     if not poly.is_valid or poly.area<1e-8:
-        return issues+["invalid_footprint"]
+        return dict(polygon_valid=False,issues=issues+["invalid_footprint"],
+                    camera_relation="unavailable",camera_in_visible_kernel=None)
+    origin=Point(0,0)
+    # 射线往返的舍入误差；只判断数值上的边界，不是人员质量阈值。
+    on_boundary=not issues and boundary_tolerance>0 and poly.boundary.distance(origin)<=boundary_tolerance*max(1,np.linalg.norm(p,axis=1).max())
+    relation="boundary" if on_boundary else "inside" if poly.contains(origin) else "boundary" if poly.covers(origin) else "outside"
     orientation=1 if sum(cross(p[i],p[(i+1)%len(p)]) for i in range(len(p)))>0 else -1
-    if not poly.contains(Point(0,0)) or any(orientation*cross(p[(i+1)%len(p)]-p[i],-p[i]) < -1e-7
-                                          for i in range(len(p))):
+    kernel=relation=="inside" and all(orientation*cross(p[(i+1)%len(p)]-p[i],-p[i])>=-1e-7
+                                     for i in range(len(p)))
+    return dict(polygon_valid=not issues,issues=issues,camera_relation=relation,
+                camera_in_visible_kernel=bool(kernel))
+
+
+def geometry_issues(points):
+    """历史合并诊断，保留原消费者及拟合行为。"""
+    state=footprint_state(points,boundary_tolerance=0)  # 历史精确contains判定保持不变。
+    issues=list(state['issues'])
+    if state['camera_relation']!='unavailable' and not state['camera_in_visible_kernel']:
         issues.append("camera_visibility_unresolved")
     return issues
 
@@ -140,7 +165,7 @@ def angular_errors(points,rays):
     return np.arctan2(np.linalg.norm(np.cross(unit,rays),axis=1),np.sum(unit*rays,axis=1))
 
 
-def fit_manhattan(floor,ceiling,pairs,w,h,frame):
+def fit_manhattan(floor,ceiling,pairs,w,h,frame, *, coordinate_convention="continuous"):
     p=np.asarray(floor)[:,[0,2]]; n=len(p)
     basis=np.array([[math.cos(frame),math.sin(frame)],[-math.sin(frame),math.cos(frame)]])
     local=p@basis.T; edges=np.roll(local,-1,axis=0)-local
@@ -154,8 +179,8 @@ def fit_manhattan(floor,ceiling,pairs,w,h,frame):
     # Exact equalities in a null-space basis avoid redundant constraints at collinear corners.
     kernel=null_space(constraints)
     start=np.r_[kernel.T@local.ravel(),max(.05,float(np.median(np.array(ceiling)[:,1])))]
-    top_rays=np.array([pixel_ray(*pair["top"],w,h) for pair in pairs])
-    bottom_rays=np.array([pixel_ray(*pair["bottom"],w,h) for pair in pairs])
+    top_rays=np.array([pixel_ray(*pair["top"],w,h,coordinate_convention=coordinate_convention) for pair in pairs])
+    bottom_rays=np.array([pixel_ray(*pair["bottom"],w,h,coordinate_convention=coordinate_convention) for pair in pairs])
     signs=np.sign(edges[np.arange(n),direction])
     def decode(v):
         coords=(kernel@v[:-1]).reshape(n,2); world=coords@basis
@@ -176,20 +201,30 @@ def fit_manhattan(floor,ceiling,pairs,w,h,frame):
     dev=np.degrees(errors(result.x))
     return {"status":"ok","floor":f.tolist(),"ceiling":c.tolist(),
             "floor_triangles":triangulate(f[:,[0,2]]),"ceiling_triangles":triangulate(c[:,[0,2]]),
-            "reprojected_pairs":[{"source_pair_id":pair["source_pair_id"],"top":project_pixel(c[i],w,h),
-                                  "bottom":project_pixel(f[i],w,h)} for i,pair in enumerate(pairs)],
+            "reprojected_pairs":[{"source_pair_id":pair["source_pair_id"],"top":project_pixel(c[i],w,h,coordinate_convention=coordinate_convention),
+                                  "bottom":project_pixel(f[i],w,h,coordinate_convention=coordinate_convention)} for i,pair in enumerate(pairs)],
             "residual_mean_deg":float(dev.mean()),"residual_max_deg":float(dev.max()),
             "per_pair_residual_deg":[{"top":float(dev[i]),"bottom":float(dev[i+n])} for i in range(n)],
             "metrics":metrics(f,c,frame),"solver_message":str(result.message),
             "axis_assignment":direction.tolist(),"iterations":int(result.nit)}
 
 
-def analyze(payload, *, compute_fit=True):
-    w,h,pairs=normalize(payload)
+def analyze(payload, *, compute_fit=True, coordinate_convention="continuous"):
+    if coordinate_convention not in {"continuous", "pixel_center"}:
+        raise ValueError("unknown_coordinate_convention")
+    w,h,pairs=normalize(payload,coordinate_convention=coordinate_convention)
     floor,ceiling,issues=[],[],[]
+    declared_floor,bottom_issues=[],[]
+    bottom_margins,top_margins=[],[]
     for pair in pairs:
         top,bottom=pair["top"],pair["bottom"]
-        rt,rf=pixel_ray(*top,w,h),pixel_ray(*bottom,w,h)
+        rt,rf=[pixel_ray(*p,w,h,coordinate_convention=coordinate_convention) for p in (top,bottom)]
+        bm,tm=abs(math.asin(rf[1])),abs(math.asin(rt[1]))
+        bottom_margins.append(math.degrees(bm));top_margins.append(math.degrees(tm))
+        # 独立底点重建：墙顶不可用不使已声明足迹同时丢失。
+        bottom_reason="wrong_hemisphere" if rf[1]>=0 else "near_horizon" if bm<math.radians(HORIZON_DEG) else None
+        declared_floor.append(None if bottom_reason else (-rf/rf[1]).tolist())
+        if bottom_reason: bottom_issues.append(bottom_reason)
         if abs((top[0]-bottom[0]+w/2)%w-w/2)>1e-6: issues.append("vertical_pair_mismatch")
         if rf[1]>=0 or rt[1]<=0:
             issues.append("wrong_hemisphere"); floor.append(None); ceiling.append(None); continue
@@ -212,9 +247,20 @@ def analyze(payload, *, compute_fit=True):
     raw["issues"]=list(dict.fromkeys(issues))
     blockers=[i for i in raw["issues"] if i!="vertical_pair_mismatch"]
     raw["surface_valid"]=not any(i!="camera_visibility_unresolved" for i in blockers)
+    state=footprint_state(np.array(declared_floor)[:,[0,2]]) if not bottom_issues else dict(
+        polygon_valid=None,issues=list(dict.fromkeys(bottom_issues)),
+        camera_relation="unavailable",camera_in_visible_kernel=None)
+    footprint_reason=';'.join(state['issues']) or None
+    wall_reason=footprint_reason or ';'.join(i for i in raw['issues'] if i!='camera_visibility_unresolved') or None
+    if not wall_reason and state['camera_relation']!='inside': wall_reason='camera_not_strictly_inside'
+    raw.update(declared_floor=declared_floor,**{k:v for k,v in state.items() if k!='issues'},
+        bottom_horizon_margin_deg=min(bottom_margins),top_horizon_margin_deg=min(top_margins),
+        representations={
+            'declared_footprint':dict(status='unavailable' if footprint_reason else 'ok',reason=footprint_reason),
+            'declared_column_wall_band':dict(status='unavailable' if wall_reason else 'ok',reason=wall_reason)})
     fit=({"status":"not_requested"} if not compute_fit else
-         {"status":"blocked","reasons":blockers} if blockers else fit_manhattan(floor,ceiling,pairs,w,h,frame))
+         {"status":"blocked","reasons":blockers} if blockers else fit_manhattan(floor,ceiling,pairs,w,h,frame,coordinate_convention=coordinate_convention))
     return {"schema_version":SCHEMA,"width":w,"height":h,"pairs":pairs,"raw":raw,"fit":fit,
-            "camera_height":1,"scale_unit":"relative",
+            "camera_height":1,"scale_unit":"relative","coordinate_convention":coordinate_convention,
             "assumptions":["horizontal_floor","ceiling_range_from_paired_floor","no_annotation_writeback"],
             "numerical_guards":{"horizon_degrees":HORIZON_DEG,"axis_ambiguity_degrees":40}}

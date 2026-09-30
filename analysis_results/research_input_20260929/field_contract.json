@@ -1,0 +1,18 @@
+{
+  "schema": "final_review_research_input_v1",
+  "documentation": "docs/thesis_main/最终审核数据接入_20260929.md",
+  "source_identity_fields": [
+    "preprocessed_points",
+    "links_zero_based",
+    "point_labels"
+  ],
+  "final_ring_fields": [
+    "points_1024x512",
+    "matterport_links_zero_based",
+    "ordered_source_point_indices",
+    "ordered_source_pair_indices"
+  ],
+  "eligibility": "独立票候选、主质量gate、主共识gate分别检查；candidate不等于方法可评价。",
+  "population": "259研究图加2张仅人工GT参考图；3152人员记录全部保留。",
+  "unavailable": "不可配对points_1024x512=null；默认未审环不冒充人工确认。"
+}

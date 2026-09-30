@@ -1,0 +1,41 @@
+{
+  "scope": "Independent local audit; selected records only, no full-population evaluation",
+  "selected_source_records_checked": 15,
+  "selected_images": 4,
+  "source_mismatches": 0,
+  "actual_repo_reconstructions_checked": 29,
+  "max_coordinate_difference": 0.0,
+  "actual_repo_masks_identical": 27,
+  "matching_mask_unavailable": [
+    {
+      "id": "R03288",
+      "reason": "camera_not_strictly_inside"
+    },
+    {
+      "id": "R03285",
+      "reason": "camera_not_strictly_inside"
+    }
+  ],
+  "actual_repo_collinear_example": {
+    "bev_iou": 1.0,
+    "median_height_proxy_iou": 0.7142857142857144
+  },
+  "same_boundary_two_roofs": {
+    "boundary_unchanged": true,
+    "volumes": [
+      34.666666666666686,
+      49.33333333333336
+    ],
+    "wall_mask_iou_between_roofs": 0.9158439606770887,
+    "column_vs_mesh_iou": [
+      0.9158439606770887,
+      1.0
+    ]
+  },
+  "sloped_planar_roof_column_mesh_iou": 1.0,
+  "rerun_numeric_tables_checked": 7,
+  "rerun_mismatches": [],
+  "rerun_max_numeric_difference": 1.4210854715202004e-14,
+  "metadata_caution": "recomputed/run_metadata.json full_panel_programmatically_verified=true means selected records checked against panel, NOT full-population validation",
+  "changes": "No source annotations, method contract, production functions, or GitHub content changed"
+}

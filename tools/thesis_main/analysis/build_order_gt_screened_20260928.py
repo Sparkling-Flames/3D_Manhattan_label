@@ -202,6 +202,8 @@ def build():
     for suffix in ('js','css'):
         page=page.replace('"order_studio.'+suffix+'"','"../../tools/thesis_main/analysis/order_studio_20260926.'+suffix+'"')
     page=page.replace('</head>','<script defer src="../../tools/thesis_main/analysis/order_gt_screened_20260928.js"></script>\n</head>')
+    if (ROOT/'analysis_results/order_pattern_recall_20260929/accepted_review.js').exists():
+        page=page.replace('<script defer src="data.js"></script>','<script defer src="data.js"></script><script defer src="../order_pattern_recall_20260929/accepted_review.js"></script>')
     (OUT/'index.html').write_text(page,encoding='utf-8')
     lookup={o['object_id']:o for o in objects}
     confirmed=[ordered_layout(lookup[r['object_id']],prior[r['object_id']]['order']) for r in inventory if r['state']=='confirmed']

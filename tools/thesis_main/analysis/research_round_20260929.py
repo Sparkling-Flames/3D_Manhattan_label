@@ -15,7 +15,7 @@ from shapely.geometry import Point, Polygon
 
 from tools.label_studio.panorama_studio.geometry import analyze
 from tools.thesis_main.analysis.consensus_region_20260923 import wall_mask, aggregate
-from tools.thesis_main.analysis.layout_metric_probe_20260926 import compare_regions, polygon_metrics
+from tools.thesis_main.analysis.layout_metric_probe_20260926 import compare_regions, polygon_metrics, bev_range_metrics
 
 REQUIRED = {'id','worker','condition','points','cleaning','independent','consensus_eligible',
             'quality_candidate','order_status','geometry_status'}
@@ -43,27 +43,50 @@ def validate_panel(panel):
         if len(versions)!=len(set(versions)):raise ValueError('duplicate_reference_version')
 
 
-def reconstruct(record):
-    """Continuous x/W convention used by the reviewed 3D viewer; no simplification."""
-    if record['points'] is None:return dict(status='unavailable',reason='pairing_unavailable')
+def reconstruct(record, *, coordinate_convention='continuous'):
+    """声明环；历史默认连续x/W。表示状态独立于审核和人员资格。"""
+    def unavailable(reason):
+        return dict(status='unavailable',reason=reason,floor=None,heights=None,
+                    polygon_valid=None,camera_relation='unavailable',camera_in_visible_kernel=None,
+                    wall_top_available=False,order_status=record.get('order_status'),ring_confirmed=record.get('ring_confirmed'),
+                    coordinate_convention=coordinate_convention,
+                    source_point_indices=record.get('source_point_indices'),source_pair_indices=record.get('source_pair_indices'),
+                    source_point_labels=record.get('source_point_labels'),
+                    representations={k:dict(status='unavailable',reason=reason) for k in
+                                     ('declared_footprint','declared_column_wall_band')})
+    if coordinate_convention not in ('continuous','pixel_center'):raise ValueError('unknown_coordinate_convention')
+    if record['points'] is None:return unavailable('pairing_unavailable')
     p=np.asarray(record['points'],float)
     if p.ndim!=2 or p.shape[1]!=2 or len(p)<6 or len(p)%2 or not np.isfinite(p).all():
-        return dict(status='unavailable',reason='invalid_point_array')
+        return unavailable('invalid_point_array')
     pairs=p.reshape(-1,2,2)
+    identities=record.get('source_pair_indices')
+    if identities is not None and (len(identities)!=len(pairs) or len(set(identities))!=len(identities)):
+        return unavailable('invalid_source_pair_identity')
     payload=dict(width=1024,height=512,coordinate_mode='pixels',ordered_pairs=[
-        dict(top=dict(zip(('x','y'),a)),bottom=dict(zip(('x','y'),b))) for a,b in pairs])
-    try:raw=analyze(payload,compute_fit=False)['raw']
-    except ValueError as e:return dict(status='unavailable',reason=str(e))
-    if not raw['surface_valid']:
-        return dict(status='unavailable',reason=';'.join(raw['issues']))
-    floor=np.asarray(raw['floor'])[:,[0,2]];height=np.asarray(raw['ceiling'])[:,1]+1
-    return dict(status='ok',reason=None,floor=floor,heights=height,metrics=raw['metrics'],
-                issues=raw['issues'],pair_count=len(pairs))
+        dict(source_pair_id=str(identities[i] if identities is not None else i),
+             top=dict(zip(('x','y'),a)),bottom=dict(zip(('x','y'),b))) for i,(a,b) in enumerate(pairs)])
+    try:raw=analyze(payload,compute_fit=False,coordinate_convention=coordinate_convention)['raw']
+    except ValueError as e:return unavailable(str(e))
+    floor=np.asarray(raw['declared_floor'])[:,[0,2]] if all(p is not None for p in raw['declared_floor']) else None
+    height=np.asarray(raw['ceiling'])[:,1]+1 if all(p is not None for p in raw['ceiling']) else None
+    return dict(status='ok' if raw['surface_valid'] else 'unavailable',
+                reason=None if raw['surface_valid'] else ';'.join(raw['issues']),
+                floor=floor,heights=height,metrics=raw['metrics'],issues=raw['issues'],pair_count=len(pairs),
+                polygon_valid=raw['polygon_valid'],camera_relation=raw['camera_relation'],
+                camera_in_visible_kernel=raw['camera_in_visible_kernel'],
+                wall_top_available=height is not None and 'vertical_pair_mismatch' not in raw['issues'],
+                bottom_horizon_margin_deg=raw['bottom_horizon_margin_deg'],top_horizon_margin_deg=raw['top_horizon_margin_deg'],
+                coordinate_convention=coordinate_convention,order_status=record.get('order_status'),ring_confirmed=record.get('ring_confirmed'),
+                source_point_indices=record.get('source_point_indices'),source_pair_indices=record.get('source_pair_indices'),
+                source_point_labels=record.get('source_point_labels'),
+                representations=raw['representations'])
 
 
 def candidate_geometry(record, geometry=None):
     g=reconstruct(record) if geometry is None else geometry
-    if g['status']!='ok':return dict(status=g['status'],reason=g['reason'])
+    state={k:g[k] for k in ('polygon_valid','camera_relation','camera_in_visible_kernel','wall_top_available','representations')}
+    if g['status']!='ok':return dict(status=g['status'],reason=g['reason'],**state)
     p,h=g['floor'],g['heights'];poly=Polygon(p)
     lengths=np.linalg.norm(np.roll(p,-1,axis=0)-p,axis=1)
     angles=np.arctan2(*(np.roll(p,-1,axis=0)-p)[:,::-1].T)
@@ -73,16 +96,15 @@ def candidate_geometry(record, geometry=None):
                 camera_inside=bool(poly.contains(Point(0,0))),
                 direction_length_weighted_deg=float(np.average(residual,weights=lengths)),
                 height_mad_relative=float(np.median(abs(h-np.median(h)))/np.median(h)),
-                **g['metrics'])
+                **g['metrics'],**state)
 
 
-def visible_wall_mask(g,width=512,height=256):
-    """Nearest positive ray/wall intersection, top linearly interpolated in 3D.
-
-    Walls use the supplied physical ring; non-star-shaped simple polygons work.
-    Non-horizontal ceilings are a piecewise wall-top model, not a room volume.
-    """
-    if g['status']!='ok':raise ValueError(g['reason'])
+def declared_column_wall_mask(g,width=512,height=256):
+    """声明底环首交＋线性墙顶的列式墙带；不声明一般屋顶真实可见性。"""
+    if not isinstance(width,int) or not isinstance(height,int) or min(width,height)<2:
+        raise ValueError('invalid_resolution')
+    state=g['representations']['declared_column_wall_band']
+    if state['status']!='ok':raise ValueError(state['reason'])
     p,h=g['floor'],g['heights']
     if not Polygon(p).contains(Point(0,0)):raise ValueError('camera_not_strictly_inside')
     longitude=2*np.pi*((np.arange(width)+.5)/width-.5)
@@ -99,6 +121,9 @@ def visible_wall_mask(g,width=512,height=256):
     if not np.isfinite(distance).all():raise ValueError('uncovered_ray')
     lat=np.pi*(.5-(np.arange(height)+.5)/height)
     return (lat[:,None]<=np.arctan2(top_height,distance)) & (lat[:,None]>=-np.arctan2(1,distance))
+
+
+visible_wall_mask = declared_column_wall_mask  # 历史导入名保留；新的调用点显式命名表示。
 
 
 def iou(a,b):
@@ -187,14 +212,14 @@ def coverage(panel):
     return summary,images,people
 
 
-def run(panel,out,seeds=100,width=512):
+def run(panel,out,seeds=100,width=512, *, include_legacy_proxy=False):
     validate_panel(panel);out=Path(out);out.mkdir(parents=True,exist_ok=True)
     height=width//2
     summary,image_rows,people=coverage(panel)
     write_csv(out/'image_coverage.csv',image_rows);write_csv(out/'worker_coverage.csv',people)
     quality=[];geometry=[];endpoints=[];replays=[];failures=[]
     for number,im in enumerate(panel['images'],1):
-        gs={};masks={'explicit_visible':{},'legacy_x_envelope':{}}
+        gs={};mask_failures={};masks={'declared_column_wall_band':{},'legacy_x_envelope_continuous':{},'legacy_x_envelope_pixel_center':{}}
         relevant=[r for r in im['annotations'] if r['cleaning'] in ('retained','retained_pending')]
         objects=relevant+im['references']
         for r in objects:
@@ -203,12 +228,14 @@ def run(panel,out,seeds=100,width=512):
                                  **candidate_geometry(r,g)))
             for representation in masks:
                 try:
-                    if representation=='explicit_visible':mask=visible_wall_mask(g,width,height)
+                    if representation=='declared_column_wall_band':mask=declared_column_wall_mask(g,width,height)
                     else:
                         if r['points'] is None:raise ValueError('pairing_unavailable')
-                        mask=wall_mask(np.asarray(r['points']).reshape(-1,2,2),width,height)
+                        convention='continuous' if representation.endswith('_continuous') else 'pixel_center'
+                        mask=wall_mask(np.asarray(r['points']).reshape(-1,2,2),width,height,coordinate_convention=convention)
                     masks[representation][r['id']]=mask
                 except ValueError as e:
+                    mask_failures[representation,r['id']]=str(e)
                     failures.append(dict(image=im['code'],id=r['id'],representation=representation,reason=str(e)))
         for r in relevant:
             for ref in im['references']:
@@ -217,16 +244,24 @@ def run(panel,out,seeds=100,width=512):
                           independent=r['independent'],order_status=r['order_status'])
                 for representation,cache in masks.items():
                     ok=r['id'] in cache and ref['id'] in cache
-                    metrics=compare_regions(cache[r['id']],cache[ref['id']]) if ok else {}
+                    metrics=compare_regions(cache[r['id']],cache[ref['id']]) if ok else dict(iou=None,
+                        reason=';'.join(key+':'+mask_failures[representation,key] for key in (r['id'],ref['id']) if key not in cache))
                     metrics={k:v for k,v in metrics.items() if not k.startswith('scores_')}
+                    if representation=='declared_column_wall_band':metrics['declared_column_wall_band_iou']=metrics.get('iou')
                     quality.append(dict(**base,representation=representation,status='ok' if ok else 'unavailable',**metrics))
                 a,b=gs[r['id']],gs[ref['id']]
-                if a['status']=='ok' and b['status']=='ok':
-                    metrics=polygon_metrics(a['floor'],b['floor'],float(np.median(a['heights'])),float(np.median(b['heights'])))
-                    metrics.pop('scores',None)
-                    metrics['prism_surrogate_iou']=metrics.pop('volume_iou')
-                    quality.append(dict(**base,representation='bev_and_prism_proxy',**metrics))
-                else:quality.append(dict(**base,representation='bev_and_prism_proxy',status='unavailable'))
+                available=all(g['representations']['declared_footprint']['status']=='ok' for g in (a,b))
+                metrics=bev_range_metrics(a['floor'],b['floor']) if available else dict(
+                    status='unavailable',bev_range_iou=None,
+                    reason=';'.join(g['representations']['declared_footprint']['reason'] for g in (a,b)
+                                    if g['representations']['declared_footprint']['reason']))
+                quality.append(dict(**base,representation='bev_range',**metrics))
+                if include_legacy_proxy:
+                    metrics=polygon_metrics(a['floor'],b['floor'],float(np.median(a['heights'])),float(np.median(b['heights']))) if a['status']==b['status']=='ok' else dict(
+                        status='unavailable',volume_iou=None,reason='surface_reconstruction_unavailable')
+                    proxy=metrics['volume_iou']
+                    quality.append(dict(**base,representation='historical_vertex_median_prism_proxy',
+                        status=metrics['status'],reason=metrics.get('reason'),prism_surrogate_iou=proxy))
         for condition in sorted({r['condition'] for r in relevant}):
             group=sorted([r for r in relevant if r['condition']==condition and r['independent'] and r['consensus_eligible']],key=lambda r:r['id'])
             if not group:continue
@@ -242,21 +277,23 @@ def run(panel,out,seeds=100,width=512):
                                               method=method,reference=ref['version'],k=len(group),used_k=len(available),
                                               algorithm_status=result['status'],evaluation_status='ok' if ok else 'unavailable',
                                               reason=result.get('reason'),**metrics))
-                if representation=='explicit_visible' and seeds:
+                if representation=='declared_column_wall_band' and seeds:
                     refs={r['version']:cache[r['id']] for r in im['references'] if r['id'] in cache}
                     replays.extend(dict(image=im['code'],building=im['building'],condition=condition,representation=representation,
                                         **row) for row in summarize_replays(group,{r['id']:cache[r['id']] for r in available},refs,seeds))
         if number%10==0:print(f'images {number}/{len(panel["images"])}',flush=True)
     for name,rows in [('individual_quality',quality),('geometry_diagnostics',geometry),('consensus_endpoints',endpoints),
                       ('replay_summary',replays),('representation_failures',failures)]:write_csv(out/(name+'.csv'),rows)
-    summary.update(schema='research_round_baseline_v1',raster=[width,height],replay_seeds=seeds,
+    summary.update(schema='research_round_baseline_v2',raster=[width,height],replay_seeds=seeds,
+                   historical_vertex_median_proxy_requested=include_legacy_proxy,
                    quality_rows=len(quality),endpoint_rows=len(endpoints),replay_rows=len(replays),
                    quality_status=dict(Counter((r['representation']+':'+r['status']) for r in quality)),
                    endpoint_status=dict(Counter(r['algorithm_status'] for r in endpoints)),
                    failures=dict(Counter(r['representation']+':'+r['reason'] for r in failures)),
                    interpretation='GT-relative diagnostics; not worker ability, semantic correctness, difficulty labels or an identified noise decomposition',
-                   coordinate_conventions={'explicit_visible':'continuous x/W as reviewed viewer; raster rays at cell centres',
-                                           'legacy_x_envelope':'historical +0.5 pixel-centre convention and x sorting'},
+                   coordinate_conventions={'declared_column_wall_band':'continuous x/W viewer candidate; raster cell centres; unknown roof',
+                                           'legacy_x_envelope_continuous':'continuous x/W and x sorting',
+                                           'legacy_x_envelope_pixel_center':'historical +0.5 pixel-centre convention and x sorting'},
                    source_manifest=panel.get('source_manifest'))
     write_json(out/'summary.json',summary)
     return summary
@@ -266,10 +303,11 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--input',type=Path,required=True);parser.add_argument('--out',type=Path,required=True)
     parser.add_argument('--seeds',type=int,default=100);parser.add_argument('--width',type=int,default=512)
+    parser.add_argument('--include-legacy-proxy',action='store_true',help='历史顶点中位墙高代理，非真实体积或主分数')
     args=parser.parse_args()
     if args.seeds<0 or args.width<4 or args.width%2:parser.error('nonnegative seeds and positive even width required')
     panel=json.loads(args.input.read_text(encoding='utf-8'))
-    print(json.dumps(run(panel,args.out,args.seeds,args.width),ensure_ascii=False))
+    print(json.dumps(run(panel,args.out,args.seeds,args.width,include_legacy_proxy=args.include_legacy_proxy),ensure_ascii=False))
 
 
 if __name__=='__main__':main()

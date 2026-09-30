@@ -1,0 +1,14 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>上下点配对 · 15份</title>
+<style>body{font:16px system-ui;margin:20px;background:#f6f8f6;color:#203c35}header,.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap}button,select,input,textarea{font:inherit;padding:8px;border:1px solid #aabdb5;border-radius:5px}button{cursor:pointer;background:white}button.primary{background:#276554;color:white}button:disabled{opacity:.5;cursor:default}#viewport{overflow:auto;background:#dde4df;border-radius:8px}canvas{display:block;width:100%;touch-action:manipulation}#point-buttons{display:flex;gap:5px;flex-wrap:wrap;margin:12px 0}#point-buttons button{padding:6px}#point-buttons .selected{background:#ffdd80}#pair-list{display:flex;flex-wrap:wrap;gap:8px;padding:0;list-style:none}#pair-list li{background:white;padding:6px;border:1px solid #bccdc5;border-radius:6px}#status{font-weight:600;white-space:pre-wrap}#note{width:min(95%,800px)}details{margin-top:18px}#problem{white-space:pre-wrap}button:focus-visible,select:focus-visible{outline:3px solid #eaab38}#progress{margin-left:auto}</style>
+<script defer src="data.js"></script><script defer src="../../tools/thesis_main/analysis/pairing_review_20260929.js"></script></head><body>
+<header><h1>补齐配对复核</h1><select id="mode" aria-label="查看范围"><option value="pending">待处理</option><option value="all">全部15份</option></select><button id="previous">← 上一份</button><select id="case" aria-label="标注对象"></select><button id="next">下一份 →</button><span id="progress"></span></header>
+<h2 id="title"></h2><p id="problem"></p>
+<p>本轮只配对，不排序。核对<strong>完整配对预览</strong>：绿色为你上轮明确配对，橙色为按原始x补齐，蓝色为本轮手动配对。有问题时解除该对，再依次选择上点、下点；正确时直接确认。灰色叉号为拟删除点，P点号始终不变。</p><p><label>修点预览方案 <select id="proposal"></select></label> <span id="proposal-hint"></span></p>
+<div class="toolbar"><label>放大 <input id="zoom" type="range" min="1" max="4" step=".25" value="1"></label><label><input id="labels" type="checkbox" checked>固定点号</label><button id="cancel">取消选点</button><button id="clear">恢复当前预览配对</button></div>
+<div id="viewport"><canvas id="panorama" width="2048" height="1024" aria-label="全景及有效点，使用下方点号按钮亦可配对"></canvas></div>
+<div id="point-buttons" aria-label="固定点位选择"></div><p id="selection"></p><ul id="pair-list"></ul>
+<p id="coverage"></p><textarea id="note" rows="2" aria-label="配对备注" placeholder="配对问题或暂缓原因；缺点、多点、位置不确定请记录"></textarea>
+<div class="toolbar"><button id="save">保存草稿</button><button class="primary" id="confirm">确认本图配对</button><button id="defer">仍有问题／暂缓</button></div><p id="status" role="status"></p>
+<details open><summary>记录与备份</summary><p>本页独立保存，确认后留在当前图。完成后导出JSON交回；已确认可继续编辑，任何配对改动会回到草稿。</p><button id="export">导出配对审核JSON</button><label>导入 <input id="import" type="file" accept=".json"></label></details>
+<details><summary>原始身份与来源</summary><pre id="source"></pre></details>
+</body></html>

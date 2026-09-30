@@ -1,0 +1,8 @@
+{
+  "primary_key": "object_id",
+  "x_candidate": "按周期x排序，比较两种相邻配对起点，最小总周期dx；y小者为上点；仅诊断候选，不证明语义正确",
+  "horizon_reference": "旧规则：255.5中线上下分类，周期x匈牙利唯一匹配，51.2px边界及平局拒绝",
+  "known_limitations": "相邻x候选可能配到同侧语义点；极密集/同x/遮挡仍需语义检查；候选差异不是错误数量",
+  "pairing_return": "局部明确配对优先，剩余x候选独立保存；deferred不应用；uNb36用户明确要求重核",
+  "old_completion": "1272确认保留原绑定证据；换配对不静默复用旧固定点对ID或确认环序"
+}

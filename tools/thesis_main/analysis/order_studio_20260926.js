@@ -8,6 +8,7 @@ controls.className = 'order-controls';
 controls.innerHTML = '<label>查找图片 <input id="image-search" placeholder="如 B6ByNegPMKs-11"></label><label>查找人员 / 来源 <input id="worker-search" placeholder="如 W021"></label><label><input id="show-points" type="checkbox" checked>标注点</label><label><input id="show-point-ids" type="checkbox" checked>原点号</label><label><input id="show-edges" type="checkbox">连接线</label><span id="filter-note" role="status"></span>';
 document.querySelector('.study-heading').after(controls);
 const identity = document.createElement('p');identity.id = 'order-identity';controls.after(identity);
+const geometryNotice=document.createElement('p');geometryNotice.id='geometry-limitation';geometryNotice.hidden=true;identity.after(geometryNotice);
 const sourceBadge=document.createElement('span');sourceBadge.id='source-badge';document.querySelector('.source-label').append(sourceBadge);
 document.querySelector('h1').textContent = '独立角点顺序工作台';
 document.querySelector('.inspector-title h3').textContent = '点位与顺序';
@@ -30,6 +31,9 @@ function pairDisplay(index){
 }
 function describeSource(){
   const source=activeSource();if(!source)return;
+  const roleLimited=geometry?.raw?.issues?.includes('wrong_hemisphere');
+  geometryNotice.hidden=!roleLimited;
+  geometryNotice.textContent=roleLimited?'表示限制：部分上端点位于地平线下方，当前三维模型无法构造相应曲线及完整表面。配对和排序记录仍可保存；这不自动表示错标或OOS。':'';
   identity.textContent=source.canonical_annotation_id
     ? `${source.worker_id} · ${source.raw_condition} · canonical ${source.canonical_annotation_id} · ${source.processing_status}`
     : `参考来源：${source.reference_name} · ${source.reference_source}`;
@@ -37,7 +41,12 @@ function describeSource(){
   if(source.review?.model_edit_status==='unchanged_coordinates')identity.textContent+='｜模型预标注坐标未修改';
   if(source.review?.trap_status==='confirmed_trap')identity.textContent+='｜历史预设 Trap';
   if(source.object_kind==='gt_original')identity.textContent+='｜原始GT自带连接次序，不按横坐标强制重排';
+  const scene=window.ORDER_SCENE_LABELS?.[source.object_id];
+  if(scene)identity.textContent+=`｜门洞：${scene.scene_doorway_status}；OOS：${scene.scene_oos_status}（未记录不等于否定）`;
   sourceBadge.textContent=source.object_kind==='gt_original'?'原始GT自带连接次序':source.review?.model_edit_status==='unchanged_coordinates'?'模型预标注坐标未改'+(source.review?.trap_status==='confirmed_trap'?' · 历史Trap':''):'';
+  if(scene?.scene_doorway_status&&scene.scene_doorway_status!=='not_recorded')sourceBadge.textContent+=' · 门洞交界';
+  if(scene?.scene_oos_status==='confirmed')sourceBadge.textContent+=' · OOS';
+  if(source.object_id==='8f2f8f8bfdaec3360646')sourceBadge.textContent+=' · 用户确认保留：玻璃内墙角';
   if(!geometry)$('order-map').textContent='上下配对或投影不可用；二维点仍可查看。此状态不等于标注无效。';
 }
 
@@ -199,7 +208,16 @@ const storageKey=reviewSchema+':'+location.pathname;
 const sourceId=s=>s?.object_id||s?.canonical_annotation_id;
 function sourceBinding(s){return sourceId(s)?JSON.stringify({id:sourceId(s),points:s.effective_points||s.points,labels:s.effective_point_labels,links:s.links_zero_based,...(s.preprocessing?{preprocessing:s.preprocessing}:{})}):null;}
 let saved={},demoOrder=[0,1,2,3,4,5],pointerDrag=null,restoring=false,reviewLoadError=null;
-try{saved=JSON.parse(localStorage.getItem(storageKey)||JSON.stringify(window.ORDER_REVIEW_SEED||{}));if(!saved||typeof saved!=='object'||Array.isArray(saved))throw Error('审核记录必须为对象');}catch(e){saved={};reviewLoadError=e;$('save-state').textContent='本地记录读取失败，请先备份本地记录，勿覆盖。';}
+try{saved=JSON.parse(localStorage.getItem(storageKey)||JSON.stringify(window.ORDER_REVIEW_SEED||{}));if(!saved||typeof saved!=='object'||Array.isArray(saved))throw Error('审核记录必须为对象');
+ if(window.ORDER_ACCEPTED_REVIEW){
+  const accepted=window.ORDER_ACCEPTED_REVIEW,next={...accepted.records};window.ORDER_LOCAL_UNRECEIVED=[];
+  for(const [id,r] of Object.entries(saved)){
+   const known=accepted.snapshots.some(snapshot=>JSON.stringify(snapshot[id])===JSON.stringify(r));
+   if(!known&&JSON.stringify(accepted.records[id])!==JSON.stringify(r)){next[id]=r;window.ORDER_LOCAL_UNRECEIVED.push(id);}
+  }
+  saved=next;
+ }
+}catch(e){saved={};reviewLoadError=e;$('save-state').textContent='本地记录读取失败，请先备份本地记录，勿覆盖。';}
 function inputBinding(){return sourceBinding(activeSource());}
 function updateProgress(){const all=dataset.cases.flatMap(c=>c.variants.map(v=>v.source)),index=all.findIndex(s=>sourceId(s)===sourceId(activeSource()));if($('object-progress'))$('object-progress').textContent=`第 ${index+1} / ${all.length} 份 · 已确认 ${Object.values(saved).filter(r=>r.status==='confirmed').length} · 匹配错误 ${Object.values(saved).filter(r=>r.status==='pairing').length}`;}
 function drawDrag(){

@@ -1,0 +1,7 @@
+{
+  "primary_key": "object_id",
+  "comments": "仅逐条读过且明确写模型误导/影响的用户comment计入user_reported_model_influence；保留原文和路径。其他关键词只检索，不自动标为误导",
+  "unchanged": "原台账比较初始预标注与原始提交坐标；不等于没有检查、顺序未改或被模型误导",
+  "same_image": "其他标注存在历史真实环邻接改动；固定点对identity为比较基线，起点/反向等价不算",
+  "grouping": "既有physical_same_supported分组；未知逐图保留；当前确认快照complete=false"
+}

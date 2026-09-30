@@ -1,0 +1,53 @@
+{
+  "schema": "order_completion_audit_v1",
+  "research_images": 259,
+  "annotations": 3152,
+  "batches": [
+    {
+      "batch": "followup77",
+      "expected": 77,
+      "received": 77,
+      "statuses": {
+        "confirmed": 77
+      },
+      "changes": {
+        "unchanged": 71,
+        "adjacency_changed": 6
+      }
+    },
+    {
+      "batch": "same_image35",
+      "expected": 35,
+      "received": 35,
+      "statuses": {
+        "confirmed": 35
+      },
+      "changes": {
+        "unchanged": 34,
+        "adjacency_changed": 1
+      }
+    }
+  ],
+  "annotation_states": {
+    "four_pairs_default_skip": 1302,
+    "confirmed": 1242,
+    "excluded": 218,
+    "not_triggered": 312,
+    "pairing_deferred": 33,
+    "user_no_recall": 44,
+    "geometry_blocked": 1
+  },
+  "manual_gt_confirmed": 30,
+  "current_confirmation_total": 1272,
+  "pending_order_ids": [],
+  "geometry_blocked_ids": [
+    "new_93_3587_7182_W010"
+  ],
+  "pairing_deferred": 33,
+  "next_stage_total": 34,
+  "queue_missing": [],
+  "order_queue_complete": true,
+  "all_annotations_individually_confirmed": false,
+  "full_pairing_and_order_complete": false,
+  "formal_analysis_connected": false
+}

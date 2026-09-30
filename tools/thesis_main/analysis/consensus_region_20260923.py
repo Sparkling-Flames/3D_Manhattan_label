@@ -12,9 +12,13 @@ from scipy.special import expit, logit
 from lib.misc.panostretch import pano_connect_points
 
 
-def wall_mask(pairs, width=512, height=256, mode="curve"):
-    """已审核 (N,2,2) 上下点对 -> 全幅布尔墙带；不可表示时显式失败。"""
+def wall_mask(pairs, width=512, height=256, mode="curve", *, coordinate_convention="pixel_center"):
+    """x排序包络；历史默认像素中心，continuous仅局部适配旧kernel。"""
     p = np.asarray(pairs, dtype=float)
+    if coordinate_convention == "continuous":
+        p = p - .5
+    elif coordinate_convention != "pixel_center":
+        raise ValueError("unknown_coordinate_convention")
     if mode not in ("curve", "linear"):
         raise ValueError("unknown_boundary_mode")
     if not isinstance(width, int) or not isinstance(height, int) or min(width, height) < 2:
