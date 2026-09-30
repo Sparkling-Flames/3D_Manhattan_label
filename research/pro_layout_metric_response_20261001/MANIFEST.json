@@ -1,0 +1,161 @@
+{
+  "schema": "public_research_bundle_manifest_v1",
+  "snapshot_kind": "controlled_metric_response_20261001",
+  "status": "research_handoff_snapshot",
+  "files": [
+    {
+      "path": "analysis_results/layout_metric_response_20261001/detail_hidden_resolution.png",
+      "bytes": 120122,
+      "source": "analysis_results/layout_metric_response_20261001/detail_hidden_resolution.png"
+    },
+    {
+      "path": "analysis_results/layout_metric_response_20261001/detail_response.png",
+      "bytes": 221734,
+      "source": "analysis_results/layout_metric_response_20261001/detail_response.png"
+    },
+    {
+      "path": "analysis_results/layout_metric_response_20261001/experiment_plan.json",
+      "bytes": 2903,
+      "source": "analysis_results/layout_metric_response_20261001/experiment_plan.json"
+    },
+    {
+      "path": "analysis_results/layout_metric_response_20261001/extent_response.png",
+      "bytes": 218372,
+      "source": "analysis_results/layout_metric_response_20261001/extent_response.png"
+    },
+    {
+      "path": "analysis_results/layout_metric_response_20261001/field_contract.json",
+      "bytes": 4996,
+      "source": "analysis_results/layout_metric_response_20261001/field_contract.json"
+    },
+    {
+      "path": "analysis_results/layout_metric_response_20261001/localization_response.png",
+      "bytes": 258532,
+      "source": "analysis_results/layout_metric_response_20261001/localization_response.png"
+    },
+    {
+      "path": "analysis_results/layout_metric_response_20261001/real_metrics.csv",
+      "bytes": 44763,
+      "source": "analysis_results/layout_metric_response_20261001/real_metrics.csv"
+    },
+    {
+      "path": "analysis_results/layout_metric_response_20261001/REPORT.md",
+      "bytes": 6773,
+      "source": "analysis_results/layout_metric_response_20261001/REPORT.md"
+    },
+    {
+      "path": "analysis_results/layout_metric_response_20261001/results.json",
+      "bytes": 840901,
+      "source": "analysis_results/layout_metric_response_20261001/results.json"
+    },
+    {
+      "path": "analysis_results/layout_metric_response_20261001/synthetic_metrics.csv",
+      "bytes": 47484,
+      "source": "analysis_results/layout_metric_response_20261001/synthetic_metrics.csv"
+    },
+    {
+      "path": "analysis_results/layout_metric_response_20261001/VALIDATION.md",
+      "bytes": 4284,
+      "source": "analysis_results/layout_metric_response_20261001/VALIDATION.md"
+    },
+    {
+      "path": "docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json",
+      "bytes": 17081,
+      "source": "docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json"
+    },
+    {
+      "path": "docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.md",
+      "bytes": 16659,
+      "source": "docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.md"
+    },
+    {
+      "path": "docs/thesis_main/布局表示地基与坐标核验_20260930.md",
+      "bytes": 27577,
+      "source": "docs/thesis_main/布局表示地基与坐标核验_20260930.md"
+    },
+    {
+      "path": "docs/thesis_main/研究方向_空间差异与共识_20260930.md",
+      "bytes": 11952,
+      "source": "docs/thesis_main/研究方向_空间差异与共识_20260930.md"
+    },
+    {
+      "path": "lib/misc/panostretch.py",
+      "bytes": 5688,
+      "source": "lib/misc/panostretch.py"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5649,
+      "source": "snapshot_local_metadata"
+    },
+    {
+      "path": "requirements.txt",
+      "bytes": 63,
+      "source": "snapshot_local_metadata"
+    },
+    {
+      "path": "tests/test_layout_metric_response_20261001.py",
+      "bytes": 6005,
+      "source": "tests/test_layout_metric_response_20261001.py"
+    },
+    {
+      "path": "tests/test_verify_layout_metric_snapshot_20261001.py",
+      "bytes": 1122,
+      "source": "tests/test_verify_layout_metric_snapshot_20261001.py"
+    },
+    {
+      "path": "tools/label_studio/panorama_studio/geometry.py",
+      "bytes": 15927,
+      "source": "tools/label_studio/panorama_studio/geometry.py"
+    },
+    {
+      "path": "tools/thesis_main/analysis/consensus_region_20260923.py",
+      "bytes": 10462,
+      "source": "tools/thesis_main/analysis/consensus_region_20260923.py"
+    },
+    {
+      "path": "tools/thesis_main/analysis/layout_foundation_20260930.py",
+      "bytes": 16472,
+      "source": "tools/thesis_main/analysis/layout_foundation_20260930.py"
+    },
+    {
+      "path": "tools/thesis_main/analysis/layout_metric_probe_20260926.py",
+      "bytes": 23343,
+      "source": "tools/thesis_main/analysis/layout_metric_probe_20260926.py"
+    },
+    {
+      "path": "tools/thesis_main/analysis/layout_metric_response_20261001.py",
+      "bytes": 32508,
+      "source": "tools/thesis_main/analysis/layout_metric_response_20261001.py"
+    },
+    {
+      "path": "tools/thesis_main/analysis/research_round_20260929.py",
+      "bytes": 21090,
+      "source": "tools/thesis_main/analysis/research_round_20260929.py"
+    },
+    {
+      "path": "tools/thesis_main/analysis/verify_layout_metric_snapshot_20261001.py",
+      "bytes": 6344,
+      "source": "tools/thesis_main/analysis/verify_layout_metric_snapshot_20261001.py"
+    },
+    {
+      "path": "VALIDATION.json",
+      "bytes": 1031,
+      "source": "snapshot_local_metadata"
+    }
+  ],
+  "expected_recheck": {
+    "synthetic_pairs": 74,
+    "synthetic_families": {
+      "equivalence": 5,
+      "extent": 19,
+      "detail": 14,
+      "localization": 36
+    },
+    "real_comparisons": 15,
+    "missing_reference_rows": 9,
+    "dense_boundary_checks": 1
+  },
+  "input_scope": "embedded a/b only; original selection/source binding not reconstructed",
+  "source_rule": "copied from current local workspace, never from the 9/29 historical package"
+}

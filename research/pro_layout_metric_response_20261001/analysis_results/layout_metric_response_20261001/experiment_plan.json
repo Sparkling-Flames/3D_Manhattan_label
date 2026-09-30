@@ -1,0 +1,92 @@
+{
+  "schema": "layout_metric_response_v1",
+  "purpose": "controlled_metric_response_and_descriptive_real_panel",
+  "synthetic_parameters_fixed_before_first_run": true,
+  "camera_height": 1,
+  "length_unit": "common_camera_height_h",
+  "real_selection_review": "first draft included comment candidates; corrected before accepted rerun: exclude comment-only candidates and prioritize explicit annotation marks; no metric/GT criteria",
+  "source_coordinate": "C: continuous 1024x512; explicit P equivalent is C-0.5",
+  "raster_sampling": "output pixel centres, independent of input coordinate phase",
+  "raster_sizes": [
+    [
+      512,
+      256
+    ],
+    [
+      1024,
+      512
+    ]
+  ],
+  "boundary_samples_per_side": 512,
+  "boundary_dense_check": {
+    "case": "near_three_pairs",
+    "gap_h": 0.002,
+    "samples_per_side": 8192
+  },
+  "extent_amplitudes_h": [
+    0,
+    0.05,
+    0.25,
+    1,
+    2
+  ],
+  "detail_depths_h": [
+    0,
+    0.002,
+    0.01,
+    0.05,
+    0.2
+  ],
+  "detail_half_width_h": 0.1,
+  "zero_depth_detail": "limit geometry with two distinct collinear inserted nodes; positive depth has four detail nodes; unmatched identities reported, no coincident zero edges",
+  "near_pair_half_gaps_h": [
+    0.002,
+    0.01,
+    0.05,
+    0.1
+  ],
+  "near_three_pair_depth_h": 0.05,
+  "localization_amplitudes_native_px": [
+    0,
+    0.1,
+    0.5,
+    1,
+    2,
+    4
+  ],
+  "localization_corner": "SE: shared x, bottom y toward horizon, top y toward horizon, separately",
+  "ordinary_half_extent_h": 2,
+  "near_horizon_half_extent_h": 32,
+  "hidden_extension_lengths_h": [
+    4,
+    8,
+    12,
+    20
+  ],
+  "fixed_manhattan_axis_deg": 0,
+  "real_selection": {
+    "per_category": 2,
+    "minimum_images": 8,
+    "maximum_images": 12,
+    "priority": [
+      "detail",
+      "scope",
+      "oos",
+      "doorway",
+      "near_horizon",
+      "ordinary"
+    ],
+    "order": "scope/detail: annotation mark, image explicit tag, existing ledger, then image code and record alias; other categories: image code then record alias",
+    "near_horizon_bottom_margin_deg": 5,
+    "population": "confirmed rings AND retained; gates copied, never changed",
+    "evidence": "explicit annotation marks, image explicit tags/existing ledger or explicit scene states; comment-only candidates excluded; missing is unknown",
+    "forbidden": "no GT distance, difficulty outcome or metric-based semantic labels"
+  },
+  "limitations": [
+    "no real RMSE without source identity correspondence",
+    "column band is a declared bottom-first-hit and linearly interpolated wall-top proxy",
+    "non-flat top does not define a measured roof or volume",
+    "finite boundary quadrature may miss detail; max is sampled, never Hausdorff",
+    "no weights, clustering, consensus, personnel totals or training"
+  ]
+}

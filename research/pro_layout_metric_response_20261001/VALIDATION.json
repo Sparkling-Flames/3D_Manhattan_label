@@ -1,0 +1,22 @@
+{
+  "schema": "controlled_metric_snapshot_validation_v1",
+  "date": "2026-10-01",
+  "status": "passed_local_verification_pending_local_review",
+  "command_cwd": "research/pro_layout_metric_response_20261001",
+  "commands": [
+    "python -B -m tools.thesis_main.analysis.verify_layout_metric_snapshot_20261001",
+    "python -B -m pytest tests -q -p no:cacheprovider -W error::RuntimeWarning"
+  ],
+  "verified": {
+    "synthetic_pairs": 74,
+    "synthetic_families": {"equivalence": 5, "extent": 19, "detail": 14, "localization": 36},
+    "real_comparisons": 15,
+    "missing_reference_rows": 9,
+    "dense_boundary_checks": 1,
+    "pytest_passed": 4
+  },
+  "scope": "embedded inputs, frozen metrics, CSV and inventory recheck only",
+  "not_verified": ["original selection or source tables", "raw photographs", "full repository tests", "next-round algorithms"],
+  "source_copy": "current local workspace files copied byte-for-byte; 9/29 historical bundle unchanged",
+  "publication": "local only; no commit, upload or publication"
+}
