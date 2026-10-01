@@ -1,0 +1,17 @@
+case,status,bev_reason,wall_reason,camera,exception_type,exception_text,expected_reason_probe_pass
+valid_control,returned_results_or_reason,,,inside,,,
+bottom_wrong_hemisphere,returned_results_or_reason,wrong_hemisphere,wrong_hemisphere,unavailable,,,True
+bottom_near_horizon,returned_results_or_reason,near_horizon,near_horizon,unavailable,,,True
+top_wrong_hemisphere,returned_results_or_reason,,wrong_hemisphere,inside,,,True
+top_near_horizon,returned_results_or_reason,,near_horizon,inside,,,True
+vertical_pair_mismatch,returned_results_or_reason,,vertical_pair_mismatch,inside,,,True
+self_intersecting_footprint,returned_results_or_reason,invalid_footprint,invalid_footprint,unavailable,,,True
+repeated_vertex,returned_results_or_reason,invalid_footprint,invalid_footprint,unavailable,,,True
+camera_outside,returned_results_or_reason,,camera_not_strictly_inside,outside,,,True
+camera_boundary,returned_results_or_reason,,camera_not_strictly_inside,outside,,,True
+nan_x,returned_results_or_reason,,,inside,,,
+infinite_bottom_y,exception,,,,GEOSException,IllegalArgumentException: Points of LinearRing do not form a closed linestring,
+odd_point_count,exception,,,,ValueError,"cannot reshape array of size 14 into shape (2,2)",
+empty_points,exception,,,,ValueError,zero-size array to reduction operation maximum which has no identity,
+only_two_pairs,exception,,,,ValueError,A linearring requires at least 4 coordinates.,
+unknown_coordinate_convention,returned_results_or_reason,,,inside,,,

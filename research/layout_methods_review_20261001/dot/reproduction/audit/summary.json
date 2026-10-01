@@ -1,0 +1,41 @@
+{
+  "scope": "returned-package reproducibility and independently recomputed structural counts; original validator and general algorithm correctness are separate audits",
+  "manifest_ok": true,
+  "numeric_and_input_files": 16,
+  "all_bytes_identical": true,
+  "numeric_leaves": 20100,
+  "max_absolute_difference": 0.0,
+  "mismatch_count": 0,
+  "checks_passed": 13,
+  "checks_total": 13,
+  "figures_generated": [
+    "01_real_two_three_paths.png",
+    "01_real_two_three_paths.svg",
+    "02_orthogonal_local_paths.png",
+    "02_orthogonal_local_paths.svg",
+    "03_bottom_top_collinearity.png",
+    "03_bottom_top_collinearity.svg",
+    "04_subtraction_detail_loss.png",
+    "04_subtraction_detail_loss.svg",
+    "05_insertion_noise.png",
+    "05_insertion_noise.svg",
+    "06_local_vs_joint_support.png",
+    "06_local_vs_joint_support.svg",
+    "07_order_vs_point_set.png",
+    "07_order_vs_point_set.svg"
+  ],
+  "failure_examples": [],
+  "unrun": [
+    "original snapshot full validator and full-field comparison (see companion source comparison)",
+    "STAPLE/MACCHIatO/Lee original implementations",
+    "true multi-person clustering/automatic reliable anchors",
+    "original image-based adjudication"
+  ],
+  "notes": [
+    "requirements are minimum bounds rather than lockfile; source environment omits matplotlib/mistune/GEOS versions",
+    "74 parameter cases contain 73 numeric BEV and 72 numeric column-IoU cases at each resolution; 2 explicit exclusion conditions were preserved",
+    "Second noise replay uses seed 61001 and same NumPy 2.3.5; no extra independent human sample is implied"
+  ],
+  "figure_png_all_bytes_equal": true,
+  "figure_svg_all_normalized_equal": true
+}

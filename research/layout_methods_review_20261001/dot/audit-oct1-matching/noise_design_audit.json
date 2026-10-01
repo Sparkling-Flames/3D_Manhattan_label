@@ -1,0 +1,152 @@
+{
+  "exact_insertion": [
+    {
+      "record": "R00236",
+      "floor_midpoint_error_h": 1.5700924586837752e-16,
+      "top_midpoint_error_h": 2.7194799110210365e-16,
+      "source_vertices": 7,
+      "inserted_edge": 0
+    },
+    {
+      "record": "R00705",
+      "floor_midpoint_error_h": 8.95090418262362e-16,
+      "top_midpoint_error_h": 9.222205069512407e-16,
+      "source_vertices": 8,
+      "inserted_edge": 1
+    }
+  ],
+  "input_geometry_eligibility": [
+    {
+      "record": "R00236",
+      "noise_px": 0.25,
+      "n": 30,
+      "invalid_footprints": 0,
+      "wall_ineligible": 0,
+      "camera_outside_or_boundary": 0,
+      "camera_status_unavailable": 0,
+      "camera_kernel_false": 0,
+      "camera_kernel_unknown": 0
+    },
+    {
+      "record": "R00236",
+      "noise_px": 0.5,
+      "n": 30,
+      "invalid_footprints": 0,
+      "wall_ineligible": 0,
+      "camera_outside_or_boundary": 0,
+      "camera_status_unavailable": 0,
+      "camera_kernel_false": 0,
+      "camera_kernel_unknown": 0
+    },
+    {
+      "record": "R00236",
+      "noise_px": 1,
+      "n": 30,
+      "invalid_footprints": 0,
+      "wall_ineligible": 0,
+      "camera_outside_or_boundary": 0,
+      "camera_status_unavailable": 0,
+      "camera_kernel_false": 0,
+      "camera_kernel_unknown": 0
+    },
+    {
+      "record": "R00236",
+      "noise_px": 2,
+      "n": 30,
+      "invalid_footprints": 0,
+      "wall_ineligible": 0,
+      "camera_outside_or_boundary": 0,
+      "camera_status_unavailable": 0,
+      "camera_kernel_false": 0,
+      "camera_kernel_unknown": 0
+    },
+    {
+      "record": "R00236",
+      "noise_px": 4,
+      "n": 30,
+      "invalid_footprints": 0,
+      "wall_ineligible": 0,
+      "camera_outside_or_boundary": 0,
+      "camera_status_unavailable": 0,
+      "camera_kernel_false": 1,
+      "camera_kernel_unknown": 0
+    },
+    {
+      "record": "R00705",
+      "noise_px": 0.25,
+      "n": 30,
+      "invalid_footprints": 0,
+      "wall_ineligible": 0,
+      "camera_outside_or_boundary": 0,
+      "camera_status_unavailable": 0,
+      "camera_kernel_false": 0,
+      "camera_kernel_unknown": 0
+    },
+    {
+      "record": "R00705",
+      "noise_px": 0.5,
+      "n": 30,
+      "invalid_footprints": 0,
+      "wall_ineligible": 0,
+      "camera_outside_or_boundary": 0,
+      "camera_status_unavailable": 0,
+      "camera_kernel_false": 0,
+      "camera_kernel_unknown": 0
+    },
+    {
+      "record": "R00705",
+      "noise_px": 1,
+      "n": 30,
+      "invalid_footprints": 0,
+      "wall_ineligible": 0,
+      "camera_outside_or_boundary": 0,
+      "camera_status_unavailable": 0,
+      "camera_kernel_false": 0,
+      "camera_kernel_unknown": 0
+    },
+    {
+      "record": "R00705",
+      "noise_px": 2,
+      "n": 30,
+      "invalid_footprints": 0,
+      "wall_ineligible": 0,
+      "camera_outside_or_boundary": 0,
+      "camera_status_unavailable": 0,
+      "camera_kernel_false": 12,
+      "camera_kernel_unknown": 0
+    },
+    {
+      "record": "R00705",
+      "noise_px": 4,
+      "n": 30,
+      "invalid_footprints": 1,
+      "wall_ineligible": 1,
+      "camera_outside_or_boundary": 0,
+      "camera_status_unavailable": 1,
+      "camera_kernel_false": 19,
+      "camera_kernel_unknown": 1
+    }
+  ],
+  "invalid_input_details": [
+    {
+      "record": "R00705",
+      "noise_px": 4,
+      "rep": 15,
+      "reason": "invalid_footprint",
+      "wall_reason": "invalid_footprint",
+      "camera": "unavailable",
+      "kernel": null
+    }
+  ],
+  "saved_output_identity_counts": {
+    "paired_noise_instances": 300,
+    "cyclic_vs_unordered_all_count_fields_identical": 300,
+    "R00705_noise4": {
+      "correct": 231,
+      "expected": 240,
+      "correct_coverage": 0.9625,
+      "split_conflicts": 11,
+      "repeats": 30
+    }
+  }
+}

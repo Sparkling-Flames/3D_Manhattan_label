@@ -1,0 +1,1146 @@
+{
+  "scope": "独立数学/几何审查；非新真人数据；可见性与渲染使用包内geometry_core，删点集合由独立位枚举复核。",
+  "deletion": {
+    "raw_subsets": 219,
+    "valid_simple_positive": 195,
+    "strict_camera_subcycles": 61,
+    "counts_by_vertices": {
+      "3": 4,
+      "4": 15,
+      "5": 20,
+      "6": 15,
+      "7": 6,
+      "8": 1
+    },
+    "added_area_candidates": 32,
+    "max_added_area": 0.7199999999999999,
+    "new_boundary_candidates": 60,
+    "all_candidates_in_camera_kernel": true,
+    "zero_residual_candidates": 5,
+    "single_reflex_deletion": {
+      "ids": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        7
+      ],
+      "vertices": 7,
+      "area": 16.520000000000003,
+      "added_area": 0.35999999999999993,
+      "lost_area": 0.0,
+      "exact_new_boundary_length": 1.8439088914585775,
+      "camera_in_kernel": true,
+      "axis_residual": 1.4048958849607254
+    },
+    "all_candidates": [
+      {
+        "ids": [
+          0,
+          1,
+          3
+        ],
+        "vertices": 3,
+        "area": 8.0,
+        "added_area": 0.0,
+        "lost_area": 8.16,
+        "exact_new_boundary_length": 8.951427324097594,
+        "camera_in_kernel": true,
+        "axis_residual": 18.360517383794686
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "vertices": 4,
+        "area": 11.6,
+        "added_area": 0.0,
+        "lost_area": 4.5600000000000005,
+        "exact_new_boundary_length": 4.565084884205331,
+        "camera_in_kernel": true,
+        "axis_residual": 9.155791286873395
+      },
+      {
+        "ids": [
+          0,
+          1,
+          4
+        ],
+        "vertices": 3,
+        "area": 8.8,
+        "added_area": 0.03272727272727271,
+        "lost_area": 7.392727272727274,
+        "exact_new_boundary_length": 9.673295280101424,
+        "camera_in_kernel": true,
+        "axis_residual": 17.29308251786822
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          4
+        ],
+        "vertices": 4,
+        "area": 12.4,
+        "added_area": 0.35999999999999993,
+        "lost_area": 4.120000000000001,
+        "exact_new_boundary_length": 6.763258441958115,
+        "camera_in_kernel": true,
+        "axis_residual": 10.416721559528423
+      },
+      {
+        "ids": [
+          0,
+          1,
+          3,
+          4
+        ],
+        "vertices": 4,
+        "area": 8.44,
+        "added_area": 0.0,
+        "lost_area": 7.720000000000001,
+        "exact_new_boundary_length": 9.3056919903918,
+        "camera_in_kernel": true,
+        "axis_residual": 17.288726482698785
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "vertices": 5,
+        "area": 12.040000000000001,
+        "added_area": 0.0,
+        "lost_area": 4.120000000000001,
+        "exact_new_boundary_length": 4.919349550499538,
+        "camera_in_kernel": true,
+        "axis_residual": 8.643412345912601
+      },
+      {
+        "ids": [
+          0,
+          1,
+          5
+        ],
+        "vertices": 3,
+        "area": 8.8,
+        "added_area": 0.03272727272727271,
+        "lost_area": 7.392727272727273,
+        "exact_new_boundary_length": 9.673295280101424,
+        "camera_in_kernel": true,
+        "axis_residual": 17.293082517868218
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          5
+        ],
+        "vertices": 4,
+        "area": 13.200000000000001,
+        "added_area": 0.32727272727272716,
+        "lost_area": 3.2872727272727276,
+        "exact_new_boundary_length": 6.990013707101675,
+        "camera_in_kernel": true,
+        "axis_residual": 8.59325353010512
+      },
+      {
+        "ids": [
+          0,
+          1,
+          3,
+          5
+        ],
+        "vertices": 4,
+        "area": 9.24,
+        "added_area": 0.03272727272727271,
+        "lost_area": 6.952727272727273,
+        "exact_new_boundary_length": 9.705973594443385,
+        "camera_in_kernel": true,
+        "axis_residual": 17.328041747655234
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          3,
+          5
+        ],
+        "vertices": 5,
+        "area": 12.840000000000002,
+        "added_area": 0.03272727272727271,
+        "lost_area": 3.352727272727273,
+        "exact_new_boundary_length": 5.319631154551123,
+        "camera_in_kernel": true,
+        "axis_residual": 8.679212725783433
+      },
+      {
+        "ids": [
+          0,
+          1,
+          4,
+          5
+        ],
+        "vertices": 4,
+        "area": 9.68,
+        "added_area": 0.06545454545454542,
+        "lost_area": 6.545454545454546,
+        "exact_new_boundary_length": 9.50789145920377,
+        "camera_in_kernel": true,
+        "axis_residual": 15.210163426034025
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          4,
+          5
+        ],
+        "vertices": 5,
+        "area": 13.280000000000001,
+        "added_area": 0.39272727272727265,
+        "lost_area": 3.272727272727273,
+        "exact_new_boundary_length": 6.5978546210604625,
+        "camera_in_kernel": true,
+        "axis_residual": 8.59273770772043
+      },
+      {
+        "ids": [
+          0,
+          1,
+          3,
+          4,
+          5
+        ],
+        "vertices": 5,
+        "area": 9.319999999999999,
+        "added_area": 0.03272727272727271,
+        "lost_area": 6.872727272727273,
+        "exact_new_boundary_length": 9.140288169494148,
+        "camera_in_kernel": true,
+        "axis_residual": 15.210721323399582
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "vertices": 6,
+        "area": 12.920000000000002,
+        "added_area": 0.03272727272727271,
+        "lost_area": 3.272727272727273,
+        "exact_new_boundary_length": 4.753945729601885,
+        "camera_in_kernel": true,
+        "axis_residual": 6.888825378553596
+      },
+      {
+        "ids": [
+          0,
+          1,
+          6
+        ],
+        "vertices": 3,
+        "area": 8.0,
+        "added_area": 0.0,
+        "lost_area": 8.16,
+        "exact_new_boundary_length": 8.951427324097594,
+        "camera_in_kernel": true,
+        "axis_residual": 18.360517383794683
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          6
+        ],
+        "vertices": 4,
+        "area": 12.4,
+        "added_area": 0.0,
+        "lost_area": 3.7600000000000002,
+        "exact_new_boundary_length": 4.7863424398922625,
+        "camera_in_kernel": true,
+        "axis_residual": 7.2856638289528854
+      },
+      {
+        "ids": [
+          0,
+          1,
+          3,
+          6
+        ],
+        "vertices": 4,
+        "area": 8.8,
+        "added_area": 0.0,
+        "lost_area": 7.36,
+        "exact_new_boundary_length": 9.172684879784525,
+        "camera_in_kernel": true,
+        "axis_residual": 16.135083846746028
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          3,
+          6
+        ],
+        "vertices": 5,
+        "area": 12.4,
+        "added_area": 0.0,
+        "lost_area": 3.7600000000000002,
+        "exact_new_boundary_length": 4.7863424398922625,
+        "camera_in_kernel": true,
+        "axis_residual": 7.285663828952885
+      },
+      {
+        "ids": [
+          0,
+          1,
+          4,
+          6
+        ],
+        "vertices": 4,
+        "area": 9.24,
+        "added_area": 0.03272727272727271,
+        "lost_area": 6.952727272727273,
+        "exact_new_boundary_length": 9.705973594443385,
+        "camera_in_kernel": true,
+        "axis_residual": 17.328041747655234
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          4,
+          6
+        ],
+        "vertices": 5,
+        "area": 12.84,
+        "added_area": 0.35999999999999993,
+        "lost_area": 3.68,
+        "exact_new_boundary_length": 6.795936756300078,
+        "camera_in_kernel": true,
+        "axis_residual": 10.464292603988897
+      },
+      {
+        "ids": [
+          0,
+          1,
+          3,
+          4,
+          6
+        ],
+        "vertices": 5,
+        "area": 8.879999999999999,
+        "added_area": 0.0,
+        "lost_area": 7.28,
+        "exact_new_boundary_length": 9.338370304733761,
+        "camera_in_kernel": true,
+        "axis_residual": 17.323613635803422
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          6
+        ],
+        "vertices": 6,
+        "area": 12.48,
+        "added_area": 0.0,
+        "lost_area": 3.68,
+        "exact_new_boundary_length": 4.9520278648415,
+        "camera_in_kernel": true,
+        "axis_residual": 8.693689901364042
+      },
+      {
+        "ids": [
+          0,
+          1,
+          5,
+          6
+        ],
+        "vertices": 4,
+        "area": 8.44,
+        "added_area": 0.0,
+        "lost_area": 7.720000000000001,
+        "exact_new_boundary_length": 9.3056919903918,
+        "camera_in_kernel": true,
+        "axis_residual": 17.28872648269878
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          5,
+          6
+        ],
+        "vertices": 5,
+        "area": 12.84,
+        "added_area": 0.29454545454545444,
+        "lost_area": 3.6145454545454547,
+        "exact_new_boundary_length": 6.622410417392052,
+        "camera_in_kernel": true,
+        "axis_residual": 8.608040994752175
+      },
+      {
+        "ids": [
+          0,
+          1,
+          3,
+          5,
+          6
+        ],
+        "vertices": 5,
+        "area": 8.879999999999999,
+        "added_area": 0.0,
+        "lost_area": 7.28,
+        "exact_new_boundary_length": 9.338370304733761,
+        "camera_in_kernel": true,
+        "axis_residual": 17.323613635803422
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          3,
+          5,
+          6
+        ],
+        "vertices": 6,
+        "area": 12.48,
+        "added_area": 0.0,
+        "lost_area": 3.68,
+        "exact_new_boundary_length": 4.9520278648415,
+        "camera_in_kernel": true,
+        "axis_residual": 8.693689901364042
+      },
+      {
+        "ids": [
+          0,
+          1,
+          4,
+          5,
+          6
+        ],
+        "vertices": 5,
+        "area": 9.32,
+        "added_area": 0.03272727272727271,
+        "lost_area": 6.872727272727273,
+        "exact_new_boundary_length": 9.140288169494148,
+        "camera_in_kernel": true,
+        "axis_residual": 15.210721323399582
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          4,
+          5,
+          6
+        ],
+        "vertices": 6,
+        "area": 12.920000000000002,
+        "added_area": 0.35999999999999993,
+        "lost_area": 3.6,
+        "exact_new_boundary_length": 6.230251331350839,
+        "camera_in_kernel": true,
+        "axis_residual": 8.607518569930345
+      },
+      {
+        "ids": [
+          0,
+          1,
+          3,
+          4,
+          5,
+          6
+        ],
+        "vertices": 6,
+        "area": 8.959999999999999,
+        "added_area": 0.0,
+        "lost_area": 7.2,
+        "exact_new_boundary_length": 8.772684879784524,
+        "camera_in_kernel": true,
+        "axis_residual": 15.21127663371197
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "vertices": 7,
+        "area": 12.560000000000002,
+        "added_area": 0.0,
+        "lost_area": 3.6,
+        "exact_new_boundary_length": 4.386342439892262,
+        "camera_in_kernel": true,
+        "axis_residual": 6.906851834748814
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          7
+        ],
+        "vertices": 4,
+        "area": 16.0,
+        "added_area": 0.0,
+        "lost_area": 0.15999999999999998,
+        "exact_new_boundary_length": 0.4,
+        "camera_in_kernel": true,
+        "axis_residual": 0.0
+      },
+      {
+        "ids": [
+          0,
+          1,
+          3,
+          7
+        ],
+        "vertices": 4,
+        "area": 12.4,
+        "added_area": 0.0,
+        "lost_area": 3.7600000000000002,
+        "exact_new_boundary_length": 4.7863424398922625,
+        "camera_in_kernel": true,
+        "axis_residual": 7.285663828952889
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          3,
+          7
+        ],
+        "vertices": 5,
+        "area": 16.0,
+        "added_area": 0.0,
+        "lost_area": 0.15999999999999998,
+        "exact_new_boundary_length": 0.4,
+        "camera_in_kernel": true,
+        "axis_residual": 0.0
+      },
+      {
+        "ids": [
+          0,
+          1,
+          4,
+          7
+        ],
+        "vertices": 4,
+        "area": 13.200000000000001,
+        "added_area": 0.32727272727272716,
+        "lost_area": 3.2872727272727276,
+        "exact_new_boundary_length": 6.990013707101674,
+        "camera_in_kernel": true,
+        "axis_residual": 8.593253530105121
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          4,
+          7
+        ],
+        "vertices": 5,
+        "area": 16.8,
+        "added_area": 0.6545454545454543,
+        "lost_area": 0.01454545454545455,
+        "exact_new_boundary_length": 4.079976868958367,
+        "camera_in_kernel": true,
+        "axis_residual": 2.8696755917117107
+      },
+      {
+        "ids": [
+          0,
+          1,
+          3,
+          4,
+          7
+        ],
+        "vertices": 5,
+        "area": 12.84,
+        "added_area": 0.29454545454545444,
+        "lost_area": 3.6145454545454547,
+        "exact_new_boundary_length": 6.622410417392052,
+        "camera_in_kernel": true,
+        "axis_residual": 8.60804099475218
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          7
+        ],
+        "vertices": 6,
+        "area": 16.44,
+        "added_area": 0.29454545454545444,
+        "lost_area": 0.01454545454545455,
+        "exact_new_boundary_length": 2.23606797749979,
+        "camera_in_kernel": true,
+        "axis_residual": 1.4019373267014579
+      },
+      {
+        "ids": [
+          0,
+          1,
+          5,
+          7
+        ],
+        "vertices": 4,
+        "area": 12.4,
+        "added_area": 0.35999999999999993,
+        "lost_area": 4.12,
+        "exact_new_boundary_length": 6.763258441958115,
+        "camera_in_kernel": true,
+        "axis_residual": 10.416721559528423
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          5,
+          7
+        ],
+        "vertices": 5,
+        "area": 16.8,
+        "added_area": 0.6545454545454543,
+        "lost_area": 0.01454545454545455,
+        "exact_new_boundary_length": 4.079976868958367,
+        "camera_in_kernel": true,
+        "axis_residual": 2.8696755917117107
+      },
+      {
+        "ids": [
+          0,
+          1,
+          3,
+          5,
+          7
+        ],
+        "vertices": 5,
+        "area": 12.84,
+        "added_area": 0.35999999999999993,
+        "lost_area": 3.68,
+        "exact_new_boundary_length": 6.795936756300078,
+        "camera_in_kernel": true,
+        "axis_residual": 10.4642926039889
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          3,
+          5,
+          7
+        ],
+        "vertices": 6,
+        "area": 16.44,
+        "added_area": 0.35999999999999993,
+        "lost_area": 0.07999999999999999,
+        "exact_new_boundary_length": 2.4095943164078157,
+        "camera_in_kernel": true,
+        "axis_residual": 2.9956224140565517
+      },
+      {
+        "ids": [
+          0,
+          1,
+          4,
+          5,
+          7
+        ],
+        "vertices": 5,
+        "area": 13.280000000000001,
+        "added_area": 0.39272727272727265,
+        "lost_area": 3.272727272727273,
+        "exact_new_boundary_length": 6.597854621060463,
+        "camera_in_kernel": true,
+        "axis_residual": 8.592737707720431
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          4,
+          5,
+          7
+        ],
+        "vertices": 6,
+        "area": 16.880000000000003,
+        "added_area": 0.7199999999999999,
+        "lost_area": 0.0,
+        "exact_new_boundary_length": 3.687817782917155,
+        "camera_in_kernel": true,
+        "axis_residual": 2.871984285999319
+      },
+      {
+        "ids": [
+          0,
+          1,
+          3,
+          4,
+          5,
+          7
+        ],
+        "vertices": 6,
+        "area": 12.92,
+        "added_area": 0.35999999999999993,
+        "lost_area": 3.6,
+        "exact_new_boundary_length": 6.230251331350839,
+        "camera_in_kernel": true,
+        "axis_residual": 8.60751856993035
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          7
+        ],
+        "vertices": 7,
+        "area": 16.520000000000003,
+        "added_area": 0.35999999999999993,
+        "lost_area": 0.0,
+        "exact_new_boundary_length": 1.8439088914585775,
+        "camera_in_kernel": true,
+        "axis_residual": 1.4048958849607254
+      },
+      {
+        "ids": [
+          0,
+          1,
+          6,
+          7
+        ],
+        "vertices": 4,
+        "area": 11.6,
+        "added_area": 0.0,
+        "lost_area": 4.5600000000000005,
+        "exact_new_boundary_length": 4.565084884205331,
+        "camera_in_kernel": true,
+        "axis_residual": 9.155791286873395
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          6,
+          7
+        ],
+        "vertices": 5,
+        "area": 16.0,
+        "added_area": 0.0,
+        "lost_area": 0.15999999999999998,
+        "exact_new_boundary_length": 0.4,
+        "camera_in_kernel": true,
+        "axis_residual": 0.0
+      },
+      {
+        "ids": [
+          0,
+          1,
+          3,
+          6,
+          7
+        ],
+        "vertices": 5,
+        "area": 12.4,
+        "added_area": 0.0,
+        "lost_area": 3.7600000000000002,
+        "exact_new_boundary_length": 4.7863424398922625,
+        "camera_in_kernel": true,
+        "axis_residual": 7.285663828952889
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          3,
+          6,
+          7
+        ],
+        "vertices": 6,
+        "area": 16.0,
+        "added_area": 0.0,
+        "lost_area": 0.15999999999999998,
+        "exact_new_boundary_length": 0.4,
+        "camera_in_kernel": true,
+        "axis_residual": 0.0
+      },
+      {
+        "ids": [
+          0,
+          1,
+          4,
+          6,
+          7
+        ],
+        "vertices": 5,
+        "area": 12.840000000000002,
+        "added_area": 0.03272727272727271,
+        "lost_area": 3.352727272727273,
+        "exact_new_boundary_length": 5.319631154551123,
+        "camera_in_kernel": true,
+        "axis_residual": 8.679212725783438
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          4,
+          6,
+          7
+        ],
+        "vertices": 6,
+        "area": 16.44,
+        "added_area": 0.35999999999999993,
+        "lost_area": 0.07999999999999999,
+        "exact_new_boundary_length": 2.4095943164078157,
+        "camera_in_kernel": true,
+        "axis_residual": 2.9956224140565517
+      },
+      {
+        "ids": [
+          0,
+          1,
+          3,
+          4,
+          6,
+          7
+        ],
+        "vertices": 6,
+        "area": 12.48,
+        "added_area": 0.0,
+        "lost_area": 3.68,
+        "exact_new_boundary_length": 4.9520278648415,
+        "camera_in_kernel": true,
+        "axis_residual": 8.693689901364046
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          6,
+          7
+        ],
+        "vertices": 7,
+        "area": 16.080000000000002,
+        "added_area": 0.0,
+        "lost_area": 0.07999999999999999,
+        "exact_new_boundary_length": 0.565685424949238,
+        "camera_in_kernel": true,
+        "axis_residual": 1.5366610840247625
+      },
+      {
+        "ids": [
+          0,
+          1,
+          5,
+          6,
+          7
+        ],
+        "vertices": 5,
+        "area": 12.040000000000001,
+        "added_area": 0.0,
+        "lost_area": 4.12,
+        "exact_new_boundary_length": 4.919349550499538,
+        "camera_in_kernel": true,
+        "axis_residual": 8.643412345912601
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          5,
+          6,
+          7
+        ],
+        "vertices": 6,
+        "area": 16.44,
+        "added_area": 0.29454545454545444,
+        "lost_area": 0.01454545454545455,
+        "exact_new_boundary_length": 2.23606797749979,
+        "camera_in_kernel": true,
+        "axis_residual": 1.4019373267014579
+      },
+      {
+        "ids": [
+          0,
+          1,
+          3,
+          5,
+          6,
+          7
+        ],
+        "vertices": 6,
+        "area": 12.48,
+        "added_area": 0.0,
+        "lost_area": 3.68,
+        "exact_new_boundary_length": 4.9520278648415,
+        "camera_in_kernel": true,
+        "axis_residual": 8.693689901364046
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          3,
+          5,
+          6,
+          7
+        ],
+        "vertices": 7,
+        "area": 16.080000000000002,
+        "added_area": 0.0,
+        "lost_area": 0.07999999999999999,
+        "exact_new_boundary_length": 0.565685424949238,
+        "camera_in_kernel": true,
+        "axis_residual": 1.5366610840247625
+      },
+      {
+        "ids": [
+          0,
+          1,
+          4,
+          5,
+          6,
+          7
+        ],
+        "vertices": 6,
+        "area": 12.920000000000002,
+        "added_area": 0.03272727272727271,
+        "lost_area": 3.272727272727273,
+        "exact_new_boundary_length": 4.753945729601885,
+        "camera_in_kernel": true,
+        "axis_residual": 6.888825378553599
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          4,
+          5,
+          6,
+          7
+        ],
+        "vertices": 7,
+        "area": 16.520000000000003,
+        "added_area": 0.35999999999999993,
+        "lost_area": 0.0,
+        "exact_new_boundary_length": 1.8439088914585775,
+        "camera_in_kernel": true,
+        "axis_residual": 1.4048958849607254
+      },
+      {
+        "ids": [
+          0,
+          1,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "vertices": 7,
+        "area": 12.56,
+        "added_area": 0.0,
+        "lost_area": 3.6,
+        "exact_new_boundary_length": 4.386342439892262,
+        "camera_in_kernel": true,
+        "axis_residual": 6.906851834748818
+      },
+      {
+        "ids": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "vertices": 8,
+        "area": 16.160000000000004,
+        "added_area": 0.0,
+        "lost_area": 0.0,
+        "exact_new_boundary_length": 0.0,
+        "camera_in_kernel": true,
+        "axis_residual": 0.0
+      }
+    ]
+  },
+  "visibility": {
+    "a": [
+      [
+        -2.0,
+        -2.0
+      ],
+      [
+        2.0,
+        -2.0
+      ],
+      [
+        2.0,
+        1.0
+      ],
+      [
+        4.0,
+        1.0
+      ],
+      [
+        4.0,
+        3.0
+      ],
+      [
+        3.0,
+        3.0
+      ],
+      [
+        3.0,
+        2.0
+      ],
+      [
+        -2.0,
+        2.0
+      ]
+    ],
+    "b": [
+      [
+        -2.0,
+        -2.0
+      ],
+      [
+        2.0,
+        -2.0
+      ],
+      [
+        2.0,
+        1.0
+      ],
+      [
+        4.0,
+        1.0
+      ],
+      [
+        4.0,
+        7.0
+      ],
+      [
+        3.0,
+        7.0
+      ],
+      [
+        3.0,
+        2.0
+      ],
+      [
+        -2.0,
+        2.0
+      ]
+    ],
+    "area_a": 19.0,
+    "area_b": 23.0,
+    "bev_iou": 0.8260869565217391,
+    "column_iou_4096": 1.0,
+    "column_different_pixels_4096": 0,
+    "camera_strictly_inside": true,
+    "camera_in_kernel_a": false,
+    "camera_in_kernel_b": false,
+    "axis_residual_a": 0.0,
+    "axis_residual_b": 0.0,
+    "interpretation": "声明足迹可不同而近表面投影相同；不能要求所有非星形候选失效，但必须标记可见/隐藏证据。"
+  },
+  "joint_support": {
+    "observed": [
+      [
+        1,
+        1,
+        0
+      ],
+      [
+        1,
+        0,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ]
+    ],
+    "majority": [
+      1,
+      1,
+      1
+    ],
+    "local_yes": [
+      2,
+      2,
+      2
+    ],
+    "whole_support": 0
+  },
+  "identifiability": {
+    "columns": 17,
+    "rank": 12,
+    "nullity": 5,
+    "max_prediction_change": 0.0,
+    "meaning": "此为设计矩阵反例；5个身份仅作示范，不代表真实历史人员。"
+  },
+  "same_bev_different_top": {
+    "bev_iou": 1.0,
+    "column_iou_1024": 0.8249070221305741
+  }
+}

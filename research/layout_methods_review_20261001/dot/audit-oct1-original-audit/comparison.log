@@ -1,0 +1,286 @@
+{
+  "official_embedded": {
+    "verified": true,
+    "synthetic_pairs": 74,
+    "synthetic_families": {
+      "equivalence": 5,
+      "extent": 19,
+      "detail": 14,
+      "localization": 36
+    },
+    "real_comparisons": 15,
+    "missing_reference_rows": 9,
+    "dense_boundary_checks": 1
+  },
+  "inventory": {
+    "missing": [
+      "requirements.txt"
+    ],
+    "unexpected": [],
+    "wrong_size": []
+  },
+  "original_csv": {
+    "synthetic": {
+      "rows": 74,
+      "fields": 59,
+      "exact_match": true
+    },
+    "real": {
+      "rows": 24,
+      "fields": 58,
+      "exact_match": true
+    }
+  },
+  "source_hashes": {
+    "count": 28,
+    "all_git_blob_match": true
+  },
+  "real_panel": {
+    "rows": 24,
+    "images": 12,
+    "selected_personnel_records": 12,
+    "personnel_count_per_image": {
+      "B6ByNegPMKs-40": 1,
+      "yqstnuAEVhm-31": 1,
+      "jtcxE69GiFV-30": 1,
+      "jtcxE69GiFV-12": 1,
+      "e9zR4mvMWw7-19": 1,
+      "e9zR4mvMWw7-16": 1,
+      "7y3sRwLe3Va-26": 1,
+      "7y3sRwLe3Va-08": 1,
+      "B6ByNegPMKs-42": 1,
+      "7y3sRwLe3Va-12": 1,
+      "7y3sRwLe3Va-06": 1,
+      "2t7WUuJeko7-07": 1
+    },
+    "real_comparisons": 15,
+    "missing_reference_rows": 9,
+    "available_reference_versions": {
+      "original": 12,
+      "manual_revision": 3
+    }
+  },
+  "cross_implementation": {
+    "comparisons": 89,
+    "compared_numeric_fields": 1228,
+    "mismatch_rows": [],
+    "maximum_deltas": {
+      "bev_iou": 5.551115123125783e-16,
+      "area_a": 9.094947017729282e-13,
+      "area_b": 9.094947017729282e-13,
+      "coverage_a": 4.440892098500626e-16,
+      "coverage_b": 3.3306690738754696e-16,
+      "centroid": 7.105427357601002e-15,
+      "boundary_mean": 2.1996293675385914e-15,
+      "boundary_p95": 7.105427357601002e-15,
+      "boundary_sampled_max": 2.842170943040401e-14,
+      "boundary_step_bound": 3.469446951953614e-18,
+      "column_iou_512": 0.0,
+      "diff_pixels_512": 0,
+      "column_iou_1024": 0.0,
+      "diff_pixels_1024": 0
+    },
+    "mask_checks": 356,
+    "available_masks": 352,
+    "mask_mismatch_rows": []
+  },
+  "delivered_vs_original": {
+    "rows": 77,
+    "compared_fields": 1060,
+    "mismatch_rows": [],
+    "maximum_deltas": {
+      "bev_iou": 5.551115123125783e-16,
+      "area_a": 9.094947017729282e-13,
+      "area_b": 9.094947017729282e-13,
+      "coverage_a": 4.440892098500626e-16,
+      "coverage_b": 2.220446049250313e-16,
+      "centroid": 7.105427357601002e-15,
+      "boundary_mean": 2.1996293675385914e-15,
+      "boundary_p95": 7.105427357601002e-15,
+      "boundary_sampled_max": 2.842170943040401e-14,
+      "boundary_step_bound": 3.469446951953614e-18,
+      "column_iou_512": 0.0,
+      "diff_pixels_512": 0,
+      "column_iou_1024": 0.0,
+      "diff_pixels_1024": 0
+    }
+  }
+}
+synthetic_inputs_summary {"pairs": 74, "sides": 148, "max_abs_coordinate_delta_px": 1.1368683772161603e-13, "exact_coordinate_sides": 143, "label_renamed_sides": 20}
+guard_contract_probes [
+  {
+    "case": "top_y_negative",
+    "original": {
+      "bev": {
+        "status": "unavailable",
+        "reason": "a:coordinates outside declared image bounds",
+        "bev_range_iou": null
+      },
+      "column_1024": {
+        "status": "unavailable",
+        "reason": "coordinates outside declared image bounds",
+        "iou": null
+      },
+      "warnings": []
+    },
+    "returned": {
+      "bev_iou": 1.0,
+      "bev_reason": null,
+      "column_iou_1024": 0.7055859147388148,
+      "column_reason_1024": null,
+      "warnings": []
+    }
+  },
+  {
+    "case": "top_y_nan",
+    "original": {
+      "bev": {
+        "status": "unavailable",
+        "reason": "a:invalid_point_array",
+        "bev_range_iou": null
+      },
+      "column_1024": {
+        "status": "unavailable",
+        "reason": "invalid_point_array",
+        "iou": null
+      },
+      "warnings": []
+    },
+    "returned": {
+      "bev_iou": 1.0,
+      "bev_reason": null,
+      "column_iou_1024": 0.5,
+      "column_reason_1024": null,
+      "warnings": []
+    }
+  },
+  {
+    "case": "top_at_pole",
+    "original": {
+      "bev": {
+        "status": "ok",
+        "reason": null,
+        "bev_range_iou": 1.0,
+        "area_a_h2": 15.999999999999993,
+        "area_b_h2": 15.999999999999993,
+        "coverage_of_a": 1.0,
+        "coverage_of_b": 1.0,
+        "symmetric_difference_h2": 0.0,
+        "centroid_distance_h": 0.0
+      },
+      "column_1024": {
+        "status": "unavailable",
+        "reason": "pole_ray",
+        "iou": null
+      },
+      "warnings": []
+    },
+    "returned": {
+      "bev_iou": 1.0,
+      "bev_reason": null,
+      "column_iou_1024": 0.7002703927728544,
+      "column_reason_1024": null,
+      "warnings": []
+    }
+  },
+  {
+    "case": "duplicate_pair_identity",
+    "original": {
+      "bev": {
+        "status": "unavailable",
+        "reason": "a:invalid_source_pair_identity",
+        "bev_range_iou": null
+      },
+      "column_1024": {
+        "status": "unavailable",
+        "reason": "invalid_source_pair_identity",
+        "iou": null
+      },
+      "warnings": []
+    },
+    "returned": {
+      "bev_iou": 1.0,
+      "bev_reason": null,
+      "column_iou_1024": 1.0,
+      "column_reason_1024": null,
+      "warnings": []
+    }
+  },
+  {
+    "case": "unknown_phase",
+    "original": {
+      "exception": "ValueError",
+      "message": "unknown_coordinate_convention"
+    },
+    "returned": {
+      "bev_iou": 1.0,
+      "bev_reason": null,
+      "column_iou_1024": 1.0,
+      "column_reason_1024": null,
+      "warnings": []
+    }
+  },
+  {
+    "case": "periodic_x_outside_image",
+    "original": {
+      "bev": {
+        "status": "unavailable",
+        "reason": "a:coordinates outside declared image bounds",
+        "bev_range_iou": null
+      },
+      "column_1024": {
+        "status": "unavailable",
+        "reason": "coordinates outside declared image bounds",
+        "iou": null
+      },
+      "warnings": []
+    },
+    "returned": {
+      "bev_iou": 0.9999999999999998,
+      "bev_reason": null,
+      "column_iou_1024": 1.0,
+      "column_reason_1024": null,
+      "warnings": []
+    }
+  },
+  {
+    "case": "missing_points",
+    "original": {
+      "bev": {
+        "status": "unavailable",
+        "reason": "a:pairing_unavailable",
+        "bev_range_iou": null
+      },
+      "column_1024": {
+        "status": "unavailable",
+        "reason": "pairing_unavailable",
+        "iou": null
+      },
+      "warnings": []
+    },
+    "returned": {
+      "exception": "ValueError",
+      "message": "cannot reshape array of size 1 into shape (2,2)"
+    }
+  },
+  {
+    "case": "odd_point_count",
+    "original": {
+      "bev": {
+        "status": "unavailable",
+        "reason": "a:invalid_point_array",
+        "bev_range_iou": null
+      },
+      "column_1024": {
+        "status": "unavailable",
+        "reason": "invalid_point_array",
+        "iou": null
+      },
+      "warnings": []
+    },
+    "returned": {
+      "exception": "ValueError",
+      "message": "cannot reshape array of size 14 into shape (2,2)"
+    }
+  }
+]

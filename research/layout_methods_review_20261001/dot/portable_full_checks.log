@@ -1,0 +1,1206 @@
+
+=== Independent matching and direction regressions ===
+{
+  "circular_objective_crosscheck": {
+    "cases": 60,
+    "all_minimum_costs_match_exhaustive": true,
+    "all_reference_dp_map_sets_match_exhaustive": true
+  },
+  "window_seam_and_start": {
+    "ring_start_shifts_tested": 4,
+    "window_plus_full_turn": true,
+    "unchanged": true
+  },
+  "real_window_reversal_effect": [
+    {
+      "record": "R03398",
+      "original": {
+        "geometry": "geometrically_distinct",
+        "point_count_a": 5,
+        "point_count_b": 4,
+        "cardinality_difference": 1,
+        "epsilon_h": 0.01,
+        "source_points_preserved": true,
+        "hausdorff_lower": 0.8689160303383282,
+        "hausdorff_upper": 0.8714160303383282,
+        "frechet_lower": 0.863916896152135,
+        "frechet_upper": 0.868916896152135,
+        "mean_a_b": 0.3161113510866096,
+        "mean_b_a": 0.4178945040194903,
+        "coverage_a_001": 0.026490066225165563,
+        "coverage_b_001": 0.02064516129032258,
+        "samples_a": 604,
+        "samples_b": 775
+      },
+      "reversed_b_ring": {
+        "geometry": "geometrically_distinct",
+        "point_count_a": 5,
+        "point_count_b": 4,
+        "cardinality_difference": 1,
+        "epsilon_h": 0.01,
+        "source_points_preserved": true,
+        "hausdorff_lower": 0.8689160303383279,
+        "hausdorff_upper": 0.8714160303383278,
+        "frechet_lower": 2.9795902954727853,
+        "frechet_upper": 2.984590295472785,
+        "mean_a_b": 0.3161113510866096,
+        "mean_b_a": 0.4178945040194903,
+        "coverage_a_001": 0.026490066225165563,
+        "coverage_b_001": 0.02064516129032258,
+        "samples_a": 604,
+        "samples_b": 775
+      }
+    },
+    {
+      "record": "R00705",
+      "original": {
+        "geometry": "geometrically_distinct",
+        "point_count_a": 5,
+        "point_count_b": 3,
+        "cardinality_difference": 2,
+        "epsilon_h": 0.01,
+        "source_points_preserved": true,
+        "hausdorff_lower": 2.5303603133096666,
+        "hausdorff_upper": 2.5328603133096665,
+        "frechet_lower": 2.5253603133096667,
+        "frechet_upper": 2.5303603133096666,
+        "mean_a_b": 0.9984559600915631,
+        "mean_b_a": 0.06900189112992208,
+        "coverage_a_001": 0.05837837837837838,
+        "coverage_b_001": 0.13366336633663367,
+        "samples_a": 925,
+        "samples_b": 404
+      },
+      "reversed_b_ring": {
+        "geometry": "geometrically_distinct",
+        "point_count_a": 5,
+        "point_count_b": 3,
+        "cardinality_difference": 2,
+        "epsilon_h": 0.01,
+        "source_points_preserved": true,
+        "hausdorff_lower": 2.5303603133096666,
+        "hausdorff_upper": 2.5328603133096665,
+        "frechet_lower": 4.129796500787801,
+        "frechet_upper": 4.134796500787801,
+        "mean_a_b": 0.998455960091563,
+        "mean_b_a": 0.06900189112992208,
+        "coverage_a_001": 0.05837837837837838,
+        "coverage_b_001": 0.13366336633663367,
+        "samples_a": 925,
+        "samples_b": 404
+      }
+    }
+  ],
+  "actual_sensitivity_grid": {
+    "settings": 45,
+    "endpoint_mode_runs": 135,
+    "wrong_tie_counts": [],
+    "split_conflict_settings": 6,
+    "zero_match_runs": 28
+  }
+}
+Tie counterexample: {'returned': {'cost': 4.0, 'matched': [[0, 0], [1, 1], [2, 3], [4, 4]], 'unmatched_a': [3], 'unmatched_b': [2], 'reverse': False, 'shift': 0, 'sigma_px': 4, 'gap': 2, 'side': 'bound', 'coverage_a': 0.8, 'coverage_b': 0.8, 'equally_best_maps': 1, 'matched_top_rms_sigma': 0.0, 'matched_bottom_rms_sigma': 0.0}, 'exhaustive_cost': 4.0, 'exhaustive_best_map_count': 2, 'exhaustive_best_maps': [((0, 0), (1, 1), (2, 3), (4, 4)), ((0, 0), (1, 1), (3, 2), (4, 4))], 'a_start_shift_sensitivity': [{'a_start_shift': 0, 'reported_ties': 1, 'map_in_original_indices': [(0, 0), (1, 1), (2, 3), (4, 4)]}, {'a_start_shift': 1, 'reported_ties': 2, 'map_in_original_indices': [(0, 0), (1, 1), (3, 2), (4, 4)]}, {'a_start_shift': 2, 'reported_ties': 2, 'map_in_original_indices': [(0, 0), (1, 1), (3, 2), (4, 4)]}, {'a_start_shift': 3, 'reported_ties': 1, 'map_in_original_indices': [(0, 0), (1, 1), (2, 3), (4, 4)]}, {'a_start_shift': 4, 'reported_ties': 1, 'map_in_original_indices': [(0, 0), (1, 1), (2, 3), (4, 4)]}]}
+Reversal decision: {'geometry': 'geometrically_distinct', 'point_count_a': 2, 'point_count_b': 2, 'cardinality_difference': 0, 'epsilon_h': 0.01, 'source_points_preserved': True, 'hausdorff_lower': 2.220446049250313e-16, 'hausdorff_upper': 0.002500000000000222, 'frechet_lower': 0.8182408738442665, 'frechet_upper': 0.8232408738442665, 'mean_a_b': 2.67523620391604e-18, 'mean_b_a': 0.0, 'coverage_a_001': 1.0, 'coverage_b_001': 1.0, 'samples_a': 166, 'samples_b': 166}
+Sparse/dense path mean: 0.3535533905932738 0.03278637709316372 coverage: 0.019801980198019802 0.9100817438692098
+
+=== Noise design and eligibility checks ===
+{
+  "exact_insertion": [
+    {
+      "record": "R00236",
+      "floor_midpoint_error_h": 1.5700924586837752e-16,
+      "top_midpoint_error_h": 2.7194799110210365e-16,
+      "source_vertices": 7,
+      "inserted_edge": 0
+    },
+    {
+      "record": "R00705",
+      "floor_midpoint_error_h": 8.95090418262362e-16,
+      "top_midpoint_error_h": 9.222205069512407e-16,
+      "source_vertices": 8,
+      "inserted_edge": 1
+    }
+  ],
+  "input_geometry_eligibility": [
+    {
+      "record": "R00236",
+      "noise_px": 0.25,
+      "n": 30,
+      "invalid_footprints": 0,
+      "wall_ineligible": 0,
+      "camera_outside_or_boundary": 0,
+      "camera_status_unavailable": 0,
+      "camera_kernel_false": 0,
+      "camera_kernel_unknown": 0
+    },
+    {
+      "record": "R00236",
+      "noise_px": 0.5,
+      "n": 30,
+      "invalid_footprints": 0,
+      "wall_ineligible": 0,
+      "camera_outside_or_boundary": 0,
+      "camera_status_unavailable": 0,
+      "camera_kernel_false": 0,
+      "camera_kernel_unknown": 0
+    },
+    {
+      "record": "R00236",
+      "noise_px": 1,
+      "n": 30,
+      "invalid_footprints": 0,
+      "wall_ineligible": 0,
+      "camera_outside_or_boundary": 0,
+      "camera_status_unavailable": 0,
+      "camera_kernel_false": 0,
+      "camera_kernel_unknown": 0
+    },
+    {
+      "record": "R00236",
+      "noise_px": 2,
+      "n": 30,
+      "invalid_footprints": 0,
+      "wall_ineligible": 0,
+      "camera_outside_or_boundary": 0,
+      "camera_status_unavailable": 0,
+      "camera_kernel_false": 0,
+      "camera_kernel_unknown": 0
+    },
+    {
+      "record": "R00236",
+      "noise_px": 4,
+      "n": 30,
+      "invalid_footprints": 0,
+      "wall_ineligible": 0,
+      "camera_outside_or_boundary": 0,
+      "camera_status_unavailable": 0,
+      "camera_kernel_false": 1,
+      "camera_kernel_unknown": 0
+    },
+    {
+      "record": "R00705",
+      "noise_px": 0.25,
+      "n": 30,
+      "invalid_footprints": 0,
+      "wall_ineligible": 0,
+      "camera_outside_or_boundary": 0,
+      "camera_status_unavailable": 0,
+      "camera_kernel_false": 0,
+      "camera_kernel_unknown": 0
+    },
+    {
+      "record": "R00705",
+      "noise_px": 0.5,
+      "n": 30,
+      "invalid_footprints": 0,
+      "wall_ineligible": 0,
+      "camera_outside_or_boundary": 0,
+      "camera_status_unavailable": 0,
+      "camera_kernel_false": 0,
+      "camera_kernel_unknown": 0
+    },
+    {
+      "record": "R00705",
+      "noise_px": 1,
+      "n": 30,
+      "invalid_footprints": 0,
+      "wall_ineligible": 0,
+      "camera_outside_or_boundary": 0,
+      "camera_status_unavailable": 0,
+      "camera_kernel_false": 0,
+      "camera_kernel_unknown": 0
+    },
+    {
+      "record": "R00705",
+      "noise_px": 2,
+      "n": 30,
+      "invalid_footprints": 0,
+      "wall_ineligible": 0,
+      "camera_outside_or_boundary": 0,
+      "camera_status_unavailable": 0,
+      "camera_kernel_false": 12,
+      "camera_kernel_unknown": 0
+    },
+    {
+      "record": "R00705",
+      "noise_px": 4,
+      "n": 30,
+      "invalid_footprints": 1,
+      "wall_ineligible": 1,
+      "camera_outside_or_boundary": 0,
+      "camera_status_unavailable": 1,
+      "camera_kernel_false": 19,
+      "camera_kernel_unknown": 1
+    }
+  ],
+  "invalid_input_details": [
+    {
+      "record": "R00705",
+      "noise_px": 4,
+      "rep": 15,
+      "reason": "invalid_footprint",
+      "wall_reason": "invalid_footprint",
+      "camera": "unavailable",
+      "kernel": null
+    }
+  ],
+  "saved_output_identity_counts": {
+    "paired_noise_instances": 300,
+    "cyclic_vs_unordered_all_count_fields_identical": 300,
+    "R00705_noise4": {
+      "correct": 231,
+      "expected": 240,
+      "correct_coverage": 0.9625,
+      "split_conflicts": 11,
+      "repeats": 30
+    }
+  }
+}
+
+=== Candidate and theory counterexamples ===
+{
+  "scope": "独立数学/几何审查；非新真人数据；可见性与渲染使用包内geometry_core，删点集合由独立位枚举复核。",
+  "visibility": {
+    "a": [
+      [
+        -2.0,
+        -2.0
+      ],
+      [
+        2.0,
+        -2.0
+      ],
+      [
+        2.0,
+        1.0
+      ],
+      [
+        4.0,
+        1.0
+      ],
+      [
+        4.0,
+        3.0
+      ],
+      [
+        3.0,
+        3.0
+      ],
+      [
+        3.0,
+        2.0
+      ],
+      [
+        -2.0,
+        2.0
+      ]
+    ],
+    "b": [
+      [
+        -2.0,
+        -2.0
+      ],
+      [
+        2.0,
+        -2.0
+      ],
+      [
+        2.0,
+        1.0
+      ],
+      [
+        4.0,
+        1.0
+      ],
+      [
+        4.0,
+        7.0
+      ],
+      [
+        3.0,
+        7.0
+      ],
+      [
+        3.0,
+        2.0
+      ],
+      [
+        -2.0,
+        2.0
+      ]
+    ],
+    "area_a": 19.0,
+    "area_b": 23.0,
+    "bev_iou": 0.8260869565217391,
+    "column_iou_4096": 1.0,
+    "column_different_pixels_4096": 0,
+    "camera_strictly_inside": true,
+    "camera_in_kernel_a": false,
+    "camera_in_kernel_b": false,
+    "axis_residual_a": 0.0,
+    "axis_residual_b": 0.0,
+    "interpretation": "声明足迹可不同而近表面投影相同；不能要求所有非星形候选失效，但必须标记可见/隐藏证据。"
+  },
+  "joint_support": {
+    "observed": [
+      [
+        1,
+        1,
+        0
+      ],
+      [
+        1,
+        0,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ]
+    ],
+    "majority": [
+      1,
+      1,
+      1
+    ],
+    "local_yes": [
+      2,
+      2,
+      2
+    ],
+    "whole_support": 0
+  },
+  "identifiability": {
+    "columns": 17,
+    "rank": 12,
+    "nullity": 5,
+    "max_prediction_change": 0.0,
+    "meaning": "此为设计矩阵反例；5个身份仅作示范，不代表真实历史人员。"
+  },
+  "same_bev_different_top": {
+    "bev_iou": 1.0,
+    "column_iou_1024": 0.8249070221305741
+  }
+}
+{
+  "raw_subsets": 219,
+  "valid_simple_positive": 195,
+  "strict_camera_subcycles": 61,
+  "counts_by_vertices": {
+    "3": 4,
+    "4": 15,
+    "5": 20,
+    "6": 15,
+    "7": 6,
+    "8": 1
+  },
+  "added_area_candidates": 32,
+  "max_added_area": 0.7199999999999999,
+  "new_boundary_candidates": 60,
+  "all_candidates_in_camera_kernel": true,
+  "zero_residual_candidates": 5,
+  "single_reflex_deletion": {
+    "ids": [
+      0,
+      1,
+      2,
+      4,
+      5,
+      6,
+      7
+    ],
+    "vertices": 7,
+    "area": 16.520000000000003,
+    "added_area": 0.35999999999999993,
+    "lost_area": 0.0,
+    "exact_new_boundary_length": 1.8439088914585775,
+    "camera_in_kernel": true,
+    "axis_residual": 1.4048958849607254
+  }
+}
+全部断言通过；61个集合与被审包逐一一致。
+
+=== Original snapshot and returned implementation comparison ===
+{
+  "official_embedded": {
+    "verified": true,
+    "synthetic_pairs": 74,
+    "synthetic_families": {
+      "equivalence": 5,
+      "extent": 19,
+      "detail": 14,
+      "localization": 36
+    },
+    "real_comparisons": 15,
+    "missing_reference_rows": 9,
+    "dense_boundary_checks": 1
+  },
+  "inventory": {
+    "missing": [
+      "requirements.txt"
+    ],
+    "unexpected": [],
+    "wrong_size": []
+  },
+  "original_csv": {
+    "synthetic": {
+      "rows": 74,
+      "fields": 59,
+      "exact_match": true
+    },
+    "real": {
+      "rows": 24,
+      "fields": 58,
+      "exact_match": true
+    }
+  },
+  "source_hashes": {
+    "count": 28,
+    "all_git_blob_match": true
+  },
+  "real_panel": {
+    "rows": 24,
+    "images": 12,
+    "selected_personnel_records": 12,
+    "personnel_count_per_image": {
+      "yqstnuAEVhm-31": 1,
+      "7y3sRwLe3Va-06": 1,
+      "7y3sRwLe3Va-26": 1,
+      "7y3sRwLe3Va-12": 1,
+      "e9zR4mvMWw7-19": 1,
+      "B6ByNegPMKs-40": 1,
+      "7y3sRwLe3Va-08": 1,
+      "e9zR4mvMWw7-16": 1,
+      "jtcxE69GiFV-12": 1,
+      "B6ByNegPMKs-42": 1,
+      "jtcxE69GiFV-30": 1,
+      "2t7WUuJeko7-07": 1
+    },
+    "real_comparisons": 15,
+    "missing_reference_rows": 9,
+    "available_reference_versions": {
+      "original": 12,
+      "manual_revision": 3
+    }
+  },
+  "cross_implementation": {
+    "comparisons": 89,
+    "compared_numeric_fields": 1228,
+    "mismatch_rows": [],
+    "maximum_deltas": {
+      "bev_iou": 5.551115123125783e-16,
+      "area_a": 9.094947017729282e-13,
+      "area_b": 9.094947017729282e-13,
+      "coverage_a": 4.440892098500626e-16,
+      "coverage_b": 3.3306690738754696e-16,
+      "centroid": 7.105427357601002e-15,
+      "boundary_mean": 2.1996293675385914e-15,
+      "boundary_p95": 7.105427357601002e-15,
+      "boundary_sampled_max": 2.842170943040401e-14,
+      "boundary_step_bound": 3.469446951953614e-18,
+      "column_iou_512": 0.0,
+      "diff_pixels_512": 0,
+      "column_iou_1024": 0.0,
+      "diff_pixels_1024": 0
+    },
+    "mask_checks": 356,
+    "available_masks": 352,
+    "mask_mismatch_rows": []
+  },
+  "delivered_vs_original": {
+    "rows": 77,
+    "compared_fields": 1060,
+    "mismatch_rows": [],
+    "maximum_deltas": {
+      "bev_iou": 5.551115123125783e-16,
+      "area_a": 9.094947017729282e-13,
+      "area_b": 9.094947017729282e-13,
+      "coverage_a": 4.440892098500626e-16,
+      "coverage_b": 2.220446049250313e-16,
+      "centroid": 7.105427357601002e-15,
+      "boundary_mean": 2.1996293675385914e-15,
+      "boundary_p95": 7.105427357601002e-15,
+      "boundary_sampled_max": 2.842170943040401e-14,
+      "boundary_step_bound": 3.469446951953614e-18,
+      "column_iou_512": 0.0,
+      "diff_pixels_512": 0,
+      "column_iou_1024": 0.0,
+      "diff_pixels_1024": 0
+    }
+  }
+}
+synthetic_inputs_summary {"pairs": 74, "sides": 148, "max_abs_coordinate_delta_px": 1.1368683772161603e-13, "exact_coordinate_sides": 143, "label_renamed_sides": 20}
+guard_contract_probes [
+  {
+    "case": "top_y_negative",
+    "original": {
+      "bev": {
+        "status": "unavailable",
+        "reason": "a:coordinates outside declared image bounds",
+        "bev_range_iou": null
+      },
+      "column_1024": {
+        "status": "unavailable",
+        "reason": "coordinates outside declared image bounds",
+        "iou": null
+      },
+      "warnings": []
+    },
+    "returned": {
+      "bev_iou": 1.0,
+      "bev_reason": null,
+      "column_iou_1024": 0.7055859147388148,
+      "column_reason_1024": null,
+      "warnings": []
+    }
+  },
+  {
+    "case": "top_y_nan",
+    "original": {
+      "bev": {
+        "status": "unavailable",
+        "reason": "a:invalid_point_array",
+        "bev_range_iou": null
+      },
+      "column_1024": {
+        "status": "unavailable",
+        "reason": "invalid_point_array",
+        "iou": null
+      },
+      "warnings": []
+    },
+    "returned": {
+      "bev_iou": 1.0,
+      "bev_reason": null,
+      "column_iou_1024": 0.5,
+      "column_reason_1024": null,
+      "warnings": []
+    }
+  },
+  {
+    "case": "top_at_pole",
+    "original": {
+      "bev": {
+        "status": "ok",
+        "reason": null,
+        "bev_range_iou": 1.0,
+        "area_a_h2": 15.999999999999993,
+        "area_b_h2": 15.999999999999993,
+        "coverage_of_a": 1.0,
+        "coverage_of_b": 1.0,
+        "symmetric_difference_h2": 0.0,
+        "centroid_distance_h": 0.0
+      },
+      "column_1024": {
+        "status": "unavailable",
+        "reason": "pole_ray",
+        "iou": null
+      },
+      "warnings": []
+    },
+    "returned": {
+      "bev_iou": 1.0,
+      "bev_reason": null,
+      "column_iou_1024": 0.7002703927728544,
+      "column_reason_1024": null,
+      "warnings": []
+    }
+  },
+  {
+    "case": "duplicate_pair_identity",
+    "original": {
+      "bev": {
+        "status": "unavailable",
+        "reason": "a:invalid_source_pair_identity",
+        "bev_range_iou": null
+      },
+      "column_1024": {
+        "status": "unavailable",
+        "reason": "invalid_source_pair_identity",
+        "iou": null
+      },
+      "warnings": []
+    },
+    "returned": {
+      "bev_iou": 1.0,
+      "bev_reason": null,
+      "column_iou_1024": 1.0,
+      "column_reason_1024": null,
+      "warnings": []
+    }
+  },
+  {
+    "case": "unknown_phase",
+    "original": {
+      "exception": "ValueError",
+      "message": "unknown_coordinate_convention"
+    },
+    "returned": {
+      "bev_iou": 1.0,
+      "bev_reason": null,
+      "column_iou_1024": 1.0,
+      "column_reason_1024": null,
+      "warnings": []
+    }
+  },
+  {
+    "case": "periodic_x_outside_image",
+    "original": {
+      "bev": {
+        "status": "unavailable",
+        "reason": "a:coordinates outside declared image bounds",
+        "bev_range_iou": null
+      },
+      "column_1024": {
+        "status": "unavailable",
+        "reason": "coordinates outside declared image bounds",
+        "iou": null
+      },
+      "warnings": []
+    },
+    "returned": {
+      "bev_iou": 0.9999999999999998,
+      "bev_reason": null,
+      "column_iou_1024": 1.0,
+      "column_reason_1024": null,
+      "warnings": []
+    }
+  },
+  {
+    "case": "missing_points",
+    "original": {
+      "bev": {
+        "status": "unavailable",
+        "reason": "a:pairing_unavailable",
+        "bev_range_iou": null
+      },
+      "column_1024": {
+        "status": "unavailable",
+        "reason": "pairing_unavailable",
+        "iou": null
+      },
+      "warnings": []
+    },
+    "returned": {
+      "exception": "ValueError",
+      "message": "cannot reshape array of size 1 into shape (2,2)"
+    }
+  },
+  {
+    "case": "odd_point_count",
+    "original": {
+      "bev": {
+        "status": "unavailable",
+        "reason": "a:invalid_point_array",
+        "bev_range_iou": null
+      },
+      "column_1024": {
+        "status": "unavailable",
+        "reason": "invalid_point_array",
+        "iou": null
+      },
+      "warnings": []
+    },
+    "returned": {
+      "exception": "ValueError",
+      "message": "cannot reshape array of size 14 into shape (2,2)"
+    }
+  }
+]
+
+=== Four original snapshot tests ===
+....                                                                     [100%]
+4 passed in 4.46s
+
+=== Clean received-package reproduction ===
+{
+  "scope": "returned-package reproducibility and independently recomputed structural counts; original validator and general algorithm correctness are separate audits",
+  "manifest_ok": true,
+  "numeric_and_input_files": 16,
+  "all_bytes_identical": true,
+  "numeric_leaves": 20100,
+  "max_absolute_difference": 0.0,
+  "mismatch_count": 0,
+  "checks_passed": 13,
+  "checks_total": 13,
+  "figures_generated": [
+    "01_real_two_three_paths.png",
+    "01_real_two_three_paths.svg",
+    "02_orthogonal_local_paths.png",
+    "02_orthogonal_local_paths.svg",
+    "03_bottom_top_collinearity.png",
+    "03_bottom_top_collinearity.svg",
+    "04_subtraction_detail_loss.png",
+    "04_subtraction_detail_loss.svg",
+    "05_insertion_noise.png",
+    "05_insertion_noise.svg",
+    "06_local_vs_joint_support.png",
+    "06_local_vs_joint_support.svg",
+    "07_order_vs_point_set.png",
+    "07_order_vs_point_set.svg"
+  ],
+  "failure_examples": [],
+  "unrun": [
+    "original snapshot full validator and full-field comparison (see companion source comparison)",
+    "STAPLE/MACCHIatO/Lee original implementations",
+    "true multi-person clustering/automatic reliable anchors",
+    "original image-based adjudication"
+  ],
+  "notes": [
+    "requirements are minimum bounds rather than lockfile; source environment omits matplotlib/mistune/GEOS versions",
+    "74 parameter cases contain 73 numeric BEV and 72 numeric column-IoU cases at each resolution; 2 explicit exclusion conditions were preserved",
+    "Second noise replay uses seed 61001 and same NumPy 2.3.5; no extra independent human sample is implied"
+  ]
+}
+
+=== Explicit input boundary probes ===
+[
+  {
+    "case": "valid_control",
+    "reconstruct_returned": true,
+    "bev_reason": null,
+    "wall_reason": null,
+    "camera": "inside",
+    "measure": {
+      "bev_iou": 1.0,
+      "area_a": 15.999999999999993,
+      "area_b": 15.999999999999993,
+      "coverage_a": 1.0,
+      "coverage_b": 1.0,
+      "centroid": 0.0,
+      "boundary_mean": 2.7755575615628907e-17,
+      "boundary_p95": 1.0061396160665473e-16,
+      "boundary_sampled_max": 1.1102230246251563e-16,
+      "boundary_step_bound": 0.015624999999999997,
+      "column_iou_512": 1.0,
+      "diff_pixels_512": 0,
+      "column_iou_1024": 1.0,
+      "diff_pixels_1024": 0
+    },
+    "status": "returned_results_or_reason",
+    "warnings": []
+  },
+  {
+    "case": "bottom_wrong_hemisphere",
+    "reconstruct_returned": true,
+    "bev_reason": "wrong_hemisphere",
+    "wall_reason": "wrong_hemisphere",
+    "camera": "unavailable",
+    "measure": {
+      "bev_reason": "wrong_hemisphere;None",
+      "column_reason_512": "wrong_hemisphere",
+      "column_reason_1024": "wrong_hemisphere"
+    },
+    "status": "returned_results_or_reason",
+    "warnings": [],
+    "expected_reason_probe_pass": true
+  },
+  {
+    "case": "bottom_near_horizon",
+    "reconstruct_returned": true,
+    "bev_reason": "near_horizon",
+    "wall_reason": "near_horizon",
+    "camera": "unavailable",
+    "measure": {
+      "bev_reason": "near_horizon;None",
+      "column_reason_512": "near_horizon",
+      "column_reason_1024": "near_horizon"
+    },
+    "status": "returned_results_or_reason",
+    "warnings": [],
+    "expected_reason_probe_pass": true
+  },
+  {
+    "case": "top_wrong_hemisphere",
+    "reconstruct_returned": true,
+    "bev_reason": null,
+    "wall_reason": "wrong_hemisphere",
+    "camera": "inside",
+    "measure": {
+      "bev_iou": 1.0,
+      "area_a": 15.999999999999993,
+      "area_b": 15.999999999999993,
+      "coverage_a": 1.0,
+      "coverage_b": 1.0,
+      "centroid": 0.0,
+      "boundary_mean": 2.7755575615628907e-17,
+      "boundary_p95": 1.0061396160665473e-16,
+      "boundary_sampled_max": 1.1102230246251563e-16,
+      "boundary_step_bound": 0.015624999999999997,
+      "column_reason_512": "wrong_hemisphere",
+      "column_reason_1024": "wrong_hemisphere"
+    },
+    "status": "returned_results_or_reason",
+    "warnings": [],
+    "expected_reason_probe_pass": true
+  },
+  {
+    "case": "top_near_horizon",
+    "reconstruct_returned": true,
+    "bev_reason": null,
+    "wall_reason": "near_horizon",
+    "camera": "inside",
+    "measure": {
+      "bev_iou": 1.0,
+      "area_a": 15.999999999999993,
+      "area_b": 15.999999999999993,
+      "coverage_a": 1.0,
+      "coverage_b": 1.0,
+      "centroid": 0.0,
+      "boundary_mean": 2.7755575615628907e-17,
+      "boundary_p95": 1.0061396160665473e-16,
+      "boundary_sampled_max": 1.1102230246251563e-16,
+      "boundary_step_bound": 0.015624999999999997,
+      "column_reason_512": "near_horizon",
+      "column_reason_1024": "near_horizon"
+    },
+    "status": "returned_results_or_reason",
+    "warnings": [],
+    "expected_reason_probe_pass": true
+  },
+  {
+    "case": "vertical_pair_mismatch",
+    "reconstruct_returned": true,
+    "bev_reason": null,
+    "wall_reason": "vertical_pair_mismatch",
+    "camera": "inside",
+    "measure": {
+      "bev_iou": 1.0,
+      "area_a": 15.999999999999993,
+      "area_b": 15.999999999999993,
+      "coverage_a": 1.0,
+      "coverage_b": 1.0,
+      "centroid": 0.0,
+      "boundary_mean": 2.7755575615628907e-17,
+      "boundary_p95": 1.0061396160665473e-16,
+      "boundary_sampled_max": 1.1102230246251563e-16,
+      "boundary_step_bound": 0.015624999999999997,
+      "column_reason_512": "vertical_pair_mismatch",
+      "column_reason_1024": "vertical_pair_mismatch"
+    },
+    "status": "returned_results_or_reason",
+    "warnings": [],
+    "expected_reason_probe_pass": true
+  },
+  {
+    "case": "self_intersecting_footprint",
+    "reconstruct_returned": true,
+    "bev_reason": "invalid_footprint",
+    "wall_reason": "invalid_footprint",
+    "camera": "unavailable",
+    "measure": {
+      "bev_reason": "invalid_footprint;None",
+      "column_reason_512": "invalid_footprint",
+      "column_reason_1024": "invalid_footprint"
+    },
+    "status": "returned_results_or_reason",
+    "warnings": [],
+    "expected_reason_probe_pass": true
+  },
+  {
+    "case": "repeated_vertex",
+    "reconstruct_returned": true,
+    "bev_reason": "invalid_footprint",
+    "wall_reason": "invalid_footprint",
+    "camera": "unavailable",
+    "measure": {
+      "bev_reason": "invalid_footprint;None",
+      "column_reason_512": "invalid_footprint",
+      "column_reason_1024": "invalid_footprint"
+    },
+    "status": "returned_results_or_reason",
+    "warnings": [],
+    "expected_reason_probe_pass": true
+  },
+  {
+    "case": "camera_outside",
+    "reconstruct_returned": true,
+    "bev_reason": null,
+    "wall_reason": "camera_not_strictly_inside",
+    "camera": "outside",
+    "measure": {
+      "bev_iou": 0.0,
+      "area_a": 4.0,
+      "area_b": 15.999999999999993,
+      "coverage_a": 0.0,
+      "coverage_b": 0.0,
+      "centroid": 4.242640687119285,
+      "boundary_mean": 2.471695756845204,
+      "boundary_p95": 5.11470001564119,
+      "boundary_sampled_max": 5.656854249492379,
+      "boundary_step_bound": 0.015624999999999997,
+      "column_reason_512": "camera_not_strictly_inside",
+      "column_reason_1024": "camera_not_strictly_inside"
+    },
+    "status": "returned_results_or_reason",
+    "warnings": [],
+    "expected_reason_probe_pass": true
+  },
+  {
+    "case": "camera_boundary",
+    "reconstruct_returned": true,
+    "bev_reason": null,
+    "wall_reason": "camera_not_strictly_inside",
+    "camera": "outside",
+    "measure": {
+      "bev_iou": 0.49999999999999994,
+      "area_a": 7.999999999999997,
+      "area_b": 15.999999999999993,
+      "coverage_a": 0.9999999999999998,
+      "coverage_b": 0.49999999999999994,
+      "centroid": 0.9999999999999998,
+      "boundary_mean": 0.5416641235351562,
+      "boundary_p95": 1.9999999999999996,
+      "boundary_sampled_max": 2.0,
+      "boundary_step_bound": 0.015624999999999997,
+      "column_reason_512": "camera_not_strictly_inside",
+      "column_reason_1024": "camera_not_strictly_inside"
+    },
+    "status": "returned_results_or_reason",
+    "warnings": [],
+    "expected_reason_probe_pass": true
+  },
+  {
+    "case": "nan_x",
+    "reconstruct_returned": true,
+    "bev_reason": null,
+    "wall_reason": null,
+    "camera": "inside",
+    "measure": {
+      "bev_iou": 1.0,
+      "area_a": 15.999999999999993,
+      "area_b": 15.999999999999993,
+      "coverage_a": 1.0,
+      "coverage_b": 1.0,
+      "centroid": 0.0,
+      "boundary_mean": 2.7755575615628907e-17,
+      "boundary_p95": 1.0061396160665473e-16,
+      "boundary_sampled_max": 1.1102230246251563e-16,
+      "boundary_step_bound": 0.015624999999999997,
+      "column_iou_512": 1.0,
+      "diff_pixels_512": 0,
+      "column_iou_1024": 1.0,
+      "diff_pixels_1024": 0
+    },
+    "status": "returned_results_or_reason",
+    "warnings": []
+  },
+  {
+    "case": "infinite_bottom_y",
+    "status": "exception",
+    "exception_type": "GEOSException",
+    "exception_text": "IllegalArgumentException: Points of LinearRing do not form a closed linestring",
+    "warnings": [
+      "invalid value encountered in cos",
+      "invalid value encountered in sin",
+      "invalid value encountered in cos"
+    ]
+  },
+  {
+    "case": "odd_point_count",
+    "status": "exception",
+    "exception_type": "ValueError",
+    "exception_text": "cannot reshape array of size 14 into shape (2,2)",
+    "warnings": []
+  },
+  {
+    "case": "empty_points",
+    "status": "exception",
+    "exception_type": "ValueError",
+    "exception_text": "zero-size array to reduction operation maximum which has no identity",
+    "warnings": []
+  },
+  {
+    "case": "only_two_pairs",
+    "status": "exception",
+    "exception_type": "ValueError",
+    "exception_text": "A linearring requires at least 4 coordinates.",
+    "warnings": []
+  },
+  {
+    "case": "unknown_coordinate_convention",
+    "reconstruct_returned": true,
+    "bev_reason": null,
+    "wall_reason": null,
+    "camera": "inside",
+    "measure": {
+      "bev_iou": 1.0,
+      "area_a": 15.999999999999993,
+      "area_b": 15.999999999999993,
+      "coverage_a": 1.0,
+      "coverage_b": 1.0,
+      "centroid": 0.0,
+      "boundary_mean": 2.7755575615628907e-17,
+      "boundary_p95": 1.0061396160665473e-16,
+      "boundary_sampled_max": 1.1102230246251563e-16,
+      "boundary_step_bound": 0.015624999999999997,
+      "column_iou_512": 1.0,
+      "diff_pixels_512": 0,
+      "column_iou_1024": 1.0,
+      "diff_pixels_1024": 0
+    },
+    "status": "returned_results_or_reason",
+    "warnings": []
+  }
+]
+
+=== Figure comparison ===
+[
+  {
+    "file": "01_real_two_three_paths.png",
+    "byte_identical": true,
+    "original_dimensions": [
+      1581,
+      786
+    ],
+    "reproduced_dimensions": [
+      1581,
+      786
+    ],
+    "pixels_identical": true,
+    "different_pixels": 0,
+    "max_channel_difference": 0,
+    "mean_absolute_channel_difference": 0.0
+  },
+  {
+    "file": "01_real_two_three_paths.svg",
+    "byte_identical": false,
+    "normalized_equal": true,
+    "normalization": "Replace dc:date; consistently rename all declared IDs and their href/url references by document order. Numeric paths, labels, styles and coordinates remain compared exactly."
+  },
+  {
+    "file": "02_orthogonal_local_paths.png",
+    "byte_identical": true,
+    "original_dimensions": [
+      1513,
+      315
+    ],
+    "reproduced_dimensions": [
+      1513,
+      315
+    ],
+    "pixels_identical": true,
+    "different_pixels": 0,
+    "max_channel_difference": 0,
+    "mean_absolute_channel_difference": 0.0
+  },
+  {
+    "file": "02_orthogonal_local_paths.svg",
+    "byte_identical": false,
+    "normalized_equal": true,
+    "normalization": "Replace dc:date; consistently rename all declared IDs and their href/url references by document order. Numeric paths, labels, styles and coordinates remain compared exactly."
+  },
+  {
+    "file": "03_bottom_top_collinearity.png",
+    "byte_identical": true,
+    "original_dimensions": [
+      1343,
+      746
+    ],
+    "reproduced_dimensions": [
+      1343,
+      746
+    ],
+    "pixels_identical": true,
+    "different_pixels": 0,
+    "max_channel_difference": 0,
+    "mean_absolute_channel_difference": 0.0
+  },
+  {
+    "file": "03_bottom_top_collinearity.svg",
+    "byte_identical": false,
+    "normalized_equal": true,
+    "normalization": "Replace dc:date; consistently rename all declared IDs and their href/url references by document order. Numeric paths, labels, styles and coordinates remain compared exactly."
+  },
+  {
+    "file": "04_subtraction_detail_loss.png",
+    "byte_identical": true,
+    "original_dimensions": [
+      866,
+      998
+    ],
+    "reproduced_dimensions": [
+      866,
+      998
+    ],
+    "pixels_identical": true,
+    "different_pixels": 0,
+    "max_channel_difference": 0,
+    "mean_absolute_channel_difference": 0.0
+  },
+  {
+    "file": "04_subtraction_detail_loss.svg",
+    "byte_identical": false,
+    "normalized_equal": true,
+    "normalization": "Replace dc:date; consistently rename all declared IDs and their href/url references by document order. Numeric paths, labels, styles and coordinates remain compared exactly."
+  },
+  {
+    "file": "05_insertion_noise.png",
+    "byte_identical": true,
+    "original_dimensions": [
+      1377,
+      794
+    ],
+    "reproduced_dimensions": [
+      1377,
+      794
+    ],
+    "pixels_identical": true,
+    "different_pixels": 0,
+    "max_channel_difference": 0,
+    "mean_absolute_channel_difference": 0.0
+  },
+  {
+    "file": "05_insertion_noise.svg",
+    "byte_identical": false,
+    "normalized_equal": true,
+    "normalization": "Replace dc:date; consistently rename all declared IDs and their href/url references by document order. Numeric paths, labels, styles and coordinates remain compared exactly."
+  },
+  {
+    "file": "06_local_vs_joint_support.png",
+    "byte_identical": true,
+    "original_dimensions": [
+      1343,
+      726
+    ],
+    "reproduced_dimensions": [
+      1343,
+      726
+    ],
+    "pixels_identical": true,
+    "different_pixels": 0,
+    "max_channel_difference": 0,
+    "mean_absolute_channel_difference": 0.0
+  },
+  {
+    "file": "06_local_vs_joint_support.svg",
+    "byte_identical": false,
+    "normalized_equal": true,
+    "normalization": "Replace dc:date; consistently rename all declared IDs and their href/url references by document order. Numeric paths, labels, styles and coordinates remain compared exactly."
+  },
+  {
+    "file": "07_order_vs_point_set.png",
+    "byte_identical": true,
+    "original_dimensions": [
+      940,
+      998
+    ],
+    "reproduced_dimensions": [
+      940,
+      998
+    ],
+    "pixels_identical": true,
+    "different_pixels": 0,
+    "max_channel_difference": 0,
+    "mean_absolute_channel_difference": 0.0
+  },
+  {
+    "file": "07_order_vs_point_set.svg",
+    "byte_identical": false,
+    "normalized_equal": true,
+    "normalization": "Replace dc:date; consistently rename all declared IDs and their href/url references by document order. Numeric paths, labels, styles and coordinates remain compared exactly."
+  }
+]
+
+Audit completed. A reproduced defect is evidence, not a claim that the returned algorithm passes it.

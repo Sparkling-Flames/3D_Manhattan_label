@@ -1,0 +1,276 @@
+{
+  "real_windows": [
+    [
+      "jtcxE69GiFV-12",
+      1,
+      1,
+      [
+        3
+      ],
+      [
+        2
+      ]
+    ],
+    [
+      "7y3sRwLe3Va-12",
+      1,
+      1,
+      [
+        3
+      ],
+      [
+        1
+      ]
+    ]
+  ],
+  "collinear": [
+    {
+      "image": "yqstnuAEVhm-31",
+      "record": "R00236",
+      "pair_index_zero_based": 1,
+      "turn_deg": 2.0614883600547533,
+      "floor_to_chord_h": 0.022567376876210563,
+      "top_to_chord_h": 0.17929907496466593,
+      "declared_bev_iou_after_omission": 0.9960695091947952,
+      "interpretation": "hypothetical diagnostic only; no input or semantic stop label changed"
+    },
+    {
+      "image": "7y3sRwLe3Va-12",
+      "record": "R00705",
+      "pair_index_zero_based": 1,
+      "turn_deg": -0.9889053707486795,
+      "floor_to_chord_h": 0.010522511003339376,
+      "top_to_chord_h": 0.03924800348186448,
+      "declared_bev_iou_after_omission": 0.9979157821671083,
+      "interpretation": "hypothetical diagnostic only; no input or semantic stop label changed"
+    },
+    {
+      "image": "7y3sRwLe3Va-12",
+      "record": "R00705",
+      "pair_index_zero_based": 2,
+      "turn_deg": 0.0554058222625834,
+      "floor_to_chord_h": 0.0006070445862992622,
+      "top_to_chord_h": 0.01445290791193501,
+      "declared_bev_iou_after_omission": 0.9998657284428567,
+      "interpretation": "hypothetical diagnostic only; no input or semantic stop label changed"
+    }
+  ],
+  "alignments": 45,
+  "split_conflicts": 6,
+  "deletion_valid": 61,
+  "orthogonal": 5,
+  "simplest": {
+    "ids": [
+      0,
+      1,
+      2,
+      7
+    ],
+    "vertices": 4,
+    "axis_residual": 0.0,
+    "fidelity_lower": 0.3999999999999999,
+    "fidelity_upper": 0.4049999999999999,
+    "bev_iou": 0.9900990099009899,
+    "unsupported_new_boundary_length": 0.39999998000000003,
+    "area": 16.0
+  },
+  "local_cases": [
+    {
+      "name": "two_nodes_three_collinear_nodes",
+      "a": [
+        [
+          -0.1,
+          2.0
+        ],
+        [
+          0.1,
+          2.0
+        ]
+      ],
+      "b": [
+        [
+          -0.1,
+          2.0
+        ],
+        [
+          0.0,
+          2.0
+        ],
+        [
+          0.1,
+          2.0
+        ]
+      ],
+      "metrics": {
+        "hausdorff_lower": 0.0,
+        "hausdorff_upper": 0.0005,
+        "frechet_lower": 0.0,
+        "frechet_upper": 2.7755575615628914e-17,
+        "mean_a_b": 0.0,
+        "mean_b_a": 0.0,
+        "coverage_a_001": 1.0,
+        "coverage_b_001": 1.0,
+        "samples_a": 201,
+        "samples_b": 201
+      }
+    },
+    {
+      "name": "two_turns_four_turns_manhattan",
+      "a": [
+        [
+          -1.0,
+          2.0
+        ],
+        [
+          -0.2,
+          2.0
+        ],
+        [
+          -0.2,
+          2.2
+        ],
+        [
+          1.0,
+          2.2
+        ]
+      ],
+      "b": [
+        [
+          -1.0,
+          2.0
+        ],
+        [
+          -0.4,
+          2.0
+        ],
+        [
+          -0.4,
+          2.1
+        ],
+        [
+          0.3,
+          2.1
+        ],
+        [
+          0.3,
+          2.2
+        ],
+        [
+          1.0,
+          2.2
+        ]
+      ],
+      "turns_a": [
+        90.0,
+        -90.0
+      ],
+      "turns_b": [
+        90.0,
+        -90.0,
+        90.0,
+        -90.0
+      ],
+      "metrics": {
+        "hausdorff_lower": 0.1000000000000001,
+        "hausdorff_upper": 0.1010000000000001,
+        "frechet_lower": 0.09800000000000009,
+        "frechet_upper": 0.10000000000000009,
+        "mean_a_b": 0.03180625685073048,
+        "mean_b_a": 0.031822302810516796,
+        "coverage_a_001": 0.6079854809437386,
+        "coverage_b_001": 0.6092475067996374,
+        "samples_a": 1102,
+        "samples_b": 1103
+      }
+    },
+    {
+      "name": "snapshot_spike_vertex_preserving",
+      "metrics": {
+        "hausdorff_lower": 0.05000000000000093,
+        "hausdorff_upper": 0.05500000000000093,
+        "frechet_lower": 0.04003998401278814,
+        "frechet_upper": 0.05003998401278814,
+        "mean_a_b": 0.00018598884066958407,
+        "mean_b_a": 2.0790693345040386e-17,
+        "coverage_a_001": 0.9944203347799132,
+        "coverage_b_001": 1.0,
+        "samples_a": 1613,
+        "samples_b": 1602
+      },
+      "baseline_512": {
+        "bev_iou": 0.9999937500390621,
+        "area_a": 16.000099999999993,
+        "area_b": 15.999999999999993,
+        "coverage_a": 0.9999937500390623,
+        "coverage_b": 1.0,
+        "centroid": 1.2604087891158291e-05,
+        "boundary_mean": 7.536418944501684e-05,
+        "boundary_p95": 9.714451465470121e-17,
+        "boundary_sampled_max": 0.037999600479361684,
+        "boundary_step_bound": 0.015718828093774975
+      },
+      "baseline_8192": {
+        "bev_iou": 0.9999937500390621,
+        "area_a": 16.000099999999993,
+        "area_b": 15.999999999999993,
+        "coverage_a": 0.9999937500390623,
+        "coverage_b": 1.0,
+        "centroid": 1.2604087891158291e-05,
+        "boundary_mean": 7.786481294762016e-05,
+        "boundary_p95": 9.714451465470115e-17,
+        "boundary_sampled_max": 0.0497793015553245,
+        "boundary_step_bound": 0.000982426755860936
+      }
+    }
+  ],
+  "parity": [
+    {
+      "nonzero_quarter_turns": 0,
+      "possible_exit_directions_mod4": [
+        0
+      ]
+    },
+    {
+      "nonzero_quarter_turns": 1,
+      "possible_exit_directions_mod4": [
+        1,
+        3
+      ]
+    },
+    {
+      "nonzero_quarter_turns": 2,
+      "possible_exit_directions_mod4": [
+        0,
+        2
+      ]
+    },
+    {
+      "nonzero_quarter_turns": 3,
+      "possible_exit_directions_mod4": [
+        1,
+        3
+      ]
+    },
+    {
+      "nonzero_quarter_turns": 4,
+      "possible_exit_directions_mod4": [
+        0,
+        2
+      ]
+    },
+    {
+      "nonzero_quarter_turns": 5,
+      "possible_exit_directions_mod4": [
+        1,
+        3
+      ]
+    },
+    {
+      "nonzero_quarter_turns": 6,
+      "possible_exit_directions_mod4": [
+        0,
+        2
+      ]
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "scope": "独立数学/几何审查；非新真人数据；可见性与渲染使用包内geometry_core，删点集合由独立位枚举复核。",
+  "visibility": {
+    "a": [
+      [
+        -2.0,
+        -2.0
+      ],
+      [
+        2.0,
+        -2.0
+      ],
+      [
+        2.0,
+        1.0
+      ],
+      [
+        4.0,
+        1.0
+      ],
+      [
+        4.0,
+        3.0
+      ],
+      [
+        3.0,
+        3.0
+      ],
+      [
+        3.0,
+        2.0
+      ],
+      [
+        -2.0,
+        2.0
+      ]
+    ],
+    "b": [
+      [
+        -2.0,
+        -2.0
+      ],
+      [
+        2.0,
+        -2.0
+      ],
+      [
+        2.0,
+        1.0
+      ],
+      [
+        4.0,
+        1.0
+      ],
+      [
+        4.0,
+        7.0
+      ],
+      [
+        3.0,
+        7.0
+      ],
+      [
+        3.0,
+        2.0
+      ],
+      [
+        -2.0,
+        2.0
+      ]
+    ],
+    "area_a": 19.0,
+    "area_b": 23.0,
+    "bev_iou": 0.8260869565217391,
+    "column_iou_4096": 1.0,
+    "column_different_pixels_4096": 0,
+    "camera_strictly_inside": true,
+    "camera_in_kernel_a": false,
+    "camera_in_kernel_b": false,
+    "axis_residual_a": 0.0,
+    "axis_residual_b": 0.0,
+    "interpretation": "声明足迹可不同而近表面投影相同；不能要求所有非星形候选失效，但必须标记可见/隐藏证据。"
+  },
+  "joint_support": {
+    "observed": [
+      [
+        1,
+        1,
+        0
+      ],
+      [
+        1,
+        0,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ]
+    ],
+    "majority": [
+      1,
+      1,
+      1
+    ],
+    "local_yes": [
+      2,
+      2,
+      2
+    ],
+    "whole_support": 0
+  },
+  "identifiability": {
+    "columns": 17,
+    "rank": 12,
+    "nullity": 5,
+    "max_prediction_change": 0.0,
+    "meaning": "此为设计矩阵反例；5个身份仅作示范，不代表真实历史人员。"
+  },
+  "same_bev_different_top": {
+    "bev_iou": 1.0,
+    "column_iou_1024": 0.8249070221305741
+  }
+}
+{
+  "raw_subsets": 219,
+  "valid_simple_positive": 195,
+  "strict_camera_subcycles": 61,
+  "counts_by_vertices": {
+    "3": 4,
+    "4": 15,
+    "5": 20,
+    "6": 15,
+    "7": 6,
+    "8": 1
+  },
+  "added_area_candidates": 32,
+  "max_added_area": 0.7199999999999999,
+  "new_boundary_candidates": 60,
+  "all_candidates_in_camera_kernel": true,
+  "zero_residual_candidates": 5,
+  "single_reflex_deletion": {
+    "ids": [
+      0,
+      1,
+      2,
+      4,
+      5,
+      6,
+      7
+    ],
+    "vertices": 7,
+    "area": 16.520000000000003,
+    "added_area": 0.35999999999999993,
+    "lost_area": 0.0,
+    "exact_new_boundary_length": 1.8439088914585775,
+    "camera_in_kernel": true,
+    "axis_residual": 1.4048958849607254
+  }
+}
+全部断言通过；61个集合与被审包逐一一致。

@@ -1,0 +1,289 @@
+[
+  {
+    "case": "valid_control",
+    "reconstruct_returned": true,
+    "bev_reason": null,
+    "wall_reason": null,
+    "camera": "inside",
+    "measure": {
+      "bev_iou": 1.0,
+      "area_a": 15.999999999999993,
+      "area_b": 15.999999999999993,
+      "coverage_a": 1.0,
+      "coverage_b": 1.0,
+      "centroid": 0.0,
+      "boundary_mean": 2.7755575615628907e-17,
+      "boundary_p95": 1.0061396160665473e-16,
+      "boundary_sampled_max": 1.1102230246251563e-16,
+      "boundary_step_bound": 0.015624999999999997,
+      "column_iou_512": 1.0,
+      "diff_pixels_512": 0,
+      "column_iou_1024": 1.0,
+      "diff_pixels_1024": 0
+    },
+    "status": "returned_results_or_reason",
+    "warnings": []
+  },
+  {
+    "case": "bottom_wrong_hemisphere",
+    "reconstruct_returned": true,
+    "bev_reason": "wrong_hemisphere",
+    "wall_reason": "wrong_hemisphere",
+    "camera": "unavailable",
+    "measure": {
+      "bev_reason": "wrong_hemisphere;None",
+      "column_reason_512": "wrong_hemisphere",
+      "column_reason_1024": "wrong_hemisphere"
+    },
+    "status": "returned_results_or_reason",
+    "warnings": [],
+    "expected_reason_probe_pass": true
+  },
+  {
+    "case": "bottom_near_horizon",
+    "reconstruct_returned": true,
+    "bev_reason": "near_horizon",
+    "wall_reason": "near_horizon",
+    "camera": "unavailable",
+    "measure": {
+      "bev_reason": "near_horizon;None",
+      "column_reason_512": "near_horizon",
+      "column_reason_1024": "near_horizon"
+    },
+    "status": "returned_results_or_reason",
+    "warnings": [],
+    "expected_reason_probe_pass": true
+  },
+  {
+    "case": "top_wrong_hemisphere",
+    "reconstruct_returned": true,
+    "bev_reason": null,
+    "wall_reason": "wrong_hemisphere",
+    "camera": "inside",
+    "measure": {
+      "bev_iou": 1.0,
+      "area_a": 15.999999999999993,
+      "area_b": 15.999999999999993,
+      "coverage_a": 1.0,
+      "coverage_b": 1.0,
+      "centroid": 0.0,
+      "boundary_mean": 2.7755575615628907e-17,
+      "boundary_p95": 1.0061396160665473e-16,
+      "boundary_sampled_max": 1.1102230246251563e-16,
+      "boundary_step_bound": 0.015624999999999997,
+      "column_reason_512": "wrong_hemisphere",
+      "column_reason_1024": "wrong_hemisphere"
+    },
+    "status": "returned_results_or_reason",
+    "warnings": [],
+    "expected_reason_probe_pass": true
+  },
+  {
+    "case": "top_near_horizon",
+    "reconstruct_returned": true,
+    "bev_reason": null,
+    "wall_reason": "near_horizon",
+    "camera": "inside",
+    "measure": {
+      "bev_iou": 1.0,
+      "area_a": 15.999999999999993,
+      "area_b": 15.999999999999993,
+      "coverage_a": 1.0,
+      "coverage_b": 1.0,
+      "centroid": 0.0,
+      "boundary_mean": 2.7755575615628907e-17,
+      "boundary_p95": 1.0061396160665473e-16,
+      "boundary_sampled_max": 1.1102230246251563e-16,
+      "boundary_step_bound": 0.015624999999999997,
+      "column_reason_512": "near_horizon",
+      "column_reason_1024": "near_horizon"
+    },
+    "status": "returned_results_or_reason",
+    "warnings": [],
+    "expected_reason_probe_pass": true
+  },
+  {
+    "case": "vertical_pair_mismatch",
+    "reconstruct_returned": true,
+    "bev_reason": null,
+    "wall_reason": "vertical_pair_mismatch",
+    "camera": "inside",
+    "measure": {
+      "bev_iou": 1.0,
+      "area_a": 15.999999999999993,
+      "area_b": 15.999999999999993,
+      "coverage_a": 1.0,
+      "coverage_b": 1.0,
+      "centroid": 0.0,
+      "boundary_mean": 2.7755575615628907e-17,
+      "boundary_p95": 1.0061396160665473e-16,
+      "boundary_sampled_max": 1.1102230246251563e-16,
+      "boundary_step_bound": 0.015624999999999997,
+      "column_reason_512": "vertical_pair_mismatch",
+      "column_reason_1024": "vertical_pair_mismatch"
+    },
+    "status": "returned_results_or_reason",
+    "warnings": [],
+    "expected_reason_probe_pass": true
+  },
+  {
+    "case": "self_intersecting_footprint",
+    "reconstruct_returned": true,
+    "bev_reason": "invalid_footprint",
+    "wall_reason": "invalid_footprint",
+    "camera": "unavailable",
+    "measure": {
+      "bev_reason": "invalid_footprint;None",
+      "column_reason_512": "invalid_footprint",
+      "column_reason_1024": "invalid_footprint"
+    },
+    "status": "returned_results_or_reason",
+    "warnings": [],
+    "expected_reason_probe_pass": true
+  },
+  {
+    "case": "repeated_vertex",
+    "reconstruct_returned": true,
+    "bev_reason": "invalid_footprint",
+    "wall_reason": "invalid_footprint",
+    "camera": "unavailable",
+    "measure": {
+      "bev_reason": "invalid_footprint;None",
+      "column_reason_512": "invalid_footprint",
+      "column_reason_1024": "invalid_footprint"
+    },
+    "status": "returned_results_or_reason",
+    "warnings": [],
+    "expected_reason_probe_pass": true
+  },
+  {
+    "case": "camera_outside",
+    "reconstruct_returned": true,
+    "bev_reason": null,
+    "wall_reason": "camera_not_strictly_inside",
+    "camera": "outside",
+    "measure": {
+      "bev_iou": 0.0,
+      "area_a": 4.0,
+      "area_b": 15.999999999999993,
+      "coverage_a": 0.0,
+      "coverage_b": 0.0,
+      "centroid": 4.242640687119285,
+      "boundary_mean": 2.471695756845204,
+      "boundary_p95": 5.11470001564119,
+      "boundary_sampled_max": 5.656854249492379,
+      "boundary_step_bound": 0.015624999999999997,
+      "column_reason_512": "camera_not_strictly_inside",
+      "column_reason_1024": "camera_not_strictly_inside"
+    },
+    "status": "returned_results_or_reason",
+    "warnings": [],
+    "expected_reason_probe_pass": true
+  },
+  {
+    "case": "camera_boundary",
+    "reconstruct_returned": true,
+    "bev_reason": null,
+    "wall_reason": "camera_not_strictly_inside",
+    "camera": "outside",
+    "measure": {
+      "bev_iou": 0.49999999999999994,
+      "area_a": 7.999999999999997,
+      "area_b": 15.999999999999993,
+      "coverage_a": 0.9999999999999998,
+      "coverage_b": 0.49999999999999994,
+      "centroid": 0.9999999999999998,
+      "boundary_mean": 0.5416641235351562,
+      "boundary_p95": 1.9999999999999996,
+      "boundary_sampled_max": 2.0,
+      "boundary_step_bound": 0.015624999999999997,
+      "column_reason_512": "camera_not_strictly_inside",
+      "column_reason_1024": "camera_not_strictly_inside"
+    },
+    "status": "returned_results_or_reason",
+    "warnings": [],
+    "expected_reason_probe_pass": true
+  },
+  {
+    "case": "nan_x",
+    "reconstruct_returned": true,
+    "bev_reason": null,
+    "wall_reason": null,
+    "camera": "inside",
+    "measure": {
+      "bev_iou": 1.0,
+      "area_a": 15.999999999999993,
+      "area_b": 15.999999999999993,
+      "coverage_a": 1.0,
+      "coverage_b": 1.0,
+      "centroid": 0.0,
+      "boundary_mean": 2.7755575615628907e-17,
+      "boundary_p95": 1.0061396160665473e-16,
+      "boundary_sampled_max": 1.1102230246251563e-16,
+      "boundary_step_bound": 0.015624999999999997,
+      "column_iou_512": 1.0,
+      "diff_pixels_512": 0,
+      "column_iou_1024": 1.0,
+      "diff_pixels_1024": 0
+    },
+    "status": "returned_results_or_reason",
+    "warnings": []
+  },
+  {
+    "case": "infinite_bottom_y",
+    "status": "exception",
+    "exception_type": "GEOSException",
+    "exception_text": "IllegalArgumentException: Points of LinearRing do not form a closed linestring",
+    "warnings": [
+      "invalid value encountered in cos",
+      "invalid value encountered in sin",
+      "invalid value encountered in cos"
+    ]
+  },
+  {
+    "case": "odd_point_count",
+    "status": "exception",
+    "exception_type": "ValueError",
+    "exception_text": "cannot reshape array of size 14 into shape (2,2)",
+    "warnings": []
+  },
+  {
+    "case": "empty_points",
+    "status": "exception",
+    "exception_type": "ValueError",
+    "exception_text": "zero-size array to reduction operation maximum which has no identity",
+    "warnings": []
+  },
+  {
+    "case": "only_two_pairs",
+    "status": "exception",
+    "exception_type": "ValueError",
+    "exception_text": "A linearring requires at least 4 coordinates.",
+    "warnings": []
+  },
+  {
+    "case": "unknown_coordinate_convention",
+    "reconstruct_returned": true,
+    "bev_reason": null,
+    "wall_reason": null,
+    "camera": "inside",
+    "measure": {
+      "bev_iou": 1.0,
+      "area_a": 15.999999999999993,
+      "area_b": 15.999999999999993,
+      "coverage_a": 1.0,
+      "coverage_b": 1.0,
+      "centroid": 0.0,
+      "boundary_mean": 2.7755575615628907e-17,
+      "boundary_p95": 1.0061396160665473e-16,
+      "boundary_sampled_max": 1.1102230246251563e-16,
+      "boundary_step_bound": 0.015624999999999997,
+      "column_iou_512": 1.0,
+      "diff_pixels_512": 0,
+      "column_iou_1024": 1.0,
+      "diff_pixels_1024": 0
+    },
+    "status": "returned_results_or_reason",
+    "warnings": []
+  }
+]

@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/scratch/a365811da80c/audit-oct1-original/tools/thesis_main/analysis/verify_layout_metric_snapshot_20261001.py", line 105, in <module>
+    print(json.dumps(verify_snapshot(args.root),ensure_ascii=False,indent=2,allow_nan=False))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/a365811da80c/audit-oct1-original/tools/thesis_main/analysis/verify_layout_metric_snapshot_20261001.py", line 70, in verify_snapshot
+    if expected_files != actual_files: raise ValueError('bundle_inventory_mismatch')
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: bundle_inventory_mismatch

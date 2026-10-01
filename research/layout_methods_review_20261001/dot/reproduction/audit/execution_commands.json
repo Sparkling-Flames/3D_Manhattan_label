@@ -1,0 +1,56 @@
+[
+  {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "src/run_replication.py"
+    ],
+    "cwd": "/workspace/scratch/a365811da80c/audit-oct1-repro/portable-verification/returned_copy",
+    "returncode": 0,
+    "seconds": 0.9657390949996625
+  },
+  {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "src/run_local_research.py"
+    ],
+    "cwd": "/workspace/scratch/a365811da80c/audit-oct1-repro/portable-verification/returned_copy",
+    "returncode": 0,
+    "seconds": 1.5472496510010387
+  },
+  {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "src/run_insertion_noise.py"
+    ],
+    "cwd": "/workspace/scratch/a365811da80c/audit-oct1-repro/portable-verification/returned_copy",
+    "returncode": 0,
+    "seconds": 6.9552481999999145
+  },
+  {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "src/run_order_and_hybrid.py"
+    ],
+    "cwd": "/workspace/scratch/a365811da80c/audit-oct1-repro/portable-verification/returned_copy",
+    "returncode": 0,
+    "seconds": 2.2556276350005646
+  },
+  {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "src/research_checks.py"
+    ],
+    "cwd": "/workspace/scratch/a365811da80c/audit-oct1-repro/portable-verification/returned_copy",
+    "returncode": 0,
+    "seconds": 0.0873230559991498
+  },
+  {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "src/make_figures.py"
+    ],
+    "cwd": "/workspace/scratch/a365811da80c/audit-oct1-repro/portable-verification/returned_copy",
+    "returncode": 0,
+    "seconds": 5.711394889000076
+  }
+]

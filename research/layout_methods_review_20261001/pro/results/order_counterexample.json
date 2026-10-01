@@ -1,0 +1,119 @@
+{
+  "a": [
+    [
+      -3.0,
+      -3.0
+    ],
+    [
+      3.0,
+      -3.0
+    ],
+    [
+      3.0,
+      3.0
+    ],
+    [
+      1.0,
+      0.7
+    ],
+    [
+      -3.0,
+      3.0
+    ]
+  ],
+  "b": [
+    [
+      -3.0,
+      -3.0
+    ],
+    [
+      3.0,
+      -3.0
+    ],
+    [
+      1.0,
+      0.7
+    ],
+    [
+      3.0,
+      3.0
+    ],
+    [
+      -3.0,
+      3.0
+    ]
+  ],
+  "space": {
+    "bev_iou": 0.6416666666666667,
+    "area_a": 29.1,
+    "area_b": 30.0,
+    "coverage_a": 0.7938144329896907,
+    "coverage_b": 0.77,
+    "centroid": 0.6192217730415625,
+    "boundary_mean": 0.3291112621810117,
+    "boundary_p95": 1.4096013565270573,
+    "boundary_sampled_max": 1.7973315646548838,
+    "boundary_step_bound": 0.025060604422704455
+  },
+  "unordered_matches": [
+    [
+      0,
+      0
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      3,
+      2
+    ],
+    [
+      4,
+      4
+    ]
+  ],
+  "unordered_cost": 0.0,
+  "cyclic": {
+    "cost": 4.0,
+    "matched": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        4,
+        4
+      ]
+    ],
+    "unmatched_a": [
+      3
+    ],
+    "unmatched_b": [
+      2
+    ],
+    "reverse": false,
+    "shift": 0,
+    "sigma_px": 4,
+    "gap": 2,
+    "side": "bound",
+    "coverage_a": 0.8,
+    "coverage_b": 0.8,
+    "equally_best_maps": 1,
+    "matched_top_rms_sigma": 0.0,
+    "matched_bottom_rms_sigma": 0.0
+  },
+  "column_iou": 0.7115644390752842
+}
