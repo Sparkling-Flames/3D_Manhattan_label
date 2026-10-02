@@ -1,14 +1,14 @@
 # HOHONET 文档入口
 
 <!-- CURRENT_RESEARCH: consensus_research_20260923_v1 -->
-当前研究规范为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`，版本 `consensus_research_20260923_v1`。当前方向：连线与表示 → 空间差异等指标 → 分簇/工人融合/合理候选 → 人员与难度 → 人数、组合及同房检验。探索性结果不代替正式方法选择或既有裁决。
+当前研究规范为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`，版本 `consensus_research_20260923_v1`。当前基础是BEV底面表示、GT参照评价与Lee等权融合；先A线粗难度与人数曲线，再B线人员画像与真实组合，之后联系两线。45图1—8人参考曲线已完成；分簇、合理空间候选和同房预测不作为前置任务。
 
 ## 规范与执行
 
 - [当前机器合同](thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json)、[自动生成摘要](thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.md)。
 - [执行 SOP](thesis_main/ROUND_BASED_ASSIGNMENT_SOP_v1.md)、[统计分析计划](thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md)。
-- [二次复核 SOP](thesis_main/两人审核归并与二次复核SOP_20260925.md)。
-- [相似场景研究 SOP](thesis_main/相似场景标注稳定性分析SOP.md)、[图片分类与同房预测 SOP](thesis_main/图片分类与同房间收敛预测研究SOP.md)。
+- 审核追溯：[二次复核 SOP](thesis_main/两人审核归并与二次复核SOP_20260925.md)；已有审核已接入，不自动重启全量复核。
+- 后续专题（非当前前置）：[相似场景研究 SOP](thesis_main/相似场景标注稳定性分析SOP.md)、[图片分类与同房预测 SOP](thesis_main/图片分类与同房间收敛预测研究SOP.md)。
 - [研究状态与边界](thesis_main/真人标注不确定性研究_当前状态.md)、[用户研究要求](thesis_main/用户研究要求核对清单_20260913.md)。
 - [GT 修正依据](thesis_main/TEST_MANUAL_GT_CORRECTIONS_20260823.md)。
 
@@ -31,9 +31,9 @@
 
 - [连线与表示阶段1：坐标追溯、接口及全量可计算性](thesis_main/布局表示地基与坐标核验_20260930.md)：探索性实现，不改变资格或冻结权重。
 
-- [当前研究方向：空间差异、分簇、共识与人员差异](thesis_main/研究方向_空间差异与共识_20260930.md)：方向确定，算法、权重与阈值待验证；替代旧任务书的冲突要求。
+- [当前研究方向：BEV、质量评价与人员共识](thesis_main/研究方向_空间差异与共识_20260930.md)：表示、指标、融合与人数曲线的职责；45图已完成，下一步共同图片人员画像。
 
-- [全量数值研究包](../research/pro_layout_20260929/README.md)：最新公开输入、源码和历史基线。提示词由对话提供，当前只先核验连线、表示与IoU。
+- [9/29数值研究包](../research/pro_layout_20260929/README.md)：来源、源码和历史基线；其中阶段任务书不覆盖当前推进台账。
 
 - [历史共识研究交付](../analysis_results/consensus_research_20260923/README.md)、[返回包独立审查](../analysis_results/pro_return_audit_20260928/README.md)。
 - [历史共识讨论纪要](thesis_main/PANORAMA_CONSENSUS_RESEARCH_DISCUSSION_20260927.md)。当前提示词已移除，历史任务书和执行记录不作为当前任务。
@@ -47,6 +47,7 @@
 - [Label Studio CE-only 运营 SOP](label_studio/LS_CE_ONLY_OPERATION_SOP_v1.md)、[运营注意事项](label_studio/label%20studio注意事项.md)。
 - [角点顺序采集改造提案](label_studio/中文版角点顺序采集改造方案_20260923.md)：尚未部署。
 - [项目地图](PROJECT_MAP_CLEAN_20260308.md)、[Agent 上下文与 playbook](agent/AGENT_CONTEXT_INDEX.md)、[写入规则](agent/WRITE_RULES.md)。
+- 10/3已移除活动项目skill `paper-a-c2-operator`，避免一般GT／active time分析误入旧C2流程；历史版本保留在Git。
 - Paper A Manhattan：`paper_a_manhattan/`；Paper B：`paper_b/`；共享参考与模板：`shared/`。
 
 ## 历史与恢复

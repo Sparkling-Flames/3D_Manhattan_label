@@ -1,12 +1,12 @@
 # HOHONET 项目地图
 
-更新：2026-09-28。规范版本 `consensus_research_20260923_v1`，唯一当前方法真源为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`。本地图只说明位置与用途，不定义方法、资格或阈值。
+更新：2026-10-03。规范版本 `consensus_research_20260923_v1`，唯一当前方法真源为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`。本地图只说明位置与用途，不定义方法、资格或阈值。
 
 ## 当前入口
 
 | 用途 | 路径 |
 |---|---|
-| 当前研究方向 | `docs/thesis_main/研究方向_空间差异与共识_20260930.md`：表示优先，空间差异、分簇、融合、合理候选分开；合同同步说明 |
+| 当前研究方向 | `docs/thesis_main/研究方向_空间差异与共识_20260930.md`：BEV表示、质量评价与Lee融合；45图曲线已完成，人员画像与真实组合为下一步 |
 | 连线与表示阶段1 | `docs/thesis_main/布局表示地基与坐标核验_20260930.md`；工具 `tools/thesis_main/analysis/layout_foundation_20260930.py`；全量表示清点 `analysis_results/layout_foundation_20260930/`，不修改资格或选择权重 |
 | 当前规范、执行与统计 | `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`；`ROUND_BASED_ASSIGNMENT_SOP_v1.md`；`STATISTICAL_ANALYSIS_PLAN_v1.md` |
 | 最终研究输入 | `analysis_results/research_input_20260929/manifest.json` 为统一入口；完整生成/读取 `tools/thesis_main/data_prep/consolidate_research_input.py`，坐标组件生成 `materialize_current_research_input.py`；说明 `docs/thesis_main/最终审核数据接入_20260929.md` |
@@ -56,6 +56,8 @@
 ## 工作规则
 
 参见 [Agent 上下文](agent/AGENT_CONTEXT_INDEX.md)、[文档同步](agent/playbooks/docs_sync.md)、[代码验证](agent/playbooks/code_change_verification.md)。协议与统计变更须分别检查 protocol_guard 和 statistical_plan_guard。Label Studio 运营先读 CE-only SOP。部署兼容路由 `/tools/vis_3d.html` 不代表源码位于 tools 根目录。
+
+2026-10-03清理：活动目录 `.agents/skills/paper-a-c2-operator/` 的SKILL与UI元数据已移除，历史可从Git恢复；离线BEV与GT分析不触发旧C2运营。文档入口统一到现行A/B研究顺序，历史数据和结果路径保留。
 
 - [原始GT主筛顺序复核](../analysis_results/order_gt_screened_20260928/index.html)：本轮已接收1160份确认，1份配对问题；历史队列保留。
 - [本轮审核接收与改序规律补查](../analysis_results/order_pattern_recall_20260929/README.md)：77份候选、24图；接收与研究工具位于tools/thesis_main/analysis/receive_order_results_20260929.py及order_pattern_recall_20260929.py。
