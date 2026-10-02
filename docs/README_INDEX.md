@@ -69,3 +69,4 @@
 - [最终审核统计与同房分类](../analysis_results/final_review_summary_20260929/index.html)：final_review_summary_20260929.py；1295份确认、3152份闭合台账、同房原260组与候选259组、OOS/门洞、空间/细节评语分层收集及Matterport数据包。
 
 - [Pro质量方法研究交接（2026-10-02）](../research/pro_quality_handoff_20261002/README.md)：独立源码、嵌入数据、复算入口和最新研究目标；配套[Pro/dot归档](../research/layout_methods_review_20261001/README.md)。
+- [Lee tile第一阶段（2026-10-02）](../research/lee_tile_stage1_20261002/README.md)：固定BEV等权投票，12图人数重放、资格覆盖与数值诊断；工具 `tools/thesis_main/analysis/lee_tile_stage1_20261002.py`，结果 `analysis_results/lee_tile_stage1_20261002/`。

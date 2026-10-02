@@ -23,6 +23,10 @@ def test_current_and_historical_contracts_have_separate_semantics():
     assert "SimpleITK" not in text  # 合同不把某台机器的依赖状态误当研究规范。
     assert old["contract_version"] in renderer.render(legacy.METHOD_CONTRACT)
     assert "Stage 3 gate separation" not in text
+    frame = current['representation']['coordinate_frame']
+    assert '原始GT' in frame and 'continuous' in frame
+    assert '原生HoHoNet' in frame and 'pixel_center' in frame
+    assert '未知来源不得猜测' in frame and '栅格中心采样' in frame
 
 
 def test_reference_check_is_scoped_and_rejects_stale_research(tmp_path, monkeypatch):

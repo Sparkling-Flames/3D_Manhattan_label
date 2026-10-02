@@ -4,7 +4,7 @@
 来源：`PAPER_A_METHOD_CONTRACT_CURRENT.json`；合同版本：`consensus_research_20260923_v1`。
 状态：`current_research_protocol`；方法选择：`comparison_protocol_not_final_algorithm`。
 
-先验证连线与空间表示，再研究空间差异、点位/细节分簇、工人融合共识与几何合理候选；随后检验人员质量/分类、图片难度及人数/组合/同房规律。方向已确定，算法和权重待验证。
+以可靠的GT参照测量研究人员与图片影响、人员类型及真实组合。当前逐步推进：固定BEV与Lee tile等权投票、人数曲线；再分别检查质量分项、人员跨图表现、人员组合和粗难度对应。分簇/局部路径/合理空间候选独立，同房预测后置。
 
 ## 研究问题
 
@@ -55,7 +55,7 @@
 
 - `representation.primary_candidate`：先核验中心投影曲线、确认邻接、周期接缝及遮挡；ERP可见墙带、BEV完整足迹和有效封闭体积分别定义，不预定ERP为全部空间研究主表示
 - `representation.sensitivity`：周期二维直线墙带
-- `representation.coordinate_frame`：1024x512像素中心坐标；改变栅格用(x+0.5)*scale-0.5
+- `representation.coordinate_frame`：共同1024x512相机坐标与原环。原始GT由官方生产公式及259份逐值核验确定为continuous (C)；人员及人工修订GT的最终LS百分比按连续画布映射x/W、y/H解释，但不据此恢复历史模型初始化phase。明确原生HoHoNet输出为pixel_center (P)，同射线P=C-0.5；未知来源不得猜测。改变尺寸时C用x*scale，P用(x+0.5)*scale-0.5，y同理。输入坐标phase与输出栅格中心采样分开：正确转换C/P保持几何等价，同一数值套两种公式仅为phase错配/未知来源敏感性，不再视原始GT两种phase同等可能。实际ERP采样、重力调平与物理尺度尚未标定；原生模型至LS及当前训练重复缩小两个已报告适配缺陷须在相应链路启用前修复，本轮实验不消费这些链路
 - `representation.pilot_raster`：512；256
 - `representation.resolution_check`：1024；512
 - `representation.horizontal_boundary`：periodic
@@ -68,6 +68,7 @@
 - `references.not_gt`：HoHoNet；BiLayout enclosed；BiLayout extended
 - `references.reference_conflicts`：历史scope/GT意见按具体对象保留，未知项不升级为统一真值
 - `references.detail_and_scope_variation`：参考省略局部细节与合理不同空间范围分别记录，可同时存在，不自动标为GT错误或从主研究剔除。明确指出参考实质错误才单列原始/人工修订版本核验；固定参考距离不直接等于人员错误。
+- `references.difficult_scene_interpretation`：门洞交界很难标且局部可能无法按规则合理标注；OOS的GT未必正确或适用。沿用现有审核和资格，不由固定参考距离直接判人员错误，不一概宣布全部OOS参考错误，不新增全量GT重审。
 - `quality.overlapping_scene_dimensions`：OOS为任务适用性，门洞为拍摄位置/边界条件，允许共存并保留评论证据；原单选category不覆盖原话。not_recorded不是否定，raw condition=oos不是研究者确认。并集分母按canonical作答去重。
 - `quality.review_use_separation`：清洗裁决、场景适用性、参考状态、范围政策和几何可计算性分开。明确暂不进主分析同时限制主共识面板与人员主质量；明确仅内侧空间须披露事后人工范围政策，不自动恢复GT质量，也不由簇号批量改判。
 - `quality.manual_scene_exclusions`：确认OOS与确认难标门洞不纳入人员主质量分析；可标门洞单列核对GT/范围后决定恢复，历史疑似分类不自动等于确认。保留场景分歧、可用表示上的分簇/共识探索。
@@ -78,6 +79,7 @@
 - `quality.worker_adjustment`：同图比较及人员/图片效应；按建筑留出检验，不从单图STAPLE参数推出跨图人员能力。质量、active time、规则、Semi及审核排除率分别研究；报告作答/审核分母、原因与场景，历史未纳入不等于人员错误，交互与随机波动不声称完全分离
 - `quality.combination_weights`：不预设空间或人员质量总分；参考差距、条件定位误差、未对应部分及几何自洽性分开，依受控案例与留出证据决定是否组合，不先验给质心正权重
 - `quality.failure_denominator`：按方法保留失败行/覆盖；共同可评价集比较及全范围失败率并报
+- `quality.coarse_difficulty_progression`：只要求粗略对应：沿用已有图片分类/人工难度预期、冻结d_model_feat及BiLayout enclosed/extended差异。先形成基础曲线，再逐项分析；不立即合成精细难度分数或把所有变量一起建模。
 
 ## 共识构造与算法比较
 
@@ -92,6 +94,7 @@
 - `consensus.outputs_distinct`：观察到的人员支持率；模型后验或优化软场(注明含义)；聚合区域；GT质量
 - `consensus.unavailable_method`：显式unavailable，不替换算法、不伪造结果
 - `consensus.research_tracks`：工人融合共识允许稳定偏离GT；减法及局部重组独立用于几何合理空间候选生成，以适用几何约束和观测保留为核心，人数另报。已观测整模式人数、候选兼容人数和局部融合证据分开，融合不必等于完整原作答。原始融合与恢复合法layout后的输出分开。
+- `consensus.stage1_20261002`：第一步固定BEV底面：当前k份独立真人区域叠加边界切tile，每人每tile一票，MV>=50%；>50%仅为平票对照。当前开发面板不加入人员权重、类别、模型难度或三维总分。切分不读取目标GT或未来成员；全员支持图可另存，不能提前供前缀使用。
 
 ## 真实人员组合与重放
 
@@ -107,11 +110,12 @@
 
 - `delivery.pro_task`：本轮提示词由对话提供；研究目的见docs/thesis_main/研究方向_空间差异与共识_20260930.md，先核验连线、空间表示与IoU
 - `delivery.results`：analysis_results/consensus_research_20260923
-- `delivery.pro_role`：先完成连线与表示核验，再依研究方向分阶段比较指标和算法；无原图不得替代视觉裁决，不按旧任务书同时全量推进全部路线
+- `delivery.pro_role`：ChatGPT中的Pro没有原图；本地上传GitHub后在对话提供目标提示词。Pro负责独立算法/数值/解释审查，不能替代视觉裁决或冒称取得本地未上传材料。
 - `delivery.final_review`：用户与本地助手复算并查看原图后确认清洗与方法
 - `delivery.execution_stage_20260928`：历史阶段描述：清洗收尾与人工角点重排；全量3152人员/287GT共享x源已生成，当前原始GT主筛队列1098份待审、63份确认沿用。队列层补充人工修订GT不扩展正式研究样本。人员分类、AABC等真实组合/进入顺序、难度及同房预测尚未在当前版本开展；历史探索不等于新研究完成。
 - `delivery.handoff`：docs/thesis_main/研究方向_空间差异与共识_20260930.md
 - `delivery.final_input_20260929`：当前数据已接入：analysis_results/research_input_20260929/preprocessed_source.json；1295确认环、3152人员、259原始GT、30人工GT。说明docs/thesis_main/最终审核数据接入_20260929.md。仅接入，不宣称新质量或共识实验完成。
+- `delivery.execution_stage_20261002`：已授权分步推进。当前12图固定面板的tile人数小实验与源绑定见research/lee_tile_stage1_20261002/README.md；历史准备状态不代表当前阶段。先检查算法和曲线，再扩图或增加一个质量维度。
 
 ## 验收与历史边界
 
