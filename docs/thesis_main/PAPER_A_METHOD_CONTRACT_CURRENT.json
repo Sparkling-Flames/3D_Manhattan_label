@@ -3,15 +3,16 @@
   "contract_version": "consensus_research_20260923_v1",
   "status": "current_research_protocol",
   "effective_date": "2026-09-23",
-  "purpose": "以可靠的GT参照测量研究人员与图片影响、人员类型及真实组合。当前逐步推进：固定BEV与Lee tile等权投票、人数曲线；再分别检查质量分项、人员跨图表现、人员组合和粗难度对应。分簇/局部路径/合理空间候选独立，同房预测后置。",
+  "purpose": "以可靠表示、质量测量与固定融合为共同基础，A线研究粗难度与人数曲线，B线研究人员类型、构成及具体成员的不确定性；两线分别推进后联系。人员/图片效应模型仅按需调整，不是前置关口。分簇、局部路径、合理空间候选独立，同房预测后置。",
   "method_selection_status": "comparison_protocol_not_final_algorithm",
   "legacy_contract": "docs/thesis_main/PAPER_A_METHOD_CONTRACT_20260811_v23.json",
   "legacy_scope": "v23只解释既往Calibration/T1/V1流程及其历史复算，不定义本研究的纳入或算法",
   "research_questions": [
-    "图片差异调整后的人员质量、类别稳定性及真实人员组合规律",
-    "共识准确性、增人稳定性和同人数成员差异随人数的变化",
-    "HoHoNet结构与错误、BiLayout双头差异对应的图片难度",
-    "同房及跨建筑预测；不明确结果保留记录，论文主文呈现另定"
+    "A线：已有粗难度与固定融合人数曲线的质量及稳定性差异",
+    "B线：同人数类型比例、同类型比例具体成员与组合结果的不确定性",
+    "共同参考适用图片上的人员画像及分类稳定性；图片效应调整按需",
+    "两线联系：困难图片是否更依赖人员构成；d_model_feat与BiLayout差异逐项粗对应",
+    "同房及跨建筑预测作为后续方向，不阻塞当前两线"
   ],
   "data": {
     "source": "原始export_label，经已有canonical版本和人工裁决生成计算视图",
@@ -106,10 +107,10 @@
     "primary": "GT-IoU保留为指定参考一致性基线，不直接等于人员质量；空间差异优先比较BEV IoU、BEV面积质心位移及墙面/边界差异，体积有效时增加3D IoU，ERP IoU作投影对照",
     "centroid": "区域面积质心而非角点均值；实际空间位移优先研究BEV质心。ERP受接缝影响，圆周方向低R不稳定，作为辅助报告适用性",
     "centroid_role": "整体位置诊断，不能代替局部结构，也不先验保证改善IoU",
-    "worker_adjustment": "同图比较及人员/图片效应；按建筑留出检验，不从单图STAPLE参数推出跨图人员能力。质量、active time、规则、Semi及审核排除率分别研究；报告作答/审核分母、原因与场景，历史未纳入不等于人员错误，交互与随机波动不声称完全分离",
+    "worker_adjustment": "先共同图片、同图比较和跨图画像，按建筑留出；不均衡分配妨碍比较时再评估人员/图片效应调整，不将该模型设为主线或前置。质量、active time、规则、Semi及排除原因分别研究；报告作答/审核分母、原因与场景，历史未纳入不等于人员错误，单图STAPLE参数不代表跨图人员能力；每人每图一次不声称彻底分开交互与随机波动。",
     "combination_weights": "不预设空间或人员质量总分；参考差距、条件定位误差、未对应部分及几何自洽性分开，依受控案例与留出证据决定是否组合，不先验给质心正权重",
     "failure_denominator": "按方法保留失败行/覆盖；共同可评价集比较及全范围失败率并报",
-    "coarse_difficulty_progression": "只要求粗略对应：沿用已有图片分类/人工难度预期、冻结d_model_feat及BiLayout enclosed/extended差异。先形成基础曲线，再逐项分析；不立即合成精细难度分数或把所有变量一起建模。"
+    "coarse_difficulty_progression": "A线只要求粗略对应：已有图片分类/人工预期、冻结d_model_feat、BiLayout enclosed/extended差异分别研究；固定融合及曲线精度就绪后即可推进，不等待B线分类，不建立精细联合难度分数。"
   },
   "consensus": {
     "lee_source": "https://ceur-ws.org/Vol-2173/paper10.pdf",
@@ -142,7 +143,8 @@
     ],
     "unavailable_method": "显式unavailable，不替换算法、不伪造结果",
     "research_tracks": "工人融合共识允许稳定偏离GT；减法及局部重组独立用于几何合理空间候选生成，以适用几何约束和观测保留为核心，人数另报。已观测整模式人数、候选兼容人数和局部融合证据分开，融合不必等于完整原作答。原始融合与恢复合法layout后的输出分开。",
-    "stage1_20261002": "第一步固定BEV底面：当前k份独立真人区域叠加边界切tile，每人每tile一票，MV>=50%；>50%仅为平票对照。当前开发面板不加入人员权重、类别、模型难度或三维总分。切分不读取目标GT或未来成员；全员支持图可另存，不能提前供前缀使用。"
+    "stage1_20261002": "第一步固定BEV底面：当前k份独立真人区域叠加边界切tile，每人每tile一票，MV>=50%；>50%仅为平票对照。当前开发面板不加入人员权重、类别、模型难度或三维总分。切分不读取目标GT或未来成员；全员支持图可另存，不能提前供前缀使用。",
+    "offline_precision_20261003": "同一固定人员池的全员tile可作为离线积分细分基底；每个子集仍只由当前成员投票选择，GT仅评价。须验证与当前成员切tile等价；不改变stage1或在线前缀信息边界。入口tools/thesis_main/analysis/lee_tile_precision_20261003.py。"
   },
   "replay": {
     "same_inputs": "所有方法共用人员子集、顺序、图片面板和区域定义",
@@ -151,7 +153,8 @@
     "permutations": "真实人员无放回；相同完整成员集最终一致不是收敛上限证据",
     "inference_unit": "同图配对方法差；建筑分组，不把像素或重放次数当独立样本",
     "classification": "分类仅由训练建筑得到；未知/不稳定类别保留，不为AABC复制真人",
-    "stopping_thresholds": "尚未冻结；不显著改善不等于达到平台"
+    "stopping_thresholds": "尚未冻结；不显著改善不等于达到平台",
+    "precision_20261003": "N<=9全枚举，大组1/2/N-2/N-1/N枚举；其余固定16384独立均匀排列，按出现频次平均、同规则/参考共用排列。所有MC参考均值用Hoeffding+union bound给95%同时计算误差界，预定均值分辨率0.02；不是总体CI、分位数保证或足够人数阈值。旧16排列及历史结果保留。"
   },
   "acceptance": [
     "完全一致",
@@ -172,6 +175,7 @@
     "execution_stage_20260928": "历史阶段描述：清洗收尾与人工角点重排；全量3152人员/287GT共享x源已生成，当前原始GT主筛队列1098份待审、63份确认沿用。队列层补充人工修订GT不扩展正式研究样本。人员分类、AABC等真实组合/进入顺序、难度及同房预测尚未在当前版本开展；历史探索不等于新研究完成。",
     "handoff": "docs/thesis_main/研究方向_空间差异与共识_20260930.md",
     "final_input_20260929": "当前数据已接入：analysis_results/research_input_20260929/preprocessed_source.json；1295确认环、3152人员、259原始GT、30人工GT。说明docs/thesis_main/最终审核数据接入_20260929.md。仅接入，不宣称新质量或共识实验完成。",
-    "execution_stage_20261002": "已授权分步推进。当前12图固定面板的tile人数小实验与源绑定见research/lee_tile_stage1_20261002/README.md；历史准备状态不代表当前阶段。先检查算法和曲线，再扩图或增加一个质量维度。"
+    "execution_stage_20261002": "已授权分步推进。当前12图固定面板的tile人数小实验与源绑定见research/lee_tile_stage1_20261002/README.md；历史准备状态不代表当前阶段。先检查算法和曲线，再扩图或增加一个质量维度。",
+    "execution_stage_20261003": "用户确认A/B两线；本轮梳理已完成工作并推进固定12图参考IoU均值精度补强。已完成、待做与验收见docs/thesis_main/研究推进台账_20261003.md。交叉效应模型非前置；云端由用户上传。"
   }
 }

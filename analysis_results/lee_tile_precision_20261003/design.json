@@ -1,0 +1,15 @@
+{
+  "schema": "lee_tile_precision_v1",
+  "status": "completed",
+  "input": "research/lee_tile_stage1_20261002/input.json",
+  "draws": 16384,
+  "seed": 20261003,
+  "simultaneous_mc_comparisons": 326,
+  "family_alpha": 0.05,
+  "mean_error_bound": 0.017005227427818948,
+  "target_mean_resolution": 0.02,
+  "precision_target_met": true,
+  "scope": "固定人员池、固定几何的离线均值；无总体抽样置信度、无量化分位数精度、无最佳人数判定",
+  "estimator": "小组全枚举；大组k=1,2,N-2,N-1,N枚举，其余按独立均匀排列频次平均，不去重。",
+  "offline_basis": "全员tile是当前子集区域指示函数的细分积分基底；子集选取与投票只读取该子集，不是在线预测。"
+}
