@@ -114,16 +114,19 @@ def validate_refinement(basis, records):
     return maximum, notices
 
 
-def run(input_path, out, draws=16384, seed=20261003):
+def run(input_path, out, draws=16384, seed=20261003, *, max_k=None, stratum=None, make_plot=True):
     data = json.loads(input_path.read_text(encoding='utf-8'))
     if data['schema'] != 'lee_tile_stage1_input_v1':
         raise ValueError('unsupported_input_schema')
+    if max_k is not None and (type(max_k) is not int or max_k < 1):
+        raise ValueError('invalid_max_k')
     groups = []; coverage = []
     for image in data['images']:
         parts = defaultdict(list)
         for r in image['annotations']:
             gate = r['main_consensus_gate']['status']
-            if r['independent'] and r['consensus_eligible'] and gate in GATES:
+            if (r['independent'] and r['consensus_eligible'] and gate in GATES
+                    and (stratum is None or (r['condition'], gate) == stratum)):
                 parts[r['condition'], gate].append(r)
         coverage.append(dict(image=image['code'], input_records=len(image['annotations']),
             candidate_records=sum(map(len, parts.values())), excluded_records=len(image['annotations'])-sum(map(len, parts.values()))))
@@ -131,7 +134,11 @@ def run(input_path, out, draws=16384, seed=20261003):
             groups.append((dict(image=image['code'], condition=condition, gate=gate),
                            sorted(records, key=lambda r: r['id']),
                            {r['version']: r['footprint'] for r in image['references']}))
-    comparisons = sum(2*(len(rs)-len(exact_ks(len(rs))))*sum(p is not None for p in refs.values())
+    if not groups:
+        raise ValueError('empty_analysis_panel')
+    if max_k is not None and any(len(rs)<max_k for _,rs,_ in groups):
+        raise ValueError('insufficient_roster_for_fixed_k')
+    comparisons = sum(2*sum(k not in exact_ks(len(rs)) for k in range(1,(max_k or len(rs))+1))*sum(p is not None for p in refs.values())
                       for _, rs, refs in groups)
     bound = mc_bound(draws, comparisons)
     out.mkdir(parents=True, exist_ok=True)
@@ -141,6 +148,9 @@ def run(input_path, out, draws=16384, seed=20261003):
         scope='固定人员池、固定几何的离线均值；无总体抽样置信度、无量化分位数精度、无最佳人数判定',
         estimator='小组全枚举；大组k=1,2,N-2,N-1,N枚举，其余按独立均匀排列频次平均，不去重。',
         offline_basis='全员tile是当前子集区域指示函数的细分积分基底；子集选取与投票只读取该子集，不是在线预测。')
+    if max_k is not None or stratum is not None:
+        plan.update(max_k=max_k, stratum=stratum,
+            coverage_note='excluded_records包含不属于指定condition/gate的记录，不等同于清洗排除。')
     write_json(out/'design.json', plan)  # 在任何曲线计算前写出固定设计，不根据结果调整批次数。
     summaries = []; support_rows = []; notices = []; checks = []; orders_saved = {}; rosters = []
     for index, (ident, records, refs) in enumerate(groups):
@@ -163,7 +173,7 @@ def run(input_path, out, draws=16384, seed=20261003):
             support_rows.append(dict(**ident, n=n, raw_disagreement_h2=d, raw_disagreement_union=d/union,
                 raw_pair_symmetric_difference_union=2*n/(n-1)*d/union if n>1 else None))
             prefix = np.bitwise_or.accumulate(np.left_shift(np.uint32(1), orders.astype(np.uint32)), axis=1)
-            for k in range(1, n+1):
+            for k in range(1, (max_k or n)+1):
                 exact = k in exact_ks(n)
                 masks = np.array([subset_mask(s) for s in combinations(range(n), k)], dtype=np.uint32) if exact else prefix[:, k-1]
                 for method in METHODS:
@@ -189,7 +199,8 @@ def run(input_path, out, draws=16384, seed=20261003):
         area='面积期望由超几何尾概率精算，不是平均IoU；单位h²，非实测米²',
         stability='本轮仅替换参考IoU均值；旧成员距离、增人Jaccard、分位数未获本轮精度保证',
         reproducibility='orders.npz按rosters.json的key及记录序号保存完整排列；枚举组合按记录序号字典序确定'))
-    plot(summaries, out)
+    if make_plot:
+        plot(summaries, out)
     plan['status'] = 'completed'
     write_json(out/'design.json', plan)
     return summaries
