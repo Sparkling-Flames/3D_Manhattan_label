@@ -1,7 +1,7 @@
 # HOHONET 文档入口
 
 <!-- CURRENT_RESEARCH: consensus_research_20260923_v1 -->
-当前研究规范为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`，版本 `consensus_research_20260923_v1`。当前基础是BEV底面表示、GT参照评价与Lee等权融合；先A线粗难度与人数曲线，再B线人员画像与真实组合，之后联系两线。45图首轮与136图逐图1—N扩展已完成；分簇、合理空间候选和同房预测不作为前置任务。
+当前研究规范为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`，版本 `consensus_research_20260923_v1`。当前基础是BEV底面表示、GT参照评价与Lee等权融合；先A线粗难度与人数曲线，再B线人员画像与真实组合，之后联系两线。136图人数扩展、24人×10图画像及固定4人构成基础分析已完成；正式类型与两线联系待研究。分簇、合理空间候选和同房预测不作为前置任务。
 
 ## 规范与执行
 
@@ -31,7 +31,7 @@
 
 - [连线与表示阶段1：坐标追溯、接口及全量可计算性](thesis_main/布局表示地基与坐标核验_20260930.md)：探索性实现，不改变资格或冻结权重。
 
-- [当前研究方向：BEV、质量评价与人员共识](thesis_main/研究方向_空间差异与共识_20260930.md)：表示、指标、融合与人数曲线的职责；136图扩展已完成，下一步共同图片人员画像。
+- [当前研究方向：BEV、质量评价与人员共识](thesis_main/研究方向_空间差异与共识_20260930.md)：表示、指标、融合与人数曲线的职责；A线扩图和B线画像／4人构成基础已完成，接续独立深度研究。
 
 - [9/29数值研究包](../research/pro_layout_20260929/README.md)：来源、源码和历史基线；其中阶段任务书不覆盖当前推进台账。
 
@@ -76,3 +76,5 @@
 - [S3-A粗难度与人数曲线（2026-10-03）](../analysis_results/lee_difficulty_20261003/REPORT.md)：固定45图、1—8人、752个参考均值；质量水平与增益、去困难/同建筑对照、面积诊断和双参考配对。工具 `tools/thesis_main/analysis/lee_difficulty_20261003.py`，不宣称独立难度效应或稳定人数。
 
 - [扩图与高人数分析（2026-10-03）](../analysis_results/lee_expanded_20261003/REPORT.md)：136图1496份独立票，逐图最多24人；固定窗口与失败整池保留，工具 `tools/thesis_main/analysis/lee_expanded_20261003.py`。
+
+- [共同人员画像与固定4人构成（2026-10-03）](../analysis_results/worker_profiles_20261003/REPORT.md)：24人×10图、整栋留出、IoU/质心及每图10626集合精算；[Chat Pro交接](../research/worker_consensus_handoff_20261003/README.md)，工具 `tools/thesis_main/analysis/worker_profiles_20261003.py`。

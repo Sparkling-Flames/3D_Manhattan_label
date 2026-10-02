@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "related_tests": 23,
+  "replay_identical_csv": 14,
+  "replay_identical_arrays": 30,
+  "direct_subset_reference_checks": 84,
+  "direct_subset_max_iou_difference": 1.1102230246251565e-15,
+  "direct_subset_warnings": [],
+  "expanded_k4_comparisons": 28,
+  "expanded_k4_max_mc_difference": 0.0014197643249630465,
+  "all_within_previous_mc_bounds": true,
+  "full_pool_partition_subsets": 10626,
+  "subsets_by_higher_count": [
+    495,
+    2640,
+    4356,
+    2640,
+    495
+  ],
+  "source_objects": 274,
+  "source_matched_coordinates": 254,
+  "source_unavailable_preserved": 20,
+  "source_warnings": 0,
+  "numeric_warning_count": 2,
+  "local_links_checked": 42,
+  "temporary_replay_removed": true,
+  "plot_visual_review": [
+    "quality_matrices.png",
+    "lobo_ranks.png",
+    "composition.png"
+  ],
+  "environment": {
+    "python": "3.11.7",
+    "numpy": "1.26.4",
+    "scipy": "1.11.4",
+    "shapely": "2.0.4"
+  }
+}
