@@ -6,7 +6,7 @@
 
 | 用途 | 路径 |
 |---|---|
-| 当前研究方向 | `docs/thesis_main/研究方向_空间差异与共识_20260930.md`：BEV表示、质量评价与Lee融合；45图曲线已完成，人员画像与真实组合为下一步 |
+| 当前研究方向 | `docs/thesis_main/研究方向_空间差异与共识_20260930.md`：BEV表示、质量评价与Lee融合；136图逐图1—N扩展已完成，人员画像与真实组合为下一步 |
 | 连线与表示阶段1 | `docs/thesis_main/布局表示地基与坐标核验_20260930.md`；工具 `tools/thesis_main/analysis/layout_foundation_20260930.py`；全量表示清点 `analysis_results/layout_foundation_20260930/`，不修改资格或选择权重 |
 | 当前规范、执行与统计 | `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`；`ROUND_BASED_ASSIGNMENT_SOP_v1.md`；`STATISTICAL_ANALYSIS_PLAN_v1.md` |
 | 最终研究输入 | `analysis_results/research_input_20260929/manifest.json` 为统一入口；完整生成/读取 `tools/thesis_main/data_prep/consolidate_research_input.py`，坐标组件生成 `materialize_current_research_input.py`；说明 `docs/thesis_main/最终审核数据接入_20260929.md` |
@@ -76,3 +76,5 @@
 - [两线研究推进台账（2026-10-03）](thesis_main/研究推进台账_20261003.md)：已完成分析、A线粗难度与曲线、B线人员类型与组合；[参考均值精度补强](../research/lee_tile_precision_20261003/README.md)及独立审查数值证据，工具 `tools/thesis_main/analysis/lee_tile_precision_20261003.py`。
 - [S2全量可比面板盘点（2026-10-03）](../analysis_results/research_panel_inventory_20261003/REPORT.md)：259图难度/资格/方法失败、人员共同覆盖；预选A线45图与B线24人×10图。工具 `tools/thesis_main/analysis/research_panel_inventory_20261003.py`，不新增资格或人员类型。
 - [S3-A粗难度与人数曲线（2026-10-03）](../analysis_results/lee_difficulty_20261003/REPORT.md)：固定45图、1—8人、752个参考均值；质量水平与增益、去困难/同建筑对照、面积诊断和双参考配对。工具 `tools/thesis_main/analysis/lee_difficulty_20261003.py`，不宣称独立难度效应或稳定人数。
+
+- [扩图与高人数分析（2026-10-03）](../analysis_results/lee_expanded_20261003/REPORT.md)：136图1496份独立票，逐图最多24人；固定窗口与失败整池保留，工具 `tools/thesis_main/analysis/lee_expanded_20261003.py`。

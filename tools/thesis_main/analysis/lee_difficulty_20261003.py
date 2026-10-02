@@ -19,12 +19,16 @@ DEFAULT_OUT = ROOT/'analysis_results/lee_difficulty_20261003'
 UNB = 'uNb9QFRL6hY'
 
 
-def collect(out):
+def collect(out, *, chosen=None, stage='S3-A', max_k=8):
     """沿用当前完整包；逐对象对照S2资格/方法状态，不由曲线选择数据。"""
     from tools.thesis_main.data_prep.consolidate_research_input import load_current_bundle
     from tools.thesis_main.data_prep.project_public_research_20260929 import project_bundle
     inventory = json.loads((INVENTORY/'input.json').read_text(encoding='utf-8'))
-    chosen = json.loads((INVENTORY/'next_panels.json').read_text(encoding='utf-8'))['a']['images']
+    default_selection = chosen is None
+    if default_selection:
+        chosen = json.loads((INVENTORY/'next_panels.json').read_text(encoding='utf-8'))['a']['images']
+    if not chosen or len(chosen) != len(set(chosen)):
+        raise ValueError('empty_or_duplicate_requested_images')
     old_images = {i['image']:i for i in inventory['images']}
     old_records = {r['id']:r for r in inventory['records']+inventory['references']}
     bundle=load_current_bundle(); panel,mapping=project_bundle(bundle)
@@ -67,8 +71,8 @@ def collect(out):
                     coordinates='exact_source_index_match' if prepared['points'] is not None else 'unavailable_preserved'))
             im[field]=updated
         images.append(im)
-    if sorted(chosen)!=sorted(i['code'] for i in images) or len(images)!=45:
-        raise ValueError('fixed_45_image_panel_mismatch')
+    if sorted(chosen)!=sorted(i['code'] for i in images):
+        raise ValueError('requested_image_panel_mismatch')
     validate_panel(dict(schema='layout_research_panel_v1',images=images))
     for im in images:
         got={r['id'] for r in im['annotations']+im['references']}
@@ -76,10 +80,12 @@ def collect(out):
         if got!=expected:
             raise ValueError('record_population_drift:'+im['code'])
     write_json(out/'source_binding.json',dict(status='passed',objects=len(checks),records=checks,warnings=notices,
-        source_manifest=panel['source_manifest'],selection='S2 next_panels.a; source coordinates from current validated bundle, not inventory statuses'))
-    data=dict(schema='lee_tile_stage1_input_v1',images=images,plan=dict(stage='S3-A',max_k=8,
+        source_manifest=panel['source_manifest'],
+        selection=('S2 next_panels.a' if default_selection else 'S2 declared image list')+'; source coordinates from current validated bundle, not inventory statuses',
+        selected_images=chosen))
+    data=dict(schema='lee_tile_stage1_input_v1',images=images,plan=dict(stage=stage,max_k=max_k,
         condition='manual',gate='main_candidate',difficulty_counts=dict(Counter(i['difficulty'] for i in images)),
-        source_manifest=panel['source_manifest'],selection_source='analysis_results/research_panel_inventory_20261003/next_panels.json'))
+        source_manifest=panel['source_manifest'],selection_source='analysis_results/research_panel_inventory_20261003/next_panels.json' if default_selection else 'source_binding.json:selected_images (S2 inventory)'))
     write_json(out/'input.json',data)
     return data
 
