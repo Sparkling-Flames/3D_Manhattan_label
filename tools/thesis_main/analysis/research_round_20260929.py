@@ -1,10 +1,12 @@
 """Latest-data numerical baseline. Inputs are explicit derived records, never raw exports.
 
-No GT enters aggregation. No point deletion, reordering, geometric fitting or worker
-classification is performed. Lengths use a common camera height of one, not metres.
+No GT enters aggregation. Reconstruction does not delete, reorder or fit points.
+The explicit prepare_record helper applies the existing confirmed/default-x rule;
+historical callers remain unchanged. Lengths use camera height one, not metres.
 """
 from __future__ import annotations
 import argparse
+import copy
 from collections import Counter, defaultdict
 import csv
 import json
@@ -41,6 +43,33 @@ def validate_panel(panel):
                 votes.add(key)
         versions=[r['version'] for r in im['references']]
         if len(versions)!=len(set(versions)):raise ValueError('duplicate_reference_version')
+
+
+def prepare_record(record):
+    """沿用10/2探针：确认环保留，未确认环按预处理共享x排序，原始GT不改序。"""
+    r = copy.deepcopy(record)
+    if r.get('points') is None:
+        r['order_used'] = 'unavailable'
+        return r
+    if r.get('ring_confirmed') or r.get('version') == 'original':
+        r['order_used'] = 'human_confirmed' if r.get('ring_confirmed') else 'original_gt_reference'
+        return r
+    p = np.asarray(r['points'], float)
+    if p.ndim != 2 or p.shape[1] != 2 or len(p) % 2 or not np.isfinite(p).all():
+        raise ValueError('invalid_preprocessed_points')
+    pairs = p.reshape(-1, 2, 2)
+    if not np.allclose(pairs[:, 0, 0], pairs[:, 1, 0], rtol=0, atol=1e-9):
+        raise ValueError('preprocessed_shared_x_mismatch')
+    order = np.argsort(pairs[:, 0, 0], kind='stable').tolist()
+    r['points'] = pairs[order].reshape(-1, 2).tolist()
+    for key in ('source_pair_indices', 'source_point_indices', 'source_point_labels'):
+        if r.get(key) is not None:
+            stride = 1 if key == 'source_pair_indices' else 2
+            if len(r[key]) != stride*len(order):
+                raise ValueError('source_identity_length_mismatch')
+            r[key] = [r[key][stride*i+j] for i in order for j in range(stride)]
+    r['order_used'] = 'default_x_unreviewed'
+    return r
 
 
 def reconstruct(record, *, coordinate_convention='continuous'):
