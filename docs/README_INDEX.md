@@ -29,6 +29,8 @@
 
 ## 当前研究与探索
 
+- [完整共识并行研究交接](../research/full_layout_consensus_handoff_20261003/README.md)：本地负责当前输入与原图核对、融合环序和既有Lee稳定性；Chat Pro研究完整共识、阈值、对应及连接，附目标提示词和已跟踪资料入口。
+
 - [同房相似性核查](../analysis_results/same_room_similarity_20261003/REPORT.md)、[人员粗分类原意与旧证据](thesis_main/人员粗分类原意与既有证据_20261003.md)、[Lee真实数据交互demo](../analysis_results/lee_consensus_demos_20261003/index.html)：研究阶段多路线探索；名单稳定、子类稳定与参考质量分别解释。
 - [点投票与区域投票溯源](thesis_main/点投票与区域投票_方法溯源_20261003.md)：历史点对原型与Lee原文职责；[融合demo](../analysis_results/lee_consensus_demos_20261003/index.html)展示整份标法簇、上下点中心候选及直接ERP区域轮廓，Lee-BEV保留底面对照。
 
