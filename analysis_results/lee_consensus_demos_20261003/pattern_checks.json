@@ -1,0 +1,15 @@
+{
+  "schema": "demo_pattern_views_v1",
+  "status": "completed",
+  "thresholds_deg": [
+    5.0
+  ],
+  "cluster_instances": 224,
+  "erp_region_groups": 116,
+  "erp_unsupported": 12,
+  "projection_failures": [],
+  "semantics": "Whole-annotation pattern clusters; preserve all clusters. Not worker classes or cross-count corner identity clustering. Cluster IDs are local to each current k, not longitudinal mode identities.",
+  "points": "Aligned cyclic x/top_y/bottom_y medians per cluster; full independent pair points, not Lee.",
+  "erp": "Direct ERP dense wall-band majority only on declared applicable rings; any unsupported member blocks that group.",
+  "gt_used_in_clustering_or_fusion": false
+}

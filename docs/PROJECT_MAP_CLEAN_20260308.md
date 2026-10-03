@@ -5,7 +5,7 @@
 ## 当前入口
 
 - [同房相似性](../analysis_results/same_room_similarity_20261003/REPORT.md)与[Lee真实数据demo](../analysis_results/lee_consensus_demos_20261003/index.html)：新工具分别为 `tools/thesis_main/analysis/same_room_similarity_20261003.py`、`lee_consensus_demos_20261003.py`；[人员粗分类溯源](thesis_main/人员粗分类原意与既有证据_20261003.md)补足Q/T/S/B及具名子类收敛的历史与当前职责。
-- [点投票与区域投票溯源](thesis_main/点投票与区域投票_方法溯源_20261003.md)：核对旧上下点对聚类与坐标中位数原型；Lee demo补充原标注与融合底边的全景对照，不新增完整3D融合结论。
+- [点投票与区域投票溯源](thesis_main/点投票与区域投票_方法溯源_20261003.md)：[融合demo](../analysis_results/lee_consensus_demos_20261003/index.html)的整份标法分组与上下点中心候选由 `tools/thesis_main/analysis/point_pattern_demo_20261003.py` 提供；直接ERP上下区域轮廓由 `erp_region_demo_20261003.py` 提供，均为探索模块，Lee-BEV旧结果保留。
 
 - [人员研究返回的本地审查](../analysis_results/worker_review_20261003/REPORT.md)、[前三轮Pro／dot精选归档](../research/consensus_reviews_20261003/README.md)：工具 `tools/thesis_main/analysis/audit_worker_returns_20261003.py`；保留连续画像、等权融合及重复坐标独立票，下一步画像迁移与人数×构成。
 

@@ -1,12 +1,15 @@
-# Lee 等权区域融合：四个真实数据演示
+# 标法分组与融合候选：四个真实数据演示
 
-当前可以固定作为研究基线的是：既有预处理与环序 → 声明BEV足迹 → 当前成员边界切tile → 人人等权投票。MV50保留支持率≥50%的区域，严格多数保留>50%；GT仅用于评价。它输出区域，不保证单连通、无孔或完整可重建的Manhattan layout。
+主展示已调整为：先看同图的整份标法簇，再看选中簇的完整上下点中心候选或直接ERP区域多数轮廓。原有Lee-BEV等权区域投票保留为折叠对照；其历史数值与成员资格没有改变。GT不参与任何一条分组／候选／投票构造。
 
 ## 演示内容与选例
 
-打开[index.html](index.html)，顶部同一全景图并排显示：左侧选中人员的已预处理上下角点及既定环连线，右侧当前Lee融合底边。可切人数、人员、规则与GT。原点坐标、确认环／默认环均保持冻结输入原值。下方保留BEV与人数曲线解释。
+打开[index.html](index.html)，首先显示当前k人全部标法簇的代表缩略图和支持人数；选簇后左侧为代表与同簇成员，右侧可切完整上下点中心／ERP上下稠密轮廓。逐人检查放在展开项。原角点、确认环／默认环与源索引保持冻结输入原值。
 
-**右侧仅是融合底边，上边尚未融合。** 当前Lee对底面区域投票，没有上角点配对或天花板输出；不以平均高度编造完整标注。融合全部外环、孔洞和断片都投影显示，不只留最大分量，也不把几何边断言为图上可见墙边。
+整份标法分组：同点对数、允许周期起点／反向对应的上下端点最大球面角距离，complete-link，固定5°未校准阈值。不同点数先分开，可能把共线冗余点也分成不同组；分组数量不是自然标法数量。簇号仅对当前k有效；查看簇不改变k、全体投票或原人数曲线。
+点中心候选：在各簇内部保持整环对应，周期x、top_y、bottom_y分别取中位数，直接产生完整点对；保留所有簇，不选最大簇或用GT选优。点中心观测数是参与估计的人数，不是恰好落在新中心坐标的票数。全员存在多个标法时并列保留多个候选，不强行合成唯一layout。新候选未经GT质量验证。
+直接ERP区域多数：在原环能表示为每列单段、绕一周且上下跨共同地平线的适用域中，512列采样投票，输出上下稠密轮廓。保留原环与曲线；任何当前成员不适用则整组unsupported，不删人、重排或取可见包络。该输出不是稀疏角点恢复，也不是已经验证质量提升。
+**Lee-BEV对照仍仅输出融合底边。** 它不输出上角点或天花板；不以平均高度编造完整标注。所有外环、孔洞和断片都保留，不只取最大分量，也不把几何边断言为可见墙边。
 显示曲线复用`panorama_studio.geometry.pixel_ray/project_pixel`的continuous 1024×512约定，+Y向上、地面Y=-1。沿既定环将三维直边投回ERP，跨接缝分段；单体顶部沿用已配对底点的水平距离重建墙顶代理，不假设所有顶点平顶。角点仍直接使用输入原值。65点采样只服务显示，不改BEV或IoU。
 
 **按既有结果选例用于解释，不能当作四图总体效果估计。** 最大／中位／最小增益均在已有A线N≥8图片中，以全员MV50减全池单人均值选出；平票例取偶数N中两规则全员IoU差最大。成员按固定R编号升序进入，未搜索有利链。图中的细虚线是这条链，粗实线是已有成员集合均值，二者不可混用。
@@ -33,4 +36,12 @@
 来源、选例及固定链见design.json、demos.json；逐前缀机器指标见metrics.csv，核验见checks.json，字段见field_contract.json。每份作答的确认状态、人员ID和记录ID随演示保留。
 复现：`python -B -m tools.thesis_main.analysis.lee_consensus_demos_20261003 --out analysis_results/<新的目录>`。已有目录拒绝覆盖。
 仅刷新ERP展示：`python -B -m tools.thesis_main.analysis.lee_consensus_demos_20261003 --refresh-display`。保留既有metrics.csv字节；新增投影核验见projection_checks.json。单人身份、原点回环、接缝和孔洞投影有定向测试。
-相关测试：`python -B -m pytest tests/test_lee_consensus_demos_20261003.py tests/test_lee_tile_stage1_20261002.py tests/test_lee_tile_precision_20261003.py -q -p no:cacheprovider`。
+新增分组状态见pattern_checks.json；直接ERP各独立成员组的支持摘要／不适用状态见erp_region_results.json。稀疏候选点以全精度保存，稠密曲线仅保留0.001px显示SVG及支持摘要；核心aggregate_records可返回全精度采样结果。
+相关测试：`python -B -m pytest tests/test_lee_consensus_demos_20261003.py tests/test_point_pattern_demo_20261003.py tests/test_erp_region_demo_20261003.py tests/test_lee_tile_stage1_20261002.py tests/test_lee_tile_precision_20261003.py -q -p no:cacheprovider`。
+
+| 图片 | 当前全员整份标法组数（5°演示） | 各组人数 | 全员直接ERP状态 |
+|---|---:|---|---|
+| B6ByNegPMKs-40 | 6 | 15、2、2、1、1、1 | ok |
+| uNb9QFRL6hY-53 | 5 | 6、5、2、1、1 | ok |
+| uNb9QFRL6hY-67 | 9 | 5、2、2、1、1、1、1、1、1 | unsupported |
+| yqstnuAEVhm-05 | 4 | 3、2、2、1 | ok |

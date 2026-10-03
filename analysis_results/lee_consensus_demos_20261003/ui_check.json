@@ -2,19 +2,69 @@
   "date": "2026-10-03",
   "status": "passed",
   "surface": "Codex in-app browser, local loopback server",
-  "checked": ["four case selections", "member count slider", "MV50 and strict majority", "individual member selection", "GT visibility", "member visibility", "tile support layer", "tie layer", "equal-aspect BEV and curves", "original panorama loading"],
-  "examples_displayed_mv50": {"B6ByNegPMKs-40": 0.7628, "uNb9QFRL6hY-53": 0.9242, "uNb9QFRL6hY-67": 0.1093, "yqstnuAEVhm-05": 0.9256},
-  "two_person_switch": {"image": "B6ByNegPMKs-40", "mv50": 0.7031, "strict": 0.3229},
+  "checked": [
+    "four case selections",
+    "member count slider",
+    "MV50 and strict majority",
+    "individual member selection",
+    "GT visibility",
+    "member visibility",
+    "tile support layer",
+    "tie layer",
+    "equal-aspect BEV and curves",
+    "original panorama loading"
+  ],
+  "examples_displayed_mv50": {
+    "B6ByNegPMKs-40": 0.7628,
+    "uNb9QFRL6hY-53": 0.9242,
+    "uNb9QFRL6hY-67": 0.1093,
+    "yqstnuAEVhm-05": 0.9256
+  },
+  "two_person_switch": {
+    "image": "B6ByNegPMKs-40",
+    "mv50": 0.7031,
+    "strict": 0.3229
+  },
   "related_tests": 14,
   "scope": "Initial BEV UI and numerical behavior checked; no new visual GT adjudication. No screenshot files retained.",
   "erp_extension": {
     "date": "2026-10-03",
     "status": "passed",
-    "checked": ["preprocessed original top/bottom points and stored-ring curves on panorama", "Lee fused floor boundary on same panorama", "current members overlay and selected worker", "all four cases", "k=1 equals individual IoU", "member selection", "GT and point visibility", "MV50/strict switch"],
-    "tie_example": {"image": "yqstnuAEVhm-05", "k": 8, "mv50": 0.9256, "strict": 0.8170},
+    "checked": [
+      "preprocessed original top/bottom points and stored-ring curves on panorama",
+      "Lee fused floor boundary on same panorama",
+      "current members overlay and selected worker",
+      "all four cases",
+      "k=1 equals individual IoU",
+      "member selection",
+      "GT and point visibility",
+      "MV50/strict switch"
+    ],
+    "tie_example": {
+      "image": "yqstnuAEVhm-05",
+      "k": 8,
+      "mv50": 0.9256,
+      "strict": 0.817
+    },
     "related_tests": 11,
     "browser_error_logs": [],
     "data_check": "metrics.csv bytes and all pre-existing demos.json fields unchanged against committed version",
     "scope": "Display projection added; no fused top boundary or new point-voting algorithm. No screenshot files retained."
+  },
+  "pattern_and_full_boundary_extension": {
+    "date": "2026-10-03",
+    "status": "passed",
+    "checked": [
+      "whole-annotation pattern cards and support denominators",
+      "switch selected pattern",
+      "full top/bottom point candidate on panorama",
+      "direct ERP region on cluster and all current people",
+      "strict-majority switch",
+      "uNb-67 whole-group unsupported with both members retained",
+      "k=1 pattern and paired-point endpoint"
+    ],
+    "related_tests": 22,
+    "browser_error_logs": [],
+    "scope": "Small illustrative demo; no new GT quality adjudication or sparse-corner recovery claim. Screenshot observations streamed only; no screenshot files retained."
   }
 }

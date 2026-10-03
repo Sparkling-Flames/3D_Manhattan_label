@@ -30,7 +30,7 @@
 ## 当前研究与探索
 
 - [同房相似性核查](../analysis_results/same_room_similarity_20261003/REPORT.md)、[人员粗分类原意与旧证据](thesis_main/人员粗分类原意与既有证据_20261003.md)、[Lee真实数据交互demo](../analysis_results/lee_consensus_demos_20261003/index.html)：研究阶段多路线探索；名单稳定、子类稳定与参考质量分别解释。
-- [点投票与区域投票溯源](thesis_main/点投票与区域投票_方法溯源_20261003.md)：上下角点对身份及中心融合已有旧原型；当前Lee只融合二维BEV底面，全景demo区分原标注上下轮廓与融合底边。
+- [点投票与区域投票溯源](thesis_main/点投票与区域投票_方法溯源_20261003.md)：历史点对原型与Lee原文职责；[融合demo](../analysis_results/lee_consensus_demos_20261003/index.html)展示整份标法簇、上下点中心候选及直接ERP区域轮廓，Lee-BEV保留底面对照。
 
 - [人员研究返回的本地审查](../analysis_results/worker_review_20261003/REPORT.md)、[前三轮Pro／dot精选归档](../research/consensus_reviews_20261003/README.md)：分组稳定性、替换背景、十图面积分解与33图配对人数精度；连续画像与构成研究继续，重复坐标按用户确认保留独立票。
 

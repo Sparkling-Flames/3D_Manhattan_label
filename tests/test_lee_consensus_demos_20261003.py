@@ -62,3 +62,28 @@ def test_erp_projection_preserves_singleton_points_ring_seam_and_holes():
     holed=Polygon(floor, [[[-.2,-.2],[.2,-.2],[.2,.2],[-.2,.2]]])
     holes=region_projection(mapping(holed))
     assert [r['hole'] for r in holes] == [False, True]
+
+
+def test_pattern_display_keeps_all_groups_full_top_bottom_and_separate_lee_results(tmp_path):
+    from tools.label_studio.panorama_studio.geometry import project_pixel
+    from tools.thesis_main.analysis.lee_consensus_demos_20261003 import add_pattern_views
+    records=[]
+    for i, scale in enumerate((1.,1.03,2.)):
+        footprint=[[x*scale,z*scale] for x,z in [[-2,-2],[2,-2],[2,2],[-2,2]]]
+        points=[p for x,z in footprint for p in (project_pixel([x,1.4,z],1024,512),project_pixel([x,-1,z],1024,512))]
+        records.append(dict(id=f'R{i}',worker=f'P{i}',points=points,footprint=footprint))
+    demos=[dict(image='test',steps=[dict(k=k,members=[r['id'] for r in records[:k]],metrics={'preserved':k}) for k in range(1,4)])]
+    snapshot=copy.deepcopy(records)
+    summary=add_pattern_views(demos,{'test':dict(annotations=records)},tmp_path)
+    assert records==snapshot
+    assert [s['metrics'] for s in demos[0]['steps']]==[{'preserved':k} for k in range(1,4)]
+    end=demos[0]['steps'][-1]
+    groups=end['pattern_views'][0]['clusters']
+    assert len(groups)==2
+    assert sorted(i for g in groups for i in g['members'])==['R0','R1','R2']
+    assert end['pattern_views'][0]['all_members_candidate']['status']=='unavailable'
+    for g in groups:
+        assert len(g['candidate']['points'])==8
+        assert g['candidate']['erp_key'] in demos[0]['point_projection_cache']
+    assert demos[0]['erp_region_cache'][end['all_erp_region_key']]['status']=='ok'
+    assert not summary['gt_used_in_clustering_or_fusion']
