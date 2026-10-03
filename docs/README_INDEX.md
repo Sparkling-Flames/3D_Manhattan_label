@@ -29,6 +29,8 @@
 
 ## 当前研究与探索
 
+- [同房相似性核查](../analysis_results/same_room_similarity_20261003/REPORT.md)、[人员粗分类原意与旧证据](thesis_main/人员粗分类原意与既有证据_20261003.md)、[Lee真实数据交互demo](../analysis_results/lee_consensus_demos_20261003/index.html)：研究阶段多路线探索；名单稳定、子类稳定与参考质量分别解释。
+
 - [人员研究返回的本地审查](../analysis_results/worker_review_20261003/REPORT.md)、[前三轮Pro／dot精选归档](../research/consensus_reviews_20261003/README.md)：分组稳定性、替换背景、十图面积分解与33图配对人数精度；连续画像与构成研究继续，重复坐标按用户确认保留独立票。
 
 - [连线与表示阶段1：坐标追溯、接口及全量可计算性](thesis_main/布局表示地基与坐标核验_20260930.md)：探索性实现，不改变资格或冻结权重。

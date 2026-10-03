@@ -5,6 +5,8 @@
 
 ## 1. 当前阶段和目标
 
+本轮用户允许多方面探索，连续画像与Q/T/S/B粗分类子类内收敛并行，参照合同`quality.exploratory_parallelism_20261003`和`quality.worker_subtype_objective_20261003`。不要求先冻结天然人员类型才做子类实验；同图同人数随机对照、目标建筑外校准和明确几何／参考终点仍保留。同房相似性核查与真实Lee demo已获本轮授权，不能因旧条目写“后续”而拒绝探索。
+
 Pro／dot返回及[本地审查](../../analysis_results/worker_review_20261003/REPORT.md)已完成，按当前合同`quality.worker_review_20261003`与`delivery.worker_return_review_20261003`接续：保留连续画像，先检验其他建筑上的迁移，再扩人数×构成。用户确认重复坐标仍按独立标注，不合票或降权，不把独立性核查重新设为前置；来源事实另存。下文“Chat Pro接力”是上一交接阶段记录。
 
 10/3追加扩图已完成：Manual主质量兼容池N≥2，137张尝试图中136张可计算；逐图1—N、最多24人，分别按固定N≥2/4/8/12/16/20/24图片汇总。1张失败整池及未记录难度保留，不能随k删图或把未知难度并入非困难。详见[扩展报告](../../analysis_results/lee_expanded_20261003/REPORT.md)。随后已完成[共同24人×10图画像与4人构成](../../analysis_results/worker_profiles_20261003/REPORT.md)：外建筑校准相对上下半，非正式人员分类；穷举同人数构成和具体成员，不改等权投票。Chat Pro接力判断质量效度与区分可靠性，再扩人数及联系两线。

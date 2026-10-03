@@ -1,0 +1,32 @@
+{
+  "schema": "lee_consensus_demos_v1",
+  "status": "completed",
+  "input": "analysis_results/lee_expanded_20261003/input.json",
+  "source_binding": "analysis_results/lee_expanded_20261003/source_binding.json",
+  "selection": [
+    {
+      "image": "B6ByNegPMKs-40",
+      "purpose": "较大改善",
+      "reason": "N≥8图中全员MV50减全池单人均值最大"
+    },
+    {
+      "image": "uNb9QFRL6hY-53",
+      "purpose": "增益中位附近",
+      "reason": "N≥8图按同一增益排序取上中位；不代表所有属性典型"
+    },
+    {
+      "image": "uNb9QFRL6hY-67",
+      "purpose": "接近参考变差",
+      "reason": "N≥8图中全员MV50减全池单人均值最小"
+    },
+    {
+      "image": "yqstnuAEVhm-05",
+      "purpose": "平票规则敏感",
+      "reason": "N≥8且N为偶数，取全员两规则原参考IoU绝对差最大"
+    }
+  ],
+  "member_chain": "Ascending fixed record ID; never searched for best chain. User-confirmed independent repeated geometry retains separate votes.",
+  "interpretation": "Post-outcome teaching examples, not an unbiased estimate of fusion benefit.",
+  "no_new_preprocessing": true,
+  "gt_used_in_votes": false
+}

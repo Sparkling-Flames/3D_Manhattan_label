@@ -1,0 +1,20 @@
+{
+  "schema": "same_room_similarity_descriptive_v1",
+  "sources": [
+    "analysis_results\\research_input_20260929\\final_review\\同房分类_原始完整记录.json",
+    "analysis_results\\lee_expanded_20261003\\input.json",
+    "analysis_results\\lee_expanded_20261003\\rosters.json"
+  ],
+  "coordinate_rule": "Polygons compared only within the same image and camera frame.",
+  "relation_rule": "Direct recorded pairs only; no transitive closure; no evidence is not confirmed different room.",
+  "population": "Existing completed A-line Manual/main_candidate rosters, no merged votes or eligibility changes.",
+  "metrics": {
+    "worker_iou_spearman": "Spearman of original-GT IoU for identical common workers.",
+    "common_mean_iou_gap": "Absolute difference of common-worker mean IoU across the two images.",
+    "pair_disagreement_spearman": "Spearman of within-image 1-IoU for the same unordered worker pairs.",
+    "common_pair_disagreement_gap": "Absolute difference of mean within-image pair 1-IoU."
+  },
+  "missing": "Empty correlation denotes constant vector or fewer than two values; n_common preserved.",
+  "aggregation": "Pair equal and building equal shown separately; pairs share images/workers and are not independent.",
+  "bounds": "Exact descriptive geometry, no new significance/CI or generalization claims; no new consensus curves."
+}

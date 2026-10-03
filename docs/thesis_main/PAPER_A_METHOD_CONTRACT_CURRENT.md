@@ -70,6 +70,8 @@
 - `references.reference_conflicts`：历史scope/GT意见按具体对象保留，未知项不升级为统一真值
 - `references.detail_and_scope_variation`：参考省略局部细节与合理不同空间范围分别记录，可同时存在，不自动标为GT错误或从主研究剔除。明确指出参考实质错误才单列原始/人工修订版本核验；固定参考距离不直接等于人员错误。
 - `references.difficult_scene_interpretation`：门洞交界很难标且局部可能无法按规则合理标注；OOS的GT未必正确或适用。沿用现有审核和资格，不由固定参考距离直接判人员错误，不一概宣布全部OOS参考错误，不新增全量GT重审。
+- `quality.exploratory_parallelism_20261003`：用户明确仍处研究阶段，并未否定连续画像。连续人员画像、Q/T/S/B单项及联合粗分类、子类内部标注稳定性、跨子类组合允许并行探索；本轮不冻结唯一方法，也不以分类尚未定型为由阻塞试验。先区分名单重复性、作答模式稳定、融合成员波动、增人变化与参考质量，再用可比数据判断解释力。
+- `quality.worker_subtype_objective_20261003`：用户再次明确人员粗分类的原意：寻找至少一个可解释子类，检验该子类内部独立标注的分歧与随人数变化的共识是否比同图同人数随机人员更容易稳定，再研究子类间真实配比。质量Q、有效时间T、scope判断S及半自动行为B的单项和组合均保留候选；scope不代表全部规则，时间不等于认真，含参考净改善的B并非无GT信息。标签/名单重复性是可靠性诊断，不替代子类标注收敛；不以必须先证明天然或永久高低类型作为探索前置。历史OSPA/分簇结果保留，不能直接宣称当前BEV/Lee已复现；目标建筑外校准、组规模匹配、失败与未定保留。
 - `quality.worker_review_20261003`：Pro/dot返回经本地复核：连续人员差异有信号，但互不重叠建筑校准的二分稳定性有限；上下半不冻结为正式类型。质心与IoU低相关不等于增量效度，参考敏感性须保留。用户确认人员不参考他人，重复坐标按独立标注保留；既有固定池不合并、不降权、不改资格，来源元数据不作为实际行为裁决或后续前置门槛。下一步先检验连续画像在校准建筑之外的迁移，再扩人数与构成。
 - `quality.overlapping_scene_dimensions`：OOS为任务适用性，门洞为拍摄位置/边界条件，允许共存并保留评论证据；原单选category不覆盖原话。not_recorded不是否定，raw condition=oos不是研究者确认。并集分母按canonical作答去重。
 - `quality.review_use_separation`：清洗裁决、场景适用性、参考状态、范围政策和几何可计算性分开。明确暂不进主分析同时限制主共识面板与人员主质量；明确仅内侧空间须披露事后人工范围政策，不自动恢复GT质量，也不由簇号批量改判。
@@ -86,6 +88,7 @@
 
 ## 共识构造与算法比较
 
+- `consensus.baseline_status_20261003`：当前研究可固定声明BEV上的Lee tile等权MV50为区域融合基线，严格多数作为平票对照；这是可运行且已核验的比较算法，不是已证明最优或每图必然提高质量。真实数据demo同时展示改善、典型、下降与平票例，固定成员顺序，按结果选例明确为教学，不能代替全图效果评价；GT只评价，不参加投票。输出不自动成为带天花板的完整合法3D layout。
 - `consensus.lee_source`：https://ceur-ws.org/Vol-2173/paper10.pdf
 - `consensus.construction`：重叠区域的成员投票→tile/pixel支持→区域选择
 - `consensus.core_methods`：mv50；mv_strict；medoid；em_correct_probability；greedy_empirical；staple

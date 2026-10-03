@@ -1,0 +1,24 @@
+{
+  "schema": "lee_consensus_demos_v1",
+  "metrics_fields": [
+    "image",
+    "k",
+    "method",
+    "version",
+    "members",
+    "tile_count",
+    "tie_area_h2",
+    "iou",
+    "area_h2",
+    "omission_h2",
+    "extension_h2",
+    "empty"
+  ],
+  "coordinates": "Common camera BEV X,Z in h units; area h². Equal aspect and per-image fixed extent.",
+  "chain": "Nested prefixes of ascending record IDs; deterministic teaching replay, not average/optimal chain.",
+  "mean_curve": "Unchanged A-line uniform-member-set mean; exact or 16384-draw MC marked individually. Not this chain.",
+  "tie": "Area supported by exactly k/2 current members; MV50 retains it and strict majority omits it.",
+  "photos": "Local original PNGs referenced by repository-relative paths; copied demo folder alone is insufficient for photographs.",
+  "failures": "No failed member is dropped; error stops calculation and writes failures.json.",
+  "selection": "Post-outcome selection from N>=8 A-line images for illustration; no inference across these four examples."
+}
