@@ -1,0 +1,9 @@
+{
+  "schema": "global_pair_study_v1",
+  "primary_results": "137 full-pool images, candidate/support/source/ring diagnostics for both point voting rules at predefined 5 degrees.",
+  "sensitivity": "All images x 3 predefined thresholds x 2 rules; every status retained; candidate points, footprint, ring diagnostics and post-hoc references. Nondefault identity assignments are reproduced from fixed inputs by the script.",
+  "metrics": "BEV floor IoU, centroid distance in camera-height units and normalized by sqrt(reference area); not complete top/layout quality.",
+  "pairing": "point_minus_lee_iou only on matching image/rule/full-pool original reference, with explicit computable denominator.",
+  "erp": "Whole-group applicable status; one unsupported member blocks the group; no thinning.",
+  "shared_x": "Only new consensus ring uses this declared baseline. No source points, pairs, rings, qualification or GT altered."
+}

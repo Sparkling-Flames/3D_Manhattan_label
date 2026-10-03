@@ -1,0 +1,302 @@
+[
+  {
+    "case": "real_three",
+    "threshold": 2.5,
+    "independent": {
+      "states_enumerated": 64,
+      "feasible_count": 0,
+      "optimal_count": 0,
+      "best_score": null,
+      "feasible_assignments": []
+    },
+    "prototype_status": "no_joint_alignment_within_tolerance"
+  },
+  {
+    "case": "real_three",
+    "threshold": 5.0,
+    "independent": {
+      "states_enumerated": 64,
+      "feasible_count": 1,
+      "optimal_count": 1,
+      "best_score": 8.42629451444466,
+      "feasible_assignments": [
+        {
+          "maps": [
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              2,
+              3
+            ]
+          ],
+          "score": 8.42629451444466,
+          "pair_errors": [
+            2.796842209086995,
+            4.1971786819265064,
+            1.4322736234311575
+          ]
+        }
+      ]
+    },
+    "prototype_status": "unique_joint_objective_optimum_not_semantic_certainty"
+  },
+  {
+    "case": "real_three",
+    "threshold": 9.0,
+    "independent": {
+      "states_enumerated": 64,
+      "feasible_count": 1,
+      "optimal_count": 1,
+      "best_score": 8.42629451444466,
+      "feasible_assignments": [
+        {
+          "maps": [
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              2,
+              3
+            ]
+          ],
+          "score": 8.42629451444466,
+          "pair_errors": [
+            2.796842209086995,
+            4.1971786819265064,
+            1.4322736234311575
+          ]
+        }
+      ]
+    },
+    "prototype_status": "unique_joint_objective_optimum_not_semantic_certainty"
+  },
+  {
+    "case": "synthetic_cycle",
+    "threshold": 2.5,
+    "independent": {
+      "states_enumerated": 64,
+      "feasible_count": 0,
+      "optimal_count": 0,
+      "best_score": null,
+      "feasible_assignments": []
+    },
+    "prototype_status": "no_joint_alignment_within_tolerance"
+  },
+  {
+    "case": "synthetic_cycle",
+    "threshold": 5.0,
+    "independent": {
+      "states_enumerated": 64,
+      "feasible_count": 2,
+      "optimal_count": 2,
+      "best_score": 8.508603729836896,
+      "feasible_assignments": [
+        {
+          "maps": [
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              3,
+              0,
+              1,
+              2
+            ],
+            [
+              3,
+              0,
+              1,
+              2
+            ]
+          ],
+          "score": 8.508603729836896,
+          "pair_errors": [
+            4.221775614057958,
+            0.8704600049398377,
+            3.416368110839101
+          ]
+        },
+        {
+          "maps": [
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              3,
+              0,
+              1,
+              2
+            ]
+          ],
+          "score": 8.5086037298369,
+          "pair_errors": [
+            3.416368110839102,
+            0.8704600049398377,
+            4.221775614057959
+          ]
+        }
+      ]
+    },
+    "prototype_status": "multiple_joint_optima"
+  },
+  {
+    "case": "synthetic_cycle",
+    "threshold": 9.0,
+    "independent": {
+      "states_enumerated": 64,
+      "feasible_count": 4,
+      "optimal_count": 2,
+      "best_score": 8.508603729836896,
+      "feasible_assignments": [
+        {
+          "maps": [
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              3,
+              0,
+              1,
+              2
+            ],
+            [
+              3,
+              0,
+              1,
+              2
+            ]
+          ],
+          "score": 8.508603729836896,
+          "pair_errors": [
+            4.221775614057958,
+            0.8704600049398377,
+            3.416368110839101
+          ]
+        },
+        {
+          "maps": [
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              3,
+              0,
+              1,
+              2
+            ]
+          ],
+          "score": 8.5086037298369,
+          "pair_errors": [
+            3.416368110839102,
+            0.8704600049398377,
+            4.221775614057959
+          ]
+        },
+        {
+          "maps": [
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              2,
+              3
+            ]
+          ],
+          "score": 13.255819750132574,
+          "pair_errors": [
+            3.416368110839102,
+            6.423083528454372,
+            3.416368110839101
+          ]
+        },
+        {
+          "maps": [
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              3,
+              0,
+              1,
+              2
+            ],
+            [
+              2,
+              3,
+              0,
+              1
+            ]
+          ],
+          "score": 16.099971819794384,
+          "pair_errors": [
+            4.221775614057958,
+            7.656420591678465,
+            4.221775614057959
+          ]
+        }
+      ]
+    },
+    "prototype_status": "multiple_joint_optima"
+  }
+]

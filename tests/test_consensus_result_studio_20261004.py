@@ -1,8 +1,12 @@
 import copy
+import json
 
 import pytest
 
-from tools.thesis_main.analysis.consensus_result_studio_20261004 import variant_for_cluster
+from tools.thesis_main.analysis.consensus_result_studio_20261004 import (
+    attach_global_results, variant_for_cluster,
+)
+from tools.thesis_main.analysis.global_pair_consensus_20261004 import build_global_pair_consensuses
 
 
 def test_result_studio_keeps_full_candidate_points_and_disables_manhattan_fit():
@@ -36,3 +40,35 @@ def test_unavailable_result_is_retained_without_inventing_points():
     assert result['error']=='invalid_points'
     assert 'geometry' not in result
     assert result['source']['cluster']['candidate']['points'] is None
+
+
+def test_global_display_uses_entire_roster_and_preserves_rule_specific_points(tmp_path):
+    rows=[dict(id=f'R{i}',worker=f'P{i}',points=[[float(x),y] for x in xs for y in (120.,390.)])
+          for i,xs in enumerate(([128,384,640,896],[128,256,384,640,896]))]
+    results=build_global_pair_consensuses(rows)
+    for r in results.values():r['reference_metrics']={}
+    source=tmp_path/'primary.json'
+    source.write_text(json.dumps(dict(images=[dict(image='test',n=2,methods=results)])))
+    data=dict(counts={},cases=[dict(demo=dict(image='test',n=2,workers=rows),
+        variants=[dict(source=dict(role='consensus_candidate'))])])
+    def reset():
+        (tmp_path/'data.js').write_text('window.STUDIO_IMAGES={};window.STUDIO_DATA='+json.dumps(data)+';\n')
+        (tmp_path/'field_contract.json').write_text('{}')
+    reset()
+    result=attach_global_results(tmp_path,source)
+    c=result['cases'][0]
+    assert c['pattern_count']==1
+    assert result['counts']['global_candidates']==2
+    for method in ('mv50','mv_strict'):
+        v=c['variants'][c['global_point_indices'][method]]
+        assert v['source']['record_ids']==['R0','R1']
+        assert v['source']['candidate_erp']['points']==results[method]['candidate']['points']
+        assert [p for pair in v['geometry']['pairs'] for p in (pair['top'],pair['bottom'])]==results[method]['candidate']['points']
+        assert v['geometry']['fit']['status']=='not_requested'
+    assert len(c['variants'][c['global_point_indices']['mv50']]['source']['candidate']['points'])==10
+    assert len(c['variants'][c['global_point_indices']['mv_strict']]['source']['candidate']['points'])==8
+    # Equal N is not sufficient: a stale demo roster must fail instead of silently displaying it.
+    data['cases'][0]['demo']['workers'][1]['id']='wrong_source'
+    reset()
+    with pytest.raises(ValueError,match='roster_identity_mismatch'):
+        attach_global_results(tmp_path,source)

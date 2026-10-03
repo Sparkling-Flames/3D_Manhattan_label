@@ -5,6 +5,8 @@
 ## 当前入口
 
 - [完整共识并行研究交接](../research/full_layout_consensus_handoff_20261003/README.md)：复用现有固定输入、历史人工审核及代码，不复制重复包；本地与Chat Pro分工、汇合交付和目标提示词。
+- [全员点对融合137图基础研究](../analysis_results/global_pair_consensus_20261004/REPORT.md)：全员跨点数、三阈值两规则、来源与连接诊断；`global_pair_consensus_20261004.py` 与 `global_pair_study_20261004.py`，默认工作台已接全员结果。
+- [完整layout Pro返回独立审查](../research/full_layout_pro_review_20261004/REVIEW.md)：精简原包、384状态独立复算、来源绑定、认证对应不一致反例；源码仅作研究参考。
 
 - [同房相似性](../analysis_results/same_room_similarity_20261003/REPORT.md)与[Lee真实数据demo](../analysis_results/lee_consensus_demos_20261003/index.html)：新工具分别为 `tools/thesis_main/analysis/same_room_similarity_20261003.py`、`lee_consensus_demos_20261003.py`；[人员粗分类溯源](thesis_main/人员粗分类原意与既有证据_20261003.md)补足Q/T/S/B及具名子类收敛的历史与当前职责。
 - [点投票与区域投票溯源](thesis_main/点投票与区域投票_方法溯源_20261003.md)：[融合demo](../analysis_results/lee_consensus_demos_20261003/index.html)的整份标法分组与上下点中心候选由 `tools/thesis_main/analysis/point_pattern_demo_20261003.py` 提供；直接ERP上下区域轮廓由 `erp_region_demo_20261003.py` 提供，均为探索模块，Lee-BEV旧结果保留。新增[融合结果工作台](../analysis_results/consensus_result_studio_20261004/index.html)，构建器及展示适配为 `consensus_result_studio_20261004.py/js/css`，复用 Panorama Studio，仅重组四图全员结果的展示。

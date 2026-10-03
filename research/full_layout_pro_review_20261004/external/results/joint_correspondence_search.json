@@ -1,0 +1,1214 @@
+[
+  {
+    "case": "real_three",
+    "tolerance": 2.5,
+    "result": {
+      "status": "no_joint_alignment_within_tolerance",
+      "states_enumerated": 64,
+      "tolerance": 2.5
+    }
+  },
+  {
+    "case": "real_three",
+    "tolerance": 5.0,
+    "result": {
+      "status": "unique_joint_objective_optimum_not_semantic_certainty",
+      "states_enumerated": 64,
+      "feasible_count": 1,
+      "optimal_count": 1,
+      "best_score": 8.426294514444661,
+      "next_distinct_score_gap": null,
+      "feasible_assignments": [
+        {
+          "score": 8.426294514444661,
+          "maps": [
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              2,
+              3
+            ]
+          ],
+          "pair_errors": [
+            2.7968422090869973,
+            4.197178681926505,
+            1.4322736234311593
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "points": [
+            [
+              189.0866625379024,
+              133.0247180323243
+            ],
+            [
+              189.0866625379024,
+              370.70447194969927
+            ],
+            [
+              309.60343646315886,
+              131.22478329224685
+            ],
+            [
+              309.60343646315886,
+              375.6605801633514
+            ],
+            [
+              702.1256002441547,
+              115.89104025538896
+            ],
+            [
+              702.1256002441547,
+              393.84889068143065
+            ],
+            [
+              850.2255077363409,
+              121.11849131815586
+            ],
+            [
+              850.2255077363409,
+              387.3906796957284
+            ]
+          ],
+          "connections": {
+            "index_base": 0,
+            "point_array": "points",
+            "pair_ring": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "closed": true,
+            "top_edges": [
+              [
+                0,
+                2
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                4,
+                6
+              ],
+              [
+                6,
+                0
+              ]
+            ],
+            "bottom_edges": [
+              [
+                1,
+                3
+              ],
+              [
+                3,
+                5
+              ],
+              [
+                5,
+                7
+              ],
+              [
+                7,
+                1
+              ]
+            ],
+            "vertical_pairs": [
+              [
+                0,
+                1
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                6,
+                7
+              ]
+            ],
+            "confirmation": "derived_connections_not_new_human_confirmation"
+          },
+          "ring_confirmed": false,
+          "order_status": "coordinate_median_under_joint_correspondence_on_observed_ring",
+          "source_pair_maps": [
+            {
+              "id": "R00227",
+              "worker": "P024",
+              "indices": [
+                0,
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "id": "R00539",
+              "worker": "P021",
+              "indices": [
+                0,
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "id": "R01831",
+              "worker": "P004",
+              "indices": [
+                0,
+                1,
+                2,
+                3
+              ]
+            }
+          ],
+          "point_support_counts": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "score": 8.426294514444661,
+          "induced_pair_errors_deg": [
+            2.7968422090869973,
+            4.197178681926505,
+            1.4322736234311593
+          ],
+          "floor_polygon_valid": true
+        }
+      ],
+      "tolerance": 5.0,
+      "objective": "sum_pairwise_max_bound_angles_subject_to_global_pairwise_diameter; equal pair weights; not a statistical likelihood",
+      "warning": "even a unique numerical optimum is not calibrated identity confidence; subset-only search; small-roster same-count scope"
+    }
+  },
+  {
+    "case": "real_three",
+    "tolerance": 9.0,
+    "result": {
+      "status": "unique_joint_objective_optimum_not_semantic_certainty",
+      "states_enumerated": 64,
+      "feasible_count": 1,
+      "optimal_count": 1,
+      "best_score": 8.426294514444661,
+      "next_distinct_score_gap": null,
+      "feasible_assignments": [
+        {
+          "score": 8.426294514444661,
+          "maps": [
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              2,
+              3
+            ]
+          ],
+          "pair_errors": [
+            2.7968422090869973,
+            4.197178681926505,
+            1.4322736234311593
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "points": [
+            [
+              189.0866625379024,
+              133.0247180323243
+            ],
+            [
+              189.0866625379024,
+              370.70447194969927
+            ],
+            [
+              309.60343646315886,
+              131.22478329224685
+            ],
+            [
+              309.60343646315886,
+              375.6605801633514
+            ],
+            [
+              702.1256002441547,
+              115.89104025538896
+            ],
+            [
+              702.1256002441547,
+              393.84889068143065
+            ],
+            [
+              850.2255077363409,
+              121.11849131815586
+            ],
+            [
+              850.2255077363409,
+              387.3906796957284
+            ]
+          ],
+          "connections": {
+            "index_base": 0,
+            "point_array": "points",
+            "pair_ring": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "closed": true,
+            "top_edges": [
+              [
+                0,
+                2
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                4,
+                6
+              ],
+              [
+                6,
+                0
+              ]
+            ],
+            "bottom_edges": [
+              [
+                1,
+                3
+              ],
+              [
+                3,
+                5
+              ],
+              [
+                5,
+                7
+              ],
+              [
+                7,
+                1
+              ]
+            ],
+            "vertical_pairs": [
+              [
+                0,
+                1
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                6,
+                7
+              ]
+            ],
+            "confirmation": "derived_connections_not_new_human_confirmation"
+          },
+          "ring_confirmed": false,
+          "order_status": "coordinate_median_under_joint_correspondence_on_observed_ring",
+          "source_pair_maps": [
+            {
+              "id": "R00227",
+              "worker": "P024",
+              "indices": [
+                0,
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "id": "R00539",
+              "worker": "P021",
+              "indices": [
+                0,
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "id": "R01831",
+              "worker": "P004",
+              "indices": [
+                0,
+                1,
+                2,
+                3
+              ]
+            }
+          ],
+          "point_support_counts": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "score": 8.426294514444661,
+          "induced_pair_errors_deg": [
+            2.7968422090869973,
+            4.197178681926505,
+            1.4322736234311593
+          ],
+          "floor_polygon_valid": true
+        }
+      ],
+      "tolerance": 9.0,
+      "objective": "sum_pairwise_max_bound_angles_subject_to_global_pairwise_diameter; equal pair weights; not a statistical likelihood",
+      "warning": "even a unique numerical optimum is not calibrated identity confidence; subset-only search; small-roster same-count scope"
+    }
+  },
+  {
+    "case": "cycle_counterexample",
+    "tolerance": 2.5,
+    "result": {
+      "status": "no_joint_alignment_within_tolerance",
+      "states_enumerated": 64,
+      "tolerance": 2.5
+    }
+  },
+  {
+    "case": "cycle_counterexample",
+    "tolerance": 5.0,
+    "result": {
+      "status": "multiple_joint_optima",
+      "states_enumerated": 64,
+      "feasible_count": 2,
+      "optimal_count": 2,
+      "best_score": 8.508603729836892,
+      "next_distinct_score_gap": null,
+      "feasible_assignments": [
+        {
+          "score": 8.508603729836892,
+          "maps": [
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              3,
+              0,
+              1,
+              2
+            ],
+            [
+              3,
+              0,
+              1,
+              2
+            ]
+          ],
+          "pair_errors": [
+            4.221775614057956,
+            0.8704600049398354,
+            3.416368110839101
+          ]
+        },
+        {
+          "score": 8.508603729836896,
+          "maps": [
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              3,
+              0,
+              1,
+              2
+            ]
+          ],
+          "pair_errors": [
+            3.4163681108391026,
+            0.8704600049398354,
+            4.221775614057958
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "points": [
+            [
+              995.5555555555557,
+              14.222222222222221
+            ],
+            [
+              995.5555555555557,
+              497.77777777777777
+            ],
+            [
+              227.55555555555554,
+              14.222222222222221
+            ],
+            [
+              227.55555555555554,
+              497.77777777777777
+            ],
+            [
+              483.55555555555554,
+              14.222222222222221
+            ],
+            [
+              483.55555555555554,
+              497.77777777777777
+            ],
+            [
+              739.5555555555555,
+              14.222222222222221
+            ],
+            [
+              739.5555555555555,
+              497.77777777777777
+            ]
+          ],
+          "connections": {
+            "index_base": 0,
+            "point_array": "points",
+            "pair_ring": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "closed": true,
+            "top_edges": [
+              [
+                0,
+                2
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                4,
+                6
+              ],
+              [
+                6,
+                0
+              ]
+            ],
+            "bottom_edges": [
+              [
+                1,
+                3
+              ],
+              [
+                3,
+                5
+              ],
+              [
+                5,
+                7
+              ],
+              [
+                7,
+                1
+              ]
+            ],
+            "vertical_pairs": [
+              [
+                0,
+                1
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                6,
+                7
+              ]
+            ],
+            "confirmation": "derived_connections_not_new_human_confirmation"
+          },
+          "ring_confirmed": false,
+          "order_status": "coordinate_median_under_joint_correspondence_on_observed_ring",
+          "source_pair_maps": [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "indices": [
+                0,
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "indices": [
+                3,
+                0,
+                1,
+                2
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "indices": [
+                3,
+                0,
+                1,
+                2
+              ]
+            }
+          ],
+          "point_support_counts": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "score": 8.508603729836892,
+          "induced_pair_errors_deg": [
+            4.221775614057956,
+            0.8704600049398354,
+            3.416368110839101
+          ],
+          "floor_polygon_valid": true
+        },
+        {
+          "points": [
+            [
+              0.0,
+              14.222222222222221
+            ],
+            [
+              0.0,
+              497.77777777777777
+            ],
+            [
+              256.0,
+              14.222222222222221
+            ],
+            [
+              256.0,
+              497.77777777777777
+            ],
+            [
+              512.0,
+              14.222222222222221
+            ],
+            [
+              512.0,
+              497.77777777777777
+            ],
+            [
+              768.0,
+              14.222222222222221
+            ],
+            [
+              768.0,
+              497.77777777777777
+            ]
+          ],
+          "connections": {
+            "index_base": 0,
+            "point_array": "points",
+            "pair_ring": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "closed": true,
+            "top_edges": [
+              [
+                0,
+                2
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                4,
+                6
+              ],
+              [
+                6,
+                0
+              ]
+            ],
+            "bottom_edges": [
+              [
+                1,
+                3
+              ],
+              [
+                3,
+                5
+              ],
+              [
+                5,
+                7
+              ],
+              [
+                7,
+                1
+              ]
+            ],
+            "vertical_pairs": [
+              [
+                0,
+                1
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                6,
+                7
+              ]
+            ],
+            "confirmation": "derived_connections_not_new_human_confirmation"
+          },
+          "ring_confirmed": false,
+          "order_status": "coordinate_median_under_joint_correspondence_on_observed_ring",
+          "source_pair_maps": [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "indices": [
+                0,
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "indices": [
+                0,
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "indices": [
+                3,
+                0,
+                1,
+                2
+              ]
+            }
+          ],
+          "point_support_counts": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "score": 8.508603729836896,
+          "induced_pair_errors_deg": [
+            3.4163681108391026,
+            0.8704600049398354,
+            4.221775614057958
+          ],
+          "floor_polygon_valid": true
+        }
+      ],
+      "tolerance": 5.0,
+      "objective": "sum_pairwise_max_bound_angles_subject_to_global_pairwise_diameter; equal pair weights; not a statistical likelihood",
+      "warning": "even a unique numerical optimum is not calibrated identity confidence; subset-only search; small-roster same-count scope"
+    }
+  },
+  {
+    "case": "cycle_counterexample",
+    "tolerance": 9.0,
+    "result": {
+      "status": "multiple_joint_optima",
+      "states_enumerated": 64,
+      "feasible_count": 4,
+      "optimal_count": 2,
+      "best_score": 8.508603729836892,
+      "next_distinct_score_gap": 4.747216020295683,
+      "feasible_assignments": [
+        {
+          "score": 8.508603729836892,
+          "maps": [
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              3,
+              0,
+              1,
+              2
+            ],
+            [
+              3,
+              0,
+              1,
+              2
+            ]
+          ],
+          "pair_errors": [
+            4.221775614057956,
+            0.8704600049398354,
+            3.416368110839101
+          ]
+        },
+        {
+          "score": 8.508603729836896,
+          "maps": [
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              3,
+              0,
+              1,
+              2
+            ]
+          ],
+          "pair_errors": [
+            3.4163681108391026,
+            0.8704600049398354,
+            4.221775614057958
+          ]
+        },
+        {
+          "score": 13.255819750132575,
+          "maps": [
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              2,
+              3
+            ]
+          ],
+          "pair_errors": [
+            3.4163681108391026,
+            6.423083528454372,
+            3.416368110839101
+          ]
+        },
+        {
+          "score": 16.099971819794376,
+          "maps": [
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              3,
+              0,
+              1,
+              2
+            ],
+            [
+              2,
+              3,
+              0,
+              1
+            ]
+          ],
+          "pair_errors": [
+            4.221775614057956,
+            7.656420591678463,
+            4.221775614057958
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "points": [
+            [
+              995.5555555555557,
+              14.222222222222221
+            ],
+            [
+              995.5555555555557,
+              497.77777777777777
+            ],
+            [
+              227.55555555555554,
+              14.222222222222221
+            ],
+            [
+              227.55555555555554,
+              497.77777777777777
+            ],
+            [
+              483.55555555555554,
+              14.222222222222221
+            ],
+            [
+              483.55555555555554,
+              497.77777777777777
+            ],
+            [
+              739.5555555555555,
+              14.222222222222221
+            ],
+            [
+              739.5555555555555,
+              497.77777777777777
+            ]
+          ],
+          "connections": {
+            "index_base": 0,
+            "point_array": "points",
+            "pair_ring": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "closed": true,
+            "top_edges": [
+              [
+                0,
+                2
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                4,
+                6
+              ],
+              [
+                6,
+                0
+              ]
+            ],
+            "bottom_edges": [
+              [
+                1,
+                3
+              ],
+              [
+                3,
+                5
+              ],
+              [
+                5,
+                7
+              ],
+              [
+                7,
+                1
+              ]
+            ],
+            "vertical_pairs": [
+              [
+                0,
+                1
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                6,
+                7
+              ]
+            ],
+            "confirmation": "derived_connections_not_new_human_confirmation"
+          },
+          "ring_confirmed": false,
+          "order_status": "coordinate_median_under_joint_correspondence_on_observed_ring",
+          "source_pair_maps": [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "indices": [
+                0,
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "indices": [
+                3,
+                0,
+                1,
+                2
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "indices": [
+                3,
+                0,
+                1,
+                2
+              ]
+            }
+          ],
+          "point_support_counts": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "score": 8.508603729836892,
+          "induced_pair_errors_deg": [
+            4.221775614057956,
+            0.8704600049398354,
+            3.416368110839101
+          ],
+          "floor_polygon_valid": true
+        },
+        {
+          "points": [
+            [
+              0.0,
+              14.222222222222221
+            ],
+            [
+              0.0,
+              497.77777777777777
+            ],
+            [
+              256.0,
+              14.222222222222221
+            ],
+            [
+              256.0,
+              497.77777777777777
+            ],
+            [
+              512.0,
+              14.222222222222221
+            ],
+            [
+              512.0,
+              497.77777777777777
+            ],
+            [
+              768.0,
+              14.222222222222221
+            ],
+            [
+              768.0,
+              497.77777777777777
+            ]
+          ],
+          "connections": {
+            "index_base": 0,
+            "point_array": "points",
+            "pair_ring": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "closed": true,
+            "top_edges": [
+              [
+                0,
+                2
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                4,
+                6
+              ],
+              [
+                6,
+                0
+              ]
+            ],
+            "bottom_edges": [
+              [
+                1,
+                3
+              ],
+              [
+                3,
+                5
+              ],
+              [
+                5,
+                7
+              ],
+              [
+                7,
+                1
+              ]
+            ],
+            "vertical_pairs": [
+              [
+                0,
+                1
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                6,
+                7
+              ]
+            ],
+            "confirmation": "derived_connections_not_new_human_confirmation"
+          },
+          "ring_confirmed": false,
+          "order_status": "coordinate_median_under_joint_correspondence_on_observed_ring",
+          "source_pair_maps": [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "indices": [
+                0,
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "indices": [
+                0,
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "indices": [
+                3,
+                0,
+                1,
+                2
+              ]
+            }
+          ],
+          "point_support_counts": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "score": 8.508603729836896,
+          "induced_pair_errors_deg": [
+            3.4163681108391026,
+            0.8704600049398354,
+            4.221775614057958
+          ],
+          "floor_polygon_valid": true
+        }
+      ],
+      "tolerance": 9.0,
+      "objective": "sum_pairwise_max_bound_angles_subject_to_global_pairwise_diameter; equal pair weights; not a statistical likelihood",
+      "warning": "even a unique numerical optimum is not calibrated identity confidence; subset-only search; small-roster same-count scope"
+    }
+  }
+]

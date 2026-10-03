@@ -1,0 +1,23 @@
+{
+  "schema": "global_pair_study_v1",
+  "status": "completed",
+  "input": "analysis_results/lee_expanded_20261003/source_input.json",
+  "image_n": 137,
+  "existing_lee_comparable_n": 136,
+  "thresholds_deg": [
+    2.5,
+    5.0,
+    10.0
+  ],
+  "default_threshold_deg": 5.0,
+  "methods": [
+    "mv50",
+    "mv_strict"
+  ],
+  "primary": "Each image uses all current independent records; no whole-annotation cluster selection.",
+  "geometry": "New ring is an explicitly declared shared-x ordered exploratory estimate, not inherited confirmation. Source rings are unchanged; adjacency evidence reported separately.",
+  "scope": "Full-pool prototype and sensitivity, not headcount curves, new quality total score, best-method selection or calibrated threshold.",
+  "sampling": "No random subset sampling. All full-pool estimates are deterministic for the declared identity tie rule.",
+  "reference": "GT only enters reference_metrics after consensus outputs exist. BEV IoU/centroid evaluate floor extent only.",
+  "failure": "Any unavailable candidate stays in the attempted denominator. Previous Lee whole-pool failure remains identifiable."
+}

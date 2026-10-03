@@ -1,28 +1,34 @@
 {
-  "schema": "consensus_result_studio_ui_check_v1",
+  "schema": "consensus_result_studio_ui_check_v2",
   "date": "2026-10-04",
   "status": "passed",
-  "surface": "Codex in-app browser, localhost:8879, default narrow viewport",
+  "surface": "Codex in-app browser, localhost:8879, default viewport",
   "checked": [
-    "Four image cases selectable; matching member and pattern counts displayed",
-    "Default result-only sparse top/bottom point candidate; GT off",
-    "Changing pattern updates point result and shared Studio geometry",
-    "Representative annotation before/after toggle",
-    "Optional GT overlay",
-    "ERP full-pool top/bottom contours and whole-group unavailable state on uNb-67",
-    "Lee ground boundary, strict-majority switch, explicit absence of fused top",
-    "Point result 3D texture loaded and rendered in reused Studio",
-    "Full-screen enter and exit",
+    "Default one full-pool point result, GT off, no whole-annotation cluster selected as primary",
+    "All four image pools retain 22/15/15/8 people",
+    "Both voting rules select matching point output and geometry",
+    "uNb-67 point failure keeps all 15 people and hides 3D; no largest-cluster substitution",
+    "Full-pool ERP applicable contours and whole-group unavailable state; no misleading output claim when unavailable",
+    "Lee bottom-only result, strict majority, no borrowed top or stale 3D",
+    "Auxiliary pattern candidates, representative comparison and single-person pattern remain separately accessible",
+    "GT overlay and full-screen enter/exit",
+    "Exact candidate top/bottom rendered on panorama; texture 3D visually checked",
     "No browser warning/error logs observed"
   ],
   "code_validation": {
-    "command": "python -B -m pytest tests/test_consensus_result_studio_20261004.py tests/test_lee_consensus_demos_20261003.py -q",
-    "passed": 5,
-    "warning": "pytest cache write permission warning only",
-    "javascript": "node --check tools/thesis_main/analysis/consensus_result_studio_20261004.js",
-    "committed_geometry_compatibility": "All 24 candidate point arrays and disabled-fit states also verified using the committed shared geometry API; no dependency on its unrelated uncommitted metadata changes.",
-    "followup": "2 adapter tests passed with pytest cache disabled after removing an assertion about unrelated shared-module metadata."
+    "related_tests_passed": 17,
+    "adapter_followup": "3 tests rerun after final display-count/field-contract edit; passed",
+    "javascript": "node --check",
+    "contract": "render_paper_a_method_contract --check",
+    "full_pool_binding": "global_pair_consensus_20261004/validation.json: 274 outputs, 15408 source-pair bindings"
+  },
+  "counts": {
+    "cases": 4,
+    "variants": 32,
+    "fit_not_requested": 30,
+    "input_failed": 2,
+    "global_candidates": 8
   },
   "screenshots": "Inspected inline only; no screenshot files retained.",
-  "limits": "Display validation only. No visual GT adjudication, new ring confirmation, threshold calibration, algorithm effectiveness claim, or full research rerun."
+  "limits": "No visual GT adjudication, human new-ring confirmation, formal threshold calibration, complete-layout quality score or effectiveness certification. Auxiliary 24-candidate audit is historical; new global display audit covers 8 rule outputs including 2 unavailable."
 }

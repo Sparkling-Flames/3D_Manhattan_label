@@ -12,6 +12,7 @@ from .lee_tile_stage1_20261002 import ROOT, write_json
 
 SOURCE = ROOT/'analysis_results/lee_consensus_demos_20261003/demos.json'
 OUT = ROOT/'analysis_results/consensus_result_studio_20261004'
+GLOBAL_RESULTS = ROOT/'analysis_results/global_pair_consensus_20261004/primary_results.json'
 STUDIO = ROOT/'tools/label_studio/panorama_studio'
 ADAPTER = ROOT/'tools/thesis_main/analysis/consensus_result_studio_20261004'
 
@@ -50,11 +51,82 @@ def variant_for_cluster(cluster, workers, point_cache):
     return variant
 
 
+def attach_global_results(out, results_path):
+    """接入新全员点输出，保留原簇候选为诊断；不重算旧投票或更改点序。"""
+    from .lee_consensus_demos_20261003 import project_display_record
+    text=(out/'data.js').read_text(encoding='utf-8')
+    image_prefix,encoded=text.split('window.STUDIO_DATA=',1)
+    payload=json.loads(encoded.rstrip(';\n'))
+    study=json.loads(results_path.read_text(encoding='utf-8'))
+    lookup={r['image']:r for r in study['images']}
+    audit=[]
+    for case in payload['cases']:
+        case['variants']=[v for v in case['variants'] if v['source']['role']=='consensus_candidate']
+        case['pattern_count']=len(case['variants'])
+        case['global_point_indices']={}
+        result=lookup[case['demo']['image']]
+        if result['n']!=case['demo']['n']:
+            raise ValueError('global_and_demo_roster_size_mismatch')
+        for method,value in result['methods'].items():
+            ids=sorted(a['id'] for a in value['assignments'])
+            if ids!=sorted(r['id'] for r in case['demo']['workers']):
+                raise ValueError('global_and_demo_roster_identity_mismatch')
+            candidate=value['candidate'];geometry=None;projection=None;error=None
+            if candidate['status']!='unavailable':
+                points=candidate['points']
+                geometry=analyze(dict(width=1024,height=512,coordinate_mode='pixels',
+                    ordered_pairs=[dict(source_pair_id=identity,
+                        top=dict(zip(('x','y'),points[2*i])),bottom=dict(zip(('x','y'),points[2*i+1])))
+                        for i,identity in enumerate(candidate['feature_ids'])]),
+                    compute_fit=False,coordinate_convention='continuous')
+                if [p for pair in geometry['pairs'] for p in (pair['top'],pair['bottom'])]!=points:
+                    raise ValueError('global_candidate_points_changed')
+                projection=project_display_record(candidate)
+            else:
+                error=candidate['reason']
+            source=dict(role='global_point_consensus',method=method,n=value['n'],
+                threshold_deg=value['threshold_deg'],minimum_support=value['minimum_support'],
+                record_ids=ids,candidate=candidate,candidate_erp=projection,
+                ring_diagnostics=value['ring_diagnostics'],method_details=value['method_details'],
+                reference_metrics=value['reference_metrics'])
+            case['global_point_indices'][method]=len(case['variants'])
+            variant=dict(name='全员点对共识 · '+method,source=source)
+            if geometry is not None:variant['geometry']=geometry
+            else:variant['error']=error
+            case['variants'].append(variant)
+            audit.append(dict(image=result['image'],method=method,n=value['n'],
+                candidate_status=candidate['status'],reason=candidate['reason'],
+                displayed=geometry is not None,ring_confirmed=False,
+                pair_count=len(candidate['points'])//2 if candidate.get('points') else 0))
+    payload['counts']['variants']=sum(len(c['variants']) for c in payload['cases'])
+    payload['counts']['global_candidates']=len(audit)
+    payload['counts']['fit_not_requested']=sum('geometry' in v for c in payload['cases'] for v in c['variants'])
+    payload['counts']['input_failed']=sum('geometry' not in v for c in payload['cases'] for v in c['variants'])
+    payload['global_result_source']=relative(results_path,out)
+    (out/'data.js').write_text(image_prefix+'window.STUDIO_DATA='+
+        json.dumps(payload,ensure_ascii=False,allow_nan=False,separators=(',',':')).replace('</','<\\/')+';\n',
+        encoding='utf-8',newline='\n')
+    write_json(out/'global_display_audit.json',dict(schema='global_point_display_v1',results=audit,
+        full_pool_roster_verified=True,source_coordinates_and_ring_unchanged=True,
+        reference='GT neither used for selection nor for ring construction.'))
+    contract=json.loads((out/'field_contract.json').read_text(encoding='utf-8'))
+    contract.update(
+        input='Existing demos.json final full-pool step plus global_pair_consensus_20261004/primary_results.json. The renderer does not recompute fusion or GT scores.',
+        cases='image_id,title,category,variants,demo,pattern_count,global_point_indices; demo retains the original full-pool source records and method caches.',
+        variants='Auxiliary whole-annotation cluster variants followed by two all-person point variants. global_point_indices maps mv50/mv_strict; unavailable results have explicit error and no geometry.',
+        source='Auxiliary sources retain cluster, representative and members. Global sources retain method,n,threshold_deg,minimum_support,record_ids,candidate,candidate_erp,ring_diagnostics,method_details,reference_metrics.',
+        identity='Global candidate.feature_ids and source_pair_maps refer to the current point-identity partition, not original person corner IDs. Auxiliary candidate identities remain local to each whole-annotation cluster.',
+        counts='variants includes auxiliary and global outputs; global_candidates counts both rules including failures. fit_not_requested counts displayed geometries; legacy input_failed counts variants without display geometry, not excluded people.')
+    contract['global_point_extension']='case.pattern_count separates auxiliary patterns from appended full-pool point variants. global_point_indices maps voting rule to one all-person result. Global candidate status, denominator, endpoint votes and ring evidence retained. No unique-true-layout claim.'
+    write_json(out/'field_contract.json',contract)
+    return payload
+
+
 def relative(path, out):
     return os.path.relpath(path,out).replace('\\','/')
 
 
-def build(source=SOURCE, out=OUT):
+def build(source=SOURCE, out=OUT, global_results=GLOBAL_RESULTS):
     source,out=Path(source).resolve(),Path(out).resolve()
     if out.exists():
         raise ValueError('use_new_output_directory')
@@ -122,30 +194,30 @@ def build(source=SOURCE, out=OUT):
         scope='Full-pool result display only. Pattern IDs local to each image/full-pool input. No natural-mode claim or quality improvement validation.',
         representations='Point candidates have complete sparse top/bottom pairs. ERP is dense top/bottom in applicable domain. Lee-BEV only has ground boundary.',
         readonly='No annotation writeback, no Manhattan fitting, no GT-assisted selection; raw Studio reconstruction uses paired-floor depth proxy for top.'))
-    text=f'''# 融合结果工作台：全景与3D
+    text='''# 全员融合结果工作台：全景与3D
 
-推荐在仓库根目录启动本地HTTP服务，再打开[融合结果工作台](http://127.0.0.1:8879/analysis_results/consensus_result_studio_20261004/index.html)。本页以融合后上下角点和全景轮廓为主视图，复用已有空间标本工作台的3D墙体、纹理和线框。
+打开[融合结果工作台](http://127.0.0.1:8879/analysis_results/consensus_result_studio_20261004/index.html)。默认展示同一张图全部当前人员形成的一份上下点共识；下方用同一组点和环显示3D。原有整份标法簇改为辅助页签。
 
-- 当前只接入既有四例的全员结果，共{counts['variants']}个标法簇候选；所有簇保留，不按GT或簇大小筛成唯一结果。
-- 完整点候选沿用已有上下坐标与环序。3D只做`analyze(..., compute_fit=False, coordinate_convention='continuous')`显示重建，没有重新分簇、融合、评分或Manhattan拟合。
-- 3D相机高度为相对单位1。上点深度沿用对应底点水平距离；墙顶封口是显示假设，不能解释成真实天花板深度或质量验证。
-- ERP多数轮廓和Lee-BEV底边保留为方法对照；前者是稠密上下轮廓，后者只有底边，不冒充完整稀疏角点输出。
-- 图片和共享渲染器沿仓库相对路径加载，没有复制或改写原图。保留完整仓库路径并通过本地HTTP服务访问；`file://`加载纹理可能受到浏览器跨域限制，单独复制此文件夹不足以携带依赖。
-- 原始输入、既有指标与旧demo不改写。[旧详情](../lee_consensus_demos_20261003/index.html)保留人数和分组追溯。
+- 四个固定案例分别使用22、15、15、8人的全员池，接入两种投票规则的8个输出。默认5°为未校准探索阈值，允许不同点数共同参与；失败显示为不可用，不改用最大簇。
+- 保留24个原簇内候选供解释不同标法，与全员点身份分区严格区分。全员ERP上下轮廓、Lee底边并列对照；ERP尚无稀疏角点，Lee尚无top_y。
+- GT默认关闭，构造与选择结果均不读GT。主图标明人数、点支持、连接不足和完整结构支持，后者不是坐标完全相同，也不要求输出复制某个人。
+- 3D复用Panorama Studio，以`continuous`坐标且`compute_fit=False`显示，不拟合成Manhattan、不改候选点或环。相机高度为相对单位1，顶部深度沿用配对底点的水平距离；墙顶是代理重建。可绘制及`ok`都不等于物理真值或环序人工确认。
+- 来源坐标、资格、人工确认环和旧Lee结果不改写。图片与共享渲染器沿仓库相对路径引用，没有复制原图；单独复制该目录不足以携带依赖。
 
-字段见[field_contract.json](field_contract.json)，24份候选坐标／几何核对见[geometry_audit.json](geometry_audit.json)。所有成功重建的点数组与既有候选逐值完全相同，拟合状态为`not_requested`；不可用输入保留错误。
+整体证据见[137图基础报告](../global_pair_consensus_20261004/REPORT.md)及[Pro独立审查](../../research/full_layout_pro_review_20261004/REVIEW.md)。[字段合同](field_contract.json)、[全员8输出展示绑定](global_display_audit.json)、[历史24簇候选绑定](geometry_audit.json)、[浏览器检查](ui_check.json)分别记录范围，不能把簇候选数当作全图共识数。
 
-本地服务：在仓库根目录运行`python -m http.server 8879 --bind 127.0.0.1`。
+在仓库根目录运行`python -m http.server 8879 --bind 127.0.0.1`。复现工作台用`python -B -m tools.thesis_main.analysis.consensus_result_studio_20261004 --out analysis_results/<新的目录>`；默认读取已完成的137图点结果，也可显式传`--global-results`。已有输出目录拒绝覆盖。
 
-复现：`python -B -m tools.thesis_main.analysis.consensus_result_studio_20261004 --out analysis_results/<新的目录>`。已有目录拒绝覆盖。前端适配器位于`tools/thesis_main/analysis/consensus_result_studio_20261004.js`及同名CSS；共享工作台文件保持原样。
+前端在`tools/thesis_main/analysis/consensus_result_studio_20261004.js`及同名CSS。共享工作台不属于本轮修改。截图仅内联目视检查，无截图文件留存。
 '''
     (out/'README.md').write_text(text,encoding='utf-8',newline='\n')
-    return payload
+    return attach_global_results(out,Path(global_results))
 
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--input',type=Path,default=SOURCE)
     parser.add_argument('--out',type=Path,default=OUT)
+    parser.add_argument('--global-results',type=Path,default=GLOBAL_RESULTS)
     args=parser.parse_args()
-    print(json.dumps(build(args.input,args.out)['counts']),flush=True)
+    print(json.dumps(build(args.input,args.out,args.global_results)['counts']),flush=True)

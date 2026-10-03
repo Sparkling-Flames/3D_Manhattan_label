@@ -1,0 +1,93 @@
+{
+  "both_inputs_valid": [
+    true,
+    true
+  ],
+  "both_inputs_contain_camera": [
+    true,
+    true
+  ],
+  "candidate_contains_camera": true,
+  "certified_minimax": {
+    "distance": 3.831827352154858,
+    "mapping": [
+      1,
+      0,
+      2
+    ],
+    "margin": 0.4762805778778798,
+    "ambiguous": false
+  },
+  "actual_minsum": {
+    "matched": 3,
+    "sum_angle": 8.607302556013488,
+    "mapping": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        2
+      ]
+    ],
+    "unmatched_anchor": [],
+    "unmatched_other": [],
+    "runner_up_mapping": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        2
+      ]
+    ],
+    "margin": 1.1720706687677716,
+    "ambiguous": false,
+    "tolerance": 5,
+    "objective": "maximum_cardinality_then_minimum_sum_bound_angle"
+  },
+  "generated_maps": {
+    "S0": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        2
+      ]
+    ],
+    "S1": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        2
+      ]
+    ]
+  },
+  "status": "single_candidate_conditional_on_method_tolerance",
+  "minimax_sum": 9.77937322478126,
+  "minsum_max": 4.308107930032738,
+  "consequence": "certificate audits a different correspondence; not proof that this candidate is visually wrong"
+}

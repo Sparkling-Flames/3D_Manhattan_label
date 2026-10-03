@@ -1,0 +1,383 @@
+{
+  "points_xy": [
+    [
+      -3.0,
+      -2.0
+    ],
+    [
+      3.0,
+      -2.0
+    ],
+    [
+      3.0,
+      2.0
+    ],
+    [
+      -3.0,
+      2.0
+    ],
+    [
+      2.0,
+      0.5
+    ]
+  ],
+  "cycles": [
+    [
+      0,
+      4,
+      1,
+      2,
+      3
+    ],
+    [
+      0,
+      1,
+      4,
+      2,
+      3
+    ],
+    [
+      0,
+      1,
+      2,
+      4,
+      3
+    ]
+  ],
+  "all_input_polygons_valid": true,
+  "camera_origin_inside_all": true,
+  "globally_admissible_cycles_using_a_subset_of_majority_edges": [
+    {
+      "cycle": [
+        0,
+        1,
+        4,
+        2,
+        3
+      ],
+      "whole_ring_observation_support": 1,
+      "discarded_majority_edges": [
+        [
+          1,
+          2
+        ]
+      ]
+    }
+  ],
+  "areas": [
+    16.5,
+    22.0,
+    19.5
+  ],
+  "edge_support": [
+    {
+      "edge": [
+        0,
+        1
+      ],
+      "workers": [
+        1,
+        2
+      ],
+      "support": 2
+    },
+    {
+      "edge": [
+        0,
+        3
+      ],
+      "workers": [
+        0,
+        1,
+        2
+      ],
+      "support": 3
+    },
+    {
+      "edge": [
+        0,
+        4
+      ],
+      "workers": [
+        0
+      ],
+      "support": 1
+    },
+    {
+      "edge": [
+        1,
+        2
+      ],
+      "workers": [
+        0,
+        2
+      ],
+      "support": 2
+    },
+    {
+      "edge": [
+        1,
+        4
+      ],
+      "workers": [
+        0,
+        1
+      ],
+      "support": 2
+    },
+    {
+      "edge": [
+        2,
+        3
+      ],
+      "workers": [
+        0,
+        1
+      ],
+      "support": 2
+    },
+    {
+      "edge": [
+        2,
+        4
+      ],
+      "workers": [
+        1,
+        2
+      ],
+      "support": 2
+    },
+    {
+      "edge": [
+        3,
+        4
+      ],
+      "workers": [
+        2
+      ],
+      "support": 1
+    }
+  ],
+  "majority_edges": [
+    [
+      1,
+      4
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      0,
+      3
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      2,
+      4
+    ]
+  ],
+  "majority_vertex_degrees": {
+    "1": 3,
+    "4": 2,
+    "2": 3,
+    "3": 2,
+    "0": 2
+  },
+  "majority_graph_is_single_cycle": false,
+  "unordered_point_set_distance": 0.0,
+  "pairwise_bev_iou": [
+    0.6041666666666666,
+    0.5,
+    0.7291666666666666
+  ],
+  "band_status": [
+    "original_ring_not_single_valued_one_turn",
+    "available",
+    "original_ring_not_single_valued_one_turn"
+  ],
+  "records": [
+    {
+      "id": "valid_ring_0",
+      "worker": "valid_ring_0",
+      "points": [
+        [
+          351.82952540723136,
+          191.74815633639855
+        ],
+        [
+          351.82952540723136,
+          300.0927561015097
+        ],
+        [
+          807.9253147532131,
+          153.48652535380234
+        ],
+        [
+          807.9253147532131,
+          329.6048072841316
+        ],
+        [
+          672.1704745927686,
+          191.74815633639855
+        ],
+        [
+          672.1704745927686,
+          300.0927561015097
+        ],
+        [
+          863.8295254072315,
+          191.74815633639855
+        ],
+        [
+          863.8295254072315,
+          300.0927561015097
+        ],
+        [
+          160.17047459276853,
+          191.74815633639855
+        ],
+        [
+          160.17047459276853,
+          300.0927561015097
+        ]
+      ],
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "ring_confirmed": false,
+      "order_status": "synthetic_declared_ring",
+      "synthetic": true,
+      "independent": null,
+      "evidence_role": "controlled_example_not_additional_independent_humans"
+    },
+    {
+      "id": "valid_ring_1",
+      "worker": "valid_ring_1",
+      "points": [
+        [
+          351.82952540723136,
+          191.74815633639855
+        ],
+        [
+          351.82952540723136,
+          300.0927561015097
+        ],
+        [
+          672.1704745927686,
+          191.74815633639855
+        ],
+        [
+          672.1704745927686,
+          300.0927561015097
+        ],
+        [
+          807.9253147532131,
+          153.48652535380234
+        ],
+        [
+          807.9253147532131,
+          329.6048072841316
+        ],
+        [
+          863.8295254072315,
+          191.74815633639855
+        ],
+        [
+          863.8295254072315,
+          300.0927561015097
+        ],
+        [
+          160.17047459276853,
+          191.74815633639855
+        ],
+        [
+          160.17047459276853,
+          300.0927561015097
+        ]
+      ],
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "ring_confirmed": false,
+      "order_status": "synthetic_declared_ring",
+      "synthetic": true,
+      "independent": null,
+      "evidence_role": "controlled_example_not_additional_independent_humans"
+    },
+    {
+      "id": "valid_ring_2",
+      "worker": "valid_ring_2",
+      "points": [
+        [
+          351.82952540723136,
+          191.74815633639855
+        ],
+        [
+          351.82952540723136,
+          300.0927561015097
+        ],
+        [
+          672.1704745927686,
+          191.74815633639855
+        ],
+        [
+          672.1704745927686,
+          300.0927561015097
+        ],
+        [
+          863.8295254072315,
+          191.74815633639855
+        ],
+        [
+          863.8295254072315,
+          300.0927561015097
+        ],
+        [
+          807.9253147532131,
+          153.48652535380234
+        ],
+        [
+          807.9253147532131,
+          329.6048072841316
+        ],
+        [
+          160.17047459276853,
+          191.74815633639855
+        ],
+        [
+          160.17047459276853,
+          300.0927561015097
+        ]
+      ],
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "ring_confirmed": false,
+      "order_status": "synthetic_declared_ring",
+      "synthetic": true,
+      "independent": null,
+      "evidence_role": "controlled_example_not_additional_independent_humans"
+    }
+  ],
+  "interpretation": "All vertices are unanimous; the complete selected majority-edge set is not a ring. A separate all-vertex cycle constraint yields ONE valid cycle in this example, but discards a majority edge; that whole ring has only 1/3 observed support. This is not a proof that no unique reconstruction is possible."
+}

@@ -1,0 +1,54 @@
+{
+  "majority_edges": [
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      3
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      1,
+      4
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      2,
+      4
+    ]
+  ],
+  "degrees": {
+    "0": 2,
+    "1": 3,
+    "2": 3,
+    "4": 2,
+    "3": 2
+  },
+  "all_inputs_valid_and_contain_camera": true,
+  "admissible_cycles": [
+    {
+      "ring": [
+        0,
+        1,
+        4,
+        2,
+        3
+      ],
+      "discarded_majority_edges": [
+        [
+          1,
+          2
+        ]
+      ],
+      "whole_ring_support": 1
+    }
+  ]
+}

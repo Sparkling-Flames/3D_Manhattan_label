@@ -1,0 +1,17 @@
+{
+  "model_A": "One underlying 111 layout; each person omits one uniformly chosen detail",
+  "model_B": "Three complete scope interpretations 110/101/011, each chosen with probability 1/3, no omission noise",
+  "observed_distribution_A": {
+    "110": 0.3333333333333333,
+    "101": 0.3333333333333333,
+    "011": 0.3333333333333333
+  },
+  "observed_distribution_B": {
+    "110": 0.3333333333333333,
+    "101": 0.3333333333333333,
+    "011": 0.3333333333333333
+  },
+  "KL_A_B": 0.0,
+  "total_variation": 0.0,
+  "consequence": "More annotations of the same type cannot distinguish these two models without additional assumptions/observations. This is not a claim that one model is true for the real images."
+}

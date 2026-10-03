@@ -1,0 +1,110 @@
+{
+  "results": [
+    {
+      "threshold_deg": 2.5,
+      "method": "mv50",
+      "attempted_images": 137,
+      "status_counts": {
+        "ok": 16,
+        "geometry_review": 67,
+        "unavailable": 54
+      },
+      "scored_original_images": 84,
+      "original_iou_mean": 0.6274933110285317,
+      "paired_lee_images": 84,
+      "paired_point_minus_lee_iou_mean": -0.2075886201718197,
+      "complete_candidate_paired_n": 83,
+      "complete_candidate_point_minus_lee_iou_mean": -0.20936457866587302,
+      "note": "Conditional description on matching computable images, not failure-adjusted method superiority. Floor-only scores may exist when top/layout is unavailable; complete_candidate fields exclude those cases."
+    },
+    {
+      "threshold_deg": 2.5,
+      "method": "mv_strict",
+      "attempted_images": 137,
+      "status_counts": {
+        "ok": 11,
+        "geometry_review": 50,
+        "unavailable": 76
+      },
+      "scored_original_images": 61,
+      "original_iou_mean": 0.5861695642649906,
+      "paired_lee_images": 61,
+      "paired_point_minus_lee_iou_mean": -0.2636269731574813,
+      "complete_candidate_paired_n": 61,
+      "complete_candidate_point_minus_lee_iou_mean": -0.2636269731574813,
+      "note": "Conditional description on matching computable images, not failure-adjusted method superiority. Floor-only scores may exist when top/layout is unavailable; complete_candidate fields exclude those cases."
+    },
+    {
+      "threshold_deg": 5.0,
+      "method": "mv50",
+      "attempted_images": 137,
+      "status_counts": {
+        "ok": 55,
+        "geometry_review": 64,
+        "unavailable": 18
+      },
+      "scored_original_images": 120,
+      "original_iou_mean": 0.7477644568617807,
+      "paired_lee_images": 120,
+      "paired_point_minus_lee_iou_mean": -0.07836541394543757,
+      "complete_candidate_paired_n": 119,
+      "complete_candidate_point_minus_lee_iou_mean": -0.07884627496346502,
+      "note": "Conditional description on matching computable images, not failure-adjusted method superiority. Floor-only scores may exist when top/layout is unavailable; complete_candidate fields exclude those cases."
+    },
+    {
+      "threshold_deg": 5.0,
+      "method": "mv_strict",
+      "attempted_images": 137,
+      "status_counts": {
+        "ok": 50,
+        "geometry_review": 63,
+        "unavailable": 24
+      },
+      "scored_original_images": 113,
+      "original_iou_mean": 0.713677789084558,
+      "paired_lee_images": 113,
+      "paired_point_minus_lee_iou_mean": -0.11532342604353733,
+      "complete_candidate_paired_n": 113,
+      "complete_candidate_point_minus_lee_iou_mean": -0.11532342604353733,
+      "note": "Conditional description on matching computable images, not failure-adjusted method superiority. Floor-only scores may exist when top/layout is unavailable; complete_candidate fields exclude those cases."
+    },
+    {
+      "threshold_deg": 10.0,
+      "method": "mv50",
+      "attempted_images": 137,
+      "status_counts": {
+        "ok": 71,
+        "geometry_review": 65,
+        "unavailable": 1
+      },
+      "scored_original_images": 136,
+      "original_iou_mean": 0.7918992270798227,
+      "paired_lee_images": 135,
+      "paired_point_minus_lee_iou_mean": -0.019139156688370983,
+      "complete_candidate_paired_n": 135,
+      "complete_candidate_point_minus_lee_iou_mean": -0.019139156688370983,
+      "note": "Conditional description on matching computable images, not failure-adjusted method superiority. Floor-only scores may exist when top/layout is unavailable; complete_candidate fields exclude those cases."
+    },
+    {
+      "threshold_deg": 10.0,
+      "method": "mv_strict",
+      "attempted_images": 137,
+      "status_counts": {
+        "ok": 70,
+        "geometry_review": 63,
+        "unavailable": 4
+      },
+      "scored_original_images": 133,
+      "original_iou_mean": 0.7767555292639848,
+      "paired_lee_images": 132,
+      "paired_point_minus_lee_iou_mean": -0.034344412012815725,
+      "complete_candidate_paired_n": 132,
+      "complete_candidate_point_minus_lee_iou_mean": -0.034344412012815725,
+      "note": "Conditional description on matching computable images, not failure-adjusted method superiority. Floor-only scores may exist when top/layout is unavailable; complete_candidate fields exclude those cases."
+    }
+  ],
+  "erp_status_counts": {
+    "ok": 113,
+    "unsupported": 24
+  }
+}

@@ -1,0 +1,221 @@
+{
+  "external_tests": 25,
+  "tests_passed": true,
+  "source_binding": "all copied computational fields exactly match; metadata excerpt incomplete",
+  "joint64": [
+    {
+      "case": "real_three",
+      "threshold": 2.5,
+      "feasible": 0,
+      "optimal": 0
+    },
+    {
+      "case": "real_three",
+      "threshold": 5.0,
+      "feasible": 1,
+      "optimal": 1
+    },
+    {
+      "case": "real_three",
+      "threshold": 9.0,
+      "feasible": 1,
+      "optimal": 1
+    },
+    {
+      "case": "synthetic_cycle",
+      "threshold": 2.5,
+      "feasible": 0,
+      "optimal": 0
+    },
+    {
+      "case": "synthetic_cycle",
+      "threshold": 5.0,
+      "feasible": 2,
+      "optimal": 2
+    },
+    {
+      "case": "synthetic_cycle",
+      "threshold": 9.0,
+      "feasible": 4,
+      "optimal": 2
+    }
+  ],
+  "cycle_audit": {
+    "comparisons": [
+      {
+        "a": "rot0",
+        "b": "rot1",
+        "distance": 3.4163681108391026,
+        "mapping": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "margin": 0.805407503218853,
+        "ambiguous": false
+      },
+      {
+        "a": "rot0",
+        "b": "rot2",
+        "distance": 0.8704600049398354,
+        "mapping": [
+          3,
+          0,
+          1,
+          2
+        ],
+        "margin": 5.552623523514536,
+        "ambiguous": false
+      },
+      {
+        "a": "rot1",
+        "b": "rot2",
+        "distance": 3.416368110839101,
+        "mapping": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "margin": 0.8054075032188575,
+        "ambiguous": false
+      }
+    ],
+    "all_pairs_compatible_and_unique": true,
+    "tested_triangles": 1,
+    "conflicts": [
+      {
+        "ids": [
+          "rot0",
+          "rot1",
+          "rot2"
+        ],
+        "via": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "direct": [
+          3,
+          0,
+          1,
+          2
+        ]
+      }
+    ],
+    "interpretation": "No tested conflict is not evidence of consistency when maps or triangles are missing."
+  },
+  "new_global_baseline": [
+    {
+      "case": "real_three",
+      "rules": {
+        "mv50": {
+          "status": "ok",
+          "reason": null,
+          "selected_pairs": 4,
+          "identity_count": 4,
+          "competing_matches": 0,
+          "exact_source_ring_support": 3,
+          "projected_source_ring_support": 3,
+          "unsupported_edges": 0,
+          "below_majority_edges": 0
+        },
+        "mv_strict": {
+          "status": "ok",
+          "reason": null,
+          "selected_pairs": 4,
+          "identity_count": 4,
+          "competing_matches": 0,
+          "exact_source_ring_support": 3,
+          "projected_source_ring_support": 3,
+          "unsupported_edges": 0,
+          "below_majority_edges": 0
+        }
+      }
+    },
+    {
+      "case": "synthetic_cycle",
+      "rules": {
+        "mv50": {
+          "status": "geometry_review",
+          "reason": "competing_threshold_correspondences",
+          "selected_pairs": 4,
+          "identity_count": 4,
+          "competing_matches": 16,
+          "exact_source_ring_support": 3,
+          "projected_source_ring_support": 3,
+          "unsupported_edges": 0,
+          "below_majority_edges": 0
+        },
+        "mv_strict": {
+          "status": "geometry_review",
+          "reason": "competing_threshold_correspondences",
+          "selected_pairs": 4,
+          "identity_count": 4,
+          "competing_matches": 16,
+          "exact_source_ring_support": 3,
+          "projected_source_ring_support": 3,
+          "unsupported_edges": 0,
+          "below_majority_edges": 0
+        }
+      }
+    },
+    {
+      "case": "majority_adjacency",
+      "rules": {
+        "mv50": {
+          "status": "geometry_review",
+          "reason": "source_ring_disagreement",
+          "selected_pairs": 5,
+          "identity_count": 5,
+          "competing_matches": 0,
+          "exact_source_ring_support": 1,
+          "projected_source_ring_support": 1,
+          "unsupported_edges": 0,
+          "below_majority_edges": 0
+        },
+        "mv_strict": {
+          "status": "geometry_review",
+          "reason": "source_ring_disagreement",
+          "selected_pairs": 5,
+          "identity_count": 5,
+          "competing_matches": 0,
+          "exact_source_ring_support": 1,
+          "projected_source_ring_support": 1,
+          "unsupported_edges": 0,
+          "below_majority_edges": 0
+        }
+      }
+    },
+    {
+      "case": "no_whole_witness",
+      "rules": {
+        "mv50": {
+          "status": "ok",
+          "reason": null,
+          "selected_pairs": 16,
+          "identity_count": 16,
+          "competing_matches": 0,
+          "exact_source_ring_support": 0,
+          "projected_source_ring_support": 0,
+          "unsupported_edges": 0,
+          "below_majority_edges": 0
+        },
+        "mv_strict": {
+          "status": "ok",
+          "reason": null,
+          "selected_pairs": 16,
+          "identity_count": 16,
+          "competing_matches": 0,
+          "exact_source_ring_support": 0,
+          "projected_source_ring_support": 0,
+          "unsupported_edges": 0,
+          "below_majority_edges": 0
+        }
+      }
+    }
+  ],
+  "limits": "one real image with three workers, controlled counterexamples; no full simulation or data reanalysis"
+}

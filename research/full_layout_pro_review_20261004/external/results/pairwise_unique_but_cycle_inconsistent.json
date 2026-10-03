@@ -1,0 +1,2039 @@
+{
+  "records": [
+    {
+      "id": "rot0",
+      "worker": "rot0",
+      "points": [
+        [
+          0.0,
+          14.222222222222221
+        ],
+        [
+          0.0,
+          497.77777777777777
+        ],
+        [
+          256.0,
+          14.222222222222221
+        ],
+        [
+          256.0,
+          497.77777777777777
+        ],
+        [
+          512.0,
+          14.222222222222221
+        ],
+        [
+          512.0,
+          497.77777777777777
+        ],
+        [
+          768.0,
+          14.222222222222221
+        ],
+        [
+          768.0,
+          497.77777777777777
+        ]
+      ],
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "ring_confirmed": false,
+      "synthetic": true,
+      "evidence_role": "controlled_example_not_real_human"
+    },
+    {
+      "id": "rot1",
+      "worker": "rot1",
+      "points": [
+        [
+          113.77777777777777,
+          14.222222222222221
+        ],
+        [
+          113.77777777777777,
+          497.77777777777777
+        ],
+        [
+          369.77777777777777,
+          14.222222222222221
+        ],
+        [
+          369.77777777777777,
+          497.77777777777777
+        ],
+        [
+          625.7777777777778,
+          14.222222222222221
+        ],
+        [
+          625.7777777777778,
+          497.77777777777777
+        ],
+        [
+          881.7777777777778,
+          14.222222222222221
+        ],
+        [
+          881.7777777777778,
+          497.77777777777777
+        ]
+      ],
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "ring_confirmed": false,
+      "synthetic": true,
+      "evidence_role": "controlled_example_not_real_human"
+    },
+    {
+      "id": "rot2",
+      "worker": "rot2",
+      "points": [
+        [
+          227.55555555555554,
+          14.222222222222221
+        ],
+        [
+          227.55555555555554,
+          497.77777777777777
+        ],
+        [
+          483.55555555555554,
+          14.222222222222221
+        ],
+        [
+          483.55555555555554,
+          497.77777777777777
+        ],
+        [
+          739.5555555555555,
+          14.222222222222221
+        ],
+        [
+          739.5555555555555,
+          497.77777777777777
+        ],
+        [
+          995.5555555555555,
+          14.222222222222221
+        ],
+        [
+          995.5555555555555,
+          497.77777777777777
+        ]
+      ],
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "ring_confirmed": false,
+      "synthetic": true,
+      "evidence_role": "controlled_example_not_real_human"
+    }
+  ],
+  "AB": {
+    "distance": 3.4163681108391026,
+    "mapping": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "margin": 0.805407503218853,
+    "ambiguous": false
+  },
+  "BC": {
+    "distance": 3.416368110839101,
+    "mapping": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "margin": 0.8054075032188575,
+    "ambiguous": false
+  },
+  "AC": {
+    "distance": 0.8704600049398354,
+    "mapping": [
+      3,
+      0,
+      1,
+      2
+    ],
+    "margin": 5.552623523514536,
+    "ambiguous": false
+  },
+  "composed_AB_BC": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "mismatched_identities": 4,
+  "all_pair_distances_below_5": true,
+  "all_pairwise_optima_unique": true,
+  "candidate_pairwise_bev_iou": [
+    0.7098078142164793,
+    0.8632179900134442,
+    0.7098078142164796
+  ],
+  "candidates": {
+    "schema": "observed_anchor_evidence_v1",
+    "n_requested": 3,
+    "n_available": 3,
+    "evidence_populations": {
+      "real_record_slots": 0,
+      "synthetic_control_slots": 3
+    },
+    "failures": [],
+    "status": "candidate_set_not_adjudicated",
+    "tolerance_deg": 5.0,
+    "ambiguity_margin_deg": 1e-09,
+    "candidates": [
+      {
+        "id": "candidate@rot0",
+        "anchor": "rot0",
+        "points": [
+          [
+            0.0,
+            14.222222222222221
+          ],
+          [
+            0.0,
+            497.77777777777777
+          ],
+          [
+            256.0,
+            14.222222222222221
+          ],
+          [
+            256.0,
+            497.77777777777777
+          ],
+          [
+            512.0,
+            14.222222222222221
+          ],
+          [
+            512.0,
+            497.77777777777777
+          ],
+          [
+            768.0,
+            14.222222222222221
+          ],
+          [
+            768.0,
+            497.77777777777777
+          ]
+        ],
+        "connections": {
+          "index_base": 0,
+          "point_array": "points",
+          "pair_ring": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "closed": true,
+          "top_edges": [
+            [
+              0,
+              2
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              4,
+              6
+            ],
+            [
+              6,
+              0
+            ]
+          ],
+          "bottom_edges": [
+            [
+              1,
+              3
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              5,
+              7
+            ],
+            [
+              7,
+              1
+            ]
+          ],
+          "vertical_pairs": [
+            [
+              0,
+              1
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              6,
+              7
+            ]
+          ],
+          "confirmation": "derived_connections_not_new_human_confirmation"
+        },
+        "ring_confirmed": false,
+        "order_status": "new_geometry_on_observed_anchor_ring_not_human_confirmed",
+        "source_anchor_ring_confirmed": false,
+        "point_donors": [
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "index": 0,
+              "source_pair_index": 0,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  0.0,
+                  14.222222222222221
+                ],
+                [
+                  0.0,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "index": 0,
+              "source_pair_index": 0,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  113.77777777777777,
+                  14.222222222222221
+                ],
+                [
+                  113.77777777777777,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "index": 3,
+              "source_pair_index": 3,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  995.5555555555555,
+                  14.222222222222221
+                ],
+                [
+                  995.5555555555555,
+                  497.77777777777777
+                ]
+              ]
+            }
+          ],
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "index": 1,
+              "source_pair_index": 1,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  256.0,
+                  14.222222222222221
+                ],
+                [
+                  256.0,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "index": 1,
+              "source_pair_index": 1,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  369.77777777777777,
+                  14.222222222222221
+                ],
+                [
+                  369.77777777777777,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "index": 0,
+              "source_pair_index": 0,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  227.55555555555554,
+                  14.222222222222221
+                ],
+                [
+                  227.55555555555554,
+                  497.77777777777777
+                ]
+              ]
+            }
+          ],
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "index": 2,
+              "source_pair_index": 2,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  512.0,
+                  14.222222222222221
+                ],
+                [
+                  512.0,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "index": 2,
+              "source_pair_index": 2,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  625.7777777777778,
+                  14.222222222222221
+                ],
+                [
+                  625.7777777777778,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "index": 1,
+              "source_pair_index": 1,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  483.55555555555554,
+                  14.222222222222221
+                ],
+                [
+                  483.55555555555554,
+                  497.77777777777777
+                ]
+              ]
+            }
+          ],
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "index": 3,
+              "source_pair_index": 3,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  768.0,
+                  14.222222222222221
+                ],
+                [
+                  768.0,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "index": 3,
+              "source_pair_index": 3,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  881.7777777777778,
+                  14.222222222222221
+                ],
+                [
+                  881.7777777777778,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "index": 2,
+              "source_pair_index": 2,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  739.5555555555555,
+                  14.222222222222221
+                ],
+                [
+                  739.5555555555555,
+                  497.77777777777777
+                ]
+              ]
+            }
+          ]
+        ],
+        "point_support_counts": [
+          3,
+          3,
+          3,
+          3
+        ],
+        "direct_edge_witnesses": [
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "source_indices": [
+                0,
+                1
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "source_indices": [
+                0,
+                1
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "source_indices": [
+                3,
+                0
+              ]
+            }
+          ],
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "source_indices": [
+                1,
+                2
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "source_indices": [
+                1,
+                2
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "source_indices": [
+                0,
+                1
+              ]
+            }
+          ],
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "source_indices": [
+                2,
+                3
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "source_indices": [
+                2,
+                3
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "source_indices": [
+                1,
+                2
+              ]
+            }
+          ],
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "source_indices": [
+                3,
+                0
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "source_indices": [
+                3,
+                0
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "source_indices": [
+                2,
+                3
+              ]
+            }
+          ]
+        ],
+        "endpoint_connection_with_intermediate_pairs": [
+          [],
+          [],
+          [],
+          []
+        ],
+        "complete_ring_mapping_witnesses": [
+          {
+            "id": "rot0",
+            "worker": "rot0"
+          },
+          {
+            "id": "rot1",
+            "worker": "rot1"
+          },
+          {
+            "id": "rot2",
+            "worker": "rot2"
+          }
+        ],
+        "alignments": [
+          {
+            "id": "rot0",
+            "worker": "rot0",
+            "mapping": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                3,
+                3
+              ]
+            ],
+            "matched": 4,
+            "unmatched_anchor": [],
+            "unmatched_other": [],
+            "margin": null,
+            "ambiguous": false
+          },
+          {
+            "id": "rot1",
+            "worker": "rot1",
+            "matched": 4,
+            "sum_angle": 13.665472443356407,
+            "mapping": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                3,
+                3
+              ]
+            ],
+            "unmatched_anchor": [],
+            "unmatched_other": [],
+            "runner_up_mapping": [
+              [
+                0,
+                3
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                3,
+                2
+              ]
+            ],
+            "margin": 3.2216300128754156,
+            "ambiguous": false,
+            "tolerance": 5.0,
+            "objective": "maximum_cardinality_then_minimum_sum_bound_angle"
+          },
+          {
+            "id": "rot2",
+            "worker": "rot2",
+            "matched": 4,
+            "sum_angle": 3.4818400197593418,
+            "mapping": [
+              [
+                0,
+                3
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                3,
+                2
+              ]
+            ],
+            "unmatched_anchor": [],
+            "unmatched_other": [],
+            "runner_up_mapping": null,
+            "margin": null,
+            "ambiguous": false,
+            "tolerance": 5.0,
+            "objective": "maximum_cardinality_then_minimum_sum_bound_angle"
+          }
+        ],
+        "warning": "point donors / edge witnesses / complete ring mapping witnesses are different denominators; generated coordinates were not jointly drawn",
+        "geometry": {
+          "polygon_valid": true,
+          "area_h2": 0.015308532491104754,
+          "scope": "floor_polygon_only_not_closed_3D_validation"
+        },
+        "band_status": "available"
+      },
+      {
+        "id": "candidate@rot1",
+        "anchor": "rot1",
+        "points": [
+          [
+            113.77777777777777,
+            14.222222222222221
+          ],
+          [
+            113.77777777777777,
+            497.77777777777777
+          ],
+          [
+            369.77777777777777,
+            14.222222222222221
+          ],
+          [
+            369.77777777777777,
+            497.77777777777777
+          ],
+          [
+            625.7777777777778,
+            14.222222222222221
+          ],
+          [
+            625.7777777777778,
+            497.77777777777777
+          ],
+          [
+            881.7777777777778,
+            14.222222222222221
+          ],
+          [
+            881.7777777777778,
+            497.77777777777777
+          ]
+        ],
+        "connections": {
+          "index_base": 0,
+          "point_array": "points",
+          "pair_ring": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "closed": true,
+          "top_edges": [
+            [
+              0,
+              2
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              4,
+              6
+            ],
+            [
+              6,
+              0
+            ]
+          ],
+          "bottom_edges": [
+            [
+              1,
+              3
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              5,
+              7
+            ],
+            [
+              7,
+              1
+            ]
+          ],
+          "vertical_pairs": [
+            [
+              0,
+              1
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              6,
+              7
+            ]
+          ],
+          "confirmation": "derived_connections_not_new_human_confirmation"
+        },
+        "ring_confirmed": false,
+        "order_status": "new_geometry_on_observed_anchor_ring_not_human_confirmed",
+        "source_anchor_ring_confirmed": false,
+        "point_donors": [
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "index": 0,
+              "source_pair_index": 0,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  0.0,
+                  14.222222222222221
+                ],
+                [
+                  0.0,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "index": 0,
+              "source_pair_index": 0,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  113.77777777777777,
+                  14.222222222222221
+                ],
+                [
+                  113.77777777777777,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "index": 0,
+              "source_pair_index": 0,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  227.55555555555554,
+                  14.222222222222221
+                ],
+                [
+                  227.55555555555554,
+                  497.77777777777777
+                ]
+              ]
+            }
+          ],
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "index": 1,
+              "source_pair_index": 1,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  256.0,
+                  14.222222222222221
+                ],
+                [
+                  256.0,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "index": 1,
+              "source_pair_index": 1,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  369.77777777777777,
+                  14.222222222222221
+                ],
+                [
+                  369.77777777777777,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "index": 1,
+              "source_pair_index": 1,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  483.55555555555554,
+                  14.222222222222221
+                ],
+                [
+                  483.55555555555554,
+                  497.77777777777777
+                ]
+              ]
+            }
+          ],
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "index": 2,
+              "source_pair_index": 2,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  512.0,
+                  14.222222222222221
+                ],
+                [
+                  512.0,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "index": 2,
+              "source_pair_index": 2,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  625.7777777777778,
+                  14.222222222222221
+                ],
+                [
+                  625.7777777777778,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "index": 2,
+              "source_pair_index": 2,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  739.5555555555555,
+                  14.222222222222221
+                ],
+                [
+                  739.5555555555555,
+                  497.77777777777777
+                ]
+              ]
+            }
+          ],
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "index": 3,
+              "source_pair_index": 3,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  768.0,
+                  14.222222222222221
+                ],
+                [
+                  768.0,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "index": 3,
+              "source_pair_index": 3,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  881.7777777777778,
+                  14.222222222222221
+                ],
+                [
+                  881.7777777777778,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "index": 3,
+              "source_pair_index": 3,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  995.5555555555555,
+                  14.222222222222221
+                ],
+                [
+                  995.5555555555555,
+                  497.77777777777777
+                ]
+              ]
+            }
+          ]
+        ],
+        "point_support_counts": [
+          3,
+          3,
+          3,
+          3
+        ],
+        "direct_edge_witnesses": [
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "source_indices": [
+                0,
+                1
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "source_indices": [
+                0,
+                1
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "source_indices": [
+                0,
+                1
+              ]
+            }
+          ],
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "source_indices": [
+                1,
+                2
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "source_indices": [
+                1,
+                2
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "source_indices": [
+                1,
+                2
+              ]
+            }
+          ],
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "source_indices": [
+                2,
+                3
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "source_indices": [
+                2,
+                3
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "source_indices": [
+                2,
+                3
+              ]
+            }
+          ],
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "source_indices": [
+                3,
+                0
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "source_indices": [
+                3,
+                0
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "source_indices": [
+                3,
+                0
+              ]
+            }
+          ]
+        ],
+        "endpoint_connection_with_intermediate_pairs": [
+          [],
+          [],
+          [],
+          []
+        ],
+        "complete_ring_mapping_witnesses": [
+          {
+            "id": "rot0",
+            "worker": "rot0"
+          },
+          {
+            "id": "rot1",
+            "worker": "rot1"
+          },
+          {
+            "id": "rot2",
+            "worker": "rot2"
+          }
+        ],
+        "alignments": [
+          {
+            "id": "rot0",
+            "worker": "rot0",
+            "matched": 4,
+            "sum_angle": 13.66547244335641,
+            "mapping": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                3,
+                3
+              ]
+            ],
+            "unmatched_anchor": [],
+            "unmatched_other": [],
+            "runner_up_mapping": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                3,
+                0
+              ]
+            ],
+            "margin": 3.2216300128754156,
+            "ambiguous": false,
+            "tolerance": 5.0,
+            "objective": "maximum_cardinality_then_minimum_sum_bound_angle"
+          },
+          {
+            "id": "rot1",
+            "worker": "rot1",
+            "mapping": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                3,
+                3
+              ]
+            ],
+            "matched": 4,
+            "unmatched_anchor": [],
+            "unmatched_other": [],
+            "margin": null,
+            "ambiguous": false
+          },
+          {
+            "id": "rot2",
+            "worker": "rot2",
+            "matched": 4,
+            "sum_angle": 13.6654724433564,
+            "mapping": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                3,
+                3
+              ]
+            ],
+            "unmatched_anchor": [],
+            "unmatched_other": [],
+            "runner_up_mapping": [
+              [
+                0,
+                3
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                3,
+                2
+              ]
+            ],
+            "margin": 3.2216300128754263,
+            "ambiguous": false,
+            "tolerance": 5.0,
+            "objective": "maximum_cardinality_then_minimum_sum_bound_angle"
+          }
+        ],
+        "warning": "point donors / edge witnesses / complete ring mapping witnesses are different denominators; generated coordinates were not jointly drawn",
+        "geometry": {
+          "polygon_valid": true,
+          "area_h2": 0.015308532491104757,
+          "scope": "floor_polygon_only_not_closed_3D_validation"
+        },
+        "band_status": "available"
+      },
+      {
+        "id": "candidate@rot2",
+        "anchor": "rot2",
+        "points": [
+          [
+            227.55555555555554,
+            14.222222222222221
+          ],
+          [
+            227.55555555555554,
+            497.77777777777777
+          ],
+          [
+            483.55555555555554,
+            14.222222222222221
+          ],
+          [
+            483.55555555555554,
+            497.77777777777777
+          ],
+          [
+            739.5555555555555,
+            14.222222222222221
+          ],
+          [
+            739.5555555555555,
+            497.77777777777777
+          ],
+          [
+            995.5555555555555,
+            14.222222222222221
+          ],
+          [
+            995.5555555555555,
+            497.77777777777777
+          ]
+        ],
+        "connections": {
+          "index_base": 0,
+          "point_array": "points",
+          "pair_ring": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "closed": true,
+          "top_edges": [
+            [
+              0,
+              2
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              4,
+              6
+            ],
+            [
+              6,
+              0
+            ]
+          ],
+          "bottom_edges": [
+            [
+              1,
+              3
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              5,
+              7
+            ],
+            [
+              7,
+              1
+            ]
+          ],
+          "vertical_pairs": [
+            [
+              0,
+              1
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              6,
+              7
+            ]
+          ],
+          "confirmation": "derived_connections_not_new_human_confirmation"
+        },
+        "ring_confirmed": false,
+        "order_status": "new_geometry_on_observed_anchor_ring_not_human_confirmed",
+        "source_anchor_ring_confirmed": false,
+        "point_donors": [
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "index": 1,
+              "source_pair_index": 1,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  256.0,
+                  14.222222222222221
+                ],
+                [
+                  256.0,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "index": 0,
+              "source_pair_index": 0,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  113.77777777777777,
+                  14.222222222222221
+                ],
+                [
+                  113.77777777777777,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "index": 0,
+              "source_pair_index": 0,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  227.55555555555554,
+                  14.222222222222221
+                ],
+                [
+                  227.55555555555554,
+                  497.77777777777777
+                ]
+              ]
+            }
+          ],
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "index": 2,
+              "source_pair_index": 2,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  512.0,
+                  14.222222222222221
+                ],
+                [
+                  512.0,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "index": 1,
+              "source_pair_index": 1,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  369.77777777777777,
+                  14.222222222222221
+                ],
+                [
+                  369.77777777777777,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "index": 1,
+              "source_pair_index": 1,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  483.55555555555554,
+                  14.222222222222221
+                ],
+                [
+                  483.55555555555554,
+                  497.77777777777777
+                ]
+              ]
+            }
+          ],
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "index": 3,
+              "source_pair_index": 3,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  768.0,
+                  14.222222222222221
+                ],
+                [
+                  768.0,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "index": 2,
+              "source_pair_index": 2,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  625.7777777777778,
+                  14.222222222222221
+                ],
+                [
+                  625.7777777777778,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "index": 2,
+              "source_pair_index": 2,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  739.5555555555555,
+                  14.222222222222221
+                ],
+                [
+                  739.5555555555555,
+                  497.77777777777777
+                ]
+              ]
+            }
+          ],
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "index": 0,
+              "source_pair_index": 0,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  0.0,
+                  14.222222222222221
+                ],
+                [
+                  0.0,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "index": 3,
+              "source_pair_index": 3,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  881.7777777777778,
+                  14.222222222222221
+                ],
+                [
+                  881.7777777777778,
+                  497.77777777777777
+                ]
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "index": 3,
+              "source_pair_index": 3,
+              "synthetic": true,
+              "independent_status": null,
+              "source_point_indices": null,
+              "source_point_labels": null,
+              "points": [
+                [
+                  995.5555555555555,
+                  14.222222222222221
+                ],
+                [
+                  995.5555555555555,
+                  497.77777777777777
+                ]
+              ]
+            }
+          ]
+        ],
+        "point_support_counts": [
+          3,
+          3,
+          3,
+          3
+        ],
+        "direct_edge_witnesses": [
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "source_indices": [
+                1,
+                2
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "source_indices": [
+                0,
+                1
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "source_indices": [
+                0,
+                1
+              ]
+            }
+          ],
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "source_indices": [
+                2,
+                3
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "source_indices": [
+                1,
+                2
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "source_indices": [
+                1,
+                2
+              ]
+            }
+          ],
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "source_indices": [
+                3,
+                0
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "source_indices": [
+                2,
+                3
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "source_indices": [
+                2,
+                3
+              ]
+            }
+          ],
+          [
+            {
+              "id": "rot0",
+              "worker": "rot0",
+              "source_indices": [
+                0,
+                1
+              ]
+            },
+            {
+              "id": "rot1",
+              "worker": "rot1",
+              "source_indices": [
+                3,
+                0
+              ]
+            },
+            {
+              "id": "rot2",
+              "worker": "rot2",
+              "source_indices": [
+                3,
+                0
+              ]
+            }
+          ]
+        ],
+        "endpoint_connection_with_intermediate_pairs": [
+          [],
+          [],
+          [],
+          []
+        ],
+        "complete_ring_mapping_witnesses": [
+          {
+            "id": "rot0",
+            "worker": "rot0"
+          },
+          {
+            "id": "rot1",
+            "worker": "rot1"
+          },
+          {
+            "id": "rot2",
+            "worker": "rot2"
+          }
+        ],
+        "alignments": [
+          {
+            "id": "rot0",
+            "worker": "rot0",
+            "matched": 4,
+            "sum_angle": 3.481840019759338,
+            "mapping": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                3,
+                0
+              ]
+            ],
+            "unmatched_anchor": [],
+            "unmatched_other": [],
+            "runner_up_mapping": null,
+            "margin": null,
+            "ambiguous": false,
+            "tolerance": 5.0,
+            "objective": "maximum_cardinality_then_minimum_sum_bound_angle"
+          },
+          {
+            "id": "rot1",
+            "worker": "rot1",
+            "matched": 4,
+            "sum_angle": 13.665472443356403,
+            "mapping": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                3,
+                3
+              ]
+            ],
+            "unmatched_anchor": [],
+            "unmatched_other": [],
+            "runner_up_mapping": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                3,
+                0
+              ]
+            ],
+            "margin": 3.2216300128754263,
+            "ambiguous": false,
+            "tolerance": 5.0,
+            "objective": "maximum_cardinality_then_minimum_sum_bound_angle"
+          },
+          {
+            "id": "rot2",
+            "worker": "rot2",
+            "mapping": [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                3,
+                3
+              ]
+            ],
+            "matched": 4,
+            "unmatched_anchor": [],
+            "unmatched_other": [],
+            "margin": null,
+            "ambiguous": false
+          }
+        ],
+        "warning": "point donors / edge witnesses / complete ring mapping witnesses are different denominators; generated coordinates were not jointly drawn",
+        "geometry": {
+          "polygon_valid": true,
+          "area_h2": 0.015308532491104754,
+          "scope": "floor_polygon_only_not_closed_3D_validation"
+        },
+        "band_status": "available"
+      }
+    ],
+    "historical_cross_record_constraints_loaded": false,
+    "interpretation": "overlapping anchor hypotheses; do not sum supports or interpret as posterior modes; historical cross-record constraints require a locally verified adapter"
+  },
+  "interpretation": "An intentionally near-pole synthetic geometry: unique pairwise optima need not define a globally coherent multiworker identity system. Not an estimate of real conflict frequency."
+}

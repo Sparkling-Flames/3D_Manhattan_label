@@ -1,0 +1,81 @@
+{
+  "ABC": {
+    "ids": [
+      "synthetic_A",
+      "synthetic_B",
+      "synthetic_C"
+    ],
+    "distances": [
+      [
+        0.0,
+        4.000000000000005,
+        7.00000000000001
+      ],
+      [
+        4.000000000000005,
+        0.0,
+        3.0000000000000107
+      ],
+      [
+        7.00000000000001,
+        3.0000000000000107,
+        0.0
+      ]
+    ],
+    "groups": [
+      [
+        "synthetic_B",
+        "synthetic_C"
+      ],
+      [
+        "synthetic_A"
+      ]
+    ]
+  },
+  "ABCD": {
+    "ids": [
+      "synthetic_A",
+      "synthetic_B",
+      "synthetic_C",
+      "synthetic_D"
+    ],
+    "distances": [
+      [
+        0.0,
+        4.000000000000005,
+        7.00000000000001,
+        9.500000000000007
+      ],
+      [
+        4.000000000000005,
+        0.0,
+        3.0000000000000107,
+        5.500000000000002
+      ],
+      [
+        7.00000000000001,
+        3.0000000000000107,
+        0.0,
+        2.5000000000000164
+      ],
+      [
+        9.500000000000007,
+        5.500000000000002,
+        2.5000000000000164,
+        0.0
+      ]
+    ],
+    "groups": [
+      [
+        "synthetic_C",
+        "synthetic_D"
+      ],
+      [
+        "synthetic_A",
+        "synthetic_B"
+      ]
+    ]
+  },
+  "old_pair_distances_max_change": 0.0,
+  "interpretation": "B,C separated after D arrived; their pairwise distance and all old comparisons are unchanged. This is a partition-policy effect, not a changed annotation."
+}

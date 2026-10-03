@@ -1,13 +1,15 @@
 {
   "schema": "consensus_result_studio_v1",
-  "input": "Existing demos.json final full-pool step only; no new clustering, fusion, votes or GT scoring.",
-  "cases": "image_id,title,category,variants,demo; demo keeps workers, references, last step, selected ERP cache.",
-  "variants": "name,source,geometry or explicit error; each full-pool whole-annotation cluster is retained.",
-  "source": "role,method,pointset_version,cluster,candidate_erp,representative{id,worker,erp},members[{id,worker}],note.",
+  "input": "Existing demos.json final full-pool step plus global_pair_consensus_20261004/primary_results.json. The renderer does not recompute fusion or GT scores.",
+  "cases": "image_id,title,category,variants,demo,pattern_count,global_point_indices; demo retains the original full-pool source records and method caches.",
+  "variants": "Auxiliary whole-annotation cluster variants followed by two all-person point variants. global_point_indices maps mv50/mv_strict; unavailable results have explicit error and no geometry.",
+  "source": "Auxiliary sources retain cluster, representative and members. Global sources retain method,n,threshold_deg,minimum_support,record_ids,candidate,candidate_erp,ring_diagnostics,method_details,reference_metrics.",
   "geometry": "panorama_studio_v1 from analyze(...compute_fit=False,continuous); source candidate points/order unchanged.",
   "image_urls": "Repository-relative local PNG URLs for original and texture; no image copying or resampling.",
-  "identity": "candidate:<cluster_id>:pair:<index> is a new candidate point identity, never an original worker point ID; provenance in source.cluster.candidate.source_pair_maps.",
+  "identity": "Global candidate.feature_ids and source_pair_maps refer to the current point-identity partition, not original person corner IDs. Auxiliary candidate identities remain local to each whole-annotation cluster.",
   "scope": "Full-pool result display only. Pattern IDs local to each image/full-pool input. No natural-mode claim or quality improvement validation.",
   "representations": "Point candidates have complete sparse top/bottom pairs. ERP is dense top/bottom in applicable domain. Lee-BEV only has ground boundary.",
-  "readonly": "No annotation writeback, no Manhattan fitting, no GT-assisted selection; raw Studio reconstruction uses paired-floor depth proxy for top."
+  "readonly": "No annotation writeback, no Manhattan fitting, no GT-assisted selection; raw Studio reconstruction uses paired-floor depth proxy for top.",
+  "global_point_extension": "case.pattern_count separates auxiliary patterns from appended full-pool point variants. global_point_indices maps voting rule to one all-person result. Global candidate status, denominator, endpoint votes and ring evidence retained. No unique-true-layout claim.",
+  "counts": "variants includes auxiliary and global outputs; global_candidates counts both rules including failures. fit_not_requested counts displayed geometries; legacy input_failed counts variants without display geometry, not excluded people."
 }
