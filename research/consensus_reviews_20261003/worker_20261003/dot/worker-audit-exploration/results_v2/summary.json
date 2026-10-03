@@ -1,0 +1,63 @@
+{
+  "fixed_commit": "405f3041fdd76977f625d50c558c63dbf342699d",
+  "workers": 24,
+  "images": 10,
+  "buildings": 8,
+  "k": 4,
+  "subsets": 10626,
+  "person_pairs": 276,
+  "backgrounds_per_pair": 1540,
+  "score_arrays_stored": 28,
+  "score_cells_evaluated": 40,
+  "revision_images": [
+    "UwV83HsGsw3-09",
+    "e9zR4mvMWw7-19",
+    "q9vSo1VnCiC-32",
+    "yqstnuAEVhm-32"
+  ],
+  "pair_image_policy_rows": 11040,
+  "pair_background_differences": 17001600,
+  "lobo_assignment_max_absolute_error": 0.0,
+  "pair_identity_max_absolute_error": 6.102757188486407e-15,
+  "additive_projection_orthogonality_max_absolute_error": 7.833309883796524e-16,
+  "definition": "Delta(a,b;T)=f(T+a)-f(T+b), uniform T of size 3 excluding a,b; all 24 recorded votes retained.",
+  "exact_identity": "E_T Delta(a,b;T)=(23/20)(E[f(S)|a in S]-E[f(S)|b in S])=beta_a-beta_b",
+  "additive_projection": "fhat(S)=mean(f)+sum_{i in S} beta_i; beta_i=(23/20)(inclusion_mean_i-mean(f)), sum(beta)=0",
+  "numeric_tie_tolerance": 1e-12,
+  "illustrative_sign_reversal_thresholds": [
+    0.001,
+    0.005
+  ],
+  "target_projection_status": "Descriptive/oracle use of target GT; never enters LOBO labels or deployed vote weights.",
+  "reference_policy": "revised_where_available uses the 4 available revised references and original for the other 6 images",
+  "inference_boundary": "Fixed selected finite pool. Scores are source artifacts, not new geometry reconstruction. No independent human sampling CI, no population or causal ability claim.",
+  "inputs": {
+    "subsets.npz": "94255370d889562da72ac49ed377e0f6569e850a7b36eba0a7b8f57af3d16dc5",
+    "rosters.json": "da264894a9fc1699678d09e08fca7cbe4ed3266589b5259a165e0ca7e2adc55f",
+    "lobo_assignments.csv": "827ac94cbecb972dae42846028f00fc72cdb315d9b011f39c7a93a3dc4a99f94",
+    "matrix_original_iou.csv": "343f46a9fc45d3c06ccbf035f57766cee3b1a121d5b412304a2f5405aeb68366",
+    "matrix_revised_where_available_iou.csv": "ecae7cc60366c1f4b22f68a3d36f21a0e4f2582e7c7b9c7b5e83f4d0a481364a"
+  },
+  "output_rows": {
+    "pair_effects_by_image": 11040,
+    "additive_projection_by_image": 40,
+    "person_utility_by_image": 960,
+    "group_contrasts_by_image": 80,
+    "candidate_influence_by_image": 2080,
+    "background_composition_by_image": 320,
+    "group_contrasts_aggregate": 16,
+    "candidate_influence_aggregate": 416,
+    "additive_projection_aggregate": 8,
+    "background_composition_aggregate": 64,
+    "pair_effects_panel_average": 2208,
+    "person_utility_panel_average": 192,
+    "pair_signs_across_buildings": 1104,
+    "reference_and_rule_sensitivity": 40
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41"
+  }
+}

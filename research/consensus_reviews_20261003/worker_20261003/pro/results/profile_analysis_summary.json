@@ -1,0 +1,96 @@
+{
+  "original": {
+    "relative_prediction_skill": 0.13702030767351425,
+    "mean_lobo_rank_corr": 0.2932361076812152,
+    "lobo_high_always": 8,
+    "lobo_low_always": 7,
+    "lobo_switch": 9,
+    "iou_centroid_profile_spearman": 0.32260869565217387,
+    "disjoint_split_median_rho": 0.48173913043478256,
+    "disjoint_split_median_same_half": 0.5833333333333334,
+    "disjoint_splits_with_cutoff_tie": 1,
+    "all_four_building_upper": 1,
+    "all_four_building_lower": 2,
+    "influence_none": {
+      "n": 24,
+      "skill": 0.13702030767351425,
+      "mean_lobo_rho": 0.2932361076812152
+    },
+    "influence_P017": {
+      "n": 23,
+      "skill": 0.013331974104707323,
+      "mean_lobo_rho": 0.1967117476466036
+    },
+    "influence_P017-P002": {
+      "n": 22,
+      "skill": -0.038264727805254806,
+      "mean_lobo_rho": 0.15290679047734365
+    },
+    "building_label_permutation": {
+      "observed": 0.062216088085428306,
+      "null_mean": 0.022074180695862665,
+      "draws": 20000,
+      "p_upper": 4.999750012499375e-05,
+      "caveat": "Conditional label-exchangeability diagnostic, selected eight buildings; not causal or prospective confirmation."
+    }
+  },
+  "revised_where_available": {
+    "relative_prediction_skill": 0.06684200898780479,
+    "mean_lobo_rank_corr": 0.24171458430528747,
+    "lobo_high_always": 7,
+    "lobo_low_always": 8,
+    "lobo_switch": 9,
+    "iou_centroid_profile_spearman": 0.8026086956521737,
+    "disjoint_split_median_rho": 0.33420378192557243,
+    "disjoint_split_median_same_half": 0.5833333333333334,
+    "disjoint_splits_with_cutoff_tie": 1,
+    "all_four_building_upper": 1,
+    "all_four_building_lower": 3,
+    "influence_none": {
+      "n": 24,
+      "skill": 0.06684200898780479,
+      "mean_lobo_rho": 0.24171458430528747
+    },
+    "influence_P017": {
+      "n": 23,
+      "skill": -0.02594741464391359,
+      "mean_lobo_rho": 0.14187105157066762
+    },
+    "influence_P017-P002": {
+      "n": 22,
+      "skill": -0.09594016677874295,
+      "mean_lobo_rho": 0.0818270570034795
+    },
+    "building_label_permutation": {
+      "observed": 0.09365422827013992,
+      "null_mean": 0.04093782353873322,
+      "draws": 20000,
+      "p_upper": 4.999750012499375e-05,
+      "caveat": "Conditional label-exchangeability diagnostic, selected eight buildings; not causal or prospective confirmation."
+    }
+  },
+  "reference_policy_changed_cells": 22,
+  "reference_policy_profile_rank_rho": 0.9208695652173912,
+  "transfer_checks": [
+    {
+      "file": "matrix_original_iou.csv",
+      "git_blob_sha": "85a4f601dc32ca9a93b9668223acd401190b49d0",
+      "verified": true
+    },
+    {
+      "file": "matrix_original_centroid_normalized.csv",
+      "git_blob_sha": "57ea518d550307c03bfc1827b821f32cb5369501",
+      "verified": true
+    },
+    {
+      "file": "matrix_revised_where_available_iou.csv",
+      "git_blob_sha": "493173aa20638ee9fb9c25b81e9a01080350fafe",
+      "verified": true
+    },
+    {
+      "file": "matrix_revised_where_available_centroid_normalized.csv",
+      "git_blob_sha": "b1c4b0b8f9dc5e013f746b082b8c935c47ae8d1d",
+      "verified": true
+    }
+  ]
+}

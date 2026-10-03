@@ -1,0 +1,97 @@
+2026年10月2日返回包复现审核
+
+结论
+
+这份返回包的受限数值实验可以复现。收到的33个文件包含32项清单记录和清单自身；32项的字节数及SHA256全部通过，审核前后收到文件的原始字节保持一致。隔离副本中的 reproduce.py 成功运行，两次复跑结果一致。9份数值与检查结果文件逐字节一致，858个保存数值单元的最大差为0；environment.json 仅Python版本信息不同。3张PNG逐字节一致，3张SVG只改变时间戳和随机元素ID，归一化后全文一致。所有图片已实际打开检查。
+
+上述结论证明限定输入、实现和保存输出间的一致性；不能据此认定指标有效、抽样有代表性、人员身份绑定正确、当前GT已确认，或已独立复跑原仓库195份作答和390个参考版本行。源绑定另有实质问题，见下文。
+
+实际范围
+
+1. inputs/current_numeric_subset.json 保存1张图、9份作答和1份原始GT。run_audit.py 明确筛选其中6份：R03286、R03288、R03281、R03287、R03284、R03282。其余3份不进入本轮实验分母。
+2. 实际计算为6个BEV比较和5个列式墙带比较。R03288相机不严格位于声明足迹内，列式结果标为不可用；BEV与模型体积仍计算。没有以0分代替这一表示失败。
+3. 所谓35个共同字段准确说是35个数值单元：6份记录乘6类指标，减去R03288缺失的列式IoU。6类指标为BEV IoU、列式IoU、当前模型体积IoU、周长墙高均值、墙高RMS、自身最佳轴RMS。
+4. 17组模型对照=7组共线细分参数（含0插点恒等对照）+1组相反斜顶+1组固定top的上下耦合+2组半像素深度敏感性+6组真实几何衍生细分。它们不是17份独立真实样本，也不是原仓库17组改序实验。
+5. 8项包内检查全部通过；它们是该实验的局部检查，不是原仓库的测试套件。原仓库195/390/117等计数不在本复现分项的独立执行范围内。
+
+执行与证据保全
+
+已完整阅读README.md、SOURCE_NOTES.md、REPORT_zh.md、reproduce.py及src下全部6个Python源文件，随后只在副本执行。入口会重生成 controlled_inputs.json、results和figures；因此直接在收到目录运行会覆盖证据。本次采用隔离副本，未改动收到输入、源码、报告或保存输出，未访问原始身份语料，也未进行远程写入。
+
+默认Python为3.12.14；NumPy 2.3.5、SciPy 1.17.0、Shapely 2.1.2、pandas 2.2.3、matplotlib 3.10.8。作者保存环境为Python 3.13.5，前三项数值依赖版本相同。Shapely来自已验证的本地依赖目录；便携入口通过可选dependency-path参数指定它，不依赖固定本机路径。
+
+首次运行matplotlib产生字体缓存目录警告，但退出码为0、图像完整生成且PNG字节一致。便携入口将缓存目录放入输出目录。一次严格清单预检捕捉到另一检查过程新增的Python缓存，随后该缓存被移除；最终清单及全部收到字节再次核实一致，相关失败与恢复日志保留。
+
+完整性验证
+
+- FILE_HASHES.json无重复路径、无缺失条目。除清单自身外，没有未声明的收到文件。
+- 9份实验结果文件字节相等：checks.json、collinear_density.csv、controlled_results.json、derived_real_subdivision.csv、horizon_sensitivity.csv、real_selected_metrics.csv、source_summary_comparison.csv、summary.json、within_image_reversals.csv。
+- 重生成的controlled_inputs.json与收到版本字节相等。current_numeric_subset.json在复跑中未被改动。
+- reproduce.py不调用make_input.py。另在独立临时目录执行make_input.py，可逐字节重建收到的9份记录及GT输入；这只能证明生成器一致，不能证明转录来源正确。
+- 清单一致是包内完整性证据，不等同于来源身份认证或与固定GitHub blob逐字节相同。
+
+独立方程复核
+
+independent_checks.py没有导入返回包的quality_core.py。重新实现球面坐标恢复；用Simpson积分精确计算线性墙高的一阶与二阶矩；枚举周期二次函数分段来计算全局最佳轴RMS；用线性方程求射线与边交点重建1024×512列式掩码，再逐项核对6份记录的35个可用数值单元。全部通过，最大绝对差为1.487004963607319e−14。包内原比较最大差为8.881784197001252e−15，两者是不同复核路径，不能混写。
+
+已独立确认的定量关系如下。
+
+1. r=cot(alpha)，H=1+r tan(beta)，以及报告所列三项偏导数正确；中心差分检查误差小于1e−8。
+2. 周长均高和线性墙高二阶矩对同一三维边的共线细分保持不变。7组模型细分及6组真实几何衍生细分的当前BEV与模型体积误差在浮点范围内；图中下降的是探索性顶点等权拟合，不应重新归因给当前周长积分实现。
+3. 对正高度、相同地面基准的水平顶面棱柱，I min(Ha,Hb)/(A Ha+B Hb−I min(Ha,Hb))不高于I/(A+B−I)。这是模型的代数性质，不能作为效度证据。
+4. 相反斜顶独立积分得到每个体积48、交集40、并集56，真实合成IoU为5/7；当前平顶代理IoU为1。返回脚本中的48/40/56本来是手写常量，本次已另行核实其积分来源。
+5. 相反斜顶的精确边界墙高RMSE为sqrt(8/3)=1.632993161855452h。包内512点离散值为1.6330180791635462h，误差约2.49e−5h；因此应称数值近似。报告约1.633h的表述成立。
+6. 固定全部top像素，将水平距离乘1.25，2.7h高度变为3.125h，BEV IoU=0.64、模型体积IoU=0.55296。两项下降来自同一bottom变化，不是两次独立top点击误差。
+7. 0.5个原域像素的bottom扰动在半宽2h和32h房间的单点平面位移分别为0.027853439956h和7.299778022433h，解析重算与保存值一致。
+
+同图反转核对
+
+5份列式可比较记录产生10个作答对。模型体积相对BEV有2个反转，列式相对BEV有1个反转。
+
+- R03286与R03287：BEV分别0.625075128859与0.626539982698；模型体积分别0.609417627301与0.604695628209，次序相反。
+- R03281与R03284：BEV分别0.603696677956与0.611031182616；模型体积分别0.583718492971与0.582985882919，次序相反。
+- 同一R03281与R03284：列式分别0.793910662320与0.791133029099，也与BEV次序相反。
+
+这三条反转与保存CSV逐条吻合。计数单位是同一图上的作答对，不能写成人员等级、独立样本或统计显著性。6份作答的quality_candidate仍为false，原始GT环也仍未确认，复现没有提升其主分析资格。
+
+需要修订的来源绑定
+
+包内已经可见R03288别名不一致：坐标摘录为P019，另读CSV为P020。另行进行的权威源绑定核查进一步确认：实际6份作答和GT R02503的坐标均匹配；R03288的worker应为P020，source_point_indices应为[4,5,2,3,6,7,0,1]，返回包写成[0,1,2,3,4,5,6,7]。此外未参与6份实验的R03280不是权威195对象中的记录，同图也没有相同坐标对象。详细来源证据由原交接包核验分项提供。
+
+这意味着README中对“保存来源索引”的承诺需要修订，不能只称为尚未澄清的一个别名差异。当前几何重建不使用worker或source_point_indices，且筛选排除了R03280，所以这些元数据错误没有改变已复现的6份数值。不得据此发布人员排名或将该摘录当成完整可信的数据快照。
+
+检查程序的一个工程缺口
+
+src/compare_saved_summary.py只打印“all within tolerance”，没有在False时返回非零状态。隔离负对照中仅把R03286的预期BEV值减少0.1，程序打印False仍退出0。因此将来仅看reproduce.py退出码，不足以确认35项比较通过。本次未修改输入的35项确实全部一致；新增便携脚本和独立检查对不符值进行断言。
+
+另需注意：依赖requirements.txt未固定版本；8项检查部分复用相同实现；controlled_inputs会在运行时重新生成。这些是未来可重复性及检查强度的边界，不会推翻本次已观察到的字节一致复现。
+
+可移植复跑
+
+先审阅收到包源码，并在独立Python环境安装NumPy、SciPy、Shapely、pandas、matplotlib。若希望尽量匹配本次环境，可使用NumPy2.3.5、SciPy1.17.0、Shapely2.1.2、pandas2.2.3、matplotlib3.10.8。
+
+python portable_reproduce.py --source /path/layout_quality_audit_20261002 --out /new/output
+
+如Shapely等依赖位于单独目录，可追加：
+--dependency-path /path/containing/packages
+
+独立方程核对：
+python independent_checks.py --package /path/layout_quality_audit_20261002 --out /new/independent-output
+
+portable_reproduce.py要求输出目录尚不存在、且位于来源目录之外；先核对清单，再复制和执行，仅写输出目录，并在结束时重新核对来源字节。它不联网、不安装软件、不修改原仓库。
+
+证据索引
+
+manifest_verification.json：首轮完整清单核验
+received_hashes_before.json与received_preservation.json：收到文件字节保全
+portable_validation_clean/machine_comparison.json：全量保存结果机器比较及图像差异分类
+portable_validation_clean/dependencies.log：实际依赖版本及加载位置
+portable_validation_clean/reproduce.log：清洁便携复跑日志
+independent/independent_checks.json：独立方程、范围、反转及模型例核对
+independent/independent_common_fields.csv：35个独立数值单元明细
+generator_comparison.json：转录生成器的字节重建检查
+comparator_negative_control.json：比较器不强制失败的隔离负对照
+
+最终判断
+
+可接受这份包作为限定范围的可复算模型实验和反例材料。修订身份与索引来源绑定，并增强比较器失败条件后，归档更可靠。它提供了指标可能测到不同几何后果的证据；没有提供哪个指标更符合真实任务质量、人员谁更好、或全样本效度已成立的证据。

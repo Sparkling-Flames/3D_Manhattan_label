@@ -1,0 +1,196 @@
+{
+  "source": {
+    "records": 240,
+    "source_files": 2,
+    "cross_author_parents": 53,
+    "same_parent_points_and_ids": 33,
+    "unresolved_lineage": 0,
+    "raw_point_max_error": 0.0,
+    "unique_footprints_by_image": [
+      19,
+      22,
+      20,
+      23,
+      22,
+      20,
+      21,
+      20,
+      20,
+      20
+    ],
+    "user_decision": "All records retain independent status; duplicate coordinates remain separate votes. Metadata does not adjudicate observed human behavior."
+  },
+  "profiles": {
+    "original": {
+      "relative_skill": {
+        "none": 0.13702030767351414,
+        "P002": 0.14093829141009484,
+        "P017": 0.013331974104707323,
+        "P017|P002": -0.038264727805254806
+      },
+      "loss_centroid_rho": 0.32260869565217387,
+      "split_median_rho": 0.48173913043478256,
+      "split_median_same_half": 0.5833333333333334,
+      "largest_three_centroid_share": 0.7479702433616413
+    },
+    "revised_where_available": {
+      "relative_skill": {
+        "none": 0.06684200898780479,
+        "P002": 0.044872415279428424,
+        "P017": -0.02594741464391359,
+        "P017|P002": -0.09594016677874317
+      },
+      "loss_centroid_rho": 0.8026086956521737,
+      "split_median_rho": 0.33420378192557243,
+      "split_median_same_half": 0.5833333333333334,
+      "largest_three_centroid_share": 0.7861358553323449
+    }
+  },
+  "replacements": [
+    {
+      "policy": "original",
+      "method": "mv50",
+      "omitted": "none",
+      "mean_gain": 0.010331302950974298,
+      "positive": 0.5907359307359308,
+      "negative": 0.3791896645021645,
+      "tie": 0.03007440476190476,
+      "residual_fraction": 0.2633893301561855,
+      "pairs_sign_flip": 262.2,
+      "max_pair_identity_error": 3.712308238590367e-16
+    },
+    {
+      "policy": "original",
+      "method": "mv50",
+      "omitted": "P017|P002",
+      "mean_gain": 0.005155441336136363,
+      "positive": 0.5500058479532164,
+      "negative": 0.4180818713450292,
+      "tie": 0.031912280701754385,
+      "residual_fraction": null,
+      "pairs_sign_flip": null,
+      "max_pair_identity_error": 3.712308238590367e-16
+    },
+    {
+      "policy": "original",
+      "method": "mv_strict",
+      "omitted": "none",
+      "mean_gain": 0.00784030871463003,
+      "positive": 0.5670260642135643,
+      "negative": 0.40461580086580085,
+      "tie": 0.028358134920634926,
+      "residual_fraction": 0.3215953555100308,
+      "pairs_sign_flip": 259.9,
+      "max_pair_identity_error": 4.2348936857283803e-16
+    },
+    {
+      "policy": "original",
+      "method": "mv_strict",
+      "omitted": "P017|P002",
+      "mean_gain": 0.004650122467589261,
+      "positive": 0.5213377192982457,
+      "negative": 0.4490138888888889,
+      "tie": 0.0296483918128655,
+      "residual_fraction": null,
+      "pairs_sign_flip": null,
+      "max_pair_identity_error": 4.2348936857283803e-16
+    },
+    {
+      "policy": "revised_where_available",
+      "method": "mv50",
+      "omitted": "none",
+      "mean_gain": 0.009826649849931052,
+      "positive": 0.5719859307359307,
+      "negative": 0.4002277236652237,
+      "tie": 0.027786345598845602,
+      "residual_fraction": 0.24061495687334516,
+      "pairs_sign_flip": 258.0,
+      "max_pair_identity_error": 3.382710778154774e-16
+    },
+    {
+      "policy": "revised_where_available",
+      "method": "mv50",
+      "omitted": "P017|P002",
+      "mean_gain": 0.0025228837691848626,
+      "positive": 0.5217836257309941,
+      "negative": 0.4480840643274854,
+      "tie": 0.03013230994152047,
+      "residual_fraction": null,
+      "pairs_sign_flip": null,
+      "max_pair_identity_error": 3.382710778154774e-16
+    },
+    {
+      "policy": "revised_where_available",
+      "method": "mv_strict",
+      "omitted": "none",
+      "mean_gain": 0.007227457727140613,
+      "positive": 0.5383712121212121,
+      "negative": 0.43571608946608953,
+      "tie": 0.025912698412698408,
+      "residual_fraction": 0.3131481750545652,
+      "pairs_sign_flip": 256.9,
+      "max_pair_identity_error": 3.469446951953614e-16
+    },
+    {
+      "policy": "revised_where_available",
+      "method": "mv_strict",
+      "omitted": "P017|P002",
+      "mean_gain": 0.0026674691174500462,
+      "positive": 0.4840884502923976,
+      "negative": 0.4882916666666667,
+      "tie": 0.027619883040935673,
+      "residual_fraction": null,
+      "pairs_sign_flip": null,
+      "max_pair_identity_error": 3.469446951953614e-16
+    }
+  ],
+  "area": {
+    "rows": 280,
+    "warnings": 0,
+    "max_identity_residual": 9.506284648352903e-16
+  },
+  "count_contrast": [
+    {
+      "method": "mv50",
+      "images": 33,
+      "draws": 16384,
+      "seed": 30412027,
+      "mean_gain": 0.0037765516352251966,
+      "mc_se": 5.097240650528319e-05,
+      "hoeffding_radius": 0.003539147679437371,
+      "lower": 0.0002374039557878258,
+      "upper": 0.007315699314662567,
+      "theoretical_squared_width_sum": 102
+    },
+    {
+      "method": "mv_strict",
+      "images": 33,
+      "draws": 16384,
+      "seed": 30412027,
+      "mean_gain": 0.0090101274622846,
+      "mc_se": 5.9178609936258836e-05,
+      "hoeffding_radius": 0.003539147679437371,
+      "lower": 0.005470979782847229,
+      "upper": 0.01254927514172197,
+      "theoretical_squared_width_sum": 102
+    }
+  ],
+  "comparison": {
+    "external_numeric_comparisons": 890,
+    "max_absolute_difference": 1.096345236817342e-15
+  },
+  "next_panel": {
+    "outside_calibration_images": 80,
+    "outside_calibration_buildings": 14,
+    "full_roster_calibrated_at_least4_images": 61,
+    "selected_buildings": 10,
+    "selected_difficulty_counts": {
+      "未定": 1,
+      "未记录": 20,
+      "简单": 16,
+      "困难": 11,
+      "中等": 13
+    },
+    "limitation": "Coverage inventory only; these images already appeared in A-line, not a new blind validation sample. Unprofiled people retained in ledger, not silently dropped."
+  }
+}

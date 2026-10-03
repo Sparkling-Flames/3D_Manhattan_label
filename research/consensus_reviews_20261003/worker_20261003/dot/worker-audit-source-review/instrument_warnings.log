@@ -1,0 +1,63 @@
+{
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "numpy": "1.26.4",
+    "shapely": "2.0.4",
+    "geos": "3.11.3"
+  },
+  "scope": "Current B-line e9zR4mvMWw7-19 only; unchanged source validate_refinement",
+  "events": [
+    {
+      "image": "e9zR4mvMWw7-19",
+      "file": "lee_tile_precision_20261003.py",
+      "function": "validate_refinement",
+      "line": 106,
+      "k": 1,
+      "method": "mv50",
+      "record_ids": [
+        "R02444"
+      ],
+      "workers": [
+        "P001"
+      ],
+      "a_valid": true,
+      "b_valid": true,
+      "a_area": 4.073494026720041,
+      "b_area": 4.073494026720039,
+      "result_area": 0.0,
+      "result_valid": true,
+      "messages": [
+        "divide by zero encountered in symmetric_difference"
+      ]
+    },
+    {
+      "image": "e9zR4mvMWw7-19",
+      "file": "lee_tile_precision_20261003.py",
+      "function": "validate_refinement",
+      "line": 106,
+      "k": 1,
+      "method": "mv_strict",
+      "record_ids": [
+        "R02444"
+      ],
+      "workers": [
+        "P001"
+      ],
+      "a_valid": true,
+      "b_valid": true,
+      "a_area": 4.073494026720041,
+      "b_area": 4.073494026720039,
+      "result_area": 0.0,
+      "result_valid": true,
+      "messages": [
+        "divide by zero encountered in symmetric_difference"
+      ]
+    }
+  ],
+  "max_geometry_delta": 0.0,
+  "inner": [],
+  "caught": [
+    "divide by zero encountered in symmetric_difference",
+    "divide by zero encountered in symmetric_difference"
+  ]
+}

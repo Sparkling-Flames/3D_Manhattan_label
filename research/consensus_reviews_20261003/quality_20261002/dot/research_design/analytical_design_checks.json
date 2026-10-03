@@ -1,0 +1,57 @@
+{
+  "status": "hypothetical analytical demonstrations, not empirical findings",
+  "wilson_18_of_24_assuming_independent_random_pairs": [
+    0.55100555994846,
+    0.8800063377140499
+  ],
+  "one_sided_95pct_upper_failure_rate_if_zero_of_12_independent_random_images": 0.22092219194555585,
+  "one_sided_95pct_upper_failure_rate_if_zero_of_24_independent_random_pairs": 0.11734615615494881,
+  "selection_example": {
+    "population_concordant_fraction": 0.9,
+    "human_agreement_A_concordant": 0.95,
+    "human_agreement_A_conflict": 0.4,
+    "population_agreement_A": 0.895,
+    "equal_strata_sample_unweighted_agreement_A": 0.675,
+    "note": "A targeted sample need not preserve the population agreement proportion; known stratum sampling weights can recover the finite-frame estimand under random within-stratum selection."
+  },
+  "missing_denominator_example": {
+    "A": {
+      "valid": 90,
+      "total": 100,
+      "valid_mean_iou": 0.8,
+      "finite_population_bound_if_missing_scores_defined_in_0_1": [
+        0.7200000000000001,
+        0.8200000000000001
+      ]
+    },
+    "B": {
+      "valid": 100,
+      "total": 100,
+      "valid_mean_iou": 0.75
+    },
+    "note": "A valid-only mean of .80 versus .75 cannot establish all-row superiority. Bounds are only meaningful if a latent score is defined; a representation for which the construct is undefined requires coverage/quality reporting rather than numerical imputation."
+  },
+  "warning": "No interval above is valid as the actual report’s confidence interval. Current images/pairs are targeted and clustered.",
+  "one_sided_95pct_upper_failure_rate_if_zero_of_5_independent_random_images": 0.4507197283469412,
+  "current_frame_limits": {
+    "source": "Fixed-snapshot bounded-panel verification in this audit",
+    "images": 12,
+    "responses": 195,
+    "images_with_nonzero_quality_candidate": 6,
+    "quality_candidate_rows": 97,
+    "images_with_more_than_one_quality_candidate": 5,
+    "singleton_image": "jtcxE69GiFV-30",
+    "both_references_geometrically_computable_responses": 71,
+    "images_with_both_references_geometrically_computable": 3,
+    "warning": "quality_candidate is not final main eligibility; the 5-image pairing figure is an upper bound before final gates. Counts come from the fixed-panel verification documented in this package.",
+    "quality_candidate_original_bev_computable_rows": 97,
+    "gate_counts": {
+      "candidate_pending_geometry": 97,
+      "out_of_primary_scene": 71,
+      "excluded": 16,
+      "hold_scene_or_reference": 9,
+      "hold_individual_review": 2
+    },
+    "condition_nested_in_image": true
+  }
+}

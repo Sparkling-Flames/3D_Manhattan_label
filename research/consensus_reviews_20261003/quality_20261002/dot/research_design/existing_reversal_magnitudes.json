@@ -1,0 +1,27 @@
+{
+  "status": "Arithmetic on existing returned results only; not remeasurement and not a practical-significance judgement.",
+  "pairs": [
+    {
+      "response_a": "R03286",
+      "response_b": "R03287",
+      "metric": "current_model_volume_iou",
+      "absolute_bev_difference": 0.001464853838418878,
+      "absolute_other_metric_difference": 0.004721999092406337
+    },
+    {
+      "response_a": "R03281",
+      "response_b": "R03284",
+      "metric": "current_model_volume_iou",
+      "absolute_bev_difference": 0.00733450466012231,
+      "absolute_other_metric_difference": 0.0007326100519541301
+    },
+    {
+      "response_a": "R03281",
+      "response_b": "R03284",
+      "metric": "column_iou",
+      "absolute_bev_difference": 0.00733450466012231,
+      "absolute_other_metric_difference": 0.0027776332219163757
+    }
+  ],
+  "interpretation": "Reversal magnitudes are small but no task-calibrated just-noticeable or acceptable difference has been established. A strict ranking reversal alone does not establish a material quality conflict."
+}

@@ -1,0 +1,44 @@
+{
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "numpy": "2.3.5",
+    "shapely": "2.1.2",
+    "geos": "3.13.1"
+  },
+  "checks": [
+    {
+      "image": "e9zR4mvMWw7-19",
+      "k": 1,
+      "method": "mv50",
+      "source_polygon_equals_current": true,
+      "symmetric_difference": 0.0,
+      "reverse_symmetric_difference": 0.0,
+      "two_sided_difference": 0.0,
+      "area_difference": 1.7763568394002505e-15,
+      "source_to_current_area": 0.0,
+      "source_to_offline_area": 0.0,
+      "reference_iou_deltas": {
+        "original": 1.6653345369377348e-16,
+        "manual_revision": 1.1102230246251565e-16
+      },
+      "warnings": []
+    },
+    {
+      "image": "e9zR4mvMWw7-19",
+      "k": 1,
+      "method": "mv_strict",
+      "source_polygon_equals_current": true,
+      "symmetric_difference": 0.0,
+      "reverse_symmetric_difference": 0.0,
+      "two_sided_difference": 0.0,
+      "area_difference": 1.7763568394002505e-15,
+      "source_to_current_area": 0.0,
+      "source_to_offline_area": 0.0,
+      "reference_iou_deltas": {
+        "original": 1.6653345369377348e-16,
+        "manual_revision": 1.1102230246251565e-16
+      },
+      "warnings": []
+    }
+  ]
+}

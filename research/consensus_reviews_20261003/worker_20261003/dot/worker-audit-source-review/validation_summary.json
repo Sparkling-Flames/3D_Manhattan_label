@@ -1,0 +1,99 @@
+{
+  "source_commit": "405f3041fdd76977f625d50c558c63dbf342699d",
+  "source_files_verified": 71,
+  "all_git_blobs_match": true,
+  "bounded_input": {
+    "images": 10,
+    "workers": 24,
+    "buildings": 8,
+    "annotations": 260,
+    "references": 14,
+    "candidates": 240,
+    "records": 274,
+    "available_coordinates": 254,
+    "unavailable_coordinates": 20,
+    "s2_record_mismatches": 0,
+    "s2_image_mismatches": 0,
+    "preparation_changed_records": 0,
+    "max_footprint_coordinate_delta": 4.440892098500626e-16,
+    "state_mismatches": 0,
+    "difficulty": {
+      "未记录": 9,
+      "简单": 1
+    },
+    "order_used": {
+      "default_x_unreviewed": 144,
+      "unavailable": 20,
+      "original_gt_reference": 10,
+      "human_confirmed": 100
+    },
+    "warning_count": 0,
+    "all_distinct_subsets_and_masks_correct": true,
+    "all_target_mutations_isolated": true,
+    "all_composition_counts_correct": true
+  },
+  "old_numeric_stack_full_replay": {
+    "csv_files": 14,
+    "csv_byte_equal": 12,
+    "csv_nonnumeric_differences": 0,
+    "csv_max_abs_delta": 6.661338147750939e-16,
+    "npz_arrays": 30,
+    "npz_exact": 30,
+    "npz_max_abs_delta": 0.0
+  },
+  "current_stack_full_replay": {
+    "csv_files": 14,
+    "csv_byte_equal": 5,
+    "csv_nonnumeric_differences": 0,
+    "csv_max_abs_delta": 7.771561172376096e-16,
+    "npz_arrays": 30,
+    "npz_exact": 2,
+    "npz_max_abs_delta": 1.1102230246251565e-15
+  },
+  "old_stack_runtime_warnings": [
+    {
+      "image": "e9zR4mvMWw7-19",
+      "stage": "integration",
+      "message": "divide by zero encountered in symmetric_difference"
+    },
+    {
+      "image": "e9zR4mvMWw7-19",
+      "stage": "integration",
+      "message": "divide by zero encountered in symmetric_difference"
+    }
+  ],
+  "current_stack_runtime_warnings": [],
+  "direct_subset_reference_checks": 84,
+  "direct_subset_max_abs_delta": 1.1102230246251565e-15,
+  "direct_subset_warnings": [],
+  "tests": {
+    "tests-23.xml": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "23",
+      "time": "1.163",
+      "timestamp": "2026-10-03T07:39:16.419609+10:00",
+      "hostname": "cb6792dbaaeb"
+    },
+    "tests-23-current.xml": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "23",
+      "time": "1.235",
+      "timestamp": "2026-10-03T07:39:18.053241+10:00",
+      "hostname": "cb6792dbaaeb"
+    }
+  },
+  "limits": [
+    "Not a full-repository test run",
+    "Not an independent full current-bundle source-index rejoin",
+    "Not a visual image audit",
+    "Not an identity/independence adjudication",
+    "Not an external validation population",
+    "Not all four-person subsets separately re-tiled"
+  ]
+}

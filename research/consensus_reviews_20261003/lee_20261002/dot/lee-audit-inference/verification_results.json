@@ -1,0 +1,259 @@
+{
+  "parity_checks": 32776,
+  "adjacent_hypergeometric_checks": 1276,
+  "dedup_exact_check": {
+    "population_mean": 0.4357142857142857,
+    "expected_dedup_mean": 0.4357142857142857,
+    "var_dedup": 0.0452827380952381,
+    "var_raw": 0.05175170068027211
+  },
+  "majority_worse_than_every_person": {
+    "persons_masks": [
+      7,
+      11,
+      13
+    ],
+    "reference_mask": 1,
+    "individual_ious": [
+      "1/3",
+      "1/3",
+      "1/3"
+    ],
+    "majority_iou": "1/4",
+    "curves": {
+      "mv50": [
+        "1/3",
+        "1/4",
+        "1/4"
+      ],
+      "strict": [
+        "1/3",
+        "1/2",
+        "1/4"
+      ]
+    }
+  },
+  "not_personal_mean_iou_optimum": {
+    "persons_masks": [
+      1,
+      7,
+      27
+    ],
+    "majority_mask": 3,
+    "alternative_mask": 7,
+    "majority_mean_iou": "5/9",
+    "alternative_mean_iou": "26/45",
+    "majority_mean_symmetric_difference": "4/3",
+    "alternative_mean_symmetric_difference": "5/3"
+  },
+  "expectation_ratio_counterexample": {
+    "individual_ious": [
+      "1",
+      "1/2"
+    ],
+    "mean_iou": "3/4",
+    "ratio_expected_intersection_union": "2/3"
+  },
+  "kernel_summary": {
+    "n": 177,
+    "all_simple": true,
+    "strict_origin_star_shaped": 153,
+    "not_origin_star_shaped": 24,
+    "near_boundary": 0,
+    "groups_all_star": 7,
+    "groups": [
+      {
+        "image": "2t7WUuJeko7-07",
+        "condition": "manual",
+        "gate": "oos_doorway_exploratory",
+        "n": 8,
+        "all_simple": true,
+        "all_strictly_origin_star_shaped": false,
+        "strict_origin_star_shaped": 6,
+        "not_origin_star_shaped": [
+          "R03288",
+          "R03285"
+        ],
+        "near_boundary": [],
+        "camera_outside": [
+          "R03288",
+          "R03285"
+        ],
+        "minimum_edge_distance": -0.4057122237941201
+      },
+      {
+        "image": "7y3sRwLe3Va-06",
+        "condition": "manual",
+        "gate": "oos_doorway_exploratory",
+        "n": 7,
+        "all_simple": true,
+        "all_strictly_origin_star_shaped": false,
+        "strict_origin_star_shaped": 6,
+        "not_origin_star_shaped": [
+          "R03293"
+        ],
+        "near_boundary": [],
+        "camera_outside": [
+          "R03293"
+        ],
+        "minimum_edge_distance": -0.14918756146678885
+      },
+      {
+        "image": "7y3sRwLe3Va-08",
+        "condition": "oos",
+        "gate": "oos_doorway_exploratory",
+        "n": 24,
+        "all_simple": true,
+        "all_strictly_origin_star_shaped": true,
+        "strict_origin_star_shaped": 24,
+        "not_origin_star_shaped": [],
+        "near_boundary": [],
+        "camera_outside": [],
+        "minimum_edge_distance": 0.04865478973208795
+      },
+      {
+        "image": "7y3sRwLe3Va-12",
+        "condition": "oos",
+        "gate": "oos_doorway_exploratory",
+        "n": 24,
+        "all_simple": true,
+        "all_strictly_origin_star_shaped": true,
+        "strict_origin_star_shaped": 24,
+        "not_origin_star_shaped": [],
+        "near_boundary": [],
+        "camera_outside": [],
+        "minimum_edge_distance": 0.3346099496171424
+      },
+      {
+        "image": "7y3sRwLe3Va-26",
+        "condition": "manual",
+        "gate": "main_candidate",
+        "n": 5,
+        "all_simple": true,
+        "all_strictly_origin_star_shaped": true,
+        "strict_origin_star_shaped": 5,
+        "not_origin_star_shaped": [],
+        "near_boundary": [],
+        "camera_outside": [],
+        "minimum_edge_distance": 0.06710533963409362
+      },
+      {
+        "image": "B6ByNegPMKs-40",
+        "condition": "manual",
+        "gate": "main_candidate",
+        "n": 22,
+        "all_simple": true,
+        "all_strictly_origin_star_shaped": true,
+        "strict_origin_star_shaped": 22,
+        "not_origin_star_shaped": [],
+        "near_boundary": [],
+        "camera_outside": [],
+        "minimum_edge_distance": 0.23214074211821523
+      },
+      {
+        "image": "B6ByNegPMKs-42",
+        "condition": "manual",
+        "gate": "oos_doorway_exploratory",
+        "n": 8,
+        "all_simple": true,
+        "all_strictly_origin_star_shaped": true,
+        "strict_origin_star_shaped": 8,
+        "not_origin_star_shaped": [],
+        "near_boundary": [],
+        "camera_outside": [],
+        "minimum_edge_distance": 0.014323121535077029
+      },
+      {
+        "image": "e9zR4mvMWw7-16",
+        "condition": "semi",
+        "gate": "main_candidate",
+        "n": 24,
+        "all_simple": true,
+        "all_strictly_origin_star_shaped": true,
+        "strict_origin_star_shaped": 24,
+        "not_origin_star_shaped": [],
+        "near_boundary": [],
+        "camera_outside": [],
+        "minimum_edge_distance": 0.3220289145482224
+      },
+      {
+        "image": "e9zR4mvMWw7-19",
+        "condition": "manual",
+        "gate": "main_candidate",
+        "n": 24,
+        "all_simple": true,
+        "all_strictly_origin_star_shaped": false,
+        "strict_origin_star_shaped": 13,
+        "not_origin_star_shaped": [
+          "R02444",
+          "R01884",
+          "R00377",
+          "R00565",
+          "R02122",
+          "R02463",
+          "R00225",
+          "R01783",
+          "R00054",
+          "R00509",
+          "R01329"
+        ],
+        "near_boundary": [],
+        "camera_outside": [],
+        "minimum_edge_distance": -0.5265095281505823
+      },
+      {
+        "image": "jtcxE69GiFV-12",
+        "condition": "manual",
+        "gate": "main_candidate",
+        "n": 9,
+        "all_simple": true,
+        "all_strictly_origin_star_shaped": false,
+        "strict_origin_star_shaped": 8,
+        "not_origin_star_shaped": [
+          "R03396"
+        ],
+        "near_boundary": [],
+        "camera_outside": [
+          "R03396"
+        ],
+        "minimum_edge_distance": -0.013899997767012676
+      },
+      {
+        "image": "jtcxE69GiFV-30",
+        "condition": "manual",
+        "gate": "main_candidate",
+        "n": 1,
+        "all_simple": true,
+        "all_strictly_origin_star_shaped": true,
+        "strict_origin_star_shaped": 1,
+        "not_origin_star_shaped": [],
+        "near_boundary": [],
+        "camera_outside": [],
+        "minimum_edge_distance": 0.16132022016485528
+      },
+      {
+        "image": "yqstnuAEVhm-31",
+        "condition": "manual",
+        "gate": "main_candidate",
+        "n": 21,
+        "all_simple": true,
+        "all_strictly_origin_star_shaped": false,
+        "strict_origin_star_shaped": 12,
+        "not_origin_star_shaped": [
+          "R00766",
+          "R00018",
+          "R02451",
+          "R01500",
+          "R00222",
+          "R01064",
+          "R01109",
+          "R01349",
+          "R01505"
+        ],
+        "near_boundary": [],
+        "camera_outside": [],
+        "minimum_edge_distance": -1.1050417654617422
+      }
+    ]
+  }
+}

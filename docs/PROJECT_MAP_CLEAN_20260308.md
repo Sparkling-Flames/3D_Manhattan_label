@@ -4,6 +4,8 @@
 
 ## 当前入口
 
+- [人员研究返回的本地审查](../analysis_results/worker_review_20261003/REPORT.md)、[前三轮Pro／dot精选归档](../research/consensus_reviews_20261003/README.md)：工具 `tools/thesis_main/analysis/audit_worker_returns_20261003.py`；保留连续画像、等权融合及重复坐标独立票，下一步画像迁移与人数×构成。
+
 | 用途 | 路径 |
 |---|---|
 | 当前研究方向 | `docs/thesis_main/研究方向_空间差异与共识_20260930.md`：BEV表示、质量评价与Lee融合；136图扩展及共同人员画像／固定4人构成基础已完成，接续深度研究 |

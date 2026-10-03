@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="23" time="1.099" timestamp="2026-10-03T07:34:17.565050+10:00" hostname="cb6792dbaaeb"><testcase classname="tests.test_worker_profiles_20261003" name="test_area_centroid_and_lobo_do_not_use_target_building" time="0.002" /><testcase classname="tests.test_worker_profiles_20261003" name="test_exact_composition_and_member_area_against_independent_geometry[mv50]" time="0.006" /><testcase classname="tests.test_worker_profiles_20261003" name="test_exact_composition_and_member_area_against_independent_geometry[mv_strict]" time="0.005" /><testcase classname="tests.test_worker_profiles_20261003" name="test_panel_does_not_silently_drop_failed_or_duplicate_people" time="0.000" /><testcase classname="tests.test_research_panel_inventory_20261003" name="test_inventory_keeps_missing_failures_and_real_people_separate" time="0.000" /><testcase classname="tests.test_research_panel_inventory_20261003" name="test_preprocessed_order_preserves_pairs_and_confirmed_rings" time="0.000" /><testcase classname="tests.test_research_panel_inventory_20261003" name="test_fixed_inventory_replay_and_output_contract" time="0.002"><failure message="FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/a365811da80c/worker-audit-original/analysis_results/research_panel_inventory_20261003/input.json'">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_fixed_inventory_replay_an0')
+
+    def test_fixed_inventory_replay_and_output_contract(tmp_path):
+        from pathlib import Path
+        source = Path(__file__).parents[1]/'analysis_results/research_panel_inventory_20261003/input.json'
+&gt;       snapshot = json.loads(source.read_text(encoding='utf-8'))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_research_panel_inventory_20261003.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1027: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/workspace/scratch/a365811da80c/worker-audit-original/analysis_results/research_panel_inventory_20261003/input.json')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/a365811da80c/worker-audit-original/analysis_results/research_panel_inventory_20261003/input.json'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1013: FileNotFoundError</failure></testcase><testcase classname="tests.test_lee_expanded_20261003" name="test_selection_keeps_failed_full_pool_and_unknown_difficulty" time="0.000" /><testcase classname="tests.test_lee_expanded_20261003" name="test_fixed_cohorts_do_not_shrink_with_k_or_treat_unknown_as_easy" time="0.001" /><testcase classname="tests.test_lee_difficulty_20261003" name="test_bounded_run_preserves_population_and_exact_votes" time="0.007" /><testcase classname="tests.test_lee_difficulty_20261003" name="test_group_means_keep_images_fixed_and_propagate_only_mc_error" time="0.001" /><testcase classname="tests.test_lee_tile_precision_20261003" name="test_offline_refinement_matches_every_current_subset_and_area_expectation" time="0.010" /><testcase classname="tests.test_lee_tile_precision_20261003" name="test_gt_cannot_change_votes_and_missing_geometry_keeps_failure" time="0.003" /><testcase classname="tests.test_lee_tile_precision_20261003" name="test_precision_scope_and_singleton_are_explicit" time="0.000" /><testcase classname="tests.test_lee_tile_precision_20261003" name="test_nested_tiling_warnings_are_not_lost" time="0.001" /><testcase classname="tests.test_lee_tile_stage1_20261002" name="test_tiles_partition_real_regions_and_obey_inclusive_ties" time="0.001" /><testcase classname="tests.test_lee_tile_stage1_20261002" name="test_consensus_ignores_order_and_vertex_density_and_preserves_holes" time="0.003" /><testcase classname="tests.test_lee_tile_stage1_20261002" name="test_duplicates_invalid_geometry_and_missing_votes_are_not_silently_repaired" time="0.001" /><testcase classname="tests.test_lee_tile_stage1_20261002" name="test_replay_is_gt_blind_and_full_set_is_mechanically_order_invariant" time="0.016" /><testcase classname="tests.test_lee_tile_stage1_20261002" name="test_floating_geometry_warnings_are_exposed" time="0.001" /><testcase classname="tests.test_consensus_contract_20260923" name="test_current_and_historical_contracts_have_separate_semantics" time="0.001" /><testcase classname="tests.test_consensus_contract_20260923" name="test_reference_check_is_scoped_and_rejects_stale_research" time="0.002" /><testcase classname="tests.test_consensus_contract_20260923" name="test_cli_defaults_output_to_selected_contract_and_protects_current" time="0.002" /></testsuite></testsuites>

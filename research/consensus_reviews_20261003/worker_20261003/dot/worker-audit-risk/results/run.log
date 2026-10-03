@@ -1,0 +1,44 @@
+7y3sRwLe3Va-04 384 tiles; 20 decomposition rows
+UwV83HsGsw3-09 721 tiles; 60 decomposition rows
+X7HyMhZNoso-13 570 tiles; 80 decomposition rows
+e9zR4mvMWw7-19 871 tiles; 120 decomposition rows
+q9vSo1VnCiC-02 442 tiles; 140 decomposition rows
+q9vSo1VnCiC-32 424 tiles; 180 decomposition rows
+rPc6DW4iMge-06 871 tiles; 200 decomposition rows
+wc2JMjhGNzB-15 464 tiles; 220 decomposition rows
+yqstnuAEVhm-32 1257 tiles; 260 decomposition rows
+yqstnuAEVhm-34 451 tiles; 280 decomposition rows
+{
+  "source_commit": "405f3041fdd76977f625d50c558c63dbf342699d",
+  "images": 10,
+  "workers": 24,
+  "k": 4,
+  "calibration_policies": [
+    "original",
+    "revised_where_available"
+  ],
+  "gt_versions": "original on all 10; manual_revision additionally on 4; crossed with both calibration policies",
+  "decomposition_rows": 280,
+  "pair_comparisons": 2760,
+  "subset_scores_per_rule_per_image": 10626,
+  "total_source_subset_score_comparisons": 297528,
+  "source_field_checks": 1148,
+  "source_max_abs": 1.6653345369377348e-15,
+  "q_hypergeom_enum_max_abs": 0.0,
+  "risk_enum_max_abs": 9.769962616701378e-15,
+  "decomposition_max_abs": 7.105427357601002e-15,
+  "fresh_subset_reference_checks": 168,
+  "fresh_subset_geometry_max_abs": 1.5276961828714433e-16,
+  "unique_footprints_total": 207,
+  "exact_equal_within_image_pairs": 46,
+  "P002_P012_exact_equal_images": 7,
+  "assumptions": "uniform sampling without replacement within fixed disjoint 12+12 halves; independent repeat group draws may overlap or coincide",
+  "area_units": "h^2 from saved BEV projection, not measured square metres",
+  "upstream_raw_generation": "not independently verified; frozen input and declared source-binding statuses only",
+  "warning_count": 0,
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "numpy": "2.3.5",
+  "pandas": "2.2.3",
+  "shapely": "2.1.2"
+}

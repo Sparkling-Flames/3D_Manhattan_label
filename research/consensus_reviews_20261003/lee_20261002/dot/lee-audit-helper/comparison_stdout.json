@@ -1,0 +1,94 @@
+{
+  "binding_objects": 210,
+  "binding_differences": 0,
+  "return_geometry_differences": 0,
+  "return_summary_cells": 144,
+  "return_summary_differences": 0,
+  "reproduction": {
+    "lee-audit-recomputed": {
+      "replay.csv": {
+        "rows": 5664,
+        "numeric_different_cells": {
+          "original_iou": 1881,
+          "area_h2": 1856,
+          "change_from_previous": 2509,
+          "manual_revision_iou": 896
+        },
+        "max_abs_difference": {
+          "original_iou": 7.771561172376096e-16,
+          "area_h2": 1.4210854715202004e-14,
+          "change_from_previous": 1.5543122344752192e-15,
+          "manual_revision_iou": 8.881784197001252e-16
+        },
+        "nonnumeric_differences": []
+      },
+      "summary.csv": {
+        "rows": 354,
+        "numeric_different_cells": {
+          "original_p10": 132,
+          "original_p90": 144,
+          "member_distance_mean": 245,
+          "change_mean": 285,
+          "original_mean": 109,
+          "manual_revision_p10": 76,
+          "manual_revision_p90": 69,
+          "manual_revision_mean": 53
+        },
+        "max_abs_difference": {
+          "original_p10": 7.771561172376096e-16,
+          "original_p90": 7.771561172376096e-16,
+          "member_distance_mean": 2.498001805406602e-16,
+          "change_mean": 7.632783294297951e-16,
+          "original_mean": 7.771561172376096e-16,
+          "manual_revision_p10": 4.440892098500626e-16,
+          "manual_revision_p90": 5.551115123125783e-16,
+          "manual_revision_mean": 2.220446049250313e-16
+        },
+        "nonnumeric_differences": []
+      },
+      "warnings": {
+        "count": 0,
+        "by_type": {}
+      },
+      "warnings_exact_equal": false,
+      "coverage_exact_equal": true,
+      "full_tiles": 4354
+    },
+    "lee-audit-recomputed-old": {
+      "replay.csv": {
+        "rows": 5664,
+        "numeric_different_cells": {
+          "change_from_previous": 3
+        },
+        "max_abs_difference": {
+          "change_from_previous": 4.440892098500626e-16
+        },
+        "nonnumeric_differences": []
+      },
+      "summary.csv": {
+        "rows": 354,
+        "numeric_different_cells": {
+          "change_mean": 3,
+          "member_distance_mean": 3
+        },
+        "max_abs_difference": {
+          "change_mean": 5.551115123125783e-17,
+          "member_distance_mean": 1.1102230246251565e-16
+        },
+        "nonnumeric_differences": []
+      },
+      "warnings": {
+        "count": 97,
+        "by_type": {
+          "('member_distance', 'divide by zero encountered in intersection')": 79,
+          "('evaluation', 'divide by zero encountered in intersection')": 2,
+          "('member_distance', 'invalid value encountered in intersection')": 15,
+          "('evaluation', 'invalid value encountered in intersection')": 1
+        }
+      },
+      "warnings_exact_equal": true,
+      "coverage_exact_equal": true,
+      "full_tiles": 4354
+    }
+  }
+}

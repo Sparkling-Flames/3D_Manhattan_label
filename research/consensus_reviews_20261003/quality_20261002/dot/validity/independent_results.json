@@ -1,0 +1,353 @@
+{
+  "valid_prism_ranking_reversal": {
+    "footprint_error_A": {
+      "bev_iou": 0.8999999999999981,
+      "current_model_volume_iou": 0.8999999999999976,
+      "current_height_mean_a_h": 3.0000000000000013,
+      "current_height_rms_a_h": 0.0,
+      "self_axis_rms_deg": 0.0,
+      "boundary_mean_h": 0.1086099639473655,
+      "boundary_p95_h": 0.10818510677892168,
+      "boundary_sampled_max_h": 0.15299684525353235,
+      "wall_height_rmse_h": 2.6645352591003757e-15,
+      "top_curve_rmse_px": 4.232816505638791,
+      "bottom_curve_rmse_px": 3.1533457990878793,
+      "column_iou": 0.9608014299372324
+    },
+    "top_only_error_B": {
+      "bev_iou": 1.0,
+      "current_model_volume_iou": 0.6666666666666665,
+      "current_height_mean_a_h": 4.499999999999998,
+      "current_height_rms_a_h": 0.0,
+      "self_axis_rms_deg": 0.0,
+      "boundary_mean_h": 1.4181364416110398e-16,
+      "boundary_p95_h": 4.440892098500626e-16,
+      "boundary_sampled_max_h": 4.440892098500626e-16,
+      "wall_height_rmse_h": 1.4999999999999998,
+      "top_curve_rmse_px": 44.204177948460625,
+      "bottom_curve_rmse_px": 0.0,
+      "column_iou": 0.8097546198121781
+    },
+    "analytic_true_volume_iou_A": 0.9,
+    "analytic_true_volume_iou_B": 0.6666666666666666,
+    "meaning": "BEV rightly prefers B for footprint; volume rightly prefers A for exact occupied-prism overlap. No universal order exists without the target."
+  },
+  "thin_deep_notch_omission": {
+    "metrics": {
+      "bev_iou": 0.99525,
+      "current_model_volume_iou": 0.9952499999999995,
+      "current_height_mean_a_h": 2.9999999999999987,
+      "current_height_rms_a_h": 0.0,
+      "self_axis_rms_deg": 0.0,
+      "boundary_mean_h": 0.15769775390625018,
+      "boundary_p95_h": 1.4026406249999985,
+      "boundary_sampled_max_h": 1.4999999999999993,
+      "wall_height_rmse_h": 7.398305820894757e-16,
+      "top_curve_rmse_px": 53.50665647404171,
+      "bottom_curve_rmse_px": 58.29434387075533,
+      "column_iou": 0.7316717103362277
+    },
+    "analytic_bev_iou": 0.99525,
+    "notch_width_h": 0.02,
+    "notch_depth_h": 3.8,
+    "boundary_lengths_h": [
+      15.999999999999993,
+      23.599999999999994
+    ],
+    "meaning": "Importance of these local walls is task-dependent; region area alone almost ignores them."
+  },
+  "known_affine_roof_volume": {
+    "points": [
+      [
+        -1.0,
+        -1.0
+      ],
+      [
+        8.0,
+        -1.0
+      ],
+      [
+        -1.0,
+        2.0
+      ]
+    ],
+    "height_formula": "3 + 0.5*x",
+    "area_h2": 13.499999999999998,
+    "area_centroid_x_h": 1.9999999999999982,
+    "area_mean_height_h": 3.999999999999999,
+    "perimeter_mean_height_h": 4.435854122563142,
+    "exact_volume_h3": 53.99999999999998,
+    "flat_proxy_volume_h3": 59.884030654602405,
+    "relative_bias": 0.10896353064078568
+  },
+  "arclength_sampling_phase": {
+    "exact_continuous_height_rmse_h": 0.040824829046386304,
+    "n512_original": {
+      "boundary_mean_h": 4.244455972626986e-16,
+      "boundary_p95_h": 1.9984014443252818e-15,
+      "boundary_sampled_max_h": 2.4424906541753444e-15,
+      "wall_height_rmse_h": 9.053594779595603e-16,
+      "sampled_max_error_bound_h": 0.015624999999999993,
+      "samples_per_direction": 512
+    },
+    "n512_cyclic_start_changed": {
+      "boundary_mean_h": 4.260368980399732e-16,
+      "boundary_p95_h": 1.9984014443252818e-15,
+      "boundary_sampled_max_h": 2.4424906541753444e-15,
+      "wall_height_rmse_h": 0.06250000000000004,
+      "sampled_max_error_bound_h": 0.015624999999999993,
+      "samples_per_direction": 512
+    },
+    "same_perimeter_mean_height_h": [
+      3.0012499999999993,
+      3.0012499999999998
+    ],
+    "convergence": [
+      {
+        "n": 512,
+        "original_phase_rmse_h": 9.053594779595603e-16,
+        "rotated_phase_rmse_h": 0.06250000000000004
+      },
+      {
+        "n": 2048,
+        "original_phase_rmse_h": 0.038198451592983115,
+        "rotated_phase_rmse_h": 0.04242149732221286
+      },
+      {
+        "n": 8192,
+        "original_phase_rmse_h": 0.04078865831690279,
+        "rotated_phase_rmse_h": 0.040998000945225876
+      },
+      {
+        "n": 32768,
+        "original_phase_rmse_h": 0.04084354018126001,
+        "rotated_phase_rmse_h": 0.040846341905498594
+      },
+      {
+        "n": 131072,
+        "original_phase_rmse_h": 0.040825123787147914,
+        "rotated_phase_rmse_h": 0.040825737402771484
+      }
+    ],
+    "meaning": "Formal arclength functional is invariant; finite 512-sample diagnostic is an approximation with no height bound from the geometric distance bound."
+  },
+  "nearest_height_correspondence_jump": {
+    "query_points": [
+      [
+        -1e-06,
+        1.25
+      ],
+      [
+        1e-06,
+        1.25
+      ]
+    ],
+    "displacement_h": 2e-06,
+    "nearest_distances_h": [
+      0.009998999999999994,
+      0.009998999999999994
+    ],
+    "nearest_heights_h": [
+      2.0,
+      5.0
+    ],
+    "height_jump_h": 3.0,
+    "meaning": "Point probes of the correspondence used by wall_height_rmse_h; short nearest distance is insufficient to certify wall identity."
+  },
+  "shared_bottom_jacobian": {
+    "radius_h": 4,
+    "height_h": 3,
+    "native_coordinate_sigma_px": 0.25,
+    "jacobian_rH_alphaBeta": [
+      [
+        -17.0,
+        0.0
+      ],
+      [
+        -8.5,
+        5.0
+      ]
+    ],
+    "finite_difference_max_abs_error": 1.892885848064907e-10,
+    "output_covariance": [
+      [
+        0.000680045049647051,
+        0.0003400225248235255
+      ],
+      [
+        0.0003400225248235255,
+        0.00022883868885181907
+      ]
+    ],
+    "independent_input_output_correlation": 0.8619342151577695,
+    "meaning": "Even independent top/bottom angular errors yield correlated range/height consequences. This is illustrative noise, not an estimate from real annotator disagreement."
+  },
+  "hidden_range_vs_column_contours": {
+    "metrics": {
+      "bev_iou": 0.8695652173913042,
+      "current_model_volume_iou": 0.8695652173913043,
+      "current_height_mean_a_h": 2.9999999999999996,
+      "current_height_rms_a_h": 7.691850745534256e-16,
+      "self_axis_rms_deg": 4.3415833508505203e-14,
+      "boundary_mean_h": 0.20521163940429657,
+      "boundary_p95_h": 1.9957031249999915,
+      "boundary_sampled_max_h": 2.9999999999999982,
+      "wall_height_rmse_h": 5.830322762800934e-16,
+      "top_curve_rmse_px": 1.8538926041669283e-15,
+      "bottom_curve_rmse_px": 1.0765503468808624e-15,
+      "column_iou": 1.0
+    },
+    "areas_h2": [
+      19.999999999999993,
+      22.99999999999998
+    ],
+    "high_resolution_max_top_difference_rad": 1.6653345369377348e-16,
+    "high_resolution_max_bottom_difference_rad": 1.1102230246251565e-16,
+    "meaning": "First-hit projection cannot supervise genuinely hidden declared range. This is a disclosed representation limit, not a bug."
+  },
+  "positive_length_exact_nearest_tie": {
+    "source_floor": [
+      [
+        -1.0,
+        -2.0
+      ],
+      [
+        1.0,
+        -2.0
+      ],
+      [
+        1.0,
+        0.5
+      ],
+      [
+        0.0,
+        0.5
+      ],
+      [
+        0.0,
+        2.5
+      ],
+      [
+        -1.0,
+        2.5
+      ]
+    ],
+    "target_floor": [
+      [
+        -2.0,
+        -10.0
+      ],
+      [
+        2.0,
+        -10.0
+      ],
+      [
+        2.0,
+        10.0
+      ],
+      [
+        -2.0,
+        10.0
+      ]
+    ],
+    "target_heights": [
+      2.0,
+      6.0,
+      6.0,
+      2.0
+    ],
+    "exact_geometry_convergence": [
+      {
+        "n": 512,
+        "original_cycle_rmse_h": 2.788874088195731,
+        "rotated_cycle_rmse_h": 2.5580155745830733
+      },
+      {
+        "n": 2048,
+        "original_cycle_rmse_h": 2.788867211650755,
+        "rotated_cycle_rmse_h": 2.558771497070549
+      },
+      {
+        "n": 8192,
+        "original_cycle_rmse_h": 2.7888667836193317,
+        "rotated_cycle_rmse_h": 2.558580196959876
+      },
+      {
+        "n": 32768,
+        "original_cycle_rmse_h": 2.7888667568947594,
+        "rotated_cycle_rmse_h": 2.5587232943574993
+      }
+    ],
+    "exact_probe_heights_original": [
+      6.0,
+      6.0
+    ],
+    "exact_probe_heights_rotated": [
+      2.0,
+      2.0
+    ],
+    "ERP_roundtrip_n512": [
+      2.558015574583067,
+      2.5580155745830675
+    ],
+    "analytic_limit_squared_RMSE_difference": 1.2307692307692308,
+    "meaning": "argmin chooses first edge at ties. Positive-length tie produces persistent arbitrary correspondence. In this ERP round-trip example floating asymmetry masks the exact tie; no real-data reversal is claimed."
+  },
+  "checks": [
+    {
+      "name": "top_only_error_invisible_to_BEV_bottom_and_plan_boundary",
+      "passed": true
+    },
+    {
+      "name": "valid_volume_ranking_reversal",
+      "passed": true
+    },
+    {
+      "name": "perfect_model_self_fit_is_not_GT_quality",
+      "passed": true
+    },
+    {
+      "name": "near_perfect_area_can_hide_large_boundary_error",
+      "passed": true
+    },
+    {
+      "name": "perimeter_mean_is_not_area_mean_for_affine_roof",
+      "passed": true
+    },
+    {
+      "name": "finite_sample_height_diagnostic_not_cyclic_start_invariant",
+      "passed": true
+    },
+    {
+      "name": "high_resolution_restores_analytic_arclength_height",
+      "passed": true
+    },
+    {
+      "name": "current_perimeter_mean_unaffected_by_cyclic_start",
+      "passed": true
+    },
+    {
+      "name": "arbitrarily_small_horizontal_change_can_switch_height_correspondence",
+      "passed": true
+    },
+    {
+      "name": "jacobian_matches_finite_difference_and_induces_correlation",
+      "passed": true
+    },
+    {
+      "name": "first_hit_contours_can_ignore_hidden_range",
+      "passed": true
+    },
+    {
+      "name": "exact_nearest_tie_is_not_fixed_by_more_samples",
+      "passed": true
+    }
+  ],
+  "provenance": {
+    "source_read_only": "reference/quality_core.py (unchanged copy of returned src/quality_core.py)",
+    "source_sha256": "be5d213c690db111f2eb0174a36b81c3fc7001312491c58b4b4b5c91232569dd",
+    "synthetic_only": true,
+    "real_GT_reassessed": false,
+    "source_modified": false
+  }
+}

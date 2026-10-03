@@ -1,0 +1,10 @@
+工作目录：/workspace/scratch/a365811da80c
+
+1. 原包隔离重跑（输出目录原先不存在）
+PYTHONPATH=$PWD/audit-oct1-deps:$PWD/audit-oct1-testdeps PYTHONDONTWRITEBYTECODE=1 python worker-audit-inputs/extracted/worker_consensus_independent_20261003/reproduce.py --out worker-audit-repro --figures
+
+2. 独立校验（读冻结原包和隔离重跑产物，只向worker-audit-validation写新文件）
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=$PWD/audit-oct1-deps:$PWD/audit-oct1-testdeps python worker-audit-validation/independent_checks.py > worker-audit-validation/independent_checks.log 2>&1
+
+可移植重跑建议：为消除fontconfig提示，设置XDG_CACHE_HOME到可写新目录。reproduce.py已设置MPLCONFIGDIR，但未设置XDG_CACHE_HOME。
+注意：requirements.txt是依赖下限，不是锁文件；已验证的具体版本在技术报告中逐一列出。

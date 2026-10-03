@@ -1,0 +1,83 @@
+{
+  "scope": "Same official calculations, strict mismatches collected rather than failing fast; no source edits, original verifier did fail",
+  "seconds": 12.979233264923096,
+  "official_summary": {
+    "stage2": {
+      "verified": true,
+      "synthetic_pairs": 74,
+      "synthetic_families": {
+        "equivalence": 5,
+        "extent": 19,
+        "detail": 14,
+        "localization": 36
+      },
+      "real_comparisons": 15,
+      "missing_reference_rows": 9,
+      "dense_boundary_checks": 1
+    },
+    "stage3d": {
+      "records": 195,
+      "comparisons": 390,
+      "missing_reference": 117,
+      "order_used": {
+        "human_confirmed": 134,
+        "default_x_unreviewed": 48,
+        "unavailable": 13
+      },
+      "order_cases": 17,
+      "order_bound": 17
+    },
+    "files": 41,
+    "scope": "embedded recomputation only; no source selection or original imagery verification"
+  },
+  "compared": {
+    "other_leaves": 33110,
+    "float_leaves": 70211
+  },
+  "max_absolute_differences": {
+    "other": {
+      "abs_difference": 1.4210854715202004e-14,
+      "path": "R01625.geometry[0].top_horizon_margin_deg",
+      "saved": 47.88530692069903,
+      "recomputed": 47.885306920699016
+    },
+    "height": {
+      "abs_difference": 8.881784197001252e-16,
+      "path": "R00222.heights[3]",
+      "saved": 3.4763490962020387,
+      "recomputed": 3.4763490962020396
+    },
+    "direction_": {
+      "abs_difference": 1.8695165593385354e-07,
+      "path": "R03399.direction_self.per_edge_deg[0]",
+      "saved": 9.486452958475152,
+      "recomputed": 9.486453145426808
+    },
+    "bev": {
+      "abs_difference": 1.0658141036401503e-14,
+      "path": "R00222.bev.symmetric_difference_h2",
+      "saved": 9.293322487810002,
+      "recomputed": 9.293322487809991
+    },
+    "boundary": {
+      "abs_difference": 1.4432899320127035e-15,
+      "path": "R01240.boundary.boundary_p95_distance",
+      "saved": 0.5789847070095997,
+      "recomputed": 0.5789847070096011
+    },
+    "column": {
+      "abs_difference": 0.0,
+      "path": "R03286.column.512x256.iou",
+      "saved": 0.7942408569919288,
+      "recomputed": 0.7942408569919288
+    },
+    "model_volume": {
+      "abs_difference": 7.105427357601002e-15,
+      "path": "R03292.model_volume.volume_a_h3",
+      "saved": 38.22714048844617,
+      "recomputed": 38.227140488446175
+    }
+  },
+  "difference_count": 1720
+}
+maximum_float_difference 1.8695165593385354e-07

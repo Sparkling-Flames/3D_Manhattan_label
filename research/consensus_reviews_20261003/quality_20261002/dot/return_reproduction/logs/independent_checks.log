@@ -1,0 +1,82 @@
+{
+  "does_not_import_returned_implementation": true,
+  "saved_images": 1,
+  "saved_annotations": 9,
+  "selected_annotations": 6,
+  "saved_references": 1,
+  "independent_common_fields": 35,
+  "all_common_fields_passed": true,
+  "independent_max_difference": 1.487004963607319e-14,
+  "identity_mismatches_in_returned_files": [
+    {
+      "annotation": "R03288",
+      "excerpt_worker": "P019",
+      "csv_worker": "P020"
+    }
+  ],
+  "controlled_case_counts": {
+    "density": 7,
+    "opposite_roofs": 1,
+    "top_bottom_dependency": 1,
+    "horizon_sensitivity": 2,
+    "derived_real_subdivision": 6
+  },
+  "controlled_pairs": 17,
+  "comparable_column_annotations": 5,
+  "pair_count": 10,
+  "independent_reversals": [
+    {
+      "a": "R03286",
+      "b": "R03287",
+      "other_metric": "current_model_volume_iou"
+    },
+    {
+      "a": "R03281",
+      "b": "R03284",
+      "other_metric": "current_model_volume_iou"
+    },
+    {
+      "a": "R03281",
+      "b": "R03284",
+      "other_metric": "column_iou"
+    }
+  ],
+  "opposite_roofs": {
+    "volume_a_h3": 48,
+    "intersection_h3": 40.0,
+    "union_h3": 56.0,
+    "exact_iou": 0.7142857142857143,
+    "current_proxy_iou": 1.0,
+    "exact_wall_height_rmse": 1.632993161855452,
+    "reported_discrete_wall_height_rmse": 1.6330180791635462,
+    "discretization_error": 2.4917308094174473e-05
+  },
+  "fixed_top_coupling": {
+    "original_height": 2.7,
+    "new_height": 3.125,
+    "range_scale": 1.25,
+    "expected_bev_iou": 0.64,
+    "expected_volume_iou": 0.55296
+  },
+  "half_pixel_horizon": [
+    {
+      "half_extent_h": 2.0,
+      "one_corner_shift_h": 0.02785343995618561
+    },
+    {
+      "half_extent_h": 32.0,
+      "one_corner_shift_h": 7.299778022432889
+    }
+  ],
+  "jacobian_analytic": [
+    -6.5942770962556665,
+    -4.042985665580899,
+    3.25430480334452
+  ],
+  "jacobian_finite_difference": [
+    -6.594277096150236,
+    -4.042985665586585,
+    3.2543048036348665
+  ],
+  "scope": "Selected numeric excerpt and controlled equations only; not full 195/390 repository reproduction or validity adjudication"
+}

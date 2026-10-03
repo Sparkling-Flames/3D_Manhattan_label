@@ -4,6 +4,8 @@
 
 ## 当前工作
 
+- 最新[人员研究返回审查](../../analysis_results/worker_review_20261003/REPORT.md)与[前三轮精选归档](../../research/consensus_reviews_20261003/README.md)：本地复核已完成；用户确认重复坐标仍为独立票。下一步连续画像迁移，再扩人数×构成；不把来源独立性核查重新设为前置，不冻结高低类型。
+
 - [研究方向与算法职责](../thesis_main/研究方向_空间差异与共识_20260930.md)、[推进台账](../thesis_main/研究推进台账_20261003.md)：A线136图最多24人；B线共同24人×10图画像及固定4人构成精算已完成。正式人员类型、完整人数×构成及两线联系待研究；[Chat Pro交接](../../research/worker_consensus_handoff_20261003/README.md)。先用这些入口判断当前阶段。
 - [当前方法摘要](../thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.md)、[执行 SOP](../thesis_main/ROUND_BASED_ASSIGNMENT_SOP_v1.md)、[统计计划](../thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md)。
 - [最终审核数据接入](../thesis_main/最终审核数据接入_20260929.md)及[统一输入](../../analysis_results/research_input_20260929/manifest.json)。仅在追溯审核时读取[二次复核 SOP](../thesis_main/两人审核归并与二次复核SOP_20260925.md)与[历史台账](../../analysis_results/review_final_20260928/README.md)。

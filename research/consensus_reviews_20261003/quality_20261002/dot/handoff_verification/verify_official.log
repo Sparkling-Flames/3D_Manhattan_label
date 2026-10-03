@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/a365811da80c/audit-oct2-original/verify.py", line 62, in <module>
+    main()
+  File "/workspace/scratch/a365811da80c/audit-oct2-original/verify.py", line 31, in main
+    _compare(o['diagnostics'], diagnostics(o['record']), o['record']['id'])
+  File "/workspace/scratch/a365811da80c/audit-oct2-original/tools/thesis_main/analysis/verify_layout_metric_snapshot_20261001.py", line 21, in _compare
+    for key,value in expected.items(): _compare(value,actual[key],path+'.'+key)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/a365811da80c/audit-oct2-original/tools/thesis_main/analysis/verify_layout_metric_snapshot_20261001.py", line 21, in _compare
+    for key,value in expected.items(): _compare(value,actual[key],path+'.'+key)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/a365811da80c/audit-oct2-original/tools/thesis_main/analysis/verify_layout_metric_snapshot_20261001.py", line 28, in _compare
+    raise ValueError(path+': numeric mismatch')
+ValueError: R03293.direction_self.axis_deg: numeric mismatch

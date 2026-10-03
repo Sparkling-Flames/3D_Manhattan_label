@@ -1,0 +1,208 @@
+    18	from tools.thesis_main.analysis.audit_supervisor_gt_sensitivity_20260922 import region_mesh
+    19	
+    20	ROOT = Path(__file__).resolve().parents[3]
+    21	METHODS = ('mv50', 'mv_strict')
+    22	GATES = {'main_candidate', 'oos_doorway_exploratory', 'stable_nonorthogonal_separate'}
+    23	
+    24	
+    25	def tile_consensus(records):
+    26	    """复用既有 region_mesh；没有 GT 接口，不合并人员、不删细小 tile。"""
+    27	    if not records:
+    28	        raise ValueError('empty_roster')
+    29	    for key in ('id', 'worker'):
+    30	        if len({r[key] for r in records}) != len(records):
+    31	            raise ValueError('duplicate_' + key)
+    32	    polygons = []
+    33	    for r in records:
+    34	        if r['footprint'] is None:
+    35	            raise ValueError('unavailable_footprint:' + r['id'])
+    36	        xy = np.asarray(r['footprint'], dtype=float)
+    37	        if xy.ndim != 2 or xy.shape[1] != 2 or len(xy) < 3 or not np.isfinite(xy).all():
+    38	            raise ValueError('invalid_footprint:' + r['id'])
+    39	        p = Polygon(xy)
+    40	        if not p.is_valid or not np.isfinite(p.area) or p.area <= 0:
+    41	            raise ValueError('invalid_footprint:' + r['id'])
+    42	        polygons.append(p)
+    43	    with warnings.catch_warnings(record=True) as caught:
+    44	        warnings.simplefilter('always', RuntimeWarning)
+    45	        mesh = region_mesh(polygons)
+    46	        domain = unary_union(polygons)
+    47	        area = mesh['area']
+    48	        tolerance = 1e-9 * max(1., domain.area)
+    49	        if not np.isfinite(area).all() or np.any(area <= 0):
+    50	            raise ValueError('nonpositive_or_nonfinite_tile')
+    51	        if abs(area.sum() - domain.area) > tolerance:
+    52	            raise ValueError('tile_partition_area_mismatch')
+    53	        restored = mesh['votes'] @ area
+    54	        if np.any(abs(restored - np.array([p.area for p in polygons])) > tolerance):
+    55	            raise ValueError('tile_worker_area_mismatch')
+    56	        support = mesh['votes'].sum(axis=0)
+    57	        selections = dict(mv50=2 * support >= len(records), mv_strict=2 * support > len(records))
+    58	        regions = {method: unary_union([t for t, keep in zip(mesh['tiles'], selected) if keep])
+    59	                   for method, selected in selections.items()}
+    60	        if any(not g.is_valid or not np.isfinite(g.area) for g in regions.values()):
+    61	            raise ValueError('invalid_consensus_geometry')
+    62	    return dict(mesh=mesh, regions=regions, selections=selections,
+    63	                warnings=[str(w.message) for w in caught])
+    64	
+    65	
+    66	def region_iou(a, b):
+    67	    intersection = a.intersection(b).area
+    68	    tolerance = 1e-12 * max(1., a.area, b.area)
+    69	    if (not np.isfinite(intersection) or intersection < -tolerance
+    70	            or intersection > min(a.area, b.area) + tolerance):
+    71	        raise ValueError('nonfinite_or_inconsistent_intersection')
+    72	    union = a.area + b.area - intersection
+    73	    # 仅裁剪浮点舍入越界（本轮约1e-15），不移动坐标或修复几何。
+    74	    return float(np.clip(intersection / union, 0., 1.)) if union else 1.0
+    75	
+    76	
+    77	def _summary(values):
+    78	    valid = [v for v in values if v is not None]
+    79	    return (float(np.mean(valid)), float(np.quantile(valid, .1)), float(np.quantile(valid, .9))) if valid else (None, None, None)
+    80	
+    81	
+    82	def replay_group(group, *, permutations, seed):
+    83	    if permutations < 1:
+    84	        raise ValueError('positive_permutations_required')
+    85	    records = sorted(group['records'], key=lambda r: r['id'])
+    86	    for key in ('id', 'worker'):
+    87	        if len({r[key] for r in records}) != len(records):
+    88	            raise ValueError('duplicate_' + key)
+    89	    rng = np.random.default_rng(seed)
+    90	    by_id = {r['id']: r for r in records}
+    91	    references = {v: Polygon(p) for v, p in group['references'].items() if p is not None}
+    92	    if any(not p.is_valid or p.area <= 0 for p in references.values()):
+    93	        raise ValueError('invalid_reference_footprint')
+    94	    cache, rows, notices = {}, [], []
+    95	    for draw in range(permutations):
+    96	        order = rng.permutation(len(records))
+    97	        previous = dict.fromkeys(METHODS)
+    98	        for k in range(1, len(records) + 1):
+    99	            members = tuple(sorted(records[i]['id'] for i in order[:k]))
+   100	            if members not in cache:
+   101	                try:
+   102	                    cache[members] = tile_consensus([by_id[i] for i in members])
+   103	                except (ValueError, GEOSException) as exc:
+   104	                    cache[members] = dict(error=str(exc))
+   105	                for note in cache[members].get('warnings', []):
+   106	                    notices.append(dict(stage='tiling', members=list(members), message=note))
+   107	            result = cache[members]
+   108	            for method in METHODS:
+   109	                row = dict(draw=draw, k=k, method=method, members='|'.join(members),
+   110	                           status='unavailable' if 'error' in result else 'ok', reason=result.get('error'),
+   111	                           tile_count=None, area_h2=None, empty=None, original_iou=None,
+   112	                           manual_revision_iou=None, change_from_previous=None)
+   113	                if 'error' not in result:
+   114	                    region = result['regions'][method]
+   115	                    row.update(tile_count=len(result['mesh']['tiles']), area_h2=float(region.area), empty=region.is_empty)
+   116	                    with warnings.catch_warnings(record=True) as caught:
+   117	                        warnings.simplefilter('always', RuntimeWarning)
+   118	                        for version, reference in references.items():
+   119	                            row[version + '_iou'] = region_iou(region, reference)
+   120	                        if previous[method] is not None:
+   121	                            row['change_from_previous'] = 1 - region_iou(region, previous[method])
+   122	                    for note in caught:
+   123	                        notices.append(dict(stage='evaluation', draw=draw, k=k, method=method,
+   124	                                            members=list(members), message=str(note.message)))
+   125	                    previous[method] = region
+   126	                else:
+   127	                    previous[method] = None
+   128	                rows.append(row)
+   129	    summary = []
+   130	    for method in METHODS:
+   131	        for k in range(1, len(records) + 1):
+   132	            observed = [r for r in rows if r['method'] == method and r['k'] == k]
+   133	            unique = {r['members']: r for r in observed if r['status'] == 'ok'}
+   134	            row = dict(method=method, k=k, roster_n=len(records), draws=len(observed),
+   135	                       valid_draws=sum(r['status'] == 'ok' for r in observed), unique_subsets=len(unique),
+   136	                       empty_subsets=sum(r['empty'] for r in unique.values()))
+   137	            for version in ('original', 'manual_revision'):
+   138	                values = [r[version + '_iou'] for r in unique.values()]
+   139	                row[version + '_n'] = sum(v is not None for v in values)
+   140	                for stat, value in zip(('mean', 'p10', 'p90'), _summary(values)):
+   141	                    row[version + '_' + stat] = value
+   142	            row['change_mean'] = _summary([r['change_from_previous'] for r in observed])[0]
+   143	            with warnings.catch_warnings(record=True) as caught:
+   144	                warnings.simplefilter('always', RuntimeWarning)
+   145	                distances = [1 - region_iou(cache[tuple(a.split('|'))]['regions'][method],
+   146	                                            cache[tuple(b.split('|'))]['regions'][method])
+   147	                             for a, b in combinations(unique, 2)]
+   148	            notices.extend(dict(stage='member_distance', k=k, method=method, message=str(w.message)) for w in caught)
+   149	            row['member_pairs'] = len(distances)
+   150	            row['member_distance_mean'] = float(np.mean(distances)) if distances else (0. if k == len(records) and unique else None)
+   151	            summary.append(row)
+   152	    full = cache.get(tuple(sorted(by_id)))
+   153	    features = []
+   154	    if full and 'error' not in full:
+   155	        roster = sorted(by_id)
+   156	        for i, tile in enumerate(full['mesh']['tiles']):
+   157	            members = [roster[j] for j in range(len(roster)) if full['mesh']['votes'][j, i]]
+   158	            features.append(dict(type='Feature', geometry=mapping(tile), properties=dict(
+   159	                tile=i, members=members, support=len(members), roster_n=len(roster), area_h2=tile.area,
+   160	                mv50=bool(full['selections']['mv50'][i]), mv_strict=bool(full['selections']['mv_strict'][i]))))
+   161	    return dict(rows=rows, summary=summary, warnings=notices, full_tiles=features,
+   162	                computed_unique_subsets=len(cache), failures=dict(Counter(v['error'] for v in cache.values() if 'error' in v)))
+   163	
+   164	
+   165	def write_csv(path, rows):
+   166	    with path.open('w', encoding='utf-8-sig', newline='') as stream:
+   167	        writer = csv.DictWriter(stream, fieldnames=list(rows[0]), lineterminator='\n')
+   168	        writer.writeheader(); writer.writerows(rows)
+   169	
+   170	
+   171	def write_json(path, value):
+   172	    path.write_bytes((json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + '\n').encode('utf-8'))
+   173	
+   174	
+   175	def run(input_path, out):
+   176	    data = json.loads(input_path.read_text(encoding='utf-8'))
+   177	    if data['schema'] != 'lee_tile_stage1_input_v1':
+   178	        raise ValueError('unsupported_input_schema')
+   179	    plan = data['plan']
+   180	    all_rows, summaries, coverage, features, notices = [], [], [], [], []
+   181	    for image in data['images']:
+   182	        groups = defaultdict(list)
+   183	        for r in image['annotations']:
+   184	            gate = r['main_consensus_gate']['status']
+   185	            if r['independent'] and r['consensus_eligible'] and gate in GATES:
+   186	                groups[r['condition'], gate].append(r)
+   187	        coverage.append(dict(image=image['code'], population=len(image['annotations']),
+   188	            candidate_records=sum(map(len, groups.values())),
+   189	            excluded_or_ineligible=len(image['annotations'])-sum(map(len, groups.values())),
+   190	            upstream_gates=dict(Counter(r['main_consensus_gate']['status'] for r in image['annotations'])),
+   191	            geometry_unavailable=sum(r['footprint'] is None for rs in groups.values() for r in rs)))
+   192	        for (condition, gate), records in sorted(groups.items()):
+   193	            identity = dict(image=image['code'], condition=condition, gate=gate)
+   194	            group = dict(code=image['code'], condition=condition, gate=gate, records=records,
+   195	                         references={r['version']: r['footprint'] for r in image['references']})
+   196	            seed = plan['seed'] + zlib.crc32('|'.join(identity.values()).encode())
+   197	            result = replay_group(group, permutations=plan['permutations'], seed=seed)
+   198	            all_rows.extend(dict(**identity, **r) for r in result['rows'])
+   199	            summaries.extend(dict(**identity, **r) for r in result['summary'])
+   200	            notices.extend(dict(**identity, **r) for r in result['warnings'])
+   201	            for feature in result['full_tiles']:
+   202	                feature['properties'].update(identity)
+   203	                features.append(feature)
+   204	            print(f"{image['code']}: n={len(records)}, subsets={result['computed_unique_subsets']}, failures={sum(result['failures'].values())}", flush=True)
+   205	    out.mkdir(parents=True, exist_ok=True)
+   206	    write_csv(out / 'replay.csv', all_rows)
+   207	    write_csv(out / 'summary.csv', summaries)
+   208	    write_json(out / 'coverage.json', coverage)
+   209	    write_json(out / 'warnings.json', notices)
+   210	    write_json(out / 'full_tiles.geojson', dict(type='FeatureCollection', features=features,
+   211	        coordinate_note='Local BEV XZ in common camera-height h, NOT geographic longitude/latitude.'))
+   212	    write_json(out / 'field_contract.json', dict(schema='lee_tile_stage1_results_v1',
+   213	        replay_fields=list(all_rows[0]), summary_fields=list(summaries[0]),
+   214	        k='当前组实际抽取的不同真人数；缺几何时整个前缀不可计算，不减小k或改分母',
+   215	        sampling='每图/condition/gate固定16个无放回排列；同k参考均值与p10/p90按采到的不同成员集等权，不是穷举或置信区间',
+   216	        member_distance='不同已采成员集融合区域之间的平均1-IoU；全员只有一个集合，0是确定性机制',
+   217	        change='相邻人数融合区域的1-IoU，按有效相邻排列步骤平均；失败不跨步连接',
+   218	        empty='合法空融合与非空GT的IoU为0；两个空融合间的IoU定义为1',
+   219	        numerical_bounds='交集需有限且不超过较小区域面积（面积容差1e-12*max(1,area_a,area_b)）；仅把浮点IoU越界舍入裁回[0,1]，不改几何',
+   220	        reference='两版固定参考分别报告；OOS/门洞/参考存疑不解释为人员错误，无GT不阻塞稳定性计算',
+   221	        warnings='数值警告显式保存；未修复/吸附/缓冲输入，不把警告隐藏成完全通过'))
+   222	    plot_curves(summaries, out)
+   223	    report(data, coverage, summaries, notices, out)
+   224	
+   225	
