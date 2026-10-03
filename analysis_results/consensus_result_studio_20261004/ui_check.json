@@ -1,0 +1,26 @@
+{
+  "schema": "consensus_result_studio_ui_check_v1",
+  "date": "2026-10-04",
+  "status": "passed",
+  "surface": "Codex in-app browser, localhost:8879, default narrow viewport",
+  "checked": [
+    "Four image cases selectable; matching member and pattern counts displayed",
+    "Default result-only sparse top/bottom point candidate; GT off",
+    "Changing pattern updates point result and shared Studio geometry",
+    "Representative annotation before/after toggle",
+    "Optional GT overlay",
+    "ERP full-pool top/bottom contours and whole-group unavailable state on uNb-67",
+    "Lee ground boundary, strict-majority switch, explicit absence of fused top",
+    "Point result 3D texture loaded and rendered in reused Studio",
+    "Full-screen enter and exit",
+    "No browser warning/error logs observed"
+  ],
+  "code_validation": {
+    "command": "python -B -m pytest tests/test_consensus_result_studio_20261004.py tests/test_lee_consensus_demos_20261003.py -q",
+    "passed": 5,
+    "warning": "pytest cache write permission warning only",
+    "javascript": "node --check tools/thesis_main/analysis/consensus_result_studio_20261004.js"
+  },
+  "screenshots": "Inspected inline only; no screenshot files retained.",
+  "limits": "Display validation only. No visual GT adjudication, new ring confirmation, threshold calibration, algorithm effectiveness claim, or full research rerun."
+}
