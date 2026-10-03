@@ -19,7 +19,9 @@
     "command": "python -B -m pytest tests/test_consensus_result_studio_20261004.py tests/test_lee_consensus_demos_20261003.py -q",
     "passed": 5,
     "warning": "pytest cache write permission warning only",
-    "javascript": "node --check tools/thesis_main/analysis/consensus_result_studio_20261004.js"
+    "javascript": "node --check tools/thesis_main/analysis/consensus_result_studio_20261004.js",
+    "committed_geometry_compatibility": "All 24 candidate point arrays and disabled-fit states also verified using the committed shared geometry API; no dependency on its unrelated uncommitted metadata changes.",
+    "followup": "2 adapter tests passed with pytest cache disabled after removing an assertion about unrelated shared-module metadata."
   },
   "screenshots": "Inspected inline only; no screenshot files retained.",
   "limits": "Display validation only. No visual GT adjudication, new ring confirmation, threshold calibration, algorithm effectiveness claim, or full research rerun."

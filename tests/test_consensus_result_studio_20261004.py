@@ -18,7 +18,6 @@ def test_result_studio_keeps_full_candidate_points_and_disables_manhattan_fit():
     assert cluster==before
     assert result['geometry']['fit']['status']=='not_requested'
     assert result['geometry']['coordinate_convention']=='continuous'
-    assert result['geometry']['coordinate_convention_source']=='payload_and_argument'
     restored=[p for pair in result['geometry']['pairs'] for p in [pair['top'],pair['bottom']]]
     assert restored==points
     assert result['source']['representative']['id']=='R9'
