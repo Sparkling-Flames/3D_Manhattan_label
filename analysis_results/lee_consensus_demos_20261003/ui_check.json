@@ -6,5 +6,15 @@
   "examples_displayed_mv50": {"B6ByNegPMKs-40": 0.7628, "uNb9QFRL6hY-53": 0.9242, "uNb9QFRL6hY-67": 0.1093, "yqstnuAEVhm-05": 0.9256},
   "two_person_switch": {"image": "B6ByNegPMKs-40", "mv50": 0.7031, "strict": 0.3229},
   "related_tests": 14,
-  "scope": "UI and numerical behavior checked; no new visual GT adjudication. No screenshot files retained."
+  "scope": "Initial BEV UI and numerical behavior checked; no new visual GT adjudication. No screenshot files retained.",
+  "erp_extension": {
+    "date": "2026-10-03",
+    "status": "passed",
+    "checked": ["preprocessed original top/bottom points and stored-ring curves on panorama", "Lee fused floor boundary on same panorama", "current members overlay and selected worker", "all four cases", "k=1 equals individual IoU", "member selection", "GT and point visibility", "MV50/strict switch"],
+    "tie_example": {"image": "yqstnuAEVhm-05", "k": 8, "mv50": 0.9256, "strict": 0.8170},
+    "related_tests": 11,
+    "browser_error_logs": [],
+    "data_check": "metrics.csv bytes and all pre-existing demos.json fields unchanged against committed version",
+    "scope": "Display projection added; no fused top boundary or new point-voting algorithm. No screenshot files retained."
+  }
 }

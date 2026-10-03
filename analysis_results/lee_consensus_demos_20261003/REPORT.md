@@ -4,7 +4,10 @@
 
 ## 演示内容与选例
 
-打开[index.html](index.html)，可切换四例、当前人数、MV50／严格多数、GT／成员层、单个成员及支持人数tile。相机原点、相同轴比例和每图固定范围保留。原全景图沿仓库相对路径显示，仅提供视觉参照，尚未新增GT视觉裁决。
+打开[index.html](index.html)，顶部同一全景图并排显示：左侧选中人员的已预处理上下角点及既定环连线，右侧当前Lee融合底边。可切人数、人员、规则与GT。原点坐标、确认环／默认环均保持冻结输入原值。下方保留BEV与人数曲线解释。
+
+**右侧仅是融合底边，上边尚未融合。** 当前Lee对底面区域投票，没有上角点配对或天花板输出；不以平均高度编造完整标注。融合全部外环、孔洞和断片都投影显示，不只留最大分量，也不把几何边断言为图上可见墙边。
+显示曲线复用`panorama_studio.geometry.pixel_ray/project_pixel`的continuous 1024×512约定，+Y向上、地面Y=-1。沿既定环将三维直边投回ERP，跨接缝分段；单体顶部沿用已配对底点的水平距离重建墙顶代理，不假设所有顶点平顶。角点仍直接使用输入原值。65点采样只服务显示，不改BEV或IoU。
 
 **按既有结果选例用于解释，不能当作四图总体效果估计。** 最大／中位／最小增益均在已有A线N≥8图片中，以全员MV50减全池单人均值选出；平票例取偶数N中两规则全员IoU差最大。成员按固定R编号升序进入，未搜索有利链。图中的细虚线是这条链，粗实线是已有成员集合均值，二者不可混用。
 
@@ -29,4 +32,5 @@
 输入复用[冻结面板](../lee_expanded_20261003/input.json)、[来源绑定](../lee_expanded_20261003/source_binding.json)、[成员表](../lee_expanded_20261003/rosters.json)。本轮未重新审计原始提交链。
 来源、选例及固定链见design.json、demos.json；逐前缀机器指标见metrics.csv，核验见checks.json，字段见field_contract.json。每份作答的确认状态、人员ID和记录ID随演示保留。
 复现：`python -B -m tools.thesis_main.analysis.lee_consensus_demos_20261003 --out analysis_results/<新的目录>`。已有目录拒绝覆盖。
+仅刷新ERP展示：`python -B -m tools.thesis_main.analysis.lee_consensus_demos_20261003 --refresh-display`。保留既有metrics.csv字节；新增投影核验见projection_checks.json。单人身份、原点回环、接缝和孔洞投影有定向测试。
 相关测试：`python -B -m pytest tests/test_lee_consensus_demos_20261003.py tests/test_lee_tile_stage1_20261002.py tests/test_lee_tile_precision_20261003.py -q -p no:cacheprovider`。
