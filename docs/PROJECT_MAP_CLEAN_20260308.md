@@ -4,6 +4,7 @@
 
 ## 当前入口
 
+- [人审来源到分析输入核查](../analysis_results/review_source_audit_20261004/REPORT.md)：后审traits与明确原话难度消费修复，`corrected_inventory/`为当前盘点，`pipeline/`为只读绑定审查；旧研究数值保留，难度分组需重新汇总。
 - [完整共识并行研究交接](../research/full_layout_consensus_handoff_20261003/README.md)：复用现有固定输入、历史人工审核及代码，不复制重复包；本地与Chat Pro分工、汇合交付和目标提示词。
 - [全员点对融合137图基础研究](../analysis_results/global_pair_consensus_20261004/REPORT.md)：全员跨点数、三阈值两规则、来源与连接诊断；`global_pair_consensus_20261004.py` 与 `global_pair_study_20261004.py`，默认工作台已接全员结果。
 - [完整layout Pro返回独立审查](../research/full_layout_pro_review_20261004/REVIEW.md)：精简原包、384状态独立复算、来源绑定、认证对应不一致反例；源码仅作研究参考。

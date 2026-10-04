@@ -14,6 +14,7 @@
 
 ## 当前复核、预处理与排序
 
+- [2026-10-04人审接入核查与难度修正](../analysis_results/review_source_audit_20261004/REPORT.md)：259图审核留痕、来源与实际名单绑定、后审难度消费修复、历史原话补充及高人数池逐图说明；旧难度分组待重新汇总。
 - [最终审核数据接入及读取示例](thesis_main/最终审核数据接入_20260929.md)。
 - **后续分析统一入口：[合包 manifest](../analysis_results/research_input_20260929/manifest.json)**，预处理、全部最终统计、研究解释与评论同目录；下列历史生成目录用于追溯。
 - [研究解释与交叉机器表](../analysis_results/review_research_tables_20260929/field_contract.json)：供AI读取，含六项证据、原话、交叉分母及解释限制。

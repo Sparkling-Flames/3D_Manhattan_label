@@ -12,21 +12,21 @@ import numpy as np
 from .lee_tile_stage1_20261002 import ROOT, METHODS, write_json, write_csv
 from .lee_tile_precision_20261003 import run, exact_ks, mc_bound
 from .research_round_20260929 import prepare_record, reconstruct, validate_panel
-from .research_panel_inventory_20261003 import bind_difficulty, HUMAN
+from .research_panel_inventory_20261003 import bind_difficulty, image_review_traits, explicit_image_text_difficulty, HUMAN
 
 INVENTORY = ROOT/'analysis_results/research_panel_inventory_20261003'
 DEFAULT_OUT = ROOT/'analysis_results/lee_difficulty_20261003'
 UNB = 'uNb9QFRL6hY'
 
 
-def collect(out, *, chosen=None, stage='S3-A', max_k=8):
+def collect(out, *, chosen=None, stage='S3-A', max_k=8, inventory_dir=INVENTORY):
     """沿用当前完整包；逐对象对照S2资格/方法状态，不由曲线选择数据。"""
     from tools.thesis_main.data_prep.consolidate_research_input import load_current_bundle
     from tools.thesis_main.data_prep.project_public_research_20260929 import project_bundle
-    inventory = json.loads((INVENTORY/'input.json').read_text(encoding='utf-8'))
+    inventory = json.loads((inventory_dir/'input.json').read_text(encoding='utf-8'))
     default_selection = chosen is None
     if default_selection:
-        chosen = json.loads((INVENTORY/'next_panels.json').read_text(encoding='utf-8'))['a']['images']
+        chosen = json.loads((inventory_dir/'next_panels.json').read_text(encoding='utf-8'))['a']['images']
     if not chosen or len(chosen) != len(set(chosen)):
         raise ValueError('empty_or_duplicate_requested_images')
     old_images = {i['image']:i for i in inventory['images']}
@@ -35,7 +35,9 @@ def collect(out, *, chosen=None, stage='S3-A', max_k=8):
     source={mapping['records'][o['object_id']]:o for o in bundle['data']['objects']}
     current_images={i['image_code']:i for i in bundle['research']['images']}
     labels=bind_difficulty(json.loads((ROOT/HUMAN).read_text(encoding='utf-8-sig')),
-                           [i['image_id'] for i in current_images.values()])
+                           [i['image_id'] for i in current_images.values()],
+                           image_review_traits(bundle['data']['objects']),
+                           explicit_image_text_difficulty(bundle['data']['objects']))
     images=[]; checks=[]; notices=[]
     for im in panel['images']:
         if im['code'] not in chosen:
@@ -81,11 +83,12 @@ def collect(out, *, chosen=None, stage='S3-A', max_k=8):
             raise ValueError('record_population_drift:'+im['code'])
     write_json(out/'source_binding.json',dict(status='passed',objects=len(checks),records=checks,warnings=notices,
         source_manifest=panel['source_manifest'],
+        inventory_source=str(inventory_dir/'input.json'),
         selection=('S2 next_panels.a' if default_selection else 'S2 declared image list')+'; source coordinates from current validated bundle, not inventory statuses',
         selected_images=chosen))
     data=dict(schema='lee_tile_stage1_input_v1',images=images,plan=dict(stage=stage,max_k=max_k,
         condition='manual',gate='main_candidate',difficulty_counts=dict(Counter(i['difficulty'] for i in images)),
-        source_manifest=panel['source_manifest'],selection_source='analysis_results/research_panel_inventory_20261003/next_panels.json' if default_selection else 'source_binding.json:selected_images (S2 inventory)'))
+        source_manifest=panel['source_manifest'],selection_source=str(inventory_dir/'next_panels.json') if default_selection else 'source_binding.json:selected_images (declared inventory)'))
     write_json(out/'input.json',data)
     return data
 

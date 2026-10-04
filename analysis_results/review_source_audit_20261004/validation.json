@@ -1,0 +1,28 @@
+{
+  "schema": "review_source_audit_validation_v1",
+  "date": "2026-10-04",
+  "related_tests": {
+    "command": "python -B -m pytest tests/test_research_panel_inventory_20261003.py tests/test_lee_difficulty_20261003.py tests/test_lee_expanded_20261003.py tests/test_worker_profiles_20261003.py -q -p no:cacheprovider",
+    "passed": 13,
+    "failed": 0,
+    "coverage": ["后审图级traits优先级及pending", "同图副本冲突", "uNb-07明确原话及源漂移", "旧难度盘点被新收集器拒绝", "修正盘点接入", "历史盘点可重放", "既有Lee分组及人员消费者"]
+  },
+  "source_binding_check": {"script": "pipeline/check_bindings.py", "anomalies": 0},
+  "review_coverage_check": {"script": "check_review_coverage.py", "status": "passed"},
+  "corrected_inventory": {
+    "generator": "tools.thesis_main.analysis.research_panel_inventory_20261003",
+    "source": "analysis_results/research_input_20260929/manifest.json",
+    "output": "corrected_inventory/",
+    "annotation_inventory_unchanged": true,
+    "reference_inventory_unchanged": true,
+    "existing_image_fields_except_difficulty_unchanged": true
+  },
+  "protocol_check": {
+    "contract": "consensus_research_20260923_v1",
+    "status": "checked_no_protocol_change",
+    "basis": "落实已有审核优先级和图级/作答级职责；不改变正式资格、人员类型、投票规则、GT或坐标。"
+  },
+  "not_run": ["全量融合重算", "更新难度组的曲线汇总", "人员分类新实验", "模型推理", "浏览器或视觉GT复核"],
+  "remaining": ["旧45/136图难度分组需按新标签重新汇总", "原冻结评论表生成器尚未重建；当前通过历史原话补充入口检索"],
+  "screenshots_created": 0
+}

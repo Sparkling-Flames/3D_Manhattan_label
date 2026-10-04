@@ -295,11 +295,12 @@ def main():
     parser = argparse.ArgumentParser(__doc__)
     parser.add_argument('--out', type=Path, default=OUT)
     parser.add_argument('--input', type=Path, help='重放本目录固定input，读取相邻block.json')
+    parser.add_argument('--inventory', type=Path, default=INVENTORY, help='新运行使用的盘点目录；--input仍重放冻结名单')
     args = parser.parse_args(); out = args.out
     if (out/'design.json').exists():
         raise ValueError('output_exists_use_new_directory')
     out.mkdir(parents=True, exist_ok=True)
-    block = json.loads(((args.input.parent/'block.json') if args.input else INVENTORY/'next_panels.json').read_text(encoding='utf-8'))
+    block = json.loads(((args.input.parent/'block.json') if args.input else args.inventory/'next_panels.json').read_text(encoding='utf-8'))
     if not args.input:
         block = block['b']['blocks'][0]
     write_json(out/'design.json', dict(status='started', stage='S3-B and S4 pilot',
@@ -313,7 +314,7 @@ def main():
         write_json(out/'source_binding.json', json.loads((args.input.parent/'source_binding.json').read_text(encoding='utf-8')))
     else:
         from .lee_difficulty_20261003 import collect
-        data = collect(out, chosen=block['images'], stage='S3-B', max_k=None)
+        data = collect(out, chosen=block['images'], stage='S3-B', max_k=None, inventory_dir=args.inventory)
     run(data, block, out)
     design = json.loads((out/'design.json').read_text(encoding='utf-8'))
     write_json(out/'design.json', dict(design, status='completed'))

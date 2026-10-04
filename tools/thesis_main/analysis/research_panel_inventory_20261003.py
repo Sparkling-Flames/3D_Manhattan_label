@@ -18,9 +18,49 @@ HUMAN = 'analysis_results/candidate_selection_review_20260913_v2/用户审查原
 FEATURE = 'analysis_results/c2b_validation_static_20260802_v16/static/c2b_static_model_risk.csv'
 BILAYOUT = 'analysis_results/independent_direction_worker_review_20260908_v1/recomputed/bilayout_recomputed_per_image.csv'
 DIFFICULTIES = ('简单', '中等', '困难', '未定', '未记录')
+REVIEW_DIFFICULTIES = {'easy': '简单', 'medium': '中等', 'hard': '困难'}
+# 10/4逐条核查发现的明确等级原话；只绑定此图及完整原文，不按关键词推测其它图。
+EXPLICIT_TEXT_DIFFICULTY = {
+    'uNb9QFRL6hY_104d12b732794414a42edd37ac554bff': dict(
+        difficulty='medium',
+        comment='中等难度,存在右边柜子停止点的问题,有些人把柜子当成墙角,有些人 是标完全被挡住的实际墙角.簇1,4是柜子处就停止了',
+        updated_at='2026-09-27T03:47:39.983Z'),
+}
 
 
-def bind_difficulty(source, image_ids):
+def image_review_traits(objects):
+    """读取当前完整入口中的图级终审，不能把逐份作答难度提升为图片难度。"""
+    traits = {}
+    for obj in objects:
+        if obj['object_kind'] != 'annotation':
+            continue
+        image = obj['image_id']; value = obj['review_evidence']['image_traits']
+        if image in traits and traits[image] != value:
+            raise ValueError('inconsistent_final_image_traits:' + image)
+        traits[image] = value
+    return traits
+
+
+def explicit_image_text_difficulty(objects):
+    result = {}
+    for obj in objects:
+        image = obj['image_id']
+        if obj['object_kind'] != 'annotation' or image not in EXPLICIT_TEXT_DIFFICULTY:
+            continue
+        expected = EXPLICIT_TEXT_DIFFICULTY[image]; evidence = obj['review_evidence']
+        history = [h['record'] for h in evidence['image_review_history'] if h['source'] == 'evidence/latest.json']
+        if (evidence['image_comment'] != expected['comment'] or len(history) != 1
+                or history[0]['status'] != 'resolved'
+                or any(history[0][k] != expected[k] for k in ('comment', 'updated_at'))):
+            raise ValueError('explicit_image_difficulty_text_drift:' + image)
+        result[image] = dict(expected, status='resolved',
+            source='analysis_results/review_final_20260928/evidence/latest.json',
+            source_pointer='/image_decisions/' + image,
+            basis='逐字明确等级；已核对当前图级原话，不是一般难度词语推断')
+    return result
+
+
+def bind_difficulty(source, image_ids, reviewed_images=None, text_reviews=None):
     if source['schema'] != 'candidate_review_user_decisions_v5':
         raise ValueError('unexpected_difficulty_schema')
     labels = {}
@@ -30,7 +70,30 @@ def bind_difficulty(source, image_ids):
         if r['difficulty'] not in DIFFICULTIES[:4]:
             raise ValueError('unknown_human_difficulty')
         labels[r['image_id']] = r['difficulty']
-    return {i: labels.get(i, '未记录') for i in image_ids}
+    labels = {i: labels.get(i, '未记录') for i in image_ids}
+    for image, review in (reviewed_images or {}).items():
+        if image not in labels:
+            continue
+        level = review.get('difficulty', 'unrecorded')
+        if level == 'unrecorded':
+            continue  # 未填写该字段不撤销既有明确标签。
+        if level not in REVIEW_DIFFICULTIES:
+            raise ValueError('unknown_review_difficulty:' + image)
+        if review['status'] == 'resolved':
+            labels[image] = REVIEW_DIFFICULTIES[level]
+        elif review['status'] == 'pending':
+            if labels[image] == '未记录':
+                labels[image] = '未定'
+        else:
+            raise ValueError('unknown_image_review_status:' + image)
+    for image, review in (text_reviews or {}).items():
+        if image not in labels:
+            continue
+        trait = (reviewed_images or {}).get(image, {})
+        if trait.get('difficulty', 'unrecorded') != 'unrecorded' and trait['difficulty'] != review['difficulty']:
+            raise ValueError('conflicting_explicit_image_difficulty:' + image)
+        labels[image] = REVIEW_DIFFICULTIES[review['difficulty']]
+    return labels
 
 
 def summarize_groups(records, images):
@@ -104,7 +167,11 @@ def collect():
     bundle = load_current_bundle(); panel, mapping = project_bundle(bundle)
     current = {i['image_code']: i for i in bundle['research']['images']}
     human = json.loads((ROOT/HUMAN).read_text(encoding='utf-8-sig'))
-    labels = bind_difficulty(human, [i['image_id'] for i in current.values()])
+    image_ids = [i['image_id'] for i in current.values()]
+    reviewed_images = image_review_traits(bundle['data']['objects'])
+    text_reviews = explicit_image_text_difficulty(bundle['data']['objects'])
+    legacy_labels = bind_difficulty(human, image_ids)
+    labels = bind_difficulty(human, image_ids, reviewed_images, text_reviews)
     features, bilayout = indexed_csv(FEATURE), indexed_csv(BILAYOUT)
     sources = {mapping['records'][o['object_id']]: o for o in bundle['data']['objects']}
     images, records, references, notices = {}, [], [], []
@@ -113,7 +180,9 @@ def collect():
             continue  # 两张reference-only图只记来源覆盖，不加入259研究图。
         meta = current[im['code']]; image_id = meta['image_id']
         item = dict(image=im['code'], image_id=image_id, building=im['building'], room=im['room'],
-            difficulty=labels[image_id], oos_status=im['scene']['oos_status'],
+            difficulty=labels[image_id], difficulty_legacy=legacy_labels[image_id],
+            difficulty_later_review=reviewed_images[image_id],
+            difficulty_text_review=text_reviews.get(image_id, {}), oos_status=im['scene']['oos_status'],
             doorway_status=im['scene']['doorway_status'], review_coverage=im['scene']['coverage'],
             coarse_space=meta['room_spatial_classification']['coarse_type'], **im['review'],
             original_bev_ok=False, manual_revision_bev_ok=False, raw_n=len(im['annotations']),
@@ -146,7 +215,10 @@ def collect():
                 quality_reasons='|'.join(r['main_quality_gate']['reasons']))
             records.append(row)
     return dict(schema='research_panel_inventory_input_v1', contract_version=bundle['data']['contract_version'],
-        source_manifest=panel['source_manifest']['source_entry'], sources=dict(human=HUMAN, feature=FEATURE, bilayout=BILAYOUT),
+        source_manifest=panel['source_manifest']['source_entry'], sources=dict(human=HUMAN,
+            later_image_difficulty='current bundle data.objects[].review_evidence.image_traits (annotation objects; exact image_id)',
+            explicit_text_difficulty='EXPLICIT_TEXT_DIFFICULTY: checked whole quoted image comment, source, resolved status and timestamp; no keyword inference',
+            feature=FEATURE, bilayout=BILAYOUT),
         source_validation=bundle['validation']['status'], source_summary=bundle['data']['summary'],
         human_labels=[dict(image_id=d['image_id'], difficulty=d['difficulty']) for d in human['decisions']],
         images=list(images.values()), records=records, references=references, warnings=notices)
@@ -226,7 +298,8 @@ def build(snapshot, out):
     write_json(out/'field_contract.json', dict(schema='research_panel_inventory_v1',
         contract_version=snapshot['contract_version'],
         unit='image × condition × existing consensus gate; votes are distinct real people',
-        difficulty='Exact image_id join to retained human tags. 未定 differs from 未记录. No legacy per-answer difficulty; no propagation within rooms.',
+        difficulty='Exact image_id join. New collection overlays legacy 9/13 image tags with resolved image_traits difficulty from the current validated bundle; unrecorded does not erase a legacy label. Pending traits retain any earlier explicit label, otherwise mark 未定; their proposed value remains in difficulty_later_review. No per-answer or second-reviewer grades, room propagation, or automatic scene-to-difficulty conversion. --input faithfully replays that saved version, including historical legacy-only snapshots.',
+        difficulty_provenance='New snapshots retain difficulty_legacy, difficulty_later_review and difficulty_text_review per image. Final traits repeated across annotations must agree. Explicit text overrides are limited to individually audited exact grade statements, with full quote/source/status/time checked against current evidence; any new conflict fails. General difficult-scene language is retained as qualitative evidence, not automatically graded. Review coverage does not imply every response or every dimension was individually confirmed.',
         curve_ready='At least one upstream independent candidate and every candidate has computable declared BEV. A failure keeps original N and blocks this full-roster curve; no silent deletion.',
         reference_quality_compatible='main_candidate and every consensus candidate already has upstream candidate_pending_geometry quality status; descriptive screening, not new formal eligibility or visual GT validation.',
         worker_overlap='Per condition: shared images with independent, upstream quality-candidate, BEV-computable responses and computable original GT. Zero-overlap pairs retained; pairwise overlap is not a common multi-person panel.',

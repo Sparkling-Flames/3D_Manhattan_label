@@ -1,0 +1,467 @@
+{
+  "schema": "difficulty_source_catalog_audit_v1",
+  "sources": [
+    {
+      "source": "analysis_results/candidate_selection_review_20260913_v2/用户审查原始记录.json",
+      "schema": "candidate_review_user_decisions_v5",
+      "difficulty_like_fields": 112,
+      "value_counts": {
+        "中等": 41,
+        "简单": 49,
+        "困难": 16,
+        "未定": 6
+      },
+      "field_examples": [
+        {
+          "pointer": "/decisions/0/difficulty",
+          "value": "中等"
+        },
+        {
+          "pointer": "/decisions/1/difficulty",
+          "value": "中等"
+        },
+        {
+          "pointer": "/decisions/2/difficulty",
+          "value": "中等"
+        },
+        {
+          "pointer": "/decisions/3/difficulty",
+          "value": "中等"
+        }
+      ]
+    },
+    {
+      "source": "analysis_results/candidate_selection_review_20260913_v1/用户审查原始记录.json",
+      "schema": "candidate_review_user_decisions_v5",
+      "difficulty_like_fields": 112,
+      "value_counts": {
+        "中等": 41,
+        "简单": 49,
+        "困难": 16,
+        "未定": 6
+      },
+      "field_examples": [
+        {
+          "pointer": "/decisions/0/difficulty",
+          "value": "中等"
+        },
+        {
+          "pointer": "/decisions/1/difficulty",
+          "value": "中等"
+        },
+        {
+          "pointer": "/decisions/2/difficulty",
+          "value": "中等"
+        },
+        {
+          "pointer": "/decisions/3/difficulty",
+          "value": "中等"
+        }
+      ]
+    },
+    {
+      "source": "analysis_results/scene_image_exploration_20260910_v1/user_review_20260912_v3.json",
+      "schema": "scene_open_layout_user_review_v3",
+      "difficulty_like_fields": 0,
+      "value_counts": {},
+      "field_examples": []
+    },
+    {
+      "source": "analysis_results/scene_image_exploration_20260910_v1/user_pair_review_resume_v1.json",
+      "schema": "same_room_pair_user_review_v1",
+      "difficulty_like_fields": 1268,
+      "value_counts": {
+        "预期相近": 454,
+        "待定": 616,
+        "存在明显差异": 198
+      },
+      "field_examples": [
+        {
+          "pointer": "/pairs/0/difficulty_similarity",
+          "value": "预期相近"
+        },
+        {
+          "pointer": "/pairs/0/prefill/difficulty_similarity",
+          "value": "预期相近"
+        },
+        {
+          "pointer": "/pairs/0/current/difficulty_similarity",
+          "value": "预期相近"
+        },
+        {
+          "pointer": "/pairs/1/difficulty_similarity",
+          "value": "待定"
+        }
+      ]
+    },
+    {
+      "source": "analysis_results/scene_image_exploration_20260910_v1/user_group_review_20260912.json",
+      "schema": "same_room_pair_user_review_v1",
+      "difficulty_like_fields": 1856,
+      "value_counts": {
+        "预期相近": 567,
+        "待定": 935,
+        "存在明显差异": 262,
+        "可能出现小幅歧义": 92
+      },
+      "field_examples": [
+        {
+          "pointer": "/pairs/0/difficulty_similarity",
+          "value": "预期相近"
+        },
+        {
+          "pointer": "/pairs/0/prefill/difficulty_similarity",
+          "value": "预期相近"
+        },
+        {
+          "pointer": "/pairs/0/current/difficulty_similarity",
+          "value": "预期相近"
+        },
+        {
+          "pointer": "/pairs/1/difficulty_similarity",
+          "value": "待定"
+        }
+      ]
+    },
+    {
+      "source": "analysis_results/spatial_dimensions_review_20260913_v2/对话确认_粗类与OOS.json",
+      "schema": null,
+      "difficulty_like_fields": 0,
+      "value_counts": {},
+      "field_examples": []
+    },
+    {
+      "source": "analysis_results/human_review_reconciliation_20260918/用户_39图文字审核_原始.json",
+      "schema": "image_difficulty_user_review_v1",
+      "difficulty_like_fields": 36,
+      "value_counts": {
+        "": 36
+      },
+      "field_examples": [
+        {
+          "pointer": "/reviews/0/review/grade",
+          "value": ""
+        },
+        {
+          "pointer": "/reviews/1/review/grade",
+          "value": ""
+        },
+        {
+          "pointer": "/reviews/2/review/grade",
+          "value": ""
+        },
+        {
+          "pointer": "/reviews/3/review/grade",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "source": "analysis_results/human_review_reconciliation_20260918/一正_39图审核_原始.json",
+      "schema": "image_difficulty_user_review_v1",
+      "difficulty_like_fields": 36,
+      "value_counts": {
+        "简单": 13,
+        "": 6,
+        "中等": 14,
+        "困难候选": 3
+      },
+      "field_examples": [
+        {
+          "pointer": "/reviews/0/review/grade",
+          "value": "简单"
+        },
+        {
+          "pointer": "/reviews/1/review/grade",
+          "value": "简单"
+        },
+        {
+          "pointer": "/reviews/2/review/grade",
+          "value": ""
+        },
+        {
+          "pointer": "/reviews/3/review/grade",
+          "value": "中等"
+        }
+      ]
+    },
+    {
+      "source": "analysis_results/human_review_reconciliation_20260918/用户_39图最终裁决_原始.json",
+      "schema": "key39_user_adjudication_v1",
+      "difficulty_like_fields": 111,
+      "value_counts": {
+        "": 42,
+        "简单": 13,
+        "None": 39,
+        "中等": 14,
+        "困难候选": 3
+      },
+      "field_examples": [
+        {
+          "pointer": "/evidence/cases/0/reviews/user_condition_records/0/review/grade",
+          "value": ""
+        },
+        {
+          "pointer": "/evidence/cases/0/reviews/peer_condition_records/0/review/grade",
+          "value": "简单"
+        },
+        {
+          "pointer": "/evidence/cases/0/reviews/final_difficulty_adjudication",
+          "value": null
+        },
+        {
+          "pointer": "/evidence/cases/1/reviews/user_condition_records/0/review/grade",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "source": "analysis_results/human_review_reconciliation_20260918/用户_11图采集采用_原始.json",
+      "schema": "collection_adoption_review_v1",
+      "difficulty_like_fields": 0,
+      "value_counts": {},
+      "field_examples": []
+    },
+    {
+      "source": "analysis_results/cluster_review_extra_20260919/用户_12图审核_原始.json",
+      "schema": "extra_cluster_review_20260919_v1",
+      "difficulty_like_fields": 0,
+      "value_counts": {},
+      "field_examples": []
+    },
+    {
+      "source": "analysis_results/clustering_numeric_received_20260920/evidence/user_review_16.json",
+      "schema": "clustering_release_visual_review_v1",
+      "difficulty_like_fields": 2,
+      "value_counts": {
+        "None": 2
+      },
+      "field_examples": [
+        {
+          "pointer": "/evidence/9/user_original/2/records/1/reviews/final_difficulty_adjudication",
+          "value": null
+        },
+        {
+          "pointer": "/evidence/11/user_original/2/records/0/reviews/final_difficulty_adjudication",
+          "value": null
+        }
+      ]
+    },
+    {
+      "source": "analysis_results/cluster_screen_reviewed_20260922/用户审核_原始.json",
+      "schema": "clustering_release_visual_review_v1",
+      "difficulty_like_fields": 0,
+      "value_counts": {},
+      "field_examples": []
+    },
+    {
+      "source": "analysis_results/new_manual_analysis_20260921/用户_八组采集采用_原始.json",
+      "schema": "collection_adoption_review_v1",
+      "difficulty_like_fields": 47,
+      "value_counts": {
+        "可能出现小幅歧义": 5,
+        "未定": 39,
+        "预期相近": 3
+      },
+      "field_examples": [
+        {
+          "pointer": "/source_evidence/0/previous/difficulty_similarity",
+          "value": "可能出现小幅歧义"
+        },
+        {
+          "pointer": "/source_evidence/0/images/0/difficulty",
+          "value": "未定"
+        },
+        {
+          "pointer": "/source_evidence/0/images/1/difficulty",
+          "value": "未定"
+        },
+        {
+          "pointer": "/source_evidence/0/images/2/difficulty",
+          "value": "未定"
+        }
+      ]
+    },
+    {
+      "source": "analysis_results/new_manual_reviewed_20260921/evidence/用户审核_原始.json",
+      "schema": "clustering_release_visual_review_v1",
+      "difficulty_like_fields": 0,
+      "value_counts": {},
+      "field_examples": []
+    },
+    {
+      "source": "analysis_results/review_reconciliation_20260925/evidence/user_review.json",
+      "schema": "consensus_visual_review_decisions_v1",
+      "difficulty_like_fields": 0,
+      "value_counts": {},
+      "field_examples": []
+    },
+    {
+      "source": "analysis_results/review_reconciliation_20260925/evidence/yizheng_review.json",
+      "schema": "consensus_visual_review_decisions_v1",
+      "difficulty_like_fields": 0,
+      "value_counts": {},
+      "field_examples": []
+    },
+    {
+      "source": "analysis_results/review_return_20260927/evidence/review_return_original.json",
+      "schema": "review_reconciliation_decisions_v1",
+      "difficulty_like_fields": 0,
+      "value_counts": {},
+      "field_examples": []
+    },
+    {
+      "source": "analysis_results/review_return_20260927/evidence/second_review.json",
+      "schema": "review_reconciliation_decisions_v1",
+      "difficulty_like_fields": 0,
+      "value_counts": {},
+      "field_examples": []
+    },
+    {
+      "source": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+      "schema": "review_return_decisions_v2",
+      "difficulty_like_fields": 88,
+      "value_counts": {
+        "unrecorded": 54,
+        "easy": 20,
+        "medium": 10,
+        "hard": 4
+      },
+      "field_examples": [
+        {
+          "pointer": "/traits/annotation:b11846422ee8df2c/difficulty",
+          "value": "unrecorded"
+        },
+        {
+          "pointer": "/traits/annotation:43fca0253b1b4fff/difficulty",
+          "value": "unrecorded"
+        },
+        {
+          "pointer": "/traits/annotation:b62a4df9e1645fe7/difficulty",
+          "value": "unrecorded"
+        },
+        {
+          "pointer": "/traits/annotation:717840fe8221eba6/difficulty",
+          "value": "unrecorded"
+        }
+      ]
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "schema": "consensus_visual_review_decisions_v1",
+      "difficulty_like_fields": 0,
+      "value_counts": {},
+      "field_examples": []
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/yizheng.json",
+      "schema": "consensus_visual_review_decisions_v1",
+      "difficulty_like_fields": 0,
+      "value_counts": {},
+      "field_examples": []
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/second.json",
+      "schema": "review_reconciliation_decisions_v1",
+      "difficulty_like_fields": 0,
+      "value_counts": {},
+      "field_examples": []
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/previous_return.json",
+      "schema": "review_return_decisions_v2",
+      "difficulty_like_fields": 88,
+      "value_counts": {
+        "unrecorded": 54,
+        "easy": 20,
+        "medium": 10,
+        "hard": 4
+      },
+      "field_examples": [
+        {
+          "pointer": "/traits/annotation:b11846422ee8df2c/difficulty",
+          "value": "unrecorded"
+        },
+        {
+          "pointer": "/traits/annotation:43fca0253b1b4fff/difficulty",
+          "value": "unrecorded"
+        },
+        {
+          "pointer": "/traits/annotation:b62a4df9e1645fe7/difficulty",
+          "value": "unrecorded"
+        },
+        {
+          "pointer": "/traits/annotation:717840fe8221eba6/difficulty",
+          "value": "unrecorded"
+        }
+      ]
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "schema": "review_return_decisions_v2",
+      "difficulty_like_fields": 91,
+      "value_counts": {
+        "unrecorded": 57,
+        "easy": 20,
+        "medium": 10,
+        "hard": 4
+      },
+      "field_examples": [
+        {
+          "pointer": "/traits/annotation:b11846422ee8df2c/difficulty",
+          "value": "unrecorded"
+        },
+        {
+          "pointer": "/traits/annotation:43fca0253b1b4fff/difficulty",
+          "value": "unrecorded"
+        },
+        {
+          "pointer": "/traits/annotation:b62a4df9e1645fe7/difficulty",
+          "value": "unrecorded"
+        },
+        {
+          "pointer": "/traits/annotation:717840fe8221eba6/difficulty",
+          "value": "unrecorded"
+        }
+      ]
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/continuation.json",
+      "schema": "review_return_decisions_v2",
+      "difficulty_like_fields": 4,
+      "value_counts": {
+        "easy": 1,
+        "unrecorded": 1,
+        "medium": 2
+      },
+      "field_examples": [
+        {
+          "pointer": "/traits/image:S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e/difficulty",
+          "value": "easy"
+        },
+        {
+          "pointer": "/traits/annotation:4283c99baaf5b8a1dd84/difficulty",
+          "value": "unrecorded"
+        },
+        {
+          "pointer": "/traits/image:uNb9QFRL6hY_6a500a9a43a340eb817c58bb084327fe/difficulty",
+          "value": "medium"
+        },
+        {
+          "pointer": "/traits/image:uNb9QFRL6hY_a372582c11864f31a9dd174e4a0ae6ad/difficulty",
+          "value": "medium"
+        }
+      ]
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/coverage.json",
+      "schema": "coverage_followup_decisions_v1",
+      "difficulty_like_fields": 0,
+      "value_counts": {},
+      "field_examples": []
+    }
+  ],
+  "exclusions": [
+    "AI suggested candidate/risk/grade; same-room difficulty_similarity is relative not absolute; per-annotation self-reported difficulty; empty final adjudication; inherited source_evidence is not new user decision"
+  ]
+}

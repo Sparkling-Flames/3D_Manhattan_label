@@ -1,0 +1,725 @@
+{
+  "schema": "difficulty_comment_retrieval_audit_v1",
+  "meaning": "原始文本关键词检索，仅供来源核查；简单标注、中等空间、范围条件句不能自动转图级等级。",
+  "comments": [
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/7y3sRwLe3Va_a775c7668ca9419daaf506e76851821e/comment",
+      "image_id": "7y3sRwLe3Va_a775c7668ca9419daaf506e76851821e",
+      "image": "7y3sRwLe3Va-18",
+      "scope": "image_comment",
+      "text": "gt是标注了整个空间,簇1是只标注了会客厅,这种标法勉强可以标,但是其他的标注者的看法都不同,标注范围也不同,gt标的也不好,所以归入门洞交界且难标的类别",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/7y3sRwLe3Va_b47475370e824b9e923a4a96bc98e1e3/comment",
+      "image_id": "7y3sRwLe3Va_b47475370e824b9e923a4a96bc98e1e3",
+      "image": "7y3sRwLe3Va-21",
+      "scope": "image_comment",
+      "text": "这图严格来说应该算oos,因为卧室的天花板是往上凸的,存在多个平面,但是这里可以只标注站在走廊区域的天花板平面高度,这样是完全可以标注的,而且目前所有标注者都是按照这个标准来标,所以暂时不归入oos. 这图是难图,同时存在只标注走廊这个区域的可能性(我印象里是见到这种标注的,但是目前的标注结果里没有)",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b/comment",
+      "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+      "image": "B6ByNegPMKs-47",
+      "scope": "image_comment",
+      "text": "这图很难,处于走廊的位置,且空间细节较难标",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/S9hNv5qa7GM_ed36c0b595de42f0a4e13ba5d332814a/comment",
+      "image_id": "S9hNv5qa7GM_ed36c0b595de42f0a4e13ba5d332814a",
+      "image": "S9hNv5qa7GM-21",
+      "scope": "image_comment",
+      "text": "这图角落有点难标",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65/comment",
+      "image_id": "UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+      "image": "UwV83HsGsw3-09",
+      "scope": "image_comment",
+      "text": "属于很难的图片,gt的标注范围是最全的,但是包含了很大块完全看不见的地方.簇1的标注都是错的;簇4是最小的标注区域(但是可能不是完全的正交,有点小问题);簇6是最正确和gt最像的,其次是簇8",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/VFuaQ6m2Qom_ad4c387f8175498491966703c8441e0d/comment",
+      "image_id": "VFuaQ6m2Qom_ad4c387f8175498491966703c8441e0d",
+      "image": "VFuaQ6m2Qom-07",
+      "scope": "image_comment",
+      "text": "属于较难的图片",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/VFuaQ6m2Qom_5fb269a812f349b4bc2ad5dfac000b85/comment",
+      "image_id": "VFuaQ6m2Qom_5fb269a812f349b4bc2ad5dfac000b85",
+      "image": "VFuaQ6m2Qom-04",
+      "scope": "image_comment",
+      "text": "属于较难的图片",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/VFuaQ6m2Qom_f0be18aa2f1d4aa2b6adf355a86f34b8/comment",
+      "image_id": "VFuaQ6m2Qom_f0be18aa2f1d4aa2b6adf355a86f34b8",
+      "image": "VFuaQ6m2Qom-10",
+      "scope": "image_comment",
+      "text": "属于较难的图片",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/e9zR4mvMWw7_4fb8c9be319e4784b4b66f9ca5d839ab/comment",
+      "image_id": "e9zR4mvMWw7_4fb8c9be319e4784b4b66f9ca5d839ab",
+      "image": "e9zR4mvMWw7-19",
+      "scope": "image_comment",
+      "text": "本图中等偏难,簇2,4,6,8的标注方法是对的,但是我不知道为啥分了这么多簇.大部分人想标的空间是和gt一致的,但是很多人都漏标了gt 的p3,p4整个位置.簇3给出了一个很奇怪的标注空间,标的特别小",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/jtcxE69GiFV_6723e18211d244f8b17ced91aae64d99/comment",
+      "image_id": "jtcxE69GiFV_6723e18211d244f8b17ced91aae64d99",
+      "image": "jtcxE69GiFV-17",
+      "scope": "image_comment",
+      "text": "这图遮挡较多,较难,而且gt标的是错误的,包括模型标的p3,p4这对点,是错误把门当成墙了,而且他们都忽略了墙面的的柱子凸起",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/q9vSo1VnCiC_dc873df7717c43888a1cff13713fe146/comment",
+      "image_id": "q9vSo1VnCiC_dc873df7717c43888a1cff13713fe146",
+      "image": "q9vSo1VnCiC-30",
+      "scope": "image_comment",
+      "text": "存在不同的标注空间,gt是标注了连廊的空间,但是墙角的细节没标注.簇1是最简单的标注,簇2的连廊的细节空间是标注的最好的,其余的或多或少都有点问题",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/q9vSo1VnCiC_e74e843601574864a14517f990c748a0/comment",
+      "image_id": "q9vSo1VnCiC_e74e843601574864a14517f990c748a0",
+      "image": "q9vSo1VnCiC-32",
+      "scope": "image_comment",
+      "text": "存在不同空间的标法,但是如果要标马桶所在的空间会很难标",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/rPc6DW4iMge_0dfe61800cc540db8e25c1738bc4b8ff/comment",
+      "image_id": "rPc6DW4iMge_0dfe61800cc540db8e25c1738bc4b8ff",
+      "image": "rPc6DW4iMge-05",
+      "scope": "image_comment",
+      "text": "这图很难很难标,而且图右边玻璃洗澡的区域存在不同的标法",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5/comment",
+      "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+      "image": "rPc6DW4iMge-06",
+      "scope": "image_comment",
+      "text": "这图很难标,而且左边的玻璃浴室处存在不同的标法,gt标的也不是完美,他标的是玻璃浴室里面的区域,但是梳妆台和玻璃连接的区域忽略了部分细节",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/rPc6DW4iMge_fbc169773c954580baea6d2798c0d486/comment",
+      "image_id": "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+      "image": "rPc6DW4iMge-22",
+      "scope": "image_comment",
+      "text": "这图很难,而且右边的玻璃浴室 存在不同的标注方法,gt是标里面的墙角,有些人会标外面的玻璃",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/uNb9QFRL6hY_104d12b732794414a42edd37ac554bff/comment",
+      "image_id": "uNb9QFRL6hY_104d12b732794414a42edd37ac554bff",
+      "image": "uNb9QFRL6hY-07",
+      "scope": "image_comment",
+      "text": "中等难度,存在右边柜子停止点的问题,有些人把柜子当成墙角,有些人 是标完全被挡住的实际墙角.簇1,4是柜子处就停止了",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/uNb9QFRL6hY_2ed0e171a7c34f17a85363923a26ab98/comment",
+      "image_id": "uNb9QFRL6hY_2ed0e171a7c34f17a85363923a26ab98",
+      "image": "uNb9QFRL6hY-18",
+      "scope": "image_comment",
+      "text": "这图很难,而且左侧玻璃洗澡区域存在不同的标法,gt是标玻璃外围,一些人是标玻璃内实际的墙角,还有有些人没有正确标注这个地方,直接忽略了部分玻璃区域",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/uNb9QFRL6hY_5b62816d9cf94f17ae166291822ea9ab/comment",
+      "image_id": "uNb9QFRL6hY_5b62816d9cf94f17ae166291822ea9ab",
+      "image": "uNb9QFRL6hY-26",
+      "scope": "image_comment",
+      "text": "这图属于困难图,一些人会标漏细节,主要空间歧义是在右侧的玻璃浴室处,有些人标内侧的墙角,gt是标外侧的玻璃",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/uNb9QFRL6hY_9f199750b00c4f5484a546d79e06a0f8/comment",
+      "image_id": "uNb9QFRL6hY_9f199750b00c4f5484a546d79e06a0f8",
+      "image": "uNb9QFRL6hY-50",
+      "scope": "image_comment",
+      "text": "这图很难,存在不同的标法,主要还是在玻璃洗澡区域,这次gt是标注到了里面的墙角,有些人会标注外面的玻璃. 还有一个歧义点是,有些人会标注马桶所在的区域,还有遗漏完全被墙遮挡住的浴缸所在区域的墙角,还有梳妆台所在的地方的墙面变化也容易被简化/忽略",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/uNb9QFRL6hY_ba24e5a57ef34c6dbc0458ed4c1e701d/comment",
+      "image_id": "uNb9QFRL6hY_ba24e5a57ef34c6dbc0458ed4c1e701d",
+      "image": "uNb9QFRL6hY-60",
+      "scope": "image_comment",
+      "text": "这图较难,图片左右两边连着的其实是玻璃洗澡区域,很多人都忽略了,存在不同的标注范围",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14/comment",
+      "image_id": "uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14",
+      "image": "uNb9QFRL6hY-88",
+      "scope": "image_comment",
+      "text": "这图很困难,存在不同的标注区域,主要还是玻璃洗澡区域,标外面还是标里面的墙角,还有是否标马桶区域,这个gt标的范围很大,把左右两侧的走廊都标了,目前没有标注者这样标",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd/comment",
+      "image_id": "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+      "image": "wc2JMjhGNzB-26",
+      "scope": "image_comment",
+      "text": "这图较难,存在不同的标注空间范围,有些人是会把走廊区域标注,但是我觉得没必要,gt是没有标的;还有很多人忽略了左侧墙面的变化",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/yqstnuAEVhm_08e2145b15fc4d2497c084af41dc7089/comment",
+      "image_id": "yqstnuAEVhm_08e2145b15fc4d2497c084af41dc7089",
+      "image": "yqstnuAEVhm-01",
+      "scope": "image_comment",
+      "text": "这图还是有点难度的,因为左边的墙面变化和最右边很不显眼的墙面变化,目前的5个标注者都没有发现,gt的是对的",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/yqstnuAEVhm_48447297e8444171a5db34ccf38bc229/comment",
+      "image_id": "yqstnuAEVhm_48447297e8444171a5db34ccf38bc229",
+      "image": "yqstnuAEVhm-09",
+      "scope": "image_comment",
+      "text": "这图较难,壁炉那里有些人是选择不标的,gt的标法肯定是最严谨的",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/yqstnuAEVhm_9de98503fd994452b627cdcc7a7d47b2/comment",
+      "image_id": "yqstnuAEVhm_9de98503fd994452b627cdcc7a7d47b2",
+      "image": "yqstnuAEVhm-25",
+      "scope": "image_comment",
+      "text": "这图确实有些人会忽略右边凸起的地方,但是因为右边的凸起把后面的墙角给挡住了,有点难标的.gt的范围还是最准确的.簇9是错的标注",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/yqstnuAEVhm_e3face7b2196414d95ed97151aa13058/comment",
+      "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+      "image": "yqstnuAEVhm-31",
+      "scope": "image_comment",
+      "text": "这个视角标注很难,标注者中也存在标注最小空间的情况(簇2).但是标注这个最小空间几乎没有标房间里的大部分区域.\ngt的标注是最严谨完美的,有些人也会忽略壁炉所在的墙角.左侧墙角被完全遮挡,这特别难标,所以就算像标注完整房间,也会出现歧义,mp3d原始的gt是标注这个地方有些遗漏的,直接忽略这折叠的墙面",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65/comment",
+      "image_id": "yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65",
+      "image": "yqstnuAEVhm-32",
+      "scope": "image_comment",
+      "text": "这图很难,标注空间范围不同,原始MP3d的是标了小隔间的区域(目前没有标注者标那里),之后壁炉有很多标注者会忽略,右边那复杂的墙角部分人也会简化/忽略.我修改过后的gt,我也忽略了最靠近门口的那一小块区域,提前停止了",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b/comment",
+      "image_id": "zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b",
+      "image": "zsNo4HB9uLZ-05",
+      "scope": "image_comment",
+      "text": "gt是肯定错的,但是因为这个门挡住了太多空间细节,标注有难度",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/new_95_3654_7089_W037/comment",
+      "image_id": "B6ByNegPMKs_d19d2ae4bddf4445a3c623edc0346937",
+      "image": "B6ByNegPMKs-42",
+      "object_id": "new_95_3654_7089_W037",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "这是在门洞交界处,本身就比较难. 范围和细节没有标好,  标的空间贼奇怪.但是都是标在墙角的,",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/new_95_3654_7259_W034/comment",
+      "image_id": "B6ByNegPMKs_d19d2ae4bddf4445a3c623edc0346937",
+      "image": "B6ByNegPMKs-42",
+      "object_id": "new_95_3654_7259_W034",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "这是在门洞交界处,本身就比较难. 范围和细节没有标好,  标的空间贼奇怪.但是都是标在墙角的,",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/11f19b08afaff69c9e6a/comment",
+      "image_id": "X7HyMhZNoso_2b16acff0dc042a1a75816a1fbd0a302",
+      "image": "X7HyMhZNoso-07",
+      "object_id": "11f19b08afaff69c9e6a",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "这图确实比较难标,他这个标注的都是墙角,但是他标注的细节和空间都不好",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/f4b7f477de2247b38b2d/comment",
+      "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+      "image": "B6ByNegPMKs-47",
+      "object_id": "f4b7f477de2247b38b2d",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "这图确实很难,但是他细节缺漏好多,这个拍摄的角度,处于 走廊 横和竖的交界处",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/81cd8395dbe20dc23478/comment",
+      "image_id": "uNb9QFRL6hY_ba24e5a57ef34c6dbc0458ed4c1e701d",
+      "image": "uNb9QFRL6hY-60",
+      "object_id": "81cd8395dbe20dc23478",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "高难度图,配对p9-10一组,顺序也要调整",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/6d67a30583e6d492/comment",
+      "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+      "image": "yqstnuAEVhm-31",
+      "object_id": "6d67a30583e6d492",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "这图本身就属于很难的图片,这标注范围也略有不同",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/8d6f18bc98ea1938/comment",
+      "image_id": "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+      "image": "rPc6DW4iMge-22",
+      "object_id": "8d6f18bc98ea1938",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "这图确实很难,但是它标的也有点抽象",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/a3975721377143bb/comment",
+      "image_id": "yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65",
+      "image": "yqstnuAEVhm-32",
+      "object_id": "a3975721377143bb",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "这图很难,但是p7这个点标的过高,但是我也发现其他人top y 喜欢标的高",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/8f3735d531f44f7b44c8/comment",
+      "image_id": "uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14",
+      "image": "uNb9QFRL6hY-88",
+      "object_id": "8f3735d531f44f7b44c8",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "这图是难图,这是标注范围和细节差异,但是细节标的差",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/94c06b2d1bd3e71f/comment",
+      "image_id": "yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65",
+      "image": "yqstnuAEVhm-32",
+      "object_id": "94c06b2d1bd3e71f",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "难图,和001一样top y 标的高",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/2431f1da19aaa950/comment",
+      "image_id": "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+      "image": "rPc6DW4iMge-22",
+      "object_id": "2431f1da19aaa950",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "难图,他标注的范围和细节不太同,也标的不太好",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/e07cd54978722b1e/comment",
+      "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+      "image": "rPc6DW4iMge-06",
+      "object_id": "e07cd54978722b1e",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "这图比较难,他标注的细节有误,但是勉强可以使用,漏标了很多左边的点",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/0657f6415220d28c/comment",
+      "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+      "image": "yqstnuAEVhm-31",
+      "object_id": "0657f6415220d28c",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "这图很难,但是他标的确实也不咋地",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/d782001d4fc8ead022db/comment",
+      "image_id": "pa4otMbVnkk_48321c1bb20244f1b43b2c41b4dc9657",
+      "image": "pa4otMbVnkk-10",
+      "object_id": "d782001d4fc8ead022db",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "和gt 有些范围上的差异,这图中等偏难,标的很不错了",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/1241f308b7f478aaf10d/comment",
+      "image_id": "wc2JMjhGNzB_1d8917d25abb4a77a0da9583dc82c17c",
+      "image": "wc2JMjhGNzB-14",
+      "object_id": "1241f308b7f478aaf10d",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "这图确实比较难标,没有理解p3 p4的意思,w27好像标的更离谱,",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/3b9e797620fb7dd9/comment",
+      "image_id": "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+      "image": "rPc6DW4iMge-22",
+      "object_id": "3b9e797620fb7dd9",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "难图,标的还行",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/new_94_3636_7116_W036/comment",
+      "image_id": "uNb9QFRL6hY_c6410f47ad754d6cbd890ba7dff8b449",
+      "image": "uNb9QFRL6hY-66",
+      "object_id": "new_94_3636_7116_W036",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "这图算是难图,他标的细节空间略有不同,主要是玻璃罩着的洗澡区域的不同,还有最左边的p15 ,16,这对点我完全不知道他在标什么",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/new_94_3635_7115_W036/comment",
+      "image_id": "uNb9QFRL6hY_b98c9460586e4f138658181461df9f51",
+      "image": "uNb9QFRL6hY-59",
+      "object_id": "new_94_3635_7115_W036",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "同图,这图比较难,他标的也 有点问题",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/new_94_3626_7322_W030/comment",
+      "image_id": "uNb9QFRL6hY_5b62816d9cf94f17ae166291822ea9ab",
+      "image": "uNb9QFRL6hY-26",
+      "object_id": "new_94_3626_7322_W030",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "这图比较难, 和gt 是有个 标注小空间的不同",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/10e91df094c576440242/comment",
+      "image_id": "yqstnuAEVhm_48447297e8444171a5db34ccf38bc229",
+      "image": "yqstnuAEVhm-09",
+      "object_id": "10e91df094c576440242",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "这图较难,他标注空间有小幅度的不同",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/4f5b58a8268243d50888/comment",
+      "image_id": "VFuaQ6m2Qom_f0be18aa2f1d4aa2b6adf355a86f34b8",
+      "image": "VFuaQ6m2Qom-10",
+      "object_id": "4f5b58a8268243d50888",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "这图比较难,但是他这标的多出来的两对点我没看懂. p5 p6,p11 p12",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/0306cba337eb984110ee/comment",
+      "image_id": "uNb9QFRL6hY_ba24e5a57ef34c6dbc0458ed4c1e701d",
+      "image": "uNb9QFRL6hY-60",
+      "object_id": "0306cba337eb984110ee",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "这图较难,范围和细节略有不同,",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/new_95_3662_6989_W035/comment",
+      "image_id": "jh4fc5c5qoQ_77e6cfabf32d46fc9398ce824843adaa",
+      "image": "jh4fc5c5qoQ-09",
+      "object_id": "new_95_3662_6989_W035",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "门洞交界,gt的标注特别复杂,空间也不同",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/f40efaca8c5d3bf1/comment",
+      "image_id": "UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+      "image": "UwV83HsGsw3-09",
+      "object_id": "f40efaca8c5d3bf1",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "这图比较难,但是这个人标的也有点抽象了,没太看懂",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/9cab10e73212c27f/comment",
+      "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+      "image": "rPc6DW4iMge-06",
+      "object_id": "9cab10e73212c27f",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "图片很难,这个标的很不错,他标注的范围略微与gt不同. 玻璃浴室那里,他标的是外侧玻璃,gt标的是内侧墙壁.属于两种空间标法",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/c2176d956a2b8b97e6b8/comment",
+      "image_id": "VFuaQ6m2Qom_5fb269a812f349b4bc2ad5dfac000b85",
+      "image": "VFuaQ6m2Qom-04",
+      "object_id": "c2176d956a2b8b97e6b8",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "这图gt 标的特别复杂且精细,不一定特别合适. 这人标的勉强能看,虽然有些细节处没有标好",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/new_94_3626_7356_W032/comment",
+      "image_id": "uNb9QFRL6hY_5b62816d9cf94f17ae166291822ea9ab",
+      "image": "uNb9QFRL6hY-26",
+      "object_id": "new_94_3626_7356_W032",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "难图,和gt标的玻璃浴缸的那个位置空间不同",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/5e9e9d9845545debf1db/comment",
+      "image_id": "zsNo4HB9uLZ_aabf649f606a48a1b16d5bdcd5970602",
+      "image": "zsNo4HB9uLZ-13",
+      "object_id": "5e9e9d9845545debf1db",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "他和gt都是标注了整个房间,包括左右两边的区域,但是gt 在左边的区域凸出部分标注的特别严谨,该标注者只是简单标注.我看其他的标注者只是标注中间的房间.这图存在不同的标注空间",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/079756c7117560ae28f4/comment",
+      "image_id": "jh4fc5c5qoQ_4547d37b305e41bdad0de45ade6971ca",
+      "image": "jh4fc5c5qoQ-04",
+      "object_id": "079756c7117560ae28f4",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "gt 标的极其细致,这图算比较难标的,这人相比gt 也只是左右两边的区域的细节没标.w001是直接不标左右两边的区域,截止点不同. ",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/7231fd59d0668aa1/comment",
+      "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+      "image": "yqstnuAEVhm-31",
+      "object_id": "7231fd59d0668aa1",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "标的范围一致,就是细节 有点偏差,不过已经很不错了,这图很难",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/238409b29552f79f4582/comment",
+      "image_id": "jh4fc5c5qoQ_855bc326ad174253b57626daf123c608",
+      "image": "jh4fc5c5qoQ-10",
+      "object_id": "238409b29552f79f4582",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "这图很难标,和gt 比差了点细节,空间区域略有缺漏.他想标的空间区域和gt差不多,但是少了一点点. w11就是标注的空间区域比gt少,在门那里停止了.",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/00c60f620f2c87cd54da/comment",
+      "image_id": "VFuaQ6m2Qom_ad4c387f8175498491966703c8441e0d",
+      "image": "VFuaQ6m2Qom-07",
+      "object_id": "00c60f620f2c87cd54da",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "细节大致都标到了,但是还是有一点点小瑕疵,这图确实难标",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/d5c88ef7632f0c3ce88f/comment",
+      "image_id": "7y3sRwLe3Va_112edb40f34e470da3a5b04599e71211",
+      "image": "7y3sRwLe3Va-03",
+      "object_id": "d5c88ef7632f0c3ce88f",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "这图中等偏难,但是他标的很奇怪",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/user.json",
+      "pointer": "/decisions/955fdd77aab2e02c77b7/comment",
+      "image_id": "VFuaQ6m2Qom_ad4c387f8175498491966703c8441e0d",
+      "image": "VFuaQ6m2Qom-07",
+      "object_id": "955fdd77aab2e02c77b7",
+      "scope": "user_annotation_comment_about_image_or_answer",
+      "text": "相比gt,右边的细节没有标完全,其他的地方细节有些忽略,但是已经算不错的了,这图难",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/review_final_20260928/evidence/yizheng.json",
+      "pointer": "/decisions/2385c7af67eeea4e/comment",
+      "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+      "image": "q9vSo1VnCiC-13",
+      "object_id": "2385c7af67eeea4e",
+      "scope": "yizheng_annotation_comment_about_image_or_answer",
+      "text": "比较简单的标了",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/human_review_reconciliation_20260918/用户_39图文字审核_原始.json",
+      "pointer": "/image_notes/1/note",
+      "image_id": "uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62",
+      "image": "uNb9QFRL6hY-40",
+      "scope": "user_image_note",
+      "text": "这图有个楼梯的开口,但是一般不会标那里,主要是左边的墙角,是阶梯型的,不注意很容易遗漏, 其实所有人都没有标好.单人标法是错的",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/human_review_reconciliation_20260918/用户_39图文字审核_原始.json",
+      "pointer": "/image_notes/2/note",
+      "image_id": "uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97",
+      "image": "uNb9QFRL6hY-45",
+      "scope": "user_image_note",
+      "text": "右侧有个 阶梯通向门口,更右侧的墙的阶梯状 容易被遗漏,单人标法1,簇3,4都是漏了,单人标法2对于天花版位置的理解不同,但是簇6把墙正中间的装饰东西 给标了,这不是说不能标,而是他标了个寂寞,完全不理解",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/human_review_reconciliation_20260918/用户_39图文字审核_原始.json",
+      "pointer": "/image_notes/20/note",
+      "image_id": "rPc6DW4iMge_0dfe61800cc540db8e25c1738bc4b8ff",
+      "image": "rPc6DW4iMge-05",
+      "scope": "user_image_note",
+      "text": "这张图确实是难图,遮挡很多,图片中间 靠后的位置被遮挡很多,而且右边有玻璃罩着的洗澡的地方,中间偏右的拐角也很多人漏标, 这图值得作为 潜在的无法收敛的图来讨论.",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/human_review_reconciliation_20260918/用户_39图文字审核_原始.json",
+      "pointer": "/image_notes/21/note",
+      "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+      "image": "rPc6DW4iMge-06",
+      "scope": "user_image_note",
+      "text": "跟上张图是一个房间,左边的玻璃地方很容易被漏标和歧义,簇2是标里面的,簇3是标外面玻璃罩的,簇1,4,6是直接没标这个地方,7是标了一半,9,10,11是没标,这图就是 未收敛的典型图",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/human_review_reconciliation_20260918/用户_39图文字审核_原始.json",
+      "pointer": "/image_notes/32/note",
+      "image_id": "wc2JMjhGNzB_55b45b0f19c2460bbcd1fb1c86c6610d",
+      "image": "wc2JMjhGNzB-30",
+      "scope": "user_image_note",
+      "text": "左侧有露台开口,中间偏右右通向其他地方的小洞,同时右侧那个阶梯式的墙容易被忽略,簇 2是完全标了这个地的,簇1,3,4是注意到了,但是没真正的标好细节,簇5是选择忽略. ",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/human_review_reconciliation_20260918/用户_39图文字审核_原始.json",
+      "pointer": "/image_notes/37/note",
+      "image_id": "yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65",
+      "image": "yqstnuAEVhm-32",
+      "scope": "user_image_note",
+      "text": "这图较难,主要是中间凸起的壁炉,中间偏右那里有个小隔间(我个人倾向不标的,但是这次也没人标),还有右侧门口的区域.w1和簇2没太大差别,w8是我说的细节全都没注意到,其余的都是大概这几个地方的缺漏和不同,确实没收敛,簇2是相对最正确的",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/human_review_reconciliation_20260918/一正_39图审核_原始.json",
+      "pointer": "/image_notes/12/note",
+      "image_id": "b8cTxDM8gDG_f63819c407e64c2897b703080766cb60",
+      "image": "b8cTxDM8gDG-19",
+      "scope": "other_human_image_note",
+      "text": "家具遮挡 房间范围因为里侧光照不足有点不可判断  内部结构复杂Q20：超出范围",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/human_review_reconciliation_20260918/一正_39图审核_原始.json",
+      "pointer": "/image_notes/14/note",
+      "image_id": "e9zR4mvMWw7_1daae4b7becc43949516096170ce2a76",
+      "image": "e9zR4mvMWw7-10",
+      "scope": "other_human_image_note",
+      "text": "卧室房间 有家具遮挡 玻璃镜子 一个开口的门 房间简单 Q03:数值簇非真实分离",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/human_review_reconciliation_20260918/一正_39图审核_原始.json",
+      "pointer": "/image_notes/17/note",
+      "image_id": "q9vSo1VnCiC_69591068e5614642b710a8fb7733bdeb",
+      "image": "q9vSo1VnCiC-09",
+      "scope": "other_human_image_note",
+      "text": "协议适用 房间范围可判定 房间结构比较复杂 墙体凹凸多 ",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/human_review_reconciliation_20260918/一正_39图审核_原始.json",
+      "pointer": "/image_notes/20/note",
+      "image_id": "rPc6DW4iMge_0dfe61800cc540db8e25c1738bc4b8ff",
+      "image": "rPc6DW4iMge-05",
+      "scope": "other_human_image_note",
+      "text": "边界较模糊 遮挡多 玻璃结构 小房间Q37：此视角相对来说更加复杂  暴露的结构需要更多标注人员进行判断",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/human_review_reconciliation_20260918/一正_39图审核_原始.json",
+      "pointer": "/image_notes/21/note",
+      "image_id": "rPc6DW4iMge_186a32a1b7e34cb797731bfa78365db5",
+      "image": "rPc6DW4iMge-06",
+      "scope": "other_human_image_note",
+      "text": "边界较模糊 遮挡多 玻璃结构 小房间Q24：空间范围解释和结构解释不同Q38：此视角相对容易判断",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/human_review_reconciliation_20260918/一正_39图审核_原始.json",
+      "pointer": "/image_notes/29/note",
+      "image_id": "uNb9QFRL6hY_aed830f085ee4ad88ef6bed7f66f1359",
+      "image": "uNb9QFRL6hY-56",
+      "scope": "other_human_image_note",
+      "text": "墙体镶嵌结构 简单房间",
+      "automatic_grade": null
+    },
+    {
+      "source": "analysis_results/human_review_reconciliation_20260918/一正_39图审核_原始.json",
+      "pointer": "/image_notes/31/note",
+      "image_id": "uNb9QFRL6hY_d02f87bbb0414146a7a15070110a0384",
+      "image": "uNb9QFRL6hY-70",
+      "scope": "other_human_image_note",
+      "text": "简单房间 墙体镶嵌结构",
+      "automatic_grade": null
+    }
+  ]
+}

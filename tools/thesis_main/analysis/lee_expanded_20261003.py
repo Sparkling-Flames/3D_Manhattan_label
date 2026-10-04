@@ -134,17 +134,18 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out',type=Path,default=OUT)
     parser.add_argument('--input',type=Path,help='复算本轮source_input.json，包含失败整池')
+    parser.add_argument('--inventory',type=Path,default=INVENTORY,help='新运行使用的盘点目录；--input仍重放相邻冻结盘点')
     args=parser.parse_args(); out=args.out
     if (out/'design.json').exists():
         raise ValueError('use_new_output_directory')
     out.mkdir(parents=True,exist_ok=True)
-    inventory_path=args.input.parent/'inventory_input.json' if args.input else INVENTORY/'input.json'
+    inventory_path=args.input.parent/'inventory_input.json' if args.input else args.inventory/'input.json'
     inventory=json.loads(inventory_path.read_text(encoding='utf-8'))
     ledger=select_groups(summarize_groups(inventory['records'],{i['image']:i for i in inventory['images']}))
     write_csv(out/'selection_ledger.csv',ledger)
     wanted=[g['image'] for g in ledger if g['expansion_status'] in ('selected','whole_pool_unavailable')]
     ready={g['image']:g for g in ledger if g['expansion_status']=='selected'}
-    source=json.loads(args.input.read_text(encoding='utf-8')) if args.input else collect(out,chosen=wanted,stage='S3-A-expanded',max_k=None)
+    source=json.loads(args.input.read_text(encoding='utf-8')) if args.input else collect(out,chosen=wanted,stage='S3-A-expanded',max_k=None,inventory_dir=args.inventory)
     if sorted(i['code'] for i in source['images'])!=sorted(wanted):
         raise ValueError('source_population_mismatch')
     write_json(out/'source_input.json',source)

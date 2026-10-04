@@ -1,0 +1,629 @@
+{
+  "schema": "difficulty_source_audit_v1",
+  "current_images": 259,
+  "base_0913_total": 112,
+  "base_0913_match": 78,
+  "base_0913_match_counts": {
+    "中等": 23,
+    "简单": 36,
+    "困难": 14,
+    "未定": 5
+  },
+  "old_inventory_counts": {
+    "未记录": 181,
+    "未定": 5,
+    "中等": 23,
+    "简单": 36,
+    "困难": 14
+  },
+  "later_unique_images": 34,
+  "later_counts": {
+    "easy": 20,
+    "medium": 10,
+    "hard": 4
+  },
+  "later_status_counts": {
+    "resolved": 33,
+    "pending": 1
+  },
+  "later_all_bind": true,
+  "latest_vs_bundle_grade_status_mismatch": [],
+  "bundle_per_annotation_image_traits_inconsistencies": [],
+  "old45_n": 45,
+  "new52_n": 52,
+  "new52_added": [
+    "B6ByNegPMKs-40",
+    "UwV83HsGsw3-10",
+    "X7HyMhZNoso-13",
+    "e9zR4mvMWw7-19",
+    "wc2JMjhGNzB-60",
+    "yqstnuAEVhm-04",
+    "yqstnuAEVhm-31"
+  ],
+  "new52_removed": [],
+  "old45_counts": {
+    "中等": 13,
+    "简单": 22,
+    "困难": 10
+  },
+  "expanded_source137": 137,
+  "expanded_success136": 136,
+  "expanded_old_counts": {
+    "未记录": 78,
+    "中等": 14,
+    "未定": 1,
+    "简单": 30,
+    "困难": 13
+  },
+  "high_n_coverage": [
+    {
+      "k": 4,
+      "total": 118,
+      "old_explicit": 57,
+      "new_explicit": 66
+    },
+    {
+      "k": 8,
+      "total": 67,
+      "old_explicit": 45,
+      "new_explicit": 52
+    },
+    {
+      "k": 12,
+      "total": 53,
+      "old_explicit": 31,
+      "new_explicit": 38
+    },
+    {
+      "k": 16,
+      "total": 39,
+      "old_explicit": 17,
+      "new_explicit": 24
+    },
+    {
+      "k": 20,
+      "total": 33,
+      "old_explicit": 11,
+      "new_explicit": 18
+    },
+    {
+      "k": 24,
+      "total": 10,
+      "old_explicit": 1,
+      "new_explicit": 3
+    }
+  ],
+  "other_human_condition_grade_n": 30,
+  "other_human_grade_images": 30,
+  "other_human_grades": {
+    "简单": 13,
+    "中等": 14,
+    "困难候选": 3
+  },
+  "non_difficulty_old_field_differences": [],
+  "old_record_rows_unchanged": true,
+  "old_reference_rows_unchanged": true,
+  "free_comment_hits": 76,
+  "free_comment_current_images": 48,
+  "source_files": 27,
+  "analysis_recomputed": false,
+  "literal_comment_conflicts": [
+    {
+      "source": "analysis_results/review_final_20260928/evidence/latest.json",
+      "pointer": "/image_decisions/uNb9QFRL6hY_104d12b732794414a42edd37ac554bff/comment",
+      "image_id": "uNb9QFRL6hY_104d12b732794414a42edd37ac554bff",
+      "image": "uNb9QFRL6hY-07",
+      "scope": "image_comment",
+      "text": "中等难度,存在右边柜子停止点的问题,有些人把柜子当成墙角,有些人 是标完全被挡住的实际墙角.簇1,4是柜子处就停止了",
+      "automatic_grade": null,
+      "reading_kind": "literal_medium_conflicts_with_old_easy",
+      "literal_grade": "中等",
+      "source_record_status": "resolved",
+      "source_updated_at": "2026-09-27T03:47:39.983Z",
+      "old_inventory": "简单",
+      "structured_only_merged": "简单",
+      "old45": true,
+      "auto_applied": false
+    }
+  ],
+  "no_old_outputs_rewritten": true,
+  "final_explicit_policy": "沿用resolved image_traits；仅逐字中等难度的uNb-07覆盖简单；uNb-26属于困难图核验一致；很难/难图/条件难度不新增三档。",
+  "final_explicit": {
+    "counts": {
+      "未记录": 152,
+      "未定": 6,
+      "中等": 31,
+      "简单": 53,
+      "困难": 17
+    },
+    "explicit_n": 101,
+    "old45_counts": {
+      "简单": 21,
+      "困难": 10,
+      "中等": 14
+    },
+    "new52_counts": {
+      "简单": 23,
+      "中等": 18,
+      "困难": 11
+    },
+    "old45_changed": [
+      "uNb9QFRL6hY-07"
+    ],
+    "new52_added": [
+      "B6ByNegPMKs-40",
+      "UwV83HsGsw3-10",
+      "X7HyMhZNoso-13",
+      "e9zR4mvMWw7-19",
+      "wc2JMjhGNzB-60",
+      "yqstnuAEVhm-04",
+      "yqstnuAEVhm-31"
+    ],
+    "expanded136_counts": {
+      "未记录": 67,
+      "中等": 19,
+      "未定": 2,
+      "简单": 34,
+      "困难": 14
+    },
+    "high_n_coverage": [
+      {
+        "k": 4,
+        "total": 118,
+        "old_explicit": 57,
+        "new_explicit": 66
+      },
+      {
+        "k": 8,
+        "total": 67,
+        "old_explicit": 45,
+        "new_explicit": 52
+      },
+      {
+        "k": 12,
+        "total": 53,
+        "old_explicit": 31,
+        "new_explicit": 38
+      },
+      {
+        "k": 16,
+        "total": 39,
+        "old_explicit": 17,
+        "new_explicit": 24
+      },
+      {
+        "k": 20,
+        "total": 33,
+        "old_explicit": 11,
+        "new_explicit": 18
+      },
+      {
+        "k": 24,
+        "total": 10,
+        "old_explicit": 1,
+        "new_explicit": 3
+      }
+    ],
+    "no_new_fusion_run": true
+  },
+  "intermediate_traits_only": {
+    "counts": {
+      "未记录": 152,
+      "未定": 6,
+      "中等": 30,
+      "简单": 54,
+      "困难": 17
+    },
+    "changed": [
+      {
+        "image": "B6ByNegPMKs-10",
+        "inventory_old": "未记录",
+        "later_raw": "easy",
+        "later_status": "resolved",
+        "independent_expected": "简单"
+      },
+      {
+        "image": "B6ByNegPMKs-21",
+        "inventory_old": "未记录",
+        "later_raw": "easy",
+        "later_status": "resolved",
+        "independent_expected": "简单"
+      },
+      {
+        "image": "B6ByNegPMKs-40",
+        "inventory_old": "未记录",
+        "later_raw": "easy",
+        "later_status": "resolved",
+        "independent_expected": "简单"
+      },
+      {
+        "image": "S9hNv5qa7GM-04",
+        "inventory_old": "未记录",
+        "later_raw": "easy",
+        "later_status": "resolved",
+        "independent_expected": "简单"
+      },
+      {
+        "image": "UwV83HsGsw3-10",
+        "inventory_old": "未记录",
+        "later_raw": "medium",
+        "later_status": "resolved",
+        "independent_expected": "中等"
+      },
+      {
+        "image": "UwV83HsGsw3-17",
+        "inventory_old": "未记录",
+        "later_raw": "easy",
+        "later_status": "pending",
+        "independent_expected": "未定"
+      },
+      {
+        "image": "X7HyMhZNoso-13",
+        "inventory_old": "未记录",
+        "later_raw": "easy",
+        "later_status": "resolved",
+        "independent_expected": "简单"
+      },
+      {
+        "image": "Z6MFQCViBuw-10",
+        "inventory_old": "未记录",
+        "later_raw": "easy",
+        "later_status": "resolved",
+        "independent_expected": "简单"
+      },
+      {
+        "image": "b8cTxDM8gDG-07",
+        "inventory_old": "未记录",
+        "later_raw": "easy",
+        "later_status": "resolved",
+        "independent_expected": "简单"
+      },
+      {
+        "image": "e9zR4mvMWw7-19",
+        "inventory_old": "未记录",
+        "later_raw": "medium",
+        "later_status": "resolved",
+        "independent_expected": "中等"
+      },
+      {
+        "image": "e9zR4mvMWw7-32",
+        "inventory_old": "未记录",
+        "later_raw": "easy",
+        "later_status": "resolved",
+        "independent_expected": "简单"
+      },
+      {
+        "image": "e9zR4mvMWw7-39",
+        "inventory_old": "未记录",
+        "later_raw": "easy",
+        "later_status": "resolved",
+        "independent_expected": "简单"
+      },
+      {
+        "image": "jtcxE69GiFV-11",
+        "inventory_old": "未记录",
+        "later_raw": "medium",
+        "later_status": "resolved",
+        "independent_expected": "中等"
+      },
+      {
+        "image": "jtcxE69GiFV-12",
+        "inventory_old": "未记录",
+        "later_raw": "hard",
+        "later_status": "resolved",
+        "independent_expected": "困难"
+      },
+      {
+        "image": "jtcxE69GiFV-30",
+        "inventory_old": "未记录",
+        "later_raw": "easy",
+        "later_status": "resolved",
+        "independent_expected": "简单"
+      },
+      {
+        "image": "pRbA3pwrgk9-04",
+        "inventory_old": "未记录",
+        "later_raw": "easy",
+        "later_status": "resolved",
+        "independent_expected": "简单"
+      },
+      {
+        "image": "pRbA3pwrgk9-05",
+        "inventory_old": "未记录",
+        "later_raw": "easy",
+        "later_status": "resolved",
+        "independent_expected": "简单"
+      },
+      {
+        "image": "pa4otMbVnkk-44",
+        "inventory_old": "未记录",
+        "later_raw": "easy",
+        "later_status": "resolved",
+        "independent_expected": "简单"
+      },
+      {
+        "image": "q9vSo1VnCiC-15",
+        "inventory_old": "未记录",
+        "later_raw": "easy",
+        "later_status": "resolved",
+        "independent_expected": "简单"
+      },
+      {
+        "image": "rPc6DW4iMge-17",
+        "inventory_old": "未记录",
+        "later_raw": "easy",
+        "later_status": "resolved",
+        "independent_expected": "简单"
+      },
+      {
+        "image": "uNb9QFRL6hY-32",
+        "inventory_old": "未记录",
+        "later_raw": "medium",
+        "later_status": "resolved",
+        "independent_expected": "中等"
+      },
+      {
+        "image": "uNb9QFRL6hY-47",
+        "inventory_old": "中等",
+        "later_raw": "hard",
+        "later_status": "resolved",
+        "independent_expected": "困难"
+      },
+      {
+        "image": "uNb9QFRL6hY-51",
+        "inventory_old": "未记录",
+        "later_raw": "medium",
+        "later_status": "resolved",
+        "independent_expected": "中等"
+      },
+      {
+        "image": "uNb9QFRL6hY-56",
+        "inventory_old": "未记录",
+        "later_raw": "easy",
+        "later_status": "resolved",
+        "independent_expected": "简单"
+      },
+      {
+        "image": "wc2JMjhGNzB-56",
+        "inventory_old": "未记录",
+        "later_raw": "easy",
+        "later_status": "resolved",
+        "independent_expected": "简单"
+      },
+      {
+        "image": "wc2JMjhGNzB-60",
+        "inventory_old": "未记录",
+        "later_raw": "medium",
+        "later_status": "resolved",
+        "independent_expected": "中等"
+      },
+      {
+        "image": "x8F5xyUWy9e-08",
+        "inventory_old": "未记录",
+        "later_raw": "easy",
+        "later_status": "resolved",
+        "independent_expected": "简单"
+      },
+      {
+        "image": "x8F5xyUWy9e-09",
+        "inventory_old": "未记录",
+        "later_raw": "medium",
+        "later_status": "resolved",
+        "independent_expected": "中等"
+      },
+      {
+        "image": "yqstnuAEVhm-04",
+        "inventory_old": "未记录",
+        "later_raw": "medium",
+        "later_status": "resolved",
+        "independent_expected": "中等"
+      },
+      {
+        "image": "yqstnuAEVhm-31",
+        "inventory_old": "未记录",
+        "later_raw": "hard",
+        "later_status": "resolved",
+        "independent_expected": "困难"
+      }
+    ],
+    "old45_changed": [],
+    "new52_counts": {
+      "中等": 17,
+      "简单": 24,
+      "困难": 11
+    },
+    "expanded136_counts": {
+      "未记录": 67,
+      "中等": 18,
+      "未定": 2,
+      "简单": 35,
+      "困难": 14
+    },
+    "meaning": "仅合并resolved image_traits、尚未加入uNb-07明确文字的历史中间计算，不代表当前corrected_inventory路径内容。"
+  },
+  "current_corrected_inventory_check": {
+    "source": "analysis_results/review_source_audit_20261004/corrected_inventory/input.json",
+    "counts": {
+      "未记录": 152,
+      "未定": 6,
+      "中等": 31,
+      "简单": 53,
+      "困难": 17
+    },
+    "row_count": 259,
+    "unique_image_ids": 259,
+    "missing_image_ids": [],
+    "extra_image_ids": [],
+    "final_explicit_expected_mismatch": [],
+    "changed_from_old": [
+      {
+        "image": "B6ByNegPMKs-10",
+        "inventory_old": "未记录",
+        "corrected_inventory": "简单"
+      },
+      {
+        "image": "B6ByNegPMKs-21",
+        "inventory_old": "未记录",
+        "corrected_inventory": "简单"
+      },
+      {
+        "image": "B6ByNegPMKs-40",
+        "inventory_old": "未记录",
+        "corrected_inventory": "简单"
+      },
+      {
+        "image": "S9hNv5qa7GM-04",
+        "inventory_old": "未记录",
+        "corrected_inventory": "简单"
+      },
+      {
+        "image": "UwV83HsGsw3-10",
+        "inventory_old": "未记录",
+        "corrected_inventory": "中等"
+      },
+      {
+        "image": "UwV83HsGsw3-17",
+        "inventory_old": "未记录",
+        "corrected_inventory": "未定"
+      },
+      {
+        "image": "X7HyMhZNoso-13",
+        "inventory_old": "未记录",
+        "corrected_inventory": "简单"
+      },
+      {
+        "image": "Z6MFQCViBuw-10",
+        "inventory_old": "未记录",
+        "corrected_inventory": "简单"
+      },
+      {
+        "image": "b8cTxDM8gDG-07",
+        "inventory_old": "未记录",
+        "corrected_inventory": "简单"
+      },
+      {
+        "image": "e9zR4mvMWw7-19",
+        "inventory_old": "未记录",
+        "corrected_inventory": "中等"
+      },
+      {
+        "image": "e9zR4mvMWw7-32",
+        "inventory_old": "未记录",
+        "corrected_inventory": "简单"
+      },
+      {
+        "image": "e9zR4mvMWw7-39",
+        "inventory_old": "未记录",
+        "corrected_inventory": "简单"
+      },
+      {
+        "image": "jtcxE69GiFV-11",
+        "inventory_old": "未记录",
+        "corrected_inventory": "中等"
+      },
+      {
+        "image": "jtcxE69GiFV-12",
+        "inventory_old": "未记录",
+        "corrected_inventory": "困难"
+      },
+      {
+        "image": "jtcxE69GiFV-30",
+        "inventory_old": "未记录",
+        "corrected_inventory": "简单"
+      },
+      {
+        "image": "pRbA3pwrgk9-04",
+        "inventory_old": "未记录",
+        "corrected_inventory": "简单"
+      },
+      {
+        "image": "pRbA3pwrgk9-05",
+        "inventory_old": "未记录",
+        "corrected_inventory": "简单"
+      },
+      {
+        "image": "pa4otMbVnkk-44",
+        "inventory_old": "未记录",
+        "corrected_inventory": "简单"
+      },
+      {
+        "image": "q9vSo1VnCiC-15",
+        "inventory_old": "未记录",
+        "corrected_inventory": "简单"
+      },
+      {
+        "image": "rPc6DW4iMge-17",
+        "inventory_old": "未记录",
+        "corrected_inventory": "简单"
+      },
+      {
+        "image": "uNb9QFRL6hY-07",
+        "inventory_old": "简单",
+        "corrected_inventory": "中等"
+      },
+      {
+        "image": "uNb9QFRL6hY-32",
+        "inventory_old": "未记录",
+        "corrected_inventory": "中等"
+      },
+      {
+        "image": "uNb9QFRL6hY-47",
+        "inventory_old": "中等",
+        "corrected_inventory": "困难"
+      },
+      {
+        "image": "uNb9QFRL6hY-51",
+        "inventory_old": "未记录",
+        "corrected_inventory": "中等"
+      },
+      {
+        "image": "uNb9QFRL6hY-56",
+        "inventory_old": "未记录",
+        "corrected_inventory": "简单"
+      },
+      {
+        "image": "wc2JMjhGNzB-56",
+        "inventory_old": "未记录",
+        "corrected_inventory": "简单"
+      },
+      {
+        "image": "wc2JMjhGNzB-60",
+        "inventory_old": "未记录",
+        "corrected_inventory": "中等"
+      },
+      {
+        "image": "x8F5xyUWy9e-08",
+        "inventory_old": "未记录",
+        "corrected_inventory": "简单"
+      },
+      {
+        "image": "x8F5xyUWy9e-09",
+        "inventory_old": "未记录",
+        "corrected_inventory": "中等"
+      },
+      {
+        "image": "yqstnuAEVhm-04",
+        "inventory_old": "未记录",
+        "corrected_inventory": "中等"
+      },
+      {
+        "image": "yqstnuAEVhm-31",
+        "inventory_old": "未记录",
+        "corrected_inventory": "困难"
+      }
+    ],
+    "old45_counts": {
+      "简单": 21,
+      "困难": 10,
+      "中等": 14
+    },
+    "new52_counts": {
+      "简单": 23,
+      "中等": 18,
+      "困难": 11
+    },
+    "old_record_rows_unchanged": true,
+    "old_reference_rows_unchanged": true,
+    "non_difficulty_old_field_differences": []
+  }
+}

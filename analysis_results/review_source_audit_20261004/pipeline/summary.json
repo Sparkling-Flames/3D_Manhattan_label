@@ -1,0 +1,64 @@
+{
+  "schema": "current_final_source_pipeline_binding_audit_v1",
+  "source_manifest": "analysis_results/research_input_20260929/manifest.json",
+  "source_objects": 3441,
+  "source_annotations": 3152,
+  "source_confirmed_orders": 1295,
+  "source_internal_failed_objects": 0,
+  "stages": [
+    {
+      "stage": "lee_difficulty45",
+      "input": "analysis_results/lee_difficulty_20261003/input.json",
+      "images": 45,
+      "annotations": 724,
+      "references": 47,
+      "confirmed_objects": 270,
+      "records_with_differences": 0,
+      "images_with_population_differences": 0
+    },
+    {
+      "stage": "lee_expanded137_source",
+      "input": "analysis_results/lee_expanded_20261003/source_input.json",
+      "images": 137,
+      "annotations": 1706,
+      "references": 149,
+      "confirmed_objects": 625,
+      "records_with_differences": 0,
+      "images_with_population_differences": 0
+    },
+    {
+      "stage": "lee_expanded136_success",
+      "input": "analysis_results/lee_expanded_20261003/input.json",
+      "images": 136,
+      "annotations": 1680,
+      "references": 148,
+      "confirmed_objects": 601,
+      "records_with_differences": 0,
+      "images_with_population_differences": 0
+    },
+    {
+      "stage": "worker_profiles10",
+      "input": "analysis_results/worker_profiles_20261003/input.json",
+      "images": 10,
+      "annotations": 260,
+      "references": 14,
+      "confirmed_objects": 100,
+      "records_with_differences": 0,
+      "images_with_population_differences": 0
+    }
+  ],
+  "roster_checks": 191,
+  "roster_failures": 0,
+  "global_images": 137,
+  "global_method_cases": 274,
+  "global_source_pair_observations": 15408,
+  "global_cases_with_differences": 0,
+  "anomalies": 0,
+  "limits": [
+    "No fusion, geometry, statistics, or eligibility is recalculated.",
+    "Comparison is to current manifest source and received_orders; later review files outside that source need a separate upstream intake audit.",
+    "Raw export paths exist and source identities are checked; raw export annotations are not reparsed here.",
+    "Nondefault 2.5/10 degree results do not persist full observation assignments; their declared source path matches the audited source but individual provenance was only directly audited at saved 5 degrees.",
+    "BEV footprint numbers and quality scores are not recomputed."
+  ]
+}

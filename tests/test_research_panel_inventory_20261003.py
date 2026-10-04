@@ -4,9 +4,45 @@ import json
 import pytest
 
 from tools.thesis_main.analysis.research_panel_inventory_20261003 import (
-    bind_difficulty, summarize_groups, worker_overlap, build,
+    bind_difficulty, image_review_traits, explicit_image_text_difficulty,
+    EXPLICIT_TEXT_DIFFICULTY, summarize_groups, worker_overlap, build,
 )
 from tools.thesis_main.analysis.research_round_20260929 import prepare_record
+
+
+def test_difficulty_consumes_final_image_review_without_promoting_pending_or_answer_traits():
+    source = dict(schema='candidate_review_user_decisions_v5', decisions=[
+        dict(image_id='revised', difficulty='中等'),
+        dict(image_id='unchanged', difficulty='简单')])
+    def obj(image, trait, kind='annotation'):
+        return dict(object_kind=kind, image_id=image,
+                    review_evidence=dict(image_traits=trait,
+                        annotation_traits=dict(status='resolved', difficulty='hard')))
+    objects = [obj('revised', dict(status='resolved', difficulty='hard')),
+               obj('added', dict(status='resolved', difficulty='easy')),
+               obj('pending', dict(status='pending', difficulty='medium')),
+               obj('unchanged', dict(status='resolved', difficulty='unrecorded')),
+               obj('answer_only', {}), obj('reference', {}, 'original_gt')]
+    traits = image_review_traits(objects + [copy.deepcopy(objects[0])])
+    labels = bind_difficulty(source, [r['image_id'] for r in objects], traits)
+    assert labels == dict(revised='困难', added='简单', pending='未定',
+                         unchanged='简单', answer_only='未记录', reference='未记录')
+    conflict = obj('revised', dict(status='resolved', difficulty='easy'))
+    with pytest.raises(ValueError, match='inconsistent_final_image_traits'):
+        image_review_traits(objects + [conflict])
+    with pytest.raises(ValueError, match='unknown_review_difficulty'):
+        bind_difficulty(source, ['added'], {'added': dict(status='resolved', difficulty='unknown')})
+    image, checked = next(iter(EXPLICIT_TEXT_DIFFICULTY.items()))
+    review = dict(status='resolved', comment=checked['comment'], updated_at=checked['updated_at'])
+    text_obj = obj(image, {})
+    text_obj['review_evidence'].update(image_comment=review['comment'],
+        image_review_history=[dict(source='evidence/latest.json', record=review)])
+    texts = explicit_image_text_difficulty([text_obj])
+    old = dict(schema='candidate_review_user_decisions_v5', decisions=[dict(image_id=image, difficulty='简单')])
+    assert bind_difficulty(old, [image], {}, texts)[image] == '中等'
+    changed = copy.deepcopy(text_obj); changed['review_evidence']['image_comment'] += '后续更新'
+    with pytest.raises(ValueError, match='explicit_image_difficulty_text_drift'):
+        explicit_image_text_difficulty([changed])
 
 
 def test_inventory_keeps_missing_failures_and_real_people_separate():

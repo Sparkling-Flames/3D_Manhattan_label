@@ -1,0 +1,14 @@
+{
+  "schema": "research_panel_inventory_v1",
+  "contract_version": "consensus_research_20260923_v1",
+  "unit": "image × condition × existing consensus gate; votes are distinct real people",
+  "difficulty": "Exact image_id join. New collection overlays legacy 9/13 image tags with resolved image_traits difficulty from the current validated bundle; unrecorded does not erase a legacy label. Pending traits retain any earlier explicit label, otherwise mark 未定; their proposed value remains in difficulty_later_review. No per-answer or second-reviewer grades, room propagation, or automatic scene-to-difficulty conversion. --input faithfully replays that saved version, including historical legacy-only snapshots.",
+  "difficulty_provenance": "New snapshots retain difficulty_legacy, difficulty_later_review and difficulty_text_review per image. Final traits repeated across annotations must agree. Explicit text overrides are limited to individually audited exact grade statements, with full quote/source/status/time checked against current evidence; any new conflict fails. General difficult-scene language is retained as qualitative evidence, not automatically graded. Review coverage does not imply every response or every dimension was individually confirmed.",
+  "curve_ready": "At least one upstream independent candidate and every candidate has computable declared BEV. A failure keeps original N and blocks this full-roster curve; no silent deletion.",
+  "reference_quality_compatible": "main_candidate and every consensus candidate already has upstream candidate_pending_geometry quality status; descriptive screening, not new formal eligibility or visual GT validation.",
+  "worker_overlap": "Per condition: shared images with independent, upstream quality-candidate, BEV-computable responses and computable original GT. Zero-overlap pairs retained; pairwise overlap is not a common multi-person panel.",
+  "common_k": "a_coverage_by_k images change with k. Freeze a single image list before comparing the shape over k; blocks contain identical rosters for stricter comparisons.",
+  "model_fields": "Availability of historical model-only signals, not validated current-pipeline difficulty. d_model_feat_static is kept separate from local/hypot risk; BiLayout band is an archived metric awaiting model input and representation alignment.",
+  "missing": "Null model value means unavailable, never zero. False review marks mean no recorded mark, not verified absence.",
+  "source": "input.json freezes this inventory with geometry statuses, not coordinates. --input replays inventory; omitting it regenerates from validated local current bundle and existing geometry code. No visual review or model inference is claimed."
+}

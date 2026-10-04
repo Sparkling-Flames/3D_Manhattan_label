@@ -7,6 +7,19 @@ from tools.thesis_main.analysis.lee_tile_precision_20261003 import run
 from tools.thesis_main.analysis.lee_difficulty_20261003 import summarize
 
 
+def test_new_collection_rejects_stale_difficulty_and_accepts_corrected_inventory(tmp_path):
+    from pathlib import Path
+    from tools.thesis_main.analysis.lee_difficulty_20261003 import collect
+    stale = tmp_path/'stale'; stale.mkdir()
+    with pytest.raises(ValueError, match='image_or_label_drift:B6ByNegPMKs-40'):
+        collect(stale, chosen=['B6ByNegPMKs-40'])
+    current = tmp_path/'current'; current.mkdir()
+    inventory = Path(__file__).parents[1]/'analysis_results/review_source_audit_20261004/corrected_inventory'
+    data = collect(current, chosen=['B6ByNegPMKs-40'], inventory_dir=inventory)
+    assert data['images'][0]['difficulty'] == '简单'
+    assert json.loads((current/'source_binding.json').read_text(encoding='utf-8'))['status'] == 'passed'
+
+
 def test_bounded_run_preserves_population_and_exact_votes(tmp_path):
     records = [dict(id=str(i), worker=str(i), condition='manual', independent=True,
                     consensus_eligible=True, main_consensus_gate={'status':'main_candidate'},
