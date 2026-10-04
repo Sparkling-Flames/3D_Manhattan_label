@@ -1,0 +1,79 @@
+{
+  "schema": "exact_arc_envelope_v1",
+  "n": 24,
+  "record_ids": [
+    "R00020",
+    "R00233",
+    "R00500",
+    "R00525",
+    "R00553",
+    "R00634",
+    "R01341",
+    "R01489",
+    "R01518",
+    "R01557",
+    "R01662",
+    "R01695",
+    "R01784",
+    "R01798",
+    "R01886",
+    "R01905",
+    "R01986",
+    "R02094",
+    "R02165",
+    "R02190",
+    "R02407",
+    "R02452",
+    "R02456",
+    "R02468"
+  ],
+  "workers": [
+    "P002",
+    "P026",
+    "P025",
+    "P010",
+    "P014",
+    "P021",
+    "P009",
+    "P020",
+    "P017",
+    "P023",
+    "P019",
+    "P027",
+    "P001",
+    "P008",
+    "P004",
+    "P018",
+    "P007",
+    "P024",
+    "P005",
+    "P022",
+    "P011",
+    "P003",
+    "P012",
+    "P006"
+  ],
+  "source_coordinate_hash": "839ca785a59e3fcb0241d94f2cafdf8c6728a09df044e8f240cc5038036c96bb",
+  "methods": {},
+  "failures": [
+    {
+      "id": "R00020",
+      "worker": "P002",
+      "reason": "source_ring_not_single_valued_one_turn"
+    },
+    {
+      "id": "R01518",
+      "worker": "P017",
+      "reason": "source_ring_not_single_valued_one_turn"
+    },
+    {
+      "id": "R01557",
+      "worker": "P023",
+      "reason": "source_ring_not_single_valued_one_turn"
+    }
+  ],
+  "source_order_modified": false,
+  "gt_used": false,
+  "evidence_kind": "human_observed",
+  "status": "unsupported_entire_selected_roster"
+}

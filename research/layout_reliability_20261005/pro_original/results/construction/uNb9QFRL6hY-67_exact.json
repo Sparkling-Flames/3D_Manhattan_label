@@ -1,0 +1,56 @@
+{
+  "schema": "exact_arc_envelope_v1",
+  "n": 15,
+  "record_ids": [
+    "R00144",
+    "R00526",
+    "R00854",
+    "R01956",
+    "R02210",
+    "R02928",
+    "R02929",
+    "R02930",
+    "R02931",
+    "R02932",
+    "R03192",
+    "R03194",
+    "R03195",
+    "R03196",
+    "R03197"
+  ],
+  "workers": [
+    "P021",
+    "P023",
+    "P022",
+    "P006",
+    "P004",
+    "P010",
+    "P005",
+    "P002",
+    "P012",
+    "P003",
+    "P025",
+    "P026",
+    "P024",
+    "P020",
+    "P018"
+  ],
+  "source_coordinate_hash": "e0ee40f36026a3126893c456ebaa2b8ad6584e25dbb973e592350997ed0d16e4",
+  "methods": {},
+  "failures": [
+    {
+      "id": "R02928",
+      "worker": "P010",
+      "reason": "source_ring_not_single_valued_one_turn"
+    },
+    {
+      "id": "R02929",
+      "worker": "P005",
+      "reason": "source_ring_not_single_valued_one_turn"
+    }
+  ],
+  "source_order_modified": false,
+  "gt_used": false,
+  "evidence_kind": "human_observed",
+  "status": "unsupported_entire_selected_roster"
+}

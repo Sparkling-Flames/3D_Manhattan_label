@@ -1,0 +1,112 @@
+{
+  "study": "four_image_exact_editor_measurement_reliability",
+  "date": "2026-10-05",
+  "repository": "Sparkling-Flames/3D_Manhattan_label",
+  "main_at_read": "017f3056a9d5bf889c257378403783bf023b3a70",
+  "selected_records": 66,
+  "distinct_people": 24,
+  "mechanism_images": 4,
+  "not_random_or_blind": true,
+  "full_roster_states": [
+    {
+      "image": "2t7WUuJeko7-06",
+      "n": 3,
+      "blob_matches_current_handoff": true,
+      "arc_status": "ok_conditional_representation",
+      "arc_individual_pass": 3,
+      "failures": [],
+      "lee_status": "ok",
+      "lee_area": 1.587876922026489,
+      "exact_pairs": 25,
+      "lee_symmetric_difference_h2": 8.098471228917609e-16,
+      "serialization_error_px": 5.684341886080802e-14
+    },
+    {
+      "image": "7y3sRwLe3Va-04",
+      "n": 24,
+      "blob_matches_current_handoff": true,
+      "arc_status": "ok_conditional_representation",
+      "arc_individual_pass": 24,
+      "failures": [],
+      "lee_status": "ok",
+      "lee_area": 2.497573740519943,
+      "exact_pairs": 66,
+      "lee_symmetric_difference_h2": 0.0,
+      "serialization_error_px": 1.1368683772161603e-13
+    },
+    {
+      "image": "rPc6DW4iMge-06",
+      "n": 24,
+      "blob_matches_current_handoff": true,
+      "arc_status": "unsupported_entire_selected_roster",
+      "arc_individual_pass": 21,
+      "failures": [
+        {
+          "id": "R00020",
+          "worker": "P002",
+          "reason": "source_ring_not_single_valued_one_turn"
+        },
+        {
+          "id": "R01518",
+          "worker": "P017",
+          "reason": "source_ring_not_single_valued_one_turn"
+        },
+        {
+          "id": "R01557",
+          "worker": "P023",
+          "reason": "source_ring_not_single_valued_one_turn"
+        }
+      ],
+      "lee_status": "ok",
+      "lee_area": 4.201210744384999
+    },
+    {
+      "image": "uNb9QFRL6hY-67",
+      "n": 15,
+      "blob_matches_current_handoff": true,
+      "arc_status": "unsupported_entire_selected_roster",
+      "arc_individual_pass": 13,
+      "failures": [
+        {
+          "id": "R02928",
+          "worker": "P010",
+          "reason": "source_ring_not_single_valued_one_turn"
+        },
+        {
+          "id": "R02929",
+          "worker": "P005",
+          "reason": "source_ring_not_single_valued_one_turn"
+        }
+      ],
+      "lee_status": "ok",
+      "lee_area": 0.959488670048615
+    }
+  ],
+  "actual_new_experiments": {
+    "compression_states": 24,
+    "pixel_anchor_states": 364,
+    "mandatory_anchor_states": 160,
+    "reference_metric_rows": 94,
+    "compression_distance_certificates": 72,
+    "raw_fixed_longitude_eligible": 27,
+    "refined_raw_discordances": 2,
+    "new_tests_passed": 24,
+    "recomputed_matching_files": 86
+  },
+  "max_real_height_envelope_violation_h": 4.440892098500626e-16,
+  "max_real_derived_height_change_h": 0.0229351922007461,
+  "modifies_inputs_or_eligibility": false,
+  "gt_used_to_construct_or_select": false,
+  "visual_validation_performed": false,
+  "previous_tests_repeated": false,
+  "full_source_bundle_revalidated": false,
+  "not_run": [
+    "new people classification",
+    "new sample size curves",
+    "full 137-image fusion",
+    "general non-monotone full-layout construction",
+    "roof volume",
+    "visual GT adjudication"
+  ],
+  "preferred_next_step": "separate exact measurement and edited output; scoped local visual check; then restore fixed-estimand member study with coverage"
+}

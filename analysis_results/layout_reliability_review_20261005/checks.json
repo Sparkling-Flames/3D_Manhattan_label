@@ -1,0 +1,588 @@
+{
+  "date": "2026-10-05",
+  "package_root": "C:/Users/ASUS/Downloads/layout_reliability_20261005_delivery/layout_reliability_20261005",
+  "role": "Independent local audit; original package and runtime implementation unchanged.",
+  "source_binding": {
+    "date": "2026-10-05",
+    "source_binding": "passed",
+    "source_objects": 3441,
+    "selected_records": 66,
+    "distinct_workers": 24,
+    "selected_record_fields_compared": 1386,
+    "reference_records": 4,
+    "reference_fields_compared": 48,
+    "current_local_source_consumers_used": true,
+    "images": [
+      {
+        "image": "2t7WUuJeko7-06",
+        "n": 3,
+        "source_fields_equal": true,
+        "handoff_bytes_equal": true,
+        "unsupported": [],
+        "max_floor_vertex_difference": 0,
+        "lee_symmetric_difference_h2": 7.62464442983314e-17
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "n": 24,
+        "source_fields_equal": true,
+        "handoff_bytes_equal": true,
+        "unsupported": [],
+        "max_floor_vertex_difference": 0,
+        "lee_symmetric_difference_h2": 2.4167702423528485e-16
+      },
+      {
+        "image": "rPc6DW4iMge-06",
+        "n": 24,
+        "source_fields_equal": true,
+        "handoff_bytes_equal": true,
+        "unsupported": [
+          {
+            "id": "R00020",
+            "worker": "P002",
+            "reason": "source_ring_not_single_valued_one_turn"
+          },
+          {
+            "id": "R01518",
+            "worker": "P017",
+            "reason": "source_ring_not_single_valued_one_turn"
+          },
+          {
+            "id": "R01557",
+            "worker": "P023",
+            "reason": "source_ring_not_single_valued_one_turn"
+          }
+        ],
+        "max_floor_vertex_difference": 0,
+        "lee_symmetric_difference_h2": 2.187356615328451e-16
+      },
+      {
+        "image": "uNb9QFRL6hY-67",
+        "n": 15,
+        "source_fields_equal": true,
+        "handoff_bytes_equal": true,
+        "unsupported": [
+          {
+            "id": "R02928",
+            "worker": "P010",
+            "reason": "source_ring_not_single_valued_one_turn"
+          },
+          {
+            "id": "R02929",
+            "worker": "P005",
+            "reason": "source_ring_not_single_valued_one_turn"
+          }
+        ],
+        "max_floor_vertex_difference": 0,
+        "lee_symmetric_difference_h2": 0
+      }
+    ]
+  },
+  "delivered_tests": {
+    "command": "python -B -m unittest discover -s C:/Users/ASUS/Downloads/layout_reliability_20261005_delivery/layout_reliability_20261005/tests -v",
+    "tests": 24,
+    "passed": 24
+  },
+  "numerical_checks": {
+    "height_counterexample": {
+      "records": [
+        {
+          "id": "r0",
+          "worker": "w0",
+          "points": [
+            [
+              128,
+              190.60688277729037
+            ],
+            [
+              128,
+              311.3848053603291
+            ],
+            [
+              384,
+              211.07720804049362
+            ],
+            [
+              384,
+              311.3848053603291
+            ],
+            [
+              640,
+              211.07720804049362
+            ],
+            [
+              640,
+              311.3848053603291
+            ],
+            [
+              896,
+              190.60688277729037
+            ],
+            [
+              896,
+              311.3848053603291
+            ]
+          ]
+        },
+        {
+          "id": "r1",
+          "worker": "w1",
+          "points": [
+            [
+              128,
+              211.07720804049362
+            ],
+            [
+              128,
+              311.3848053603291
+            ],
+            [
+              384,
+              190.60688277729037
+            ],
+            [
+              384,
+              311.3848053603291
+            ],
+            [
+              640,
+              190.60688277729037
+            ],
+            [
+              640,
+              311.3848053603291
+            ],
+            [
+              896,
+              211.07720804049362
+            ],
+            [
+              896,
+              311.3848053603291
+            ]
+          ]
+        }
+      ],
+      "original_audit": [
+        {
+          "height_envelope_violation_h": 0.3999999999999999,
+          "height_envelope_violation_at_x": 128,
+          "height_envelope_source": [
+            "r1",
+            "above"
+          ]
+        },
+        {
+          "height_envelope_violation_h": 0.3999999999999999,
+          "height_envelope_violation_at_x": 128,
+          "height_envelope_source": [
+            "r0",
+            "below"
+          ]
+        }
+      ],
+      "in_memory_event_split_audit": [
+        {
+          "height_envelope_violation_h": 1.1102230246251565e-16,
+          "height_envelope_violation_at_x": 256,
+          "height_envelope_source": [
+            "r1",
+            "below"
+          ]
+        },
+        {
+          "height_envelope_violation_h": 1.1102230246251565e-16,
+          "height_envelope_violation_at_x": 256,
+          "height_envelope_source": [
+            "r0",
+            "above"
+          ]
+        }
+      ],
+      "original_package_modified": false
+    },
+    "incorrect_merged_provenance": {
+      "candidate": "2t7WUuJeko7-06_pixel_only_2px",
+      "at_x": 311.47336,
+      "reported_window": {
+        "x_lo": 189.0866625379024,
+        "x_hi": 340.7424350683285,
+        "witness_count": 0,
+        "witness_records": [],
+        "top_source_curves": [
+          "R00227"
+        ],
+        "bottom_source_curves": []
+      },
+      "actual_top_exact_donors": [],
+      "top_difference_from_reported_source_px": -0.8821103024536967
+    },
+    "score_drift_checks": {
+      "rows": 72,
+      "passed": 72,
+      "order_sufficient_condition_met": 62,
+      "order_not_guaranteed": 10,
+      "actual_reversals": 4,
+      "negative_float_delta_rows": [
+        {
+          "image": "7y3sRwLe3Va-04",
+          "policy": "bottom_locked",
+          "epsilon_px": 0.25,
+          "metric": "bev",
+          "exact_loss": 0.0435273306322342,
+          "compressed_loss": 0.0435273306322347,
+          "point_loss": 0.0414892032874216,
+          "gt_free_compression_score_shift_bound": -2.220446049250313e-16,
+          "actual_score_shift": 5.551115123125784e-16,
+          "bound_passed": true,
+          "exact_point_gap": 0.0020381273448125,
+          "compressed_point_gap": 0.0020381273448131,
+          "point_order_certified": true,
+          "point_order_reversed": false
+        }
+      ]
+    },
+    "coarse_same_sign_pairs_requiring_refinement": [
+      {
+        "image": "2t7WUuJeko7-06",
+        "side": "top",
+        "first": "R00227",
+        "second": "R01831",
+        "coarse_arc_difference_deg": -0.012409207504213704,
+        "coarse_arc_difference_bound_deg": 0.024997515284647998,
+        "longitude_difference_px": -0.33763185587892863
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "top",
+        "first": "R00194",
+        "second": "R00862",
+        "coarse_arc_difference_deg": 0.002438807017331568,
+        "coarse_arc_difference_bound_deg": 0.0249954628758463,
+        "longitude_difference_px": 0.0036486304170975092
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "top",
+        "first": "R00194",
+        "second": "R01550",
+        "coarse_arc_difference_deg": 0.002438807017331568,
+        "coarse_arc_difference_bound_deg": 0.0249954628758463,
+        "longitude_difference_px": 0.0036486304170975092
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "top",
+        "first": "R00194",
+        "second": "R01649",
+        "coarse_arc_difference_deg": 0.002438807017331568,
+        "coarse_arc_difference_bound_deg": 0.0249954628758463,
+        "longitude_difference_px": 0.0036486304170975092
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "top",
+        "first": "R00441",
+        "second": "R01449",
+        "coarse_arc_difference_deg": 0.009055434355278447,
+        "coarse_arc_difference_bound_deg": 0.0249946441482234,
+        "longitude_difference_px": 0.0641460523344306
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "top",
+        "first": "R00755",
+        "second": "R01556",
+        "coarse_arc_difference_deg": -0.02423657026347259,
+        "coarse_arc_difference_bound_deg": 0.0249950575059684,
+        "longitude_difference_px": -0.07094846127688648
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "top",
+        "first": "R00755",
+        "second": "R01837",
+        "coarse_arc_difference_deg": -0.006643847989458718,
+        "coarse_arc_difference_bound_deg": 0.0249930269182903,
+        "longitude_difference_px": -0.023401311833984195
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "top",
+        "first": "R00755",
+        "second": "R02398",
+        "coarse_arc_difference_deg": -0.006643847989458718,
+        "coarse_arc_difference_bound_deg": 0.0249930269182903,
+        "longitude_difference_px": -0.023401311833984195
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "top",
+        "first": "R01556",
+        "second": "R01837",
+        "coarse_arc_difference_deg": 0.017592722274013872,
+        "coarse_arc_difference_bound_deg": 0.0249936768169669,
+        "longitude_difference_px": 0.04754714944290228
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "top",
+        "first": "R01556",
+        "second": "R02398",
+        "coarse_arc_difference_deg": 0.017592722274013872,
+        "coarse_arc_difference_bound_deg": 0.0249936768169669,
+        "longitude_difference_px": 0.04754714944290228
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "bottom",
+        "first": "R00194",
+        "second": "R00478",
+        "coarse_arc_difference_deg": 0.011973866643480213,
+        "coarse_arc_difference_bound_deg": 0.024997368744848203,
+        "longitude_difference_px": 0.0350488587735891
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "bottom",
+        "first": "R00194",
+        "second": "R00917",
+        "coarse_arc_difference_deg": 0.0037653060927480553,
+        "coarse_arc_difference_bound_deg": 0.0249973799565423,
+        "longitude_difference_px": 0.0013324081651011621
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "bottom",
+        "first": "R00441",
+        "second": "R01553",
+        "coarse_arc_difference_deg": -0.023464173159740476,
+        "coarse_arc_difference_bound_deg": 0.024996437039918898,
+        "longitude_difference_px": -0.06563240989188923
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "bottom",
+        "first": "R00478",
+        "second": "R00917",
+        "coarse_arc_difference_deg": -0.008208560550732158,
+        "coarse_arc_difference_bound_deg": 0.024996997820063302,
+        "longitude_difference_px": -0.033716450608487936
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "bottom",
+        "first": "R01020",
+        "second": "R01041",
+        "coarse_arc_difference_deg": 0.003210919341664842,
+        "coarse_arc_difference_bound_deg": 0.0249957205585684,
+        "longitude_difference_px": 0.010563307978683767
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "bottom",
+        "first": "R01020",
+        "second": "R02003",
+        "coarse_arc_difference_deg": 0.003210919341664842,
+        "coarse_arc_difference_bound_deg": 0.0249957205585684,
+        "longitude_difference_px": 0.010563307978683767
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "bottom",
+        "first": "R01896",
+        "second": "R02226",
+        "coarse_arc_difference_deg": 0.024040432031726233,
+        "coarse_arc_difference_bound_deg": 0.0249949617647185,
+        "longitude_difference_px": 0.10652169069769579
+      }
+    ]
+  },
+  "targeted_height_impact": {
+    "states": 24,
+    "original_vs_in_memory_event_split_max_delta_h": 0,
+    "max_original_violation_h": 4.440892098500626e-16,
+    "states_exceeding_1e_8_h": 0,
+    "source_envelope_dense_check_directions": 20001,
+    "max_source_envelope_difference_h": 1.78e-15,
+    "scope": "Both real supported images only. The diagnostic generality bug remains."
+  },
+  "independent_fixed_longitude": {
+    "bottom_reference_pairs_checked": 8,
+    "max_mean_difference_px": 2.67e-13,
+    "max_extrema_difference_px": 9.06e-14,
+    "approach": "Reconstruct endpoint curves independently, integrate absolute discrepancy and bracket derivative roots; no package Ring/fixed_longitude calls."
+  },
+  "not_run": [
+    "Complete 86-artifact regeneration",
+    "Full repository test suite",
+    "Original image semantic/visual review",
+    "Human editing usability study"
+  ],
+  "scope": "Current full rosters 3/24/24/15. Two images usable by all-roster single-valued fusion. No eligibility or source geometry change; no screenshots produced.",
+  "independent_additional_refinement": {
+    "pairs": 17,
+    "cached_record_side_results": 22,
+    "new_reversals": 0,
+    "numerically_unresolved": 0,
+    "integration_warnings": 0,
+    "method": "Independent nearest spherical arc kernel and adaptive arc-parameter quadrature; numerical error estimates, not interval proof.",
+    "values_rounded_from_independent_audit": true,
+    "rows": [
+      {
+        "image": "2t7WUuJeko7-06",
+        "side": "top",
+        "first": "R00227",
+        "second": "R01831",
+        "arc_difference_deg": -0.01240783028,
+        "combined_error_estimate_deg": 3.26e-10,
+        "longitude_difference_px": -0.33763186
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "top",
+        "first": "R00194",
+        "second": "R00862",
+        "arc_difference_deg": 0.00243749512,
+        "combined_error_estimate_deg": 3.38e-10,
+        "longitude_difference_px": 0.00364863
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "top",
+        "first": "R00194",
+        "second": "R01550",
+        "arc_difference_deg": 0.00243749512,
+        "combined_error_estimate_deg": 3.38e-10,
+        "longitude_difference_px": 0.00364863
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "top",
+        "first": "R00194",
+        "second": "R01649",
+        "arc_difference_deg": 0.00243749512,
+        "combined_error_estimate_deg": 3.38e-10,
+        "longitude_difference_px": 0.00364863
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "top",
+        "first": "R00441",
+        "second": "R01449",
+        "arc_difference_deg": 0.00905439317,
+        "combined_error_estimate_deg": 3.83e-10,
+        "longitude_difference_px": 0.06414605
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "top",
+        "first": "R00755",
+        "second": "R01556",
+        "arc_difference_deg": -0.02424204765,
+        "combined_error_estimate_deg": 3.42e-10,
+        "longitude_difference_px": -0.07094846
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "top",
+        "first": "R00755",
+        "second": "R01837",
+        "arc_difference_deg": -0.00664275049,
+        "combined_error_estimate_deg": 3.19e-10,
+        "longitude_difference_px": -0.02340131
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "top",
+        "first": "R00755",
+        "second": "R02398",
+        "arc_difference_deg": -0.00664275049,
+        "combined_error_estimate_deg": 3.19e-10,
+        "longitude_difference_px": -0.02340131
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "top",
+        "first": "R01556",
+        "second": "R01837",
+        "arc_difference_deg": 0.01759929717,
+        "combined_error_estimate_deg": 3.12e-10,
+        "longitude_difference_px": 0.04754715
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "top",
+        "first": "R01556",
+        "second": "R02398",
+        "arc_difference_deg": 0.01759929717,
+        "combined_error_estimate_deg": 3.12e-10,
+        "longitude_difference_px": 0.04754715
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "bottom",
+        "first": "R00194",
+        "second": "R00478",
+        "arc_difference_deg": 0.01197514874,
+        "combined_error_estimate_deg": 5.02e-10,
+        "longitude_difference_px": 0.03504886
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "bottom",
+        "first": "R00194",
+        "second": "R00917",
+        "arc_difference_deg": 0.00376620419,
+        "combined_error_estimate_deg": 5.39e-10,
+        "longitude_difference_px": 0.00133241
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "bottom",
+        "first": "R00441",
+        "second": "R01553",
+        "arc_difference_deg": -0.02346437096,
+        "combined_error_estimate_deg": 4.5e-10,
+        "longitude_difference_px": -0.06563241
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "bottom",
+        "first": "R00478",
+        "second": "R00917",
+        "arc_difference_deg": -0.00820894455,
+        "combined_error_estimate_deg": 4.58e-10,
+        "longitude_difference_px": -0.03371645
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "bottom",
+        "first": "R01020",
+        "second": "R01041",
+        "arc_difference_deg": 0.00322288558,
+        "combined_error_estimate_deg": 3.6e-10,
+        "longitude_difference_px": 0.01056331
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "bottom",
+        "first": "R01020",
+        "second": "R02003",
+        "arc_difference_deg": 0.00322288558,
+        "combined_error_estimate_deg": 3.6e-10,
+        "longitude_difference_px": 0.01056331
+      },
+      {
+        "image": "7y3sRwLe3Va-04",
+        "side": "bottom",
+        "first": "R01896",
+        "second": "R02226",
+        "arc_difference_deg": 0.02404304533,
+        "combined_error_estimate_deg": 3.77e-10,
+        "longitude_difference_px": 0.10652169
+      }
+    ],
+    "execution_note": "An initial output serialization failed for NumPy scalars; output conversion corrected and computation rerun successfully in memory."
+  }
+}

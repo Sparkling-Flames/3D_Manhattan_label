@@ -4,6 +4,9 @@
 
 ## 当前入口
 
+- [共识可靠性修复与空间候选执行](../research/layout_reliability_20261005/README.md)：原件精选归档、本地修复模块`tools/thesis_main/analysis/layout_reliability_20261005/`，定向复算及单点对删除入口；结果分别在`analysis_results/layout_reliability_fixed_20261005/`与`local_structure_deletion_20261005/`。
+
+- [10月5日Pro共识可靠性返回独立审查](../analysis_results/layout_reliability_review_20261005/REPORT.md)：源绑定、包络与来源缺陷、排序补查及减法候选下一步；外部原件和运行算法未改。
 - [共识可靠性后续方案与Pro深研资料](thesis_main/研究推进方案_共识可靠性与Pro深研_20261004.md)：本阶段完成条件、研究问题与创新边界；[交接包](../research/layout_foundations_handoff_20261004/README.md)含最新Pro／dot原件及四图66份完整当前名单，GT分离；只交接资料，未新增融合实验。
 - [下一线程完整交接：连线、质量与完整共识](thesis_main/线程交接_连线质量与完整共识_20261004.md)：最新优先级、跨线程证据、算法与数据入口、已知缺陷、Pro分工、未提交边界及具体接续任务。
 - [人员子类与完整共识返回审查](../analysis_results/worker_subtype_review_20261004/REPORT.md)、[Pro／dot精选归档](../research/worker_subtype_returns_20261004/README.md)：数值复核、认证反例和点身份并列提示；当前优先回到连线、质量与共识基础，跨线程进度和后续安排统一见研究方向。

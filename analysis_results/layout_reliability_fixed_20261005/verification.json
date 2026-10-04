@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-05",
+  "new_tests": {
+    "count": 9,
+    "result": "passed",
+    "command": "python -B -m pytest -p no:cacheprovider tests/test_local_structure_deletion_20261005.py tests/test_layout_reliability_20261005.py -q"
+  },
+  "pro_compatibility_tests": {
+    "count": 24,
+    "result": "passed",
+    "method": "Inject corrected local arc_consensus and continuous_metrics modules into the unchanged archived unittest suite in a separate python -B process."
+  },
+  "tdd": {
+    "bug_regressions_before_fix": {
+      "failed": 2,
+      "passed": 3
+    },
+    "bug_regressions_after_fix": {
+      "passed": 5
+    },
+    "candidate_tests_before_implementation": "module import failed as expected",
+    "candidate_tests_after_implementation": {
+      "passed": 4
+    }
+  },
+  "archive": {
+    "files_verified": 144,
+    "bytes": 6253843,
+    "byte_identical_to_external_original": true
+  },
+  "checks": {
+    "local_arc_body_identical": true,
+    "local_document_links": 38,
+    "missing_links": [],
+    "candidate_objects": 56,
+    "witness_outputs": 26,
+    "interval_donor_checks": 57
+  },
+  "protocol": {
+    "source_annotations_unchanged": true,
+    "source_ring_confirmation_preserved": true,
+    "new_candidate_rings_unconfirmed": true,
+    "generated_candidates_not_person_votes": true,
+    "contract_unchanged": true,
+    "gt_used_for_generation": false
+  },
+  "not_run": [
+    "full repository regression suite",
+    "entire Pro 86-artifact reproduction",
+    "human editing usability",
+    "per-edge physical truth adjudication",
+    "multi-observer structure recombination"
+  ],
+  "screenshots_created": 0
+}
