@@ -26,6 +26,7 @@
     <div class="result-options"><label id="compact-pattern-control">辅助标法 <select id="compact-pattern"></select></label>
     <label id="rule-control">投票规则 <select id="result-rule"><option value="mv50">至少一半（≥50%）</option><option value="mv_strict">超过一半（>50%）</option></select></label>
     <label><input type="checkbox" id="result-gt">对照 GT</label><label><input type="checkbox" id="result-before">对照该类代表标注</label>
+    <label id="lee-nodes-control" hidden><input type="checkbox" id="lee-nodes" checked>显示底边表示节点</label>
     <button id="result-expand">放大查看</button></div>
     <div class="result-panoramas"><figure id="before-panel" hidden><figcaption>融合前 · 该类代表标注</figcaption><svg id="before-pano" viewBox="0 0 1024 512" role="img" aria-label="该类标法的代表标注"></svg></figure>
     <figure id="result-panel"><figcaption id="result-caption">融合后</figcaption><svg id="result-pano" viewBox="0 0 1024 512" role="img" aria-label="融合后的全景标注"></svg><p id="result-unavailable" hidden role="status"></p></figure></div>
@@ -74,6 +75,7 @@
     const svg=byId('result-pano');base(svg,d);base(byId('before-pano'),d);layout(byId('before-pano'),v.source.representative.erp);
     byId('compact-pattern').value=selectedPattern;
     byId('rule-control').hidden=method==='point';byId('compact-pattern-control').hidden=all;
+    byId('lee-nodes-control').hidden=method!=='lee';
     sidebar.hidden=all;document.querySelector('.workspace').classList.toggle('only-global',all);
     byId('result-before').disabled=all;byId('before-panel').hidden=all||!byId('result-before').checked;
     byId('result-count').textContent=`${all?d.n:g.support} 人参与${all?' · 全员':` · 标法 ${selectedPattern+1}`}`;
@@ -115,8 +117,16 @@
     } else {
       title='全员 Lee 投票后的底边';
       const rings=d.step.erp_regions[rule];for(const r of rings)path(svg,r.paths,'#34ffe0',r.hole);
-      explanation=rings.length?`${d.n} 人的底面区域投票后回投到全景图。青线是融合底边；这一路还没有 top_y，不能显示完整房间。`:'当前规则得到空区域：没有可显示的融合底边。';
-      detail='在声明 BEV 底面上切 tile 后等权投票，所有分量与孔洞原样保留。这里没有借用某个人的上边补成完整结果。';
+      let count=0;
+      for(const r of rings)r.vertices.slice(0,-1).forEach((p,i)=>{
+        count++;
+        if(byId('lee-nodes').checked){
+          const dot=node('circle',{cx:p[0],cy:p[1],r:3,fill:'#34ffe0',stroke:'#09232a','stroke-width':1.2,class:'lee-boundary-node'});
+          dot.append(node('title',{},`分量 ${r.component+1} · ${r.hole?'孔洞':'外环'} · 表示节点 ${i+1}（未认证物理墙角）`));svg.append(dot);
+        }
+      });
+      explanation=rings.length?`${d.n} 人的底面区域投票后回投到全景图，保存 ${count} 个底边表示节点。节点可来自原边交点，不等于人工标注墙角；当前没有融合上点，尚非完整上下点对标注。`:'当前规则得到空区域：没有可显示的融合底边。';
+      detail='区域和边界顶点可直接用于底面范围、边界与稳定性比较；所有分量与孔洞原样保留。完整上下点对、顶部与墙高需要另行构造，不能从底面唯一恢复。';
     }
     byId('result-title').textContent=title;byId('result-caption').textContent=title;
     byId('result-explanation').textContent=explanation;byId('method-detail').textContent=detail;
@@ -144,7 +154,7 @@
     method=b.dataset.resultMethod;chooseVariant(selectedPattern,false);
   });
   byId('result-rule').onchange=()=>chooseVariant(selectedPattern,false);
-  for(const id of ['result-gt','result-before'])byId(id).onchange=drawResult;
+  for(const id of ['result-gt','result-before','lee-nodes'])byId(id).onchange=drawResult;
   byId('compact-pattern').onchange=e=>{const i=Number(e.target.value);byId('variant-select').value=i;chooseVariant(i,false);};
   const expandLabel=()=>{byId('result-expand').textContent=document.fullscreenElement||hero.classList.contains('large-result')?'退出放大':'放大查看';};
   document.addEventListener('fullscreenchange',expandLabel);

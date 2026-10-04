@@ -30,6 +30,7 @@
 
 ## 当前研究与探索
 
+- [Lee底边节点及后续用途](../analysis_results/lee_boundary_usability_20261005/REPORT.md)：现有四图八输出回投验收、工作台节点开关；区域比较与完整上下标注分开。
 - [局部跨接证据与Pro并行交接](../research/local_shortcut_handoff_20261005/README.md)：51操作单经度回投、两个原图窗口、dot复核及有限路径候选深研；仍未自动裁决删除。
 - [共识可靠性修复与局部候选执行](../research/layout_reliability_20261005/README.md)：两处修复、26份诊断复算、33项相关测试；[51个真实局部删除](../analysis_results/local_structure_deletion_20261005/REPORT.md)与[候选计划](thesis_main/空间候选构造_局部删改试验_20261005.md)，不等同完整多人重组。
 
