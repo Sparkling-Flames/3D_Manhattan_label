@@ -1,7 +1,7 @@
 # HOHONET 文档入口
 
 <!-- CURRENT_RESEARCH: consensus_research_20260923_v1 -->
-当前研究规范为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`，版本 `consensus_research_20260923_v1`。当前基础是BEV底面表示、GT参照评价与Lee等权融合；先A线粗难度与人数曲线，再B线人员画像与真实组合，之后联系两线。136图人数扩展、24人×10图画像及固定4人构成基础分析已完成；正式类型与两线联系待研究。分簇、合理空间候选和同房预测不作为前置任务。
+当前研究规范为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`，版本 `consensus_research_20260923_v1`。当前优先核清连线／空间表示、分项质量评价和完整共识；Lee区域投票与上下点融合并行。已有136图人数曲线、人员画像及组合实验保留，人员分类、难度联系与同房预测后移。
 
 ## 规范与执行
 
@@ -30,6 +30,7 @@
 
 ## 当前研究与探索
 
+- [下一线程完整交接：连线、质量与完整共识](thesis_main/线程交接_连线质量与完整共识_20261004.md)：最新优先级、跨线程证据、算法与数据入口、已知缺陷、Pro分工、未提交边界及具体接续任务。
 - [人员子类与完整共识返回审查](../analysis_results/worker_subtype_review_20261004/REPORT.md)、[Pro／dot精选归档](../research/worker_subtype_returns_20261004/README.md)：数值复核、认证反例和点身份并列提示；当前优先回到连线、质量与共识基础，跨线程进度和后续安排统一见研究方向。
 - [完整共识并行研究交接](../research/full_layout_consensus_handoff_20261003/README.md)：本地负责当前输入与原图核对、融合环序和既有Lee稳定性；Chat Pro研究完整共识、阈值、对应及连接，附目标提示词和已跟踪资料入口。
 - [全员点对融合137图基础研究](../analysis_results/global_pair_consensus_20261004/REPORT.md)：全员跨点数、三阈值两规则、来源与连接诊断；`global_pair_consensus_20261004.py` 与 `global_pair_study_20261004.py`，默认工作台已接全员结果。
