@@ -42,12 +42,15 @@ def _identities(records, threshold):
                           source_geometry_reason=geometry['reason'])
         for i,pair in enumerate(pairs):
             nodes.append(dict(record=r,assignment=assignment,pair_index=i,pair=pair))
-    # Canonical observation order avoids input-list/cyclic-start/reversal tie artifacts.
+    # Canonical order fixes list/ring reordering; it does not resolve equal-distance merge choices.
     nodes.sort(key=lambda v:(str(v['record']['worker']),str(v['record']['id']),
         float(v['pair'][0,0]%1024),float(v['pair'][0,1]),float(v['pair'][1,1]),v['pair_index']))
     correspondence=dict(policy='deterministic constrained complete-linkage partition; not proven unique global correspondence',
         uniqueness_established=False,observations_with_multiple_matches_to_same_other_worker=0,
         competing_worker_matches=0,competing_match_examples=[],example_limit=20,
+        partition_tie_check=dict(probe='reverse_canonical_observation_order',performed=False,
+            partition_changed=False,affected_observation_count=0,
+            limitation='single order-sensitivity probe; unchanged does not establish unique correspondence'),
         interpretation='threshold-compatible alternatives are ambiguity evidence, not feasible global partitions or posterior probabilities')
     if not nodes:return [],assignments,issues,correspondence
     p=np.array([v['pair'] for v in nodes])
@@ -60,6 +63,14 @@ def _identities(records, threshold):
     # ponytail: O(total point-pairs²) per image, matching the existing small-panel implementation.
     labels=fcluster(linkage(squareform(constrained,checks=False),method='complete'),
                     threshold,criterion='distance')
+    # Diagnostic only: keep the original partition and geometry, including its tie choice.
+    reversed_labels=fcluster(linkage(squareform(constrained[::-1,::-1],checks=False),method='complete'),
+                             threshold,criterion='distance')[::-1]
+    members={label:frozenset(np.flatnonzero(labels==label)) for label in set(labels)}
+    reversed_members={label:frozenset(np.flatnonzero(reversed_labels==label)) for label in set(reversed_labels)}
+    affected=sum(members[a]!=reversed_members[b] for a,b in zip(labels,reversed_labels))
+    correspondence['partition_tie_check'].update(performed=True,partition_changed=bool(affected),
+                                                 affected_observation_count=int(affected))
     groups=[]
     ordered=sorted(set(labels),key=lambda label:int(np.flatnonzero(labels==label)[0]))
     for number,label in enumerate(ordered,1):
@@ -175,6 +186,7 @@ def _result(groups, assignments, issues, correspondence, n, threshold, method):
                 if ring['below_majority_edge_count']:flags.append('candidate_edges_below_majority_support')
                 if ring['source_ring_disagreement_count']:flags.append('source_ring_disagreement')
                 if correspondence['competing_worker_matches']:flags.append('competing_threshold_correspondences')
+                if correspondence['partition_tie_check']['partition_changed']:flags.append('complete_linkage_partition_tie')
                 if issues:flags.append('unavailable_input_observations_in_denominator')
                 candidate.update(status='geometry_review' if flags else 'ok',reason=';'.join(flags) or None)
     return dict(schema_version=SCHEMA,status=candidate['status'],n=n,vote_denominator=n,method=method,

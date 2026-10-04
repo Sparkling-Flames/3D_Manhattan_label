@@ -1,0 +1,32 @@
+                 policy  workers  images  buildings  pooled_relative_improvement  building_equal_relative_improvement  workers_with_pooled_improvement  workers_with_building_equal_improvement  buildings_with_improvement  p017_share_of_signed_gain  p017_share_of_building_equal_signed_gain
+               original       24      10          8                     0.107054                             0.132121                                7                                        9                           4                   1.145785                                  1.035379
+revised_where_available       24      10          8                     0.109005                             0.123653                                9                                        9                           4                   0.875519                                  0.798776
+
+FIXED-PREDICTION SCORING PARTITIONS
+                 policy scoring_partition_excludes  evaluated_workers  refit  recentered  pooled_relative_improvement  building_equal_relative_improvement
+               original                     (none)                 24  False       False                     0.107054                             0.132121
+               original                       P017                 23  False       False                    -0.022602                            -0.007037
+               original                  P002|P017                 22  False       False                    -0.029919                            -0.023910
+revised_where_available                     (none)                 24  False       False                     0.109005                             0.123653
+revised_where_available                       P017                 23  False       False                     0.017655                             0.032962
+revised_where_available                  P002|P017                 22  False       False                     0.002731                             0.003531
+
+AUDIT
+{
+  "input_sha256": {
+    "results/nested_prediction_cells.csv": "7f6ea82dfb27b6a9ef27286c5734418cb01e543fb9e7703f1be4ce3dbc4709b2",
+    "results/nested_method_choices.csv": "8a9d6aee83ed1abfcc00ab883cfef976adc89fe4921b08b266031d82073e4bfa",
+    "results/nested_summary.csv": "bea5dc1773243b6df9e7c7868f84d29638811fa62354c51220817e73eed5df61",
+    "inputs/matrix_original_iou.csv": "343f46a9fc45d3c06ccbf035f57766cee3b1a121d5b412304a2f5405aeb68366",
+    "inputs/matrix_revised_where_available_iou.csv": "ecae7cc60366c1f4b22f68a3d36f21a0e4f2582e7c7b9c7b5e83f4d0a481364a"
+  },
+  "centered_target_max_abs_error": 9.8879238130678e-17,
+  "prediction_count": 480,
+  "no_production_code_imports": true,
+  "no_refits": true,
+  "no_eligibility_changes": true,
+  "no_remote_or_original_input_writes": true,
+  "outer_baseline_sse_max_abs_error": 2.7755575615628914e-16,
+  "outer_test_sse_max_abs_error": 2.220446049250313e-16,
+  "interpretation": "Shares are signed arithmetic loss decompositions, not causal contribution or independent significance. Scoring partitions retain the original 24-worker centering and trained predictions."
+}

@@ -1,0 +1,16 @@
+{
+  "schema_version": "global_pair_consensus_20261004_v1",
+  "change": "additive_diagnostic_only_20261004_partition_tie_probe",
+  "path": "correspondence_diagnostics.partition_tie_check",
+  "fields": {
+    "probe": "reverse_canonical_observation_order",
+    "performed": "boolean; false only when no usable point-pair observations exist",
+    "partition_changed": "boolean; compares co-membership partitions under canonical and reversed observation order, ignoring numeric cluster labels",
+    "affected_observation_count": "integer; number of point-pair observations whose co-membership set changes in this one probe",
+    "limitation": "single order-sensitivity probe; unchanged does not establish unique correspondence"
+  },
+  "status_rule": "If geometry is otherwise available and partition_changed is true, preserve the candidate and add complete_linkage_partition_tie to candidate.reason; status becomes geometry_review.",
+  "unchanged": ["chosen partition", "selected identities", "points", "footprint", "original and generated order", "person denominator", "same-person constraints", "duplicate geometry as independent votes"],
+  "scope": "finite diagnostic, not exhaustive tie enumeration, identity certification, identifier-invariance proof, statistical confidence or visual quality judgement",
+  "historical_outputs": "Existing saved v1 outputs can lack this additive field. A missing field means this probe was not recorded, not that it passed. No frozen 137-image or 822-setting outputs were regenerated."
+}

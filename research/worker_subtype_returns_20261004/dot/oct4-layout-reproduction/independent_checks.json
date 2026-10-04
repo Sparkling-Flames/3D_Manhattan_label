@@ -1,0 +1,351 @@
+{
+  "independent_spherical_3d": {
+    "matrix": [
+      [
+        0.0,
+        1.4322736234311633,
+        4.197178681926509
+      ],
+      [
+        1.4322736234311633,
+        0.0,
+        2.796842209086997
+      ],
+      [
+        4.197178681926509,
+        2.796842209086997,
+        0.0
+      ]
+    ],
+    "maximum_difference": 5.551115123125783e-15
+  },
+  "finite_pool_exact_rational": {
+    "subsets": 4095,
+    "rows": [
+      {
+        "k": 1,
+        "subsets": 12,
+        "same_exact": "2",
+        "nested_exact": "6/11"
+      },
+      {
+        "k": 2,
+        "subsets": 66,
+        "same_exact": "10/11",
+        "nested_exact": "2/11"
+      },
+      {
+        "k": 3,
+        "subsets": 220,
+        "same_exact": "6/11",
+        "nested_exact": "1/11"
+      },
+      {
+        "k": 4,
+        "subsets": 495,
+        "same_exact": "4/11",
+        "nested_exact": "3/55"
+      },
+      {
+        "k": 5,
+        "subsets": 792,
+        "same_exact": "14/55",
+        "nested_exact": "2/55"
+      },
+      {
+        "k": 6,
+        "subsets": 924,
+        "same_exact": "2/11",
+        "nested_exact": "2/77"
+      },
+      {
+        "k": 7,
+        "subsets": 792,
+        "same_exact": "10/77",
+        "nested_exact": "3/154"
+      },
+      {
+        "k": 8,
+        "subsets": 495,
+        "same_exact": "1/11",
+        "nested_exact": "1/66"
+      },
+      {
+        "k": 9,
+        "subsets": 220,
+        "same_exact": "2/33",
+        "nested_exact": "2/165"
+      },
+      {
+        "k": 10,
+        "subsets": 66,
+        "same_exact": "2/55",
+        "nested_exact": "6/605"
+      },
+      {
+        "k": 11,
+        "subsets": 12,
+        "same_exact": "2/121",
+        "nested_exact": "1/121"
+      },
+      {
+        "k": 12,
+        "subsets": 1,
+        "same_exact": "0",
+        "nested_exact": null
+      }
+    ],
+    "max_float_difference": 5.551115123125783e-17
+  },
+  "known_correspondence_noise": {
+    "pair_trials": 100000,
+    "scalar_gaussian_draws": 3680000,
+    "rows": [
+      {
+        "pair_count": 4,
+        "acceptance_mc": 0.90855,
+        "acceptance_exact": 0.9084388003594399,
+        "scalar_draws": 160000
+      },
+      {
+        "pair_count": 8,
+        "acceptance_mc": 0.8279,
+        "acceptance_exact": 0.8252610539984983,
+        "scalar_draws": 320000
+      },
+      {
+        "pair_count": 16,
+        "acceptance_mc": 0.6809,
+        "acceptance_exact": 0.6810558072467123,
+        "scalar_draws": 640000
+      },
+      {
+        "pair_count": 24,
+        "acceptance_mc": 0.5621,
+        "acceptance_exact": 0.5620488333202199,
+        "scalar_draws": 960000
+      },
+      {
+        "pair_count": 40,
+        "acceptance_mc": 0.3849,
+        "acceptance_exact": 0.3827866218889753,
+        "scalar_draws": 1600000
+      }
+    ]
+  },
+  "independent_complete_link": {
+    "settings": 4,
+    "repetitions_per_setting": 300,
+    "total": 1200,
+    "rows": [
+      {
+        "pair_count": 4,
+        "mean_clusters": 2.546666666666667,
+        "mean_singleton_person_fraction": 0.01722222222222222
+      },
+      {
+        "pair_count": 8,
+        "mean_clusters": 3.3633333333333333,
+        "mean_singleton_person_fraction": 0.030555555555555555
+      },
+      {
+        "pair_count": 16,
+        "mean_clusters": 4.296666666666667,
+        "mean_singleton_person_fraction": 0.05222222222222221
+      },
+      {
+        "pair_count": 24,
+        "mean_clusters": 5.04,
+        "mean_singleton_person_fraction": 0.08694444444444444
+      }
+    ],
+    "all_aggregate_values_equal": true
+  },
+  "fresh_18_prefix_inference": {
+    "orders": 6,
+    "prefix_calls": 18,
+    "distinct_subsets": 7,
+    "rows": [
+      {
+        "order": 1,
+        "k": 1,
+        "member_ids": [
+          "R01831"
+        ],
+        "baseline_equal": true,
+        "prototype_equal": true
+      },
+      {
+        "order": 1,
+        "k": 2,
+        "member_ids": [
+          "R01831",
+          "R00539"
+        ],
+        "baseline_equal": true,
+        "prototype_equal": true
+      },
+      {
+        "order": 1,
+        "k": 3,
+        "member_ids": [
+          "R01831",
+          "R00539",
+          "R00227"
+        ],
+        "baseline_equal": true,
+        "prototype_equal": true
+      },
+      {
+        "order": 2,
+        "k": 1,
+        "member_ids": [
+          "R01831"
+        ],
+        "baseline_equal": true,
+        "prototype_equal": true
+      },
+      {
+        "order": 2,
+        "k": 2,
+        "member_ids": [
+          "R01831",
+          "R00227"
+        ],
+        "baseline_equal": true,
+        "prototype_equal": true
+      },
+      {
+        "order": 2,
+        "k": 3,
+        "member_ids": [
+          "R01831",
+          "R00227",
+          "R00539"
+        ],
+        "baseline_equal": true,
+        "prototype_equal": true
+      },
+      {
+        "order": 3,
+        "k": 1,
+        "member_ids": [
+          "R00539"
+        ],
+        "baseline_equal": true,
+        "prototype_equal": true
+      },
+      {
+        "order": 3,
+        "k": 2,
+        "member_ids": [
+          "R00539",
+          "R01831"
+        ],
+        "baseline_equal": true,
+        "prototype_equal": true
+      },
+      {
+        "order": 3,
+        "k": 3,
+        "member_ids": [
+          "R00539",
+          "R01831",
+          "R00227"
+        ],
+        "baseline_equal": true,
+        "prototype_equal": true
+      },
+      {
+        "order": 4,
+        "k": 1,
+        "member_ids": [
+          "R00539"
+        ],
+        "baseline_equal": true,
+        "prototype_equal": true
+      },
+      {
+        "order": 4,
+        "k": 2,
+        "member_ids": [
+          "R00539",
+          "R00227"
+        ],
+        "baseline_equal": true,
+        "prototype_equal": true
+      },
+      {
+        "order": 4,
+        "k": 3,
+        "member_ids": [
+          "R00539",
+          "R00227",
+          "R01831"
+        ],
+        "baseline_equal": true,
+        "prototype_equal": true
+      },
+      {
+        "order": 5,
+        "k": 1,
+        "member_ids": [
+          "R00227"
+        ],
+        "baseline_equal": true,
+        "prototype_equal": true
+      },
+      {
+        "order": 5,
+        "k": 2,
+        "member_ids": [
+          "R00227",
+          "R01831"
+        ],
+        "baseline_equal": true,
+        "prototype_equal": true
+      },
+      {
+        "order": 5,
+        "k": 3,
+        "member_ids": [
+          "R00227",
+          "R01831",
+          "R00539"
+        ],
+        "baseline_equal": true,
+        "prototype_equal": true
+      },
+      {
+        "order": 6,
+        "k": 1,
+        "member_ids": [
+          "R00227"
+        ],
+        "baseline_equal": true,
+        "prototype_equal": true
+      },
+      {
+        "order": 6,
+        "k": 2,
+        "member_ids": [
+          "R00227",
+          "R00539"
+        ],
+        "baseline_equal": true,
+        "prototype_equal": true
+      },
+      {
+        "order": 6,
+        "k": 3,
+        "member_ids": [
+          "R00227",
+          "R00539",
+          "R01831"
+        ],
+        "baseline_equal": true,
+        "prototype_equal": true
+      }
+    ]
+  }
+}

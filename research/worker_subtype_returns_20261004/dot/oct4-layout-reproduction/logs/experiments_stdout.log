@@ -1,0 +1,261 @@
+{
+  "pilot": {
+    "images": 1,
+    "workers": 3,
+    "all_nonempty_subsets": 7,
+    "input_projection_max_error_h": 2.220446049250313e-16,
+    "real_distance_matrix": [
+      [
+        0.0,
+        1.4322736234311577,
+        4.197178681926505
+      ],
+      [
+        1.4322736234311577,
+        0.0,
+        2.7968422090869973
+      ],
+      [
+        4.197178681926505,
+        2.7968422090869973,
+        0.0
+      ]
+    ],
+    "same_k2_candidate_distances_deg": [
+      1.3981070435410397,
+      2.0983116935159223,
+      0.7161404047729102
+    ],
+    "prediction_sha256": "f071c817e9dc6a29ac858611cd79616aaa6c38b1e54e645d8383afb496a2708b",
+    "reference_loaded_after_prediction_write": true,
+    "limits": "access-selected tiny pilot; original reference is not newly visually adjudicated; no method selection from reference"
+  },
+  "subdivision": [
+    {
+      "top_delta_px": 0.0,
+      "base_pairs": 4,
+      "other_pairs": 5,
+      "equal_count_baseline_distance": 181.0,
+      "partial_matches": 4,
+      "partial_ambiguous": false,
+      "unmatched_other": "[1]",
+      "bev_iou": 1.0,
+      "erp_band_iou": 1.0,
+      "top_max_difference_px": 5.684341886080802e-14,
+      "bottom_max_difference_px": 5.684341886080802e-14
+    },
+    {
+      "top_delta_px": 2.0,
+      "base_pairs": 4,
+      "other_pairs": 5,
+      "equal_count_baseline_distance": 181.0,
+      "partial_matches": 4,
+      "partial_ambiguous": false,
+      "unmatched_other": "[1]",
+      "bev_iou": 1.0,
+      "erp_band_iou": 0.9996459214934857,
+      "top_max_difference_px": 1.999076055125272,
+      "bottom_max_difference_px": 5.684341886080802e-14
+    },
+    {
+      "top_delta_px": 8.0,
+      "base_pairs": 4,
+      "other_pairs": 5,
+      "equal_count_baseline_distance": 181.0,
+      "partial_matches": 4,
+      "partial_ambiguous": false,
+      "unmatched_other": "[1]",
+      "bev_iou": 1.0,
+      "erp_band_iou": 0.9985997199812274,
+      "top_max_difference_px": 7.996179337982028,
+      "bottom_max_difference_px": 5.684341886080802e-14
+    },
+    {
+      "top_delta_px": 20.0,
+      "base_pairs": 4,
+      "other_pairs": 5,
+      "equal_count_baseline_distance": 181.0,
+      "partial_matches": 4,
+      "partial_ambiguous": false,
+      "unmatched_other": "[1]",
+      "bev_iou": 1.0,
+      "erp_band_iou": 0.9965711005065251,
+      "top_max_difference_px": 19.989877583145187,
+      "bottom_max_difference_px": 5.684341886080802e-14
+    }
+  ],
+  "majority_joint": {
+    "majority_area": 19.0,
+    "each_input_area": [
+      18.0,
+      18.0,
+      18.0
+    ],
+    "majority_iou_to_each_observation": [
+      0.9473684210526315,
+      0.9473684210526315,
+      0.9473684210526315
+    ],
+    "full_111_joint_observation_support": 0
+  },
+  "edge_majority": {
+    "majority_vertex_degrees": {
+      "1": 3,
+      "4": 2,
+      "2": 3,
+      "3": 2,
+      "0": 2
+    },
+    "pairwise_bev_iou": [
+      0.6041666666666666,
+      0.5,
+      0.7291666666666666
+    ],
+    "band_status": [
+      "original_ring_not_single_valued_one_turn",
+      "available",
+      "original_ring_not_single_valued_one_turn"
+    ]
+  },
+  "cycle": {
+    "AB": {
+      "distance": 3.4163681108391026,
+      "mapping": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "margin": 0.805407503218853,
+      "ambiguous": false
+    },
+    "BC": {
+      "distance": 3.416368110839101,
+      "mapping": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "margin": 0.8054075032188575,
+      "ambiguous": false
+    },
+    "AC": {
+      "distance": 0.8704600049398354,
+      "mapping": [
+        3,
+        0,
+        1,
+        2
+      ],
+      "margin": 5.552623523514536,
+      "ambiguous": false
+    },
+    "mismatched_identities": 4,
+    "candidate_pairwise_bev_iou": [
+      0.7098078142164793,
+      0.8632179900134442,
+      0.7098078142164796
+    ]
+  },
+  "multiplicity": {
+    "pair_experiment": [
+      {
+        "pair_count": 4,
+        "identical_latent_layout": true,
+        "vertical_sigma_px": 4.0,
+        "trials": 20000,
+        "threshold_deg": 5.0,
+        "pair_acceptance_mc": 0.90855,
+        "mc_standard_error": 0.002039335018589903,
+        "pair_acceptance_exact": 0.9084388003594399,
+        "mean_max_angle": 3.553243198172682,
+        "q95_max_angle": 5.421251336036061
+      },
+      {
+        "pair_count": 8,
+        "identical_latent_layout": true,
+        "vertical_sigma_px": 4.0,
+        "trials": 20000,
+        "threshold_deg": 5.0,
+        "pair_acceptance_mc": 0.8279,
+        "mc_standard_error": 0.0026851931657870167,
+        "pair_acceptance_exact": 0.8252610539984983,
+        "mean_max_angle": 4.121933438583452,
+        "q95_max_angle": 5.878882225930024
+      },
+      {
+        "pair_count": 16,
+        "identical_latent_layout": true,
+        "vertical_sigma_px": 4.0,
+        "trials": 20000,
+        "threshold_deg": 5.0,
+        "pair_acceptance_mc": 0.6809,
+        "mc_standard_error": 0.003295593987904467,
+        "pair_acceptance_exact": 0.6810558072467123,
+        "mean_max_angle": 4.674072177857954,
+        "q95_max_angle": 6.2794614050141035
+      },
+      {
+        "pair_count": 24,
+        "identical_latent_layout": true,
+        "vertical_sigma_px": 4.0,
+        "trials": 20000,
+        "threshold_deg": 5.0,
+        "pair_acceptance_mc": 0.5621,
+        "mc_standard_error": 0.003508204257762079,
+        "pair_acceptance_exact": 0.5620488333202199,
+        "mean_max_angle": 4.963606784562685,
+        "q95_max_angle": 6.474477154250908
+      },
+      {
+        "pair_count": 40,
+        "identical_latent_layout": true,
+        "vertical_sigma_px": 4.0,
+        "trials": 20000,
+        "threshold_deg": 5.0,
+        "pair_acceptance_mc": 0.3849,
+        "mc_standard_error": 0.003437011958022564,
+        "pair_acceptance_exact": 0.3827866218889753,
+        "mean_max_angle": 5.318294300044661,
+        "q95_max_angle": 6.789411447688452
+      }
+    ],
+    "cluster_experiment": [
+      {
+        "pair_count": 4,
+        "workers": 12,
+        "repeats": 300,
+        "mean_clusters": 2.546666666666667,
+        "mean_singleton_person_fraction": 0.01722222222222222,
+        "threshold_deg": 5.0
+      },
+      {
+        "pair_count": 8,
+        "workers": 12,
+        "repeats": 300,
+        "mean_clusters": 3.3633333333333333,
+        "mean_singleton_person_fraction": 0.030555555555555555,
+        "threshold_deg": 5.0
+      },
+      {
+        "pair_count": 16,
+        "workers": 12,
+        "repeats": 300,
+        "mean_clusters": 4.296666666666667,
+        "mean_singleton_person_fraction": 0.05222222222222221,
+        "threshold_deg": 5.0
+      },
+      {
+        "pair_count": 24,
+        "workers": 12,
+        "repeats": 300,
+        "mean_clusters": 5.04,
+        "mean_singleton_person_fraction": 0.08694444444444444,
+        "threshold_deg": 5.0
+      }
+    ],
+    "assumption": "Synthetic independent Gaussian VERTICAL errors, fixed known correspondence, no x errors; one latent layout per cell. Not real-person estimates."
+  },
+  "finite_pool_max_error": 5.551115123125783e-17
+}

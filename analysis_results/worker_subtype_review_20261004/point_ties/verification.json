@@ -1,0 +1,103 @@
+{
+  "kind": "synthetic_existence_counterexample_not_current_human_image",
+  "checks": [
+    {
+      "case": "original",
+      "method": "mv50",
+      "before_status": "ok",
+      "after_status": "geometry_review",
+      "first_x": 108.0,
+      "support": [
+        2,
+        3,
+        3,
+        3
+      ],
+      "all_preexisting_non_status_fields_exactly_unchanged": true,
+      "diagnostic": {
+        "probe": "reverse_canonical_observation_order",
+        "performed": true,
+        "partition_changed": true,
+        "affected_observation_count": 3,
+        "limitation": "single order-sensitivity probe; unchanged does not establish unique correspondence"
+      }
+    },
+    {
+      "case": "original",
+      "method": "mv_strict",
+      "before_status": "ok",
+      "after_status": "geometry_review",
+      "first_x": 108.0,
+      "support": [
+        2,
+        3,
+        3,
+        3
+      ],
+      "all_preexisting_non_status_fields_exactly_unchanged": true,
+      "diagnostic": {
+        "probe": "reverse_canonical_observation_order",
+        "performed": true,
+        "partition_changed": true,
+        "affected_observation_count": 3,
+        "limitation": "single order-sensitivity probe; unchanged does not establish unique correspondence"
+      }
+    },
+    {
+      "case": "renamed_only",
+      "method": "mv50",
+      "before_status": "ok",
+      "after_status": "geometry_review",
+      "first_x": 124.0,
+      "support": [
+        2,
+        3,
+        3,
+        3
+      ],
+      "all_preexisting_non_status_fields_exactly_unchanged": true,
+      "diagnostic": {
+        "probe": "reverse_canonical_observation_order",
+        "performed": true,
+        "partition_changed": true,
+        "affected_observation_count": 3,
+        "limitation": "single order-sensitivity probe; unchanged does not establish unique correspondence"
+      }
+    },
+    {
+      "case": "renamed_only",
+      "method": "mv_strict",
+      "before_status": "ok",
+      "after_status": "geometry_review",
+      "first_x": 124.0,
+      "support": [
+        2,
+        3,
+        3,
+        3
+      ],
+      "all_preexisting_non_status_fields_exactly_unchanged": true,
+      "diagnostic": {
+        "probe": "reverse_canonical_observation_order",
+        "performed": true,
+        "partition_changed": true,
+        "affected_observation_count": 3,
+        "limitation": "single order-sensitivity probe; unchanged does not establish unique correspondence"
+      }
+    }
+  ],
+  "pytest": {
+    "command": "python -B -m pytest -p no:cacheprovider tests/test_global_pair_consensus_20261004.py tests/test_consensus_result_studio_20261004.py -q",
+    "passed": 12
+  },
+  "tdd": {
+    "before_fix": "3 failed and 6 passed: two new policy assertions and one additive-field assertion failed as expected",
+    "after_fix": "12 passed including three existing studio integration checks"
+  },
+  "environment": {
+    "python": "3.11.7",
+    "numpy": "1.26.4",
+    "scipy": "1.11.4"
+  },
+  "full_panel_recomputed": false
+}

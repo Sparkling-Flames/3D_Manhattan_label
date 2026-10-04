@@ -1,0 +1,43 @@
+{
+  "status": "exploratory_not_confirmatory",
+  "source_commit": "ad12d64d3567235e5691f9142d045df63b38b4e4",
+  "analysis_unit": "fixed_known_worker_pool_per_image_and_condition",
+  "profile_target": "image_centered_reference_IoU_for_known_workers",
+  "profile_training": "other_entire_buildings; images equally weighted for training mean",
+  "profile_methods": [
+    "no_worker",
+    "individual",
+    "median2",
+    "ward2",
+    "ward3",
+    "ward4"
+  ],
+  "nested_selection": "inner_leave_building_out_building_equal_MSE; outer_building_not_used_for_selection",
+  "ties": "median tie produces unavailable; Ward deterministic source-worker order; Ward merge-tie sensitivity not exhaustively tested",
+  "class_vote_weights": "all_equal_one",
+  "geometry": "stored_BEV_floor_polygon_only",
+  "normalization": "fixed_24_person_union_for_offline_evaluation_only",
+  "fusion_rules": [
+    "at_least_half",
+    "strict_majority"
+  ],
+  "subsets": "within-class uniform without replacement; real identities retained",
+  "new_couplings": [
+    "same-k independent draws",
+    "same-k disjoint draws",
+    "add-one",
+    "add-two",
+    "within-class swap",
+    "cross-class swap",
+    "next-person original annotation"
+  ],
+  "reference": "evaluation-only; no max-over-GT; target original fixed",
+  "mc_runs": 0,
+  "synthetic_people": 0,
+  "all_six_person_sets_per_image": 134596,
+  "images_numerically_recomputed": 2,
+  "TSB_current_feature_rebinding_complete": false,
+  "visual_adjudication": false,
+  "model_difficulty_established": false,
+  "existing_results_overwritten": false
+}

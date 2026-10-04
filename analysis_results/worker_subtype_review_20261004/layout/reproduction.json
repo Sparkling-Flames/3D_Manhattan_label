@@ -1,0 +1,409 @@
+{
+  "schema": "layout_certificate_independent_review_v1",
+  "environment": {
+    "python": "3.11.7",
+    "numpy": "1.26.4",
+    "shapely": "2.0.4"
+  },
+  "cases": {
+    "known_two": {
+      "before_status": "single_candidate_conditional_on_method_tolerance",
+      "after_status": "unresolved_actual_mapping_certificate_mismatch",
+      "candidate_anchor": "S0",
+      "actual_maps": {
+        "S0": [
+          0,
+          1,
+          2
+        ],
+        "S1": [
+          0,
+          1,
+          2
+        ]
+      },
+      "independent_pairs": [
+        {
+          "a": "S0",
+          "b": "S1",
+          "certified_minimax_mapping": [
+            1,
+            0,
+            2
+          ],
+          "certified_max_deg": 3.831827352154863,
+          "minimax_margin_deg": 0.47628057787786915,
+          "actual_a_map": [
+            0,
+            1,
+            2
+          ],
+          "actual_b_map": [
+            0,
+            1,
+            2
+          ],
+          "actual_max_deg": 4.308107930032732
+        }
+      ],
+      "fixed_mapping_candidate_residuals": [
+        {
+          "id": "S0",
+          "max_deg": 2.154066715885996
+        },
+        {
+          "id": "S1",
+          "max_deg": 2.154042222364027
+        }
+      ],
+      "candidate_points": [
+        [
+          399.89482402237627,
+          120.65029385378273
+        ],
+        [
+          399.89482402237627,
+          365.6228939738335
+        ],
+        [
+          406.2421855403492,
+          125.32109518193312
+        ],
+        [
+          406.2421855403492,
+          357.2993366128085
+        ],
+        [
+          912.6399196061575,
+          130.9434118865175
+        ],
+        [
+          912.6399196061575,
+          383.7966770960828
+        ]
+      ],
+      "guard_diagnostic": {
+        "status": "unresolved_actual_mapping_certificate_mismatch",
+        "single_candidate": null,
+        "mapping_disagreements": [
+          {
+            "id": "S1",
+            "actual_mapping": [
+              0,
+              1,
+              2
+            ],
+            "certified_mapping": [
+              1,
+              0,
+              2
+            ]
+          }
+        ],
+        "actual_induced_pair_errors_deg": [
+          {
+            "a": "S0",
+            "b": "S1",
+            "distance": 4.308107930032738
+          }
+        ],
+        "cycle_audit": {
+          "comparisons": [
+            {
+              "a": "S0",
+              "b": "S1",
+              "distance": 3.831827352154858,
+              "mapping": [
+                1,
+                0,
+                2
+              ],
+              "margin": 0.4762805778778798,
+              "ambiguous": false
+            }
+          ],
+          "all_pairs_compatible_and_unique": true,
+          "tested_triangles": 0,
+          "conflicts": [],
+          "interpretation": "No tested conflict is not evidence of consistency when maps or triangles are missing."
+        }
+      },
+      "inputs_unchanged": true
+    },
+    "new_three": {
+      "before_status": "single_candidate_conditional_on_method_tolerance",
+      "after_status": "unresolved_actual_mapping_certificate_mismatch",
+      "candidate_anchor": "S0",
+      "actual_maps": {
+        "S0": [
+          0,
+          1,
+          2
+        ],
+        "S1": [
+          0,
+          1,
+          2
+        ],
+        "S2": [
+          0,
+          1,
+          2
+        ]
+      },
+      "independent_pairs": [
+        {
+          "a": "S0",
+          "b": "S1",
+          "certified_minimax_mapping": [
+            1,
+            0,
+            2
+          ],
+          "certified_max_deg": 3.831827352154863,
+          "minimax_margin_deg": 0.47628057787786915,
+          "actual_a_map": [
+            0,
+            1,
+            2
+          ],
+          "actual_b_map": [
+            0,
+            1,
+            2
+          ],
+          "actual_max_deg": 4.308107930032732
+        },
+        {
+          "a": "S0",
+          "b": "S2",
+          "certified_minimax_mapping": [
+            0,
+            1,
+            2
+          ],
+          "certified_max_deg": 2.926917297402842,
+          "minimax_margin_deg": 0.3654057836251998,
+          "actual_a_map": [
+            0,
+            1,
+            2
+          ],
+          "actual_b_map": [
+            0,
+            1,
+            2
+          ],
+          "actual_max_deg": 2.926917297402842
+        },
+        {
+          "a": "S1",
+          "b": "S2",
+          "certified_minimax_mapping": [
+            1,
+            0,
+            2
+          ],
+          "certified_max_deg": 4.056463968306228,
+          "minimax_margin_deg": 1.5229739645979805,
+          "actual_a_map": [
+            0,
+            1,
+            2
+          ],
+          "actual_b_map": [
+            0,
+            1,
+            2
+          ],
+          "actual_max_deg": 5.5794379329042085
+        }
+      ],
+      "fixed_mapping_candidate_residuals": [
+        {
+          "id": "S0",
+          "max_deg": 2.069632435905092
+        },
+        {
+          "id": "S1",
+          "max_deg": 4.307513854193475
+        },
+        {
+          "id": "S2",
+          "max_deg": 2.3409198465552725
+        }
+      ],
+      "candidate_points": [
+        [
+          399.7438111952623,
+          126.77653577974678
+        ],
+        [
+          399.7438111952623,
+          364.99880790848783
+        ],
+        [
+          406.05931932243556,
+          124.57130146753148
+        ],
+        [
+          406.05931932243556,
+          358.6537243104402
+        ],
+        [
+          912.5570753133109,
+          130.1100751099441
+        ],
+        [
+          912.5570753133109,
+          381.7479824427092
+        ]
+      ],
+      "guard_diagnostic": {
+        "status": "unresolved_actual_mapping_certificate_mismatch",
+        "single_candidate": null,
+        "mapping_disagreements": [
+          {
+            "id": "S1",
+            "actual_mapping": [
+              0,
+              1,
+              2
+            ],
+            "certified_mapping": [
+              1,
+              0,
+              2
+            ]
+          }
+        ],
+        "actual_induced_pair_errors_deg": [
+          {
+            "a": "S0",
+            "b": "S1",
+            "distance": 4.308107930032738
+          },
+          {
+            "a": "S0",
+            "b": "S2",
+            "distance": 2.9269172974028415
+          },
+          {
+            "a": "S1",
+            "b": "S2",
+            "distance": 5.579437932904212
+          }
+        ],
+        "cycle_audit": {
+          "comparisons": [
+            {
+              "a": "S0",
+              "b": "S1",
+              "distance": 3.831827352154858,
+              "mapping": [
+                1,
+                0,
+                2
+              ],
+              "margin": 0.4762805778778798,
+              "ambiguous": false
+            },
+            {
+              "a": "S0",
+              "b": "S2",
+              "distance": 2.9269172974028415,
+              "mapping": [
+                0,
+                1,
+                2
+              ],
+              "margin": 0.3654057836252047,
+              "ambiguous": false
+            },
+            {
+              "a": "S1",
+              "b": "S2",
+              "distance": 4.056463968306217,
+              "mapping": [
+                1,
+                0,
+                2
+              ],
+              "margin": 1.5229739645979947,
+              "ambiguous": false
+            }
+          ],
+          "all_pairs_compatible_and_unique": true,
+          "tested_triangles": 1,
+          "conflicts": [],
+          "interpretation": "No tested conflict is not evidence of consistency when maps or triangles are missing."
+        }
+      },
+      "inputs_unchanged": true,
+      "independent_joint36": {
+        "states": 36,
+        "feasible_count": 2,
+        "optimal_count": 1,
+        "optimal": [
+          {
+            "maps": [
+              [
+                0,
+                1,
+                2
+              ],
+              [
+                1,
+                0,
+                2
+              ],
+              [
+                0,
+                1,
+                2
+              ]
+            ],
+            "errors_deg": [
+              3.831827352154863,
+              2.926917297402842,
+              4.056463968306228
+            ],
+            "objective": 10.815208617863934
+          }
+        ]
+      }
+    }
+  },
+  "ordinary_control": {
+    "status": "single_candidate_conditional_on_method_tolerance",
+    "fixed_residuals_deg": [
+      2.796842209086995,
+      1.1313704368140391,
+      1.4144991264587115
+    ]
+  },
+  "remaining_mixed_population": {
+    "populations": {
+      "real_record_slots": 1,
+      "synthetic_control_slots": 1
+    },
+    "support": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "status": "single_candidate_conditional_on_method_tolerance"
+  },
+  "remaining_top_domain": {
+    "status": "single_candidate_conditional_on_method_tolerance",
+    "band_status": "boundaries_do_not_strictly_straddle_horizon",
+    "interpretation": "existing floor/correspondence certificate is not full 3D validity; guard does not extend that scope"
+  },
+  "tests": {
+    "dot_guard_regressions": 6,
+    "passed": true,
+    "independent_three_record_max_deg": 5.5794379329042085
+  },
+  "scope": "two fixed synthetic counterexamples, one ordinary real control and two API controls; no fusion-panel rerun or prevalence estimate"
+}

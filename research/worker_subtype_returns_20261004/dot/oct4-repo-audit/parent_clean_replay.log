@@ -1,0 +1,136 @@
+{
+  "angles": [
+    [
+      0.0,
+      3.8275550165074015,
+      7.650148889238645
+    ],
+    [
+      3.8275550165074015,
+      0.0,
+      3.8275550165074015
+    ],
+    [
+      7.650148889238645,
+      3.8275550165074015,
+      0.0
+    ]
+  ],
+  "results": [
+    {
+      "name": "original",
+      "status": "ok",
+      "points": [
+        [
+          108.0,
+          120.0
+        ],
+        [
+          108.0,
+          390.0
+        ],
+        [
+          384.0,
+          120.0
+        ],
+        [
+          384.0,
+          390.0
+        ],
+        [
+          640.0,
+          120.0
+        ],
+        [
+          640.0,
+          390.0
+        ],
+        [
+          896.0,
+          120.0
+        ],
+        [
+          896.0,
+          390.0
+        ]
+      ],
+      "support": [
+        2,
+        3,
+        3,
+        3
+      ],
+      "correspondence": {
+        "policy": "deterministic constrained complete-linkage partition; not proven unique global correspondence",
+        "uniqueness_established": false,
+        "observations_with_multiple_matches_to_same_other_worker": 0,
+        "competing_worker_matches": 0,
+        "competing_match_examples": [],
+        "example_limit": 20,
+        "interpretation": "threshold-compatible alternatives are ambiguity evidence, not feasible global partitions or posterior probabilities"
+      }
+    },
+    {
+      "name": "renamed_only",
+      "status": "ok",
+      "points": [
+        [
+          124.0,
+          120.0
+        ],
+        [
+          124.0,
+          390.0
+        ],
+        [
+          384.0,
+          120.0
+        ],
+        [
+          384.0,
+          390.0
+        ],
+        [
+          640.0,
+          120.0
+        ],
+        [
+          640.0,
+          390.0
+        ],
+        [
+          896.0,
+          120.0
+        ],
+        [
+          896.0,
+          390.0
+        ]
+      ],
+      "support": [
+        2,
+        3,
+        3,
+        3
+      ],
+      "correspondence": {
+        "policy": "deterministic constrained complete-linkage partition; not proven unique global correspondence",
+        "uniqueness_established": false,
+        "observations_with_multiple_matches_to_same_other_worker": 0,
+        "competing_worker_matches": 0,
+        "competing_match_examples": [],
+        "example_limit": 20,
+        "interpretation": "threshold-compatible alternatives are ambiguity evidence, not feasible global partitions or posterior probabilities"
+      }
+    }
+  ]
+}
+(2.5, 'mv50') common_n= 61 point_minus_lee= -0.19859511595550727 Counter({'geometry_review': 46, 'ok': 15})
+(2.5, 'mv_strict') common_n= 61 point_minus_lee= -0.2636269731574813 Counter({'geometry_review': 50, 'ok': 11})
+(5, 'mv50') common_n= 61 point_minus_lee= -0.04109709249781297 Counter({'ok': 37, 'geometry_review': 24})
+(5, 'mv_strict') common_n= 61 point_minus_lee= -0.07010861853198881 Counter({'ok': 34, 'geometry_review': 27})
+(10, 'mv50') common_n= 61 point_minus_lee= -0.00541066163917575 Counter({'ok': 42, 'geometry_review': 19})
+(10, 'mv_strict') common_n= 61 point_minus_lee= -0.004506786153093527 Counter({'ok': 42, 'geometry_review': 19})
+default ok 55 0.0014494085138464074
+default geometry_review 64 -0.14785037795177958
+PASS: 822 unique rows; 61 common images; all JS summaries agree with independent Python aggregation

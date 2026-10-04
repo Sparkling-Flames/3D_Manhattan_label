@@ -1,0 +1,79 @@
+{
+  "scope": "当前保存的24×10面板、两政策480单人分数、重训嵌套预测、十图80稳定性行；两图六人NPZ全量重汇总及每图19组重新几何积分；两图35校准传播。不是完整外包复跑，不视觉裁决。",
+  "sources": {
+    "pro": "D:\\Work\\HOHONET\\research\\worker_subtype_returns_20261004\\pro",
+    "dot": "D:\\Work\\HOHONET\\research\\worker_subtype_returns_20261004\\dot",
+    "panel": "D:\\Work\\HOHONET\\analysis_results\\worker_profiles_20261003"
+  },
+  "environment": {
+    "python": "3.11.7",
+    "numpy": "1.26.4",
+    "scipy": "1.11.4",
+    "shapely": "2.0.4",
+    "geos": "3.11.3"
+  },
+  "matrix_bytes_equal_repo": {
+    "original": true,
+    "revised_where_available": true
+  },
+  "dot_original_matrix_bytes_equal_repo": true,
+  "binding": {
+    "dot_records": 240,
+    "pro_records": 48,
+    "pro_references": 2,
+    "excluded_not_restored": 20,
+    "all_supplied_record_fields_equal": true,
+    "omitted_fields_not_certified": true
+  },
+  "single_iou": {
+    "n": 480,
+    "max_absolute_error": 1.1102230246251565e-16
+  },
+  "nested_prediction": {
+    "cells": 480,
+    "outer_choices_match": true,
+    "max_absolute_prediction_or_target_error": 9.8879238130678e-17
+  },
+  "ten_image": {
+    "raw_rows": 20,
+    "shape_rows": 80,
+    "max_raw_error": 1.3877787807814457e-16,
+    "max_shape_error": 1.0408340855860843e-16
+  },
+  "six_person": {
+    "images": 2,
+    "sets_each": 134596,
+    "all_members_arrays_validated": true,
+    "full_saved_array_decomposition_rows": 16,
+    "selected_geometry_sets_each": 19,
+    "selected_geometry_score_checks": 76,
+    "max_decomposition_error": 9.006684287271582e-15,
+    "max_selected_geometry_iou_error": 1.1102230246251565e-15
+  },
+  "calibration_propagation": {
+    "details": 280,
+    "summary_rows": 8,
+    "max_detail_error": 1.1102230246251565e-16,
+    "max_summary_error": 1.1102230246251565e-16
+  },
+  "inventory_version": {
+    "matched_excerpt_rows": 73,
+    "high_support_manual_n": 47,
+    "computable_manual_n": 44,
+    "quality_main_n": 33,
+    "current_quality_main_difficulty": {
+      "未记录": 13,
+      "中等": 7,
+      "简单": 6,
+      "困难": 5,
+      "未定": 2
+    },
+    "difficulty_changes_in_excerpt": 19,
+    "quality_hold_main_n": 6,
+    "quality_hold_reasons": {
+      "unconfirmed": 5,
+      "doorway_annotatable": 1
+    }
+  },
+  "status": "targeted_checks_passed"
+}

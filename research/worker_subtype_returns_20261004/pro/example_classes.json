@@ -1,0 +1,150 @@
+{
+  "schema": "frozen_worker_classes_v1",
+  "image": "7y3sRwLe3Va-04",
+  "condition": "manual",
+  "target_building": "7y3sRwLe3Va",
+  "training_target_isolation_verified": true,
+  "calibration_buildings": [
+    "UwV83HsGsw3",
+    "X7HyMhZNoso",
+    "e9zR4mvMWw7",
+    "q9vSo1VnCiC",
+    "rPc6DW4iMge",
+    "wc2JMjhGNzB",
+    "yqstnuAEVhm"
+  ],
+  "feature_source_bindings": [
+    {
+      "axis": "Q",
+      "source": "inputs/matrix_original_iou.csv",
+      "reference_policy": "original",
+      "source_commit": "ad12d64d3567235e5691f9142d045df63b38b4e4",
+      "rule": "other_building_mean_centered_IoU_median_split"
+    }
+  ],
+  "reference_evaluation_allowed": true,
+  "reference_id": "R02507",
+  "reference_eligibility_source": "frozen current 24x10 Manual reference-compatible roster",
+  "members": [
+    {
+      "id": "R01553",
+      "worker": "P001",
+      "class": 1
+    },
+    {
+      "id": "R02398",
+      "worker": "P002",
+      "class": 1
+    },
+    {
+      "id": "R00862",
+      "worker": "P003",
+      "class": 1
+    },
+    {
+      "id": "R00194",
+      "worker": "P004",
+      "class": 0
+    },
+    {
+      "id": "R01300",
+      "worker": "P005",
+      "class": 0
+    },
+    {
+      "id": "R01787",
+      "worker": "P006",
+      "class": 1
+    },
+    {
+      "id": "R02226",
+      "worker": "P007",
+      "class": 0
+    },
+    {
+      "id": "R01649",
+      "worker": "P008",
+      "class": 0
+    },
+    {
+      "id": "R01550",
+      "worker": "P009",
+      "class": 0
+    },
+    {
+      "id": "R01041",
+      "worker": "P010",
+      "class": 0
+    },
+    {
+      "id": "R02003",
+      "worker": "P011",
+      "class": 0
+    },
+    {
+      "id": "R01837",
+      "worker": "P012",
+      "class": 1
+    },
+    {
+      "id": "R01441",
+      "worker": "P014",
+      "class": 1
+    },
+    {
+      "id": "R00332",
+      "worker": "P017",
+      "class": 1
+    },
+    {
+      "id": "R00478",
+      "worker": "P018",
+      "class": 1
+    },
+    {
+      "id": "R01896",
+      "worker": "P019",
+      "class": 1
+    },
+    {
+      "id": "R00992",
+      "worker": "P020",
+      "class": 0
+    },
+    {
+      "id": "R01556",
+      "worker": "P021",
+      "class": 0
+    },
+    {
+      "id": "R01020",
+      "worker": "P022",
+      "class": 1
+    },
+    {
+      "id": "R00917",
+      "worker": "P023",
+      "class": 1
+    },
+    {
+      "id": "R00441",
+      "worker": "P024",
+      "class": 0
+    },
+    {
+      "id": "R02365",
+      "worker": "P025",
+      "class": 0
+    },
+    {
+      "id": "R00755",
+      "worker": "P026",
+      "class": 1
+    },
+    {
+      "id": "R01449",
+      "worker": "P027",
+      "class": 0
+    }
+  ]
+}

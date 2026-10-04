@@ -24,6 +24,7 @@ def test_all_people_cross_point_counts_majority_tie_and_provenance():
     a,b=result['mv50'],result['mv_strict']
     assert a['vote_denominator']==b['vote_denominator']==4
     assert a['candidate']['status']=='ok'
+    assert a['correspondence_diagnostics']['partition_tie_check']['partition_changed'] is False
     assert a['candidate']['point_support_counts']==[4,2,4,4,4]
     assert b['candidate']['point_support_counts']==[4]*4
     assert a['candidate']['ring_confirmed'] is False
@@ -119,3 +120,26 @@ def test_candidate_needs_ring_review_without_original_edge_majority_and_rejects_
     assert result['candidate']['points'] is not None
     with pytest.raises(ValueError,match='missing_annotation_fields'):
         build_global_pair_consensus([{'points':None}])
+
+
+@pytest.mark.parametrize('method', ['mv50', 'mv_strict'])
+def test_equal_merge_partition_needs_review_without_changing_selected_geometry(method):
+    # Each person offers one nearby point: the existing same-worker diagnostic misses this tie.
+    rows=[record(i,[x,384,640,896]) for i,x in enumerate([100,116,132])]
+    renamed=copy.deepcopy(rows)
+    for r in renamed:
+        r['worker']='P'+str(2-int(r['worker'][1:]));r['id']='R'+r['worker'][1:]
+    for source,expected_x in [(rows,108.),(renamed,124.)]:
+        before=copy.deepcopy(source)
+        result=build_global_pair_consensus(source,method=method)
+        assert source==before
+        assert result['candidate']['points']==[[x,y] for x in [expected_x,384.,640.,896.] for y in (120.,390.)]
+        assert result['candidate']['point_support_counts']==[2,3,3,3]
+        assert result['vote_denominator']==3
+        assert result['correspondence_diagnostics']['competing_worker_matches']==0
+        assert result['status']=='geometry_review'
+        assert 'complete_linkage_partition_tie' in result['candidate']['reason']
+        diagnostic=result['correspondence_diagnostics']['partition_tie_check']
+        assert diagnostic['probe']=='reverse_canonical_observation_order'
+        assert diagnostic['performed'] and diagnostic['partition_changed']
+        assert diagnostic['affected_observation_count']==3

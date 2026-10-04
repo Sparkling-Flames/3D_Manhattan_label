@@ -1,0 +1,283 @@
+{
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "shapely": "2.1.2",
+    "geos": "3.13.1"
+  },
+  "image": "rPc6DW4iMge-06",
+  "indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "workers": [
+    "P001",
+    "P002",
+    "P003",
+    "P004",
+    "P005",
+    "P006"
+  ],
+  "record_ids": [
+    "R01784",
+    "R00020",
+    "R02452",
+    "R01886",
+    "R02165",
+    "R02468"
+  ],
+  "reference_id": "R02670",
+  "threshold": 3,
+  "source_inputs_unchanged": true,
+  "validity": [
+    {
+      "worker": "P001",
+      "valid": true,
+      "reason": "Valid Geometry",
+      "covers": false,
+      "contains": false,
+      "distance_to_boundary": 0.08597186833428228
+    },
+    {
+      "worker": "P002",
+      "valid": true,
+      "reason": "Valid Geometry",
+      "covers": true,
+      "contains": true,
+      "distance_to_boundary": 0.03177043029237052
+    },
+    {
+      "worker": "P003",
+      "valid": true,
+      "reason": "Valid Geometry",
+      "covers": true,
+      "contains": true,
+      "distance_to_boundary": 0.007399256705194615
+    },
+    {
+      "worker": "P004",
+      "valid": true,
+      "reason": "Valid Geometry",
+      "covers": false,
+      "contains": false,
+      "distance_to_boundary": 0.007347437921570052
+    },
+    {
+      "worker": "P005",
+      "valid": true,
+      "reason": "Valid Geometry",
+      "covers": true,
+      "contains": true,
+      "distance_to_boundary": 0.009677601631364172
+    },
+    {
+      "worker": "P006",
+      "valid": true,
+      "reason": "Valid Geometry",
+      "covers": false,
+      "contains": false,
+      "distance_to_boundary": 0.021382537463699915
+    }
+  ],
+  "decimal70_point_votes": [
+    {
+      "worker": "P001",
+      "inside": false
+    },
+    {
+      "worker": "P002",
+      "inside": true
+    },
+    {
+      "worker": "P003",
+      "inside": true
+    },
+    {
+      "worker": "P004",
+      "inside": false
+    },
+    {
+      "worker": "P005",
+      "inside": true
+    },
+    {
+      "worker": "P006",
+      "inside": false
+    }
+  ],
+  "triple_orders": [
+    {
+      "workers": [
+        "P002",
+        "P003",
+        "P005"
+      ],
+      "first_area": 3.743073558963929,
+      "first_contains_probe": true,
+      "triple_area": 3.5895082682944546,
+      "triple_contains_probe": true,
+      "valid": true
+    },
+    {
+      "workers": [
+        "P002",
+        "P005",
+        "P003"
+      ],
+      "first_area": 4.142200819980826,
+      "first_contains_probe": true,
+      "triple_area": 3.589508268294455,
+      "triple_contains_probe": true,
+      "valid": true
+    },
+    {
+      "workers": [
+        "P003",
+        "P002",
+        "P005"
+      ],
+      "first_area": 3.743073558963928,
+      "first_contains_probe": true,
+      "triple_area": 3.589508268294455,
+      "triple_contains_probe": true,
+      "valid": true
+    },
+    {
+      "workers": [
+        "P003",
+        "P005",
+        "P002"
+      ],
+      "first_area": 3.5958430732296742,
+      "first_contains_probe": true,
+      "triple_area": 3.5895082682944546,
+      "triple_contains_probe": true,
+      "valid": true
+    },
+    {
+      "workers": [
+        "P005",
+        "P002",
+        "P003"
+      ],
+      "first_area": 4.142200819980826,
+      "first_contains_probe": true,
+      "triple_area": 3.589508268294455,
+      "triple_contains_probe": true,
+      "valid": true
+    },
+    {
+      "workers": [
+        "P005",
+        "P003",
+        "P002"
+      ],
+      "first_area": 3.5958430732296742,
+      "first_contains_probe": true,
+      "triple_area": 3.589508268294454,
+      "triple_contains_probe": true,
+      "valid": true
+    }
+  ],
+  "consensus_orders": [
+    {
+      "order": "forward",
+      "iou": 0.501497083352437,
+      "area": 4.308093519071049,
+      "versus_full_tile_symdiff": 0.002619939822869757,
+      "valid": true
+    },
+    {
+      "order": "reverse",
+      "iou": 0.5018406295769196,
+      "area": 4.310713458893918,
+      "versus_full_tile_symdiff": 0.0,
+      "valid": true
+    },
+    {
+      "order": "rotate1",
+      "iou": 0.5018406295769196,
+      "area": 4.310713458893918,
+      "versus_full_tile_symdiff": 0.0,
+      "valid": true
+    },
+    {
+      "order": "rotate2",
+      "iou": 0.5018406295769193,
+      "area": 4.310713458893916,
+      "versus_full_tile_symdiff": 0.0,
+      "valid": true
+    }
+  ],
+  "union_orders": [
+    {
+      "order": "forward",
+      "operation": "sequential binary union",
+      "iou": 0.5018406295769194,
+      "versus_full_tile_symdiff": 0.0
+    },
+    {
+      "order": "reverse",
+      "operation": "sequential binary union",
+      "iou": 0.5018406295769192,
+      "versus_full_tile_symdiff": 0.0
+    }
+  ],
+  "union_preservation": {
+    "any_input_contains_probe": true,
+    "unary_union_contains_probe": false
+  },
+  "precision_grid_diagnostics": [
+    {
+      "grid_size": 1e-12,
+      "diagnostic_only": true,
+      "iou": 0.5018406295770819,
+      "versus_unmodified_tile_symdiff": 2.733324249429434e-12
+    },
+    {
+      "grid_size": 1e-10,
+      "diagnostic_only": true,
+      "iou": 0.501840629567471,
+      "versus_unmodified_tile_symdiff": 2.2932413289714145e-10
+    },
+    {
+      "grid_size": 1e-09,
+      "diagnostic_only": true,
+      "iou": 0.5018406294783647,
+      "versus_unmodified_tile_symdiff": 2.775157449908389e-09
+    },
+    {
+      "grid_size": 1e-08,
+      "diagnostic_only": true,
+      "iou": 0.5018406287891246,
+      "versus_unmodified_tile_symdiff": 2.677988314941964e-08
+    }
+  ],
+  "warnings": [],
+  "full_tile": {
+    "iou": 0.5018406295769197,
+    "area": 4.310713458893915,
+    "valid": true
+  },
+  "six_only_tile": {
+    "iou": 0.5018406295769196,
+    "area": 4.310713458893917,
+    "versus_full_tile_symdiff": 0.0
+  },
+  "lost_region": {
+    "area": 0.0026199398228697567,
+    "probe": [
+      0.35790104492516644,
+      0.48718312274104003
+    ],
+    "forward_covers_probe": false,
+    "tile_covers_probe": true,
+    "all_three_overlap_area": 0.0026199398228697567,
+    "missing_from_tile_but_in_forward": 0.0
+  },
+  "resolution": "Auditor direct-comparator forward-intersection-order unary_union loses a positive-area region. Full-pool author tile, fresh six-person tile, three alternative direct operation orders and 70-digit probe votes agree. No source repair or production precision change applied. Not an observed author numerical error."
+}

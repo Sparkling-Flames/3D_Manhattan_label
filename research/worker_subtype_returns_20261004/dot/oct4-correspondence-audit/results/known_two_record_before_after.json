@@ -1,0 +1,543 @@
+{
+  "attribution": "Two-record fixture and original defect already documented in repository ad12d64 REVIEW section 5. New three-record extension is independent audit evidence of induced >5-degree diameter, not a prevalence estimate.",
+  "source_records": [
+    {
+      "id": "S0",
+      "worker": "S0",
+      "points": [
+        [
+          400.04583684949023,
+          126.77653577974678
+        ],
+        [
+          400.04583684949023,
+          362.69974098863645
+        ],
+        [
+          406.05931932243556,
+          124.57130146753148
+        ],
+        [
+          406.05931932243556,
+          359.5692498546709
+        ],
+        [
+          912.4830469458965,
+          131.77674866309093
+        ],
+        [
+          912.4830469458965,
+          387.6347062722267
+        ]
+      ],
+      "synthetic": true
+    },
+    {
+      "id": "S1",
+      "worker": "S1",
+      "points": [
+        [
+          399.7438111952623,
+          114.52405192781868
+        ],
+        [
+          399.7438111952623,
+          368.5460469590306
+        ],
+        [
+          406.42505175826284,
+          126.07088889633474
+        ],
+        [
+          406.42505175826284,
+          355.029423370946
+        ],
+        [
+          912.7967922664184,
+          130.1100751099441
+        ],
+        [
+          912.7967922664184,
+          379.9586479199389
+        ]
+      ],
+      "synthetic": true
+    }
+  ],
+  "input_polygon_valid": [
+    true,
+    true
+  ],
+  "input_contains_camera": [
+    true,
+    true
+  ],
+  "selected_candidate_contains_camera": true,
+  "before": {
+    "status": "single_candidate_conditional_on_method_tolerance",
+    "single_candidate": {
+      "id": "candidate@S0",
+      "anchor": "S0",
+      "points": [
+        [
+          399.89482402237627,
+          120.65029385378273
+        ],
+        [
+          399.89482402237627,
+          365.6228939738335
+        ],
+        [
+          406.2421855403492,
+          125.32109518193312
+        ],
+        [
+          406.2421855403492,
+          357.2993366128085
+        ],
+        [
+          912.6399196061575,
+          130.9434118865175
+        ],
+        [
+          912.6399196061575,
+          383.7966770960828
+        ]
+      ],
+      "connections": {
+        "index_base": 0,
+        "point_array": "points",
+        "pair_ring": [
+          0,
+          1,
+          2
+        ],
+        "closed": true,
+        "top_edges": [
+          [
+            0,
+            2
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            4,
+            0
+          ]
+        ],
+        "bottom_edges": [
+          [
+            1,
+            3
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            5,
+            1
+          ]
+        ],
+        "vertical_pairs": [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        "confirmation": "derived_connections_not_new_human_confirmation"
+      },
+      "ring_confirmed": false,
+      "order_status": "new_geometry_on_observed_anchor_ring_not_human_confirmed",
+      "source_anchor_ring_confirmed": null,
+      "point_donors": [
+        [
+          {
+            "id": "S0",
+            "worker": "S0",
+            "index": 0,
+            "source_pair_index": 0,
+            "synthetic": true,
+            "independent_status": null,
+            "source_point_indices": null,
+            "source_point_labels": null,
+            "points": [
+              [
+                400.04583684949023,
+                126.77653577974678
+              ],
+              [
+                400.04583684949023,
+                362.69974098863645
+              ]
+            ]
+          },
+          {
+            "id": "S1",
+            "worker": "S1",
+            "index": 0,
+            "source_pair_index": 0,
+            "synthetic": true,
+            "independent_status": null,
+            "source_point_indices": null,
+            "source_point_labels": null,
+            "points": [
+              [
+                399.7438111952623,
+                114.52405192781868
+              ],
+              [
+                399.7438111952623,
+                368.5460469590306
+              ]
+            ]
+          }
+        ],
+        [
+          {
+            "id": "S0",
+            "worker": "S0",
+            "index": 1,
+            "source_pair_index": 1,
+            "synthetic": true,
+            "independent_status": null,
+            "source_point_indices": null,
+            "source_point_labels": null,
+            "points": [
+              [
+                406.05931932243556,
+                124.57130146753148
+              ],
+              [
+                406.05931932243556,
+                359.5692498546709
+              ]
+            ]
+          },
+          {
+            "id": "S1",
+            "worker": "S1",
+            "index": 1,
+            "source_pair_index": 1,
+            "synthetic": true,
+            "independent_status": null,
+            "source_point_indices": null,
+            "source_point_labels": null,
+            "points": [
+              [
+                406.42505175826284,
+                126.07088889633474
+              ],
+              [
+                406.42505175826284,
+                355.029423370946
+              ]
+            ]
+          }
+        ],
+        [
+          {
+            "id": "S0",
+            "worker": "S0",
+            "index": 2,
+            "source_pair_index": 2,
+            "synthetic": true,
+            "independent_status": null,
+            "source_point_indices": null,
+            "source_point_labels": null,
+            "points": [
+              [
+                912.4830469458965,
+                131.77674866309093
+              ],
+              [
+                912.4830469458965,
+                387.6347062722267
+              ]
+            ]
+          },
+          {
+            "id": "S1",
+            "worker": "S1",
+            "index": 2,
+            "source_pair_index": 2,
+            "synthetic": true,
+            "independent_status": null,
+            "source_point_indices": null,
+            "source_point_labels": null,
+            "points": [
+              [
+                912.7967922664184,
+                130.1100751099441
+              ],
+              [
+                912.7967922664184,
+                379.9586479199389
+              ]
+            ]
+          }
+        ]
+      ],
+      "point_support_counts": [
+        2,
+        2,
+        2
+      ],
+      "direct_edge_witnesses": [
+        [
+          {
+            "id": "S0",
+            "worker": "S0",
+            "source_indices": [
+              0,
+              1
+            ]
+          },
+          {
+            "id": "S1",
+            "worker": "S1",
+            "source_indices": [
+              0,
+              1
+            ]
+          }
+        ],
+        [
+          {
+            "id": "S0",
+            "worker": "S0",
+            "source_indices": [
+              1,
+              2
+            ]
+          },
+          {
+            "id": "S1",
+            "worker": "S1",
+            "source_indices": [
+              1,
+              2
+            ]
+          }
+        ],
+        [
+          {
+            "id": "S0",
+            "worker": "S0",
+            "source_indices": [
+              2,
+              0
+            ]
+          },
+          {
+            "id": "S1",
+            "worker": "S1",
+            "source_indices": [
+              2,
+              0
+            ]
+          }
+        ]
+      ],
+      "endpoint_connection_with_intermediate_pairs": [
+        [],
+        [],
+        []
+      ],
+      "complete_ring_mapping_witnesses": [
+        {
+          "id": "S0",
+          "worker": "S0"
+        },
+        {
+          "id": "S1",
+          "worker": "S1"
+        }
+      ],
+      "alignments": [
+        {
+          "id": "S0",
+          "worker": "S0",
+          "mapping": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "matched": 3,
+          "unmatched_anchor": [],
+          "unmatched_other": [],
+          "margin": null,
+          "ambiguous": false
+        },
+        {
+          "id": "S1",
+          "worker": "S1",
+          "matched": 3,
+          "sum_angle": 8.607302556013488,
+          "mapping": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "unmatched_anchor": [],
+          "unmatched_other": [],
+          "runner_up_mapping": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "margin": 1.1720706687677716,
+          "ambiguous": false,
+          "tolerance": 5,
+          "objective": "maximum_cardinality_then_minimum_sum_bound_angle"
+        }
+      ],
+      "warning": "point donors / edge witnesses / complete ring mapping witnesses are different denominators; generated coordinates were not jointly drawn",
+      "geometry": {
+        "polygon_valid": true,
+        "area_h2": 0.06105011741675282,
+        "scope": "floor_polygon_only_not_closed_3D_validation"
+      },
+      "band_status": "available"
+    },
+    "cycle_audit": {
+      "comparisons": [
+        {
+          "a": "S0",
+          "b": "S1",
+          "distance": 3.831827352154858,
+          "mapping": [
+            1,
+            0,
+            2
+          ],
+          "margin": 0.4762805778778798,
+          "ambiguous": false
+        }
+      ],
+      "all_pairs_compatible_and_unique": true,
+      "tested_triangles": 0,
+      "conflicts": [],
+      "interpretation": "No tested conflict is not evidence of consistency when maps or triangles are missing."
+    },
+    "residuals_deg": [
+      2.154066715886002,
+      2.154042222364029
+    ],
+    "qualification": "not a unique true layout, not validated semantic equivalence, not a sufficient sample-size claim; alternatives and tolerance sensitivity must remain available"
+  },
+  "actual_candidate_identity": {
+    "maps": {
+      "S0": [
+        0,
+        1,
+        2
+      ],
+      "S1": [
+        0,
+        1,
+        2
+      ]
+    },
+    "induced_pair_errors": [
+      {
+        "a": "S0",
+        "b": "S1",
+        "max_bound_angle_deg": 4.308107930032738
+      }
+    ],
+    "fixed_mapping_residuals": [
+      {
+        "id": "S0",
+        "max_bound_angle_deg": 2.154066715886002
+      },
+      {
+        "id": "S1",
+        "max_bound_angle_deg": 2.154042222364029
+      }
+    ]
+  },
+  "after": {
+    "status": "unresolved_actual_mapping_certificate_mismatch",
+    "single_candidate": null,
+    "mapping_disagreements": [
+      {
+        "id": "S1",
+        "actual_mapping": [
+          0,
+          1,
+          2
+        ],
+        "certified_mapping": [
+          1,
+          0,
+          2
+        ]
+      }
+    ],
+    "actual_induced_pair_errors_deg": [
+      {
+        "a": "S0",
+        "b": "S1",
+        "distance": 4.308107930032738
+      }
+    ],
+    "cycle_audit": {
+      "comparisons": [
+        {
+          "a": "S0",
+          "b": "S1",
+          "distance": 3.831827352154858,
+          "mapping": [
+            1,
+            0,
+            2
+          ],
+          "margin": 0.4762805778778798,
+          "ambiguous": false
+        }
+      ],
+      "all_pairs_compatible_and_unique": true,
+      "tested_triangles": 0,
+      "conflicts": [],
+      "interpretation": "No tested conflict is not evidence of consistency when maps or triangles are missing."
+    }
+  }
+}

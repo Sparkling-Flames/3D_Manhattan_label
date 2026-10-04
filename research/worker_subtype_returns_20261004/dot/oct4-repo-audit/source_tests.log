@@ -1,0 +1,135 @@
+{
+  "angles": [
+    [
+      0.0,
+      3.8275550165074015,
+      7.650148889238645
+    ],
+    [
+      3.8275550165074015,
+      0.0,
+      3.8275550165074015
+    ],
+    [
+      7.650148889238645,
+      3.8275550165074015,
+      0.0
+    ]
+  ],
+  "results": [
+    {
+      "name": "original",
+      "status": "ok",
+      "points": [
+        [
+          108.0,
+          120.0
+        ],
+        [
+          108.0,
+          390.0
+        ],
+        [
+          384.0,
+          120.0
+        ],
+        [
+          384.0,
+          390.0
+        ],
+        [
+          640.0,
+          120.0
+        ],
+        [
+          640.0,
+          390.0
+        ],
+        [
+          896.0,
+          120.0
+        ],
+        [
+          896.0,
+          390.0
+        ]
+      ],
+      "support": [
+        2,
+        3,
+        3,
+        3
+      ],
+      "correspondence": {
+        "policy": "deterministic constrained complete-linkage partition; not proven unique global correspondence",
+        "uniqueness_established": false,
+        "observations_with_multiple_matches_to_same_other_worker": 0,
+        "competing_worker_matches": 0,
+        "competing_match_examples": [],
+        "example_limit": 20,
+        "interpretation": "threshold-compatible alternatives are ambiguity evidence, not feasible global partitions or posterior probabilities"
+      }
+    },
+    {
+      "name": "renamed_only",
+      "status": "ok",
+      "points": [
+        [
+          124.0,
+          120.0
+        ],
+        [
+          124.0,
+          390.0
+        ],
+        [
+          384.0,
+          120.0
+        ],
+        [
+          384.0,
+          390.0
+        ],
+        [
+          640.0,
+          120.0
+        ],
+        [
+          640.0,
+          390.0
+        ],
+        [
+          896.0,
+          120.0
+        ],
+        [
+          896.0,
+          390.0
+        ]
+      ],
+      "support": [
+        2,
+        3,
+        3,
+        3
+      ],
+      "correspondence": {
+        "policy": "deterministic constrained complete-linkage partition; not proven unique global correspondence",
+        "uniqueness_established": false,
+        "observations_with_multiple_matches_to_same_other_worker": 0,
+        "competing_worker_matches": 0,
+        "competing_match_examples": [],
+        "example_limit": 20,
+        "interpretation": "threshold-compatible alternatives are ambiguity evidence, not feasible global partitions or posterior probabilities"
+      }
+    }
+  ]
+}
+PASS test_all_people_cross_point_counts_majority_tie_and_provenance
+PASS test_periodic_center_and_same_person_nearby_corners_do_not_merge
+PASS test_invalid_record_stays_in_denominator_and_insufficient_consensus_is_explicit
+PASS test_complete_linkage_not_chaining_threshold_sensitivity_and_new_ring_diagnostics
+PASS test_equal_x_distinct_identities_are_order_failure_not_silently_sorted
+PASS test_record_order_ring_rotation_and_reversal_leave_geometry_and_votes_invariant
+PASS test_candidate_needs_ring_review_without_original_edge_majority_and_rejects_bad_geometry
+PASS: seven source tests; exact function extraction harness, not full repository integration

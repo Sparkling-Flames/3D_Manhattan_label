@@ -30,6 +30,7 @@
 
 ## 当前研究与探索
 
+- [人员子类与完整共识返回审查](../analysis_results/worker_subtype_review_20261004/REPORT.md)、[Pro／dot精选归档](../research/worker_subtype_returns_20261004/README.md)：数值复核、认证反例和点身份并列提示；当前优先回到连线、质量与共识基础，跨线程进度和后续安排统一见研究方向。
 - [完整共识并行研究交接](../research/full_layout_consensus_handoff_20261003/README.md)：本地负责当前输入与原图核对、融合环序和既有Lee稳定性；Chat Pro研究完整共识、阈值、对应及连接，附目标提示词和已跟踪资料入口。
 - [全员点对融合137图基础研究](../analysis_results/global_pair_consensus_20261004/REPORT.md)：全员跨点数、三阈值两规则、来源与连接诊断；`global_pair_consensus_20261004.py` 与 `global_pair_study_20261004.py`，默认工作台已接全员结果。
 - [完整layout Pro返回独立审查](../research/full_layout_pro_review_20261004/REVIEW.md)：精简原包、384状态独立复算、来源绑定、认证对应不一致反例；源码仅作研究参考。

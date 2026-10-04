@@ -1,0 +1,291 @@
+{
+  "scope": "frozen Pro source; isolated fail-closed guard; not latest repository baseline",
+  "source_sha256": "e3d7d1efc3aa2b295174bc31fbe14ecad512135556dda076bb0131b597419cfc",
+  "checks": [
+    {
+      "name": "independent_partial_oracle_15_cost_tables",
+      "passed": true,
+      "detail": {
+        "cases": 15
+      }
+    },
+    {
+      "name": "partial_ties_are_flagged_but_not_all_enumerated",
+      "passed": true,
+      "detail": {
+        "exact_tie_count": 24,
+        "returned_mapping_count": 2,
+        "returned": {
+          "matched": 3,
+          "sum_angle": 0.0,
+          "mapping": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "unmatched_anchor": [],
+          "unmatched_other": [
+            3
+          ],
+          "runner_up_mapping": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "margin": 0.0,
+          "ambiguous": true,
+          "tolerance": 5,
+          "objective": "maximum_cardinality_then_minimum_sum_bound_angle"
+        },
+        "classification": "disclosed two-best interface limitation, not a DP optimality bug"
+      }
+    },
+    {
+      "name": "maximum_cardinality_precedes_error",
+      "passed": true,
+      "detail": {
+        "returned": {
+          "matched": 3,
+          "sum_angle": 14.700000000000001,
+          "mapping": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              0
+            ]
+          ],
+          "unmatched_anchor": [],
+          "unmatched_other": [],
+          "runner_up_mapping": null,
+          "margin": null,
+          "ambiguous": false,
+          "tolerance": 5,
+          "objective": "maximum_cardinality_then_minimum_sum_bound_angle"
+        },
+        "best_lower_cardinality": {
+          "matched": 2,
+          "sum_angle": 0.0
+        },
+        "classification": "declared objective; no lower-cardinality alternative exported; not physical layout example"
+      }
+    },
+    {
+      "name": "known_two_record_original_rejects_mismatched_certificate",
+      "passed": false,
+      "detail": {
+        "status": "single_candidate_conditional_on_method_tolerance",
+        "actual_pair_errors": [
+          {
+            "a": "S0",
+            "b": "S1",
+            "max_bound_angle_deg": 4.308107930032738
+          }
+        ],
+        "expected": "unresolved mapping; KNOWN ORIGINAL FAILURE retained"
+      }
+    },
+    {
+      "name": "known_two_record_guard_rejects_mismatched_certificate",
+      "passed": true,
+      "detail": {
+        "status": "unresolved_actual_mapping_certificate_mismatch",
+        "scope": "conservative abstention only; no joint solver integration"
+      }
+    },
+    {
+      "name": "new_three_record_original_rejects_mismatched_certificate",
+      "passed": false,
+      "detail": {
+        "status": "single_candidate_conditional_on_method_tolerance",
+        "actual_pair_errors": [
+          {
+            "a": "S0",
+            "b": "S1",
+            "max_bound_angle_deg": 4.308107930032738
+          },
+          {
+            "a": "S0",
+            "b": "S2",
+            "max_bound_angle_deg": 2.9269172974028415
+          },
+          {
+            "a": "S1",
+            "b": "S2",
+            "max_bound_angle_deg": 5.579437932904212
+          }
+        ],
+        "expected": "unresolved mapping; KNOWN ORIGINAL FAILURE retained"
+      }
+    },
+    {
+      "name": "new_three_record_guard_rejects_mismatched_certificate",
+      "passed": true,
+      "detail": {
+        "status": "unresolved_actual_mapping_certificate_mismatch",
+        "scope": "conservative abstention only; no joint solver integration"
+      }
+    },
+    {
+      "name": "new_three_record_joint_diagnostic_remains_separate",
+      "passed": true,
+      "detail": {
+        "states": 36,
+        "feasible": 2,
+        "optima": 1,
+        "induced_pair_errors": [
+          3.831827352154858,
+          2.9269172974028415,
+          4.056463968306217
+        ],
+        "interpretation": "a computational alternative exists; no semantic winner declared"
+      }
+    },
+    {
+      "name": "identical_coordinates_distinct_workers_are_three_votes",
+      "passed": true,
+      "detail": {
+        "point_counts": [
+          3,
+          3,
+          3,
+          3
+        ],
+        "direct_counts": [
+          3,
+          3,
+          3,
+          3
+        ],
+        "whole_count": 3
+      }
+    },
+    {
+      "name": "subdivision_path_is_not_direct_or_whole_ring_vote",
+      "passed": true,
+      "detail": {
+        "direct_counts": [
+          1,
+          2,
+          2,
+          2
+        ],
+        "paths": [
+          [
+            {
+              "id": "P1",
+              "worker": "P1",
+              "source_indices": [
+                0,
+                2
+              ]
+            }
+          ],
+          [],
+          [],
+          []
+        ],
+        "whole_count": 1,
+        "limitation": "path payload has endpoints only; intermediate indices/direction/geometry must be recovered from source"
+      }
+    },
+    {
+      "name": "original_null_provenance_does_not_crash",
+      "passed": false,
+      "detail": {
+        "result": "TypeError: 'NoneType' object is not subscriptable",
+        "attribution": "known ad12d64 interface defect"
+      }
+    },
+    {
+      "name": "guarded_null_provenance_does_not_crash",
+      "passed": true,
+      "detail": {
+        "result": "returned normally; no invented provenance",
+        "attribution": "known ad12d64 interface defect"
+      }
+    },
+    {
+      "name": "mixed_populations_are_detectably_counted_together",
+      "passed": true,
+      "detail": {
+        "populations": {
+          "real_record_slots": 1,
+          "synthetic_control_slots": 1
+        },
+        "point_counts": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "status": "single_candidate_conditional_on_method_tolerance",
+        "classification": "missing separation guard; controlled API probe, not evidence current real run contaminated"
+      }
+    },
+    {
+      "name": "joint_budget_boundary_is_exact_and_nontruncating",
+      "passed": true,
+      "detail": {
+        "below_boundary": {
+          "status": "budget_exceeded_no_exact_result",
+          "states_required": 8,
+          "budget": 7
+        },
+        "at_boundary": {
+          "status": "unique_joint_objective_optimum_not_semantic_certainty",
+          "states_enumerated": 8,
+          "feasible_count": 1,
+          "optimal_count": 1
+        }
+      }
+    },
+    {
+      "name": "conditional_does_not_call_joint_solver",
+      "passed": true,
+      "detail": {
+        "classification": "integration gap; exact solver remains separate, not proof of a wrong numerical solver"
+      }
+    },
+    {
+      "name": "guarded_copy_original_25_tests",
+      "passed": true,
+      "detail": {
+        "tests_run": 25,
+        "failures": 0,
+        "errors": 0
+      }
+    }
+  ],
+  "total_checks": 16,
+  "passed_checks": 13,
+  "original_failures_retained": [
+    "known_two_record_original_rejects_mismatched_certificate",
+    "new_three_record_original_rejects_mismatched_certificate",
+    "original_null_provenance_does_not_crash"
+  ]
+}

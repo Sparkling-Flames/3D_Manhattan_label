@@ -1,0 +1,135 @@
+{
+  "frozen_commit": "c4e8f908f3725900600dec5909586658092d6234",
+  "source_path": "/workspace/scratch/a365811da80c/worker-audit-a-line/expanded_count_independent_20261003/analysis_results/lee_expanded_20261003/input.json",
+  "bytes": 6602906,
+  "sha256": "73aaefacb25c066442d8ffaf1ec1e7f55a57ea1ffa9c82a0bc6143ea44143faa",
+  "git_blob": "faa118622c05b47c8edac1e04476282af08c97c5",
+  "image_metadata": [
+    {
+      "code": "2t7WUuJeko7-06",
+      "fields_equal": {
+        "code": true,
+        "image_id": true,
+        "building": true,
+        "room": true,
+        "difficulty": true,
+        "scene": true
+      }
+    }
+  ],
+  "annotations": [
+    {
+      "id": "R01831",
+      "fields_equal": {
+        "id": true,
+        "worker": true,
+        "points": true,
+        "source_point_indices": true,
+        "source_point_labels": true,
+        "source_pair_indices": true,
+        "order_status": true,
+        "order_used": true,
+        "ring_confirmed": true,
+        "geometry_status": true,
+        "geometry_issues": true,
+        "preprocessing_status": true,
+        "condition": true,
+        "cleaning": true,
+        "independent": true,
+        "independence_reasons": true,
+        "consensus_eligible": true,
+        "quality_candidate": true,
+        "borrowed_points": true,
+        "main_quality_gate": true,
+        "main_consensus_gate": true,
+        "footprint": true,
+        "footprint_state": true
+      }
+    },
+    {
+      "id": "R00539",
+      "fields_equal": {
+        "id": true,
+        "worker": true,
+        "points": true,
+        "source_point_indices": true,
+        "source_point_labels": true,
+        "source_pair_indices": true,
+        "order_status": true,
+        "order_used": true,
+        "ring_confirmed": true,
+        "geometry_status": true,
+        "geometry_issues": true,
+        "preprocessing_status": true,
+        "condition": true,
+        "cleaning": true,
+        "independent": true,
+        "independence_reasons": true,
+        "consensus_eligible": true,
+        "quality_candidate": true,
+        "borrowed_points": true,
+        "main_quality_gate": true,
+        "main_consensus_gate": true,
+        "footprint": true,
+        "footprint_state": true
+      }
+    },
+    {
+      "id": "R00227",
+      "fields_equal": {
+        "id": true,
+        "worker": true,
+        "points": true,
+        "source_point_indices": true,
+        "source_point_labels": true,
+        "source_pair_indices": true,
+        "order_status": true,
+        "order_used": true,
+        "ring_confirmed": true,
+        "geometry_status": true,
+        "geometry_issues": true,
+        "preprocessing_status": true,
+        "condition": true,
+        "cleaning": true,
+        "independent": true,
+        "independence_reasons": true,
+        "consensus_eligible": true,
+        "quality_candidate": true,
+        "borrowed_points": true,
+        "main_quality_gate": true,
+        "main_consensus_gate": true,
+        "footprint": true,
+        "footprint_state": true
+      }
+    }
+  ],
+  "references": [
+    {
+      "id": "R02502",
+      "fields_equal": {
+        "id": true,
+        "version": true,
+        "points": true,
+        "order_status": true,
+        "ring_confirmed": true,
+        "footprint": true
+      }
+    }
+  ],
+  "extra_demo_cross_check_in_fixed_input": [
+    {
+      "id": "R00086",
+      "image_code_equal": true,
+      "fields_equal": {
+        "id": true,
+        "worker": true,
+        "points": true,
+        "source_pair_indices": true,
+        "source_point_indices": true,
+        "order_status": true,
+        "ring_confirmed": true
+      },
+      "note": "Cross-check only: the cited demos.json bytes and blob were not available."
+    }
+  ]
+}

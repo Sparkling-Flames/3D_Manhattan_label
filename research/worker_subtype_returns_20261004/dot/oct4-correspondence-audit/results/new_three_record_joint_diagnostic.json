@@ -1,0 +1,194 @@
+{
+  "status": "unique_joint_objective_optimum_not_semantic_certainty",
+  "states_enumerated": 36,
+  "feasible_count": 2,
+  "optimal_count": 1,
+  "best_score": 10.815208617863917,
+  "next_distinct_score_gap": 0.8416863615030845,
+  "feasible_assignments": [
+    {
+      "score": 10.815208617863917,
+      "maps": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          0,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "pair_errors": [
+        3.831827352154858,
+        2.9269172974028415,
+        4.056463968306217
+      ]
+    },
+    {
+      "score": 11.656894979367001,
+      "maps": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          0,
+          2
+        ]
+      ],
+      "pair_errors": [
+        4.308107930032738,
+        3.292323081028046,
+        4.056463968306217
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "points": [
+        [
+          400.04583684949023,
+          126.77653577974678
+        ],
+        [
+          400.04583684949023,
+          362.69974098863645
+        ],
+        [
+          405.8622210947603,
+          118.29508741594076
+        ],
+        [
+          405.8622210947603,
+          359.5692498546709
+        ],
+        [
+          912.5570753133109,
+          130.1100751099441
+        ],
+        [
+          912.5570753133109,
+          381.7479824427092
+        ]
+      ],
+      "connections": {
+        "index_base": 0,
+        "point_array": "points",
+        "pair_ring": [
+          0,
+          1,
+          2
+        ],
+        "closed": true,
+        "top_edges": [
+          [
+            0,
+            2
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            4,
+            0
+          ]
+        ],
+        "bottom_edges": [
+          [
+            1,
+            3
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            5,
+            1
+          ]
+        ],
+        "vertical_pairs": [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        "confirmation": "derived_connections_not_new_human_confirmation"
+      },
+      "ring_confirmed": false,
+      "order_status": "coordinate_median_under_joint_correspondence_on_observed_ring",
+      "source_pair_maps": [
+        {
+          "id": "S0",
+          "worker": "S0",
+          "indices": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "id": "S1",
+          "worker": "S1",
+          "indices": [
+            1,
+            0,
+            2
+          ]
+        },
+        {
+          "id": "S2",
+          "worker": "S2",
+          "indices": [
+            0,
+            1,
+            2
+          ]
+        }
+      ],
+      "point_support_counts": [
+        3,
+        3,
+        3
+      ],
+      "score": 10.815208617863917,
+      "induced_pair_errors_deg": [
+        3.831827352154858,
+        2.9269172974028415,
+        4.056463968306217
+      ],
+      "floor_polygon_valid": true,
+      "fixed_mapping_candidate_residual_deg": [
+        2.2069813873347526,
+        3.582106361397692,
+        2.3409198465552716
+      ]
+    }
+  ],
+  "tolerance": 5,
+  "objective": "sum_pairwise_max_bound_angles_subject_to_global_pairwise_diameter; equal pair weights; not a statistical likelihood",
+  "warning": "even a unique numerical optimum is not calibrated identity confidence; subset-only search; small-roster same-count scope"
+}

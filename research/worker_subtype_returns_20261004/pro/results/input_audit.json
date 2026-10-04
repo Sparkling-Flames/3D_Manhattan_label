@@ -1,0 +1,34 @@
+{
+  "source_commit": "ad12d64d3567235e5691f9142d045df63b38b4e4",
+  "exact_inputs": [
+    {
+      "file": "matrix_original_iou.csv",
+      "bytes": 4966,
+      "git_blob": "85a4f601dc32ca9a93b9668223acd401190b49d0",
+      "exact_blob_match": true,
+      "sha256": "343f46a9fc45d3c06ccbf035f57766cee3b1a121d5b412304a2f5405aeb68366"
+    },
+    {
+      "file": "matrix_revised_where_available_iou.csv",
+      "bytes": 4970,
+      "git_blob": "493173aa20638ee9fb9c25b81e9a01080350fafe",
+      "exact_blob_match": true,
+      "sha256": "ecae7cc60366c1f4b22f68a3d36f21a0e4f2582e7c7b9c7b5e83f4d0a481364a"
+    },
+    {
+      "file": "one_image_geometry.json",
+      "bytes": 17375,
+      "git_blob": "d435129575849339e264867e2f9c797084b31a26",
+      "exact_blob_match": true,
+      "sha256": "e8974fa5aa39b936e6ccf253ac2d420d4eac30a8c0ed8f993e4aece1f3c47092"
+    }
+  ],
+  "geometry_records_crosschecked": 48,
+  "max_geometry_score_difference": 6.661338147750939e-16,
+  "full_current_bundle_verified": false,
+  "original_images_available": false,
+  "notes": [
+    "rpc_geometry.json and high_support_inventory_excerpt.csv are numerical/categorical excerpts, not byte-identical full source files.",
+    "Agreement with saved scores does not certify original images, labels, independence causality or the reference."
+  ]
+}

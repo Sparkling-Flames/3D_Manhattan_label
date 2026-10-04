@@ -1,0 +1,21 @@
+                 policy      target selected_method  inner_mse  test_mse  baseline_mse  test_n  test_sse  baseline_sse
+               original 7y3sRwLe3Va      individual   0.007186  0.002315      0.000585       1  0.055550      0.014049
+               original UwV83HsGsw3           ward3   0.004417  0.021453      0.026850       1  0.514878      0.644409
+               original X7HyMhZNoso      individual   0.007149  0.002597      0.000842       1  0.062333      0.020214
+               original e9zR4mvMWw7      individual   0.006673  0.005898      0.008729       1  0.141541      0.209491
+               original q9vSo1VnCiC      individual   0.006890  0.005231      0.005418       2  0.251105      0.260048
+               original rPc6DW4iMge      individual   0.005990  0.010305      0.016369       1  0.247331      0.392868
+               original wc2JMjhGNzB      individual   0.007082  0.002928      0.001064       1  0.070282      0.025533
+               original yqstnuAEVhm      individual   0.007231  0.003206      0.002287       2  0.153901      0.109774
+revised_where_available 7y3sRwLe3Va           ward2   0.013955  0.002387      0.000585       1  0.057287      0.014049
+revised_where_available UwV83HsGsw3      individual   0.009668  0.035946      0.046011       1  0.862696      1.104262
+revised_where_available X7HyMhZNoso           ward2   0.013884  0.002843      0.000842       1  0.068232      0.020214
+revised_where_available e9zR4mvMWw7      individual   0.009976  0.033679      0.037544       1  0.808292      0.901062
+revised_where_available q9vSo1VnCiC           ward2   0.013168  0.009416      0.010301       2  0.451980      0.494453
+revised_where_available rPc6DW4iMge      individual   0.013878  0.009488      0.016369       1  0.227706      0.392868
+revised_where_available wc2JMjhGNzB           ward2   0.013770  0.003536      0.001064       1  0.084864      0.025533
+revised_where_available yqstnuAEVhm           ward2   0.014668  0.003637      0.002456       2  0.174576      0.117873
+                         test_sse  baseline_sse  building_equal_mse  building_equal_baseline  pooled_relative_improvement  building_equal_relative_improvement
+policy                                                                                                                                                        
+original                 1.496922      1.676386            0.006742                 0.007768                     0.107054                             0.132121
+revised_where_available  2.735633      3.070314            0.012616                 0.014397                     0.109005                             0.123653

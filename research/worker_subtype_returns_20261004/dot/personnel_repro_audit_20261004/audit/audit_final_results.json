@@ -1,0 +1,276 @@
+{
+  "manifest": {
+    "entries": 81,
+    "mismatches": [],
+    "source_commit_authentication": "not performed; packaged declarations and archived source only"
+  },
+  "replay_comparison": {
+    "files": 42,
+    "counts": {
+      "exact_bytes": 37,
+      "exact_arrays": 4,
+      "missing": 1
+    }
+  },
+  "geometry_field_check": {
+    "fields": 490,
+    "status_counts": {
+      "exact": 490
+    },
+    "rosters": [
+      {
+        "image": "7y3sRwLe3Va-04",
+        "excerpt_n": 24,
+        "archive_total_n": 26,
+        "candidate_ids_equal": true,
+        "worker_pairs_equal": true,
+        "excluded_ids": [
+          "R02082",
+          "R02173"
+        ],
+        "borrowed_points_all_false_in_source": true,
+        "building_equal": true,
+        "difficulty_equal": true
+      },
+      {
+        "image": "rPc6DW4iMge-06",
+        "excerpt_n": 24,
+        "archive_total_n": 26,
+        "candidate_ids_equal": true,
+        "worker_pairs_equal": true,
+        "excluded_ids": [
+          "R00733",
+          "R01234"
+        ],
+        "borrowed_points_all_false_in_source": true,
+        "building_equal": true,
+        "difficulty_equal": true
+      }
+    ],
+    "scope": "Every field present in the 48 excerpt records and two references compared recursively; omitted fields are not implied present."
+  },
+  "matrices": {
+    "frames": [
+      {
+        "policy": "original",
+        "images": 10,
+        "workers": 24,
+        "buildings": 8,
+        "archive_frame_exact": true,
+        "all_finite": true
+      },
+      {
+        "policy": "revised_where_available",
+        "images": 10,
+        "workers": 24,
+        "buildings": 8,
+        "archive_frame_exact": true,
+        "all_finite": true
+      }
+    ],
+    "cells": 480,
+    "max_abs_geometry_error": 1.3322676295501878e-15
+  },
+  "inventory": {
+    "excerpt_rows": 73,
+    "derived_high_support_rows": 73,
+    "key_sets_equal": true,
+    "fields": 438,
+    "mismatches": [],
+    "conditions": {
+      "manual": 47,
+      "semi": 17,
+      "oos": 9
+    },
+    "coverage_max_abs_error": 1.1102230246251565e-16
+  },
+  "target_isolation": {
+    "perturbations": 16,
+    "all_methods_invariant": true,
+    "prediction_max_abs_change": 0.0,
+    "inner_score_max_abs_change": 0.0,
+    "all_heldout_losses_changed": true,
+    "interpretation": "Targets used only for image-centred evaluation. Known-worker relative scores, not deployable absolute quality forecasts."
+  },
+  "finite_pool_independent_bruteforce": {
+    "check_counts": {
+      "marginal": 704,
+      "same_k_independent": 704,
+      "add_1": 960,
+      "add_2": 832,
+      "disjoint": 192,
+      "swap": 1408,
+      "next_raw_person": 960
+    },
+    "max_abs_error": {
+      "marginal": 1.1102230246251565e-16,
+      "same_k_independent": 5.551115123125783e-17,
+      "add_1": 0.0,
+      "add_2": 0.0,
+      "disjoint": 0.0,
+      "swap": 1.1102230246251565e-16,
+      "next_raw_person": 1.1102230246251565e-16
+    },
+    "total_checks": 5760,
+    "all_pass": true,
+    "scope": "All 32 fixed binary annotation populations with 2+3 people; two rules; all nonempty feasible compositions; add one/two including mixed-class add-two; same/cross-class swap; disjoint and independent draws."
+  },
+  "six_person_independent": [
+    {
+      "image": "7y3sRwLe3Va-04",
+      "subsets": 134596,
+      "unique_sets": 134596,
+      "subsets_exact": true,
+      "workers_exact": true,
+      "record_ids_exact": true,
+      "error": {
+        "mv50": {
+          "iou_max_abs_error": 0.0,
+          "area_max_abs_error": 0.0,
+          "direct_intersection_consensus_samples": 19,
+          "direct_iou_max_abs_error": 1.2212453270876722e-15
+        },
+        "mv_strict": {
+          "iou_max_abs_error": 0.0,
+          "area_max_abs_error": 0.0,
+          "direct_intersection_consensus_samples": 19,
+          "direct_iou_max_abs_error": 1.1102230246251565e-15
+        }
+      }
+    },
+    {
+      "image": "rPc6DW4iMge-06",
+      "subsets": 134596,
+      "unique_sets": 134596,
+      "subsets_exact": true,
+      "workers_exact": true,
+      "record_ids_exact": true,
+      "error": {
+        "mv50": {
+          "iou_max_abs_error": 0.0,
+          "area_max_abs_error": 0.0,
+          "direct_intersection_consensus_samples": 19,
+          "direct_iou_max_abs_error": 0.000343546224482294
+        },
+        "mv_strict": {
+          "iou_max_abs_error": 0.0,
+          "area_max_abs_error": 0.0,
+          "direct_intersection_consensus_samples": 19,
+          "direct_iou_max_abs_error": 4.440892098500626e-16
+        }
+      }
+    }
+  ],
+  "denominators": [
+    {
+      "image": "7y3sRwLe3Va-04",
+      "union_area": 2.81530993784878,
+      "reference_area": 2.4091121048104682,
+      "reference_outside_pool_union": 0.0,
+      "tile_union_area_error": 0.0,
+      "max_individual_area_error": 1.3322676295501878e-15,
+      "tile_n": 384,
+      "geometry_duplicate_groups": [
+        [
+          "P002",
+          "P012"
+        ],
+        [
+          "P003",
+          "P008",
+          "P009"
+        ],
+        [
+          "P006",
+          "P014"
+        ],
+        [
+          "P010",
+          "P011"
+        ]
+      ]
+    },
+    {
+      "image": "rPc6DW4iMge-06",
+      "union_area": 10.24858124753874,
+      "reference_area": 7.1425693677769,
+      "reference_outside_pool_union": 0.004138651690885771,
+      "tile_union_area_error": 0.0,
+      "max_individual_area_error": 2.6645352591003757e-15,
+      "tile_n": 871,
+      "geometry_duplicate_groups": [
+        [
+          "P003",
+          "P008",
+          "P009"
+        ],
+        [
+          "P010",
+          "P011"
+        ]
+      ]
+    }
+  ],
+  "first_pass_conclusion": {
+    "status": "FAIL",
+    "failures": [
+      {
+        "section": "replay",
+        "message": "results differ or missing"
+      },
+      {
+        "section": "six",
+        "message": "enumeration mismatch"
+      }
+    ],
+    "absolute_relative_tolerance": 2e-12,
+    "limits": [
+      "Offline comparison authenticates consistency with supplied frozen package and old full B input, not a live git commit or unseen source images.",
+      "Reproduction is BEV-only; T/S/B currently unbound, never imputed zero.",
+      "24 known people and 10 images from 8 buildings; two geometric examples do not validate new workers or all 44 high-support images.",
+      "Reference gate compatibility is upstream ledger screening, not new visual validation."
+    ]
+  },
+  "resolved_findings": [
+    {
+      "finding": "One result file absent from run_all",
+      "resolution": "rpc_input_crosscheck.csv is an input-restoration provenance artifact, not one of the 41 run_all products. Its 24 ID/validity/IoU/matrix/area rows were independently verified.",
+      "status": "documented boundary"
+    },
+    {
+      "finding": "First direct geometry comparator differs on one sampled six-person set",
+      "resolution": "Auditor direct-comparator forward-intersection-order unary_union loses a positive-area region. Full-pool author tile, fresh six-person tile, three alternative direct operation orders and 70-digit probe votes agree. No source repair or production precision change applied. Not an observed author numerical error.",
+      "status": "auditor comparator GEOS numerical path limitation; not observed source-code bug",
+      "fixture": "overlay_failure_fixture.json",
+      "current_environment": {
+        "python": "3.12.14",
+        "numpy": "2.3.5",
+        "shapely": "2.1.2",
+        "geos": "3.13.1"
+      },
+      "old_environment": {
+        "python": "3.12.14",
+        "numpy": "1.26.4",
+        "shapely": "2.0.4",
+        "geos": "3.11.3"
+      },
+      "unary_union_iou": 0.501497083352437,
+      "tile_iou": 0.5018406295769197,
+      "symdiff_area": 0.0026199398228697567
+    }
+  ],
+  "conclusion": {
+    "status": "REPRODUCED_WITH_DOCUMENTED_GEOMETRY_COMPARATOR_LIMITATION",
+    "author_tests": "35/35 passed",
+    "full_pipeline": "11 stages completed once continuously; 41 numerical results exactly matched",
+    "independent_checks": "480 matrix scores; 490 excerpt fields; 438 ledger fields; 16 holdout perturbations; 5760 finite-pool cases; 269192 real six-person identity sets under 2 rules",
+    "unresolved_author_numerical_failures": [],
+    "geometry_comparator_limit": "Full all-subset re-enumeration shares planar-arrangement design; independent direct overlay on samples encountered one reproducible GEOS3.13.1 unary_union path defect, resolved by alternate order, binary union, six-only tiling and old GEOS on that fixture. Do not claim every implementation is bitwise reliable.",
+    "limits": [
+      "Offline comparison authenticates consistency with supplied frozen package and old full B input, not a live git commit or unseen source images.",
+      "Reproduction is BEV-only; T/S/B currently unbound, never imputed zero.",
+      "24 known people and 10 images from 8 buildings; two geometric examples do not validate new workers or all 44 high-support images.",
+      "Reference gate compatibility is upstream ledger screening, not new visual validation."
+    ]
+  }
+}

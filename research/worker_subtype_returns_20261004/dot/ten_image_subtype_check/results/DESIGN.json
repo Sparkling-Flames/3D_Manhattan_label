@@ -1,0 +1,25 @@
+{
+  "purpose": "Finite ten-image check of raw within-subtype dispersion and same-k fused-output redraw difference",
+  "source": "inputs/footprints_240.json",
+  "source_git_blob": "5a174746730bb70e405680a3748663caf56dd51f",
+  "class_rule": "original reference, LOBO median 12/12, frozen labels",
+  "k": [
+    4,
+    6
+  ],
+  "rules": [
+    "mv50",
+    "mv_strict"
+  ],
+  "normalization": "fixed all-24-person polygon union area per image",
+  "couplings": [
+    "independent draws may overlap",
+    "disjoint draws"
+  ],
+  "no_geometry_repairs": true,
+  "new_workers": 0,
+  "excluded_historical_records": 20,
+  "inference_scope": "descriptive same already-explored panel; not new buildings, new people, T/S/B, or visual quality",
+  "prior_k4_status": "k4 is replication anchor of earlier ten-image analysis, not all new",
+  "stopping_condition": "10 images x 2 subtypes x k4/6 x 2 rules; no six-person IoU enumeration"
+}
