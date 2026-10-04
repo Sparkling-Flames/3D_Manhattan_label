@@ -1,0 +1,25 @@
+{
+  "schema": "exact_arc_envelope_v1",
+  "n": 2,
+  "record_ids": [
+    "R01518",
+    "R01784"
+  ],
+  "workers": [
+    "P017",
+    "P001"
+  ],
+  "source_coordinate_hash": "00f853c3871e4d55bde99b2ea9c28d1732a5a88ebdeb731c6ee01039ea7ff2fe",
+  "methods": {},
+  "failures": [
+    {
+      "id": "R01518",
+      "worker": "P017",
+      "reason": "source_ring_not_single_valued_one_turn"
+    }
+  ],
+  "source_order_modified": false,
+  "gt_used": false,
+  "evidence_kind": "human_observed",
+  "status": "unsupported_entire_selected_roster"
+}

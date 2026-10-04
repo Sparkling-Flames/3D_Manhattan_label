@@ -1,0 +1,70 @@
+{
+  "observed_boundary": {
+    "id": "s0",
+    "worker": "s0",
+    "image": "synthetic",
+    "points": [
+      [
+        128.0,
+        200.61519463967093
+      ],
+      [
+        128.0,
+        311.3848053603291
+      ],
+      [
+        384.0,
+        200.61519463967093
+      ],
+      [
+        384.0,
+        311.3848053603291
+      ],
+      [
+        640.0,
+        200.61519463967093
+      ],
+      [
+        640.0,
+        311.3848053603291
+      ],
+      [
+        896.0,
+        200.61519463967093
+      ],
+      [
+        896.0,
+        311.3848053603291
+      ]
+    ],
+    "independent": true,
+    "consensus_eligible": true,
+    "condition": "synthetic",
+    "evidence_kind": "synthetic_control",
+    "ring_confirmed": false,
+    "order_status": "synthetic_known_order",
+    "source_pair_indices": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "source_point_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "perimeter_height_h": 1.0,
+  "floor_y_h": -1.0,
+  "flat_volume_h3": 31.999999999999986,
+  "tent_volume_h3": 42.66666666666665,
+  "solid_iou": 0.75,
+  "all_observed_point_and_boundary_metrics_identical": true,
+  "conclusion": "Roof volume is unidentified by perimeter alone; a declared flat-roof model makes a conditional volume well-defined."
+}

@@ -1,0 +1,1118 @@
+[
+  {
+    "case": "pilot3",
+    "method": "exact_erp_mv50",
+    "quality": {
+      "iou": 0.8315891468753996,
+      "omission_h2": 0.0,
+      "extension_h2": 0.26741570709534557,
+      "centroid_distance_h": 0.03198742787038762,
+      "reference_area_h2": 1.3204612149311432,
+      "candidate_area_h2": 1.5878769220264894,
+      "centroid_normalized": 0.02783661961284228,
+      "top_candidate_to_reference": {
+        "mean_deg": 1.2226436122339768,
+        "p95_deg": 3.0640889448037556,
+        "max_lower_deg": 3.0787172970543515,
+        "max_upper_deg": 3.103705028631875,
+        "mean_absolute_numerical_bound_deg": 0.012493865788761719,
+        "sample_n": 4478,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_reference_to_candidate": {
+        "mean_deg": 1.2544001307452006,
+        "p95_deg": 3.0633730240896706,
+        "max_lower_deg": 3.0787170673946376,
+        "max_upper_deg": 3.1037160862282804,
+        "mean_absolute_numerical_bound_deg": 0.012499509416821248,
+        "sample_n": 4560,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_candidate_to_reference": {
+        "mean_deg": 2.1268262193284024,
+        "p95_deg": 4.309830086934974,
+        "max_lower_deg": 4.331722671804469,
+        "max_upper_deg": 4.3567183970594145,
+        "mean_absolute_numerical_bound_deg": 0.012497862627472928,
+        "sample_n": 4621,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_reference_to_candidate": {
+        "mean_deg": 2.1263550890582783,
+        "p95_deg": 4.311504030833865,
+        "max_lower_deg": 4.331722676228013,
+        "max_upper_deg": 4.356719074970883,
+        "mean_absolute_numerical_bound_deg": 0.012498199371434957,
+        "sample_n": 4430,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_height_proxy_min_h": 1.0232930630857702,
+      "top_height_proxy_max_h": 1.1108132524568668,
+      "solid_iou": null,
+      "solid_iou_reason": "roof_interior_not_specified",
+      "height_profile_difference": {
+        "status": "conditional_on_common_floor",
+        "azimuth_mean_absolute_height_difference_h": 0.11706986926437697,
+        "quadrature_error_estimate_h": 1.3757294536564537e-12,
+        "depends_on": "both_floor_depth_and_top_angle",
+        "unknown_roof_interior_not_evaluated": true
+      },
+      "height_coordinate_definition": "top Y relative to camera; floor Y=-1; full local wall height is top Y+1",
+      "pair_count": 25
+    }
+  },
+  {
+    "case": "pilot3",
+    "method": "exact_erp_mv_strict",
+    "quality": {
+      "iou": 0.8315891468753996,
+      "omission_h2": 0.0,
+      "extension_h2": 0.26741570709534557,
+      "centroid_distance_h": 0.03198742787038762,
+      "reference_area_h2": 1.3204612149311432,
+      "candidate_area_h2": 1.5878769220264894,
+      "centroid_normalized": 0.02783661961284228,
+      "top_candidate_to_reference": {
+        "mean_deg": 1.2226436122339768,
+        "p95_deg": 3.0640889448037556,
+        "max_lower_deg": 3.0787172970543515,
+        "max_upper_deg": 3.103705028631875,
+        "mean_absolute_numerical_bound_deg": 0.012493865788761719,
+        "sample_n": 4478,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_reference_to_candidate": {
+        "mean_deg": 1.2544001307452006,
+        "p95_deg": 3.0633730240896706,
+        "max_lower_deg": 3.0787170673946376,
+        "max_upper_deg": 3.1037160862282804,
+        "mean_absolute_numerical_bound_deg": 0.012499509416821248,
+        "sample_n": 4560,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_candidate_to_reference": {
+        "mean_deg": 2.1268262193284024,
+        "p95_deg": 4.309830086934974,
+        "max_lower_deg": 4.331722671804469,
+        "max_upper_deg": 4.3567183970594145,
+        "mean_absolute_numerical_bound_deg": 0.012497862627472928,
+        "sample_n": 4621,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_reference_to_candidate": {
+        "mean_deg": 2.1263550890582783,
+        "p95_deg": 4.311504030833865,
+        "max_lower_deg": 4.331722676228013,
+        "max_upper_deg": 4.356719074970883,
+        "mean_absolute_numerical_bound_deg": 0.012498199371434957,
+        "sample_n": 4430,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_height_proxy_min_h": 1.0232930630857702,
+      "top_height_proxy_max_h": 1.1108132524568668,
+      "solid_iou": null,
+      "solid_iou_reason": "roof_interior_not_specified",
+      "height_profile_difference": {
+        "status": "conditional_on_common_floor",
+        "azimuth_mean_absolute_height_difference_h": 0.11706986926437697,
+        "quadrature_error_estimate_h": 1.3757294536564537e-12,
+        "depends_on": "both_floor_depth_and_top_angle",
+        "unknown_roof_interior_not_evaluated": true
+      },
+      "height_coordinate_definition": "top Y relative to camera; floor Y=-1; full local wall height is top Y+1",
+      "pair_count": 25
+    }
+  },
+  {
+    "case": "pilot3",
+    "method": "compressed_0px",
+    "quality": {
+      "iou": 0.8315891468753996,
+      "omission_h2": 0.0,
+      "extension_h2": 0.26741570709534557,
+      "centroid_distance_h": 0.03198742787038762,
+      "reference_area_h2": 1.3204612149311432,
+      "candidate_area_h2": 1.5878769220264894,
+      "centroid_normalized": 0.02783661961284228,
+      "top_candidate_to_reference": {
+        "mean_deg": 1.2226436122339768,
+        "p95_deg": 3.0640889448037556,
+        "max_lower_deg": 3.0787172970543515,
+        "max_upper_deg": 3.103705028631875,
+        "mean_absolute_numerical_bound_deg": 0.012493865788761719,
+        "sample_n": 4478,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_reference_to_candidate": {
+        "mean_deg": 1.2544001307452006,
+        "p95_deg": 3.0633730240896706,
+        "max_lower_deg": 3.0787170673946376,
+        "max_upper_deg": 3.1037160862282804,
+        "mean_absolute_numerical_bound_deg": 0.012499509416821248,
+        "sample_n": 4560,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_candidate_to_reference": {
+        "mean_deg": 2.1268262193284024,
+        "p95_deg": 4.309830086934974,
+        "max_lower_deg": 4.331722671804469,
+        "max_upper_deg": 4.3567183970594145,
+        "mean_absolute_numerical_bound_deg": 0.012497862627472928,
+        "sample_n": 4621,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_reference_to_candidate": {
+        "mean_deg": 2.1263550890582783,
+        "p95_deg": 4.311504030833865,
+        "max_lower_deg": 4.331722676228013,
+        "max_upper_deg": 4.356719074970883,
+        "mean_absolute_numerical_bound_deg": 0.012498199371434957,
+        "sample_n": 4430,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_height_proxy_min_h": 1.0232930630857702,
+      "top_height_proxy_max_h": 1.1108132524568668,
+      "solid_iou": null,
+      "solid_iou_reason": "roof_interior_not_specified",
+      "height_profile_difference": {
+        "status": "conditional_on_common_floor",
+        "azimuth_mean_absolute_height_difference_h": 0.11706986926437697,
+        "quadrature_error_estimate_h": 1.3757294536564537e-12,
+        "depends_on": "both_floor_depth_and_top_angle",
+        "unknown_roof_interior_not_evaluated": true
+      },
+      "height_coordinate_definition": "top Y relative to camera; floor Y=-1; full local wall height is top Y+1",
+      "pair_count": 25
+    }
+  },
+  {
+    "case": "pilot3",
+    "method": "compressed_0.25px",
+    "quality": {
+      "iou": 0.8317476798196431,
+      "omission_h2": 0.0,
+      "extension_h2": 0.26711305424803045,
+      "centroid_distance_h": 0.03206077116112252,
+      "reference_area_h2": 1.3204612149311432,
+      "candidate_area_h2": 1.5875742691791739,
+      "centroid_normalized": 0.027900445603903958,
+      "top_candidate_to_reference": {
+        "mean_deg": 1.2229336125082193,
+        "p95_deg": 3.0640889448037556,
+        "max_lower_deg": 3.0787172970543515,
+        "max_upper_deg": 3.1037108190005376,
+        "mean_absolute_numerical_bound_deg": 0.012496760973092961,
+        "sample_n": 4474,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_reference_to_candidate": {
+        "mean_deg": 1.254646815651756,
+        "p95_deg": 3.0633730240896706,
+        "max_lower_deg": 3.0787170673946376,
+        "max_upper_deg": 3.1037160862282804,
+        "mean_absolute_numerical_bound_deg": 0.012499509416821248,
+        "sample_n": 4560,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_candidate_to_reference": {
+        "mean_deg": 2.124353238362541,
+        "p95_deg": 4.309830086934974,
+        "max_lower_deg": 4.331722671804469,
+        "max_upper_deg": 4.3567183970594145,
+        "mean_absolute_numerical_bound_deg": 0.012497862627472928,
+        "sample_n": 4620,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_reference_to_candidate": {
+        "mean_deg": 2.1237852824706516,
+        "p95_deg": 4.311504030833865,
+        "max_lower_deg": 4.331722676228013,
+        "max_upper_deg": 4.356719074970883,
+        "mean_absolute_numerical_bound_deg": 0.012498199371434957,
+        "sample_n": 4430,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_height_proxy_min_h": 1.0232930630857702,
+      "top_height_proxy_max_h": 1.1108132524568668,
+      "solid_iou": null,
+      "solid_iou_reason": "roof_interior_not_specified",
+      "height_profile_difference": {
+        "status": "conditional_on_common_floor",
+        "azimuth_mean_absolute_height_difference_h": 0.11696315697855449,
+        "quadrature_error_estimate_h": 1.3765615040510714e-12,
+        "depends_on": "both_floor_depth_and_top_angle",
+        "unknown_roof_interior_not_evaluated": true
+      },
+      "height_coordinate_definition": "top Y relative to camera; floor Y=-1; full local wall height is top Y+1",
+      "pair_count": 20
+    }
+  },
+  {
+    "case": "pilot3",
+    "method": "compressed_0.5px",
+    "quality": {
+      "iou": 0.8316052517105866,
+      "omission_h2": 0.0,
+      "extension_h2": 0.2673849563321993,
+      "centroid_distance_h": 0.03228455725394185,
+      "reference_area_h2": 1.3204612149311432,
+      "candidate_area_h2": 1.587846171263343,
+      "centroid_normalized": 0.028095192376470277,
+      "top_candidate_to_reference": {
+        "mean_deg": 1.2230298679399405,
+        "p95_deg": 3.0640889448037556,
+        "max_lower_deg": 3.0787172970543515,
+        "max_upper_deg": 3.103704090123539,
+        "mean_absolute_numerical_bound_deg": 0.012493396534593824,
+        "sample_n": 4467,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_reference_to_candidate": {
+        "mean_deg": 1.2555154058777587,
+        "p95_deg": 3.0633730240896706,
+        "max_lower_deg": 3.0787170673946376,
+        "max_upper_deg": 3.1037160862282804,
+        "mean_absolute_numerical_bound_deg": 0.012499509416821248,
+        "sample_n": 4560,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_candidate_to_reference": {
+        "mean_deg": 2.127223752098169,
+        "p95_deg": 4.309830086934974,
+        "max_lower_deg": 4.331722671804469,
+        "max_upper_deg": 4.35672207342109,
+        "mean_absolute_numerical_bound_deg": 0.012499700808310737,
+        "sample_n": 4612,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_reference_to_candidate": {
+        "mean_deg": 2.1263843708356043,
+        "p95_deg": 4.311504030833865,
+        "max_lower_deg": 4.331722676228013,
+        "max_upper_deg": 4.356719074970883,
+        "mean_absolute_numerical_bound_deg": 0.012498199371434957,
+        "sample_n": 4430,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_height_proxy_min_h": 1.0236287665599473,
+      "top_height_proxy_max_h": 1.1108132524568668,
+      "solid_iou": null,
+      "solid_iou_reason": "roof_interior_not_specified",
+      "height_profile_difference": {
+        "status": "conditional_on_common_floor",
+        "azimuth_mean_absolute_height_difference_h": 0.11701094686154603,
+        "quadrature_error_estimate_h": 1.3766492448322089e-12,
+        "depends_on": "both_floor_depth_and_top_angle",
+        "unknown_roof_interior_not_evaluated": true
+      },
+      "height_coordinate_definition": "top Y relative to camera; floor Y=-1; full local wall height is top Y+1",
+      "pair_count": 15
+    }
+  },
+  {
+    "case": "pilot3",
+    "method": "compressed_1px",
+    "quality": {
+      "iou": 0.8328959035253145,
+      "omission_h2": 0.0,
+      "extension_h2": 0.2649244369158166,
+      "centroid_distance_h": 0.03245307450814478,
+      "reference_area_h2": 1.3204612149311432,
+      "candidate_area_h2": 1.58538565184696,
+      "centroid_normalized": 0.02824184220159705,
+      "top_candidate_to_reference": {
+        "mean_deg": 1.1904698498027766,
+        "p95_deg": 3.0642796862642725,
+        "max_lower_deg": 3.0787172970543515,
+        "max_upper_deg": 3.103716540068741,
+        "mean_absolute_numerical_bound_deg": 0.012499621507194806,
+        "sample_n": 4458,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_reference_to_candidate": {
+        "mean_deg": 1.2231952188468018,
+        "p95_deg": 3.0633730240896706,
+        "max_lower_deg": 3.0787170673946376,
+        "max_upper_deg": 3.1037160862282804,
+        "mean_absolute_numerical_bound_deg": 0.012499509416821248,
+        "sample_n": 4560,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_candidate_to_reference": {
+        "mean_deg": 2.10795722488725,
+        "p95_deg": 4.309830086934974,
+        "max_lower_deg": 4.331722671804469,
+        "max_upper_deg": 4.3567183970594145,
+        "mean_absolute_numerical_bound_deg": 0.012497862627472928,
+        "sample_n": 4611,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_reference_to_candidate": {
+        "mean_deg": 2.107453256792368,
+        "p95_deg": 4.311504030833865,
+        "max_lower_deg": 4.331722676228013,
+        "max_upper_deg": 4.356719074970883,
+        "mean_absolute_numerical_bound_deg": 0.012498199371434957,
+        "sample_n": 4430,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_height_proxy_min_h": 1.0232930630857702,
+      "top_height_proxy_max_h": 1.1108132524568668,
+      "solid_iou": null,
+      "solid_iou_reason": "roof_interior_not_specified",
+      "height_profile_difference": {
+        "status": "conditional_on_common_floor",
+        "azimuth_mean_absolute_height_difference_h": 0.11236582171597305,
+        "quadrature_error_estimate_h": 7.53006894828158e-13,
+        "depends_on": "both_floor_depth_and_top_angle",
+        "unknown_roof_interior_not_evaluated": true
+      },
+      "height_coordinate_definition": "top Y relative to camera; floor Y=-1; full local wall height is top Y+1",
+      "pair_count": 11
+    }
+  },
+  {
+    "case": "pilot3",
+    "method": "compressed_2px",
+    "quality": {
+      "iou": 0.8401059382454396,
+      "omission_h2": 0.0,
+      "extension_h2": 0.251318193852617,
+      "centroid_distance_h": 0.03166061750128873,
+      "reference_area_h2": 1.3204612149311432,
+      "candidate_area_h2": 1.5717794087837604,
+      "centroid_normalized": 0.027552217379346027,
+      "top_candidate_to_reference": {
+        "mean_deg": 1.1607894939959655,
+        "p95_deg": 3.0642828430058753,
+        "max_lower_deg": 3.0787173048931322,
+        "max_upper_deg": 3.103716547907522,
+        "mean_absolute_numerical_bound_deg": 0.012499621507194806,
+        "sample_n": 4446,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_reference_to_candidate": {
+        "mean_deg": 1.1972196761765088,
+        "p95_deg": 3.06337302408967,
+        "max_lower_deg": 3.0787170673946376,
+        "max_upper_deg": 3.1037160862282804,
+        "mean_absolute_numerical_bound_deg": 0.012499509416821248,
+        "sample_n": 4560,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_candidate_to_reference": {
+        "mean_deg": 2.0283574048570516,
+        "p95_deg": 4.175149043781108,
+        "max_lower_deg": 4.238037713582018,
+        "max_upper_deg": 4.263034569970065,
+        "mean_absolute_numerical_bound_deg": 0.012498428194023737,
+        "sample_n": 4607,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_reference_to_candidate": {
+        "mean_deg": 2.024628227931151,
+        "p95_deg": 4.178631611265104,
+        "max_lower_deg": 4.237978690547921,
+        "max_upper_deg": 4.262975089290792,
+        "mean_absolute_numerical_bound_deg": 0.012498199371434957,
+        "sample_n": 4430,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_height_proxy_min_h": 1.0339128103428044,
+      "top_height_proxy_max_h": 1.1108132524568668,
+      "solid_iou": null,
+      "solid_iou_reason": "roof_interior_not_specified",
+      "height_profile_difference": {
+        "status": "conditional_on_common_floor",
+        "azimuth_mean_absolute_height_difference_h": 0.11284409098276191,
+        "quadrature_error_estimate_h": 7.535080816656739e-13,
+        "depends_on": "both_floor_depth_and_top_angle",
+        "unknown_roof_interior_not_evaluated": true
+      },
+      "height_coordinate_definition": "top Y relative to camera; floor Y=-1; full local wall height is top Y+1",
+      "pair_count": 6
+    }
+  },
+  {
+    "case": "pilot3",
+    "method": "point5_mv50",
+    "quality": {
+      "iou": 0.8512509462773056,
+      "omission_h2": 0.0,
+      "extension_h2": 0.23073966267820345,
+      "centroid_distance_h": 0.03138618647331162,
+      "reference_area_h2": 1.3204612149311432,
+      "candidate_area_h2": 1.5512008776093467,
+      "centroid_normalized": 0.027313397547794896,
+      "top_candidate_to_reference": {
+        "mean_deg": 1.1476202021866801,
+        "p95_deg": 2.950393722725451,
+        "max_lower_deg": 2.9765618864719765,
+        "max_upper_deg": 3.0015618392775667,
+        "mean_absolute_numerical_bound_deg": 0.012499976402795198,
+        "sample_n": 4451,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_reference_to_candidate": {
+        "mean_deg": 1.1785734290829637,
+        "p95_deg": 2.961816567394818,
+        "max_lower_deg": 2.9765618884095697,
+        "max_upper_deg": 3.001560907243212,
+        "mean_absolute_numerical_bound_deg": 0.012499509416821248,
+        "sample_n": 4560,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_candidate_to_reference": {
+        "mean_deg": 1.8344927646493299,
+        "p95_deg": 3.685630446093433,
+        "max_lower_deg": 3.7043277856119863,
+        "max_upper_deg": 3.7293276445262453,
+        "mean_absolute_numerical_bound_deg": 0.012499929457129673,
+        "sample_n": 4604,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_reference_to_candidate": {
+        "mean_deg": 1.8239703169854047,
+        "p95_deg": 3.687054838433745,
+        "max_lower_deg": 3.704327621707682,
+        "max_upper_deg": 3.729324020450552,
+        "mean_absolute_numerical_bound_deg": 0.012498199371434957,
+        "sample_n": 4430,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_height_proxy_min_h": 1.0283851968957316,
+      "top_height_proxy_max_h": 1.107591434828566,
+      "solid_iou": null,
+      "solid_iou_reason": "roof_interior_not_specified",
+      "height_profile_difference": {
+        "status": "conditional_on_common_floor",
+        "azimuth_mean_absolute_height_difference_h": 0.10714356427402984,
+        "quadrature_error_estimate_h": 1.4246648812840452e-12,
+        "depends_on": "both_floor_depth_and_top_angle",
+        "unknown_roof_interior_not_evaluated": true
+      },
+      "height_coordinate_definition": "top Y relative to camera; floor Y=-1; full local wall height is top Y+1",
+      "pair_count": 4
+    }
+  },
+  {
+    "case": "pilot3",
+    "method": "point5_mv_strict",
+    "quality": {
+      "iou": 0.8512509462773056,
+      "omission_h2": 0.0,
+      "extension_h2": 0.23073966267820345,
+      "centroid_distance_h": 0.03138618647331162,
+      "reference_area_h2": 1.3204612149311432,
+      "candidate_area_h2": 1.5512008776093467,
+      "centroid_normalized": 0.027313397547794896,
+      "top_candidate_to_reference": {
+        "mean_deg": 1.1476202021866801,
+        "p95_deg": 2.950393722725451,
+        "max_lower_deg": 2.9765618864719765,
+        "max_upper_deg": 3.0015618392775667,
+        "mean_absolute_numerical_bound_deg": 0.012499976402795198,
+        "sample_n": 4451,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_reference_to_candidate": {
+        "mean_deg": 1.1785734290829637,
+        "p95_deg": 2.961816567394818,
+        "max_lower_deg": 2.9765618884095697,
+        "max_upper_deg": 3.001560907243212,
+        "mean_absolute_numerical_bound_deg": 0.012499509416821248,
+        "sample_n": 4560,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_candidate_to_reference": {
+        "mean_deg": 1.8344927646493299,
+        "p95_deg": 3.685630446093433,
+        "max_lower_deg": 3.7043277856119863,
+        "max_upper_deg": 3.7293276445262453,
+        "mean_absolute_numerical_bound_deg": 0.012499929457129673,
+        "sample_n": 4604,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_reference_to_candidate": {
+        "mean_deg": 1.8239703169854047,
+        "p95_deg": 3.687054838433745,
+        "max_lower_deg": 3.704327621707682,
+        "max_upper_deg": 3.729324020450552,
+        "mean_absolute_numerical_bound_deg": 0.012498199371434957,
+        "sample_n": 4430,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_height_proxy_min_h": 1.0283851968957316,
+      "top_height_proxy_max_h": 1.107591434828566,
+      "solid_iou": null,
+      "solid_iou_reason": "roof_interior_not_specified",
+      "height_profile_difference": {
+        "status": "conditional_on_common_floor",
+        "azimuth_mean_absolute_height_difference_h": 0.10714356427402984,
+        "quadrature_error_estimate_h": 1.4246648812840452e-12,
+        "depends_on": "both_floor_depth_and_top_angle",
+        "unknown_roof_interior_not_evaluated": true
+      },
+      "height_coordinate_definition": "top Y relative to camera; floor Y=-1; full local wall height is top Y+1",
+      "pair_count": 4
+    }
+  },
+  {
+    "case": "real24",
+    "method": "exact_erp_mv50",
+    "quality": {
+      "iou": 0.957501273283323,
+      "omission_h2": 0.02069712474470116,
+      "extension_h2": 0.08531275571819119,
+      "centroid_distance_h": 0.013797596430047902,
+      "reference_area_h2": 2.4091121048104682,
+      "candidate_area_h2": 2.4737277357839584,
+      "centroid_normalized": 0.008889450850927716,
+      "top_candidate_to_reference": {
+        "mean_deg": 0.617147885961587,
+        "p95_deg": 1.0798171752103358,
+        "max_lower_deg": 1.0882148910793406,
+        "max_upper_deg": 1.1132040225584028,
+        "mean_absolute_numerical_bound_deg": 0.012494565739531126,
+        "sample_n": 5751,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_reference_to_candidate": {
+        "mean_deg": 0.61636990078389,
+        "p95_deg": 1.079865991197841,
+        "max_lower_deg": 1.0882149706885214,
+        "max_upper_deg": 1.1132086857429828,
+        "mean_absolute_numerical_bound_deg": 0.012496857527230712,
+        "sample_n": 5679,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_candidate_to_reference": {
+        "mean_deg": 0.5719937332697598,
+        "p95_deg": 1.3710587016289346,
+        "max_lower_deg": 1.4849807063471587,
+        "max_upper_deg": 1.509979671928672,
+        "mean_absolute_numerical_bound_deg": 0.012499482790756538,
+        "sample_n": 5120,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_reference_to_candidate": {
+        "mean_deg": 0.5685849500477779,
+        "p95_deg": 1.3604069157659826,
+        "max_lower_deg": 1.47826859646412,
+        "max_upper_deg": 1.503265932205767,
+        "mean_absolute_numerical_bound_deg": 0.01249866787082349,
+        "sample_n": 5044,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_height_proxy_min_h": 0.7458093684012201,
+      "top_height_proxy_max_h": 0.7816672773241405,
+      "solid_iou": null,
+      "solid_iou_reason": "roof_interior_not_specified",
+      "height_profile_difference": {
+        "status": "conditional_on_common_floor",
+        "azimuth_mean_absolute_height_difference_h": 0.005377225910931404,
+        "quadrature_error_estimate_h": 8.060758588649214e-11,
+        "depends_on": "both_floor_depth_and_top_angle",
+        "unknown_roof_interior_not_evaluated": true
+      },
+      "height_coordinate_definition": "top Y relative to camera; floor Y=-1; full local wall height is top Y+1",
+      "pair_count": 68
+    }
+  },
+  {
+    "case": "real24",
+    "method": "exact_erp_mv_strict",
+    "quality": {
+      "iou": 0.9564726693677658,
+      "omission_h2": 0.01035081276094053,
+      "extension_h2": 0.09881244847041455,
+      "centroid_distance_h": 0.008114240046721654,
+      "reference_area_h2": 2.4091121048104682,
+      "candidate_area_h2": 2.497573740519944,
+      "centroid_normalized": 0.005227804600145935,
+      "top_candidate_to_reference": {
+        "mean_deg": 0.6544322248265454,
+        "p95_deg": 1.094131219940563,
+        "max_lower_deg": 1.1030466541945991,
+        "max_upper_deg": 1.1280456911254455,
+        "mean_absolute_numerical_bound_deg": 0.012499518465423293,
+        "sample_n": 5747,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_reference_to_candidate": {
+        "mean_deg": 0.6534836151892484,
+        "p95_deg": 1.094107239257969,
+        "max_lower_deg": 1.1030516675186173,
+        "max_upper_deg": 1.1280453825730787,
+        "mean_absolute_numerical_bound_deg": 0.012496857527230712,
+        "sample_n": 5679,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_candidate_to_reference": {
+        "mean_deg": 0.5896098555450356,
+        "p95_deg": 1.371621184235283,
+        "max_lower_deg": 1.4852261969429403,
+        "max_upper_deg": 1.510224875352967,
+        "mean_absolute_numerical_bound_deg": 0.012499339205013407,
+        "sample_n": 5121,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_reference_to_candidate": {
+        "mean_deg": 0.5864907647844129,
+        "p95_deg": 1.3610128576976301,
+        "max_lower_deg": 1.4789393262428865,
+        "max_upper_deg": 1.5039366619845336,
+        "mean_absolute_numerical_bound_deg": 0.01249866787082349,
+        "sample_n": 5044,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_height_proxy_min_h": 0.745647120698367,
+      "top_height_proxy_max_h": 0.7794746172471034,
+      "solid_iou": null,
+      "solid_iou_reason": "roof_interior_not_specified",
+      "height_profile_difference": {
+        "status": "conditional_on_common_floor",
+        "azimuth_mean_absolute_height_difference_h": 0.00650990183376775,
+        "quadrature_error_estimate_h": 1.0179992193017166e-10,
+        "depends_on": "both_floor_depth_and_top_angle",
+        "unknown_roof_interior_not_evaluated": true
+      },
+      "height_coordinate_definition": "top Y relative to camera; floor Y=-1; full local wall height is top Y+1",
+      "pair_count": 66
+    }
+  },
+  {
+    "case": "real24",
+    "method": "compressed_0px",
+    "quality": {
+      "iou": 0.9564726693677658,
+      "omission_h2": 0.01035081276094053,
+      "extension_h2": 0.09881244847041455,
+      "centroid_distance_h": 0.008114240046721654,
+      "reference_area_h2": 2.4091121048104682,
+      "candidate_area_h2": 2.497573740519944,
+      "centroid_normalized": 0.005227804600145935,
+      "top_candidate_to_reference": {
+        "mean_deg": 0.6544322248265454,
+        "p95_deg": 1.094131219940563,
+        "max_lower_deg": 1.1030466541945991,
+        "max_upper_deg": 1.1280456911254455,
+        "mean_absolute_numerical_bound_deg": 0.012499518465423293,
+        "sample_n": 5747,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_reference_to_candidate": {
+        "mean_deg": 0.6534836151892484,
+        "p95_deg": 1.094107239257969,
+        "max_lower_deg": 1.1030516675186173,
+        "max_upper_deg": 1.1280453825730787,
+        "mean_absolute_numerical_bound_deg": 0.012496857527230712,
+        "sample_n": 5679,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_candidate_to_reference": {
+        "mean_deg": 0.5896098555450356,
+        "p95_deg": 1.371621184235283,
+        "max_lower_deg": 1.4852261969429403,
+        "max_upper_deg": 1.510224875352967,
+        "mean_absolute_numerical_bound_deg": 0.012499339205013407,
+        "sample_n": 5121,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_reference_to_candidate": {
+        "mean_deg": 0.5864907647844129,
+        "p95_deg": 1.3610128576976301,
+        "max_lower_deg": 1.4789393262428865,
+        "max_upper_deg": 1.5039366619845336,
+        "mean_absolute_numerical_bound_deg": 0.01249866787082349,
+        "sample_n": 5044,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_height_proxy_min_h": 0.745647120698367,
+      "top_height_proxy_max_h": 0.7794746172471034,
+      "solid_iou": null,
+      "solid_iou_reason": "roof_interior_not_specified",
+      "height_profile_difference": {
+        "status": "conditional_on_common_floor",
+        "azimuth_mean_absolute_height_difference_h": 0.00650990183376775,
+        "quadrature_error_estimate_h": 1.0179992193017166e-10,
+        "depends_on": "both_floor_depth_and_top_angle",
+        "unknown_roof_interior_not_evaluated": true
+      },
+      "height_coordinate_definition": "top Y relative to camera; floor Y=-1; full local wall height is top Y+1",
+      "pair_count": 66
+    }
+  },
+  {
+    "case": "real24",
+    "method": "compressed_0.25px",
+    "quality": {
+      "iou": 0.9566187285195444,
+      "omission_h2": 0.009942406364839796,
+      "extension_h2": 0.09885645875567135,
+      "centroid_distance_h": 0.008396984052632703,
+      "reference_area_h2": 2.4091121048104682,
+      "candidate_area_h2": 2.4980261572013007,
+      "centroid_normalized": 0.005409969584944809,
+      "top_candidate_to_reference": {
+        "mean_deg": 0.6557788099947989,
+        "p95_deg": 1.0985109109051887,
+        "max_lower_deg": 1.1027379278850886,
+        "max_upper_deg": 1.127736261368643,
+        "mean_absolute_numerical_bound_deg": 0.01249916674177733,
+        "sample_n": 5724,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_reference_to_candidate": {
+        "mean_deg": 0.6547815323191575,
+        "p95_deg": 1.0985404351032555,
+        "max_lower_deg": 1.1027380069025456,
+        "max_upper_deg": 1.127731721957007,
+        "mean_absolute_numerical_bound_deg": 0.012496857527230712,
+        "sample_n": 5679,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_candidate_to_reference": {
+        "mean_deg": 0.5874488963556939,
+        "p95_deg": 1.3721173007253198,
+        "max_lower_deg": 1.4852263156732282,
+        "max_upper_deg": 1.510223462174967,
+        "mean_absolute_numerical_bound_deg": 0.012498573250869522,
+        "sample_n": 5101,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_reference_to_candidate": {
+        "mean_deg": 0.5841968670101386,
+        "p95_deg": 1.3610128576976237,
+        "max_lower_deg": 1.4789393262428754,
+        "max_upper_deg": 1.5039366619845225,
+        "mean_absolute_numerical_bound_deg": 0.01249866787082349,
+        "sample_n": 5044,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_height_proxy_min_h": 0.745647120698367,
+      "top_height_proxy_max_h": 0.7794746172471034,
+      "solid_iou": null,
+      "solid_iou_reason": "roof_interior_not_specified",
+      "height_profile_difference": {
+        "status": "conditional_on_common_floor",
+        "azimuth_mean_absolute_height_difference_h": 0.006348427154697173,
+        "quadrature_error_estimate_h": 5.869496053505052e-11,
+        "depends_on": "both_floor_depth_and_top_angle",
+        "unknown_roof_interior_not_evaluated": true
+      },
+      "height_coordinate_definition": "top Y relative to camera; floor Y=-1; full local wall height is top Y+1",
+      "pair_count": 28
+    }
+  },
+  {
+    "case": "real24",
+    "method": "compressed_0.5px",
+    "quality": {
+      "iou": 0.957026493910411,
+      "omission_h2": 0.00980394495099116,
+      "extension_h2": 0.0979325539595337,
+      "centroid_distance_h": 0.008038459649665304,
+      "reference_area_h2": 2.4091121048104682,
+      "candidate_area_h2": 2.497240713819011,
+      "centroid_normalized": 0.005178981160606192,
+      "top_candidate_to_reference": {
+        "mean_deg": 0.6283513524362667,
+        "p95_deg": 1.0985109109051887,
+        "max_lower_deg": 1.1027379278850886,
+        "max_upper_deg": 1.1277371153338147,
+        "mean_absolute_numerical_bound_deg": 0.01249959372436307,
+        "sample_n": 5715,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_reference_to_candidate": {
+        "mean_deg": 0.627211296827725,
+        "p95_deg": 1.0985404351032555,
+        "max_lower_deg": 1.1027380069025456,
+        "max_upper_deg": 1.127731721957007,
+        "mean_absolute_numerical_bound_deg": 0.012496857527230712,
+        "sample_n": 5679,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_candidate_to_reference": {
+        "mean_deg": 0.5822721943298801,
+        "p95_deg": 1.3721173007253198,
+        "max_lower_deg": 1.4852263156732282,
+        "max_upper_deg": 1.5102221886004596,
+        "mean_absolute_numerical_bound_deg": 0.012497936463615812,
+        "sample_n": 5090,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_reference_to_candidate": {
+        "mean_deg": 0.5790484853146962,
+        "p95_deg": 1.3610128576976237,
+        "max_lower_deg": 1.4789393262428754,
+        "max_upper_deg": 1.5039366619845225,
+        "mean_absolute_numerical_bound_deg": 0.01249866787082349,
+        "sample_n": 5044,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_height_proxy_min_h": 0.745647120698367,
+      "top_height_proxy_max_h": 0.7794746172471034,
+      "solid_iou": null,
+      "solid_iou_reason": "roof_interior_not_specified",
+      "height_profile_difference": {
+        "status": "conditional_on_common_floor",
+        "azimuth_mean_absolute_height_difference_h": 0.005650295162263206,
+        "quadrature_error_estimate_h": 4.5586904065807715e-11,
+        "depends_on": "both_floor_depth_and_top_angle",
+        "unknown_roof_interior_not_evaluated": true
+      },
+      "height_coordinate_definition": "top Y relative to camera; floor Y=-1; full local wall height is top Y+1",
+      "pair_count": 17
+    }
+  },
+  {
+    "case": "real24",
+    "method": "compressed_1px",
+    "quality": {
+      "iou": 0.9596241973775905,
+      "omission_h2": 0.009118639110486458,
+      "extension_h2": 0.09186012187843264,
+      "centroid_distance_h": 0.008246999111846462,
+      "reference_area_h2": 2.4091121048104682,
+      "candidate_area_h2": 2.4918535875784142,
+      "centroid_normalized": 0.0053133379892710145,
+      "top_candidate_to_reference": {
+        "mean_deg": 0.6099672960926702,
+        "p95_deg": 1.1207236956671718,
+        "max_lower_deg": 1.129472376409298,
+        "max_upper_deg": 1.154472111858889,
+        "mean_absolute_numerical_bound_deg": 0.012499867724795584,
+        "sample_n": 5709,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_reference_to_candidate": {
+        "mean_deg": 0.60910792280482,
+        "p95_deg": 1.120794913594903,
+        "max_lower_deg": 1.129472360485925,
+        "max_upper_deg": 1.1544660755403864,
+        "mean_absolute_numerical_bound_deg": 0.012496857527230712,
+        "sample_n": 5679,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_candidate_to_reference": {
+        "mean_deg": 0.5437954346706835,
+        "p95_deg": 1.3204881568790419,
+        "max_lower_deg": 1.4281947305560891,
+        "max_upper_deg": 1.4531944626388897,
+        "mean_absolute_numerical_bound_deg": 0.012499866041400376,
+        "sample_n": 5082,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_reference_to_candidate": {
+        "mean_deg": 0.5418473919124547,
+        "p95_deg": 1.320835929296186,
+        "max_lower_deg": 1.4279858369101517,
+        "max_upper_deg": 1.4529831726517988,
+        "mean_absolute_numerical_bound_deg": 0.01249866787082349,
+        "sample_n": 5044,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_height_proxy_min_h": 0.752745078824711,
+      "top_height_proxy_max_h": 0.775130395461839,
+      "solid_iou": null,
+      "solid_iou_reason": "roof_interior_not_specified",
+      "height_profile_difference": {
+        "status": "conditional_on_common_floor",
+        "azimuth_mean_absolute_height_difference_h": 0.004918966785667391,
+        "quadrature_error_estimate_h": 3.346296115346837e-11,
+        "depends_on": "both_floor_depth_and_top_angle",
+        "unknown_roof_interior_not_evaluated": true
+      },
+      "height_coordinate_definition": "top Y relative to camera; floor Y=-1; full local wall height is top Y+1",
+      "pair_count": 10
+    }
+  },
+  {
+    "case": "real24",
+    "method": "compressed_2px",
+    "quality": {
+      "iou": 0.9610451562279126,
+      "omission_h2": 0.01505204046351459,
+      "extension_h2": 0.08198839013776317,
+      "centroid_distance_h": 0.011682982317381973,
+      "reference_area_h2": 2.4091121048104682,
+      "candidate_area_h2": 2.476048454484717,
+      "centroid_normalized": 0.007527057167468121,
+      "top_candidate_to_reference": {
+        "mean_deg": 0.5741350385947094,
+        "p95_deg": 1.090998830392604,
+        "max_lower_deg": 1.1027379278850886,
+        "max_upper_deg": 1.1277373327640152,
+        "mean_absolute_numerical_bound_deg": 0.01249970243946341,
+        "sample_n": 5699,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_reference_to_candidate": {
+        "mean_deg": 0.5738042298854517,
+        "p95_deg": 1.0910506744710318,
+        "max_lower_deg": 1.1027380069025456,
+        "max_upper_deg": 1.127731721957007,
+        "mean_absolute_numerical_bound_deg": 0.012496857527230712,
+        "sample_n": 5679,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_candidate_to_reference": {
+        "mean_deg": 0.5240153103743286,
+        "p95_deg": 1.371531184256994,
+        "max_lower_deg": 1.4852263156732282,
+        "max_upper_deg": 1.5102257190388506,
+        "mean_absolute_numerical_bound_deg": 0.01249970168281134,
+        "sample_n": 5077,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_reference_to_candidate": {
+        "mean_deg": 0.5200346914907384,
+        "p95_deg": 1.3610128576976237,
+        "max_lower_deg": 1.4789393262428754,
+        "max_upper_deg": 1.5039366619845225,
+        "mean_absolute_numerical_bound_deg": 0.01249866787082349,
+        "sample_n": 5044,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_height_proxy_min_h": 0.7500978957649679,
+      "top_height_proxy_max_h": 0.7794746172471034,
+      "solid_iou": null,
+      "solid_iou_reason": "roof_interior_not_specified",
+      "height_profile_difference": {
+        "status": "conditional_on_common_floor",
+        "azimuth_mean_absolute_height_difference_h": 0.005934688863821105,
+        "quadrature_error_estimate_h": 8.84517259393518e-12,
+        "depends_on": "both_floor_depth_and_top_angle",
+        "unknown_roof_interior_not_evaluated": true
+      },
+      "height_coordinate_definition": "top Y relative to camera; floor Y=-1; full local wall height is top Y+1",
+      "pair_count": 5
+    }
+  },
+  {
+    "case": "real24",
+    "method": "point5_mv50",
+    "quality": {
+      "iou": 0.9585107967125783,
+      "omission_h2": 0.010782782599014478,
+      "extension_h2": 0.0930290608780633,
+      "centroid_distance_h": 0.010091407747321193,
+      "reference_area_h2": 2.4091121048104682,
+      "candidate_area_h2": 2.4913583830895174,
+      "centroid_normalized": 0.006501644952531162,
+      "top_candidate_to_reference": {
+        "mean_deg": 0.7002864878409881,
+        "p95_deg": 1.1207863407627974,
+        "max_lower_deg": 1.1295464313327905,
+        "max_upper_deg": 1.1545421756511145,
+        "mean_absolute_numerical_bound_deg": 0.012497872159161988,
+        "sample_n": 5714,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_reference_to_candidate": {
+        "mean_deg": 0.6997233755341097,
+        "p95_deg": 1.1208559161862242,
+        "max_lower_deg": 1.1295463969963706,
+        "max_upper_deg": 1.154540112050832,
+        "mean_absolute_numerical_bound_deg": 0.012496857527230712,
+        "sample_n": 5679,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_candidate_to_reference": {
+        "mean_deg": 0.558717370859585,
+        "p95_deg": 1.3397306674350662,
+        "max_lower_deg": 1.444550308370733,
+        "max_upper_deg": 1.4695437529352586,
+        "mean_absolute_numerical_bound_deg": 0.012496722282262746,
+        "sample_n": 5087,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_reference_to_candidate": {
+        "mean_deg": 0.5554328984888441,
+        "p95_deg": 1.330406649564479,
+        "max_lower_deg": 1.4388091525945637,
+        "max_upper_deg": 1.4638064883362105,
+        "mean_absolute_numerical_bound_deg": 0.01249866787082349,
+        "sample_n": 5044,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_height_proxy_min_h": 0.7482004202578145,
+      "top_height_proxy_max_h": 0.7772486061621471,
+      "solid_iou": null,
+      "solid_iou_reason": "roof_interior_not_specified",
+      "height_profile_difference": {
+        "status": "conditional_on_common_floor",
+        "azimuth_mean_absolute_height_difference_h": 0.0057134606276965025,
+        "quadrature_error_estimate_h": 1.0142955519232558e-11,
+        "depends_on": "both_floor_depth_and_top_angle",
+        "unknown_roof_interior_not_evaluated": true
+      },
+      "height_coordinate_definition": "top Y relative to camera; floor Y=-1; full local wall height is top Y+1",
+      "pair_count": 4
+    }
+  },
+  {
+    "case": "real24",
+    "method": "point5_mv_strict",
+    "quality": {
+      "iou": 0.9585107967125783,
+      "omission_h2": 0.010782782599014478,
+      "extension_h2": 0.0930290608780633,
+      "centroid_distance_h": 0.010091407747321193,
+      "reference_area_h2": 2.4091121048104682,
+      "candidate_area_h2": 2.4913583830895174,
+      "centroid_normalized": 0.006501644952531162,
+      "top_candidate_to_reference": {
+        "mean_deg": 0.7002864878409881,
+        "p95_deg": 1.1207863407627974,
+        "max_lower_deg": 1.1295464313327905,
+        "max_upper_deg": 1.1545421756511145,
+        "mean_absolute_numerical_bound_deg": 0.012497872159161988,
+        "sample_n": 5714,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_reference_to_candidate": {
+        "mean_deg": 0.6997233755341097,
+        "p95_deg": 1.1208559161862242,
+        "max_lower_deg": 1.1295463969963706,
+        "max_upper_deg": 1.154540112050832,
+        "mean_absolute_numerical_bound_deg": 0.012496857527230712,
+        "sample_n": 5679,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_candidate_to_reference": {
+        "mean_deg": 0.558717370859585,
+        "p95_deg": 1.3397306674350662,
+        "max_lower_deg": 1.444550308370733,
+        "max_upper_deg": 1.4695437529352586,
+        "mean_absolute_numerical_bound_deg": 0.012496722282262746,
+        "sample_n": 5087,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "bottom_reference_to_candidate": {
+        "mean_deg": 0.5554328984888441,
+        "p95_deg": 1.330406649564479,
+        "max_lower_deg": 1.4388091525945637,
+        "max_upper_deg": 1.4638064883362105,
+        "mean_absolute_numerical_bound_deg": 0.01249866787082349,
+        "sample_n": 5044,
+        "interpretation": "distance to declared curve union; not correspondence or semantic correctness"
+      },
+      "top_height_proxy_min_h": 0.7482004202578145,
+      "top_height_proxy_max_h": 0.7772486061621471,
+      "solid_iou": null,
+      "solid_iou_reason": "roof_interior_not_specified",
+      "height_profile_difference": {
+        "status": "conditional_on_common_floor",
+        "azimuth_mean_absolute_height_difference_h": 0.0057134606276965025,
+        "quadrature_error_estimate_h": 1.0142955519232558e-11,
+        "depends_on": "both_floor_depth_and_top_angle",
+        "unknown_roof_interior_not_evaluated": true
+      },
+      "height_coordinate_definition": "top Y relative to camera; floor Y=-1; full local wall height is top Y+1",
+      "pair_count": 4
+    }
+  }
+]

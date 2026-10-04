@@ -1,0 +1,29 @@
+# 四图研究快照字段与读取说明
+
+此说明仅约束本次便利快照，不替代当前方法合同或统一输入schema。日期2026-10-04，坐标为1024×512连续坐标C，共同相机高度单位h=1；不表示实测米制或物理标定完成。
+
+## 构造输入
+
+inputs下四个以图片代码命名的JSON具有image、condition、evidence_kind、records四个顶层字段。condition固定manual，evidence_kind为human_observed；records恰为该图当前完整选中名单。
+
+每条记录保留id、worker、points、condition、independent、independence_reasons、consensus_eligible、quality_candidate、main_quality_gate、main_consensus_gate、source_point_indices、source_point_labels、source_pair_indices、order_status、order_used、ring_confirmed、preprocessing_status、borrowed_points、cleaning，并添加明确的image和evidence_kind。嵌套gate保留完整当前对象，不只摘status。
+
+points按上、下交替为二维数组，沿既定点对环；每对共享x。source_pair_indices逐对对应，source_point_indices与source_point_labels逐点对应。没有重新平均、配对、拟合或移动点。确认环保留；未确认人员按既有prepare_record的共享x默认环。默认环不升格为人工确认。一般源输入若points为空必须保留不可用，不补点；本次四图的66条均非空。
+
+选中规则沿用当前研究消费者：condition为manual、independent为true、consensus_eligible为true、main_consensus_gate.status为main_candidate。没有再以几何成功、质量资格或GT分数筛选。rosters.json的images逐图保存source_records、selected_count、record_ids、worker_ids和not_selected；后者保留未选中id、worker、condition、原因及原gate。全部源记录恰分为selected和not_selected，无重复或遗漏。
+
+每张图片的人员不重复；同坐标不同人员仍分别保留独立票。四图66份记录不代表66名不同人员。完整源记录71份，未选中5份；跨图独立人员数见source_binding.json的summary。
+
+## 评价与解释材料
+
+evaluation/references.json只供评价，顶层policy说明原GT主分析、已有修订另报，images逐图保存image和references。每条参考沿公共投影字段保留version、points、源索引和环状态，并经相同prepare_record处理；原GT不改序。本次四图各有1份原GT，没有附加人工修订GT，不虚构第二版本。
+
+context/review_context.json含image、building、room、scene、图级review及逐份annotations的review、geometry_status、geometry_issues、scene_category。它提供已有解释状态；不用于构造调参、GT选优或新清洗裁决。缺少原图时不能据此完成新的视觉审核。
+
+## 来源与验证记录
+
+source_binding.json记载统一源入口、合同版本、bundle验证、投影过程、坐标、源环政策、使用本地工作区未提交消费者的事实、计数及未执行实验。归档清单archive_inventory.json列出外部文件相对路径和字节数；外部历史散列不作为本快照必需接口。
+
+verification.json是此次交付检查记录：记录字段与当前输入绑定、完整名单、参考隔离、文件引用和归档完整性。新四图尚未运行融合或质量评价，不能从输入验证通过推断方法适用、几何正确或接近GT。
+
+快照再生成时若当前来源发生变化，应另存新版本并说明差异，不覆盖本目录。进一步新增分析字段、指标结果或失败schema时，另附定义、单位、空值／失败语义和必要验证。

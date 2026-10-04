@@ -30,6 +30,7 @@
 
 ## 当前研究与探索
 
+- [共识可靠性后续方案与Pro深研资料](thesis_main/研究推进方案_共识可靠性与Pro深研_20261004.md)：本阶段完成条件、研究问题与创新边界；[交接包](../research/layout_foundations_handoff_20261004/README.md)含最新Pro／dot原件及四图66份完整当前名单，GT分离；只交接资料，未新增融合实验。
 - [下一线程完整交接：连线、质量与完整共识](thesis_main/线程交接_连线质量与完整共识_20261004.md)：最新优先级、跨线程证据、算法与数据入口、已知缺陷、Pro分工、未提交边界及具体接续任务。
 - [人员子类与完整共识返回审查](../analysis_results/worker_subtype_review_20261004/REPORT.md)、[Pro／dot精选归档](../research/worker_subtype_returns_20261004/README.md)：数值复核、认证反例和点身份并列提示；当前优先回到连线、质量与共识基础，跨线程进度和后续安排统一见研究方向。
 - [完整共识并行研究交接](../research/full_layout_consensus_handoff_20261003/README.md)：本地负责当前输入与原图核对、融合环序和既有Lee稳定性；Chat Pro研究完整共识、阈值、对应及连接，附目标提示词和已跟踪资料入口。

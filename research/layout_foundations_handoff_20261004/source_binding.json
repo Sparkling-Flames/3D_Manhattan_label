@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-04",
+  "source_entry": "analysis_results/research_input_20260929/manifest.json",
+  "contract_version": "consensus_research_20260923_v1",
+  "bundle_validation": {
+    "status": "passed",
+    "objects": 3441,
+    "annotations": 3152,
+    "ready_coordinate_objects": 3298,
+    "confirmed_orders": 1295,
+    "research_images": 259,
+    "reference_only_images": 2,
+    "comment_occurrences": 32462,
+    "unresolved_comment_occurrences": 1,
+    "checks": [
+      "完整配对",
+      "周期平均x及y不变",
+      "Matterport数组源点身份",
+      "确认环绑定",
+      "人员/GT/图片引用",
+      "清洗及研究表字段一致",
+      "交叉表ID及计数",
+      "评论来源覆盖"
+    ],
+    "limitation": "机器一致性验证，不宣称所有标注人工确认或方法可计算；人工未决和未知来源继续保留。"
+  },
+  "projection": "project_bundle(load_current_bundle()) then source_pair_indices from source objects and prepare_record()",
+  "coordinate_convention": "continuous",
+  "shape": [
+    1024,
+    512
+  ],
+  "ring_policy": "confirmed and original GT retained; remaining annotations use established shared-x default; source points unchanged",
+  "snapshot_role": "derived convenience excerpt, not authoritative input or new eligibility",
+  "generation_used_local_worktree": true,
+  "uncommitted_consumers_used": [
+    "tools/thesis_main/data_prep/consolidate_research_input.py",
+    "tools/thesis_main/data_prep/project_public_research_20260929.py"
+  ],
+  "not_run": [
+    "fusion",
+    "quality_evaluation",
+    "compression",
+    "image_review",
+    "new_independent_tests"
+  ],
+  "summary": {
+    "images": 4,
+    "selected_records": 66,
+    "selected_distinct_workers": 24,
+    "source_records": 71,
+    "reference_records": 4
+  }
+}

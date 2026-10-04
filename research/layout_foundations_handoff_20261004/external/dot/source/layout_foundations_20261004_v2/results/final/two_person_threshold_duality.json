@@ -1,0 +1,2424 @@
+{
+  "inputs": [
+    {
+      "id": "small",
+      "worker": "small",
+      "image": "synthetic",
+      "points": [
+        [
+          128.0,
+          155.6924026801645
+        ],
+        [
+          128.0,
+          356.3075973198355
+        ],
+        [
+          384.0,
+          155.6924026801645
+        ],
+        [
+          384.0,
+          356.3075973198355
+        ],
+        [
+          640.0,
+          155.6924026801645
+        ],
+        [
+          640.0,
+          356.3075973198355
+        ],
+        [
+          896.0,
+          155.6924026801645
+        ],
+        [
+          896.0,
+          356.3075973198355
+        ]
+      ],
+      "independent": true,
+      "consensus_eligible": true,
+      "condition": "synthetic",
+      "evidence_kind": "synthetic_control",
+      "ring_confirmed": false,
+      "order_status": "synthetic_known_order",
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "source_point_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "id": "large",
+      "worker": "large",
+      "image": "synthetic",
+      "points": [
+        [
+          128.0,
+          200.61519463967093
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ],
+        [
+          384.0,
+          200.61519463967093
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          640.0,
+          200.61519463967093
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          200.61519463967093
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ]
+      ],
+      "independent": true,
+      "consensus_eligible": true,
+      "condition": "synthetic",
+      "evidence_kind": "synthetic_control",
+      "ring_confirmed": false,
+      "order_status": "synthetic_known_order",
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "source_point_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    }
+  ],
+  "result": {
+    "schema": "exact_arc_envelope_v1",
+    "n": 2,
+    "record_ids": [
+      "small",
+      "large"
+    ],
+    "workers": [
+      "small",
+      "large"
+    ],
+    "source_coordinate_hash": "89e2db86666444899eef57aa4d7ab269fe7af251ddb66895cbccf2c87b3416a6",
+    "methods": {
+      "mv50": {
+        "status": "conditional_complete_boundary",
+        "n": 2,
+        "erp_threshold": 1,
+        "knot_provenance": [
+          {
+            "index": 0,
+            "node_type": "derived_pair_knot_not_semantic_corner",
+            "upper_curve_turn": true,
+            "lower_curve_turn": true,
+            "coincident_source_longitudes": [
+              {
+                "id": "small",
+                "worker": "small",
+                "pair_index": 0
+              },
+              {
+                "id": "large",
+                "worker": "large",
+                "pair_index": 0
+              }
+            ],
+            "longitude_coincidence_is_not_point_correspondence": true,
+            "upper_left_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_endpoint_indices": [
+                  [
+                    6,
+                    7
+                  ],
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "upper_right_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_endpoint_indices": [
+                  [
+                    0,
+                    1
+                  ],
+                  [
+                    2,
+                    3
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "lower_left_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_endpoint_indices": [
+                  [
+                    6,
+                    7
+                  ],
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "lower_right_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_endpoint_indices": [
+                  [
+                    0,
+                    1
+                  ],
+                  [
+                    2,
+                    3
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ]
+          },
+          {
+            "index": 1,
+            "node_type": "derived_pair_knot_not_semantic_corner",
+            "upper_curve_turn": true,
+            "lower_curve_turn": true,
+            "coincident_source_longitudes": [
+              {
+                "id": "small",
+                "worker": "small",
+                "pair_index": 1
+              },
+              {
+                "id": "large",
+                "worker": "large",
+                "pair_index": 1
+              }
+            ],
+            "longitude_coincidence_is_not_point_correspondence": true,
+            "upper_left_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_endpoint_indices": [
+                  [
+                    0,
+                    1
+                  ],
+                  [
+                    2,
+                    3
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "upper_right_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_endpoint_indices": [
+                  [
+                    2,
+                    3
+                  ],
+                  [
+                    4,
+                    5
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "lower_left_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_endpoint_indices": [
+                  [
+                    0,
+                    1
+                  ],
+                  [
+                    2,
+                    3
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "lower_right_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_endpoint_indices": [
+                  [
+                    2,
+                    3
+                  ],
+                  [
+                    4,
+                    5
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ]
+          },
+          {
+            "index": 2,
+            "node_type": "derived_pair_knot_not_semantic_corner",
+            "upper_curve_turn": true,
+            "lower_curve_turn": true,
+            "coincident_source_longitudes": [
+              {
+                "id": "small",
+                "worker": "small",
+                "pair_index": 2
+              },
+              {
+                "id": "large",
+                "worker": "large",
+                "pair_index": 2
+              }
+            ],
+            "longitude_coincidence_is_not_point_correspondence": true,
+            "upper_left_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_endpoint_indices": [
+                  [
+                    2,
+                    3
+                  ],
+                  [
+                    4,
+                    5
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "upper_right_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_endpoint_indices": [
+                  [
+                    4,
+                    5
+                  ],
+                  [
+                    6,
+                    7
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "lower_left_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_endpoint_indices": [
+                  [
+                    2,
+                    3
+                  ],
+                  [
+                    4,
+                    5
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "lower_right_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_endpoint_indices": [
+                  [
+                    4,
+                    5
+                  ],
+                  [
+                    6,
+                    7
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ]
+          },
+          {
+            "index": 3,
+            "node_type": "derived_pair_knot_not_semantic_corner",
+            "upper_curve_turn": true,
+            "lower_curve_turn": true,
+            "coincident_source_longitudes": [
+              {
+                "id": "small",
+                "worker": "small",
+                "pair_index": 3
+              },
+              {
+                "id": "large",
+                "worker": "large",
+                "pair_index": 3
+              }
+            ],
+            "longitude_coincidence_is_not_point_correspondence": true,
+            "upper_left_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_endpoint_indices": [
+                  [
+                    4,
+                    5
+                  ],
+                  [
+                    6,
+                    7
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "upper_right_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_endpoint_indices": [
+                  [
+                    6,
+                    7
+                  ],
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "lower_left_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_endpoint_indices": [
+                  [
+                    4,
+                    5
+                  ],
+                  [
+                    6,
+                    7
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "lower_right_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_endpoint_indices": [
+                  [
+                    6,
+                    7
+                  ],
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ]
+          }
+        ],
+        "equivalent_bev_threshold": 2,
+        "points": [
+          [
+            128.0,
+            155.6924026801645
+          ],
+          [
+            128.0,
+            356.3075973198355
+          ],
+          [
+            384.0,
+            155.6924026801645
+          ],
+          [
+            384.0,
+            356.3075973198355
+          ],
+          [
+            640.0,
+            155.6924026801645
+          ],
+          [
+            640.0,
+            356.3075973198355
+          ],
+          [
+            896.0,
+            155.6924026801645
+          ],
+          [
+            896.0,
+            356.3075973198355
+          ]
+        ],
+        "footprint": [
+          [
+            -0.9999999999999997,
+            0.9999999999999994
+          ],
+          [
+            -0.9999999999999994,
+            -0.9999999999999997
+          ],
+          [
+            0.9999999999999994,
+            -0.9999999999999997
+          ],
+          [
+            0.9999999999999997,
+            0.9999999999999994
+          ]
+        ],
+        "pair_count": 4,
+        "ring_confirmed": false,
+        "representation": "paired_boundary_knots_not_semantic_corners",
+        "connections": [
+          {
+            "pair_indices": [
+              0,
+              1
+            ],
+            "kind": "straight_3d_edge_projective_arc"
+          },
+          {
+            "pair_indices": [
+              1,
+              2
+            ],
+            "kind": "straight_3d_edge_projective_arc"
+          },
+          {
+            "pair_indices": [
+              2,
+              3
+            ],
+            "kind": "straight_3d_edge_projective_arc"
+          },
+          {
+            "pair_indices": [
+              3,
+              0
+            ],
+            "kind": "straight_3d_edge_projective_arc"
+          }
+        ],
+        "provenance_intervals": [
+          {
+            "lo": 0.0,
+            "hi": 0.7853981633974483,
+            "coeff": [
+              [
+                -1.1891241456679373e-16,
+                1.0000000000000007
+              ],
+              [
+                1.1891241456679373e-16,
+                -1.0000000000000007
+              ]
+            ],
+            "top_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_endpoint_indices": [
+                  [
+                    6,
+                    7
+                  ],
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "bottom_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_endpoint_indices": [
+                  [
+                    6,
+                    7
+                  ],
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ]
+          },
+          {
+            "lo": 0.7853981633974483,
+            "hi": 2.356194490192345,
+            "coeff": [
+              [
+                1.0000000000000007,
+                1.1102230246251573e-16
+              ],
+              [
+                -1.0000000000000007,
+                -1.1102230246251573e-16
+              ]
+            ],
+            "top_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_endpoint_indices": [
+                  [
+                    0,
+                    1
+                  ],
+                  [
+                    2,
+                    3
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "bottom_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_endpoint_indices": [
+                  [
+                    0,
+                    1
+                  ],
+                  [
+                    2,
+                    3
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ]
+          },
+          {
+            "lo": 2.356194490192345,
+            "hi": 3.9269908169872414,
+            "coeff": [
+              [
+                1.8394777362344743e-16,
+                -1.0000000000000004
+              ],
+              [
+                -1.8394777362344743e-16,
+                1.0000000000000004
+              ]
+            ],
+            "top_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_endpoint_indices": [
+                  [
+                    2,
+                    3
+                  ],
+                  [
+                    4,
+                    5
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "bottom_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_endpoint_indices": [
+                  [
+                    2,
+                    3
+                  ],
+                  [
+                    4,
+                    5
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ]
+          },
+          {
+            "lo": 3.9269908169872414,
+            "hi": 5.497787143782138,
+            "coeff": [
+              [
+                -1.0000000000000004,
+                -1.6653345369377358e-16
+              ],
+              [
+                1.0000000000000004,
+                1.6653345369377358e-16
+              ]
+            ],
+            "top_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_endpoint_indices": [
+                  [
+                    4,
+                    5
+                  ],
+                  [
+                    6,
+                    7
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "bottom_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_endpoint_indices": [
+                  [
+                    4,
+                    5
+                  ],
+                  [
+                    6,
+                    7
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ]
+          },
+          {
+            "lo": 5.497787143782138,
+            "hi": 6.283185307179586,
+            "coeff": [
+              [
+                -1.1891241456679373e-16,
+                1.0000000000000007
+              ],
+              [
+                1.1891241456679373e-16,
+                -1.0000000000000007
+              ]
+            ],
+            "top_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_endpoint_indices": [
+                  [
+                    6,
+                    7
+                  ],
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "bottom_sources": [
+              {
+                "id": "small",
+                "worker": "small",
+                "edge_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_endpoint_indices": [
+                  [
+                    6,
+                    7
+                  ],
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ]
+          }
+        ],
+        "source_pair_residuals": [
+          {
+            "id": "small",
+            "worker": "small",
+            "pair_index": 0,
+            "source_points": [
+              [
+                128.0,
+                155.6924026801645
+              ],
+              [
+                128.0,
+                356.3075973198355
+              ]
+            ],
+            "generated_top_y": 155.6924026801645,
+            "generated_bottom_y": 356.3075973198355,
+            "source_minus_generated_top_px": 0.0,
+            "source_minus_generated_bottom_px": 0.0
+          },
+          {
+            "id": "small",
+            "worker": "small",
+            "pair_index": 1,
+            "source_points": [
+              [
+                384.0,
+                155.6924026801645
+              ],
+              [
+                384.0,
+                356.3075973198355
+              ]
+            ],
+            "generated_top_y": 155.6924026801645,
+            "generated_bottom_y": 356.3075973198355,
+            "source_minus_generated_top_px": 0.0,
+            "source_minus_generated_bottom_px": 0.0
+          },
+          {
+            "id": "small",
+            "worker": "small",
+            "pair_index": 2,
+            "source_points": [
+              [
+                640.0,
+                155.6924026801645
+              ],
+              [
+                640.0,
+                356.3075973198355
+              ]
+            ],
+            "generated_top_y": 155.6924026801645,
+            "generated_bottom_y": 356.3075973198355,
+            "source_minus_generated_top_px": 0.0,
+            "source_minus_generated_bottom_px": 0.0
+          },
+          {
+            "id": "small",
+            "worker": "small",
+            "pair_index": 3,
+            "source_points": [
+              [
+                896.0,
+                155.6924026801645
+              ],
+              [
+                896.0,
+                356.3075973198355
+              ]
+            ],
+            "generated_top_y": 155.6924026801645,
+            "generated_bottom_y": 356.3075973198355,
+            "source_minus_generated_top_px": 0.0,
+            "source_minus_generated_bottom_px": 0.0
+          },
+          {
+            "id": "large",
+            "worker": "large",
+            "pair_index": 0,
+            "source_points": [
+              [
+                128.0,
+                200.61519463967093
+              ],
+              [
+                128.0,
+                311.3848053603291
+              ]
+            ],
+            "generated_top_y": 155.6924026801645,
+            "generated_bottom_y": 356.3075973198355,
+            "source_minus_generated_top_px": 44.92279195950644,
+            "source_minus_generated_bottom_px": -44.92279195950641
+          },
+          {
+            "id": "large",
+            "worker": "large",
+            "pair_index": 1,
+            "source_points": [
+              [
+                384.0,
+                200.61519463967093
+              ],
+              [
+                384.0,
+                311.3848053603291
+              ]
+            ],
+            "generated_top_y": 155.6924026801645,
+            "generated_bottom_y": 356.3075973198355,
+            "source_minus_generated_top_px": 44.92279195950644,
+            "source_minus_generated_bottom_px": -44.92279195950641
+          },
+          {
+            "id": "large",
+            "worker": "large",
+            "pair_index": 2,
+            "source_points": [
+              [
+                640.0,
+                200.61519463967093
+              ],
+              [
+                640.0,
+                311.3848053603291
+              ]
+            ],
+            "generated_top_y": 155.6924026801645,
+            "generated_bottom_y": 356.3075973198355,
+            "source_minus_generated_top_px": 44.92279195950644,
+            "source_minus_generated_bottom_px": -44.92279195950641
+          },
+          {
+            "id": "large",
+            "worker": "large",
+            "pair_index": 3,
+            "source_points": [
+              [
+                896.0,
+                200.61519463967093
+              ],
+              [
+                896.0,
+                311.3848053603291
+              ]
+            ],
+            "generated_top_y": 155.6924026801645,
+            "generated_bottom_y": 356.3075973198355,
+            "source_minus_generated_top_px": 44.92279195950644,
+            "source_minus_generated_bottom_px": -44.92279195950641
+          }
+        ],
+        "source_record_ids": [
+          "small",
+          "large"
+        ],
+        "source_workers": [
+          "small",
+          "large"
+        ],
+        "shared_top_bottom_donor_longitude_fraction": 1.0,
+        "different_top_bottom_donor_longitude_fraction": 0.0,
+        "height_proxy": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "bottom_xyz": [
+          [
+            -0.9999999999999997,
+            -1.0,
+            0.9999999999999994
+          ],
+          [
+            -0.9999999999999994,
+            -1.0,
+            -0.9999999999999997
+          ],
+          [
+            0.9999999999999994,
+            -1.0,
+            -0.9999999999999997
+          ],
+          [
+            0.9999999999999997,
+            -1.0,
+            0.9999999999999994
+          ]
+        ],
+        "top_xyz": [
+          [
+            -0.9999999999999997,
+            1.0,
+            0.9999999999999994
+          ],
+          [
+            -0.9999999999999994,
+            1.0,
+            -0.9999999999999997
+          ],
+          [
+            0.9999999999999994,
+            1.0,
+            -0.9999999999999997
+          ],
+          [
+            0.9999999999999997,
+            1.0,
+            0.9999999999999994
+          ]
+        ],
+        "roof_interior": "not_observed_not_assumed",
+        "max_serialization_error_px": 0.0,
+        "geometry_valid": true,
+        "camera_inside": true,
+        "numerical_epsilon_radians": 2e-11,
+        "uncertainty": "Conditional vote result; no semantic correspondence, common ceiling or unique scene claim. All raw events preserved."
+      },
+      "mv_strict": {
+        "status": "conditional_complete_boundary",
+        "n": 2,
+        "erp_threshold": 2,
+        "knot_provenance": [
+          {
+            "index": 0,
+            "node_type": "derived_pair_knot_not_semantic_corner",
+            "upper_curve_turn": true,
+            "lower_curve_turn": true,
+            "coincident_source_longitudes": [
+              {
+                "id": "small",
+                "worker": "small",
+                "pair_index": 0
+              },
+              {
+                "id": "large",
+                "worker": "large",
+                "pair_index": 0
+              }
+            ],
+            "longitude_coincidence_is_not_point_correspondence": true,
+            "upper_left_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_endpoint_indices": [
+                  [
+                    6,
+                    7
+                  ],
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "upper_right_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_endpoint_indices": [
+                  [
+                    0,
+                    1
+                  ],
+                  [
+                    2,
+                    3
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "lower_left_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_endpoint_indices": [
+                  [
+                    6,
+                    7
+                  ],
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "lower_right_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_endpoint_indices": [
+                  [
+                    0,
+                    1
+                  ],
+                  [
+                    2,
+                    3
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ]
+          },
+          {
+            "index": 1,
+            "node_type": "derived_pair_knot_not_semantic_corner",
+            "upper_curve_turn": true,
+            "lower_curve_turn": true,
+            "coincident_source_longitudes": [
+              {
+                "id": "small",
+                "worker": "small",
+                "pair_index": 1
+              },
+              {
+                "id": "large",
+                "worker": "large",
+                "pair_index": 1
+              }
+            ],
+            "longitude_coincidence_is_not_point_correspondence": true,
+            "upper_left_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_endpoint_indices": [
+                  [
+                    0,
+                    1
+                  ],
+                  [
+                    2,
+                    3
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "upper_right_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_endpoint_indices": [
+                  [
+                    2,
+                    3
+                  ],
+                  [
+                    4,
+                    5
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "lower_left_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_endpoint_indices": [
+                  [
+                    0,
+                    1
+                  ],
+                  [
+                    2,
+                    3
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "lower_right_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_endpoint_indices": [
+                  [
+                    2,
+                    3
+                  ],
+                  [
+                    4,
+                    5
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ]
+          },
+          {
+            "index": 2,
+            "node_type": "derived_pair_knot_not_semantic_corner",
+            "upper_curve_turn": true,
+            "lower_curve_turn": true,
+            "coincident_source_longitudes": [
+              {
+                "id": "small",
+                "worker": "small",
+                "pair_index": 2
+              },
+              {
+                "id": "large",
+                "worker": "large",
+                "pair_index": 2
+              }
+            ],
+            "longitude_coincidence_is_not_point_correspondence": true,
+            "upper_left_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_endpoint_indices": [
+                  [
+                    2,
+                    3
+                  ],
+                  [
+                    4,
+                    5
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "upper_right_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_endpoint_indices": [
+                  [
+                    4,
+                    5
+                  ],
+                  [
+                    6,
+                    7
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "lower_left_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_endpoint_indices": [
+                  [
+                    2,
+                    3
+                  ],
+                  [
+                    4,
+                    5
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "lower_right_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_endpoint_indices": [
+                  [
+                    4,
+                    5
+                  ],
+                  [
+                    6,
+                    7
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ]
+          },
+          {
+            "index": 3,
+            "node_type": "derived_pair_knot_not_semantic_corner",
+            "upper_curve_turn": true,
+            "lower_curve_turn": true,
+            "coincident_source_longitudes": [
+              {
+                "id": "small",
+                "worker": "small",
+                "pair_index": 3
+              },
+              {
+                "id": "large",
+                "worker": "large",
+                "pair_index": 3
+              }
+            ],
+            "longitude_coincidence_is_not_point_correspondence": true,
+            "upper_left_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_endpoint_indices": [
+                  [
+                    4,
+                    5
+                  ],
+                  [
+                    6,
+                    7
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "upper_right_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_endpoint_indices": [
+                  [
+                    6,
+                    7
+                  ],
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "lower_left_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_endpoint_indices": [
+                  [
+                    4,
+                    5
+                  ],
+                  [
+                    6,
+                    7
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "lower_right_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_endpoint_indices": [
+                  [
+                    6,
+                    7
+                  ],
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ]
+          }
+        ],
+        "equivalent_bev_threshold": 1,
+        "points": [
+          [
+            128.0,
+            200.61519463967093
+          ],
+          [
+            128.0,
+            311.3848053603291
+          ],
+          [
+            384.0,
+            200.61519463967093
+          ],
+          [
+            384.0,
+            311.3848053603291
+          ],
+          [
+            640.0,
+            200.61519463967093
+          ],
+          [
+            640.0,
+            311.3848053603291
+          ],
+          [
+            896.0,
+            200.61519463967093
+          ],
+          [
+            896.0,
+            311.3848053603291
+          ]
+        ],
+        "footprint": [
+          [
+            -1.9999999999999998,
+            1.9999999999999993
+          ],
+          [
+            -1.9999999999999993,
+            -1.9999999999999998
+          ],
+          [
+            1.9999999999999993,
+            -1.9999999999999998
+          ],
+          [
+            1.9999999999999998,
+            1.9999999999999993
+          ]
+        ],
+        "pair_count": 4,
+        "ring_confirmed": false,
+        "representation": "paired_boundary_knots_not_semantic_corners",
+        "connections": [
+          {
+            "pair_indices": [
+              0,
+              1
+            ],
+            "kind": "straight_3d_edge_projective_arc"
+          },
+          {
+            "pair_indices": [
+              1,
+              2
+            ],
+            "kind": "straight_3d_edge_projective_arc"
+          },
+          {
+            "pair_indices": [
+              2,
+              3
+            ],
+            "kind": "straight_3d_edge_projective_arc"
+          },
+          {
+            "pair_indices": [
+              3,
+              0
+            ],
+            "kind": "straight_3d_edge_projective_arc"
+          }
+        ],
+        "provenance_intervals": [
+          {
+            "lo": 0.0,
+            "hi": 0.7853981633974483,
+            "coeff": [
+              [
+                -1.110223024625156e-16,
+                0.4999999999999999
+              ],
+              [
+                9.197388681172374e-17,
+                -0.5000000000000002
+              ]
+            ],
+            "top_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_endpoint_indices": [
+                  [
+                    6,
+                    7
+                  ],
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "bottom_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_endpoint_indices": [
+                  [
+                    6,
+                    7
+                  ],
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ]
+          },
+          {
+            "lo": 0.7853981633974483,
+            "hi": 2.356194490192345,
+            "coeff": [
+              [
+                0.4999999999999999,
+                5.5511151231257815e-17
+              ],
+              [
+                -0.5000000000000002,
+                -5.551115123125785e-17
+              ]
+            ],
+            "top_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_endpoint_indices": [
+                  [
+                    0,
+                    1
+                  ],
+                  [
+                    2,
+                    3
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "bottom_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_pair_indices": [
+                  0,
+                  1
+                ],
+                "source_endpoint_indices": [
+                  [
+                    0,
+                    1
+                  ],
+                  [
+                    2,
+                    3
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ]
+          },
+          {
+            "lo": 2.356194490192345,
+            "hi": 3.9269908169872414,
+            "coeff": [
+              [
+                8.802883075958471e-17,
+                -0.49999999999999983
+              ],
+              [
+                -1.244915663400506e-16,
+                0.5000000000000001
+              ]
+            ],
+            "top_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_endpoint_indices": [
+                  [
+                    2,
+                    3
+                  ],
+                  [
+                    4,
+                    5
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "bottom_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_pair_indices": [
+                  1,
+                  2
+                ],
+                "source_endpoint_indices": [
+                  [
+                    2,
+                    3
+                  ],
+                  [
+                    4,
+                    5
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ]
+          },
+          {
+            "lo": 3.9269908169872414,
+            "hi": 5.497787143782138,
+            "coeff": [
+              [
+                -0.49999999999999983,
+                -8.326672684688672e-17
+              ],
+              [
+                0.5000000000000001,
+                8.326672684688678e-17
+              ]
+            ],
+            "top_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_endpoint_indices": [
+                  [
+                    4,
+                    5
+                  ],
+                  [
+                    6,
+                    7
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "bottom_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_pair_indices": [
+                  2,
+                  3
+                ],
+                "source_endpoint_indices": [
+                  [
+                    4,
+                    5
+                  ],
+                  [
+                    6,
+                    7
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ]
+          },
+          {
+            "lo": 5.497787143782138,
+            "hi": 6.283185307179586,
+            "coeff": [
+              [
+                -1.110223024625156e-16,
+                0.4999999999999999
+              ],
+              [
+                9.197388681172374e-17,
+                -0.5000000000000002
+              ]
+            ],
+            "top_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_endpoint_indices": [
+                  [
+                    6,
+                    7
+                  ],
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ],
+            "bottom_sources": [
+              {
+                "id": "large",
+                "worker": "large",
+                "edge_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_pair_indices": [
+                  3,
+                  0
+                ],
+                "source_endpoint_indices": [
+                  [
+                    6,
+                    7
+                  ],
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "source_ring_confirmed": false,
+                "source_order_status": "synthetic_known_order"
+              }
+            ]
+          }
+        ],
+        "source_pair_residuals": [
+          {
+            "id": "small",
+            "worker": "small",
+            "pair_index": 0,
+            "source_points": [
+              [
+                128.0,
+                155.6924026801645
+              ],
+              [
+                128.0,
+                356.3075973198355
+              ]
+            ],
+            "generated_top_y": 200.61519463967093,
+            "generated_bottom_y": 311.3848053603291,
+            "source_minus_generated_top_px": -44.92279195950644,
+            "source_minus_generated_bottom_px": 44.92279195950641
+          },
+          {
+            "id": "small",
+            "worker": "small",
+            "pair_index": 1,
+            "source_points": [
+              [
+                384.0,
+                155.6924026801645
+              ],
+              [
+                384.0,
+                356.3075973198355
+              ]
+            ],
+            "generated_top_y": 200.61519463967093,
+            "generated_bottom_y": 311.3848053603291,
+            "source_minus_generated_top_px": -44.92279195950644,
+            "source_minus_generated_bottom_px": 44.92279195950641
+          },
+          {
+            "id": "small",
+            "worker": "small",
+            "pair_index": 2,
+            "source_points": [
+              [
+                640.0,
+                155.6924026801645
+              ],
+              [
+                640.0,
+                356.3075973198355
+              ]
+            ],
+            "generated_top_y": 200.61519463967093,
+            "generated_bottom_y": 311.3848053603291,
+            "source_minus_generated_top_px": -44.92279195950644,
+            "source_minus_generated_bottom_px": 44.92279195950641
+          },
+          {
+            "id": "small",
+            "worker": "small",
+            "pair_index": 3,
+            "source_points": [
+              [
+                896.0,
+                155.6924026801645
+              ],
+              [
+                896.0,
+                356.3075973198355
+              ]
+            ],
+            "generated_top_y": 200.61519463967093,
+            "generated_bottom_y": 311.3848053603291,
+            "source_minus_generated_top_px": -44.92279195950644,
+            "source_minus_generated_bottom_px": 44.92279195950641
+          },
+          {
+            "id": "large",
+            "worker": "large",
+            "pair_index": 0,
+            "source_points": [
+              [
+                128.0,
+                200.61519463967093
+              ],
+              [
+                128.0,
+                311.3848053603291
+              ]
+            ],
+            "generated_top_y": 200.61519463967093,
+            "generated_bottom_y": 311.3848053603291,
+            "source_minus_generated_top_px": 0.0,
+            "source_minus_generated_bottom_px": 0.0
+          },
+          {
+            "id": "large",
+            "worker": "large",
+            "pair_index": 1,
+            "source_points": [
+              [
+                384.0,
+                200.61519463967093
+              ],
+              [
+                384.0,
+                311.3848053603291
+              ]
+            ],
+            "generated_top_y": 200.61519463967093,
+            "generated_bottom_y": 311.3848053603291,
+            "source_minus_generated_top_px": 0.0,
+            "source_minus_generated_bottom_px": 0.0
+          },
+          {
+            "id": "large",
+            "worker": "large",
+            "pair_index": 2,
+            "source_points": [
+              [
+                640.0,
+                200.61519463967093
+              ],
+              [
+                640.0,
+                311.3848053603291
+              ]
+            ],
+            "generated_top_y": 200.61519463967093,
+            "generated_bottom_y": 311.3848053603291,
+            "source_minus_generated_top_px": 0.0,
+            "source_minus_generated_bottom_px": 0.0
+          },
+          {
+            "id": "large",
+            "worker": "large",
+            "pair_index": 3,
+            "source_points": [
+              [
+                896.0,
+                200.61519463967093
+              ],
+              [
+                896.0,
+                311.3848053603291
+              ]
+            ],
+            "generated_top_y": 200.61519463967093,
+            "generated_bottom_y": 311.3848053603291,
+            "source_minus_generated_top_px": 0.0,
+            "source_minus_generated_bottom_px": 0.0
+          }
+        ],
+        "source_record_ids": [
+          "small",
+          "large"
+        ],
+        "source_workers": [
+          "small",
+          "large"
+        ],
+        "shared_top_bottom_donor_longitude_fraction": 1.0,
+        "different_top_bottom_donor_longitude_fraction": 0.0,
+        "height_proxy": [
+          0.9999999999999994,
+          0.9999999999999994,
+          0.9999999999999994,
+          0.9999999999999994
+        ],
+        "bottom_xyz": [
+          [
+            -1.9999999999999998,
+            -1.0,
+            1.9999999999999993
+          ],
+          [
+            -1.9999999999999993,
+            -1.0,
+            -1.9999999999999998
+          ],
+          [
+            1.9999999999999993,
+            -1.0,
+            -1.9999999999999998
+          ],
+          [
+            1.9999999999999998,
+            -1.0,
+            1.9999999999999993
+          ]
+        ],
+        "top_xyz": [
+          [
+            -1.9999999999999996,
+            0.9999999999999994,
+            1.9999999999999993
+          ],
+          [
+            -1.9999999999999993,
+            0.9999999999999994,
+            -1.9999999999999996
+          ],
+          [
+            1.9999999999999993,
+            0.9999999999999994,
+            -1.9999999999999996
+          ],
+          [
+            1.9999999999999996,
+            0.9999999999999994,
+            1.9999999999999993
+          ]
+        ],
+        "roof_interior": "not_observed_not_assumed",
+        "max_serialization_error_px": 0.0,
+        "geometry_valid": true,
+        "camera_inside": true,
+        "numerical_epsilon_radians": 2e-11,
+        "uncertainty": "Conditional vote result; no semantic correspondence, common ceiling or unique scene claim. All raw events preserved."
+      }
+    },
+    "failures": [],
+    "source_order_modified": false,
+    "gt_used": false,
+    "evidence_kind": "synthetic_control",
+    "status": "ok_conditional_representation",
+    "atomic_intervals": 5,
+    "minimum_atomic_width_rad": 0.7853981633974483,
+    "bev_mv50_complete_method": "mv_strict"
+  },
+  "erp_mv50_vs_bev_mv50_iou": 0.2499999999999999
+}

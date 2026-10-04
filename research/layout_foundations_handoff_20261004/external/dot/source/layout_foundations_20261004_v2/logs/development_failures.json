@@ -1,0 +1,39 @@
+[
+  {
+    "stage": "raw_download",
+    "status": "unavailable",
+    "reason": "container DNS/network could not fetch GitHub; connector text excerpts used"
+  },
+  {
+    "stage": "source_AGENTS",
+    "status": "not_found",
+    "path": "AGENTS.md",
+    "meaning": "not read; not assumed to exist"
+  },
+  {
+    "stage": "initial_arc_code",
+    "status": "fixed",
+    "reason": "machine-sized holes at shared half-open endpoints from wrapped span arithmetic",
+    "fix": "reuse identical stored endpoint; regression test exact knot evaluation"
+  },
+  {
+    "stage": "paper_screenshots",
+    "status": "unavailable",
+    "reason": "web screenshot cache miss; paper text read, paper figures not visually inspected"
+  },
+  {
+    "stage": "viewer_initial_browser",
+    "status": "environment",
+    "reason": "Playwright bundled browser missing; system Chromium used"
+  },
+  {
+    "stage": "viewer_file_url",
+    "status": "environment",
+    "reason": "file navigation blocked in runtime; identical HTML tested with page.set_content"
+  },
+  {
+    "stage": "plot_first_save",
+    "status": "environment_fixed",
+    "reason": "new figure directory was not writable by user-visible Python; permission changed only for generated directory and plot rerun"
+  }
+]
