@@ -1,0 +1,58 @@
+LOCAL REVIEW RUN LOG (sanitized aggregate; no source data)
+Repository: D:\Work\HOHONET
+Remote origin: https://github.com/Sparkling-Flames/3D_Manhattan_label.git
+HEAD start/end: 61ad4c61564572793f76e1872d307b688bdad4ab
+Branch: main
+origin/main: 017f3056a9d5bf889c257378403783bf023b3a70
+Status at start and end: identical; see full status below.
+
+Command: python -B -m pytest -p no:cacheprovider tests/test_layout_reliability_20261005.py tests/test_local_structure_deletion_20261005.py -q
+Output: ......... [100%]; 9 passed in 0.94s
+
+Command: python -B -m tools.thesis_main.analysis.repair_layout_reliability_20261005 --out C:\Users\ASUS\Documents\Codex\2026-10-05\task\review_output\reliability
+Exit: 0
+Sanitized key output: 26 diagnostics; 24 compression states; 57 interval donor checks; 1 witness interval file structure changed; max self-envelope violation 3.3306690738754696e-16 h; max aggregate difference 5.829114968491922e-12; compressed-height findings unchanged; GT read false; source files changed false.
+
+Command: python -B -m tools.thesis_main.analysis.local_structure_deletion_20261005 --out C:\Users\ASUS\Documents\Codex\2026-10-05\task\review_output\deletion
+Exit: 0
+Sanitized key output: 5 sources; 56 candidates (5 original + 51 single-pair deletions); 50 deletion polygons valid; 1 invalid retained; 48 deletion candidates camera-inside; strict edge-donor matches 0; exact whole-encoding matches 0; GT read false; source mutation false.
+
+Command: python -B -m pytest -p no:cacheprovider tests/test_panorama_studio.py tests/test_layout_foundation_20260930.py tests/test_layout_metric_probe_20260926.py -q
+Output: ................................... [100%]; 35 passed in 5.29s
+
+Command: node tests/panorama_studio_order_browser.cjs --geometry-only --source
+Output: {"passed":true,"checks":["3D wall-top boundary retained on reordered cap","declared continuous/pixel_center import, reprojection and actual canvas overlay agree"]}
+Nature: Playwright-driven headless Chromium smoke test with SwiftShader and temporary synthetic fixture; no screenshot or human visual inspection.
+
+Command: git diff --check
+Output: (no output)
+
+Git status --short --branch at start and end (identical):
+## main...origin/main [ahead 2]
+ M analysis_results/research_input_20260929/README.md
+ M docs/PROJECT_MAP_CLEAN_20260308.md
+ M docs/README_INDEX.md
+ M docs/thesis_main/布局表示地基与坐标核验_20260930.md
+ M research/pro_layout_20260929/MANIFEST.json
+ M research/pro_layout_20260929/README.md
+ M tests/panorama_studio_order_browser.cjs
+ M tests/test_layout_foundation_20260930.py
+ M tests/test_layout_metric_probe_20260926.py
+ M tests/test_panorama_studio.py
+ M tools/label_studio/panorama_studio/build.py
+ M tools/label_studio/panorama_studio/geometry.py
+ M tools/label_studio/panorama_studio/studio.js
+ M tools/thesis_main/analysis/layout_foundation_20260930.py
+ M tools/thesis_main/analysis/layout_metric_probe_20260926.py
+ M tools/thesis_main/data_prep/consolidate_research_input.py
+ M tools/thesis_main/data_prep/project_public_research_20260929.py
+?? analysis_results/layout_3d_quality_probe_20261002/
+?? analysis_results/layout_metric_response_20261001/
+?? tests/test_layout_3d_quality_probe_20261002.py
+?? tests/test_layout_metric_response_20261001.py
+?? tests/test_verify_layout_metric_snapshot_20261001.py
+?? tools/thesis_main/analysis/layout_3d_quality_probe_20261002.py
+?? tools/thesis_main/analysis/layout_metric_response_20261001.py
+?? tools/thesis_main/analysis/verify_layout_metric_snapshot_20261001.py
+
+No repository file was modified. Review output was written outside the repository.

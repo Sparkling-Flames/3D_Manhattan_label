@@ -1,5 +1,7 @@
 # 共识可靠性返回：原件与本地修复入口
 
+2026-10-05接续：已接收[dot本地复核](dot_local_review/LOCAL_REVIEW_ZH.md)，并完成[局部路径证据与下一轮并行交接](../local_shortcut_handoff_20261005/README.md)。新诊断未改本页所记原修复结果。
+
 本目录的`pro_original/`是10月5日Pro返回的数值精选归档，原文件逐字节复制。目录包含源代码、四图输入、分离GT、数值结果、24项测试、报告和执行日志；未收录已渲染的HTML与图像。明细见[archive_receipt.json](archive_receipt.json)。原报告中的渲染页面／图像链接及原`verify_delivery.py`的完整包验收需要Downloads中的完整交付包，不能拿精选归档冒充完整包。
 
 - [独立审查](../../analysis_results/layout_reliability_review_20261005/REPORT.md)：两个缺陷及作用范围，输入绑定和指标排序补查。

@@ -1,0 +1,40 @@
+{
+  "schema": "panorama_layout_local_review_summary_v1",
+  "input_rosters": {
+    "per_image_record_counts": [3, 24, 24, 15],
+    "annotation_record_total": 66,
+    "distinct_worker_ids_across_images": 24,
+    "duplicate_worker_ids_within_each_image": false
+  },
+  "reliability_recomputation": {
+    "diagnostics_recomputed": 26,
+    "compression_states": 24,
+    "interval_donor_checks": 57,
+    "witness_interval_structures_changed": 1,
+    "max_self_envelope_violation_h": 3.3306690738754696e-16,
+    "max_aggregate_absolute_difference": 5.829114968491922e-12,
+    "aggregate_comparison_tolerance": 1e-10,
+    "compressed_height_findings_unchanged": true,
+    "gt_read": false,
+    "source_files_changed": false
+  },
+  "local_structure_deletion_recomputation": {
+    "source_records": 5,
+    "candidate_total": 56,
+    "single_pair_deletion_candidates": 51,
+    "valid_deletion_polygons": 50,
+    "invalid_deletion_polygons_retained": 1,
+    "camera_inside_deletion_candidates": 48,
+    "strict_endpoint_edge_donor_matches": 0,
+    "strict_whole_encoding_matches": 0,
+    "gt_read": false,
+    "source_mutation": false,
+    "detail_protection_policy": "not_run_missing_local_evidence"
+  },
+  "test_results": {
+    "reliability_and_deletion_pytest": "9 passed",
+    "panorama_studio_and_geometry_pytest": "35 passed",
+    "playwright_headless_chromium_geometry_smoke": "passed; no screenshot or manual visual review",
+    "git_diff_check": "passed"
+  }
+}

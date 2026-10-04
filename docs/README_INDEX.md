@@ -30,6 +30,7 @@
 
 ## 当前研究与探索
 
+- [局部跨接证据与Pro并行交接](../research/local_shortcut_handoff_20261005/README.md)：51操作单经度回投、两个原图窗口、dot复核及有限路径候选深研；仍未自动裁决删除。
 - [共识可靠性修复与局部候选执行](../research/layout_reliability_20261005/README.md)：两处修复、26份诊断复算、33项相关测试；[51个真实局部删除](../analysis_results/local_structure_deletion_20261005/REPORT.md)与[候选计划](thesis_main/空间候选构造_局部删改试验_20261005.md)，不等同完整多人重组。
 
 - [10月5日Pro共识可靠性返回独立审查](../analysis_results/layout_reliability_review_20261005/REPORT.md)：66份输入与四GT源绑定、24测试、两个实现缺陷及真实影响核验；补查17个小差排序，保留减法空间候选的独立目标。

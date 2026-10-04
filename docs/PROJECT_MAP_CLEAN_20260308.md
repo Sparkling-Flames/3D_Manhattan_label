@@ -4,6 +4,7 @@
 
 ## 当前入口
 
+- [局部跨接证据与Pro并行交接](../research/local_shortcut_handoff_20261005/README.md)：`local_shortcut_projection_20261005.py`和`local_shortcut_figures_20261005.py`；结果在`analysis_results/local_shortcut_projection_20261005/`及`local_shortcut_evidence_20261005/`，含51操作回投、两图证据、dot复核和有限候选深研资料。
 - [共识可靠性修复与空间候选执行](../research/layout_reliability_20261005/README.md)：原件精选归档、本地修复模块`tools/thesis_main/analysis/layout_reliability_20261005/`，定向复算及单点对删除入口；结果分别在`analysis_results/layout_reliability_fixed_20261005/`与`local_structure_deletion_20261005/`。
 
 - [10月5日Pro共识可靠性返回独立审查](../analysis_results/layout_reliability_review_20261005/REPORT.md)：源绑定、包络与来源缺陷、排序补查及减法候选下一步；外部原件和运行算法未改。

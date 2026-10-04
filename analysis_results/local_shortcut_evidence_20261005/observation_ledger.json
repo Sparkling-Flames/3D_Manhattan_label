@@ -1,0 +1,47 @@
+{
+  "schema": "local_shortcut_observation_ledger_v1",
+  "reviewer": "Codex image inspection; not independent human adjudication",
+  "coordinate_convention": "continuous_1024x512",
+  "gt_read": false,
+  "source_mutation": false,
+  "observations": [
+    {
+      "image": "rPc6DW4iMge-06",
+      "record": "R01557",
+      "removed_source_pair_index": 6,
+      "anchor_source_pair_indices": [
+        5,
+        7
+      ],
+      "figure": "figures/R01557_delete_source_6.png",
+      "visible_context": "门洞侧部墙顶饰线与墙底路径；两种声明投影存在可见偏差",
+      "unresolved": [
+        "点对6是否独立实体墙角",
+        "饰线、门洞及遮挡应怎样定义保留路径",
+        "锚点5和7的同一墙面解释"
+      ],
+      "decision": "undetermined",
+      "protection_label": null,
+      "observed_pixel_disagreement_is_semantic_error": false
+    },
+    {
+      "image": "uNb9QFRL6hY-67",
+      "record": "R02928",
+      "removed_source_pair_index": 3,
+      "anchor_source_pair_indices": [
+        1,
+        4
+      ],
+      "figure": "figures/R02928_delete_source_3.png",
+      "visible_context": "上点靠近玻璃外浴室墙顶变化处；下点在浴缸遮挡附近；跨接大幅偏离原路径",
+      "unresolved": [
+        "下点是否代表被遮挡墙脚或其他高度",
+        "原两段路径的完整范围与墙面解释",
+        "跨玻璃内外的两个锚点是否应直接连接"
+      ],
+      "decision": "undetermined",
+      "protection_label": null,
+      "observed_pixel_disagreement_is_semantic_error": false
+    }
+  ]
+}
