@@ -1,0 +1,20 @@
+{
+  "schema": "point_route_panel_plan_v1",
+  "date": "2026-10-05",
+  "status": "fixed_before_new_outputs_and_reference_evaluation",
+  "images": ["2t7WUuJeko7-06", "7y3sRwLe3Va-04", "rPc6DW4iMge-06", "uNb9QFRL6hY-67"],
+  "selection_reason": "reuse the four complete Pro reliability pools; two ordinary and two complex-ring development cases, not a blind sample",
+  "expected_records": 66,
+  "thresholds_deg": [1, 2.5, 5, 7.5, 10],
+  "threshold_role": "exploratory sensitivity grid only; 5 degrees is a demonstration value, no best threshold or calibration claimed",
+  "routes": ["paired", "bottom_anchor", "top_anchor", "split_unique"],
+  "vote_rule": "at_least_half_of_all_current_records; one worker at most once per endpoint identity",
+  "center_rule": "unchanged pair-distance-medoid anchored periodic x and endpoint coordinate medians; no GT fitting",
+  "hybrid_scope": "single endpoint establishes identity; original paired partners estimate the other end; both symmetric anchors reported, no adaptive winner selection",
+  "split_pairing": "threshold top/bottom identity supports separately; selected identity bipartite graph uses original pair incidence; output complete pairs only if graph is one-to-one with no isolated selected identity; do not demand joint majority",
+  "split_x": "shortest-periodic midpoint of matched endpoint centers; record each output adjustment; half-turn ambiguity unavailable; no source preprocessing changes",
+  "connection": "reuse exploratory center-x ring and original adjacency diagnostics; generated rings unconfirmed, complex source rings not reordered",
+  "synthetic_controls": ["top_dispersion", "bottom_dispersion", "marginal_joint_vote_counterexample"],
+  "evaluation": "save all constructed candidates before reading fixed original references; report BEV plus upper/lower continuous longitude differences where applicable, failures and unavailable metrics explicitly",
+  "not_done": ["optimal threshold calibration", "general adaptive hybrid", "two-versus-three local path fusion", "physical corner certification", "general topology recovery", "holdout generalization", "person classification or number-curve expansion"]
+}

@@ -1,0 +1,12 @@
+{
+  "revision": "point_route_review_v2",
+  "base_plan": "analysis_results/point_route_panel_20261005/PLAN.json",
+  "fixed_changes": [
+    "retain complete observed identity cycles without selecting largest support",
+    "retain isolated paired components and every unresolved selected endpoint",
+    "separate source-only human review from method and reference disclosure"
+  ],
+  "threshold_policy": "1, 2.5, 5, 7.5, 10 degrees remain exploratory; 5 is a demonstration, not calibrated",
+  "evaluation_scope": "evaluations.json evaluates the unchanged x-order baseline only; not observed-order alternatives or partial pairs",
+  "semantic_answers": "pending human review; no automatic corner or boundary certification"
+}

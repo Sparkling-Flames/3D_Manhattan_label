@@ -4,7 +4,7 @@ import json
 import pytest
 
 from tools.thesis_main.analysis.global_pair_consensus_20261004 import (
-    build_global_pair_consensus, build_global_pair_consensuses,
+    _identities, build_global_pair_consensus, build_global_pair_consensuses,
 )
 
 
@@ -12,6 +12,25 @@ def record(worker, xs, offset=0):
     return dict(id='R'+str(worker), worker='P'+str(worker),
                 points=[[float((x+offset)%1024), y] for x in xs for y in (120., 390.)],
                 source_pair_indices=list(range(len(xs))), order_status='human_confirmed', ring_confirmed=True)
+
+
+def test_single_endpoint_matching_preserves_full_pair_diameter_and_inputs():
+    rows=[record(i,[128,384,640,896]) for i in range(3)]
+    for row,y in zip(rows,(80.,120.,160.)):
+        for point in row['points'][::2]:point[1]=y
+    for side in ('bottom','top'):
+        before=copy.deepcopy(rows)
+        paired=_identities(rows,1.)[0]
+        groups=_identities(rows,1.,match_side=side)[0]
+        assert rows==before
+        assert len(paired)==12 and all(g['support']==1 for g in paired)
+        assert all('maximum_match_angle_deg' not in g for g in paired)
+        assert len(groups)==4 and all(g['support']==3 for g in groups)
+        assert all(g['maximum_match_angle_deg']==pytest.approx(0.,abs=2e-6) for g in groups)
+        assert all(g['maximum_pair_angle_deg']>1. for g in groups)
+        # Swap endpoint roles by reflecting vertically, preserving valid top/bottom order.
+        rows=[dict(r,points=[[x,512.-y] for pair in zip(r['points'][::2],r['points'][1::2])
+                            for x,y in reversed(pair)]) for r in rows]
 
 
 def test_all_people_cross_point_counts_majority_tie_and_provenance():

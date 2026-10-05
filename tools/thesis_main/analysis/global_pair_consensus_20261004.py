@@ -21,7 +21,7 @@ from .union_branch_consensus_20260926 import _ring_key
 SCHEMA = 'global_pair_consensus_20261004_v1'
 
 
-def _identities(records, threshold):
+def _identities(records, threshold, match_side=None):
     if any(not {'id','worker','points'}<=r.keys() for r in records):
         raise ValueError('missing_annotation_fields')
     rows=sorted(records,key=lambda r:(str(r['worker']),str(r['id'])))
@@ -55,7 +55,10 @@ def _identities(records, threshold):
     if not nodes:return [],assignments,issues,correspondence
     p=np.array([v['pair'] for v in nodes])
     # angular is the existing pixel-centre formula; C-.5 only in memory makes it continuous ERP.
-    distance=np.maximum(angular(p[:,0]-.5,p[:,0]-.5),angular(p[:,1]-.5,p[:,1]-.5))
+    top_distance=angular(p[:,0]-.5,p[:,0]-.5)
+    bottom_distance=angular(p[:,1]-.5,p[:,1]-.5)
+    pair_distance=np.maximum(top_distance,bottom_distance)
+    distance=pair_distance if match_side is None else {'top':top_distance,'bottom':bottom_distance}[match_side]
     workers=np.array([str(v['record']['worker']) for v in nodes])
     constrained=distance.copy()
     constrained[workers[:,None]==workers[None,:]]=181.
@@ -75,7 +78,7 @@ def _identities(records, threshold):
     ordered=sorted(set(labels),key=lambda label:int(np.flatnonzero(labels==label)[0]))
     for number,label in enumerate(ordered,1):
         indices=np.flatnonzero(labels==label)
-        local=distance[np.ix_(indices,indices)]
+        local=pair_distance[np.ix_(indices,indices)]
         anchor=int(indices[int(np.argmin(local.sum(axis=1)))])
         xs=(p[indices,0,0]-p[anchor,0,0]+512)%1024-512
         ambiguous=bool(np.ptp(xs)>=512-1e-9 or np.any(abs(abs(xs)-512)<1e-9))
@@ -97,6 +100,8 @@ def _identities(records, threshold):
             members=members,center=center,center_status='ambiguous_periodic_center' if ambiguous else 'ok',
             maximum_pair_angle_deg=float(local.max()),center_anchor=dict(id=nodes[anchor]['record']['id'],
             pair_index=nodes[anchor]['pair_index'])))
+        if match_side is not None:
+            groups[-1]['maximum_match_angle_deg']=float(distance[np.ix_(indices,indices)].max())
     ambiguous_nodes=set()
     for i,node in enumerate(nodes):
         alternatives=defaultdict(list)

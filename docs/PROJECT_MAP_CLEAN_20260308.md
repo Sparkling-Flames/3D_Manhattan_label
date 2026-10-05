@@ -1,8 +1,14 @@
 # HOHONET 项目地图
 
+2026-10-06发布交接入口：[Pro对应替代与上下目标分离任务](../research/point_route_review_20261006/README.md)；具体历史段落的“未提交”记录保留，当前发布范围以此入口及Git清单为准。
+
 更新：2026-10-03。规范版本 `consensus_research_20260923_v1`，唯一当前方法真源为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`。本地图只说明位置与用途，不定义方法、资格或阈值。
 
 ## 当前入口
+
+- [四图点融合路线与阈值探索](../analysis_results/point_route_panel_20261005/REPORT.md)：独立探索工具`point_route_panel_20261005.py`与`point_route_panel_view_20261005.py`；绑定、上下锚定及独立对应小面板，阈值未校准，新环未确认。
+- [点路线修订与原图核验](../analysis_results/point_route_review_20261006/REPORT.md)：独立探索工具`point_route_review_20261006.py`与`point_route_review_view_20261006.py`；[人工核验页](../analysis_results/point_route_review_20261006/review.html)、[方法对照页](../analysis_results/point_route_review_20261006/index.html)，完整源身份环备选与未决端点保留，5°仅演示。
+- [人工判断真源](../research/point_route_review_20261006/human_review.json)：保留原话与纠错；analysis_results仅为发布副本。现有点路线工具`--stage audit`可重生对应审计，独立探索，目标政策未定。
 
 - [Lee底边表示与用途验收](../analysis_results/lee_boundary_usability_20261005/REPORT.md)：已有区域及底点摘录、回投数值与UI核验；显示改动在`consensus_result_studio_20261004.js`，不改Lee投票。
 - [局部跨接证据与Pro并行交接](../research/local_shortcut_handoff_20261005/README.md)：`local_shortcut_projection_20261005.py`和`local_shortcut_figures_20261005.py`；结果在`analysis_results/local_shortcut_projection_20261005/`及`local_shortcut_evidence_20261005/`，含51操作回投、两图证据、dot复核和有限候选深研资料。

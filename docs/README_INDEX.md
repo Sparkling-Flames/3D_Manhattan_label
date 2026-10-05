@@ -1,5 +1,7 @@
 # HOHONET 文档入口
 
+2026-10-06发布交接入口：[Pro对应替代与上下目标分离任务](../research/point_route_review_20261006/README.md)；具体历史段落的“未提交”记录保留，当前发布范围以此入口及Git清单为准。
+
 <!-- CURRENT_RESEARCH: consensus_research_20260923_v1 -->
 当前研究规范为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`，版本 `consensus_research_20260923_v1`。当前优先核清连线／空间表示、分项质量评价和完整共识；Lee区域投票与上下点融合并行。已有136图人数曲线、人员画像及组合实验保留，人员分类、难度联系与同房预测后移。
 
@@ -29,6 +31,10 @@
 - [二审归并](../analysis_results/review_reconciliation_20260925/README.md)、[定向补审](../analysis_results/review_return_20260927/index.html)、[初始清查](../analysis_results/consensus_visual_review_20260923/index.html)。这些页面对应不同阶段，以最新台账解释状态。
 
 ## 当前研究与探索
+
+- [四图点融合路线与阈值探索](../analysis_results/point_route_panel_20261005/REPORT.md)：独立探索工具`point_route_panel_20261005.py`与`point_route_panel_view_20261005.py`；绑定、上下锚定及独立对应小面板，阈值未校准，新环未确认。
+- [点路线修订与原图核验](../analysis_results/point_route_review_20261006/REPORT.md)：独立探索工具`point_route_review_20261006.py`与`point_route_review_view_20261006.py`；[人工核验页](../analysis_results/point_route_review_20261006/review.html)、[方法对照页](../analysis_results/point_route_review_20261006/index.html)，完整源身份环备选与未决端点保留，5°仅演示。
+- [人工判断真源](../research/point_route_review_20261006/human_review.json)：保留原话与纠错；analysis_results仅为发布副本。现有点路线工具`--stage audit`可重生对应审计，独立探索，目标政策未定。
 
 - [Lee底边节点及后续用途](../analysis_results/lee_boundary_usability_20261005/REPORT.md)：现有四图八输出回投验收、工作台节点开关；区域比较与完整上下标注分开。
 - [局部跨接证据与Pro并行交接](../research/local_shortcut_handoff_20261005/README.md)：51操作单经度回投、两个原图窗口、dot复核及有限路径候选深研；仍未自动裁决删除。
