@@ -90,15 +90,15 @@ def triangulate(points):
         for k,b in enumerate(ids):
             a,c=ids[k-1],ids[(k+1)%len(ids)]
             turn=cross(p[b]-p[a],p[c]-p[b])
-            if abs(turn)<=eps:
-                ids.pop(k); found=True; break
-            if turn<0: continue
+            # XZ 共线不代表 3D 墙顶共线；不能删除原始边界端点。
+            if turn<=eps: continue
             def inside(j):
                 return min(cross(p[b]-p[a],p[j]-p[a]),cross(p[c]-p[b],p[j]-p[b]),
                            cross(p[a]-p[c],p[j]-p[c]))>=-eps
             if any(inside(j) for j in ids if j not in {a,b,c}): continue
             triangles.append([a,b,c]); ids.pop(k); found=True; break
         if not found: return []
+    if cross(p[ids[1]]-p[ids[0]],p[ids[2]]-p[ids[1]])<=eps: return []
     triangles.append(ids)
     return triangles
 
@@ -209,7 +209,14 @@ def fit_manhattan(floor,ceiling,pairs,w,h,frame, *, coordinate_convention="conti
             "axis_assignment":direction.tolist(),"iterations":int(result.nit)}
 
 
-def analyze(payload, *, compute_fit=True, coordinate_convention="continuous"):
+def analyze(payload, *, compute_fit=True, coordinate_convention=None):
+    declared=payload.get("coordinate_convention")
+    if declared is not None and coordinate_convention is not None and declared!=coordinate_convention:
+        raise ValueError("coordinate_convention_conflict")
+    source=("payload_and_argument" if declared is not None and coordinate_convention is not None else
+            "payload" if declared is not None else "argument" if coordinate_convention is not None else
+            "assumed_unverified_default")
+    if coordinate_convention is None: coordinate_convention=declared if declared is not None else "continuous"
     if coordinate_convention not in {"continuous", "pixel_center"}:
         raise ValueError("unknown_coordinate_convention")
     w,h,pairs=normalize(payload,coordinate_convention=coordinate_convention)
@@ -260,7 +267,12 @@ def analyze(payload, *, compute_fit=True, coordinate_convention="continuous"):
             'declared_column_wall_band':dict(status='unavailable' if wall_reason else 'ok',reason=wall_reason)})
     fit=({"status":"not_requested"} if not compute_fit else
          {"status":"blocked","reasons":blockers} if blockers else fit_manhattan(floor,ceiling,pairs,w,h,frame,coordinate_convention=coordinate_convention))
+    for surface in (raw,fit):
+        if "floor" in surface:
+            surface["display_cap_issues"]=[key+"_triangulation_unavailable" for key in ("floor","ceiling")
+                if not surface.get(key+"_triangles")]
     return {"schema_version":SCHEMA,"width":w,"height":h,"pairs":pairs,"raw":raw,"fit":fit,
             "camera_height":1,"scale_unit":"relative","coordinate_convention":coordinate_convention,
+            "coordinate_convention_source":source,
             "assumptions":["horizontal_floor","ceiling_range_from_paired_floor","no_annotation_writeback"],
             "numerical_guards":{"horizon_degrees":HORIZON_DEG,"axis_ambiguity_degrees":40}}

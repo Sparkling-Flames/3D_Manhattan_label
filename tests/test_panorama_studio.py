@@ -22,10 +22,45 @@ RECT = [(-2, -3), (3, -3), (3, 2), (-2, 2)]
 CONCAVE = [(-3, -3), (1, -3), (1, -1), (3, -1), (3, 3), (-3, 3)]
 
 
+def test_import_propagates_declared_phase_and_rejects_conflicts(tmp_path):
+    import json
+    from tools.label_studio.panorama_studio.build import load_variant
+    continuous = room(RECT)
+    centered = copy.deepcopy(continuous)
+    centered['coordinate_convention'] = 'pixel_center'
+    for pair in centered['ordered_pairs']:
+        for endpoint in ('top', 'bottom'):
+            for axis in ('x', 'y'): pair[endpoint][axis] -= .5
+    path = tmp_path / 'layout.json'
+    path.write_text(json.dumps(centered))
+    spec = dict(name='known room', path=str(path))
+    snapshot = copy.deepcopy(centered)
+    for declaration in ({}, {'coordinate_convention': 'pixel_center'}):
+        geometry = load_variant(dict(spec, **declaration))['geometry']
+        assert geometry['coordinate_convention'] == 'pixel_center'
+        np.testing.assert_allclose(geometry['raw']['floor'], analyze(continuous)['raw']['floor'])
+        for pair, reprojection in zip(geometry['pairs'], geometry['fit']['reprojected_pairs']):
+            for endpoint in ('top', 'bottom'):
+                np.testing.assert_allclose(reprojection[endpoint], pair[endpoint], atol=1e-7)
+    assert centered == snapshot
+    with pytest.raises(ValueError, match='coordinate_convention_conflict'):
+        load_variant(dict(spec, coordinate_convention='continuous'))
+    with pytest.raises(ValueError, match='coordinate_convention_conflict'):
+        analyze(centered, coordinate_convention='continuous')
+    centered.pop('coordinate_convention'); path.write_text(json.dumps(centered))
+    assert load_variant(dict(spec, coordinate_convention='pixel_center'))['geometry']['coordinate_convention'] == 'pixel_center'
+    default = load_variant(spec)['geometry']
+    assert default['coordinate_convention'] == 'continuous'
+    assert default['coordinate_convention_source'] == 'assumed_unverified_default'
+    with pytest.raises(ValueError, match='unknown_coordinate_convention'):
+        load_variant(dict(spec, coordinate_convention='unknown'))
+
+
 def test_raw_screening_skips_fit_without_changing_geometry():
     payload = room(RECT)
     raw_only = analyze(payload, compute_fit=False)
     assert raw_only['fit']['status'] == 'not_requested'
+    assert raw_only['raw']['display_cap_issues'] == []
     assert raw_only['raw'] == analyze(payload)['raw']
 
 
@@ -86,6 +121,8 @@ def test_invalid_inputs_fail_explicitly(kind):
     result = analyze(data)
     assert result["fit"]["status"] == "blocked"
     assert result["raw"]["issues"]
+    if kind == 'degenerate':
+        assert 'ceiling_triangulation_unavailable' in result['raw']['display_cap_issues']
 
 
 def test_txt_and_explicit_percent_json(tmp_path):

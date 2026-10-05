@@ -12,6 +12,8 @@ const reasonText = {
   preview_order_semantics_unconfirmed:"当前轮廓仅做显示有效性检查，排列语义仍需人工确认",
   preview_ceiling_invalid:"当前天花板代理轮廓自交或退化",
   preview_coordinates_unavailable:"部分代理坐标缺失或非有限，不能组成完整表面",
+  floor_triangulation_unavailable:"地面显示封口无法保留完整原边界，未生成",
+  ceiling_triangulation_unavailable:"墙顶显示封口无法保留完整原边界，未生成",
   ambiguous_axis_assignment:"部分墙面主方向归属含混", optimizer_failed:"约束优化未可靠完成"
 };
 let currentCase=0, currentVariant=0, geometry=null, originalImage=null, imageToken=0;
@@ -63,7 +65,22 @@ function previewPolygon(points){
   }
   const area=p.reduce((s,a,i)=>s+a.x*p[(i+1)%n].y-p[(i+1)%n].x*a.y,0)/2;
   if(Math.abs(area)<=areaEps)return invalid;
-  const triangles=THREE.ShapeUtils.triangulateShape(p,[]);
+  // 与 Python 一致：保留每个原边界索引，XZ 共线点也可能是 3D 抬高折点。
+  const ids=p.map((_,i)=>i),triangles=[];
+  if(area<0)ids.reverse();
+  while(ids.length>3){
+    let found=false;
+    for(let k=0;k<ids.length;k++){
+      const a=ids[(k+ids.length-1)%ids.length],b=ids[k],c=ids[(k+1)%ids.length];
+      if(turn(p[a],p[b],p[c])<=areaEps)continue;
+      if(ids.some(j=>j!==a&&j!==b&&j!==c&&
+        Math.min(turn(p[a],p[b],p[j]),turn(p[b],p[c],p[j]),turn(p[c],p[a],p[j]))>=-areaEps))continue;
+      triangles.push([a,b,c]);ids.splice(k,1);found=true;break;
+    }
+    if(!found)return invalid;
+  }
+  if(turn(p[ids[0]],p[ids[1]],p[ids[2]])<=areaEps)return invalid;
+  triangles.push(ids);
   const triangleArea=triangles.reduce((s,t)=>s+Math.abs(turn(p[t[0]],p[t[1]],p[t[2]]))/2,0);
   if(!triangles.length||Math.abs(triangleArea-Math.abs(area))>areaEps*n)return invalid;
   const origin=new THREE.Vector2(0,0);
@@ -79,6 +96,8 @@ function orderedPreview(source,order){
     const floor=previewPolygon(result.raw.floor),ceiling=previewPolygon(result.raw.ceiling);
     // Old triangle indices address the old vertex ring; always triangulate the new ring.
     result.raw.floor_triangles=floor.triangles;result.raw.ceiling_triangles=ceiling.triangles;
+    result.raw.display_cap_issues=[...(!floor.valid?["floor_triangulation_unavailable"]:[]),
+      ...(!ceiling.valid?["ceiling_triangulation_unavailable"]:[])];
     result.raw.surface_valid=floor.valid&&ceiling.valid;result.raw.metrics=null;
     result.raw.source_issues=clone(source.raw.issues||[]);
     const recomputed=new Set(["invalid_footprint","duplicate_or_zero_edge","camera_visibility_unresolved",
@@ -431,12 +450,15 @@ function drawPath(ctx,points,color,dashed=false,scale=1){
   for(const p of points){if(!previous||Math.abs(p[0]-previous[0])>geometry.width/2)ctx.moveTo(...p);else ctx.lineTo(...p);previous=p;}
   ctx.stroke();ctx.setLineDash([]);
 }
-function project(p){return [(Math.atan2(p[0],-p[2])/(Math.PI*2)+.5)*geometry.width,
-  (.5-Math.atan2(p[1],Math.hypot(p[0],p[2]))/Math.PI)*geometry.height];}
+function displayPixel(p){const offset=geometry.coordinate_convention==="pixel_center"?.5:0;
+  return p.map(v=>v+offset);}
+function project(p){const offset=geometry.coordinate_convention==="pixel_center"?.5:0;
+  return [((Math.atan2(p[0],-p[2])/(Math.PI*2)+.5)*geometry.width%geometry.width)-offset,
+    (.5-Math.atan2(p[1],Math.hypot(p[0],p[2]))/Math.PI)*geometry.height-offset];}
 function boundaryPoints(surface,ep,i){
   const pts=ep==="top"?surface.ceiling:surface.floor,a=pts[i],b=pts[(i+1)%pts.length];
   if(!a||!b)return [];
-  return Array.from({length:65},(_,j)=>project(a.map((v,k)=>v+(b[k]-v)*j/64)));
+  return Array.from({length:65},(_,j)=>displayPixel(project(a.map((v,k)=>v+(b[k]-v)*j/64))));
 }
 
 function drawPanorama(){
@@ -451,7 +473,7 @@ function drawPanorama(){
     }
   }
   geometry.pairs.forEach((p,i)=>["top","bottom"].forEach(ep=>{
-    const active=selected?.index===i&&endpoint===ep;ctx.beginPath();ctx.arc(...p[ep],active?5:2.6,0,Math.PI*2);
+    const active=selected?.index===i&&endpoint===ep;ctx.beginPath();ctx.arc(...displayPixel(p[ep]),active?5:2.6,0,Math.PI*2);
     ctx.fillStyle=active?"#f7c58b":"#e9fff0";ctx.fill();ctx.strokeStyle="#426950";ctx.lineWidth=1;ctx.stroke();
   }));
 }
@@ -459,7 +481,8 @@ function drawPanorama(){
 function drawCrop(){
   const canvas=$("crop"),ctx=canvas.getContext("2d");ctx.fillStyle="#e5e6dd";ctx.fillRect(0,0,canvas.width,canvas.height);
   if(!geometry||!originalImage||!selected){ctx.fillStyle="#97a08e";ctx.font="20px Segoe UI";ctx.textAlign="center";ctx.fillText("选择一个角点",canvas.width/2,canvas.height/2);return;}
-  const p=geometry.pairs[selected.index][endpoint],q=geometry.fit.reprojected_pairs?.[selected.index]?.[endpoint];
+  const p=displayPixel(geometry.pairs[selected.index][endpoint]),reprojected=geometry.fit.reprojected_pairs?.[selected.index]?.[endpoint];
+  const q=reprojected?displayPixel(reprojected):null;
   const span=160,zoom=canvas.width/span,left=p[0]-span/2,top=p[1]-canvas.height/zoom/2;
   ctx.save();ctx.scale(zoom,zoom);ctx.translate(-left,-top);
   for(let t=-1;t<=1;t++)ctx.drawImage(originalImage,t*geometry.width,0,geometry.width,geometry.height);
@@ -496,15 +519,18 @@ function updateMetrics(variant){
     ["高度跨度 / 中位高度",fmt(raw.metrics?.height_relative_spread*100)+"% / "+fmt(fit.metrics?.height_relative_spread*100)+"%"]];
   $("metrics").replaceChildren(...rows.map(([name,value])=>{const row=document.createElement("div");row.className="metric-row";
     for(const text of [name,value]){const span=document.createElement("span");span.textContent=text;row.append(span);}return row;}));
-  const notes=[...raw.issues,...(fit.reasons||[])];
+  const notes=[...raw.issues,...(raw.display_cap_issues||[]),...(fit.display_cap_issues||[]),...(fit.reasons||[])];
   $("issues").classList.toggle("warning",notes.length>0);
   $("issues").textContent=notes.length?reasons([...new Set(notes)]):"当前几何检查通过。约束结果仅供对照，不代表正确性判断。";
   $("raw-title").textContent=raw.preview_validation?"顺序预览副本":"原始重建";
   $("raw-caption").textContent=raw.preview_validation?
-    (raw.surface_valid?"预览排列 · 代理面，语义未确认":"预览轮廓异常 · 线框"):
-    raw.surface_valid?"水平地面 · 原始角点射线":"输入异常 · 保留可解析线框";
+    (raw.surface_valid?"预览排列 · 墙顶封口为显示假设，语义未确认":"预览轮廓异常 · 线框"):
+    raw.surface_valid?"水平地面 · 墙顶封口为显示假设":"输入异常 · 保留可解析线框";
   $("fit-caption").textContent=fit.status==="ok"?"固定主方向 · 共面天花板":"未生成约束房间";
   const pre=document.createElement("pre");pre.textContent=JSON.stringify(variant.source,null,2);
+  pre.textContent+=`\n\n坐标约定：${geometry.coordinate_convention||"continuous"}；`+
+    (geometry.coordinate_convention_source&&geometry.coordinate_convention_source!=="assumed_unverified_default"?
+      `显式声明（${geometry.coordinate_convention_source}）`:"未核验的历史默认假设");
   if(raw.preview_validation)pre.textContent+="\n\n原始顺序诊断（保留，不作为当前轮廓检查结果）：\n"+reasons(raw.source_issues);
   $("provenance").replaceChildren(pre);
 }
@@ -587,7 +613,8 @@ $("panorama").onclick=e=>{
   const p=[(e.clientX-rect.left)/rect.width*geometry.width,(e.clientY-rect.top)/rect.height*geometry.height];
   let best=Infinity,item=null;
   geometry.pairs.forEach((pair,index)=>["top","bottom"].forEach(ep=>{
-    const d=Math.hypot((pair[ep][0]-p[0]+geometry.width/2)%geometry.width-geometry.width/2,pair[ep][1]-p[1]);
+    const point=displayPixel(pair[ep]);
+    const d=Math.hypot((point[0]-p[0]+geometry.width/2+geometry.width)%geometry.width-geometry.width/2,point[1]-p[1]);
     if(d<best){best=d;item={kind:"point",index,endpoint:ep};}
   }));if(item)select(item);
 };

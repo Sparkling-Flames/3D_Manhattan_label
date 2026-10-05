@@ -4,8 +4,31 @@ const {pathToFileURL}=require('node:url');
 const assert=require('node:assert/strict');
 const runtime=process.env.PLAYWRIGHT_MODULE||'C:/Users/ASUS/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright';
 const {chromium}=require(runtime);
-const studio=path.resolve(process.argv[2]);
+let studio=path.resolve(process.argv[2]);
 (async()=>{
+  let fixture=null;
+  try{
+  if(process.argv.includes('--geometry-only')){
+    const fs=require('node:fs'),os=require('node:os');
+    fixture=fs.mkdtempSync(path.join(os.tmpdir(),'hohonet-phase-'));
+    require('node:child_process').execFileSync('python',['-B','-X','utf8','-c',`
+import json,sys
+from pathlib import Path
+from PIL import Image
+from tools.label_studio.panorama_studio.geometry import project_pixel
+from tools.label_studio.panorama_studio.build import build
+root=Path(sys.argv[1]);Image.new('RGB',(1024,512),'#aabbcc').save(root/'erp.png')
+variants=[]
+for phase in ('continuous','pixel_center'):
+    payload=dict(width=1024,height=512,coordinate_mode='pixels',coordinate_convention=phase,
+        ordered_pairs=[dict(source_pair_id=str(i),**{ep:dict(zip(('x','y'),project_pixel([x,y,z],1024,512,coordinate_convention=phase)))
+            for ep,y in [('top',1.7),('bottom',-1)]}) for i,(x,z) in enumerate([[-2,-2],[2,-2],[2,2],[-2,2]])])
+    p=root/(phase+'.json');p.write_text(json.dumps(payload))
+    variants.append(dict(name=phase,path=str(p),coordinate_convention=phase))
+build(dict(cases=[dict(image_id='known-phase',image=str(root/'erp.png'),variants=variants)]),root/'studio')
+`,fixture],{cwd:path.resolve(__dirname,'..')});
+    studio=path.join(fixture,'studio');
+  }
   // Test current source against the real case without deploying over review artifacts.
   let server=null,url=pathToFileURL(path.join(studio,'index.html')).href;
   if(process.argv.includes('--source')){
@@ -40,6 +63,10 @@ const studio=path.resolve(process.argv[2]);
       const results=Object.fromEntries(Object.entries(cases).map(([name,p])=>[name,previewPolygon(floor(p))]));
       results.missing=previewPolygon([null,[0,-1,1],[1,-1,0]]);
       results.nonfinite=previewPolygon([[Infinity,-1,0],[0,-1,1],[1,-1,0]]);
+      const ring=[[-2,0],[-2,-2],[2,-2],[2,2],[-2,2]],top=ring.map(([x,z],i)=>[x,i===0?3:1.7,z]);
+      results.peak=previewPolygon(top);
+      results.peakReordered=orderedPreview({pairs:ring.map((_,i)=>({source_pair_id:String(i)})),
+        raw:{floor:floor(ring),ceiling:top,issues:[]},fit:{}},[4,3,2,1,0]).raw;
       const base=clone(sourceGeometry),order=base.pairs.map((_,i)=>i).reverse();
       base.raw.ceiling[0]=null;
       results.badCeiling=orderedPreview(base,order).raw;
@@ -49,6 +76,41 @@ const studio=path.resolve(process.argv[2]);
     assert.equal(topology.rectangle.area,16);assert.equal(topology.concave.area,32);
     for(const key of ['crossing','duplicate','touching','degenerate','backtrack','missing','nonfinite'])assert.equal(topology[key].valid,false,key);
     assert.equal(topology.badCeiling.surface_valid,false);assert.deepEqual(topology.badCeiling.ceiling_triangles,[]);
+    assert.ok(topology.badCeiling.display_cap_issues.includes('ceiling_triangulation_unavailable'));
+    for(const triangles of [topology.peak.triangles,topology.peakReordered.ceiling_triangles]){
+      const counts=new Map();
+      for(const t of triangles)for(let k=0;k<3;k++){
+        const edge=[t[k],t[(k+1)%3]].sort((a,b)=>a-b).join(',');counts.set(edge,(counts.get(edge)||0)+1);
+      }
+      assert.deepEqual([...counts].filter(([,n])=>n===1).map(([e])=>e).sort(),['0,1','0,4','1,2','2,3','3,4']);
+    }
+    if(process.argv.includes('--geometry-only')){
+      for(let index=0;index<2;index++){
+        await page.selectOption('#variant-select',String(index));
+        const phase=await page.evaluate(()=>{
+          const ctx=document.getElementById('panorama').getContext('2d'),arc=ctx.arc,markers=[];
+          try{ctx.arc=function(x,y,...args){markers.push([x,y]);return arc.call(this,x,y,...args);};drawPanorama();}
+          finally{ctx.arc=arc;}
+          return {convention:geometry.coordinate_convention,markers,
+          floor:geometry.raw.floor,overlay:geometry.pairs.map((p,i)=>['top','bottom'].map(ep=>({
+            declared:p[ep],projected:project((ep==='top'?geometry.raw.ceiling:geometry.raw.floor)[i]),
+            marker:displayPixel(p[ep]),line:boundaryPoints(geometry.raw,ep,i)[0]})))};
+        });
+        assert.equal(phase.convention,index===0?'continuous':'pixel_center');
+        phase.floor.forEach((p,i)=>p.forEach((v,k)=>assert.ok(Math.abs(v-[[-2,-1,-2],[2,-1,-2],[2,-1,2],[-2,-1,2]][i][k])<1e-8)));
+        for(const pair of phase.overlay)for(const ep of pair)for(let k=0;k<2;k++){
+          assert.ok(Math.abs(ep.projected[k]-ep.declared[k])<1e-8);
+          assert.ok(Math.abs(ep.marker[k]-ep.declared[k]-(index===1?.5:0))<1e-8);
+          assert.ok(Math.abs(ep.line[k]-ep.marker[k])<1e-8);
+        }
+        assert.deepEqual(phase.markers,phase.overlay.flat().map(ep=>ep.marker));
+        assert.match(await page.locator('#provenance').textContent(),/显式声明/);
+        await page.locator('#pair-buttons button').first().click();
+        assert.ok(await page.locator('#crop').evaluate(c=>c.width>0));
+      }
+      console.log(JSON.stringify({passed:true,checks:['3D wall-top boundary retained on reordered cap',
+        'declared continuous/pixel_center import, reprojection and actual canvas overlay agree']}));return;
+    }
     const variants=await page.locator('#variant-select option').allTextContents();
     const worker31=variants.findIndex(name=>/W31|worker.?31|人工.*31/i.test(name));
     assert.ok(worker31>=0,`W31 variant missing: ${variants}`);
@@ -68,6 +130,7 @@ const studio=path.resolve(process.argv[2]);
     assert.equal(preview.orderRecord.preview_surface_valid,true);
     assert.equal(preview.orderRecord.preview_validation.annotation_correctness_confirmed,false);
     assert.match(await page.locator('#provenance').textContent(),/原始顺序诊断/);
+    assert.match(await page.locator('#provenance').textContent(),/未核验的历史默认假设/);
     assert.equal(JSON.parse(preview.geometry).raw.surface_valid,true);
     assert.ok(!JSON.parse(preview.geometry).raw.issues.includes('invalid_footprint'));
     assert.ok(JSON.parse(preview.geometry).raw.source_issues.includes('invalid_footprint'));
@@ -124,4 +187,11 @@ const studio=path.resolve(process.argv[2]);
       'source geometry and point IDs preserved; old issues retained separately','fit disabled; original invalid state restored',
       'actual JSON download, previous/next moves, duplicate permutation rejected']}));
   }finally{await browser.close();if(server)await new Promise(resolve=>server.close(resolve));}
+  }finally{
+    if(fixture){
+      assert.equal(path.dirname(fixture),require('node:os').tmpdir());
+      assert.ok(path.basename(fixture).startsWith('hohonet-phase-'));
+      require('node:fs').rmSync(fixture,{recursive:true,force:true});
+    }
+  }
 })().catch(error=>{console.error(error);process.exit(1)});

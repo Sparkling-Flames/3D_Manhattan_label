@@ -47,7 +47,8 @@ def load_variant(spec):
         payload=annotation_layout(tasks[0],spec["annotation_id"])
     else:
         payload=read_layout(path,spec.get("width",1024),spec.get("height",512))
-    return {"name":spec["name"],"source":dict(spec),"geometry":analyze(payload)}
+    return {"name":spec["name"],"source":dict(spec),
+            "geometry":analyze(payload,coordinate_convention=spec.get("coordinate_convention"))}
 
 
 def image_stem(task):
