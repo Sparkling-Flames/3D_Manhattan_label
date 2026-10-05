@@ -1,0 +1,8 @@
+/mnt/data/local_path_research_20261005/src/real_diagnostics.py:84: DeprecationWarning: Arrays of 2-dimensional vectors are deprecated. Use arrays of 3-dimensional vectors instead. (deprecated in NumPy 2.0)
+  theta=TAU*(x/W-.5);ray=np.array([np.sin(theta),-np.cos(theta)]);eh=(b-a)[[0,2]];mu=abs(np.cross(ray,eh/np.linalg.norm(eh)))
+/mnt/data/local_path_research_20261005/src/real_diagnostics.py:84: DeprecationWarning: Arrays of 2-dimensional vectors are deprecated. Use arrays of 3-dimensional vectors instead. (deprecated in NumPy 2.0)
+  theta=TAU*(x/W-.5);ray=np.array([np.sin(theta),-np.cos(theta)]);eh=(b-a)[[0,2]];mu=abs(np.cross(ray,eh/np.linalg.norm(eh)))
+R01557 {'top': {'path_to_chord_max_h': 0.04894999233674527, 'same_longitude_3d_error_h': 0.1664336982042443, 'same_longitude_dy_px': 5.114690188599752, 'incidence_abs_sin': 0.259205428893617}, 'bottom': {'path_to_chord_max_h': 0.04262336129230223, 'same_longitude_3d_error_h': 0.1644385361611993, 'same_longitude_dy_px': -8.829622144546931, 'incidence_abs_sin': 0.259205428893617}}
+max curves {'top': 5.114690188599752, 'bottom': 8.829622144546931}
+R02928 {'top': {'path_to_chord_max_h': 1.0818415433694653, 'same_longitude_3d_error_h': 2.0704035861806753, 'same_longitude_dy_px': -120.46540714200364, 'incidence_abs_sin': 0.5221943232305638}, 'bottom': {'path_to_chord_max_h': 1.0805627236281834, 'same_longitude_3d_error_h': 2.0692732102931806, 'same_longitude_dy_px': 126.07936863765866, 'incidence_abs_sin': 0.5221943232305638}}
+max curves {'top': 120.46540714200367, 'bottom': 126.07936863765866}

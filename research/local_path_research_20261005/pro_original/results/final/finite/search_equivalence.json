@@ -1,0 +1,421 @@
+{
+  "addition": {
+    "initialization_atoms": 6,
+    "visited_partial_states": 568,
+    "complete_states": 324
+  },
+  "elimination": {
+    "initialization_atoms": 16,
+    "visited_partial_states": 568,
+    "complete_states": 324,
+    "alternative_deletions": 804,
+    "root_is_domain_sets_not_room": true
+  },
+  "domain_size": 324,
+  "same_domain": true,
+  "policy_checks": [
+    {
+      "policy": "budget_005",
+      "stream": "all_worlds__observations_only",
+      "same_optimal_or_admissible_set": true,
+      "size": 1
+    },
+    {
+      "policy": "budget_020",
+      "stream": "all_worlds__observations_only",
+      "same_optimal_or_admissible_set": true,
+      "size": 1
+    },
+    {
+      "policy": "carrier_pareto",
+      "stream": "all_worlds__observations_only",
+      "same_optimal_or_admissible_set": true,
+      "size": 55
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_A__observations_only",
+      "same_optimal_or_admissible_set": true,
+      "size": 110
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_A__sparse_local",
+      "same_optimal_or_admissible_set": true,
+      "size": 10
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_A__clean_geometric_probes_upper",
+      "same_optimal_or_admissible_set": true,
+      "size": 1
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_A__misclassified_probe0",
+      "same_optimal_or_admissible_set": true,
+      "size": 2
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_A__misclassified_probe1",
+      "same_optimal_or_admissible_set": true,
+      "size": 0
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_A__conflicting_checks",
+      "same_optimal_or_admissible_set": true,
+      "size": 0
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_A__shared_wrong_evidence_twice",
+      "same_optimal_or_admissible_set": true,
+      "size": 2
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_A__two_wrong_source_groups",
+      "same_optimal_or_admissible_set": true,
+      "size": 2
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_B__observations_only",
+      "same_optimal_or_admissible_set": true,
+      "size": 110
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_B__sparse_local",
+      "same_optimal_or_admissible_set": true,
+      "size": 40
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_B__clean_geometric_probes_upper",
+      "same_optimal_or_admissible_set": true,
+      "size": 2
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_B__misclassified_probe0",
+      "same_optimal_or_admissible_set": true,
+      "size": 0
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_B__misclassified_probe1",
+      "same_optimal_or_admissible_set": true,
+      "size": 2
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_B__conflicting_checks",
+      "same_optimal_or_admissible_set": true,
+      "size": 0
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_B__shared_wrong_evidence_twice",
+      "same_optimal_or_admissible_set": true,
+      "size": 0
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_B__two_wrong_source_groups",
+      "same_optimal_or_admissible_set": true,
+      "size": 0
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_C__observations_only",
+      "same_optimal_or_admissible_set": true,
+      "size": 110
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_C__sparse_local",
+      "same_optimal_or_admissible_set": true,
+      "size": 40
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_C__clean_geometric_probes_upper",
+      "same_optimal_or_admissible_set": true,
+      "size": 2
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_C__misclassified_probe0",
+      "same_optimal_or_admissible_set": true,
+      "size": 1
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_C__misclassified_probe1",
+      "same_optimal_or_admissible_set": true,
+      "size": 2
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_C__conflicting_checks",
+      "same_optimal_or_admissible_set": true,
+      "size": 0
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_C__shared_wrong_evidence_twice",
+      "same_optimal_or_admissible_set": true,
+      "size": 1
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_C__two_wrong_source_groups",
+      "same_optimal_or_admissible_set": true,
+      "size": 1
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_D__observations_only",
+      "same_optimal_or_admissible_set": true,
+      "size": 110
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_D__sparse_local",
+      "same_optimal_or_admissible_set": true,
+      "size": 20
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_D__clean_geometric_probes_upper",
+      "same_optimal_or_admissible_set": true,
+      "size": 1
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_D__misclassified_probe0",
+      "same_optimal_or_admissible_set": true,
+      "size": 2
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_D__misclassified_probe1",
+      "same_optimal_or_admissible_set": true,
+      "size": 1
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_D__conflicting_checks",
+      "same_optimal_or_admissible_set": true,
+      "size": 0
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_D__shared_wrong_evidence_twice",
+      "same_optimal_or_admissible_set": true,
+      "size": 2
+    },
+    {
+      "policy": "evidence_b0",
+      "stream": "W_D__two_wrong_source_groups",
+      "same_optimal_or_admissible_set": true,
+      "size": 2
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_A__observations_only",
+      "same_optimal_or_admissible_set": true,
+      "size": 110
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_A__sparse_local",
+      "same_optimal_or_admissible_set": true,
+      "size": 70
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_A__clean_geometric_probes_upper",
+      "same_optimal_or_admissible_set": true,
+      "size": 6
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_A__misclassified_probe0",
+      "same_optimal_or_admissible_set": true,
+      "size": 11
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_A__misclassified_probe1",
+      "same_optimal_or_admissible_set": true,
+      "size": 4
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_A__conflicting_checks",
+      "same_optimal_or_admissible_set": true,
+      "size": 3
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_A__shared_wrong_evidence_twice",
+      "same_optimal_or_admissible_set": true,
+      "size": 11
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_A__two_wrong_source_groups",
+      "same_optimal_or_admissible_set": true,
+      "size": 10
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_B__observations_only",
+      "same_optimal_or_admissible_set": true,
+      "size": 110
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_B__sparse_local",
+      "same_optimal_or_admissible_set": true,
+      "size": 90
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_B__clean_geometric_probes_upper",
+      "same_optimal_or_admissible_set": true,
+      "size": 10
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_B__misclassified_probe0",
+      "same_optimal_or_admissible_set": true,
+      "size": 4
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_B__misclassified_probe1",
+      "same_optimal_or_admissible_set": true,
+      "size": 11
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_B__conflicting_checks",
+      "same_optimal_or_admissible_set": true,
+      "size": 2
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_B__shared_wrong_evidence_twice",
+      "same_optimal_or_admissible_set": true,
+      "size": 4
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_B__two_wrong_source_groups",
+      "same_optimal_or_admissible_set": true,
+      "size": 2
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_C__observations_only",
+      "same_optimal_or_admissible_set": true,
+      "size": 110
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_C__sparse_local",
+      "same_optimal_or_admissible_set": true,
+      "size": 100
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_C__clean_geometric_probes_upper",
+      "same_optimal_or_admissible_set": true,
+      "size": 15
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_C__misclassified_probe0",
+      "same_optimal_or_admissible_set": true,
+      "size": 9
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_C__misclassified_probe1",
+      "same_optimal_or_admissible_set": true,
+      "size": 15
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_C__conflicting_checks",
+      "same_optimal_or_admissible_set": true,
+      "size": 3
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_C__shared_wrong_evidence_twice",
+      "same_optimal_or_admissible_set": true,
+      "size": 9
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_C__two_wrong_source_groups",
+      "same_optimal_or_admissible_set": true,
+      "size": 7
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_D__observations_only",
+      "same_optimal_or_admissible_set": true,
+      "size": 110
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_D__sparse_local",
+      "same_optimal_or_admissible_set": true,
+      "size": 70
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_D__clean_geometric_probes_upper",
+      "same_optimal_or_admissible_set": true,
+      "size": 7
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_D__misclassified_probe0",
+      "same_optimal_or_admissible_set": true,
+      "size": 13
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_D__misclassified_probe1",
+      "same_optimal_or_admissible_set": true,
+      "size": 8
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_D__conflicting_checks",
+      "same_optimal_or_admissible_set": true,
+      "size": 3
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_D__shared_wrong_evidence_twice",
+      "same_optimal_or_admissible_set": true,
+      "size": 13
+    },
+    {
+      "policy": "evidence_b1",
+      "stream": "W_D__two_wrong_source_groups",
+      "same_optimal_or_admissible_set": true,
+      "size": 12
+    }
+  ],
+  "finite_budget_search": "not_run_no_directional_claim"
+}

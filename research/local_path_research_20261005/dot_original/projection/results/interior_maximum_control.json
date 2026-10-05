@@ -1,0 +1,129 @@
+{
+  "found": true,
+  "attempt": 1,
+  "seed": 20261005,
+  "points_xyz_h": [
+    [
+      -0.11570562192682132,
+      -1.0,
+      -0.1925682109076674
+    ],
+    [
+      -0.07973616905898404,
+      -1.0,
+      -0.9467821164192392
+    ],
+    [
+      1.3203574628279997,
+      -1.0,
+      -2.197463443359583
+    ]
+  ],
+  "angles_rad": [
+    -0.5410481287096044,
+    -0.08401980918911525,
+    0.5410481287096044
+  ],
+  "radii_h": [
+    0.22465597431996415,
+    0.950133797224105,
+    2.5636281740040516
+  ],
+  "removed_point_x_px": 498.3069000191124,
+  "removed_point_abs_dy_px": 73.65970026226655,
+  "interior_witness_x_px": 514.1807511899382,
+  "interior_max_abs_dy_px": 73.99771797675838,
+  "strict_excess_px": 0.3380177144918264,
+  "direct_finite_ray_verified_abs_dy_px": 73.99771797675834,
+  "all_positive_finite_unique_on_local_domain": true,
+  "continuous": {
+    "pieces": [
+      {
+        "lo_x_px": 423.8228642460124,
+        "hi_x_px": 498.30690001911245,
+        "max_abs_dy_px": 73.65970026226667,
+        "signed_dy_px": 73.65970026226667,
+        "witness_x_px": 498.30690001911245,
+        "stationary_roots": [],
+        "polynomial_coefficients_ascending": [
+          134.6932128728993,
+          -616.0023784487834,
+          -1327.9180094372964,
+          -1609.011352482343,
+          1327.9180094372962,
+          -616.0023784487834,
+          -134.6932128728993
+        ],
+        "dense_scan_max_px": 73.65970026226667,
+        "direct_derivative_brentq_max_px": 73.65970026226667,
+        "brentq_roots_theta": [],
+        "polynomial_vs_brentq_gap_px": 0.0,
+        "source_edge": 0
+      },
+      {
+        "lo_x_px": 498.3069000191124,
+        "hi_x_px": 600.1771357539876,
+        "max_abs_dy_px": 73.99771797675838,
+        "signed_dy_px": 73.99771797675838,
+        "witness_x_px": 514.1807511899382,
+        "stationary_roots": [
+          {
+            "theta": 0.013380921714095738,
+            "derivative_px_per_rad": 1.7189131078487274e-13
+          }
+        ],
+        "polynomial_coefficients_ascending": [
+          0.2569409180929867,
+          -37.903107975895196,
+          -76.50533486230606,
+          255.85716314589257,
+          76.50533486230606,
+          -37.903107975895196,
+          -0.2569409180929867
+        ],
+        "dense_scan_max_px": 73.9977179767183,
+        "direct_derivative_brentq_max_px": 73.99771797675838,
+        "brentq_roots_theta": [
+          0.01338092171409765
+        ],
+        "polynomial_vs_brentq_gap_px": 0.0,
+        "source_edge": 1
+      }
+    ],
+    "new_chord_unique_coverage_unwrapped_x_px": [
+      423.8228642460124,
+      600.1771357539876
+    ],
+    "old_path_unique_coverage_matches_chord_here": true,
+    "max_abs_dy_px": 73.99771797675838,
+    "floating_numeric_check_not_interval_certificate": true
+  },
+  "bounds": {
+    "path_to_chord_max_h": 0.4099446123044602,
+    "nearest_chord_t": 0.2571201228798443,
+    "nearest_chord_point_h": [
+      0.25353509488854653,
+      -1.0,
+      -0.708067119436918
+    ],
+    "same_longitude_chord_t": 0.061989646901782304,
+    "original_horizontal_depth_h": 0.950133797224105,
+    "chord_horizontal_depth_h": 0.31797263496862993,
+    "same_longitude_3d_error_h": 0.632161162255475,
+    "signed_dy_px": 73.65970026226654,
+    "incidence_mu": 0.6484811734429035,
+    "slope_factor_kappa": 1.0,
+    "local_oblique_bound_h": 1.0421057745599356,
+    "local_top_or_bottom_pixel_bound_from_depth_px": 169.37144004599983,
+    "uniform_mu_min": 0.08043259531086105,
+    "uniform_horizontal_depth_min_h": 0.22465597431996415,
+    "uniform_camera_distance_min_h": 1.024924537123418,
+    "uniform_oblique_bound_h": 5.506691903873009,
+    "uniform_angle_to_pixel_bound_px": 512.0,
+    "radial_error_h": 0.632161162255475,
+    "radial_bound_h": 0.6321611622554751,
+    "local_bottom_pixel_bound_px": 93.56610149655697,
+    "uniform_bottom_pixel_bound_px": 790.7321705065649
+  },
+  "conclusion": "Counterexample to a general maximum-at-deleted-point claim; not a real annotation and not an empirical frequency."
+}

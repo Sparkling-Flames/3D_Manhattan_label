@@ -1,0 +1,13 @@
+[
+  {
+    "issue": "First evaluation compared a JSON-loaded list key with a fresh tuple key via str, incorrectly reporting zero truth coverage.",
+    "impact": "evaluation true_geometry/coverage fields only; candidate selection unchanged",
+    "fix": "compare JSON-normalized geometry keys",
+    "status": "fixed before final results; regression added"
+  },
+  {
+    "issue": "Unjoinable candidate previously exposed a diagnostic stitched node array despite anchor mismatch flag.",
+    "fix": "retain exact declared local paths and edge endpoints, return null complete-node/ERP serialization and polygon-validity for anchor gaps; never silently close mismatched anchors.",
+    "impact": "illegal-candidate representation only; all valid candidates and policy choices unchanged"
+  }
+]

@@ -2,6 +2,8 @@
 
 唯一完整分析入口：[manifest.json](manifest.json)，由当前机器合同`data.analysis_bundle`指定。预处理、研究解释、评论和最终统计均在本目录内；原目录作为历史来源保留。
 
+公开范围更新（2026-10-01）：用户授权“这些映射和原评语允许公开”。当前公开仓库含[内部编号与别名映射](../research_round_20260929/private_alias_map.json)及[历史评语来源索引](final_review/历史评语_去重来源索引.csv)；映射连接27个人员编号及3441个对象编号，不是姓名表。独立研究包的 `inputs/panel.json` 继续使用别名投影。9/29生成manifest内的“仅本地分析”文字为当日状态，当前授权范围以本段为准；不据此扩大其他材料的公开范围。
+
 ```python
 from tools.thesis_main.data_prep.consolidate_research_input import load_current_bundle
 bundle = load_current_bundle()  # 读取时校验跨表一致性，不一致则报错

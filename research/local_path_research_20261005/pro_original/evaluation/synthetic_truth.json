@@ -1,0 +1,83 @@
+{
+  "worlds": [
+    {
+      "id": "W_A",
+      "choices": [
+        1,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "description": "minority first detail true; symmetric second detail false; narrow true; right range true"
+    },
+    {
+      "id": "W_B",
+      "choices": [
+        0,
+        1,
+        1,
+        1,
+        0,
+        0
+      ],
+      "description": "same observations and compatibility as A; symmetric first detail false and second true"
+    },
+    {
+      "id": "W_C",
+      "choices": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "description": "plain true layout; all observed deviations spurious"
+    },
+    {
+      "id": "W_D",
+      "choices": [
+        1,
+        1,
+        0,
+        2,
+        1,
+        1
+      ],
+      "description": "both small details, top-only structure, left range and inset are true"
+    }
+  ],
+  "feature_events": {
+    "small_left": [
+      0,
+      1
+    ],
+    "small_right": [
+      1,
+      1
+    ],
+    "narrow": [
+      2,
+      1
+    ],
+    "range_right": [
+      3,
+      1
+    ],
+    "top_only": [
+      3,
+      2
+    ],
+    "range_left": [
+      4,
+      1
+    ],
+    "inset": [
+      5,
+      1
+    ]
+  },
+  "do_not_use_for_construction": true
+}

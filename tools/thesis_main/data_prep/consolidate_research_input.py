@@ -114,7 +114,7 @@ def build():
             final_summary='final_review/summary.json',final_orders='final_review/received_orders.json',validation='validation.json',field_contract='field_contract.json',research_field_contract='research_tables_field_contract.json'),
         additional_tables=files,validation=validation,
         consumer_rule='从本manifest相对路径读取；preprocessed_source只负责坐标及最终状态，汇总和评论不覆盖裁决。历史源路径仅用于追溯。',
-        privacy='含原始评论和内部身份，仅本地分析；不是可直接公开的数据包。')
+        privacy='含原始评论和内部编号；2026-10-01已授权公开映射与原评语。当前可见范围见README，独立面板仍按白名单投影。')
     dump(OUT/'manifest.json',manifest)
     return manifest
 

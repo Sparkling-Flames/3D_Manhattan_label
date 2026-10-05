@@ -1,0 +1,39 @@
+{
+  "schema": "finite_local_path_study_v1",
+  "stage": "frozen_before_policy_evaluation",
+  "domain": "six given corresponding anchors; 3x2x3x3x3x2=324 full path assignments",
+  "anchor_correspondence": "given synthetic condition, not learned",
+  "budgets_h": [
+    0.05,
+    0.2
+  ],
+  "policies": [
+    "budget_compact_0.05",
+    "budget_compact_0.20",
+    "compatible_carrier_pareto",
+    "evidence_consistent_b0",
+    "evidence_consistent_b1"
+  ],
+  "budget_objective": "minimize added representation knots within maximum directed top/bottom carrier-to-chosen path budget; preserve all tied geometries",
+  "fidelity_objective": "Pareto minimize directed top/bottom losses for ALL distinct observed local paths, no voter-count scalarization; exact source duplicates do not create new dimensions",
+  "evidence_objective": "retain all candidates violating at most b independent evidence-source groups; missing not negative; contradictions and empty sets explicit",
+  "geometric_numerics": {
+    "root_tolerance": 1e-10,
+    "distance_zero_h": 1e-09,
+    "no_semantic_tolerance": true
+  },
+  "evaluation": "after candidate and policy results saved; explicit synthetic truth only",
+  "search": "two exhaustive encodings on the identical product domain and objective; initialization costs and invalid leaves retained; no limited-budget directional superiority claim",
+  "real_diagnostics": [
+    {
+      "record": "R01557",
+      "source_pair": 6
+    },
+    {
+      "record": "R02928",
+      "source_pair": 3
+    }
+  ],
+  "truth_usage": "not construction, correspondence, budget selection, or candidate selection",
+  "visual_review": "not performed; source originals not obtained in runtime"
+}

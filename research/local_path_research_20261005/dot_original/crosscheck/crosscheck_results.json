@@ -1,0 +1,397 @@
+{
+  "scope": "Independent direct-choice Boolean crosscheck; exact rational input-path probe verification; delivered canonical admissibility set compared, not independently general-geometry validated",
+  "canonical_geometries": 70,
+  "direct_probe_checks": 490,
+  "metrics": [
+    {
+      "flipped_distinct_probes": 0,
+      "cases": 70,
+      "truth_covered": 70,
+      "unique_geometries": 0,
+      "empty": 0,
+      "wrong_fixed_events": 0,
+      "cases_with_wrong_fixed_event": 0,
+      "fixed_events": 100,
+      "multiple_candidates": 70,
+      "by_status": {
+        "multiple_candidates": {
+          "cases": 70,
+          "wrong_fixed_events": 0,
+          "cases_with_wrong_fixed_event": 0
+        }
+      }
+    },
+    {
+      "flipped_distinct_probes": 1,
+      "cases": 490,
+      "truth_covered": 490,
+      "unique_geometries": 14,
+      "empty": 0,
+      "wrong_fixed_events": 0,
+      "cases_with_wrong_fixed_event": 0,
+      "fixed_events": 1010,
+      "multiple_candidates": 476,
+      "single_geometry_conditional": 11,
+      "compatibility_unresolved": 3,
+      "by_status": {
+        "multiple_candidates": {
+          "cases": 476,
+          "wrong_fixed_events": 0,
+          "cases_with_wrong_fixed_event": 0
+        },
+        "single_geometry_conditional": {
+          "cases": 11,
+          "wrong_fixed_events": 0,
+          "cases_with_wrong_fixed_event": 0
+        },
+        "compatibility_unresolved": {
+          "cases": 3,
+          "wrong_fixed_events": 0,
+          "cases_with_wrong_fixed_event": 0
+        }
+      }
+    },
+    {
+      "flipped_distinct_probes": 2,
+      "cases": 1470,
+      "truth_covered": 0,
+      "unique_geometries": 92,
+      "empty": 30,
+      "wrong_fixed_events": 554,
+      "cases_with_wrong_fixed_event": 526,
+      "fixed_events": 3668,
+      "multiple_candidates": 1348,
+      "single_geometry_conditional": 73,
+      "compatibility_unresolved": 19,
+      "no_feasible_candidate": 30,
+      "by_status": {
+        "multiple_candidates": {
+          "cases": 1348,
+          "wrong_fixed_events": 434,
+          "cases_with_wrong_fixed_event": 434
+        },
+        "single_geometry_conditional": {
+          "cases": 73,
+          "wrong_fixed_events": 95,
+          "cases_with_wrong_fixed_event": 73
+        },
+        "compatibility_unresolved": {
+          "cases": 19,
+          "wrong_fixed_events": 25,
+          "cases_with_wrong_fixed_event": 19
+        },
+        "no_feasible_candidate": {
+          "cases": 30,
+          "wrong_fixed_events": 0,
+          "cases_with_wrong_fixed_event": 0
+        }
+      }
+    }
+  ],
+  "same_observation_counterexample": [
+    {
+      "truth": "C000210",
+      "truth_code": "0000111",
+      "flip_probes": [
+        3
+      ],
+      "observed": "0001111",
+      "selected": [
+        "C000210"
+      ],
+      "status": "single_geometry_conditional",
+      "fixed_events": [
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        false
+      ],
+      "wrong_event_indices": []
+    },
+    {
+      "truth": "C000010",
+      "truth_code": "0000011",
+      "flip_probes": [
+        3,
+        4
+      ],
+      "observed": "0001111",
+      "selected": [
+        "C000210"
+      ],
+      "status": "single_geometry_conditional",
+      "fixed_events": [
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        false
+      ],
+      "wrong_event_indices": [
+        4
+      ]
+    }
+  ],
+  "additional_wrong_witnesses": [
+    {
+      "truth": "C000010",
+      "truth_code": "0000011",
+      "flip_probes": [
+        0,
+        3
+      ],
+      "observed": "1001011",
+      "selected": [
+        "C100010",
+        "C100100"
+      ],
+      "status": "multiple_candidates",
+      "fixed_events": [
+        true,
+        false,
+        false,
+        null,
+        false,
+        null,
+        false
+      ],
+      "wrong_event_indices": [
+        0
+      ]
+    },
+    {
+      "truth": "C000010",
+      "truth_code": "0000011",
+      "flip_probes": [
+        3,
+        4
+      ],
+      "observed": "0001111",
+      "selected": [
+        "C000210"
+      ],
+      "status": "single_geometry_conditional",
+      "fixed_events": [
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        false
+      ],
+      "wrong_event_indices": [
+        4
+      ]
+    },
+    {
+      "truth": "C000211",
+      "truth_code": "0000110",
+      "flip_probes": [
+        2,
+        3
+      ],
+      "observed": "0011110",
+      "selected": [
+        "C001211"
+      ],
+      "status": "compatibility_unresolved",
+      "fixed_events": [
+        false,
+        false,
+        true,
+        false,
+        true,
+        true,
+        true
+      ],
+      "wrong_event_indices": [
+        2
+      ]
+    }
+  ],
+  "source_double_group_controls": [
+    {
+      "world": "W_A",
+      "mode": "two_wrong_source_groups",
+      "bad_probe_ids": [
+        "e0"
+      ],
+      "bad_source_groups": [
+        "check_0",
+        "second_wrong_source"
+      ],
+      "bad_claims": 2
+    },
+    {
+      "world": "W_B",
+      "mode": "two_wrong_source_groups",
+      "bad_probe_ids": [
+        "e0"
+      ],
+      "bad_source_groups": [
+        "check_0",
+        "second_wrong_source"
+      ],
+      "bad_claims": 2
+    },
+    {
+      "world": "W_C",
+      "mode": "two_wrong_source_groups",
+      "bad_probe_ids": [
+        "e0"
+      ],
+      "bad_source_groups": [
+        "check_0",
+        "second_wrong_source"
+      ],
+      "bad_claims": 2
+    },
+    {
+      "world": "W_D",
+      "mode": "two_wrong_source_groups",
+      "bad_probe_ids": [
+        "e0"
+      ],
+      "bad_source_groups": [
+        "check_0",
+        "second_wrong_source"
+      ],
+      "bad_claims": 2
+    }
+  ],
+  "artifact_check": [
+    {
+      "path": "finite/all_candidates.json",
+      "byte_identical": true,
+      "semantic_identical": true
+    },
+    {
+      "path": "finite/candidate_ledger.csv",
+      "byte_identical": true,
+      "semantic_identical": true
+    },
+    {
+      "path": "finite/candidate_truth_evaluation.csv",
+      "byte_identical": true,
+      "semantic_identical": true
+    },
+    {
+      "path": "finite/construction_summary.json",
+      "byte_identical": false,
+      "semantic_identical": true
+    },
+    {
+      "path": "finite/evaluation_notes.json",
+      "byte_identical": true,
+      "semantic_identical": true
+    },
+    {
+      "path": "finite/evaluation_summary.csv",
+      "byte_identical": true,
+      "semantic_identical": true
+    },
+    {
+      "path": "finite/event_decisions.csv",
+      "byte_identical": true,
+      "semantic_identical": true
+    },
+    {
+      "path": "finite/evidence_identifiability.json",
+      "byte_identical": true,
+      "semantic_identical": true
+    },
+    {
+      "path": "finite/exclusive_union.json",
+      "byte_identical": true,
+      "semantic_identical": true
+    },
+    {
+      "path": "finite/higher_order_compatibility_control.json",
+      "byte_identical": true,
+      "semantic_identical": true
+    },
+    {
+      "path": "finite/minimal_conflict_cores.json",
+      "byte_identical": true,
+      "semantic_identical": true
+    },
+    {
+      "path": "finite/outside_candidate_domain_control.json",
+      "byte_identical": true,
+      "semantic_identical": true
+    },
+    {
+      "path": "finite/policy_evaluation.csv",
+      "byte_identical": true,
+      "semantic_identical": true
+    },
+    {
+      "path": "finite/policy_outputs_before_truth.json",
+      "byte_identical": true,
+      "semantic_identical": true
+    },
+    {
+      "path": "finite/probe_identification.json",
+      "byte_identical": true,
+      "semantic_identical": true
+    },
+    {
+      "path": "finite/search_equivalence.json",
+      "byte_identical": true,
+      "semantic_identical": true
+    },
+    {
+      "path": "finite/synthetic_source_rings.json",
+      "byte_identical": true,
+      "semantic_identical": true
+    },
+    {
+      "path": "real/real_diagnostics.json",
+      "byte_identical": true,
+      "semantic_identical": true
+    },
+    {
+      "path": "upstream_projection/results.json",
+      "byte_identical": true,
+      "semantic_identical": true
+    }
+  ],
+  "budget_reason_check": [
+    {
+      "policy": "budget_005",
+      "missing_exclusion_reasons": 9,
+      "all_candidates_retained_in_full_ledger": true,
+      "selection_correct": true,
+      "witness": {
+        "id": "C001001",
+        "max_carrier_loss_h": 0.040000000000000036,
+        "extra_knots": 7,
+        "selected_ids": [
+          "C001000"
+        ],
+        "minimum_extra_knots": 3
+      }
+    },
+    {
+      "policy": "budget_020",
+      "missing_exclusion_reasons": 21,
+      "all_candidates_retained_in_full_ledger": true,
+      "selection_correct": true,
+      "witness": {
+        "id": "C000001",
+        "max_carrier_loss_h": 0.08000000000000007,
+        "extra_knots": 4,
+        "selected_ids": [
+          "C000000"
+        ],
+        "minimum_extra_knots": 0
+      }
+    }
+  ]
+}

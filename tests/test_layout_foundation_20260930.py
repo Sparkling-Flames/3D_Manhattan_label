@@ -153,6 +153,28 @@ def test_known_mesh_oracle_requires_roof_and_exposes_nonflat_occlusion():
     assert .90 < iou(mesh, declared_column_wall_mask(g, 128, 64)) < .93
 
 
+def test_roof_keeps_every_wall_top_segment_including_projected_collinear_peak():
+    from collections import Counter
+    from tools.label_studio.panorama_studio.geometry import analyze, triangulate
+    floor = np.array([[-2, 0], [-2, -2], [2, -2], [2, 2], [-2, 2]])
+    for heights in ([4, 2.7, 2.7, 2.7, 2.7], [2.7]*5, [2.7, 2, 3.7, 4, 3.4]):
+        for order in (np.arange(5), np.roll(np.arange(5), 2), np.arange(5)[::-1]):
+            p, h = floor[order], np.array(heights)[order]
+            triangles = triangulate(p)
+            edges = Counter(tuple(sorted((t[k], t[(k+1)%3]))) for t in triangles for k in range(3))
+            assert {e for e, count in edges.items() if count == 1} == {
+                tuple(sorted((i, (i+1)%5))) for i in range(5)}
+            synthetic_mesh_wall_mask(p, h, triangles, 32)
+    # XZ partition alone accepts the old missing peak; the 3D wall-top boundary cannot.
+    with pytest.raises(ValueError, match='roof_boundary_not_wall_top_boundary'):
+        synthetic_mesh_wall_mask(floor, [4, 2.7, 2.7, 2.7, 2.7], [[4, 1, 2], [2, 3, 4]], 32)
+    record = synthetic_record(floor, [4, 2.7, 2.7, 2.7, 2.7])
+    points = np.array(record['points']).reshape(-1, 2, 2)
+    payload = dict(width=1024, height=512, coordinate_mode='pixels', ordered_pairs=[
+        dict(top=dict(zip(('x', 'y'), t)), bottom=dict(zip(('x', 'y'), b))) for t, b in points])
+    assert 0 in {i for t in analyze(payload, compute_fit=False)['raw']['ceiling_triangles'] for i in t}
+
+
 def test_census_preserves_unknowns_and_denominators():
     a = synthetic_record(SQUARE); a.update(worker='P1', condition='manual', cleaning='retained',
         independent=True, consensus_eligible=True, quality_candidate=True,

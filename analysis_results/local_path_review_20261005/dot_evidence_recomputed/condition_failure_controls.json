@@ -1,0 +1,63 @@
+[
+  {
+    "case": "out_of_domain_0.06h_bump",
+    "probe_code": [
+      true,
+      false,
+      true,
+      true,
+      false,
+      false,
+      true
+    ],
+    "all_observed_claims_correct": true,
+    "true_geometry_in_frozen_domain": false,
+    "E0_status": "single_geometry_conditional",
+    "E0_candidates": [
+      "C101100"
+    ],
+    "lost_rectangular_area_h2_exact": "1/250",
+    "nested_layout_iou_exact": "43021/43031",
+    "iou": 0.9997676093978759,
+    "note": "Only the authored small rectangular bump is extended by 0.02h; area nesting is explicit."
+  },
+  {
+    "case": "geometrically_valid_truth_but_wrong_given_threeway_exclusion",
+    "truth": "C111100",
+    "probe_code": [
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      true
+    ],
+    "b": 0,
+    "status": "no_feasible_candidate",
+    "candidate_ids": [],
+    "truth_covered": false
+  },
+  {
+    "case": "geometrically_valid_truth_but_wrong_given_threeway_exclusion",
+    "truth": "C111100",
+    "probe_code": [
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      true
+    ],
+    "b": 1,
+    "status": "multiple_candidates",
+    "candidate_ids": [
+      "C011100",
+      "C101100",
+      "C110100",
+      "C211100"
+    ],
+    "truth_covered": false
+  }
+]

@@ -10,6 +10,7 @@
 - [点路线修订与原图核验](../analysis_results/point_route_review_20261006/REPORT.md)：独立探索工具`point_route_review_20261006.py`与`point_route_review_view_20261006.py`；[人工核验页](../analysis_results/point_route_review_20261006/review.html)、[方法对照页](../analysis_results/point_route_review_20261006/index.html)，完整源身份环备选与未决端点保留，5°仅演示。
 - [人工判断真源](../research/point_route_review_20261006/human_review.json)：保留原话与纠错；analysis_results仅为发布副本。现有点路线工具`--stage audit`可重生对应审计，独立探索，目标政策未定。
 
+- [有限局部路径返回审查与修复](../analysis_results/local_path_review_20261005/REPORT.md)：原件在`research/local_path_research_20261005/`；本地工具`finite_local_paths_20261005.py`与`review_local_path_research_20261005.py`，仅补全候选依据，不接自动删点。
 - [Lee底边表示与用途验收](../analysis_results/lee_boundary_usability_20261005/REPORT.md)：已有区域及底点摘录、回投数值与UI核验；显示改动在`consensus_result_studio_20261004.js`，不改Lee投票。
 - [局部跨接证据与Pro并行交接](../research/local_shortcut_handoff_20261005/README.md)：`local_shortcut_projection_20261005.py`和`local_shortcut_figures_20261005.py`；结果在`analysis_results/local_shortcut_projection_20261005/`及`local_shortcut_evidence_20261005/`，含51操作回投、两图证据、dot复核和有限候选深研资料。
 - [共识可靠性修复与空间候选执行](../research/layout_reliability_20261005/README.md)：原件精选归档、本地修复模块`tools/thesis_main/analysis/layout_reliability_20261005/`，定向复算及单点对删除入口；结果分别在`analysis_results/layout_reliability_fixed_20261005/`与`local_structure_deletion_20261005/`。
@@ -30,8 +31,12 @@
 
 | 用途 | 路径 |
 |---|---|
+| Pro 方法与 dot 审核资料 | `research/layout_methods_review_20261001/`：精选外部报告、源码、结果及反例，非正式算法入口 |
 | 当前研究方向 | `docs/thesis_main/研究方向_空间差异与共识_20260930.md`：BEV表示、质量评价与Lee融合；136图扩展及共同人员画像／固定4人构成基础已完成，接续深度研究 |
 | 连线与表示阶段1 | `docs/thesis_main/布局表示地基与坐标核验_20260930.md`；工具 `tools/thesis_main/analysis/layout_foundation_20260930.py`；全量表示清点 `analysis_results/layout_foundation_20260930/`，不修改资格或选择权重 |
+| 阶段2小型指标响应 | `tools/thesis_main/analysis/layout_metric_response_20261001.py`；`analysis_results/layout_metric_response_20261001/REPORT.md`及机器结果/字段合同/固定计划；74合成对照与12图描述，非全量研究或方法定案 |
+| 排序后3D质量增量 | `tools/thesis_main/analysis/layout_3d_quality_probe_20261002.py`；`analysis_results/layout_3d_quality_probe_20261002/REPORT.md`；12图全部作答和17份改序，墙高/方向/水平顶面模型体积诊断，不改变资格或正式评分 |
+| 阶段2最小当前快照 | `research/pro_layout_metric_response_20261001/`；独立入口 `tools/thesis_main/analysis/verify_layout_metric_snapshot_20261001.py`；只复算嵌入74+15，保留9条参考缺失，不重建上游或覆盖历史包 |
 | 当前规范、执行与统计 | `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`；`ROUND_BASED_ASSIGNMENT_SOP_v1.md`；`STATISTICAL_ANALYSIS_PLAN_v1.md` |
 | 最终研究输入 | `analysis_results/research_input_20260929/manifest.json` 为统一入口；完整生成/读取 `tools/thesis_main/data_prep/consolidate_research_input.py`，坐标组件生成 `materialize_current_research_input.py`；说明 `docs/thesis_main/最终审核数据接入_20260929.md` |
 | 全量复核与资格台账 | `analysis_results/review_final_20260928/` |

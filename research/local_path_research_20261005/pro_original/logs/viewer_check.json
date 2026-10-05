@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "method": "system chromium, headless, loaded saved self-contained HTML via set_content",
+  "checks": [
+    "324 options including failures",
+    "anchor mismatch null ring/raw paths",
+    "self-intersection ledger display",
+    "empty set does not show stale candidate",
+    "truth overlay independent of construction",
+    "source table and local segment controls",
+    "report rendered"
+  ],
+  "javascript_errors": [],
+  "scope": "synthetic viewer/report display only; no original-image visual validity check",
+  "initial_environment_failures": [
+    "default Playwright bundled browser not installed; used system Chromium",
+    "file URL navigation restricted; rendered exact HTML text",
+    "SVG inner_text unavailable; read SVG text_content"
+  ]
+}

@@ -9,6 +9,16 @@ from tools.thesis_main.analysis.layout_metric_probe_20260926 import (
 from tools.thesis_main.analysis.consensus_region_20260923 import wall_mask
 
 
+def test_region_inputs_are_validated_before_boolean_conversion():
+    binary = np.array([[0, 1], [1, 0]])
+    assert compare_regions(binary, binary) == compare_regions(binary.astype(bool), binary.astype(bool))
+    for value in (float('nan'), float('inf'), .2, -1):
+        bad = binary.astype(float); bad[0, 0] = value
+        for a, b in ((bad, binary), (binary, bad)):
+            with pytest.raises(ValueError, match='binary_mask'):
+                compare_regions(a, b)
+
+
 def test_fixed_l_shape_order_counterexample_and_invalid_state():
     p = np.array([[-2, -2], [2, -2], [2, 0], [0, 0], [0, 2], [-2, 2]]) - [-1, 1.3]
     order = np.argsort(np.arctan2(p[:, 0], -p[:, 1]))

@@ -49,7 +49,7 @@ def project(source):
         coordinate_frame=source['coordinate_frame'],preprocessing=source['preprocessing'],
         object_counts=dict(Counter(o['object_kind'] for o in objects)),
         consensus_inclusion='Upstream main_candidate, oos_doorway_exploratory and stable_nonorthogonal_separate; report separately',
-        privacy='New participant and record aliases; no raw IDs, comments, photographs, task URLs or private mappings'),images=images)
+        privacy='This alias panel omits raw IDs, comments, photographs, task URLs and mappings; authorized mappings/comments are separately public in the repository (2026-10-01)'),images=images)
     validate_panel(panel)
     assert sum(len(i['annotations'])+len(i['references']) for i in images)==len(objects)
     return panel,dict(workers=workers,records=ids)
@@ -78,7 +78,7 @@ def project_bundle(bundle):
         difference_axes=['space_extent','detail_representation','localization_within_matched_structure'],
         comment_summary=bundle['comments']['summary'],
         unique_recorded_texts=len({c['text'] for c in bundle['comments']['comments'] if c['text_role']=='recorded_text'}),
-        privacy='Local full comments were reviewed; public package contains only allowlisted structured evidence, not original comments or internal identity',
+        privacy='Full comments were reviewed; this alias panel contains only allowlisted structured evidence. Authorized mappings/comments are separately public in the repository (2026-10-01)',
         interpretation='Scope/detail evidence can coexist; no automatic semantic classification from metrics, point count, keywords or missing marks')
     return panel,mapping
 

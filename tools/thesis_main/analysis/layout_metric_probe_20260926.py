@@ -50,7 +50,7 @@ def bev_range_metrics(a, b):
                 centroid_distance_h=float(p.centroid.distance(q.centroid)))
 
 
-def polygon_metrics(a, b, height_a=2.7, height_b=2.7):
+def polygon_metrics(a, b, height_a=2.7, height_b=2.7, *, boundary_samples=512):
     """a 相对 b；保留顶点邻接，失败显式返回，禁止修复无效多边形。"""
     polygons = []
     for name, points in [('a', a), ('b', b)]:
@@ -61,6 +61,8 @@ def polygon_metrics(a, b, height_a=2.7, height_b=2.7):
                         volume_iou=None, centroid_distance=None, scores=None)
     if not all(math.isfinite(h) and h > 0 for h in [height_a, height_b]):
         raise ValueError('invalid_prism_height')
+    if type(boundary_samples) is not int or boundary_samples < 2:
+        raise ValueError('invalid_boundary_samples')
     p, q = polygons
     inter = p.intersection(q).area
     iou = inter/(p.area+q.area-inter)
@@ -70,7 +72,7 @@ def polygon_metrics(a, b, height_a=2.7, height_b=2.7):
     # ponytail: fixed arclength quadrature for diagnostic distances; increase samples for convergence studies.
     distances = np.array([source.boundary.interpolate(t, normalized=True).distance(target.boundary)
                           for source, target in [(p, q), (q, p)]
-                          for t in np.arange(512)/512])
+                          for t in np.arange(boundary_samples)/boundary_samples])
     normalizer = math.sqrt(q.area)
     return dict(status='ok', iou=float(iou), volume_iou=float(viou),
                 area_a=float(p.area), area_b=float(q.area), intersection_area=float(inter),
@@ -79,7 +81,10 @@ def polygon_metrics(a, b, height_a=2.7, height_b=2.7):
                 camera_inside_a=bool(p.contains(Point(0, 0))), camera_inside_b=bool(q.contains(Point(0, 0))),
                 boundary_mean_distance=float(distances.mean()),
                 boundary_p95_distance=float(np.quantile(distances, .95)),
-                boundary_sampled_max=float(distances.max()), boundary_samples_per_side=512,
+                boundary_sampled_max=float(distances.max()), boundary_samples_per_side=boundary_samples,
+                boundary_mean_a_to_b=float(distances[:boundary_samples].mean()),
+                boundary_mean_b_to_a=float(distances[boundary_samples:].mean()),
+                boundary_step_a=float(p.length/boundary_samples), boundary_step_b=float(q.length/boundary_samples),
                 scores=_scores(iou, dc, normalizer))
 
 
@@ -144,8 +149,8 @@ def _sphere(mask):
 
 def compare_regions(a, b):
     """固定 ERP 域面积及球面立体角权重；两种质量定义分别报告。"""
-    a, b = np.asarray(a, bool), np.asarray(b, bool)
     out = compare_masks(a, b)
+    a, b = np.asarray(a, bool), np.asarray(b, bool)
     from tools.thesis_main.analysis.consensus_region_20260923 import centroid
     ca, cb = centroid(a), centroid(b)
     sa, _ = _sphere(a)

@@ -54,6 +54,13 @@ def synthetic_mesh_wall_mask(floor, heights, roof_triangles, width=128):
     if (unary_union(parts).symmetric_difference(poly).area>1e-8
             or abs(sum(t.area for t in parts)-poly.area)>1e-8):
         raise ValueError('roof_triangulation_not_a_partition')
+    # 面积覆盖不能发现遗漏的抬高折点。边界索引必须逐段连接原墙顶 3D 顶点；
+    # 即使某点真正 3D 共线，也保留原始边界分段，不静默化简。
+    edges=Counter(tuple(sorted((t[k],t[(k+1)%3]))) for t in roof for k in range(3))
+    boundary={tuple(sorted((i,(i+1)%n))) for i in range(n)}
+    if ({e for e,count in edges.items() if count==1}!=boundary
+            or any(count not in (1,2) for count in edges.values()) or any(t.area<=0 for t in parts)):
+        raise ValueError('roof_boundary_not_wall_top_boundary')
     vertices=np.r_[np.c_[p[:,0],-np.ones(n),p[:,1]],np.c_[p[:,0],h-1,p[:,1]]]
     faces=[];labels=[]
     for i in range(n):
@@ -146,7 +153,7 @@ def inspect_panel(panel, width=512):
         annotation_population=_counts([r for r in rows if r['kind']=='annotation']),
         mark_semantics='no_recorded_mark means unknown/absence of recorded mark, never verified negative',
         scope='representation computability only; no quality, clustering, consensus, search or weights',
-        coordinate_status='continuous viewer candidate; pixel-center legacy envelope separately reported; source calibration unresolved')
+        coordinate_status='original GT production verified continuous; final LS percent maps to continuous canvas; native HoHoNet pixel_center; same numeric C/P is mismatch or unknown-source sensitivity; physical ERP sampling/gravity calibration unresolved')
     return rows,strata,summary
 
 

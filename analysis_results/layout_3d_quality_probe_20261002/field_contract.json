@@ -1,0 +1,42 @@
+{
+  "schema": "layout_3d_quality_probe_v1",
+  "metrics_csv": [
+    "image",
+    "id",
+    "worker",
+    "condition",
+    "quality_candidate",
+    "order_used",
+    "reference_version",
+    "status",
+    "reason",
+    "bev_iou",
+    "column_iou",
+    "model_volume_iou",
+    "volume_reason",
+    "height_mean_h",
+    "height_rms_h",
+    "height_rms_relative",
+    "height_max_deviation_h",
+    "height_signed_h",
+    "direction_self_rms_deg",
+    "direction_reference_rms_deg",
+    "direction_self_reason",
+    "direction_reference_reason"
+  ],
+  "order_csv": [
+    "image",
+    "id",
+    "status",
+    "reason",
+    "before_after_bev_iou",
+    "before_after_volume_iou"
+  ],
+  "missing": "null in JSON, empty in CSV; status/reason retained per metric in results.json",
+  "primary": "results.json retains input identities, points, gates, per-edge directions and each representation status",
+  "volume": "same floor level; area_intersection*min(mean_height_a,mean_height_b) / volume_union",
+  "heights": "mean=integral(h ds)/perimeter; RMS=sqrt(integral((h-mean)^2 ds)/perimeter)",
+  "geometry": "direction residual is model consistency, not a distance between complete layouts; wall verticality and floor flatness are imposed",
+  "applicability": "mathematical axes reported even in non-Manhattan scenes as diagnostics, never automatic worker errors",
+  "review": "unmarked is unknown; order confirmation is not quality eligibility; excluded rows are diagnostics only"
+}

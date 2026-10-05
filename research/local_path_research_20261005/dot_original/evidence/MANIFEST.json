@@ -1,0 +1,99 @@
+{
+  "schema": "finite_path_evidence_audit_minimal_v1",
+  "scope": "conditional group-error guarantee audit; bounded independent exact finite experiment",
+  "python": "3.10+ standard library only",
+  "files": {
+    "README_ZH.md": {
+      "bytes": 955,
+      "sha256": "7239b579b3879acb53294f52900a8c1d7cd80d25e1ce626e76b86c310f1c9b8d"
+    },
+    "REPORT_ZH.md": {
+      "bytes": 16066,
+      "sha256": "f675c2c33b345c830ac4515c98301e885c3c0c128e3890cb71a97b8dc032fced"
+    },
+    "independent_audit.py": {
+      "bytes": 17592,
+      "sha256": "e7908bd8461e663516057626f9bb6a9de242b91e36d1e500bc4900423e01d293"
+    },
+    "inputs/domain.json": {
+      "bytes": 18441,
+      "sha256": "338f5170682bd20bab27d0c258dcd7106597e81b212c3a8693f4f14a67fd533c"
+    },
+    "inputs/evidence_streams.json": {
+      "bytes": 45887,
+      "sha256": "1779d72b5eee1dde4409d8e06ac8e30a53b8c87689fa5ef42f9fd2fc7569e21b"
+    },
+    "inputs/policies.json": {
+      "bytes": 418,
+      "sha256": "2ccca8ff194670661049589291a1770b20c1f154793302b241a0a945123891ad"
+    },
+    "inputs/probes.json": {
+      "bytes": 652,
+      "sha256": "4eca443b7525cc50d219e353daef2137d755ea22d10616df355602d7999f1f8d"
+    },
+    "inputs/synthetic_truth.json": {
+      "bytes": 1275,
+      "sha256": "6ccdafd497aa78713d94e0cfcabcf020f07cc5ce743aed4d3ad743dc4ae7bbfc"
+    },
+    "results/case_results.csv": {
+      "bytes": 858977,
+      "sha256": "bf609d19afc066b660a7f714814890467f70b851756f99e917c48564255b8be4"
+    },
+    "results/condition_failure_controls.json": {
+      "bytes": 1290,
+      "sha256": "e6e15eb4a13d60973f4effde4c0dcad4aa335880d662f95d76d8ce7baebc6389"
+    },
+    "results/delivered_comparison.json": {
+      "bytes": 791,
+      "sha256": "2073e3cd51039fe5665dfd2cd980eb6cf1c7fde97600b36c7b585879193c8a6c"
+    },
+    "results/feature_summary.csv": {
+      "bytes": 2712,
+      "sha256": "22af2c4d361d285894d58c02427ff2fa371883f671f5d376d3d0f645a8de2d1c"
+    },
+    "results/four_world_evidence.json": {
+      "bytes": 65771,
+      "sha256": "a97c40866f85b9992463c45c3e140082d3efbf4f5005e42f18329859118f8a1a"
+    },
+    "results/grouping_sensitivity.json": {
+      "bytes": 1895,
+      "sha256": "01281b939ec7e3e87d2993dd1330a0d774cef20c4586a38d9db60a366dade41d"
+    },
+    "results/independent_baseline_outputs.json": {
+      "bytes": 37624,
+      "sha256": "c3b53573f407222b10297115502dbe45c4bad0853cd2af23d2bfb5a3667936ab"
+    },
+    "results/minimum_distance_witnesses.json": {
+      "bytes": 2124,
+      "sha256": "37817e480d7517dfc48d8026eb969ef28e3db8c543dc38edb02a785456a23f93"
+    },
+    "results/probe_subsets.csv": {
+      "bytes": 2782,
+      "sha256": "b483f74cee57f5540419bd35733101fb6cf1e2bb2049c8657f483dd6fa2be9ae"
+    },
+    "results/reproduction.log": {
+      "bytes": 1452,
+      "sha256": "0b1a02e5af0d8ea29a0b6149f53e6db3a529ba69017922b6759a8b2ac25b7245"
+    },
+    "results/selftests.log": {
+      "bytes": 937,
+      "sha256": "973ce52ad0efa86360fc95b506d359235877fa192619380cd4248e03a090fe78"
+    },
+    "results/summary.json": {
+      "bytes": 7455,
+      "sha256": "30eef2c68e54ce875bac97f8bfa84b17158588d6d5acab0545803072d1df5b96"
+    },
+    "results/wrong_decision_witnesses.json": {
+      "bytes": 4152,
+      "sha256": "1af052c7f229b693447ad8e179052aa93b080831e21fc918b9210f1f359f8283"
+    },
+    "test_independent_audit.py": {
+      "bytes": 2565,
+      "sha256": "64752b75901560fc7b4b3b10a93e9d956275071b053c3a2fe35116337796e3ef"
+    },
+    "verify_reproduction.py": {
+      "bytes": 910,
+      "sha256": "f6193211db163d68ad0fe3a1c9610c9438611cbfc11be4b49a9228734d2082e3"
+    }
+  }
+}

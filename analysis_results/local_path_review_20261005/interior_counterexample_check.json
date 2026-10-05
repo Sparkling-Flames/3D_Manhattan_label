@@ -1,0 +1,55 @@
+{
+  "fixture": {
+    "interior_max_abs_dy_px": 73.99771797675838,
+    "interior_witness_x_px": 514.1807511899382,
+    "points_xyz_h": [
+      [
+        -0.11570562192682132,
+        -1.0,
+        -0.1925682109076674
+      ],
+      [
+        -0.07973616905898404,
+        -1.0,
+        -0.9467821164192392
+      ],
+      [
+        1.3203574628279997,
+        -1.0,
+        -2.197463443359583
+      ]
+    ],
+    "removed_point_abs_dy_px": 73.65970026226655,
+    "removed_point_x_px": 498.3069000191124
+  },
+  "independent_finite_ray_at_witness_px": 73.99771797675834,
+  "pro_continuous": {
+    "certificate_kind": "floating polynomial stationary roots plus numeric scan/optimization check; not interval arithmetic",
+    "max_abs_dy_px": 73.9977179767584,
+    "measurement": "continuous signed projection difference on overlapping declared local branches; no visibility choice",
+    "pieces": [
+      {
+        "crosscheck_difference_px": 0.0,
+        "hi_x_px": 498.30690001911245,
+        "independent_scan_local_opt_max_px": 73.65970026226665,
+        "lo_x_px": 423.8228642460124,
+        "max_abs_dy_px": 73.65970026226665,
+        "signed_dy_at_max_px": 73.65970026226665,
+        "source_edge": 0,
+        "stationary_candidates": 2,
+        "witness_x_px": 498.30690001911245
+      },
+      {
+        "crosscheck_difference_px": 0.0,
+        "hi_x_px": 600.1771357539876,
+        "independent_scan_local_opt_max_px": 73.9977179767584,
+        "lo_x_px": 498.3069000191124,
+        "max_abs_dy_px": 73.9977179767584,
+        "signed_dy_at_max_px": 73.9977179767584,
+        "source_edge": 1,
+        "stationary_candidates": 3,
+        "witness_x_px": 514.1807511899385
+      }
+    ]
+  }
+}

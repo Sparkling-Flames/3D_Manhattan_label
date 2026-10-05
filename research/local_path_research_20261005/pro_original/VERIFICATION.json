@@ -1,0 +1,79 @@
+{
+  "new_tests": {
+    "passed": 27,
+    "log": "logs/new_tests.log"
+  },
+  "original_minimal_tests": {
+    "passed": 4,
+    "log": "logs/upstream_tests.log"
+  },
+  "original_reprojection_operations": 51,
+  "per_side_unique": 33,
+  "per_side_not_covered": 18,
+  "final_replay": {
+    "status": "passed",
+    "artifact_count": 19,
+    "byte_identical": 19,
+    "differences": [],
+    "files": [
+      "finite/all_candidates.json",
+      "finite/candidate_ledger.csv",
+      "finite/candidate_truth_evaluation.csv",
+      "finite/construction_summary.json",
+      "finite/evaluation_notes.json",
+      "finite/evaluation_summary.csv",
+      "finite/event_decisions.csv",
+      "finite/evidence_identifiability.json",
+      "finite/exclusive_union.json",
+      "finite/higher_order_compatibility_control.json",
+      "finite/minimal_conflict_cores.json",
+      "finite/outside_candidate_domain_control.json",
+      "finite/policy_evaluation.csv",
+      "finite/policy_outputs_before_truth.json",
+      "finite/probe_identification.json",
+      "finite/search_equivalence.json",
+      "finite/synthetic_source_rings.json",
+      "real/real_diagnostics.json",
+      "upstream_projection/results.json"
+    ]
+  },
+  "viewer": {
+    "status": "passed",
+    "method": "system chromium, headless, loaded saved self-contained HTML via set_content",
+    "checks": [
+      "324 options including failures",
+      "anchor mismatch null ring/raw paths",
+      "self-intersection ledger display",
+      "empty set does not show stale candidate",
+      "truth overlay independent of construction",
+      "source table and local segment controls",
+      "report rendered"
+    ],
+    "javascript_errors": [],
+    "scope": "synthetic viewer/report display only; no original-image visual validity check",
+    "initial_environment_failures": [
+      "default Playwright bundled browser not installed; used system Chromium",
+      "file URL navigation restricted; rendered exact HTML text",
+      "SVG inner_text unavailable; read SVG text_content"
+    ]
+  },
+  "not_executed": [
+    "full repository tests",
+    "original-image figures generator",
+    "original-image visual review",
+    "finite-budget heuristic comparison",
+    "full current-source bundle validation"
+  ],
+  "development_notes": "logs/development_notes.json",
+  "packaged_reproduction": {
+    "status": "passed",
+    "new_tests_passed": 27,
+    "numeric_artifacts_identical": 19,
+    "differences": [],
+    "method": "unzip delivered sources in new directory, run pytest and full reproduce.py",
+    "logs": [
+      "logs/packaged_tests.log",
+      "logs/packaged_reproduction.log"
+    ]
+  }
+}

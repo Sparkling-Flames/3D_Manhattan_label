@@ -1,0 +1,37 @@
+{
+  "pairs": [
+    {
+      "active_slots": [
+        0,
+        1
+      ],
+      "admissible": true,
+      "geometry_valid": true
+    },
+    {
+      "active_slots": [
+        0,
+        2
+      ],
+      "admissible": true,
+      "geometry_valid": true
+    },
+    {
+      "active_slots": [
+        1,
+        2
+      ],
+      "admissible": true,
+      "geometry_valid": true
+    }
+  ],
+  "all_three": {
+    "id": "C111000",
+    "geometry_valid": true,
+    "admissible": false,
+    "violations": [
+      "higher_order"
+    ]
+  },
+  "relation_is_given_synthetic_condition": true
+}

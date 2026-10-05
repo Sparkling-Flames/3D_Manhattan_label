@@ -1,0 +1,96 @@
+[
+  {
+    "stream": "W_A__misclassified_probe1",
+    "minimal_inconsistent_source_group_sets": [
+      [
+        "check_0",
+        "check_1",
+        "check_2"
+      ]
+    ],
+    "interpretation": "cannot all be satisfied in the given candidate/compatibility domain; not proof that any named checker alone is wrong"
+  },
+  {
+    "stream": "W_A__conflicting_checks",
+    "minimal_inconsistent_source_group_sets": [
+      [
+        "check_0",
+        "other_check"
+      ]
+    ],
+    "interpretation": "cannot all be satisfied in the given candidate/compatibility domain; not proof that any named checker alone is wrong"
+  },
+  {
+    "stream": "W_B__misclassified_probe0",
+    "minimal_inconsistent_source_group_sets": [
+      [
+        "check_0",
+        "check_1",
+        "check_2"
+      ]
+    ],
+    "interpretation": "cannot all be satisfied in the given candidate/compatibility domain; not proof that any named checker alone is wrong"
+  },
+  {
+    "stream": "W_B__conflicting_checks",
+    "minimal_inconsistent_source_group_sets": [
+      [
+        "check_0",
+        "other_check"
+      ],
+      [
+        "check_1",
+        "check_2",
+        "other_check"
+      ]
+    ],
+    "interpretation": "cannot all be satisfied in the given candidate/compatibility domain; not proof that any named checker alone is wrong"
+  },
+  {
+    "stream": "W_B__shared_wrong_evidence_twice",
+    "minimal_inconsistent_source_group_sets": [
+      [
+        "check_0",
+        "check_1",
+        "check_2"
+      ]
+    ],
+    "interpretation": "cannot all be satisfied in the given candidate/compatibility domain; not proof that any named checker alone is wrong"
+  },
+  {
+    "stream": "W_B__two_wrong_source_groups",
+    "minimal_inconsistent_source_group_sets": [
+      [
+        "check_0",
+        "check_1",
+        "check_2"
+      ],
+      [
+        "check_1",
+        "check_2",
+        "second_wrong_source"
+      ]
+    ],
+    "interpretation": "cannot all be satisfied in the given candidate/compatibility domain; not proof that any named checker alone is wrong"
+  },
+  {
+    "stream": "W_C__conflicting_checks",
+    "minimal_inconsistent_source_group_sets": [
+      [
+        "check_0",
+        "other_check"
+      ]
+    ],
+    "interpretation": "cannot all be satisfied in the given candidate/compatibility domain; not proof that any named checker alone is wrong"
+  },
+  {
+    "stream": "W_D__conflicting_checks",
+    "minimal_inconsistent_source_group_sets": [
+      [
+        "check_0",
+        "other_check"
+      ]
+    ],
+    "interpretation": "cannot all be satisfied in the given candidate/compatibility domain; not proof that any named checker alone is wrong"
+  }
+]

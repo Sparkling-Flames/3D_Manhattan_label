@@ -36,6 +36,7 @@
 - [点路线修订与原图核验](../analysis_results/point_route_review_20261006/REPORT.md)：独立探索工具`point_route_review_20261006.py`与`point_route_review_view_20261006.py`；[人工核验页](../analysis_results/point_route_review_20261006/review.html)、[方法对照页](../analysis_results/point_route_review_20261006/index.html)，完整源身份环备选与未决端点保留，5°仅演示。
 - [人工判断真源](../research/point_route_review_20261006/human_review.json)：保留原话与纠错；analysis_results仅为发布副本。现有点路线工具`--stage audit`可重生对应审计，独立探索，目标政策未定。
 
+- [有限局部路径Pro与dot本地审查](../analysis_results/local_path_review_20261005/REPORT.md)：324赋值、证据错误压力与连续峰值反例，补齐30条预算排除原因；[归档及本地有限模块](../research/local_path_research_20261005/README.md)，真实删除仍待定。
 - [Lee底边节点及后续用途](../analysis_results/lee_boundary_usability_20261005/REPORT.md)：现有四图八输出回投验收、工作台节点开关；区域比较与完整上下标注分开。
 - [局部跨接证据与Pro并行交接](../research/local_shortcut_handoff_20261005/README.md)：51操作单经度回投、两个原图窗口、dot复核及有限路径候选深研；仍未自动裁决删除。
 - [共识可靠性修复与局部候选执行](../research/layout_reliability_20261005/README.md)：两处修复、26份诊断复算、33项相关测试；[51个真实局部删除](../analysis_results/local_structure_deletion_20261005/REPORT.md)与[候选计划](thesis_main/空间候选构造_局部删改试验_20261005.md)，不等同完整多人重组。
@@ -53,7 +54,12 @@
 
 - [人员研究返回的本地审查](../analysis_results/worker_review_20261003/REPORT.md)、[前三轮Pro／dot精选归档](../research/consensus_reviews_20261003/README.md)：分组稳定性、替换背景、十图面积分解与33图配对人数精度；连续画像与构成研究继续，重复坐标按用户确认保留独立票。
 
+- [Pro 方法探索与 dot 独立审核归档](../research/layout_methods_review_20261001/README.md)：外部提案、反例及复算证据；已知局部路径缺陷保留，未升级为正式方法。
+
 - [连线与表示阶段1：坐标追溯、接口及全量可计算性](thesis_main/布局表示地基与坐标核验_20260930.md)：探索性实现，不改变资格或冻结权重。
+- [阶段2小型指标响应：74合成对照与12图描述面板](../analysis_results/layout_metric_response_20261001/REPORT.md)：当前来源坐标合同收尾，范围/细节/定位扫描；字段、计划与失败记录同目录，无人员评分或共识。
+- [排序后的3D质量增量实验](../analysis_results/layout_3d_quality_probe_20261002/REPORT.md)：既有12图全部作答、17份改序对照；默认环按预处理共享x排序，墙高/方向与模型体积为探索诊断。
+- [阶段2最小当前快照](../research/pro_layout_metric_response_20261001/README.md)：独立复算嵌入的74参数对照、15个有参考比较及9条缺失记录；不重建选样或原始源表，不覆盖9/29历史包。
 
 - [当前研究方向：BEV、质量评价与人员共识](thesis_main/研究方向_空间差异与共识_20260930.md)：表示、指标、融合与人数曲线的职责；A线扩图和B线画像／4人构成基础已完成，接续独立深度研究。
 

@@ -1,0 +1,299 @@
+{
+  "independent_implementation": "Python stdlib Fraction; exact geometry, ray crossings, top interpolation, constraint enumeration and group union; no imports from audited code",
+  "raw": 324,
+  "geometry_valid": 144,
+  "admissible_representations": 110,
+  "admissible_geometries": 70,
+  "incompatible_with_valid_geometry": 34,
+  "unresolved_representations": 25,
+  "unresolved_geometries": 15,
+  "algebraic_crosscheck": {
+    "codebook_factorization": "7 x 5 x 2 = 70",
+    "response_domain_exactly_equal": true,
+    "constraints": [
+      "not(x0 & x1 & x2)",
+      "not(x3 & x4)",
+      "not(x3 & x5)"
+    ],
+    "x6": "not inset"
+  },
+  "independent_stream_budget_checks": 64,
+  "minimum_hamming_distance": 1,
+  "minimum_exact_probe_count": 7,
+  "six_probe_classes": [
+    {
+      "probes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "size": 6,
+      "response_classes": 35,
+      "max_ambiguity": 2
+    },
+    {
+      "probes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6
+      ],
+      "size": 6,
+      "response_classes": 42,
+      "max_ambiguity": 2
+    },
+    {
+      "probes": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6
+      ],
+      "size": 6,
+      "response_classes": 42,
+      "max_ambiguity": 2
+    },
+    {
+      "probes": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6
+      ],
+      "size": 6,
+      "response_classes": 56,
+      "max_ambiguity": 2
+    },
+    {
+      "probes": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6
+      ],
+      "size": 6,
+      "response_classes": 40,
+      "max_ambiguity": 2
+    },
+    {
+      "probes": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "size": 6,
+      "response_classes": 40,
+      "max_ambiguity": 2
+    },
+    {
+      "probes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "size": 6,
+      "response_classes": 40,
+      "max_ambiguity": 2
+    }
+  ],
+  "feature_cross_class_distance": {
+    "small_left": 1,
+    "small_right": 1,
+    "narrow": 1,
+    "range_right": 1,
+    "top_only": 1,
+    "range_left": 1,
+    "inset": 1
+  },
+  "bounded_experiment": [
+    {
+      "mode": "clean",
+      "b": 0,
+      "cases": 70,
+      "truth_covered": 70,
+      "unique_geometries": 70,
+      "empty": 0,
+      "fixed_event_count": 490,
+      "event_count": 490,
+      "wrong_fixed_event_count": 0,
+      "geometry_count_min": 1,
+      "geometry_count_max": 1,
+      "all_seven_events_undetermined": 0,
+      "status_counts": {
+        "single_geometry_conditional": 55,
+        "compatibility_unresolved": 15
+      },
+      "cases_with_wrong_fixed_event": 0,
+      "multiple_candidate_cases_with_wrong_fixed_event": 0
+    },
+    {
+      "mode": "clean",
+      "b": 1,
+      "cases": 70,
+      "truth_covered": 70,
+      "unique_geometries": 0,
+      "empty": 0,
+      "fixed_event_count": 100,
+      "event_count": 490,
+      "wrong_fixed_event_count": 0,
+      "geometry_count_min": 5,
+      "geometry_count_max": 8,
+      "all_seven_events_undetermined": 8,
+      "status_counts": {
+        "multiple_candidates": 70
+      },
+      "cases_with_wrong_fixed_event": 0,
+      "multiple_candidate_cases_with_wrong_fixed_event": 0
+    },
+    {
+      "mode": "double_distinct_flip",
+      "b": 0,
+      "cases": 1470,
+      "truth_covered": 0,
+      "unique_geometries": 972,
+      "empty": 498,
+      "fixed_event_count": 6804,
+      "event_count": 10290,
+      "wrong_fixed_event_count": 1944,
+      "geometry_count_min": 0,
+      "geometry_count_max": 1,
+      "all_seven_events_undetermined": 498,
+      "status_counts": {
+        "single_geometry_conditional": 773,
+        "compatibility_unresolved": 199,
+        "no_feasible_candidate": 498
+      },
+      "cases_with_wrong_fixed_event": 972,
+      "multiple_candidate_cases_with_wrong_fixed_event": 0
+    },
+    {
+      "mode": "double_distinct_flip",
+      "b": 1,
+      "cases": 1470,
+      "truth_covered": 0,
+      "unique_geometries": 92,
+      "empty": 30,
+      "fixed_event_count": 3668,
+      "event_count": 10290,
+      "wrong_fixed_event_count": 554,
+      "geometry_count_min": 0,
+      "geometry_count_max": 8,
+      "all_seven_events_undetermined": 176,
+      "status_counts": {
+        "multiple_candidates": 1348,
+        "single_geometry_conditional": 73,
+        "compatibility_unresolved": 19,
+        "no_feasible_candidate": 30
+      },
+      "cases_with_wrong_fixed_event": 526,
+      "multiple_candidate_cases_with_wrong_fixed_event": 434
+    },
+    {
+      "mode": "single_flip",
+      "b": 0,
+      "cases": 490,
+      "truth_covered": 0,
+      "unique_geometries": 390,
+      "empty": 100,
+      "fixed_event_count": 2730,
+      "event_count": 3430,
+      "wrong_fixed_event_count": 390,
+      "geometry_count_min": 0,
+      "geometry_count_max": 1,
+      "all_seven_events_undetermined": 100,
+      "status_counts": {
+        "single_geometry_conditional": 310,
+        "compatibility_unresolved": 80,
+        "no_feasible_candidate": 100
+      },
+      "cases_with_wrong_fixed_event": 390,
+      "multiple_candidate_cases_with_wrong_fixed_event": 0
+    },
+    {
+      "mode": "single_flip",
+      "b": 1,
+      "cases": 490,
+      "truth_covered": 490,
+      "unique_geometries": 14,
+      "empty": 0,
+      "fixed_event_count": 1010,
+      "event_count": 3430,
+      "wrong_fixed_event_count": 0,
+      "geometry_count_min": 1,
+      "geometry_count_max": 8,
+      "all_seven_events_undetermined": 56,
+      "status_counts": {
+        "multiple_candidates": 476,
+        "single_geometry_conditional": 11,
+        "compatibility_unresolved": 3
+      },
+      "cases_with_wrong_fixed_event": 0,
+      "multiple_candidate_cases_with_wrong_fixed_event": 0
+    },
+    {
+      "mode": "single_missing",
+      "b": 0,
+      "cases": 490,
+      "truth_covered": 490,
+      "unique_geometries": 100,
+      "empty": 0,
+      "fixed_event_count": 3040,
+      "event_count": 3430,
+      "wrong_fixed_event_count": 0,
+      "geometry_count_min": 1,
+      "geometry_count_max": 2,
+      "all_seven_events_undetermined": 0,
+      "status_counts": {
+        "multiple_candidates": 390,
+        "single_geometry_conditional": 75,
+        "compatibility_unresolved": 25
+      },
+      "cases_with_wrong_fixed_event": 0,
+      "multiple_candidate_cases_with_wrong_fixed_event": 0
+    },
+    {
+      "mode": "single_missing",
+      "b": 1,
+      "cases": 490,
+      "truth_covered": 490,
+      "unique_geometries": 0,
+      "empty": 0,
+      "fixed_event_count": 498,
+      "event_count": 3430,
+      "wrong_fixed_event_count": 0,
+      "geometry_count_min": 6,
+      "geometry_count_max": 14,
+      "all_seven_events_undetermined": 114,
+      "status_counts": {
+        "multiple_candidates": 490
+      },
+      "cases_with_wrong_fixed_event": 0,
+      "multiple_candidate_cases_with_wrong_fixed_event": 0
+    }
+  ],
+  "one_error_coverage_checks": 560,
+  "input_sha256": {
+    "domain.json": "338f5170682bd20bab27d0c258dcd7106597e81b212c3a8693f4f14a67fd533c",
+    "evidence_streams.json": "1779d72b5eee1dde4409d8e06ac8e30a53b8c87689fa5ef42f9fd2fc7569e21b",
+    "policies.json": "2ccca8ff194670661049589291a1770b20c1f154793302b241a0a945123891ad",
+    "probes.json": "4eca443b7525cc50d219e353daef2137d755ea22d10616df355602d7999f1f8d",
+    "synthetic_truth.json": "6ccdafd497aa78713d94e0cfcabcf020f07cc5ce743aed4d3ad743dc4ae7bbfc"
+  }
+}

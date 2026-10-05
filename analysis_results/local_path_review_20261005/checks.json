@@ -1,0 +1,1388 @@
+{
+  "distinct_workers": 24,
+  "dot_evidence_b1": {
+    "clean": {
+      "all_seven_events_undetermined": 8,
+      "b": 1,
+      "cases": 70,
+      "cases_with_wrong_fixed_event": 0,
+      "empty": 0,
+      "event_count": 490,
+      "fixed_event_count": 100,
+      "geometry_count_max": 8,
+      "geometry_count_min": 5,
+      "mode": "clean",
+      "multiple_candidate_cases_with_wrong_fixed_event": 0,
+      "status_counts": {
+        "multiple_candidates": 70
+      },
+      "truth_covered": 70,
+      "unique_geometries": 0,
+      "wrong_fixed_event_count": 0
+    },
+    "single_error": {
+      "all_seven_events_undetermined": 56,
+      "b": 1,
+      "cases": 490,
+      "cases_with_wrong_fixed_event": 0,
+      "empty": 0,
+      "event_count": 3430,
+      "fixed_event_count": 1010,
+      "geometry_count_max": 8,
+      "geometry_count_min": 1,
+      "mode": "single_flip",
+      "multiple_candidate_cases_with_wrong_fixed_event": 0,
+      "status_counts": {
+        "compatibility_unresolved": 3,
+        "multiple_candidates": 476,
+        "single_geometry_conditional": 11
+      },
+      "truth_covered": 490,
+      "unique_geometries": 14,
+      "wrong_fixed_event_count": 0
+    },
+    "two_distinct_errors": {
+      "all_seven_events_undetermined": 176,
+      "b": 1,
+      "cases": 1470,
+      "cases_with_wrong_fixed_event": 526,
+      "empty": 30,
+      "event_count": 10290,
+      "fixed_event_count": 3668,
+      "geometry_count_max": 8,
+      "geometry_count_min": 0,
+      "mode": "double_distinct_flip",
+      "multiple_candidate_cases_with_wrong_fixed_event": 434,
+      "status_counts": {
+        "compatibility_unresolved": 19,
+        "multiple_candidates": 1348,
+        "no_feasible_candidate": 30,
+        "single_geometry_conditional": 73
+      },
+      "truth_covered": 0,
+      "unique_geometries": 92,
+      "wrong_fixed_event_count": 554
+    }
+  },
+  "dot_independent_evidence_outputs": 64,
+  "dot_independent_rebuilt_candidates": 324,
+  "enumeration_state_count_clarification": {
+    "addition": {
+      "all_visited_states": 568,
+      "nonterminal_states": 244,
+      "terminal_states": 324
+    },
+    "elimination": {
+      "all_visited_states": 568,
+      "nonterminal_states": 244,
+      "terminal_states": 324
+    }
+  },
+  "environment": {
+    "geos": "3.11.3",
+    "numpy": "1.26.4",
+    "scipy": "1.11.4",
+    "shapely": "2.0.4"
+  },
+  "exclusion_repairs": [
+    {
+      "added_reasons": {
+        "C001001": "eligible_but_more_knots",
+        "C011000": "eligible_but_more_knots",
+        "C011001": "eligible_but_more_knots",
+        "C101000": "eligible_but_more_knots",
+        "C101001": "eligible_but_more_knots",
+        "C201000": "eligible_but_more_knots",
+        "C201001": "eligible_but_more_knots",
+        "C211000": "eligible_but_more_knots",
+        "C211001": "eligible_but_more_knots"
+      },
+      "policy": "budget_005"
+    },
+    {
+      "added_reasons": {
+        "C000001": "eligible_but_more_knots",
+        "C001000": "eligible_but_more_knots",
+        "C001001": "eligible_but_more_knots",
+        "C010000": "eligible_but_more_knots",
+        "C010001": "eligible_but_more_knots",
+        "C011000": "eligible_but_more_knots",
+        "C011001": "eligible_but_more_knots",
+        "C100000": "eligible_but_more_knots",
+        "C100001": "eligible_but_more_knots",
+        "C101000": "eligible_but_more_knots",
+        "C101001": "eligible_but_more_knots",
+        "C110000": "eligible_but_more_knots",
+        "C110001": "eligible_but_more_knots",
+        "C200000": "eligible_but_more_knots",
+        "C200001": "eligible_but_more_knots",
+        "C201000": "eligible_but_more_knots",
+        "C201001": "eligible_but_more_knots",
+        "C210000": "eligible_but_more_knots",
+        "C210001": "eligible_but_more_knots",
+        "C211000": "eligible_but_more_knots",
+        "C211001": "eligible_but_more_knots"
+      },
+      "policy": "budget_020"
+    }
+  ],
+  "local_regressions": {
+    "after_fix_passed": 2,
+    "before_fix_failed": 2
+  },
+  "original_tests_passed": {
+    "pro_new": 27,
+    "upstream_minimal": 4
+  },
+  "policies_checked_selection_unchanged": 67,
+  "real_deletion_decisions": {
+    "R01557_source6": "undetermined",
+    "R02928_source3": "undetermined"
+  },
+  "real_records": 39,
+  "reproduction_artifacts": [
+    {
+      "byte_equal": false,
+      "geos_witness_changes": [
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/36/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/37/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/38/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/39/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/40/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/41/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[1.66666666666667 1]",
+          "location": "/42/geometry_issues/0",
+          "original": "Self-intersection[2 0]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/43/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/44/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/45/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[1.66666666666667 1]",
+          "location": "/46/geometry_issues/0",
+          "original": "Self-intersection[2 0]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/47/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/48/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/49/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/50/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/51/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/52/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/53/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/90/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/91/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/92/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/93/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/94/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/95/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[1.66666666666667 1]",
+          "location": "/96/geometry_issues/0",
+          "original": "Self-intersection[2 0]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/97/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/98/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/99/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[1.66666666666667 1]",
+          "location": "/100/geometry_issues/0",
+          "original": "Self-intersection[2 0]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/101/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/102/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/103/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/104/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/105/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/106/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/107/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/144/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/145/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/146/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/147/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/148/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/149/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/150/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/151/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/152/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/153/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/154/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/155/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/156/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/157/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/158/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/159/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/160/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/161/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/198/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/199/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/200/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/201/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/202/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/203/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/204/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/205/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/206/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/207/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/208/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/209/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/210/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/211/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/212/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/213/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/214/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/215/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/252/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/253/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/254/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/255/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/256/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/257/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[1.66666666666667 1]",
+          "location": "/258/geometry_issues/0",
+          "original": "Self-intersection[2 0]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/259/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/260/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/261/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[1.66666666666667 1]",
+          "location": "/262/geometry_issues/0",
+          "original": "Self-intersection[2 0]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/263/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/264/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/265/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/266/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/267/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/268/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/269/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/306/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/307/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/308/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/309/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/310/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/311/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[1.66666666666667 1]",
+          "location": "/312/geometry_issues/0",
+          "original": "Self-intersection[2 0]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/313/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/314/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/315/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[1.66666666666667 1]",
+          "location": "/316/geometry_issues/0",
+          "original": "Self-intersection[2 0]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/317/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/318/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/319/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/320/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/321/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/322/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/323/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        }
+      ],
+      "max_numeric_abs_difference": 1.1368683772161603e-13,
+      "numeric_changed_leaves": 360,
+      "parsed_exact_equal": false,
+      "path": "finite/all_candidates.json"
+    },
+    {
+      "byte_equal": false,
+      "geos_witness_changes": [
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/36/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/37/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/38/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/39/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/40/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/41/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[1.66666666666667 1]",
+          "location": "/42/geometry_issues/0",
+          "original": "Self-intersection[2 0]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/43/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/44/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/45/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[1.66666666666667 1]",
+          "location": "/46/geometry_issues/0",
+          "original": "Self-intersection[2 0]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/47/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/48/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/49/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/50/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/51/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/52/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/53/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/90/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/91/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/92/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/93/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/94/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/95/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[1.66666666666667 1]",
+          "location": "/96/geometry_issues/0",
+          "original": "Self-intersection[2 0]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/97/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/98/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/99/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[1.66666666666667 1]",
+          "location": "/100/geometry_issues/0",
+          "original": "Self-intersection[2 0]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/101/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/102/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/103/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/104/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/105/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/106/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/107/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/144/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/145/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/146/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/147/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/148/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/149/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/150/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/151/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/152/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/153/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/154/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/155/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/156/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/157/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/158/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/159/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/160/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/161/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/198/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/199/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/200/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/201/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/202/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/203/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/204/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/205/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/206/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/207/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/208/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/209/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/210/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/211/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/212/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/213/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/214/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/215/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/252/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/253/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/254/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/255/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/256/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/257/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[1.66666666666667 1]",
+          "location": "/258/geometry_issues/0",
+          "original": "Self-intersection[2 0]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/259/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/260/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/261/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[1.66666666666667 1]",
+          "location": "/262/geometry_issues/0",
+          "original": "Self-intersection[2 0]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/263/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/264/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/265/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/266/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/267/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/268/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/269/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/306/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/307/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/308/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/309/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/310/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/311/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[1.66666666666667 1]",
+          "location": "/312/geometry_issues/0",
+          "original": "Self-intersection[2 0]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/313/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/314/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/315/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[1.66666666666667 1]",
+          "location": "/316/geometry_issues/0",
+          "original": "Self-intersection[2 0]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/317/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/318/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/319/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/320/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/321/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/322/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        },
+        {
+          "local": "Self-intersection[2 0]",
+          "location": "/323/geometry_issues/0",
+          "original": "Self-intersection[1.66666666666667 1]"
+        }
+      ],
+      "max_numeric_abs_difference": 0,
+      "numeric_changed_leaves": 0,
+      "parsed_exact_equal": false,
+      "path": "finite/candidate_ledger.csv"
+    },
+    {
+      "byte_equal": true,
+      "geos_witness_changes": [],
+      "max_numeric_abs_difference": 0,
+      "numeric_changed_leaves": 0,
+      "parsed_exact_equal": true,
+      "path": "finite/candidate_truth_evaluation.csv"
+    },
+    {
+      "byte_equal": false,
+      "geos_witness_changes": [],
+      "max_numeric_abs_difference": 0,
+      "numeric_changed_leaves": 0,
+      "parsed_exact_equal": true,
+      "path": "finite/construction_summary.json"
+    },
+    {
+      "byte_equal": false,
+      "geos_witness_changes": [],
+      "max_numeric_abs_difference": 0,
+      "numeric_changed_leaves": 0,
+      "parsed_exact_equal": true,
+      "path": "finite/evaluation_notes.json"
+    },
+    {
+      "byte_equal": true,
+      "geos_witness_changes": [],
+      "max_numeric_abs_difference": 0,
+      "numeric_changed_leaves": 0,
+      "parsed_exact_equal": true,
+      "path": "finite/evaluation_summary.csv"
+    },
+    {
+      "byte_equal": true,
+      "geos_witness_changes": [],
+      "max_numeric_abs_difference": 0,
+      "numeric_changed_leaves": 0,
+      "parsed_exact_equal": true,
+      "path": "finite/event_decisions.csv"
+    },
+    {
+      "byte_equal": false,
+      "geos_witness_changes": [],
+      "max_numeric_abs_difference": 0,
+      "numeric_changed_leaves": 0,
+      "parsed_exact_equal": true,
+      "path": "finite/evidence_identifiability.json"
+    },
+    {
+      "byte_equal": false,
+      "geos_witness_changes": [],
+      "max_numeric_abs_difference": 0,
+      "numeric_changed_leaves": 0,
+      "parsed_exact_equal": true,
+      "path": "finite/exclusive_union.json"
+    },
+    {
+      "byte_equal": false,
+      "geos_witness_changes": [],
+      "max_numeric_abs_difference": 0,
+      "numeric_changed_leaves": 0,
+      "parsed_exact_equal": true,
+      "path": "finite/higher_order_compatibility_control.json"
+    },
+    {
+      "byte_equal": false,
+      "geos_witness_changes": [],
+      "max_numeric_abs_difference": 0,
+      "numeric_changed_leaves": 0,
+      "parsed_exact_equal": true,
+      "path": "finite/minimal_conflict_cores.json"
+    },
+    {
+      "byte_equal": false,
+      "geos_witness_changes": [],
+      "max_numeric_abs_difference": 0,
+      "numeric_changed_leaves": 0,
+      "parsed_exact_equal": true,
+      "path": "finite/outside_candidate_domain_control.json"
+    },
+    {
+      "byte_equal": true,
+      "geos_witness_changes": [],
+      "max_numeric_abs_difference": 0,
+      "numeric_changed_leaves": 0,
+      "parsed_exact_equal": true,
+      "path": "finite/policy_evaluation.csv"
+    },
+    {
+      "byte_equal": false,
+      "geos_witness_changes": [],
+      "max_numeric_abs_difference": 0,
+      "numeric_changed_leaves": 0,
+      "parsed_exact_equal": true,
+      "path": "finite/policy_outputs_before_truth.json"
+    },
+    {
+      "byte_equal": false,
+      "geos_witness_changes": [],
+      "max_numeric_abs_difference": 0,
+      "numeric_changed_leaves": 0,
+      "parsed_exact_equal": true,
+      "path": "finite/probe_identification.json"
+    },
+    {
+      "byte_equal": false,
+      "geos_witness_changes": [],
+      "max_numeric_abs_difference": 0,
+      "numeric_changed_leaves": 0,
+      "parsed_exact_equal": true,
+      "path": "finite/search_equivalence.json"
+    },
+    {
+      "byte_equal": false,
+      "geos_witness_changes": [],
+      "max_numeric_abs_difference": 1.1368683772161603e-13,
+      "numeric_changed_leaves": 8,
+      "parsed_exact_equal": false,
+      "path": "finite/synthetic_source_rings.json"
+    },
+    {
+      "byte_equal": false,
+      "geos_witness_changes": [],
+      "max_numeric_abs_difference": 5.684341886080802e-14,
+      "numeric_changed_leaves": 25,
+      "parsed_exact_equal": false,
+      "path": "real/real_diagnostics.json"
+    },
+    {
+      "byte_equal": false,
+      "geos_witness_changes": [],
+      "max_numeric_abs_difference": 1.1368683772161603e-13,
+      "numeric_changed_leaves": 83,
+      "parsed_exact_equal": false,
+      "path": "upstream_projection/results.json"
+    }
+  ],
+  "schema": "local_path_return_review_v1",
+  "scope": "finite-domain audit; no new original-image adjudication, GT review, whole-repository test, or automatic deletion",
+  "source_bindings": {
+    "rPc6DW4iMge-06.json": true,
+    "tests/test_local_shortcut_projection_20261005.py": true,
+    "tools/thesis_main/analysis/layout_reliability_20261005/arc_consensus.py": true,
+    "tools/thesis_main/analysis/local_shortcut_projection_20261005.py": true,
+    "uNb9QFRL6hY-67.json": true
+  }
+}
