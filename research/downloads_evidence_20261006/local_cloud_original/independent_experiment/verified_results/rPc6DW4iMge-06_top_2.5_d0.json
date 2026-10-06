@@ -1,0 +1,148 @@
+{
+  "domain_id": "rPc6DW4iMge-06_top_2.5_d0",
+  "threshold": 2.5,
+  "metric": "top",
+  "union_nodes": 9,
+  "baseline_support": [
+    8,
+    1
+  ],
+  "equal_blocks": [
+    [
+      "R02452:2",
+      "R01798:2",
+      "R01341:2",
+      "R00525:2",
+      "R02407:2"
+    ]
+  ],
+  "equal_block_node_counts": [
+    5
+  ],
+  "independent_forbidden_edges_match": true,
+  "full_roster": 24,
+  "all_input_observations": 224,
+  "outside_groups_unchanged": true,
+  "conditions": {
+    "geometry": {
+      "feasible_count": 2,
+      "minimum_edit": 0,
+      "minimum_edit_then_cost": 0.25015331321961554,
+      "selection_status": "numerically_unique",
+      "selected_count": 1,
+      "selected": [
+        {
+          "canonical_mask": 2,
+          "upstream_candidate_id": 0,
+          "blocks": [
+            [
+              "R02452:2",
+              "R01798:2",
+              "R01341:2",
+              "R00525:2",
+              "R02407:2",
+              "R01905:2",
+              "R01662:0",
+              "R01557:2"
+            ],
+            [
+              "R02468:2"
+            ]
+          ],
+          "support": [
+            8,
+            1
+          ],
+          "edit_count": 0,
+          "cost": 0.25015331321961554,
+          "moved_alternative_alignments": [
+            []
+          ],
+          "target_group_members": null,
+          "target_group_support": null,
+          "diameters_deg": [
+            1.5142850398574745,
+            0.0
+          ],
+          "lost_relations": [],
+          "added_relations": [],
+          "identical_full_coordinates_split": [],
+          "worker_unique": true,
+          "observation_cover_exact": true
+        }
+      ],
+      "cost_range": [
+        0.25015331321961554,
+        0.6547083133912289
+      ],
+      "status": "ok",
+      "orientation_states": 2,
+      "components": 2,
+      "exact_assignment_set_matches_upstream_filter": true
+    },
+    "geometry_equal": {
+      "feasible_count": 2,
+      "minimum_edit": 0,
+      "minimum_edit_then_cost": 0.25015331321961554,
+      "selection_status": "numerically_unique",
+      "selected_count": 1,
+      "selected": [
+        {
+          "canonical_mask": 2,
+          "upstream_candidate_id": 0,
+          "blocks": [
+            [
+              "R02452:2",
+              "R01798:2",
+              "R01341:2",
+              "R00525:2",
+              "R02407:2",
+              "R01905:2",
+              "R01662:0",
+              "R01557:2"
+            ],
+            [
+              "R02468:2"
+            ]
+          ],
+          "support": [
+            8,
+            1
+          ],
+          "edit_count": 0,
+          "cost": 0.25015331321961554,
+          "moved_alternative_alignments": [
+            []
+          ],
+          "target_group_members": null,
+          "target_group_support": null,
+          "diameters_deg": [
+            1.5142850398574745,
+            0.0
+          ],
+          "lost_relations": [],
+          "added_relations": [],
+          "identical_full_coordinates_split": [],
+          "worker_unique": true,
+          "observation_cover_exact": true
+        }
+      ],
+      "cost_range": [
+        0.25015331321961554,
+        0.6547083133912289
+      ],
+      "status": "ok",
+      "orientation_states": 2,
+      "components": 2,
+      "exact_assignment_set_matches_upstream_filter": true
+    },
+    "human": {
+      "status": "constraints_outside_local_domain",
+      "feasible_count": null
+    },
+    "human_equal": {
+      "status": "constraints_outside_local_domain",
+      "feasible_count": null
+    }
+  }
+}

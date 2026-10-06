@@ -1,0 +1,173 @@
+{
+  "scope": "Numeric reproduction only; no new visual adjudication or e9z study",
+  "full_comparisons": 2565,
+  "reviewed_directed_comparisons": 52,
+  "unreviewed_comparisons": 2513,
+  "record_metric_queries": 351,
+  "rpc_correct_wrong": [
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "metric": "pair",
+      "query": [
+        "R02452",
+        2
+      ],
+      "candidate": [
+        "R01557",
+        2
+      ],
+      "source_pair_indices": [
+        2,
+        4
+      ],
+      "order_status": [
+        "human_confirmed",
+        "human_confirmed"
+      ],
+      "relation": "different_corner",
+      "anchor_deg": 4.452581126226412,
+      "neighbor_deg": 28.12718769985609,
+      "combined_deg": 28.12718769985609,
+      "orientations_deg": {
+        "forward": 28.12718769985609,
+        "reverse": 59.824376130175544
+      },
+      "best_orientations": [
+        "forward"
+      ],
+      "query_neighbor_indices": [
+        1,
+        3
+      ],
+      "candidate_neighbor_indices": [
+        1,
+        3
+      ],
+      "anchor_rank": 2,
+      "combined_rank": 1
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "metric": "pair",
+      "query": [
+        "R02452",
+        2
+      ],
+      "candidate": [
+        "R01557",
+        4
+      ],
+      "source_pair_indices": [
+        2,
+        3
+      ],
+      "order_status": [
+        "human_confirmed",
+        "human_confirmed"
+      ],
+      "relation": "same_corner",
+      "anchor_deg": 3.0669444542229267,
+      "neighbor_deg": 43.09627012989334,
+      "combined_deg": 43.09627012989334,
+      "orientations_deg": {
+        "forward": 43.09627012989334,
+        "reverse": 59.00029034447167
+      },
+      "best_orientations": [
+        "forward"
+      ],
+      "query_neighbor_indices": [
+        1,
+        3
+      ],
+      "candidate_neighbor_indices": [
+        3,
+        5
+      ],
+      "anchor_rank": 1,
+      "combined_rank": 2
+    }
+  ],
+  "subdivision_control": {
+    "kind": "synthetic_straight_edge_subdivision_not_new_people",
+    "floor": [
+      [
+        -2.0,
+        -2.0
+      ],
+      [
+        2.0,
+        -2.0
+      ],
+      [
+        2.0,
+        2.0
+      ],
+      [
+        -2.0,
+        2.0
+      ]
+    ],
+    "subdivided_floor": [
+      [
+        -2.0,
+        -2.0
+      ],
+      [
+        0.0,
+        -2.0
+      ],
+      [
+        2.0,
+        -2.0
+      ],
+      [
+        2.0,
+        2.0
+      ],
+      [
+        -2.0,
+        2.0
+      ]
+    ],
+    "statement": "Inserted midpoint lies on the same straight 3D wall edge; continuous boundary and anchor unchanged.",
+    "comparison": {
+      "anchor_deg": 0.0,
+      "neighbor_deg": 41.8103148957786,
+      "combined_deg": 41.8103148957786,
+      "orientations_deg": {
+        "forward": 41.8103148957786,
+        "reverse": 141.05755873101862
+      },
+      "best_orientations": [
+        "forward"
+      ],
+      "query_neighbor_indices": [
+        3,
+        1
+      ],
+      "candidate_neighbor_indices": [
+        4,
+        1
+      ]
+    }
+  },
+  "vector_crosscheck_max_error_deg": 5.684341886080802e-14,
+  "ring_representation_invariance": [
+    {
+      "control": "reverse",
+      "max_error": 0.0
+    },
+    {
+      "control": "rotate",
+      "max_error": 0.0
+    },
+    {
+      "control": "common_seam_shift",
+      "max_error": 1.4210854715202004e-14
+    }
+  ],
+  "reviewed_relations_not_independent_samples": true
+}

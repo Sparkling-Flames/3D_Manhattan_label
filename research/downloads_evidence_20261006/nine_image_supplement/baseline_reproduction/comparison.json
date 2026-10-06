@@ -1,0 +1,209 @@
+{
+  "expected_states": 108,
+  "actual_states": 108,
+  "runtime_seconds": 5.462495062000016,
+  "failures": [],
+  "full_parsed_equality": false,
+  "exact_equal_states": 53,
+  "different_states": 55,
+  "float_difference_count": 93,
+  "non_float_difference_count": 0,
+  "max_absolute_float_error": 1.7763568394002505e-15,
+  "all_numeric_differences_within_abs1e_9_rel1e_12": true,
+  "all_discrete_semantics_equal": true,
+  "numeric_fields": {
+    "/result/identity_groups/maximum_pair_angle_deg": 3,
+    "/result/candidate/footprint": 55,
+    "/result/correspondence_diagnostics/competing_match_examples/candidates/distance_deg": 8,
+    "/result/correspondence_diagnostics/bottom/competing_match_examples/candidates/distance_deg": 3,
+    "/result/identity_groups/maximum_match_angle_deg": 9,
+    "/result/correspondence_diagnostics/top/competing_match_examples/candidates/distance_deg": 5,
+    "/result/endpoint_groups/bottom/maximum_match_angle_deg": 6,
+    "/result/endpoint_groups/top/maximum_match_angle_deg": 3,
+    "/result/endpoint_groups/top/maximum_pair_angle_deg": 1
+  },
+  "largest_numeric_differences": [
+    {
+      "path": "/17/result/correspondence_diagnostics/competing_match_examples/16/candidates/0/distance_deg",
+      "kind": "float",
+      "expected": 7.610746012956513,
+      "actual": 7.610746012956511,
+      "abs_error": 1.7763568394002505e-15,
+      "relative_error": 2.3340114574526406e-16,
+      "within_1e_9_abs_plus_1e_12_rel": true
+    },
+    {
+      "path": "/19/result/correspondence_diagnostics/bottom/competing_match_examples/16/candidates/0/distance_deg",
+      "kind": "float",
+      "expected": 7.610746012956513,
+      "actual": 7.610746012956511,
+      "abs_error": 1.7763568394002505e-15,
+      "relative_error": 2.3340114574526406e-16,
+      "within_1e_9_abs_plus_1e_12_rel": true
+    },
+    {
+      "path": "/53/result/correspondence_diagnostics/competing_match_examples/7/candidates/0/distance_deg",
+      "kind": "float",
+      "expected": 8.43658133549739,
+      "actual": 8.436581335497392,
+      "abs_error": 1.7763568394002505e-15,
+      "relative_error": 2.1055410583504113e-16,
+      "within_1e_9_abs_plus_1e_12_rel": true
+    },
+    {
+      "path": "/55/result/correspondence_diagnostics/bottom/competing_match_examples/7/candidates/0/distance_deg",
+      "kind": "float",
+      "expected": 8.43658133549739,
+      "actual": 8.436581335497392,
+      "abs_error": 1.7763568394002505e-15,
+      "relative_error": 2.1055410583504113e-16,
+      "within_1e_9_abs_plus_1e_12_rel": true
+    },
+    {
+      "path": "/57/result/correspondence_diagnostics/competing_match_examples/7/candidates/0/distance_deg",
+      "kind": "float",
+      "expected": 8.43658133549739,
+      "actual": 8.436581335497392,
+      "abs_error": 1.7763568394002505e-15,
+      "relative_error": 2.1055410583504113e-16,
+      "within_1e_9_abs_plus_1e_12_rel": true
+    },
+    {
+      "path": "/59/result/correspondence_diagnostics/bottom/competing_match_examples/7/candidates/0/distance_deg",
+      "kind": "float",
+      "expected": 8.43658133549739,
+      "actual": 8.436581335497392,
+      "abs_error": 1.7763568394002505e-15,
+      "relative_error": 2.1055410583504113e-16,
+      "within_1e_9_abs_plus_1e_12_rel": true
+    },
+    {
+      "path": "/78/result/correspondence_diagnostics/competing_match_examples/16/candidates/1/distance_deg",
+      "kind": "float",
+      "expected": 6.9563953658543545,
+      "actual": 6.956395365854356,
+      "abs_error": 1.7763568394002505e-15,
+      "relative_error": 2.553559345001498e-16,
+      "within_1e_9_abs_plus_1e_12_rel": true
+    },
+    {
+      "path": "/79/result/correspondence_diagnostics/top/competing_match_examples/16/candidates/1/distance_deg",
+      "kind": "float",
+      "expected": 6.9563953658543545,
+      "actual": 6.956395365854356,
+      "abs_error": 1.7763568394002505e-15,
+      "relative_error": 2.553559345001498e-16,
+      "within_1e_9_abs_plus_1e_12_rel": true
+    },
+    {
+      "path": "/82/result/identity_groups/5/maximum_match_angle_deg",
+      "kind": "float",
+      "expected": 9.023636377433927,
+      "actual": 9.023636377433926,
+      "abs_error": 1.7763568394002505e-15,
+      "relative_error": 1.9685598633412545e-16,
+      "within_1e_9_abs_plus_1e_12_rel": true
+    },
+    {
+      "path": "/83/result/endpoint_groups/top/5/maximum_match_angle_deg",
+      "kind": "float",
+      "expected": 9.023636377433927,
+      "actual": 9.023636377433926,
+      "abs_error": 1.7763568394002505e-15,
+      "relative_error": 1.9685598633412545e-16,
+      "within_1e_9_abs_plus_1e_12_rel": true
+    },
+    {
+      "path": "/49/result/identity_groups/1/maximum_match_angle_deg",
+      "kind": "float",
+      "expected": 4.822565661866244,
+      "actual": 4.822565661866243,
+      "abs_error": 8.881784197001252e-16,
+      "relative_error": 1.841713481940268e-16,
+      "within_1e_9_abs_plus_1e_12_rel": true
+    },
+    {
+      "path": "/51/result/endpoint_groups/bottom/1/maximum_match_angle_deg",
+      "kind": "float",
+      "expected": 4.822565661866244,
+      "actual": 4.822565661866243,
+      "abs_error": 8.881784197001252e-16,
+      "relative_error": 1.841713481940268e-16,
+      "within_1e_9_abs_plus_1e_12_rel": true
+    },
+    {
+      "path": "/73/result/identity_groups/26/maximum_match_angle_deg",
+      "kind": "float",
+      "expected": 4.7985706952738205,
+      "actual": 4.79857069527382,
+      "abs_error": 8.881784197001252e-16,
+      "relative_error": 1.8509228603736205e-16,
+      "within_1e_9_abs_plus_1e_12_rel": true
+    },
+    {
+      "path": "/75/result/endpoint_groups/bottom/26/maximum_match_angle_deg",
+      "kind": "float",
+      "expected": 4.7985706952738205,
+      "actual": 4.79857069527382,
+      "abs_error": 8.881784197001252e-16,
+      "relative_error": 1.8509228603736205e-16,
+      "within_1e_9_abs_plus_1e_12_rel": true
+    },
+    {
+      "path": "/77/result/identity_groups/19/maximum_match_angle_deg",
+      "kind": "float",
+      "expected": 4.7985706952738205,
+      "actual": 4.79857069527382,
+      "abs_error": 8.881784197001252e-16,
+      "relative_error": 1.8509228603736205e-16,
+      "within_1e_9_abs_plus_1e_12_rel": true
+    },
+    {
+      "path": "/78/result/correspondence_diagnostics/competing_match_examples/19/candidates/0/distance_deg",
+      "kind": "float",
+      "expected": 3.874722691011573,
+      "actual": 3.874722691011574,
+      "abs_error": 8.881784197001252e-16,
+      "relative_error": 2.292237381943451e-16,
+      "within_1e_9_abs_plus_1e_12_rel": true
+    },
+    {
+      "path": "/78/result/identity_groups/19/maximum_match_angle_deg",
+      "kind": "float",
+      "expected": 5.322630930171307,
+      "actual": 5.322630930171306,
+      "abs_error": 8.881784197001252e-16,
+      "relative_error": 1.6686830842722725e-16,
+      "within_1e_9_abs_plus_1e_12_rel": true
+    },
+    {
+      "path": "/79/result/correspondence_diagnostics/top/competing_match_examples/19/candidates/0/distance_deg",
+      "kind": "float",
+      "expected": 3.874722691011573,
+      "actual": 3.874722691011574,
+      "abs_error": 8.881784197001252e-16,
+      "relative_error": 2.292237381943451e-16,
+      "within_1e_9_abs_plus_1e_12_rel": true
+    },
+    {
+      "path": "/79/result/endpoint_groups/bottom/19/maximum_match_angle_deg",
+      "kind": "float",
+      "expected": 4.7985706952738205,
+      "actual": 4.79857069527382,
+      "abs_error": 8.881784197001252e-16,
+      "relative_error": 1.8509228603736205e-16,
+      "within_1e_9_abs_plus_1e_12_rel": true
+    },
+    {
+      "path": "/79/result/endpoint_groups/top/19/maximum_match_angle_deg",
+      "kind": "float",
+      "expected": 5.322630930171307,
+      "actual": 5.322630930171306,
+      "abs_error": 8.881784197001252e-16,
+      "relative_error": 1.6686830842722725e-16,
+      "within_1e_9_abs_plus_1e_12_rel": true
+    }
+  ],
+  "construction_evaluation_reads": [],
+  "input_unchanged_in_memory": true
+}

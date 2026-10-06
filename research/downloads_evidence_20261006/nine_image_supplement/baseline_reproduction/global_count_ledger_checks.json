@@ -1,0 +1,89 @@
+{
+  "scope": "Independent arithmetic and internal consistency checks of supplied 137-image/1644-state summary, plus crosscheck against 108 actually replayed panel states. Not a full 137-image geometry replay. Upstream raw geometry for remaining 128 images not provided here.",
+  "images": 137,
+  "qualified_records": 1520,
+  "records_are_not_unique_people": true,
+  "all_inventory_records_at_least_eight_endpoints": true,
+  "states": 1644,
+  "paired_shortfalls": {
+    "5": {
+      "count": 29,
+      "three": 12,
+      "zero_to_two": 17
+    },
+    "9": {
+      "count": 10,
+      "three": 9,
+      "zero_to_two": 1
+    },
+    "12": {
+      "count": 5,
+      "three": 5,
+      "zero_to_two": 0
+    }
+  },
+  "nine_degree_shortfalls_with_23_or_24_records": 6,
+  "preserved_failure": {
+    "image": "rPc6DW4iMge-22",
+    "record": "R01424",
+    "worker": "P002",
+    "n": 24,
+    "minimum_support": 12,
+    "affected_state_rows": 12,
+    "reason": "coordinates_outside_continuous_canvas"
+  },
+  "replayed_panel_states_matched_ledger": 108,
+  "other_routes": {
+    "bottom_anchor": {
+      "5": {
+        "below_four_selected": 18,
+        "below_four_generated": 12,
+        "no_generated": 6
+      },
+      "9": {
+        "below_four_selected": 6,
+        "below_four_generated": 5,
+        "no_generated": 1
+      },
+      "12": {
+        "below_four_selected": 2,
+        "below_four_generated": 2,
+        "no_generated": 0
+      }
+    },
+    "top_anchor": {
+      "5": {
+        "below_four_selected": 18,
+        "below_four_generated": 13,
+        "no_generated": 5
+      },
+      "9": {
+        "below_four_selected": 5,
+        "below_four_generated": 3,
+        "no_generated": 2
+      },
+      "12": {
+        "below_four_selected": 2,
+        "below_four_generated": 2,
+        "no_generated": 0
+      }
+    },
+    "split_unique": {
+      "5": {
+        "below_four_selected": null,
+        "below_four_generated": 1,
+        "no_generated": 53
+      },
+      "9": {
+        "below_four_selected": null,
+        "below_four_generated": 1,
+        "no_generated": 26
+      },
+      "12": {
+        "below_four_selected": null,
+        "below_four_generated": 1,
+        "no_generated": 17
+      }
+    }
+  }
+}

@@ -1,0 +1,1716 @@
+{
+  "claims": [
+    {
+      "claim": "local_domains",
+      "observed": 41,
+      "expected": 41,
+      "passed": true
+    },
+    {
+      "claim": "total_feasible_partitions",
+      "observed": 1328993,
+      "expected": 1328993,
+      "passed": true
+    },
+    {
+      "claim": "full_records",
+      "observed": 66,
+      "expected": 66,
+      "passed": true
+    },
+    {
+      "claim": "observations",
+      "observed": 400,
+      "expected": 400,
+      "passed": true
+    },
+    {
+      "claim": "distinct_workers",
+      "observed": 24,
+      "expected": 24,
+      "passed": true
+    },
+    {
+      "claim": "baseline_states",
+      "observed": 60,
+      "expected": 60,
+      "passed": true
+    },
+    {
+      "claim": "development_probes",
+      "observed": 45,
+      "expected": 45,
+      "passed": true
+    },
+    {
+      "claim": "automatic_statuses",
+      "observed": {
+        "unchanged": 28,
+        "numerically_unique": 13
+      },
+      "expected": {
+        "unchanged": 28,
+        "numerically_unique": 13
+      },
+      "passed": true
+    },
+    {
+      "claim": "rpc_domain_count",
+      "observed": 30,
+      "expected": 30,
+      "passed": true
+    },
+    {
+      "claim": "rpc_auto_repaired_domains",
+      "observed": 0,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "claim": "rpc_assisted_statuses",
+      "observed": {
+        "constraints_outside_local_domain": 21,
+        "numerically_unique": 9
+      },
+      "expected": {
+        "constraints_outside_local_domain": 21,
+        "numerically_unique": 9
+      },
+      "passed": true
+    },
+    {
+      "claim": "all_1328993_candidate_ledger_rows_legal",
+      "observed": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "claim": "pair_5deg_feasible",
+      "observed": 4096,
+      "expected": 4096,
+      "passed": true
+    },
+    {
+      "claim": "pair_5deg_human_feasible",
+      "observed": 1024,
+      "expected": 1024,
+      "passed": true
+    },
+    {
+      "claim": "pair_5deg_support_range",
+      "observed": [
+        6,
+        16
+      ],
+      "expected": [
+        6,
+        16
+      ],
+      "passed": true
+    },
+    {
+      "claim": "pair_5deg_forced_member_count",
+      "observed": 6,
+      "expected": 6,
+      "passed": true
+    },
+    {
+      "claim": "bottom_5deg_feasible",
+      "observed": 128,
+      "expected": 128,
+      "passed": true
+    },
+    {
+      "claim": "bottom_5deg_human_feasible",
+      "observed": 64,
+      "expected": 64,
+      "passed": true
+    },
+    {
+      "claim": "bottom_5deg_support_range",
+      "observed": [
+        10,
+        16
+      ],
+      "expected": [
+        10,
+        16
+      ],
+      "passed": true
+    },
+    {
+      "claim": "bottom_5deg_forced_member_count",
+      "observed": 10,
+      "expected": 10,
+      "passed": true
+    },
+    {
+      "claim": "top_5deg_feasible",
+      "observed": 2048,
+      "expected": 2048,
+      "passed": true
+    },
+    {
+      "claim": "top_5deg_human_feasible",
+      "observed": 512,
+      "expected": 512,
+      "passed": true
+    },
+    {
+      "claim": "top_5deg_support_range",
+      "observed": [
+        4,
+        13
+      ],
+      "expected": [
+        4,
+        13
+      ],
+      "passed": true
+    },
+    {
+      "claim": "top_5deg_forced_member_count",
+      "observed": 4,
+      "expected": 4,
+      "passed": true
+    },
+    {
+      "claim": "pair_5deg_baseline_unique_W_minimum",
+      "observed": [
+        4066
+      ],
+      "expected": [
+        4066
+      ],
+      "passed": true
+    },
+    {
+      "claim": "unb_bottom_support",
+      "observed": 9,
+      "expected": 9,
+      "passed": true
+    },
+    {
+      "claim": "unb_upper_geometry_sizes",
+      "observed": [
+        2,
+        3,
+        4
+      ],
+      "expected": [
+        2,
+        3,
+        4
+      ],
+      "passed": true
+    },
+    {
+      "claim": "unb_semantic_supports",
+      "observed": {
+        "glass_to_ceiling": 2,
+        "low_glass_top": 1,
+        "unknown": 6
+      },
+      "expected": {
+        "glass_to_ceiling": 2,
+        "low_glass_top": 1,
+        "unknown": 6
+      },
+      "passed": true
+    },
+    {
+      "claim": "unb_single_upper_target_selected",
+      "observed": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "claim": "transform_control_runs",
+      "observed": 540,
+      "expected": 540,
+      "passed": true
+    },
+    {
+      "claim": "control_mode_counts",
+      "observed": {
+        "shuffle": 144,
+        "rename": 144,
+        "jitter": 240,
+        "seam": 12
+      },
+      "expected": {
+        "shuffle": 144,
+        "rename": 144,
+        "jitter": 240,
+        "seam": 12
+      },
+      "passed": true
+    },
+    {
+      "claim": "non_jitter_control_changes",
+      "observed": 0,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "claim": "jitter_2t7WUuJeko7-06_pair",
+      "observed": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "passed": true
+    },
+    {
+      "claim": "jitter_2t7WUuJeko7-06_bottom",
+      "observed": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "passed": true
+    },
+    {
+      "claim": "jitter_2t7WUuJeko7-06_top",
+      "observed": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "passed": true
+    },
+    {
+      "claim": "jitter_7y3sRwLe3Va-04_pair",
+      "observed": [
+        2,
+        2,
+        0,
+        23
+      ],
+      "expected": [
+        2,
+        2,
+        0,
+        23
+      ],
+      "passed": true
+    },
+    {
+      "claim": "jitter_7y3sRwLe3Va-04_bottom",
+      "observed": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "passed": true
+    },
+    {
+      "claim": "jitter_7y3sRwLe3Va-04_top",
+      "observed": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "passed": true
+    },
+    {
+      "claim": "jitter_rPc6DW4iMge-06_pair",
+      "observed": [
+        6,
+        13,
+        6,
+        96
+      ],
+      "expected": [
+        6,
+        13,
+        6,
+        96
+      ],
+      "passed": true
+    },
+    {
+      "claim": "jitter_rPc6DW4iMge-06_bottom",
+      "observed": [
+        12,
+        12,
+        12,
+        50
+      ],
+      "expected": [
+        12,
+        12,
+        12,
+        50
+      ],
+      "passed": true
+    },
+    {
+      "claim": "jitter_rPc6DW4iMge-06_top",
+      "observed": [
+        3,
+        8,
+        3,
+        24
+      ],
+      "expected": [
+        3,
+        8,
+        3,
+        24
+      ],
+      "passed": true
+    },
+    {
+      "claim": "jitter_uNb9QFRL6hY-67_pair",
+      "observed": [
+        5,
+        5,
+        0,
+        5
+      ],
+      "expected": [
+        5,
+        5,
+        0,
+        5
+      ],
+      "passed": true
+    },
+    {
+      "claim": "jitter_uNb9QFRL6hY-67_bottom",
+      "observed": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "passed": true
+    },
+    {
+      "claim": "jitter_uNb9QFRL6hY-67_top",
+      "observed": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "passed": true
+    },
+    {
+      "claim": "all_five_upstream_scalar_checks",
+      "observed": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "claim": "all_selected_constraints_valid",
+      "observed": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "claim": "all_selected_outside_memberships_fixed",
+      "observed": true,
+      "expected": true,
+      "passed": true
+    }
+  ],
+  "all_claims_pass": true,
+  "candidate_ledger_checks": [
+    {
+      "domain_id": "7y3sRwLe3Va-04_bottom_1_d0",
+      "expected_count": 1,
+      "observed_count": 1,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "7y3sRwLe3Va-04_top_1_d0",
+      "expected_count": 4,
+      "observed_count": 4,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "7y3sRwLe3Va-04_pair_2.5_d0",
+      "expected_count": 16,
+      "observed_count": 16,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "7y3sRwLe3Va-04_pair_2.5_d1",
+      "expected_count": 2,
+      "observed_count": 2,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "7y3sRwLe3Va-04_bottom_2.5_d0",
+      "expected_count": 4096,
+      "observed_count": 4096,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "7y3sRwLe3Va-04_top_2.5_d0",
+      "expected_count": 16,
+      "observed_count": 16,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_bottom_1_d0",
+      "expected_count": 32,
+      "observed_count": 32,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_top_1_d0",
+      "expected_count": 1,
+      "observed_count": 1,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_top_1_d1",
+      "expected_count": 32,
+      "observed_count": 32,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_pair_2.5_d0",
+      "expected_count": 1,
+      "observed_count": 1,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_pair_2.5_d1",
+      "expected_count": 4,
+      "observed_count": 4,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_pair_2.5_d2",
+      "expected_count": 4,
+      "observed_count": 4,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_pair_2.5_d3",
+      "expected_count": 4,
+      "observed_count": 4,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_bottom_2.5_d0",
+      "expected_count": 1,
+      "observed_count": 1,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_bottom_2.5_d1",
+      "expected_count": 256,
+      "observed_count": 256,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_bottom_2.5_d2",
+      "expected_count": 1,
+      "observed_count": 1,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_bottom_2.5_d3",
+      "expected_count": 256,
+      "observed_count": 256,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_top_2.5_d0",
+      "expected_count": 2,
+      "observed_count": 2,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_top_2.5_d1",
+      "expected_count": 4,
+      "observed_count": 4,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_top_2.5_d2",
+      "expected_count": 1,
+      "observed_count": 1,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_pair_5_d0",
+      "expected_count": 4096,
+      "observed_count": 4096,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_pair_5_d1",
+      "expected_count": 1024,
+      "observed_count": 1024,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_bottom_5_d0",
+      "expected_count": 128,
+      "observed_count": 128,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_top_5_d0",
+      "expected_count": 2048,
+      "observed_count": 2048,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_top_5_d1",
+      "expected_count": 4096,
+      "observed_count": 4096,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_pair_7.5_d0",
+      "expected_count": 131072,
+      "observed_count": 131072,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_bottom_7.5_d0",
+      "expected_count": 131072,
+      "observed_count": 131072,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_bottom_7.5_d1",
+      "expected_count": 2,
+      "observed_count": 2,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_top_7.5_d0",
+      "expected_count": 262144,
+      "observed_count": 262144,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_top_7.5_d1",
+      "expected_count": 1,
+      "observed_count": 1,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_pair_10_d0",
+      "expected_count": 262144,
+      "observed_count": 262144,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_pair_10_d1",
+      "expected_count": 64,
+      "observed_count": 64,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_bottom_10_d0",
+      "expected_count": 262144,
+      "observed_count": 262144,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_bottom_10_d1",
+      "expected_count": 2048,
+      "observed_count": 2048,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_top_10_d0",
+      "expected_count": 262144,
+      "observed_count": 262144,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_top_10_d1",
+      "expected_count": 4,
+      "observed_count": 4,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "uNb9QFRL6hY-67_bottom_2.5_d0",
+      "expected_count": 16,
+      "observed_count": 16,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "uNb9QFRL6hY-67_pair_7.5_d0",
+      "expected_count": 2,
+      "observed_count": 2,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "uNb9QFRL6hY-67_top_7.5_d0",
+      "expected_count": 2,
+      "observed_count": 2,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "uNb9QFRL6hY-67_pair_10_d0",
+      "expected_count": 4,
+      "observed_count": 4,
+      "invalid_candidates": 0,
+      "passed": true
+    },
+    {
+      "domain_id": "uNb9QFRL6hY-67_top_10_d0",
+      "expected_count": 4,
+      "observed_count": 4,
+      "invalid_candidates": 0,
+      "passed": true
+    }
+  ],
+  "main_5deg": [
+    {
+      "domain_id": "rPc6DW4iMge-06_pair_5_d0",
+      "feasible": 4096,
+      "baseline_id": 4066,
+      "baseline_cost": 1.267935486097706,
+      "minimum_cost": 1.267935486097706,
+      "minimum_ids": [
+        4066
+      ],
+      "human_feasible_count": 1024,
+      "target_group_size_range": [
+        6,
+        16
+      ],
+      "forced_member_count": 6,
+      "size_histogram": {
+        "16": 1,
+        "15": 10,
+        "14": 45,
+        "13": 120,
+        "12": 210,
+        "11": 252,
+        "10": 210,
+        "9": 120,
+        "8": 45,
+        "7": 10,
+        "6": 1
+      },
+      "policies": {
+        "automatic": {
+          "choice": {
+            "status": "unchanged",
+            "selected_ids": [
+              4066
+            ],
+            "baseline_cost": 1.267935486097706
+          },
+          "selected": [
+            {
+              "id": 4066,
+              "cost": 1.267935486097706,
+              "supports": [
+                8,
+                10
+              ],
+              "moved": [
+                []
+              ],
+              "lost": 0,
+              "added": 0,
+              "identical_pairs_split": 0,
+              "diameters": [
+                3.3820864233495116,
+                2.839700640641708
+              ],
+              "correct_triple": false,
+              "wrong_triple": false
+            }
+          ]
+        },
+        "human_assisted": {
+          "choice": {
+            "status": "numerically_unique",
+            "selected_ids": [
+              2018
+            ],
+            "edit_count": 1,
+            "cost": 1.6039520933090503,
+            "baseline_cost": 1.267935486097706,
+            "no_semantic_uniqueness_claim": true
+          },
+          "selected": [
+            {
+              "id": 2018,
+              "cost": 1.6039520933090503,
+              "supports": [
+                9,
+                9
+              ],
+              "moved": [
+                [
+                  "R02452:2"
+                ]
+              ],
+              "lost": 9,
+              "added": 8,
+              "identical_pairs_split": 4,
+              "diameters": [
+                4.849739035733618,
+                2.839700640641708
+              ],
+              "correct_triple": true,
+              "wrong_triple": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_bottom_5_d0",
+      "feasible": 128,
+      "baseline_id": 127,
+      "baseline_cost": 1.8000296133770215,
+      "minimum_cost": 1.8000296133770215,
+      "minimum_ids": [
+        127
+      ],
+      "human_feasible_count": 64,
+      "target_group_size_range": [
+        10,
+        16
+      ],
+      "forced_member_count": 10,
+      "size_histogram": {
+        "16": 1,
+        "15": 6,
+        "14": 15,
+        "13": 20,
+        "12": 15,
+        "11": 6,
+        "10": 1
+      },
+      "policies": {
+        "automatic": {
+          "choice": {
+            "status": "unchanged",
+            "selected_ids": [
+              127
+            ],
+            "baseline_cost": 1.8000296133770215
+          },
+          "selected": [
+            {
+              "id": 127,
+              "cost": 1.8000296133770215,
+              "supports": [
+                9,
+                11
+              ],
+              "moved": [
+                []
+              ],
+              "lost": 0,
+              "added": 0,
+              "identical_pairs_split": 0,
+              "diameters": [
+                4.277623941495004,
+                4.926841598936796
+              ],
+              "correct_triple": false,
+              "wrong_triple": false
+            }
+          ]
+        },
+        "human_assisted": {
+          "choice": {
+            "status": "numerically_unique",
+            "selected_ids": [
+              63
+            ],
+            "edit_count": 1,
+            "cost": 2.013817775376177,
+            "baseline_cost": 1.8000296133770215,
+            "no_semantic_uniqueness_claim": true
+          },
+          "selected": [
+            {
+              "id": 63,
+              "cost": 2.013817775376177,
+              "supports": [
+                10,
+                10
+              ],
+              "moved": [
+                [
+                  "R02452:2"
+                ]
+              ],
+              "lost": 10,
+              "added": 9,
+              "identical_pairs_split": 4,
+              "diameters": [
+                4.326333840176633,
+                4.926841598936796
+              ],
+              "correct_triple": true,
+              "wrong_triple": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "domain_id": "rPc6DW4iMge-06_top_5_d0",
+      "feasible": 2048,
+      "baseline_id": 2040,
+      "baseline_cost": 0.7096814181583333,
+      "minimum_cost": 0.5990532126345955,
+      "minimum_ids": [
+        1272
+      ],
+      "human_feasible_count": 512,
+      "target_group_size_range": [
+        4,
+        13
+      ],
+      "forced_member_count": 4,
+      "size_histogram": {
+        "13": 1,
+        "12": 9,
+        "11": 36,
+        "10": 84,
+        "9": 126,
+        "8": 126,
+        "7": 84,
+        "6": 36,
+        "5": 9,
+        "4": 1
+      },
+      "policies": {
+        "automatic": {
+          "choice": {
+            "status": "numerically_unique",
+            "selected_ids": [
+              1528
+            ],
+            "edit_count": 1,
+            "cost": 0.6287059034832041,
+            "baseline_cost": 0.7096814181583333,
+            "no_semantic_uniqueness_claim": true
+          },
+          "selected": [
+            {
+              "id": 1528,
+              "cost": 0.6287059034832041,
+              "supports": [
+                6,
+                9
+              ],
+              "moved": [
+                [
+                  "R02165:2"
+                ]
+              ],
+              "lost": 9,
+              "added": 5,
+              "identical_pairs_split": 0,
+              "diameters": [
+                2.6136009335720036,
+                3.2153157923444144
+              ],
+              "correct_triple": false,
+              "wrong_triple": true
+            }
+          ]
+        },
+        "human_assisted": {
+          "choice": {
+            "status": "numerically_unique",
+            "selected_ids": [
+              760
+            ],
+            "edit_count": 2,
+            "cost": 1.133053943403203,
+            "baseline_cost": 0.7096814181583333,
+            "no_semantic_uniqueness_claim": true
+          },
+          "selected": [
+            {
+              "id": 760,
+              "cost": 1.133053943403203,
+              "supports": [
+                7,
+                8
+              ],
+              "moved": [
+                [
+                  "R02452:2",
+                  "R01986:2"
+                ]
+              ],
+              "lost": 16,
+              "added": 10,
+              "identical_pairs_split": 4,
+              "diameters": [
+                4.849739035733618,
+                3.2825341021814247
+              ],
+              "correct_triple": true,
+              "wrong_triple": false
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "unb_5deg": {
+    "threshold_deg": 5.0,
+    "roster_denominator": 15,
+    "bottom_group": [
+      0,
+      4,
+      8,
+      20,
+      30,
+      38,
+      42,
+      51,
+      64
+    ],
+    "bottom_members": [
+      [
+        "R02930",
+        0
+      ],
+      [
+        "R02932",
+        0
+      ],
+      [
+        "R02210",
+        0
+      ],
+      [
+        "R01956",
+        0
+      ],
+      [
+        "R02931",
+        0
+      ],
+      [
+        "R03196",
+        0
+      ],
+      [
+        "R00144",
+        0
+      ],
+      [
+        "R00526",
+        0
+      ],
+      [
+        "R03194",
+        0
+      ]
+    ],
+    "bottom_support": 9,
+    "bottom_support_interpretation": "geometric group; only three tentative same-corner judgments, rest unreviewed",
+    "bottom_centroid_full_pair_proxy": {
+      "points": [
+        [
+          145.4027802242441,
+          119.06468019732864
+        ],
+        [
+          145.4027802242441,
+          413.1523010244134
+        ]
+      ],
+      "alternatives": [
+        [
+          [
+            145.4027802242441,
+            119.06468019732864
+          ],
+          [
+            145.4027802242441,
+            413.1523010244134
+          ]
+        ]
+      ],
+      "status": "ok",
+      "anchor_count": 1,
+      "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+    },
+    "geometric_top_subgroups": [
+      {
+        "members": [
+          [
+            "R02930",
+            0
+          ],
+          [
+            "R01956",
+            0
+          ]
+        ],
+        "geometric_support": 2,
+        "known_semantic_members": {
+          "glass_to_ceiling": [],
+          "low_glass_top": []
+        },
+        "unknown_members": [
+          [
+            "R02930",
+            0
+          ],
+          [
+            "R01956",
+            0
+          ]
+        ],
+        "center": {
+          "points": [
+            [
+              143.4743036007291,
+              123.69602296311444
+            ],
+            [
+              143.4743036007291,
+              413.6921001806264
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                143.4743036007291,
+                123.69602296311444
+              ],
+              [
+                143.4743036007291,
+                413.6921001806264
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 2,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        },
+        "top_diameter_deg": 3.3804362271107857,
+        "semantic_interpretation": "unknown_except_explicitly_reviewed_individuals",
+        "majority_gate_applied": false
+      },
+      {
+        "members": [
+          [
+            "R02932",
+            0
+          ],
+          [
+            "R02931",
+            0
+          ],
+          [
+            "R00144",
+            0
+          ]
+        ],
+        "geometric_support": 3,
+        "known_semantic_members": {
+          "glass_to_ceiling": [],
+          "low_glass_top": [
+            [
+              "R00144",
+              0
+            ]
+          ]
+        },
+        "unknown_members": [
+          [
+            "R02932",
+            0
+          ],
+          [
+            "R02931",
+            0
+          ]
+        ],
+        "center": {
+          "points": [
+            [
+              139.27969348659005,
+              147.1264367816092
+            ],
+            [
+              139.27969348659005,
+              413.91570881226056
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                139.27969348659005,
+                147.1264367816092
+              ],
+              [
+                139.27969348659005,
+                413.91570881226056
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 2,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        },
+        "top_diameter_deg": 1.6908481988038504,
+        "semantic_interpretation": "unknown_except_explicitly_reviewed_individuals",
+        "majority_gate_applied": false
+      },
+      {
+        "members": [
+          [
+            "R02210",
+            0
+          ],
+          [
+            "R03196",
+            0
+          ],
+          [
+            "R00526",
+            0
+          ],
+          [
+            "R03194",
+            0
+          ]
+        ],
+        "geometric_support": 4,
+        "known_semantic_members": {
+          "glass_to_ceiling": [
+            [
+              "R02210",
+              0
+            ],
+            [
+              "R00526",
+              0
+            ]
+          ],
+          "low_glass_top": []
+        },
+        "unknown_members": [
+          [
+            "R03196",
+            0
+          ],
+          [
+            "R03194",
+            0
+          ]
+        ],
+        "center": {
+          "points": [
+            [
+              146.8309287845965,
+              112.15004456227487
+            ],
+            [
+              146.8309287845965,
+              412.51674457161266
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                146.8309287845965,
+                112.15004456227487
+              ],
+              [
+                146.8309287845965,
+                412.51674457161266
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 1,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        },
+        "top_diameter_deg": 2.1332434956575796,
+        "semantic_interpretation": "unknown_except_explicitly_reviewed_individuals",
+        "majority_gate_applied": false
+      }
+    ],
+    "targets": [
+      {
+        "target": "glass_to_ceiling",
+        "members": [
+          [
+            "R02210",
+            0
+          ],
+          [
+            "R00526",
+            0
+          ]
+        ],
+        "top_support": 2,
+        "bottom_marginal_support": 9,
+        "original_pair_incidence": 2,
+        "center_of_own_sources": {
+          "points": [
+            [
+              147.39001640913597,
+              111.60567429247885
+            ],
+            [
+              147.39001640913597,
+              412.51674457161266
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                147.39001640913597,
+                111.60567429247885
+              ],
+              [
+                147.39001640913597,
+                412.51674457161266
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 2,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        },
+        "raw_paired_points": [
+          [
+            [
+              148.6257452530068,
+              114.53727157112453
+            ],
+            [
+              148.6257452530068,
+              413.1523010244134
+            ]
+          ],
+          [
+            [
+              146.15428756526512,
+              108.67407701383317
+            ],
+            [
+              146.15428756526512,
+              411.8811881188119
+            ]
+          ]
+        ],
+        "full_roster_fraction": 0.13333333333333333,
+        "has_semantic_label": true
+      },
+      {
+        "target": "low_glass_top",
+        "members": [
+          [
+            "R00144",
+            0
+          ]
+        ],
+        "top_support": 1,
+        "bottom_marginal_support": 9,
+        "original_pair_incidence": 1,
+        "center_of_own_sources": {
+          "points": [
+            [
+              145.40278022424408,
+              147.24332174606994
+            ],
+            [
+              145.40278022424408,
+              406.7596763235182
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                145.40278022424408,
+                147.24332174606994
+              ],
+              [
+                145.40278022424408,
+                406.7596763235182
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 1,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        },
+        "raw_paired_points": [
+          [
+            [
+              145.40278022424408,
+              147.24332174606994
+            ],
+            [
+              145.40278022424408,
+              406.7596763235182
+            ]
+          ]
+        ],
+        "full_roster_fraction": 0.06666666666666667,
+        "has_semantic_label": true
+      },
+      {
+        "target": "unknown",
+        "members": [
+          [
+            "R02930",
+            0
+          ],
+          [
+            "R02932",
+            0
+          ],
+          [
+            "R01956",
+            0
+          ],
+          [
+            "R02931",
+            0
+          ],
+          [
+            "R03196",
+            0
+          ],
+          [
+            "R03194",
+            0
+          ]
+        ],
+        "top_support": 6,
+        "bottom_marginal_support": 9,
+        "original_pair_incidence": 6,
+        "center_of_own_sources": null,
+        "raw_paired_points": [
+          [
+            [
+              145.35038363171356,
+              128.32736572890025
+            ],
+            [
+              145.35038363171356,
+              411.17135549872125
+            ]
+          ],
+          [
+            [
+              139.27969348659005,
+              147.1264367816092
+            ],
+            [
+              139.27969348659005,
+              413.91570881226056
+            ]
+          ],
+          [
+            [
+              141.59822356974462,
+              119.06468019732864
+            ],
+            [
+              141.59822356974462,
+              416.21284486253165
+            ]
+          ],
+          [
+            [
+              139.27969348659005,
+              147.1264367816092
+            ],
+            [
+              139.27969348659005,
+              413.91570881226056
+            ]
+          ],
+          [
+            [
+              145.60000000000002,
+              113.6
+            ],
+            [
+              145.60000000000002,
+              417.6
+            ]
+          ],
+          [
+            [
+              147.50757000392787,
+              110.70008912454973
+            ],
+            [
+              147.50757000392787,
+              411.1959714515167
+            ]
+          ]
+        ],
+        "full_roster_fraction": 0.4,
+        "has_semantic_label": false
+      }
+    ],
+    "pairing_policy": "retain original incidence; do not duplicate bottom marginal as top or joint support",
+    "single_upper_target_selected": false,
+    "complete_layout_created": false,
+    "reviewed_members_outside_this_bottom_group": [],
+    "endpoint_center_alignment": "not_applied; conditional top and bottom estimates retain separate longitudes, no new shared-x pair is asserted"
+  },
+  "summary": {
+    "full_records": 66,
+    "pair_observations": 400,
+    "baseline_metric_threshold_states": 60,
+    "development_probes": 45,
+    "local_domains": 41,
+    "no_local_domain_states": 36,
+    "enumerated_feasible_partitions": 1328993,
+    "automatic_statuses": {
+      "unchanged": 28,
+      "numerically_unique": 13
+    },
+    "assisted_statuses": {
+      "constraints_outside_local_domain": 21,
+      "numerically_unique": 9
+    },
+    "rpc_automatic_correct": false,
+    "all_source_scalar_crosschecks_passed": true,
+    "all_selected_outside_memberships_fixed": true,
+    "all_selected_valid_constraints": true,
+    "complete_layout_created": false,
+    "reference_used": false,
+    "visual_validation": false
+  },
+  "control_jitter_summary": [
+    {
+      "image": "2t7WUuJeko7-06",
+      "metric": "pair",
+      "mode": "jitter",
+      "n": 20,
+      "baseline_changed": 0,
+      "auto_set_changed": 0,
+      "assisted_set_changed": 0,
+      "max_changed_relations": 0,
+      "automatic_correct_triple_any": 0
+    },
+    {
+      "image": "2t7WUuJeko7-06",
+      "metric": "bottom",
+      "mode": "jitter",
+      "n": 20,
+      "baseline_changed": 0,
+      "auto_set_changed": 0,
+      "assisted_set_changed": 0,
+      "max_changed_relations": 0,
+      "automatic_correct_triple_any": 0
+    },
+    {
+      "image": "2t7WUuJeko7-06",
+      "metric": "top",
+      "mode": "jitter",
+      "n": 20,
+      "baseline_changed": 0,
+      "auto_set_changed": 0,
+      "assisted_set_changed": 0,
+      "max_changed_relations": 0,
+      "automatic_correct_triple_any": 0
+    },
+    {
+      "image": "7y3sRwLe3Va-04",
+      "metric": "pair",
+      "mode": "jitter",
+      "n": 20,
+      "baseline_changed": 2,
+      "auto_set_changed": 2,
+      "assisted_set_changed": 0,
+      "max_changed_relations": 23,
+      "automatic_correct_triple_any": 0
+    },
+    {
+      "image": "7y3sRwLe3Va-04",
+      "metric": "bottom",
+      "mode": "jitter",
+      "n": 20,
+      "baseline_changed": 0,
+      "auto_set_changed": 0,
+      "assisted_set_changed": 0,
+      "max_changed_relations": 0,
+      "automatic_correct_triple_any": 0
+    },
+    {
+      "image": "7y3sRwLe3Va-04",
+      "metric": "top",
+      "mode": "jitter",
+      "n": 20,
+      "baseline_changed": 0,
+      "auto_set_changed": 0,
+      "assisted_set_changed": 0,
+      "max_changed_relations": 0,
+      "automatic_correct_triple_any": 0
+    },
+    {
+      "image": "rPc6DW4iMge-06",
+      "metric": "pair",
+      "mode": "jitter",
+      "n": 20,
+      "baseline_changed": 6,
+      "auto_set_changed": 13,
+      "assisted_set_changed": 6,
+      "max_changed_relations": 96,
+      "automatic_correct_triple_any": 0
+    },
+    {
+      "image": "rPc6DW4iMge-06",
+      "metric": "bottom",
+      "mode": "jitter",
+      "n": 20,
+      "baseline_changed": 12,
+      "auto_set_changed": 12,
+      "assisted_set_changed": 12,
+      "max_changed_relations": 50,
+      "automatic_correct_triple_any": 0
+    },
+    {
+      "image": "rPc6DW4iMge-06",
+      "metric": "top",
+      "mode": "jitter",
+      "n": 20,
+      "baseline_changed": 3,
+      "auto_set_changed": 8,
+      "assisted_set_changed": 3,
+      "max_changed_relations": 24,
+      "automatic_correct_triple_any": 0
+    },
+    {
+      "image": "uNb9QFRL6hY-67",
+      "metric": "pair",
+      "mode": "jitter",
+      "n": 20,
+      "baseline_changed": 5,
+      "auto_set_changed": 5,
+      "assisted_set_changed": 0,
+      "max_changed_relations": 5,
+      "automatic_correct_triple_any": 0
+    },
+    {
+      "image": "uNb9QFRL6hY-67",
+      "metric": "bottom",
+      "mode": "jitter",
+      "n": 20,
+      "baseline_changed": 0,
+      "auto_set_changed": 0,
+      "assisted_set_changed": 0,
+      "max_changed_relations": 0,
+      "automatic_correct_triple_any": 0
+    },
+    {
+      "image": "uNb9QFRL6hY-67",
+      "metric": "top",
+      "mode": "jitter",
+      "n": 20,
+      "baseline_changed": 0,
+      "auto_set_changed": 0,
+      "assisted_set_changed": 0,
+      "max_changed_relations": 0,
+      "automatic_correct_triple_any": 0
+    }
+  ]
+}

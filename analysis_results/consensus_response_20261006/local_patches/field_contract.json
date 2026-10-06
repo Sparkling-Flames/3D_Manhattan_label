@@ -1,0 +1,41 @@
+{
+  "schema": "local_patch_response_v1",
+  "patch_source": "Pro diagnostic_patches.geojson; two post-hoc observed path/chord regions, unchanged.",
+  "input": "Existing prepared Manual 24-person pools; original ring order and footprints.",
+  "expected_patch_fraction": "E[area(F intersect patch)] / fixed patch area. Exact finite-pool marginal probabilities; no MC.",
+  "semantics": "rPc: retention of one observed protrusion; yq: filling of one observed indent. Neither is semantic accuracy or point identity support.",
+  "selection": "Uniform k=1..N; existing k=8 compositions and both existing calibration reference policies. No new worker ranking.",
+  "reference": "version indexes evaluation GT; policy indexes calibration GT. Global D/O/E/V reused from existing tables.",
+  "source_higher": "Label of the patch-source worker under the current calibration; blank for uniform rows.",
+  "checks": [
+    {
+      "image": "rPc6DW4iMge-06",
+      "method": "mv50",
+      "single_error": 5.551115123125783e-17,
+      "all_geometry_error": 0.0,
+      "pro_endpoint_error": 5.551115123125783e-17
+    },
+    {
+      "image": "rPc6DW4iMge-06",
+      "method": "mv_strict",
+      "single_error": 5.551115123125783e-17,
+      "all_geometry_error": 2.7755575615628914e-17,
+      "pro_endpoint_error": 2.7755575615628914e-17
+    },
+    {
+      "image": "yqstnuAEVhm-32",
+      "method": "mv50",
+      "single_error": 0.0,
+      "all_geometry_error": 0.0,
+      "pro_endpoint_error": 1.1102230246251565e-16
+    },
+    {
+      "image": "yqstnuAEVhm-32",
+      "method": "mv_strict",
+      "single_error": 0.0,
+      "all_geometry_error": 1.1102230246251565e-16,
+      "pro_endpoint_error": 0.0
+    }
+  ],
+  "warnings": []
+}

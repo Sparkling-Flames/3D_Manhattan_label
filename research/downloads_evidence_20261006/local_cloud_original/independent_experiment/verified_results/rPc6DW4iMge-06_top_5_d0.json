@@ -1,0 +1,864 @@
+{
+  "domain_id": "rPc6DW4iMge-06_top_5_d0",
+  "threshold": 5.0,
+  "metric": "top",
+  "union_nodes": 15,
+  "baseline_support": [
+    10,
+    5
+  ],
+  "equal_blocks": [
+    [
+      "R02452:2",
+      "R01798:2",
+      "R01341:2",
+      "R00525:2",
+      "R02407:2"
+    ]
+  ],
+  "equal_block_node_counts": [
+    5
+  ],
+  "independent_forbidden_edges_match": true,
+  "full_roster": 24,
+  "all_input_observations": 224,
+  "outside_groups_unchanged": true,
+  "conditions": {
+    "geometry": {
+      "feasible_count": 2048,
+      "minimum_edit": 0,
+      "minimum_edit_then_cost": 0.7096814181583336,
+      "selection_status": "numerically_unique",
+      "selected_count": 1,
+      "selected": [
+        {
+          "canonical_mask": 9214,
+          "upstream_candidate_id": 2040,
+          "blocks": [
+            [
+              "R01784:1",
+              "R01489:1",
+              "R00634:1",
+              "R01557:4",
+              "R00500:1"
+            ],
+            [
+              "R02452:2",
+              "R02165:2",
+              "R01986:2",
+              "R01798:2",
+              "R01341:2",
+              "R00525:2",
+              "R02407:2",
+              "R01905:2",
+              "R01662:0",
+              "R01557:2"
+            ]
+          ],
+          "support": [
+            5,
+            10
+          ],
+          "edit_count": 0,
+          "cost": 0.7096814181583336,
+          "moved_alternative_alignments": [
+            []
+          ],
+          "target_group_members": null,
+          "target_group_support": null,
+          "diameters_deg": [
+            2.6136009335719907,
+            3.282534102181427
+          ],
+          "lost_relations": [],
+          "added_relations": [],
+          "identical_full_coordinates_split": [],
+          "worker_unique": true,
+          "observation_cover_exact": true
+        }
+      ],
+      "cost_range": [
+        0.5990532126345935,
+        2.105226179328448
+      ],
+      "reviewed_triple_together_count": 512,
+      "target_support_range": [
+        4,
+        13
+      ],
+      "target_support_histogram": {
+        "4": 1,
+        "5": 9,
+        "6": 36,
+        "7": 84,
+        "8": 126,
+        "9": 126,
+        "10": 84,
+        "11": 36,
+        "12": 9,
+        "13": 1
+      },
+      "support_at_least_12_count": 10,
+      "support_greater_than_12_count": 1,
+      "forced_members": [
+        "R01784:1",
+        "R02452:2",
+        "R01986:2",
+        "R01557:4"
+      ],
+      "possible_members": [
+        "R01784:1",
+        "R02452:2",
+        "R02165:2",
+        "R01986:2",
+        "R01798:2",
+        "R01341:2",
+        "R00525:2",
+        "R02407:2",
+        "R01905:2",
+        "R01489:1",
+        "R00634:1",
+        "R01557:4",
+        "R00500:1"
+      ],
+      "variable_members": [
+        "R02165:2",
+        "R01798:2",
+        "R01341:2",
+        "R00525:2",
+        "R02407:2",
+        "R01905:2",
+        "R01489:1",
+        "R00634:1",
+        "R00500:1"
+      ],
+      "conditional_center_extrema": {
+        "x_unwrapped_px": [
+          213.6768097952494,
+          221.4054054054054
+        ],
+        "top_y_px": [
+          208.22651222651223,
+          214.57169220036835
+        ],
+        "bottom_y_px": [
+          308.8563813373012,
+          312.33976833976834
+        ],
+        "x_anchor_px": 221.4054054054054,
+        "interpretation": "Coordinate-median extrema over target assignments, not confidence intervals; x can be reduced modulo 1024. No top/bottom semantic target is newly established."
+      },
+      "status": "ok",
+      "orientation_states": 2048,
+      "components": 12,
+      "exact_assignment_set_matches_upstream_filter": true
+    },
+    "geometry_equal": {
+      "feasible_count": 128,
+      "minimum_edit": 0,
+      "minimum_edit_then_cost": 0.7096814181583336,
+      "selection_status": "numerically_unique",
+      "selected_count": 1,
+      "selected": [
+        {
+          "canonical_mask": 9214,
+          "upstream_candidate_id": 2040,
+          "blocks": [
+            [
+              "R01784:1",
+              "R01489:1",
+              "R00634:1",
+              "R01557:4",
+              "R00500:1"
+            ],
+            [
+              "R02452:2",
+              "R02165:2",
+              "R01986:2",
+              "R01798:2",
+              "R01341:2",
+              "R00525:2",
+              "R02407:2",
+              "R01905:2",
+              "R01662:0",
+              "R01557:2"
+            ]
+          ],
+          "support": [
+            5,
+            10
+          ],
+          "edit_count": 0,
+          "cost": 0.7096814181583336,
+          "moved_alternative_alignments": [
+            []
+          ],
+          "target_group_members": null,
+          "target_group_support": null,
+          "diameters_deg": [
+            2.6136009335719907,
+            3.282534102181427
+          ],
+          "lost_relations": [],
+          "added_relations": [],
+          "identical_full_coordinates_split": [],
+          "worker_unique": true,
+          "observation_cover_exact": true
+        }
+      ],
+      "cost_range": [
+        0.5990532126345935,
+        2.105226179328448
+      ],
+      "reviewed_triple_together_count": 32,
+      "target_support_range": [
+        8,
+        13
+      ],
+      "target_support_histogram": {
+        "8": 1,
+        "9": 5,
+        "10": 10,
+        "11": 10,
+        "12": 5,
+        "13": 1
+      },
+      "support_at_least_12_count": 6,
+      "support_greater_than_12_count": 1,
+      "forced_members": [
+        "R01784:1",
+        "R02452:2",
+        "R01986:2",
+        "R01798:2",
+        "R01341:2",
+        "R00525:2",
+        "R02407:2",
+        "R01557:4"
+      ],
+      "possible_members": [
+        "R01784:1",
+        "R02452:2",
+        "R02165:2",
+        "R01986:2",
+        "R01798:2",
+        "R01341:2",
+        "R00525:2",
+        "R02407:2",
+        "R01905:2",
+        "R01489:1",
+        "R00634:1",
+        "R01557:4",
+        "R00500:1"
+      ],
+      "variable_members": [
+        "R02165:2",
+        "R01905:2",
+        "R01489:1",
+        "R00634:1",
+        "R00500:1"
+      ],
+      "conditional_center_extrema": {
+        "x_unwrapped_px": [
+          215.0036645998193,
+          221.4054054054054
+        ],
+        "top_y_px": [
+          208.22651222651223,
+          209.04142011834318
+        ],
+        "bottom_y_px": [
+          310.292405274133,
+          312.33976833976834
+        ],
+        "x_anchor_px": 221.4054054054054,
+        "interpretation": "Coordinate-median extrema over target assignments, not confidence intervals; x can be reduced modulo 1024. No top/bottom semantic target is newly established."
+      },
+      "status": "ok",
+      "orientation_states": 128,
+      "components": 8,
+      "exact_assignment_set_matches_upstream_filter": true
+    },
+    "human": {
+      "feasible_count": 512,
+      "minimum_edit": 2,
+      "minimum_edit_then_cost": 1.1330539434032052,
+      "selection_status": "numerically_unique",
+      "selected_count": 1,
+      "selected": [
+        {
+          "canonical_mask": 9204,
+          "upstream_candidate_id": 760,
+          "blocks": [
+            [
+              "R01784:1",
+              "R02452:2",
+              "R01986:2",
+              "R01489:1",
+              "R00634:1",
+              "R01557:4",
+              "R00500:1"
+            ],
+            [
+              "R02165:2",
+              "R01798:2",
+              "R01341:2",
+              "R00525:2",
+              "R02407:2",
+              "R01905:2",
+              "R01662:0",
+              "R01557:2"
+            ]
+          ],
+          "support": [
+            7,
+            8
+          ],
+          "edit_count": 2,
+          "cost": 1.1330539434032052,
+          "moved_alternative_alignments": [
+            [
+              "R02452:2",
+              "R01986:2"
+            ]
+          ],
+          "target_group_members": [
+            "R01784:1",
+            "R02452:2",
+            "R01986:2",
+            "R01489:1",
+            "R00634:1",
+            "R01557:4",
+            "R00500:1"
+          ],
+          "target_group_support": 7,
+          "diameters_deg": [
+            4.849739035733623,
+            3.282534102181427
+          ],
+          "lost_relations": [
+            [
+              "R02452:2",
+              "R02165:2"
+            ],
+            [
+              "R02452:2",
+              "R01798:2"
+            ],
+            [
+              "R02452:2",
+              "R01341:2"
+            ],
+            [
+              "R02452:2",
+              "R00525:2"
+            ],
+            [
+              "R02452:2",
+              "R02407:2"
+            ],
+            [
+              "R02452:2",
+              "R01905:2"
+            ],
+            [
+              "R02452:2",
+              "R01662:0"
+            ],
+            [
+              "R02452:2",
+              "R01557:2"
+            ],
+            [
+              "R02165:2",
+              "R01986:2"
+            ],
+            [
+              "R01986:2",
+              "R01798:2"
+            ],
+            [
+              "R01986:2",
+              "R01341:2"
+            ],
+            [
+              "R01986:2",
+              "R00525:2"
+            ],
+            [
+              "R01986:2",
+              "R02407:2"
+            ],
+            [
+              "R01986:2",
+              "R01905:2"
+            ],
+            [
+              "R01986:2",
+              "R01662:0"
+            ],
+            [
+              "R01986:2",
+              "R01557:2"
+            ]
+          ],
+          "added_relations": [
+            [
+              "R01784:1",
+              "R02452:2"
+            ],
+            [
+              "R01784:1",
+              "R01986:2"
+            ],
+            [
+              "R02452:2",
+              "R01489:1"
+            ],
+            [
+              "R02452:2",
+              "R00634:1"
+            ],
+            [
+              "R02452:2",
+              "R01557:4"
+            ],
+            [
+              "R02452:2",
+              "R00500:1"
+            ],
+            [
+              "R01986:2",
+              "R01489:1"
+            ],
+            [
+              "R01986:2",
+              "R00634:1"
+            ],
+            [
+              "R01986:2",
+              "R01557:4"
+            ],
+            [
+              "R01986:2",
+              "R00500:1"
+            ]
+          ],
+          "identical_full_coordinates_split": [
+            [
+              "R02452:2",
+              "R01798:2"
+            ],
+            [
+              "R02452:2",
+              "R01341:2"
+            ],
+            [
+              "R02452:2",
+              "R00525:2"
+            ],
+            [
+              "R02452:2",
+              "R02407:2"
+            ]
+          ],
+          "worker_unique": true,
+          "observation_cover_exact": true
+        }
+      ],
+      "cost_range": [
+        0.9322043682979341,
+        2.105226179328448
+      ],
+      "reviewed_triple_together_count": 512,
+      "target_support_range": [
+        4,
+        13
+      ],
+      "target_support_histogram": {
+        "4": 1,
+        "5": 9,
+        "6": 36,
+        "7": 84,
+        "8": 126,
+        "9": 126,
+        "10": 84,
+        "11": 36,
+        "12": 9,
+        "13": 1
+      },
+      "support_at_least_12_count": 10,
+      "support_greater_than_12_count": 1,
+      "forced_members": [
+        "R01784:1",
+        "R02452:2",
+        "R01986:2",
+        "R01557:4"
+      ],
+      "possible_members": [
+        "R01784:1",
+        "R02452:2",
+        "R02165:2",
+        "R01986:2",
+        "R01798:2",
+        "R01341:2",
+        "R00525:2",
+        "R02407:2",
+        "R01905:2",
+        "R01489:1",
+        "R00634:1",
+        "R01557:4",
+        "R00500:1"
+      ],
+      "variable_members": [
+        "R02165:2",
+        "R01798:2",
+        "R01341:2",
+        "R00525:2",
+        "R02407:2",
+        "R01905:2",
+        "R01489:1",
+        "R00634:1",
+        "R00500:1"
+      ],
+      "conditional_center_extrema": {
+        "x_unwrapped_px": [
+          213.6768097952494,
+          221.4054054054054
+        ],
+        "top_y_px": [
+          208.22651222651223,
+          214.57169220036835
+        ],
+        "bottom_y_px": [
+          308.8563813373012,
+          312.33976833976834
+        ],
+        "x_anchor_px": 221.4054054054054,
+        "interpretation": "Coordinate-median extrema over target assignments, not confidence intervals; x can be reduced modulo 1024. No top/bottom semantic target is newly established."
+      },
+      "status": "ok",
+      "orientation_states": 512,
+      "components": 10,
+      "exact_assignment_set_matches_upstream_filter": true
+    },
+    "human_equal": {
+      "feasible_count": 32,
+      "minimum_edit": 4,
+      "minimum_edit_then_cost": 2.0372824769833207,
+      "selection_status": "numerically_unique",
+      "selected_count": 1,
+      "selected": [
+        {
+          "canonical_mask": 28160,
+          "upstream_candidate_id": 7,
+          "blocks": [
+            [
+              "R01784:1",
+              "R02452:2",
+              "R02165:2",
+              "R01986:2",
+              "R01798:2",
+              "R01341:2",
+              "R00525:2",
+              "R02407:2",
+              "R01905:2",
+              "R01557:4"
+            ],
+            [
+              "R01662:0",
+              "R01489:1",
+              "R00634:1",
+              "R01557:2",
+              "R00500:1"
+            ]
+          ],
+          "support": [
+            10,
+            5
+          ],
+          "edit_count": 4,
+          "cost": 2.0372824769833207,
+          "moved_alternative_alignments": [
+            [
+              "R01784:1",
+              "R01662:0",
+              "R01557:4",
+              "R01557:2"
+            ]
+          ],
+          "target_group_members": [
+            "R01784:1",
+            "R02452:2",
+            "R02165:2",
+            "R01986:2",
+            "R01798:2",
+            "R01341:2",
+            "R00525:2",
+            "R02407:2",
+            "R01905:2",
+            "R01557:4"
+          ],
+          "target_group_support": 10,
+          "diameters_deg": [
+            4.849739035733623,
+            4.646249524572578
+          ],
+          "lost_relations": [
+            [
+              "R01784:1",
+              "R01489:1"
+            ],
+            [
+              "R01784:1",
+              "R00634:1"
+            ],
+            [
+              "R01784:1",
+              "R00500:1"
+            ],
+            [
+              "R02452:2",
+              "R01662:0"
+            ],
+            [
+              "R02452:2",
+              "R01557:2"
+            ],
+            [
+              "R02165:2",
+              "R01662:0"
+            ],
+            [
+              "R02165:2",
+              "R01557:2"
+            ],
+            [
+              "R01986:2",
+              "R01662:0"
+            ],
+            [
+              "R01986:2",
+              "R01557:2"
+            ],
+            [
+              "R01798:2",
+              "R01662:0"
+            ],
+            [
+              "R01798:2",
+              "R01557:2"
+            ],
+            [
+              "R01341:2",
+              "R01662:0"
+            ],
+            [
+              "R01341:2",
+              "R01557:2"
+            ],
+            [
+              "R00525:2",
+              "R01662:0"
+            ],
+            [
+              "R00525:2",
+              "R01557:2"
+            ],
+            [
+              "R02407:2",
+              "R01662:0"
+            ],
+            [
+              "R02407:2",
+              "R01557:2"
+            ],
+            [
+              "R01905:2",
+              "R01662:0"
+            ],
+            [
+              "R01905:2",
+              "R01557:2"
+            ],
+            [
+              "R01489:1",
+              "R01557:4"
+            ],
+            [
+              "R00634:1",
+              "R01557:4"
+            ],
+            [
+              "R01557:4",
+              "R00500:1"
+            ]
+          ],
+          "added_relations": [
+            [
+              "R01784:1",
+              "R02452:2"
+            ],
+            [
+              "R01784:1",
+              "R02165:2"
+            ],
+            [
+              "R01784:1",
+              "R01986:2"
+            ],
+            [
+              "R01784:1",
+              "R01798:2"
+            ],
+            [
+              "R01784:1",
+              "R01341:2"
+            ],
+            [
+              "R01784:1",
+              "R00525:2"
+            ],
+            [
+              "R01784:1",
+              "R02407:2"
+            ],
+            [
+              "R01784:1",
+              "R01905:2"
+            ],
+            [
+              "R02452:2",
+              "R01557:4"
+            ],
+            [
+              "R02165:2",
+              "R01557:4"
+            ],
+            [
+              "R01986:2",
+              "R01557:4"
+            ],
+            [
+              "R01798:2",
+              "R01557:4"
+            ],
+            [
+              "R01341:2",
+              "R01557:4"
+            ],
+            [
+              "R00525:2",
+              "R01557:4"
+            ],
+            [
+              "R02407:2",
+              "R01557:4"
+            ],
+            [
+              "R01905:2",
+              "R01557:4"
+            ],
+            [
+              "R01662:0",
+              "R01489:1"
+            ],
+            [
+              "R01662:0",
+              "R00634:1"
+            ],
+            [
+              "R01662:0",
+              "R00500:1"
+            ],
+            [
+              "R01489:1",
+              "R01557:2"
+            ],
+            [
+              "R00634:1",
+              "R01557:2"
+            ],
+            [
+              "R01557:2",
+              "R00500:1"
+            ]
+          ],
+          "identical_full_coordinates_split": [],
+          "worker_unique": true,
+          "observation_cover_exact": true
+        }
+      ],
+      "cost_range": [
+        1.7063049128162187,
+        2.105226179328448
+      ],
+      "reviewed_triple_together_count": 32,
+      "target_support_range": [
+        8,
+        13
+      ],
+      "target_support_histogram": {
+        "8": 1,
+        "9": 5,
+        "10": 10,
+        "11": 10,
+        "12": 5,
+        "13": 1
+      },
+      "support_at_least_12_count": 6,
+      "support_greater_than_12_count": 1,
+      "forced_members": [
+        "R01784:1",
+        "R02452:2",
+        "R01986:2",
+        "R01798:2",
+        "R01341:2",
+        "R00525:2",
+        "R02407:2",
+        "R01557:4"
+      ],
+      "possible_members": [
+        "R01784:1",
+        "R02452:2",
+        "R02165:2",
+        "R01986:2",
+        "R01798:2",
+        "R01341:2",
+        "R00525:2",
+        "R02407:2",
+        "R01905:2",
+        "R01489:1",
+        "R00634:1",
+        "R01557:4",
+        "R00500:1"
+      ],
+      "variable_members": [
+        "R02165:2",
+        "R01905:2",
+        "R01489:1",
+        "R00634:1",
+        "R00500:1"
+      ],
+      "conditional_center_extrema": {
+        "x_unwrapped_px": [
+          215.0036645998193,
+          221.4054054054054
+        ],
+        "top_y_px": [
+          208.22651222651223,
+          209.04142011834318
+        ],
+        "bottom_y_px": [
+          310.292405274133,
+          312.33976833976834
+        ],
+        "x_anchor_px": 221.4054054054054,
+        "interpretation": "Coordinate-median extrema over target assignments, not confidence intervals; x can be reduced modulo 1024. No top/bottom semantic target is newly established."
+      },
+      "status": "ok",
+      "orientation_states": 32,
+      "components": 6,
+      "exact_assignment_set_matches_upstream_filter": true
+    }
+  }
+}

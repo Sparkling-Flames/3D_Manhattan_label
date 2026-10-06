@@ -1,0 +1,119 @@
+{
+  "methods": "independent >=j coverage recurrence, direct set area, direct projection equations, exact all-pair enumeration; no imported study code",
+  "source_cases_sha256": "78f186601701a43d87663828e3d9a2a5d57c7b439c418e55f3a19399a12624e2",
+  "versions": {
+    "numpy": "2.3.5",
+    "shapely": "2.1.2",
+    "pandas": "2.2.3"
+  },
+  "images": [
+    {
+      "image": "x8F5xyUWy9e-01",
+      "n": 5,
+      "preserved": 5,
+      "room": "G231",
+      "building": "x8F5xyUWy9e",
+      "ring_status": {
+        "human_confirmed": 5
+      },
+      "ring_confirmed_count": 5,
+      "primary_quality_status": {
+        "out_of_primary_scene": 5
+      }
+    },
+    {
+      "image": "x8F5xyUWy9e-09",
+      "n": 24,
+      "preserved": 26,
+      "room": "G231",
+      "building": "x8F5xyUWy9e",
+      "ring_status": {
+        "default_x_unreviewed": 24
+      },
+      "ring_confirmed_count": 0,
+      "primary_quality_status": {
+        "out_of_primary_scene": 24
+      }
+    },
+    {
+      "image": "uNb9QFRL6hY-47",
+      "n": 23,
+      "preserved": 26,
+      "room": "G197",
+      "building": "uNb9QFRL6hY",
+      "ring_status": {
+        "default_x_unreviewed": 16,
+        "human_confirmed": 7
+      },
+      "ring_confirmed_count": 7,
+      "primary_quality_status": {
+        "hold_scene_or_reference": 23
+      }
+    },
+    {
+      "image": "jtcxE69GiFV-12",
+      "n": 9,
+      "preserved": 9,
+      "room": "",
+      "building": "jtcxE69GiFV",
+      "ring_status": {
+        "human_confirmed": 9
+      },
+      "ring_confirmed_count": 9,
+      "primary_quality_status": {
+        "hold_scene_or_reference": 9
+      }
+    },
+    {
+      "image": "rPc6DW4iMge-06",
+      "n": 24,
+      "preserved": 26,
+      "room": "G166",
+      "building": "rPc6DW4iMge",
+      "ring_status": {
+        "human_confirmed": 24
+      },
+      "ring_confirmed_count": 24,
+      "primary_quality_status": {
+        "candidate_pending_geometry": 24
+      }
+    },
+    {
+      "image": "yqstnuAEVhm-32",
+      "n": 24,
+      "preserved": 26,
+      "room": "G245",
+      "building": "yqstnuAEVhm",
+      "ring_status": {
+        "human_confirmed": 24
+      },
+      "ring_confirmed_count": 24,
+      "primary_quality_status": {
+        "candidate_pending_geometry": 24
+      }
+    }
+  ],
+  "uNb_fixed_90_diagnostic": {
+    "raw_original_vs_revision": 0.38831041581907894,
+    "rotated_original_vs_revision": 0.8683307148515195,
+    "raw_original_vs_mv50": 0.4104283741884126,
+    "rotated_original_vs_mv50": 0.8726465379103743,
+    "not_used_as_reference": true
+  },
+  "preserved_records": 118,
+  "included_records": 109,
+  "unique_people": 24,
+  "all_pair_count": 1127,
+  "four_special_pair_count": 575,
+  "six_images_five_buildings": 5,
+  "elapsed_seconds": 4.26920223236084,
+  "checks": {
+    "max_consensus_symdiff_h2": 0.0,
+    "max_endpoint_error": 2.1316282072803006e-14,
+    "max_individual_D_error": 3.3306690738754696e-16,
+    "max_projection_coordinate_error_h": 4.440892098500626e-16,
+    "max_pair_error": 4.440892098500626e-15,
+    "max_local_fraction_error": 3.3306690738754696e-16
+  },
+  "all_assertions_passed": true
+}

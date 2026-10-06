@@ -1,0 +1,199 @@
+{
+  "minimum_dispersion_ids": [
+    1
+  ],
+  "baseline_equal_dispersion_ids": [
+    1
+  ],
+  "domain": {
+    "union": [
+      0,
+      24,
+      84,
+      92
+    ],
+    "baseline_blocks": [
+      [
+        0,
+        84
+      ],
+      [
+        24,
+        92
+      ]
+    ],
+    "union_nodes": 4,
+    "incompatibility_components": [
+      {
+        "nodes": [
+          0,
+          84,
+          92
+        ],
+        "colors": [
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "nodes": [
+          24
+        ],
+        "colors": [
+          0
+        ]
+      }
+    ],
+    "forbidden_pairs": [
+      {
+        "nodes": [
+          0,
+          92
+        ],
+        "distance_deg": 2.9727263501873384,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          84,
+          92
+        ],
+        "distance_deg": 2.7414176095950755,
+        "same_worker": false
+      }
+    ],
+    "orientation_states": 2,
+    "all_unordered_two_nonempty_partitions": 7,
+    "status": "ok",
+    "exhaustive_within_declared_domain": true,
+    "feasible_count": 2,
+    "infeasible_partition_count": 5,
+    "domain_id": "7y3sRwLe3Va-04_pair_2.5_d1",
+    "group_indices": [
+      0,
+      10
+    ],
+    "compatible_cross_pairs": [
+      [
+        0,
+        24
+      ],
+      [
+        84,
+        24
+      ]
+    ]
+  },
+  "automatic": {
+    "status": "unchanged",
+    "selected_ids": [
+      1
+    ],
+    "baseline_cost": 0.21746832198290206
+  },
+  "human_assisted": null,
+  "pareto_ids": [
+    1
+  ],
+  "selected_details": [
+    {
+      "local_id": 1,
+      "blocks": [
+        [
+          0,
+          84
+        ],
+        [
+          24,
+          92
+        ]
+      ],
+      "edit_count": 0,
+      "cost": 0.21746832198290206,
+      "moved_nodes_alternative_alignments": [
+        []
+      ],
+      "block_label_alignments": [
+        0
+      ],
+      "diameters_deg": null,
+      "supports": [
+        2,
+        2
+      ],
+      "diameters_checked_deg": [
+        0.9399879763029386,
+        1.3545392682355812
+      ],
+      "centers": [
+        {
+          "points": [
+            [
+              122.26589913222784,
+              165.9743964258098
+            ],
+            [
+              122.26589913222784,
+              375.48133001116935
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                122.26589913222784,
+                165.9743964258098
+              ],
+              [
+                122.26589913222784,
+                375.48133001116935
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 2,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        },
+        {
+          "points": [
+            [
+              122.23358882272764,
+              164.4551546151335
+            ],
+            [
+              122.23358882272764,
+              369.30769111176755
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                122.23358882272764,
+                164.4551546151335
+              ],
+              [
+                122.23358882272764,
+                369.30769111176755
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 2,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        }
+      ],
+      "added_coassignments": [],
+      "lost_coassignments": [],
+      "full_observation_count": 96,
+      "full_unique_observations": 96,
+      "outside_groups_unchanged": true,
+      "new_same_worker_collisions": 0,
+      "new_diameter_violations": 0,
+      "newly_split_identical_coordinates": [],
+      "complete_layout_created": false,
+      "roster_denominator": 24
+    }
+  ],
+  "all_candidate_ledger": "7y3sRwLe3Va-04_pair_2.5_d1.jsonl.gz",
+  "node_lookup_file": "node_lookup.json"
+}

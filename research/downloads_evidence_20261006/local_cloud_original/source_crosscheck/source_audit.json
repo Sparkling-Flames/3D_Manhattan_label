@@ -1,0 +1,6331 @@
+{
+  "schema": "point_correspondence_audit_v1",
+  "human_review_source": "research/point_route_review_20261006/human_review.json",
+  "source_fields_checked": 882,
+  "source_member_bindings": 7600,
+  "rows": [
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "paired",
+      "threshold_deg": 1,
+      "side": "pair",
+      "metric": "pair",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_008",
+          "corner_005",
+          "corner_001"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_008",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_005",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_001",
+            "support": 1,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 4.197178681926505,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R00227",
+            0
+          ],
+          [
+            "R01831",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "bottom_anchor",
+      "threshold_deg": 1,
+      "side": "pair",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_008",
+          "corner_005",
+          "corner_001"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_008",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_005",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_001",
+            "support": 1,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 4.197178681926505,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R00227",
+            0
+          ],
+          [
+            "R01831",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "top_anchor",
+      "threshold_deg": 1,
+      "side": "pair",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_005",
+          "corner_005",
+          "corner_001"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_005",
+            "support": 2,
+            "selected": true
+          },
+          {
+            "feature_id": "corner_001",
+            "support": 1,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 1.2166157324678553,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R00227",
+            0
+          ],
+          [
+            "R01831",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "split_unique",
+      "threshold_deg": 1,
+      "side": "top",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_005",
+          "corner_005",
+          "corner_001"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_005",
+            "support": 2,
+            "selected": true
+          },
+          {
+            "feature_id": "corner_001",
+            "support": 1,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 1.2166157324678553,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R00227",
+            0
+          ],
+          [
+            "R01831",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "split_unique",
+      "threshold_deg": 1,
+      "side": "bottom",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_008",
+          "corner_005",
+          "corner_001"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_008",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_005",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_001",
+            "support": 1,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 4.197178681926505,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R00227",
+            0
+          ],
+          [
+            "R01831",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "paired",
+      "threshold_deg": 2.5,
+      "side": "pair",
+      "metric": "pair",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_005",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_005",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_001",
+            "support": 2,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 4.197178681926505,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R00227",
+            0
+          ],
+          [
+            "R01831",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "bottom_anchor",
+      "threshold_deg": 2.5,
+      "side": "pair",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_005",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_005",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_001",
+            "support": 2,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 4.197178681926505,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R00227",
+            0
+          ],
+          [
+            "R01831",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "top_anchor",
+      "threshold_deg": 2.5,
+      "side": "pair",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 3,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 1.2166157324678553,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01831",
+            0
+          ],
+          [
+            "R00227",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "split_unique",
+      "threshold_deg": 2.5,
+      "side": "top",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 3,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 1.2166157324678553,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01831",
+            0
+          ],
+          [
+            "R00227",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "split_unique",
+      "threshold_deg": 2.5,
+      "side": "bottom",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_005",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_005",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_001",
+            "support": 2,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 4.197178681926505,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R00227",
+            0
+          ],
+          [
+            "R01831",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "paired",
+      "threshold_deg": 5,
+      "side": "pair",
+      "metric": "pair",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 3,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 4.197178681926505,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01831",
+            0
+          ],
+          [
+            "R00227",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "bottom_anchor",
+      "threshold_deg": 5,
+      "side": "pair",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 3,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 4.197178681926505,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01831",
+            0
+          ],
+          [
+            "R00227",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "top_anchor",
+      "threshold_deg": 5,
+      "side": "pair",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 3,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 1.2166157324678553,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01831",
+            0
+          ],
+          [
+            "R00227",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "split_unique",
+      "threshold_deg": 5,
+      "side": "top",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 3,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 1.2166157324678553,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01831",
+            0
+          ],
+          [
+            "R00227",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "split_unique",
+      "threshold_deg": 5,
+      "side": "bottom",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 3,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 4.197178681926505,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01831",
+            0
+          ],
+          [
+            "R00227",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "paired",
+      "threshold_deg": 7.5,
+      "side": "pair",
+      "metric": "pair",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 3,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 4.197178681926505,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01831",
+            0
+          ],
+          [
+            "R00227",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "bottom_anchor",
+      "threshold_deg": 7.5,
+      "side": "pair",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 3,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 4.197178681926505,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01831",
+            0
+          ],
+          [
+            "R00227",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "top_anchor",
+      "threshold_deg": 7.5,
+      "side": "pair",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 3,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 1.2166157324678553,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01831",
+            0
+          ],
+          [
+            "R00227",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "split_unique",
+      "threshold_deg": 7.5,
+      "side": "top",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 3,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 1.2166157324678553,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01831",
+            0
+          ],
+          [
+            "R00227",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "split_unique",
+      "threshold_deg": 7.5,
+      "side": "bottom",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 3,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 4.197178681926505,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01831",
+            0
+          ],
+          [
+            "R00227",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "paired",
+      "threshold_deg": 10,
+      "side": "pair",
+      "metric": "pair",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 3,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 4.197178681926505,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01831",
+            0
+          ],
+          [
+            "R00227",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "bottom_anchor",
+      "threshold_deg": 10,
+      "side": "pair",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 3,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 4.197178681926505,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01831",
+            0
+          ],
+          [
+            "R00227",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "top_anchor",
+      "threshold_deg": 10,
+      "side": "pair",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 3,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 1.2166157324678553,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01831",
+            0
+          ],
+          [
+            "R00227",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "split_unique",
+      "threshold_deg": 10,
+      "side": "top",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 3,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 1.2166157324678553,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01831",
+            0
+          ],
+          [
+            "R00227",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "split_unique",
+      "threshold_deg": 10,
+      "side": "bottom",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R00227",
+          0
+        ],
+        [
+          "R00539",
+          0
+        ],
+        [
+          "R01831",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 1.2166157324678553,
+          "bottom": 4.197178681926505,
+          "pair": 4.197178681926505
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 3,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 4.197178681926505,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01831",
+            0
+          ],
+          [
+            "R00227",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "paired",
+      "threshold_deg": 1,
+      "side": "pair",
+      "metric": "pair",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_033",
+          "corner_039",
+          "corner_009"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_033",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_039",
+            "support": 2,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_009",
+            "support": 1,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 13.560762234669092,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R00144",
+            0
+          ],
+          [
+            "R00526",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "bottom_anchor",
+      "threshold_deg": 1,
+      "side": "pair",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_027",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_027",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_001",
+            "support": 4,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 2.343361822400281,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R00144",
+            0
+          ],
+          [
+            "R02210",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "top_anchor",
+      "threshold_deg": 1,
+      "side": "pair",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_030",
+          "corner_034",
+          "corner_009"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_030",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_034",
+            "support": 2,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_009",
+            "support": 2,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 13.560762234669092,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R00144",
+            0
+          ],
+          [
+            "R00526",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "split_unique",
+      "threshold_deg": 1,
+      "side": "top",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_030",
+          "corner_034",
+          "corner_009"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_030",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_034",
+            "support": 2,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_009",
+            "support": 2,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 13.560762234669092,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R00144",
+            0
+          ],
+          [
+            "R00526",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "split_unique",
+      "threshold_deg": 1,
+      "side": "bottom",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_027",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_027",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_001",
+            "support": 4,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 2.343361822400281,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R00144",
+            0
+          ],
+          [
+            "R02210",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "paired",
+      "threshold_deg": 2.5,
+      "side": "pair",
+      "metric": "pair",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_022",
+          "corner_026",
+          "corner_008"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_022",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_026",
+            "support": 2,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_008",
+            "support": 3,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 13.560762234669092,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R00144",
+            0
+          ],
+          [
+            "R00526",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "bottom_anchor",
+      "threshold_deg": 2.5,
+      "side": "pair",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_015",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_015",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_001",
+            "support": 8,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 3.8112592035409394,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R00144",
+            0
+          ],
+          [
+            "R03196",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "top_anchor",
+      "threshold_deg": 2.5,
+      "side": "pair",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_005",
+          "corner_008",
+          "corner_008"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_005",
+            "support": 3,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_008",
+            "support": 4,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 13.623865377333672,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R02932",
+            0
+          ],
+          [
+            "R00526",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "split_unique",
+      "threshold_deg": 2.5,
+      "side": "top",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_005",
+          "corner_008",
+          "corner_008"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_005",
+            "support": 3,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_008",
+            "support": 4,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 13.623865377333672,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R02932",
+            0
+          ],
+          [
+            "R00526",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "split_unique",
+      "threshold_deg": 2.5,
+      "side": "bottom",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_015",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_015",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_001",
+            "support": 8,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 3.8112592035409394,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R00144",
+            0
+          ],
+          [
+            "R03196",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "paired",
+      "threshold_deg": 5,
+      "side": "pair",
+      "metric": "pair",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_005",
+          "corner_006",
+          "corner_006"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_005",
+            "support": 3,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_006",
+            "support": 5,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 13.623865377333672,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R02932",
+            0
+          ],
+          [
+            "R00526",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "bottom_anchor",
+      "threshold_deg": 5,
+      "side": "pair",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 9,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 3.8112592035409394,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R03196",
+            0
+          ],
+          [
+            "R00144",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": [
+        {
+          "members": [
+            [
+              "R00144",
+              0
+            ],
+            [
+              "R00526",
+              0
+            ]
+          ],
+          "feature_id": "corner_001"
+        },
+        {
+          "members": [
+            [
+              "R00144",
+              0
+            ],
+            [
+              "R02210",
+              0
+            ]
+          ],
+          "feature_id": "corner_001"
+        }
+      ]
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "top_anchor",
+      "threshold_deg": 5,
+      "side": "pair",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_005",
+          "corner_006",
+          "corner_006"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_005",
+            "support": 3,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_006",
+            "support": 4,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 13.623865377333672,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R02932",
+            0
+          ],
+          [
+            "R00526",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "split_unique",
+      "threshold_deg": 5,
+      "side": "top",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_005",
+          "corner_006",
+          "corner_006"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_005",
+            "support": 3,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_006",
+            "support": 4,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 13.623865377333672,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R02932",
+            0
+          ],
+          [
+            "R00526",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "split_unique",
+      "threshold_deg": 5,
+      "side": "bottom",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 9,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 3.8112592035409394,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R03196",
+            0
+          ],
+          [
+            "R00144",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": [
+        {
+          "members": [
+            [
+              "R00144",
+              0
+            ],
+            [
+              "R00526",
+              0
+            ]
+          ],
+          "feature_id": "corner_001"
+        },
+        {
+          "members": [
+            [
+              "R00144",
+              0
+            ],
+            [
+              "R02210",
+              0
+            ]
+          ],
+          "feature_id": "corner_001"
+        }
+      ]
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "paired",
+      "threshold_deg": 7.5,
+      "side": "pair",
+      "metric": "pair",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_005",
+          "corner_005"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 4,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_005",
+            "support": 5,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 13.623865377333672,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R02932",
+            0
+          ],
+          [
+            "R00526",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "bottom_anchor",
+      "threshold_deg": 7.5,
+      "side": "pair",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 9,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 3.8112592035409394,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R03196",
+            0
+          ],
+          [
+            "R00144",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": [
+        {
+          "members": [
+            [
+              "R00144",
+              0
+            ],
+            [
+              "R00526",
+              0
+            ]
+          ],
+          "feature_id": "corner_001"
+        },
+        {
+          "members": [
+            [
+              "R00144",
+              0
+            ],
+            [
+              "R02210",
+              0
+            ]
+          ],
+          "feature_id": "corner_001"
+        }
+      ]
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "top_anchor",
+      "threshold_deg": 7.5,
+      "side": "pair",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_005",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_005",
+            "support": 3,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_001",
+            "support": 6,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 13.623865377333672,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R02932",
+            0
+          ],
+          [
+            "R00526",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "split_unique",
+      "threshold_deg": 7.5,
+      "side": "top",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_005",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_005",
+            "support": 3,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_001",
+            "support": 6,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 13.623865377333672,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R02932",
+            0
+          ],
+          [
+            "R00526",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "split_unique",
+      "threshold_deg": 7.5,
+      "side": "bottom",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 9,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 3.8112592035409394,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R03196",
+            0
+          ],
+          [
+            "R00144",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": [
+        {
+          "members": [
+            [
+              "R00144",
+              0
+            ],
+            [
+              "R00526",
+              0
+            ]
+          ],
+          "feature_id": "corner_001"
+        },
+        {
+          "members": [
+            [
+              "R00144",
+              0
+            ],
+            [
+              "R02210",
+              0
+            ]
+          ],
+          "feature_id": "corner_001"
+        }
+      ]
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "paired",
+      "threshold_deg": 10,
+      "side": "pair",
+      "metric": "pair",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_005",
+          "corner_005"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 4,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_005",
+            "support": 5,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 13.623865377333672,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R02932",
+            0
+          ],
+          [
+            "R00526",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "bottom_anchor",
+      "threshold_deg": 10,
+      "side": "pair",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 9,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 3.8112592035409394,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R03196",
+            0
+          ],
+          [
+            "R00144",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": [
+        {
+          "members": [
+            [
+              "R00144",
+              0
+            ],
+            [
+              "R00526",
+              0
+            ]
+          ],
+          "feature_id": "corner_001"
+        },
+        {
+          "members": [
+            [
+              "R00144",
+              0
+            ],
+            [
+              "R02210",
+              0
+            ]
+          ],
+          "feature_id": "corner_001"
+        }
+      ]
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "top_anchor",
+      "threshold_deg": 10,
+      "side": "pair",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_005",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_005",
+            "support": 3,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_001",
+            "support": 6,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 13.623865377333672,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R02932",
+            0
+          ],
+          [
+            "R00526",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "split_unique",
+      "threshold_deg": 10,
+      "side": "top",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_005",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_005",
+            "support": 3,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_001",
+            "support": 6,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 13.623865377333672,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R02932",
+            0
+          ],
+          [
+            "R00526",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "relation": "different_upper_targets",
+      "bottom_relation": "same_corner_user_tentative",
+      "route": "split_unique",
+      "threshold_deg": 10,
+      "side": "bottom",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R00144",
+          0
+        ],
+        [
+          "R00526",
+          0
+        ],
+        [
+          "R02210",
+          0
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_001",
+          "corner_001",
+          "corner_001"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_001",
+            "support": 9,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 3.8112592035409394,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R03196",
+            0
+          ],
+          [
+            "R00144",
+            0
+          ]
+        ]
+      },
+      "rejected_combination_probe": null,
+      "different_upper_targets_in_same_group": [
+        {
+          "members": [
+            [
+              "R00144",
+              0
+            ],
+            [
+              "R00526",
+              0
+            ]
+          ],
+          "feature_id": "corner_001"
+        },
+        {
+          "members": [
+            [
+              "R00144",
+              0
+            ],
+            [
+              "R02210",
+              0
+            ]
+          ],
+          "feature_id": "corner_001"
+        }
+      ]
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "paired",
+      "threshold_deg": 1,
+      "side": "pair",
+      "metric": "pair",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_023",
+          "corner_060",
+          "corner_109"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_023",
+            "support": 6,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_060",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_109",
+            "support": 2,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 5.158175888895815,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01662",
+            0
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_023",
+          "corner_060",
+          "corner_110"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_023",
+            "support": 6,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_060",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_110",
+            "support": 1,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01986",
+            2
+          ],
+          [
+            "R01557",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "bottom_anchor",
+      "threshold_deg": 1,
+      "side": "pair",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_022",
+          "corner_055",
+          "corner_085"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_022",
+            "support": 7,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_055",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_085",
+            "support": 2,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 4.326333840176633,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R02452",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_022",
+          "corner_055",
+          "corner_086"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_022",
+            "support": 7,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_055",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_086",
+            "support": 1,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01986",
+            2
+          ],
+          [
+            "R01557",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "top_anchor",
+      "threshold_deg": 1,
+      "side": "pair",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_021",
+          "corner_035",
+          "corner_073"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_021",
+            "support": 7,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_035",
+            "support": 2,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_073",
+            "support": 3,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 3.63493867187194,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01662",
+            0
+          ],
+          [
+            "R01557",
+            4
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_021",
+          "corner_035",
+          "corner_083"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_021",
+            "support": 7,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_035",
+            "support": 2,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_083",
+            "support": 1,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 3.2825341021814247,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01662",
+            0
+          ],
+          [
+            "R02165",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "split_unique",
+      "threshold_deg": 1,
+      "side": "top",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_021",
+          "corner_035",
+          "corner_073"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_021",
+            "support": 7,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_035",
+            "support": 2,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_073",
+            "support": 3,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 3.63493867187194,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01662",
+            0
+          ],
+          [
+            "R01557",
+            4
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_021",
+          "corner_035",
+          "corner_083"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_021",
+            "support": 7,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_035",
+            "support": 2,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_083",
+            "support": 1,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 3.2825341021814247,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01662",
+            0
+          ],
+          [
+            "R02165",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "split_unique",
+      "threshold_deg": 1,
+      "side": "bottom",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_022",
+          "corner_055",
+          "corner_085"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_022",
+            "support": 7,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_055",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_085",
+            "support": 2,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 4.326333840176633,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R02452",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_022",
+          "corner_055",
+          "corner_086"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_022",
+            "support": 7,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_055",
+            "support": 1,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_086",
+            "support": 1,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01986",
+            2
+          ],
+          [
+            "R01557",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "paired",
+      "threshold_deg": 2.5,
+      "side": "pair",
+      "metric": "pair",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_022",
+          "corner_035",
+          "corner_002"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_022",
+            "support": 9,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_035",
+            "support": 2,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 4,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 5.475183125304163,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01662",
+            0
+          ],
+          [
+            "R01784",
+            1
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_022",
+          "corner_035",
+          "corner_073"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_022",
+            "support": 9,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_035",
+            "support": 2,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_073",
+            "support": 1,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01986",
+            2
+          ],
+          [
+            "R01557",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "bottom_anchor",
+      "threshold_deg": 2.5,
+      "side": "pair",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_022",
+          "corner_039",
+          "corner_002"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_022",
+            "support": 9,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_039",
+            "support": 2,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 5,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 5.316461749132066,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R02456",
+            1
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_022",
+          "corner_039",
+          "corner_052"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_022",
+            "support": 9,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_039",
+            "support": 2,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_052",
+            "support": 1,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01986",
+            2
+          ],
+          [
+            "R01557",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "top_anchor",
+      "threshold_deg": 2.5,
+      "side": "pair",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_020",
+          "corner_029",
+          "corner_048"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_020",
+            "support": 8,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_029",
+            "support": 2,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_048",
+            "support": 4,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 4.6462495245725695,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01557",
+            2
+          ],
+          [
+            "R00634",
+            1
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_020",
+          "corner_029",
+          "corner_020"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_020",
+            "support": 8,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_029",
+            "support": 2,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 3.2825341021814247,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01662",
+            0
+          ],
+          [
+            "R02165",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "split_unique",
+      "threshold_deg": 2.5,
+      "side": "top",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_020",
+          "corner_029",
+          "corner_048"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_020",
+            "support": 8,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_029",
+            "support": 2,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_048",
+            "support": 4,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 4.6462495245725695,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01557",
+            2
+          ],
+          [
+            "R00634",
+            1
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_020",
+          "corner_029",
+          "corner_020"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_020",
+            "support": 8,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_029",
+            "support": 2,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 3.2825341021814247,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01662",
+            0
+          ],
+          [
+            "R02165",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "split_unique",
+      "threshold_deg": 2.5,
+      "side": "bottom",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_022",
+          "corner_039",
+          "corner_002"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_022",
+            "support": 9,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_039",
+            "support": 2,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 5,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 5.316461749132066,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R02456",
+            1
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_022",
+          "corner_039",
+          "corner_052"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_022",
+            "support": 9,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_039",
+            "support": 2,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_052",
+            "support": 1,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01986",
+            2
+          ],
+          [
+            "R01557",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "paired",
+      "threshold_deg": 5,
+      "side": "pair",
+      "metric": "pair",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_022",
+          "corner_002",
+          "corner_002"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_022",
+            "support": 10,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 8,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 6.572426230219333,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R02468",
+            2
+          ],
+          [
+            "R01784",
+            1
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_022",
+          "corner_002",
+          "corner_035"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_022",
+            "support": 10,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 8,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_035",
+            "support": 2,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                4
+              ],
+              [
+                "R01557",
+                2
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01986",
+            2
+          ],
+          [
+            "R01557",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "bottom_anchor",
+      "threshold_deg": 5,
+      "side": "pair",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_021",
+          "corner_002",
+          "corner_002"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_021",
+            "support": 11,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 9,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01557",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_021",
+          "corner_002",
+          "corner_021"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_021",
+            "support": 11,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 9,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01557",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "top_anchor",
+      "threshold_deg": 5,
+      "side": "pair",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_018",
+          "corner_018",
+          "corner_002"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_018",
+            "support": 10,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 5,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 5.475183125304163,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01662",
+            0
+          ],
+          [
+            "R01784",
+            1
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_018",
+          "corner_018",
+          "corner_018"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_018",
+            "support": 10,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 3.2825341021814247,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R02165",
+            2
+          ],
+          [
+            "R01662",
+            0
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "split_unique",
+      "threshold_deg": 5,
+      "side": "top",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_018",
+          "corner_018",
+          "corner_002"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_018",
+            "support": 10,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 5,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 5.475183125304163,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01662",
+            0
+          ],
+          [
+            "R01784",
+            1
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_018",
+          "corner_018",
+          "corner_018"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_018",
+            "support": 10,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 3.2825341021814247,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R02165",
+            2
+          ],
+          [
+            "R01662",
+            0
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "split_unique",
+      "threshold_deg": 5,
+      "side": "bottom",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_021",
+          "corner_002",
+          "corner_002"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_021",
+            "support": 11,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 9,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01557",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_021",
+          "corner_002",
+          "corner_021"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_021",
+            "support": 11,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 9,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01557",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "paired",
+      "threshold_deg": 7.5,
+      "side": "pair",
+      "metric": "pair",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_020",
+          "corner_002",
+          "corner_002"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_020",
+            "support": 12,
+            "selected": true
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 8,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01557",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_020",
+          "corner_002",
+          "corner_020"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_020",
+            "support": 12,
+            "selected": true
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 8,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01557",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "bottom_anchor",
+      "threshold_deg": 7.5,
+      "side": "pair",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_019",
+          "corner_002",
+          "corner_002"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_019",
+            "support": 11,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 9,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01557",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_019",
+          "corner_002",
+          "corner_019"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_019",
+            "support": 11,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 9,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01557",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "top_anchor",
+      "threshold_deg": 7.5,
+      "side": "pair",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_016",
+          "corner_016",
+          "corner_002"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_016",
+            "support": 15,
+            "selected": true
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 5,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 6.572426230219333,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R02468",
+            2
+          ],
+          [
+            "R01784",
+            1
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_016",
+          "corner_016",
+          "corner_016"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_016",
+            "support": 15,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 5.3040394137675495,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R02468",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "split_unique",
+      "threshold_deg": 7.5,
+      "side": "top",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_016",
+          "corner_016",
+          "corner_002"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_016",
+            "support": 15,
+            "selected": true
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 5,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 6.572426230219333,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R02468",
+            2
+          ],
+          [
+            "R01784",
+            1
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_016",
+          "corner_016",
+          "corner_016"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_016",
+            "support": 15,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 5.3040394137675495,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R02468",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "split_unique",
+      "threshold_deg": 7.5,
+      "side": "bottom",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_019",
+          "corner_002",
+          "corner_002"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_019",
+            "support": 11,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 9,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01557",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_019",
+          "corner_002",
+          "corner_019"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": false,
+        "target_groups": [
+          {
+            "feature_id": "corner_019",
+            "support": 11,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 9,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": true,
+        "whole_group_diameter_witness": [
+          [
+            "R01557",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "paired",
+      "threshold_deg": 10,
+      "side": "pair",
+      "metric": "pair",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_017",
+          "corner_002",
+          "corner_002"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_017",
+            "support": 12,
+            "selected": true
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 8,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01557",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_017",
+          "corner_002",
+          "corner_017"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_017",
+            "support": 12,
+            "selected": true
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 8,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01557",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "bottom_anchor",
+      "threshold_deg": 10,
+      "side": "pair",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_016",
+          "corner_002",
+          "corner_002"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_016",
+            "support": 11,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 9,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01557",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_016",
+          "corner_002",
+          "corner_016"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_016",
+            "support": 11,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 9,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01557",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "top_anchor",
+      "threshold_deg": 10,
+      "side": "pair",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_016",
+          "corner_016",
+          "corner_002"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_016",
+            "support": 15,
+            "selected": true
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 5,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 6.572426230219333,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R02468",
+            2
+          ],
+          [
+            "R01784",
+            1
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_016",
+          "corner_016",
+          "corner_016"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_016",
+            "support": 15,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 5.3040394137675495,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R02468",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "split_unique",
+      "threshold_deg": 10,
+      "side": "top",
+      "metric": "top",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_016",
+          "corner_016",
+          "corner_002"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_016",
+            "support": 15,
+            "selected": true
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 5,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 6.572426230219333,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R02468",
+            2
+          ],
+          [
+            "R01784",
+            1
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_016",
+          "corner_016",
+          "corner_016"
+        ],
+        "same_group": true,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_016",
+            "support": 15,
+            "selected": true
+          }
+        ],
+        "same_worker_merge_conflicts": [],
+        "whole_group_merge_diameter_deg": 5.3040394137675495,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R02468",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "relation": "same_corner_pair",
+      "bottom_relation": null,
+      "route": "split_unique",
+      "threshold_deg": 10,
+      "side": "bottom",
+      "metric": "bottom",
+      "requested_members": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ],
+      "probe": {
+        "member_group_ids": [
+          "corner_016",
+          "corner_002",
+          "corner_002"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_016",
+            "support": 11,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 9,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01557",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "rejected_combination_probe": {
+        "member_group_ids": [
+          "corner_016",
+          "corner_002",
+          "corner_016"
+        ],
+        "same_group": false,
+        "diameters_deg": {
+          "top": 2.63967231653176,
+          "bottom": 8.311424572913038,
+          "pair": 8.311424572913038
+        },
+        "local_group_feasible": true,
+        "target_groups": [
+          {
+            "feature_id": "corner_016",
+            "support": 11,
+            "selected": false
+          },
+          {
+            "feature_id": "corner_002",
+            "support": 9,
+            "selected": false
+          }
+        ],
+        "same_worker_merge_conflicts": [
+          {
+            "worker": "P023",
+            "members": [
+              [
+                "R01557",
+                2
+              ],
+              [
+                "R01557",
+                4
+              ]
+            ]
+          }
+        ],
+        "whole_group_merge_diameter_deg": 8.311424572913038,
+        "whole_group_merge_exceeds_threshold": false,
+        "whole_group_diameter_witness": [
+          [
+            "R01557",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      "different_upper_targets_in_same_group": []
+    }
+  ],
+  "policy": "Post-hoc development diagnostics only; unchanged complete pools, source observations, thresholds, clustering, votes and GT. No merge-history or global optimum claim."
+}

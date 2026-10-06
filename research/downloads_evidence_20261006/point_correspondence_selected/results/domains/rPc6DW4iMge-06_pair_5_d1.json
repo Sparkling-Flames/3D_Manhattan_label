@@ -1,0 +1,604 @@
+{
+  "minimum_dispersion_ids": [
+    0
+  ],
+  "baseline_equal_dispersion_ids": [
+    16
+  ],
+  "domain": {
+    "union": [
+      22,
+      52,
+      72,
+      82,
+      92,
+      102,
+      111,
+      119,
+      141,
+      149,
+      186,
+      210
+    ],
+    "baseline_blocks": [
+      [
+        22,
+        52,
+        72,
+        82,
+        92,
+        102,
+        119,
+        141,
+        149,
+        210
+      ],
+      [
+        111,
+        186
+      ]
+    ],
+    "union_nodes": 12,
+    "incompatibility_components": [
+      {
+        "nodes": [
+          22
+        ],
+        "colors": [
+          0
+        ]
+      },
+      {
+        "nodes": [
+          52
+        ],
+        "colors": [
+          0
+        ]
+      },
+      {
+        "nodes": [
+          72
+        ],
+        "colors": [
+          0
+        ]
+      },
+      {
+        "nodes": [
+          82
+        ],
+        "colors": [
+          0
+        ]
+      },
+      {
+        "nodes": [
+          92
+        ],
+        "colors": [
+          0
+        ]
+      },
+      {
+        "nodes": [
+          102
+        ],
+        "colors": [
+          0
+        ]
+      },
+      {
+        "nodes": [
+          111
+        ],
+        "colors": [
+          0
+        ]
+      },
+      {
+        "nodes": [
+          119
+        ],
+        "colors": [
+          0
+        ]
+      },
+      {
+        "nodes": [
+          141,
+          186
+        ],
+        "colors": [
+          0,
+          1
+        ]
+      },
+      {
+        "nodes": [
+          149
+        ],
+        "colors": [
+          0
+        ]
+      },
+      {
+        "nodes": [
+          210
+        ],
+        "colors": [
+          0
+        ]
+      }
+    ],
+    "forbidden_pairs": [
+      {
+        "nodes": [
+          141,
+          186
+        ],
+        "distance_deg": 6.142947333710038,
+        "same_worker": false
+      }
+    ],
+    "orientation_states": 1024,
+    "all_unordered_two_nonempty_partitions": 2047,
+    "status": "ok",
+    "exhaustive_within_declared_domain": true,
+    "feasible_count": 1024,
+    "infeasible_partition_count": 1023,
+    "domain_id": "rPc6DW4iMge-06_pair_5_d1",
+    "group_indices": [
+      21,
+      34
+    ],
+    "compatible_cross_pairs": [
+      [
+        22,
+        111
+      ],
+      [
+        22,
+        186
+      ],
+      [
+        52,
+        111
+      ],
+      [
+        52,
+        186
+      ],
+      [
+        72,
+        111
+      ],
+      [
+        72,
+        186
+      ],
+      [
+        82,
+        111
+      ],
+      [
+        82,
+        186
+      ],
+      [
+        92,
+        111
+      ],
+      [
+        92,
+        186
+      ],
+      [
+        102,
+        111
+      ],
+      [
+        102,
+        186
+      ],
+      [
+        119,
+        111
+      ],
+      [
+        119,
+        186
+      ],
+      [
+        141,
+        111
+      ],
+      [
+        149,
+        111
+      ],
+      [
+        149,
+        186
+      ],
+      [
+        210,
+        111
+      ],
+      [
+        210,
+        186
+      ]
+    ]
+  },
+  "automatic": {
+    "status": "numerically_unique",
+    "selected_ids": [
+      0
+    ],
+    "edit_count": 1,
+    "cost": 0.7555744818909541,
+    "baseline_cost": 0.7560360913471247,
+    "no_semantic_uniqueness_claim": true
+  },
+  "human_assisted": {
+    "status": "constraints_outside_local_domain",
+    "selected_ids": []
+  },
+  "pareto_ids": [
+    16,
+    0
+  ],
+  "selected_details": [
+    {
+      "local_id": 0,
+      "blocks": [
+        [
+          22,
+          52,
+          72,
+          82,
+          92,
+          102,
+          111,
+          119,
+          141,
+          149,
+          210
+        ],
+        [
+          186
+        ]
+      ],
+      "edit_count": 1,
+      "cost": 0.7555744818909541,
+      "moved_nodes_alternative_alignments": [
+        [
+          111
+        ]
+      ],
+      "block_label_alignments": [
+        0
+      ],
+      "diameters_deg": null,
+      "supports": [
+        11,
+        1
+      ],
+      "diameters_checked_deg": [
+        3.6694013447093723,
+        0.0
+      ],
+      "centers": [
+        {
+          "points": [
+            [
+              221.4054054054054,
+              208.22651222651223
+            ],
+            [
+              221.4054054054054,
+              312.33976833976834
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                221.4054054054054,
+                208.22651222651223
+              ],
+              [
+                221.4054054054054,
+                312.33976833976834
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 5,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        },
+        {
+          "points": [
+            [
+              221.17514823528978,
+              205.54129242689953
+            ],
+            [
+              221.17514823528978,
+              325.00309068315204
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                221.17514823528978,
+                205.54129242689953
+              ],
+              [
+                221.17514823528978,
+                325.00309068315204
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 1,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        }
+      ],
+      "added_coassignments": [
+        [
+          22,
+          111
+        ],
+        [
+          52,
+          111
+        ],
+        [
+          72,
+          111
+        ],
+        [
+          82,
+          111
+        ],
+        [
+          92,
+          111
+        ],
+        [
+          102,
+          111
+        ],
+        [
+          111,
+          119
+        ],
+        [
+          111,
+          141
+        ],
+        [
+          111,
+          149
+        ],
+        [
+          111,
+          210
+        ]
+      ],
+      "lost_coassignments": [
+        [
+          111,
+          186
+        ]
+      ],
+      "full_observation_count": 224,
+      "full_unique_observations": 224,
+      "outside_groups_unchanged": true,
+      "new_same_worker_collisions": 0,
+      "new_diameter_violations": 0,
+      "newly_split_identical_coordinates": [],
+      "complete_layout_created": false,
+      "roster_denominator": 24,
+      "human_development_probe": {
+        "members": [
+          [
+            "R02452",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ],
+          [
+            "R01557",
+            4
+          ]
+        ],
+        "member_groups": [
+          "corner_043",
+          "corner_002",
+          "corner_002"
+        ],
+        "supports": [
+          11,
+          8,
+          8
+        ],
+        "same_group": false,
+        "local_diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_feasible": true,
+        "whole_union_diameter": 6.572426230219333,
+        "whole_union_witness": [
+          [
+            "R01784",
+            1
+          ],
+          [
+            "R02468",
+            2
+          ]
+        ],
+        "same_worker_conflicts": {},
+        "wrong_triple_same_group": false
+      }
+    },
+    {
+      "local_id": 16,
+      "blocks": [
+        [
+          22,
+          52,
+          72,
+          82,
+          92,
+          102,
+          119,
+          141,
+          149,
+          210
+        ],
+        [
+          111,
+          186
+        ]
+      ],
+      "edit_count": 0,
+      "cost": 0.7560360913471247,
+      "moved_nodes_alternative_alignments": [
+        []
+      ],
+      "block_label_alignments": [
+        0
+      ],
+      "diameters_deg": null,
+      "supports": [
+        10,
+        2
+      ],
+      "diameters_checked_deg": [
+        2.839700640641708,
+        3.437114545155738
+      ],
+      "centers": [
+        {
+          "points": [
+            [
+              221.4054054054054,
+              208.22651222651223
+            ],
+            [
+              221.4054054054054,
+              312.33976833976834
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                221.4054054054054,
+                208.22651222651223
+              ],
+              [
+                221.4054054054054,
+                312.33976833976834
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 5,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        },
+        {
+          "points": [
+            [
+              219.55702421947785,
+              210.17594152913205
+            ],
+            [
+              219.55702421947785,
+              321.0025636715149
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                219.55702421947785,
+                210.17594152913205
+              ],
+              [
+                219.55702421947785,
+                321.0025636715149
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 2,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        }
+      ],
+      "added_coassignments": [],
+      "lost_coassignments": [],
+      "full_observation_count": 224,
+      "full_unique_observations": 224,
+      "outside_groups_unchanged": true,
+      "new_same_worker_collisions": 0,
+      "new_diameter_violations": 0,
+      "newly_split_identical_coordinates": [],
+      "complete_layout_created": false,
+      "roster_denominator": 24,
+      "human_development_probe": {
+        "members": [
+          [
+            "R02452",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ],
+          [
+            "R01557",
+            4
+          ]
+        ],
+        "member_groups": [
+          "corner_043",
+          "corner_002",
+          "corner_002"
+        ],
+        "supports": [
+          10,
+          8,
+          8
+        ],
+        "same_group": false,
+        "local_diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_feasible": true,
+        "whole_union_diameter": 6.572426230219333,
+        "whole_union_witness": [
+          [
+            "R01784",
+            1
+          ],
+          [
+            "R02468",
+            2
+          ]
+        ],
+        "same_worker_conflicts": {},
+        "wrong_triple_same_group": false
+      }
+    }
+  ],
+  "all_candidate_ledger": "rPc6DW4iMge-06_pair_5_d1.jsonl.gz",
+  "node_lookup_file": "node_lookup.json"
+}

@@ -1,0 +1,371 @@
+{
+  "minimum_dispersion_ids": [
+    2
+  ],
+  "baseline_equal_dispersion_ids": [
+    2
+  ],
+  "domain": {
+    "union": [
+      0,
+      4,
+      8,
+      20,
+      30,
+      38,
+      42,
+      51,
+      64
+    ],
+    "baseline_blocks": [
+      [
+        4,
+        30,
+        42
+      ],
+      [
+        0,
+        8,
+        20,
+        38,
+        51,
+        64
+      ]
+    ],
+    "union_nodes": 9,
+    "incompatibility_components": [
+      {
+        "nodes": [
+          0
+        ],
+        "colors": [
+          0
+        ]
+      },
+      {
+        "nodes": [
+          4,
+          8,
+          30,
+          38,
+          42,
+          51,
+          64
+        ],
+        "colors": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      },
+      {
+        "nodes": [
+          20
+        ],
+        "colors": [
+          0
+        ]
+      }
+    ],
+    "forbidden_pairs": [
+      {
+        "nodes": [
+          4,
+          8
+        ],
+        "distance_deg": 11.695285587666765,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          4,
+          38
+        ],
+        "distance_deg": 11.892453536529201,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          4,
+          51
+        ],
+        "distance_deg": 13.623865377333672,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          4,
+          64
+        ],
+        "distance_deg": 12.967563699524517,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          8,
+          30
+        ],
+        "distance_deg": 11.695285587666765,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          8,
+          42
+        ],
+        "distance_deg": 11.526720045533974,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          30,
+          38
+        ],
+        "distance_deg": 11.892453536529201,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          30,
+          51
+        ],
+        "distance_deg": 13.623865377333672,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          30,
+          64
+        ],
+        "distance_deg": 12.967563699524517,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          38,
+          42
+        ],
+        "distance_deg": 11.82783350614085,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          42,
+          51
+        ],
+        "distance_deg": 13.560762234669092,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          42,
+          64
+        ],
+        "distance_deg": 12.85782971653281,
+        "same_worker": false
+      }
+    ],
+    "orientation_states": 4,
+    "all_unordered_two_nonempty_partitions": 255,
+    "status": "ok",
+    "exhaustive_within_declared_domain": true,
+    "feasible_count": 4,
+    "infeasible_partition_count": 251,
+    "domain_id": "uNb9QFRL6hY-67_top_10_d0",
+    "group_indices": [
+      4,
+      0
+    ],
+    "compatible_cross_pairs": [
+      [
+        4,
+        0
+      ],
+      [
+        4,
+        20
+      ],
+      [
+        30,
+        0
+      ],
+      [
+        30,
+        20
+      ],
+      [
+        42,
+        0
+      ],
+      [
+        42,
+        20
+      ]
+    ]
+  },
+  "automatic": {
+    "status": "unchanged",
+    "selected_ids": [
+      2
+    ],
+    "baseline_cost": 0.3443807242332304
+  },
+  "human_assisted": null,
+  "pareto_ids": [
+    2
+  ],
+  "selected_details": [
+    {
+      "local_id": 2,
+      "blocks": [
+        [
+          0,
+          8,
+          20,
+          38,
+          51,
+          64
+        ],
+        [
+          4,
+          30,
+          42
+        ]
+      ],
+      "edit_count": 0,
+      "cost": 0.3443807242332304,
+      "moved_nodes_alternative_alignments": [
+        []
+      ],
+      "block_label_alignments": [
+        1
+      ],
+      "diameters_deg": null,
+      "supports": [
+        6,
+        3
+      ],
+      "diameters_checked_deg": [
+        6.911897974492075,
+        1.6908481988038504
+      ],
+      "centers": [
+        {
+          "points": [
+            [
+              145.87714378263257,
+              114.06863578556226
+            ],
+            [
+              145.87714378263257,
+              412.51674457161266
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                145.87714378263257,
+                114.06863578556226
+              ],
+              [
+                145.87714378263257,
+                412.51674457161266
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 1,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        },
+        {
+          "points": [
+            [
+              139.27969348659005,
+              147.1264367816092
+            ],
+            [
+              139.27969348659005,
+              413.91570881226056
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                139.27969348659005,
+                147.1264367816092
+              ],
+              [
+                139.27969348659005,
+                413.91570881226056
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 2,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        }
+      ],
+      "added_coassignments": [],
+      "lost_coassignments": [],
+      "full_observation_count": 68,
+      "full_unique_observations": 68,
+      "outside_groups_unchanged": true,
+      "new_same_worker_collisions": 0,
+      "new_diameter_violations": 0,
+      "newly_split_identical_coordinates": [],
+      "complete_layout_created": false,
+      "roster_denominator": 15,
+      "human_development_probe": {
+        "members": [
+          [
+            "R00144",
+            0
+          ],
+          [
+            "R00526",
+            0
+          ],
+          [
+            "R02210",
+            0
+          ]
+        ],
+        "member_groups": [
+          "corner_011",
+          "corner_010",
+          "corner_010"
+        ],
+        "supports": [
+          3,
+          6,
+          6
+        ],
+        "same_group": false,
+        "local_diameters_deg": {
+          "top": 13.560762234669092,
+          "bottom": 2.343361822400281,
+          "pair": 13.560762234669092
+        },
+        "local_feasible": false,
+        "whole_union_diameter": 13.623865377333672,
+        "whole_union_witness": [
+          [
+            "R02932",
+            0
+          ],
+          [
+            "R00526",
+            0
+          ]
+        ],
+        "same_worker_conflicts": {}
+      }
+    }
+  ],
+  "all_candidate_ledger": "uNb9QFRL6hY-67_top_10_d0.jsonl.gz",
+  "node_lookup_file": "node_lookup.json"
+}

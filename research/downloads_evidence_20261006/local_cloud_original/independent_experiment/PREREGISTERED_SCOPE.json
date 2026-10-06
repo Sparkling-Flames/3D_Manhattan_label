@@ -1,0 +1,68 @@
+{
+  "title": "Exact-coordinate block preservation as a declared correspondence sensitivity constraint",
+  "registered_utc": "2026-10-05T15:32:32.578287+00:00",
+  "question": "Within the already frozen rpc two-block domains, can the existing reviewed relation coexist with preserving each baseline-coassigned block of exactly identical full point-pair coordinates, and how does that change feasible membership, support, edit count and relation changes?",
+  "prior_exposure": "Full upstream report, code, human review and summary read. 5-degree baseline aided counts/ranges and split-identical-coordinates finding already known. This is development sensitivity analysis, not preregistration of the source study or held-out evaluation.",
+  "scope": {
+    "image": "rPc6DW4iMge-06",
+    "all_saved_rpc_domains": 30,
+    "thresholds_deg": [
+      1.0,
+      2.5,
+      5.0,
+      7.5,
+      10.0
+    ],
+    "metrics": [
+      "pair",
+      "bottom",
+      "top"
+    ],
+    "outside_groups": "frozen",
+    "outputs": "exactly two nonempty groups",
+    "full_roster": 24,
+    "source_observations": 224
+  },
+  "equality_definition": "Within each of the two old groups independently, group observations by exact equality of all four stored coordinate scalars. Preserve coassignment only for buckets of size >=2. No merging across old groups, no metric-distance tolerance, no deduplication, no identity or semantic inference.",
+  "four_conditions": [
+    "geometry plus same-worker constraints",
+    "same constraints plus equality preservation",
+    "same constraints plus existing human relation",
+    "same constraints plus human relation plus equality preservation"
+  ],
+  "human_scope": "Read exact rpc ids and processed indices from source human_review. Existing same-corner triple and rejected-purple relation only. If any triple member outside domain report incomplete; rejected point outside already separated by fixed outside membership.",
+  "implementation": "Independent spherical unit-vector angles and parity union-find. Compare exact canonical assignment sets against upstream saved ledgers under all four filters. Direct brute-force all 2^17 canonical assignments in 18-node 5-degree pair domain independently.",
+  "outputs": [
+    "feasible counts",
+    "target-group support min/max and histogram",
+    "conditional forced/possible/excluded membership",
+    "minimum edit then original W results with all 1e-10 ties",
+    "complete moved/added/lost relation lists for selected candidates",
+    "feasible masks and original source ids"
+  ],
+  "limits": {
+    "max_nodes": 32,
+    "max_orientation_states": 262144,
+    "max_bruteforce_nodes": 18
+  },
+  "stopping_condition": "Finish all 30 domains, independent comparisons and direct 18-node check. Explicitly record inconsistency, budget excess or incomplete human scope without relaxing constraints. No new thresholds, objectives, domains or claim of semantic success.",
+  "prohibitions": [
+    "No GT reading or tuning",
+    "No new semantic labels or propagation",
+    "No real input/qualification/ring modification",
+    "No vote deduplication",
+    "No global layout or general effectiveness claim"
+  ],
+  "source_sha256": {
+    "REPORT_ZH.md": "befced903ba3ece8bd17dd796b41084b4f87235252938c4e9e34c1ab8db34e8b",
+    "config.json": "62f9f8cc2ce450b67986077cb448358af218bdb62e23e34da81bf1ac51c687dc",
+    "inputs/rPc6DW4iMge-06.json": "70503d4e650a7c0ee9c966f69286a678a33f4db8d30bad4713ff7fdabc1d325e",
+    "inputs/human_review.json": "14cbb126be7fbcca0ec8ce6270e36163df810b759f1468eccd5867e986c5df79",
+    "src/core.py": "001659e1ae90ec1b70e570c9d859c1f6f8e15eeda8857cf0f7d4c9a5e0a30689",
+    "results/domains/domains_summary.json": "4c5397338887a60b420c2c0ad5c3aa04857d89b90de6404aaaf329a9feaf4300"
+  },
+  "additional_outputs_before_calculation": {
+    "registered_utc": "2026-10-05T15:35:09.888717+00:00",
+    "parent_request": "Count target-support >=12 and >12 of 24; coordinate-median target-center extrema if unambiguous circular unwrapping is certifiable within fixed domain. Counts are combinatorial, not probabilities; extrema conditional, not confidence intervals."
+  }
+}

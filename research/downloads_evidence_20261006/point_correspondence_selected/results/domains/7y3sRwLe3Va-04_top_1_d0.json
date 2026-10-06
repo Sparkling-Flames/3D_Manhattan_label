@@ -1,0 +1,197 @@
+{
+  "minimum_dispersion_ids": [
+    3
+  ],
+  "baseline_equal_dispersion_ids": [
+    3
+  ],
+  "domain": {
+    "union": [
+      0,
+      24,
+      84,
+      92
+    ],
+    "baseline_blocks": [
+      [
+        0
+      ],
+      [
+        24,
+        84,
+        92
+      ]
+    ],
+    "union_nodes": 4,
+    "incompatibility_components": [
+      {
+        "nodes": [
+          0,
+          92
+        ],
+        "colors": [
+          0,
+          1
+        ]
+      },
+      {
+        "nodes": [
+          24
+        ],
+        "colors": [
+          0
+        ]
+      },
+      {
+        "nodes": [
+          84
+        ],
+        "colors": [
+          0
+        ]
+      }
+    ],
+    "forbidden_pairs": [
+      {
+        "nodes": [
+          0,
+          92
+        ],
+        "distance_deg": 1.067778329946674,
+        "same_worker": false
+      }
+    ],
+    "orientation_states": 4,
+    "all_unordered_two_nonempty_partitions": 7,
+    "status": "ok",
+    "exhaustive_within_declared_domain": true,
+    "feasible_count": 4,
+    "infeasible_partition_count": 3,
+    "domain_id": "7y3sRwLe3Va-04_top_1_d0",
+    "group_indices": [
+      0,
+      14
+    ],
+    "compatible_cross_pairs": [
+      [
+        0,
+        24
+      ],
+      [
+        0,
+        84
+      ]
+    ]
+  },
+  "automatic": {
+    "status": "unchanged",
+    "selected_ids": [
+      3
+    ],
+    "baseline_cost": 0.11054486020546428
+  },
+  "human_assisted": null,
+  "pareto_ids": [
+    3
+  ],
+  "selected_details": [
+    {
+      "local_id": 3,
+      "blocks": [
+        [
+          0
+        ],
+        [
+          24,
+          84,
+          92
+        ]
+      ],
+      "edit_count": 0,
+      "cost": 0.11054486020546428,
+      "moved_nodes_alternative_alignments": [
+        []
+      ],
+      "block_label_alignments": [
+        0
+      ],
+      "diameters_deg": null,
+      "supports": [
+        1,
+        3
+      ],
+      "diameters_checked_deg": [
+        0.0,
+        0.3738252945903081
+      ],
+      "centers": [
+        {
+          "points": [
+            [
+              121.2893203883495,
+              167.02135922330098
+            ],
+            [
+              121.2893203883495,
+              375.7980582524272
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                121.2893203883495,
+                167.02135922330098
+              ],
+              [
+                121.2893203883495,
+                375.7980582524272
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 1,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        },
+        {
+          "points": [
+            [
+              122.46310432569969,
+              164.75763747454178
+            ],
+            [
+              122.46310432569969,
+              371.2260692464358
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                122.46310432569969,
+                164.75763747454178
+              ],
+              [
+                122.46310432569969,
+                371.2260692464358
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 1,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        }
+      ],
+      "added_coassignments": [],
+      "lost_coassignments": [],
+      "full_observation_count": 96,
+      "full_unique_observations": 96,
+      "outside_groups_unchanged": true,
+      "new_same_worker_collisions": 0,
+      "new_diameter_violations": 0,
+      "newly_split_identical_coordinates": [],
+      "complete_layout_created": false,
+      "roster_denominator": 24
+    }
+  ],
+  "all_candidate_ledger": "7y3sRwLe3Va-04_top_1_d0.jsonl.gz",
+  "node_lookup_file": "node_lookup.json"
+}

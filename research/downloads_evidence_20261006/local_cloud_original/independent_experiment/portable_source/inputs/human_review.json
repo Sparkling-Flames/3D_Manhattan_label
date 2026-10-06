@@ -1,0 +1,103 @@
+{
+  "schema": "point_route_human_review_v1",
+  "status": "user_visual_judgment_development_cases_not_formal_gold",
+  "reviews": [
+    {
+      "case_id": "2t7_corner",
+      "image": "2t7WUuJeko7-06",
+      "record_ids": [
+        "R00227",
+        "R00539",
+        "R01831"
+      ],
+      "processed_pair_indices": [
+        0,
+        0,
+        0
+      ],
+      "reviewer": "user",
+      "source": "explicit_chat_reply_20261006",
+      "verbatim": "在我看来,这三种标注,从视觉上看,是同一墙角位置,只不过标注有差异",
+      "interpretation": "用户随后澄清前述同一墙角判断指2t7；本记录已更正案例归属。三份指定点对为同一墙角的位置差异。",
+      "not_decided": [
+        "哪一份坐标最准确或最终融合中心应取何值",
+        "其余人员或整个自动点簇是否均属于此墙角",
+        "绑定、锚定或拆分方法的总体优劣",
+        "最佳阈值或5度阈值有效性"
+      ],
+      "correction_quote": "哦,我刚刚说的是2t 7 的",
+      "relation": "same_corner_pair"
+    },
+    {
+      "case_id": "unb_upper",
+      "image": "uNb9QFRL6hY-67",
+      "record_ids": [
+        "R00144",
+        "R00526",
+        "R02210"
+      ],
+      "processed_pair_indices": [
+        0,
+        0,
+        0
+      ],
+      "reviewer": "user",
+      "source": "explicit_chat_correction_20261006",
+      "verbatim": "一个低一点的是标到了 矮一截的玻璃的顶部,其他的两个是标到玻璃延伸到天花板的位置",
+      "prior_correction_quote": "但是unb的黄色上端的 与其他两个不是同一标注位置",
+      "bottom_verbatim": "下端应该是同一处墙角",
+      "bottom_relation": "same_corner_user_tentative",
+      "interpretation": "黄色A（R00144）上端标较矮玻璃的顶部；B、C（R00526、R02210）标玻璃延伸到天花板的位置。属于不同高度边界目标，不作为同一上端目标的普通定位偏差。此前误归到unb的同一墙角判断继续撤回。",
+      "not_decided": [
+        "任务规范应选哪一种高度边界",
+        "其余人员的上端目标"
+      ],
+      "relation": "different_upper_targets",
+      "different_upper_target_indices": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ]
+      ]
+    },
+    {
+      "case_id": "rpc_lower",
+      "image": "rPc6DW4iMge-06",
+      "record_ids": [
+        "R02452",
+        "R01986",
+        "R01557"
+      ],
+      "processed_pair_indices": [
+        2,
+        2,
+        4
+      ],
+      "source_pair_indices_zero_based": [
+        2,
+        2,
+        3
+      ],
+      "reviewer": "user",
+      "source": "explicit_chat_correction_20261006",
+      "verbatim": "你新的选对了,这个新的是和a b 是同一位置的墙角",
+      "prior_correction_quote": "rpc的紫色和其他两个标注的不是同一细节,你圈出来的点和a b 的不是同一位置,应该是离得最近的紫色点才是",
+      "interpretation": "用户确认新的紫色源第4点对（处理后索引4）与A、B是同一墙角；旧圈选的源第5对（处理后索引2）是不同细节，不能混作同一墙角定位差。",
+      "rejected_previous_purple_processed_pair_index": 2,
+      "not_decided": [
+        "最准确位置或最终融合中心",
+        "其他人员或整个点簇的身份",
+        "最佳阈值"
+      ],
+      "relation": "same_corner_pair"
+    }
+  ],
+  "pending_case_ids": [],
+  "correction_history": [
+    "助手曾把2t7的判断误记为unb，用户纠正后已撤回；不得继承误记结论。"
+  ]
+}

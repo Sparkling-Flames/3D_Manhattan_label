@@ -1,0 +1,54 @@
+{
+  "schema": "local_boundary_followup_v1",
+  "specs": {
+    "rPc6DW4iMge-06": {
+      "records": [
+        "R01557",
+        "R01905",
+        "R02452"
+      ],
+      "erp": [
+        180,
+        245,
+        180,
+        360
+      ],
+      "bev": [
+        -3.1,
+        -1.95,
+        0.3,
+        1.05
+      ]
+    },
+    "yqstnuAEVhm-32": {
+      "records": [
+        "R02256",
+        "R01095",
+        "R00157"
+      ],
+      "erp": [
+        875,
+        1015,
+        150,
+        380
+      ],
+      "bev": [
+        0.15,
+        2.1,
+        1.2,
+        3.4
+      ]
+    }
+  },
+  "figures": "Existing observations and actual saved all-pool boundaries; no resampling of people, smoothing, snapping or new vote.",
+  "geometry": "Clipped to fixed display boxes only; no structure recovery score or semantic identity inferred.",
+  "duplicate_display_geometry": {
+    "records": [
+      "R01095",
+      "R01029"
+    ],
+    "exact_full_points_equal": true,
+    "action": "One shown path; existing independent-vote eligibility unchanged."
+  },
+  "checks": "Bottom projection roundtrip <1e-8 pixels; selected clipped paths nonempty; original reference equals source TXT."
+}

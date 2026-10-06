@@ -1,0 +1,23 @@
+{
+  "schema":"local_reassignment_plan_v1",
+  "frozen_before_new_outcome_calculation":true,
+  "commit":"4716aef3c8453779633a0a4aadf44105afb3b733",
+  "thresholds_deg":[1.0,2.5,5.0,7.5,10.0],
+  "thresholds_calibrated":false,
+  "metrics":["pair","bottom","top"],
+  "full_rosters":{"2t7WUuJeko7-06":3,"7y3sRwLe3Va-04":24,"rPc6DW4iMge-06":24,"uNb9QFRL6hY-67":15},
+  "nominated_seeds":{"2t7WUuJeko7-06":["R00227",0],"7y3sRwLe3Va-04":["R01553",0],"rPc6DW4iMge-06":["R02452",2],"uNb9QFRL6hY-67":["R00144",0]},
+  "seed_role":"Development-window localization only. The automatic function receives seed but no human correspondences or upper target labels. Not a blind detector.",
+  "local_domain":"For each baseline group containing a nominated seed, pair with EVERY other baseline group having any threshold-compatible cross-person pair; retain all nodes in the two groups. Others frozen. Enumerate all unordered nonempty two-block partitions of this union under diameter and one-worker constraints. Do not combine overlapping-window alternatives.",
+  "limits":{"max_union_nodes":32,"max_orientation_states":262144},
+  "outside_domain":"All memberships outside the two groups frozen, no local node allowed to escape elsewhere or disappear. All original source rings unchanged. Roster denominator unchanged.",
+  "cost":"W=sum_g [sum_{i<j in g}(d_ij/tau)^2 / |g|]. Dispersion objective, NOT semantic truth or calibrated likelihood.",
+  "edit_cost":"Minimum number of nodes changing block, after optimal two-label alignment with baseline. Equal alignments retained.",
+  "policies":{"baseline":"No change.","automatic_minimal":"If any feasible alternative strictly improves W by >1e-10, minimize edit count then W; keep every numerical tie (1e-10), plus preserve baseline and complete Pareto/frontier ledger. Otherwise unchanged. Cross-window alternatives are separate, not silently combined.","human_assisted":"In the identical local domains, add given same-corner must-links and rejected rpc cannot-links, then minimize edit count followed by W. Infeasible or domain-incomplete constraints remain failures; no threshold relaxation. Not automatic success."},
+  "human_read_only_for_assisted_and_evaluation":true,
+  "center":"Periodic medoid-anchored coordinate median, copied interpretation from existing baseline; all tied center anchors examined; no output source mutation.",
+  "unb":"Freeze bottom grouping per threshold; retain original paired upper endpoints. Upper geometrical partitions within a bottom group are exploratory; preserve every subthreshold upper group, named semantics only for explicitly reviewed observations. No unknown-to-known semantic propagation and no full ring creation.",
+  "controls":{"shuffle_repeats":12,"rename_repeats":12,"perturb_repeats":20,"perturb_shared_x_and_each_y_px":0.05,"seed":61006,"perturb_threshold_deg":5.0,"same_worker_collision":true,"seam_shift_px":723.5,"symmetric_tie":true,"synthetic_wrong_semantics":true},
+  "gt_policy":"No GT files are loaded anywhere in this round. Development cases historically exposed; not a blind experiment.",
+  "not_solved":["arbitrary multi-group repartition","semantic meaning of unknown upper endpoints","2-versus-3 local path equivalence","complete layout generation","formal global correspondence uniqueness"]
+}

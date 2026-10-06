@@ -1,0 +1,321 @@
+{
+  "minimum_dispersion_ids": [
+    0
+  ],
+  "baseline_equal_dispersion_ids": [
+    0
+  ],
+  "domain": {
+    "union": [
+      22,
+      52,
+      72,
+      82,
+      92,
+      102,
+      141,
+      149,
+      186
+    ],
+    "baseline_blocks": [
+      [
+        22,
+        72,
+        82,
+        92,
+        102,
+        141,
+        149,
+        186
+      ],
+      [
+        52
+      ]
+    ],
+    "union_nodes": 9,
+    "incompatibility_components": [
+      {
+        "nodes": [
+          22,
+          52,
+          72,
+          82,
+          92,
+          102,
+          141,
+          186
+        ],
+        "colors": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "nodes": [
+          149
+        ],
+        "colors": [
+          0
+        ]
+      }
+    ],
+    "forbidden_pairs": [
+      {
+        "nodes": [
+          22,
+          52
+        ],
+        "distance_deg": 2.7610668308445994,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          52,
+          72
+        ],
+        "distance_deg": 2.7610668308445994,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          52,
+          82
+        ],
+        "distance_deg": 2.7610668308445994,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          52,
+          92
+        ],
+        "distance_deg": 2.7610668308445994,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          52,
+          102
+        ],
+        "distance_deg": 2.7610668308445994,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          52,
+          141
+        ],
+        "distance_deg": 2.5034882943312278,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          52,
+          186
+        ],
+        "distance_deg": 3.4502895902138273,
+        "same_worker": false
+      }
+    ],
+    "orientation_states": 2,
+    "all_unordered_two_nonempty_partitions": 255,
+    "status": "ok",
+    "exhaustive_within_declared_domain": true,
+    "feasible_count": 2,
+    "infeasible_partition_count": 253,
+    "domain_id": "rPc6DW4iMge-06_top_2.5_d0",
+    "group_indices": [
+      19,
+      31
+    ],
+    "compatible_cross_pairs": [
+      [
+        149,
+        52
+      ]
+    ]
+  },
+  "automatic": {
+    "status": "unchanged",
+    "selected_ids": [
+      0
+    ],
+    "baseline_cost": 0.25015331321961454
+  },
+  "human_assisted": {
+    "status": "constraints_outside_local_domain",
+    "selected_ids": []
+  },
+  "pareto_ids": [
+    0
+  ],
+  "selected_details": [
+    {
+      "local_id": 0,
+      "blocks": [
+        [
+          22,
+          72,
+          82,
+          92,
+          102,
+          141,
+          149,
+          186
+        ],
+        [
+          52
+        ]
+      ],
+      "edit_count": 0,
+      "cost": 0.25015331321961454,
+      "moved_nodes_alternative_alignments": [
+        []
+      ],
+      "block_label_alignments": [
+        0
+      ],
+      "diameters_deg": null,
+      "supports": [
+        8,
+        1
+      ],
+      "diameters_checked_deg": [
+        1.5142850398574663,
+        0.0
+      ],
+      "centers": [
+        {
+          "points": [
+            [
+              221.4054054054054,
+              208.22651222651223
+            ],
+            [
+              221.4054054054054,
+              312.33976833976834
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                221.4054054054054,
+                208.22651222651223
+              ],
+              [
+                221.4054054054054,
+                312.33976833976834
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 5,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        },
+        {
+          "points": [
+            [
+              228.01715259125157,
+              212.83999302014894
+            ],
+            [
+              228.01715259125157,
+              312.5273206719681
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                228.01715259125157,
+                212.83999302014894
+              ],
+              [
+                228.01715259125157,
+                312.5273206719681
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 1,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        }
+      ],
+      "added_coassignments": [],
+      "lost_coassignments": [],
+      "full_observation_count": 224,
+      "full_unique_observations": 224,
+      "outside_groups_unchanged": true,
+      "new_same_worker_collisions": 0,
+      "new_diameter_violations": 0,
+      "newly_split_identical_coordinates": [],
+      "complete_layout_created": false,
+      "roster_denominator": 24,
+      "human_development_probe": {
+        "members": [
+          [
+            "R02452",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ],
+          [
+            "R01557",
+            4
+          ]
+        ],
+        "member_groups": [
+          "corner_055",
+          "corner_028",
+          "corner_046"
+        ],
+        "supports": [
+          8,
+          2,
+          4
+        ],
+        "same_group": false,
+        "local_diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_feasible": false,
+        "whole_union_diameter": 4.6462495245725695,
+        "whole_union_witness": [
+          [
+            "R00634",
+            1
+          ],
+          [
+            "R01557",
+            2
+          ]
+        ],
+        "same_worker_conflicts": {
+          "P023": [
+            [
+              "R01557",
+              4
+            ],
+            [
+              "R01557",
+              2
+            ]
+          ]
+        },
+        "wrong_triple_same_group": false
+      }
+    }
+  ],
+  "all_candidate_ledger": "rPc6DW4iMge-06_top_2.5_d0.jsonl.gz",
+  "node_lookup_file": "node_lookup.json",
+  "compact_reference": "rPc6DW4iMge-06_top_2.5_d0_reference.npz"
+}

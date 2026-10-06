@@ -1,0 +1,971 @@
+{
+  "domain_id": "rPc6DW4iMge-06_top_10_d0",
+  "threshold": 10.0,
+  "metric": "top",
+  "union_nodes": 20,
+  "baseline_support": [
+    15,
+    5
+  ],
+  "equal_blocks": [
+    [
+      "R02452:2",
+      "R01798:2",
+      "R01341:2",
+      "R00525:2",
+      "R02407:2"
+    ]
+  ],
+  "equal_block_node_counts": [
+    5
+  ],
+  "independent_forbidden_edges_match": true,
+  "full_roster": 24,
+  "all_input_observations": 224,
+  "outside_groups_unchanged": true,
+  "conditions": {
+    "geometry": {
+      "feasible_count": 262144,
+      "minimum_edit": 0,
+      "minimum_edit_then_cost": 0.39219825490730326,
+      "selection_status": "numerically_unique",
+      "selected_count": 1,
+      "selected": [
+        {
+          "canonical_mask": 860158,
+          "upstream_candidate_id": 262083,
+          "blocks": [
+            [
+              "R01784:1",
+              "R01489:1",
+              "R00634:1",
+              "R01557:4",
+              "R00500:1"
+            ],
+            [
+              "R02452:2",
+              "R02165:2",
+              "R02468:2",
+              "R01986:2",
+              "R01798:2",
+              "R01341:2",
+              "R00525:2",
+              "R02407:2",
+              "R02456:1",
+              "R00553:2",
+              "R01905:2",
+              "R01662:0",
+              "R01557:2",
+              "R00233:0",
+              "R01695:0"
+            ]
+          ],
+          "support": [
+            5,
+            15
+          ],
+          "edit_count": 0,
+          "cost": 0.39219825490730326,
+          "moved_alternative_alignments": [
+            []
+          ],
+          "target_group_members": null,
+          "target_group_support": null,
+          "diameters_deg": [
+            2.6136009335719907,
+            5.304039413767545
+          ],
+          "lost_relations": [],
+          "added_relations": [],
+          "identical_full_coordinates_split": [],
+          "worker_unique": true,
+          "observation_cover_exact": true
+        }
+      ],
+      "cost_range": [
+        0.309852708264564,
+        0.7085767410099842
+      ],
+      "reviewed_triple_together_count": 65536,
+      "target_support_range": [
+        3,
+        19
+      ],
+      "target_support_histogram": {
+        "3": 1,
+        "4": 16,
+        "5": 120,
+        "6": 560,
+        "7": 1820,
+        "8": 4368,
+        "9": 8008,
+        "10": 11440,
+        "11": 12870,
+        "12": 11440,
+        "13": 8008,
+        "14": 4368,
+        "15": 1820,
+        "16": 560,
+        "17": 120,
+        "18": 16,
+        "19": 1
+      },
+      "support_at_least_12_count": 26333,
+      "support_greater_than_12_count": 14893,
+      "forced_members": [
+        "R02452:2",
+        "R01986:2",
+        "R01557:4"
+      ],
+      "possible_members": [
+        "R01784:1",
+        "R02452:2",
+        "R02165:2",
+        "R02468:2",
+        "R01986:2",
+        "R01798:2",
+        "R01341:2",
+        "R00525:2",
+        "R02407:2",
+        "R02456:1",
+        "R00553:2",
+        "R01905:2",
+        "R01662:0",
+        "R01489:1",
+        "R00634:1",
+        "R01557:4",
+        "R00500:1",
+        "R00233:0",
+        "R01695:0"
+      ],
+      "variable_members": [
+        "R01784:1",
+        "R02165:2",
+        "R02468:2",
+        "R01798:2",
+        "R01341:2",
+        "R00525:2",
+        "R02407:2",
+        "R02456:1",
+        "R00553:2",
+        "R01905:2",
+        "R01662:0",
+        "R01489:1",
+        "R00634:1",
+        "R00500:1",
+        "R00233:0",
+        "R01695:0"
+      ],
+      "conditional_center_extrema": {
+        "x_unwrapped_px": [
+          213.6768097952494,
+          221.4054054054054
+        ],
+        "top_y_px": [
+          207.99615222968987,
+          214.74174757281554
+        ],
+        "bottom_y_px": [
+          307.53023840275773,
+          312.4335445058682
+        ],
+        "x_anchor_px": 221.4054054054054,
+        "interpretation": "Coordinate-median extrema over target assignments, not confidence intervals; x can be reduced modulo 1024. No top/bottom semantic target is newly established."
+      },
+      "status": "ok",
+      "orientation_states": 262144,
+      "components": 19,
+      "exact_assignment_set_matches_upstream_filter": true
+    },
+    "geometry_equal": {
+      "feasible_count": 16384,
+      "minimum_edit": 0,
+      "minimum_edit_then_cost": 0.39219825490730326,
+      "selection_status": "numerically_unique",
+      "selected_count": 1,
+      "selected": [
+        {
+          "canonical_mask": 860158,
+          "upstream_candidate_id": 262083,
+          "blocks": [
+            [
+              "R01784:1",
+              "R01489:1",
+              "R00634:1",
+              "R01557:4",
+              "R00500:1"
+            ],
+            [
+              "R02452:2",
+              "R02165:2",
+              "R02468:2",
+              "R01986:2",
+              "R01798:2",
+              "R01341:2",
+              "R00525:2",
+              "R02407:2",
+              "R02456:1",
+              "R00553:2",
+              "R01905:2",
+              "R01662:0",
+              "R01557:2",
+              "R00233:0",
+              "R01695:0"
+            ]
+          ],
+          "support": [
+            5,
+            15
+          ],
+          "edit_count": 0,
+          "cost": 0.39219825490730326,
+          "moved_alternative_alignments": [
+            []
+          ],
+          "target_group_members": null,
+          "target_group_support": null,
+          "diameters_deg": [
+            2.6136009335719907,
+            5.304039413767545
+          ],
+          "lost_relations": [],
+          "added_relations": [],
+          "identical_full_coordinates_split": [],
+          "worker_unique": true,
+          "observation_cover_exact": true
+        }
+      ],
+      "cost_range": [
+        0.309852708264564,
+        0.7085767410099842
+      ],
+      "reviewed_triple_together_count": 4096,
+      "target_support_range": [
+        7,
+        19
+      ],
+      "target_support_histogram": {
+        "7": 1,
+        "8": 12,
+        "9": 66,
+        "10": 220,
+        "11": 495,
+        "12": 792,
+        "13": 924,
+        "14": 792,
+        "15": 495,
+        "16": 220,
+        "17": 66,
+        "18": 12,
+        "19": 1
+      },
+      "support_at_least_12_count": 3302,
+      "support_greater_than_12_count": 2510,
+      "forced_members": [
+        "R02452:2",
+        "R01986:2",
+        "R01798:2",
+        "R01341:2",
+        "R00525:2",
+        "R02407:2",
+        "R01557:4"
+      ],
+      "possible_members": [
+        "R01784:1",
+        "R02452:2",
+        "R02165:2",
+        "R02468:2",
+        "R01986:2",
+        "R01798:2",
+        "R01341:2",
+        "R00525:2",
+        "R02407:2",
+        "R02456:1",
+        "R00553:2",
+        "R01905:2",
+        "R01662:0",
+        "R01489:1",
+        "R00634:1",
+        "R01557:4",
+        "R00500:1",
+        "R00233:0",
+        "R01695:0"
+      ],
+      "variable_members": [
+        "R01784:1",
+        "R02165:2",
+        "R02468:2",
+        "R02456:1",
+        "R00553:2",
+        "R01905:2",
+        "R01662:0",
+        "R01489:1",
+        "R00634:1",
+        "R00500:1",
+        "R00233:0",
+        "R01695:0"
+      ],
+      "conditional_center_extrema": {
+        "x_unwrapped_px": [
+          215.0036645998193,
+          221.4054054054054
+        ],
+        "top_y_px": [
+          208.22651222651223,
+          213.86194690265486
+        ],
+        "bottom_y_px": [
+          310.06101137914266,
+          312.33976833976834
+        ],
+        "x_anchor_px": 221.4054054054054,
+        "interpretation": "Coordinate-median extrema over target assignments, not confidence intervals; x can be reduced modulo 1024. No top/bottom semantic target is newly established."
+      },
+      "status": "ok",
+      "orientation_states": 16384,
+      "components": 15,
+      "exact_assignment_set_matches_upstream_filter": true
+    },
+    "human": {
+      "feasible_count": 65536,
+      "minimum_edit": 2,
+      "minimum_edit_then_cost": 0.4767274954628715,
+      "selection_status": "numerically_unique",
+      "selected_count": 1,
+      "selected": [
+        {
+          "canonical_mask": 860140,
+          "upstream_candidate_id": 114627,
+          "blocks": [
+            [
+              "R01784:1",
+              "R02452:2",
+              "R01986:2",
+              "R01489:1",
+              "R00634:1",
+              "R01557:4",
+              "R00500:1"
+            ],
+            [
+              "R02165:2",
+              "R02468:2",
+              "R01798:2",
+              "R01341:2",
+              "R00525:2",
+              "R02407:2",
+              "R02456:1",
+              "R00553:2",
+              "R01905:2",
+              "R01662:0",
+              "R01557:2",
+              "R00233:0",
+              "R01695:0"
+            ]
+          ],
+          "support": [
+            7,
+            13
+          ],
+          "edit_count": 2,
+          "cost": 0.4767274954628715,
+          "moved_alternative_alignments": [
+            [
+              "R02452:2",
+              "R01986:2"
+            ]
+          ],
+          "target_group_members": [
+            "R01784:1",
+            "R02452:2",
+            "R01986:2",
+            "R01489:1",
+            "R00634:1",
+            "R01557:4",
+            "R00500:1"
+          ],
+          "target_group_support": 7,
+          "diameters_deg": [
+            4.849739035733623,
+            5.059990228803601
+          ],
+          "lost_relations": [
+            [
+              "R02452:2",
+              "R02165:2"
+            ],
+            [
+              "R02452:2",
+              "R02468:2"
+            ],
+            [
+              "R02452:2",
+              "R01798:2"
+            ],
+            [
+              "R02452:2",
+              "R01341:2"
+            ],
+            [
+              "R02452:2",
+              "R00525:2"
+            ],
+            [
+              "R02452:2",
+              "R02407:2"
+            ],
+            [
+              "R02452:2",
+              "R02456:1"
+            ],
+            [
+              "R02452:2",
+              "R00553:2"
+            ],
+            [
+              "R02452:2",
+              "R01905:2"
+            ],
+            [
+              "R02452:2",
+              "R01662:0"
+            ],
+            [
+              "R02452:2",
+              "R01557:2"
+            ],
+            [
+              "R02452:2",
+              "R00233:0"
+            ],
+            [
+              "R02452:2",
+              "R01695:0"
+            ],
+            [
+              "R02165:2",
+              "R01986:2"
+            ],
+            [
+              "R02468:2",
+              "R01986:2"
+            ],
+            [
+              "R01986:2",
+              "R01798:2"
+            ],
+            [
+              "R01986:2",
+              "R01341:2"
+            ],
+            [
+              "R01986:2",
+              "R00525:2"
+            ],
+            [
+              "R01986:2",
+              "R02407:2"
+            ],
+            [
+              "R01986:2",
+              "R02456:1"
+            ],
+            [
+              "R01986:2",
+              "R00553:2"
+            ],
+            [
+              "R01986:2",
+              "R01905:2"
+            ],
+            [
+              "R01986:2",
+              "R01662:0"
+            ],
+            [
+              "R01986:2",
+              "R01557:2"
+            ],
+            [
+              "R01986:2",
+              "R00233:0"
+            ],
+            [
+              "R01986:2",
+              "R01695:0"
+            ]
+          ],
+          "added_relations": [
+            [
+              "R01784:1",
+              "R02452:2"
+            ],
+            [
+              "R01784:1",
+              "R01986:2"
+            ],
+            [
+              "R02452:2",
+              "R01489:1"
+            ],
+            [
+              "R02452:2",
+              "R00634:1"
+            ],
+            [
+              "R02452:2",
+              "R01557:4"
+            ],
+            [
+              "R02452:2",
+              "R00500:1"
+            ],
+            [
+              "R01986:2",
+              "R01489:1"
+            ],
+            [
+              "R01986:2",
+              "R00634:1"
+            ],
+            [
+              "R01986:2",
+              "R01557:4"
+            ],
+            [
+              "R01986:2",
+              "R00500:1"
+            ]
+          ],
+          "identical_full_coordinates_split": [
+            [
+              "R02452:2",
+              "R01798:2"
+            ],
+            [
+              "R02452:2",
+              "R01341:2"
+            ],
+            [
+              "R02452:2",
+              "R00525:2"
+            ],
+            [
+              "R02452:2",
+              "R02407:2"
+            ]
+          ],
+          "worker_unique": true,
+          "observation_cover_exact": true
+        }
+      ],
+      "cost_range": [
+        0.38166102525154477,
+        0.7085724388817682
+      ],
+      "reviewed_triple_together_count": 65536,
+      "target_support_range": [
+        3,
+        19
+      ],
+      "target_support_histogram": {
+        "3": 1,
+        "4": 16,
+        "5": 120,
+        "6": 560,
+        "7": 1820,
+        "8": 4368,
+        "9": 8008,
+        "10": 11440,
+        "11": 12870,
+        "12": 11440,
+        "13": 8008,
+        "14": 4368,
+        "15": 1820,
+        "16": 560,
+        "17": 120,
+        "18": 16,
+        "19": 1
+      },
+      "support_at_least_12_count": 26333,
+      "support_greater_than_12_count": 14893,
+      "forced_members": [
+        "R02452:2",
+        "R01986:2",
+        "R01557:4"
+      ],
+      "possible_members": [
+        "R01784:1",
+        "R02452:2",
+        "R02165:2",
+        "R02468:2",
+        "R01986:2",
+        "R01798:2",
+        "R01341:2",
+        "R00525:2",
+        "R02407:2",
+        "R02456:1",
+        "R00553:2",
+        "R01905:2",
+        "R01662:0",
+        "R01489:1",
+        "R00634:1",
+        "R01557:4",
+        "R00500:1",
+        "R00233:0",
+        "R01695:0"
+      ],
+      "variable_members": [
+        "R01784:1",
+        "R02165:2",
+        "R02468:2",
+        "R01798:2",
+        "R01341:2",
+        "R00525:2",
+        "R02407:2",
+        "R02456:1",
+        "R00553:2",
+        "R01905:2",
+        "R01662:0",
+        "R01489:1",
+        "R00634:1",
+        "R00500:1",
+        "R00233:0",
+        "R01695:0"
+      ],
+      "conditional_center_extrema": {
+        "x_unwrapped_px": [
+          213.6768097952494,
+          221.4054054054054
+        ],
+        "top_y_px": [
+          207.99615222968987,
+          214.74174757281554
+        ],
+        "bottom_y_px": [
+          307.53023840275773,
+          312.4335445058682
+        ],
+        "x_anchor_px": 221.4054054054054,
+        "interpretation": "Coordinate-median extrema over target assignments, not confidence intervals; x can be reduced modulo 1024. No top/bottom semantic target is newly established."
+      },
+      "status": "ok",
+      "orientation_states": 65536,
+      "components": 17,
+      "exact_assignment_set_matches_upstream_filter": true
+    },
+    "human_equal": {
+      "feasible_count": 4096,
+      "minimum_edit": 2,
+      "minimum_edit_then_cost": 0.5592223964369051,
+      "selection_status": "numerically_unique",
+      "selected_count": 1,
+      "selected": [
+        {
+          "canonical_mask": 827390,
+          "upstream_candidate_id": 262091,
+          "blocks": [
+            [
+              "R01784:1",
+              "R01489:1",
+              "R00634:1",
+              "R01557:2",
+              "R00500:1"
+            ],
+            [
+              "R02452:2",
+              "R02165:2",
+              "R02468:2",
+              "R01986:2",
+              "R01798:2",
+              "R01341:2",
+              "R00525:2",
+              "R02407:2",
+              "R02456:1",
+              "R00553:2",
+              "R01905:2",
+              "R01662:0",
+              "R01557:4",
+              "R00233:0",
+              "R01695:0"
+            ]
+          ],
+          "support": [
+            5,
+            15
+          ],
+          "edit_count": 2,
+          "cost": 0.5592223964369051,
+          "moved_alternative_alignments": [
+            [
+              "R01557:4",
+              "R01557:2"
+            ]
+          ],
+          "target_group_members": [
+            "R02452:2",
+            "R02165:2",
+            "R02468:2",
+            "R01986:2",
+            "R01798:2",
+            "R01341:2",
+            "R00525:2",
+            "R02407:2",
+            "R02456:1",
+            "R00553:2",
+            "R01905:2",
+            "R01662:0",
+            "R01557:4",
+            "R00233:0",
+            "R01695:0"
+          ],
+          "target_group_support": 15,
+          "diameters_deg": [
+            5.2905676674901985,
+            5.304039413767545
+          ],
+          "lost_relations": [
+            [
+              "R01784:1",
+              "R01557:4"
+            ],
+            [
+              "R02452:2",
+              "R01557:2"
+            ],
+            [
+              "R02165:2",
+              "R01557:2"
+            ],
+            [
+              "R02468:2",
+              "R01557:2"
+            ],
+            [
+              "R01986:2",
+              "R01557:2"
+            ],
+            [
+              "R01798:2",
+              "R01557:2"
+            ],
+            [
+              "R01341:2",
+              "R01557:2"
+            ],
+            [
+              "R00525:2",
+              "R01557:2"
+            ],
+            [
+              "R02407:2",
+              "R01557:2"
+            ],
+            [
+              "R02456:1",
+              "R01557:2"
+            ],
+            [
+              "R00553:2",
+              "R01557:2"
+            ],
+            [
+              "R01905:2",
+              "R01557:2"
+            ],
+            [
+              "R01662:0",
+              "R01557:2"
+            ],
+            [
+              "R01489:1",
+              "R01557:4"
+            ],
+            [
+              "R00634:1",
+              "R01557:4"
+            ],
+            [
+              "R01557:4",
+              "R00500:1"
+            ],
+            [
+              "R01557:2",
+              "R00233:0"
+            ],
+            [
+              "R01557:2",
+              "R01695:0"
+            ]
+          ],
+          "added_relations": [
+            [
+              "R01784:1",
+              "R01557:2"
+            ],
+            [
+              "R02452:2",
+              "R01557:4"
+            ],
+            [
+              "R02165:2",
+              "R01557:4"
+            ],
+            [
+              "R02468:2",
+              "R01557:4"
+            ],
+            [
+              "R01986:2",
+              "R01557:4"
+            ],
+            [
+              "R01798:2",
+              "R01557:4"
+            ],
+            [
+              "R01341:2",
+              "R01557:4"
+            ],
+            [
+              "R00525:2",
+              "R01557:4"
+            ],
+            [
+              "R02407:2",
+              "R01557:4"
+            ],
+            [
+              "R02456:1",
+              "R01557:4"
+            ],
+            [
+              "R00553:2",
+              "R01557:4"
+            ],
+            [
+              "R01905:2",
+              "R01557:4"
+            ],
+            [
+              "R01662:0",
+              "R01557:4"
+            ],
+            [
+              "R01489:1",
+              "R01557:2"
+            ],
+            [
+              "R00634:1",
+              "R01557:2"
+            ],
+            [
+              "R01557:4",
+              "R00233:0"
+            ],
+            [
+              "R01557:4",
+              "R01695:0"
+            ],
+            [
+              "R01557:2",
+              "R00500:1"
+            ]
+          ],
+          "identical_full_coordinates_split": [],
+          "worker_unique": true,
+          "observation_cover_exact": true
+        }
+      ],
+      "cost_range": [
+        0.49800844518324894,
+        0.7085515054533912
+      ],
+      "reviewed_triple_together_count": 4096,
+      "target_support_range": [
+        7,
+        19
+      ],
+      "target_support_histogram": {
+        "7": 1,
+        "8": 12,
+        "9": 66,
+        "10": 220,
+        "11": 495,
+        "12": 792,
+        "13": 924,
+        "14": 792,
+        "15": 495,
+        "16": 220,
+        "17": 66,
+        "18": 12,
+        "19": 1
+      },
+      "support_at_least_12_count": 3302,
+      "support_greater_than_12_count": 2510,
+      "forced_members": [
+        "R02452:2",
+        "R01986:2",
+        "R01798:2",
+        "R01341:2",
+        "R00525:2",
+        "R02407:2",
+        "R01557:4"
+      ],
+      "possible_members": [
+        "R01784:1",
+        "R02452:2",
+        "R02165:2",
+        "R02468:2",
+        "R01986:2",
+        "R01798:2",
+        "R01341:2",
+        "R00525:2",
+        "R02407:2",
+        "R02456:1",
+        "R00553:2",
+        "R01905:2",
+        "R01662:0",
+        "R01489:1",
+        "R00634:1",
+        "R01557:4",
+        "R00500:1",
+        "R00233:0",
+        "R01695:0"
+      ],
+      "variable_members": [
+        "R01784:1",
+        "R02165:2",
+        "R02468:2",
+        "R02456:1",
+        "R00553:2",
+        "R01905:2",
+        "R01662:0",
+        "R01489:1",
+        "R00634:1",
+        "R00500:1",
+        "R00233:0",
+        "R01695:0"
+      ],
+      "conditional_center_extrema": {
+        "x_unwrapped_px": [
+          215.0036645998193,
+          221.4054054054054
+        ],
+        "top_y_px": [
+          208.22651222651223,
+          213.86194690265486
+        ],
+        "bottom_y_px": [
+          310.06101137914266,
+          312.33976833976834
+        ],
+        "x_anchor_px": 221.4054054054054,
+        "interpretation": "Coordinate-median extrema over target assignments, not confidence intervals; x can be reduced modulo 1024. No top/bottom semantic target is newly established."
+      },
+      "status": "ok",
+      "orientation_states": 4096,
+      "components": 13,
+      "exact_assignment_set_matches_upstream_filter": true
+    }
+  }
+}

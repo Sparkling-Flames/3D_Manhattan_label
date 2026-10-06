@@ -1,0 +1,645 @@
+{
+  "minimum_dispersion_ids": [
+    0
+  ],
+  "baseline_equal_dispersion_ids": [
+    0
+  ],
+  "domain": {
+    "union": [
+      22,
+      32,
+      42,
+      52,
+      62,
+      72,
+      82,
+      92,
+      102,
+      111,
+      119,
+      140,
+      141,
+      149,
+      175,
+      184,
+      186,
+      210,
+      218
+    ],
+    "baseline_blocks": [
+      [
+        22,
+        42,
+        52,
+        62,
+        72,
+        82,
+        92,
+        102,
+        111,
+        119,
+        141,
+        149,
+        186,
+        210,
+        218
+      ],
+      [
+        32,
+        140,
+        175,
+        184
+      ]
+    ],
+    "union_nodes": 19,
+    "incompatibility_components": [
+      {
+        "nodes": [
+          22,
+          32,
+          52,
+          72,
+          82,
+          92,
+          102,
+          111,
+          119,
+          140,
+          141,
+          149,
+          175,
+          184,
+          186,
+          210,
+          218
+        ],
+        "colors": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "nodes": [
+          42
+        ],
+        "colors": [
+          0
+        ]
+      },
+      {
+        "nodes": [
+          62
+        ],
+        "colors": [
+          0
+        ]
+      }
+    ],
+    "forbidden_pairs": [
+      {
+        "nodes": [
+          22,
+          32
+        ],
+        "distance_deg": 10.551024493559694,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          32,
+          52
+        ],
+        "distance_deg": 13.107102916551876,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          32,
+          72
+        ],
+        "distance_deg": 10.551024493559694,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          32,
+          82
+        ],
+        "distance_deg": 10.551024493559694,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          32,
+          92
+        ],
+        "distance_deg": 10.551024493559694,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          32,
+          102
+        ],
+        "distance_deg": 10.551024493559694,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          32,
+          111
+        ],
+        "distance_deg": 12.173740186208816,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          32,
+          119
+        ],
+        "distance_deg": 11.718091534432943,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          32,
+          141
+        ],
+        "distance_deg": 11.03451219215769,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          32,
+          149
+        ],
+        "distance_deg": 10.731192532698472,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          32,
+          210
+        ],
+        "distance_deg": 12.215878425784274,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          32,
+          218
+        ],
+        "distance_deg": 12.103855041853608,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          52,
+          140
+        ],
+        "distance_deg": 11.862184867218858,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          52,
+          175
+        ],
+        "distance_deg": 11.36867944890117,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          52,
+          184
+        ],
+        "distance_deg": 10.36971946425873,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          111,
+          140
+        ],
+        "distance_deg": 10.26030848066978,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          119,
+          140
+        ],
+        "distance_deg": 10.052337344537934,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          140,
+          141
+        ],
+        "distance_deg": 9.527196306353662,
+        "same_worker": true
+      },
+      {
+        "nodes": [
+          140,
+          210
+        ],
+        "distance_deg": 10.53409811596295,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          140,
+          218
+        ],
+        "distance_deg": 10.251753410748568,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          175,
+          210
+        ],
+        "distance_deg": 10.0422294332273,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          184,
+          186
+        ],
+        "distance_deg": 7.41300974142274,
+        "same_worker": true
+      }
+    ],
+    "orientation_states": 4,
+    "all_unordered_two_nonempty_partitions": 262143,
+    "status": "ok",
+    "exhaustive_within_declared_domain": true,
+    "feasible_count": 4,
+    "infeasible_partition_count": 262139,
+    "domain_id": "rPc6DW4iMge-06_top_10_d1",
+    "group_indices": [
+      15,
+      17
+    ],
+    "compatible_cross_pairs": [
+      [
+        22,
+        140
+      ],
+      [
+        22,
+        175
+      ],
+      [
+        22,
+        184
+      ],
+      [
+        42,
+        32
+      ],
+      [
+        42,
+        140
+      ],
+      [
+        42,
+        175
+      ],
+      [
+        42,
+        184
+      ],
+      [
+        62,
+        32
+      ],
+      [
+        62,
+        140
+      ],
+      [
+        62,
+        175
+      ],
+      [
+        62,
+        184
+      ],
+      [
+        72,
+        140
+      ],
+      [
+        72,
+        175
+      ],
+      [
+        72,
+        184
+      ],
+      [
+        82,
+        140
+      ],
+      [
+        82,
+        175
+      ],
+      [
+        82,
+        184
+      ],
+      [
+        92,
+        140
+      ],
+      [
+        92,
+        175
+      ],
+      [
+        92,
+        184
+      ],
+      [
+        102,
+        140
+      ],
+      [
+        102,
+        175
+      ],
+      [
+        102,
+        184
+      ],
+      [
+        111,
+        175
+      ],
+      [
+        111,
+        184
+      ],
+      [
+        119,
+        175
+      ],
+      [
+        119,
+        184
+      ],
+      [
+        141,
+        175
+      ],
+      [
+        141,
+        184
+      ],
+      [
+        149,
+        140
+      ],
+      [
+        149,
+        175
+      ],
+      [
+        149,
+        184
+      ],
+      [
+        186,
+        32
+      ],
+      [
+        186,
+        140
+      ],
+      [
+        186,
+        175
+      ],
+      [
+        210,
+        184
+      ],
+      [
+        218,
+        175
+      ],
+      [
+        218,
+        184
+      ]
+    ]
+  },
+  "automatic": {
+    "status": "unchanged",
+    "selected_ids": [
+      0
+    ],
+    "baseline_cost": 0.6135818163259437
+  },
+  "human_assisted": {
+    "status": "constraints_outside_local_domain",
+    "selected_ids": []
+  },
+  "pareto_ids": [
+    0
+  ],
+  "selected_details": [
+    {
+      "local_id": 0,
+      "blocks": [
+        [
+          22,
+          42,
+          52,
+          62,
+          72,
+          82,
+          92,
+          102,
+          111,
+          119,
+          141,
+          149,
+          186,
+          210,
+          218
+        ],
+        [
+          32,
+          140,
+          175,
+          184
+        ]
+      ],
+      "edit_count": 0,
+      "cost": 0.6135818163259437,
+      "moved_nodes_alternative_alignments": [
+        []
+      ],
+      "block_label_alignments": [
+        0
+      ],
+      "diameters_deg": null,
+      "supports": [
+        15,
+        4
+      ],
+      "diameters_checked_deg": [
+        5.3040394137675495,
+        7.215649349857988
+      ],
+      "centers": [
+        {
+          "points": [
+            [
+              221.3051929724124,
+              208.22651222651223
+            ],
+            [
+              221.3051929724124,
+              312.33976833976834
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                221.3051929724124,
+                208.22651222651223
+              ],
+              [
+                221.3051929724124,
+                312.33976833976834
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 5,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        },
+        {
+          "points": [
+            [
+              202.2404287647887,
+              190.48501306644275
+            ],
+            [
+              202.2404287647887,
+              317.27747037316817
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                202.2404287647887,
+                190.48501306644275
+              ],
+              [
+                202.2404287647887,
+                317.27747037316817
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 1,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        }
+      ],
+      "added_coassignments": [],
+      "lost_coassignments": [],
+      "full_observation_count": 224,
+      "full_unique_observations": 224,
+      "outside_groups_unchanged": true,
+      "new_same_worker_collisions": 0,
+      "new_diameter_violations": 0,
+      "newly_split_identical_coordinates": [],
+      "complete_layout_created": false,
+      "roster_denominator": 24,
+      "human_development_probe": {
+        "members": [
+          [
+            "R02452",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ],
+          [
+            "R01557",
+            4
+          ]
+        ],
+        "member_groups": [
+          "corner_018",
+          "corner_018",
+          "corner_002"
+        ],
+        "supports": [
+          15,
+          15,
+          5
+        ],
+        "same_group": false,
+        "local_diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_feasible": true,
+        "whole_union_diameter": 6.572426230219333,
+        "whole_union_witness": [
+          [
+            "R01784",
+            1
+          ],
+          [
+            "R02468",
+            2
+          ]
+        ],
+        "same_worker_conflicts": {
+          "P023": [
+            [
+              "R01557",
+              4
+            ],
+            [
+              "R01557",
+              2
+            ]
+          ]
+        },
+        "wrong_triple_same_group": true
+      }
+    }
+  ],
+  "all_candidate_ledger": "rPc6DW4iMge-06_top_10_d1.jsonl.gz",
+  "node_lookup_file": "node_lookup.json",
+  "compact_reference": "rPc6DW4iMge-06_top_10_d1_reference.npz"
+}

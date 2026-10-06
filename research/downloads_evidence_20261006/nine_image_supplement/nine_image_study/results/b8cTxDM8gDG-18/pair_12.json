@@ -1,0 +1,3905 @@
+{
+  "image": "b8cTxDM8gDG-18",
+  "threshold_deg": 12,
+  "metric": "pair",
+  "vote_denominator": 6,
+  "minimum_support": 3,
+  "evidence": {
+    "fixed": {
+      "tested_pairs": 40,
+      "statuses": {
+        "not_witnessed": 22,
+        "witnessed": 18
+      },
+      "contexts": {
+        "no_comparable_two_sided_anchor_path": 22,
+        "positive_path_witness": 18
+      },
+      "leg_statuses": {
+        "anchor_outside_gate": 500,
+        "accept": 74,
+        "path_length_outside_declared_domain": 66
+      }
+    },
+    "event": {
+      "tested_pairs": 40,
+      "statuses": {
+        "not_witnessed": 22,
+        "witnessed": 18
+      },
+      "contexts": {
+        "no_comparable_two_sided_anchor_path": 22,
+        "positive_path_witness": 18
+      },
+      "leg_statuses": {
+        "anchor_outside_gate": 202,
+        "accept": 74
+      }
+    }
+  },
+  "policies": {
+    "raw": {
+      "groups": [
+        {
+          "feature_id": "G000",
+          "node_indices": [
+            0,
+            4,
+            8,
+            12,
+            16,
+            20
+          ],
+          "support": 6,
+          "support_workers": [
+            "P005",
+            "P008",
+            "P009",
+            "P012",
+            "P024",
+            "P025"
+          ],
+          "selected": true,
+          "center": {
+            "points": [
+              [
+                165.0967569235329,
+                192.12080317628886
+              ],
+              [
+                165.0967569235329,
+                322.22350107935836
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02073",
+              "pair_index": 0
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 3.1683546218888647,
+            "bottom": 3.5526653113713262,
+            "pair": 3.5526653113713262
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G001",
+          "node_indices": [
+            1,
+            5,
+            9,
+            13,
+            17,
+            21
+          ],
+          "support": 6,
+          "support_workers": [
+            "P005",
+            "P008",
+            "P009",
+            "P012",
+            "P024",
+            "P025"
+          ],
+          "selected": true,
+          "center": {
+            "points": [
+              [
+                313.57284299858554,
+                189.20189000791427
+              ],
+              [
+                313.57284299858554,
+                325.52331450448867
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02073",
+              "pair_index": 1
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 1.6745799029547912,
+            "bottom": 0.8336878420796608,
+            "pair": 1.6745799029547912
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G002",
+          "node_indices": [
+            2
+          ],
+          "support": 1,
+          "support_workers": [
+            "P005"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                561.2446958981612,
+                133.25035360678925
+              ],
+              [
+                561.2446958981612,
+                406.992927864215
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02073",
+              "pair_index": 2
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.0,
+            "bottom": 0.0,
+            "pair": 0.0
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G003",
+          "node_indices": [
+            3,
+            15
+          ],
+          "support": 2,
+          "support_workers": [
+            "P005",
+            "P012"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                988.3892885813622,
+                95.79032482746669
+              ],
+              [
+                988.3892885813622,
+                372.3658144943397
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02073",
+              "pair_index": 3
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 6.979278211756742,
+            "bottom": 9.207573693246612,
+            "pair": 9.207573693246612
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G004",
+          "node_indices": [
+            6,
+            10,
+            14
+          ],
+          "support": 3,
+          "support_workers": [
+            "P008",
+            "P009",
+            "P012"
+          ],
+          "selected": true,
+          "center": {
+            "points": [
+              [
+                543.4673495518566,
+                95.57069992713555
+              ],
+              [
+                543.4673495518566,
+                401.20870678617155
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02164",
+              "pair_index": 2
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 8.619486011732164,
+            "bottom": 5.685042698231763,
+            "pair": 8.619486011732164
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G005",
+          "node_indices": [
+            7,
+            11
+          ],
+          "support": 2,
+          "support_workers": [
+            "P008",
+            "P009"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                1002.164834098277,
+                98.48974056402427
+              ],
+              [
+                1002.164834098277,
+                404.70943522000687
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02164",
+              "pair_index": 3
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.0,
+            "bottom": 0.0,
+            "pair": 0.0
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G006",
+          "node_indices": [
+            18,
+            22
+          ],
+          "support": 2,
+          "support_workers": [
+            "P024",
+            "P025"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                649.4306325159957,
+                209.62170461097367
+              ],
+              [
+                649.4306325159957,
+                303.65931709061226
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R01624",
+              "pair_index": 2
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.8716421210383739,
+            "bottom": 4.542902424884013,
+            "pair": 4.542902424884013
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G007",
+          "node_indices": [
+            19,
+            23
+          ],
+          "support": 2,
+          "support_workers": [
+            "P024",
+            "P025"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                802.525299798905,
+                202.6551703240172
+              ],
+              [
+                802.525299798905,
+                315.74289144556565
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R01624",
+              "pair_index": 3
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 5.180458127514405,
+            "bottom": 4.248926703106821,
+            "pair": 5.180458127514405
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        }
+      ],
+      "ring": {
+        "selected_pair_count": 3,
+        "minimum_four_pairs_enforced": false,
+        "x_diagnostic": {
+          "points": [
+            [
+              165.0967569235329,
+              192.12080317628886
+            ],
+            [
+              165.0967569235329,
+              322.22350107935836
+            ],
+            [
+              313.57284299858554,
+              189.20189000791427
+            ],
+            [
+              313.57284299858554,
+              325.52331450448867
+            ],
+            [
+              543.4673495518566,
+              95.57069992713555
+            ],
+            [
+              543.4673495518566,
+              401.20870678617155
+            ]
+          ],
+          "identity_cycle": [
+            "G000",
+            "G001",
+            "G004"
+          ],
+          "ring_confirmed": false,
+          "footprint": [
+            [
+              -1.9717767641598463,
+              1.2301022260027932
+            ],
+            [
+              -2.0643548120115,
+              -0.7611899140255663
+            ],
+            [
+              0.15510771828910172,
+              -0.7933210964885599
+            ]
+          ],
+          "geometry_valid": true,
+          "reason": null,
+          "area_h2": 2.211286466911316,
+          "role": "unconfirmed_center_x_diagnostic_not_source_ring_reordering"
+        },
+        "x_diagnostic_edges": [
+          {
+            "identity_pair": [
+              "G000",
+              "G001"
+            ],
+            "direct_workers": [
+              "P005",
+              "P008",
+              "P009",
+              "P012",
+              "P024",
+              "P025"
+            ],
+            "deletion_projected_workers": [
+              "P008",
+              "P009",
+              "P012"
+            ],
+            "new_edge_without_direct_source": false
+          },
+          {
+            "identity_pair": [
+              "G001",
+              "G004"
+            ],
+            "direct_workers": [
+              "P008",
+              "P009",
+              "P012"
+            ],
+            "deletion_projected_workers": [
+              "P008",
+              "P009",
+              "P012"
+            ],
+            "new_edge_without_direct_source": false
+          },
+          {
+            "identity_pair": [
+              "G004",
+              "G000"
+            ],
+            "direct_workers": [],
+            "deletion_projected_workers": [
+              "P008",
+              "P009",
+              "P012"
+            ],
+            "new_edge_without_direct_source": true
+          }
+        ],
+        "all_complete_observed_cycles": [],
+        "primary_ring_available": false,
+        "primary_ring": null,
+        "assignments": [
+          {
+            "id": "R02073",
+            "worker": "P005",
+            "source_identity_cycle": [
+              "G000",
+              "G001",
+              "G002",
+              "G003"
+            ]
+          },
+          {
+            "id": "R02164",
+            "worker": "P008",
+            "source_identity_cycle": [
+              "G000",
+              "G001",
+              "G004",
+              "G005"
+            ]
+          },
+          {
+            "id": "R01897",
+            "worker": "P009",
+            "source_identity_cycle": [
+              "G000",
+              "G001",
+              "G004",
+              "G005"
+            ]
+          },
+          {
+            "id": "R02278",
+            "worker": "P012",
+            "source_identity_cycle": [
+              "G000",
+              "G001",
+              "G004",
+              "G003"
+            ]
+          },
+          {
+            "id": "R01624",
+            "worker": "P024",
+            "source_identity_cycle": [
+              "G000",
+              "G001",
+              "G006",
+              "G007"
+            ]
+          },
+          {
+            "id": "R01139",
+            "worker": "P025",
+            "source_identity_cycle": [
+              "G000",
+              "G001",
+              "G006",
+              "G007"
+            ]
+          }
+        ],
+        "local_correspondence_not_full_layout_certification": true
+      },
+      "changes_from_raw": {
+        "lost_comemberships": [],
+        "new_comemberships": [],
+        "affected_nodes": [],
+        "no_semantic_harm_claim_for_unreviewed_members": true,
+        "lost_comemberships_sources": [],
+        "new_comemberships_sources": []
+      }
+    },
+    "fixed_strict": {
+      "groups": [
+        {
+          "feature_id": "G000",
+          "node_indices": [
+            0,
+            12
+          ],
+          "support": 2,
+          "support_workers": [
+            "P005",
+            "P012"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                165.41819764022264,
+                193.85949540628104
+              ],
+              [
+                165.41819764022264,
+                321.5211447470285
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02278",
+              "pair_index": 0
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 3.116007243733969,
+            "bottom": 2.3417465546829193,
+            "pair": 3.116007243733969
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G001",
+          "node_indices": [
+            1,
+            13
+          ],
+          "support": 2,
+          "support_workers": [
+            "P005",
+            "P012"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                313.1398145850802,
+                189.20189000791427
+              ],
+              [
+                313.1398145850802,
+                325.52331450448867
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02073",
+              "pair_index": 1
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.7002848347543678,
+            "bottom": 0.3757058460754636,
+            "pair": 0.7002848347543678
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G002",
+          "node_indices": [
+            2
+          ],
+          "support": 1,
+          "support_workers": [
+            "P005"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                561.2446958981612,
+                133.25035360678925
+              ],
+              [
+                561.2446958981612,
+                406.992927864215
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02073",
+              "pair_index": 2
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.0,
+            "bottom": 0.0,
+            "pair": 0.0
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G003",
+          "node_indices": [
+            3,
+            15
+          ],
+          "support": 2,
+          "support_workers": [
+            "P005",
+            "P012"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                988.3892885813622,
+                95.79032482746669
+              ],
+              [
+                988.3892885813622,
+                372.3658144943397
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02073",
+              "pair_index": 3
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 6.979278211756742,
+            "bottom": 9.207573693246612,
+            "pair": 9.207573693246612
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G004",
+          "node_indices": [
+            4,
+            8
+          ],
+          "support": 2,
+          "support_workers": [
+            "P008",
+            "P009"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                163.66610078620715,
+                189.7369165487977
+              ],
+              [
+                163.66610078620715,
+                324.4353752815089
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02164",
+              "pair_index": 0
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.0,
+            "bottom": 0.0,
+            "pair": 0.0
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G005",
+          "node_indices": [
+            5,
+            9
+          ],
+          "support": 2,
+          "support_workers": [
+            "P008",
+            "P009"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                313.57284299858554,
+                188.28854314002828
+              ],
+              [
+                313.57284299858554,
+                325.8840169731259
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02164",
+              "pair_index": 1
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.0,
+            "bottom": 0.0,
+            "pair": 0.0
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G006",
+          "node_indices": [
+            6,
+            10,
+            14
+          ],
+          "support": 3,
+          "support_workers": [
+            "P008",
+            "P009",
+            "P012"
+          ],
+          "selected": true,
+          "center": {
+            "points": [
+              [
+                543.4673495518566,
+                95.57069992713555
+              ],
+              [
+                543.4673495518566,
+                401.20870678617155
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02164",
+              "pair_index": 2
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 8.619486011732164,
+            "bottom": 5.685042698231763,
+            "pair": 8.619486011732164
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G007",
+          "node_indices": [
+            7,
+            11
+          ],
+          "support": 2,
+          "support_workers": [
+            "P008",
+            "P009"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                1002.164834098277,
+                98.48974056402427
+              ],
+              [
+                1002.164834098277,
+                404.70943522000687
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02164",
+              "pair_index": 3
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.0,
+            "bottom": 0.0,
+            "pair": 0.0
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G008",
+          "node_indices": [
+            16
+          ],
+          "support": 1,
+          "support_workers": [
+            "P024"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                169.04614277702063,
+                197.24260937816686
+              ],
+              [
+                169.04614277702063,
+                315.63615815069215
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R01624",
+              "pair_index": 0
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.0,
+            "bottom": 0.0,
+            "pair": 0.0
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G009",
+          "node_indices": [
+            17,
+            21
+          ],
+          "support": 2,
+          "support_workers": [
+            "P024",
+            "P025"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                313.21692994246814,
+                192.03526226187574
+              ],
+              [
+                313.21692994246814,
+                323.89516416923414
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R01624",
+              "pair_index": 1
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.9981013985708815,
+            "bottom": 0.7510777706340079,
+            "pair": 0.9981013985708815
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G010",
+          "node_indices": [
+            18,
+            22
+          ],
+          "support": 2,
+          "support_workers": [
+            "P024",
+            "P025"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                649.4306325159957,
+                209.62170461097367
+              ],
+              [
+                649.4306325159957,
+                303.65931709061226
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R01624",
+              "pair_index": 2
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.8716421210383739,
+            "bottom": 4.542902424884013,
+            "pair": 4.542902424884013
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G011",
+          "node_indices": [
+            19
+          ],
+          "support": 1,
+          "support_workers": [
+            "P024"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                797.2914066507178,
+                208.10815845215728
+              ],
+              [
+                797.2914066507178,
+                312.1863600589817
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R01624",
+              "pair_index": 3
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.0,
+            "bottom": 0.0,
+            "pair": 0.0
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G012",
+          "node_indices": [
+            20
+          ],
+          "support": 1,
+          "support_workers": [
+            "P025"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                166.5274130608586,
+                194.50468980378002
+              ],
+              [
+                166.5274130608586,
+                320.01162687720773
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R01139",
+              "pair_index": 0
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.0,
+            "bottom": 0.0,
+            "pair": 0.0
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G013",
+          "node_indices": [
+            23
+          ],
+          "support": 1,
+          "support_workers": [
+            "P025"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                807.7591929470923,
+                197.2021821958771
+              ],
+              [
+                807.7591929470923,
+                319.2994228321496
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R01139",
+              "pair_index": 3
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.0,
+            "bottom": 0.0,
+            "pair": 0.0
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        }
+      ],
+      "ring": {
+        "selected_pair_count": 1,
+        "minimum_four_pairs_enforced": false,
+        "x_diagnostic": {
+          "points": [
+            [
+              543.4673495518566,
+              95.57069992713555
+            ],
+            [
+              543.4673495518566,
+              401.20870678617155
+            ]
+          ],
+          "identity_cycle": [
+            "G006"
+          ],
+          "ring_confirmed": false,
+          "footprint": null,
+          "geometry_valid": false,
+          "reason": "fewer_than_three_geometry_vertices_but_all_MV_nodes_retained",
+          "area_h2": null,
+          "role": "unconfirmed_center_x_diagnostic_not_source_ring_reordering"
+        },
+        "x_diagnostic_edges": [],
+        "all_complete_observed_cycles": [],
+        "primary_ring_available": false,
+        "primary_ring": null,
+        "assignments": [
+          {
+            "id": "R02073",
+            "worker": "P005",
+            "source_identity_cycle": [
+              "G000",
+              "G001",
+              "G002",
+              "G003"
+            ]
+          },
+          {
+            "id": "R02164",
+            "worker": "P008",
+            "source_identity_cycle": [
+              "G004",
+              "G005",
+              "G006",
+              "G007"
+            ]
+          },
+          {
+            "id": "R01897",
+            "worker": "P009",
+            "source_identity_cycle": [
+              "G004",
+              "G005",
+              "G006",
+              "G007"
+            ]
+          },
+          {
+            "id": "R02278",
+            "worker": "P012",
+            "source_identity_cycle": [
+              "G000",
+              "G001",
+              "G006",
+              "G003"
+            ]
+          },
+          {
+            "id": "R01624",
+            "worker": "P024",
+            "source_identity_cycle": [
+              "G008",
+              "G009",
+              "G010",
+              "G011"
+            ]
+          },
+          {
+            "id": "R01139",
+            "worker": "P025",
+            "source_identity_cycle": [
+              "G012",
+              "G009",
+              "G010",
+              "G013"
+            ]
+          }
+        ],
+        "local_correspondence_not_full_layout_certification": true
+      },
+      "changes_from_raw": {
+        "lost_comemberships": [
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            8
+          ],
+          [
+            0,
+            16
+          ],
+          [
+            0,
+            20
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            1,
+            17
+          ],
+          [
+            1,
+            21
+          ],
+          [
+            4,
+            12
+          ],
+          [
+            4,
+            16
+          ],
+          [
+            4,
+            20
+          ],
+          [
+            5,
+            13
+          ],
+          [
+            5,
+            17
+          ],
+          [
+            5,
+            21
+          ],
+          [
+            8,
+            12
+          ],
+          [
+            8,
+            16
+          ],
+          [
+            8,
+            20
+          ],
+          [
+            9,
+            13
+          ],
+          [
+            9,
+            17
+          ],
+          [
+            9,
+            21
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            12,
+            20
+          ],
+          [
+            13,
+            17
+          ],
+          [
+            13,
+            21
+          ],
+          [
+            16,
+            20
+          ],
+          [
+            19,
+            23
+          ]
+        ],
+        "new_comemberships": [],
+        "affected_nodes": [
+          0,
+          1,
+          4,
+          5,
+          8,
+          9,
+          12,
+          13,
+          16,
+          17,
+          19,
+          20,
+          21,
+          23
+        ],
+        "no_semantic_harm_claim_for_unreviewed_members": true,
+        "lost_comemberships_sources": [
+          {
+            "node_indices": [
+              0,
+              4
+            ],
+            "sources": [
+              [
+                "R02073",
+                0
+              ],
+              [
+                "R02164",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              0,
+              8
+            ],
+            "sources": [
+              [
+                "R02073",
+                0
+              ],
+              [
+                "R01897",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              0,
+              16
+            ],
+            "sources": [
+              [
+                "R02073",
+                0
+              ],
+              [
+                "R01624",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              0,
+              20
+            ],
+            "sources": [
+              [
+                "R02073",
+                0
+              ],
+              [
+                "R01139",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              1,
+              5
+            ],
+            "sources": [
+              [
+                "R02073",
+                1
+              ],
+              [
+                "R02164",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              1,
+              9
+            ],
+            "sources": [
+              [
+                "R02073",
+                1
+              ],
+              [
+                "R01897",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              1,
+              17
+            ],
+            "sources": [
+              [
+                "R02073",
+                1
+              ],
+              [
+                "R01624",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              1,
+              21
+            ],
+            "sources": [
+              [
+                "R02073",
+                1
+              ],
+              [
+                "R01139",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              4,
+              12
+            ],
+            "sources": [
+              [
+                "R02164",
+                0
+              ],
+              [
+                "R02278",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              4,
+              16
+            ],
+            "sources": [
+              [
+                "R02164",
+                0
+              ],
+              [
+                "R01624",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              4,
+              20
+            ],
+            "sources": [
+              [
+                "R02164",
+                0
+              ],
+              [
+                "R01139",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              5,
+              13
+            ],
+            "sources": [
+              [
+                "R02164",
+                1
+              ],
+              [
+                "R02278",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              5,
+              17
+            ],
+            "sources": [
+              [
+                "R02164",
+                1
+              ],
+              [
+                "R01624",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              5,
+              21
+            ],
+            "sources": [
+              [
+                "R02164",
+                1
+              ],
+              [
+                "R01139",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              8,
+              12
+            ],
+            "sources": [
+              [
+                "R01897",
+                0
+              ],
+              [
+                "R02278",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              8,
+              16
+            ],
+            "sources": [
+              [
+                "R01897",
+                0
+              ],
+              [
+                "R01624",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              8,
+              20
+            ],
+            "sources": [
+              [
+                "R01897",
+                0
+              ],
+              [
+                "R01139",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              9,
+              13
+            ],
+            "sources": [
+              [
+                "R01897",
+                1
+              ],
+              [
+                "R02278",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              9,
+              17
+            ],
+            "sources": [
+              [
+                "R01897",
+                1
+              ],
+              [
+                "R01624",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              9,
+              21
+            ],
+            "sources": [
+              [
+                "R01897",
+                1
+              ],
+              [
+                "R01139",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              12,
+              16
+            ],
+            "sources": [
+              [
+                "R02278",
+                0
+              ],
+              [
+                "R01624",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              12,
+              20
+            ],
+            "sources": [
+              [
+                "R02278",
+                0
+              ],
+              [
+                "R01139",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              13,
+              17
+            ],
+            "sources": [
+              [
+                "R02278",
+                1
+              ],
+              [
+                "R01624",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              13,
+              21
+            ],
+            "sources": [
+              [
+                "R02278",
+                1
+              ],
+              [
+                "R01139",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              16,
+              20
+            ],
+            "sources": [
+              [
+                "R01624",
+                0
+              ],
+              [
+                "R01139",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              19,
+              23
+            ],
+            "sources": [
+              [
+                "R01624",
+                3
+              ],
+              [
+                "R01139",
+                3
+              ]
+            ]
+          }
+        ],
+        "new_comemberships_sources": []
+      }
+    },
+    "fixed_three_state": {
+      "groups": [
+        {
+          "feature_id": "G000",
+          "node_indices": [
+            0,
+            4,
+            8,
+            12,
+            16,
+            20
+          ],
+          "support": 6,
+          "support_workers": [
+            "P005",
+            "P008",
+            "P009",
+            "P012",
+            "P024",
+            "P025"
+          ],
+          "selected": true,
+          "center": {
+            "points": [
+              [
+                165.0967569235329,
+                192.12080317628886
+              ],
+              [
+                165.0967569235329,
+                322.22350107935836
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02073",
+              "pair_index": 0
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 3.1683546218888647,
+            "bottom": 3.5526653113713262,
+            "pair": 3.5526653113713262
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G001",
+          "node_indices": [
+            1,
+            5,
+            9,
+            13,
+            17,
+            21
+          ],
+          "support": 6,
+          "support_workers": [
+            "P005",
+            "P008",
+            "P009",
+            "P012",
+            "P024",
+            "P025"
+          ],
+          "selected": true,
+          "center": {
+            "points": [
+              [
+                313.57284299858554,
+                189.20189000791427
+              ],
+              [
+                313.57284299858554,
+                325.52331450448867
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02073",
+              "pair_index": 1
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 1.6745799029547912,
+            "bottom": 0.8336878420796608,
+            "pair": 1.6745799029547912
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G002",
+          "node_indices": [
+            2
+          ],
+          "support": 1,
+          "support_workers": [
+            "P005"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                561.2446958981612,
+                133.25035360678925
+              ],
+              [
+                561.2446958981612,
+                406.992927864215
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02073",
+              "pair_index": 2
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.0,
+            "bottom": 0.0,
+            "pair": 0.0
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G003",
+          "node_indices": [
+            3,
+            15
+          ],
+          "support": 2,
+          "support_workers": [
+            "P005",
+            "P012"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                988.3892885813622,
+                95.79032482746669
+              ],
+              [
+                988.3892885813622,
+                372.3658144943397
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02073",
+              "pair_index": 3
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 6.979278211756742,
+            "bottom": 9.207573693246612,
+            "pair": 9.207573693246612
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G004",
+          "node_indices": [
+            6,
+            10,
+            14
+          ],
+          "support": 3,
+          "support_workers": [
+            "P008",
+            "P009",
+            "P012"
+          ],
+          "selected": true,
+          "center": {
+            "points": [
+              [
+                543.4673495518566,
+                95.57069992713555
+              ],
+              [
+                543.4673495518566,
+                401.20870678617155
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02164",
+              "pair_index": 2
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 8.619486011732164,
+            "bottom": 5.685042698231763,
+            "pair": 8.619486011732164
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G005",
+          "node_indices": [
+            7,
+            11
+          ],
+          "support": 2,
+          "support_workers": [
+            "P008",
+            "P009"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                1002.164834098277,
+                98.48974056402427
+              ],
+              [
+                1002.164834098277,
+                404.70943522000687
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02164",
+              "pair_index": 3
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.0,
+            "bottom": 0.0,
+            "pair": 0.0
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G006",
+          "node_indices": [
+            18,
+            22
+          ],
+          "support": 2,
+          "support_workers": [
+            "P024",
+            "P025"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                649.4306325159957,
+                209.62170461097367
+              ],
+              [
+                649.4306325159957,
+                303.65931709061226
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R01624",
+              "pair_index": 2
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.8716421210383739,
+            "bottom": 4.542902424884013,
+            "pair": 4.542902424884013
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G007",
+          "node_indices": [
+            19,
+            23
+          ],
+          "support": 2,
+          "support_workers": [
+            "P024",
+            "P025"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                802.525299798905,
+                202.6551703240172
+              ],
+              [
+                802.525299798905,
+                315.74289144556565
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R01624",
+              "pair_index": 3
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 5.180458127514405,
+            "bottom": 4.248926703106821,
+            "pair": 5.180458127514405
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        }
+      ],
+      "ring": {
+        "selected_pair_count": 3,
+        "minimum_four_pairs_enforced": false,
+        "x_diagnostic": {
+          "points": [
+            [
+              165.0967569235329,
+              192.12080317628886
+            ],
+            [
+              165.0967569235329,
+              322.22350107935836
+            ],
+            [
+              313.57284299858554,
+              189.20189000791427
+            ],
+            [
+              313.57284299858554,
+              325.52331450448867
+            ],
+            [
+              543.4673495518566,
+              95.57069992713555
+            ],
+            [
+              543.4673495518566,
+              401.20870678617155
+            ]
+          ],
+          "identity_cycle": [
+            "G000",
+            "G001",
+            "G004"
+          ],
+          "ring_confirmed": false,
+          "footprint": [
+            [
+              -1.9717767641598463,
+              1.2301022260027932
+            ],
+            [
+              -2.0643548120115,
+              -0.7611899140255663
+            ],
+            [
+              0.15510771828910172,
+              -0.7933210964885599
+            ]
+          ],
+          "geometry_valid": true,
+          "reason": null,
+          "area_h2": 2.211286466911316,
+          "role": "unconfirmed_center_x_diagnostic_not_source_ring_reordering"
+        },
+        "x_diagnostic_edges": [
+          {
+            "identity_pair": [
+              "G000",
+              "G001"
+            ],
+            "direct_workers": [
+              "P005",
+              "P008",
+              "P009",
+              "P012",
+              "P024",
+              "P025"
+            ],
+            "deletion_projected_workers": [
+              "P008",
+              "P009",
+              "P012"
+            ],
+            "new_edge_without_direct_source": false
+          },
+          {
+            "identity_pair": [
+              "G001",
+              "G004"
+            ],
+            "direct_workers": [
+              "P008",
+              "P009",
+              "P012"
+            ],
+            "deletion_projected_workers": [
+              "P008",
+              "P009",
+              "P012"
+            ],
+            "new_edge_without_direct_source": false
+          },
+          {
+            "identity_pair": [
+              "G004",
+              "G000"
+            ],
+            "direct_workers": [],
+            "deletion_projected_workers": [
+              "P008",
+              "P009",
+              "P012"
+            ],
+            "new_edge_without_direct_source": true
+          }
+        ],
+        "all_complete_observed_cycles": [],
+        "primary_ring_available": false,
+        "primary_ring": null,
+        "assignments": [
+          {
+            "id": "R02073",
+            "worker": "P005",
+            "source_identity_cycle": [
+              "G000",
+              "G001",
+              "G002",
+              "G003"
+            ]
+          },
+          {
+            "id": "R02164",
+            "worker": "P008",
+            "source_identity_cycle": [
+              "G000",
+              "G001",
+              "G004",
+              "G005"
+            ]
+          },
+          {
+            "id": "R01897",
+            "worker": "P009",
+            "source_identity_cycle": [
+              "G000",
+              "G001",
+              "G004",
+              "G005"
+            ]
+          },
+          {
+            "id": "R02278",
+            "worker": "P012",
+            "source_identity_cycle": [
+              "G000",
+              "G001",
+              "G004",
+              "G003"
+            ]
+          },
+          {
+            "id": "R01624",
+            "worker": "P024",
+            "source_identity_cycle": [
+              "G000",
+              "G001",
+              "G006",
+              "G007"
+            ]
+          },
+          {
+            "id": "R01139",
+            "worker": "P025",
+            "source_identity_cycle": [
+              "G000",
+              "G001",
+              "G006",
+              "G007"
+            ]
+          }
+        ],
+        "local_correspondence_not_full_layout_certification": true
+      },
+      "changes_from_raw": {
+        "lost_comemberships": [],
+        "new_comemberships": [],
+        "affected_nodes": [],
+        "no_semantic_harm_claim_for_unreviewed_members": true,
+        "lost_comemberships_sources": [],
+        "new_comemberships_sources": []
+      }
+    },
+    "event_strict": {
+      "groups": [
+        {
+          "feature_id": "G000",
+          "node_indices": [
+            0,
+            12
+          ],
+          "support": 2,
+          "support_workers": [
+            "P005",
+            "P012"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                165.41819764022264,
+                193.85949540628104
+              ],
+              [
+                165.41819764022264,
+                321.5211447470285
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02278",
+              "pair_index": 0
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 3.116007243733969,
+            "bottom": 2.3417465546829193,
+            "pair": 3.116007243733969
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G001",
+          "node_indices": [
+            1,
+            13
+          ],
+          "support": 2,
+          "support_workers": [
+            "P005",
+            "P012"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                313.1398145850802,
+                189.20189000791427
+              ],
+              [
+                313.1398145850802,
+                325.52331450448867
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02073",
+              "pair_index": 1
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.7002848347543678,
+            "bottom": 0.3757058460754636,
+            "pair": 0.7002848347543678
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G002",
+          "node_indices": [
+            2
+          ],
+          "support": 1,
+          "support_workers": [
+            "P005"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                561.2446958981612,
+                133.25035360678925
+              ],
+              [
+                561.2446958981612,
+                406.992927864215
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02073",
+              "pair_index": 2
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.0,
+            "bottom": 0.0,
+            "pair": 0.0
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G003",
+          "node_indices": [
+            3,
+            15
+          ],
+          "support": 2,
+          "support_workers": [
+            "P005",
+            "P012"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                988.3892885813622,
+                95.79032482746669
+              ],
+              [
+                988.3892885813622,
+                372.3658144943397
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02073",
+              "pair_index": 3
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 6.979278211756742,
+            "bottom": 9.207573693246612,
+            "pair": 9.207573693246612
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G004",
+          "node_indices": [
+            4,
+            8
+          ],
+          "support": 2,
+          "support_workers": [
+            "P008",
+            "P009"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                163.66610078620715,
+                189.7369165487977
+              ],
+              [
+                163.66610078620715,
+                324.4353752815089
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02164",
+              "pair_index": 0
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.0,
+            "bottom": 0.0,
+            "pair": 0.0
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G005",
+          "node_indices": [
+            5,
+            9
+          ],
+          "support": 2,
+          "support_workers": [
+            "P008",
+            "P009"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                313.57284299858554,
+                188.28854314002828
+              ],
+              [
+                313.57284299858554,
+                325.8840169731259
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02164",
+              "pair_index": 1
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.0,
+            "bottom": 0.0,
+            "pair": 0.0
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G006",
+          "node_indices": [
+            6,
+            10,
+            14
+          ],
+          "support": 3,
+          "support_workers": [
+            "P008",
+            "P009",
+            "P012"
+          ],
+          "selected": true,
+          "center": {
+            "points": [
+              [
+                543.4673495518566,
+                95.57069992713555
+              ],
+              [
+                543.4673495518566,
+                401.20870678617155
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02164",
+              "pair_index": 2
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 8.619486011732164,
+            "bottom": 5.685042698231763,
+            "pair": 8.619486011732164
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G007",
+          "node_indices": [
+            7,
+            11
+          ],
+          "support": 2,
+          "support_workers": [
+            "P008",
+            "P009"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                1002.164834098277,
+                98.48974056402427
+              ],
+              [
+                1002.164834098277,
+                404.70943522000687
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02164",
+              "pair_index": 3
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.0,
+            "bottom": 0.0,
+            "pair": 0.0
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G008",
+          "node_indices": [
+            16
+          ],
+          "support": 1,
+          "support_workers": [
+            "P024"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                169.04614277702063,
+                197.24260937816686
+              ],
+              [
+                169.04614277702063,
+                315.63615815069215
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R01624",
+              "pair_index": 0
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.0,
+            "bottom": 0.0,
+            "pair": 0.0
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G009",
+          "node_indices": [
+            17,
+            21
+          ],
+          "support": 2,
+          "support_workers": [
+            "P024",
+            "P025"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                313.21692994246814,
+                192.03526226187574
+              ],
+              [
+                313.21692994246814,
+                323.89516416923414
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R01624",
+              "pair_index": 1
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.9981013985708815,
+            "bottom": 0.7510777706340079,
+            "pair": 0.9981013985708815
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G010",
+          "node_indices": [
+            18,
+            22
+          ],
+          "support": 2,
+          "support_workers": [
+            "P024",
+            "P025"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                649.4306325159957,
+                209.62170461097367
+              ],
+              [
+                649.4306325159957,
+                303.65931709061226
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R01624",
+              "pair_index": 2
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.8716421210383739,
+            "bottom": 4.542902424884013,
+            "pair": 4.542902424884013
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G011",
+          "node_indices": [
+            19
+          ],
+          "support": 1,
+          "support_workers": [
+            "P024"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                797.2914066507178,
+                208.10815845215728
+              ],
+              [
+                797.2914066507178,
+                312.1863600589817
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R01624",
+              "pair_index": 3
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.0,
+            "bottom": 0.0,
+            "pair": 0.0
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G012",
+          "node_indices": [
+            20
+          ],
+          "support": 1,
+          "support_workers": [
+            "P025"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                166.5274130608586,
+                194.50468980378002
+              ],
+              [
+                166.5274130608586,
+                320.01162687720773
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R01139",
+              "pair_index": 0
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.0,
+            "bottom": 0.0,
+            "pair": 0.0
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G013",
+          "node_indices": [
+            23
+          ],
+          "support": 1,
+          "support_workers": [
+            "P025"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                807.7591929470923,
+                197.2021821958771
+              ],
+              [
+                807.7591929470923,
+                319.2994228321496
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R01139",
+              "pair_index": 3
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.0,
+            "bottom": 0.0,
+            "pair": 0.0
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        }
+      ],
+      "ring": {
+        "selected_pair_count": 1,
+        "minimum_four_pairs_enforced": false,
+        "x_diagnostic": {
+          "points": [
+            [
+              543.4673495518566,
+              95.57069992713555
+            ],
+            [
+              543.4673495518566,
+              401.20870678617155
+            ]
+          ],
+          "identity_cycle": [
+            "G006"
+          ],
+          "ring_confirmed": false,
+          "footprint": null,
+          "geometry_valid": false,
+          "reason": "fewer_than_three_geometry_vertices_but_all_MV_nodes_retained",
+          "area_h2": null,
+          "role": "unconfirmed_center_x_diagnostic_not_source_ring_reordering"
+        },
+        "x_diagnostic_edges": [],
+        "all_complete_observed_cycles": [],
+        "primary_ring_available": false,
+        "primary_ring": null,
+        "assignments": [
+          {
+            "id": "R02073",
+            "worker": "P005",
+            "source_identity_cycle": [
+              "G000",
+              "G001",
+              "G002",
+              "G003"
+            ]
+          },
+          {
+            "id": "R02164",
+            "worker": "P008",
+            "source_identity_cycle": [
+              "G004",
+              "G005",
+              "G006",
+              "G007"
+            ]
+          },
+          {
+            "id": "R01897",
+            "worker": "P009",
+            "source_identity_cycle": [
+              "G004",
+              "G005",
+              "G006",
+              "G007"
+            ]
+          },
+          {
+            "id": "R02278",
+            "worker": "P012",
+            "source_identity_cycle": [
+              "G000",
+              "G001",
+              "G006",
+              "G003"
+            ]
+          },
+          {
+            "id": "R01624",
+            "worker": "P024",
+            "source_identity_cycle": [
+              "G008",
+              "G009",
+              "G010",
+              "G011"
+            ]
+          },
+          {
+            "id": "R01139",
+            "worker": "P025",
+            "source_identity_cycle": [
+              "G012",
+              "G009",
+              "G010",
+              "G013"
+            ]
+          }
+        ],
+        "local_correspondence_not_full_layout_certification": true
+      },
+      "changes_from_raw": {
+        "lost_comemberships": [
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            8
+          ],
+          [
+            0,
+            16
+          ],
+          [
+            0,
+            20
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            1,
+            17
+          ],
+          [
+            1,
+            21
+          ],
+          [
+            4,
+            12
+          ],
+          [
+            4,
+            16
+          ],
+          [
+            4,
+            20
+          ],
+          [
+            5,
+            13
+          ],
+          [
+            5,
+            17
+          ],
+          [
+            5,
+            21
+          ],
+          [
+            8,
+            12
+          ],
+          [
+            8,
+            16
+          ],
+          [
+            8,
+            20
+          ],
+          [
+            9,
+            13
+          ],
+          [
+            9,
+            17
+          ],
+          [
+            9,
+            21
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            12,
+            20
+          ],
+          [
+            13,
+            17
+          ],
+          [
+            13,
+            21
+          ],
+          [
+            16,
+            20
+          ],
+          [
+            19,
+            23
+          ]
+        ],
+        "new_comemberships": [],
+        "affected_nodes": [
+          0,
+          1,
+          4,
+          5,
+          8,
+          9,
+          12,
+          13,
+          16,
+          17,
+          19,
+          20,
+          21,
+          23
+        ],
+        "no_semantic_harm_claim_for_unreviewed_members": true,
+        "lost_comemberships_sources": [
+          {
+            "node_indices": [
+              0,
+              4
+            ],
+            "sources": [
+              [
+                "R02073",
+                0
+              ],
+              [
+                "R02164",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              0,
+              8
+            ],
+            "sources": [
+              [
+                "R02073",
+                0
+              ],
+              [
+                "R01897",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              0,
+              16
+            ],
+            "sources": [
+              [
+                "R02073",
+                0
+              ],
+              [
+                "R01624",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              0,
+              20
+            ],
+            "sources": [
+              [
+                "R02073",
+                0
+              ],
+              [
+                "R01139",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              1,
+              5
+            ],
+            "sources": [
+              [
+                "R02073",
+                1
+              ],
+              [
+                "R02164",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              1,
+              9
+            ],
+            "sources": [
+              [
+                "R02073",
+                1
+              ],
+              [
+                "R01897",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              1,
+              17
+            ],
+            "sources": [
+              [
+                "R02073",
+                1
+              ],
+              [
+                "R01624",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              1,
+              21
+            ],
+            "sources": [
+              [
+                "R02073",
+                1
+              ],
+              [
+                "R01139",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              4,
+              12
+            ],
+            "sources": [
+              [
+                "R02164",
+                0
+              ],
+              [
+                "R02278",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              4,
+              16
+            ],
+            "sources": [
+              [
+                "R02164",
+                0
+              ],
+              [
+                "R01624",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              4,
+              20
+            ],
+            "sources": [
+              [
+                "R02164",
+                0
+              ],
+              [
+                "R01139",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              5,
+              13
+            ],
+            "sources": [
+              [
+                "R02164",
+                1
+              ],
+              [
+                "R02278",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              5,
+              17
+            ],
+            "sources": [
+              [
+                "R02164",
+                1
+              ],
+              [
+                "R01624",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              5,
+              21
+            ],
+            "sources": [
+              [
+                "R02164",
+                1
+              ],
+              [
+                "R01139",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              8,
+              12
+            ],
+            "sources": [
+              [
+                "R01897",
+                0
+              ],
+              [
+                "R02278",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              8,
+              16
+            ],
+            "sources": [
+              [
+                "R01897",
+                0
+              ],
+              [
+                "R01624",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              8,
+              20
+            ],
+            "sources": [
+              [
+                "R01897",
+                0
+              ],
+              [
+                "R01139",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              9,
+              13
+            ],
+            "sources": [
+              [
+                "R01897",
+                1
+              ],
+              [
+                "R02278",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              9,
+              17
+            ],
+            "sources": [
+              [
+                "R01897",
+                1
+              ],
+              [
+                "R01624",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              9,
+              21
+            ],
+            "sources": [
+              [
+                "R01897",
+                1
+              ],
+              [
+                "R01139",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              12,
+              16
+            ],
+            "sources": [
+              [
+                "R02278",
+                0
+              ],
+              [
+                "R01624",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              12,
+              20
+            ],
+            "sources": [
+              [
+                "R02278",
+                0
+              ],
+              [
+                "R01139",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              13,
+              17
+            ],
+            "sources": [
+              [
+                "R02278",
+                1
+              ],
+              [
+                "R01624",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              13,
+              21
+            ],
+            "sources": [
+              [
+                "R02278",
+                1
+              ],
+              [
+                "R01139",
+                1
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              16,
+              20
+            ],
+            "sources": [
+              [
+                "R01624",
+                0
+              ],
+              [
+                "R01139",
+                0
+              ]
+            ]
+          },
+          {
+            "node_indices": [
+              19,
+              23
+            ],
+            "sources": [
+              [
+                "R01624",
+                3
+              ],
+              [
+                "R01139",
+                3
+              ]
+            ]
+          }
+        ],
+        "new_comemberships_sources": []
+      }
+    },
+    "event_three_state": {
+      "groups": [
+        {
+          "feature_id": "G000",
+          "node_indices": [
+            0,
+            4,
+            8,
+            12,
+            16,
+            20
+          ],
+          "support": 6,
+          "support_workers": [
+            "P005",
+            "P008",
+            "P009",
+            "P012",
+            "P024",
+            "P025"
+          ],
+          "selected": true,
+          "center": {
+            "points": [
+              [
+                165.0967569235329,
+                192.12080317628886
+              ],
+              [
+                165.0967569235329,
+                322.22350107935836
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02073",
+              "pair_index": 0
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 3.1683546218888647,
+            "bottom": 3.5526653113713262,
+            "pair": 3.5526653113713262
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G001",
+          "node_indices": [
+            1,
+            5,
+            9,
+            13,
+            17,
+            21
+          ],
+          "support": 6,
+          "support_workers": [
+            "P005",
+            "P008",
+            "P009",
+            "P012",
+            "P024",
+            "P025"
+          ],
+          "selected": true,
+          "center": {
+            "points": [
+              [
+                313.57284299858554,
+                189.20189000791427
+              ],
+              [
+                313.57284299858554,
+                325.52331450448867
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02073",
+              "pair_index": 1
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 1.6745799029547912,
+            "bottom": 0.8336878420796608,
+            "pair": 1.6745799029547912
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G002",
+          "node_indices": [
+            2
+          ],
+          "support": 1,
+          "support_workers": [
+            "P005"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                561.2446958981612,
+                133.25035360678925
+              ],
+              [
+                561.2446958981612,
+                406.992927864215
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02073",
+              "pair_index": 2
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.0,
+            "bottom": 0.0,
+            "pair": 0.0
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G003",
+          "node_indices": [
+            3,
+            15
+          ],
+          "support": 2,
+          "support_workers": [
+            "P005",
+            "P012"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                988.3892885813622,
+                95.79032482746669
+              ],
+              [
+                988.3892885813622,
+                372.3658144943397
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02073",
+              "pair_index": 3
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 6.979278211756742,
+            "bottom": 9.207573693246612,
+            "pair": 9.207573693246612
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G004",
+          "node_indices": [
+            6,
+            10,
+            14
+          ],
+          "support": 3,
+          "support_workers": [
+            "P008",
+            "P009",
+            "P012"
+          ],
+          "selected": true,
+          "center": {
+            "points": [
+              [
+                543.4673495518566,
+                95.57069992713555
+              ],
+              [
+                543.4673495518566,
+                401.20870678617155
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02164",
+              "pair_index": 2
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 8.619486011732164,
+            "bottom": 5.685042698231763,
+            "pair": 8.619486011732164
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G005",
+          "node_indices": [
+            7,
+            11
+          ],
+          "support": 2,
+          "support_workers": [
+            "P008",
+            "P009"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                1002.164834098277,
+                98.48974056402427
+              ],
+              [
+                1002.164834098277,
+                404.70943522000687
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R02164",
+              "pair_index": 3
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.0,
+            "bottom": 0.0,
+            "pair": 0.0
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G006",
+          "node_indices": [
+            18,
+            22
+          ],
+          "support": 2,
+          "support_workers": [
+            "P024",
+            "P025"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                649.4306325159957,
+                209.62170461097367
+              ],
+              [
+                649.4306325159957,
+                303.65931709061226
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R01624",
+              "pair_index": 2
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 0.8716421210383739,
+            "bottom": 4.542902424884013,
+            "pair": 4.542902424884013
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        },
+        {
+          "feature_id": "G007",
+          "node_indices": [
+            19,
+            23
+          ],
+          "support": 2,
+          "support_workers": [
+            "P024",
+            "P025"
+          ],
+          "selected": false,
+          "center": {
+            "points": [
+              [
+                802.525299798905,
+                202.6551703240172
+              ],
+              [
+                802.525299798905,
+                315.74289144556565
+              ]
+            ],
+            "status": "ok",
+            "anchor": {
+              "id": "R01624",
+              "pair_index": 3
+            },
+            "method": "authoritative_first_argmin_medoid_periodic_coordinate_median",
+            "warning": "conditional correspondence center; generated location has no new votes"
+          },
+          "marginal_diameters_deg": {
+            "top": 5.180458127514405,
+            "bottom": 4.248926703106821,
+            "pair": 5.180458127514405
+          },
+          "support_scope": "geometric_identity_members; no semantic target or location vote certification"
+        }
+      ],
+      "ring": {
+        "selected_pair_count": 3,
+        "minimum_four_pairs_enforced": false,
+        "x_diagnostic": {
+          "points": [
+            [
+              165.0967569235329,
+              192.12080317628886
+            ],
+            [
+              165.0967569235329,
+              322.22350107935836
+            ],
+            [
+              313.57284299858554,
+              189.20189000791427
+            ],
+            [
+              313.57284299858554,
+              325.52331450448867
+            ],
+            [
+              543.4673495518566,
+              95.57069992713555
+            ],
+            [
+              543.4673495518566,
+              401.20870678617155
+            ]
+          ],
+          "identity_cycle": [
+            "G000",
+            "G001",
+            "G004"
+          ],
+          "ring_confirmed": false,
+          "footprint": [
+            [
+              -1.9717767641598463,
+              1.2301022260027932
+            ],
+            [
+              -2.0643548120115,
+              -0.7611899140255663
+            ],
+            [
+              0.15510771828910172,
+              -0.7933210964885599
+            ]
+          ],
+          "geometry_valid": true,
+          "reason": null,
+          "area_h2": 2.211286466911316,
+          "role": "unconfirmed_center_x_diagnostic_not_source_ring_reordering"
+        },
+        "x_diagnostic_edges": [
+          {
+            "identity_pair": [
+              "G000",
+              "G001"
+            ],
+            "direct_workers": [
+              "P005",
+              "P008",
+              "P009",
+              "P012",
+              "P024",
+              "P025"
+            ],
+            "deletion_projected_workers": [
+              "P008",
+              "P009",
+              "P012"
+            ],
+            "new_edge_without_direct_source": false
+          },
+          {
+            "identity_pair": [
+              "G001",
+              "G004"
+            ],
+            "direct_workers": [
+              "P008",
+              "P009",
+              "P012"
+            ],
+            "deletion_projected_workers": [
+              "P008",
+              "P009",
+              "P012"
+            ],
+            "new_edge_without_direct_source": false
+          },
+          {
+            "identity_pair": [
+              "G004",
+              "G000"
+            ],
+            "direct_workers": [],
+            "deletion_projected_workers": [
+              "P008",
+              "P009",
+              "P012"
+            ],
+            "new_edge_without_direct_source": true
+          }
+        ],
+        "all_complete_observed_cycles": [],
+        "primary_ring_available": false,
+        "primary_ring": null,
+        "assignments": [
+          {
+            "id": "R02073",
+            "worker": "P005",
+            "source_identity_cycle": [
+              "G000",
+              "G001",
+              "G002",
+              "G003"
+            ]
+          },
+          {
+            "id": "R02164",
+            "worker": "P008",
+            "source_identity_cycle": [
+              "G000",
+              "G001",
+              "G004",
+              "G005"
+            ]
+          },
+          {
+            "id": "R01897",
+            "worker": "P009",
+            "source_identity_cycle": [
+              "G000",
+              "G001",
+              "G004",
+              "G005"
+            ]
+          },
+          {
+            "id": "R02278",
+            "worker": "P012",
+            "source_identity_cycle": [
+              "G000",
+              "G001",
+              "G004",
+              "G003"
+            ]
+          },
+          {
+            "id": "R01624",
+            "worker": "P024",
+            "source_identity_cycle": [
+              "G000",
+              "G001",
+              "G006",
+              "G007"
+            ]
+          },
+          {
+            "id": "R01139",
+            "worker": "P025",
+            "source_identity_cycle": [
+              "G000",
+              "G001",
+              "G006",
+              "G007"
+            ]
+          }
+        ],
+        "local_correspondence_not_full_layout_certification": true
+      },
+      "changes_from_raw": {
+        "lost_comemberships": [],
+        "new_comemberships": [],
+        "affected_nodes": [],
+        "no_semantic_harm_claim_for_unreviewed_members": true,
+        "lost_comemberships_sources": [],
+        "new_comemberships_sources": []
+      }
+    }
+  },
+  "domain_change": {
+    "status_transitions": [
+      {
+        "fixed": "not_witnessed",
+        "event": "not_witnessed",
+        "count": 22
+      },
+      {
+        "fixed": "witnessed",
+        "event": "witnessed",
+        "count": 18
+      }
+    ],
+    "changed_focal_pairs": []
+  }
+}

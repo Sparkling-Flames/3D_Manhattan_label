@@ -1,0 +1,11 @@
+{
+  "schema": "worker_image_response_v1",
+  "population": "Existing balanced 24 Manual workers x 10 images; no new selection or quality tier.",
+  "loss": "D=omission_ref+extension_ref, each normalized by that image/reference area; original vs existing revision where available.",
+  "decomposition": "Descriptive two-way centering: e=mean+image_mean_effect+worker_mean_effect+remaining. SS fractions describe this matrix, not independent uncertainty sources, causal effects, measurement error or variance components.",
+  "remaining": "Includes person-image interaction, target differences and one-off errors. No repeated same-person same-image trials.",
+  "ranks": "Within-image error rank; ties averaged, 1=lower reference area error. 45 pairs share images/workers; not independent tests.",
+  "prediction": "In-sample centering only, no new predictor; existing building-held-out Q predictions remain separate.",
+  "references": "revised_where_available uses same 4 revised and 6 original references as existing panel.",
+  "check": "Orthogonal SS identity and zero row/column residual means; no raw geometry recomputation."
+}

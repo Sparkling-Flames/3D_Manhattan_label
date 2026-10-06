@@ -1,0 +1,450 @@
+{
+  "minimum_dispersion_ids": [
+    2
+  ],
+  "baseline_equal_dispersion_ids": [
+    2
+  ],
+  "domain": {
+    "union": [
+      22,
+      72,
+      82,
+      92,
+      102,
+      111,
+      119,
+      141,
+      149,
+      186,
+      210,
+      218
+    ],
+    "baseline_blocks": [
+      [
+        22,
+        72,
+        82,
+        92,
+        102,
+        141,
+        149,
+        186
+      ],
+      [
+        111,
+        119,
+        210,
+        218
+      ]
+    ],
+    "union_nodes": 12,
+    "incompatibility_components": [
+      {
+        "nodes": [
+          22,
+          72,
+          82,
+          92,
+          102,
+          111,
+          149,
+          186,
+          210,
+          218
+        ],
+        "colors": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1
+        ]
+      },
+      {
+        "nodes": [
+          119
+        ],
+        "colors": [
+          0
+        ]
+      },
+      {
+        "nodes": [
+          141
+        ],
+        "colors": [
+          0
+        ]
+      }
+    ],
+    "forbidden_pairs": [
+      {
+        "nodes": [
+          22,
+          111
+        ],
+        "distance_deg": 2.595181202426761,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          72,
+          111
+        ],
+        "distance_deg": 2.595181202426761,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          82,
+          111
+        ],
+        "distance_deg": 2.595181202426761,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          92,
+          111
+        ],
+        "distance_deg": 2.595181202426761,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          102,
+          111
+        ],
+        "distance_deg": 2.595181202426761,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          111,
+          149
+        ],
+        "distance_deg": 3.058914559489448,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          111,
+          186
+        ],
+        "distance_deg": 3.437114545155738,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          149,
+          218
+        ],
+        "distance_deg": 2.769105648481991,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          186,
+          210
+        ],
+        "distance_deg": 2.8599024358707625,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          186,
+          218
+        ],
+        "distance_deg": 3.1974739083742416,
+        "same_worker": false
+      }
+    ],
+    "orientation_states": 4,
+    "all_unordered_two_nonempty_partitions": 2047,
+    "status": "ok",
+    "exhaustive_within_declared_domain": true,
+    "feasible_count": 4,
+    "infeasible_partition_count": 2043,
+    "domain_id": "rPc6DW4iMge-06_top_2.5_d1",
+    "group_indices": [
+      19,
+      37
+    ],
+    "compatible_cross_pairs": [
+      [
+        22,
+        119
+      ],
+      [
+        22,
+        210
+      ],
+      [
+        22,
+        218
+      ],
+      [
+        72,
+        119
+      ],
+      [
+        72,
+        210
+      ],
+      [
+        72,
+        218
+      ],
+      [
+        82,
+        119
+      ],
+      [
+        82,
+        210
+      ],
+      [
+        82,
+        218
+      ],
+      [
+        92,
+        119
+      ],
+      [
+        92,
+        210
+      ],
+      [
+        92,
+        218
+      ],
+      [
+        102,
+        119
+      ],
+      [
+        102,
+        210
+      ],
+      [
+        102,
+        218
+      ],
+      [
+        141,
+        111
+      ],
+      [
+        141,
+        119
+      ],
+      [
+        141,
+        210
+      ],
+      [
+        141,
+        218
+      ],
+      [
+        149,
+        119
+      ],
+      [
+        149,
+        210
+      ],
+      [
+        186,
+        119
+      ]
+    ]
+  },
+  "automatic": {
+    "status": "unchanged",
+    "selected_ids": [
+      2
+    ],
+    "baseline_cost": 0.4437260848390219
+  },
+  "human_assisted": {
+    "status": "constraints_outside_local_domain",
+    "selected_ids": []
+  },
+  "pareto_ids": [
+    2
+  ],
+  "selected_details": [
+    {
+      "local_id": 2,
+      "blocks": [
+        [
+          22,
+          72,
+          82,
+          92,
+          102,
+          141,
+          149,
+          186
+        ],
+        [
+          111,
+          119,
+          210,
+          218
+        ]
+      ],
+      "edit_count": 0,
+      "cost": 0.4437260848390219,
+      "moved_nodes_alternative_alignments": [
+        []
+      ],
+      "block_label_alignments": [
+        0
+      ],
+      "diameters_deg": null,
+      "supports": [
+        8,
+        4
+      ],
+      "diameters_checked_deg": [
+        1.5142850398574663,
+        1.2421642743592232
+      ],
+      "centers": [
+        {
+          "points": [
+            [
+              221.4054054054054,
+              208.22651222651223
+            ],
+            [
+              221.4054054054054,
+              312.33976833976834
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                221.4054054054054,
+                208.22651222651223
+              ],
+              [
+                221.4054054054054,
+                312.33976833976834
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 5,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        },
+        {
+          "points": [
+            [
+              219.64264264436676,
+              213.99916649097474
+            ],
+            [
+              219.64264264436676,
+              311.66439055012296
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                219.64264264436676,
+                213.99916649097474
+              ],
+              [
+                219.64264264436676,
+                311.66439055012296
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 1,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        }
+      ],
+      "added_coassignments": [],
+      "lost_coassignments": [],
+      "full_observation_count": 224,
+      "full_unique_observations": 224,
+      "outside_groups_unchanged": true,
+      "new_same_worker_collisions": 0,
+      "new_diameter_violations": 0,
+      "newly_split_identical_coordinates": [],
+      "complete_layout_created": false,
+      "roster_denominator": 24,
+      "human_development_probe": {
+        "members": [
+          [
+            "R02452",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ],
+          [
+            "R01557",
+            4
+          ]
+        ],
+        "member_groups": [
+          "corner_055",
+          "corner_028",
+          "corner_046"
+        ],
+        "supports": [
+          8,
+          2,
+          4
+        ],
+        "same_group": false,
+        "local_diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_feasible": false,
+        "whole_union_diameter": 4.6462495245725695,
+        "whole_union_witness": [
+          [
+            "R00634",
+            1
+          ],
+          [
+            "R01557",
+            2
+          ]
+        ],
+        "same_worker_conflicts": {
+          "P023": [
+            [
+              "R01557",
+              4
+            ],
+            [
+              "R01557",
+              2
+            ]
+          ]
+        },
+        "wrong_triple_same_group": false
+      }
+    }
+  ],
+  "all_candidate_ledger": "rPc6DW4iMge-06_top_2.5_d1.jsonl.gz",
+  "node_lookup_file": "node_lookup.json",
+  "compact_reference": "rPc6DW4iMge-06_top_2.5_d1_reference.npz"
+}

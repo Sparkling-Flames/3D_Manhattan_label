@@ -1,0 +1,474 @@
+{
+  "minimum_dispersion_ids": [
+    0
+  ],
+  "baseline_equal_dispersion_ids": [
+    0
+  ],
+  "domain": {
+    "union": [
+      22,
+      52,
+      72,
+      82,
+      92,
+      102,
+      111,
+      119,
+      140,
+      149,
+      175,
+      184,
+      186,
+      210
+    ],
+    "baseline_blocks": [
+      [
+        22,
+        52,
+        72,
+        82,
+        92,
+        102,
+        111,
+        119,
+        149,
+        186,
+        210
+      ],
+      [
+        140,
+        175,
+        184
+      ]
+    ],
+    "union_nodes": 14,
+    "incompatibility_components": [
+      {
+        "nodes": [
+          22,
+          52,
+          72,
+          82,
+          92,
+          102,
+          119,
+          140,
+          149,
+          175,
+          184,
+          186,
+          210
+        ],
+        "colors": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "nodes": [
+          111
+        ],
+        "colors": [
+          0
+        ]
+      }
+    ],
+    "forbidden_pairs": [
+      {
+        "nodes": [
+          22,
+          184
+        ],
+        "distance_deg": 8.359499532311965,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          52,
+          140
+        ],
+        "distance_deg": 8.758233798051332,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          52,
+          175
+        ],
+        "distance_deg": 8.421650015064897,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          52,
+          184
+        ],
+        "distance_deg": 10.250463814584942,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          72,
+          184
+        ],
+        "distance_deg": 8.359499532311965,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          82,
+          184
+        ],
+        "distance_deg": 8.359499532311965,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          92,
+          184
+        ],
+        "distance_deg": 8.359499532311965,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          102,
+          184
+        ],
+        "distance_deg": 8.359499532311965,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          119,
+          184
+        ],
+        "distance_deg": 8.127475616522375,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          140,
+          186
+        ],
+        "distance_deg": 8.205575968933557,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          149,
+          184
+        ],
+        "distance_deg": 8.60802490093853,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          175,
+          186
+        ],
+        "distance_deg": 8.038309947657588,
+        "same_worker": false
+      },
+      {
+        "nodes": [
+          184,
+          186
+        ],
+        "distance_deg": 7.038912570672148,
+        "same_worker": true
+      },
+      {
+        "nodes": [
+          184,
+          210
+        ],
+        "distance_deg": 8.543836030124554,
+        "same_worker": false
+      }
+    ],
+    "orientation_states": 2,
+    "all_unordered_two_nonempty_partitions": 8191,
+    "status": "ok",
+    "exhaustive_within_declared_domain": true,
+    "feasible_count": 2,
+    "infeasible_partition_count": 8189,
+    "domain_id": "rPc6DW4iMge-06_bottom_7.5_d1",
+    "group_indices": [
+      18,
+      23
+    ],
+    "compatible_cross_pairs": [
+      [
+        22,
+        140
+      ],
+      [
+        22,
+        175
+      ],
+      [
+        72,
+        140
+      ],
+      [
+        72,
+        175
+      ],
+      [
+        82,
+        140
+      ],
+      [
+        82,
+        175
+      ],
+      [
+        92,
+        140
+      ],
+      [
+        92,
+        175
+      ],
+      [
+        102,
+        140
+      ],
+      [
+        102,
+        175
+      ],
+      [
+        111,
+        140
+      ],
+      [
+        111,
+        175
+      ],
+      [
+        111,
+        184
+      ],
+      [
+        119,
+        140
+      ],
+      [
+        119,
+        175
+      ],
+      [
+        149,
+        140
+      ],
+      [
+        149,
+        175
+      ],
+      [
+        210,
+        140
+      ],
+      [
+        210,
+        175
+      ]
+    ]
+  },
+  "automatic": {
+    "status": "unchanged",
+    "selected_ids": [
+      0
+    ],
+    "baseline_cost": 0.7710728456809761
+  },
+  "human_assisted": {
+    "status": "constraints_outside_local_domain",
+    "selected_ids": []
+  },
+  "pareto_ids": [
+    0
+  ],
+  "selected_details": [
+    {
+      "local_id": 0,
+      "blocks": [
+        [
+          22,
+          52,
+          72,
+          82,
+          92,
+          102,
+          111,
+          119,
+          149,
+          186,
+          210
+        ],
+        [
+          140,
+          175,
+          184
+        ]
+      ],
+      "edit_count": 0,
+      "cost": 0.7710728456809761,
+      "moved_nodes_alternative_alignments": [
+        []
+      ],
+      "block_label_alignments": [
+        0
+      ],
+      "diameters_deg": null,
+      "supports": [
+        11,
+        3
+      ],
+      "diameters_checked_deg": [
+        4.926841598936796,
+        5.221754259422693
+      ],
+      "centers": [
+        {
+          "points": [
+            [
+              221.4054054054054,
+              208.22651222651223
+            ],
+            [
+              221.4054054054054,
+              312.33976833976834
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                221.4054054054054,
+                208.22651222651223
+              ],
+              [
+                221.4054054054054,
+                312.33976833976834
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 5,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        },
+        {
+          "points": [
+            [
+              201.70027403827618,
+              190.98304019082696
+            ],
+            [
+              201.70027403827618,
+              310.2525415530536
+            ]
+          ],
+          "alternatives": [
+            [
+              [
+                201.70027403827618,
+                190.98304019082696
+              ],
+              [
+                201.70027403827618,
+                310.2525415530536
+              ]
+            ]
+          ],
+          "status": "ok",
+          "anchor_count": 1,
+          "warning": "coordinate estimate conditional on correspondence, not votes at generated location"
+        }
+      ],
+      "added_coassignments": [],
+      "lost_coassignments": [],
+      "full_observation_count": 224,
+      "full_unique_observations": 224,
+      "outside_groups_unchanged": true,
+      "new_same_worker_collisions": 0,
+      "new_diameter_violations": 0,
+      "newly_split_identical_coordinates": [],
+      "complete_layout_created": false,
+      "roster_denominator": 24,
+      "human_development_probe": {
+        "members": [
+          [
+            "R02452",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ],
+          [
+            "R01557",
+            4
+          ]
+        ],
+        "member_groups": [
+          "corner_023",
+          "corner_002",
+          "corner_002"
+        ],
+        "supports": [
+          11,
+          9,
+          9
+        ],
+        "same_group": false,
+        "local_diameters_deg": {
+          "top": 3.0669444542229267,
+          "bottom": 4.326333840176633,
+          "pair": 4.326333840176633
+        },
+        "local_feasible": true,
+        "whole_union_diameter": 8.311424572913038,
+        "whole_union_witness": [
+          [
+            "R01986",
+            2
+          ],
+          [
+            "R01557",
+            2
+          ]
+        ],
+        "same_worker_conflicts": {
+          "P023": [
+            [
+              "R01557",
+              4
+            ],
+            [
+              "R01557",
+              2
+            ]
+          ]
+        },
+        "wrong_triple_same_group": false
+      }
+    }
+  ],
+  "all_candidate_ledger": "rPc6DW4iMge-06_bottom_7.5_d1.jsonl.gz",
+  "node_lookup_file": "node_lookup.json",
+  "compact_reference": "rPc6DW4iMge-06_bottom_7.5_d1_reference.npz"
+}

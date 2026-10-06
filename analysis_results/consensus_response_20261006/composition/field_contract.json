@@ -1,0 +1,15 @@
+{
+  "schema": "consensus_composition_v1",
+  "k": [
+    4,
+    8,
+    12
+  ],
+  "source": "Existing assignments and fusion rows; no recalibration or new thresholds.",
+  "raw_pairwise": "E[mean of distinct within-team pair distances]; fixed full-pool union denominator; exact pair inclusion probabilities for given composition.",
+  "contrast": "higher_rich minus lower_rich; negative means smaller difference/error, not necessarily better semantic interpretation.",
+  "summary": "Fixed named panels; images/ buildings weighted separately. Reduction counts always count images; 1e-12 tolerance for floating zero only.",
+  "references": "original and manual_revision separately. policy is calibration reference, version is evaluation reference.",
+  "count_response": "All 57 pools by method/reference. D and V have different denominators. D16-D8 is a fixed interval, not an estimated convergence rate.",
+  "condition": "Composition Manual only; count_response Manual and Semi separately."
+}

@@ -1,0 +1,60 @@
+{
+  "input_sha256": "2856289665c8af226b828cc336989beb29c623cbf24afeaa47414d85d73c0d6e",
+  "evidence_scope": "Independent statistical recomputation of transferred arrays, not original CSV byte certification",
+  "transfer_note": "Original-policy arrays were parsed unchanged from the readable assistant message. Revised four-image O/E rows transcribed verbatim from complete batch3A received in parent context; remaining six unchanged rows reused. Revised changed-image D recomputed as float64 O+E, not claimed byte-identical original CSV D. No original source CSV byte certification.",
+  "n_unique_person_image_cells": 240,
+  "n_policy_evaluations": 480,
+  "n_images": 10,
+  "n_buildings": 8,
+  "n_workers": 24,
+  "changed_reference_images": [
+    "UwV83HsGsw3-09",
+    "e9zR4mvMWw7-19",
+    "q9vSo1VnCiC-32",
+    "yqstnuAEVhm-32"
+  ],
+  "unchanged_reference_images": [
+    "7y3sRwLe3Va-04",
+    "X7HyMhZNoso-13",
+    "q9vSo1VnCiC-02",
+    "rPc6DW4iMge-06",
+    "wc2JMjhGNzB-15",
+    "yqstnuAEVhm-34"
+  ],
+  "max_annotation_area_difference_h2_across_references": 7.105427357601002e-15,
+  "max_D_minus_O_plus_E_absolute": {
+    "original": 1.1102230246251565e-16,
+    "revised_where_available": 1.1102230246251565e-16
+  },
+  "small_negative_values_preserved": [
+    {
+      "policy": "original",
+      "metric": "E",
+      "image": "q9vSo1VnCiC-02",
+      "worker": "P002",
+      "value": -1.7127671230683068e-17
+    },
+    {
+      "policy": "original",
+      "metric": "E",
+      "image": "q9vSo1VnCiC-02",
+      "worker": "P012",
+      "value": -1.7127671230683068e-17
+    },
+    {
+      "policy": "revised_where_available",
+      "metric": "E",
+      "image": "q9vSo1VnCiC-02",
+      "worker": "P002",
+      "value": -1.7127671230683068e-17
+    },
+    {
+      "policy": "revised_where_available",
+      "metric": "E",
+      "image": "q9vSo1VnCiC-02",
+      "worker": "P012",
+      "value": -1.7127671230683068e-17
+    }
+  ],
+  "all_checks_passed": true
+}
