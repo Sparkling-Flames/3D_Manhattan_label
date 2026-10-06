@@ -1,0 +1,48 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>候选图片审查台 · 8图难度补标</title>
+<style>/*__STYLE__*/
+.pano-button{display:block;width:100%;padding:0;border:0;border-radius:0}.edit label{flex:1;min-width:150px}.edit select{display:block;width:100%;font-size:14px;margin-top:5px}.edit .note-label{flex-basis:100%}.single{grid-template-columns:1fr}.head{align-items:center}#saved{font-size:13px;color:#345b45}#zoomTitle{font-size:16px;margin:0}#zoom .head{position:sticky;top:0;background:white}button:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #227dc6;outline-offset:2px}
+</style>
+<header><h1>候选图片审查台 · 8图难度补标</h1><p>请按你的判断选择标注难度；可补一句原因。前7张用于补齐共同24人×10图面板，第8张为23人补充图。</p><p>OOS：房间结构难以用当前布局准确表达。门洞交界：相机位置造成范围歧义，房间本身仍可符合曼哈顿约束。两项分别填写，也可暂时留空。</p></header>
+<div class="bar"><div class="controls"><input id="q" aria-label="搜索图片编号" placeholder="搜索图片编号" size="25"><select id="filter" aria-label="填写状态筛选"><option value="all">全部图片</option><option value="pending">难度未填写</option><option value="done">难度已填写</option></select><button id="layout">切换为单列大图</button><span id="stats" aria-live="polite"></span></div>
+<div class="controls"><button id="export">导出我的难度标注</button><label>导入继续填写 <input id="import" type="file" accept="application/json,.json" style="width:220px"></label><span id="saved" role="status">填写后自动暂存；完成后请导出JSON。</span></div></div>
+<main><div class="legend">点击图片可放大。难度选“简单／中等／困难／暂不能判断”，原因可不填。这里不预设难度对应哪一种人数曲线。</div><section id="cards" class="cards" aria-label="待标图片"></section><footer>沿用候选图片审查台。此次填写单独保存；导出后把JSON交回来即可。</footer></main>
+<dialog id="zoom" aria-labelledby="zoomTitle"><div class="head"><h2 id="zoomTitle"></h2><button id="close">关闭大图</button></div><img id="zoomImg" alt="原图放大"></dialog>
+<script id="source" type="application/json">/*__DATA__*/</script>
+<script>
+const D=JSON.parse(document.getElementById('source').textContent),KEY=D.schema;
+const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const options={difficulty:['','简单','中等','困难','暂不能判断'],oos:['','是','否','不确定'],doorway:['','是','否','不确定']};
+let state={};
+const empty=()=>({difficulty:'',oos:'',doorway:'',note:'',updated_at:null});
+const S=id=>state[id]||empty();
+function validate(v){
+ if(v.schema!==D.schema||!Array.isArray(v.decisions)||v.decisions.length!==D.images.length)throw Error('请使用本次8图导出文件');
+ const next={};
+ for(const r of v.decisions){
+  const image=D.images.find(x=>x.image_id===r.image_id);
+  if(!image||image.image_code!==r.image_code||Object.hasOwn(next,r.image_id))throw Error('图片编号不匹配或重复');
+  if(Object.entries(options).some(([k,a])=>!a.includes(r[k]))||typeof r.note!=='string'||!(r.updated_at===null||typeof r.updated_at==='string'))throw Error('填写内容格式不匹配');
+  next[r.image_id]={...Object.fromEntries(Object.keys(options).map(k=>[k,r[k]])),note:r.note,updated_at:r.updated_at};
+ }
+ return next;
+}
+function exportData(){return {schema:D.schema,exported_at:new Date().toISOString(),decisions:D.images.map(r=>({image_id:r.image_id,image_code:r.image_code,...S(r.image_id)}))};}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(exportData()));$('saved').textContent='已暂存到当前浏览器；完成后请导出JSON。';}catch(e){$('saved').textContent='浏览器暂存失败，请导出JSON保存。';}}
+function stats(){$('stats').textContent=`难度已填写 ${D.images.filter(r=>S(r.image_id).difficulty).length} / ${D.images.length}`;}
+function select(r,key,label){return `<label>${label}<select data-id="${esc(r.image_id)}" data-key="${key}">${options[key].map(v=>`<option value="${v}" ${S(r.image_id)[key]===v?'selected':''}>${v||'请选择（可留空）'}</option>`).join('')}</select></label>`;}
+function render(){
+ const q=$('q').value.trim().toLowerCase(),filter=$('filter').value;
+ $('cards').innerHTML=D.images.filter(r=>(r.image_code+' '+r.image_id).toLowerCase().includes(q)&&(filter==='all'||Boolean(S(r.image_id).difficulty)===(filter==='done'))).map(r=>`<article class="card"><div class="head"><b>${esc(r.image_code)}</b><span class="small">Manual ${r.manual_n}人</span></div><button class="pano-button" data-zoom="${esc(r.image_id)}" aria-label="放大 ${esc(r.image_code)}"><img class="pano" src="${esc(r.src)}" alt="${esc(r.image_code)} 全景原图"></button><div class="edit">${select(r,'difficulty','标注难度')}${select(r,'oos','结构OOS（可选）')}${select(r,'doorway','门洞交界（可选）')}<label class="note-label">原因／备注（可选）<textarea class="notes" data-id="${esc(r.image_id)}" data-key="note" placeholder="可以简单说说哪里难标或有歧义">${esc(S(r.image_id).note)}</textarea></label></div></article>`).join('')||'<p>当前筛选无图片。</p>';
+ stats();
+}
+try{const raw=localStorage.getItem(KEY);if(raw)state=validate(JSON.parse(raw));}catch(e){$('saved').textContent='未能读取暂存：'+e.message;}
+$('cards').addEventListener('input',e=>{const {id,key}=e.target.dataset;if(!id||!key)return;state[id]={...S(id),[key]:e.target.value,updated_at:new Date().toISOString()};persist();stats();});
+$('cards').addEventListener('click',e=>{const button=e.target.closest('[data-zoom]');if(!button)return;const r=D.images.find(x=>x.image_id===button.dataset.zoom);$('zoomTitle').textContent=r.image_code;$('zoomImg').src=r.src;$('zoom').showModal();});
+$('close').onclick=()=>$('zoom').close();
+$('q').oninput=render;$('filter').onchange=render;
+$('layout').onclick=()=>{const single=$('cards').classList.toggle('single');$('layout').textContent=single?'切换为双列图片':'切换为单列大图';};
+$('export').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(exportData(),null,2)],{type:'application/json'}));a.download='8图标注难度_20261006.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);};
+$('import').onchange=async e=>{try{if(!e.target.files.length)return;const next=validate(JSON.parse(await e.target.files[0].text()));if(Object.values(state).some(r=>r.updated_at)&&!confirm('用导入文件替换本页当前填写？未导出的内容请先导出。'))return;state=next;persist();render();$('saved').textContent='已导入并暂存。';}catch(err){alert('导入失败：'+err.message);}finally{e.target.value='';}};
+render();
+</script></html>

@@ -77,6 +77,7 @@
 
 ## 复现及交付
 
+- [难度补标工作台](index.html)：复用候选图片审查台的图片卡片、放大及填写方式，只放本轮8图；所有答案留空，导出为独立新增记录。构建：`python -B -m tools.thesis_main.analysis.build_difficulty_review_20261006`。浏览器检查通过8图加载、独立场景字段、填写／刷新／导出／导入、筛选及放大；检查截图已清理。
 - [summary.csv](summary.csv)：固定面板、两规则、逐人数，含均值、中位数、建筑等权及图片名单。
 - [difficulty_roster.csv](difficulty_roster.csv)：67图难度、人数及场景状态；[label_sources.json](label_sources.json)保留已有难度来源字段。
 - [special_scenes.csv](special_scenes.csv)：全库已记录的特殊场景42图，含重叠、待定和可标门洞。
