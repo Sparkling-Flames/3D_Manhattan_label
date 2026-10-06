@@ -1,12 +1,22 @@
 # HOHONET 项目地图
 
-统一研究解释：[人员、图片与融合不确定性模型](thesis_main/研究模型_人员图片与融合不确定性_20261006.md)，[术语](thesis_main/CONTEXT.md)；数据、单人质量、团队抽组、融合输出与评价一一连接。[10/6返回包](../research/fast_research_return_20261006/README.md)保存Pro完整原件、dot直接研究证据和独立取舍。
+2026-10-06审核归档：`research/pro_parallel_return_20261006/dot_original/`保存用户提供的独立审核包；[共同面板报告](../analysis_results/consensus_response_20261006/worker_image/README.md)记录两项针对性复算和解释修订。没有新增主线算法入口。
 
-统一研究解释：[人员、图片与融合不确定性模型](thesis_main/研究模型_人员图片与融合不确定性_20261006.md)，[术语](thesis_main/CONTEXT.md)；数据、单人质量、团队抽组、融合输出与评价一一连接。[10/6返回包](../research/fast_research_return_20261006/README.md)保存Pro完整原件、dot直接研究证据和独立取舍。
+2026-10-06人图推进：`worker_image_response_20261006.py`对应[共同面板分项矩阵](../analysis_results/consensus_response_20261006/worker_image/README.md)；`local_boundary_followup_20261006.py`对应[局部实际边界、人审与单图方位追踪](../analysis_results/consensus_response_20261006/boundary_followup/README.md)。两工具均在`tools/thesis_main/analysis/`，派生结果未修改GT或人员资格。
+
+2026-10-06返回连接：[Pro原件与综合分析](../research/pro_parallel_return_20261006/README.md)；`tools/thesis_main/analysis/local_patch_response_20261006.py`将两处固定观察片区接回已有人员／人数实验，结果在[local_patches](../analysis_results/consensus_response_20261006/local_patches/README.md)。不改变GT、人员池或质量资格。
+
+2026-10-06构成推进：[构成结果](../analysis_results/consensus_response_20261006/composition/REPORT.md)，工具`tools/thesis_main/analysis/consensus_composition_20261006.py`复用楼外分组、融合表及原作答距离；[全员图集](../analysis_results/consensus_response_20261006/ATLAS.md)与完整GeoJSON覆盖57池两规则。当前检查集中于新构成期望公式和新增区域导出。
+
+2026-10-06并行实施：[第一批连接结果](../analysis_results/consensus_response_20261006/REPORT.md)，工具`tools/thesis_main/analysis/consensus_response_20261006.py`；[八图Pro包](../research/pro_parallel_handoff_20261006/README.md)，导出工具`tools/thesis_main/analysis/build_pro_parallel_handoff_20261006.py`。本地人员／人数与Pro特殊场景／细节分工，输入用途不变。
+
+统一研究解释与快速推进：[人员、图片与融合不确定性模型](thesis_main/研究模型_人员图片与融合不确定性_20261006.md)，[术语](thesis_main/CONTEXT.md)；原作答一致性、人数／构成过程和实际全员融合分开连接，特殊场景保留非正交可标及门洞可标性。当前安排集中在模型第8节。[10/6返回包](../research/fast_research_return_20261006/README.md)保存Pro完整原件、dot直接研究证据和独立取舍。
 
 2026-10-06难度补充：[原始8图导出](../analysis_results/difficulty_consensus_20261006/user_review.json)与[更新分析](../analysis_results/difficulty_consensus_20261006/updated/REPORT.md)，由`tools/thesis_main/analysis/update_difficulty_review_20261006.py`接入；只重汇总已有融合结果，旧标签与历史报告保留。
 
 2026-10-06人员与人数实算：[高人数与构成结论](../analysis_results/worker_count_composition_20261006/CONCLUSIONS.md)，工具`tools/thesis_main/analysis/worker_count_composition_20261006.py`；复用有限池概率，保存57图积分基底和固定面板结果，不修改源资格。[人工难度初查](../analysis_results/difficulty_consensus_20261006/REPORT.md)由`tools/thesis_main/analysis/difficulty_consensus_20261006.py`重汇总已有结果；保留OOS／门洞独立状态。[8图难度补标台](../analysis_results/difficulty_consensus_20261006/index.html)由`tools/thesis_main/analysis/build_difficulty_review_20261006.py`复用旧候选图片台生成。
+
+人数研究的[纯数值模块](../tools/thesis_main/analysis/worker_count_metrics_20261006.py)独立提供楼外分组、可行构成、面积指标与固定面板汇总；实验入口保留兼容导出，概率与几何算法不变。
 
 2026-10-06本轮建议：[精简推进与Pro并行交接](../research/fast_research_handoff_20261006/README.md)，含最新独立判断、子智能体审查、九图精选返回和12图质量原图；限定下一轮工作，不修改研究合同。
 
@@ -128,3 +138,9 @@
 - [扩图与高人数分析（2026-10-03）](../analysis_results/lee_expanded_20261003/REPORT.md)：136图1496份独立票，逐图最多24人；固定窗口与失败整池保留，工具 `tools/thesis_main/analysis/lee_expanded_20261003.py`。
 
 - [共同人员画像与固定4人构成（2026-10-03）](../analysis_results/worker_profiles_20261003/REPORT.md)：24人×10图、整栋留出、IoU/质心及每图10626集合精算；[Chat Pro交接](../research/worker_consensus_handoff_20261003/README.md)，工具 `tools/thesis_main/analysis/worker_profiles_20261003.py`。
+
+- [Downloads仓库外完整原件与回收审计索引](../research/downloads_evidence_20261006/ARCHIVE_INDEX_20261006.md)：本轮原件和审计已外移，主线保留精选与来源索引；不改变研究输入或结论。
+
+- 2026-10-06 公共内核与依赖边界：统计输出 IO 使用 [research_artifact_io.py](../tools/thesis_main/analysis/research_artifact_io.py)，区域网格使用 [region_mesh.py](../tools/thesis_main/analysis/region_mesh.py)，展示投影使用 [layout_display_projection.py](../tools/thesis_main/analysis/layout_display_projection.py)；旧入口保留导出，不改变实验公式、坐标或资格。
+
+- [公开研究输入与历史原件范围](../research/downloads_evidence_20261006/ARCHIVE_INDEX_20261006.md)：保留必要复现输入，原评论与机器来源原件外置；[逐文件公开输入合同](../research/pro_parallel_return_20261006/PUBLIC_INPUT_CONTRACT_20261006.json)。

@@ -1,12 +1,22 @@
 # HOHONET 文档入口
 
-当前解释入口：[统一研究模型：人员、图片与融合不确定性](thesis_main/研究模型_人员图片与融合不确定性_20261006.md) → [术语](thesis_main/CONTEXT.md) → [数据说明](thesis_main/研究数据说明_来源预处理与用途_20261006.md)。包含条件、量、已实现／待验证状态和准确数据入口；[Pro／dot返回与独立取舍](../research/fast_research_return_20261006/README.md)已本地归档。以下保留各阶段结果，不以旧建议覆盖当前模型。
+2026-10-06审核补充：[dot原件与本地取舍](../research/pro_parallel_return_20261006/README.md)已归档；共同面板解释加入P017影响与误差尺度敏感性。下一项成员—融合收益连接见统一模型第8.4节，尚未执行。
 
-当前解释入口：[统一研究模型：人员、图片与融合不确定性](thesis_main/研究模型_人员图片与融合不确定性_20261006.md) → [术语](thesis_main/CONTEXT.md) → [数据说明](thesis_main/研究数据说明_来源预处理与用途_20261006.md)。包含条件、量、已实现／待验证状态和准确数据入口；[Pro／dot返回与独立取舍](../research/fast_research_return_20261006/README.md)已本地归档。以下保留各阶段结果，不以旧建议覆盖当前模型。
+2026-10-06最新：[共同24人十图分项矩阵](../analysis_results/consensus_response_20261006/worker_image/README.md)已连接同人跨图排名、遗漏／外扩及描述性人图差异；[局部边界与人审](../analysis_results/consensus_response_20261006/boundary_followup/README.md)确认rPc不同合理目标、yq同结构偏差／简化。共识表达观察，不保证必须像GT。
+
+2026-10-06返回：[Pro返回与本地综合分析](../research/pro_parallel_return_20261006/README.md)连接四特殊场景、两细节图及新[局部人数／构成响应](../analysis_results/consensus_response_20261006/local_patches/README.md)。整体参考收益不决定局部观察保留，Q分组的局部方向依赖校准参考。
+
+2026-10-06本地继续：[构成与一致性结果](../analysis_results/consensus_response_20261006/composition/REPORT.md)已连接39图k=4／8／12的R/D/V；[全员图集](../analysis_results/consensus_response_20261006/ATLAS.md)覆盖57池两规则114份底面。人员参考收益不等于原作答更一致或融合更稳定。
+
+2026-10-06并行实施：[原作答—人数—全员第一批结果](../analysis_results/consensus_response_20261006/REPORT.md)连接57池数值与共同十图全员区域；[Pro任务与八图资料](../research/pro_parallel_handoff_20261006/README.md)由用户手动上传，承担特殊场景和细节研究。
+
+当前解释与推进入口：[统一研究模型：人员、图片与融合不确定性](thesis_main/研究模型_人员图片与融合不确定性_20261006.md) → [术语](thesis_main/CONTEXT.md) → [数据说明](thesis_main/研究数据说明_来源预处理与用途_20261006.md)。模型第3节区分原作答分歧、融合人数过程与实际全员结果，第8节给出快速推进安排；非正交可标与门洞可标性单列，不预设特殊场景一定不一致。[Pro／dot返回与独立取舍](../research/fast_research_return_20261006/README.md)已本地归档。以下阶段结果中的旧建议不覆盖当前模型。
 
 2026-10-06补标已接收：[8图补标后的共同24人十图结果](../analysis_results/difficulty_consensus_20261006/updated/REPORT.md)，全库有效难度增至109图；原备注及OOS／门洞独立判断保留。
 
 2026-10-06人员与人数实算：[高人数与构成结论](../analysis_results/worker_count_composition_20261006/CONCLUSIONS.md)，39图Manual、18图Semi，逐图至24人及楼外构成比较；固定图片分母，零换组波动不作为最佳人数。[单一融合与人工难度初查](../analysis_results/difficulty_consensus_20261006/REPORT.md)连接52图既有难度，OOS与门洞交界分开；[8图难度补标台](../analysis_results/difficulty_consensus_20261006/index.html)复用原候选图片审查台。
+
+人数研究的[纯数值模块](../tools/thesis_main/analysis/worker_count_metrics_20261006.py)独立提供楼外分组、可行构成、面积指标与固定面板汇总；实验入口保留兼容导出，概率与几何算法不变。
 
 2026-10-06本轮建议：[精简推进与Pro并行交接](../research/fast_research_handoff_20261006/README.md)，含最新独立判断、子智能体审查和本地资料；限定下一轮工作，不修改研究合同。
 
@@ -87,7 +97,7 @@
 - [历史共识讨论纪要](thesis_main/PANORAMA_CONSENSUS_RESEARCH_DISCUSSION_20260927.md)。当前提示词已移除，历史任务书和执行记录不作为当前任务。
 - [算法与数学初探](../analysis_results/layout_algorithm_exploration_20260926/README.md)、[结构共识](../analysis_results/structural_consensus_20260926/README.md)、[并集分支共识](../analysis_results/union_branch_consensus_20260926/README.md)。均为探索，不声明算法已验证。
 - [共享 x 历史对照](../analysis_results/shared_x_reanalysis_20260922/README.md)、[研究展示](../analysis_results/research_dashboard_20260922/index.html)、[展示接口](thesis_main/OFFLINE_RESEARCH_DASHBOARD.md)。
-- [导师讲稿](thesis_main/导师汇报简明讲稿_20260922.md)、[问答与边界](thesis_main/导师汇报讲解与问答_20260922.md)：解释 9/22 历史结果。
+- 导师讲稿与问答（旧入口所指文件未纳入当前仓库）：解释 9/22 历史结果。
 - Pro 本地研究副本：`research/pro_layout_20260927/`；旧公开 Release 是历史快照。
 
 ## 运营与工程
@@ -126,3 +136,9 @@
 - [扩图与高人数分析（2026-10-03）](../analysis_results/lee_expanded_20261003/REPORT.md)：136图1496份独立票，逐图最多24人；固定窗口与失败整池保留，工具 `tools/thesis_main/analysis/lee_expanded_20261003.py`。
 
 - [共同人员画像与固定4人构成（2026-10-03）](../analysis_results/worker_profiles_20261003/REPORT.md)：24人×10图、整栋留出、IoU/质心及每图10626集合精算；[Chat Pro交接](../research/worker_consensus_handoff_20261003/README.md)，工具 `tools/thesis_main/analysis/worker_profiles_20261003.py`。
+
+- [Downloads仓库外完整原件与回收审计索引](../research/downloads_evidence_20261006/ARCHIVE_INDEX_20261006.md)：本轮原件和审计已外移，主线保留精选与来源索引；不改变研究输入或结论。
+
+- 2026-10-06 公共内核与依赖边界：统计输出 IO 使用 [research_artifact_io.py](../tools/thesis_main/analysis/research_artifact_io.py)，区域网格使用 [region_mesh.py](../tools/thesis_main/analysis/region_mesh.py)，展示投影使用 [layout_display_projection.py](../tools/thesis_main/analysis/layout_display_projection.py)；旧入口保留导出，不改变实验公式、坐标或资格。
+
+- [公开研究输入与历史原件范围](../research/downloads_evidence_20261006/ARCHIVE_INDEX_20261006.md)：保留必要复现输入，原评论与机器来源原件外置；[逐文件公开输入合同](../research/pro_parallel_return_20261006/PUBLIC_INPUT_CONTRACT_20261006.json)。
