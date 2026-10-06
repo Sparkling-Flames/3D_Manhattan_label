@@ -1,0 +1,323 @@
+{
+  "id": "uNb9QFRL6hY-67_5_L0_R02929",
+  "image": "uNb9QFRL6hY-67",
+  "threshold_deg": 5,
+  "role": "single_observed_path_replacement_with_frozen_raw_anchor_centers_not_all_person_consensus",
+  "voting_role": "not_an_independent_vote",
+  "vote_denominator_unchanged": 15,
+  "local_match": "uNb9QFRL6hY-67_5_L0",
+  "base_record": "R02929",
+  "donor_record": "R03195",
+  "base_processed_path": [
+    3,
+    4,
+    5
+  ],
+  "donor_processed_path": [
+    1,
+    2
+  ],
+  "donor_path_used_order": [
+    1,
+    2
+  ],
+  "new_anchor_group_member_node_indices": [
+    [
+      16,
+      47,
+      56
+    ],
+    [
+      17,
+      27,
+      35,
+      57,
+      61
+    ]
+  ],
+  "base_internal_vertices_removed_in_candidate_only": [
+    4
+  ],
+  "donor_internal_vertices_retained": [],
+  "base_context_retained_indices": [
+    6,
+    7,
+    0,
+    1,
+    2
+  ],
+  "anchor_group_ids": [
+    "G011",
+    "G012"
+  ],
+  "anchor_supports": [
+    3,
+    5
+  ],
+  "exact_local_path_donor_before_anchor_movement": "P024",
+  "candidate_path_has_new_anchor_endpoints": true,
+  "whole_candidate_support": "not_established",
+  "ring_confirmed": false,
+  "points": [
+    [
+      212.6918219561937,
+      201.31586055034896
+    ],
+    [
+      212.6918219561937,
+      303.5552602058164
+    ],
+    [
+      288.74254469967434,
+      198.5595567867036
+    ],
+    [
+      288.74254469967434,
+      318.8579608200719
+    ],
+    [
+      646.7302514407928,
+      103.60241591807952
+    ],
+    [
+      646.7302514407928,
+      419.38577532369726
+    ],
+    [
+      882.45712358586,
+      97.434256396103
+    ],
+    [
+      882.45712358586,
+      417.8159855290186
+    ],
+    [
+      34.87881727815137,
+      72.22411049372525
+    ],
+    [
+      34.87881727815137,
+      440.7547169811321
+    ],
+    [
+      7.737737177364656,
+      204.19774784645134
+    ],
+    [
+      7.737737177364656,
+      321.6500582944994
+    ],
+    [
+      119.19569266300378,
+      212.6988876089777
+    ],
+    [
+      119.19569266300378,
+      293.68044371907246
+    ]
+  ],
+  "footprint": [
+    [
+      -3.212379142779719,
+      0.874321404483138
+    ],
+    [
+      -2.4133498178845505,
+      -0.4914863286591125
+    ],
+    [
+      0.46976856579601306,
+      -0.43248752717361955
+    ],
+    [
+      0.4978467135217308,
+      0.4212918036979779
+    ],
+    [
+      -0.09924913074863073,
+      0.4566492642159729
+    ],
+    [
+      -0.11137635870171567,
+      2.3440810936345344
+    ],
+    [
+      -2.8371036784885053,
+      3.161477992746981
+    ]
+  ],
+  "status": "geometry_candidate_unreviewed",
+  "camera_inside": true,
+  "anchor_only_control_points": [
+    [
+      34.87881727815137,
+      72.22411049372525
+    ],
+    [
+      34.87881727815137,
+      440.7547169811321
+    ],
+    [
+      7.737737177364656,
+      204.19774784645134
+    ],
+    [
+      7.737737177364656,
+      321.6500582944994
+    ],
+    [
+      119.19569266300378,
+      212.6988876089777
+    ],
+    [
+      119.19569266300378,
+      293.68044371907246
+    ],
+    [
+      212.6918219561937,
+      201.31586055034896
+    ],
+    [
+      212.6918219561937,
+      303.5552602058164
+    ],
+    [
+      212.22819948049874,
+      200.0888967766422
+    ],
+    [
+      212.22819948049874,
+      318.3977826797926
+    ],
+    [
+      288.74254469967434,
+      198.5595567867036
+    ],
+    [
+      288.74254469967434,
+      318.8579608200719
+    ],
+    [
+      646.7302514407928,
+      103.60241591807952
+    ],
+    [
+      646.7302514407928,
+      419.38577532369726
+    ],
+    [
+      882.45712358586,
+      97.434256396103
+    ],
+    [
+      882.45712358586,
+      417.8159855290186
+    ]
+  ],
+  "anchor_only_control_geometry_status": "ok",
+  "added_relative_to_anchor_only_h2": 0.4728336068992969,
+  "lost_relative_to_anchor_only_h2": 0.0,
+  "post_center_path_comparison": {
+    "base": {
+      "top": {
+        "status": "accept",
+        "reason": "sagitta_bounded_free_space",
+        "lower_deg": 2.3774588695034815,
+        "upper_deg": 5.0,
+        "step_deg": 5.0,
+        "chord_error_bound": 0.0013722633676970242,
+        "vertices": [
+          7,
+          8
+        ]
+      },
+      "bottom": {
+        "status": "reject",
+        "reason": "sagitta_bounded_free_space",
+        "lower_deg": 5.0,
+        "upper_deg": null,
+        "step_deg": 2.0,
+        "chord_error_bound": 0.00029497474358874953,
+        "vertices": [
+          14,
+          17
+        ]
+      }
+    },
+    "donor": {
+      "top": {
+        "status": "accept",
+        "reason": "sagitta_bounded_free_space",
+        "lower_deg": 0.6304820008704386,
+        "upper_deg": 5.0,
+        "step_deg": 5.0,
+        "chord_error_bound": 0.001386530027454258,
+        "vertices": [
+          7,
+          7
+        ]
+      },
+      "bottom": {
+        "status": "accept",
+        "reason": "sagitta_bounded_free_space",
+        "lower_deg": 0.5976718414548934,
+        "upper_deg": 5.0,
+        "step_deg": 5.0,
+        "chord_error_bound": 0.0014513848195661927,
+        "vertices": [
+          7,
+          7
+        ]
+      }
+    }
+  },
+  "post_center_compatibility_status": "outside_previous_local_gate",
+  "new_edges": [
+    {
+      "index": 0,
+      "exact_endpoint_original_edge_workers": [],
+      "new_edge_not_exact_original": true
+    },
+    {
+      "index": 1,
+      "exact_endpoint_original_edge_workers": [],
+      "new_edge_not_exact_original": true
+    },
+    {
+      "index": 2,
+      "exact_endpoint_original_edge_workers": [
+        "P005"
+      ],
+      "new_edge_not_exact_original": false
+    },
+    {
+      "index": 3,
+      "exact_endpoint_original_edge_workers": [
+        "P005"
+      ],
+      "new_edge_not_exact_original": false
+    },
+    {
+      "index": 4,
+      "exact_endpoint_original_edge_workers": [
+        "P005"
+      ],
+      "new_edge_not_exact_original": false
+    },
+    {
+      "index": 5,
+      "exact_endpoint_original_edge_workers": [
+        "P005"
+      ],
+      "new_edge_not_exact_original": false
+    },
+    {
+      "index": 6,
+      "exact_endpoint_original_edge_workers": [],
+      "new_edge_not_exact_original": true
+    }
+  ],
+  "added_relative_to_base_h2": 0.4553001492044661,
+  "lost_relative_to_base_h2": 0.02948214613190372,
+  "fewer_than_four_pairs_allowed": true
+}

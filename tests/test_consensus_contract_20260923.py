@@ -27,6 +27,8 @@ def test_current_and_historical_contracts_have_separate_semantics():
     assert '原始GT' in frame and 'continuous' in frame
     assert '原生HoHoNet' in frame and 'pixel_center' in frame
     assert '未知来源不得猜测' in frame and '栅格中心采样' in frame
+    assert current['consensus']['corner_count_diagnostic_endpoints_20261006'] == 8
+    assert current['consensus']['corner_count_minimum_enforced_20261006'] is False
 
 
 def test_reference_check_is_scoped_and_rejects_stale_research(tmp_path, monkeypatch):

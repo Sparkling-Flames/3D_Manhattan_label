@@ -6,6 +6,14 @@
 
 ## 当前入口
 
+- [新增八图阈值扩展](../analysis_results/point_threshold_expanded_20261006/REPORT.md)：复用`point_threshold_sweep_20261006.py --expanded`，固定名单见输出PLAN；不改正式阈值合同。该入口的`--count-shortfalls`生成[137图点数与人数诊断](../analysis_results/point_threshold_expanded_20261006/PAIR_COUNT_REPORT.md)，保留原始MV、点数条件单列。
+- [Pro结构约束main交接](../research/structure_constraints_20261006/README.md)：本目录保存9图150份作答、原图及108基线，代码直接使用仓库；无需ZIP。`tools/thesis_main/analysis/structure_paths_local_review_20261006.py --stage current`复算基线。
+- [连续路径原件与本地核验](../research/structure_paths_20261006/README.md)：Pro/dot原件按研究资料保留，`analysis_results/structure_paths_review_20261006/`保存本地重放与解释；上述工具的`events`、`compare`模式用于定向核验，不是正式融合实现。
+
+- [较宽阈值全员融合](../analysis_results/point_threshold_sweep_20261006/REPORT.md)：入口`tools/thesis_main/analysis/point_threshold_sweep_20261006.py`复用现有四路线，默认9°，三栏比较5°/9°/12°；阶段性工作值，非正式合同参数。
+
+- [即时邻点与阈值敏感性检验](../analysis_results/point_context_probe_20261006/REPORT.md)：工具`tools/thesis_main/analysis/point_context_probe_20261006.py`、测试`tests/test_point_context_probe_20261006.py`及计划`research/point_context_probe_20261006/PLAN.md`；开发诊断，不改融合。
+
 - [四图点融合路线与阈值探索](../analysis_results/point_route_panel_20261005/REPORT.md)：独立探索工具`point_route_panel_20261005.py`与`point_route_panel_view_20261005.py`；绑定、上下锚定及独立对应小面板，阈值未校准，新环未确认。
 - [点路线修订与原图核验](../analysis_results/point_route_review_20261006/REPORT.md)：独立探索工具`point_route_review_20261006.py`与`point_route_review_view_20261006.py`；[人工核验页](../analysis_results/point_route_review_20261006/review.html)、[方法对照页](../analysis_results/point_route_review_20261006/index.html)，完整源身份环备选与未决端点保留，5°仅演示。
 - [人工判断真源](../research/point_route_review_20261006/human_review.json)：保留原话与纠错；analysis_results仅为发布副本。现有点路线工具`--stage audit`可重生对应审计，独立探索，目标政策未定。

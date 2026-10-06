@@ -1,0 +1,22 @@
+{
+  "schema": "point_route_panel_v1",
+  "candidates": "All four fixed pools and 80 route/threshold states; original metadata, full identity members, center and adjacency diagnostics retained.",
+  "controls": "Three mechanism controls, each five thresholds times four routes; no synthetic reference scores.",
+  "anchor_support": "Votes establish only the anchor identity. Other endpoint coordinates use original paired partners; their spread can exceed the identity threshold.",
+  "split_support": "top_support and bottom_support are marginal identity supports; joint_support counts original pair incidence, not votes for the generated coordinate; point_support_counts is null.",
+  "status": "ok denotes existing computational checks only. Every generated ring is unconfirmed, including ok. geometry_review also retains a computable candidate; unavailable is not interpreted as no possible consensus.",
+  "connection": "New center-x ring only; source order unchanged. Direct and deletion-projected source adjacency are separate, neither establishes physical correctness.",
+  "geometry": "BEV omission/extension h² and centroid h use camera-height units; no top score for Lee BEV. Uniform-longitude boundary px discrepancy applies only to single-valued rings; not nearest boundary distance or semantic matching.",
+  "reference": "Only original version; no threshold, identity, ring or route selection by GT. Previously seen development panel, not holdout validation.",
+  "review_schema": "point_route_review_v2",
+  "connection_review": "x baseline unchanged; all complete source identity-cycle alternatives retained. Full-roster unanimous valid cycle may be displayed by default. Otherwise nodes only; no largest branch choice. New rings remain unconfirmed.",
+  "partial_correspondences": "Mutual degree-one edge components plus all unresolved selected endpoints; no forced matching, no closed polygon or area score for partial evidence, no global matching uniqueness claim.",
+  "review_cases": "Three development windows, not blinded holdout cases. Explicit chat feedback is displayed separately from blank browser draft forms; unanswered issues must not be invented. Method/reference disclosure is separate from source-only review.",
+  "evaluation_scope": "Existing evaluation rows refer only to the x-order baseline candidate. Do not transfer these scores to observed-order alternatives or partial pairs.",
+  "full_pairing_complete": "All selected endpoint identities belong to retained single-edge components with available centers; this flag alone does not imply at least three pairs, a ring, geometric validity, or physical correspondence.",
+  "human_review": "Published copy of the research human-review source; audit stage regenerates this copy. Verbatim statements and corrections are retained. No formal gold, source-label or eligibility changes.",
+  "source_policy": "Only display artifacts and independent analysis outputs change; no source annotations, qualification, weights, GT, SOP or protocol changes.",
+  "human_review_source": "research/point_route_review_20261006/human_review.json stores explicit chat judgments; analysis_results copy is published output. relation is same_corner_pair or different_upper_targets; different_upper_target_indices indexes the three listed observations. No formal gold or source annotation changes.",
+  "correspondence_audit": "One row per reviewed case/threshold/route/group side. Local feasibility uses only the listed observations and the route metric, not physical validity or majority support. Merge conflicts concern existing whole groups; they do not reconstruct merge history or exclude a different partition. Upper-target mixing is not a judgment that bottom identity is wrong.",
+  "human_correspondence_checks": "Reproducible 50-row subset for the two same-corner triples. matching_groups contains a group only if it contains every listed member; selected retains the unchanged full-pool vote threshold. Rejected rpc combination substitutes only the old purple observation."
+}

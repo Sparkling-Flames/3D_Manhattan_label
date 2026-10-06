@@ -1,0 +1,577 @@
+{
+  "records": [
+    {
+      "id": "A",
+      "worker": "A",
+      "points": [
+        [
+          384.0,
+          190.60688277729037
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          640.0,
+          190.60688277729037
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          190.60688277729037
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          190.60688277729037
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "condition": "manual",
+      "image": "synthetic_control",
+      "evidence_kind": "synthetic_control_not_person",
+      "independent": true,
+      "consensus_eligible": true,
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "source_point_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "ring_confirmed": true,
+      "order_status": "given_synthetic_order"
+    },
+    {
+      "id": "B",
+      "worker": "B",
+      "points": [
+        [
+          384.0,
+          190.60688277729037
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          436.43718776297817,
+          175.72832127031828
+        ],
+        [
+          436.43718776297817,
+          324.5364410371149
+        ],
+        [
+          512.0,
+          167.92531475321306
+        ],
+        [
+          512.0,
+          331.56281223702183
+        ],
+        [
+          587.5628122370218,
+          175.72832127031828
+        ],
+        [
+          587.5628122370218,
+          324.5364410371149
+        ],
+        [
+          640.0,
+          190.60688277729037
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          692.4371877629782,
+          175.72832127031828
+        ],
+        [
+          692.4371877629782,
+          324.5364410371149
+        ],
+        [
+          768.0,
+          167.92531475321306
+        ],
+        [
+          768.0,
+          331.56281223702183
+        ],
+        [
+          843.5628122370218,
+          175.72832127031828
+        ],
+        [
+          843.5628122370218,
+          324.5364410371149
+        ],
+        [
+          896.0,
+          190.60688277729037
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          948.4371877629782,
+          175.72832127031828
+        ],
+        [
+          948.4371877629782,
+          324.5364410371149
+        ],
+        [
+          0.0,
+          167.92531475321306
+        ],
+        [
+          0.0,
+          331.56281223702183
+        ],
+        [
+          75.56281223702183,
+          175.72832127031828
+        ],
+        [
+          75.56281223702183,
+          324.5364410371149
+        ],
+        [
+          128.0,
+          190.60688277729037
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ],
+        [
+          180.43718776297817,
+          175.72832127031828
+        ],
+        [
+          180.43718776297817,
+          324.5364410371149
+        ],
+        [
+          256.0,
+          167.92531475321306
+        ],
+        [
+          256.0,
+          331.56281223702183
+        ],
+        [
+          331.56281223702183,
+          175.72832127031828
+        ],
+        [
+          331.56281223702183,
+          324.5364410371149
+        ]
+      ],
+      "condition": "manual",
+      "image": "synthetic_control",
+      "evidence_kind": "synthetic_control_not_person",
+      "independent": true,
+      "consensus_eligible": true,
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "source_point_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31
+      ],
+      "ring_confirmed": true,
+      "order_status": "given_synthetic_order"
+    }
+  ],
+  "result": {
+    "nodes": [
+      1,
+      10
+    ],
+    "focal_distance_deg": 0.0,
+    "metric": "pair",
+    "gate_deg": 5,
+    "status": "not_witnessed",
+    "legs": [
+      {
+        "paths": [
+          "A:0:-1:1",
+          "B:0:-1:1"
+        ],
+        "steps": [
+          1,
+          1
+        ],
+        "end_nodes": [
+          0,
+          9
+        ],
+        "sides": {},
+        "anchor_distance_deg": 65.90515744788931,
+        "status": "anchor_outside_gate",
+        "orientation": 1,
+        "side_of_focal": -1
+      },
+      {
+        "paths": [
+          "A:0:-1:1",
+          "B:0:-1:2"
+        ],
+        "steps": [
+          1,
+          2
+        ],
+        "end_nodes": [
+          0,
+          8
+        ],
+        "sides": {},
+        "anchor_distance_deg": 41.81031489577859,
+        "status": "anchor_outside_gate",
+        "orientation": 1,
+        "side_of_focal": -1
+      },
+      {
+        "paths": [
+          "A:0:-1:2",
+          "B:0:-1:1"
+        ],
+        "steps": [
+          2,
+          1
+        ],
+        "end_nodes": [
+          3,
+          9
+        ],
+        "sides": {},
+        "anchor_distance_deg": 132.8759886666357,
+        "status": "anchor_outside_gate",
+        "orientation": 1,
+        "side_of_focal": -1
+      },
+      {
+        "paths": [
+          "A:0:-1:2",
+          "B:0:-1:2"
+        ],
+        "steps": [
+          2,
+          2
+        ],
+        "end_nodes": [
+          3,
+          8
+        ],
+        "sides": {},
+        "anchor_distance_deg": 116.56505117707799,
+        "status": "anchor_outside_gate",
+        "orientation": 1,
+        "side_of_focal": -1
+      },
+      {
+        "paths": [
+          "A:0:1:1",
+          "B:0:1:1"
+        ],
+        "steps": [
+          1,
+          1
+        ],
+        "end_nodes": [
+          2,
+          11
+        ],
+        "sides": {},
+        "anchor_distance_deg": 65.90515744788931,
+        "status": "anchor_outside_gate",
+        "orientation": 1,
+        "side_of_focal": 1
+      },
+      {
+        "paths": [
+          "A:0:1:1",
+          "B:0:1:2"
+        ],
+        "steps": [
+          1,
+          2
+        ],
+        "end_nodes": [
+          2,
+          12
+        ],
+        "sides": {},
+        "anchor_distance_deg": 41.81031489577859,
+        "status": "anchor_outside_gate",
+        "orientation": 1,
+        "side_of_focal": 1
+      },
+      {
+        "paths": [
+          "A:0:1:2",
+          "B:0:1:1"
+        ],
+        "steps": [
+          2,
+          1
+        ],
+        "end_nodes": [
+          3,
+          11
+        ],
+        "sides": {},
+        "anchor_distance_deg": 132.87598866663572,
+        "status": "anchor_outside_gate",
+        "orientation": 1,
+        "side_of_focal": 1
+      },
+      {
+        "paths": [
+          "A:0:1:2",
+          "B:0:1:2"
+        ],
+        "steps": [
+          2,
+          2
+        ],
+        "end_nodes": [
+          3,
+          12
+        ],
+        "sides": {},
+        "anchor_distance_deg": 116.56505117707799,
+        "status": "anchor_outside_gate",
+        "orientation": 1,
+        "side_of_focal": 1
+      },
+      {
+        "paths": [
+          "A:0:-1:1",
+          "B:0:1:1"
+        ],
+        "steps": [
+          1,
+          1
+        ],
+        "end_nodes": [
+          0,
+          11
+        ],
+        "sides": {},
+        "anchor_distance_deg": 97.82123550649963,
+        "status": "anchor_outside_gate",
+        "orientation": -1,
+        "side_of_focal": -1
+      },
+      {
+        "paths": [
+          "A:0:-1:1",
+          "B:0:1:2"
+        ],
+        "steps": [
+          1,
+          2
+        ],
+        "end_nodes": [
+          0,
+          12
+        ],
+        "sides": {},
+        "anchor_distance_deg": 116.56505117707799,
+        "status": "anchor_outside_gate",
+        "orientation": -1,
+        "side_of_focal": -1
+      },
+      {
+        "paths": [
+          "A:0:-1:2",
+          "B:0:1:1"
+        ],
+        "steps": [
+          2,
+          1
+        ],
+        "end_nodes": [
+          3,
+          11
+        ],
+        "sides": {},
+        "anchor_distance_deg": 132.87598866663572,
+        "status": "anchor_outside_gate",
+        "orientation": -1,
+        "side_of_focal": -1
+      },
+      {
+        "paths": [
+          "A:0:-1:2",
+          "B:0:1:2"
+        ],
+        "steps": [
+          2,
+          2
+        ],
+        "end_nodes": [
+          3,
+          12
+        ],
+        "sides": {},
+        "anchor_distance_deg": 116.56505117707799,
+        "status": "anchor_outside_gate",
+        "orientation": -1,
+        "side_of_focal": -1
+      },
+      {
+        "paths": [
+          "A:0:1:1",
+          "B:0:-1:1"
+        ],
+        "steps": [
+          1,
+          1
+        ],
+        "end_nodes": [
+          2,
+          9
+        ],
+        "sides": {},
+        "anchor_distance_deg": 97.82123550649963,
+        "status": "anchor_outside_gate",
+        "orientation": -1,
+        "side_of_focal": 1
+      },
+      {
+        "paths": [
+          "A:0:1:1",
+          "B:0:-1:2"
+        ],
+        "steps": [
+          1,
+          2
+        ],
+        "end_nodes": [
+          2,
+          8
+        ],
+        "sides": {},
+        "anchor_distance_deg": 116.56505117707799,
+        "status": "anchor_outside_gate",
+        "orientation": -1,
+        "side_of_focal": 1
+      },
+      {
+        "paths": [
+          "A:0:1:2",
+          "B:0:-1:1"
+        ],
+        "steps": [
+          2,
+          1
+        ],
+        "end_nodes": [
+          3,
+          9
+        ],
+        "sides": {},
+        "anchor_distance_deg": 132.8759886666357,
+        "status": "anchor_outside_gate",
+        "orientation": -1,
+        "side_of_focal": 1
+      },
+      {
+        "paths": [
+          "A:0:1:2",
+          "B:0:-1:2"
+        ],
+        "steps": [
+          2,
+          2
+        ],
+        "end_nodes": [
+          3,
+          8
+        ],
+        "sides": {},
+        "anchor_distance_deg": 116.56505117707799,
+        "status": "anchor_outside_gate",
+        "orientation": -1,
+        "side_of_focal": 1
+      }
+    ],
+    "witnesses": [],
+    "interpretation": "geometric_candidate_only; two separate boundary traversals; no semantic equivalence guarantee"
+  },
+  "interpretation": "kernel is subdivision invariant in ideal geometry; fixed one/two-edge anchor proposal is not. Source points must remain, and absent anchor cannot establish different structure."
+}

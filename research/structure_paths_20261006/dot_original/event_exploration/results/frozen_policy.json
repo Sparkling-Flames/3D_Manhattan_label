@@ -1,0 +1,132 @@
+{
+  "question": "At fixed corresponding focal observations, does replacing a 1/2-source-edge endpoint budget with metric-specific turn-event endpoints and the existing arc-length cap preserve the enumerated geometric witness decisions under pure source-edge subdivision?",
+  "scope": "One synthetic square counterexample and seven fixed report-named real focal comparisons; no full-pool regrouping, no majority update, no center movement, no reference/GT read",
+  "search_domain": "Each direction from the retained focal, propose every source vertex that is a turn event in any compared boundary, within 120 degrees cumulative arc length on every compared boundary. Preserve full source sequence between focal and endpoint. Reject any combined two-sided paths covering a complete source cycle.",
+  "metric_event_rule": {
+    "top": "top turns",
+    "bottom": "bottom turns",
+    "pair": "union of top and bottom turns at original paired source positions; no interior cross-side identity inferred"
+  },
+  "thresholds_deg": [
+    5,
+    9,
+    12
+  ],
+  "maximum_side_path_length_deg": 120,
+  "sphere_approximation_steps_deg": [
+    5,
+    2,
+    0.5
+  ],
+  "numerical_collinearity_tolerance_deg": 1e-07,
+  "minimum_resolved_edge_length_deg": 1e-08,
+  "antipodal_exclusion_margin_deg": 1e-07,
+  "subdivision_factors": [
+    2,
+    4,
+    8
+  ],
+  "real_windows": [
+    {
+      "name": "rpc_AB",
+      "image": "rPc6DW4iMge-06",
+      "focals": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01986",
+          2
+        ]
+      ]
+    },
+    {
+      "name": "rpc_AC",
+      "image": "rPc6DW4iMge-06",
+      "focals": [
+        [
+          "R02452",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ]
+    },
+    {
+      "name": "rpc_BC",
+      "image": "rPc6DW4iMge-06",
+      "focals": [
+        [
+          "R01986",
+          2
+        ],
+        [
+          "R01557",
+          4
+        ]
+      ]
+    },
+    {
+      "name": "unb_patch_start",
+      "image": "uNb9QFRL6hY-67",
+      "focals": [
+        [
+          "R02929",
+          3
+        ],
+        [
+          "R03195",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "unb_patch_end",
+      "image": "uNb9QFRL6hY-67",
+      "focals": [
+        [
+          "R02929",
+          5
+        ],
+        [
+          "R03195",
+          2
+        ]
+      ]
+    },
+    {
+      "name": "rpc_drift_start",
+      "image": "rPc6DW4iMge-06",
+      "focals": [
+        [
+          "R00634",
+          8
+        ],
+        [
+          "R01695",
+          5
+        ]
+      ]
+    },
+    {
+      "name": "rpc_drift_end",
+      "image": "rPc6DW4iMge-06",
+      "focals": [
+        [
+          "R00634",
+          1
+        ],
+        [
+          "R01695",
+          0
+        ]
+      ]
+    }
+  ],
+  "stopping_condition": "Finish all declared original/subdivision runs and tests; report every outcome, domain failure and mismatch; do not tune gates, budgets or window selection after outcomes",
+  "source_observations_and_votes": "Source inputs remain byte-identical. Synthetic subdivisions are same-record metamorphic probes, never additional annotators or votes. Event compression is only a search representation, never deletion or identity certification.",
+  "claim_limit": "Exact subdivision invariance is conditional on unambiguous ordered minor arcs, exact same-curve subdivisions, and fixed corresponding focal observations. Floating point tests support only the listed finite cases; collinearity below tolerance and degenerate arcs are not semantically certified."
+}

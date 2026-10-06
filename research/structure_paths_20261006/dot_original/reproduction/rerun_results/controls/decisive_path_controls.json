@@ -1,0 +1,729 @@
+[
+  {
+    "case": "collinear_2_vs_3",
+    "path_a": [
+      [
+        436.43718776297817,
+        175.72832127031828
+      ],
+      [
+        436.43718776297817,
+        324.5364410371149
+      ],
+      [
+        587.5628122370218,
+        175.72832127031828
+      ],
+      [
+        587.5628122370218,
+        324.5364410371149
+      ]
+    ],
+    "path_b": [
+      [
+        436.43718776297817,
+        175.72832127031828
+      ],
+      [
+        436.43718776297817,
+        324.5364410371149
+      ],
+      [
+        512.0,
+        167.92531475321306
+      ],
+      [
+        512.0,
+        331.56281223702183
+      ],
+      [
+        587.5628122370218,
+        175.72832127031828
+      ],
+      [
+        587.5628122370218,
+        324.5364410371149
+      ]
+    ],
+    "given_control_label_not_construction_input": "same_geometric_path_different_segmentation",
+    "geometry": {
+      "top": {
+        "lower_deg": 0.0,
+        "upper_deg": 0.0002717012597676225,
+        "step_deg": 0.25,
+        "chord_error_bound": 4.7420815647569725e-06,
+        "euclidean_interval": [
+          0.0,
+          0.0
+        ]
+      },
+      "bottom": {
+        "lower_deg": 0.0,
+        "upper_deg": 0.0002706276352724826,
+        "step_deg": 0.25,
+        "chord_error_bound": 4.723343282386772e-06,
+        "euclidean_interval": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "gate_checks": {
+      "top": {
+        "5": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 0.0,
+          "upper_deg": 5.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.0016403469092169942,
+          "vertices": [
+            11,
+            11
+          ]
+        },
+        "9": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 0.0,
+          "upper_deg": 9.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.0016403469092169942,
+          "vertices": [
+            11,
+            11
+          ]
+        },
+        "12": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 0.0,
+          "upper_deg": 12.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.0016403469092169942,
+          "vertices": [
+            11,
+            11
+          ]
+        }
+      },
+      "bottom": {
+        "5": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 0.0,
+          "upper_deg": 5.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.0017682306567761152,
+          "vertices": [
+            11,
+            11
+          ]
+        },
+        "9": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 0.0,
+          "upper_deg": 9.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.0017682306567761152,
+          "vertices": [
+            11,
+            11
+          ]
+        },
+        "12": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 0.0,
+          "upper_deg": 12.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.0017682306567761152,
+          "vertices": [
+            11,
+            11
+          ]
+        }
+      }
+    },
+    "all_input_points_retained": true
+  },
+  {
+    "case": "short_protrusion_2_vs_3",
+    "path_a": [
+      [
+        436.43718776297817,
+        175.72832127031828
+      ],
+      [
+        436.43718776297817,
+        324.5364410371149
+      ],
+      [
+        587.5628122370218,
+        175.72832127031828
+      ],
+      [
+        587.5628122370218,
+        324.5364410371149
+      ]
+    ],
+    "path_b": [
+      [
+        436.43718776297817,
+        175.72832127031828
+      ],
+      [
+        436.43718776297817,
+        324.5364410371149
+      ],
+      [
+        512.0,
+        187.84003136119983
+      ],
+      [
+        512.0,
+        313.80803364881905
+      ],
+      [
+        587.5628122370218,
+        175.72832127031828
+      ],
+      [
+        587.5628122370218,
+        324.5364410371149
+      ]
+    ],
+    "given_control_label_not_construction_input": "different_geometric_path_truth_not_inferred_from_geometry",
+    "geometry": {
+      "top": {
+        "lower_deg": 7.000995454703194,
+        "upper_deg": 7.001539425298685,
+        "step_deg": 0.25,
+        "chord_error_bound": 4.737954107825182e-06,
+        "euclidean_interval": [
+          0.12211915857539803,
+          0.12211915903032736
+        ]
+      },
+      "bottom": {
+        "lower_deg": 6.241635792355447,
+        "upper_deg": 6.242177948761756,
+        "step_deg": 0.25,
+        "chord_error_bound": 4.723987114485517e-06,
+        "euclidean_interval": [
+          0.10888796108983864,
+          0.10888796149555913
+        ]
+      }
+    },
+    "gate_checks": {
+      "top": {
+        "5": {
+          "status": "reject",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 5.0,
+          "upper_deg": null,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.001710853055427286,
+          "vertices": [
+            11,
+            11
+          ]
+        },
+        "9": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 0.0,
+          "upper_deg": 9.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.001710853055427286,
+          "vertices": [
+            11,
+            11
+          ]
+        },
+        "12": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 0.0,
+          "upper_deg": 12.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.001710853055427286,
+          "vertices": [
+            11,
+            11
+          ]
+        }
+      },
+      "bottom": {
+        "5": {
+          "status": "reject",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 5.0,
+          "upper_deg": null,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.0018240126404329704,
+          "vertices": [
+            11,
+            11
+          ]
+        },
+        "9": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 0.0,
+          "upper_deg": 9.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.0018240126404329704,
+          "vertices": [
+            11,
+            11
+          ]
+        },
+        "12": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 0.0,
+          "upper_deg": 12.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.0018240126404329704,
+          "vertices": [
+            11,
+            11
+          ]
+        }
+      }
+    },
+    "all_input_points_retained": true
+  },
+  {
+    "case": "narrow_protrusion_2_vs_3",
+    "path_a": [
+      [
+        511.18513348187855,
+        167.92621349666118
+      ],
+      [
+        511.18513348187855,
+        331.56199737695465
+      ],
+      [
+        512.8148665181214,
+        167.92621349666118
+      ],
+      [
+        512.8148665181214,
+        331.56199737695465
+      ]
+    ],
+    "path_b": [
+      [
+        511.18513348187855,
+        167.92621349666118
+      ],
+      [
+        511.18513348187855,
+        331.56199737695465
+      ],
+      [
+        512.0,
+        187.84003136119983
+      ],
+      [
+        512.0,
+        313.80803364881905
+      ],
+      [
+        512.8148665181214,
+        167.92621349666118
+      ],
+      [
+        512.8148665181214,
+        331.56199737695465
+      ]
+    ],
+    "given_control_label_not_construction_input": "narrow_different_path_not_allowed_to_be_silently_deleted",
+    "geometry": {
+      "top": {
+        "lower_deg": 7.001007976576555,
+        "upper_deg": 7.0015269034217535,
+        "step_deg": 0.25,
+        "chord_error_bound": 4.5198139415614236e-06,
+        "euclidean_interval": [
+          0.12211915857539787,
+          0.12211915903032719
+        ]
+      },
+      "bottom": {
+        "lower_deg": 6.241710522658857,
+        "upper_deg": 6.242110920979761,
+        "step_deg": 0.25,
+        "chord_error_bound": 3.488749257041235e-06,
+        "euclidean_interval": [
+          0.10888802820748351,
+          0.10888802861316105
+        ]
+      }
+    },
+    "gate_checks": {
+      "top": {
+        "5": {
+          "status": "reject",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 5.0,
+          "upper_deg": null,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.0004763406201693243,
+          "vertices": [
+            2,
+            5
+          ]
+        },
+        "9": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 0.0,
+          "upper_deg": 9.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.0004763406201693243,
+          "vertices": [
+            2,
+            5
+          ]
+        },
+        "12": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 0.0,
+          "upper_deg": 12.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.0004763406201693243,
+          "vertices": [
+            2,
+            5
+          ]
+        }
+      },
+      "bottom": {
+        "5": {
+          "status": "reject",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 5.0,
+          "upper_deg": null,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.00038148530192305685,
+          "vertices": [
+            2,
+            5
+          ]
+        },
+        "9": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 0.0,
+          "upper_deg": 9.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.00038148530192305685,
+          "vertices": [
+            2,
+            5
+          ]
+        },
+        "12": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 0.0,
+          "upper_deg": 12.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.00038148530192305685,
+          "vertices": [
+            2,
+            5
+          ]
+        }
+      }
+    },
+    "all_input_points_retained": true
+  },
+  {
+    "case": "same_lower_different_upper_targets",
+    "path_a": [
+      [
+        436.43718776297817,
+        227.15134248796733
+      ],
+      [
+        436.43718776297817,
+        324.5364410371149
+      ],
+      [
+        587.5628122370218,
+        227.15134248796733
+      ],
+      [
+        587.5628122370218,
+        324.5364410371149
+      ]
+    ],
+    "path_b": [
+      [
+        436.43718776297817,
+        175.72832127031828
+      ],
+      [
+        436.43718776297817,
+        324.5364410371149
+      ],
+      [
+        587.5628122370218,
+        175.72832127031828
+      ],
+      [
+        587.5628122370218,
+        324.5364410371149
+      ]
+    ],
+    "given_control_label_not_construction_input": "two_synthetic_upper_targets_same_bottom",
+    "geometry": {
+      "top": {
+        "lower_deg": 19.653524240736555,
+        "upper_deg": 19.654076619390857,
+        "step_deg": 0.25,
+        "chord_error_bound": 4.749636888345954e-06,
+        "euclidean_interval": [
+          0.3413442534660893,
+          0.3413442535671593
+        ]
+      },
+      "bottom": {
+        "lower_deg": 0.0,
+        "upper_deg": 0.00027202621781548383,
+        "step_deg": 0.25,
+        "chord_error_bound": 4.747753152622991e-06,
+        "euclidean_interval": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "gate_checks": {
+      "top": {
+        "5": {
+          "status": "reject",
+          "reason": "endpoint_lower_bound",
+          "lower_deg": 18.07840589682975,
+          "upper_deg": null
+        },
+        "9": {
+          "status": "reject",
+          "reason": "endpoint_lower_bound",
+          "lower_deg": 18.07840589682975,
+          "upper_deg": null
+        },
+        "12": {
+          "status": "reject",
+          "reason": "endpoint_lower_bound",
+          "lower_deg": 18.07840589682975,
+          "upper_deg": null
+        }
+      },
+      "bottom": {
+        "5": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 0.0,
+          "upper_deg": 5.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.0017682306567761152,
+          "vertices": [
+            11,
+            11
+          ]
+        },
+        "9": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 0.0,
+          "upper_deg": 9.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.0017682306567761152,
+          "vertices": [
+            11,
+            11
+          ]
+        },
+        "12": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 0.0,
+          "upper_deg": 12.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.0017682306567761152,
+          "vertices": [
+            11,
+            11
+          ]
+        }
+      }
+    },
+    "all_input_points_retained": true
+  },
+  {
+    "case": "near_seam_distinct_repeated_motifs",
+    "path_a": [
+      [
+        1008.0,
+        140.0
+      ],
+      [
+        1008.0,
+        380.0
+      ],
+      [
+        1020.0,
+        135.0
+      ],
+      [
+        1020.0,
+        385.0
+      ],
+      [
+        8.0,
+        140.0
+      ],
+      [
+        8.0,
+        380.0
+      ]
+    ],
+    "path_b": [
+      [
+        1016.0,
+        140.0
+      ],
+      [
+        1016.0,
+        380.0
+      ],
+      [
+        4.0,
+        135.0
+      ],
+      [
+        4.0,
+        385.0
+      ],
+      [
+        16.0,
+        140.0
+      ],
+      [
+        16.0,
+        380.0
+      ]
+    ],
+    "given_control_label_not_construction_input": "different_synthetic_identities_despite_close_same_shape",
+    "geometry": {
+      "top": {
+        "lower_deg": 2.129306127307734,
+        "upper_deg": 2.129811170204687,
+        "step_deg": 0.25,
+        "chord_error_bound": 4.4065696684914e-06,
+        "euclidean_interval": [
+          0.03716567068337311,
+          0.03716567068337311
+        ]
+      },
+      "bottom": {
+        "lower_deg": 2.0365771974604154,
+        "upper_deg": 2.0371181501907976,
+        "step_deg": 0.25,
+        "chord_error_bound": 4.719957399146324e-06,
+        "euclidean_interval": [
+          0.03554782633952934,
+          0.03554782633952934
+        ]
+      }
+    },
+    "gate_checks": {
+      "top": {
+        "5": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 2.1295586487510394,
+          "upper_deg": 5.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.0009913966230630233,
+          "vertices": [
+            3,
+            3
+          ]
+        },
+        "9": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 2.1295586487510394,
+          "upper_deg": 9.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.0009913966230630233,
+          "vertices": [
+            3,
+            3
+          ]
+        },
+        "12": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 2.1295586487510394,
+          "upper_deg": 12.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.0009913966230630233,
+          "vertices": [
+            3,
+            3
+          ]
+        }
+      },
+      "bottom": {
+        "5": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 2.0368476738199317,
+          "upper_deg": 5.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.0009250406969576463,
+          "vertices": [
+            3,
+            3
+          ]
+        },
+        "9": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 2.0368476738199317,
+          "upper_deg": 9.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.0009250406969576463,
+          "vertices": [
+            3,
+            3
+          ]
+        },
+        "12": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 2.0368476738199317,
+          "upper_deg": 12.0,
+          "step_deg": 5.0,
+          "chord_error_bound": 0.0009250406969576463,
+          "vertices": [
+            3,
+            3
+          ]
+        }
+      }
+    },
+    "all_input_points_retained": true
+  }
+]

@@ -1,0 +1,150 @@
+[
+  {
+    "id": "uNb9QFRL6hY-67_5_L0",
+    "paths": [
+      "R02929:3:1:2",
+      "R03195:1:1:1"
+    ],
+    "path_sizes": [
+      3,
+      2
+    ],
+    "source_records": [
+      "R02929",
+      "R03195"
+    ],
+    "endpoint_correspondence_hypothesis": [
+      [
+        16,
+        56
+      ],
+      [
+        17,
+        57
+      ]
+    ],
+    "same_raw_endpoint_groups": true,
+    "gate_deg": 5,
+    "status": "same_raw_anchor_identities",
+    "continuous_path_evidence": {
+      "paths": [
+        "R02929:3:1:2",
+        "R03195:1:1:1"
+      ],
+      "steps": [
+        2,
+        1
+      ],
+      "end_nodes": [
+        17,
+        57
+      ],
+      "sides": {
+        "bottom": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 2.7197625195426656,
+          "upper_deg": 5.0,
+          "step_deg": 2,
+          "chord_error_bound": 0.000283445356490053,
+          "vertices": [
+            17,
+            15
+          ]
+        },
+        "top": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 2.704606010073659,
+          "upper_deg": 5.0,
+          "step_deg": 5,
+          "chord_error_bound": 0.0014196287416096132,
+          "vertices": [
+            8,
+            7
+          ]
+        }
+      },
+      "anchor_distance_deg": 1.4074370619902632,
+      "status": "accept",
+      "orientation": 1,
+      "side_of_focal": 1
+    },
+    "all_internal_observations_retained": true,
+    "coarse_endpoint_support_not_inherited_by_internal_structure": true
+  },
+  {
+    "id": "uNb9QFRL6hY-67_5_L1",
+    "paths": [
+      "R02929:5:-1:2",
+      "R03195:2:-1:1"
+    ],
+    "path_sizes": [
+      3,
+      2
+    ],
+    "source_records": [
+      "R02929",
+      "R03195"
+    ],
+    "endpoint_correspondence_hypothesis": [
+      [
+        17,
+        57
+      ],
+      [
+        16,
+        56
+      ]
+    ],
+    "same_raw_endpoint_groups": true,
+    "gate_deg": 5,
+    "status": "same_raw_anchor_identities",
+    "continuous_path_evidence": {
+      "paths": [
+        "R02929:5:-1:2",
+        "R03195:2:-1:1"
+      ],
+      "steps": [
+        2,
+        1
+      ],
+      "end_nodes": [
+        16,
+        56
+      ],
+      "sides": {
+        "bottom": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 2.7197625195426656,
+          "upper_deg": 5.0,
+          "step_deg": 2,
+          "chord_error_bound": 0.000283445356490053,
+          "vertices": [
+            17,
+            15
+          ]
+        },
+        "top": {
+          "status": "accept",
+          "reason": "sagitta_bounded_free_space",
+          "lower_deg": 2.704606010073659,
+          "upper_deg": 5.0,
+          "step_deg": 5,
+          "chord_error_bound": 0.0014196287416096132,
+          "vertices": [
+            8,
+            7
+          ]
+        }
+      },
+      "anchor_distance_deg": 2.719762519542673,
+      "status": "accept",
+      "orientation": 1,
+      "side_of_focal": -1
+    },
+    "all_internal_observations_retained": true,
+    "coarse_endpoint_support_not_inherited_by_internal_structure": true
+  }
+]

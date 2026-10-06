@@ -1,0 +1,21 @@
+{
+  "schema": "ordered_short_path_comparison_20261006_v1",
+  "input_role": "available_previous_delivery_only_new_local_bundle_not_received",
+  "thresholds_deg": [5, 9, 12],
+  "endpoint_metrics": ["pair", "bottom", "top"],
+  "candidate_gates_and_path_gates_identical": true,
+  "raw_MV": "all_actual_groups_with_support_ge_ceil_n_over_2_no_minimum_four_pairs",
+  "source_path_edge_counts": [1, 2],
+  "maximum_side_path_length_deg": 120,
+  "sphere_approximation_steps_deg": [5, 2, 0.5],
+  "maximum_identity_gate_deg": 12,
+  "center": "unchanged_medoid_anchored_periodic_coordinate_medians",
+  "structure_policy": "require_incoming_and_outgoing_order_consistent_2_or_3_pair_path_witnesses; no_witness_is_not_a_semantic_cannot_link",
+  "internal_points": "retained_in_path_ledger_not_counted_as_new_vertex_votes_not_deleted",
+  "unb_semantic_mode": "never_assign_names_to_unreviewed_upper_targets",
+  "manual_mode": "separate_given_development_constraints_not_automatic_validation",
+  "new_ring_policy": "raw_x_order_diagnostic_only_and_all_complete_observed_identity_cycles; no_minimum_four_pair_fill",
+  "path_patch_policy": "all_matched_2_vs_3_local_paths_as_alternatives; no_unique_full_consensus_claim",
+  "gt_used_for_construction": false,
+  "novel_full_catalogue_137_inputs_received": false
+}

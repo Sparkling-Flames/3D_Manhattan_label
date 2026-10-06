@@ -1,0 +1,7306 @@
+[
+  {
+    "summary": {
+      "window": "synthetic_square",
+      "image": "synthetic_control",
+      "factors": [
+        1,
+        4
+      ],
+      "metric": "pair",
+      "gate_deg": 5,
+      "focals_original_indices": [
+        [
+          "A",
+          0
+        ],
+        [
+          "B",
+          0
+        ]
+      ],
+      "full_source_pool_size_unchanged": null,
+      "fixed_hop": {
+        "status": "not_witnessed",
+        "witness_count": 0,
+        "attempted_legs": 16,
+        "leg_status_counts": {
+          "anchor_outside_gate": 16
+        },
+        "maximum_accepted_leg_length_deg": null,
+        "maximum_accepted_source_edge_hops": null
+      },
+      "event_domain": {
+        "status": "witnessed",
+        "witness_count": 1,
+        "attempted_legs": 4,
+        "leg_status_counts": {
+          "accept": 2,
+          "anchor_outside_gate": 2
+        },
+        "maximum_accepted_leg_length_deg": 83.6206297915572,
+        "maximum_accepted_source_edge_hops": 4
+      },
+      "invariant_signature": true
+    },
+    "fixed_hop_result": {
+      "nodes": [
+        1,
+        10
+      ],
+      "focal_distance_deg": 0.0,
+      "metric": "pair",
+      "gate_deg": 5,
+      "status": "not_witnessed",
+      "legs": [
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            0,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 62.139170273244304,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            0,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 41.810314895778596,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            2,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 62.139170273244304,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            2,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 41.810314895778596,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            0,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 100.82169196863705,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            0,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            2,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 100.82169196863705,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            2,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        }
+      ],
+      "witnesses": [],
+      "interpretation": "geometric_candidate_only; two separate boundary traversals; no semantic equivalence guarantee"
+    },
+    "event_result": {
+      "nodes": [
+        1,
+        10
+      ],
+      "focal_distance_deg": 0.0,
+      "metric": "pair",
+      "gate_deg": 5,
+      "search_policy": "turn_events_with_arc_length_cap",
+      "focal_observations_retained": true,
+      "joint_top_bottom_interior_pairing_inferred": false,
+      "identity_certified": false,
+      "status": "witnessed",
+      "domains": [
+        {
+          "node": 1,
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            1
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 167.2412595831144
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "node": 1,
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            1
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 167.24125958311438
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "node": 10,
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            4
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 15,
+              "edge_count": 1,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 14,
+              "edge_count": 2,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 13,
+              "edge_count": 3,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 11,
+              "edge_count": 5,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 10,
+              "edge_count": 6,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 125.43094468733581
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            4,
+            8,
+            12
+          ]
+        },
+        {
+          "node": 10,
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            4
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 1,
+              "edge_count": 1,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 3,
+              "edge_count": 3,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 5,
+              "edge_count": 5,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 6,
+              "edge_count": 6,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 125.43094468733578
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            4,
+            8,
+            12
+          ]
+        }
+      ],
+      "legs": [
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            0,
+            6
+          ],
+          "sides": {
+            "bottom": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0016238940100677945,
+              "vertices": [
+                18,
+                21
+              ]
+            },
+            "top": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0017789778921195598,
+              "vertices": [
+                18,
+                19
+              ]
+            }
+          },
+          "anchor_distance_deg": 0.0,
+          "status": "accept",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            2,
+            14
+          ],
+          "sides": {
+            "bottom": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0016238940100677945,
+              "vertices": [
+                18,
+                21
+              ]
+            },
+            "top": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0017789778921195598,
+              "vertices": [
+                18,
+                19
+              ]
+            }
+          },
+          "anchor_distance_deg": 0.0,
+          "status": "accept",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            0,
+            14
+          ],
+          "sides": {},
+          "anchor_distance_deg": 141.05755873101862,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            2,
+            6
+          ],
+          "sides": {},
+          "anchor_distance_deg": 141.05755873101862,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        }
+      ],
+      "witnesses": [
+        {
+          "orientation": 1,
+          "leg_indices": [
+            0,
+            1
+          ],
+          "raw_path_donors": [
+            "A",
+            "B"
+          ],
+          "interior_point_identities_inferred": false
+        }
+      ],
+      "interpretation": "geometric_search_candidate_only; absence is unknown, never a semantic cannot-link"
+    },
+    "signature": {
+      "status": "witnessed",
+      "domains": [
+        {
+          "focal": [
+            "A",
+            0
+          ],
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "A",
+              3
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "A",
+            0
+          ],
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "A",
+              1
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "B",
+            0
+          ],
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "B",
+              3
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "B",
+            0
+          ],
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "B",
+              1
+            ]
+          ]
+        }
+      ],
+      "legs": [
+        {
+          "orientation": 1,
+          "side_of_focal": -1,
+          "ends": [
+            [
+              "A",
+              3
+            ],
+            [
+              "B",
+              3
+            ]
+          ],
+          "status": "accept",
+          "boundary_status": {
+            "bottom": "accept",
+            "top": "accept"
+          }
+        },
+        {
+          "orientation": 1,
+          "side_of_focal": 1,
+          "ends": [
+            [
+              "A",
+              1
+            ],
+            [
+              "B",
+              1
+            ]
+          ],
+          "status": "accept",
+          "boundary_status": {
+            "bottom": "accept",
+            "top": "accept"
+          }
+        },
+        {
+          "orientation": -1,
+          "side_of_focal": -1,
+          "ends": [
+            [
+              "A",
+              3
+            ],
+            [
+              "B",
+              1
+            ]
+          ],
+          "status": "anchor_outside_gate",
+          "boundary_status": {}
+        },
+        {
+          "orientation": -1,
+          "side_of_focal": 1,
+          "ends": [
+            [
+              "A",
+              1
+            ],
+            [
+              "B",
+              3
+            ]
+          ],
+          "status": "anchor_outside_gate",
+          "boundary_status": {}
+        }
+      ],
+      "witnesses": [
+        {
+          "orientation": 1,
+          "legs": [
+            {
+              "orientation": 1,
+              "side_of_focal": -1,
+              "ends": [
+                [
+                  "A",
+                  3
+                ],
+                [
+                  "B",
+                  3
+                ]
+              ],
+              "status": "accept",
+              "boundary_status": {
+                "bottom": "accept",
+                "top": "accept"
+              }
+            },
+            {
+              "orientation": 1,
+              "side_of_focal": 1,
+              "ends": [
+                [
+                  "A",
+                  1
+                ],
+                [
+                  "B",
+                  1
+                ]
+              ],
+              "status": "accept",
+              "boundary_status": {
+                "bottom": "accept",
+                "top": "accept"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "summary": {
+      "window": "synthetic_square",
+      "image": "synthetic_control",
+      "factors": [
+        1,
+        4
+      ],
+      "metric": "pair",
+      "gate_deg": 9,
+      "focals_original_indices": [
+        [
+          "A",
+          0
+        ],
+        [
+          "B",
+          0
+        ]
+      ],
+      "full_source_pool_size_unchanged": null,
+      "fixed_hop": {
+        "status": "not_witnessed",
+        "witness_count": 0,
+        "attempted_legs": 16,
+        "leg_status_counts": {
+          "anchor_outside_gate": 16
+        },
+        "maximum_accepted_leg_length_deg": null,
+        "maximum_accepted_source_edge_hops": null
+      },
+      "event_domain": {
+        "status": "witnessed",
+        "witness_count": 1,
+        "attempted_legs": 4,
+        "leg_status_counts": {
+          "accept": 2,
+          "anchor_outside_gate": 2
+        },
+        "maximum_accepted_leg_length_deg": 83.6206297915572,
+        "maximum_accepted_source_edge_hops": 4
+      },
+      "invariant_signature": true
+    },
+    "fixed_hop_result": {
+      "nodes": [
+        1,
+        10
+      ],
+      "focal_distance_deg": 0.0,
+      "metric": "pair",
+      "gate_deg": 9,
+      "status": "not_witnessed",
+      "legs": [
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            0,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 62.139170273244304,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            0,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 41.810314895778596,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            2,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 62.139170273244304,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            2,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 41.810314895778596,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            0,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 100.82169196863705,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            0,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            2,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 100.82169196863705,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            2,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        }
+      ],
+      "witnesses": [],
+      "interpretation": "geometric_candidate_only; two separate boundary traversals; no semantic equivalence guarantee"
+    },
+    "event_result": {
+      "nodes": [
+        1,
+        10
+      ],
+      "focal_distance_deg": 0.0,
+      "metric": "pair",
+      "gate_deg": 9,
+      "search_policy": "turn_events_with_arc_length_cap",
+      "focal_observations_retained": true,
+      "joint_top_bottom_interior_pairing_inferred": false,
+      "identity_certified": false,
+      "status": "witnessed",
+      "domains": [
+        {
+          "node": 1,
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            1
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 167.2412595831144
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "node": 1,
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            1
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 167.24125958311438
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "node": 10,
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            4
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 15,
+              "edge_count": 1,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 14,
+              "edge_count": 2,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 13,
+              "edge_count": 3,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 11,
+              "edge_count": 5,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 10,
+              "edge_count": 6,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 125.43094468733581
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            4,
+            8,
+            12
+          ]
+        },
+        {
+          "node": 10,
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            4
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 1,
+              "edge_count": 1,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 3,
+              "edge_count": 3,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 5,
+              "edge_count": 5,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 6,
+              "edge_count": 6,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 125.43094468733578
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            4,
+            8,
+            12
+          ]
+        }
+      ],
+      "legs": [
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            0,
+            6
+          ],
+          "sides": {
+            "bottom": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0016238940100677945,
+              "vertices": [
+                18,
+                21
+              ],
+              "cached_from_gate": 5.0
+            },
+            "top": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0017789778921195598,
+              "vertices": [
+                18,
+                19
+              ],
+              "cached_from_gate": 5.0
+            }
+          },
+          "anchor_distance_deg": 0.0,
+          "status": "accept",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            2,
+            14
+          ],
+          "sides": {
+            "bottom": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0016238940100677945,
+              "vertices": [
+                18,
+                21
+              ],
+              "cached_from_gate": 5.0
+            },
+            "top": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0017789778921195598,
+              "vertices": [
+                18,
+                19
+              ],
+              "cached_from_gate": 5.0
+            }
+          },
+          "anchor_distance_deg": 0.0,
+          "status": "accept",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            0,
+            14
+          ],
+          "sides": {},
+          "anchor_distance_deg": 141.05755873101862,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            2,
+            6
+          ],
+          "sides": {},
+          "anchor_distance_deg": 141.05755873101862,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        }
+      ],
+      "witnesses": [
+        {
+          "orientation": 1,
+          "leg_indices": [
+            0,
+            1
+          ],
+          "raw_path_donors": [
+            "A",
+            "B"
+          ],
+          "interior_point_identities_inferred": false
+        }
+      ],
+      "interpretation": "geometric_search_candidate_only; absence is unknown, never a semantic cannot-link"
+    },
+    "signature": {
+      "status": "witnessed",
+      "domains": [
+        {
+          "focal": [
+            "A",
+            0
+          ],
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "A",
+              3
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "A",
+            0
+          ],
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "A",
+              1
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "B",
+            0
+          ],
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "B",
+              3
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "B",
+            0
+          ],
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "B",
+              1
+            ]
+          ]
+        }
+      ],
+      "legs": [
+        {
+          "orientation": 1,
+          "side_of_focal": -1,
+          "ends": [
+            [
+              "A",
+              3
+            ],
+            [
+              "B",
+              3
+            ]
+          ],
+          "status": "accept",
+          "boundary_status": {
+            "bottom": "accept",
+            "top": "accept"
+          }
+        },
+        {
+          "orientation": 1,
+          "side_of_focal": 1,
+          "ends": [
+            [
+              "A",
+              1
+            ],
+            [
+              "B",
+              1
+            ]
+          ],
+          "status": "accept",
+          "boundary_status": {
+            "bottom": "accept",
+            "top": "accept"
+          }
+        },
+        {
+          "orientation": -1,
+          "side_of_focal": -1,
+          "ends": [
+            [
+              "A",
+              3
+            ],
+            [
+              "B",
+              1
+            ]
+          ],
+          "status": "anchor_outside_gate",
+          "boundary_status": {}
+        },
+        {
+          "orientation": -1,
+          "side_of_focal": 1,
+          "ends": [
+            [
+              "A",
+              1
+            ],
+            [
+              "B",
+              3
+            ]
+          ],
+          "status": "anchor_outside_gate",
+          "boundary_status": {}
+        }
+      ],
+      "witnesses": [
+        {
+          "orientation": 1,
+          "legs": [
+            {
+              "orientation": 1,
+              "side_of_focal": -1,
+              "ends": [
+                [
+                  "A",
+                  3
+                ],
+                [
+                  "B",
+                  3
+                ]
+              ],
+              "status": "accept",
+              "boundary_status": {
+                "bottom": "accept",
+                "top": "accept"
+              }
+            },
+            {
+              "orientation": 1,
+              "side_of_focal": 1,
+              "ends": [
+                [
+                  "A",
+                  1
+                ],
+                [
+                  "B",
+                  1
+                ]
+              ],
+              "status": "accept",
+              "boundary_status": {
+                "bottom": "accept",
+                "top": "accept"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "summary": {
+      "window": "synthetic_square",
+      "image": "synthetic_control",
+      "factors": [
+        1,
+        4
+      ],
+      "metric": "pair",
+      "gate_deg": 12,
+      "focals_original_indices": [
+        [
+          "A",
+          0
+        ],
+        [
+          "B",
+          0
+        ]
+      ],
+      "full_source_pool_size_unchanged": null,
+      "fixed_hop": {
+        "status": "not_witnessed",
+        "witness_count": 0,
+        "attempted_legs": 16,
+        "leg_status_counts": {
+          "anchor_outside_gate": 16
+        },
+        "maximum_accepted_leg_length_deg": null,
+        "maximum_accepted_source_edge_hops": null
+      },
+      "event_domain": {
+        "status": "witnessed",
+        "witness_count": 1,
+        "attempted_legs": 4,
+        "leg_status_counts": {
+          "accept": 2,
+          "anchor_outside_gate": 2
+        },
+        "maximum_accepted_leg_length_deg": 83.6206297915572,
+        "maximum_accepted_source_edge_hops": 4
+      },
+      "invariant_signature": true
+    },
+    "fixed_hop_result": {
+      "nodes": [
+        1,
+        10
+      ],
+      "focal_distance_deg": 0.0,
+      "metric": "pair",
+      "gate_deg": 12,
+      "status": "not_witnessed",
+      "legs": [
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            0,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 62.139170273244304,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            0,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 41.810314895778596,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            2,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 62.139170273244304,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            2,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 41.810314895778596,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            0,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 100.82169196863705,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            0,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            2,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 100.82169196863705,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            2,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        }
+      ],
+      "witnesses": [],
+      "interpretation": "geometric_candidate_only; two separate boundary traversals; no semantic equivalence guarantee"
+    },
+    "event_result": {
+      "nodes": [
+        1,
+        10
+      ],
+      "focal_distance_deg": 0.0,
+      "metric": "pair",
+      "gate_deg": 12,
+      "search_policy": "turn_events_with_arc_length_cap",
+      "focal_observations_retained": true,
+      "joint_top_bottom_interior_pairing_inferred": false,
+      "identity_certified": false,
+      "status": "witnessed",
+      "domains": [
+        {
+          "node": 1,
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            1
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 167.2412595831144
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "node": 1,
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            1
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 167.24125958311438
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "node": 10,
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            4
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 15,
+              "edge_count": 1,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 14,
+              "edge_count": 2,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 13,
+              "edge_count": 3,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 11,
+              "edge_count": 5,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 10,
+              "edge_count": 6,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 125.43094468733581
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            4,
+            8,
+            12
+          ]
+        },
+        {
+          "node": 10,
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            4
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 1,
+              "edge_count": 1,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 3,
+              "edge_count": 3,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 5,
+              "edge_count": 5,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 6,
+              "edge_count": 6,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 125.43094468733578
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            4,
+            8,
+            12
+          ]
+        }
+      ],
+      "legs": [
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            0,
+            6
+          ],
+          "sides": {
+            "bottom": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0016238940100677945,
+              "vertices": [
+                18,
+                21
+              ],
+              "cached_from_gate": 5.0
+            },
+            "top": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0017789778921195598,
+              "vertices": [
+                18,
+                19
+              ],
+              "cached_from_gate": 5.0
+            }
+          },
+          "anchor_distance_deg": 0.0,
+          "status": "accept",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            2,
+            14
+          ],
+          "sides": {
+            "bottom": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0016238940100677945,
+              "vertices": [
+                18,
+                21
+              ],
+              "cached_from_gate": 5.0
+            },
+            "top": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0017789778921195598,
+              "vertices": [
+                18,
+                19
+              ],
+              "cached_from_gate": 5.0
+            }
+          },
+          "anchor_distance_deg": 0.0,
+          "status": "accept",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            0,
+            14
+          ],
+          "sides": {},
+          "anchor_distance_deg": 141.05755873101862,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            2,
+            6
+          ],
+          "sides": {},
+          "anchor_distance_deg": 141.05755873101862,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        }
+      ],
+      "witnesses": [
+        {
+          "orientation": 1,
+          "leg_indices": [
+            0,
+            1
+          ],
+          "raw_path_donors": [
+            "A",
+            "B"
+          ],
+          "interior_point_identities_inferred": false
+        }
+      ],
+      "interpretation": "geometric_search_candidate_only; absence is unknown, never a semantic cannot-link"
+    },
+    "signature": {
+      "status": "witnessed",
+      "domains": [
+        {
+          "focal": [
+            "A",
+            0
+          ],
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "A",
+              3
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "A",
+            0
+          ],
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "A",
+              1
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "B",
+            0
+          ],
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "B",
+              3
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "B",
+            0
+          ],
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "B",
+              1
+            ]
+          ]
+        }
+      ],
+      "legs": [
+        {
+          "orientation": 1,
+          "side_of_focal": -1,
+          "ends": [
+            [
+              "A",
+              3
+            ],
+            [
+              "B",
+              3
+            ]
+          ],
+          "status": "accept",
+          "boundary_status": {
+            "bottom": "accept",
+            "top": "accept"
+          }
+        },
+        {
+          "orientation": 1,
+          "side_of_focal": 1,
+          "ends": [
+            [
+              "A",
+              1
+            ],
+            [
+              "B",
+              1
+            ]
+          ],
+          "status": "accept",
+          "boundary_status": {
+            "bottom": "accept",
+            "top": "accept"
+          }
+        },
+        {
+          "orientation": -1,
+          "side_of_focal": -1,
+          "ends": [
+            [
+              "A",
+              3
+            ],
+            [
+              "B",
+              1
+            ]
+          ],
+          "status": "anchor_outside_gate",
+          "boundary_status": {}
+        },
+        {
+          "orientation": -1,
+          "side_of_focal": 1,
+          "ends": [
+            [
+              "A",
+              1
+            ],
+            [
+              "B",
+              3
+            ]
+          ],
+          "status": "anchor_outside_gate",
+          "boundary_status": {}
+        }
+      ],
+      "witnesses": [
+        {
+          "orientation": 1,
+          "legs": [
+            {
+              "orientation": 1,
+              "side_of_focal": -1,
+              "ends": [
+                [
+                  "A",
+                  3
+                ],
+                [
+                  "B",
+                  3
+                ]
+              ],
+              "status": "accept",
+              "boundary_status": {
+                "bottom": "accept",
+                "top": "accept"
+              }
+            },
+            {
+              "orientation": 1,
+              "side_of_focal": 1,
+              "ends": [
+                [
+                  "A",
+                  1
+                ],
+                [
+                  "B",
+                  1
+                ]
+              ],
+              "status": "accept",
+              "boundary_status": {
+                "bottom": "accept",
+                "top": "accept"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "summary": {
+      "window": "synthetic_square",
+      "image": "synthetic_control",
+      "factors": [
+        1,
+        4
+      ],
+      "metric": "bottom",
+      "gate_deg": 5,
+      "focals_original_indices": [
+        [
+          "A",
+          0
+        ],
+        [
+          "B",
+          0
+        ]
+      ],
+      "full_source_pool_size_unchanged": null,
+      "fixed_hop": {
+        "status": "not_witnessed",
+        "witness_count": 0,
+        "attempted_legs": 16,
+        "leg_status_counts": {
+          "anchor_outside_gate": 16
+        },
+        "maximum_accepted_leg_length_deg": null,
+        "maximum_accepted_source_edge_hops": null
+      },
+      "event_domain": {
+        "status": "witnessed",
+        "witness_count": 1,
+        "attempted_legs": 4,
+        "leg_status_counts": {
+          "accept": 2,
+          "anchor_outside_gate": 2
+        },
+        "maximum_accepted_leg_length_deg": 83.6206297915572,
+        "maximum_accepted_source_edge_hops": 4
+      },
+      "invariant_signature": true
+    },
+    "fixed_hop_result": {
+      "nodes": [
+        1,
+        10
+      ],
+      "focal_distance_deg": 0.0,
+      "metric": "bottom",
+      "gate_deg": 5,
+      "status": "not_witnessed",
+      "legs": [
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            0,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 62.139170273244304,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            0,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 41.810314895778596,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            2,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 62.139170273244304,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            2,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 41.810314895778596,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            0,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 100.82169196863705,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            0,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            2,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 100.82169196863705,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            2,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        }
+      ],
+      "witnesses": [],
+      "interpretation": "geometric_candidate_only; two separate boundary traversals; no semantic equivalence guarantee"
+    },
+    "event_result": {
+      "nodes": [
+        1,
+        10
+      ],
+      "focal_distance_deg": 0.0,
+      "metric": "bottom",
+      "gate_deg": 5,
+      "search_policy": "turn_events_with_arc_length_cap",
+      "focal_observations_retained": true,
+      "joint_top_bottom_interior_pairing_inferred": false,
+      "identity_certified": false,
+      "status": "witnessed",
+      "domains": [
+        {
+          "node": 1,
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            1
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 167.2412595831144
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "node": 1,
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            1
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 167.24125958311438
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "node": 10,
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            4
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 15,
+              "edge_count": 1,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 14,
+              "edge_count": 2,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 13,
+              "edge_count": 3,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 11,
+              "edge_count": 5,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 10,
+              "edge_count": 6,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 125.43094468733581
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            4,
+            8,
+            12
+          ]
+        },
+        {
+          "node": 10,
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            4
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 1,
+              "edge_count": 1,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 3,
+              "edge_count": 3,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 5,
+              "edge_count": 5,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 6,
+              "edge_count": 6,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 125.43094468733578
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            4,
+            8,
+            12
+          ]
+        }
+      ],
+      "legs": [
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            0,
+            6
+          ],
+          "sides": {
+            "bottom": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0016238940100677945,
+              "vertices": [
+                18,
+                21
+              ],
+              "cached_from_gate": 5.0
+            }
+          },
+          "anchor_distance_deg": 0.0,
+          "status": "accept",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            2,
+            14
+          ],
+          "sides": {
+            "bottom": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0016238940100677945,
+              "vertices": [
+                18,
+                21
+              ],
+              "cached_from_gate": 5.0
+            }
+          },
+          "anchor_distance_deg": 0.0,
+          "status": "accept",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            0,
+            14
+          ],
+          "sides": {},
+          "anchor_distance_deg": 141.05755873101862,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            2,
+            6
+          ],
+          "sides": {},
+          "anchor_distance_deg": 141.05755873101862,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        }
+      ],
+      "witnesses": [
+        {
+          "orientation": 1,
+          "leg_indices": [
+            0,
+            1
+          ],
+          "raw_path_donors": [
+            "A",
+            "B"
+          ],
+          "interior_point_identities_inferred": false
+        }
+      ],
+      "interpretation": "geometric_search_candidate_only; absence is unknown, never a semantic cannot-link"
+    },
+    "signature": {
+      "status": "witnessed",
+      "domains": [
+        {
+          "focal": [
+            "A",
+            0
+          ],
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "A",
+              3
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "A",
+            0
+          ],
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "A",
+              1
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "B",
+            0
+          ],
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "B",
+              3
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "B",
+            0
+          ],
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "B",
+              1
+            ]
+          ]
+        }
+      ],
+      "legs": [
+        {
+          "orientation": 1,
+          "side_of_focal": -1,
+          "ends": [
+            [
+              "A",
+              3
+            ],
+            [
+              "B",
+              3
+            ]
+          ],
+          "status": "accept",
+          "boundary_status": {
+            "bottom": "accept"
+          }
+        },
+        {
+          "orientation": 1,
+          "side_of_focal": 1,
+          "ends": [
+            [
+              "A",
+              1
+            ],
+            [
+              "B",
+              1
+            ]
+          ],
+          "status": "accept",
+          "boundary_status": {
+            "bottom": "accept"
+          }
+        },
+        {
+          "orientation": -1,
+          "side_of_focal": -1,
+          "ends": [
+            [
+              "A",
+              3
+            ],
+            [
+              "B",
+              1
+            ]
+          ],
+          "status": "anchor_outside_gate",
+          "boundary_status": {}
+        },
+        {
+          "orientation": -1,
+          "side_of_focal": 1,
+          "ends": [
+            [
+              "A",
+              1
+            ],
+            [
+              "B",
+              3
+            ]
+          ],
+          "status": "anchor_outside_gate",
+          "boundary_status": {}
+        }
+      ],
+      "witnesses": [
+        {
+          "orientation": 1,
+          "legs": [
+            {
+              "orientation": 1,
+              "side_of_focal": -1,
+              "ends": [
+                [
+                  "A",
+                  3
+                ],
+                [
+                  "B",
+                  3
+                ]
+              ],
+              "status": "accept",
+              "boundary_status": {
+                "bottom": "accept"
+              }
+            },
+            {
+              "orientation": 1,
+              "side_of_focal": 1,
+              "ends": [
+                [
+                  "A",
+                  1
+                ],
+                [
+                  "B",
+                  1
+                ]
+              ],
+              "status": "accept",
+              "boundary_status": {
+                "bottom": "accept"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "summary": {
+      "window": "synthetic_square",
+      "image": "synthetic_control",
+      "factors": [
+        1,
+        4
+      ],
+      "metric": "bottom",
+      "gate_deg": 9,
+      "focals_original_indices": [
+        [
+          "A",
+          0
+        ],
+        [
+          "B",
+          0
+        ]
+      ],
+      "full_source_pool_size_unchanged": null,
+      "fixed_hop": {
+        "status": "not_witnessed",
+        "witness_count": 0,
+        "attempted_legs": 16,
+        "leg_status_counts": {
+          "anchor_outside_gate": 16
+        },
+        "maximum_accepted_leg_length_deg": null,
+        "maximum_accepted_source_edge_hops": null
+      },
+      "event_domain": {
+        "status": "witnessed",
+        "witness_count": 1,
+        "attempted_legs": 4,
+        "leg_status_counts": {
+          "accept": 2,
+          "anchor_outside_gate": 2
+        },
+        "maximum_accepted_leg_length_deg": 83.6206297915572,
+        "maximum_accepted_source_edge_hops": 4
+      },
+      "invariant_signature": true
+    },
+    "fixed_hop_result": {
+      "nodes": [
+        1,
+        10
+      ],
+      "focal_distance_deg": 0.0,
+      "metric": "bottom",
+      "gate_deg": 9,
+      "status": "not_witnessed",
+      "legs": [
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            0,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 62.139170273244304,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            0,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 41.810314895778596,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            2,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 62.139170273244304,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            2,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 41.810314895778596,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            0,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 100.82169196863705,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            0,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            2,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 100.82169196863705,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            2,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        }
+      ],
+      "witnesses": [],
+      "interpretation": "geometric_candidate_only; two separate boundary traversals; no semantic equivalence guarantee"
+    },
+    "event_result": {
+      "nodes": [
+        1,
+        10
+      ],
+      "focal_distance_deg": 0.0,
+      "metric": "bottom",
+      "gate_deg": 9,
+      "search_policy": "turn_events_with_arc_length_cap",
+      "focal_observations_retained": true,
+      "joint_top_bottom_interior_pairing_inferred": false,
+      "identity_certified": false,
+      "status": "witnessed",
+      "domains": [
+        {
+          "node": 1,
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            1
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 167.2412595831144
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "node": 1,
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            1
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 167.24125958311438
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "node": 10,
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            4
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 15,
+              "edge_count": 1,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 14,
+              "edge_count": 2,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 13,
+              "edge_count": 3,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 11,
+              "edge_count": 5,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 10,
+              "edge_count": 6,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 125.43094468733581
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            4,
+            8,
+            12
+          ]
+        },
+        {
+          "node": 10,
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            4
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 1,
+              "edge_count": 1,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 3,
+              "edge_count": 3,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 5,
+              "edge_count": 5,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 6,
+              "edge_count": 6,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 125.43094468733578
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            4,
+            8,
+            12
+          ]
+        }
+      ],
+      "legs": [
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            0,
+            6
+          ],
+          "sides": {
+            "bottom": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0016238940100677945,
+              "vertices": [
+                18,
+                21
+              ],
+              "cached_from_gate": 5.0
+            }
+          },
+          "anchor_distance_deg": 0.0,
+          "status": "accept",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            2,
+            14
+          ],
+          "sides": {
+            "bottom": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0016238940100677945,
+              "vertices": [
+                18,
+                21
+              ],
+              "cached_from_gate": 5.0
+            }
+          },
+          "anchor_distance_deg": 0.0,
+          "status": "accept",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            0,
+            14
+          ],
+          "sides": {},
+          "anchor_distance_deg": 141.05755873101862,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            2,
+            6
+          ],
+          "sides": {},
+          "anchor_distance_deg": 141.05755873101862,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        }
+      ],
+      "witnesses": [
+        {
+          "orientation": 1,
+          "leg_indices": [
+            0,
+            1
+          ],
+          "raw_path_donors": [
+            "A",
+            "B"
+          ],
+          "interior_point_identities_inferred": false
+        }
+      ],
+      "interpretation": "geometric_search_candidate_only; absence is unknown, never a semantic cannot-link"
+    },
+    "signature": {
+      "status": "witnessed",
+      "domains": [
+        {
+          "focal": [
+            "A",
+            0
+          ],
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "A",
+              3
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "A",
+            0
+          ],
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "A",
+              1
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "B",
+            0
+          ],
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "B",
+              3
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "B",
+            0
+          ],
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "B",
+              1
+            ]
+          ]
+        }
+      ],
+      "legs": [
+        {
+          "orientation": 1,
+          "side_of_focal": -1,
+          "ends": [
+            [
+              "A",
+              3
+            ],
+            [
+              "B",
+              3
+            ]
+          ],
+          "status": "accept",
+          "boundary_status": {
+            "bottom": "accept"
+          }
+        },
+        {
+          "orientation": 1,
+          "side_of_focal": 1,
+          "ends": [
+            [
+              "A",
+              1
+            ],
+            [
+              "B",
+              1
+            ]
+          ],
+          "status": "accept",
+          "boundary_status": {
+            "bottom": "accept"
+          }
+        },
+        {
+          "orientation": -1,
+          "side_of_focal": -1,
+          "ends": [
+            [
+              "A",
+              3
+            ],
+            [
+              "B",
+              1
+            ]
+          ],
+          "status": "anchor_outside_gate",
+          "boundary_status": {}
+        },
+        {
+          "orientation": -1,
+          "side_of_focal": 1,
+          "ends": [
+            [
+              "A",
+              1
+            ],
+            [
+              "B",
+              3
+            ]
+          ],
+          "status": "anchor_outside_gate",
+          "boundary_status": {}
+        }
+      ],
+      "witnesses": [
+        {
+          "orientation": 1,
+          "legs": [
+            {
+              "orientation": 1,
+              "side_of_focal": -1,
+              "ends": [
+                [
+                  "A",
+                  3
+                ],
+                [
+                  "B",
+                  3
+                ]
+              ],
+              "status": "accept",
+              "boundary_status": {
+                "bottom": "accept"
+              }
+            },
+            {
+              "orientation": 1,
+              "side_of_focal": 1,
+              "ends": [
+                [
+                  "A",
+                  1
+                ],
+                [
+                  "B",
+                  1
+                ]
+              ],
+              "status": "accept",
+              "boundary_status": {
+                "bottom": "accept"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "summary": {
+      "window": "synthetic_square",
+      "image": "synthetic_control",
+      "factors": [
+        1,
+        4
+      ],
+      "metric": "bottom",
+      "gate_deg": 12,
+      "focals_original_indices": [
+        [
+          "A",
+          0
+        ],
+        [
+          "B",
+          0
+        ]
+      ],
+      "full_source_pool_size_unchanged": null,
+      "fixed_hop": {
+        "status": "not_witnessed",
+        "witness_count": 0,
+        "attempted_legs": 16,
+        "leg_status_counts": {
+          "anchor_outside_gate": 16
+        },
+        "maximum_accepted_leg_length_deg": null,
+        "maximum_accepted_source_edge_hops": null
+      },
+      "event_domain": {
+        "status": "witnessed",
+        "witness_count": 1,
+        "attempted_legs": 4,
+        "leg_status_counts": {
+          "accept": 2,
+          "anchor_outside_gate": 2
+        },
+        "maximum_accepted_leg_length_deg": 83.6206297915572,
+        "maximum_accepted_source_edge_hops": 4
+      },
+      "invariant_signature": true
+    },
+    "fixed_hop_result": {
+      "nodes": [
+        1,
+        10
+      ],
+      "focal_distance_deg": 0.0,
+      "metric": "bottom",
+      "gate_deg": 12,
+      "status": "not_witnessed",
+      "legs": [
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            0,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 62.139170273244304,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            0,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 41.810314895778596,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            2,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 62.139170273244304,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            2,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 41.810314895778596,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            0,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 100.82169196863705,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            0,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            2,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 100.82169196863705,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            2,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 130.61430693284868,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 116.56505117707799,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        }
+      ],
+      "witnesses": [],
+      "interpretation": "geometric_candidate_only; two separate boundary traversals; no semantic equivalence guarantee"
+    },
+    "event_result": {
+      "nodes": [
+        1,
+        10
+      ],
+      "focal_distance_deg": 0.0,
+      "metric": "bottom",
+      "gate_deg": 12,
+      "search_policy": "turn_events_with_arc_length_cap",
+      "focal_observations_retained": true,
+      "joint_top_bottom_interior_pairing_inferred": false,
+      "identity_certified": false,
+      "status": "witnessed",
+      "domains": [
+        {
+          "node": 1,
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            1
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 167.2412595831144
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "node": 1,
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            1
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 167.24125958311438
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "node": 10,
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            4
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 15,
+              "edge_count": 1,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 14,
+              "edge_count": 2,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 13,
+              "edge_count": 3,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 11,
+              "edge_count": 5,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 10,
+              "edge_count": 6,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 125.43094468733581
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            4,
+            8,
+            12
+          ]
+        },
+        {
+          "node": 10,
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            4
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 1,
+              "edge_count": 1,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 3,
+              "edge_count": 3,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 5,
+              "edge_count": 5,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 6,
+              "edge_count": 6,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 125.43094468733578
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            4,
+            8,
+            12
+          ]
+        }
+      ],
+      "legs": [
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            0,
+            6
+          ],
+          "sides": {
+            "bottom": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0016238940100677945,
+              "vertices": [
+                18,
+                21
+              ],
+              "cached_from_gate": 5.0
+            }
+          },
+          "anchor_distance_deg": 0.0,
+          "status": "accept",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            2,
+            14
+          ],
+          "sides": {
+            "bottom": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0016238940100677945,
+              "vertices": [
+                18,
+                21
+              ],
+              "cached_from_gate": 5.0
+            }
+          },
+          "anchor_distance_deg": 0.0,
+          "status": "accept",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            0,
+            14
+          ],
+          "sides": {},
+          "anchor_distance_deg": 141.05755873101862,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            2,
+            6
+          ],
+          "sides": {},
+          "anchor_distance_deg": 141.05755873101862,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        }
+      ],
+      "witnesses": [
+        {
+          "orientation": 1,
+          "leg_indices": [
+            0,
+            1
+          ],
+          "raw_path_donors": [
+            "A",
+            "B"
+          ],
+          "interior_point_identities_inferred": false
+        }
+      ],
+      "interpretation": "geometric_search_candidate_only; absence is unknown, never a semantic cannot-link"
+    },
+    "signature": {
+      "status": "witnessed",
+      "domains": [
+        {
+          "focal": [
+            "A",
+            0
+          ],
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "A",
+              3
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "A",
+            0
+          ],
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "A",
+              1
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "B",
+            0
+          ],
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "B",
+              3
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "B",
+            0
+          ],
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "B",
+              1
+            ]
+          ]
+        }
+      ],
+      "legs": [
+        {
+          "orientation": 1,
+          "side_of_focal": -1,
+          "ends": [
+            [
+              "A",
+              3
+            ],
+            [
+              "B",
+              3
+            ]
+          ],
+          "status": "accept",
+          "boundary_status": {
+            "bottom": "accept"
+          }
+        },
+        {
+          "orientation": 1,
+          "side_of_focal": 1,
+          "ends": [
+            [
+              "A",
+              1
+            ],
+            [
+              "B",
+              1
+            ]
+          ],
+          "status": "accept",
+          "boundary_status": {
+            "bottom": "accept"
+          }
+        },
+        {
+          "orientation": -1,
+          "side_of_focal": -1,
+          "ends": [
+            [
+              "A",
+              3
+            ],
+            [
+              "B",
+              1
+            ]
+          ],
+          "status": "anchor_outside_gate",
+          "boundary_status": {}
+        },
+        {
+          "orientation": -1,
+          "side_of_focal": 1,
+          "ends": [
+            [
+              "A",
+              1
+            ],
+            [
+              "B",
+              3
+            ]
+          ],
+          "status": "anchor_outside_gate",
+          "boundary_status": {}
+        }
+      ],
+      "witnesses": [
+        {
+          "orientation": 1,
+          "legs": [
+            {
+              "orientation": 1,
+              "side_of_focal": -1,
+              "ends": [
+                [
+                  "A",
+                  3
+                ],
+                [
+                  "B",
+                  3
+                ]
+              ],
+              "status": "accept",
+              "boundary_status": {
+                "bottom": "accept"
+              }
+            },
+            {
+              "orientation": 1,
+              "side_of_focal": 1,
+              "ends": [
+                [
+                  "A",
+                  1
+                ],
+                [
+                  "B",
+                  1
+                ]
+              ],
+              "status": "accept",
+              "boundary_status": {
+                "bottom": "accept"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "summary": {
+      "window": "synthetic_square",
+      "image": "synthetic_control",
+      "factors": [
+        1,
+        4
+      ],
+      "metric": "top",
+      "gate_deg": 5,
+      "focals_original_indices": [
+        [
+          "A",
+          0
+        ],
+        [
+          "B",
+          0
+        ]
+      ],
+      "full_source_pool_size_unchanged": null,
+      "fixed_hop": {
+        "status": "not_witnessed",
+        "witness_count": 0,
+        "attempted_legs": 16,
+        "leg_status_counts": {
+          "anchor_outside_gate": 16
+        },
+        "maximum_accepted_leg_length_deg": null,
+        "maximum_accepted_source_edge_hops": null
+      },
+      "event_domain": {
+        "status": "witnessed",
+        "witness_count": 1,
+        "attempted_legs": 4,
+        "leg_status_counts": {
+          "accept": 2,
+          "anchor_outside_gate": 2
+        },
+        "maximum_accepted_leg_length_deg": 81.22571035215346,
+        "maximum_accepted_source_edge_hops": 4
+      },
+      "invariant_signature": true
+    },
+    "fixed_hop_result": {
+      "nodes": [
+        1,
+        10
+      ],
+      "focal_distance_deg": 0.0,
+      "metric": "top",
+      "gate_deg": 5,
+      "status": "not_witnessed",
+      "legs": [
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            0,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 60.16714049804798,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            0,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 40.61285517607673,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 123.67647755303071,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 110.93051073566099,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            2,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 60.16714049804798,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            2,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 40.61285517607673,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 123.67647755303071,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 110.93051073566099,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            0,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 96.8205886911288,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            0,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 110.93051073566099,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 123.67647755303071,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 110.93051073566099,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            2,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 96.8205886911288,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            2,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 110.93051073566099,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 123.67647755303071,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 110.93051073566099,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        }
+      ],
+      "witnesses": [],
+      "interpretation": "geometric_candidate_only; two separate boundary traversals; no semantic equivalence guarantee"
+    },
+    "event_result": {
+      "nodes": [
+        1,
+        10
+      ],
+      "focal_distance_deg": 0.0,
+      "metric": "top",
+      "gate_deg": 5,
+      "search_policy": "turn_events_with_arc_length_cap",
+      "focal_observations_retained": true,
+      "joint_top_bottom_interior_pairing_inferred": false,
+      "identity_certified": false,
+      "status": "witnessed",
+      "domains": [
+        {
+          "node": 1,
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            1
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 162.45142070430694
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "node": 1,
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            1
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 162.4514207043069
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "node": 10,
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            4
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 15,
+              "edge_count": 1,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 14,
+              "edge_count": 2,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 13,
+              "edge_count": 3,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 11,
+              "edge_count": 5,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 10,
+              "edge_count": 6,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 121.83856552823019
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            4,
+            8,
+            12
+          ]
+        },
+        {
+          "node": 10,
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            4
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 1,
+              "edge_count": 1,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 3,
+              "edge_count": 3,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 5,
+              "edge_count": 5,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 6,
+              "edge_count": 6,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 121.83856552823016
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            4,
+            8,
+            12
+          ]
+        }
+      ],
+      "legs": [
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            0,
+            6
+          ],
+          "sides": {
+            "top": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0017789778921195598,
+              "vertices": [
+                18,
+                19
+              ],
+              "cached_from_gate": 5.0
+            }
+          },
+          "anchor_distance_deg": 0.0,
+          "status": "accept",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            2,
+            14
+          ],
+          "sides": {
+            "top": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0017789778921195598,
+              "vertices": [
+                18,
+                19
+              ],
+              "cached_from_gate": 5.0
+            }
+          },
+          "anchor_distance_deg": 0.0,
+          "status": "accept",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            0,
+            14
+          ],
+          "sides": {},
+          "anchor_distance_deg": 134.0204644527823,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            2,
+            6
+          ],
+          "sides": {},
+          "anchor_distance_deg": 134.0204644527823,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        }
+      ],
+      "witnesses": [
+        {
+          "orientation": 1,
+          "leg_indices": [
+            0,
+            1
+          ],
+          "raw_path_donors": [
+            "A",
+            "B"
+          ],
+          "interior_point_identities_inferred": false
+        }
+      ],
+      "interpretation": "geometric_search_candidate_only; absence is unknown, never a semantic cannot-link"
+    },
+    "signature": {
+      "status": "witnessed",
+      "domains": [
+        {
+          "focal": [
+            "A",
+            0
+          ],
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "A",
+              3
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "A",
+            0
+          ],
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "A",
+              1
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "B",
+            0
+          ],
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "B",
+              3
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "B",
+            0
+          ],
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "B",
+              1
+            ]
+          ]
+        }
+      ],
+      "legs": [
+        {
+          "orientation": 1,
+          "side_of_focal": -1,
+          "ends": [
+            [
+              "A",
+              3
+            ],
+            [
+              "B",
+              3
+            ]
+          ],
+          "status": "accept",
+          "boundary_status": {
+            "top": "accept"
+          }
+        },
+        {
+          "orientation": 1,
+          "side_of_focal": 1,
+          "ends": [
+            [
+              "A",
+              1
+            ],
+            [
+              "B",
+              1
+            ]
+          ],
+          "status": "accept",
+          "boundary_status": {
+            "top": "accept"
+          }
+        },
+        {
+          "orientation": -1,
+          "side_of_focal": -1,
+          "ends": [
+            [
+              "A",
+              3
+            ],
+            [
+              "B",
+              1
+            ]
+          ],
+          "status": "anchor_outside_gate",
+          "boundary_status": {}
+        },
+        {
+          "orientation": -1,
+          "side_of_focal": 1,
+          "ends": [
+            [
+              "A",
+              1
+            ],
+            [
+              "B",
+              3
+            ]
+          ],
+          "status": "anchor_outside_gate",
+          "boundary_status": {}
+        }
+      ],
+      "witnesses": [
+        {
+          "orientation": 1,
+          "legs": [
+            {
+              "orientation": 1,
+              "side_of_focal": -1,
+              "ends": [
+                [
+                  "A",
+                  3
+                ],
+                [
+                  "B",
+                  3
+                ]
+              ],
+              "status": "accept",
+              "boundary_status": {
+                "top": "accept"
+              }
+            },
+            {
+              "orientation": 1,
+              "side_of_focal": 1,
+              "ends": [
+                [
+                  "A",
+                  1
+                ],
+                [
+                  "B",
+                  1
+                ]
+              ],
+              "status": "accept",
+              "boundary_status": {
+                "top": "accept"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "summary": {
+      "window": "synthetic_square",
+      "image": "synthetic_control",
+      "factors": [
+        1,
+        4
+      ],
+      "metric": "top",
+      "gate_deg": 9,
+      "focals_original_indices": [
+        [
+          "A",
+          0
+        ],
+        [
+          "B",
+          0
+        ]
+      ],
+      "full_source_pool_size_unchanged": null,
+      "fixed_hop": {
+        "status": "not_witnessed",
+        "witness_count": 0,
+        "attempted_legs": 16,
+        "leg_status_counts": {
+          "anchor_outside_gate": 16
+        },
+        "maximum_accepted_leg_length_deg": null,
+        "maximum_accepted_source_edge_hops": null
+      },
+      "event_domain": {
+        "status": "witnessed",
+        "witness_count": 1,
+        "attempted_legs": 4,
+        "leg_status_counts": {
+          "accept": 2,
+          "anchor_outside_gate": 2
+        },
+        "maximum_accepted_leg_length_deg": 81.22571035215346,
+        "maximum_accepted_source_edge_hops": 4
+      },
+      "invariant_signature": true
+    },
+    "fixed_hop_result": {
+      "nodes": [
+        1,
+        10
+      ],
+      "focal_distance_deg": 0.0,
+      "metric": "top",
+      "gate_deg": 9,
+      "status": "not_witnessed",
+      "legs": [
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            0,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 60.16714049804798,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            0,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 40.61285517607673,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 123.67647755303071,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 110.93051073566099,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            2,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 60.16714049804798,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            2,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 40.61285517607673,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 123.67647755303071,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 110.93051073566099,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            0,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 96.8205886911288,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            0,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 110.93051073566099,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 123.67647755303071,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 110.93051073566099,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            2,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 96.8205886911288,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            2,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 110.93051073566099,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 123.67647755303071,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 110.93051073566099,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        }
+      ],
+      "witnesses": [],
+      "interpretation": "geometric_candidate_only; two separate boundary traversals; no semantic equivalence guarantee"
+    },
+    "event_result": {
+      "nodes": [
+        1,
+        10
+      ],
+      "focal_distance_deg": 0.0,
+      "metric": "top",
+      "gate_deg": 9,
+      "search_policy": "turn_events_with_arc_length_cap",
+      "focal_observations_retained": true,
+      "joint_top_bottom_interior_pairing_inferred": false,
+      "identity_certified": false,
+      "status": "witnessed",
+      "domains": [
+        {
+          "node": 1,
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            1
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 162.45142070430694
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "node": 1,
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            1
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 162.4514207043069
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "node": 10,
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            4
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 15,
+              "edge_count": 1,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 14,
+              "edge_count": 2,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 13,
+              "edge_count": 3,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 11,
+              "edge_count": 5,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 10,
+              "edge_count": 6,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 121.83856552823019
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            4,
+            8,
+            12
+          ]
+        },
+        {
+          "node": 10,
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            4
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 1,
+              "edge_count": 1,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 3,
+              "edge_count": 3,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 5,
+              "edge_count": 5,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 6,
+              "edge_count": 6,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 121.83856552823016
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            4,
+            8,
+            12
+          ]
+        }
+      ],
+      "legs": [
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            0,
+            6
+          ],
+          "sides": {
+            "top": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0017789778921195598,
+              "vertices": [
+                18,
+                19
+              ],
+              "cached_from_gate": 5.0
+            }
+          },
+          "anchor_distance_deg": 0.0,
+          "status": "accept",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            2,
+            14
+          ],
+          "sides": {
+            "top": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0017789778921195598,
+              "vertices": [
+                18,
+                19
+              ],
+              "cached_from_gate": 5.0
+            }
+          },
+          "anchor_distance_deg": 0.0,
+          "status": "accept",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            0,
+            14
+          ],
+          "sides": {},
+          "anchor_distance_deg": 134.0204644527823,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            2,
+            6
+          ],
+          "sides": {},
+          "anchor_distance_deg": 134.0204644527823,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        }
+      ],
+      "witnesses": [
+        {
+          "orientation": 1,
+          "leg_indices": [
+            0,
+            1
+          ],
+          "raw_path_donors": [
+            "A",
+            "B"
+          ],
+          "interior_point_identities_inferred": false
+        }
+      ],
+      "interpretation": "geometric_search_candidate_only; absence is unknown, never a semantic cannot-link"
+    },
+    "signature": {
+      "status": "witnessed",
+      "domains": [
+        {
+          "focal": [
+            "A",
+            0
+          ],
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "A",
+              3
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "A",
+            0
+          ],
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "A",
+              1
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "B",
+            0
+          ],
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "B",
+              3
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "B",
+            0
+          ],
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "B",
+              1
+            ]
+          ]
+        }
+      ],
+      "legs": [
+        {
+          "orientation": 1,
+          "side_of_focal": -1,
+          "ends": [
+            [
+              "A",
+              3
+            ],
+            [
+              "B",
+              3
+            ]
+          ],
+          "status": "accept",
+          "boundary_status": {
+            "top": "accept"
+          }
+        },
+        {
+          "orientation": 1,
+          "side_of_focal": 1,
+          "ends": [
+            [
+              "A",
+              1
+            ],
+            [
+              "B",
+              1
+            ]
+          ],
+          "status": "accept",
+          "boundary_status": {
+            "top": "accept"
+          }
+        },
+        {
+          "orientation": -1,
+          "side_of_focal": -1,
+          "ends": [
+            [
+              "A",
+              3
+            ],
+            [
+              "B",
+              1
+            ]
+          ],
+          "status": "anchor_outside_gate",
+          "boundary_status": {}
+        },
+        {
+          "orientation": -1,
+          "side_of_focal": 1,
+          "ends": [
+            [
+              "A",
+              1
+            ],
+            [
+              "B",
+              3
+            ]
+          ],
+          "status": "anchor_outside_gate",
+          "boundary_status": {}
+        }
+      ],
+      "witnesses": [
+        {
+          "orientation": 1,
+          "legs": [
+            {
+              "orientation": 1,
+              "side_of_focal": -1,
+              "ends": [
+                [
+                  "A",
+                  3
+                ],
+                [
+                  "B",
+                  3
+                ]
+              ],
+              "status": "accept",
+              "boundary_status": {
+                "top": "accept"
+              }
+            },
+            {
+              "orientation": 1,
+              "side_of_focal": 1,
+              "ends": [
+                [
+                  "A",
+                  1
+                ],
+                [
+                  "B",
+                  1
+                ]
+              ],
+              "status": "accept",
+              "boundary_status": {
+                "top": "accept"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "summary": {
+      "window": "synthetic_square",
+      "image": "synthetic_control",
+      "factors": [
+        1,
+        4
+      ],
+      "metric": "top",
+      "gate_deg": 12,
+      "focals_original_indices": [
+        [
+          "A",
+          0
+        ],
+        [
+          "B",
+          0
+        ]
+      ],
+      "full_source_pool_size_unchanged": null,
+      "fixed_hop": {
+        "status": "not_witnessed",
+        "witness_count": 0,
+        "attempted_legs": 16,
+        "leg_status_counts": {
+          "anchor_outside_gate": 16
+        },
+        "maximum_accepted_leg_length_deg": null,
+        "maximum_accepted_source_edge_hops": null
+      },
+      "event_domain": {
+        "status": "witnessed",
+        "witness_count": 1,
+        "attempted_legs": 4,
+        "leg_status_counts": {
+          "accept": 2,
+          "anchor_outside_gate": 2
+        },
+        "maximum_accepted_leg_length_deg": 81.22571035215346,
+        "maximum_accepted_source_edge_hops": 4
+      },
+      "invariant_signature": true
+    },
+    "fixed_hop_result": {
+      "nodes": [
+        1,
+        10
+      ],
+      "focal_distance_deg": 0.0,
+      "metric": "top",
+      "gate_deg": 12,
+      "status": "not_witnessed",
+      "legs": [
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            0,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 60.16714049804798,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            0,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 40.61285517607673,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 123.67647755303071,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 110.93051073566099,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            2,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 60.16714049804798,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            2,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 40.61285517607673,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 123.67647755303071,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 110.93051073566099,
+          "status": "anchor_outside_gate",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            0,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 96.8205886911288,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            0,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 110.93051073566099,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            11
+          ],
+          "sides": {},
+          "anchor_distance_deg": 123.67647755303071,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:-1:2",
+            "B:0:1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            12
+          ],
+          "sides": {},
+          "anchor_distance_deg": 110.93051073566099,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            1,
+            1
+          ],
+          "end_nodes": [
+            2,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 96.8205886911288,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            1,
+            2
+          ],
+          "end_nodes": [
+            2,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 110.93051073566099,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:-1:1"
+          ],
+          "steps": [
+            2,
+            1
+          ],
+          "end_nodes": [
+            3,
+            9
+          ],
+          "sides": {},
+          "anchor_distance_deg": 123.67647755303071,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:1:2",
+            "B:0:-1:2"
+          ],
+          "steps": [
+            2,
+            2
+          ],
+          "end_nodes": [
+            3,
+            8
+          ],
+          "sides": {},
+          "anchor_distance_deg": 110.93051073566099,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        }
+      ],
+      "witnesses": [],
+      "interpretation": "geometric_candidate_only; two separate boundary traversals; no semantic equivalence guarantee"
+    },
+    "event_result": {
+      "nodes": [
+        1,
+        10
+      ],
+      "focal_distance_deg": 0.0,
+      "metric": "top",
+      "gate_deg": 12,
+      "search_policy": "turn_events_with_arc_length_cap",
+      "focal_observations_retained": true,
+      "joint_top_bottom_interior_pairing_inferred": false,
+      "identity_certified": false,
+      "status": "witnessed",
+      "domains": [
+        {
+          "node": 1,
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            1
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 162.45142070430694
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "node": 1,
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            1
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 162.4514207043069
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "node": 10,
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            4
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 15,
+              "edge_count": 1,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 14,
+              "edge_count": 2,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 13,
+              "edge_count": 3,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 11,
+              "edge_count": 5,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 10,
+              "edge_count": 6,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 121.83856552823019
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            4,
+            8,
+            12
+          ]
+        },
+        {
+          "node": 10,
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "endpoint_edge_counts": [
+            4
+          ],
+          "excluded": [
+            {
+              "processed_pair_index": 1,
+              "edge_count": 1,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 2,
+              "edge_count": 2,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 3,
+              "edge_count": 3,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 5,
+              "edge_count": 5,
+              "reason": "nonturn_search_position_only_source_retained"
+            },
+            {
+              "processed_pair_index": 6,
+              "edge_count": 6,
+              "reason": "arc_length_cap",
+              "maximum_compared_side_deg": 121.83856552823016
+            }
+          ],
+          "event_processed_indices": [
+            0,
+            4,
+            8,
+            12
+          ]
+        }
+      ],
+      "legs": [
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:-1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            0,
+            6
+          ],
+          "sides": {
+            "top": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0017789778921195598,
+              "vertices": [
+                18,
+                19
+              ],
+              "cached_from_gate": 5.0
+            }
+          },
+          "anchor_distance_deg": 0.0,
+          "status": "accept",
+          "orientation": 1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            2,
+            14
+          ],
+          "sides": {
+            "top": {
+              "status": "accept",
+              "reason": "sagitta_bounded_free_space",
+              "lower_deg": 0.0,
+              "upper_deg": 5.0,
+              "step_deg": 5,
+              "chord_error_bound": 0.0017789778921195598,
+              "vertices": [
+                18,
+                19
+              ],
+              "cached_from_gate": 5.0
+            }
+          },
+          "anchor_distance_deg": 0.0,
+          "status": "accept",
+          "orientation": 1,
+          "side_of_focal": 1
+        },
+        {
+          "paths": [
+            "A:0:-1:1",
+            "B:0:1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            0,
+            14
+          ],
+          "sides": {},
+          "anchor_distance_deg": 134.0204644527823,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": -1
+        },
+        {
+          "paths": [
+            "A:0:1:1",
+            "B:0:-1:4"
+          ],
+          "steps": [
+            1,
+            4
+          ],
+          "end_nodes": [
+            2,
+            6
+          ],
+          "sides": {},
+          "anchor_distance_deg": 134.0204644527823,
+          "status": "anchor_outside_gate",
+          "orientation": -1,
+          "side_of_focal": 1
+        }
+      ],
+      "witnesses": [
+        {
+          "orientation": 1,
+          "leg_indices": [
+            0,
+            1
+          ],
+          "raw_path_donors": [
+            "A",
+            "B"
+          ],
+          "interior_point_identities_inferred": false
+        }
+      ],
+      "interpretation": "geometric_search_candidate_only; absence is unknown, never a semantic cannot-link"
+    },
+    "signature": {
+      "status": "witnessed",
+      "domains": [
+        {
+          "focal": [
+            "A",
+            0
+          ],
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "A",
+              3
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "A",
+            0
+          ],
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "A",
+              1
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "B",
+            0
+          ],
+          "direction": -1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "B",
+              3
+            ]
+          ]
+        },
+        {
+          "focal": [
+            "B",
+            0
+          ],
+          "direction": 1,
+          "status": "resolved_numeric_domain",
+          "ends": [
+            [
+              "B",
+              1
+            ]
+          ]
+        }
+      ],
+      "legs": [
+        {
+          "orientation": 1,
+          "side_of_focal": -1,
+          "ends": [
+            [
+              "A",
+              3
+            ],
+            [
+              "B",
+              3
+            ]
+          ],
+          "status": "accept",
+          "boundary_status": {
+            "top": "accept"
+          }
+        },
+        {
+          "orientation": 1,
+          "side_of_focal": 1,
+          "ends": [
+            [
+              "A",
+              1
+            ],
+            [
+              "B",
+              1
+            ]
+          ],
+          "status": "accept",
+          "boundary_status": {
+            "top": "accept"
+          }
+        },
+        {
+          "orientation": -1,
+          "side_of_focal": -1,
+          "ends": [
+            [
+              "A",
+              3
+            ],
+            [
+              "B",
+              1
+            ]
+          ],
+          "status": "anchor_outside_gate",
+          "boundary_status": {}
+        },
+        {
+          "orientation": -1,
+          "side_of_focal": 1,
+          "ends": [
+            [
+              "A",
+              1
+            ],
+            [
+              "B",
+              3
+            ]
+          ],
+          "status": "anchor_outside_gate",
+          "boundary_status": {}
+        }
+      ],
+      "witnesses": [
+        {
+          "orientation": 1,
+          "legs": [
+            {
+              "orientation": 1,
+              "side_of_focal": -1,
+              "ends": [
+                [
+                  "A",
+                  3
+                ],
+                [
+                  "B",
+                  3
+                ]
+              ],
+              "status": "accept",
+              "boundary_status": {
+                "top": "accept"
+              }
+            },
+            {
+              "orientation": 1,
+              "side_of_focal": 1,
+              "ends": [
+                [
+                  "A",
+                  1
+                ],
+                [
+                  "B",
+                  1
+                ]
+              ],
+              "status": "accept",
+              "boundary_status": {
+                "top": "accept"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

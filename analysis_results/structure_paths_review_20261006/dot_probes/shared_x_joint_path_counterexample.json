@@ -1,0 +1,124 @@
+{
+  "scope": "P and Q paired curves use actual top/bottom minor great-circle arcs at common longitude within every source edge; this constructed example is longitude-monotone",
+  "P": [
+    [
+      [
+        500.0,
+        100.0
+      ],
+      [
+        500.0,
+        370.0
+      ]
+    ],
+    [
+      [
+        502.0,
+        140.0
+      ],
+      [
+        502.0,
+        330.0
+      ]
+    ]
+  ],
+  "Q": [
+    [
+      [
+        500.0,
+        100.0
+      ],
+      [
+        500.0,
+        370.0
+      ]
+    ],
+    [
+      [
+        501.0,
+        140.0
+      ],
+      [
+        501.0,
+        370.0
+      ]
+    ],
+    [
+      [
+        502.0,
+        140.0
+      ],
+      [
+        502.0,
+        330.0
+      ]
+    ]
+  ],
+  "independent_side_results": {
+    "top": {
+      "distance": {
+        "lower_deg": 0.2660260076989822,
+        "upper_deg": 0.2660477244062494,
+        "step_deg": 0.05,
+        "chord_error_bound": 1.895048573619107e-07,
+        "euclidean_interval": [
+          0.004643215064593241,
+          0.004643215081901566
+        ]
+      },
+      "gate_5deg": {
+        "status": "accept",
+        "reason": "sagitta_bounded_free_space",
+        "lower_deg": 0.0,
+        "upper_deg": 5.0,
+        "step_deg": 5.0,
+        "chord_error_bound": 0.0016742313058859537,
+        "vertices": [
+          4,
+          5
+        ]
+      }
+    },
+    "bottom": {
+      "distance": {
+        "lower_deg": 0.26869965108784283,
+        "upper_deg": 0.26872137642510063,
+        "step_deg": 0.05,
+        "chord_error_bound": 1.8958006675617867e-07,
+        "euclidean_interval": [
+          0.004689878892948583,
+          0.004689878910438821
+        ]
+      },
+      "gate_5deg": {
+        "status": "accept",
+        "reason": "sagitta_bounded_free_space",
+        "lower_deg": 0.0,
+        "upper_deg": 5.0,
+        "step_deg": 5.0,
+        "chord_error_bound": 0.001674895671037957,
+        "vertices": [
+          4,
+          5
+        ]
+      }
+    }
+  },
+  "mandatory_Q_middle_pair": [
+    [
+      501.0,
+      140.0
+    ],
+    [
+      501.0,
+      370.0
+    ]
+  ],
+  "necessary_joint_frechet_lower_bound_deg": 7.230336744978413,
+  "best_middle_pair_match_upper_deg": 7.230990658018852,
+  "best_matching_P_x_px": 501.10832,
+  "grid_intervals": 100000,
+  "conservative_grid_safety_deg": 0.0006539130404390528,
+  "proof": "Every surjective continuous monotone traversal of Q must visit its original middle pair. P at that moment is somewhere on its shared-x paired curve. The minimum over ALL such P positions of max(top angle,bottom angle) lower-bounds EVERY joint coupling. Sampling this scalar minimum with a global Lipschitz bound gives the stated lower bound; this is ordinary floating-point evaluation, not formal interval arithmetic.",
+  "interpretation": "Independent boundary Frechet passes do not certify existence of a shared paired traversal even when both curves preserve source paired x. This is a control of the representation boundary, not a criticism of an unimplemented joint metric."
+}

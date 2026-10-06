@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-06",
+  "status": "local_working_tree_research_handoff_not_formal_method_adoption",
+  "images": [
+    {
+      "image": "B6ByNegPMKs-33",
+      "n": 23
+    },
+    {
+      "image": "UwV83HsGsw3-09",
+      "n": 24
+    },
+    {
+      "image": "b8cTxDM8gDG-18",
+      "n": 6
+    },
+    {
+      "image": "uNb9QFRL6hY-67",
+      "n": 15
+    },
+    {
+      "image": "wc2JMjhGNzB-53",
+      "n": 23
+    },
+    {
+      "image": "e9zR4mvMWw7-15",
+      "n": 8
+    },
+    {
+      "image": "rPc6DW4iMge-06",
+      "n": 24
+    },
+    {
+      "image": "2t7WUuJeko7-06",
+      "n": 3
+    },
+    {
+      "image": "7y3sRwLe3Va-04",
+      "n": 24
+    }
+  ],
+  "records": 150,
+  "baseline_states": 108,
+  "thresholds": [
+    5,
+    9,
+    12
+  ],
+  "source_modules": 44,
+  "environment": {
+    "numpy": "1.26.4",
+    "scipy": "1.11.4",
+    "shapely": "2.0.4",
+    "pandas": "2.3.1",
+    "matplotlib": "3.8.0",
+    "Pillow": "10.2.0"
+  },
+  "minimum_four_pairs_enforced": false,
+  "selection": "Five persistent 12-degree shortfalls plus e9z and rpc development cases and 2t7/7y3s controls; unb is already among the five; not a random or blind panel.",
+  "verification": "Full baseline replay from isolated extracted package is required before delivery; see VERIFICATION.json.",
+  "images_included": 9
+}

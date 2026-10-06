@@ -1,0 +1,946 @@
+{
+  "files_compared": 235,
+  "all_byte_identical": true,
+  "checks": [
+    {
+      "file": "summary.json",
+      "match": true
+    },
+    {
+      "file": "source_manifest_before.json",
+      "match": true
+    },
+    {
+      "file": "subdivision_validations.json",
+      "match": true
+    },
+    {
+      "file": "source_manifest_after.json",
+      "match": true
+    },
+    {
+      "file": "invariance_checks.json",
+      "match": true
+    },
+    {
+      "file": "unresolved_event_domains.json",
+      "match": true
+    },
+    {
+      "file": "original_counterexample_reproduced.json",
+      "match": true
+    },
+    {
+      "file": "verification.json",
+      "match": true
+    },
+    {
+      "file": "frozen_policy.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/synthetic_square_1x4.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_AB_8x8.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_drift_end_1x1.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_AC_4x4.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/unb_patch_start_2x2.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/unb_patch_start_1x1.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_BC_1x4.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_AB_1x8.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/unb_patch_start_1x8.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_drift_start_4x4.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_drift_start_1x1.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/synthetic_square_1x1.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_BC_1x8.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_drift_start_8x8.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/unb_patch_end_1x8.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_drift_start_1x4.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/unb_patch_start_4x4.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_BC_1x2.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/unb_patch_end_1x1.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_AC_1x4.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_AC_1x8.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_AB_4x4.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_drift_end_8x8.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/synthetic_square_1x2.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_BC_4x4.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_BC_2x2.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/unb_patch_start_1x2.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/unb_patch_end_2x2.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_AB_1x4.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_drift_end_1x8.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_drift_end_4x4.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_AC_8x8.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/unb_patch_end_4x4.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/unb_patch_end_8x8.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_AC_2x2.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/unb_patch_start_8x8.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_drift_end_2x2.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_drift_end_1x4.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/synthetic_square_8x8.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_AB_1x1.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/synthetic_square_2x2.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/unb_patch_start_1x4.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_drift_start_1x2.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_AC_1x1.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_drift_start_1x8.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_drift_start_2x2.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_AC_1x2.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_BC_8x8.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_drift_end_1x2.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_AB_2x2.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/unb_patch_end_1x2.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_AB_1x2.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/synthetic_square_4x4.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/rpc_BC_1x1.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/unb_patch_end_1x4.json",
+      "match": true
+    },
+    {
+      "file": "probe_records/synthetic_square_1x8.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/synthetic_square_1x4.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_AB_8x8.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_drift_end_1x1.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_AC_4x4.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/unb_patch_start_2x2.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/unb_patch_start_1x1.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_BC_1x4.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_AB_1x8.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/unb_patch_start_1x8.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_drift_start_4x4.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_drift_start_1x1.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/synthetic_square_1x1.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_BC_1x8.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_drift_start_8x8.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/unb_patch_end_1x8.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_drift_start_1x4.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/unb_patch_start_4x4.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_BC_1x2.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/unb_patch_end_1x1.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_AC_1x4.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_AC_1x8.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_AB_4x4.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_drift_end_8x8.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/synthetic_square_1x2.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_BC_4x4.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_BC_2x2.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/unb_patch_start_1x2.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/unb_patch_end_2x2.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_AB_1x4.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_drift_end_1x8.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_drift_end_4x4.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_AC_8x8.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/unb_patch_end_4x4.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/unb_patch_end_8x8.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_AC_2x2.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/unb_patch_start_8x8.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_drift_end_2x2.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_drift_end_1x4.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/synthetic_square_8x8.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_AB_1x1.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/synthetic_square_2x2.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/unb_patch_start_1x4.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_drift_start_1x2.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_AC_1x1.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_drift_start_1x8.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_drift_start_2x2.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_AC_1x2.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_BC_8x8.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_drift_end_1x2.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_AB_2x2.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/unb_patch_end_1x2.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_AB_1x2.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/synthetic_square_4x4.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/rpc_BC_1x1.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/unb_patch_end_1x4.json",
+      "match": true
+    },
+    {
+      "file": "event_maps/synthetic_square_1x8.json",
+      "match": true
+    },
+    {
+      "file": "paths/synthetic_square_1x4.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_AB_8x8.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_drift_end_1x1.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_AC_4x4.json",
+      "match": true
+    },
+    {
+      "file": "paths/unb_patch_start_2x2.json",
+      "match": true
+    },
+    {
+      "file": "paths/unb_patch_start_1x1.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_BC_1x4.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_AB_1x8.json",
+      "match": true
+    },
+    {
+      "file": "paths/unb_patch_start_1x8.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_drift_start_4x4.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_drift_start_1x1.json",
+      "match": true
+    },
+    {
+      "file": "paths/synthetic_square_1x1.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_BC_1x8.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_drift_start_8x8.json",
+      "match": true
+    },
+    {
+      "file": "paths/unb_patch_end_1x8.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_drift_start_1x4.json",
+      "match": true
+    },
+    {
+      "file": "paths/unb_patch_start_4x4.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_BC_1x2.json",
+      "match": true
+    },
+    {
+      "file": "paths/unb_patch_end_1x1.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_AC_1x4.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_AC_1x8.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_AB_4x4.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_drift_end_8x8.json",
+      "match": true
+    },
+    {
+      "file": "paths/synthetic_square_1x2.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_BC_4x4.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_BC_2x2.json",
+      "match": true
+    },
+    {
+      "file": "paths/unb_patch_start_1x2.json",
+      "match": true
+    },
+    {
+      "file": "paths/unb_patch_end_2x2.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_AB_1x4.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_drift_end_1x8.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_drift_end_4x4.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_AC_8x8.json",
+      "match": true
+    },
+    {
+      "file": "paths/unb_patch_end_4x4.json",
+      "match": true
+    },
+    {
+      "file": "paths/unb_patch_end_8x8.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_AC_2x2.json",
+      "match": true
+    },
+    {
+      "file": "paths/unb_patch_start_8x8.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_drift_end_2x2.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_drift_end_1x4.json",
+      "match": true
+    },
+    {
+      "file": "paths/synthetic_square_8x8.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_AB_1x1.json",
+      "match": true
+    },
+    {
+      "file": "paths/synthetic_square_2x2.json",
+      "match": true
+    },
+    {
+      "file": "paths/unb_patch_start_1x4.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_drift_start_1x2.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_AC_1x1.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_drift_start_1x8.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_drift_start_2x2.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_AC_1x2.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_BC_8x8.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_drift_end_1x2.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_AB_2x2.json",
+      "match": true
+    },
+    {
+      "file": "paths/unb_patch_end_1x2.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_AB_1x2.json",
+      "match": true
+    },
+    {
+      "file": "paths/synthetic_square_4x4.json",
+      "match": true
+    },
+    {
+      "file": "paths/rpc_BC_1x1.json",
+      "match": true
+    },
+    {
+      "file": "paths/unb_patch_end_1x4.json",
+      "match": true
+    },
+    {
+      "file": "paths/synthetic_square_1x8.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/synthetic_square_1x4.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_AB_8x8.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_drift_end_1x1.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_AC_4x4.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/unb_patch_start_2x2.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/unb_patch_start_1x1.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_BC_1x4.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_AB_1x8.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/unb_patch_start_1x8.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_drift_start_4x4.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_drift_start_1x1.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/synthetic_square_1x1.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_BC_1x8.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_drift_start_8x8.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/unb_patch_end_1x8.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_drift_start_1x4.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/unb_patch_start_4x4.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_BC_1x2.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/unb_patch_end_1x1.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_AC_1x4.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_AC_1x8.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_AB_4x4.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_drift_end_8x8.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/synthetic_square_1x2.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_BC_4x4.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_BC_2x2.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/unb_patch_start_1x2.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/unb_patch_end_2x2.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_AB_1x4.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_drift_end_1x8.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_drift_end_4x4.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_AC_8x8.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/unb_patch_end_4x4.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/unb_patch_end_8x8.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_AC_2x2.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/unb_patch_start_8x8.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_drift_end_2x2.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_drift_end_1x4.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/synthetic_square_8x8.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_AB_1x1.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/synthetic_square_2x2.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/unb_patch_start_1x4.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_drift_start_1x2.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_AC_1x1.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_drift_start_1x8.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_drift_start_2x2.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_AC_1x2.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_BC_8x8.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_drift_end_1x2.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_AB_2x2.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/unb_patch_end_1x2.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_AB_1x2.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/synthetic_square_4x4.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/rpc_BC_1x1.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/unb_patch_end_1x4.json",
+      "match": true
+    },
+    {
+      "file": "ledgers/synthetic_square_1x8.json",
+      "match": true
+    },
+    {
+      "file": "inputs/rPc6DW4iMge-06.json",
+      "match": true
+    },
+    {
+      "file": "inputs/uNb9QFRL6hY-67.json",
+      "match": true
+    }
+  ]
+}

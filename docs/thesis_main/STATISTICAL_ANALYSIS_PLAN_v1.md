@@ -1,4 +1,6 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
+
+2026-10-06按最新合同`consensus.corner_count_policy_20261006`：不强制最低8角点。原始MV结果、少于4对诊断和结构约束候选分别报告；所有尝试保留分母，可计算率、满足点数条件率与正确率不能混用。人数与缺点的横断面关系不解释为人数的因果效果。
 # 人员、图片与区域共识统计分析计划
 
 当前规范：`PAPER_A_METHOD_CONTRACT_CURRENT.json`，版本 `consensus_research_20260923_v1`。本计划是2026-09-23已授权的研究比较协议，不宣称最终算法、分类阈值或收敛阈值已验证。旧T1/V1统计计划完整见 [历史版本](../legacy/paper_a_before_consensus_20260928/source_snapshots/history/research_before_20260923/docs/thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md)，旧v23合同的历史解释不追改。

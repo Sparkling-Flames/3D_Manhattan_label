@@ -221,7 +221,7 @@ def run_controls(out):
     write_json(out/'connection_controls.json', dict(kind='synthetic_repetition_of_one_observed_ring_not_three_new_people', checks=checks))
 
 
-def run(out):
+def run(out, plan=None):
     out.mkdir(parents=True, exist_ok=True)
     write_json(out/'PLAN.json', dict(revision='point_route_review_v2',
         base_plan='analysis_results/point_route_panel_20261005/PLAN.json',
@@ -231,7 +231,7 @@ def run(out):
         threshold_policy='1, 2.5, 5, 7.5, 10 degrees remain exploratory; 5 is a demonstration, not calibrated',
         evaluation_scope='evaluations.json evaluates the unchanged x-order baseline only; not observed-order alternatives or partial pairs',
         semantic_answers='Human feedback is held separately in research/point_route_review_20261006/human_review.json; construction does not consume it. No automatic corner certification.'))
-    construct_panel(out)
+    construct_panel(out, plan=plan)
     evaluate_panel(out)
     audit_outputs(out)
     data = json.loads((out/'candidates.json').read_text(encoding='utf-8'))

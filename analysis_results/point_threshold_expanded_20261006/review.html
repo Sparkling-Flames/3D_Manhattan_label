@@ -1,0 +1,40 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>点对应开发审阅</title><style>
+body{font:15px system-ui;background:#f5f6f7;color:#263440;margin:24px}main{max-width:1200px;margin:auto}
+button,select,textarea{font:inherit;padding:7px;margin:4px}label{display:inline-block;margin:5px}textarea{display:block;width:95%;height:80px}
+svg{width:100%;height:65vh;background:#20252a}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:white;padding:10px}.notice{background:#fff0cc;padding:12px}
+circle{cursor:pointer}.error{color:#b14d20}a{color:#165d88}fieldset{margin:12px 0}h1{font-size:24px}
+</style><main><h1>人工核验：开发案例</h1><p class="notice">这是已用于开发的案例，不称盲测。答案默认未回答；浏览与草稿不表示人工已确认。可直接在聊天给出案例答案。草稿只保存在本浏览器，不自动回写项目源。</p>
+<label>案例 <select id="case"></select></label><label><input id="photo" type="checkbox" checked>原图</label><label><input id="rings" type="checkbox" checked>指定源环</label><label><input id="points" type="checkbox" checked>原点</label>
+<button id="mode">切换全图</button><button id="comparison">打开方法对照</button><button id="export">导出审阅草稿JSON</button>
+<h2 id="title"></h2><p id="question"></p><p id="recorded-review"></p><fieldset id="records"><legend>源记录显示</legend></fieldset>
+<svg id="canvas" viewBox="0 0 1024 512" role="img" aria-label="指定原记录的真实投影与点"></svg><p id="error" class="error"></p>
+<p>聊天判断另列；表单用于补充/修订，不自动替用户选择答案。</p><fieldset id="answers"><legend>问题答案（默认未回答）</legend></fieldset><label>备注<textarea id="note"></textarea></label><p id="saved"></p>
+</main><script>const DATA=[];
+const $=id=>document.getElementById(id),NS='http://www.w3.org/2000/svg',pretty=v=>JSON.stringify(v,null,2);
+function el(tag,attrs={}){const e=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))e.setAttribute(k,v);return e}
+function options(id,rows){$(id).replaceChildren();for(const [value,label] of rows)$(id).add(new Option(label,value))}
+function paths(svg,view,color,width=2,bottom=false){if(!view||view.error)return;for(const key of bottom?['bottom_paths']:['top_paths','bottom_paths','vertical_paths'])for(const d of view[key]||[])svg.append(el('path',{d,fill:'none',stroke:color,'stroke-width':width}))}
+function background(svg,photo,show=true){if(photo&&show)svg.append(el('image',{href:photo,width:1024,height:512}));}
+function dot(svg,point,color,label,show){const c=el('circle',{cx:point[0],cy:point[1],r:4,fill:color,stroke:'#222','stroke-width':1,tabindex:0,role:'button','aria-label':label});c.onclick=show;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();show()}};svg.append(c);}
+const DRAFT_KEY='hohonet_point_route_review_20261006_v1';
+function drafts(){return JSON.parse(localStorage.getItem(DRAFT_KEY)||'{}')}
+function saveDrafts(value){localStorage.setItem(DRAFT_KEY,JSON.stringify(value))}
+
+let selected=0,viewMode='local';const palette=['#ffd65e','#42e8d5','#eaa4ff','#a2d3ff'];
+function current(){return DATA[selected]}
+function persist(){const item=current(),all=drafts(),old=all[item.case.id]||{};all[item.case.id]={case_id:item.case.id,image:item.case.image,source_ids:item.case.record_ids,answer:$('answers').querySelector('input:checked')?.value??null,note:$('note').value,view_mode:viewMode,opened_comparison:old.opened_comparison===true};saveDrafts(all);$('saved').textContent='本地草稿已保存；未写回项目源。'}
+function render(){const item=current(),c=item.case,svg=$('canvas'),errors=[];svg.replaceChildren();svg.setAttribute('viewBox',viewMode==='local'?c.view_box.join(' '):'0 0 1024 512');background(svg,item.photo,$('photo').checked);if(!item.photo)errors.push('无原图');
+ item.records.forEach((r,i)=>{if(!$('records').querySelector(`input[data-index="${i}"]`).checked)return;const color=palette[i%palette.length];if($('rings').checked){paths(svg,r.view,color,1.5);if(r.view.error)errors.push(`${r.id}投影不可用：${r.view.error}`)}
+ if($('points').checked)(r.points||[]).forEach((p,j)=>dot(svg,p,color,`${r.id}原点${j+1}`,()=>{}));
+ for(const h of c.highlights.filter(h=>String(h.id)===String(r.id))){const offset=h.label_offset||[8,-8-i*5];for(const q of (r.points||[]).slice(2*h.pair_index,2*h.pair_index+2)){const x=q[0]+offset[0],y=q[1]+offset[1];svg.append(el('path',{d:`M${q[0]},${q[1]}L${x},${y}`,stroke:color,'stroke-width':.6,fill:'none'}));const text=el('text',{x,y,fill:color,'font-size':viewMode==='local'?5:12,stroke:'#222','stroke-width':.6,'paint-order':'stroke'});text.textContent=h.label;svg.append(text);svg.append(el('circle',{cx:q[0],cy:q[1],r:7,fill:'none',stroke:color,'stroke-width':2}))}}});
+ $('mode').textContent=viewMode==='local'?'切换全图':'切换局部';$('error').textContent=errors.join('；');}
+function changeCase(){selected=Number($('case').value);const item=current(),c=item.case,d=drafts()[c.id]||{};viewMode=d.view_mode||'local';$('title').textContent=c.title+' · '+c.id;$('question').textContent=c.question;$('recorded-review').textContent=(item.human_reviews||[]).map(r=>'已收到的聊天反馈：'+r.verbatim+(r.bottom_verbatim?'；下端原话：'+r.bottom_verbatim:'')+(r.correction_quote?'（已澄清指2t7）':'')).join('；');
+ $('records').replaceChildren();item.records.forEach((r,i)=>{const l=document.createElement('label'),box=document.createElement('input');l.style.color=palette[i%palette.length];l.style.background='#20252a';l.style.padding='5px';box.type='checkbox';box.checked=true;box.dataset.index=i;box.onchange=render;l.append(box,document.createTextNode(`${String.fromCharCode(65+i)} · ${r.worker} / ${r.id}`));$('records').append(l)});
+ $('answers').replaceChildren();const legend=document.createElement('legend');legend.textContent='问题答案（默认未回答）';$('answers').append(legend);for(const option of c.options){const l=document.createElement('label'),radio=document.createElement('input');radio.type='radio';radio.name='answer';radio.value=option;radio.checked=d.answer===option;radio.onchange=persist;l.append(radio,document.createTextNode(option));$('answers').append(l)}
+ const clear=document.createElement('button');clear.textContent='清空答案';clear.onclick=()=>{$('answers').querySelectorAll('input').forEach(x=>x.checked=false);persist()};$('answers').append(clear);$('note').value=d.note||'';$('saved').textContent=d.opened_comparison?'草稿记录：已在本页打开过方法对照。':'';render();}
+options('case',DATA.map((item,i)=>[i,item.case.id+' · '+item.case.title]));$('case').value=String(Math.max(0,DATA.findIndex(item=>item.case.id===location.hash.slice(1))));$('case').onchange=changeCase;
+for(const id of ['photo','rings','points'])$(id).onchange=render;$('note').oninput=persist;$('mode').onclick=()=>{viewMode=viewMode==='local'?'full':'local';persist();render()};
+$('comparison').onclick=()=>{persist();const all=drafts();all[current().case.id].opened_comparison=true;saveDrafts(all);window.open('index.html','_blank');$('saved').textContent='已记录本页点击打开方法对照。'};
+$('export').onclick=()=>{persist();const all=drafts(),rows=DATA.map(item=>all[item.case.id]||{case_id:item.case.id,image:item.case.image,source_ids:item.case.record_ids,answer:null,note:'',view_mode:'local',opened_comparison:false});const url=URL.createObjectURL(new Blob([pretty({schema:DRAFT_KEY,status:'review_draft_not_confirmation',cases:rows})],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download='point_route_review_draft_20261006.json';a.click();URL.revokeObjectURL(url)};changeCase();
+</script></html>

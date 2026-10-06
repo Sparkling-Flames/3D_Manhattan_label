@@ -1,0 +1,11 @@
+{
+  "anchor_deg": "Continuous ERP spherical endpoint distance; pair means max(top,bottom).",
+  "neighbor_deg": "Min over forward/reverse alignments of max of two immediate-neighbor distances.",
+  "combined_deg": "max(anchor_deg,neighbor_deg); conjunctive baseline, not learned score or physical identity.",
+  "ranks": "1 + count strictly closer candidates in the same target record; all 1e-9 degree ties preserved.",
+  "relation": "Human ledger scope only; different_upper_target is not a general corner-identity label; bottom tentative retained.",
+  "direction": "Each query direction is saved; reciprocal observations are not independent samples.",
+  "threshold_sensitivity": "All empirical score-event intervals per case/metric. Development separation is [max positive,min negative), only when both classes exist; never a recommended clustering threshold.",
+  "source": "Archived complete input snapshots, no GT, no source mutation, no vote/fusion/ring generation.",
+  "interpretation": "Finite development probe; one-hop comparison does not solve two-versus-three path equivalence."
+}

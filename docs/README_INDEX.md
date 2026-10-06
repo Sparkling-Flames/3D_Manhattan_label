@@ -32,6 +32,13 @@
 
 ## 当前研究与探索
 
+- [新增八图阈值验证](../analysis_results/point_threshold_expanded_20261006/REPORT.md)：八建筑139份记录，5/9/12°四路线；[大图审阅](../analysis_results/point_threshold_expanded_20261006/compare.html)；[全库点数与人数诊断](../analysis_results/point_threshold_expanded_20261006/PAIR_COUNT_REPORT.md)覆盖137图，最低8角点仅作诊断；[Pro结构约束main入口](../research/structure_constraints_20261006/README.md)含9图150份作答、原图和108基线，无需ZIP。
+- [连续路径本地深入审查](../analysis_results/structure_paths_review_20261006/REPORT.md)：旧四图与当前输入接通；Pro全流程、dot事件窗口和共同配对反例复核，外部原件与最新任务均由该入口导航。
+
+- [较宽阈值全员融合](../analysis_results/point_threshold_sweep_20261006/REPORT.md)：[可缩放大图对照](../analysis_results/point_threshold_sweep_20261006/compare.html)，六阈值四路线96设置，9°作为下一阶段工作对照。
+
+- [即时邻点与阈值敏感性检验](../analysis_results/point_context_probe_20261006/REPORT.md)：[计划](../research/point_context_probe_20261006/PLAN.md)；rpc邻点规则负结果与全部已审距离转折区间，非最佳阈值或完整结构匹配。
+
 - [四图点融合路线与阈值探索](../analysis_results/point_route_panel_20261005/REPORT.md)：独立探索工具`point_route_panel_20261005.py`与`point_route_panel_view_20261005.py`；绑定、上下锚定及独立对应小面板，阈值未校准，新环未确认。
 - [点路线修订与原图核验](../analysis_results/point_route_review_20261006/REPORT.md)：独立探索工具`point_route_review_20261006.py`与`point_route_review_view_20261006.py`；[人工核验页](../analysis_results/point_route_review_20261006/review.html)、[方法对照页](../analysis_results/point_route_review_20261006/index.html)，完整源身份环备选与未决端点保留，5°仅演示。
 - [人工判断真源](../research/point_route_review_20261006/human_review.json)：保留原话与纠错；analysis_results仅为发布副本。现有点路线工具`--stage audit`可重生对应审计，独立探索，目标政策未定。

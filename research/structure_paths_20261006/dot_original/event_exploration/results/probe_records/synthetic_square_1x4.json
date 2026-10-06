@@ -1,0 +1,301 @@
+{
+  "role": "same_record_metamorphic_probe_no_new_voters",
+  "records": [
+    {
+      "id": "A",
+      "worker": "A",
+      "points": [
+        [
+          384.0,
+          190.60688277729037
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          640.0,
+          190.60688277729037
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          190.60688277729037
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          190.60688277729037
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "condition": "manual",
+      "image": "synthetic_control",
+      "evidence_kind": "synthetic_control_not_person",
+      "independent": true,
+      "consensus_eligible": true,
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "source_point_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "ring_confirmed": true,
+      "order_status": "given_synthetic_order",
+      "_probe_original_pair_indices": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "B",
+      "worker": "B",
+      "points": [
+        [
+          384.0,
+          190.60688277729037
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          448.0,
+          173.50878380121316
+        ],
+        [
+          448.0,
+          326.52541990130175
+        ],
+        [
+          512.0,
+          167.92531475321312
+        ],
+        [
+          512.0,
+          331.56281223702183
+        ],
+        [
+          576.0,
+          173.50878380121316
+        ],
+        [
+          576.0,
+          326.52541990130175
+        ],
+        [
+          640.0,
+          190.60688277729037
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          704.0,
+          173.50878380121316
+        ],
+        [
+          704.0,
+          326.52541990130175
+        ],
+        [
+          768.0,
+          167.92531475321312
+        ],
+        [
+          768.0,
+          331.56281223702183
+        ],
+        [
+          832.0,
+          173.50878380121316
+        ],
+        [
+          832.0,
+          326.52541990130175
+        ],
+        [
+          896.0,
+          190.60688277729037
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          960.0,
+          173.50878380121316
+        ],
+        [
+          960.0,
+          326.52541990130175
+        ],
+        [
+          0.0,
+          167.92531475321312
+        ],
+        [
+          0.0,
+          331.56281223702183
+        ],
+        [
+          64.0,
+          173.50878380121316
+        ],
+        [
+          64.0,
+          326.52541990130175
+        ],
+        [
+          128.0,
+          190.60688277729037
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ],
+        [
+          192.0,
+          173.50878380121316
+        ],
+        [
+          192.0,
+          326.52541990130175
+        ],
+        [
+          256.0,
+          167.92531475321312
+        ],
+        [
+          256.0,
+          331.56281223702183
+        ],
+        [
+          320.0,
+          173.50878380121316
+        ],
+        [
+          320.0,
+          326.52541990130175
+        ]
+      ],
+      "condition": "manual",
+      "image": "synthetic_control",
+      "evidence_kind": "synthetic_control_not_person",
+      "independent": true,
+      "consensus_eligible": true,
+      "source_pair_indices": [
+        0,
+        null,
+        null,
+        null,
+        1,
+        null,
+        null,
+        null,
+        2,
+        null,
+        null,
+        null,
+        3,
+        null,
+        null,
+        null
+      ],
+      "source_point_indices": [
+        0,
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        2,
+        3,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        4,
+        5,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        6,
+        7,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "ring_confirmed": true,
+      "order_status": "given_synthetic_order",
+      "_probe_original_pair_indices": [
+        0,
+        null,
+        null,
+        null,
+        1,
+        null,
+        null,
+        null,
+        2,
+        null,
+        null,
+        null,
+        3,
+        null,
+        null,
+        null
+      ],
+      "_probe_role": "synthetic_same_record_subdivision_not_an_independent_observation_or_vote"
+    }
+  ],
+  "validation": [
+    {
+      "record": "A",
+      "factor": 1,
+      "maximum_arc_additivity_error_deg": 0.0,
+      "source_originals_unchanged": true
+    },
+    {
+      "record": "B",
+      "factor": 4,
+      "original_pairs": 4,
+      "probe_pairs": 16,
+      "maximum_arc_additivity_error_deg": 1.4210854715202004e-14,
+      "source_originals_unchanged": true,
+      "top_bottom_interpolation_fractions_need_not_equal": true
+    }
+  ]
+}

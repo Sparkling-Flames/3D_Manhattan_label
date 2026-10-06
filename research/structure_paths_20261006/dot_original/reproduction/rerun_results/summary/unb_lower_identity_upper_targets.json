@@ -1,0 +1,2135 @@
+[
+  {
+    "threshold_deg": 5,
+    "policy": "raw_MV",
+    "lower_geometric_group": "G000",
+    "lower_geometric_support": 9,
+    "full_pool_denominator": 15,
+    "user_same_lower_status": "tentative_only_for_three_listed_observations",
+    "upper_partitions": [
+      {
+        "semantic_status": "unknown_upper_target",
+        "known_upper_support": null,
+        "original_pair_incidence": 6,
+        "sources": [
+          {
+            "id": "R02930",
+            "worker": "P002",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              2,
+              3
+            ],
+            "points": [
+              [
+                145.35038363171356,
+                128.32736572890025
+              ],
+              [
+                145.35038363171356,
+                411.17135549872125
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R02932",
+            "worker": "P003",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                139.27969348659005,
+                147.1264367816092
+              ],
+              [
+                139.27969348659005,
+                413.91570881226056
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R01956",
+            "worker": "P006",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                141.59822356974462,
+                119.06468019732864
+              ],
+              [
+                141.59822356974462,
+                416.21284486253165
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R02931",
+            "worker": "P012",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                139.27969348659005,
+                147.1264367816092
+              ],
+              [
+                139.27969348659005,
+                413.91570881226056
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R03196",
+            "worker": "P020",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              6,
+              7
+            ],
+            "points": [
+              [
+                145.60000000000002,
+                113.6
+              ],
+              [
+                145.60000000000002,
+                417.6
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R03194",
+            "worker": "P026",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                147.50757000392787,
+                110.70008912454973
+              ],
+              [
+                147.50757000392787,
+                411.1959714515167
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": null
+      },
+      {
+        "semantic_status": "glass_to_ceiling",
+        "known_upper_support": 2,
+        "original_pair_incidence": 2,
+        "sources": [
+          {
+            "id": "R02210",
+            "worker": "P004",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              1,
+              0
+            ],
+            "points": [
+              [
+                148.6257452530068,
+                114.53727157112453
+              ],
+              [
+                148.6257452530068,
+                413.1523010244134
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R00526",
+            "worker": "P023",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                146.15428756526512,
+                108.67407701383317
+              ],
+              [
+                146.15428756526512,
+                411.8811881188119
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": 111.60567429247885
+      },
+      {
+        "semantic_status": "low_glass_top",
+        "known_upper_support": 1,
+        "original_pair_incidence": 1,
+        "sources": [
+          {
+            "id": "R00144",
+            "worker": "P021",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                145.40278022424408,
+                147.24332174606994
+              ],
+              [
+                145.40278022424408,
+                406.7596763235182
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": 147.24332174606994
+      }
+    ],
+    "mixed_top_center_for_diagnostic_only": [
+      145.4027802242441,
+      119.06468019732864
+    ],
+    "no_single_upper_target_selected": true
+  },
+  {
+    "threshold_deg": 5,
+    "policy": "strict_path_MV",
+    "lower_geometric_group": "G000",
+    "lower_geometric_support": 9,
+    "full_pool_denominator": 15,
+    "user_same_lower_status": "tentative_only_for_three_listed_observations",
+    "upper_partitions": [
+      {
+        "semantic_status": "unknown_upper_target",
+        "known_upper_support": null,
+        "original_pair_incidence": 6,
+        "sources": [
+          {
+            "id": "R02930",
+            "worker": "P002",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              2,
+              3
+            ],
+            "points": [
+              [
+                145.35038363171356,
+                128.32736572890025
+              ],
+              [
+                145.35038363171356,
+                411.17135549872125
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R02932",
+            "worker": "P003",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                139.27969348659005,
+                147.1264367816092
+              ],
+              [
+                139.27969348659005,
+                413.91570881226056
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R01956",
+            "worker": "P006",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                141.59822356974462,
+                119.06468019732864
+              ],
+              [
+                141.59822356974462,
+                416.21284486253165
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R02931",
+            "worker": "P012",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                139.27969348659005,
+                147.1264367816092
+              ],
+              [
+                139.27969348659005,
+                413.91570881226056
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R03196",
+            "worker": "P020",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              6,
+              7
+            ],
+            "points": [
+              [
+                145.60000000000002,
+                113.6
+              ],
+              [
+                145.60000000000002,
+                417.6
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R03194",
+            "worker": "P026",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                147.50757000392787,
+                110.70008912454973
+              ],
+              [
+                147.50757000392787,
+                411.1959714515167
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": null
+      },
+      {
+        "semantic_status": "glass_to_ceiling",
+        "known_upper_support": 2,
+        "original_pair_incidence": 2,
+        "sources": [
+          {
+            "id": "R02210",
+            "worker": "P004",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              1,
+              0
+            ],
+            "points": [
+              [
+                148.6257452530068,
+                114.53727157112453
+              ],
+              [
+                148.6257452530068,
+                413.1523010244134
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R00526",
+            "worker": "P023",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                146.15428756526512,
+                108.67407701383317
+              ],
+              [
+                146.15428756526512,
+                411.8811881188119
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": 111.60567429247885
+      },
+      {
+        "semantic_status": "low_glass_top",
+        "known_upper_support": 1,
+        "original_pair_incidence": 1,
+        "sources": [
+          {
+            "id": "R00144",
+            "worker": "P021",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                145.40278022424408,
+                147.24332174606994
+              ],
+              [
+                145.40278022424408,
+                406.7596763235182
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": 147.24332174606994
+      }
+    ],
+    "mixed_top_center_for_diagnostic_only": [
+      145.4027802242441,
+      119.06468019732864
+    ],
+    "no_single_upper_target_selected": true
+  },
+  {
+    "threshold_deg": 5,
+    "policy": "three_state_MV",
+    "lower_geometric_group": "G000",
+    "lower_geometric_support": 9,
+    "full_pool_denominator": 15,
+    "user_same_lower_status": "tentative_only_for_three_listed_observations",
+    "upper_partitions": [
+      {
+        "semantic_status": "unknown_upper_target",
+        "known_upper_support": null,
+        "original_pair_incidence": 6,
+        "sources": [
+          {
+            "id": "R02930",
+            "worker": "P002",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              2,
+              3
+            ],
+            "points": [
+              [
+                145.35038363171356,
+                128.32736572890025
+              ],
+              [
+                145.35038363171356,
+                411.17135549872125
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R02932",
+            "worker": "P003",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                139.27969348659005,
+                147.1264367816092
+              ],
+              [
+                139.27969348659005,
+                413.91570881226056
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R01956",
+            "worker": "P006",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                141.59822356974462,
+                119.06468019732864
+              ],
+              [
+                141.59822356974462,
+                416.21284486253165
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R02931",
+            "worker": "P012",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                139.27969348659005,
+                147.1264367816092
+              ],
+              [
+                139.27969348659005,
+                413.91570881226056
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R03196",
+            "worker": "P020",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              6,
+              7
+            ],
+            "points": [
+              [
+                145.60000000000002,
+                113.6
+              ],
+              [
+                145.60000000000002,
+                417.6
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R03194",
+            "worker": "P026",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                147.50757000392787,
+                110.70008912454973
+              ],
+              [
+                147.50757000392787,
+                411.1959714515167
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": null
+      },
+      {
+        "semantic_status": "glass_to_ceiling",
+        "known_upper_support": 2,
+        "original_pair_incidence": 2,
+        "sources": [
+          {
+            "id": "R02210",
+            "worker": "P004",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              1,
+              0
+            ],
+            "points": [
+              [
+                148.6257452530068,
+                114.53727157112453
+              ],
+              [
+                148.6257452530068,
+                413.1523010244134
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R00526",
+            "worker": "P023",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                146.15428756526512,
+                108.67407701383317
+              ],
+              [
+                146.15428756526512,
+                411.8811881188119
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": 111.60567429247885
+      },
+      {
+        "semantic_status": "low_glass_top",
+        "known_upper_support": 1,
+        "original_pair_incidence": 1,
+        "sources": [
+          {
+            "id": "R00144",
+            "worker": "P021",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                145.40278022424408,
+                147.24332174606994
+              ],
+              [
+                145.40278022424408,
+                406.7596763235182
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": 147.24332174606994
+      }
+    ],
+    "mixed_top_center_for_diagnostic_only": [
+      145.4027802242441,
+      119.06468019732864
+    ],
+    "no_single_upper_target_selected": true
+  },
+  {
+    "threshold_deg": 9,
+    "policy": "raw_MV",
+    "lower_geometric_group": "G000",
+    "lower_geometric_support": 9,
+    "full_pool_denominator": 15,
+    "user_same_lower_status": "tentative_only_for_three_listed_observations",
+    "upper_partitions": [
+      {
+        "semantic_status": "unknown_upper_target",
+        "known_upper_support": null,
+        "original_pair_incidence": 6,
+        "sources": [
+          {
+            "id": "R02930",
+            "worker": "P002",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              2,
+              3
+            ],
+            "points": [
+              [
+                145.35038363171356,
+                128.32736572890025
+              ],
+              [
+                145.35038363171356,
+                411.17135549872125
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R02932",
+            "worker": "P003",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                139.27969348659005,
+                147.1264367816092
+              ],
+              [
+                139.27969348659005,
+                413.91570881226056
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R01956",
+            "worker": "P006",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                141.59822356974462,
+                119.06468019732864
+              ],
+              [
+                141.59822356974462,
+                416.21284486253165
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R02931",
+            "worker": "P012",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                139.27969348659005,
+                147.1264367816092
+              ],
+              [
+                139.27969348659005,
+                413.91570881226056
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R03196",
+            "worker": "P020",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              6,
+              7
+            ],
+            "points": [
+              [
+                145.60000000000002,
+                113.6
+              ],
+              [
+                145.60000000000002,
+                417.6
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R03194",
+            "worker": "P026",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                147.50757000392787,
+                110.70008912454973
+              ],
+              [
+                147.50757000392787,
+                411.1959714515167
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": null
+      },
+      {
+        "semantic_status": "glass_to_ceiling",
+        "known_upper_support": 2,
+        "original_pair_incidence": 2,
+        "sources": [
+          {
+            "id": "R02210",
+            "worker": "P004",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              1,
+              0
+            ],
+            "points": [
+              [
+                148.6257452530068,
+                114.53727157112453
+              ],
+              [
+                148.6257452530068,
+                413.1523010244134
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R00526",
+            "worker": "P023",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                146.15428756526512,
+                108.67407701383317
+              ],
+              [
+                146.15428756526512,
+                411.8811881188119
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": 111.60567429247885
+      },
+      {
+        "semantic_status": "low_glass_top",
+        "known_upper_support": 1,
+        "original_pair_incidence": 1,
+        "sources": [
+          {
+            "id": "R00144",
+            "worker": "P021",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                145.40278022424408,
+                147.24332174606994
+              ],
+              [
+                145.40278022424408,
+                406.7596763235182
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": 147.24332174606994
+      }
+    ],
+    "mixed_top_center_for_diagnostic_only": [
+      145.4027802242441,
+      119.06468019732864
+    ],
+    "no_single_upper_target_selected": true
+  },
+  {
+    "threshold_deg": 9,
+    "policy": "strict_path_MV",
+    "lower_geometric_group": "G000",
+    "lower_geometric_support": 9,
+    "full_pool_denominator": 15,
+    "user_same_lower_status": "tentative_only_for_three_listed_observations",
+    "upper_partitions": [
+      {
+        "semantic_status": "unknown_upper_target",
+        "known_upper_support": null,
+        "original_pair_incidence": 6,
+        "sources": [
+          {
+            "id": "R02930",
+            "worker": "P002",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              2,
+              3
+            ],
+            "points": [
+              [
+                145.35038363171356,
+                128.32736572890025
+              ],
+              [
+                145.35038363171356,
+                411.17135549872125
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R02932",
+            "worker": "P003",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                139.27969348659005,
+                147.1264367816092
+              ],
+              [
+                139.27969348659005,
+                413.91570881226056
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R01956",
+            "worker": "P006",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                141.59822356974462,
+                119.06468019732864
+              ],
+              [
+                141.59822356974462,
+                416.21284486253165
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R02931",
+            "worker": "P012",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                139.27969348659005,
+                147.1264367816092
+              ],
+              [
+                139.27969348659005,
+                413.91570881226056
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R03196",
+            "worker": "P020",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              6,
+              7
+            ],
+            "points": [
+              [
+                145.60000000000002,
+                113.6
+              ],
+              [
+                145.60000000000002,
+                417.6
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R03194",
+            "worker": "P026",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                147.50757000392787,
+                110.70008912454973
+              ],
+              [
+                147.50757000392787,
+                411.1959714515167
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": null
+      },
+      {
+        "semantic_status": "glass_to_ceiling",
+        "known_upper_support": 2,
+        "original_pair_incidence": 2,
+        "sources": [
+          {
+            "id": "R02210",
+            "worker": "P004",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              1,
+              0
+            ],
+            "points": [
+              [
+                148.6257452530068,
+                114.53727157112453
+              ],
+              [
+                148.6257452530068,
+                413.1523010244134
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R00526",
+            "worker": "P023",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                146.15428756526512,
+                108.67407701383317
+              ],
+              [
+                146.15428756526512,
+                411.8811881188119
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": 111.60567429247885
+      },
+      {
+        "semantic_status": "low_glass_top",
+        "known_upper_support": 1,
+        "original_pair_incidence": 1,
+        "sources": [
+          {
+            "id": "R00144",
+            "worker": "P021",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                145.40278022424408,
+                147.24332174606994
+              ],
+              [
+                145.40278022424408,
+                406.7596763235182
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": 147.24332174606994
+      }
+    ],
+    "mixed_top_center_for_diagnostic_only": [
+      145.4027802242441,
+      119.06468019732864
+    ],
+    "no_single_upper_target_selected": true
+  },
+  {
+    "threshold_deg": 9,
+    "policy": "three_state_MV",
+    "lower_geometric_group": "G000",
+    "lower_geometric_support": 9,
+    "full_pool_denominator": 15,
+    "user_same_lower_status": "tentative_only_for_three_listed_observations",
+    "upper_partitions": [
+      {
+        "semantic_status": "unknown_upper_target",
+        "known_upper_support": null,
+        "original_pair_incidence": 6,
+        "sources": [
+          {
+            "id": "R02930",
+            "worker": "P002",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              2,
+              3
+            ],
+            "points": [
+              [
+                145.35038363171356,
+                128.32736572890025
+              ],
+              [
+                145.35038363171356,
+                411.17135549872125
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R02932",
+            "worker": "P003",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                139.27969348659005,
+                147.1264367816092
+              ],
+              [
+                139.27969348659005,
+                413.91570881226056
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R01956",
+            "worker": "P006",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                141.59822356974462,
+                119.06468019732864
+              ],
+              [
+                141.59822356974462,
+                416.21284486253165
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R02931",
+            "worker": "P012",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                139.27969348659005,
+                147.1264367816092
+              ],
+              [
+                139.27969348659005,
+                413.91570881226056
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R03196",
+            "worker": "P020",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              6,
+              7
+            ],
+            "points": [
+              [
+                145.60000000000002,
+                113.6
+              ],
+              [
+                145.60000000000002,
+                417.6
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R03194",
+            "worker": "P026",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                147.50757000392787,
+                110.70008912454973
+              ],
+              [
+                147.50757000392787,
+                411.1959714515167
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": null
+      },
+      {
+        "semantic_status": "glass_to_ceiling",
+        "known_upper_support": 2,
+        "original_pair_incidence": 2,
+        "sources": [
+          {
+            "id": "R02210",
+            "worker": "P004",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              1,
+              0
+            ],
+            "points": [
+              [
+                148.6257452530068,
+                114.53727157112453
+              ],
+              [
+                148.6257452530068,
+                413.1523010244134
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R00526",
+            "worker": "P023",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                146.15428756526512,
+                108.67407701383317
+              ],
+              [
+                146.15428756526512,
+                411.8811881188119
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": 111.60567429247885
+      },
+      {
+        "semantic_status": "low_glass_top",
+        "known_upper_support": 1,
+        "original_pair_incidence": 1,
+        "sources": [
+          {
+            "id": "R00144",
+            "worker": "P021",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                145.40278022424408,
+                147.24332174606994
+              ],
+              [
+                145.40278022424408,
+                406.7596763235182
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": 147.24332174606994
+      }
+    ],
+    "mixed_top_center_for_diagnostic_only": [
+      145.4027802242441,
+      119.06468019732864
+    ],
+    "no_single_upper_target_selected": true
+  },
+  {
+    "threshold_deg": 12,
+    "policy": "raw_MV",
+    "lower_geometric_group": "G000",
+    "lower_geometric_support": 9,
+    "full_pool_denominator": 15,
+    "user_same_lower_status": "tentative_only_for_three_listed_observations",
+    "upper_partitions": [
+      {
+        "semantic_status": "unknown_upper_target",
+        "known_upper_support": null,
+        "original_pair_incidence": 6,
+        "sources": [
+          {
+            "id": "R02930",
+            "worker": "P002",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              2,
+              3
+            ],
+            "points": [
+              [
+                145.35038363171356,
+                128.32736572890025
+              ],
+              [
+                145.35038363171356,
+                411.17135549872125
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R02932",
+            "worker": "P003",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                139.27969348659005,
+                147.1264367816092
+              ],
+              [
+                139.27969348659005,
+                413.91570881226056
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R01956",
+            "worker": "P006",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                141.59822356974462,
+                119.06468019732864
+              ],
+              [
+                141.59822356974462,
+                416.21284486253165
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R02931",
+            "worker": "P012",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                139.27969348659005,
+                147.1264367816092
+              ],
+              [
+                139.27969348659005,
+                413.91570881226056
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R03196",
+            "worker": "P020",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              6,
+              7
+            ],
+            "points": [
+              [
+                145.60000000000002,
+                113.6
+              ],
+              [
+                145.60000000000002,
+                417.6
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R03194",
+            "worker": "P026",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                147.50757000392787,
+                110.70008912454973
+              ],
+              [
+                147.50757000392787,
+                411.1959714515167
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": null
+      },
+      {
+        "semantic_status": "glass_to_ceiling",
+        "known_upper_support": 2,
+        "original_pair_incidence": 2,
+        "sources": [
+          {
+            "id": "R02210",
+            "worker": "P004",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              1,
+              0
+            ],
+            "points": [
+              [
+                148.6257452530068,
+                114.53727157112453
+              ],
+              [
+                148.6257452530068,
+                413.1523010244134
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R00526",
+            "worker": "P023",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                146.15428756526512,
+                108.67407701383317
+              ],
+              [
+                146.15428756526512,
+                411.8811881188119
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": 111.60567429247885
+      },
+      {
+        "semantic_status": "low_glass_top",
+        "known_upper_support": 1,
+        "original_pair_incidence": 1,
+        "sources": [
+          {
+            "id": "R00144",
+            "worker": "P021",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                145.40278022424408,
+                147.24332174606994
+              ],
+              [
+                145.40278022424408,
+                406.7596763235182
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": 147.24332174606994
+      }
+    ],
+    "mixed_top_center_for_diagnostic_only": [
+      145.4027802242441,
+      119.06468019732864
+    ],
+    "no_single_upper_target_selected": true
+  },
+  {
+    "threshold_deg": 12,
+    "policy": "strict_path_MV",
+    "lower_geometric_group": "G000",
+    "lower_geometric_support": 9,
+    "full_pool_denominator": 15,
+    "user_same_lower_status": "tentative_only_for_three_listed_observations",
+    "upper_partitions": [
+      {
+        "semantic_status": "unknown_upper_target",
+        "known_upper_support": null,
+        "original_pair_incidence": 6,
+        "sources": [
+          {
+            "id": "R02930",
+            "worker": "P002",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              2,
+              3
+            ],
+            "points": [
+              [
+                145.35038363171356,
+                128.32736572890025
+              ],
+              [
+                145.35038363171356,
+                411.17135549872125
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R02932",
+            "worker": "P003",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                139.27969348659005,
+                147.1264367816092
+              ],
+              [
+                139.27969348659005,
+                413.91570881226056
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R01956",
+            "worker": "P006",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                141.59822356974462,
+                119.06468019732864
+              ],
+              [
+                141.59822356974462,
+                416.21284486253165
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R02931",
+            "worker": "P012",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                139.27969348659005,
+                147.1264367816092
+              ],
+              [
+                139.27969348659005,
+                413.91570881226056
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R03196",
+            "worker": "P020",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              6,
+              7
+            ],
+            "points": [
+              [
+                145.60000000000002,
+                113.6
+              ],
+              [
+                145.60000000000002,
+                417.6
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R03194",
+            "worker": "P026",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                147.50757000392787,
+                110.70008912454973
+              ],
+              [
+                147.50757000392787,
+                411.1959714515167
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": null
+      },
+      {
+        "semantic_status": "glass_to_ceiling",
+        "known_upper_support": 2,
+        "original_pair_incidence": 2,
+        "sources": [
+          {
+            "id": "R02210",
+            "worker": "P004",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              1,
+              0
+            ],
+            "points": [
+              [
+                148.6257452530068,
+                114.53727157112453
+              ],
+              [
+                148.6257452530068,
+                413.1523010244134
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R00526",
+            "worker": "P023",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                146.15428756526512,
+                108.67407701383317
+              ],
+              [
+                146.15428756526512,
+                411.8811881188119
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": 111.60567429247885
+      },
+      {
+        "semantic_status": "low_glass_top",
+        "known_upper_support": 1,
+        "original_pair_incidence": 1,
+        "sources": [
+          {
+            "id": "R00144",
+            "worker": "P021",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                145.40278022424408,
+                147.24332174606994
+              ],
+              [
+                145.40278022424408,
+                406.7596763235182
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": 147.24332174606994
+      }
+    ],
+    "mixed_top_center_for_diagnostic_only": [
+      145.4027802242441,
+      119.06468019732864
+    ],
+    "no_single_upper_target_selected": true
+  },
+  {
+    "threshold_deg": 12,
+    "policy": "three_state_MV",
+    "lower_geometric_group": "G000",
+    "lower_geometric_support": 9,
+    "full_pool_denominator": 15,
+    "user_same_lower_status": "tentative_only_for_three_listed_observations",
+    "upper_partitions": [
+      {
+        "semantic_status": "unknown_upper_target",
+        "known_upper_support": null,
+        "original_pair_incidence": 6,
+        "sources": [
+          {
+            "id": "R02930",
+            "worker": "P002",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              2,
+              3
+            ],
+            "points": [
+              [
+                145.35038363171356,
+                128.32736572890025
+              ],
+              [
+                145.35038363171356,
+                411.17135549872125
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R02932",
+            "worker": "P003",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                139.27969348659005,
+                147.1264367816092
+              ],
+              [
+                139.27969348659005,
+                413.91570881226056
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R01956",
+            "worker": "P006",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                141.59822356974462,
+                119.06468019732864
+              ],
+              [
+                141.59822356974462,
+                416.21284486253165
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R02931",
+            "worker": "P012",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              0,
+              1
+            ],
+            "points": [
+              [
+                139.27969348659005,
+                147.1264367816092
+              ],
+              [
+                139.27969348659005,
+                413.91570881226056
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R03196",
+            "worker": "P020",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              6,
+              7
+            ],
+            "points": [
+              [
+                145.60000000000002,
+                113.6
+              ],
+              [
+                145.60000000000002,
+                417.6
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R03194",
+            "worker": "P026",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                147.50757000392787,
+                110.70008912454973
+              ],
+              [
+                147.50757000392787,
+                411.1959714515167
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": null
+      },
+      {
+        "semantic_status": "glass_to_ceiling",
+        "known_upper_support": 2,
+        "original_pair_incidence": 2,
+        "sources": [
+          {
+            "id": "R02210",
+            "worker": "P004",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              1,
+              0
+            ],
+            "points": [
+              [
+                148.6257452530068,
+                114.53727157112453
+              ],
+              [
+                148.6257452530068,
+                413.1523010244134
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          },
+          {
+            "id": "R00526",
+            "worker": "P023",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                146.15428756526512,
+                108.67407701383317
+              ],
+              [
+                146.15428756526512,
+                411.8811881188119
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": 111.60567429247885
+      },
+      {
+        "semantic_status": "low_glass_top",
+        "known_upper_support": 1,
+        "original_pair_incidence": 1,
+        "sources": [
+          {
+            "id": "R00144",
+            "worker": "P021",
+            "pair_index": 0,
+            "source_pair_index": 0,
+            "source_point_indices": [
+              7,
+              6
+            ],
+            "points": [
+              [
+                145.40278022424408,
+                147.24332174606994
+              ],
+              [
+                145.40278022424408,
+                406.7596763235182
+              ]
+            ],
+            "source_ring_confirmed": true,
+            "source_order_status": "human_confirmed"
+          }
+        ],
+        "upper_center_y": 147.24332174606994
+      }
+    ],
+    "mixed_top_center_for_diagnostic_only": [
+      145.4027802242441,
+      119.06468019732864
+    ],
+    "no_single_upper_target_selected": true
+  }
+]

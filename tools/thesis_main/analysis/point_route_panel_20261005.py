@@ -148,17 +148,18 @@ def synthetic_controls():
                     [(120., 390.)]*2+[(120., 430.)]*4+[(160., 390.)]*4)])
 
 
-def construct_panel(out):
-    plan = json.loads((OUT/'PLAN.json').read_text(encoding='utf-8'))
+def construct_panel(out, plan=None):
+    if plan is None:
+        plan = json.loads((OUT/'PLAN.json').read_text(encoding='utf-8'))
     source = json.loads((ROOT/'analysis_results/lee_expanded_20261003/source_input.json').read_text(encoding='utf-8'))
     source_images = {r['code']: r for r in source['images']}
     images, checks, all_workers = [], [], set()
     for code in plan['images']:
-        snapshot = json.loads((INPUT/'inputs'/f'{code}.json').read_text(encoding='utf-8'))
         image = source_images[code]
         current = {r['id']: r for r in image['annotations'] if r['independent'] and r['consensus_eligible']
                    and r['condition'] == 'manual' and r['main_consensus_gate']['status'] == 'main_candidate'}
-        records = snapshot['records']
+        records = (list(current.values()) if plan.get('roster_source') == 'current_source_input' else
+                   json.loads((INPUT/'inputs'/f'{code}.json').read_text(encoding='utf-8'))['records'])
         if set(current) != {r['id'] for r in records}:
             raise ValueError('full_roster_drift:'+code)
         fields_checked = 0
@@ -206,10 +207,11 @@ def construct_panel(out):
         note='Source inventory also contains historical references; only annotations and image IDs are accessed. This is an already-seen development panel, not a blinded experiment.'))
 
 
-def evaluate_panel(out):
+def evaluate_panel(out, reference_file=None):
     # Candidates are serialized first and reloaded here; references cannot select route, threshold or ring.
     data = json.loads((out/'candidates.json').read_text(encoding='utf-8'))
-    reference_file = json.loads((INPUT/'evaluation/references.json').read_text(encoding='utf-8'))
+    if reference_file is None:
+        reference_file = json.loads((INPUT/'evaluation/references.json').read_text(encoding='utf-8'))
     references = {}
     for item in reference_file['images']:
         refs = [r for r in item['references'] if r['version'] == 'original']
@@ -249,13 +251,14 @@ def evaluate_panel(out):
             rows.append(row)
     write_json(out/'evaluations.json', dict(schema='point_route_panel_evaluation_v1', rows=rows, lee=lee_rows,
         references=[dict(image=code, record=record) for code, record in references.items()],
-        interpretation='Post-construction original-reference discrepancies, not physical correctness or threshold calibration. Failures remain in all 80 attempts.'))
+        interpretation='Post-construction original-reference discrepancies, not physical correctness or threshold calibration. All attempted states remain.'))
     write_json(out/'field_contract.json', dict(schema='point_route_panel_v1',
-        candidates='All four fixed pools and 80 route/threshold states; original metadata, full identity members, center and adjacency diagnostics retained.',
-        controls='Three mechanism controls, each five thresholds times four routes; no synthetic reference scores.',
+        candidates='All fixed pools and route/threshold states declared in the saved plan; original metadata, full identity members, center and adjacency diagnostics retained.',
+        controls='Three mechanism controls, each planned threshold times four routes; no synthetic reference scores.',
         anchor_support='Votes establish only the anchor identity. Other endpoint coordinates use original paired partners; their spread can exceed the identity threshold.',
         split_support='top_support and bottom_support are marginal identity supports; joint_support counts original pair incidence, not votes for the generated coordinate; point_support_counts is null.',
         status='ok denotes existing computational checks only. Every generated ring is unconfirmed, including ok. geometry_review also retains a computable candidate; unavailable is not interpreted as no possible consensus.',
+        minimum_corners='2026-10-06 revised user direction: retain raw majority outputs without a four-pair gate. Report fewer-than-four pairs separately; structure-constrained candidates are a parallel research route, not changes to raw votes.',
         connection='New center-x ring only; source order unchanged. Direct and deletion-projected source adjacency are separate, neither establishes physical correctness.',
         geometry='BEV omission/extension h² and centroid h use camera-height units; no top score for Lee BEV. Uniform-longitude boundary px discrepancy applies only to single-valued rings; not nearest boundary distance or semantic matching.',
         reference='Only original version; no threshold, identity, ring or route selection by GT. Previously seen development panel, not holdout validation.'))

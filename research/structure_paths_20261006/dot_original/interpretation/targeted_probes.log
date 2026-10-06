@@ -1,0 +1,79 @@
+{
+  "range_cases": [
+    {
+      "base_depth_h": 20,
+      "donor_apex_depth_h": 40.0,
+      "footprint_addition_h2": 200.0
+    },
+    {
+      "base_depth_h": 20,
+      "donor_apex_depth_h": 200.0,
+      "footprint_addition_h2": 1800.0
+    },
+    {
+      "base_depth_h": 20,
+      "donor_apex_depth_h": 1000.0,
+      "footprint_addition_h2": 9800.0
+    }
+  ],
+  "joint_minimum": {
+    "lower": 7.031288735562073,
+    "upper": 7.031359109083215,
+    "parameter_t": 0.50004,
+    "grid_safety_bound": 7.03735211418418e-05
+  },
+  "side_distances": {
+    "top": {
+      "distance": {
+        "lower_deg": 0.2660260076989822,
+        "upper_deg": 0.2660477244062494,
+        "step_deg": 0.05,
+        "chord_error_bound": 1.895048573619107e-07,
+        "euclidean_interval": [
+          0.004643215064593241,
+          0.004643215081901566
+        ]
+      },
+      "gate_5deg": {
+        "status": "accept",
+        "reason": "sagitta_bounded_free_space",
+        "lower_deg": 0.0,
+        "upper_deg": 5.0,
+        "step_deg": 5.0,
+        "chord_error_bound": 0.0016742313058859537,
+        "vertices": [
+          4,
+          5
+        ]
+      }
+    },
+    "bottom": {
+      "distance": {
+        "lower_deg": 0.26869965108784283,
+        "upper_deg": 0.26872137642510063,
+        "step_deg": 0.05,
+        "chord_error_bound": 1.8958006675617867e-07,
+        "euclidean_interval": [
+          0.004689878892948583,
+          0.004689878910438821
+        ]
+      },
+      "gate_5deg": {
+        "status": "accept",
+        "reason": "sagitta_bounded_free_space",
+        "lower_deg": 0.0,
+        "upper_deg": 5.0,
+        "step_deg": 5.0,
+        "chord_error_bound": 0.001674895671037957,
+        "vertices": [
+          4,
+          5
+        ]
+      }
+    }
+  }
+}
+{
+  "shared_x_joint_lower_deg": 7.230336744978413,
+  "shared_x_grid_safety_deg": 0.0006539130404390528
+}

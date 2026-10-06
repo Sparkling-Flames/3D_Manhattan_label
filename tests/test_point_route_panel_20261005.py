@@ -3,6 +3,21 @@ import copy
 from tools.thesis_main.analysis.point_route_panel_20261005 import build_routes, synthetic_controls
 
 
+def test_four_pair_inputs_can_lose_one_identity_without_padding_raw_majority():
+    rows = copy.deepcopy(synthetic_controls()['top_dispersion'])
+    for row, x in zip(rows, (800., 860., 940.)):
+        row['points'] = [[v, y] for v in (128., 384., 640., x) for y in (120., 390.)]
+    assert all(len(row['points']) == 8 for row in rows)
+    routes = build_routes(rows, 1.)
+    for route, result in routes.items():
+        assert len(result['candidate']['points']) == 6, route
+        assert result['status'] == 'geometry_review', route
+        assert result['vote_denominator'] == 3
+    selected = [g for g in routes['paired']['identity_groups'] if g['selected']]
+    assert len(selected) == 3
+    assert sum(len(g['members']) for g in routes['paired']['identity_groups']) == 12
+
+
 def test_single_endpoint_dispersion_and_marginal_joint_support():
     controls = synthetic_controls()
     rows = controls['top_dispersion']
