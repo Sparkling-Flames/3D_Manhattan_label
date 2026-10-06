@@ -1,0 +1,33 @@
+{
+  "schema": "difficulty_consensus_regroup_v1",
+  "source_manifest": "analysis_results/research_input_20260929/manifest.json",
+  "sources": [
+    "analysis_results\\lee_expanded_20261003\\image_curves.csv",
+    "analysis_results\\worker_count_composition_20261006\\per_image.csv",
+    "analysis_results\\review_source_audit_20261004\\corrected_inventory\\input.json"
+  ],
+  "unit": "每组人员、每种投票规则仅一个Lee融合区域；本表对抽组结果的参考误差取期望。",
+  "distance": "E[area(C_k symmetric_difference G)] / area(G)；较小更近，只衡量BEV范围；不是1-IoU。",
+  "summary": "同一panel_n内固定图片，k从1到panel_n；图片等权均值/中位数，以及先楼内均值再楼间等权。",
+  "scope": "all、within_uNb、without_uNb；后两者仅为建筑构成敏感性检查。",
+  "roster": "至少8人且已有主质量结果的Manual图片；未知或待定难度保留，不补成三档。",
+  "scenes": "保留两个原始轴及交集。clear须显式not_oos+none；unflagged不代表已审核正常。",
+  "special_scenes": "全259图中已记录的OOS、难标门洞、待定OOS、可标门洞；不把GT远近直接解释为人员质量。",
+  "label_counts": {
+    "未记录": 152,
+    "未定": 6,
+    "中等": 31,
+    "简单": 53,
+    "困难": 17
+  },
+  "scene_counts": {
+    "clear": 22,
+    "doorway_difficult": 15,
+    "unflagged": 195,
+    "oos": 22,
+    "doorway_annotatable": 2,
+    "oos_and_doorway": 2,
+    "oos_pending": 1
+  },
+  "interpretation": "描述性初查，未建立难度预测或快/慢/远自动分类，不改原始标签或研究合同。"
+}
