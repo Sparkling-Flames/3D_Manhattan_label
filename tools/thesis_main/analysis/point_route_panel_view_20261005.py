@@ -5,8 +5,8 @@ import json
 import os
 from pathlib import Path
 
-from .lee_consensus_demos_20261003 import compact_paths, project_display_record, region_projection
-from .lee_tile_stage1_20261002 import ROOT
+from .layout_display_projection import compact_paths, project_display_record, region_projection
+from .research_artifact_io import ROOT
 
 
 def project(record):

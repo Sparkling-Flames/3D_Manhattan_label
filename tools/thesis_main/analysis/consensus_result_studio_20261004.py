@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 
 from tools.label_studio.panorama_studio.geometry import analyze
-from .lee_tile_stage1_20261002 import ROOT, write_json
+from .research_artifact_io import ROOT, write_json
 
 SOURCE = ROOT/'analysis_results/lee_consensus_demos_20261003/demos.json'
 OUT = ROOT/'analysis_results/consensus_result_studio_20261004'
@@ -53,7 +53,7 @@ def variant_for_cluster(cluster, workers, point_cache):
 
 def attach_global_results(out, results_path):
     """接入新全员点输出，保留原簇候选为诊断；不重算旧投票或更改点序。"""
-    from .lee_consensus_demos_20261003 import project_display_record
+    from .layout_display_projection import project_display_record
     text=(out/'data.js').read_text(encoding='utf-8')
     image_prefix,encoded=text.split('window.STUDIO_DATA=',1)
     payload=json.loads(encoded.rstrip(';\n'))

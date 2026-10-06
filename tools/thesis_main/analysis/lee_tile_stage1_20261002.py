@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter, defaultdict
-import csv
 from itertools import combinations
 import json
 from pathlib import Path
@@ -15,9 +14,9 @@ from shapely.errors import GEOSException
 from shapely.geometry import Polygon, mapping
 from shapely.ops import unary_union
 
-from tools.thesis_main.analysis.audit_supervisor_gt_sensitivity_20260922 import region_mesh
+from tools.thesis_main.analysis.region_mesh import region_mesh
+from tools.thesis_main.analysis.research_artifact_io import ROOT, write_csv, write_json
 
-ROOT = Path(__file__).resolve().parents[3]
 METHODS = ('mv50', 'mv_strict')
 GATES = {'main_candidate', 'oos_doorway_exploratory', 'stable_nonorthogonal_separate'}
 
@@ -160,16 +159,6 @@ def replay_group(group, *, permutations, seed):
                 mv50=bool(full['selections']['mv50'][i]), mv_strict=bool(full['selections']['mv_strict'][i]))))
     return dict(rows=rows, summary=summary, warnings=notices, full_tiles=features,
                 computed_unique_subsets=len(cache), failures=dict(Counter(v['error'] for v in cache.values() if 'error' in v)))
-
-
-def write_csv(path, rows):
-    with path.open('w', encoding='utf-8-sig', newline='') as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(rows[0]), lineterminator='\n')
-        writer.writeheader(); writer.writerows(rows)
-
-
-def write_json(path, value):
-    path.write_bytes((json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + '\n').encode('utf-8'))
 
 
 def run(input_path, out):

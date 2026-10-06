@@ -19,12 +19,25 @@ ROOT = Path(__file__).resolve().parents[3]
 PACKAGE = ROOT / 'analysis_results/panorama_research_received_20260921/original_package'
 SOURCE = PACKAGE.parent / 'local_recompute/source_work'
 OUT = ROOT / 'analysis_results/worker_cluster_sensitivity_20260921/numeric'
-sys.path.insert(0, str(PACKAGE / 'code'))
-import common as c
-c.configure(SOURCE)
-spec = importlib.util.spec_from_file_location('reference_replay', PACKAGE / 'code/02_replay.py')
+spec = importlib.util.spec_from_file_location(__name__ + '._common', PACKAGE / 'code/common.py')
+c = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(c)
+# Bind the data root without changing the importing application's search path.
+c.SOURCE = SOURCE.resolve()
+spec = importlib.util.spec_from_file_location(__name__ + '._reference_replay', PACKAGE / 'code/02_replay.py')
 ref = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(ref)
+# The unchanged frozen replay imports its sibling as the top-level name common.
+_missing = object()
+_previous_common = sys.modules.get('common', _missing)
+sys.modules['common'] = c
+try:
+    spec.loader.exec_module(ref)
+finally:
+    if _previous_common is _missing:
+        del sys.modules['common']
+    else:
+        sys.modules['common'] = _previous_common
+del _missing, _previous_common
 
 
 def subset(v, ix):
@@ -132,6 +145,7 @@ def target_panel_summary():
 
 def joint():
     """Joint deletion and equal-count random deletion, separate from primary run."""
+    c.configure(SOURCE)
     _, _, views, _, _ = c.load()
     selected = json.loads((OUT / 'selected.json').read_text())
     rng = np.random.default_rng(c.SEED+2); rows = []; scope = []
@@ -168,6 +182,7 @@ def joint():
 
 
 def main():
+    c.configure(SOURCE)
     OUT.mkdir(parents=True, exist_ok=True)
     plan = dict(source=str(SOURCE), cut=25.6, seed=c.SEED, orders=200, epsilon=.1, tail=3,
                 selection='Top 3 complete-linkage singleton fractions on original N>=8 images, minimum 20 observations; include W037 if absent.',

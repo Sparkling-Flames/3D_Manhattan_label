@@ -3,8 +3,7 @@ import ast
 import json
 
 from .difficulty_consensus_20261006 import OUT, REVIEW
-from .lee_tile_stage1_20261002 import ROOT
-from .worker_count_composition_20261006 import read_csv
+from .research_artifact_io import ROOT, read_csv
 
 
 def build():

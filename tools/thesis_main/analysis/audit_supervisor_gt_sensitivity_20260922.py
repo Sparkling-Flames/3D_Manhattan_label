@@ -9,11 +9,10 @@ import pandas as pd
 from scipy.optimize import linear_sum_assignment
 from scipy import sparse
 from scipy.sparse.linalg import lsqr
-from shapely import contains_xy
 from shapely.geometry import Polygon, Point
-from shapely.ops import polygonize, unary_union
 
 from . import reviewed_manual_20260921 as reviewed
+from .region_mesh import region_mesh
 from .shared_x_reanalysis_20260922 import shared_x, verify_raw, save
 from .materialize_model_gt_threshold_screen import _read_test_gt
 from .geometry_consensus.representation import normalize_geometry
@@ -105,17 +104,6 @@ def load_references():
             refs[iid] = versions
             audit.append(row)
     return refs, pd.DataFrame(audit)
-
-
-def region_mesh(polygons):
-    tiles = list(polygonize(unary_union([p.boundary for p in polygons])))
-    xy = np.array([[p.representative_point().x, p.representative_point().y] for p in tiles])
-    votes = np.array([contains_xy(p, xy[:, 0], xy[:, 1]) for p in polygons])
-    keep = votes.any(axis=0)
-    tiles = [p for p, use in zip(tiles, keep) if use]
-    a = np.array([p.area for p in tiles])
-    c = np.array([[p.centroid.x, p.centroid.y] for p in tiles])
-    return dict(tiles=tiles, votes=votes[:, keep], area=a, moment=a[:, None]*c)
 
 
 def region_score(mesh, selected, gt, intersections=None):

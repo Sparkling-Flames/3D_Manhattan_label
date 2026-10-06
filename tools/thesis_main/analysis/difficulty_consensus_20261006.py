@@ -3,8 +3,7 @@ from collections import Counter, defaultdict
 import json
 from statistics import mean, median
 
-from .lee_tile_stage1_20261002 import ROOT, write_csv, write_json
-from .worker_count_composition_20261006 import INVENTORY, read_csv
+from .research_artifact_io import ROOT, INVENTORY, read_csv, write_csv, write_json
 
 OUT = ROOT / 'analysis_results/difficulty_consensus_20261006'
 LABELS = ('简单', '中等', '困难')

@@ -55,3 +55,28 @@ def test_fixed_panel_does_not_drop_exhausted_image_from_add_one_mean():
         assert r['image_n'] == 2
         assert r['ref_symdiff_ref'] == pytest.approx(.2)
         assert r['add_one_symdiff_union'] is None
+
+
+def test_metrics_can_run_without_geometry_or_experiment_imports():
+    import subprocess
+    import sys
+
+    subprocess.run([sys.executable, '-c', """
+import sys
+sys.modules['shapely'] = None
+sys.modules['tools.thesis_main.analysis.worker_count_composition_20261006'] = None
+import numpy as np
+from tools.thesis_main.analysis.worker_count_metrics_20261006 import area_summary, summarize
+result = area_summary(np.array([2.]), np.array([1.]), 1., np.array([.5]))
+assert result['ref_symdiff_ref'] == 1.
+assert result['member_symdiff_union'] == .5
+assert summarize([], {}) == []
+"""], check=True)
+
+
+def test_experiment_preserves_existing_numeric_entry_points():
+    from tools.thesis_main.analysis import worker_count_composition_20261006 as experiment
+    from tools.thesis_main.analysis import worker_count_metrics_20261006 as metrics
+
+    for name in ('FIELDS', 'area_summary', 'fit_labels', 'feasible_compositions', 'summarize'):
+        assert getattr(experiment, name) is getattr(metrics, name)

@@ -7,8 +7,6 @@ from dataclasses import dataclass
 from functools import lru_cache
 import itertools, math
 import numpy as np
-from shapely.geometry import Polygon
-from shapely.ops import unary_union, polygonize
 
 @lru_cache(None, typed=True)
 def hg(N:int,c:int,k:int):
@@ -130,6 +128,9 @@ class Basis:
         return I/U if U>0 else 1.
 
 def make_basis(records,reference=None):
+    from shapely.geometry import Polygon
+    from shapely.ops import unary_union, polygonize
+
     if not records:raise ValueError('empty_roster')
     for key in ['id','worker']:
         v=[r.get(key) for r in records]

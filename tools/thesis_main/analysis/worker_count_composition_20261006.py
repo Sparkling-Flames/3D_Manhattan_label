@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import argparse
 from collections import defaultdict
-import csv
 import json
 from pathlib import Path
 import warnings
@@ -14,52 +13,20 @@ from research.worker_subtype_returns_20261004.pro.src.finite_pool import (
     marginal, coupled, next_member_loss,
 )
 from .lee_tile_precision_20261003 import integration_basis, subset_mask
-from .lee_tile_stage1_20261002 import ROOT, METHODS, write_csv, write_json
+from .lee_tile_stage1_20261002 import METHODS
+from .research_artifact_io import ROOT, INVENTORY, read_csv, write_csv, write_json
 from .research_round_20260929 import prepare_record, reconstruct
+from .worker_count_metrics_20261006 import (
+    FIELDS, area_summary, fit_labels, feasible_compositions, summarize,
+)
 
 OUT = ROOT / 'analysis_results/worker_count_composition_20261006'
 PROFILES = ROOT / 'analysis_results/worker_profiles_20261003'
-INVENTORY = ROOT / 'analysis_results/review_source_audit_20261004/corrected_inventory/input.json'
-FIELDS = ('omission_ref', 'extension_ref', 'ref_symdiff_ref', 'member_symdiff_union',
-          'squared_bias_union', 'add_one_symdiff_union', 'next_person_loss_union', 'higher_fraction')
-
-
-def read_csv(path):
-    with path.open(encoding='utf-8-sig', newline='') as f:
-        return list(csv.DictReader(f))
-
-
-def fit_labels(rows, workers, target_building):
-    train = [r for r in rows if r['building'] != target_building]
-    scores = np.array([[float(r[w]) for w in workers] for r in train]).mean(axis=0)
-    ordered = np.sort(scores)
-    mid = len(workers)//2
-    if np.isclose(ordered[mid-1], ordered[mid], rtol=0, atol=1e-12):
-        raise ValueError('calibration_cutoff_tie')
-    return dict(zip(workers, (scores > np.median(scores)).tolist())), [r['image'] for r in train]
-
-
-def feasible_compositions(higher_n, lower_n, k):
-    low, high = max(0, k-lower_n), min(k, higher_n)
-    return dict(lower_rich=low, balanced=min(high, max(low, k//2)), higher_rich=high)
 
 
 def probabilities(patterns, masks, sizes, draws, method):
     return np.array([marginal(sizes, tuple((int(p) & m).bit_count() for m in masks),
                               draws, method) for p in patterns])
-
-
-def area_summary(area, inside, reference_area, q):
-    omission = float(reference_area - inside @ q)
-    extension = float((area-inside) @ q)
-    variance = float(area @ (q*(1-q)))
-    union = float(area.sum())
-    return dict(omission_h2=omission, extension_h2=extension,
-                ref_symdiff_h2=omission+extension, member_symdiff_h2=2*variance,
-                omission_ref=omission/reference_area, extension_ref=extension/reference_area,
-                ref_symdiff_ref=(omission+extension)/reference_area,
-                member_symdiff_union=2*variance/union,
-                squared_bias_union=(omission+extension-variance)/union)
 
 
 def collect():
@@ -114,36 +81,6 @@ def collect():
     return dict(schema='worker_count_composition_input_v1',
                 source_manifest='analysis_results/research_input_20260929/manifest.json',
                 groups=groups, coverage=coverage, warnings=notices)
-
-
-def summarize(rows, panels):
-    output = []
-    for panel, (images, limit) in panels.items():
-        paired = {r['image'] for r in rows if r['image'] in images and r['version']=='manual_revision'}
-        for suffix, pool, versions in [('', images, ('original',)),
-                                       ('_dualref', paired, ('original', 'manual_revision'))]:
-            buckets = defaultdict(list)
-            for r in rows:
-                if r['image'] in pool and r['k'] <= limit and r['version'] in versions:
-                    key = tuple(r[k] for k in ('scenario','policy','method','version','k','strategy'))
-                    buckets[key].append(r)
-            for key, members in buckets.items():
-                for weighting in ('image', 'building'):
-                    row = dict(zip(('scenario','policy','method','version','k','strategy'), key))
-                    row.update(panel=panel+suffix, max_k=limit, weighting=weighting,
-                               image_n=len(members), building_n=len({r['building'] for r in members}),
-                               images='|'.join(sorted(r['image'] for r in members)))
-                    for field in FIELDS:
-                        valid = [r for r in members if r.get(field) is not None]
-                        if not valid or (field in ('add_one_symdiff_union','next_person_loss_union') and len(valid)!=len(members)):
-                            row[field] = None
-                        elif weighting=='image':
-                            row[field] = float(np.mean([r[field] for r in valid]))
-                        else:
-                            bs = {r['building'] for r in valid}
-                            row[field] = float(np.mean([np.mean([r[field] for r in valid if r['building']==b]) for b in bs]))
-                    output.append(row)
-    return output
 
 
 def image_effects(rows, coverage, out):
