@@ -1,6 +1,16 @@
 # HOHONET 项目地图
 
-2026-10-06发布交接入口：[Pro对应替代与上下目标分离任务](../research/point_route_review_20261006/README.md)；具体历史段落的“未提交”记录保留，当前发布范围以此入口及Git清单为准。
+统一研究解释：[人员、图片与融合不确定性模型](thesis_main/研究模型_人员图片与融合不确定性_20261006.md)，[术语](thesis_main/CONTEXT.md)；数据、单人质量、团队抽组、融合输出与评价一一连接。[10/6返回包](../research/fast_research_return_20261006/README.md)保存Pro完整原件、dot直接研究证据和独立取舍。
+
+统一研究解释：[人员、图片与融合不确定性模型](thesis_main/研究模型_人员图片与融合不确定性_20261006.md)，[术语](thesis_main/CONTEXT.md)；数据、单人质量、团队抽组、融合输出与评价一一连接。[10/6返回包](../research/fast_research_return_20261006/README.md)保存Pro完整原件、dot直接研究证据和独立取舍。
+
+2026-10-06难度补充：[原始8图导出](../analysis_results/difficulty_consensus_20261006/user_review.json)与[更新分析](../analysis_results/difficulty_consensus_20261006/updated/REPORT.md)，由`tools/thesis_main/analysis/update_difficulty_review_20261006.py`接入；只重汇总已有融合结果，旧标签与历史报告保留。
+
+2026-10-06人员与人数实算：[高人数与构成结论](../analysis_results/worker_count_composition_20261006/CONCLUSIONS.md)，工具`tools/thesis_main/analysis/worker_count_composition_20261006.py`；复用有限池概率，保存57图积分基底和固定面板结果，不修改源资格。[人工难度初查](../analysis_results/difficulty_consensus_20261006/REPORT.md)由`tools/thesis_main/analysis/difficulty_consensus_20261006.py`重汇总已有结果；保留OOS／门洞独立状态。[8图难度补标台](../analysis_results/difficulty_consensus_20261006/index.html)由`tools/thesis_main/analysis/build_difficulty_review_20261006.py`复用旧候选图片台生成。
+
+2026-10-06本轮建议：[精简推进与Pro并行交接](../research/fast_research_handoff_20261006/README.md)，含最新独立判断、子智能体审查、九图精选返回和12图质量原图；限定下一轮工作，不修改研究合同。
+
+2026-10-06当前接手入口：[完整研究交接](thesis_main/线程交接_连线质量与完整共识_20261004.md)与[研究数据说明](thesis_main/研究数据说明_来源预处理与用途_20261006.md)。记录研究原意、已有证据和数据用途，不指定主推进路线；历史方案／Pro任务书不自动成为当前待办，本地材料不等于远端已发布。
 
 更新：2026-10-03。规范版本 `consensus_research_20260923_v1`，唯一当前方法真源为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`。本地图只说明位置与用途，不定义方法、资格或阈值。
 
@@ -25,8 +35,9 @@
 
 - [10月5日Pro共识可靠性返回独立审查](../analysis_results/layout_reliability_review_20261005/REPORT.md)：源绑定、包络与来源缺陷、排序补查及减法候选下一步；外部原件和运行算法未改。
 - [共识可靠性后续方案与Pro深研资料](thesis_main/研究推进方案_共识可靠性与Pro深研_20261004.md)：本阶段完成条件、研究问题与创新边界；[交接包](../research/layout_foundations_handoff_20261004/README.md)含最新Pro／dot原件及四图66份完整当前名单，GT分离；只交接资料，未新增融合实验。
-- [下一线程完整交接：连线、质量与完整共识](thesis_main/线程交接_连线质量与完整共识_20261004.md)：最新优先级、跨线程证据、算法与数据入口、已知缺陷、Pro分工、未提交边界及具体接续任务。
-- [人员子类与完整共识返回审查](../analysis_results/worker_subtype_review_20261004/REPORT.md)、[Pro／dot精选归档](../research/worker_subtype_returns_20261004/README.md)：数值复核、认证反例和点身份并列提示；当前优先回到连线、质量与共识基础，跨线程进度和后续安排统一见研究方向。
+- [完整研究交接：原意、证据与状态](thesis_main/线程交接_连线质量与完整共识_20261004.md)：用户原意、GT与人工审核、人员／难度／算法进度、已有判断及未决事项，不指定主推进路线。
+- [研究数据说明：来源、预处理与用途](thesis_main/研究数据说明_来源预处理与用途_20261006.md)：原始真源、当前统一包、共享x与环序、GT／评论／难度／模型数据、各实验名单和派生输出的区别。
+- [人员子类与完整共识返回审查](../analysis_results/worker_subtype_review_20261004/REPORT.md)、[Pro／dot精选归档](../research/worker_subtype_returns_20261004/README.md)：数值复核、认证反例和点身份并列提示；这是带日期的历史审查；完整研究状态见当前交接，不从本入口指定后续安排。
 - [人审来源到分析输入核查](../analysis_results/review_source_audit_20261004/REPORT.md)：后审traits与明确原话难度消费修复，`corrected_inventory/`为当前盘点，`pipeline/`为只读绑定审查；旧研究数值保留，难度分组需重新汇总。
 - [完整共识并行研究交接](../research/full_layout_consensus_handoff_20261003/README.md)：复用现有固定输入、历史人工审核及代码，不复制重复包；本地与Chat Pro分工、汇合交付和目标提示词。
 - [全员点对融合137图基础研究](../analysis_results/global_pair_consensus_20261004/REPORT.md)：全员跨点数、三阈值两规则、来源与连接诊断；`global_pair_consensus_20261004.py` 与 `global_pair_study_20261004.py`，默认工作台已接全员结果。
@@ -40,7 +51,7 @@
 | 用途 | 路径 |
 |---|---|
 | Pro 方法与 dot 审核资料 | `research/layout_methods_review_20261001/`：精选外部报告、源码、结果及反例，非正式算法入口 |
-| 当前研究方向 | `docs/thesis_main/研究方向_空间差异与共识_20260930.md`：BEV表示、质量评价与Lee融合；136图扩展及共同人员画像／固定4人构成基础已完成，接续深度研究 |
+| 研究对象与算法职责 | `docs/thesis_main/研究方向_空间差异与共识_20260930.md`：原意与职责索引；主推进路线暂不规定 |
 | 连线与表示阶段1 | `docs/thesis_main/布局表示地基与坐标核验_20260930.md`；工具 `tools/thesis_main/analysis/layout_foundation_20260930.py`；全量表示清点 `analysis_results/layout_foundation_20260930/`，不修改资格或选择权重 |
 | 阶段2小型指标响应 | `tools/thesis_main/analysis/layout_metric_response_20261001.py`；`analysis_results/layout_metric_response_20261001/REPORT.md`及机器结果/字段合同/固定计划；74合成对照与12图描述，非全量研究或方法定案 |
 | 排序后3D质量增量 | `tools/thesis_main/analysis/layout_3d_quality_probe_20261002.py`；`analysis_results/layout_3d_quality_probe_20261002/REPORT.md`；12图全部作答和17份改序，墙高/方向/水平顶面模型体积诊断，不改变资格或正式评分 |

@@ -1,9 +1,19 @@
 # HOHONET 文档入口
 
-2026-10-06发布交接入口：[Pro对应替代与上下目标分离任务](../research/point_route_review_20261006/README.md)；具体历史段落的“未提交”记录保留，当前发布范围以此入口及Git清单为准。
+当前解释入口：[统一研究模型：人员、图片与融合不确定性](thesis_main/研究模型_人员图片与融合不确定性_20261006.md) → [术语](thesis_main/CONTEXT.md) → [数据说明](thesis_main/研究数据说明_来源预处理与用途_20261006.md)。包含条件、量、已实现／待验证状态和准确数据入口；[Pro／dot返回与独立取舍](../research/fast_research_return_20261006/README.md)已本地归档。以下保留各阶段结果，不以旧建议覆盖当前模型。
+
+当前解释入口：[统一研究模型：人员、图片与融合不确定性](thesis_main/研究模型_人员图片与融合不确定性_20261006.md) → [术语](thesis_main/CONTEXT.md) → [数据说明](thesis_main/研究数据说明_来源预处理与用途_20261006.md)。包含条件、量、已实现／待验证状态和准确数据入口；[Pro／dot返回与独立取舍](../research/fast_research_return_20261006/README.md)已本地归档。以下保留各阶段结果，不以旧建议覆盖当前模型。
+
+2026-10-06补标已接收：[8图补标后的共同24人十图结果](../analysis_results/difficulty_consensus_20261006/updated/REPORT.md)，全库有效难度增至109图；原备注及OOS／门洞独立判断保留。
+
+2026-10-06人员与人数实算：[高人数与构成结论](../analysis_results/worker_count_composition_20261006/CONCLUSIONS.md)，39图Manual、18图Semi，逐图至24人及楼外构成比较；固定图片分母，零换组波动不作为最佳人数。[单一融合与人工难度初查](../analysis_results/difficulty_consensus_20261006/REPORT.md)连接52图既有难度，OOS与门洞交界分开；[8图难度补标台](../analysis_results/difficulty_consensus_20261006/index.html)复用原候选图片审查台。
+
+2026-10-06本轮建议：[精简推进与Pro并行交接](../research/fast_research_handoff_20261006/README.md)，含最新独立判断、子智能体审查和本地资料；限定下一轮工作，不修改研究合同。
+
+2026-10-06当前接手入口：[完整研究交接](thesis_main/线程交接_连线质量与完整共识_20261004.md)与[研究数据说明](thesis_main/研究数据说明_来源预处理与用途_20261006.md)。记录研究原意、已有证据和数据用途，不指定主推进路线；历史方案／Pro任务书不自动成为当前待办，本地材料不等于远端已发布。
 
 <!-- CURRENT_RESEARCH: consensus_research_20260923_v1 -->
-当前研究规范为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`，版本 `consensus_research_20260923_v1`。当前优先核清连线／空间表示、分项质量评价和完整共识；Lee区域投票与上下点融合并行。已有136图人数曲线、人员画像及组合实验保留，人员分类、难度联系与同房预测后移。
+当前研究规范为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`，版本 `consensus_research_20260923_v1`。研究原意和状态见接手入口；下一轮有限工作建议见上方并行交接，旧阶段优先级不自动延续。
 
 ## 规范与执行
 
@@ -50,8 +60,9 @@
 
 - [10月5日Pro共识可靠性返回独立审查](../analysis_results/layout_reliability_review_20261005/REPORT.md)：66份输入与四GT源绑定、24测试、两个实现缺陷及真实影响核验；补查17个小差排序，保留减法空间候选的独立目标。
 - [共识可靠性后续方案与Pro深研资料](thesis_main/研究推进方案_共识可靠性与Pro深研_20261004.md)：本阶段完成条件、研究问题与创新边界；[交接包](../research/layout_foundations_handoff_20261004/README.md)含最新Pro／dot原件及四图66份完整当前名单，GT分离；只交接资料，未新增融合实验。
-- [下一线程完整交接：连线、质量与完整共识](thesis_main/线程交接_连线质量与完整共识_20261004.md)：最新优先级、跨线程证据、算法与数据入口、已知缺陷、Pro分工、未提交边界及具体接续任务。
-- [人员子类与完整共识返回审查](../analysis_results/worker_subtype_review_20261004/REPORT.md)、[Pro／dot精选归档](../research/worker_subtype_returns_20261004/README.md)：数值复核、认证反例和点身份并列提示；当前优先回到连线、质量与共识基础，跨线程进度和后续安排统一见研究方向。
+- [完整研究交接：原意、证据与状态](thesis_main/线程交接_连线质量与完整共识_20261004.md)：用户原意、GT与人工审核、人员／难度／算法进度、已有判断及未决事项，不指定主推进路线。
+- [研究数据说明：来源、预处理与用途](thesis_main/研究数据说明_来源预处理与用途_20261006.md)：原始真源、当前统一包、共享x与环序、GT／评论／难度／模型数据、各实验名单和派生输出的区别。
+- [人员子类与完整共识返回审查](../analysis_results/worker_subtype_review_20261004/REPORT.md)、[Pro／dot精选归档](../research/worker_subtype_returns_20261004/README.md)：数值复核、认证反例和点身份并列提示；这是带日期的历史审查；完整研究状态见当前交接，不从本入口指定后续安排。
 - [完整共识并行研究交接](../research/full_layout_consensus_handoff_20261003/README.md)：本地负责当前输入与原图核对、融合环序和既有Lee稳定性；Chat Pro研究完整共识、阈值、对应及连接，附目标提示词和已跟踪资料入口。
 - [全员点对融合137图基础研究](../analysis_results/global_pair_consensus_20261004/REPORT.md)：全员跨点数、三阈值两规则、来源与连接诊断；`global_pair_consensus_20261004.py` 与 `global_pair_study_20261004.py`，默认工作台已接全员结果。
 - [完整layout Pro返回独立审查](../research/full_layout_pro_review_20261004/REVIEW.md)：精简原包、384状态独立复算、来源绑定、认证对应不一致反例；源码仅作研究参考。
@@ -68,7 +79,7 @@
 - [排序后的3D质量增量实验](../analysis_results/layout_3d_quality_probe_20261002/REPORT.md)：既有12图全部作答、17份改序对照；默认环按预处理共享x排序，墙高/方向与模型体积为探索诊断。
 - [阶段2最小当前快照](../research/pro_layout_metric_response_20261001/README.md)：独立复算嵌入的74参数对照、15个有参考比较及9条缺失记录；不重建选样或原始源表，不覆盖9/29历史包。
 
-- [当前研究方向：BEV、质量评价与人员共识](thesis_main/研究方向_空间差异与共识_20260930.md)：表示、指标、融合与人数曲线的职责；A线扩图和B线画像／4人构成基础已完成，接续独立深度研究。
+- [研究对象与算法职责](thesis_main/研究方向_空间差异与共识_20260930.md)：人员、图片条件、表示、衡量、共识和空间候选的职责与证据索引，不规定任务顺序。
 
 - [9/29数值研究包](../research/pro_layout_20260929/README.md)：来源、源码和历史基线；其中阶段任务书不覆盖当前推进台账。
 

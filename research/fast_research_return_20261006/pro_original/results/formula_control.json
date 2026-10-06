@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "scope": "one footprint pair, common floor, two height settings",
+  "formula": "I*min(Ha,Hg)/(Aa*Ha+Ag*Hg-I*min(Ha,Hg))",
+  "results": [
+    {
+      "height_a": 2,
+      "height_g": 2,
+      "bev_iou": 0.6,
+      "direct_unit_cube_iou": 0.6,
+      "prism_formula_iou": 0.6
+    },
+    {
+      "height_a": 2,
+      "height_g": 3,
+      "bev_iou": 0.6,
+      "direct_unit_cube_iou": 0.42857142857142855,
+      "prism_formula_iou": 0.42857142857142855
+    }
+  ]
+}

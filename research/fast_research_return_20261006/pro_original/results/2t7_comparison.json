@@ -1,0 +1,58 @@
+{
+  "image": "2t7WUuJeko7-06",
+  "sampling_columns": 8192,
+  "results": [
+    {
+      "method": "lee",
+      "area_h2": 1.587876922026489,
+      "bev_iou": 0.8315891468753993,
+      "missing_over_gt": 0.0,
+      "excess_over_gt": 0.20251689642341403,
+      "valid": true,
+      "camera_inside": true,
+      "geometry_type": "Polygon",
+      "hole_count": 0,
+      "boundary_node_count": 11
+    },
+    {
+      "method": "exact",
+      "area_h2": 1.5878769220264892,
+      "bev_iou": 0.8315891468753993,
+      "missing_over_gt": 0.0,
+      "excess_over_gt": 0.20251689642341386,
+      "valid": true,
+      "camera_inside": true,
+      "geometry_type": "Polygon",
+      "hole_count": 0,
+      "boundary_node_count": 25,
+      "status": "ok",
+      "upper_mae_deg": 1.4131183595953924,
+      "lower_mae_deg": 2.634107837653831,
+      "upper_signed_deg": -0.1668640595211139,
+      "lower_signed_deg": -2.634107837653831,
+      "upper_p95_deg": 3.0678073491208435,
+      "lower_p95_deg": 5.24018487967483,
+      "pair_count": 25
+    },
+    {
+      "method": "point",
+      "area_h2": 1.5512008776093467,
+      "bev_iou": 0.8512509462773057,
+      "missing_over_gt": 0.0,
+      "excess_over_gt": 0.1747417190820221,
+      "valid": true,
+      "camera_inside": true,
+      "geometry_type": "Polygon",
+      "hole_count": 0,
+      "boundary_node_count": 4,
+      "status": "ok",
+      "upper_mae_deg": 1.3197322487433167,
+      "lower_mae_deg": 2.2548390651317103,
+      "upper_signed_deg": -0.3267409251093309,
+      "lower_signed_deg": -2.2548390651317103,
+      "upper_p95_deg": 2.949908500392799,
+      "lower_p95_deg": 4.8694707026654935,
+      "pair_count": 4
+    }
+  ]
+}
