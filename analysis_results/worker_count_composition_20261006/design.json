@@ -1,0 +1,15 @@
+{
+  "schema": "worker_count_composition_v1",
+  "contract": "consensus_research_20260923_v1",
+  "min_n": 16,
+  "uniform": "每图1到N；有限池中均匀无放回抽k人；Manual与Semi分开",
+  "composition": "Manual：每个偶数k及全池N；可行最低/约半/最高上半组人数；不删除人员补成相同比例",
+  "calibration": "既有24人10图，目标整栋剔除；新建筑用全部10图。原GT与修订优先分别校准。",
+  "policies": [
+    "mv50",
+    "mv_strict"
+  ],
+  "inference": "固定观测池的解析期望，无MC；不估计总体能力、最佳人数或停止规则",
+  "sampling": "同k换组为两次独立抽组，允许成员重叠；增一人为原组加一名未入组成员",
+  "references": "原GT为主，已有修订GT在相同图片上并列；不选更高分参考"
+}
