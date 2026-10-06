@@ -1,0 +1,237 @@
+[
+  {
+    "control": "pure_subdivision",
+    "factor": 2,
+    "fixed_status": "witnessed",
+    "event_status": "witnessed",
+    "full_event_signature_equal": true,
+    "all_source_points_retained": true
+  },
+  {
+    "control": "pure_subdivision",
+    "factor": 4,
+    "fixed_status": "not_witnessed",
+    "event_status": "witnessed",
+    "full_event_signature_equal": true,
+    "all_source_points_retained": true
+  },
+  {
+    "control": "pure_subdivision",
+    "factor": 8,
+    "fixed_status": "not_witnessed",
+    "event_status": "witnessed",
+    "full_event_signature_equal": true,
+    "all_source_points_retained": true
+  },
+  {
+    "control": "real_short_bump",
+    "turn_retained": true,
+    "original": {
+      "id": "B",
+      "worker": "B",
+      "points": [
+        [
+          384.0,
+          190.60688277729037
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          512.0,
+          167.92890965034996
+        ],
+        [
+          512.0,
+          331.55955287416225
+        ],
+        [
+          640.0,
+          190.60688277729037
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          190.60688277729037
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          190.60688277729037
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "condition": "manual",
+      "image": "synthetic_control",
+      "evidence_kind": "synthetic_control_not_person",
+      "independent": true,
+      "consensus_eligible": true,
+      "source_pair_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "source_point_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "ring_confirmed": true,
+      "order_status": "given_synthetic_order"
+    },
+    "event_map": {
+      "events": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "vertices": [
+        {
+          "processed_pair_index": 0,
+          "turn_deg": {
+            "top": 42.66598396004857,
+            "bottom": 36.86817884121132
+          },
+          "event_sides": [
+            "top",
+            "bottom"
+          ],
+          "near_tolerance_sides": []
+        },
+        {
+          "processed_pair_index": 1,
+          "turn_deg": {
+            "top": 0.0029477351623483057,
+            "bottom": 0.0025622426656697955
+          },
+          "event_sides": [
+            "top",
+            "bottom"
+          ],
+          "near_tolerance_sides": []
+        },
+        {
+          "processed_pair_index": 2,
+          "turn_deg": {
+            "top": 42.66598396004857,
+            "bottom": 36.86817884121132
+          },
+          "event_sides": [
+            "top",
+            "bottom"
+          ],
+          "near_tolerance_sides": []
+        },
+        {
+          "processed_pair_index": 3,
+          "turn_deg": {
+            "top": 42.66792549410839,
+            "bottom": 36.86989764584404
+          },
+          "event_sides": [
+            "top",
+            "bottom"
+          ],
+          "near_tolerance_sides": []
+        },
+        {
+          "processed_pair_index": 4,
+          "turn_deg": {
+            "top": 42.66792549410839,
+            "bottom": 36.86989764584404
+          },
+          "event_sides": [
+            "top",
+            "bottom"
+          ],
+          "near_tolerance_sides": []
+        }
+      ],
+      "status": "resolved_numeric_domain",
+      "all_source_vertices_retained": true,
+      "metric": "pair",
+      "edge_issues": {
+        "top": [],
+        "bottom": []
+      }
+    }
+  },
+  {
+    "control": "same_lower_distinct_upper",
+    "bottom": {
+      "status": "accept",
+      "reason": "sagitta_bounded_free_space",
+      "lower_deg": 0.0,
+      "upper_deg": 5.0,
+      "step_deg": 5.0,
+      "chord_error_bound": 0.0017682306567761152,
+      "vertices": [
+        11,
+        11
+      ]
+    },
+    "top": {
+      "status": "reject",
+      "reason": "endpoint_lower_bound",
+      "lower_deg": 18.07840589682975,
+      "upper_deg": null
+    },
+    "pair_rule_does_not_copy_bottom_evidence_to_upper": true
+  },
+  {
+    "control": "seam_near_repeated_motifs",
+    "given_distinct_identities_only_for_control": true,
+    "path_checks": {
+      "top": {
+        "status": "accept",
+        "reason": "sagitta_bounded_free_space",
+        "lower_deg": 2.1295586487510394,
+        "upper_deg": 5.0,
+        "step_deg": 5.0,
+        "chord_error_bound": 0.0009913966230630233,
+        "vertices": [
+          3,
+          3
+        ]
+      },
+      "bottom": {
+        "status": "accept",
+        "reason": "sagitta_bounded_free_space",
+        "lower_deg": 2.0368476738199317,
+        "upper_deg": 5.0,
+        "step_deg": 5.0,
+        "chord_error_bound": 0.0009250406969576463,
+        "vertices": [
+          3,
+          3
+        ]
+      }
+    },
+    "demonstrates_geometric_acceptance_not_identity_proof": true
+  },
+  {
+    "control": "zero_length_arc",
+    "domain_status": "unresolved_degenerate_domain"
+  }
+]

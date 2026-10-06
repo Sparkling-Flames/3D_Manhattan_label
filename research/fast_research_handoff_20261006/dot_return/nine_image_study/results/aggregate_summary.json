@@ -1,0 +1,107 @@
+{
+  "policy_totals": [
+    {
+      "policy": "raw",
+      "selected_pairs": 102,
+      "covered_observations": 1491,
+      "below_four_images_by_gate": {
+        "5": 6,
+        "9": 5,
+        "12": 5
+      },
+      "known_false_splits": 6,
+      "known_false_merges": 2,
+      "lost_unknown": 0,
+      "new_unknown": 0
+    },
+    {
+      "policy": "fixed_strict",
+      "selected_pairs": 52,
+      "covered_observations": 654,
+      "below_four_images_by_gate": {
+        "5": 7,
+        "9": 6,
+        "12": 5
+      },
+      "known_false_splits": 7,
+      "known_false_merges": 0,
+      "lost_unknown": 8161,
+      "new_unknown": 377
+    },
+    {
+      "policy": "fixed_three_state",
+      "selected_pairs": 77,
+      "covered_observations": 1002,
+      "below_four_images_by_gate": {
+        "5": 7,
+        "9": 5,
+        "12": 5
+      },
+      "known_false_splits": 7,
+      "known_false_merges": 0,
+      "lost_unknown": 3960,
+      "new_unknown": 339
+    },
+    {
+      "policy": "event_strict",
+      "selected_pairs": 50,
+      "covered_observations": 624,
+      "below_four_images_by_gate": {
+        "5": 7,
+        "9": 6,
+        "12": 5
+      },
+      "known_false_splits": 5,
+      "known_false_merges": 0,
+      "lost_unknown": 8169,
+      "new_unknown": 272
+    },
+    {
+      "policy": "event_three_state",
+      "selected_pairs": 76,
+      "covered_observations": 995,
+      "below_four_images_by_gate": {
+        "5": 7,
+        "9": 5,
+        "12": 5
+      },
+      "known_false_splits": 5,
+      "known_false_merges": 0,
+      "lost_unknown": 4353,
+      "new_unknown": 358
+    }
+  ],
+  "evidence": {
+    "fixed": {
+      "statuses": {
+        "not_witnessed": 9826,
+        "witnessed": 9893,
+        "numerically_unresolved": 12
+      },
+      "contexts": {
+        "no_comparable_two_sided_anchor_path": 8490,
+        "all_proposed_two_sided_paths_disagree": 1336,
+        "positive_path_witness": 9893,
+        "numeric_undetermined": 12
+      }
+    },
+    "event": {
+      "statuses": {
+        "not_witnessed": 9512,
+        "witnessed": 10207,
+        "numerically_unresolved": 12
+      },
+      "contexts": {
+        "no_comparable_two_sided_anchor_path": 7135,
+        "all_proposed_two_sided_paths_disagree": 2377,
+        "positive_path_witness": 10207,
+        "numeric_undetermined": 12
+      }
+    }
+  },
+  "denominators": {
+    "same_relation_gate_checks": 18,
+    "different_relation_gate_checks": 12
+  },
+  "caution": "gate-state counts reuse observations and relations; not independent trials"
+}

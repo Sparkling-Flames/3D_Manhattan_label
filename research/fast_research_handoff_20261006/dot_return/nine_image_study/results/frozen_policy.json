@@ -1,0 +1,187 @@
+{
+  "images": [
+    "B6ByNegPMKs-33",
+    "UwV83HsGsw3-09",
+    "b8cTxDM8gDG-18",
+    "uNb9QFRL6hY-67",
+    "wc2JMjhGNzB-53",
+    "e9zR4mvMWw7-15",
+    "rPc6DW4iMge-06",
+    "2t7WUuJeko7-06",
+    "7y3sRwLe3Va-04"
+  ],
+  "records": 150,
+  "thresholds_deg": [
+    5,
+    9,
+    12
+  ],
+  "metric": "pair",
+  "policies": [
+    "raw",
+    "fixed_strict",
+    "fixed_three_state",
+    "event_strict",
+    "event_three_state"
+  ],
+  "same_focal_and_outer_anchor_gate_as_raw": true,
+  "fixed_path_config": {
+    "source_path_edge_counts": [
+      1,
+      2
+    ],
+    "maximum_side_path_length_deg": 120,
+    "sphere_approximation_steps_deg": [
+      5,
+      2,
+      0.5
+    ]
+  },
+  "event_source_policy_snapshot_historical_scope_not_current_study": {
+    "question": "At fixed corresponding focal observations, does replacing a 1/2-source-edge endpoint budget with metric-specific turn-event endpoints and the existing arc-length cap preserve the enumerated geometric witness decisions under pure source-edge subdivision?",
+    "scope": "One synthetic square counterexample and seven fixed report-named real focal comparisons; no full-pool regrouping, no majority update, no center movement, no reference/GT read",
+    "search_domain": "Each direction from the retained focal, propose every source vertex that is a turn event in any compared boundary, within 120 degrees cumulative arc length on every compared boundary. Preserve full source sequence between focal and endpoint. Reject any combined two-sided paths covering a complete source cycle.",
+    "metric_event_rule": {
+      "top": "top turns",
+      "bottom": "bottom turns",
+      "pair": "union of top and bottom turns at original paired source positions; no interior cross-side identity inferred"
+    },
+    "thresholds_deg": [
+      5,
+      9,
+      12
+    ],
+    "maximum_side_path_length_deg": 120,
+    "sphere_approximation_steps_deg": [
+      5,
+      2,
+      0.5
+    ],
+    "numerical_collinearity_tolerance_deg": 1e-07,
+    "minimum_resolved_edge_length_deg": 1e-08,
+    "antipodal_exclusion_margin_deg": 1e-07,
+    "subdivision_factors": [
+      2,
+      4,
+      8
+    ],
+    "real_windows": [
+      {
+        "name": "rpc_AB",
+        "image": "rPc6DW4iMge-06",
+        "focals": [
+          [
+            "R02452",
+            2
+          ],
+          [
+            "R01986",
+            2
+          ]
+        ]
+      },
+      {
+        "name": "rpc_AC",
+        "image": "rPc6DW4iMge-06",
+        "focals": [
+          [
+            "R02452",
+            2
+          ],
+          [
+            "R01557",
+            4
+          ]
+        ]
+      },
+      {
+        "name": "rpc_BC",
+        "image": "rPc6DW4iMge-06",
+        "focals": [
+          [
+            "R01986",
+            2
+          ],
+          [
+            "R01557",
+            4
+          ]
+        ]
+      },
+      {
+        "name": "unb_patch_start",
+        "image": "uNb9QFRL6hY-67",
+        "focals": [
+          [
+            "R02929",
+            3
+          ],
+          [
+            "R03195",
+            1
+          ]
+        ]
+      },
+      {
+        "name": "unb_patch_end",
+        "image": "uNb9QFRL6hY-67",
+        "focals": [
+          [
+            "R02929",
+            5
+          ],
+          [
+            "R03195",
+            2
+          ]
+        ]
+      },
+      {
+        "name": "rpc_drift_start",
+        "image": "rPc6DW4iMge-06",
+        "focals": [
+          [
+            "R00634",
+            8
+          ],
+          [
+            "R01695",
+            5
+          ]
+        ]
+      },
+      {
+        "name": "rpc_drift_end",
+        "image": "rPc6DW4iMge-06",
+        "focals": [
+          [
+            "R00634",
+            1
+          ],
+          [
+            "R01695",
+            0
+          ]
+        ]
+      }
+    ],
+    "stopping_condition": "Finish all declared original/subdivision runs and tests; report every outcome, domain failure and mismatch; do not tune gates, budgets or window selection after outcomes",
+    "source_observations_and_votes": "Source inputs remain byte-identical. Synthetic subdivisions are same-record metamorphic probes, never additional annotators or votes. Event compression is only a search representation, never deletion or identity certification.",
+    "claim_limit": "Exact subdivision invariance is conditional on unambiguous ordered minor arcs, exact same-curve subdivisions, and fixed corresponding focal observations. Floating point tests support only the listed finite cases; collinearity below tolerance and degenerate arcs are not semantically certified."
+  },
+  "event_applied_rule": "Each direction from the retained focal, propose every source vertex that is a turn event in any compared boundary, within 120 degrees cumulative arc length on every compared boundary. Preserve full source sequence between focal and endpoint. Reject any combined two-sided paths covering a complete source cycle.",
+  "event_domain_replaces_fixed_domain_not_general_superset": true,
+  "complete_pools_unchanged": true,
+  "vote_threshold": "ceil(n/2)",
+  "center": "authoritative_source_first_medoid_coordinate_medians_for_every_policy",
+  "no_forced_four_or_min8": true,
+  "no_GT_read_or_tuning": true,
+  "human_review": "read only after saving all automatic candidates; exposed development cases",
+  "not_run": [
+    "new focal gate expansion",
+    "single-endpoint structure policies",
+    "new human-assisted selection"
+  ],
+  "scope_note": "five targeted hard cases plus four exposed/ordinary cases; not random/blind test",
+  "stopping_condition": "all nine images x three fixed gates x five policies plus posthoc relation accounting"
+}

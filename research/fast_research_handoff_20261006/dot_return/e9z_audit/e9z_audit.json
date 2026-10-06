@@ -1,0 +1,725 @@
+{
+  "schema": "independent_e9z_audit_v1",
+  "source": "/workspace/scratch/a365811da80c/oct6-handoff-intake",
+  "input_sha256": "f30353ef455edfa8f191fa7c1eb64438894185753ec6f8c7033045f9957bfb8b",
+  "source_unmodified": true,
+  "threshold_policy": "existing comparison thresholds, not calibrated",
+  "right_observations": [
+    {
+      "id": "R03366",
+      "worker": "P018",
+      "pair_index": 3,
+      "source_pair_index": 3,
+      "points": [
+        [
+          1007.079592679235,
+          223.56028622540236
+        ],
+        [
+          1007.079592679235,
+          316.72558139534885
+        ]
+      ]
+    },
+    {
+      "id": "R03368",
+      "worker": "P020",
+      "pair_index": 3,
+      "source_pair_index": 3,
+      "points": [
+        [
+          1008.8,
+          225.6
+        ],
+        [
+          1008.8,
+          347.2
+        ]
+      ]
+    },
+    {
+      "id": "R03362",
+      "worker": "P021",
+      "pair_index": 4,
+      "source_pair_index": 4,
+      "points": [
+        [
+          1004.7631619797452,
+          219.94471185819194
+        ],
+        [
+          1004.7631619797452,
+          359.74220653869344
+        ]
+      ]
+    },
+    {
+      "id": "R03367",
+      "worker": "P022",
+      "pair_index": 3,
+      "source_pair_index": 3,
+      "points": [
+        [
+          1005.7685459940653,
+          220.29673590504453
+        ],
+        [
+          1005.7685459940653,
+          376.7833827893175
+        ]
+      ]
+    },
+    {
+      "id": "R03365",
+      "worker": "P024",
+      "pair_index": 3,
+      "source_pair_index": 3,
+      "points": [
+        [
+          1005.6093612838301,
+          223.26939506969458
+        ],
+        [
+          1005.6093612838301,
+          294.20757048701074
+        ]
+      ]
+    },
+    {
+      "id": "R03361",
+      "worker": "P025",
+      "pair_index": 4,
+      "source_pair_index": 4,
+      "points": [
+        [
+          1006.3673469387754,
+          224.6530612244898
+        ],
+        [
+          1006.3673469387754,
+          295.18367346938777
+        ]
+      ]
+    },
+    {
+      "id": "R03364",
+      "worker": "P026",
+      "pair_index": 3,
+      "source_pair_index": 3,
+      "points": [
+        [
+          1004.9854342068475,
+          223.18484100073547
+        ],
+        [
+          1004.9854342068475,
+          322.48767073282795
+        ]
+      ]
+    },
+    {
+      "id": "R03363",
+      "worker": "P027",
+      "pair_index": 4,
+      "source_pair_index": 4,
+      "points": [
+        [
+          1003.9109225874868,
+          224.78048780487808
+        ],
+        [
+          1003.9109225874868,
+          352.91622481442204
+        ]
+      ]
+    }
+  ],
+  "left_observations": [
+    {
+      "id": "R03362",
+      "worker": "P021",
+      "pair_index": 0,
+      "source_pair_index": 0,
+      "points": [
+        [
+          1.2248803827751131,
+          225.37799043062202
+        ],
+        [
+          1.2248803827751131,
+          320.91866028708137
+        ]
+      ]
+    },
+    {
+      "id": "R03361",
+      "worker": "P025",
+      "pair_index": 0,
+      "source_pair_index": 0,
+      "points": [
+        [
+          3.265306122449002,
+          227.26530612244898
+        ],
+        [
+          3.265306122449002,
+          326.53061224489795
+        ]
+      ]
+    },
+    {
+      "id": "R03363",
+      "worker": "P027",
+      "pair_index": 0,
+      "source_pair_index": 0,
+      "points": [
+        [
+          2.171792152704136,
+          223.694591728526
+        ],
+        [
+          2.171792152704136,
+          331.19830328738067
+        ]
+      ]
+    }
+  ],
+  "right_angle_max_deg": {
+    "top": 2.4257425987626102,
+    "bottom": 29.030599424372852
+  },
+  "right_group_support_5": [
+    2,
+    3,
+    1,
+    2
+  ],
+  "all_seven_person_subsets": [
+    {
+      "omitted": "R03366",
+      "pair_count": 3,
+      "minimum_support": 4,
+      "selected_member_ids": [
+        [
+          "R03368",
+          "R03362",
+          "R03367",
+          "R03365",
+          "R03361",
+          "R03364",
+          "R03363"
+        ],
+        [
+          "R03368",
+          "R03362",
+          "R03367",
+          "R03365",
+          "R03361",
+          "R03364",
+          "R03363"
+        ],
+        [
+          "R03368",
+          "R03362",
+          "R03367",
+          "R03365",
+          "R03361",
+          "R03364"
+        ]
+      ]
+    },
+    {
+      "omitted": "R03368",
+      "pair_count": 3,
+      "minimum_support": 4,
+      "selected_member_ids": [
+        [
+          "R03366",
+          "R03362",
+          "R03367",
+          "R03365",
+          "R03361",
+          "R03364",
+          "R03363"
+        ],
+        [
+          "R03366",
+          "R03362",
+          "R03367",
+          "R03365",
+          "R03361",
+          "R03364",
+          "R03363"
+        ],
+        [
+          "R03366",
+          "R03362",
+          "R03367",
+          "R03365",
+          "R03361",
+          "R03364"
+        ]
+      ]
+    },
+    {
+      "omitted": "R03362",
+      "pair_count": 3,
+      "minimum_support": 4,
+      "selected_member_ids": [
+        [
+          "R03366",
+          "R03368",
+          "R03367",
+          "R03365",
+          "R03361",
+          "R03364",
+          "R03363"
+        ],
+        [
+          "R03366",
+          "R03368",
+          "R03367",
+          "R03365",
+          "R03361",
+          "R03364",
+          "R03363"
+        ],
+        [
+          "R03366",
+          "R03368",
+          "R03367",
+          "R03365",
+          "R03361",
+          "R03364"
+        ]
+      ]
+    },
+    {
+      "omitted": "R03367",
+      "pair_count": 3,
+      "minimum_support": 4,
+      "selected_member_ids": [
+        [
+          "R03366",
+          "R03368",
+          "R03362",
+          "R03365",
+          "R03361",
+          "R03364",
+          "R03363"
+        ],
+        [
+          "R03366",
+          "R03368",
+          "R03362",
+          "R03365",
+          "R03361",
+          "R03364",
+          "R03363"
+        ],
+        [
+          "R03366",
+          "R03368",
+          "R03362",
+          "R03365",
+          "R03361",
+          "R03364"
+        ]
+      ]
+    },
+    {
+      "omitted": "R03365",
+      "pair_count": 3,
+      "minimum_support": 4,
+      "selected_member_ids": [
+        [
+          "R03366",
+          "R03368",
+          "R03362",
+          "R03367",
+          "R03361",
+          "R03364",
+          "R03363"
+        ],
+        [
+          "R03366",
+          "R03368",
+          "R03362",
+          "R03367",
+          "R03361",
+          "R03364",
+          "R03363"
+        ],
+        [
+          "R03366",
+          "R03368",
+          "R03362",
+          "R03367",
+          "R03361",
+          "R03364"
+        ]
+      ]
+    },
+    {
+      "omitted": "R03361",
+      "pair_count": 3,
+      "minimum_support": 4,
+      "selected_member_ids": [
+        [
+          "R03366",
+          "R03368",
+          "R03362",
+          "R03367",
+          "R03365",
+          "R03364",
+          "R03363"
+        ],
+        [
+          "R03366",
+          "R03368",
+          "R03362",
+          "R03367",
+          "R03365",
+          "R03364",
+          "R03363"
+        ],
+        [
+          "R03366",
+          "R03368",
+          "R03362",
+          "R03367",
+          "R03365",
+          "R03364"
+        ]
+      ]
+    },
+    {
+      "omitted": "R03364",
+      "pair_count": 3,
+      "minimum_support": 4,
+      "selected_member_ids": [
+        [
+          "R03366",
+          "R03368",
+          "R03362",
+          "R03367",
+          "R03365",
+          "R03361",
+          "R03363"
+        ],
+        [
+          "R03366",
+          "R03368",
+          "R03362",
+          "R03367",
+          "R03365",
+          "R03361",
+          "R03363"
+        ],
+        [
+          "R03366",
+          "R03368",
+          "R03362",
+          "R03367",
+          "R03365",
+          "R03361"
+        ]
+      ]
+    },
+    {
+      "omitted": "R03363",
+      "pair_count": 3,
+      "minimum_support": 4,
+      "selected_member_ids": [
+        [
+          "R03366",
+          "R03368",
+          "R03362",
+          "R03367",
+          "R03365",
+          "R03361",
+          "R03364"
+        ],
+        [
+          "R03366",
+          "R03368",
+          "R03362",
+          "R03367",
+          "R03365",
+          "R03361",
+          "R03364"
+        ],
+        [
+          "R03366",
+          "R03368",
+          "R03362",
+          "R03367",
+          "R03365",
+          "R03361",
+          "R03364"
+        ]
+      ]
+    }
+  ],
+  "independent_baseline_checks": [
+    {
+      "route": "paired",
+      "threshold_deg": 5,
+      "independent_memberships_equal": true,
+      "max_center_error_px": 0.0
+    },
+    {
+      "route": "paired",
+      "threshold_deg": 9,
+      "independent_memberships_equal": true,
+      "max_center_error_px": 0.0
+    },
+    {
+      "route": "paired",
+      "threshold_deg": 12,
+      "independent_memberships_equal": true,
+      "max_center_error_px": 0.0
+    },
+    {
+      "route": "top_anchor",
+      "threshold_deg": 5,
+      "independent_memberships_equal": true,
+      "max_center_error_px": 0.0
+    },
+    {
+      "route": "top_anchor",
+      "threshold_deg": 9,
+      "independent_memberships_equal": true,
+      "max_center_error_px": 0.0
+    },
+    {
+      "route": "top_anchor",
+      "threshold_deg": 12,
+      "independent_memberships_equal": true,
+      "max_center_error_px": 0.0
+    }
+  ],
+  "range_scores": {
+    "paired_5": {
+      "iou": 0.4757096841760139,
+      "omission_h2": 3.836479999095594,
+      "extension_h2": 0.03425285453826384,
+      "candidate_area_h2": 3.546324406800269,
+      "reference_area_h2": 7.348551551357598,
+      "centroid_distance_h": 0.6457090193572846
+    },
+    "paired_9": {
+      "iou": 0.9017758983709195,
+      "omission_h2": 0.6845268016444285,
+      "extension_h2": 0.04133851085397223,
+      "candidate_area_h2": 6.705363260567144,
+      "reference_area_h2": 7.348551551357598,
+      "centroid_distance_h": 0.09550785688567988
+    },
+    "paired_12": {
+      "iou": 0.9171455102598322,
+      "omission_h2": 0.5709299221894873,
+      "extension_h2": 0.0413571963262631,
+      "candidate_area_h2": 6.818978825494376,
+      "reference_area_h2": 7.348551551357598,
+      "centroid_distance_h": 0.07947139112212677
+    },
+    "top_5": {
+      "iou": 0.8737255241627392,
+      "omission_h2": 0.8975747487530008,
+      "extension_h2": 0.034747464413222705,
+      "candidate_area_h2": 6.485724267017821,
+      "reference_area_h2": 7.348551551357598,
+      "centroid_distance_h": 0.14942613017246328
+    },
+    "top_9": {
+      "iou": 0.8733418978048959,
+      "omission_h2": 0.8946600682155693,
+      "extension_h2": 0.04132805863658949,
+      "candidate_area_h2": 6.495219541778617,
+      "reference_area_h2": 7.348551551357598,
+      "centroid_distance_h": 0.15055369780182334
+    },
+    "top_12": {
+      "iou": 0.8733418978048959,
+      "omission_h2": 0.8946600682155693,
+      "extension_h2": 0.04132805863658949,
+      "candidate_area_h2": 6.495219541778617,
+      "reference_area_h2": 7.348551551357598,
+      "centroid_distance_h": 0.15055369780182334
+    },
+    "paired_12_delete_user_rejected_left": {
+      "iou": 0.7786682619487011,
+      "omission_h2": 1.5943409525043795,
+      "extension_h2": 0.04125856425272363,
+      "candidate_area_h2": 5.795469163105944,
+      "reference_area_h2": 7.348551551357598,
+      "centroid_distance_h": 0.27880790710836184
+    }
+  },
+  "compensation": {
+    "removed_area_h2": 1.023509662388431,
+    "added_area_h2": 0.0,
+    "removed_inside_reference_h2": 1.0234110303148916,
+    "removed_outside_reference_h2": 9.863207353947304e-05,
+    "removed_inside_reference_fraction": 0.9999036334710224
+  },
+  "range_examples": [
+    {
+      "label": "reference",
+      "x": 1004.68,
+      "bottom_y": 319.26,
+      "floor_radius_h": 2.4455624635253974,
+      "floor_xz": [
+        0.2892331816147412,
+        2.4283986348327216
+      ]
+    },
+    {
+      "label": "paired_12",
+      "x": 1005.2658539869053,
+      "bottom_y": 356.32921567655774,
+      "floor_radius_h": 1.4138156912822264,
+      "floor_xz": [
+        0.16216224260084963,
+        1.4044850358727583
+      ]
+    },
+    {
+      "label": "top_5",
+      "x": 1005.6889536389477,
+      "bottom_y": 334.84383536641394,
+      "floor_radius_h": 1.9032230439560913,
+      "floor_xz": [
+        0.21338733708417731,
+        1.8912228317725053
+      ]
+    }
+  ],
+  "manual_delete_points": [
+    [
+      123.86188872523202,
+      232.10627619504166
+    ],
+    [
+      123.86188872523202,
+      303.67742180079733
+    ],
+    [
+      288.458235451498,
+      221.70691315364428
+    ],
+    [
+      288.458235451498,
+      324.1419315991972
+    ],
+    [
+      599.2710120353394,
+      133.62403968554185
+    ],
+    [
+      599.2710120353394,
+      429.17833919328365
+    ],
+    [
+      1005.2658539869053,
+      222.5386118549613
+    ],
+    [
+      1005.2658539869053,
+      356.32921567655774
+    ]
+  ],
+  "reference": {
+    "id": "R02591",
+    "points": [
+      [
+        605.16,
+        125.94
+      ],
+      [
+        605.16,
+        431.99
+      ],
+      [
+        1004.68,
+        220.06
+      ],
+      [
+        1004.68,
+        319.26
+      ],
+      [
+        122.31,
+        229.33
+      ],
+      [
+        122.31,
+        303.68
+      ],
+      [
+        287.94,
+        218.0
+      ],
+      [
+        287.94,
+        322.62
+      ]
+    ],
+    "order_status": "original_gt_reference",
+    "geometry_status": "surface_valid",
+    "geometry_issues": [],
+    "source_point_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "source_point_labels": [
+      "GT p1",
+      "GT p2",
+      "GT p3",
+      "GT p4",
+      "GT p5",
+      "GT p6",
+      "GT p7",
+      "GT p8"
+    ],
+    "preprocessing_status": "ready",
+    "ring_confirmed": false,
+    "version": "original",
+    "source_pair_indices": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "order_used": "original_gt_reference",
+    "footprint": [
+      [
+        0.2892118190550892,
+        -0.44960318282525585
+      ],
+      [
+        0.2892331816147412,
+        2.428398634832721
+      ],
+      [
+        -2.2642257950304012,
+        2.428118083981884
+      ],
+      [
+        -2.264339367320166,
+        -0.4495385553195425
+      ]
+    ],
+    "footprint_state": {
+      "status": "ok",
+      "reason": null
+    }
+  }
+}
