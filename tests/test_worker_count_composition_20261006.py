@@ -60,6 +60,7 @@ def test_fixed_panel_does_not_drop_exhausted_image_from_add_one_mean():
 def test_metrics_can_run_without_geometry_or_experiment_imports():
     import subprocess
     import sys
+    from pathlib import Path
 
     subprocess.run([sys.executable, '-c', """
 import sys
@@ -71,7 +72,7 @@ result = area_summary(np.array([2.]), np.array([1.]), 1., np.array([.5]))
 assert result['ref_symdiff_ref'] == 1.
 assert result['member_symdiff_union'] == .5
 assert summarize([], {}) == []
-"""], check=True)
+"""], check=True, cwd=Path(__file__).resolve().parents[1])
 
 
 def test_experiment_preserves_existing_numeric_entry_points():

@@ -1,4 +1,5 @@
 import subprocess
+import os
 import sys
 
 import pytest
@@ -53,10 +54,12 @@ def test_artifact_io_preserves_existing_entry_points():
         assert getattr(count, name) is getattr(artifacts, name)
 
 
-def test_lee_cli_keeps_direct_script_entry_point():
+def test_lee_cli_keeps_direct_script_entry_point(tmp_path):
     script = artifacts.ROOT / 'tools/thesis_main/analysis/lee_tile_stage1_20261002.py'
+    env = dict(os.environ)
+    env.pop('PYTHONPATH', None)
     result = subprocess.run([sys.executable, str(script), '--help'],
-                            check=True, capture_output=True, text=True)
+                            check=True, capture_output=True, text=True, cwd=tmp_path, env=env)
     assert '--input' in result.stdout
     assert '--out' in result.stdout
 

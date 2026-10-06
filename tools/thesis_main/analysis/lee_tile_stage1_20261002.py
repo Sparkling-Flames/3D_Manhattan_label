@@ -5,6 +5,7 @@ import argparse
 from collections import Counter, defaultdict
 from itertools import combinations
 import json
+import sys
 from pathlib import Path
 import warnings
 import zlib
@@ -13,6 +14,9 @@ import numpy as np
 from shapely.errors import GEOSException
 from shapely.geometry import Polygon, mapping
 from shapely.ops import unary_union
+
+if not __package__:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 from tools.thesis_main.analysis.region_mesh import region_mesh
 from tools.thesis_main.analysis.research_artifact_io import ROOT, write_csv, write_json
