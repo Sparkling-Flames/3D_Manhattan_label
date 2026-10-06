@@ -1,0 +1,78 @@
+{
+  "schema": "difficulty_consensus_user_update_v1",
+  "source_manifest": "analysis_results/research_input_20260929/manifest.json",
+  "sources": [
+    "analysis_results\\lee_expanded_20261003\\image_curves.csv",
+    "analysis_results\\worker_count_composition_20261006\\per_image.csv",
+    "analysis_results\\review_source_audit_20261004\\corrected_inventory\\input.json",
+    "analysis_results\\difficulty_consensus_20261006\\user_review.json"
+  ],
+  "unit": "每组人员、每种投票规则仅一个Lee融合区域；本表对抽组结果的参考误差取期望。",
+  "distance": "E[area(C_k symmetric_difference G)] / area(G)；较小更近，只衡量BEV范围；不是1-IoU。",
+  "summary": "同一panel_n内固定图片，k从1到panel_n；图片等权均值/中位数，以及先楼内均值再楼间等权。",
+  "scope": "all、within_uNb、without_uNb；后两者仅为建筑构成敏感性检查。",
+  "roster": "原67图名单，8份用户补标覆盖有效难度／场景字段；previous_difficulty保留之前难度，review_note原样保留。",
+  "scenes": "保留两个原始轴及交集。clear须显式not_oos+none；unflagged不代表已审核正常。",
+  "special_scenes": "全259图中已记录的OOS、难标门洞、待定OOS、可标门洞；不把GT远近直接解释为人员质量。",
+  "label_counts": {
+    "未记录": 144,
+    "简单": 57,
+    "未定": 6,
+    "中等": 32,
+    "困难": 20
+  },
+  "scene_counts": {
+    "clear": 29,
+    "doorway_difficult": 15,
+    "unflagged": 188,
+    "oos": 22,
+    "doorway_annotatable": 2,
+    "oos_and_doorway": 2,
+    "oos_pending": 1
+  },
+  "interpretation": "描述性初查，未建立难度预测或快/慢/远自动分类，不改原始标签或研究合同。",
+  "common10_images": [
+    "7y3sRwLe3Va-04",
+    "UwV83HsGsw3-09",
+    "X7HyMhZNoso-13",
+    "e9zR4mvMWw7-19",
+    "q9vSo1VnCiC-02",
+    "q9vSo1VnCiC-32",
+    "rPc6DW4iMge-06",
+    "wc2JMjhGNzB-15",
+    "yqstnuAEVhm-32",
+    "yqstnuAEVhm-34"
+  ],
+  "common24_workers": [
+    "P001",
+    "P002",
+    "P003",
+    "P004",
+    "P005",
+    "P006",
+    "P007",
+    "P008",
+    "P009",
+    "P010",
+    "P011",
+    "P012",
+    "P014",
+    "P017",
+    "P018",
+    "P019",
+    "P020",
+    "P021",
+    "P022",
+    "P023",
+    "P024",
+    "P025",
+    "P026",
+    "P027"
+  ],
+  "common10_difficulty_counts": {
+    "简单": 5,
+    "困难": 3,
+    "中等": 2
+  },
+  "individual": "共同十图原GT、随机抽组、单一Lee融合；保留遗漏／外扩以及换组波动。后者按全员并集归一化，不与GT误差直接比数值。"
+}

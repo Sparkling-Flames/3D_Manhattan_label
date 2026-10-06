@@ -1,6 +1,22 @@
 import pytest
+import json
 
 from tools.thesis_main.analysis.difficulty_consensus_20261006 import scene_group, summarize
+
+
+def test_returned_review_keeps_notes_and_checks_image_identity():
+    from tools.thesis_main.analysis.update_difficulty_review_20261006 import apply_review, OUT
+    payload=json.loads((OUT/'user_review.json').read_text(encoding='utf-8-sig'))
+    identities={r['image_code']:r['image_id'] for r in payload['decisions']}
+    meta={code:dict(difficulty='未记录',oos_status='not_recorded',doorway_status='not_recorded') for code in identities}
+    result=apply_review(meta,payload,identities)
+    assert result['yqstnuAEVhm-34']['difficulty']=='简单'
+    assert result['yqstnuAEVhm-34']['review_note']=='也存在不同的标注范围(较少)'
+    assert result['yqstnuAEVhm-34']['scene']=='clear'
+    assert meta['yqstnuAEVhm-34']['difficulty']=='未记录'
+    identities['yqstnuAEVhm-34']='wrong-image'
+    with pytest.raises(ValueError,match='图片身份不匹配'):
+        apply_review(meta,payload,identities)
 
 
 def test_scene_axes_keep_overlap_pending_and_unknown_separate():
