@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>36份标注 · 质量审查台</title><meta name="description" content="原图、俯视与同尺度三维对照，按统一标准评价36份标注。"><link rel="icon" href="favicon.svg"><link rel="stylesheet" href="review36.css"></head><body>
+<header><div><strong>全景标注质量审查台</strong><span>首轮36份 · 整体评分</span></div><nav><a href="https://panorama-quality-review.fringnb.chatgpt.site/legacy.html">历史对照与人员分项</a><button id="helpButton">评分说明</button></nav></header>
+<div id="status" role="status">正在载入36份标注…</div>
+<div id="saveWarning" role="alert" hidden></div>
+<main id="workspace" hidden>
+<aside class="sidebar"><div class="progress"><b id="progressText">0 / 36</b><small id="progressDetail"></small><progress id="progressBar" max="36" value="0"></progress></div><label>图片<select id="imageSelect"></select></label><p class="muted" id="scope"></p><div class="listHead"><b>本图6份作答</b><span>固定审查顺序</span></div><div id="recordList"></div><button id="nextUnreviewed" class="wide">下一份未处理</button><details class="storageTools"><summary>备份与继续审查</summary><p>意见自动存于此浏览器。换设备前请导出JSON，再导入继续；不会自动同步GitHub。</p><button id="exportJSON">导出评分 JSON</button><button id="exportCSV">导出评分 CSV</button><button id="importButton">导入评分 JSON</button><input id="importFile" type="file" accept=".json,application/json" hidden><p id="importStatus" role="status"></p></details></aside>
+<section class="stage" data-display="A">
+<div class="taskBar"><button id="previous">上一份</button><div><b id="taskTitle"></b><small id="taskSubtitle"></small></div><button id="next">下一份</button></div>
+<div class="bar"><div class="viewMode"><button data-display="A" aria-pressed="true" class="active">只看 A</button><button data-display="both" aria-pressed="false">并排对照</button><button data-display="B" aria-pressed="false">只看 B</button></div><label><input id="showGT" type="checkbox" checked>显示 GT</label><label>参考版本<select id="referenceSelect"></select></label></div>
+<div class="selection"><label class="selectA">当前作答 A<select id="aSelect"></select></label><label class="selectB">辅助对照 B<select id="bSelect"></select></label></div>
+<div id="compareNotice" class="notice" hidden>评分表始终针对当前作答 A；B 只作辅助对照。 <button id="rateB">将B设为当前评分</button></div>
+<div class="bar"><b>原图与连线</b><label><input id="showA" type="checkbox" checked>A</label><label><input id="showB" type="checkbox">B</label><label><input id="pointLabels" type="checkbox">点对号</label><button id="panoReset">复位</button><button id="panoExpand">放大全景</button></div>
+<div id="panoWrap"><svg id="pano" viewBox="0 0 1024 512" aria-label="全景原图与现存点连接"></svg></div><p class="hint">滚轮缩放 · 拖动平移 · 点击角点查看局部。原点、连接和表达均保留。</p>
+<div class="bar"><b>俯视范围</b><span class="muted">同图固定坐标范围 · 单位 h</span></div><div class="bevModels"><article><div class="modelTitle" id="bevTitleA"></div><svg id="bevA" viewBox="0 0 640 380" aria-label="A俯视图"></svg></article><article><div class="modelTitle" id="bevTitleB"></div><svg id="bevB" viewBox="0 0 640 380" aria-label="B俯视图"></svg></article></div>
+<div class="bar"><b>条件三维</b><select id="material"><option value="clay">白模</option><option value="texture">原图纹理</option><option value="wire">线框</option></select><button data-view="iso">轴测</button><button data-view="top">俯视</button><button data-view="inside">室内</button><button data-view="reset">复位</button><label><input id="sync" type="checkbox" checked>同步视角</label></div>
+<div class="models"><article><div class="modelTitle" id="titleA"></div><div id="viewA" class="viewport"></div></article><article><div class="modelTitle" id="titleB"></div><div id="viewB" class="viewport"></div></article></div><p class="hint">拖动旋转 · 滚轮缩放 · 右键平移。共同地面与竖墙假设下重建；h 是相机高度单位，不是米。紫线为当前GT参考。</p>
+<details id="sourceDetails"><summary>作答与参考信息</summary><div id="sourceInfo"></div></details>
+<details id="metricDetails"><summary>查看算法分项（建议完成个人判断后再看）</summary><p>打开会记录“看过指标”；小残差或贴近GT不自动等于整体质量好。</p><div id="metrics" class="metrics"></div></details>
+</section>
+<aside class="ratingPanel" id="ratingPanel"><h2 id="ratingTitle">评价当前作答</h2><p>按实际表达结果评分。不同合理范围或可接受简化，不自动判差；完整意图也不自动加分。</p><fieldset id="ratingChoices"><legend>整体质量</legend>
+<label><input type="radio" name="overall" value="5"><b>5 · 很好</b><span>表达有依据，无明显影响使用的问题</span></label>
+<label><input type="radio" name="overall" value="4"><b>4 · 较好</b><span>轻微偏差或可接受的简化</span></label>
+<label><input type="radio" name="overall" value="3"><b>3 · 有明确问题</b><span>基本合理，但有需要修改之处</span></label>
+<label><input type="radio" name="overall" value="2"><b>2 · 问题较大</b><span>需要大幅修改</span></label>
+<label><input type="radio" name="overall" value="1"><b>1 · 严重问题</b><span>明显错误或变形，难以可靠使用</span></label>
+<label class="unable"><input type="radio" name="overall" value="unable"><b>无法判断</b><span>证据不足或目标不明；不当作3分</span></label></fieldset>
+<label>范围／内容说明<textarea id="scopeNote" rows="3" placeholder="选择了什么范围？哪些结构保留或省略？这种表达是否仍可接受？"></textarea></label>
+<label>几何实现说明<textarea id="geometryNote" rows="3" placeholder="点位、连接、上界或3D有哪些实际问题？轻微还是明显？"></textarea></label>
+<fieldset class="tags"><legend>主要观察（可选）</legend><label><input type="checkbox" value="范围表达">范围表达</label><label><input type="checkbox" value="细节取舍">细节取舍</label><label><input type="checkbox" value="点位或连接">点位／连接</label><label><input type="checkbox" value="上界高度">上界高度</label><label><input type="checkbox" value="3D几何">3D几何</label><label><input type="checkbox" value="参考疑问">参考疑问</label></fieldset>
+<p id="ratingReference" class="muted"></p><p id="noteStatus" role="status">尚未评分</p><button id="saveNext" class="primary wide">保存并查看下一份</button><button id="exportJSONBottom" class="wide">导出评分备份</button><small>首轮等级标准，可在校准后修订。现在不显示人员身份或算法排名。</small></aside>
+</main>
+<dialog id="help"><button id="closeHelp">关闭</button><h2>本轮审查标准</h2><p>每份只给一个整体分，并简述范围／内容与几何实现。不要先看算法分数。分值为有序等级，不表示5分是1分的五倍。</p><h3>评价什么</h3><p>主体范围是否充分、必要结构是否缺失，以及选定内容的点位、连接、上下边界和3D是否表达好。GT是参考目标，不是所有合理表达的唯一答案。</p><p>少点、少细节、主动选小范围、投影面积小是不同现象。按实际结果评价，不按意图或多数人的水平自动给分。</p><h3>怎样操作</h3><p>从左侧选择作答，查看原图、俯视与3D，再在右侧评分。辅助B可比较，但评分始终属于A。GT默认显示；切换参考版本或关闭GT都会记录在审查上下文中。</p><h3>保存</h3><p>输入会自动保存在当前浏览器，不会自动上传到GitHub。每次结束请导出JSON备份；CSV方便查看，JSON可导入继续。旧版两两审查意见仍在“历史对照与人员分项”中保留。</p><p>共有36份、6张图，每图6份。本轮是用于校准的定向与随机混合抽样，不代表全库质量分布。</p></dialog>
+<dialog id="detail"><button id="closeDetail">关闭</button><h3 id="detailTitle"></h3><canvas id="crop" width="900" height="500"></canvas><p>仅查看局部原图，未修改标注。</p></dialog>
+<script src="vendor/three.min.js"></script><script src="vendor/OrbitControls.js"></script><script src="data36.js"></script><script src="review36-core.js"></script><script src="review36-view.js"></script><script src="review36-app.js"></script></body></html>

@@ -1,0 +1,107 @@
+{
+  "schema": "review36-frontend-source-receipt-v1",
+  "private_site": "https://panorama-quality-review.fringnb.chatgpt.site",
+  "source_access": "owner-only; this archive does not change access",
+  "files": [
+    {
+      "source_role": "current private workbench build",
+      "source_file": "index.html",
+      "archive_file": "frontend/index.html",
+      "source_sha256": "c2a35c5618a114f4021f2b4cdbdc7d8ed58412f863d47b370dc8f1c1b4f110bb",
+      "archive_sha256": "e1b98e167ba379c149c38ad2877a97930399e48831d0fe97c54e5e349bebefd8",
+      "bytes": 8759,
+      "matched_42_check_build": true,
+      "changes": [
+        {
+          "kind": "navigation_only",
+          "from": "legacy.html",
+          "to": "https://panorama-quality-review.fringnb.chatgpt.site/legacy.html",
+          "reason": "Keep legacy private hosted route; do not duplicate its old data or photos in public source archive"
+        }
+      ]
+    },
+    {
+      "source_role": "current private workbench build",
+      "source_file": "review36-core.js",
+      "archive_file": "frontend/review36-core.js",
+      "source_sha256": "f8a43793df1092b82f98f6f060f956eb4aba2dcbed096c3b5f2d227caf73888e",
+      "archive_sha256": "f8a43793df1092b82f98f6f060f956eb4aba2dcbed096c3b5f2d227caf73888e",
+      "bytes": 4217,
+      "matched_42_check_build": true,
+      "changes": []
+    },
+    {
+      "source_role": "current private workbench build",
+      "source_file": "review36-view.js",
+      "archive_file": "frontend/review36-view.js",
+      "source_sha256": "8d8472506a6ccd73b660f570a58d4d63806c49dfafea2a9aa9da15db0724e865",
+      "archive_sha256": "8d8472506a6ccd73b660f570a58d4d63806c49dfafea2a9aa9da15db0724e865",
+      "bytes": 10064,
+      "matched_42_check_build": true,
+      "changes": []
+    },
+    {
+      "source_role": "current private workbench build",
+      "source_file": "review36-app.js",
+      "archive_file": "frontend/review36-app.js",
+      "source_sha256": "550819e924e6aafaceac406d178ea72f35c866191de16c47f3f282f0bae055e8",
+      "archive_sha256": "550819e924e6aafaceac406d178ea72f35c866191de16c47f3f282f0bae055e8",
+      "bytes": 17006,
+      "matched_42_check_build": true,
+      "changes": []
+    },
+    {
+      "source_role": "current private workbench build",
+      "source_file": "review36.css",
+      "archive_file": "frontend/review36.css",
+      "source_sha256": "5f431f1b45158a586246e1c9af1a382b33471572b4b0b484aac03a2d572d6144",
+      "archive_sha256": "5f431f1b45158a586246e1c9af1a382b33471572b4b0b484aac03a2d572d6144",
+      "bytes": 7062,
+      "matched_42_check_build": true,
+      "changes": []
+    },
+    {
+      "source_role": "current private workbench build",
+      "source_file": "favicon.svg",
+      "archive_file": "frontend/favicon.svg",
+      "source_sha256": "7193fe2432614bac5673934446a46a85369137fd5c7e9c6c588e2f1fa49e1de5",
+      "archive_sha256": "7193fe2432614bac5673934446a46a85369137fd5c7e9c6c588e2f1fa49e1de5",
+      "bytes": 230,
+      "matched_42_check_build": null,
+      "changes": []
+    },
+    {
+      "source_role": "current private workbench build",
+      "source_file": "vendor/three.min.js",
+      "archive_file": "frontend/vendor/three.min.js",
+      "source_sha256": "9274bbcec8d96168626c732b5d31c775aa8cfb7eaa0599bec0c175908a2c1ce2",
+      "archive_sha256": "9274bbcec8d96168626c732b5d31c775aa8cfb7eaa0599bec0c175908a2c1ce2",
+      "bytes": 603445,
+      "matched_42_check_build": null,
+      "changes": []
+    },
+    {
+      "source_role": "current private workbench build",
+      "source_file": "vendor/OrbitControls.js",
+      "archive_file": "frontend/vendor/OrbitControls.js",
+      "source_sha256": "02bb4ade710f3e607329e37a21f098bc3ac70eb6e33daf8a65e79f4db785e7b2",
+      "archive_sha256": "02bb4ade710f3e607329e37a21f098bc3ac70eb6e33daf8a65e79f4db785e7b2",
+      "bytes": 26375,
+      "matched_42_check_build": null,
+      "changes": []
+    }
+  ],
+  "data_policy": "data36.js is regenerated from data/frozen_geometry.json and ignored; photos are absent",
+  "hosting_config_copied": false,
+  "verifiedDeployment": {
+    "siteUrl": "https://panorama-quality-review.fringnb.chatgpt.site",
+    "version": 3,
+    "status": "succeeded",
+    "deployedAtUTC": "2026-10-07T17:23:06Z",
+    "sourceRevision": "1778b06cf5466ca1a8d8b91cdf320768c214607f",
+    "deploymentId": "appgdep_6ac67fefea04819180bb7edc8d60b21c",
+    "access": "owner-only",
+    "sourceTestsPassed": 42,
+    "realBrowserWebGLQA": "blocked by the private-site login gate; not completed"
+  }
+}

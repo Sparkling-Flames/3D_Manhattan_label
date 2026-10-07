@@ -1,0 +1,70 @@
+{
+  "schema_version": "quality-review36-source-receipts-v1",
+  "purpose": "Identify upstream bytes used for the summaries without publishing raw sources or machine paths",
+  "sources": [
+    {
+      "source_id": "independent_quality_audit_report",
+      "filename": "独立审核结论.txt",
+      "role_zh": "独立数值审核与解释边界",
+      "bytes": 7342,
+      "sha256": "6637b6e4b2c91dbde80ddb727cbb15ca1dfa5027ed9074beba0a44a9f429d19d",
+      "full_source_in_this_public_archive": false
+    },
+    {
+      "source_id": "output_comparison_audit",
+      "filename": "output_comparison_audit.json",
+      "role_zh": "逐输出重跑比较",
+      "bytes": 1721,
+      "sha256": "76b01a8c6769e2821b0145d818d0155827fbd5cdd3c51aeca1dc51a090f84b63",
+      "full_source_in_this_public_archive": false
+    },
+    {
+      "source_id": "source_binding_audit",
+      "filename": "source_binding_audit.json",
+      "role_zh": "输入绑定核验",
+      "bytes": 120743,
+      "sha256": "a2b455eb206cc3b9365ab7df07e937700eaec9f2199d2c542c3f86b1900ca198",
+      "full_source_in_this_public_archive": false
+    },
+    {
+      "source_id": "mathematics_audit_results",
+      "filename": "audit_results.json",
+      "role_zh": "条件冲突与容差边界计算",
+      "bytes": 13337,
+      "sha256": "61f117efe0a2d2614c985aec596fee8b36ac0f89106f83e0fcaf5001231e72ac",
+      "full_source_in_this_public_archive": false
+    },
+    {
+      "source_id": "quality_handoff_manifest",
+      "filename": "MANIFEST.json",
+      "role_zh": "此前质量交接工件清单",
+      "bytes": 33597,
+      "sha256": "6c918b682bf5c11ded5222828641b597aad00b37b420b7f53081623a48e4d1f0",
+      "full_source_in_this_public_archive": false
+    },
+    {
+      "source_id": "quality_handoff_overview",
+      "filename": "overview.txt",
+      "role_zh": "此前研究目标与案例说明",
+      "bytes": 7187,
+      "sha256": "dcfdb4b553d17086aad21eccba5de94aba082b28746b003d2c2282c03f5efe0f",
+      "full_source_in_this_public_archive": false
+    },
+    {
+      "source_id": "correction_precedence",
+      "filename": "correction_precedence.txt",
+      "role_zh": "最新人工更正优先级",
+      "bytes": 1801,
+      "sha256": "c14aa7f00b77a828149c88a8e607b05d7215f59c7a7c81864381a2ac4d722d29",
+      "full_source_in_this_public_archive": false
+    },
+    {
+      "source_id": "prior_six_comparisons",
+      "filename": "analysis.json",
+      "role_zh": "六对历史判断及更正的转录分析",
+      "bytes": 31218,
+      "sha256": "ed23735236c31d7ffda1105a4b5c48d8814996b01a85e3fd7c6a597f22e87b8a",
+      "full_source_in_this_public_archive": false
+    }
+  ]
+}

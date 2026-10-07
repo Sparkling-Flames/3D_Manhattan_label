@@ -1,5 +1,7 @@
 # 研究分析交付入口
 
+2026-10-08：[36 份整答质量评分工作台与研究归档](research/quality_review36_20261008/README.md)，含暂定 1–5 分规则、冻结选样、来源与复现说明、初始空白结果，以及既有六对比较的匿名更正摘要；尚无最终质量公式或校准权重。
+
 最新：[共同人员画像与固定4人构成](analysis_results/worker_profiles_20261003/REPORT.md)、[Chat Pro深度研究交接](research/worker_consensus_handoff_20261003/README.md)。已完成基础分析，正式人员分类及两线联系仍待研究。
 
 当前研究入口：[研究方向与算法职责](docs/thesis_main/研究方向_空间差异与共识_20260930.md)、[推进台账](docs/thesis_main/研究推进台账_20261003.md)、[136图扩展与高人数曲线](analysis_results/lee_expanded_20261003/REPORT.md)。[45图首轮难度曲线](analysis_results/lee_difficulty_20261003/REPORT.md)保留。规范以[当前方法合同](docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json)为准。
@@ -9,3 +11,4 @@
 [完整报告](analysis_results/preflight_20260906_v2/REPORT_ZH.md)、[文献及算法模拟](analysis_results/preflight_20260906_v2/REFERENCES_AND_SIMULATION.md)、[案例卡](analysis_results/preflight_20260906_v2/cases/CASE_CARDS.md)、[原始交付与复现说明](analysis_results/preflight_20260906_v2/DELIVERY_AND_REPRODUCTION.md)。
 
 旧材料中的前置任务、人数缺口、SHA/ZIP和远端读回要求仅属于当时的交付，不再规定当前研究顺序或触发上传。结果、代码与来源仍可从[历史目录](analysis_results/preflight_20260906_v2/)追溯。
+
