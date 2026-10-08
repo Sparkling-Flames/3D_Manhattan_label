@@ -1,0 +1,37 @@
+{
+  "schema_version": "quality-review36-reproduction-summary-v1",
+  "status": "reported from completed independent audit; no new full audit executed by this archive task",
+  "scope": {
+    "annotations": 156,
+    "images": 15,
+    "reference_objects": 20,
+    "versioned_comparisons": 224,
+    "computable_comparisons": 213,
+    "missing_point_annotations": 6,
+    "uncomputable_comparisons": 11
+  },
+  "checks": {
+    "byte_identical_generated_outputs": 24,
+    "passed_api_checks": 10,
+    "passed_mechanism_assertions": 4,
+    "source_objects_matched_on_common_fields": 176,
+    "retained_fields_recomputed": 1035,
+    "retained_field_max_absolute_difference": 3.55e-15
+  },
+  "broad_panel": {
+    "common_finite_records": 1533,
+    "images": 154,
+    "within_image_pairs": 11801,
+    "conditional_four_axis_dominance_pairs": 4565,
+    "tradeoff_pairs": 7059,
+    "feature_identical_pairs": 177,
+    "pairs_are_independent_samples": false
+  },
+  "interpretation": {
+    "numeric_reproducibility_supported": true,
+    "human_quality_validity_certified": false,
+    "final_scalar_validated": false,
+    "final_weights_calibrated": false,
+    "qualification_changed": false
+  }
+}
