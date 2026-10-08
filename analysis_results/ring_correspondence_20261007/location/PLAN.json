@@ -1,0 +1,21 @@
+{
+  "source": "analysis_results\\ring_correspondence_20261007",
+  "input": "frozen cyclic_identity partitions from current-bundle five-image study",
+  "variables": "only source selection and resulting coordinates change; existence groups/votes and order frozen",
+  "routes": [
+    "all_median",
+    "joint_mode",
+    "split_mode",
+    "adaptive"
+  ],
+  "thresholds": [
+    5,
+    9,
+    12
+  ],
+  "primary_threshold": 9,
+  "mode": "unique maximum-cardinality pairwise-compatible subset, found exactly; tied subsets unresolved",
+  "adaptive": "joint conditional strict majority -> joint; else both marginal conditional strict majorities -> split; otherwise all-member median compromise",
+  "denominator": "existence uses full N and original MV50; adaptive >s/2 only chooses estimator, never deletes an identity",
+  "caveat": "working rules, no semantic type detector; thresholds not tuned by GT; order delegated to human check"
+}

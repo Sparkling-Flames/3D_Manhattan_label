@@ -1,0 +1,36 @@
+{
+  "schema": "adaptive_point_experiment_v1",
+  "images": [
+    "B6ByNegPMKs-33",
+    "UwV83HsGsw3-09",
+    "b8cTxDM8gDG-18",
+    "uNb9QFRL6hY-67",
+    "wc2JMjhGNzB-53",
+    "e9zR4mvMWw7-15",
+    "rPc6DW4iMge-06",
+    "2t7WUuJeko7-06",
+    "7y3sRwLe3Va-04"
+  ],
+  "thresholds": [
+    5,
+    9,
+    12
+  ],
+  "views": [
+    "shared_x",
+    "late_x"
+  ],
+  "routes": [
+    "paired",
+    "split_unique",
+    "bottom_anchor",
+    "top_anchor",
+    "adaptive_incidence_v1"
+  ],
+  "denominator": "Same nine development pools / 150 independent records; ceil(N/2); no new collection or per-image GT tuning.",
+  "adaptive_rule": "Connected components of majority bound/top/bottom groups linked by original observation identity. One top and one bottom, <=one bound, nonempty original-pair incidence -> independent; else bound baseline. No density threshold fitted.",
+  "variables": "Adaptive changes selected identities/members and pairing; coordinate median and x-order fixed. late_x separately changes coordinates used for matching and timing of x projection, not source ring or y.",
+  "raw_scope": "Restore before_preprocessing_points via ordered_source_point_indices; does NOT undo historical repairs, cleaning, borrowing, canonical snapshot or source-pair decisions.",
+  "comparison": "Coverage over all attempts; reference error comparisons on common available states, separately per view/threshold/reference; no success-only pooled ranking.",
+  "order": "Freeze plan -> build without GT -> serialize -> evaluate; all images previously seen, not blind validation."
+}

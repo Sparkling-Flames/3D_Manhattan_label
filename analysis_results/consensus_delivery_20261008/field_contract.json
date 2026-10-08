@@ -1,0 +1,11 @@
+{
+  "schema": "consensus_delivery_v1",
+  "automatic": "Chosen working gap, original full-person pool, MV50, all-member coordinate median; GT unused.",
+  "assisted": "Only exact reviewed partitions covering whole touched groups, plus explicit user order. One person one observation; all source observations and full N preserved. Post-selection feedback is separate from tuning cases.",
+  "cases": "Deduplicated local relations, not independent samples; mixed is weak not-all-one constraint. Uncertain text and duplicate-person same-target opinions deferred.",
+  "outputs": "177 actual all-person node outputs and candidate connection. Missing connection/failed geometry retained. One known whole-pool failure separate.",
+  "remaining": "Known unresolved relation cases only, not exhaustive error count; no claim of >90% accuracy.",
+  "sorting_policy": "N=2: node output and source diagnostics retained; candidate order/geometry deferred. N>=3 may enter order review. This does not change MV50 votes.",
+  "followup": "user_followup.json stores post-selection identity/order decisions; no changes to 36-case calibration. The interventions count includes identity and order operations; applied_reviews names them.",
+  "history_order_audit": "order_followup/history_order_audit.csv/json joins actual adjacency changes and historical user orders to current candidates. History may be outside current pool; changed_objects_in_pool distinguishes this. Non-x order is a review signal, not error. No automatic ring certification."
+}

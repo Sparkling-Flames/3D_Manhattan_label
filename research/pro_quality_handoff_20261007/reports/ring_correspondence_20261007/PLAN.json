@@ -1,0 +1,21 @@
+{
+  "images": [
+    "yqstnuAEVhm-25",
+    "uNb9QFRL6hY-26",
+    "uNb9QFRL6hY-41",
+    "rPc6DW4iMge-06",
+    "uNb9QFRL6hY-67"
+  ],
+  "gap_per_omitted_node_deg": 13.5,
+  "matching_cost": "mean(top_angle,bottom_angle)",
+  "controls": [
+    "existing paired/split/anchors at 9deg",
+    "unordered matching with same cost/gap",
+    "cyclic matching with same cost/gap"
+  ],
+  "grouping": "complete linkage with unmatched observation pairs prohibited; one per person",
+  "location": "fixed current medoid anchored median; no semantic mode selector in this first correspondence experiment",
+  "connection": "most supported complete projected source ring; nodes/positions fixed; no x fallback",
+  "evidence": "existing development cases; no GT selection, no new people or blind test",
+  "limitation": "13.5deg skip is an uncalibrated working choice (1.5 times old 9deg); changed metric/tolerance separated by free control"
+}

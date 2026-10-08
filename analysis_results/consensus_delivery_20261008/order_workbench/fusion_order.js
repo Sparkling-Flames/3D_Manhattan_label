@@ -1,0 +1,10 @@
+'use strict';
+document.title='融合共识排序复核';document.querySelector('h1').textContent='融合共识 · 点对排序';
+document.querySelector('.order-editor p').textContent='只调整完整融合点对的顺序，票数和坐标不改。两人池不在本次队列。节点归属有问题时请标记，不必强行连线。';
+$('order-restore').textContent='恢复当前来源建议';$('pairing-problem').textContent='节点归属需复核';
+$('pairing-note').placeholder='请填写节点编号及问题（可选）';
+const baseDescription=describeSource;describeSource=function(){baseDescription();const s=activeSource();identity.textContent='融合节点票数：'+s.node_supports.map((n,i)=>'对'+(i+1)+'='+n+'票').join('，')+'。对N是固定节点编号；拖动改变连接顺序。';};
+describeSource();
+const info=document.createElement('p');info.innerHTML='复用原排序台：拖动卡片或输入完整排列→确认→导出JSON。无需修改时直接确认；不确定可暂留。<a href="residual_review.html" target="_blank">另开：两处残余墙线归属复核</a>';
+document.querySelector('.study-heading').after(info);
+$('download-orders').onclick=()=>{const url=URL.createObjectURL(new Blob([JSON.stringify({schema:reviewSchema,examples_only:false,records:saved},null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='融合共识排序审核_20261008.json';a.click();URL.revokeObjectURL(url);};

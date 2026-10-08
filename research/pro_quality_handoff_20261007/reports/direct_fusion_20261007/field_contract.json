@@ -1,0 +1,10 @@
+{
+  "schema": "direct_fusion_v1",
+  "node_consensus": "all selected identities, centers and support regardless of order or geometry; no silent node dropping",
+  "candidate": "ordered coordinates only; absence of order leaves points null but node_consensus remains ready",
+  "manual_order": "explicit permutation of all selected IDs exactly once; changes no identity, support or center",
+  "diagnostic": "two spatial subgroups are not semantic identities; exploratory queue only, no automatic mutation",
+  "provenance": "current bundle records; old partitions reused after exact input check; new correspondence computed on additional pools",
+  "human_assisted": "user_review.json identity corrections; uNb36 six-node x ordering explicitly requested by user; original automatic output preserved",
+  "user_requested_x_sort": "user-selected ordering policy, not an independent human certification of geometry; changes no vote or center"
+}

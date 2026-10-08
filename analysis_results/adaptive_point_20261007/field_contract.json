@@ -1,0 +1,11 @@
+{
+  "schema": "adaptive_point_experiment_v1",
+  "plan": "PLAN.json",
+  "inputs": "inputs.json and input_comparison.csv; before_shared_x is a coordinate sensitivity view, not a replacement canonical input",
+  "states": "All 270 image/view/threshold/route states retained. geometry_review and ok both mean geometry available, not semantic approval.",
+  "identity": "adaptive component graph over majority groups; top/bottom/joint support separate; binding fallback may omit unmatched endpoint observations with explicit component trace",
+  "centers": "Existing medoid-anchored coordinate median; late_x estimates each endpoint x then periodic midpoint. Same-member differences across views can be projection/median noncommutativity, not identity gains.",
+  "metrics": "Post-construction reference versions separate. D=normalized symmetric difference, IoU/centroid, top/bottom same-longitude angular MAE where Ring domain permits. Not corner RMSE.",
+  "human": "Known development relations only, not complete semantic gold. Correct triples together is not certification of remaining cluster members.",
+  "mutations": "Only opt-in endpoint coordinate view added to existing helpers; default shared-x calculations preserved by tests. No source/GT/eligibility edits."
+}

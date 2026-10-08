@@ -1,0 +1,16 @@
+{
+  "schema": "member_fusion_response_v1",
+  "source": [
+    "../individual_reference.csv",
+    "../composition/per_image.csv",
+    "../all_pool_summary.csv",
+    "analysis_results\\worker_count_composition_20261006\\assignments.csv"
+  ],
+  "panel": "Same 24 Manual workers x 10 images; k=8; existing building-held-out Q labels, no selection changes.",
+  "references": "calibration selects existing Q assignments; evaluation chooses original or revision where available (4 revised, 6 original). version is actual GT. Repeated original rows under two evaluation policies are not independent observations.",
+  "metrics": "O=omission/GT area, E=extension/GT area, D=O+E; M=expected member mean, F=expected fusion error, B=M-F. B is reduction, not efficiency, ability, spatial complementarity or causal attribution.",
+  "full": "all_M averages 24 people, all_F is actual full-24 consensus for the same rule/reference. Repeated across strategies/calibrations, not independent outputs; 8->24 changes size and composition.",
+  "RV": "Existing R and V retain fixed full-pool union denominator; do not subtract from GT-normalized losses.",
+  "contrast": "delta is higher_rich minus lower_rich; delta_F=delta_M-delta_B. No benefit ratios or B-vs-M correlation.",
+  "check": "Fixed-composition expectation tested against enumerated teams; D=O+E and contrast identity checked."
+}

@@ -1,0 +1,100 @@
+{
+  "schema": "local_identity_review_v1",
+  "image": "uNb9QFRL6hY-36",
+  "feature_id": "node_003",
+  "source_image": "uNb9QFRL6hY-36_review.png",
+  "reviewer": "user",
+  "verbatim": "1-3是同一墙角,4-6标的是靠前的墙角.他们标注的空间停止点不同",
+  "decision": "two_distinct_corners_with_different_spatial_stopping_points",
+  "groups": [
+    {
+      "identity": "rear_corner",
+      "display_indices": [
+        1,
+        2,
+        3
+      ],
+      "members": [
+        {
+          "id": "R01570",
+          "worker": "P005",
+          "pair_index": 3,
+          "source_pair_index": 3
+        },
+        {
+          "id": "R02473",
+          "worker": "P008",
+          "pair_index": 3,
+          "source_pair_index": 3
+        },
+        {
+          "id": "R01466",
+          "worker": "P009",
+          "pair_index": 1,
+          "source_pair_index": 1
+        }
+      ],
+      "support": 3,
+      "denominator": 6,
+      "mv50_selected": true,
+      "strict_majority_selected": false,
+      "all_member_median": [
+        [
+          268.2767804239963,
+          257.25451916005534
+        ],
+        [
+          268.2767804239963,
+          316.6066547925655
+        ]
+      ]
+    },
+    {
+      "identity": "front_corner",
+      "display_indices": [
+        4,
+        5,
+        6
+      ],
+      "members": [
+        {
+          "id": "R01857",
+          "worker": "P012",
+          "pair_index": 1,
+          "source_pair_index": 1
+        },
+        {
+          "id": "R00977",
+          "worker": "P024",
+          "pair_index": 1,
+          "source_pair_index": 1
+        },
+        {
+          "id": "R01534",
+          "worker": "P025",
+          "pair_index": 1,
+          "source_pair_index": 1
+        }
+      ],
+      "support": 3,
+      "denominator": 6,
+      "mv50_selected": true,
+      "strict_majority_selected": false,
+      "all_member_median": [
+        [
+          279.213282247765,
+          235.40229885057474
+        ],
+        [
+          279.213282247765,
+          337.5096146884458
+        ]
+      ]
+    }
+  ],
+  "automatic_result": "false_merge_of_two_identities",
+  "scope": "只裁决所示六份局部身份与空间停止点；未认证精确坐标或完整环",
+  "implication": "旧6/6不是真实同角支持；当前MV50下两个3/6均达票，可同时保留、分别定位后进入单一融合输出，不要求有人完整提交过这一组合。整环支持与三维可用性另记，未生成完整新环。",
+  "automatic_outputs_preserved": true,
+  "fusion_policy_clarification_verbatim": "但是这其实确实离得比较近,按照我们之前的思路,或者融合共识的算法,如果他们同时都 达标,其实也不是不行把?我们融合共识不是说要形成对的,而是形成 标注者们认为应该标的地方"
+}

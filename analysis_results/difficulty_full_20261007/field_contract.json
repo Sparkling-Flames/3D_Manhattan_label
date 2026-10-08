@@ -1,0 +1,19 @@
+{
+  "schema": "difficulty_full_v1",
+  "date": "2026-10-07",
+  "source_manifest": "analysis_results/research_input_20260929/manifest.json",
+  "sources": [
+    "Current load_current_bundle/project_bundle; existing ordered_source_pair_indices",
+    "Corrected inventory + 8-image user difficulty update"
+  ],
+  "population": "All research_annotation_image entries; two reference-only images not counted. All current independent consensus-eligible records, separated by condition and gate. Failed geometry keeps whole pool unavailable; no member removed to repair it.",
+  "quality": "Difficulty ordinary panel uses manual/main_candidate/all quality_candidate. Expanded panel additionally accepts annotatable doorway with existing three-level label; it does not change quality eligibility. Difficult/pending doorway and all OOS stay separate descriptive strata.",
+  "metrics": "Exact finite-pool uniform k-subset area expectations. D=O+E normalized by GT; V by full-pool union. Full geometry and all endpoints saved; k=N V=0 mechanical.",
+  "summary": "Fixed N>=limit pools, original or revised-where-available, conditions/scenes kept separate. Unknown difficulty has its own descriptive output, never relabeled. Building-equal and image-equal results retained.",
+  "limits": "Scene gates remain observational. Reference validity is geometric, not semantic certification. High D cannot by itself prove difficulty, worker error, or GT error. OOS output only where current declared-footprint model is computable.",
+  "snapshots": "roster.csv provides exact pool membership; issues.json logs representation/reference warnings; coverage includes every research image.",
+  "images": 259,
+  "pools": 284,
+  "success": 274,
+  "geometry_count": 548
+}

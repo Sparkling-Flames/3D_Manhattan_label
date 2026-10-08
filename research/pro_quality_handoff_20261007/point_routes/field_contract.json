@@ -1,0 +1,11 @@
+{
+  "schema": "point_route_panel_v1",
+  "candidates": "All four fixed pools and 80 route/threshold states; original metadata, full identity members, center and adjacency diagnostics retained.",
+  "controls": "Three mechanism controls, each five thresholds times four routes; no synthetic reference scores.",
+  "anchor_support": "Votes establish only the anchor identity. Other endpoint coordinates use original paired partners; their spread can exceed the identity threshold.",
+  "split_support": "top_support and bottom_support are marginal identity supports; joint_support counts original pair incidence, not votes for the generated coordinate; point_support_counts is null.",
+  "status": "ok denotes existing computational checks only. Every generated ring is unconfirmed, including ok. geometry_review also retains a computable candidate; unavailable is not interpreted as no possible consensus.",
+  "connection": "New center-x ring only; source order unchanged. Direct and deletion-projected source adjacency are separate, neither establishes physical correctness.",
+  "geometry": "BEV omission/extension h² and centroid h use camera-height units; no top score for Lee BEV. Uniform-longitude boundary px discrepancy applies only to single-valued rings; not nearest boundary distance or semantic matching.",
+  "reference": "Only original version; no threshold, identity, ring or route selection by GT. Previously seen development panel, not holdout validation."
+}

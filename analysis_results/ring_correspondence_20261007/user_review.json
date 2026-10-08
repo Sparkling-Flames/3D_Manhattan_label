@@ -1,0 +1,155 @@
+{
+  "date": "2026-10-07",
+  "reviewer": "user",
+  "image": "yqstnuAEVhm-25",
+  "route": "cyclic_identity",
+  "source_image": "yqstnuAEVhm-25_new_members.png",
+  "identity": {
+    "question_scope": "additional five observations only",
+    "members": [
+      [
+        "R00401",
+        3
+      ],
+      [
+        "R01166",
+        3
+      ],
+      [
+        "R01584",
+        3
+      ],
+      [
+        "R02035",
+        3
+      ],
+      [
+        "R02228",
+        3
+      ]
+    ],
+    "verbatim": "是的,全都是想标被遮挡的墙角",
+    "decision": "same_occluded_wall_corner",
+    "all_18_individually_newly_reviewed": false
+  },
+  "order": {
+    "source_image": "yqstnuAEVhm-25_complete.png",
+    "displayed_indices_one_based": [
+      3,
+      4,
+      5,
+      6
+    ],
+    "feature_ids": [
+      "node_002",
+      "node_003",
+      "node_004",
+      "node_005"
+    ],
+    "verbatim": "顺序没错",
+    "decision": "displayed_local_connection_correct",
+    "changed": false
+  },
+  "candidate_points": [
+    [
+      184.8142707240293,
+      81.18198198198198
+    ],
+    [
+      184.8142707240293,
+      444.34
+    ],
+    [
+      488.85760000000005,
+      199.7025561769502
+    ],
+    [
+      488.85760000000005,
+      318.27080430134885
+    ],
+    [
+      681.5193277310923,
+      224.78720401835704
+    ],
+    [
+      681.5193277310923,
+      295.2064468382444
+    ],
+    [
+      759.99,
+      222.25896396396396
+    ],
+    [
+      759.99,
+      300.7086236436322
+    ],
+    [
+      740.3785252141074,
+      142.55576155663726
+    ],
+    [
+      740.3785252141074,
+      382.6980443641422
+    ],
+    [
+      794.1405267064213,
+      142.3712693498452
+    ],
+    [
+      794.1405267064213,
+      382.4570562343331
+    ]
+  ],
+  "entire_layout_or_precise_positions_confirmed": false,
+  "followup_20261007": {
+    "source": "用户本轮直接反馈",
+    "verbatim": [
+      "我不要强求,每张图片都能自动且完美的配对墙线,但是绝大部分的都能成功配对就行,剩下的我可以人工稍微介入辅助一下.毕竟有些复杂的图,有些人标的千奇百怪",
+      "41那个,我觉得你画的 自适应选择那些点,其实都属于同一墙线,67那个也没问题. yq-25确实是比较特殊的一点,但是它可以通过相近的上下y坐标去和   那两个未被遮挡的墙线区分开"
+    ],
+    "adopted_scope": "多数自动对应、少数人工辅助为目标；41所示自适应点属同一墙线，67所示局部获接受反馈。未提出撤销旧上端目标判断或认证精确坐标。",
+    "yq_coordinate_check": {
+      "source": "candidates.json / cyclic_identity / identity_groups / members.points",
+      "unit": "1024x512 ERP像素",
+      "groups": [
+        {
+          "feature_id": "node_003",
+          "n": 18,
+          "top_y_range": [
+            213.40504201680673,
+            226.67184466019418
+          ],
+          "bottom_y_range": [
+            292.3,
+            310.5172938762555
+          ]
+        },
+        {
+          "feature_id": "node_004",
+          "n": 16,
+          "top_y_range": [
+            135.71,
+            145.1647509578544
+          ],
+          "bottom_y_range": [
+            375.39714867617107,
+            385.73980582524274
+          ]
+        },
+        {
+          "feature_id": "node_005",
+          "n": 20,
+          "top_y_range": [
+            130.75507900571418,
+            146.13221406086043
+          ],
+          "bottom_y_range": [
+            373.3116089613035,
+            385.79821200510855
+          ]
+        }
+      ],
+      "interpretation": "遮挡角与两个可见角在上下y分别有间隔；两个可见角之间y重叠。已有分组上的描述，不是新自动规则的验证。"
+    }
+  }
+}

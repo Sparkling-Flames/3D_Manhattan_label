@@ -1,0 +1,10 @@
+{
+  "schema": "fixed_identity_location_v2",
+  "input": "previous frozen candidates/inputs, not new raw observations",
+  "support": "number of source people used, not votes at an exact output coordinate; joint is intersection of source pair IDs",
+  "mode": "exact maximum-cardinality pairwise-compatible subsets; may overlap, not a partition or semantic types; threshold uncalibrated",
+  "ties": "pure mode routes retain unresolved nodes; adaptive falls back to declared all-source median, not point omission",
+  "adaptive": "conditional strict-majority rule among same-identity s, not a change to full-N MV50 existence",
+  "connection": "previous order copied without optimization; source nodes unchanged; endpoints can shift",
+  "unit": "1024x512 continuous ERP; angular degrees; periodic midpoint x after independent endpoint estimation"
+}

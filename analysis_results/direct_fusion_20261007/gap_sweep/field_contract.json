@@ -1,0 +1,9 @@
+{
+  "schema": "correspondence_gap_v1",
+  "summary": "One image/gap row. partitions_equal_baseline compares source membership sets, not unstable node IDs.",
+  "relations": "Explicit within-reviewed-cohort pairs should join; cross-cohort pairs should separate. Counts are dependent relations, not independent people or whole-image accuracy.",
+  "unreviewed": "Members beyond each reviewed set remain unknown; no scores inferred from absence of review.",
+  "human_status": "confirmed_local, provisional and user_A_interpretation remain separate; target-ambiguous sources do not create hard relations.",
+  "trace": "Failed same pairs: direct pairwise match vs final group membership. Missing fields fail visibly.",
+  "states": "Automatic results only, source members and complete node/candidate outputs. Current human-assisted workflow untouched."
+}

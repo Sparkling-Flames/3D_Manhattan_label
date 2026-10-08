@@ -1,0 +1,12 @@
+{
+  "unit": "one image and gap; not independent samples",
+  "changed_observations": "Observations whose full identity membership set differs from the stated baseline; node labels ignored.",
+  "selected_equal": "Same retained membership sets AND centers; does not assess ring order or semantic correctness.",
+  "review_signals": "Adjacent-cohort diagnostic, not errors. No signal does not mean correct.",
+  "failures": "Input failure reported once per pool, excluded from all setting totals without deleting any voter.",
+  "local_cases": "Only existing explicit reviews; provisional and uncertain identities not hard accuracy labels.",
+  "schemas": "summary.csv contains counts, equality flags, order/geometry statuses; totals.csv aggregates by gap.",
+  "new_review": "Three local cases reviewed after the broad scan, kept separate in new_review_scores.csv; not whole-image accuracy.",
+  "boundary": "new_review_boundary.json adds0.1 samples for two new images only,8 extra states outside2301 broad states.",
+  "human_review_html": "review.html displays source membership colors; exported wall_identity_review_20261007_v1 decisions contain per-gap verdicts and explicit group/source references; never auto-applies edits."
+}

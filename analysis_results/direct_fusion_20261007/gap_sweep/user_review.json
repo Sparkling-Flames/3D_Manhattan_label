@@ -1,0 +1,30 @@
+{
+  "schema": "gap_sweep_review_v1",
+  "date": "2026-10-07",
+  "source": "本线程用户对两张来源图的直接回答",
+  "decisions": [
+    {
+      "image": "yqstnuAEVhm-25",
+      "source_image": "yq25_split_sources.png",
+      "question_scope": "9°新拆出的另外五份是否与已确认参照表达同一遮挡墙角",
+      "verbatim": "是的",
+      "decision": "same_occluded_corner_as_reviewed_reference",
+      "confirmed_same_members": [["R01891",3],["R00150",3],["R02387",3],["R01654",3],["R02388",3]],
+      "reference": ["R00401",3],
+      "interpretation": "五份与参照同角；可与上次已确认五份合为十份明确关系。未把其余八份自动升级成人工认证。"
+    },
+    {
+      "image": "rPc6DW4iMge-06",
+      "source_image": "rPc_conflict_sources.png",
+      "verbatim": "红色都贴近A,   第二个确实因为它标的模棱两可,我主观认为它更想标的不是玻璃,而是梳妆台",
+      "first_A_members": [["R02468",2]],
+      "first_interpretation": "第一份按用户回答归入A，在关系表单列user_A_interpretation，区分此前明确同角三份。",
+      "ambiguous_member": ["R01662",0],
+      "remaining_uncertainty": "第二份位置贴近A，但用户倾向梳妆台而非玻璃目标；不强制同角或异角，不用于硬关系评分。",
+      "decision": "first_A_second_target_uncertain",
+      "coordinates_certified": false
+    }
+  ],
+  "pending_questions": [],
+  "not_claimed": "没有认证全部18人／20人的完整身份，没有修改原始标注、存在票或生产输出。"
+}

@@ -1,0 +1,12 @@
+{
+  "inputs": [
+    "D:\\Work\\HOHONET\\analysis_results\\consensus_response_20261006\\composition\\per_image.csv",
+    "D:\\Work\\HOHONET\\analysis_results\\difficulty_full_20261007\\updated\\curves.csv"
+  ],
+  "join": "Manual main_candidate; exact image/method/evaluation version; same N and random8/full endpoint verified; latest human labels/scenes override old composition labels.",
+  "gains": "count_gain_8_k=D(random8)-D(randomk); selection_gain=D(random8)-D(higher-rich8); positive means closer to named reference. No causal decomposition.",
+  "groups": "Ordinary/OOS kept apart; no doorway extrapolation without composition data. Fixed N>=16 or20 per summary; evaluation revised where available is explicit.",
+  "selection": "Existing building-held-out Q policy, no new calibration. higher_fraction records actual feasible composition. Cost of calibration is not included.",
+  "metrics": "R/V use full-pool union; D/O/E use reference area. Raw gains cannot be compared with R/V. Full output retained independently.",
+  "counts": "Signs only, 1e-12 floating tolerance, no thresholds or trajectory classifier. Building-equal difference complements image averages."
+}
