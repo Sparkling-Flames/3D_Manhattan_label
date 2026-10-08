@@ -83,7 +83,8 @@ def build_residual(inputs,current):
         'uNb9QFRL6hY-08':'原话“最左边那份应与G06同停止位置”定位到P022/R02260第4对；另一单人组是P018/R01833第4对。请先选这两份，确认同一停止墙线／不同／不确定；其余人员如无新意见不用重判。'}
     images=[]
     for code,fids in selected.items():
-        src=inputs[code];package=read(DELIVERY/(code+'.json'));state=package['assisted'] or package['automatic']
+        # Preserve the reviewed source groups after follow-up partitions change live IDs.
+        src=inputs[code];package=read(DELIVERY/(code+'.json'));state=package['automatic']
         observations=[];lookup={}
         for rec in src['records']:
             for k in range(len(rec['points'])//2):
@@ -104,6 +105,32 @@ def build_residual(inputs,current):
     page=page.replace('墙线归类复审_20261008.json','墙线残余归属审核_20261008.json')
     page=page.replace('list();\n</script>',"list();$('rightLabel').style.display='none';$('leftLabel').firstChild.textContent='当前局部归类是否可用 ';$('panels').style.gridTemplateColumns='1fr';\n</script>")
     (OUT/'residual_review.html').write_text(page,encoding='utf-8')
+    rpc=images[0]
+    members=sorted({m for g in rpc['states']['7.5'] for m in g['members']})
+    individual=dict(schema='wall_identity_individual_20261008_v2',image=rpc,
+        observations=[rpc['observations'][m] for m in members],
+        references=[next(o for o in rpc['observations'] if o['id']=='R01557' and o['pair_index']==k) for k in [4,2]])
+    bundle=read(ROOT/'analysis_results/research_input_20260929/preprocessed_source.json')
+    gt=next(o for o in bundle['objects'] if o['image_id']==rpc['image_id'] and o['object_kind']=='gt_original')
+    individual['gt_reference']={k:gt[k] for k in ['object_id','source','points_1024x512','links_zero_based']}
+    individual['target_classes']={'A':'梳妆台','B':'玻璃外侧','C':'玻璃与墙相交处','other':'其他目标','uncertain':'不确定'}
+    prior_path=OUT/'user_residual_review_20261008.json'
+    individual['previous_review']=read(prior_path) if prior_path.exists() else None
+    individual_path=OUT/'user_individual_review_20261008.json'
+    individual['received_individual']=read(individual_path) if individual_path.exists() else None
+    correction_path=DELIVERY/'rpc_p001_followup.json'
+    if correction_path.exists() and individual['received_individual']:
+        correction=read(correction_path)
+        for answer in individual['received_individual']['decisions']:
+            o=answer['observation']
+            if (o['id'],o['pair_index'])==(correction['observation_id'],correction['pair_index']):
+                answer.update(choice=correction['choice'],note=correction['quote'])
+    template=(ROOT/'tools/thesis_main/analysis/wall_identity_individual_20261008.html').read_text(encoding='utf-8')
+    ring_template=(ROOT/'tools/thesis_main/analysis/wall_identity_review_20261007.html').read_text(encoding='utf-8')
+    arc=ring_template.split('function sourceArc(){',1)[1].split('\nfunction chosen()',1)[0]
+    arc='function sourceArc(id){'+arc.replace("const id=$('worker').value;",'').replace('current.observations','D.image.observations')
+    template=template.replace('/*__SOURCE_ARC__*/',arc)
+    (OUT/'individual_review.html').write_text(template.replace('/*__DATA__*/',encode(individual)),encoding='utf-8')
 
 
 if __name__=='__main__':build()

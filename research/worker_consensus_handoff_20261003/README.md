@@ -6,7 +6,7 @@
 
 ## 先读这些材料
 
-1. [当前方向与算法职责](../../docs/thesis_main/研究方向_空间差异与共识_20260930.md)及[推进台账](../../docs/thesis_main/研究推进台账_20261003.md)。规范以[当前合同](../../docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json)为准，历史研究包不规定当前前置任务。
+1. [当前方向与算法职责](../../docs/thesis_main/history/研究方向_空间差异与共识_20260930.md)及[推进台账](../../docs/thesis_main/研究推进台账_20261003.md)。规范以[当前合同](../../docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json)为准，历史研究包不规定当前前置任务。
 2. [A线136图、最高24人数曲线](../../analysis_results/lee_expanded_20261003/REPORT.md)：固定人数窗口，难度缺失及失败整池保留；含固定输入、逐图/分组结果、完整排列与图表。
 3. [B线共同24人×10图及4人构成](../../analysis_results/worker_profiles_20261003/REPORT.md)：画像、质心、建筑留出、参考/权重敏感性、10626集合/图精确构成，及GT无关成员区域差异。
 4. [早期Pro与dot材料归档](../layout_methods_review_20261001/README.md)与[质量方法交接](../pro_quality_handoff_20261002/README.md)用于追溯；外部意见、当前报告及用户预期均不是应当证明的真理。

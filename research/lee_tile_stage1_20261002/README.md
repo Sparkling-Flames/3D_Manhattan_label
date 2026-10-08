@@ -42,6 +42,6 @@ python -B -m tools.thesis_main.analysis.lee_tile_stage1_20261002 --out analysis_
 3. 利用参考适用的图片研究人员跨图表现，再决定分类；随后比较不同类型的真实人员组合。
 4. 用已有图片分类、人工难度预期、冻结d_model_feat及BiLayout enclosed/extended差异，分别检查与曲线的大致对应。不建精细难度模型，不把它们一次塞进联合分析。
 
-分簇、局部路径、合理空间候选独立；同房预测后置。主线与合同见[研究方向](../../docs/thesis_main/研究方向_空间差异与共识_20260930.md)、[当前方法合同](../../docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json)、[统计计划](../../docs/thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md)。
+分簇、局部路径、合理空间候选独立；同房预测后置。主线与合同见[研究方向](../../docs/thesis_main/history/研究方向_空间差异与共识_20260930.md)、[当前方法合同](../../docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json)、[统计计划](../../docs/thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md)。
 
 ChatGPT Pro可以在没有图片的条件下独立审查实现、复算数值、识别曲线解释的边界，并提出最值得做的下一小步。用户将通过对话提供目标提示词；本包不要求Pro采用指定的分析方法，也不请其替代视觉裁决。

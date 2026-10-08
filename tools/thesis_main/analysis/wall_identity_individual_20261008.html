@@ -1,0 +1,36 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>rPc · 逐份墙线归属</title>
+<style>body{font:16px system-ui;margin:20px;background:#eff3f6;color:#162936}button,select,textarea{font:inherit;padding:9px;margin:4px}button{cursor:pointer}nav{position:sticky;top:0;background:#eff3f6;padding:8px;z-index:2}.views{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:12px}section{background:white;padding:10px;border-radius:8px}svg{width:100%;display:block}h2{font-size:17px}textarea{width:90%}.picked{background:#143f63;color:white}#status{font-weight:bold}@media(max-width:850px){.views{grid-template-columns:1fr 1fr}.views section:first-child{grid-column:1/-1}}</style>
+<h1>rPc-06：一次只审一份标注</h1><p>左侧红线是当前待判断观察；右侧三个目标参照分别单独显示，不叠加其他人。只判断目标归属，不评价坐标准确度。现分为A梳妆台、B玻璃外侧、C玻璃与墙相交处。参照仅说明目标，不代表坐标标准。</p>
+<nav><button id="prev">上一份</button><select id="person" aria-label="选择标注"></select><button id="next">下一份</button><span id="progress"></span><button id="export">导出逐份审核JSON</button></nav>
+<div class="views"><section><h2 id="who"></h2><div id="current"></div></section><section><h2>A 梳妆台：P023第5对</h2><div id="refA"></div></section><section><h2>B 玻璃外侧：P023第3对</h2><div id="refB"></div></section><section><h2>C 玻璃与墙相交处：用户截图</h2><img src="C_glass_wall_user_reference.png" alt="用户指定的玻璃与墙相交处" style="display:block;height:360px;max-width:100%;object-fit:contain;margin:auto"><p>此截图用于辨认目标，不作为融合坐标。</p></section></div>
+<p><strong>C：玻璃与墙相交处</strong>——按用户提供的截图单独归类，不并入A或B。</p><details><summary>查看实际原GT局部（独立对照，不用于自动归类）</summary><div id="gt"></div><p id="gtSource"></p></details><div id="choices"><button data-choice="A">A：梳妆台</button><button data-choice="B">B：玻璃外侧</button><button data-choice="C">C：玻璃与墙相交处</button><button data-choice="other">其他目标</button><button data-choice="uncertain">不确定</button><button data-choice="">清除此份选择</button></div><p id="status"></p><textarea id="note" placeholder="可选备注：如介于两者之间、看不清、停止位置不同"></textarea>
+<details open><summary>查看该人员完整原标注（按原环连线；红色为待复核第几对）</summary><div id="whole"></div></details>
+<details><summary>此前上传的判断（原样保留，不自动转成逐人分类）</summary><pre id="prior" style="white-space:pre-wrap"></pre></details>
+<p id="saved">本浏览器自动暂存；完成后请导出交回。不确定可以保留，无需把每份都硬分到A、B或C。</p>
+<script id="data" type="application/json">/*__DATA__*/</script><script>
+const D=JSON.parse(document.getElementById('data').textContent),$=id=>document.getElementById(id),key=D.schema;
+const labels=D.target_classes;
+let index=Math.max(0,D.observations.findIndex(o=>o.worker==='P001')),answers={};
+const id=o=>o.id+':'+o.pair_index;
+const name=o=>o.worker+' / '+o.id+' 第'+(o.pair_index+1)+'对';
+function validate(rows){for(const [k,a] of Object.entries(rows)){const o=D.observations.find(o=>id(o)===k);if(!o||JSON.stringify(o)!==JSON.stringify(a.observation)||!labels[a.choice]||typeof a.note!=='string')throw Error('来源或分类不匹配')}return rows}
+if(D.received_individual)answers=validate(Object.fromEntries(D.received_individual.decisions.map(a=>[id(a.observation),a])));
+try{const raw=localStorage.getItem(key);if(raw)answers=validate(JSON.parse(raw))}catch(e){$('saved').textContent='旧暂存未载入：'+e.message}
+function svg(o,color,whole=false){const [a,b]=o.points;return `<svg viewBox="${whole?'0 0 1024 512':'155 160 150 205'}" role="img" aria-label="${name(o)}"><image href="${D.image.src}" width="1024" height="512"/><path d="M${a}L${b}" stroke="white" stroke-width="2.5"/><path d="M${a}L${b}" stroke="${color}" stroke-width="1.3"/>${o.points.map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="2" fill="${color}" stroke="white" stroke-width=".6"/>`).join('')}</svg>`}
+/*__SOURCE_ARC__*/
+function fullAnnotation(o){const obs=D.image.observations.filter(p=>p.id===o.id);const base=svg(o,'#ed174c',true);const lines=obs.map(p=>`<path d="M${p.points[0]}L${p.points[1]}" stroke="#00d5ff" stroke-width="1.5"/>${p.points.map(v=>`<text x="${v[0]+3}" y="${v[1]-4}" font-size="10" fill="white" stroke="black" stroke-width=".5">${p.pair_index+1}</text>`).join('')}`).join('');return base.replace('</svg>',sourceArc(o.id)+lines+`<path d="M${o.points[0]}L${o.points[1]}" stroke="#ff174c" stroke-width="3"/></svg>`)}
+function draw(){const o=D.observations[index],a=answers[id(o)];$('person').value=index;$('who').textContent='当前：'+name(o);$('current').innerHTML=svg(o,'#ed174c');$('whole').innerHTML='<p>'+name(o)+'；亮青为该人员全部点对，红色为当前复核点对；白色描边连线沿该人员原环。</p>'+fullAnnotation(o);$('note').value=a?.note||'';$('status').textContent=a?'已选：'+labels[a.choice]:'此份尚未判断';$('progress').textContent=`${index+1}/${D.observations.length} · 已填${Object.keys(answers).length}`;$('prev').disabled=index===0;$('next').disabled=index===D.observations.length-1;document.querySelectorAll('[data-choice]').forEach(b=>b.classList.toggle('picked',!!a&&b.dataset.choice===a.choice))}
+function save(){localStorage.setItem(key,JSON.stringify(answers));$('saved').textContent='已暂存；完成后请导出JSON交回。'}
+$('person').innerHTML=D.observations.map((o,i)=>`<option value="${i}">${i+1}. ${name(o)}</option>`).join('');
+$('refA').innerHTML=svg(D.references[0],'#0085d5');$('refB').innerHTML=svg(D.references[1],'#b05a00');
+$('prior').textContent=JSON.stringify(D.previous_review,null,2);
+const old=localStorage.getItem('wall_identity_individual_20261008_v1');if(old)$('prior').textContent+='\n此前两类暂存（保留待重看，不自动计入三类）：\n'+old;
+const gt=D.gt_reference,pts=gt.points_1024x512;
+$('gt').innerHTML=`<svg viewBox="130 145 240 235"><image href="${D.image.src}" width="1024" height="512"/>${gt.links_zero_based.map(([a,b],i)=>`<path d="M${pts[a]}L${pts[b]}" stroke="#00d9fa" stroke-width="1.2"/><text x="${pts[a][0]}" y="${pts[a][1]-3}" font-size="5" fill="white" stroke="black" stroke-width=".2">GT${i+1}</text>`).join('')}</svg>`;
+$('gtSource').textContent='来源：'+gt.source+'。当前版本未明确列出这三处近邻目标；不补造C参照坐标。';
+$('choices').onclick=e=>{if(e.target.dataset.choice===undefined)return;const o=D.observations[index],choice=e.target.dataset.choice;if(choice)answers[id(o)]={observation:o,choice,note:$('note').value};else delete answers[id(o)];save();draw()};
+$('note').oninput=()=>{const a=answers[id(D.observations[index])];if(a){a.note=$('note').value;save()}};
+$('person').onchange=e=>{index=+e.target.value;draw()};$('prev').onclick=()=>{index--;draw()};$('next').onclick=()=>{index++;draw()};
+$('export').onclick=()=>{const data={schema:D.schema,image:D.image.code,image_id:D.image.image_id,references:D.references,target_classes:D.target_classes,gt_reference:D.gt_reference,decisions:Object.values(answers),previous_review:D.previous_review};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='rPc逐份墙线归属_20261008.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+draw();
+</script></html>

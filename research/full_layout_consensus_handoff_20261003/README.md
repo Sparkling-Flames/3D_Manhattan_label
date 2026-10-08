@@ -41,7 +41,7 @@ Q／T／S／B先同步核对来源与覆盖，后续先单项子类、再有限�
 
 ## Pro 先读的当前材料
 
-1. [研究方向](../../docs/thesis_main/研究方向_空间差异与共识_20260930.md)、[推进台账](../../docs/thesis_main/研究推进台账_20261003.md)、[当前合同](../../docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json)。先看最新段落，历史批次记录不等于当前尚未完成。
+1. [研究方向](../../docs/thesis_main/history/研究方向_空间差异与共识_20260930.md)、[推进台账](../../docs/thesis_main/研究推进台账_20261003.md)、[当前合同](../../docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json)。先看最新段落，历史批次记录不等于当前尚未完成。
 2. [方法溯源](../../docs/thesis_main/点投票与区域投票_方法溯源_20261003.md)，尤其第7至9节：完整输出、排序筛查历史、阈值工作版本与开发证据。
 3. [demo报告](../../analysis_results/lee_consensus_demos_20261003/REPORT.md)、[设计与选例](../../analysis_results/lee_consensus_demos_20261003/design.json)、[输出字段](../../analysis_results/lee_consensus_demos_20261003/field_contract.json)、[分组状态](../../analysis_results/lee_consensus_demos_20261003/pattern_checks.json)。四图是开发展示，不是总体效果估计。
 4. 当前机器输入用[136图固定输入](../../analysis_results/lee_expanded_20261003/input.json)、[来源绑定](../../analysis_results/lee_expanded_20261003/source_binding.json)、[人员表](../../analysis_results/lee_expanded_20261003/rosters.json)。失败尝试见[source_input](../../analysis_results/lee_expanded_20261003/source_input.json)及[selection_ledger](../../analysis_results/lee_expanded_20261003/selection_ledger.csv)，不能只看成功池宣布全覆盖。

@@ -49,6 +49,16 @@ def apply_followup(result, feedback):
         current.update(assemble_fusion(current['identity_groups'],current['assignments'],order))
         current['candidate']['order_status']='user_requested_x_sort'
         applied.append('user_order_x_ascending')
+    if 'manual_order' in feedback:
+        binding=[dict(feature_id=n['feature_id'],points=n['points']) for n in current['node_consensus']['nodes']]
+        if feedback['order_binding']!=binding:
+            current['candidate'].update(review_status='needs_order_reconfirmation',review_note='节点已改变，旧排序确认未套用')
+        elif current['n']!=2:
+            current.update(assemble_fusion(current['identity_groups'],current['assignments'],feedback['manual_order']))
+            current['candidate']['order_status']='human_reviewed_order'
+            applied.append('user_workbench_order')
+    if 'review_issue' in feedback:
+        current['candidate'].update(review_status=feedback['review_issue']['status'],review_note=feedback['review_issue']['note'])
     return current,applied
 
 
@@ -117,11 +127,12 @@ def get_state(im,gap):
     return read(path)
 
 
-def run():
-    OUT.mkdir(exist_ok=True)
+def replay_calibration():
+    """单独复现开发选参，不覆盖冻结选择或当前交付。"""
+    destination=OUT/'history/calibration_replay';destination.mkdir(parents=True,exist_ok=True)
     failed={r['image'] for r in read(POP/'failures.json')}
     inputs={im['image']:im for im in read(POP/'inputs.json')['images'] if im['image'] not in failed}
-    constraints,deferred=cases();write_json(OUT/'review_cases.json',constraints);write_json(OUT/'deferred_reviews.json',deferred)
+    constraints,_=cases()
     effects=[];scores=[]
     for gap in FINE:
         states={code:get_state(inputs[code],gap) for code in {c['image'] for c in constraints}}
@@ -141,11 +152,20 @@ def run():
         if not runs or round(gap-runs[-1][-1],1)!=.1:runs.append([])
         runs[-1].append(gap)
     band=max(runs,key=lambda a:(len(a),-a[0]));chosen=band[(len(band)-1)//2]
-    write_csv(OUT/'parameter_scores.csv',scores);write_csv(OUT/'local_effects.csv',effects)
-    write_json(OUT/'selection.json',dict(gap=chosen,best_sampled=tied,working_band=band,
+    write_csv(destination/'parameter_scores.csv',scores);write_csv(destination/'local_effects.csv',effects)
+    write_json(destination/'selection.json',dict(gap=chosen,best_sampled=tied,working_band=band,
         rule='Equal weight per explicit local case; minimize failed cases, then false-merge cases, then lower midpoint of longest contiguous tied run. A development choice, not preregistered.',
         interpretation='Development working parameter, not universal optimum or identity accuracy; mixed means not all same, no inferred partition.',
         no_gt=True))
+    print('Calibration replay:',chosen,'; frozen delivery:',WORKING_GAP,flush=True)
+
+
+def run():
+    OUT.mkdir(exist_ok=True)
+    failed={r['image'] for r in read(POP/'failures.json')}
+    inputs={im['image']:im for im in read(POP/'inputs.json')['images'] if im['image'] not in failed}
+    constraints,deferred=cases();write_json(OUT/'review_cases.json',constraints);write_json(OUT/'deferred_reviews.json',deferred)
+    chosen=WORKING_GAP
     followups={r['image']:r for r in read(OUT/'user_followup.json')['records']}
     outputs=[];summary=[];interventions=[]
     for code,im in inputs.items():
@@ -162,8 +182,11 @@ def run():
             current,extra=apply_followup(current,followups[code]);applied.extend(extra)
         current=apply_sorting_policy(current)
         remains=[c['case'] for c in constraints if c['image']==code and any(relation_error(current,c))]
+        for event in interventions:
+            if event['image']==code and event['status']=='pending' and event['case'] not in remains:
+                event['status']='resolved_by_followup'
         package=dict(image=code,image_id=im['image_id'],gap=chosen,n=auto['n'],automatic=auto,
-            assisted=current if applied else None,applied_reviews=applied,remaining_review_cases=remains)
+            assisted=current if applied or code in followups and 'review_issue' in followups[code] else None,applied_reviews=applied,remaining_review_cases=remains)
         write_json(OUT/(code+'.json'),package)
         for name,r in [('automatic',auto),('assisted',current)]:
             summary.append(dict(image=code,version=name,n=r['n'],nodes=len(r['node_consensus']['nodes']),
@@ -177,15 +200,17 @@ def run():
     write_json(OUT/'interventions.json',interventions);write_json(OUT/'failures.json',read(POP/'failures.json'))
     write_json(OUT/'field_contract.json',dict(schema='consensus_delivery_v1',
         automatic='Chosen working gap, original full-person pool, MV50, all-member coordinate median; GT unused.',
-        assisted='Only exact reviewed partitions covering whole touched groups, plus explicit user order. One person one observation; all source observations and full N preserved. Post-selection feedback is separate from tuning cases.',
+        assisted='Exact reviewed partitions and explicit user order; all sources and full N preserved. Human reviewers may have consulted GT for target interpretation; assisted results are not claimed GT-blind. Post-selection feedback is separate from tuning cases.',
         cases='Deduplicated local relations, not independent samples; mixed is weak not-all-one constraint. Uncertain text and duplicate-person same-target opinions deferred.',
         outputs='177 actual all-person node outputs and candidate connection. Missing connection/failed geometry retained. One known whole-pool failure separate.',
         remaining='Known unresolved relation cases only, not exhaustive error count; no claim of >90% accuracy.',
         sorting_policy='N=2: node output and source diagnostics retained; candidate order/geometry deferred. N>=3 may enter order review. This does not change MV50 votes.',
+        review_state='candidate.review_status/review_note are independent of geometry_status. incomplete_consensus_observed records an explained incomplete result, not an open identity-review request or a complete layout.',
+        order_import='Confirmed source-bound permutations enter user_followup.manual_order with order_binding; later identity/coordinate change invalidates old order confirmation. Explicit identity_review_resolution may close an uploaded issue without confirming order or completing the layout.',
         followup='user_followup.json stores post-selection identity/order decisions; no changes to 36-case calibration. The interventions count includes identity and order operations; applied_reviews names them.',
         history_order_audit='order_followup/history_order_audit.csv/json joins actual adjacency changes and historical user orders to current candidates. History may be outside current pool; changed_objects_in_pool distinguishes this. Non-x order is a review signal, not error. No automatic ring certification.'))
     gallery(inputs)
-    print('SELECTION',scores,'chosen',chosen,'interventions',interventions,flush=True)
+    print('Frozen gap',chosen,'; outputs',len(outputs),'; interventions',len(interventions),flush=True)
 
 
 def gallery(inputs):
@@ -216,4 +241,9 @@ def gallery(inputs):
     (OUT/'gallery.html').write_text('<!doctype html><meta charset="utf-8"><title>融合共识交付</title><h1>全员融合：自动与人工辅助对照</h1><p>图中顺序为来源建议，少数为已授权人工顺序；不以GT挑融合。不确定处仍保留。</p>'+''.join(links),encoding='utf-8')
 
 
-if __name__=='__main__':run()
+if __name__=='__main__':
+    import argparse
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--replay-calibration',action='store_true',help='复现开发选参，输出到history/calibration_replay，不重交付')
+    args=parser.parse_args()
+    replay_calibration() if args.replay_calibration else run()

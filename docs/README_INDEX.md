@@ -1,5 +1,14 @@
 # HOHONET 文档入口
 
+## 当前融合共识入口（2026-10-08）
+
+- [操作SOP](thesis_main/融合共识操作SOP_20261008.md)：输入、算法、人审、排序回收及复算。
+- [当前结果与未决](../analysis_results/consensus_delivery_20261008/REPORT.md)：唯一最新数量和待办；原阶段报告仅作历史。
+- [方法定义](thesis_main/共识投票机制与三路线推进_20261007.md)与[数据说明](thesis_main/研究数据说明_来源预处理与用途_20261006.md)：分管数学／边界和真源／索引。
+- 回执导入 `tools/thesis_main/analysis/consensus_order_import_20261008.py`；两项收尾图件 `tools/thesis_main/analysis/consensus_closeout_20261008.py`。原工作台快照保留。
+- 历史导航与三路线阶段长文已移入`thesis_main/history/`；重复复审报告移入结果目录`history/`。日常交付固定7.5，`--replay-calibration`仅复现历史选参，不覆盖交付。
+
+
 2026-10-07全量扩展：[259图人数与难度结果](../analysis_results/difficulty_full_20261007/REPORT.md)，249图／274池可算、548份全员区域；未知难度与OOS独立保留。[10图补充审查台](../analysis_results/difficulty_full_20261007/review.html)按人数和标签缺失选择，不按分数选择。 [逐图归类审核HTML](../analysis_results/direct_fusion_20261007/gap_sweep/population/review.html)默认17图、可切177图，模板`tools/thesis_main/analysis/wall_identity_review_20261007.html`，由同模块`build_review()`生成。
 
 2026-10-07全量扩展：[259图人数与难度结果](../analysis_results/difficulty_full_20261007/REPORT.md)，249图／274池可算、548份全员区域；未知难度与OOS独立保留。[10图补充审查台](../analysis_results/difficulty_full_20261007/review.html)按人数和标签缺失选择，不按分数选择。
@@ -40,7 +49,7 @@
 
 2026-10-08：[7.5—9细扫与11图未决复审](../analysis_results/direct_fusion_20261007/gap_sweep/population/refine_20261008/REPORT.md)，工具`tools/thesis_main/analysis/refine_review_20261008.py`；人工只判断同墙线及归类可用性，参数比较由研究端完成。
 
-2026-10-08：[调参与全员融合交付](../analysis_results/consensus_delivery_20261008/REPORT.md)，工具`tools/thesis_main/analysis/consensus_delivery_20261008.py`；工作参数7.5、177图节点、12图明确人审辅助，自动／辅助分别保存。后续[e9z／zs反馈与历史改序检查](../analysis_results/consensus_delivery_20261008/REVIEW_FOLLOWUP.md)，复算工具`tools/thesis_main/analysis/consensus_order_followup_20261008.py`。
+2026-10-08：[调参与全员融合交付](../analysis_results/consensus_delivery_20261008/REPORT.md)，工具`tools/thesis_main/analysis/consensus_delivery_20261008.py`；工作参数7.5，当前人工辅助全员版本已收尾，数量和例外以报告为准。[e9z／zs及历史改序检查](../analysis_results/consensus_delivery_20261008/history/REVIEW_FOLLOWUP.md)仅作历史，工具`tools/thesis_main/analysis/consensus_order_followup_20261008.py`。后续随机人数实验接口见融合SOP第9节，尚未运行。
 
 2026-10-06交接背景：[完整研究交接](thesis_main/线程交接_连线质量与完整共识_20261004.md)与[研究数据说明](thesis_main/研究数据说明_来源预处理与用途_20261006.md)。交接记录研究原意、已有证据和数据用途，当时未指定主推进路线；当前安排以上方模型及路线为准。历史方案／Pro任务书不自动成为当前待办，本地材料不等于远端已发布。
 
@@ -111,7 +120,7 @@
 - [排序后的3D质量增量实验](../analysis_results/layout_3d_quality_probe_20261002/REPORT.md)：既有12图全部作答、17份改序对照；默认环按预处理共享x排序，墙高/方向与模型体积为探索诊断。
 - [阶段2最小当前快照](../research/pro_layout_metric_response_20261001/README.md)：独立复算嵌入的74参数对照、15个有参考比较及9条缺失记录；不重建选样或原始源表，不覆盖9/29历史包。
 
-- [研究对象与算法职责](thesis_main/研究方向_空间差异与共识_20260930.md)：人员、图片条件、表示、衡量、共识和空间候选的职责与证据索引，不规定任务顺序。
+- [研究对象与算法职责](thesis_main/history/研究方向_空间差异与共识_20260930.md)：人员、图片条件、表示、衡量、共识和空间候选的职责与证据索引，不规定任务顺序。
 
 - [9/29数值研究包](../research/pro_layout_20260929/README.md)：来源、源码和历史基线；其中阶段任务书不覆盖当前推进台账。
 
@@ -170,3 +179,5 @@
 - 2026-10-07：[G184同房续研](../analysis_results/adaptive_point_20261007/expanded/g184/REPORT.md)：九视角原图、成员来源和成组／达票追踪；[后续人工判断与质疑](../analysis_results/adaptive_point_20261007/expanded/g184/USER_REVIEW.md)保留同墙角身份明确但上下目标未定的状态。
 
 - 2026-10-08：[融合顺序复核工作台](../analysis_results/consensus_delivery_20261008/order_workbench/index.html)，复用旧点对排序台；35图，N=2暂缓，附两处残余身份复核。生成工具`tools/thesis_main/analysis/build_fusion_order_workbench_20261008.py`。
+
+- rPc残余归属新增[逐份放大审核](../analysis_results/consensus_delivery_20261008/order_workbench/individual_review.html)，模板`tools/thesis_main/analysis/wall_identity_individual_20261008.html`；沿用融合工作台生成器，原上传记录只读保留。

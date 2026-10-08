@@ -9,7 +9,7 @@
 - [匹配与局部路径审核](dot/audit-oct1-matching/MATCHING_LOCAL_AUDIT_zh.md)。
 - [方法与减法反例](dot/audit-oct1-methods/方法审查_zh.md)。
 - [原快照比较](dot/audit-oct1-original-audit/AUTHORITATIVE_STAGE2_COMPARISON_zh.md)。
-- [当前研究方向](../../docs/thesis_main/研究方向_空间差异与共识_20260930.md)：仍以它和当前机器合同为准，不能用 Pro 的 A/B/C 替代研究分工。
+- [当前研究方向](../../docs/thesis_main/history/研究方向_空间差异与共识_20260930.md)：仍以它和当前机器合同为准，不能用 Pro 的 A/B/C 替代研究分工。
 
 ## 与研究问题的关系
 

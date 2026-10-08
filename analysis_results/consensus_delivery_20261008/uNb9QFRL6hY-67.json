@@ -5000,7 +5000,5005 @@
     },
     "location_policy": "all identity members, same medoid-anchored coordinate medians as bound baseline; not semantic mode selection"
   },
-  "assisted": null,
-  "applied_reviews": [],
+  "assisted": {
+    "route": "cyclic_identity",
+    "n": 15,
+    "minimum_support": 8,
+    "identity_groups": [
+      {
+        "feature_id": "node_000",
+        "members": [
+          {
+            "id": "R02930",
+            "worker": "P002",
+            "pair_index": 0,
+            "points": [
+              [
+                145.35038363171356,
+                128.32736572890025
+              ],
+              [
+                145.35038363171356,
+                411.17135549872125
+              ]
+            ],
+            "source_pair_index": 0
+          },
+          {
+            "id": "R02932",
+            "worker": "P003",
+            "pair_index": 0,
+            "points": [
+              [
+                139.27969348659005,
+                147.1264367816092
+              ],
+              [
+                139.27969348659005,
+                413.91570881226056
+              ]
+            ],
+            "source_pair_index": 0
+          },
+          {
+            "id": "R02210",
+            "worker": "P004",
+            "pair_index": 0,
+            "points": [
+              [
+                148.6257452530068,
+                114.53727157112453
+              ],
+              [
+                148.6257452530068,
+                413.1523010244134
+              ]
+            ],
+            "source_pair_index": 0
+          },
+          {
+            "id": "R01956",
+            "worker": "P006",
+            "pair_index": 0,
+            "points": [
+              [
+                141.59822356974462,
+                119.06468019732864
+              ],
+              [
+                141.59822356974462,
+                416.21284486253165
+              ]
+            ],
+            "source_pair_index": 0
+          },
+          {
+            "id": "R02931",
+            "worker": "P012",
+            "pair_index": 0,
+            "points": [
+              [
+                139.27969348659005,
+                147.1264367816092
+              ],
+              [
+                139.27969348659005,
+                413.91570881226056
+              ]
+            ],
+            "source_pair_index": 0
+          },
+          {
+            "id": "R03196",
+            "worker": "P020",
+            "pair_index": 0,
+            "points": [
+              [
+                145.60000000000002,
+                113.6
+              ],
+              [
+                145.60000000000002,
+                417.6
+              ]
+            ],
+            "source_pair_index": 0
+          },
+          {
+            "id": "R00144",
+            "worker": "P021",
+            "pair_index": 0,
+            "points": [
+              [
+                145.40278022424408,
+                147.24332174606994
+              ],
+              [
+                145.40278022424408,
+                406.7596763235182
+              ]
+            ],
+            "source_pair_index": 0
+          },
+          {
+            "id": "R00526",
+            "worker": "P023",
+            "pair_index": 0,
+            "points": [
+              [
+                146.15428756526512,
+                108.67407701383317
+              ],
+              [
+                146.15428756526512,
+                411.8811881188119
+              ]
+            ],
+            "source_pair_index": 0
+          },
+          {
+            "id": "R03194",
+            "worker": "P026",
+            "pair_index": 0,
+            "points": [
+              [
+                147.50757000392787,
+                110.70008912454973
+              ],
+              [
+                147.50757000392787,
+                411.1959714515167
+              ]
+            ],
+            "source_pair_index": 0
+          }
+        ],
+        "support": 9,
+        "selected": true,
+        "center": [
+          [
+            145.4027802242441,
+            119.06468019732864
+          ],
+          [
+            145.4027802242441,
+            413.1523010244134
+          ]
+        ],
+        "top_support": 9,
+        "bottom_support": 9,
+        "joint_support": 9,
+        "maximum_top_angle": 13.623865377333672,
+        "maximum_bottom_angle": 3.8112592035409394,
+        "top_position_groups_9deg": [
+          {
+            "support": 3,
+            "members": [
+              {
+                "id": "R02932",
+                "pair_index": 0
+              },
+              {
+                "id": "R02931",
+                "pair_index": 0
+              },
+              {
+                "id": "R00144",
+                "pair_index": 0
+              }
+            ]
+          },
+          {
+            "support": 6,
+            "members": [
+              {
+                "id": "R02930",
+                "pair_index": 0
+              },
+              {
+                "id": "R02210",
+                "pair_index": 0
+              },
+              {
+                "id": "R01956",
+                "pair_index": 0
+              },
+              {
+                "id": "R03196",
+                "pair_index": 0
+              },
+              {
+                "id": "R00526",
+                "pair_index": 0
+              },
+              {
+                "id": "R03194",
+                "pair_index": 0
+              }
+            ]
+          }
+        ],
+        "bottom_position_groups_9deg": [
+          {
+            "support": 9,
+            "members": [
+              {
+                "id": "R02930",
+                "pair_index": 0
+              },
+              {
+                "id": "R02932",
+                "pair_index": 0
+              },
+              {
+                "id": "R02210",
+                "pair_index": 0
+              },
+              {
+                "id": "R01956",
+                "pair_index": 0
+              },
+              {
+                "id": "R02931",
+                "pair_index": 0
+              },
+              {
+                "id": "R03196",
+                "pair_index": 0
+              },
+              {
+                "id": "R00144",
+                "pair_index": 0
+              },
+              {
+                "id": "R00526",
+                "pair_index": 0
+              },
+              {
+                "id": "R03194",
+                "pair_index": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "feature_id": "node_001",
+        "members": [
+          {
+            "id": "R02930",
+            "worker": "P002",
+            "pair_index": 1,
+            "points": [
+              [
+                362.72122762148337,
+                128.32736572890025
+              ],
+              [
+                362.72122762148337,
+                407.2429667519181
+              ]
+            ],
+            "source_pair_index": 1
+          },
+          {
+            "id": "R02932",
+            "worker": "P003",
+            "pair_index": 1,
+            "points": [
+              [
+                363.89272030651347,
+                131.43295019157088
+              ],
+              [
+                363.89272030651347,
+                409.99233716475095
+              ]
+            ],
+            "source_pair_index": 1
+          },
+          {
+            "id": "R02210",
+            "worker": "P004",
+            "pair_index": 1,
+            "points": [
+              [
+                368.1555157643288,
+                114.53727157112453
+              ],
+              [
+                368.1555157643288,
+                409.0616841825875
+              ]
+            ],
+            "source_pair_index": 1
+          },
+          {
+            "id": "R01956",
+            "worker": "P006",
+            "pair_index": 1,
+            "points": [
+              [
+                360.43170270774203,
+                111.56220583944146
+              ],
+              [
+                360.43170270774203,
+                414.06753086032165
+              ]
+            ],
+            "source_pair_index": 1
+          },
+          {
+            "id": "R02931",
+            "worker": "P012",
+            "pair_index": 1,
+            "points": [
+              [
+                363.89272030651347,
+                131.43295019157088
+              ],
+              [
+                363.89272030651347,
+                409.99233716475095
+              ]
+            ],
+            "source_pair_index": 1
+          },
+          {
+            "id": "R03196",
+            "worker": "P020",
+            "pair_index": 1,
+            "points": [
+              [
+                366.40000000000003,
+                118.4
+              ],
+              [
+                366.40000000000003,
+                406.4
+              ]
+            ],
+            "source_pair_index": 1
+          },
+          {
+            "id": "R00144",
+            "worker": "P021",
+            "pair_index": 1,
+            "points": [
+              [
+                361.6664090387843,
+                112.27303283137833
+              ],
+              [
+                361.6664090387843,
+                406.7596763235182
+              ]
+            ],
+            "source_pair_index": 1
+          },
+          {
+            "id": "R00526",
+            "worker": "P023",
+            "pair_index": 1,
+            "points": [
+              [
+                364.16649648465244,
+                112.47605757500553
+              ],
+              [
+                364.16649648465244,
+                409.34653465346537
+              ]
+            ],
+            "source_pair_index": 1
+          },
+          {
+            "id": "R03194",
+            "worker": "P026",
+            "pair_index": 1,
+            "points": [
+              [
+                366.8736533376608,
+                112.33655260357332
+              ],
+              [
+                366.8736533376608,
+                406.84813364738244
+              ]
+            ],
+            "source_pair_index": 1
+          }
+        ],
+        "support": 9,
+        "selected": true,
+        "center": [
+          [
+            363.89272030651347,
+            114.53727157112453
+          ],
+          [
+            363.89272030651347,
+            409.0616841825875
+          ]
+        ],
+        "top_support": 9,
+        "bottom_support": 9,
+        "joint_support": 9,
+        "maximum_top_angle": 7.034126745225192,
+        "maximum_bottom_angle": 2.961273896985953,
+        "top_position_groups_9deg": [
+          {
+            "support": 9,
+            "members": [
+              {
+                "id": "R02930",
+                "pair_index": 1
+              },
+              {
+                "id": "R02932",
+                "pair_index": 1
+              },
+              {
+                "id": "R02210",
+                "pair_index": 1
+              },
+              {
+                "id": "R01956",
+                "pair_index": 1
+              },
+              {
+                "id": "R02931",
+                "pair_index": 1
+              },
+              {
+                "id": "R03196",
+                "pair_index": 1
+              },
+              {
+                "id": "R00144",
+                "pair_index": 1
+              },
+              {
+                "id": "R00526",
+                "pair_index": 1
+              },
+              {
+                "id": "R03194",
+                "pair_index": 1
+              }
+            ]
+          }
+        ],
+        "bottom_position_groups_9deg": [
+          {
+            "support": 9,
+            "members": [
+              {
+                "id": "R02930",
+                "pair_index": 1
+              },
+              {
+                "id": "R02932",
+                "pair_index": 1
+              },
+              {
+                "id": "R02210",
+                "pair_index": 1
+              },
+              {
+                "id": "R01956",
+                "pair_index": 1
+              },
+              {
+                "id": "R02931",
+                "pair_index": 1
+              },
+              {
+                "id": "R03196",
+                "pair_index": 1
+              },
+              {
+                "id": "R00144",
+                "pair_index": 1
+              },
+              {
+                "id": "R00526",
+                "pair_index": 1
+              },
+              {
+                "id": "R03194",
+                "pair_index": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "feature_id": "node_002",
+        "members": [
+          {
+            "id": "R02930",
+            "worker": "P002",
+            "pair_index": 2,
+            "points": [
+              [
+                648.8388746803068,
+                104.75703324808184
+              ],
+              [
+                648.8388746803068,
+                420.3375959079284
+              ]
+            ],
+            "source_pair_index": 2
+          },
+          {
+            "id": "R02932",
+            "worker": "P003",
+            "pair_index": 2,
+            "points": [
+              [
+                654.2222222222222,
+                107.8927203065134
+              ],
+              [
+                654.2222222222222,
+                413.91570881226056
+              ]
+            ],
+            "source_pair_index": 2
+          },
+          {
+            "id": "R02210",
+            "worker": "P004",
+            "pair_index": 2,
+            "points": [
+              [
+                652.5388316142416,
+                106.25893291421889
+              ],
+              [
+                652.5388316142416,
+                414.1373795631095
+              ]
+            ],
+            "source_pair_index": 2
+          },
+          {
+            "id": "R02929",
+            "worker": "P005",
+            "pair_index": 6,
+            "points": [
+              [
+                646.7302514407928,
+                103.60241591807952
+              ],
+              [
+                646.7302514407928,
+                419.38577532369726
+              ]
+            ],
+            "source_pair_index": 6
+          },
+          {
+            "id": "R01956",
+            "worker": "P006",
+            "pair_index": 2,
+            "points": [
+              [
+                651.1371052359709,
+                102.98049769794598
+              ],
+              [
+                651.1371052359709,
+                418.3582718979055
+              ]
+            ],
+            "source_pair_index": 2
+          },
+          {
+            "id": "R02928",
+            "worker": "P010",
+            "pair_index": 4,
+            "points": [
+              [
+                648.8642659279778,
+                107.78947368421052
+              ],
+              [
+                648.8642659279778,
+                416.9750692520776
+              ]
+            ],
+            "source_pair_index": 4
+          },
+          {
+            "id": "R02931",
+            "worker": "P012",
+            "pair_index": 2,
+            "points": [
+              [
+                654.2222222222222,
+                107.8927203065134
+              ],
+              [
+                654.2222222222222,
+                413.91570881226056
+              ]
+            ],
+            "source_pair_index": 2
+          },
+          {
+            "id": "R03197",
+            "worker": "P018",
+            "pair_index": 2,
+            "points": [
+              [
+                651.7112639755961,
+                104.64651086758509
+              ],
+              [
+                651.7112639755961,
+                417.0099078023944
+              ]
+            ],
+            "source_pair_index": 2
+          },
+          {
+            "id": "R03196",
+            "worker": "P020",
+            "pair_index": 2,
+            "points": [
+              [
+                651.2,
+                108.8
+              ],
+              [
+                651.2,
+                420.8
+              ]
+            ],
+            "source_pair_index": 2
+          },
+          {
+            "id": "R00144",
+            "worker": "P021",
+            "pair_index": 2,
+            "points": [
+              [
+                648.5295295475216,
+                104.91086674407485
+              ],
+              [
+                648.5295295475216,
+                417.80292545447344
+              ]
+            ],
+            "source_pair_index": 2
+          },
+          {
+            "id": "R00854",
+            "worker": "P022",
+            "pair_index": 3,
+            "points": [
+              [
+                650.0942363421701,
+                102.09523809523812
+              ],
+              [
+                650.0942363421701,
+                416.008014024543
+              ]
+            ],
+            "source_pair_index": 3
+          },
+          {
+            "id": "R00526",
+            "worker": "P023",
+            "pair_index": 2,
+            "points": [
+              [
+                652.0396109967788,
+                101.38613843228512
+              ],
+              [
+                652.0396109967788,
+                420.7524752475247
+              ]
+            ],
+            "source_pair_index": 2
+          },
+          {
+            "id": "R03195",
+            "worker": "P024",
+            "pair_index": 3,
+            "points": [
+              [
+                648.408035275147,
+                105.28478352606494
+              ],
+              [
+                648.408035275147,
+                438.4582432526702
+              ]
+            ],
+            "source_pair_index": 3
+          },
+          {
+            "id": "R03192",
+            "worker": "P025",
+            "pair_index": 2,
+            "points": [
+              [
+                651.7551020408164,
+                105.79591836734694
+              ],
+              [
+                651.7551020408164,
+                408.81632653061223
+              ]
+            ],
+            "source_pair_index": 2
+          },
+          {
+            "id": "R03194",
+            "worker": "P026",
+            "pair_index": 2,
+            "points": [
+              [
+                650.5335422866267,
+                110.68700148775268
+              ],
+              [
+                650.5335422866267,
+                411.135335742643
+              ]
+            ],
+            "source_pair_index": 2
+          }
+        ],
+        "support": 15,
+        "selected": true,
+        "center": [
+          [
+            651.1371052359709,
+            105.28478352606494
+          ],
+          [
+            651.1371052359709,
+            417.0099078023944
+          ]
+        ],
+        "top_support": 15,
+        "bottom_support": 15,
+        "joint_support": 15,
+        "maximum_top_angle": 3.285497464378727,
+        "maximum_bottom_angle": 10.43820798602444,
+        "top_position_groups_9deg": [
+          {
+            "support": 15,
+            "members": [
+              {
+                "id": "R02930",
+                "pair_index": 2
+              },
+              {
+                "id": "R02932",
+                "pair_index": 2
+              },
+              {
+                "id": "R02210",
+                "pair_index": 2
+              },
+              {
+                "id": "R02929",
+                "pair_index": 6
+              },
+              {
+                "id": "R01956",
+                "pair_index": 2
+              },
+              {
+                "id": "R02928",
+                "pair_index": 4
+              },
+              {
+                "id": "R02931",
+                "pair_index": 2
+              },
+              {
+                "id": "R03197",
+                "pair_index": 2
+              },
+              {
+                "id": "R03196",
+                "pair_index": 2
+              },
+              {
+                "id": "R00144",
+                "pair_index": 2
+              },
+              {
+                "id": "R00854",
+                "pair_index": 3
+              },
+              {
+                "id": "R00526",
+                "pair_index": 2
+              },
+              {
+                "id": "R03195",
+                "pair_index": 3
+              },
+              {
+                "id": "R03192",
+                "pair_index": 2
+              },
+              {
+                "id": "R03194",
+                "pair_index": 2
+              }
+            ]
+          }
+        ],
+        "bottom_position_groups_9deg": [
+          {
+            "support": 14,
+            "members": [
+              {
+                "id": "R02930",
+                "pair_index": 2
+              },
+              {
+                "id": "R02932",
+                "pair_index": 2
+              },
+              {
+                "id": "R02210",
+                "pair_index": 2
+              },
+              {
+                "id": "R02929",
+                "pair_index": 6
+              },
+              {
+                "id": "R01956",
+                "pair_index": 2
+              },
+              {
+                "id": "R02928",
+                "pair_index": 4
+              },
+              {
+                "id": "R02931",
+                "pair_index": 2
+              },
+              {
+                "id": "R03197",
+                "pair_index": 2
+              },
+              {
+                "id": "R03196",
+                "pair_index": 2
+              },
+              {
+                "id": "R00144",
+                "pair_index": 2
+              },
+              {
+                "id": "R00854",
+                "pair_index": 3
+              },
+              {
+                "id": "R00526",
+                "pair_index": 2
+              },
+              {
+                "id": "R03192",
+                "pair_index": 2
+              },
+              {
+                "id": "R03194",
+                "pair_index": 2
+              }
+            ]
+          },
+          {
+            "support": 1,
+            "members": [
+              {
+                "id": "R03195",
+                "pair_index": 3
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "feature_id": "node_003",
+        "members": [
+          {
+            "id": "R02930",
+            "worker": "P002",
+            "pair_index": 3,
+            "points": [
+              [
+                876.685421994885,
+                99.51918158567774
+              ],
+              [
+                876.685421994885,
+                415.0997442455243
+              ]
+            ],
+            "source_pair_index": 3
+          },
+          {
+            "id": "R02932",
+            "worker": "P003",
+            "pair_index": 3,
+            "points": [
+              [
+                882.7586206896551,
+                109.8544061302682
+              ],
+              [
+                882.7586206896551,
+                415.8773946360153
+              ]
+            ],
+            "source_pair_index": 3
+          },
+          {
+            "id": "R02210",
+            "worker": "P004",
+            "pair_index": 3,
+            "points": [
+              [
+                878.319542901712,
+                104.15050696297534
+              ],
+              [
+                878.319542901712,
+                416.8427078381438
+              ]
+            ],
+            "source_pair_index": 3
+          },
+          {
+            "id": "R02929",
+            "worker": "P005",
+            "pair_index": 7,
+            "points": [
+              [
+                882.45712358586,
+                97.434256396103
+              ],
+              [
+                882.45712358586,
+                417.8159855290186
+              ]
+            ],
+            "source_pair_index": 7
+          },
+          {
+            "id": "R01956",
+            "worker": "P006",
+            "pair_index": 3,
+            "points": [
+              [
+                877.0382480768894,
+                102.98049769794598
+              ],
+              [
+                877.0382480768894,
+                420.5036989332794
+              ]
+            ],
+            "source_pair_index": 3
+          },
+          {
+            "id": "R02928",
+            "worker": "P010",
+            "pair_index": 5,
+            "points": [
+              [
+                877.2077562326871,
+                106.37119113573407
+              ],
+              [
+                877.2077562326871,
+                414.1385041551247
+              ]
+            ],
+            "source_pair_index": 5
+          },
+          {
+            "id": "R02931",
+            "worker": "P012",
+            "pair_index": 3,
+            "points": [
+              [
+                882.7586206896551,
+                109.8544061302682
+              ],
+              [
+                882.7586206896551,
+                415.8773946360153
+              ]
+            ],
+            "source_pair_index": 3
+          },
+          {
+            "id": "R03197",
+            "worker": "P018",
+            "pair_index": 3,
+            "points": [
+              [
+                878.5256851308866,
+                101.34750346667228
+              ],
+              [
+                878.5256851308866,
+                411.4511763571112
+              ]
+            ],
+            "source_pair_index": 3
+          },
+          {
+            "id": "R03196",
+            "worker": "P020",
+            "pair_index": 3,
+            "points": [
+              [
+                881.6,
+                107.2
+              ],
+              [
+                881.6,
+                416.0
+              ]
+            ],
+            "source_pair_index": 3
+          },
+          {
+            "id": "R00144",
+            "worker": "P021",
+            "pair_index": 3,
+            "points": [
+              [
+                877.6769490148431,
+                101.22978370042308
+              ],
+              [
+                877.6769490148431,
+                414.1218424108217
+              ]
+            ],
+            "source_pair_index": 3
+          },
+          {
+            "id": "R00854",
+            "worker": "P022",
+            "pair_index": 4,
+            "points": [
+              [
+                878.101248613645,
+                99.04761904761905
+              ],
+              [
+                878.101248613645,
+                414.8631533755501
+              ]
+            ],
+            "source_pair_index": 4
+          },
+          {
+            "id": "R00526",
+            "worker": "P023",
+            "pair_index": 3,
+            "points": [
+              [
+                879.670777980999,
+                102.6511516305755
+              ],
+              [
+                879.670777980999,
+                418.2178217821782
+              ]
+            ],
+            "source_pair_index": 3
+          },
+          {
+            "id": "R03195",
+            "worker": "P024",
+            "pair_index": 4,
+            "points": [
+              [
+                878.4819829561505,
+                96.12448849656086
+              ],
+              [
+                878.4819829561505,
+                413.76086402684524
+              ]
+            ],
+            "source_pair_index": 4
+          },
+          {
+            "id": "R03192",
+            "worker": "P025",
+            "pair_index": 3,
+            "points": [
+              [
+                878.3673469387754,
+                97.95918367346935
+              ],
+              [
+                878.3673469387754,
+                416.6530612244898
+              ]
+            ],
+            "source_pair_index": 3
+          },
+          {
+            "id": "R03194",
+            "worker": "P026",
+            "pair_index": 3,
+            "points": [
+              [
+                878.0616989403059,
+                110.1130441969473
+              ],
+              [
+                878.0616989403059,
+                412.4086406095823
+              ]
+            ],
+            "source_pair_index": 3
+          }
+        ],
+        "support": 15,
+        "selected": true,
+        "center": [
+          [
+            878.3673469387754,
+            102.6511516305755
+          ],
+          [
+            878.3673469387754,
+            415.8773946360153
+          ]
+        ],
+        "top_support": 15,
+        "bottom_support": 15,
+        "joint_support": 15,
+        "maximum_top_angle": 4.918624610843705,
+        "maximum_bottom_angle": 3.1957395969555566,
+        "top_position_groups_9deg": [
+          {
+            "support": 15,
+            "members": [
+              {
+                "id": "R02930",
+                "pair_index": 3
+              },
+              {
+                "id": "R02932",
+                "pair_index": 3
+              },
+              {
+                "id": "R02210",
+                "pair_index": 3
+              },
+              {
+                "id": "R02929",
+                "pair_index": 7
+              },
+              {
+                "id": "R01956",
+                "pair_index": 3
+              },
+              {
+                "id": "R02928",
+                "pair_index": 5
+              },
+              {
+                "id": "R02931",
+                "pair_index": 3
+              },
+              {
+                "id": "R03197",
+                "pair_index": 3
+              },
+              {
+                "id": "R03196",
+                "pair_index": 3
+              },
+              {
+                "id": "R00144",
+                "pair_index": 3
+              },
+              {
+                "id": "R00854",
+                "pair_index": 4
+              },
+              {
+                "id": "R00526",
+                "pair_index": 3
+              },
+              {
+                "id": "R03195",
+                "pair_index": 4
+              },
+              {
+                "id": "R03192",
+                "pair_index": 3
+              },
+              {
+                "id": "R03194",
+                "pair_index": 3
+              }
+            ]
+          }
+        ],
+        "bottom_position_groups_9deg": [
+          {
+            "support": 15,
+            "members": [
+              {
+                "id": "R02930",
+                "pair_index": 3
+              },
+              {
+                "id": "R02932",
+                "pair_index": 3
+              },
+              {
+                "id": "R02210",
+                "pair_index": 3
+              },
+              {
+                "id": "R02929",
+                "pair_index": 7
+              },
+              {
+                "id": "R01956",
+                "pair_index": 3
+              },
+              {
+                "id": "R02928",
+                "pair_index": 5
+              },
+              {
+                "id": "R02931",
+                "pair_index": 3
+              },
+              {
+                "id": "R03197",
+                "pair_index": 3
+              },
+              {
+                "id": "R03196",
+                "pair_index": 3
+              },
+              {
+                "id": "R00144",
+                "pair_index": 3
+              },
+              {
+                "id": "R00854",
+                "pair_index": 4
+              },
+              {
+                "id": "R00526",
+                "pair_index": 3
+              },
+              {
+                "id": "R03195",
+                "pair_index": 4
+              },
+              {
+                "id": "R03192",
+                "pair_index": 3
+              },
+              {
+                "id": "R03194",
+                "pair_index": 3
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "feature_id": "node_004",
+        "members": [
+          {
+            "id": "R02929",
+            "worker": "P005",
+            "pair_index": 0,
+            "points": [
+              [
+                34.87881727815137,
+                72.22411049372525
+              ],
+              [
+                34.87881727815137,
+                440.7547169811321
+              ]
+            ],
+            "source_pair_index": 1
+          }
+        ],
+        "support": 1,
+        "selected": false,
+        "center": [
+          [
+            34.87881727815137,
+            72.22411049372525
+          ],
+          [
+            34.87881727815137,
+            440.7547169811321
+          ]
+        ],
+        "top_support": 1,
+        "bottom_support": 1,
+        "joint_support": 1,
+        "maximum_top_angle": 0.0,
+        "maximum_bottom_angle": 0.0,
+        "top_position_groups_9deg": [
+          {
+            "support": 1,
+            "members": [
+              {
+                "id": "R02929",
+                "pair_index": 0
+              }
+            ]
+          }
+        ],
+        "bottom_position_groups_9deg": [
+          {
+            "support": 1,
+            "members": [
+              {
+                "id": "R02929",
+                "pair_index": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "feature_id": "node_005",
+        "members": [
+          {
+            "id": "R02929",
+            "worker": "P005",
+            "pair_index": 1,
+            "points": [
+              [
+                7.737737177364656,
+                204.19774784645134
+              ],
+              [
+                7.737737177364656,
+                321.6500582944994
+              ]
+            ],
+            "source_pair_index": 0
+          }
+        ],
+        "support": 1,
+        "selected": false,
+        "center": [
+          [
+            7.737737177364656,
+            204.19774784645134
+          ],
+          [
+            7.737737177364656,
+            321.6500582944994
+          ]
+        ],
+        "top_support": 1,
+        "bottom_support": 1,
+        "joint_support": 1,
+        "maximum_top_angle": 0.0,
+        "maximum_bottom_angle": 0.0,
+        "top_position_groups_9deg": [
+          {
+            "support": 1,
+            "members": [
+              {
+                "id": "R02929",
+                "pair_index": 1
+              }
+            ]
+          }
+        ],
+        "bottom_position_groups_9deg": [
+          {
+            "support": 1,
+            "members": [
+              {
+                "id": "R02929",
+                "pair_index": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "feature_id": "node_006",
+        "members": [
+          {
+            "id": "R02929",
+            "worker": "P005",
+            "pair_index": 2,
+            "points": [
+              [
+                119.19569266300378,
+                212.6988876089777
+              ],
+              [
+                119.19569266300378,
+                293.68044371907246
+              ]
+            ],
+            "source_pair_index": 2
+          },
+          {
+            "id": "R02928",
+            "worker": "P010",
+            "pair_index": 0,
+            "points": [
+              [
+                117.50670291055127,
+                214.08558190221422
+              ],
+              [
+                117.50670291055127,
+                298.50420633448095
+              ]
+            ],
+            "source_pair_index": 0
+          },
+          {
+            "id": "R00854",
+            "worker": "P022",
+            "pair_index": 0,
+            "points": [
+              [
+                118.07523939479874,
+                221.79250841000785
+              ],
+              [
+                118.07523939479874,
+                297.64216550467984
+              ]
+            ],
+            "source_pair_index": 0
+          },
+          {
+            "id": "R03195",
+            "worker": "P024",
+            "pair_index": 0,
+            "points": [
+              [
+                117.45910563265707,
+                214.5295136688619
+              ],
+              [
+                117.45910563265707,
+                302.87898401013365
+              ]
+            ],
+            "source_pair_index": 0
+          }
+        ],
+        "support": 4,
+        "selected": false,
+        "center": [
+          [
+            117.79097115267501,
+            214.30754778553808
+          ],
+          [
+            117.79097115267501,
+            298.0731859195804
+          ]
+        ],
+        "top_support": 4,
+        "bottom_support": 4,
+        "joint_support": 4,
+        "maximum_top_angle": 3.219808380287529,
+        "maximum_bottom_angle": 3.2872413438898103,
+        "top_position_groups_9deg": [
+          {
+            "support": 4,
+            "members": [
+              {
+                "id": "R02929",
+                "pair_index": 2
+              },
+              {
+                "id": "R02928",
+                "pair_index": 0
+              },
+              {
+                "id": "R00854",
+                "pair_index": 0
+              },
+              {
+                "id": "R03195",
+                "pair_index": 0
+              }
+            ]
+          }
+        ],
+        "bottom_position_groups_9deg": [
+          {
+            "support": 4,
+            "members": [
+              {
+                "id": "R02929",
+                "pair_index": 2
+              },
+              {
+                "id": "R02928",
+                "pair_index": 0
+              },
+              {
+                "id": "R00854",
+                "pair_index": 0
+              },
+              {
+                "id": "R03195",
+                "pair_index": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "feature_id": "node_007",
+        "members": [
+          {
+            "id": "R02929",
+            "worker": "P005",
+            "pair_index": 3,
+            "points": [
+              [
+                219.85383155417753,
+                201.31586055034896
+              ],
+              [
+                219.85383155417753,
+                303.76254241361215
+              ]
+            ],
+            "source_pair_index": 4
+          },
+          {
+            "id": "R02928",
+            "worker": "P010",
+            "pair_index": 1,
+            "points": [
+              [
+                231.88919667590025,
+                208.4875346260388
+              ],
+              [
+                231.88919667590025,
+                300.67590027700834
+              ]
+            ],
+            "source_pair_index": 2
+          }
+        ],
+        "support": 2,
+        "selected": false,
+        "center": [
+          [
+            225.8715141150389,
+            204.90169758819388
+          ],
+          [
+            225.8715141150389,
+            302.21922134531025
+          ]
+        ],
+        "top_support": 2,
+        "bottom_support": 2,
+        "joint_support": 2,
+        "maximum_top_angle": 4.748964819026487,
+        "maximum_bottom_angle": 4.20446805337053,
+        "top_position_groups_9deg": [
+          {
+            "support": 2,
+            "members": [
+              {
+                "id": "R02929",
+                "pair_index": 3
+              },
+              {
+                "id": "R02928",
+                "pair_index": 1
+              }
+            ]
+          }
+        ],
+        "bottom_position_groups_9deg": [
+          {
+            "support": 2,
+            "members": [
+              {
+                "id": "R02929",
+                "pair_index": 3
+              },
+              {
+                "id": "R02928",
+                "pair_index": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "feature_id": "node_008",
+        "members": [
+          {
+            "id": "R02929",
+            "worker": "P005",
+            "pair_index": 4,
+            "points": [
+              [
+                212.22819948049874,
+                200.0888967766422
+              ],
+              [
+                212.22819948049874,
+                318.3977826797926
+              ]
+            ],
+            "source_pair_index": 3
+          },
+          {
+            "id": "R02928",
+            "worker": "P010",
+            "pair_index": 2,
+            "points": [
+              [
+                210.61495844875347,
+                201.39612188365652
+              ],
+              [
+                210.61495844875347,
+                317.69529085872574
+              ]
+            ],
+            "source_pair_index": 1
+          },
+          {
+            "id": "R03197",
+            "worker": "P018",
+            "pair_index": 0,
+            "points": [
+              [
+                212.69180793259613,
+                197.26751043214267
+              ],
+              [
+                212.69180793259613,
+                319.59350262183636
+              ]
+            ],
+            "source_pair_index": 0
+          },
+          {
+            "id": "R03192",
+            "worker": "P025",
+            "pair_index": 0,
+            "points": [
+              [
+                213.55102040816325,
+                203.7551020408163
+              ],
+              [
+                213.55102040816325,
+                318.6938775510204
+              ]
+            ],
+            "source_pair_index": 0
+          }
+        ],
+        "support": 4,
+        "selected": false,
+        "center": [
+          [
+            212.4600037065474,
+            200.74250933014935
+          ],
+          [
+            212.4600037065474,
+            318.5458301154065
+          ]
+        ],
+        "top_support": 4,
+        "bottom_support": 4,
+        "joint_support": 4,
+        "maximum_top_angle": 2.2984942287022037,
+        "maximum_bottom_angle": 1.0202528186993263,
+        "top_position_groups_9deg": [
+          {
+            "support": 4,
+            "members": [
+              {
+                "id": "R02929",
+                "pair_index": 4
+              },
+              {
+                "id": "R02928",
+                "pair_index": 2
+              },
+              {
+                "id": "R03197",
+                "pair_index": 0
+              },
+              {
+                "id": "R03192",
+                "pair_index": 0
+              }
+            ]
+          }
+        ],
+        "bottom_position_groups_9deg": [
+          {
+            "support": 4,
+            "members": [
+              {
+                "id": "R02929",
+                "pair_index": 4
+              },
+              {
+                "id": "R02928",
+                "pair_index": 2
+              },
+              {
+                "id": "R03197",
+                "pair_index": 0
+              },
+              {
+                "id": "R03192",
+                "pair_index": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "feature_id": "node_009",
+        "members": [
+          {
+            "id": "R02929",
+            "worker": "P005",
+            "pair_index": 5,
+            "points": [
+              [
+                290.44000821160614,
+                195.05565127126317
+              ],
+              [
+                290.44000821160614,
+                320.0913251630985
+              ]
+            ],
+            "source_pair_index": 5
+          },
+          {
+            "id": "R02928",
+            "worker": "P010",
+            "pair_index": 3,
+            "points": [
+              [
+                285.0747922437673,
+                198.5595567867036
+              ],
+              [
+                285.0747922437673,
+                317.69529085872574
+              ]
+            ],
+            "source_pair_index": 3
+          },
+          {
+            "id": "R03197",
+            "worker": "P018",
+            "pair_index": 1,
+            "points": [
+              [
+                288.74254469967434,
+                195.01235238472887
+              ],
+              [
+                288.74254469967434,
+                320.5065897059242
+              ]
+            ],
+            "source_pair_index": 1
+          },
+          {
+            "id": "R00854",
+            "worker": "P022",
+            "pair_index": 2,
+            "points": [
+              [
+                288.2838981746339,
+                200.03736879366312
+              ],
+              [
+                288.2838981746339,
+                303.23809523809524
+              ]
+            ],
+            "source_pair_index": 2
+          },
+          {
+            "id": "R03195",
+            "worker": "P024",
+            "pair_index": 2,
+            "points": [
+              [
+                290.5773801421064,
+                199.0569656186247
+              ],
+              [
+                290.5773801421064,
+                318.8579608200719
+              ]
+            ],
+            "source_pair_index": 2
+          },
+          {
+            "id": "R03192",
+            "worker": "P025",
+            "pair_index": 1,
+            "points": [
+              [
+                288.0,
+                202.44897959183675
+              ],
+              [
+                288.0,
+                318.6938775510204
+              ]
+            ],
+            "source_pair_index": 1
+          }
+        ],
+        "support": 6,
+        "selected": false,
+        "center": [
+          [
+            288.51322143715413,
+            198.80826120266414
+          ],
+          [
+            288.51322143715413,
+            318.7759191855462
+          ]
+        ],
+        "top_support": 6,
+        "bottom_support": 6,
+        "joint_support": 6,
+        "maximum_top_angle": 2.721120512271241,
+        "maximum_bottom_angle": 6.0728516554151755,
+        "top_position_groups_9deg": [
+          {
+            "support": 6,
+            "members": [
+              {
+                "id": "R02929",
+                "pair_index": 5
+              },
+              {
+                "id": "R02928",
+                "pair_index": 3
+              },
+              {
+                "id": "R03197",
+                "pair_index": 1
+              },
+              {
+                "id": "R00854",
+                "pair_index": 2
+              },
+              {
+                "id": "R03195",
+                "pair_index": 2
+              },
+              {
+                "id": "R03192",
+                "pair_index": 1
+              }
+            ]
+          }
+        ],
+        "bottom_position_groups_9deg": [
+          {
+            "support": 6,
+            "members": [
+              {
+                "id": "R02929",
+                "pair_index": 5
+              },
+              {
+                "id": "R02928",
+                "pair_index": 3
+              },
+              {
+                "id": "R03197",
+                "pair_index": 1
+              },
+              {
+                "id": "R00854",
+                "pair_index": 2
+              },
+              {
+                "id": "R03195",
+                "pair_index": 2
+              },
+              {
+                "id": "R03192",
+                "pair_index": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "feature_id": "node_010",
+        "members": [
+          {
+            "id": "R00854",
+            "worker": "P022",
+            "pair_index": 1,
+            "points": [
+              [
+                212.6918219561937,
+                202.2436277155047
+              ],
+              [
+                212.6918219561937,
+                302.3338968713606
+              ]
+            ],
+            "source_pair_index": 1
+          },
+          {
+            "id": "R03195",
+            "worker": "P024",
+            "pair_index": 1,
+            "points": [
+              [
+                211.77745289872027,
+                200.2366975640957
+              ],
+              [
+                211.77745289872027,
+                303.5552602058164
+              ]
+            ],
+            "source_pair_index": 1
+          }
+        ],
+        "support": 2,
+        "selected": false,
+        "center": [
+          [
+            212.234637427457,
+            201.2401626398002
+          ],
+          [
+            212.234637427457,
+            302.94457853858853
+          ]
+        ],
+        "top_support": 2,
+        "bottom_support": 2,
+        "joint_support": 2,
+        "maximum_top_angle": 0.7680602900863892,
+        "maximum_bottom_angle": 0.5285519315765902,
+        "top_position_groups_9deg": [
+          {
+            "support": 2,
+            "members": [
+              {
+                "id": "R00854",
+                "pair_index": 1
+              },
+              {
+                "id": "R03195",
+                "pair_index": 1
+              }
+            ]
+          }
+        ],
+        "bottom_position_groups_9deg": [
+          {
+            "support": 2,
+            "members": [
+              {
+                "id": "R00854",
+                "pair_index": 1
+              },
+              {
+                "id": "R03195",
+                "pair_index": 1
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "assignments": [
+      {
+        "id": "R02930",
+        "worker": "P002",
+        "feature_ids": [
+          "node_000",
+          "node_001",
+          "node_002",
+          "node_003"
+        ],
+        "source_ring_confirmed": true,
+        "source_order_status": "human_confirmed"
+      },
+      {
+        "id": "R02932",
+        "worker": "P003",
+        "feature_ids": [
+          "node_000",
+          "node_001",
+          "node_002",
+          "node_003"
+        ],
+        "source_ring_confirmed": true,
+        "source_order_status": "human_confirmed"
+      },
+      {
+        "id": "R02210",
+        "worker": "P004",
+        "feature_ids": [
+          "node_000",
+          "node_001",
+          "node_002",
+          "node_003"
+        ],
+        "source_ring_confirmed": true,
+        "source_order_status": "human_confirmed"
+      },
+      {
+        "id": "R02929",
+        "worker": "P005",
+        "feature_ids": [
+          "node_004",
+          "node_005",
+          "node_006",
+          "node_007",
+          "node_008",
+          "node_009",
+          "node_002",
+          "node_003"
+        ],
+        "source_ring_confirmed": true,
+        "source_order_status": "human_confirmed"
+      },
+      {
+        "id": "R01956",
+        "worker": "P006",
+        "feature_ids": [
+          "node_000",
+          "node_001",
+          "node_002",
+          "node_003"
+        ],
+        "source_ring_confirmed": true,
+        "source_order_status": "human_confirmed"
+      },
+      {
+        "id": "R02928",
+        "worker": "P010",
+        "feature_ids": [
+          "node_006",
+          "node_007",
+          "node_008",
+          "node_009",
+          "node_002",
+          "node_003"
+        ],
+        "source_ring_confirmed": true,
+        "source_order_status": "human_confirmed"
+      },
+      {
+        "id": "R02931",
+        "worker": "P012",
+        "feature_ids": [
+          "node_000",
+          "node_001",
+          "node_002",
+          "node_003"
+        ],
+        "source_ring_confirmed": true,
+        "source_order_status": "human_confirmed"
+      },
+      {
+        "id": "R03197",
+        "worker": "P018",
+        "feature_ids": [
+          "node_008",
+          "node_009",
+          "node_002",
+          "node_003"
+        ],
+        "source_ring_confirmed": true,
+        "source_order_status": "human_confirmed"
+      },
+      {
+        "id": "R03196",
+        "worker": "P020",
+        "feature_ids": [
+          "node_000",
+          "node_001",
+          "node_002",
+          "node_003"
+        ],
+        "source_ring_confirmed": true,
+        "source_order_status": "human_confirmed"
+      },
+      {
+        "id": "R00144",
+        "worker": "P021",
+        "feature_ids": [
+          "node_000",
+          "node_001",
+          "node_002",
+          "node_003"
+        ],
+        "source_ring_confirmed": true,
+        "source_order_status": "human_confirmed"
+      },
+      {
+        "id": "R00854",
+        "worker": "P022",
+        "feature_ids": [
+          "node_006",
+          "node_010",
+          "node_009",
+          "node_002",
+          "node_003"
+        ],
+        "source_ring_confirmed": true,
+        "source_order_status": "human_confirmed"
+      },
+      {
+        "id": "R00526",
+        "worker": "P023",
+        "feature_ids": [
+          "node_000",
+          "node_001",
+          "node_002",
+          "node_003"
+        ],
+        "source_ring_confirmed": true,
+        "source_order_status": "human_confirmed"
+      },
+      {
+        "id": "R03195",
+        "worker": "P024",
+        "feature_ids": [
+          "node_006",
+          "node_010",
+          "node_009",
+          "node_002",
+          "node_003"
+        ],
+        "source_ring_confirmed": true,
+        "source_order_status": "human_confirmed"
+      },
+      {
+        "id": "R03192",
+        "worker": "P025",
+        "feature_ids": [
+          "node_008",
+          "node_009",
+          "node_002",
+          "node_003"
+        ],
+        "source_ring_confirmed": true,
+        "source_order_status": "human_confirmed"
+      },
+      {
+        "id": "R03194",
+        "worker": "P026",
+        "feature_ids": [
+          "node_000",
+          "node_001",
+          "node_002",
+          "node_003"
+        ],
+        "source_ring_confirmed": true,
+        "source_order_status": "human_confirmed"
+      }
+    ],
+    "pairwise": [
+      {
+        "a": "R02930",
+        "b": "R02932",
+        "cost": 9.818014810143241,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02930",
+        "b": "R02210",
+        "cost": 8.89293572565936,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02930",
+        "b": "R02929",
+        "cost": 61.97965758099812,
+        "matches": [
+          [
+            2,
+            6
+          ],
+          [
+            3,
+            7
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02930",
+        "b": "R01956",
+        "cost": 9.198148622704071,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02930",
+        "b": "R02928",
+        "cost": 47.50648771687547,
+        "matches": [
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            5
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02930",
+        "b": "R02931",
+        "cost": 9.818014810143241,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02930",
+        "b": "R03197",
+        "cost": 31.987962710439163,
+        "matches": [
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02930",
+        "b": "R03196",
+        "cost": 8.876740929731024,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02930",
+        "b": "R00144",
+        "cost": 8.069332886373072,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02930",
+        "b": "R00854",
+        "cost": 39.06671514760225,
+        "matches": [
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02930",
+        "b": "R00526",
+        "cost": 9.033061383838586,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02930",
+        "b": "R03195",
+        "cost": 41.70667176271293,
+        "matches": [
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02930",
+        "b": "R03192",
+        "cost": 33.04468137722376,
+        "matches": [
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02930",
+        "b": "R03194",
+        "cost": 11.670536834139057,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02932",
+        "b": "R02210",
+        "cost": 12.359623090665288,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02932",
+        "b": "R02929",
+        "cost": 64.82713561794324,
+        "matches": [
+          [
+            2,
+            6
+          ],
+          [
+            3,
+            7
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02932",
+        "b": "R01956",
+        "cost": 13.813988852622304,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02932",
+        "b": "R02928",
+        "cost": 47.815502344247925,
+        "matches": [
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            5
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02932",
+        "b": "R02931",
+        "cost": 0.0,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02932",
+        "b": "R03197",
+        "cost": 33.67386644469035,
+        "matches": [
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02932",
+        "b": "R03196",
+        "cost": 12.044304380604892,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02932",
+        "b": "R00144",
+        "cost": 10.124767930753244,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02932",
+        "b": "R00854",
+        "cost": 41.60931406264798,
+        "matches": [
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02932",
+        "b": "R00526",
+        "cost": 15.242045931437914,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02932",
+        "b": "R03195",
+        "cost": 45.63297804366675,
+        "matches": [
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02932",
+        "b": "R03192",
+        "cost": 33.97413753036072,
+        "matches": [
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02932",
+        "b": "R03194",
+        "cost": 13.984949703257323,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02210",
+        "b": "R02929",
+        "cost": 63.53910356375192,
+        "matches": [
+          [
+            2,
+            6
+          ],
+          [
+            3,
+            7
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02210",
+        "b": "R01956",
+        "cost": 6.456678892600618,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02210",
+        "b": "R02928",
+        "cost": 46.98806595141954,
+        "matches": [
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            5
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02210",
+        "b": "R02931",
+        "cost": 12.359623090665295,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02210",
+        "b": "R03197",
+        "cost": 32.24923108668834,
+        "matches": [
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02210",
+        "b": "R03196",
+        "cost": 5.06648897240454,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02210",
+        "b": "R00144",
+        "cost": 10.79969341597059,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02210",
+        "b": "R00854",
+        "cost": 39.92891269662004,
+        "matches": [
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02210",
+        "b": "R00526",
+        "cost": 4.990558202638876,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02210",
+        "b": "R03195",
+        "cost": 44.21433542110324,
+        "matches": [
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02210",
+        "b": "R03192",
+        "cost": 32.17727268098243,
+        "matches": [
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02210",
+        "b": "R03194",
+        "cost": 5.0740828734768995,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02929",
+        "b": "R01956",
+        "cost": 62.74470701570438,
+        "matches": [
+          [
+            6,
+            2
+          ],
+          [
+            7,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02929",
+        "b": "R02928",
+        "cost": 27.163880295870825,
+        "matches": [
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            7,
+            5
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02929",
+        "b": "R02931",
+        "cost": 64.82713561794324,
+        "matches": [
+          [
+            6,
+            2
+          ],
+          [
+            7,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02929",
+        "b": "R03197",
+        "cost": 34.45296141927281,
+        "matches": [
+          [
+            4,
+            0
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            7,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02929",
+        "b": "R03196",
+        "cost": 63.567129706766316,
+        "matches": [
+          [
+            6,
+            2
+          ],
+          [
+            7,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02929",
+        "b": "R00144",
+        "cost": 62.2466342298417,
+        "matches": [
+          [
+            6,
+            2
+          ],
+          [
+            7,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02929",
+        "b": "R00854",
+        "cost": 33.497420584457224,
+        "matches": [
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            7,
+            4
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02929",
+        "b": "R00526",
+        "cost": 62.46257728267712,
+        "matches": [
+          [
+            6,
+            2
+          ],
+          [
+            7,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02929",
+        "b": "R03195",
+        "cost": 33.15660793422393,
+        "matches": [
+          [
+            2,
+            0
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            7,
+            4
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02929",
+        "b": "R03192",
+        "cost": 36.16899272549037,
+        "matches": [
+          [
+            4,
+            0
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            7,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02929",
+        "b": "R03194",
+        "cost": 66.12791559205205,
+        "matches": [
+          [
+            6,
+            2
+          ],
+          [
+            7,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R01956",
+        "b": "R02928",
+        "cost": 47.9211318836729,
+        "matches": [
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            5
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R01956",
+        "b": "R02931",
+        "cost": 13.813988852622307,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R01956",
+        "b": "R03197",
+        "cost": 32.46562753478474,
+        "matches": [
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R01956",
+        "b": "R03196",
+        "cost": 7.625287408095831,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R01956",
+        "b": "R00144",
+        "cost": 10.301529072991046,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R01956",
+        "b": "R00854",
+        "cost": 39.811124246208834,
+        "matches": [
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R01956",
+        "b": "R00526",
+        "cost": 5.618662962874744,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R01956",
+        "b": "R03195",
+        "cost": 43.944154942802015,
+        "matches": [
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R01956",
+        "b": "R03192",
+        "cost": 33.75911010934136,
+        "matches": [
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R01956",
+        "b": "R03194",
+        "cost": 10.15103236313485,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02928",
+        "b": "R02931",
+        "cost": 47.815502344247925,
+        "matches": [
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02928",
+        "b": "R03197",
+        "cost": 20.210462351892446,
+        "matches": [
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02928",
+        "b": "R03196",
+        "cost": 47.05220603793111,
+        "matches": [
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02928",
+        "b": "R00144",
+        "cost": 46.60811059718215,
+        "matches": [
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02928",
+        "b": "R00854",
+        "cost": 17.98592669861423,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            5,
+            4
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02928",
+        "b": "R00526",
+        "cost": 48.3629883512313,
+        "matches": [
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02928",
+        "b": "R03195",
+        "cost": 19.122481413735393,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            5,
+            4
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02928",
+        "b": "R03192",
+        "cost": 21.36825390834001,
+        "matches": [
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02928",
+        "b": "R03194",
+        "cost": 47.560870867051975,
+        "matches": [
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02931",
+        "b": "R03197",
+        "cost": 33.67386644469035,
+        "matches": [
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02931",
+        "b": "R03196",
+        "cost": 12.044304380604892,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02931",
+        "b": "R00144",
+        "cost": 10.124767930753244,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02931",
+        "b": "R00854",
+        "cost": 41.60931406264798,
+        "matches": [
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02931",
+        "b": "R00526",
+        "cost": 15.242045931437914,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02931",
+        "b": "R03195",
+        "cost": 45.63297804366675,
+        "matches": [
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02931",
+        "b": "R03192",
+        "cost": 33.97413753036072,
+        "matches": [
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R02931",
+        "b": "R03194",
+        "cost": 13.984949703257323,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R03197",
+        "b": "R03196",
+        "cost": 33.33457682919367,
+        "matches": [
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R03197",
+        "b": "R00144",
+        "cost": 31.241838496199257,
+        "matches": [
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R03197",
+        "b": "R00854",
+        "cost": 17.05450215164523,
+        "matches": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R03197",
+        "b": "R00526",
+        "cost": 32.68525229708915,
+        "matches": [
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R03197",
+        "b": "R03195",
+        "cost": 17.52608532100468,
+        "matches": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R03197",
+        "b": "R03192",
+        "cost": 6.166762218198558,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R03197",
+        "b": "R03194",
+        "cost": 33.82496342363444,
+        "matches": [
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R03196",
+        "b": "R00144",
+        "cost": 12.490991820496331,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R03196",
+        "b": "R00854",
+        "cost": 41.40907452450979,
+        "matches": [
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R03196",
+        "b": "R00526",
+        "cost": 6.157653922234586,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R03196",
+        "b": "R03195",
+        "cost": 43.772181290128664,
+        "matches": [
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R03196",
+        "b": "R03192",
+        "cost": 34.63205282163971,
+        "matches": [
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R03196",
+        "b": "R03194",
+        "cost": 6.257047851935665,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R00144",
+        "b": "R00854",
+        "cost": 38.894044104665824,
+        "matches": [
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R00144",
+        "b": "R00526",
+        "cost": 10.894470536394826,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R00144",
+        "b": "R03195",
+        "cost": 42.201008445755576,
+        "matches": [
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R00144",
+        "b": "R03192",
+        "cost": 33.01672410950255,
+        "matches": [
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R00144",
+        "b": "R03194",
+        "cost": 12.464201730245854,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R00854",
+        "b": "R00526",
+        "cost": 39.85239949493252,
+        "matches": [
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R00854",
+        "b": "R03195",
+        "cost": 11.293497098289398,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R00854",
+        "b": "R03192",
+        "cost": 16.282264750887016,
+        "matches": [
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R00854",
+        "b": "R03194",
+        "cost": 42.245218962234645,
+        "matches": [
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R00526",
+        "b": "R03195",
+        "cost": 43.35568335137437,
+        "matches": [
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R00526",
+        "b": "R03192",
+        "cost": 34.011736109000765,
+        "matches": [
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R00526",
+        "b": "R03194",
+        "cost": 7.09075252343073,
+        "matches": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R03195",
+        "b": "R03192",
+        "cost": 18.433231487190277,
+        "matches": [
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R03195",
+        "b": "R03194",
+        "cost": 45.98427354191822,
+        "matches": [
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      },
+      {
+        "a": "R03192",
+        "b": "R03194",
+        "cost": 34.17985672393263,
+        "matches": [
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "tied_cyclic_solutions": 1,
+        "tie_scope": "cyclic cuts/directions only; within-DP equal-cost alternatives not enumerated"
+      }
+    ],
+    "node_consensus": {
+      "status": "ready",
+      "nodes": [
+        {
+          "feature_id": "node_000",
+          "support": 9,
+          "points": [
+            [
+              145.4027802242441,
+              119.06468019732864
+            ],
+            [
+              145.4027802242441,
+              413.1523010244134
+            ]
+          ],
+          "members": [
+            {
+              "id": "R02930",
+              "worker": "P002",
+              "pair_index": 0
+            },
+            {
+              "id": "R02932",
+              "worker": "P003",
+              "pair_index": 0
+            },
+            {
+              "id": "R02210",
+              "worker": "P004",
+              "pair_index": 0
+            },
+            {
+              "id": "R01956",
+              "worker": "P006",
+              "pair_index": 0
+            },
+            {
+              "id": "R02931",
+              "worker": "P012",
+              "pair_index": 0
+            },
+            {
+              "id": "R03196",
+              "worker": "P020",
+              "pair_index": 0
+            },
+            {
+              "id": "R00144",
+              "worker": "P021",
+              "pair_index": 0
+            },
+            {
+              "id": "R00526",
+              "worker": "P023",
+              "pair_index": 0
+            },
+            {
+              "id": "R03194",
+              "worker": "P026",
+              "pair_index": 0
+            }
+          ]
+        },
+        {
+          "feature_id": "node_001",
+          "support": 9,
+          "points": [
+            [
+              363.89272030651347,
+              114.53727157112453
+            ],
+            [
+              363.89272030651347,
+              409.0616841825875
+            ]
+          ],
+          "members": [
+            {
+              "id": "R02930",
+              "worker": "P002",
+              "pair_index": 1
+            },
+            {
+              "id": "R02932",
+              "worker": "P003",
+              "pair_index": 1
+            },
+            {
+              "id": "R02210",
+              "worker": "P004",
+              "pair_index": 1
+            },
+            {
+              "id": "R01956",
+              "worker": "P006",
+              "pair_index": 1
+            },
+            {
+              "id": "R02931",
+              "worker": "P012",
+              "pair_index": 1
+            },
+            {
+              "id": "R03196",
+              "worker": "P020",
+              "pair_index": 1
+            },
+            {
+              "id": "R00144",
+              "worker": "P021",
+              "pair_index": 1
+            },
+            {
+              "id": "R00526",
+              "worker": "P023",
+              "pair_index": 1
+            },
+            {
+              "id": "R03194",
+              "worker": "P026",
+              "pair_index": 1
+            }
+          ]
+        },
+        {
+          "feature_id": "node_002",
+          "support": 15,
+          "points": [
+            [
+              651.1371052359709,
+              105.28478352606494
+            ],
+            [
+              651.1371052359709,
+              417.0099078023944
+            ]
+          ],
+          "members": [
+            {
+              "id": "R02930",
+              "worker": "P002",
+              "pair_index": 2
+            },
+            {
+              "id": "R02932",
+              "worker": "P003",
+              "pair_index": 2
+            },
+            {
+              "id": "R02210",
+              "worker": "P004",
+              "pair_index": 2
+            },
+            {
+              "id": "R02929",
+              "worker": "P005",
+              "pair_index": 6
+            },
+            {
+              "id": "R01956",
+              "worker": "P006",
+              "pair_index": 2
+            },
+            {
+              "id": "R02928",
+              "worker": "P010",
+              "pair_index": 4
+            },
+            {
+              "id": "R02931",
+              "worker": "P012",
+              "pair_index": 2
+            },
+            {
+              "id": "R03197",
+              "worker": "P018",
+              "pair_index": 2
+            },
+            {
+              "id": "R03196",
+              "worker": "P020",
+              "pair_index": 2
+            },
+            {
+              "id": "R00144",
+              "worker": "P021",
+              "pair_index": 2
+            },
+            {
+              "id": "R00854",
+              "worker": "P022",
+              "pair_index": 3
+            },
+            {
+              "id": "R00526",
+              "worker": "P023",
+              "pair_index": 2
+            },
+            {
+              "id": "R03195",
+              "worker": "P024",
+              "pair_index": 3
+            },
+            {
+              "id": "R03192",
+              "worker": "P025",
+              "pair_index": 2
+            },
+            {
+              "id": "R03194",
+              "worker": "P026",
+              "pair_index": 2
+            }
+          ]
+        },
+        {
+          "feature_id": "node_003",
+          "support": 15,
+          "points": [
+            [
+              878.3673469387754,
+              102.6511516305755
+            ],
+            [
+              878.3673469387754,
+              415.8773946360153
+            ]
+          ],
+          "members": [
+            {
+              "id": "R02930",
+              "worker": "P002",
+              "pair_index": 3
+            },
+            {
+              "id": "R02932",
+              "worker": "P003",
+              "pair_index": 3
+            },
+            {
+              "id": "R02210",
+              "worker": "P004",
+              "pair_index": 3
+            },
+            {
+              "id": "R02929",
+              "worker": "P005",
+              "pair_index": 7
+            },
+            {
+              "id": "R01956",
+              "worker": "P006",
+              "pair_index": 3
+            },
+            {
+              "id": "R02928",
+              "worker": "P010",
+              "pair_index": 5
+            },
+            {
+              "id": "R02931",
+              "worker": "P012",
+              "pair_index": 3
+            },
+            {
+              "id": "R03197",
+              "worker": "P018",
+              "pair_index": 3
+            },
+            {
+              "id": "R03196",
+              "worker": "P020",
+              "pair_index": 3
+            },
+            {
+              "id": "R00144",
+              "worker": "P021",
+              "pair_index": 3
+            },
+            {
+              "id": "R00854",
+              "worker": "P022",
+              "pair_index": 4
+            },
+            {
+              "id": "R00526",
+              "worker": "P023",
+              "pair_index": 3
+            },
+            {
+              "id": "R03195",
+              "worker": "P024",
+              "pair_index": 4
+            },
+            {
+              "id": "R03192",
+              "worker": "P025",
+              "pair_index": 3
+            },
+            {
+              "id": "R03194",
+              "worker": "P026",
+              "pair_index": 3
+            }
+          ]
+        }
+      ],
+      "order_independent": true,
+      "location_policy": "all identity members, equal-person coordinate medians"
+    },
+    "candidate": {
+      "status": "geometry_review",
+      "reason": "identity_unconfirmed",
+      "points": [
+        [
+          145.4027802242441,
+          119.06468019732864
+        ],
+        [
+          145.4027802242441,
+          413.1523010244134
+        ],
+        [
+          363.89272030651347,
+          114.53727157112453
+        ],
+        [
+          363.89272030651347,
+          409.0616841825875
+        ],
+        [
+          651.1371052359709,
+          105.28478352606494
+        ],
+        [
+          651.1371052359709,
+          417.0099078023944
+        ],
+        [
+          878.3673469387754,
+          102.6511516305755
+        ],
+        [
+          878.3673469387754,
+          415.8773946360153
+        ]
+      ],
+      "footprint": [
+        [
+          -0.5400475942135622,
+          0.43548085572287326
+        ],
+        [
+          -0.5770514477264356,
+          -0.4497244914038148
+        ],
+        [
+          0.4969046760381487,
+          -0.43324261005556747
+        ],
+        [
+          0.5215779897267411,
+          0.41937476460594214
+        ]
+      ],
+      "ring_confirmed": true,
+      "feature_ids": [
+        "node_000",
+        "node_001",
+        "node_002",
+        "node_003"
+      ],
+      "order_status": "human_reviewed_order",
+      "geometry_status": "ok"
+    },
+    "ring_diagnostics": {
+      "feature_ids": [
+        "node_000",
+        "node_001",
+        "node_002",
+        "node_003"
+      ],
+      "ring_confirmed": false,
+      "policy": "most supported complete projected source ring; no x sorting; ties lexicographic and flagged",
+      "reason": null,
+      "tied_best": false,
+      "alternatives": [
+        {
+          "feature_ids": [
+            "node_000",
+            "node_001",
+            "node_002",
+            "node_003"
+          ],
+          "support": 9,
+          "workers": [
+            "P002",
+            "P003",
+            "P004",
+            "P006",
+            "P012",
+            "P020",
+            "P021",
+            "P023",
+            "P026"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "feature_ids": [
+            "node_000",
+            "node_001"
+          ],
+          "direct_support": 9,
+          "direct_workers": [
+            "P002",
+            "P003",
+            "P004",
+            "P006",
+            "P012",
+            "P020",
+            "P021",
+            "P023",
+            "P026"
+          ],
+          "projected_support": 9,
+          "projected_workers": [
+            "P002",
+            "P003",
+            "P004",
+            "P006",
+            "P012",
+            "P020",
+            "P021",
+            "P023",
+            "P026"
+          ]
+        },
+        {
+          "feature_ids": [
+            "node_001",
+            "node_002"
+          ],
+          "direct_support": 9,
+          "direct_workers": [
+            "P002",
+            "P003",
+            "P004",
+            "P006",
+            "P012",
+            "P020",
+            "P021",
+            "P023",
+            "P026"
+          ],
+          "projected_support": 9,
+          "projected_workers": [
+            "P002",
+            "P003",
+            "P004",
+            "P006",
+            "P012",
+            "P020",
+            "P021",
+            "P023",
+            "P026"
+          ]
+        },
+        {
+          "feature_ids": [
+            "node_002",
+            "node_003"
+          ],
+          "direct_support": 15,
+          "direct_workers": [
+            "P002",
+            "P003",
+            "P004",
+            "P005",
+            "P006",
+            "P010",
+            "P012",
+            "P018",
+            "P020",
+            "P021",
+            "P022",
+            "P023",
+            "P024",
+            "P025",
+            "P026"
+          ],
+          "projected_support": 9,
+          "projected_workers": [
+            "P002",
+            "P003",
+            "P004",
+            "P006",
+            "P012",
+            "P020",
+            "P021",
+            "P023",
+            "P026"
+          ]
+        },
+        {
+          "feature_ids": [
+            "node_003",
+            "node_000"
+          ],
+          "direct_support": 9,
+          "direct_workers": [
+            "P002",
+            "P003",
+            "P004",
+            "P006",
+            "P012",
+            "P020",
+            "P021",
+            "P023",
+            "P026"
+          ],
+          "projected_support": 9,
+          "projected_workers": [
+            "P002",
+            "P003",
+            "P004",
+            "P006",
+            "P012",
+            "P020",
+            "P021",
+            "P023",
+            "P026"
+          ]
+        }
+      ]
+    },
+    "location_policy": "all identity members, same medoid-anchored coordinate medians as bound baseline; not semantic mode selection"
+  },
+  "applied_reviews": [
+    "user_workbench_order"
+  ],
   "remaining_review_cases": []
 }

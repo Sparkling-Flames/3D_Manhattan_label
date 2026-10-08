@@ -4,7 +4,7 @@
 
 ## 先读的材料
 
-1. [后续推进方案](../../docs/thesis_main/研究推进方案_共识可靠性与Pro深研_20261004.md)，随后读[原线程交接](../../docs/thesis_main/线程交接_连线质量与完整共识_20261004.md)和[当前研究方向](../../docs/thesis_main/研究方向_空间差异与共识_20260930.md)。
+1. [后续推进方案](../../docs/thesis_main/研究推进方案_共识可靠性与Pro深研_20261004.md)，随后读[原线程交接](../../docs/thesis_main/线程交接_连线质量与完整共识_20261004.md)和[当前研究方向](../../docs/thesis_main/history/研究方向_空间差异与共识_20260930.md)。
 2. [新Pro报告](external/dot/source/layout_foundations_20261004_v2/REPORT_ZH.md)、[dot独立复审](external/dot/REVIEW_ZH.md)、[高度与均值反例证明](external/dot/crosscheck/CROSSCHECK_ZH.md)。外部报告是待评价证据，不是方法合同。
 3. [四图数据说明](DATA.md)、[名单](inputs/rosters.json)、[来源绑定](source_binding.json)。构造输入与参考坐标分离。
 4. [当前合同](../../docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json)、[统计计划](../../docs/thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md)。算法开放，既有输入、GT隔离与资格边界保留。

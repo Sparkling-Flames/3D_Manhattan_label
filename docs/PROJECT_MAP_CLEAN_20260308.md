@@ -1,5 +1,14 @@
 # HOHONET 项目地图
 
+## 当前融合共识入口（2026-10-08）
+
+- [操作SOP](thesis_main/融合共识操作SOP_20261008.md)：输入、算法、人审、排序回收及复算。
+- [当前结果与未决](../analysis_results/consensus_delivery_20261008/REPORT.md)：唯一最新数量和待办；原阶段报告仅作历史。
+- [方法定义](thesis_main/共识投票机制与三路线推进_20261007.md)与[数据说明](thesis_main/研究数据说明_来源预处理与用途_20261006.md)：分管数学／边界和真源／索引。
+- 回执导入 `tools/thesis_main/analysis/consensus_order_import_20261008.py`；两项收尾图件 `tools/thesis_main/analysis/consensus_closeout_20261008.py`。原工作台快照保留。
+- 历史导航与三路线阶段长文已移入`thesis_main/history/`；重复复审报告移入结果目录`history/`。日常交付固定7.5，`--replay-calibration`仅复现历史选参，不覆盖交付。
+
+
 2026-10-07全量：`tools/thesis_main/analysis/difficulty_full_20261007.py`沿统一包覆盖全部研究图，输出[全量研究目录](../analysis_results/difficulty_full_20261007/REPORT.md)，含逐池名单／失败、曲线、全员GeoJSON、固定面板及复用的10图审查台。原分析目录保持历史结果。
 
 2026-10-07全量：`tools/thesis_main/analysis/difficulty_full_20261007.py`沿统一包覆盖全部研究图，输出[全量研究目录](../analysis_results/difficulty_full_20261007/REPORT.md)，含逐池名单／失败、曲线、全员GeoJSON、固定面板及复用的10图审查台。原分析目录保持历史结果。
@@ -40,7 +49,7 @@
 
 2026-10-08：[7.5—9细扫与11图未决复审](../analysis_results/direct_fusion_20261007/gap_sweep/population/refine_20261008/REPORT.md)，工具`tools/thesis_main/analysis/refine_review_20261008.py`；人工只判断同墙线及归类可用性，参数比较由研究端完成。
 
-2026-10-08：[调参与全员融合交付](../analysis_results/consensus_delivery_20261008/REPORT.md)，工具`tools/thesis_main/analysis/consensus_delivery_20261008.py`；工作参数7.5、177图节点、12图明确人审辅助，自动／辅助分别保存。后续[e9z／zs反馈与历史改序检查](../analysis_results/consensus_delivery_20261008/REVIEW_FOLLOWUP.md)，复算工具`tools/thesis_main/analysis/consensus_order_followup_20261008.py`。
+2026-10-08：[调参与全员融合交付](../analysis_results/consensus_delivery_20261008/REPORT.md)，工具`tools/thesis_main/analysis/consensus_delivery_20261008.py`；工作参数7.5，当前人工辅助全员版本已收尾，数量和例外以报告为准。[e9z／zs及历史改序检查](../analysis_results/consensus_delivery_20261008/history/REVIEW_FOLLOWUP.md)仅作历史，工具`tools/thesis_main/analysis/consensus_order_followup_20261008.py`。后续随机人数实验接口见融合SOP第9节，尚未运行。
 
 2026-10-06交接背景：[完整研究交接](thesis_main/线程交接_连线质量与完整共识_20261004.md)与[研究数据说明](thesis_main/研究数据说明_来源预处理与用途_20261006.md)。交接记录研究原意、已有证据和数据用途，当时未指定主推进路线；当前安排以上方模型及路线为准。历史方案／Pro任务书不自动成为当前待办，本地材料不等于远端已发布。
 
@@ -83,7 +92,7 @@
 | 用途 | 路径 |
 |---|---|
 | Pro 方法与 dot 审核资料 | `research/layout_methods_review_20261001/`：精选外部报告、源码、结果及反例，非正式算法入口 |
-| 研究对象与算法职责 | `docs/thesis_main/研究方向_空间差异与共识_20260930.md`：原意与职责索引；主推进路线暂不规定 |
+| 研究对象与算法职责 | `docs/thesis_main/history/研究方向_空间差异与共识_20260930.md`：原意与职责索引；主推进路线暂不规定 |
 | 连线与表示阶段1 | `docs/thesis_main/布局表示地基与坐标核验_20260930.md`；工具 `tools/thesis_main/analysis/layout_foundation_20260930.py`；全量表示清点 `analysis_results/layout_foundation_20260930/`，不修改资格或选择权重 |
 | 阶段2小型指标响应 | `tools/thesis_main/analysis/layout_metric_response_20261001.py`；`analysis_results/layout_metric_response_20261001/REPORT.md`及机器结果/字段合同/固定计划；74合成对照与12图描述，非全量研究或方法定案 |
 | 排序后3D质量增量 | `tools/thesis_main/analysis/layout_3d_quality_probe_20261002.py`；`analysis_results/layout_3d_quality_probe_20261002/REPORT.md`；12图全部作答和17份改序，墙高/方向/水平顶面模型体积诊断，不改变资格或正式评分 |
@@ -173,3 +182,5 @@
 - `research/pro_quality_handoff_20261007/`及同名zip：可手动上传Pro的质量评价材料，含最新任务、当前八图坐标与原图、四图点候选、既有审核和来源清单；不执行外部上传或启动采集。
 
 - 2026-10-08：[融合顺序复核工作台](../analysis_results/consensus_delivery_20261008/order_workbench/index.html)，复用旧点对排序台；35图，N=2暂缓，附两处残余身份复核。生成工具`tools/thesis_main/analysis/build_fusion_order_workbench_20261008.py`。
+
+- rPc残余归属新增[逐份放大审核](../analysis_results/consensus_delivery_20261008/order_workbench/individual_review.html)，模板`tools/thesis_main/analysis/wall_identity_individual_20261008.html`；沿用融合工作台生成器，原上传记录只读保留。

@@ -21739,8 +21739,16 @@
     },
     "candidate": {
       "status": "geometry_review",
-      "reason": "source_order_and_identity_unconfirmed",
+      "reason": "identity_unconfirmed",
       "points": [
+        [
+          110.01187457782251,
+          216.52544185781701
+        ],
+        [
+          110.01187457782251,
+          304.75376353508864
+        ],
         [
           295.23749165129135,
           196.6995283028043
@@ -21764,17 +21772,13 @@
         [
           945.0057142857142,
           443.6315125232026
-        ],
-        [
-          110.01187457782251,
-          216.52544185781701
-        ],
-        [
-          110.01187457782251,
-          304.75376353508864
         ]
       ],
       "footprint": [
+        [
+          -2.0262884878557985,
+          2.5313892726936875
+        ],
         [
           -1.9937620841505195,
           -0.4895094502505503
@@ -21786,20 +21790,16 @@
         [
           0.20780119903163946,
           0.3946068882729899
-        ],
-        [
-          -2.0262884878557985,
-          2.5313892726936875
         ]
       ],
-      "ring_confirmed": false,
+      "ring_confirmed": true,
       "feature_ids": [
+        "node_011",
         "node_001",
         "node_003",
-        "review_wc2JMjhGNzB-53_revisit_3_0",
-        "node_011"
+        "review_wc2JMjhGNzB-53_revisit_3_0"
       ],
-      "order_status": "source_suggestion",
+      "order_status": "human_reviewed_order",
       "geometry_status": "ok"
     },
     "ring_diagnostics": {
@@ -22010,7 +22010,8 @@
     "location_policy": "all identity members, same medoid-anchored coordinate medians as bound baseline; not semantic mode selection"
   },
   "applied_reviews": [
-    "wc2JMjhGNzB-53_revisit_3"
+    "wc2JMjhGNzB-53_revisit_3",
+    "user_workbench_order"
   ],
   "remaining_review_cases": []
 }

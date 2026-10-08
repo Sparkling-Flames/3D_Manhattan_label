@@ -22610,7 +22610,7 @@
     },
     "candidate": {
       "status": "geometry_review",
-      "reason": "source_order_and_identity_unconfirmed",
+      "reason": "identity_unconfirmed",
       "points": [
         [
           184.8142707240293,
@@ -22687,7 +22687,7 @@
           0.162762451900243
         ]
       ],
-      "ring_confirmed": false,
+      "ring_confirmed": true,
       "feature_ids": [
         "node_000",
         "node_001",
@@ -22696,7 +22696,7 @@
         "node_004",
         "node_005"
       ],
-      "order_status": "source_suggestion",
+      "order_status": "human_reviewed_order",
       "geometry_status": "ok"
     },
     "ring_diagnostics": {
@@ -23034,7 +23034,8 @@
     "location_policy": "all identity members, same medoid-anchored coordinate medians as bound baseline; not semantic mode selection"
   },
   "applied_reviews": [
-    "yqstnuAEVhm-25_revisit_0"
+    "yqstnuAEVhm-25_revisit_0",
+    "user_workbench_order"
   ],
   "remaining_review_cases": []
 }

@@ -1,6 +1,6 @@
 # 人员子类与完整共识：Pro／dot精选返回
 
-2026-10-04。这里保存外部原件；采纳判断、当前输入版本纠正及本地验证以[综合审查](../../analysis_results/worker_subtype_review_20261004/REPORT.md)为准，当前路线见[研究方向](../../docs/thesis_main/研究方向_空间差异与共识_20260930.md)。报告意见不自动成为方法合同。
+2026-10-04。这里保存外部原件；采纳判断、当前输入版本纠正及本地验证以[综合审查](../../analysis_results/worker_subtype_review_20261004/REPORT.md)为准，当前路线见[研究方向](../../docs/thesis_main/history/研究方向_空间差异与共识_20260930.md)。报告意见不自动成为方法合同。
 
 ## 保留内容
 

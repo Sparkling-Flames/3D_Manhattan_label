@@ -1,6 +1,6 @@
 # 2026-09-29 全量复核后数值研究包
 
-入口：[当前研究方向](../../docs/thesis_main/研究方向_空间差异与共识_20260930.md)、[简要说明](RESEARCH_ALIGNMENT_20260930.md)。当前先核验连线、空间表示及其对IoU的影响；提示词由对话提供，不再随包保存。旧八图包和旧Release只用于历史对照。
+入口：[当前研究方向](../../docs/thesis_main/history/研究方向_空间差异与共识_20260930.md)、[简要说明](RESEARCH_ALIGNMENT_20260930.md)。当前先核验连线、空间表示及其对IoU的影响；提示词由对话提供，不再随包保存。旧八图包和旧Release只用于历史对照。
 
 已执行结果：[首轮报告](baseline/REPORT.md)、[固定图片面板曲线](baseline/fixed_panel_replay.png)。
 

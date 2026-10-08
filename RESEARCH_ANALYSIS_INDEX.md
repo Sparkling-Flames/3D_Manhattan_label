@@ -4,7 +4,7 @@
 
 最新：[共同人员画像与固定4人构成](analysis_results/worker_profiles_20261003/REPORT.md)、[Chat Pro深度研究交接](research/worker_consensus_handoff_20261003/README.md)。已完成基础分析，正式人员分类及两线联系仍待研究。
 
-当前研究入口：[研究方向与算法职责](docs/thesis_main/研究方向_空间差异与共识_20260930.md)、[推进台账](docs/thesis_main/研究推进台账_20261003.md)、[136图扩展与高人数曲线](analysis_results/lee_expanded_20261003/REPORT.md)。[45图首轮难度曲线](analysis_results/lee_difficulty_20261003/REPORT.md)保留。规范以[当前方法合同](docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json)为准。
+当前研究入口：[统一模型](docs/thesis_main/研究模型_人员图片与融合不确定性_20261006.md)、[融合SOP](docs/thesis_main/融合共识操作SOP_20261008.md)。历史材料：[研究方向与算法职责](docs/thesis_main/history/研究方向_空间差异与共识_20260930.md)、[推进台账](docs/thesis_main/研究推进台账_20261003.md)、[136图扩展与高人数曲线](analysis_results/lee_expanded_20261003/REPORT.md)。[45图首轮难度曲线](analysis_results/lee_difficulty_20261003/REPORT.md)保留。规范以[当前方法合同](docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json)为准。
 
 ## 历史：2026-09-06瓶颈五项研究
 
