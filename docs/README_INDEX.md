@@ -1,6 +1,14 @@
 # HOHONET 文档入口
 
-2026-10-06审核补充：[dot原件与本地取舍](../research/pro_parallel_return_20261006/README.md)已归档；共同面板解释加入P017影响与误差尺度敏感性。下一项成员—融合收益连接见统一模型第8.4节，尚未执行。
+2026-10-07全量扩展：[259图人数与难度结果](../analysis_results/difficulty_full_20261007/REPORT.md)，249图／274池可算、548份全员区域；未知难度与OOS独立保留。[10图补充审查台](../analysis_results/difficulty_full_20261007/review.html)按人数和标签缺失选择，不按分数选择。 [逐图归类审核HTML](../analysis_results/direct_fusion_20261007/gap_sweep/population/review.html)默认17图、可切177图，模板`tools/thesis_main/analysis/wall_identity_review_20261007.html`，由同模块`build_review()`生成。
+
+2026-10-07全量扩展：[259图人数与难度结果](../analysis_results/difficulty_full_20261007/REPORT.md)，249图／274池可算、548份全员区域；未知难度与OOS独立保留。[10图补充审查台](../analysis_results/difficulty_full_20261007/review.html)按人数和标签缺失选择，不按分数选择。
+
+2026-10-07：[难度×人数过程及门洞扩展](../analysis_results/difficulty_consensus_20261006/trajectory/REPORT.md)已比较起点、区间改善与全员残留；门洞形成62／33／27图扩展，OOS单列。MV50后段改善有限的证据与规则／参考反例并列，不冻结快慢类别。
+
+2026-10-07：[成员起点、8人融合与全员结果](../analysis_results/consensus_response_20261006/member_fusion/REPORT.md)已完成共同十图O/E/D配对、240行结果和一张配对图；较好成员输入不保证更大融合改善。
+
+2026-10-06审核补充：[dot原件与本地取舍](../research/pro_parallel_return_20261006/README.md)已归档；共同面板解释加入P017影响与误差尺度敏感性。成员—融合连接已于2026-10-07完成，当前状态见统一模型第8.4节。
 
 2026-10-06最新：[共同24人十图分项矩阵](../analysis_results/consensus_response_20261006/worker_image/README.md)已连接同人跨图排名、遗漏／外扩及描述性人图差异；[局部边界与人审](../analysis_results/consensus_response_20261006/boundary_followup/README.md)确认rPc不同合理目标、yq同结构偏差／简化。共识表达观察，不保证必须像GT。
 
@@ -18,12 +26,26 @@
 
 人数研究的[纯数值模块](../tools/thesis_main/analysis/worker_count_metrics_20261006.py)独立提供楼外分组、可行构成、面积指标与固定面板汇总；实验入口保留兼容导出，概率与几何算法不变。
 
-2026-10-06本轮建议：[精简推进与Pro并行交接](../research/fast_research_handoff_20261006/README.md)，含最新独立判断、子智能体审查和本地资料；限定下一轮工作，不修改研究合同。
+2026-10-06阶段建议快照：[精简推进与Pro并行交接](../research/fast_research_handoff_20261006/README.md)，保存当时独立判断、子智能体审查和本地资料；后续推进以上方统一模型及下方最新路线为准。
 
-2026-10-06当前接手入口：[完整研究交接](thesis_main/线程交接_连线质量与完整共识_20261004.md)与[研究数据说明](thesis_main/研究数据说明_来源预处理与用途_20261006.md)。记录研究原意、已有证据和数据用途，不指定主推进路线；历史方案／Pro任务书不自动成为当前待办，本地材料不等于远端已发布。
+2026-10-07点方法解释与路线：[共识投票机制与三路线推进](thesis_main/共识投票机制与三路线推进_20261007.md)。区分当前实现、数学定义与待做实验；[五图自动对应与来源环](../analysis_results/ring_correspondence_20261007/REPORT.md)已实算，工具为`tools/thesis_main/analysis/ring_correspondence_20261007.py`。yq局部身份／连接经用户复核，保序尚未显示独立对应收益，仍检验定位与完整连接；GT只作外部评价。
+
+2026-10-07后续：[固定身份定位对照](../analysis_results/ring_correspondence_20261007/location/REPORT.md)，工具`tools/thesis_main/analysis/fixed_identity_location_20261007.py`；[137图扩展](../analysis_results/ring_correspondence_20261007/expanded/REPORT.md)，工具`tools/thesis_main/analysis/correspondence_expanded_20261007.py`。比较联合／独立／自适应，允许少量人工辅助，几何可用不等于对应正确。
+
+2026-10-07最新：[178图直接融合与对应不足](../analysis_results/direct_fusion_20261007/REPORT.md)，工具`tools/thesis_main/analysis/direct_fusion_20261007.py`。新增41图；节点／排序已解耦，uNb-04及uNb-36保存人工辅助拆分，jtc-26暂按同角保留。已发现局部范围选择误合，人工可辅助身份与顺序。 现已接通[流程输出与18图完整对照](../analysis_results/direct_fusion_20261007/workflow/README.md)，同脚本提供`workflow()`及`workflow_plot()`，异常提示仅辅助人审。
+
+2026-10-07参数实验：[三档首轮](../analysis_results/direct_fusion_20261007/gap_sweep/CONCLUSIONS.md)、[103档细扫与六图检查](../analysis_results/direct_fusion_20261007/gap_sweep/fine/REPORT.md)，工具`tools/thesis_main/analysis/correspondence_gap_20261007.py`。低值端扩至3，变化区间按0.1细化；较好采样值5.7—9.5，9仍为试用候选。uNb-36在3—4.1自动重现人审节点，但较小参数会拆散其它同角；pa4新局部人审支持自动分开范围，已知rPc／yq／uNb-36允许人工。尚未建立>90%准确率，默认13.5保留对照；当前计划见模型第8.4节。
+
+2026-10-07全量扩展：[177图13档参数验证](../analysis_results/direct_fusion_20261007/gap_sweep/population/REPORT.md)，工具`tools/thesis_main/analysis/population_gap_20261007.py`；新三处人审收窄原开发区间，9继续候选，>90%身份准确率未建立。
+
+2026-10-08：[7.5—9细扫与11图未决复审](../analysis_results/direct_fusion_20261007/gap_sweep/population/refine_20261008/REPORT.md)，工具`tools/thesis_main/analysis/refine_review_20261008.py`；人工只判断同墙线及归类可用性，参数比较由研究端完成。
+
+2026-10-08：[调参与全员融合交付](../analysis_results/consensus_delivery_20261008/REPORT.md)，工具`tools/thesis_main/analysis/consensus_delivery_20261008.py`；工作参数7.5、177图节点、12图明确人审辅助，自动／辅助分别保存。后续[e9z／zs反馈与历史改序检查](../analysis_results/consensus_delivery_20261008/REVIEW_FOLLOWUP.md)，复算工具`tools/thesis_main/analysis/consensus_order_followup_20261008.py`。
+
+2026-10-06交接背景：[完整研究交接](thesis_main/线程交接_连线质量与完整共识_20261004.md)与[研究数据说明](thesis_main/研究数据说明_来源预处理与用途_20261006.md)。交接记录研究原意、已有证据和数据用途，当时未指定主推进路线；当前安排以上方模型及路线为准。历史方案／Pro任务书不自动成为当前待办，本地材料不等于远端已发布。
 
 <!-- CURRENT_RESEARCH: consensus_research_20260923_v1 -->
-当前研究规范为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`，版本 `consensus_research_20260923_v1`。研究原意和状态见接手入口；下一轮有限工作建议见上方并行交接，旧阶段优先级不自动延续。
+当前研究规范为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`，版本 `consensus_research_20260923_v1`。研究原意和状态见接手入口；下一轮工作见统一模型与2026-10-07三路线推进，旧阶段优先级不自动延续。
 
 ## 规范与执行
 
@@ -97,7 +119,7 @@
 - [历史共识讨论纪要](thesis_main/PANORAMA_CONSENSUS_RESEARCH_DISCUSSION_20260927.md)。当前提示词已移除，历史任务书和执行记录不作为当前任务。
 - [算法与数学初探](../analysis_results/layout_algorithm_exploration_20260926/README.md)、[结构共识](../analysis_results/structural_consensus_20260926/README.md)、[并集分支共识](../analysis_results/union_branch_consensus_20260926/README.md)。均为探索，不声明算法已验证。
 - [共享 x 历史对照](../analysis_results/shared_x_reanalysis_20260922/README.md)、[研究展示](../analysis_results/research_dashboard_20260922/index.html)、[展示接口](thesis_main/OFFLINE_RESEARCH_DASHBOARD.md)。
-- 导师讲稿与问答（旧入口所指文件未纳入当前仓库）：解释 9/22 历史结果。
+- [导师讲稿](thesis_main/导师汇报简明讲稿_20260922.md)、[问答与边界](thesis_main/导师汇报讲解与问答_20260922.md)：解释 9/22 历史结果。
 - Pro 本地研究副本：`research/pro_layout_20260927/`；旧公开 Release 是历史快照。
 
 ## 运营与工程
@@ -140,5 +162,11 @@
 - [Downloads仓库外完整原件与回收审计索引](../research/downloads_evidence_20261006/ARCHIVE_INDEX_20261006.md)：本轮原件和审计已外移，主线保留精选与来源索引；不改变研究输入或结论。
 
 - 2026-10-06 公共内核与依赖边界：统计输出 IO 使用 [research_artifact_io.py](../tools/thesis_main/analysis/research_artifact_io.py)，区域网格使用 [region_mesh.py](../tools/thesis_main/analysis/region_mesh.py)，展示投影使用 [layout_display_projection.py](../tools/thesis_main/analysis/layout_display_projection.py)；旧入口保留导出，不改变实验公式、坐标或资格。
+- 2026-10-07：[全量10图补标后的难度与人数结果](../analysis_results/difficulty_full_20261007/updated/REPORT.md)，保留OOS分层及待定门洞。
+- 2026-10-07：[加人与选人的逐图连接](../analysis_results/count_selection_20261007/REPORT.md)，最新人工难度、实际全员结果及规则／参考敏感性。
+- 2026-10-07：[Pro完整上下标注质量任务](../research/pro_quality_handoff_20261007/PRO_TASK.md)，八图原图／154份作答／11份参考及四图既有点候选；完整布局探索（未选定主方法）、局部自适应混合和标法分簇的最新澄清／全研究完成度见研究模型和CONTEXT。
+- 2026-10-07：[上下融合三路线与共享x时机实验](../analysis_results/adaptive_point_20261007/REPORT.md)，九图150份作答、两输入×三门限×五实现270状态；局部自适应v1已有实算，未选定赢家，候选覆盖与身份／质量分别评价。
+- 2026-10-07：[三路线固定137图扩展](../analysis_results/adaptive_point_20261007/expanded/REPORT.md)：1520份作答、固定共享x／9°、五实现685状态；新增128图单列，最新OOS另外汇总；[uNb-26／41局部用户判断](../analysis_results/adaptive_point_20261007/expanded/USER_REVIEW.md)区分不同墙角、细节省略与同角定位分散。
+- 2026-10-07：[G184同房续研](../analysis_results/adaptive_point_20261007/expanded/g184/REPORT.md)：九视角原图、成员来源和成组／达票追踪；[后续人工判断与质疑](../analysis_results/adaptive_point_20261007/expanded/g184/USER_REVIEW.md)保留同墙角身份明确但上下目标未定的状态。
 
-- [公开研究输入与历史原件范围](../research/downloads_evidence_20261006/ARCHIVE_INDEX_20261006.md)：保留必要复现输入，原评论与机器来源原件外置；[逐文件公开输入合同](../research/pro_parallel_return_20261006/PUBLIC_INPUT_CONTRACT_20261006.json)。
+- 2026-10-08：[融合顺序复核工作台](../analysis_results/consensus_delivery_20261008/order_workbench/index.html)，复用旧点对排序台；35图，N=2暂缓，附两处残余身份复核。生成工具`tools/thesis_main/analysis/build_fusion_order_workbench_20261008.py`。

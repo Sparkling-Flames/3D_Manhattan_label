@@ -21,7 +21,7 @@ from .union_branch_consensus_20260926 import _ring_key
 SCHEMA = 'global_pair_consensus_20261004_v1'
 
 
-def _identities(records, threshold, match_side=None):
+def _identities(records, threshold, match_side=None, endpoint_points=None):
     if any(not {'id','worker','points'}<=r.keys() for r in records):
         raise ValueError('missing_annotation_fields')
     rows=sorted(records,key=lambda r:(str(r['worker']),str(r['id'])))
@@ -40,6 +40,13 @@ def _identities(records, threshold, match_side=None):
         geometry=reconstruct(r,coordinate_convention='continuous')
         assignment.update(feature_ids=[None]*len(pairs),source_geometry_status=geometry['status'],
                           source_geometry_reason=geometry['reason'])
+        if endpoint_points is not None:
+            observed=np.asarray(endpoint_points[r['id']],float)
+            if observed.shape!=(2*len(pairs),2) or not np.isfinite(observed).all():
+                raise ValueError('invalid_endpoint_coordinate_view:'+str(r['id']))
+            pairs=observed.reshape(-1,2,2)
+            if np.any(pairs<0) or np.any(pairs[:,:,0]>1024) or np.any(pairs[:,:,1]>512) or np.any(pairs[:,0,1]>=pairs[:,1,1]):
+                raise ValueError('invalid_endpoint_coordinate_bounds_or_roles:'+str(r['id']))
         for i,pair in enumerate(pairs):
             nodes.append(dict(record=r,assignment=assignment,pair_index=i,pair=pair))
     # Canonical order fixes list/ring reordering; it does not resolve equal-distance merge choices.
@@ -83,9 +90,19 @@ def _identities(records, threshold, match_side=None):
         xs=(p[indices,0,0]-p[anchor,0,0]+512)%1024-512
         ambiguous=bool(np.ptp(xs)>=512-1e-9 or np.any(abs(abs(xs)-512)<1e-9))
         center=None
+        endpoint_centers=None
         if not ambiguous:
             x=float((p[anchor,0,0]+np.median(xs))%1024)
             center=[[x,float(np.median(p[indices,0,1]))],[x,float(np.median(p[indices,1,1]))]]
+            if endpoint_points is not None:
+                bx=(p[indices,1,0]-p[anchor,1,0]+512)%1024-512
+                ambiguous=bool(np.ptp(bx)>=512-1e-9 or np.any(abs(abs(bx)-512)<1e-9))
+                bottom_x=float((p[anchor,1,0]+np.median(bx))%1024)
+                dx=(bottom_x-x+512)%1024-512
+                ambiguous=ambiguous or abs(abs(dx)-512)<1e-9
+                endpoint_centers=[[x,center[0][1]],[bottom_x,center[1][1]]]
+                x=(x+dx/2)%1024
+                center=None if ambiguous else [[x,center[0][1]],[x,center[1][1]]]
         fid=f'corner_{number:03d}'; members=[]
         for j in indices:
             node=nodes[int(j)];r=node['record'];i=node['pair_index']
@@ -100,6 +117,8 @@ def _identities(records, threshold, match_side=None):
             members=members,center=center,center_status='ambiguous_periodic_center' if ambiguous else 'ok',
             maximum_pair_angle_deg=float(local.max()),center_anchor=dict(id=nodes[anchor]['record']['id'],
             pair_index=nodes[anchor]['pair_index'])))
+        if endpoint_points is not None:
+            groups[-1]['endpoint_centers_before_x_alignment']=endpoint_centers
         if match_side is not None:
             groups[-1]['maximum_match_angle_deg']=float(distance[np.ix_(indices,indices)].max())
     ambiguous_nodes=set()

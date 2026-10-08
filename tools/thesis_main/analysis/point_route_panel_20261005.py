@@ -34,7 +34,8 @@ def paired_identity(top_group, bottom_group, joint, number):
     """Construct one representation pair without asserting a closed layout."""
     if top_group['center'] is None or bottom_group['center'] is None:
         return None, 'ambiguous_periodic_endpoint_center'
-    top, bottom = top_group['center'][0], bottom_group['center'][1]
+    top = (top_group.get('endpoint_centers_before_x_alignment') or top_group['center'])[0]
+    bottom = (bottom_group.get('endpoint_centers_before_x_alignment') or bottom_group['center'])[1]
     dx = (bottom[0]-top[0]+512) % 1024-512
     if abs(abs(dx)-512) < 1e-9:
         return None, 'half_turn_endpoint_center_alignment'
@@ -117,12 +118,12 @@ def split_candidate(records, threshold, top_data, bottom_data):
     return result
 
 
-def build_routes(records, threshold):
+def build_routes(records, threshold, endpoint_points=None):
     threshold = float(threshold)
     if not math.isfinite(threshold) or not 0 < threshold < 180:
         raise ValueError('invalid_exploratory_threshold')
     records = list(records)
-    identities = {side: _identities(records, threshold, match_side=side) for side in (None, 'bottom', 'top')}
+    identities = {side: _identities(records, threshold, match_side=side, endpoint_points=endpoint_points) for side in (None, 'bottom', 'top')}
     routes = {}
     for route, side in [('paired', None), ('bottom_anchor', 'bottom'), ('top_anchor', 'top')]:
         groups, assignments, issues, diagnostics = identities[side]

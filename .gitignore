@@ -124,6 +124,7 @@ docs/*
 !docs/agent/REPO_PATH_MAP.md
 !docs/thesis_main/
 docs/thesis_main/*
+!docs/thesis_main/共识投票机制与三路线推进_20261007.md
 !docs/thesis_main/布局表示地基与坐标核验_20260930.md
 !docs/thesis_main/OFFLINE_RESEARCH_DASHBOARD.md
 !docs/thesis_main/PRO_MULTIMODAL_LAYOUT_RESEARCH_20260926.md
@@ -680,3 +681,12 @@ docs/thesis_main/history/*
 !/docs/legacy/paper_a_before_consensus_20260928/superseded/final_gold_rebinding_contract_v1.md
 
 !/analysis_results/repo_cleanup/research_cleanup_20260928/raw_snapshot_retained.json
+
+# Local reproducible gap-sweep states; keep inputs, reviews, summaries and delivery.
+# Rebuild with correspondence_gap_20261007.py / population_gap_20261007.py / refine_review_20261008.py.
+/analysis_results/direct_fusion_20261007/gap_sweep/**/*_gap_*.json
+/analysis_results/direct_fusion_20261007/gap_sweep/*_gap_*.json
+# Retain comparison anchors used by follow-up scripts.
+!/analysis_results/direct_fusion_20261007/gap_sweep/**/*_gap_7.5.json
+!/analysis_results/direct_fusion_20261007/gap_sweep/**/*_gap_9.json
+!/analysis_results/direct_fusion_20261007/gap_sweep/**/*_gap_13.5.json
