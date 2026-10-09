@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-10",
+  "panel": "current178manual_pools_with_legacy137_membership",
+  "scope_geometry_screen": {
+    "measure": "area(annotation symmetric difference GT)/area(GT)",
+    "threshold": 0.3,
+    "sensitivity": [
+      0.2,
+      0.4
+    ],
+    "large_fraction": "flagged>=ceil(full_N/2), N>=3",
+    "role": "review prioritization only; NOT semantic scope truth or difficulty definition",
+    "missing": "full N remains denominator; invalid records reported with lower and upper possible flagged fractions"
+  },
+  "scope_review": "Inspect photo plus all valid individual footprints and selected/original GT; distinguish local coordinate error/detail from extent/stop-boundary difference; unresolved -> manual queue. Never substitute majority for GT.",
+  "difficulty": "N and H objectively computed; visual visibility assessed independently by subagent without using worker errors/curves. N<=6 with no/limited occlusion and clear target may be simple; special scenes and uncertain reference separate. Preserve original and visual-assisted judgments.",
+  "freeze_boundary": "No source GT, annotations, operational eligibility, fusion or old scores changed.",
+  "scope_clarification_20261010": {
+    "user": "所有已经标注过的图，忘记具体数量",
+    "resolved": "259 annotated images / 3152 annotation records; 178 Manual pools retained as subset",
+    "extension": "all conditions and existing gates kept separate; excluded groups audit only, no pooled cross-condition vote",
+    "timing": "added after first 178 review; thresholds unchanged; not retrospectively described as pre-registered full-corpus scope"
+  }
+}
