@@ -1,0 +1,39 @@
+<section class="point-editor" aria-label="独立点编辑复核">
+ <div id="quick-editor" class="point-editor quick-editor" aria-label="原图编辑操作">
+  <div class="quick-title"><strong>在原图上编辑</strong><label class="scope-choice">查看范围 <select id="scope-filter"><option value="selected">本轮25份待核验</option><option value="all">原109份（含旧草稿）</option></select></label><span id="save-indicator" role="status"></span></div>
+  <div class="quick-buttons" id="quick-buttons">
+   <button id="tool-add" data-quick-tool="add" class="primary">＋ 补点</button>
+   <button id="tool-delete" data-quick-tool="delete">删点</button>
+   <button id="tool-move" data-quick-tool="move">移动点</button>
+   <button id="tool-pair" data-quick-tool="pair">上下配对</button><button id="tool-order" data-quick-tool="order">角点排序</button>
+   <button id="undo-step">撤销上一步</button>
+   <button id="quick-delete" hidden>删除所选点</button>
+  </div>
+  <p id="mode-guide" role="status">点击“补点”，再在原图目标位置单击一次。</p>
+  <div id="baseline-choice" class="baseline-choice" hidden>
+   <strong>这份记录有不同的点版本，请选本次要编辑的版本：</strong>
+   <p id="baseline-explanation"></p><div id="baseline-options" class="quick-buttons"></div>
+  </div>
+  <section id="review-order" class="sort-panel" hidden>
+   <div class="sort-heading"><strong>拖动点对，调整连接顺序</strong><span id="order-help"></span></div>
+   <div id="pair-drag-list" aria-label="拖动完整点对排序"></div>
+   <div id="sort-unpaired" aria-label="尚未配对的点"></div>
+   <div class="quick-buttons"><button id="pair-by-x">按x配对剩余点</button><button id="pair-earlier">前移</button><button id="pair-later">后移</button><label><input id="show-ring-preview" type="checkbox" checked>相邻关系示意线</label></div>
+   <p id="pair-order-map"></p><p class="sort-legend">编号是连接位置；原p号、坐标和上下身份保持不变。只有全部有效点配对后才预览首尾闭合。</p>
+  </section><div id="quick-feedback"></div>
+ </div>
+ <div class="edit-filters"><label>意见类别 <select id="review-filter"><option value="">全部109份</option></select></label><label>审核状态 <select id="status-filter"><option value="">全部</option><option value="pending">待审</option><option value="completed">我已完成</option><option value="confirmed">确认补丁</option><option value="deferred">暂缓</option><option value="kept">保持原裁决</option></select></label><span id="review-progress"></span></div>
+ <p id="version-summary"></p><p id="reviewer-text"></p><div id="edit-proposals"></div><p id="version-warning" class="warning-note"></p>
+ <details class="advanced-edit"><summary>精确坐标、草稿基准及更多操作</summary><div class="edit-actions"><button id="create-draft">以当前查看版本建立独立草稿</button><label>操作 <select id="edit-tool"><option value="select">选点</option><option value="add">点图补点</option><option value="delete">选点后删除</option><option value="move">点图 / 拖拽挪点</option><option value="pair">上下配对</option><option value="order">角点排序</option></select></label><label>放大 <input id="edit-zoom" type="range" min="1" max="4" step=".25" value="1"></label><label><input id="edit-labels" type="checkbox" checked>稳定原p号</label><button id="cancel-selection">取消选点</button></div>
+ <p id="edit-selection">选择一个点查看原始身份与坐标。</p>
+ <div class="edit-actions"><label>x <input id="point-x" type="number" step="any" aria-label="x坐标"></label><label>y <input id="point-y" type="number" step="any" aria-label="y坐标"></label><button id="add-point">按坐标补点</button><button id="move-point">移动所选点</button><button id="delete-point">删除所选点</button><label>新增来源 <input id="point-provenance" value="用户在原图手动新增" aria-label="新增点来源或供体"></label><label><input id="point-imputed" type="checkbox">插补点</label></div>
+ </details>
+ <div id="edit-point-buttons"></div><ul id="edit-pairs"></ul>
+ <label class="version-check"><input id="version-ack" type="checkbox">我确认本次所审基准版本与当前原图；第三方建议仍需我裁决。</label>
+ <textarea id="review-note" rows="2" aria-label="审核理由" placeholder="我的备注（选填）"></textarea>
+ <div class="edit-actions"><button id="reset-draft">撤回至草稿基准（留痕）</button><button id="save-draft">保存草稿</button><button id="confirm-patch" class="primary">完成本条</button><button id="complete-next" class="primary">完成并下一条</button><button id="defer-patch">稍后再看</button><button id="keep-decision">保持原裁决</button><button id="export-patches">导出审核返回JSON</button><label>导入返回 <input id="import-patches" type="file" accept=".json"></label></div>
+ <p id="edit-status" role="status"></p><p id="pair-status"></p>
+ <details><summary>原始稳定点号与坐标 / 当前查看坐标</summary><div class="point-table-wrap"><table id="stable-point-table"><thead><tr><th>原p号 / 稳定ID</th><th>原始x,y</th><th>查看x,y</th><th>状态</th></tr></thead><tbody></tbody></table></div></details>
+ <details><summary>完整身份、历史生效记录、资格与新意见</summary><pre id="review-source"></pre></details>
+ <p class="review-boundary">编辑会自动保存为独立草稿；确认只确认本次补丁，仍需另行决定正式应用。配对不自动生成环，几何修复不恢复人员、作答或独立投票资格。</p>
+</section>

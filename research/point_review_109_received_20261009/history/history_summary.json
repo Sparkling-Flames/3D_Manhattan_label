@@ -1,0 +1,21 @@
+{
+  "new109": 109,
+  "current_changed20": 20,
+  "overlap_new109_current20": [],
+  "earlier_applied_but_current_missing": [
+    "R00541",
+    "R01907",
+    "R02034",
+    "R02059"
+  ],
+  "history_class_counts": {
+    "未见已确认补删指令；现行缺可靠配对/标签": 89,
+    "已保留但历史明确OOS不可计算": 5,
+    "早期已确认排除或歧义暂排除": 5,
+    "已确认且历史已应用；现行点身份断链": 4,
+    "最新逐答已明确排除": 5,
+    "历史明确保持原点；现行仍缺配对": 1
+  },
+  "historical_evidence_coverage": "确认用户决定+历史已应用audit、39图点提案、9/21修补、9/28有效override+撤销、9/29完整配对、当前20点数变化；按canonical_object_id对应",
+  "caveat": "历史资格排除不等于抹除补删来源；缺source labels不能回退raw重补；新CSV没有审核时底图/坐标hash。"
+}

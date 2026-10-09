@@ -1,0 +1,17 @@
+{
+  "schema": "pairing_completion_review_20260929_v1",
+  "scope": "pairing_only",
+  "order_confirmed": false,
+  "pairs": "零基原始P点索引[上,下]；checked必须完整覆盖所有未删除点。完整配对不代表连接环序。",
+  "proposal_id": "选择的只读预览方案；B6-33/W032必须明确选择删除P1或P3后确认。",
+  "deleted_source_indices": "原始零基索引；只在本轮记录建议删除，不改原GT/导出/历史坐标；余下P号不重排。",
+  "binding": "原始对象+坐标+标签+全部方案+上轮明确配对；独立缓存，新一轮状态不沿用旧checked",
+  "statuses": [
+    "draft",
+    "checked",
+    "deferred"
+  ],
+  "provenance": "explicit_pairs为上轮明确配对；方案其余为x候选；最终pairs为本轮复核完整配对",
+  "rule": "周期x相邻最小总差候选，先锁定明确配对；不以地平线上下划分角色；仍需用户复核。"
+}
+

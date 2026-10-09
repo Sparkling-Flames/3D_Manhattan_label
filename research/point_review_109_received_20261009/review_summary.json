@@ -1,0 +1,108 @@
+{
+  "review_file": "109核验结果.csv",
+  "library_file_id": "libfile_682b6839559481918a1613765838afd1",
+  "review_file_sha256": "f0bb8b77efe8651763fd0cbef88ca6c61f6786cbcbbd57a288318122f78a7134",
+  "review_rows": 109,
+  "unique_records": 109,
+  "unique_images": 71,
+  "labels": {
+    "需补点": 39,
+    "需删点": 37,
+    "维持原裁决": 3,
+    "坐标需修复": 4,
+    "建议恢复候选": 18,
+    "其他": 2,
+    "需改点": 6
+  },
+  "records_are_mutually_exclusive_labels": true,
+  "add_unique_images": 32,
+  "delete_unique_images": 28,
+  "add_delete_image_overlap": [
+    "pRbA3pwrgk9-11",
+    "x8F5xyUWy9e-09"
+  ],
+  "add_point_count_groups": {
+    "even_lt8": 14,
+    "odd_lt8": 3,
+    "even_ge8": 20,
+    "odd_ge8": 2
+  },
+  "delete_note_absent": 18,
+  "delete_formally_bounded_only_if_raw_index_base_confirmed": 14,
+  "delete_ambiguous_or_incomplete": {
+    "R00013": "所列19超过原始12点；不可猜作10",
+    "R00089": "6/7或5/8为二选一，未裁定",
+    "R00289": "删除7/8明确，但另需调整9/10而无目标坐标",
+    "R00716": "类别为需删点，备注只说6个点需重新调整",
+    "R01210": "如26只是举例，并非穷尽删除集合"
+  },
+  "new_review_intersection_with_changed20_records": [],
+  "same_image_overlap_with_changed20": 13,
+  "changed20_records_with_same_image_new_reviews": 16,
+  "historical_status_categories": {
+    "worker_exclusion_kept_raw": 80,
+    "historical_specific_geometry_exclusion": 4,
+    "retained_explicit_oos_uncalculable": 5,
+    "user_confirmed_individual_exclusion": 4,
+    "human_review_invalid_exclusion": 5,
+    "prior_exposure_nonindependent": 10,
+    "superseded_annotation": 1
+  },
+  "restoration18_historical_categories": {
+    "worker_exclusion_kept_raw": 14,
+    "historical_specific_geometry_exclusion": 1,
+    "prior_exposure_nonindependent": 2,
+    "superseded_annotation": 1
+  },
+  "all_rows_identity_image_worker_raw_count_match_core": true,
+  "all_rows_can_apply_from_csv_alone": false,
+  "raw_coordinate_out_of_domain_records": [
+    "R00071",
+    "R00669",
+    "R02155"
+  ],
+  "initialization_missing_point_identity_records": [
+    "R00541",
+    "R01907",
+    "R02034",
+    "R02059"
+  ],
+  "coordinate_byte_identity_with_reviewer_screen": "unverifiable: CSV contains no coordinate arrays or hashes",
+  "latest_core_records_sha256": "69294e054e7b18991f913fd914ea6ed8b5802dcc74ab7fb48a2f25d924daf5b7",
+  "core_vs_old_snapshot_byte_identical": true,
+  "not_checked": "local prior UI; hidden reviewer state; original image-by-image visual judgment",
+  "scope_correction": "No overlap with CURRENT retained changed20 is not evidence of no historical edits; 4 additional 9/9 confirmed deletions are present in new109 but absent from current effective view.",
+  "historical_confirmed_deletions_not_in_current_effective_view": [
+    "R00541",
+    "R01907",
+    "R02034",
+    "R02059"
+  ],
+  "historical_leave_unchanged_reproposed_add": [
+    "R02322"
+  ],
+  "historical_user_exclusions_proposed_add": [
+    "R00452",
+    "R01234",
+    "R01921",
+    "R02243"
+  ],
+  "historical_confirmed_actions_20260909_in_review109": {
+    "exclude_response_temporarily": 4,
+    "remove_confirmed_point": 4,
+    "leave_unchanged": 1
+  },
+  "history_class_counts": {
+    "未见已确认补删指令；现行缺可靠配对/标签": 89,
+    "已保留但历史明确OOS不可计算": 5,
+    "早期已确认排除或歧义暂排除": 5,
+    "已确认且历史已应用；现行点身份断链": 4,
+    "最新逐答已明确排除": 5,
+    "历史明确保持原点；现行仍缺配对": 1
+  },
+  "verified_break_mechanism": "accepted-only audit -> missing label/repair defaults -> length mismatch in raw_initial_points -> missing_point_identity and null",
+  "version_chain_parity_source": "history/repo_snapshot_parity.json",
+  "delete_point_bindings_14_record_count": 14,
+  "delete_point_bindings_nominated_point_count": 33,
+  "delete_point_bindings_scope": "Canonical record and original array point coordinates resolved exactly; reviewer UI display index convention has not been independently established"
+}

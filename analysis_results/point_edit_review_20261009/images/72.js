@@ -1,0 +1,1 @@
+window.STUDIO_IMAGES[72]={"original":"/image/rPc6DW4iMge_1f14902595544e389c9c910c444e79e7","texture":"/image/rPc6DW4iMge_1f14902595544e389c9c910c444e79e7"};

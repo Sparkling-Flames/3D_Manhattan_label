@@ -1,0 +1,20 @@
+{
+  "schema": "point_edit_review_20261009_v1",
+  "identity": "record_id + canonical_object_id + 完整image_id + project/task/annotation",
+  "original_point_id": "canonical_object_id::original_export_points[原始零基索引]；显示原p标签，删除不重编号",
+  "new_point_id": "new:uuid，不属于原作答；保存来源及是否插补",
+  "versions": "raw / historical / current / draft；基准必须手工选择，缺失current不回退",
+  "hashes": "source_hash=包内manifest规范JSON SHA256；记录source_hash=冻结对象；raw_hash/current_hash=相应数组规范JSON；photo_hash=本机实际原图字节",
+  "operations": "pair_x按周期x生成候选上下点对并记录为一项可撤销操作；order拖动完整上下点对，仅改变有序pairs及相邻连接，坐标与稳定点ID不变；每项带操作ID/时间/稳定点ID/前后坐标/前后配对；移动解除关联配对；undo仅撤销本草稿操作，不恢复历史删除",
+  "statuses": [
+    "draft",
+    "completed",
+    "confirmed",
+    "deferred",
+    "kept"
+  ],
+  "confirmation": "completed仅表示用户完成本条复核，备注可空、不要求勾选；外部意见仍只读；confirmed为兼容旧记录的补丁确认；ring_confirmed=false；不恢复人员/作答或投票资格；不足完整点对可保留未解决状态",
+  "persistence": "既有草稿缓存键不变；编辑自动保存；刷新恢复最近记录；导入原子校验，冲突不覆盖；保存失败保留内存改动并暂停切换",
+  "review_queue": "默认导航按20261010重筛清单及队列裁决补充文件遍历待核对象；人员已排除84份、既有单条invalid五份、明确OOS不可计算五份及OOS无有效点一份不重复审核；后两类保留原状态并记为无法计算，不以奇数点强行修改；原109份保留供查看与继续旧草稿；浏览器草稿绑定source_hash/原queue_hash不变，切换范围不改变审核返回",
+  "scope": "不写原始标注、正式点数据、GT、算法、分数；不自动批准第三方建议"
+}

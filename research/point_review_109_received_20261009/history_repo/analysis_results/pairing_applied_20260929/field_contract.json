@@ -1,0 +1,9 @@
+{
+  "schema": "research_preprocessed_source_v2",
+  "coordinate_frame": "1024x512",
+  "initialization": "原P点读原始导出坐标；保留已确认删点/补点；上下配对共享周期最短弧x中点，y不变；结果持久写入preprocessed_points，非仅显示变换。",
+  "original_export_indices": "有效点到原导出的零基映射；补点为null，保留repair_evidence",
+  "order": "点对身份按上下点label映射；相同身份沿用历史确认环，四对默认不召回；新完整配对>4对且无可沿用环进入续审。",
+  "separation": "门洞/OOS独立保留；明确无法计算的5份不自动复活；资格及原始文件不改；历史计算不自动冒充使用本版本。"
+}
+

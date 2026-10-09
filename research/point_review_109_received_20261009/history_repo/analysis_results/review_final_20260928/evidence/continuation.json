@@ -1,0 +1,332 @@
+{
+  "schema": "review_return_decisions_v2",
+  "binding": {
+    "id": "review_continue_20260928_v1"
+  },
+  "image_decisions": {
+    "S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e": {
+      "status": "resolved",
+      "category": "ordinary",
+      "comment": "目前只有一个标注结果,尚不能完全确定有没有标注空间范围的歧义",
+      "updated_at": "2026-09-27T17:08:38.911Z"
+    },
+    "rPc6DW4iMge_1f14902595544e389c9c910c444e79e7": {
+      "status": "resolved",
+      "category": "ordinary",
+      "comment": "感觉簇1,2没啥大差别",
+      "updated_at": "2026-09-27T02:46:01.411Z"
+    },
+    "uNb9QFRL6hY_6a500a9a43a340eb817c58bb084327fe": {
+      "status": "pending",
+      "category": "reference_concern",
+      "comment": "离门框下很近,gt是标了门框里的区域和右边阶梯下的区域(阶梯下的区域不太应该标),而且有些区域标的也不太对,这是否纳入考分析还有待确定",
+      "updated_at": "2026-09-27T07:15:28.342Z"
+    },
+    "uNb9QFRL6hY_a372582c11864f31a9dd174e4a0ae6ad": {
+      "status": "pending",
+      "category": "reference_concern",
+      "comment": "这个房间比较奇怪,他有个向外的玻璃区域,这个玻璃区域的顶部是斜着的,肯定不符合曼哈顿世界约束,所以gt肯定不对.但是这个东西本身就具有很大的迷惑性,拍摄的相机位置正好处在玻璃外扩区域和客厅之间,簇1是只标内侧空间标的比较好的",
+      "updated_at": "2026-09-27T08:16:42.834Z"
+    },
+    "wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f": {
+      "status": "resolved",
+      "category": "ordinary",
+      "comment": "",
+      "updated_at": "2026-09-27T09:12:03.893Z"
+    }
+  },
+  "annotation_decisions": {
+    "4283c99baaf5b8a1dd84": {
+      "status": "resolved",
+      "verdict": "usable",
+      "comment": "标注的空间略有不同,gt是标注在了被柜子挡住的墙角,而他是在柜子处停止",
+      "repair_confirmation": "unreviewed",
+      "updated_at": "2026-09-25T13:25:51.890Z",
+      "view_context": {
+        "point_mode": "raw",
+        "reference_ids": [
+          "reference:gt_revised"
+        ],
+        "cluster_method": "affinity"
+      }
+    },
+    "40a13dc4d685b575": {
+      "status": "resolved",
+      "verdict": "usable",
+      "comment": "不理解标门框的原因, p9 p10",
+      "repair_confirmation": "unreviewed",
+      "updated_at": "2026-09-27T02:46:35.993Z",
+      "view_context": {
+        "point_mode": "effective",
+        "reference_ids": [
+          "reference:gt_revised"
+        ],
+        "cluster_method": "affinity"
+      }
+    },
+    "4a1158da9bd83ef9": {
+      "status": "pending",
+      "verdict": "undetermined",
+      "comment": "不知道以前有没有补过点,如果没有补的话,这一簇都直接排除,不知道是否有没有补点记录",
+      "repair_confirmation": "needs_followup",
+      "updated_at": "2026-09-27T15:29:41.193Z",
+      "view_context": {
+        "point_mode": "effective",
+        "reference_ids": [
+          "reference:gt_revised"
+        ],
+        "cluster_method": "affinity"
+      }
+    },
+    "6aed1eb1185c1318": {
+      "status": "pending",
+      "verdict": "undetermined",
+      "comment": "不知道以前有没有补过点,如果没有补的话,这一簇都直接排除,不知道是否有没有补点记录",
+      "repair_confirmation": "needs_followup",
+      "updated_at": "2026-09-27T15:29:51.917Z",
+      "view_context": {
+        "point_mode": "effective",
+        "reference_ids": [
+          "reference:gt_revised"
+        ],
+        "cluster_method": "affinity"
+      }
+    },
+    "6d192755ca096a2c": {
+      "status": "pending",
+      "verdict": "undetermined",
+      "comment": "不知道以前有没有补过点,如果没有补的话,这一簇都直接排除,不知道是否有没有补点记录",
+      "repair_confirmation": "needs_followup",
+      "updated_at": "2026-09-27T15:29:59.196Z",
+      "view_context": {
+        "point_mode": "effective",
+        "reference_ids": [
+          "reference:gt_revised"
+        ],
+        "cluster_method": "affinity"
+      }
+    },
+    "77b05f21e38a4a6a984c": {
+      "status": "resolved",
+      "verdict": "usable",
+      "comment": "标了个走廊的最小空间",
+      "repair_confirmation": "unreviewed",
+      "updated_at": "2026-09-27T07:12:58.321Z",
+      "view_context": {
+        "point_mode": "effective",
+        "reference_ids": [
+          "reference:gt_revised"
+        ],
+        "cluster_method": "affinity"
+      }
+    },
+    "aa9565bd4989480666d5": {
+      "status": "resolved",
+      "verdict": "usable",
+      "comment": "标了门框内的",
+      "repair_confirmation": "unreviewed",
+      "updated_at": "2026-09-27T07:15:36.433Z",
+      "view_context": {
+        "point_mode": "effective",
+        "reference_ids": [
+          "reference:gt_revised"
+        ],
+        "cluster_method": "affinity"
+      }
+    },
+    "c0e23bd981313dc96d38": {
+      "status": "resolved",
+      "verdict": "usable",
+      "comment": "标了门框内的",
+      "repair_confirmation": "unreviewed",
+      "updated_at": "2026-09-27T07:15:53.365Z",
+      "view_context": {
+        "point_mode": "effective",
+        "reference_ids": [
+          "reference:gt_revised"
+        ],
+        "cluster_method": "affinity"
+      }
+    },
+    "103bd0e8ec57eb971857": {
+      "status": "resolved",
+      "verdict": "usable",
+      "comment": "",
+      "repair_confirmation": "unreviewed",
+      "updated_at": "2026-09-27T08:16:46.811Z",
+      "view_context": {
+        "point_mode": "effective",
+        "reference_ids": [
+          "reference:gt_revised"
+        ],
+        "cluster_method": "affinity"
+      }
+    },
+    "20512095d53578cdb0d8": {
+      "status": "resolved",
+      "verdict": "usable",
+      "comment": "",
+      "repair_confirmation": "unreviewed",
+      "updated_at": "2026-09-27T08:16:52.207Z",
+      "view_context": {
+        "point_mode": "effective",
+        "reference_ids": [
+          "reference:gt_revised"
+        ],
+        "cluster_method": "affinity"
+      }
+    },
+    "793fbf24fd55bb3641aa": {
+      "status": "resolved",
+      "verdict": "usable",
+      "comment": "",
+      "repair_confirmation": "unreviewed",
+      "updated_at": "2026-09-27T08:16:57.219Z",
+      "view_context": {
+        "point_mode": "effective",
+        "reference_ids": [
+          "reference:gt_revised"
+        ],
+        "cluster_method": "affinity"
+      }
+    },
+    "ab0fd432ae8aa26071ae": {
+      "status": "resolved",
+      "verdict": "usable",
+      "comment": "",
+      "repair_confirmation": "unreviewed",
+      "updated_at": "2026-09-27T08:17:02.010Z",
+      "view_context": {
+        "point_mode": "effective",
+        "reference_ids": [
+          "reference:gt_revised"
+        ],
+        "cluster_method": "affinity"
+      }
+    },
+    "20ff4e6c277a22cf5399": {
+      "status": "resolved",
+      "verdict": "invalid",
+      "comment": "不知道标的什么",
+      "repair_confirmation": "unreviewed",
+      "updated_at": "2026-09-27T08:17:26.830Z",
+      "view_context": {
+        "point_mode": "effective",
+        "reference_ids": [
+          "reference:gt_revised"
+        ],
+        "cluster_method": "affinity"
+      }
+    },
+    "6c0f921d12fdfaa633d5": {
+      "status": "resolved",
+      "verdict": "invalid",
+      "comment": "不知道标的什么",
+      "repair_confirmation": "unreviewed",
+      "updated_at": "2026-09-27T08:17:49.445Z",
+      "view_context": {
+        "point_mode": "effective",
+        "reference_ids": [
+          "reference:gt_revised"
+        ],
+        "cluster_method": "affinity"
+      }
+    },
+    "032cd152706166629e82": {
+      "status": "pending",
+      "verdict": "repair_needed",
+      "comment": "只有6点,如果历史有修复记录,修了就纳入,没有的话就直接排除,尚未修复",
+      "repair_confirmation": "needs_followup",
+      "updated_at": "2026-09-27T15:51:35.290Z",
+      "view_context": {
+        "point_mode": "effective",
+        "reference_ids": [
+          "reference:gt_revised"
+        ],
+        "cluster_method": "affinity"
+      }
+    },
+    "5dcbaaa4a3faeb7832f8": {
+      "status": "resolved",
+      "verdict": "invalid",
+      "comment": "",
+      "repair_confirmation": "unreviewed",
+      "updated_at": "2026-09-27T09:11:52.225Z",
+      "view_context": {
+        "point_mode": "effective",
+        "reference_ids": [
+          "reference:gt_revised"
+        ],
+        "cluster_method": "affinity"
+      }
+    }
+  },
+  "traits": {
+    "image:S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e": {
+      "status": "resolved",
+      "tags": [
+        "scope",
+        "view_unobservable"
+      ],
+      "difficulty": "easy",
+      "comment": "",
+      "updated_at": "2026-09-27T14:49:58.198Z"
+    },
+    "annotation:4283c99baaf5b8a1dd84": {
+      "status": "resolved",
+      "tags": [
+        "scope"
+      ],
+      "difficulty": "unrecorded",
+      "comment": "",
+      "updated_at": "2026-09-27T14:49:58.756Z"
+    },
+    "image:uNb9QFRL6hY_6a500a9a43a340eb817c58bb084327fe": {
+      "status": "resolved",
+      "tags": [
+        "reference_error",
+        "scope"
+      ],
+      "difficulty": "medium",
+      "comment": "图像右边完全不知道标的什么",
+      "updated_at": "2026-09-27T15:32:06.940Z"
+    },
+    "image:uNb9QFRL6hY_a372582c11864f31a9dd174e4a0ae6ad": {
+      "status": "resolved",
+      "tags": [
+        "reference_error"
+      ],
+      "difficulty": "medium",
+      "comment": "外面的玻璃区域是斜的,完全不能标,gt直接把点标在\"虚空\"里了,漂浮的点.  ",
+      "updated_at": "2026-09-27T15:39:38.083Z"
+    }
+  },
+  "issue_decisions": {
+    "S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e:continue": {
+      "status": "resolved",
+      "comment": "最终确定存在空间范围的歧义",
+      "updated_at": "2026-09-27T17:09:43.832Z"
+    },
+    "uNb9QFRL6hY_6a500a9a43a340eb817c58bb084327fe:continue": {
+      "status": "resolved",
+      "comment": "先不进入主分析,因为gt也不太对,这图也很怪",
+      "updated_at": "2026-09-27T17:11:11.626Z"
+    },
+    "uNb9QFRL6hY_a372582c11864f31a9dd174e4a0ae6ad:continue": {
+      "status": "resolved",
+      "comment": "只标内侧空间,类似簇1",
+      "updated_at": "2026-09-27T17:11:39.869Z"
+    },
+    "rPc6DW4iMge_1f14902595544e389c9c910c444e79e7:continue": {
+      "status": "resolved",
+      "comment": "直接排除,这些都是错误的标注,但是竟然有三个人是出现了同一个问题,得额外记录",
+      "updated_at": "2026-09-27T17:13:37.235Z"
+    },
+    "wc2JMjhGNzB_ec04ef10a0664e94878aa2d0f1720c2f:continue": {
+      "status": "resolved",
+      "comment": "直接排除",
+      "updated_at": "2026-09-27T17:14:22.164Z"
+    }
+  },
+  "exported_at": "2026-09-27T17:14:34.016Z"
+}

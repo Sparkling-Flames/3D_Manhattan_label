@@ -1,0 +1,16 @@
+{
+  "schema": "point_review_queue_resolution_20261010_v1",
+  "records": {
+    "R01210": {"action": "remove_from_pending", "outcome": "existing_invalid", "reason": "既有单条人工裁决为 invalid，当前清洗状态为 excluded_by_review；不重复审核。", "formal_decision_changed": false},
+    "R02183": {"action": "remove_from_pending", "outcome": "existing_invalid", "reason": "既有单条人工裁决为 invalid，当前清洗状态为 excluded_by_review；不重复审核。", "formal_decision_changed": false},
+    "R03177": {"action": "remove_from_pending", "outcome": "existing_invalid", "reason": "既有单条人工裁决为 invalid，当前清洗状态为 excluded_by_review；不重复审核。", "formal_decision_changed": false},
+    "R01812": {"action": "remove_from_pending", "outcome": "existing_invalid", "reason": "既有单条人工裁决为 invalid，当前清洗状态为 excluded_by_review；不重复审核。", "formal_decision_changed": false},
+    "R02016": {"action": "remove_from_pending", "outcome": "existing_invalid", "reason": "OOS图，既有单条人工裁决为 invalid，当前清洗状态为 excluded_by_review；不因奇数点重复审核。", "formal_decision_changed": false},
+    "R00089": {"action": "remove_from_pending", "outcome": "retained_oos_uncalculable", "reason": "OOS标注已保留，既有明确无法计算记录；不强行删点或补点。", "formal_decision_changed": false},
+    "R01732": {"action": "remove_from_pending", "outcome": "retained_oos_uncalculable", "reason": "OOS标注已保留，既有明确无法计算记录；不强行删点或补点。", "formal_decision_changed": false},
+    "R02219": {"action": "remove_from_pending", "outcome": "retained_oos_uncalculable", "reason": "OOS标注已保留，既有明确无法计算记录；不强行删点或补点。", "formal_decision_changed": false},
+    "R02393": {"action": "remove_from_pending", "outcome": "retained_oos_uncalculable", "reason": "OOS标注已保留，既有明确无法计算记录；不强行删点或补点。", "formal_decision_changed": false},
+    "R00773": {"action": "remove_from_pending", "outcome": "retained_oos_uncalculable", "reason": "OOS标注已保留，既有明确无法计算记录；不强行删点或补点。", "formal_decision_changed": false},
+    "R01283": {"action": "remove_from_pending", "outcome": "oos_no_effective_points", "reason": "OOS图当前无有效点，既有几何歧义排除；本轮记为无法计算，不要求补齐15个原始点的奇数。", "formal_decision_changed": false}
+  }
+}

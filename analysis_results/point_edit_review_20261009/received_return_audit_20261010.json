@@ -1,0 +1,1045 @@
+{
+  "schema": "point_edit_received_return_audit_20261010_v1",
+  "source_file": "analysis_results/point_edit_review_20261009/evidence/109点编辑审核返回_20261010_原件.json",
+  "source_sha256": "04aa06c5d2c8f46aea4a1af7845d753a88c8a21bd9257a56d8c005cafb0bdef5",
+  "source_hash": "ef70b350bcd641813925281f797bc75526ce97b2730763562208fbb16aab3596",
+  "queue_hash": "b6557af36d5e6e34338aa197130fc0325e5333108e5081776706baad87a6bad7",
+  "prior_order_source": "analysis_results/research_input_20260929/final_review/received_orders.json",
+  "summary": {
+    "return_records": 18,
+    "current_queue_records": 14,
+    "archive_only_records": 4,
+    "current_queue_completed": 14,
+    "current_queue_full_pair_coverage": 14,
+    "current_queue_changed_adjacency": 3,
+    "current_queue_cycle_only": 0,
+    "prior_exact_object_order_found": 0,
+    "current_queue_prior_same_image_worker": 11
+  },
+  "definitions": {
+    "prior_exact_object_order": "同一canonical_object_id出现在既有确认排序汇总",
+    "prior_same_image_worker_objects": "仅同图同正式W人员的其他对象ID，不可作为本对象环序继承",
+    "order_effect": "以本次pair_x初始点对环为参照，旋转或反向视为环等价",
+    "draft_pair_coverage": "草稿每个有效点恰好配对一次；不等于3D可计算或正式环确认",
+    "review_scope": "current_14是本轮待审，archive_only仅保留旧范围操作"
+  },
+  "records": [
+    {
+      "record_id": "R00003",
+      "canonical_object_id": "00a98959a0e8cc08",
+      "image_code": "7y3sRwLe3Va-12",
+      "image_id": "7y3sRwLe3Va_6376b741b50a4418b3dc3fde791c3c09",
+      "list_worker": "P013",
+      "formal_worker": "W019",
+      "review_scope": "archive_only",
+      "source_oos": true,
+      "original_point_count": 6,
+      "draft_status": "completed",
+      "draft_base_version": "raw",
+      "draft_active_points": 8,
+      "draft_pair_count": 0,
+      "draft_pair_coverage": false,
+      "draft_bounds_valid": true,
+      "point_operations": [
+        {
+          "type": "add",
+          "point_id": "new:9d7fa558-2d14-4b32-9097-0a1981ec157d",
+          "before": null,
+          "after": {
+            "x": 795.4169026007448,
+            "y": 210.0875434264288
+          }
+        },
+        {
+          "type": "add",
+          "point_id": "new:4fea9922-c293-4776-9b5e-d597b24c6def",
+          "before": null,
+          "after": {
+            "x": 795.9608889940295,
+            "y": 388.40628480526175
+          }
+        }
+      ],
+      "order_operation_count": 0,
+      "order_effect": "no_pair_x_candidate",
+      "final_pairs_original_labels": [],
+      "prior_exact_object_order": false,
+      "prior_same_image_worker_objects": [],
+      "frozen_effective_points_available": false,
+      "frozen_pairing_basis": "pairing_unavailable",
+      "current_cleaning_disposition": "historical_not_accepted",
+      "ring_confirmed": false,
+      "restore_eligibility": false,
+      "apply_to_formal": false
+    },
+    {
+      "record_id": "R00013",
+      "canonical_object_id": "0162b7ec9d17cddb",
+      "image_code": "Z6MFQCViBuw-10",
+      "image_id": "Z6MFQCViBuw_fbef2c9afec642c88d01cf09c90aec12",
+      "list_worker": "P013",
+      "formal_worker": "W019",
+      "review_scope": "archive_only",
+      "source_oos": false,
+      "original_point_count": 12,
+      "draft_status": "draft",
+      "draft_base_version": "raw",
+      "draft_active_points": 12,
+      "draft_pair_count": 6,
+      "draft_pair_coverage": true,
+      "draft_bounds_valid": true,
+      "point_operations": [],
+      "order_operation_count": 0,
+      "order_effect": "same_as_x_candidate",
+      "final_pairs_original_labels": [
+        [
+          "p1",
+          "p2"
+        ],
+        [
+          "p3",
+          "p4"
+        ],
+        [
+          "p9",
+          "p10"
+        ],
+        [
+          "p11",
+          "p12"
+        ],
+        [
+          "p5",
+          "p6"
+        ],
+        [
+          "p7",
+          "p8"
+        ]
+      ],
+      "prior_exact_object_order": false,
+      "prior_same_image_worker_objects": [],
+      "frozen_effective_points_available": false,
+      "frozen_pairing_basis": "pairing_unavailable",
+      "current_cleaning_disposition": "historical_not_accepted",
+      "ring_confirmed": false,
+      "restore_eligibility": false,
+      "apply_to_formal": false
+    },
+    {
+      "record_id": "R00071",
+      "canonical_object_id": "06fcd18a585187a4c3dc",
+      "image_code": "VFuaQ6m2Qom-07",
+      "image_id": "VFuaQ6m2Qom_ad4c387f8175498491966703c8441e0d",
+      "list_worker": "P018",
+      "formal_worker": "W028",
+      "review_scope": "current_14",
+      "source_oos": false,
+      "original_point_count": 26,
+      "draft_status": "completed",
+      "draft_base_version": "raw",
+      "draft_active_points": 24,
+      "draft_pair_count": 12,
+      "draft_pair_coverage": true,
+      "draft_bounds_valid": true,
+      "point_operations": [
+        {
+          "type": "delete",
+          "point_id": "06fcd18a585187a4c3dc::original_export_points[21]",
+          "before": {
+            "x": 789.1594877764843,
+            "y": 236.0325960419092
+          },
+          "after": null
+        },
+        {
+          "type": "delete",
+          "point_id": "06fcd18a585187a4c3dc::original_export_points[9]",
+          "before": {
+            "x": 44479.18070033388,
+            "y": 324.66255278927827
+          },
+          "after": null
+        }
+      ],
+      "order_operation_count": 0,
+      "order_effect": "same_as_x_candidate",
+      "final_pairs_original_labels": [
+        [
+          "p1",
+          "p2"
+        ],
+        [
+          "p3",
+          "p4"
+        ],
+        [
+          "p5",
+          "p6"
+        ],
+        [
+          "p7",
+          "p8"
+        ],
+        [
+          "p9",
+          "p11"
+        ],
+        [
+          "p12",
+          "p13"
+        ],
+        [
+          "p16",
+          "p17"
+        ],
+        [
+          "p14",
+          "p15"
+        ],
+        [
+          "p18",
+          "p19"
+        ],
+        [
+          "p20",
+          "p21"
+        ],
+        [
+          "p23",
+          "p24"
+        ],
+        [
+          "p25",
+          "p26"
+        ]
+      ],
+      "prior_exact_object_order": false,
+      "prior_same_image_worker_objects": [],
+      "frozen_effective_points_available": false,
+      "frozen_pairing_basis": "pairing_unavailable",
+      "current_cleaning_disposition": "historical_not_accepted",
+      "ring_confirmed": false,
+      "restore_eligibility": false,
+      "apply_to_formal": false
+    },
+    {
+      "record_id": "R00089",
+      "canonical_object_id": "082bd5bd0d332eff07b8",
+      "image_code": "pRbA3pwrgk9-11",
+      "image_id": "pRbA3pwrgk9_8b07a4b08cf447abb246769d8dce8494",
+      "list_worker": "P001",
+      "formal_worker": "W001",
+      "review_scope": "archive_only",
+      "source_oos": true,
+      "original_point_count": 20,
+      "draft_status": "completed",
+      "draft_base_version": "raw",
+      "draft_active_points": 20,
+      "draft_pair_count": 0,
+      "draft_pair_coverage": false,
+      "draft_bounds_valid": true,
+      "point_operations": [],
+      "order_operation_count": 0,
+      "order_effect": "no_pair_x_candidate",
+      "final_pairs_original_labels": [],
+      "prior_exact_object_order": false,
+      "prior_same_image_worker_objects": [],
+      "frozen_effective_points_available": false,
+      "frozen_pairing_basis": "user_explicit_oos_uncalculable",
+      "current_cleaning_disposition": "retained",
+      "ring_confirmed": false,
+      "restore_eligibility": false,
+      "apply_to_formal": false
+    },
+    {
+      "record_id": "R00669",
+      "canonical_object_id": "4254da3317f7e8030a58",
+      "image_code": "q9vSo1VnCiC-04",
+      "image_id": "q9vSo1VnCiC_3e7f67e8969f434b9a4aec0c68668b20",
+      "list_worker": "P010",
+      "formal_worker": "W015",
+      "review_scope": "current_14",
+      "source_oos": false,
+      "original_point_count": 21,
+      "draft_status": "completed",
+      "draft_base_version": "raw",
+      "draft_active_points": 20,
+      "draft_pair_count": 10,
+      "draft_pair_coverage": true,
+      "draft_bounds_valid": true,
+      "point_operations": [
+        {
+          "type": "delete",
+          "point_id": "4254da3317f7e8030a58::original_export_points[4]",
+          "before": {
+            "x": 5132.7049423815615,
+            "y": 402.5198463508322
+          },
+          "after": null
+        }
+      ],
+      "order_operation_count": 3,
+      "order_effect": "changed_adjacency_from_x_candidate",
+      "final_pairs_original_labels": [
+        [
+          "p1",
+          "p2"
+        ],
+        [
+          "p3",
+          "p4"
+        ],
+        [
+          "p14",
+          "p15"
+        ],
+        [
+          "p17",
+          "p19"
+        ],
+        [
+          "p16",
+          "p18"
+        ],
+        [
+          "p20",
+          "p21"
+        ],
+        [
+          "p6",
+          "p7"
+        ],
+        [
+          "p8",
+          "p9"
+        ],
+        [
+          "p10",
+          "p11"
+        ],
+        [
+          "p12",
+          "p13"
+        ]
+      ],
+      "prior_exact_object_order": false,
+      "prior_same_image_worker_objects": [],
+      "frozen_effective_points_available": false,
+      "frozen_pairing_basis": "pairing_unavailable",
+      "current_cleaning_disposition": "historical_not_accepted",
+      "ring_confirmed": false,
+      "restore_eligibility": false,
+      "apply_to_formal": false
+    },
+    {
+      "record_id": "R02155",
+      "canonical_object_id": "dc745be5cce5949b29e1",
+      "image_code": "q9vSo1VnCiC-04",
+      "image_id": "q9vSo1VnCiC_3e7f67e8969f434b9a4aec0c68668b20",
+      "list_worker": "P002",
+      "formal_worker": "W002",
+      "review_scope": "current_14",
+      "source_oos": false,
+      "original_point_count": 21,
+      "draft_status": "completed",
+      "draft_base_version": "raw",
+      "draft_active_points": 20,
+      "draft_pair_count": 10,
+      "draft_pair_coverage": true,
+      "draft_bounds_valid": true,
+      "point_operations": [
+        {
+          "type": "delete",
+          "point_id": "dc745be5cce5949b29e1::original_export_points[10]",
+          "before": {
+            "x": 5132.7049423815615,
+            "y": 402.5198463508322
+          },
+          "after": null
+        }
+      ],
+      "order_operation_count": 3,
+      "order_effect": "changed_adjacency_from_x_candidate",
+      "final_pairs_original_labels": [
+        [
+          "p1",
+          "p2"
+        ],
+        [
+          "p3",
+          "p4"
+        ],
+        [
+          "p5",
+          "p6"
+        ],
+        [
+          "p7",
+          "p8"
+        ],
+        [
+          "p9",
+          "p10"
+        ],
+        [
+          "p20",
+          "p21"
+        ],
+        [
+          "p12",
+          "p13"
+        ],
+        [
+          "p14",
+          "p15"
+        ],
+        [
+          "p16",
+          "p17"
+        ],
+        [
+          "p18",
+          "p19"
+        ]
+      ],
+      "prior_exact_object_order": false,
+      "prior_same_image_worker_objects": [],
+      "frozen_effective_points_available": false,
+      "frozen_pairing_basis": "pairing_unavailable",
+      "current_cleaning_disposition": "historical_not_accepted",
+      "ring_confirmed": false,
+      "restore_eligibility": false,
+      "apply_to_formal": false
+    },
+    {
+      "record_id": "R03313",
+      "canonical_object_id": "new_95_3653_6980_W035",
+      "image_code": "7y3sRwLe3Va-18",
+      "image_id": "7y3sRwLe3Va_a775c7668ca9419daaf506e76851821e",
+      "list_worker": "P025",
+      "formal_worker": "W035",
+      "review_scope": "current_14",
+      "source_oos": false,
+      "original_point_count": 8,
+      "draft_status": "completed",
+      "draft_base_version": "raw",
+      "draft_active_points": 8,
+      "draft_pair_count": 4,
+      "draft_pair_coverage": true,
+      "draft_bounds_valid": true,
+      "point_operations": [],
+      "order_operation_count": 1,
+      "order_effect": "same_as_x_candidate",
+      "final_pairs_original_labels": [
+        [
+          "p5",
+          "p6"
+        ],
+        [
+          "p1",
+          "p2"
+        ],
+        [
+          "p3",
+          "p4"
+        ],
+        [
+          "p7",
+          "p8"
+        ]
+      ],
+      "prior_exact_object_order": false,
+      "prior_same_image_worker_objects": [
+        "b02aea4f86afbc5430f7"
+      ],
+      "frozen_effective_points_available": false,
+      "frozen_pairing_basis": "pairing_unavailable",
+      "current_cleaning_disposition": "historical_not_accepted",
+      "ring_confirmed": false,
+      "restore_eligibility": false,
+      "apply_to_formal": false
+    },
+    {
+      "record_id": "R03314",
+      "canonical_object_id": "new_95_3653_7026_W031",
+      "image_code": "7y3sRwLe3Va-18",
+      "image_id": "7y3sRwLe3Va_a775c7668ca9419daaf506e76851821e",
+      "list_worker": "P021",
+      "formal_worker": "W031",
+      "review_scope": "current_14",
+      "source_oos": false,
+      "original_point_count": 10,
+      "draft_status": "completed",
+      "draft_base_version": "raw",
+      "draft_active_points": 10,
+      "draft_pair_count": 5,
+      "draft_pair_coverage": true,
+      "draft_bounds_valid": true,
+      "point_operations": [],
+      "order_operation_count": 0,
+      "order_effect": "same_as_x_candidate",
+      "final_pairs_original_labels": [
+        [
+          "p5",
+          "p6"
+        ],
+        [
+          "p1",
+          "p2"
+        ],
+        [
+          "p3",
+          "p4"
+        ],
+        [
+          "p7",
+          "p8"
+        ],
+        [
+          "p9",
+          "p10"
+        ]
+      ],
+      "prior_exact_object_order": false,
+      "prior_same_image_worker_objects": [
+        "1c3df8c137a169fee41d"
+      ],
+      "frozen_effective_points_available": false,
+      "frozen_pairing_basis": "pairing_unavailable",
+      "current_cleaning_disposition": "historical_not_accepted",
+      "ring_confirmed": false,
+      "restore_eligibility": false,
+      "apply_to_formal": false
+    },
+    {
+      "record_id": "R03320",
+      "canonical_object_id": "new_95_3653_7462_W030",
+      "image_code": "7y3sRwLe3Va-18",
+      "image_id": "7y3sRwLe3Va_a775c7668ca9419daaf506e76851821e",
+      "list_worker": "P020",
+      "formal_worker": "W030",
+      "review_scope": "current_14",
+      "source_oos": false,
+      "original_point_count": 12,
+      "draft_status": "completed",
+      "draft_base_version": "raw",
+      "draft_active_points": 12,
+      "draft_pair_count": 6,
+      "draft_pair_coverage": true,
+      "draft_bounds_valid": true,
+      "point_operations": [],
+      "order_operation_count": 0,
+      "order_effect": "same_as_x_candidate",
+      "final_pairs_original_labels": [
+        [
+          "p11",
+          "p12"
+        ],
+        [
+          "p9",
+          "p10"
+        ],
+        [
+          "p7",
+          "p8"
+        ],
+        [
+          "p5",
+          "p6"
+        ],
+        [
+          "p3",
+          "p4"
+        ],
+        [
+          "p1",
+          "p2"
+        ]
+      ],
+      "prior_exact_object_order": false,
+      "prior_same_image_worker_objects": [
+        "c89be364009b1fc0544e"
+      ],
+      "frozen_effective_points_available": false,
+      "frozen_pairing_basis": "pairing_unavailable",
+      "current_cleaning_disposition": "historical_not_accepted",
+      "ring_confirmed": false,
+      "restore_eligibility": false,
+      "apply_to_formal": false
+    },
+    {
+      "record_id": "R03390",
+      "canonical_object_id": "new_95_3662_7442_W028",
+      "image_code": "jh4fc5c5qoQ-09",
+      "image_id": "jh4fc5c5qoQ_77e6cfabf32d46fc9398ce824843adaa",
+      "list_worker": "P018",
+      "formal_worker": "W028",
+      "review_scope": "current_14",
+      "source_oos": false,
+      "original_point_count": 12,
+      "draft_status": "completed",
+      "draft_base_version": "raw",
+      "draft_active_points": 12,
+      "draft_pair_count": 6,
+      "draft_pair_coverage": true,
+      "draft_bounds_valid": true,
+      "point_operations": [],
+      "order_operation_count": 0,
+      "order_effect": "same_as_x_candidate",
+      "final_pairs_original_labels": [
+        [
+          "p1",
+          "p2"
+        ],
+        [
+          "p3",
+          "p4"
+        ],
+        [
+          "p5",
+          "p6"
+        ],
+        [
+          "p7",
+          "p8"
+        ],
+        [
+          "p9",
+          "p10"
+        ],
+        [
+          "p11",
+          "p12"
+        ]
+      ],
+      "prior_exact_object_order": false,
+      "prior_same_image_worker_objects": [
+        "a975ff57cab3777521c7"
+      ],
+      "frozen_effective_points_available": false,
+      "frozen_pairing_basis": "pairing_unavailable",
+      "current_cleaning_disposition": "historical_not_accepted",
+      "ring_confirmed": false,
+      "restore_eligibility": false,
+      "apply_to_formal": false
+    },
+    {
+      "record_id": "R03403",
+      "canonical_object_id": "new_95_3664_7100_W037",
+      "image_code": "q9vSo1VnCiC-04",
+      "image_id": "q9vSo1VnCiC_3e7f67e8969f434b9a4aec0c68668b20",
+      "list_worker": "P027",
+      "formal_worker": "W037",
+      "review_scope": "current_14",
+      "source_oos": false,
+      "original_point_count": 12,
+      "draft_status": "completed",
+      "draft_base_version": "raw",
+      "draft_active_points": 12,
+      "draft_pair_count": 6,
+      "draft_pair_coverage": true,
+      "draft_bounds_valid": true,
+      "point_operations": [],
+      "order_operation_count": 0,
+      "order_effect": "same_as_x_candidate",
+      "final_pairs_original_labels": [
+        [
+          "p1",
+          "p3"
+        ],
+        [
+          "p2",
+          "p4"
+        ],
+        [
+          "p7",
+          "p10"
+        ],
+        [
+          "p8",
+          "p9"
+        ],
+        [
+          "p5",
+          "p6"
+        ],
+        [
+          "p11",
+          "p12"
+        ]
+      ],
+      "prior_exact_object_order": false,
+      "prior_same_image_worker_objects": [
+        "53530603e76707ac6f94"
+      ],
+      "frozen_effective_points_available": false,
+      "frozen_pairing_basis": "pairing_unavailable",
+      "current_cleaning_disposition": "historical_not_accepted",
+      "ring_confirmed": false,
+      "restore_eligibility": false,
+      "apply_to_formal": false
+    },
+    {
+      "record_id": "R03405",
+      "canonical_object_id": "new_95_3664_7268_W034",
+      "image_code": "q9vSo1VnCiC-04",
+      "image_id": "q9vSo1VnCiC_3e7f67e8969f434b9a4aec0c68668b20",
+      "list_worker": "P024",
+      "formal_worker": "W034",
+      "review_scope": "current_14",
+      "source_oos": false,
+      "original_point_count": 8,
+      "draft_status": "completed",
+      "draft_base_version": "raw",
+      "draft_active_points": 8,
+      "draft_pair_count": 4,
+      "draft_pair_coverage": true,
+      "draft_bounds_valid": true,
+      "point_operations": [],
+      "order_operation_count": 0,
+      "order_effect": "same_as_x_candidate",
+      "final_pairs_original_labels": [
+        [
+          "p1",
+          "p2"
+        ],
+        [
+          "p3",
+          "p4"
+        ],
+        [
+          "p5",
+          "p6"
+        ],
+        [
+          "p7",
+          "p8"
+        ]
+      ],
+      "prior_exact_object_order": false,
+      "prior_same_image_worker_objects": [
+        "8066ad223dec81c40daa"
+      ],
+      "frozen_effective_points_available": false,
+      "frozen_pairing_basis": "pairing_unavailable",
+      "current_cleaning_disposition": "historical_not_accepted",
+      "ring_confirmed": false,
+      "restore_eligibility": false,
+      "apply_to_formal": false
+    },
+    {
+      "record_id": "R01210",
+      "canonical_object_id": "7bed161c9c3ed689c7ae",
+      "image_code": "q9vSo1VnCiC-16",
+      "image_id": "q9vSo1VnCiC_a424533651804a38a55b1252daccc81e",
+      "list_worker": "P003",
+      "formal_worker": "W006",
+      "review_scope": "archive_only",
+      "source_oos": false,
+      "original_point_count": 26,
+      "draft_status": "draft",
+      "draft_base_version": "raw",
+      "draft_active_points": 26,
+      "draft_pair_count": 0,
+      "draft_pair_coverage": false,
+      "draft_bounds_valid": true,
+      "point_operations": [],
+      "order_operation_count": 0,
+      "order_effect": "no_pair_x_candidate",
+      "final_pairs_original_labels": [],
+      "prior_exact_object_order": false,
+      "prior_same_image_worker_objects": [],
+      "frozen_effective_points_available": false,
+      "frozen_pairing_basis": "pairing_unavailable",
+      "current_cleaning_disposition": "excluded_by_review",
+      "ring_confirmed": false,
+      "restore_eligibility": false,
+      "apply_to_formal": false
+    },
+    {
+      "record_id": "R03184",
+      "canonical_object_id": "new_94_3636_6926_W031",
+      "image_code": "uNb9QFRL6hY-66",
+      "image_id": "uNb9QFRL6hY_c6410f47ad754d6cbd890ba7dff8b449",
+      "list_worker": "P021",
+      "formal_worker": "W031",
+      "review_scope": "current_14",
+      "source_oos": false,
+      "original_point_count": 14,
+      "draft_status": "completed",
+      "draft_base_version": "raw",
+      "draft_active_points": 14,
+      "draft_pair_count": 7,
+      "draft_pair_coverage": true,
+      "draft_bounds_valid": true,
+      "point_operations": [],
+      "order_operation_count": 0,
+      "order_effect": "same_as_x_candidate",
+      "final_pairs_original_labels": [
+        [
+          "p1",
+          "p2"
+        ],
+        [
+          "p3",
+          "p4"
+        ],
+        [
+          "p5",
+          "p6"
+        ],
+        [
+          "p7",
+          "p8"
+        ],
+        [
+          "p9",
+          "p10"
+        ],
+        [
+          "p11",
+          "p12"
+        ],
+        [
+          "p14",
+          "p13"
+        ]
+      ],
+      "prior_exact_object_order": false,
+      "prior_same_image_worker_objects": [
+        "63597564c489c761152b"
+      ],
+      "frozen_effective_points_available": false,
+      "frozen_pairing_basis": "pairing_unavailable",
+      "current_cleaning_disposition": "historical_not_accepted",
+      "ring_confirmed": false,
+      "restore_eligibility": false,
+      "apply_to_formal": false
+    },
+    {
+      "record_id": "R03409",
+      "canonical_object_id": "new_95_3665_6992_W035",
+      "image_code": "uNb9QFRL6hY-83",
+      "image_id": "uNb9QFRL6hY_f7944295a76541b186e6a557ebdbba14",
+      "list_worker": "P025",
+      "formal_worker": "W035",
+      "review_scope": "current_14",
+      "source_oos": false,
+      "original_point_count": 8,
+      "draft_status": "completed",
+      "draft_base_version": "raw",
+      "draft_active_points": 8,
+      "draft_pair_count": 4,
+      "draft_pair_coverage": true,
+      "draft_bounds_valid": true,
+      "point_operations": [],
+      "order_operation_count": 0,
+      "order_effect": "same_as_x_candidate",
+      "final_pairs_original_labels": [
+        [
+          "p5",
+          "p6"
+        ],
+        [
+          "p1",
+          "p2"
+        ],
+        [
+          "p3",
+          "p4"
+        ],
+        [
+          "p7",
+          "p8"
+        ]
+      ],
+      "prior_exact_object_order": false,
+      "prior_same_image_worker_objects": [
+        "c0e08c82870e77e231bc"
+      ],
+      "frozen_effective_points_available": false,
+      "frozen_pairing_basis": "pairing_unavailable",
+      "current_cleaning_disposition": "historical_not_accepted",
+      "ring_confirmed": false,
+      "restore_eligibility": false,
+      "apply_to_formal": false
+    },
+    {
+      "record_id": "R03415",
+      "canonical_object_id": "new_95_3665_7480_W030",
+      "image_code": "uNb9QFRL6hY-83",
+      "image_id": "uNb9QFRL6hY_f7944295a76541b186e6a557ebdbba14",
+      "list_worker": "P020",
+      "formal_worker": "W030",
+      "review_scope": "current_14",
+      "source_oos": false,
+      "original_point_count": 10,
+      "draft_status": "completed",
+      "draft_base_version": "raw",
+      "draft_active_points": 10,
+      "draft_pair_count": 5,
+      "draft_pair_coverage": true,
+      "draft_bounds_valid": true,
+      "point_operations": [],
+      "order_operation_count": 0,
+      "order_effect": "same_as_x_candidate",
+      "final_pairs_original_labels": [
+        [
+          "p1",
+          "p2"
+        ],
+        [
+          "p3",
+          "p4"
+        ],
+        [
+          "p5",
+          "p6"
+        ],
+        [
+          "p7",
+          "p8"
+        ],
+        [
+          "p9",
+          "p10"
+        ]
+      ],
+      "prior_exact_object_order": false,
+      "prior_same_image_worker_objects": [
+        "6bc3f17cddcae6548a83"
+      ],
+      "frozen_effective_points_available": false,
+      "frozen_pairing_basis": "pairing_unavailable",
+      "current_cleaning_disposition": "historical_not_accepted",
+      "ring_confirmed": false,
+      "restore_eligibility": false,
+      "apply_to_formal": false
+    },
+    {
+      "record_id": "R02963",
+      "canonical_object_id": "new_93_3608_7137_W012",
+      "image_code": "uNb9QFRL6hY-88",
+      "image_id": "uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14",
+      "list_worker": "P007",
+      "formal_worker": "W012",
+      "review_scope": "current_14",
+      "source_oos": false,
+      "original_point_count": 22,
+      "draft_status": "completed",
+      "draft_base_version": "raw",
+      "draft_active_points": 22,
+      "draft_pair_count": 11,
+      "draft_pair_coverage": true,
+      "draft_bounds_valid": true,
+      "point_operations": [],
+      "order_operation_count": 2,
+      "order_effect": "changed_adjacency_from_x_candidate",
+      "final_pairs_original_labels": [
+        [
+          "p1",
+          "p2"
+        ],
+        [
+          "p3",
+          "p4"
+        ],
+        [
+          "p5",
+          "p6"
+        ],
+        [
+          "p7",
+          "p8"
+        ],
+        [
+          "p9",
+          "p10"
+        ],
+        [
+          "p11",
+          "p12"
+        ],
+        [
+          "p13",
+          "p14"
+        ],
+        [
+          "p15",
+          "p16"
+        ],
+        [
+          "p17",
+          "p18"
+        ],
+        [
+          "p19",
+          "p20"
+        ],
+        [
+          "p21",
+          "p22"
+        ]
+      ],
+      "prior_exact_object_order": false,
+      "prior_same_image_worker_objects": [
+        "16f88794bfabdd24c227"
+      ],
+      "frozen_effective_points_available": false,
+      "frozen_pairing_basis": "pairing_unavailable",
+      "current_cleaning_disposition": "historical_not_accepted",
+      "ring_confirmed": false,
+      "restore_eligibility": false,
+      "apply_to_formal": false
+    },
+    {
+      "record_id": "R03428",
+      "canonical_object_id": "new_95_3667_7271_W034",
+      "image_code": "wc2JMjhGNzB-29",
+      "image_id": "wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366",
+      "list_worker": "P024",
+      "formal_worker": "W034",
+      "review_scope": "current_14",
+      "source_oos": false,
+      "original_point_count": 8,
+      "draft_status": "completed",
+      "draft_base_version": "raw",
+      "draft_active_points": 8,
+      "draft_pair_count": 4,
+      "draft_pair_coverage": true,
+      "draft_bounds_valid": true,
+      "point_operations": [],
+      "order_operation_count": 0,
+      "order_effect": "same_as_x_candidate",
+      "final_pairs_original_labels": [
+        [
+          "p1",
+          "p2"
+        ],
+        [
+          "p3",
+          "p4"
+        ],
+        [
+          "p5",
+          "p6"
+        ],
+        [
+          "p7",
+          "p8"
+        ]
+      ],
+      "prior_exact_object_order": false,
+      "prior_same_image_worker_objects": [
+        "new_95_3667_7272_W034"
+      ],
+      "frozen_effective_points_available": false,
+      "frozen_pairing_basis": "pairing_unavailable",
+      "current_cleaning_disposition": "historical_not_accepted",
+      "ring_confirmed": false,
+      "restore_eligibility": false,
+      "apply_to_formal": false
+    }
+  ]
+}
