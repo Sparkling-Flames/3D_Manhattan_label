@@ -7,6 +7,7 @@
 - [文档总索引](README_INDEX.md)：当前模型、术语、数据、难度和融合入口。
 - 当前人员／图片研究：[统一研究模型](thesis_main/研究模型_人员图片与融合不确定性_20261006.md)、[术语](thesis_main/CONTEXT.md)、[数据说明](thesis_main/研究数据说明_来源预处理与用途_20261006.md)。
 - 图片难度：[最新少量事实分层方案与12图试点](thesis_main/图片客观难度评分_20261009.md)、[独立场景分层](../analysis_results/objective_difficulty_20261009/stratified/REPORT.md)。历史[同源布局模型](../analysis_results/objective_difficulty_20261009/model_comparison/REPORT.md)及[DINOv3两轴](../analysis_results/objective_difficulty_20261009/dino_probe/REPORT.md)保留，不作为继续堆模型／调主观相关的安排。已有工具为`tools/thesis_main/analysis/difficulty_{features,score,strata,model_probe,bilayout_probe,model_comparison,dino}_20261009.py`，对应七个测试；本次方案未新增代码或机器字段。Bi同源结果在`bilayout_probe/research_source/`。
+- 图片难度外部审查：[自包含讨论汇总与Pro任务](thesis_main/图片难度研究汇总与Pro深度研究任务_20261009.md)，补充旧HoHoNet特征／风险定义与方法取舍，属于支撑材料，不新增算法或协议。
 - 墙线融合：[方法](thesis_main/共识投票机制与三路线推进_20261007.md)、[操作 SOP](thesis_main/融合共识操作SOP_20261008.md)、[当前交付](../analysis_results/consensus_delivery_20261008/REPORT.md)。
 - GT结构条件：[环序与自遮挡审计](../analysis_results/gt_order_visibility_20261009/REPORT.md)；工具`tools/thesis_main/analysis/gt_order_visibility_20261009.py`，测试`tests/test_gt_order_visibility_20261009.py`。原／修订GT及循环接缝分开，不将几何条件当作已识别的人类难度或噪声量。
 - [机器可读方法合同](thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json)是规范真源；Markdown 由合同生成。历史 v23 消费者仍固定读取其原版本合同。

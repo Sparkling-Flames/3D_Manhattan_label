@@ -8,6 +8,7 @@
 - [术语](thesis_main/CONTEXT.md)：统一概念和解释边界。
 - [研究数据说明](thesis_main/研究数据说明_来源预处理与用途_20261006.md)：输入真源、预处理、人员与参考、补充证据及结果入口。
 - 图片难度：[最新事实分层方案与12图试点](thesis_main/图片客观难度评分_20261009.md)、[场景独立分层](../analysis_results/objective_difficulty_20261009/stratified/REPORT.md)；[同源布局模型比较](../analysis_results/objective_difficulty_20261009/model_comparison/REPORT.md)、[DINOv3视觉两轴](../analysis_results/objective_difficulty_20261009/dino_probe/REPORT.md)及[首轮实算](../analysis_results/objective_difficulty_20261009/REPORT.md)保留历史。优先少量任务事实，不继续堆评分模型；OOS子类／门洞／可标性独立，未记录不认证正常。
+- 图片难度外部审查：[讨论汇总与Pro深度研究任务](thesis_main/图片难度研究汇总与Pro深度研究任务_20261009.md)，包含旧d_model／风险分数澄清、既有证据、未定方案与可复制提示词；不替代规范或冻结分类。
 - 图片结构条件：[GT循环环序与自遮挡核验](../analysis_results/gt_order_visibility_20261009/REPORT.md)，不使用人员主观难度或作答结果定义；既定GT、射线遮挡及原／修订版本分开。
 - 墙线融合：[当前方法](thesis_main/共识投票机制与三路线推进_20261007.md)、[操作 SOP](thesis_main/融合共识操作SOP_20261008.md)和[唯一当前结果报告](../analysis_results/consensus_delivery_20261008/REPORT.md)。数量、例外和待办以结果报告为准。
 - [完整研究交接](thesis_main/线程交接_连线质量与完整共识_20261004.md)：保留研究原意、历史证据和状态，不替代当前安排。
