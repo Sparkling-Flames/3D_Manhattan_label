@@ -1,0 +1,40 @@
+{
+  "source_commit": "3db905eb7cfd63c6055039dae621bb173bf75ac7",
+  "formal_update": "quality_review_20261010_v1",
+  "source_hashes": {
+    "frozen_package/scope_scan/all_259_images_scope_scan.csv": "70019a05657d08affedbaf159770f3564f07dae43c0fe0b2ccab73bb33cb393f",
+    "frozen_package/scope_scan/all_3152_records_scope_metrics.csv": "72b75307532302630b0681be505600e2d626f391992613a0be1278649e07851f",
+    "analysis_results/image_difficulty_full_review_20261010/review_data.json": "b0c9338418742df57c40ae0fdbf3ddc1fd2e13ed312709efbb90884c0a4982d2",
+    "analysis_results/image_difficulty_full_review_20261010/all_scope_evidence.json": "8b2da7ffbcd2410fc94738ebae26ba2e760408845d7e86f358e1dc291757a7b4",
+    "analysis_results/research_input_20260929/quality_update_20261010.json": "b8cc1b37f36d05f4541069ac54df86908e7fd1a8ed982bd01654ca24c52b2aad"
+  },
+  "algorithm_base": 16,
+  "visual_extent": 13,
+  "intersection": 5,
+  "union": 24,
+  "first_round": [
+    "e9zR4mvMWw7-17",
+    "e9zR4mvMWw7-09",
+    "b8cTxDM8gDG-18"
+  ],
+  "routing_counts": {
+    "first_round_3": 3,
+    "reserve_geometry_or_target_uncertain": 11,
+    "fixed_gt_glass_or_mixed_control": 4,
+    "existing_hold_no_reactivation": 2,
+    "same_space_depth_control": 2,
+    "excess_or_mixed_not_simple_crop": 2
+  },
+  "frozen_primary_records": 2368,
+  "frozen_primary_coordinate_matches": 2368,
+  "reviewed14_in_frozen_primary": 0,
+  "exact_geometry_records_rechecked": 283,
+  "geometry_max_tolerance": 1e-07,
+  "geometry_max_absolute_error": 9.807710199538633e-12,
+  "geometry_failures": [],
+  "Q_recomputed": false,
+  "GT_modified": false,
+  "eligibility_modified": false,
+  "human_decisions_applied": false,
+  "scope": "24-candidate reconciliation, not a fresh full-corpus Q run; screening sample differs from formal quality gates"
+}
