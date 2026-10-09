@@ -1,0 +1,13 @@
+{
+  "schema_version": "frozen_dmodel_supplement_v1",
+  "fields": {
+    "d_model_feat_static": "global LHFeat mean/std, frozen PCA/scale, mean five nearest reference Euclidean distances",
+    "d_model_feat_local_max_static": "local channel max, frozen PCA/scale, mean five nearest reference Euclidean distances",
+    "static_model_risk_score": "historical hypot(global,local); retain separate semantics",
+    "value_origin": "historical_unchanged or reproduced_supplement"
+  },
+  "source": "D:\\Work\\HOHONET\\data\\mp3d_layout\\img_v",
+  "old_values_overwritten": false,
+  "source_cache_modified": false,
+  "preprocessing": "PIL RGB float32 /255; no resize; four phases 0,.25,.5,.75 physical batch=4"
+}

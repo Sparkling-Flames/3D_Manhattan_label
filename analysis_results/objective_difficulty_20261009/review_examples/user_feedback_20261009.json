@@ -1,0 +1,16 @@
+{
+  "source": "user_message_in_codex_thread_01a11f11-23c1-7f51-b9d3-c4300015b352",
+  "date": "2026-10-09",
+  "statement": "有些图的GT标注空间与大多标注者不一致；x8F5xyUWy9e-01的GT有问题，属于墙面夹角不是90度的OOS；整体粗分类勉强可使用，门洞交界和OOS需要单独评判评分。",
+  "image_decisions": [
+    {
+      "image": "x8F5xyUWy9e-01",
+      "oos_subtype": "nonorthogonal_annotatable",
+      "reference_status": "user_reported_gt_issue_pending",
+      "difficulty_status": "pending_reference_review",
+      "difficulty_label": null,
+      "scope_mismatch_confirmed_for_this_image": false
+    }
+  ],
+  "boundary": "多数作答不自动成为GT；用户未指定该图的新难度分数，也未指定需修改的GT坐标。此记录不修改正式GT或分析资格。"
+}

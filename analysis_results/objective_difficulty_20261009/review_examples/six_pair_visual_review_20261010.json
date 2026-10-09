@@ -1,0 +1,616 @@
+{
+  "version": "six_pair_visual_review_20261010_v1",
+  "authorization": "用户授权阅读图片，将无遮挡／较少遮挡的6点对类似图归为简单。",
+  "rule": "非特殊且非暂停，N=6，当前GT无结构隐藏角点，逐图检查照片及GT点位可见性为无遮挡或局部轻微遮挡；范围限定于当前参考。H>0不是绝对不可降档，但必须核清隐藏角点与目标，本轮未有通过者。",
+  "records": [
+    {
+      "image": "7y3sRwLe3Va-03",
+      "image_id": "7y3sRwLe3Va_112edb40f34e470da3a5b04599e71211",
+      "gt_object_id": "gt:7y3sRwLe3Va_112edb40f34e470da3a5b04599e71211:data/mp3d_layout/test/label_cor/7y3sRwLe3Va_112edb40f34e470da3a5b04599e71211.txt",
+      "N": 6,
+      "H": 1,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": [
+        "scope_existing_ledger"
+      ]
+    },
+    {
+      "image": "B6ByNegPMKs-37",
+      "image_id": "B6ByNegPMKs_c946db5792df4f90bea20f06a0030c37",
+      "gt_object_id": "gt:B6ByNegPMKs_c946db5792df4f90bea20f06a0030c37:data/mp3d_layout/test/label_cor/B6ByNegPMKs_c946db5792df4f90bea20f06a0030c37.txt",
+      "N": 6,
+      "H": 2,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": [
+        "scope_existing_ledger",
+        "scope_comment_candidate"
+      ]
+    },
+    {
+      "image": "S9hNv5qa7GM-05",
+      "image_id": "S9hNv5qa7GM_322a5d3bbca1428fb92d39bfc6e603ee",
+      "gt_object_id": "gt:S9hNv5qa7GM_322a5d3bbca1428fb92d39bfc6e603ee:data/mp3d_layout/valid/label_cor/S9hNv5qa7GM_322a5d3bbca1428fb92d39bfc6e603ee.txt",
+      "N": 6,
+      "H": 0,
+      "previous_class": "中等",
+      "decision": "simple",
+      "visual_occlusion": "limited_local",
+      "reason": "淋浴区与浴室的主要转折、上边界清楚；浴缸仅局部遮住底边，不需推断整处隐藏墙角。",
+      "review_depth": "photo_and_gt_pair_overlay",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": []
+    },
+    {
+      "image": "S9hNv5qa7GM-09",
+      "image_id": "S9hNv5qa7GM_625eb179629b45f280c01d3f6ec74b4f",
+      "gt_object_id": "gt:S9hNv5qa7GM_625eb179629b45f280c01d3f6ec74b4f:data/mp3d_layout/valid/label_cor/S9hNv5qa7GM_625eb179629b45f280c01d3f6ec74b4f.txt",
+      "N": 6,
+      "H": 2,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": [
+        "scope_existing_ledger",
+        "scope_comment_candidate"
+      ]
+    },
+    {
+      "image": "S9hNv5qa7GM-12",
+      "image_id": "S9hNv5qa7GM_8b55e4f095374cfe8ddb0fda0f0dfa02",
+      "gt_object_id": "gt:S9hNv5qa7GM_8b55e4f095374cfe8ddb0fda0f0dfa02:data/mp3d_layout/valid/label_cor/S9hNv5qa7GM_8b55e4f095374cfe8ddb0fda0f0dfa02.txt",
+      "N": 6,
+      "H": 1,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": []
+    },
+    {
+      "image": "S9hNv5qa7GM-21",
+      "image_id": "S9hNv5qa7GM_ed36c0b595de42f0a4e13ba5d332814a",
+      "gt_object_id": "gt:S9hNv5qa7GM_ed36c0b595de42f0a4e13ba5d332814a:data/mp3d_layout/valid/label_cor/S9hNv5qa7GM_ed36c0b595de42f0a4e13ba5d332814a.txt",
+      "N": 6,
+      "H": 1,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": []
+    },
+    {
+      "image": "UwV83HsGsw3-12",
+      "image_id": "UwV83HsGsw3_a3630444bbd94cd6ac4edbe2dc1221de",
+      "gt_object_id": "gt:UwV83HsGsw3_a3630444bbd94cd6ac4edbe2dc1221de:data/mp3d_layout/test/label_cor/UwV83HsGsw3_a3630444bbd94cd6ac4edbe2dc1221de.txt",
+      "N": 6,
+      "H": 1,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": []
+    },
+    {
+      "image": "UwV83HsGsw3-22",
+      "image_id": "UwV83HsGsw3_f9641b59487a4b0ca0fe41a82edc0980",
+      "gt_object_id": "gt:UwV83HsGsw3_f9641b59487a4b0ca0fe41a82edc0980:data/mp3d_layout/test/label_cor/UwV83HsGsw3_f9641b59487a4b0ca0fe41a82edc0980.txt",
+      "N": 6,
+      "H": 1,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": []
+    },
+    {
+      "image": "VFuaQ6m2Qom-03",
+      "image_id": "VFuaQ6m2Qom_381ce3cd69b846c3b920be16d29ed48e",
+      "gt_object_id": "gt:VFuaQ6m2Qom_381ce3cd69b846c3b920be16d29ed48e:data/mp3d_layout/valid/label_cor/VFuaQ6m2Qom_381ce3cd69b846c3b920be16d29ed48e.txt",
+      "N": 6,
+      "H": 0,
+      "previous_class": "中等",
+      "decision": "simple",
+      "visual_occlusion": "limited_local",
+      "reason": "卧室主要墙角及入口小转折清楚；床和电视柜局部挡住底端，上部位置与相邻边仍可辨。",
+      "review_depth": "photo_and_gt_pair_overlay",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": []
+    },
+    {
+      "image": "X7HyMhZNoso-05",
+      "image_id": "X7HyMhZNoso_28ada927582d4d6ea7cf44cabf31527a",
+      "gt_object_id": "gt:X7HyMhZNoso_28ada927582d4d6ea7cf44cabf31527a:export_label/groudTruth.json",
+      "N": 6,
+      "H": 0,
+      "previous_class": "中等",
+      "decision": "simple",
+      "visual_occlusion": "none",
+      "reason": "空房主体及入口凹入处的六个转折清楚，几乎无家具遮挡；按当前修订GT目标评价。",
+      "review_depth": "photo_and_gt_pair_overlay",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": []
+    },
+    {
+      "image": "b8cTxDM8gDG-07",
+      "image_id": "b8cTxDM8gDG_51c90ec9afc4495ab3788c6badc303df",
+      "gt_object_id": "gt:b8cTxDM8gDG_51c90ec9afc4495ab3788c6badc303df:data/mp3d_layout/test/label_cor/b8cTxDM8gDG_51c90ec9afc4495ab3788c6badc303df.txt",
+      "N": 6,
+      "H": 0,
+      "previous_class": "中等",
+      "decision": "simple",
+      "visual_occlusion": "limited_local",
+      "reason": "卧室主体、门侧凸墙和窗侧转折可辨；床主要遮住局部底端。简单判断限于当前GT的卧室范围，原范围差异记录继续保留。",
+      "review_depth": "photo_and_gt_pair_overlay",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": [
+        "scope_explicit_tag",
+        "scope_existing_ledger"
+      ]
+    },
+    {
+      "image": "b8cTxDM8gDG-17",
+      "image_id": "b8cTxDM8gDG_f339391e9479496e8652c972953f0ce4",
+      "gt_object_id": "gt:b8cTxDM8gDG_f339391e9479496e8652c972953f0ce4:data/mp3d_layout/test/label_cor/b8cTxDM8gDG_f339391e9479496e8652c972953f0ce4.txt",
+      "N": 6,
+      "H": 1,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": []
+    },
+    {
+      "image": "e9zR4mvMWw7-19",
+      "image_id": "e9zR4mvMWw7_4fb8c9be319e4784b4b66f9ca5d839ab",
+      "gt_object_id": "gt:e9zR4mvMWw7_4fb8c9be319e4784b4b66f9ca5d839ab:export_label/groudTruth.json",
+      "N": 6,
+      "H": 1,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": [
+        "scope_explicit_tag",
+        "scope_existing_ledger",
+        "scope_comment_candidate"
+      ]
+    },
+    {
+      "image": "jh4fc5c5qoQ-13",
+      "image_id": "jh4fc5c5qoQ_abbdc7ac89204f23a935fcb9ccae887c",
+      "gt_object_id": "gt:jh4fc5c5qoQ_abbdc7ac89204f23a935fcb9ccae887c:data/mp3d_layout/valid/label_cor/jh4fc5c5qoQ_abbdc7ac89204f23a935fcb9ccae887c.txt",
+      "N": 6,
+      "H": 0,
+      "previous_class": "中等",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "厨房橱柜和电器遮挡多段墙脚，开放连接空间较多。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": []
+    },
+    {
+      "image": "jtcxE69GiFV-13",
+      "image_id": "jtcxE69GiFV_5d3af9ad575b4be88587967ff8114c36",
+      "gt_object_id": "gt:jtcxE69GiFV_5d3af9ad575b4be88587967ff8114c36:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_5d3af9ad575b4be88587967ff8114c36.txt",
+      "N": 6,
+      "H": 0,
+      "previous_class": "中等",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "窗帘覆盖窄转折附近，浴缸／台柜遮挡底边；本轮不足以认定仅少量遮挡。",
+      "review_depth": "photo_and_gt_pair_overlay",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": []
+    },
+    {
+      "image": "jtcxE69GiFV-17",
+      "image_id": "jtcxE69GiFV_6723e18211d244f8b17ced91aae64d99",
+      "gt_object_id": "gt:jtcxE69GiFV_6723e18211d244f8b17ced91aae64d99:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_6723e18211d244f8b17ced91aae64d99.txt",
+      "N": 6,
+      "H": 1,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": [
+        "gt_substantive_error_mark",
+        "gt_detail_omission_mark"
+      ]
+    },
+    {
+      "image": "pa4otMbVnkk-05",
+      "image_id": "pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b",
+      "gt_object_id": "gt:pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b:data/mp3d_layout/valid/label_cor/pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b.txt",
+      "N": 6,
+      "H": 1,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": []
+    },
+    {
+      "image": "pa4otMbVnkk-18",
+      "image_id": "pa4otMbVnkk_64ba4f267872432abdcb00af002649d5",
+      "gt_object_id": "gt:pa4otMbVnkk_64ba4f267872432abdcb00af002649d5:data/mp3d_layout/valid/label_cor/pa4otMbVnkk_64ba4f267872432abdcb00af002649d5.txt",
+      "N": 6,
+      "H": 2,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": [
+        "gt_detail_omission_mark"
+      ]
+    },
+    {
+      "image": "q9vSo1VnCiC-30",
+      "image_id": "q9vSo1VnCiC_dc873df7717c43888a1cff13713fe146",
+      "gt_object_id": "gt:q9vSo1VnCiC_dc873df7717c43888a1cff13713fe146:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_dc873df7717c43888a1cff13713fe146.txt",
+      "N": 6,
+      "H": 0,
+      "previous_class": "中等",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "已有范围及GT遗漏线索，开放空间停止位置仍影响目标。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": [
+        "scope_existing_ledger",
+        "scope_comment_candidate",
+        "gt_detail_omission_mark"
+      ]
+    },
+    {
+      "image": "q9vSo1VnCiC-34",
+      "image_id": "q9vSo1VnCiC_f7452776f0604b508bb2b0263238deb0",
+      "gt_object_id": "gt:q9vSo1VnCiC_f7452776f0604b508bb2b0263238deb0:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_f7452776f0604b508bb2b0263238deb0.txt",
+      "N": 6,
+      "H": 2,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": [
+        "scope_explicit_tag",
+        "scope_existing_ledger",
+        "scope_comment_candidate"
+      ]
+    },
+    {
+      "image": "rPc6DW4iMge-16",
+      "image_id": "rPc6DW4iMge_a72230c911234d18b08568b9d8b02dd2",
+      "gt_object_id": "gt:rPc6DW4iMge_a72230c911234d18b08568b9d8b02dd2:data/mp3d_layout/test/label_cor/rPc6DW4iMge_a72230c911234d18b08568b9d8b02dd2.txt",
+      "N": 6,
+      "H": 0,
+      "previous_class": "中等",
+      "decision": "simple",
+      "visual_occlusion": "limited_local",
+      "reason": "淋浴区和浴室主体转折清楚，玻璃内墙角可见；洗手柜遮住局部底边，上部角线仍可辨。",
+      "review_depth": "photo_and_gt_pair_overlay",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": []
+    },
+    {
+      "image": "rPc6DW4iMge-17",
+      "image_id": "rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a",
+      "gt_object_id": "gt:rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a:export_label/groudTruth.json",
+      "N": 6,
+      "H": 0,
+      "previous_class": "中等",
+      "decision": "simple",
+      "visual_occlusion": "limited_local",
+      "reason": "按当前修订GT的小卫生间范围，六处墙面转折明确；洗手柜及马桶造成局部底端遮挡。原范围差异记录保留，不扩展到门外空间。",
+      "review_depth": "photo_and_gt_pair_overlay",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": [
+        "scope_explicit_tag",
+        "scope_existing_ledger"
+      ]
+    },
+    {
+      "image": "uNb9QFRL6hY-19",
+      "image_id": "uNb9QFRL6hY_33dd9892d10e474ead8f7ad38a8da562",
+      "gt_object_id": "gt:uNb9QFRL6hY_33dd9892d10e474ead8f7ad38a8da562:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_33dd9892d10e474ead8f7ad38a8da562.txt",
+      "N": 6,
+      "H": 0,
+      "previous_class": "中等",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含远端走廊转折，局部角线较小且有家具遮挡；不因主体卧室较空直接降档。",
+      "review_depth": "photo_and_gt_pair_overlay",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": [
+        "scope_comment_candidate"
+      ]
+    },
+    {
+      "image": "uNb9QFRL6hY-29",
+      "image_id": "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+      "gt_object_id": "gt:uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd.txt",
+      "N": 6,
+      "H": 0,
+      "previous_class": "中等",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "已有范围线索且包含走廊连接，不仅是主体卧室墙角。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": [
+        "scope_existing_ledger",
+        "scope_comment_candidate"
+      ]
+    },
+    {
+      "image": "uNb9QFRL6hY-40",
+      "image_id": "uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62",
+      "gt_object_id": "gt:uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62.txt",
+      "N": 6,
+      "H": 0,
+      "previous_class": "中等",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "连通客厅且已有范围差异，沙发／钢琴等遮住多段底边。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": [
+        "scope_explicit_tag",
+        "scope_existing_ledger",
+        "scope_comment_candidate"
+      ]
+    },
+    {
+      "image": "uNb9QFRL6hY-43",
+      "image_id": "uNb9QFRL6hY_84722e58b32f4646acc12614994f835b",
+      "gt_object_id": "gt:uNb9QFRL6hY_84722e58b32f4646acc12614994f835b:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_84722e58b32f4646acc12614994f835b.txt",
+      "N": 6,
+      "H": 0,
+      "previous_class": "中等",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "钢琴、植物和坐具覆盖边界，不能仅凭6点认定少量遮挡。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": []
+    },
+    {
+      "image": "uNb9QFRL6hY-44",
+      "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+      "gt_object_id": "gt:uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.txt",
+      "N": 6,
+      "H": 1,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": [
+        "scope_existing_ledger"
+      ]
+    },
+    {
+      "image": "uNb9QFRL6hY-45",
+      "image_id": "uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97",
+      "gt_object_id": "gt:uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97:export_label/groudTruth.json",
+      "N": 6,
+      "H": 0,
+      "previous_class": "中等",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "家具较多且连接空间复杂，本轮不认定低遮挡简单。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": []
+    },
+    {
+      "image": "uNb9QFRL6hY-55",
+      "image_id": "uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78",
+      "gt_object_id": "gt:uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78.txt",
+      "N": 6,
+      "H": 1,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": [
+        "scope_comment_candidate"
+      ]
+    },
+    {
+      "image": "uNb9QFRL6hY-58",
+      "image_id": "uNb9QFRL6hY_b73ae36f994747e196380b1cb71cf407",
+      "gt_object_id": "gt:uNb9QFRL6hY_b73ae36f994747e196380b1cb71cf407:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_b73ae36f994747e196380b1cb71cf407.txt",
+      "N": 6,
+      "H": 0,
+      "previous_class": "中等",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "钢琴、植物和沙发造成多处遮挡，本轮保留旧档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": []
+    },
+    {
+      "image": "uNb9QFRL6hY-68",
+      "image_id": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+      "gt_object_id": "gt:uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d.txt",
+      "N": 6,
+      "H": 1,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": [
+        "scope_existing_ledger",
+        "scope_comment_candidate"
+      ]
+    },
+    {
+      "image": "uNb9QFRL6hY-81",
+      "image_id": "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+      "gt_object_id": "gt:uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd.txt",
+      "N": 6,
+      "H": 1,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": [
+        "scope_existing_ledger",
+        "scope_comment_candidate"
+      ]
+    },
+    {
+      "image": "uNb9QFRL6hY-86",
+      "image_id": "uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269",
+      "gt_object_id": "gt:uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269.txt",
+      "N": 6,
+      "H": 2,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": [
+        "scope_existing_ledger",
+        "scope_comment_candidate"
+      ]
+    },
+    {
+      "image": "wc2JMjhGNzB-46",
+      "image_id": "wc2JMjhGNzB_9087f0358178420a8b9ac7b17a8919c7",
+      "gt_object_id": "gt:wc2JMjhGNzB_9087f0358178420a8b9ac7b17a8919c7:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_9087f0358178420a8b9ac7b17a8919c7.txt",
+      "N": 6,
+      "H": 1,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": []
+    },
+    {
+      "image": "wc2JMjhGNzB-61",
+      "image_id": "wc2JMjhGNzB_e6693f97b36545f7a76e03c3fe32ba8c",
+      "gt_object_id": "gt:wc2JMjhGNzB_e6693f97b36545f7a76e03c3fe32ba8c:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_e6693f97b36545f7a76e03c3fe32ba8c.txt",
+      "N": 6,
+      "H": 1,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": [
+        "scope_explicit_tag",
+        "scope_existing_ledger",
+        "scope_comment_candidate"
+      ]
+    },
+    {
+      "image": "yqstnuAEVhm-08",
+      "image_id": "yqstnuAEVhm_4642492bb42d40debb1a3bad0ea7a24f",
+      "gt_object_id": "gt:yqstnuAEVhm_4642492bb42d40debb1a3bad0ea7a24f:data/mp3d_layout/test/label_cor/yqstnuAEVhm_4642492bb42d40debb1a3bad0ea7a24f.txt",
+      "N": 6,
+      "H": 1,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": [
+        "scope_existing_ledger",
+        "scope_comment_candidate",
+        "gt_detail_omission_mark"
+      ]
+    },
+    {
+      "image": "yqstnuAEVhm-24",
+      "image_id": "yqstnuAEVhm_9cb726b170554b9bacd039d4db246040",
+      "gt_object_id": "gt:yqstnuAEVhm_9cb726b170554b9bacd039d4db246040:data/mp3d_layout/test/label_cor/yqstnuAEVhm_9cb726b170554b9bacd039d4db246040.txt",
+      "N": 6,
+      "H": 0,
+      "previous_class": "中等",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "分叉通道、开口与停止位置需要解释，本轮不直接判简单。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": []
+    },
+    {
+      "image": "yqstnuAEVhm-25",
+      "image_id": "yqstnuAEVhm_9de98503fd994452b627cdcc7a7d47b2",
+      "gt_object_id": "gt:yqstnuAEVhm_9de98503fd994452b627cdcc7a7d47b2:data/mp3d_layout/test/label_cor/yqstnuAEVhm_9de98503fd994452b627cdcc7a7d47b2.txt",
+      "N": 6,
+      "H": 1,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": [
+        "scope_comment_candidate"
+      ]
+    },
+    {
+      "image": "zsNo4HB9uLZ-16",
+      "image_id": "zsNo4HB9uLZ_faad06c7cb2b4a6f9220e7f6f87c800b",
+      "gt_object_id": "gt:zsNo4HB9uLZ_faad06c7cb2b4a6f9220e7f6f87c800b:data/mp3d_layout/valid/label_cor/zsNo4HB9uLZ_faad06c7cb2b4a6f9220e7f6f87c800b.txt",
+      "N": 6,
+      "H": 1,
+      "previous_class": "困难",
+      "decision": "retain_previous",
+      "visual_occlusion": "not_accepted_as_low",
+      "reason": "GT含隐藏角点；原图初筛不足以证明其仅局部轻微遮挡，不按H=1或H/N较小自动降档。",
+      "review_depth": "photo_contact_sheet_screen",
+      "reviewer": "Codex_visual_review_not_independent_human_label",
+      "scope_flags": []
+    }
+  ]
+}

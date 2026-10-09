@@ -1,0 +1,27 @@
+{
+  "status": "completed",
+  "old_panel_count": 46,
+  "supplement_count": 66,
+  "panel_count": 112,
+  "model_audit": {
+    "device": "cuda",
+    "dtype": "float32",
+    "physical_batch_size": 4,
+    "image_count": 66,
+    "elapsed_seconds": 6.069178600002488
+  },
+  "reference_listing_overlap": {
+    "reference_image_count": 1647,
+    "reference_building_count": 48,
+    "research_image_count": 259,
+    "research_building_count": 22,
+    "overlapping_buildings": [],
+    "reference_role": "frozen training_no_occ listing; 1647 images",
+    "limitation": "清单不重合不证明checkpoint训练与epoch选择历史独立。"
+  },
+  "fields": [
+    "d_model_feat_static",
+    "d_model_feat_local_max_static",
+    "static_model_risk_score"
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "status": "passed",
+  "tolerances": {
+    "descriptor_relative_l2_max": 0.0001,
+    "score_atol": 0.001,
+    "score_rtol": 0.0001,
+    "sample_selection": "first three frozen candidate-cache paths; not score-selected"
+  },
+  "config_identity": "historical_crlf_equivalent",
+  "model_audit": {
+    "device": "cuda",
+    "dtype": "float32",
+    "physical_batch_size": 4,
+    "image_count": 3,
+    "elapsed_seconds": 9.120550899999216
+  },
+  "rows": [
+    {
+      "image_id": "7y3sRwLe3Va_112edb40f34e470da3a5b04599e71211",
+      "image_path": "D:/Work/HOHONET/data/mp3d_layout/img_v/7y3sRwLe3Va_112edb40f34e470da3a5b04599e71211.jpg",
+      "descriptor_relative_l2": 0.0,
+      "global_match": true,
+      "local_match": true,
+      "global_old": 33.570980072021484,
+      "local_old": 19.190343856811523,
+      "global_replayed": 33.57099151611328,
+      "local_replayed": 19.190343856811523,
+      "cache_global": 33.57099151611328,
+      "cache_local": 19.190343856811523
+    },
+    {
+      "image_id": "7y3sRwLe3Va_9e4c92fd7eb74504baecf55a3264716e",
+      "image_path": "D:/Work/HOHONET/data/mp3d_layout/img_v/7y3sRwLe3Va_9e4c92fd7eb74504baecf55a3264716e.jpg",
+      "descriptor_relative_l2": 0.0,
+      "global_match": true,
+      "local_match": true,
+      "global_old": 35.742271423339844,
+      "local_old": 18.763507843017578,
+      "global_replayed": 35.74225997924805,
+      "local_replayed": 18.763507843017578,
+      "cache_global": 35.74225997924805,
+      "cache_local": 18.763507843017578
+    },
+    {
+      "image_id": "7y3sRwLe3Va_a775c7668ca9419daaf506e76851821e",
+      "image_path": "D:/Work/HOHONET/data/mp3d_layout/img_v/7y3sRwLe3Va_a775c7668ca9419daaf506e76851821e.jpg",
+      "descriptor_relative_l2": 0.0,
+      "global_match": true,
+      "local_match": true,
+      "global_old": 47.396156311035156,
+      "local_old": 25.443912506103516,
+      "global_replayed": 47.39617919921875,
+      "local_replayed": 25.44390869140625,
+      "cache_global": 47.39617919921875,
+      "cache_local": 25.44390869140625
+    }
+  ],
+  "reference_listing_overlap": {
+    "reference_image_count": 1647,
+    "reference_building_count": 48,
+    "research_image_count": 259,
+    "research_building_count": 22,
+    "overlapping_buildings": [],
+    "reference_role": "frozen training_no_occ listing; 1647 images",
+    "limitation": "清单不重合不证明checkpoint训练与epoch选择历史独立。"
+  }
+}

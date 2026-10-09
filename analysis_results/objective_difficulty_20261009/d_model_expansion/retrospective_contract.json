@@ -1,0 +1,25 @@
+{
+  "label_role": "historical_not_blind; no estimator training or calibration",
+  "main_strata": "exact selected GT pair count × structural occlusion",
+  "supplementary_strata": [
+    "4",
+    "6-8",
+    ">=10"
+  ],
+  "uncertainty": "building cluster percentile bootstrap, fixed seed 20261009, 1000 repetitions",
+  "minimum_for_association": {
+    "images": 6,
+    "buildings": 3,
+    "distinct_labels": 2
+  },
+  "minimum_valid_bootstrap_repetitions_for_ci": 950,
+  "room_count_definition": "distinct (building, nonempty room); empty room reported as n_room_unknown_images",
+  "missing_or_constant": "N/A; no zero imputation",
+  "fields": [
+    "d_model_feat_static",
+    "d_model_feat_local_max_static",
+    "static_model_risk_score"
+  ],
+  "gt_reference_source": "D:\\Work\\HOHONET\\analysis_results\\objective_difficulty_20261009\\structure_classification\\images.csv",
+  "panel_source": "D:\\Work\\HOHONET\\analysis_results\\objective_difficulty_20261009\\stratified\\features_and_scores.csv"
+}
