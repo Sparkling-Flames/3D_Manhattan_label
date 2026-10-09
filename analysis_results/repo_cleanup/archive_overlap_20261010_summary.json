@@ -1,0 +1,37 @@
+{
+  "archive_count": 41,
+  "archive_bytes": 812560511,
+  "fully_represented_count": 3,
+  "fully_represented_archive_bytes": 67597496,
+  "partial_count": 24,
+  "no_basename_content_match_count": 14,
+  "method": "Match ZIP member to tracked file by basename, byte size, CRC32; verify full matches byte for byte. Partial overlap is a lower bound.",
+  "source_branch": "main",
+  "source_commit": "a41e9406c829bb68645397439276b1c4ae02f5c2",
+  "exact_zip_blob_groups": [
+    [
+      "analysis_results/clustering_numeric_received_20260920/inputs/source_snapshot.zip",
+      "analysis_results/local_point_clustering_20260920/pro_local_points_20260920.zip"
+    ],
+    [
+      "analysis_results/panorama_research_received_20260921/original_package/source_snapshot.zip",
+      "analysis_results/pro_research_handoff_20260921/pro_research_20260921.zip"
+    ]
+  ],
+  "local_only_zip_count": 11,
+  "local_only_zip_bytes": 298468488,
+  "field_contract": {
+    "archive": "Repository-relative path of tracked ZIP",
+    "archive_bytes": "Archive-relative count or byte size, not Git storage cost",
+    "members": "Archive-relative count or byte size, not Git storage cost",
+    "matched_members": "Archive-relative count or byte size, not Git storage cost",
+    "matched_uncompressed_bytes": "Archive-relative count or byte size, not Git storage cost",
+    "unmatched_members": "Archive-relative count or byte size, not Git storage cost",
+    "unmatched_uncompressed_bytes": "Archive-relative count or byte size, not Git storage cost",
+    "all_members_byte_identical_to_tracked_files": "Boolean; true only after every member was compared byte for byte",
+    "sample_match": "Repository-relative tracked file matching one ZIP member",
+    "sample_unmatched": "Sample ZIP-internal member name without a basename+size+CRC32 match in tracked files",
+    "git_blob_oid": "Git blob object ID; identical ID means no second blob storage"
+  },
+  "limitations": "For partial/no matches, matching uses basename+size+CRC32, so counts are lower bounds. ZIP packaging, timestamps and manifest role are not judged redundant by content overlap alone. Local-only ZIP count includes untracked/ignored files and is not GitHub content."
+}
