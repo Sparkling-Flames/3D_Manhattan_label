@@ -23,7 +23,7 @@
 
 ## 1. 进入 Label Studio 前先核对
 
-- 界面 XML：使用同一份 [label_studio_view_config.xml](label_studio_view_config.xml)。
+- 界面 XML：使用同一份 [label_studio_view_config.xml](../../tools/label_studio/label_studio_view_config.xml)。
 - 分析模式：后续正式分析统一用 `--quality_mode v2`。
 - 如果这轮需要 active log，就先把浏览器脚本装好，并确认能写入 `active_logs/`。
 
@@ -157,7 +157,7 @@ PreScreen 这一轮，导入要和当前冻结文件对齐：
 
 ## 6. 分析、查看和保存
 
-这部分按 [analysis_results/README.md](../analysis_results/README.md) 的口径来。
+这部分按 [analysis_results/README.md](../../analysis_results/README.md) 的口径来。
 
 ### 6.1 怎么存
 

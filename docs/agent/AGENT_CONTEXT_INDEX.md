@@ -24,7 +24,7 @@
 - [当前方法摘要](../thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.md)、[执行 SOP](../thesis_main/ROUND_BASED_ASSIGNMENT_SOP_v1.md)、[统计计划](../thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md)。
 - [最终审核数据接入](../thesis_main/最终审核数据接入_20260929.md)及[统一输入](../../analysis_results/research_input_20260929/manifest.json)。仅在追溯审核时读取[二次复核 SOP](../thesis_main/两人审核归并与二次复核SOP_20260925.md)与[历史台账](../../analysis_results/review_final_20260928/README.md)。
 - [共享 x 预处理基线](../../analysis_results/shared_x_baseline_20260928/README.md)及相关输入禁止移动。预处理状态、资格与确认排列分别解释。
-- [文档总索引](../README_INDEX.md)、[项目地图](../PROJECT_MAP_CLEAN_20260308.md)、[路径速查](REPO_PATH_MAP.md)、[写入规则](WRITE_RULES.md)。
+- [文档总索引](../README_INDEX.md)、[项目地图](../PROJECT_MAP_CLEAN_20260308.md)、[历史文档目录](../thesis_main/history/README.md)、[路径速查](REPO_PATH_MAP.md)、[写入规则](WRITE_RULES.md)。
 - [CE-only 运营 SOP](../label_studio/LS_CE_ONLY_OPERATION_SOP_v1.md)只在相应运营任务中加载；离线BEV/GT分析不据此启动采集、分发或C2阶段。
 
 ## 按任务读取 playbook
