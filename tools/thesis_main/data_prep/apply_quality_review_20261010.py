@@ -65,6 +65,10 @@ def apply_data(data, update):
             else: raise ValueError('unsupported_review_operation:'+op['type'])
             if pairs != op['pairs_after']: raise ValueError('operation_pair_replay:'+rid)
         if state != d['points'] or pairs != d['pairs']: raise ValueError('review_replay_mismatch:'+rid)
+        initial=next(op['pairs_after'] for op in d['operations'] if op['type']=='pair_x')
+        def adjacency(ring):
+            return {frozenset((tuple(ring[i]),tuple(ring[(i+1)%len(ring)]))) for i in range(len(ring))}
+        order_effect='review_x_adjacency_changed' if adjacency(initial)!=adjacency(pairs) else 'review_x_candidate_retained'
         active=[p for p in state if not p.get('deleted')]; ix={p['id']:i for i,p in enumerate(active)}
         flat=[i for pair in pairs for i in pair]
         if len(flat)!=len(set(flat)) or set(flat)!=set(ix) or any(len(p)!=2 for p in pairs):
@@ -94,7 +98,7 @@ def apply_data(data, update):
         o['order_origins']=['user_completed_point_review_20261010']
         o['geometry']=geometry_status(o,order)
         o['method_evaluability']='not_assessed_per_method'
-        o['quality_review_provenance']=dict(record_id=rid,source=update['return_source'],source_sha256=update['return_sha256'],authorization=update['authorization_message_id'])
+        o['quality_review_provenance']=dict(record_id=rid,source=update['return_source'],source_sha256=update['return_sha256'],authorization=update['authorization_message_id'],order_effect=order_effect)
         old=o['repair_evidence']; old=old if isinstance(old,list) else [old]
         o['repair_evidence']=old+[dict(status='applied',source=update['return_source'],operations=copy.deepcopy(d['operations']),eligibility_changed=False)]
     policies={p['image_code']:p for p in update['image_decisions']}
@@ -130,7 +134,7 @@ def apply_bundle(loaded, update):
             r[k]=copy.deepcopy(o[k])
         r['geometry_status']=o['geometry']['status'];r['geometry_issues']=o['geometry']['issues']
         if o.get('quality_review_provenance'):
-            r['order_change']='new_pairing_and_reviewed_order'
+            r['order_change']=o['quality_review_provenance']['order_effect']
             r['order_change_evidence']=copy.deepcopy(o['quality_review_provenance'])
         if 'quality_review_20261010' in o: r['quality_review_20261010']=copy.deepcopy(o['quality_review_20261010'])
     image_map={im['image_id']:im for im in data['images']}
@@ -147,8 +151,12 @@ def apply_bundle(loaded, update):
     for name,table in research['cross_tables'].items():
         if not table:continue
         if name=='order_changes_by_kind':
-            added=[o['object_id'] for o in data['objects'] if o.get('quality_review_provenance')]
-            table.append(dict(dimensions=dict(object_kind='annotation',change='new_pairing_and_reviewed_order'),n=len(added),ids=added))
+            effects=defaultdict(list)
+            for o in data['objects']:
+                if o.get('quality_review_provenance'):
+                    effects[o['quality_review_provenance']['order_effect']].append(o['object_id'])
+            for change,ids in sorted(effects.items()):
+                table.append(dict(dimensions=dict(object_kind='annotation',change=change),n=len(ids),ids=ids))
             continue
         fields=list(table[0]['dimensions']);items=research['images'] if name in {'gt_marks','scene_images'} else research['annotations']
         old_ids={i for row in table for i in row['ids']}
