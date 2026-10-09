@@ -9,7 +9,8 @@
     "final_orders": "final_review/received_orders.json",
     "validation": "validation.json",
     "field_contract": "field_contract.json",
-    "research_field_contract": "research_tables_field_contract.json"
+    "research_field_contract": "research_tables_field_contract.json",
+    "quality_update": "quality_update_20261010.json"
   },
   "additional_tables": [
     {
@@ -143,6 +144,9 @@
     ],
     "limitation": "机器一致性验证，不宣称所有标注人工确认或方法可计算；人工未决和未知来源继续保留。"
   },
-  "consumer_rule": "从本manifest相对路径读取；preprocessed_source只负责坐标及最终状态，汇总和评论不覆盖裁决。历史源路径仅用于追溯。",
-  "privacy": "含原始评论和内部身份，仅本地分析；不是可直接公开的数据包。"
+  "consumer_rule": "正式读取使用load_current_bundle或load_current_input；底层preprocessed_source为冻结基线，必须应用quality_update增量。历史直接读取基线仅可复现旧结果。",
+  "privacy": "含原始评论和内部身份，仅本地分析；不是可直接公开的数据包。",
+  "effective_input_revision": "quality_review_20261010_v1",
+  "validation_scope": "frozen baseline; effective validation returned by loader",
+  "effective_validation_report": "quality_update_validation_20261010.json"
 }

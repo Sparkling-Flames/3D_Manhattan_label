@@ -1,5 +1,7 @@
 # HOHONET 项目地图
 
+- 质量研究最新：[正式输入与边界](thesis_main/质量研究正式输入与待研究问题_20261010.md)、[Pro独立研究资料](../research/quality_scope_handoff_20261010/README.md)。14份点位审核已接入正式loader；共同小范围和非正交质量方案仍待研究。
+
 - 259图全量难度/范围复核：[分层标准与字段合同](thesis_main/图片难度全量复核与分层标准_20261010.md)、[全量报告](../analysis_results/image_difficulty_full_review_20261010/REPORT.md)、[人工粗审页](../analysis_results/image_difficulty_full_review_20261010/review.html)。259图3152份台账，13张范围优先候选、20张改档建议；尚待用户粗审，旧工作表保留。
 
 更新：2026-10-09。仓库用于半自动全景布局标注与研究。当前方法版本为 `consensus_research_20260923_v1`；日期化实验结论以各自唯一报告为准。

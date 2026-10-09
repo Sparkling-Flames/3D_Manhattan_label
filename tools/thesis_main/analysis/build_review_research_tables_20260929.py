@@ -32,7 +32,7 @@ def cross(items, fields, id_key='object_id'):
 
 
 def build():
-    data = load_current_input()
+    data = load_current_input(apply_updates=False)  # historical builder; formal loader applies current layer
     source = indexed(data['objects'], 'object_id')
     ann = [o for o in data['objects'] if o['object_kind'] == 'annotation']
     changes = indexed(rows(FINAL / '逐对象改序及审核来源.csv'), 'object_id')

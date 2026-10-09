@@ -176,12 +176,15 @@ def build():
     return result
 
 
-def load_current_input():
+def load_current_input(*, apply_updates=True):
     """唯一当前读取入口；历史脚本仍读取其冻结版本。"""
     contract = read(CONTRACT)
     result = read(ROOT / contract['data']['preprocessed_source'])
     if result['schema'] != SCHEMA or result['contract_version'] != contract['contract_version']:
         raise ValueError('current_input_schema_or_contract_mismatch')
+    if apply_updates and contract['data'].get('quality_update'):
+        from .apply_quality_review_20261010 import apply_data
+        result=apply_data(result,read(ROOT/contract['data']['quality_update']))
     return result
 
 

@@ -28,14 +28,15 @@
 - `data.unbound`：保留，列为待审/不可评价，不猜配对或补点
 - `data.raw_mutation`：False
 - `data.preprocessed_source`：analysis_results/research_input_20260929/preprocessed_source.json
-- `data.preprocessed_source_scope`：最终审核接入：3152份人员/259研究图、259份原始GT及30份人工GT（其中2份为研究图外参考）。原导出点经已确认删补及最终配对后共享周期平均x，y不变；1295份确认环独立保存，默认未审不冒充确认。不可配对为null，不回退原点。2923保留、11保留待定、85排除、133历史未纳入；历史结果不追改。
+- `data.preprocessed_source_scope`：冻结20260929基线保留；20261010正式读取额外接入14份点/配对/环复核及图片质量说明，不恢复人员/重复作答资格。完整当前计数由loader验证返回。
 - `data.analysis_input_schema`：final_review_research_input_v1
 - `data.analysis_bundle`：analysis_results/research_input_20260929/manifest.json
 - `data.analysis_bundle_loader`：tools.thesis_main.data_prep.consolidate_research_input.load_current_bundle
-- `data.analysis_bundle_rule`：后续分析统一从manifest读取同目录的预处理输入、研究解释、评论及最终统计；preprocessed_source是包内坐标及最终状态视图。来源目录只用于追溯，不混读不同批次。
+- `data.analysis_bundle_rule`：正式输入为冻结基线加quality_update授权增量，必须用load_current_bundle/load_current_input；manifest登记增量。历史直接读取冻结JSON只复现旧版本，不代表当前输入。
 - `data.current_input_loader`：tools.thesis_main.data_prep.materialize_current_research_input.load_current_input
 - `data.accepted_snapshot_role`：3019及2481为清洗前历史输入计数，不是当前分析分母。当前数量读取接入summary并按方法报告资格/失败。
 - `data.final_input_eligibility`：main_quality_gate、main_consensus_gate承接现有裁决；candidate不是最终可评价。独立票候选另检查清洗、借用点和真人去重；每方法可计算性另核验。近180度中间点不自动删除，可能表达停止区域。
+- `data.quality_update`：analysis_results/research_input_20260929/quality_update_20261010.json
 - `cleaning.review_continuation_20260928`：明确后续说明与续审issue优先于旧表单pending；仅覆盖涉及对象。原件保留，机器全量台账3152份含133份历史未纳入，不自动恢复资格。改善建议不授权修复。
 - `cleaning.review_sop`：docs/thesis_main/两人审核归并与二次复核SOP_20260925.md
 - `cleaning.review_scope_20260925`：两份用户JSON为主；一正独审图和任一作者全部排除作答必须复核；补点请求、同图图片背景和相似标法处理差异保留来源。作者选项含义分开，不直接合并。

@@ -80,6 +80,12 @@ def project_bundle(bundle):
         unique_recorded_texts=len({c['text'] for c in bundle['comments']['comments'] if c['text_role']=='recorded_text'}),
         privacy='Full comments were reviewed; this alias panel contains only allowlisted structured evidence. Authorized mappings/comments are separately public in the repository (2026-10-01)',
         interpretation='Scope/detail evidence can coexist; no automatic semantic classification from metrics, point count, keywords or missing marks')
+    if bundle.get('quality_update'):
+        panel['quality_research_policy']=bundle['quality_update']['confirmed_policy']
+        panel['source_manifest']['quality_update_revision']=bundle['quality_update']['revision']
+        decisions={d['image_code']:d for d in bundle['quality_update']['image_decisions']}
+        for im in panel['images']:
+            if im['code'] in decisions: im['quality_review_20261010']=decisions[im['code']]
     return panel,mapping
 
 

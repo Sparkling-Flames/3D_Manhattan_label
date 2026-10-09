@@ -7,7 +7,7 @@ def test_bundle_consistency_and_corruption_rejected():
     b=load_current_bundle()
     v=b['validation']
     assert v['status']=='passed'
-    assert (v['objects'],v['annotations'],v['research_images'],v['reference_only_images'],v['confirmed_orders'])==(3441,3152,259,2,1295)
+    assert (v['objects'],v['annotations'],v['research_images'],v['reference_only_images'],v['confirmed_orders'])==(3441,3152,259,2,1309)
     assert v['comment_occurrences']==b['comments']['summary']['occurrences']
     assert len(b['manifest']['additional_tables'])>=20
     o=next(o for o in b['data']['objects'] if o['preprocessing_status']=='ready')

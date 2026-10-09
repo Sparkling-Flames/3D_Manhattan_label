@@ -115,6 +115,11 @@ def build():
         additional_tables=files,validation=validation,
         consumer_rule='从本manifest相对路径读取；preprocessed_source只负责坐标及最终状态，汇总和评论不覆盖裁决。历史源路径仅用于追溯。',
         privacy='含原始评论和内部编号；2026-10-01已授权公开映射与原评语。当前可见范围见README，独立面板仍按白名单投影。')
+    update_path=OUT/'quality_update_20261010.json'
+    if update_path.exists():
+        manifest['entrypoints']['quality_update']=update_path.name
+        manifest['effective_input_revision']=read(update_path)['revision']
+        manifest['consumer_rule']='Use load_current_bundle/load_current_input; apply the authorized quality_update to the frozen baseline.'
     dump(OUT/'manifest.json',manifest)
     return manifest
 
@@ -136,6 +141,12 @@ def load_current_bundle():
         raise ValueError('final_order_snapshot_mismatch')
     if (ROOT/read(CONTRACT)['data']['preprocessed_source']).resolve()!=(path.parent/manifest['entrypoints']['data']).resolve():
         raise ValueError('contract_coordinate_entry_mismatch')
+    if 'quality_update' in loaded:
+        from .apply_quality_review_20261010 import apply_bundle
+        loaded=apply_bundle(loaded,loaded['quality_update'])
+        loaded['validation']=validate_bundle(loaded['data'],loaded['research'],loaded['comments'],loaded['final_summary'])
+        if {o['object_id']:o['order_record'] for o in loaded['data']['objects'] if o['ring_confirmed']}!=loaded['final_orders']['records']:
+            raise ValueError('effective_final_order_snapshot_mismatch')
     return dict(manifest=manifest,**loaded)
 
 

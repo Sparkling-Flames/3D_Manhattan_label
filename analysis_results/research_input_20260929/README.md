@@ -1,3 +1,5 @@
+> 2026-10-10：正式输入须经loader应用quality_update_20261010.json；下文旧统计为冻结基线。当前接入见../../docs/thesis_main/质量研究正式输入与待研究问题_20261010.md。
+
 # 最终审核研究输入
 
 唯一完整分析入口：[manifest.json](manifest.json)，由当前机器合同`data.analysis_bundle`指定。预处理、研究解释、评论和最终统计均在本目录内；原目录作为历史来源保留。
