@@ -1,0 +1,55 @@
+{
+  "schema": "difficulty_strata_20261009_v2",
+  "parent": "analysis_results\\objective_difficulty_20261009",
+  "sources": [
+    "analysis_results/review_source_audit_20261004/corrected_inventory/input.json",
+    "analysis_results/difficulty_consensus_20261006/user_review.json",
+    "analysis_results/difficulty_full_20261007/updated/human_review.json"
+  ],
+  "counts": {
+    "images": 259,
+    "complete": 156,
+    "ordinary_complete": 136,
+    "ordinary_labelled": 42,
+    "scene_strata": {
+      "clear": 35,
+      "doorway_difficult": 15,
+      "unflagged": 181,
+      "oos": 23,
+      "doorway_annotatable": 2,
+      "oos_and_doorway": 2,
+      "oos_pending": 1
+    },
+    "scored_strata": {
+      "clear": 17,
+      "unflagged": 119,
+      "oos": 10,
+      "doorway_difficult": 6,
+      "doorway_annotatable": 1,
+      "oos_and_doorway": 2,
+      "oos_pending": 1
+    },
+    "oos": {
+      "not_oos": 37,
+      "not_recorded": 196,
+      "confirmed": 25,
+      "pending": 1
+    },
+    "doorway": {
+      "none": 37,
+      "difficult": 17,
+      "not_recorded": 203,
+      "annotatable": 2
+    }
+  },
+  "baseline": "继承首轮标签盲基线及156图冻结参照；逐图验证原特征、分数完全相同；不按场景加分",
+  "axes": "独立oos_status与doorway_status；旧scene只为历史分组。最新非空逐轴覆盖，空白不撤销；变化单列。是门洞不能新推困难。",
+  "doorway_sources": "doorway_source为最新门洞存在性状态来源；doorway_annotation_source另保留继承的难标/可标记录来源，两者不混同",
+  "clear": "只有显式not_oos+none为clear；unflagged只是未标特殊，不认证正常或无歧义",
+  "applicability": "特殊/待定图只保留模型代理诊断，主观校准分null；不意味着不可标或自动排除",
+  "calibration": "冻结原136图/42标签留建筑预测，检查名单和标签不变；clear/unflagged子集只是诊断，不是各自重训",
+  "evidence": "稳定非正交、范围标签/既有账本/评论候选和GT标记分别保留；false仅未见对应记录，GT标记不是版本裁决",
+  "distributions": "同时输出各特征可用样本与共同完整样本分布；各轴分组存在重合，不能相加为图数",
+  "discordance": "只用同折外层baseline/calibrated对标签0/.5/1的固定残差；主观等距编码是约定；个案用于解释不验证或逐图调分",
+  "validation": "相关测试见评分说明；未运行模型，上游训练/参照库建筑独立性未核实"
+}

@@ -1,0 +1,36 @@
+{
+  "schema": "hohonet_difficulty_probe_20261009_v1",
+  "checkpoint": "D:\\Work\\HOHONET\\ckpt\\mp3d_layout_HOHO_layout_aug_efficienthc_Transen1_resnet34\\ep300.pth",
+  "config": "D:\\Work\\HOHONET\\config\\mp3d_layout\\HOHO_layout_aug_efficienthc_Transen1_resnet34.yaml",
+  "model_loader": "tools.thesis_main.registry.hohonet_feature_backend.load_model; strict local state_dict; pretrained=False",
+  "torch": "2.10.0+cpu",
+  "device": "cpu",
+  "threads": 4,
+  "input_size": [
+    512,
+    1024
+  ],
+  "shifts": [
+    0,
+    256,
+    512,
+    768
+  ],
+  "source": "local test/valid PNG preferred; otherwise annotation JPG, each path recorded",
+  "population": "all259 research images",
+  "trace": "原模型infer，临时截取gen_ww实际调用/返回；一般解码后转force_cuboid才记fallback；forced change/infer按原action计数",
+  "boundary_correction": "camera包含且有效的最终点原环按球面墙边重建单值每列上下边界，top z=-50/bottom z=+50；与raw y_bon像素差平均乘180/512。包含墙拟合/高度统一/回退的综合改变量，不是GT误差、非正交程度或遮挡比例",
+  "stability": "对输入循环右移0/256/512/768后推理，raw bon/cor反向左移对齐，平均非零相位到0的绝对差；只测该模型对yaw的稳定性",
+  "limitations": "后处理约束不是独立真实结构；重放fallback不是历史实际初始化证据；低变化不证明容易或正确。未按主观/GT调参，标签只在推理后分组。",
+  "summary": {
+    "images": 259,
+    "complete": 259,
+    "failed": 0,
+    "phase0_fallback_images": 0,
+    "any_phase_fallback_images": 0,
+    "rotation_changes_pair_count_images": 23,
+    "archived_count_compared": 236,
+    "archived_count_different": 1,
+    "elapsed_seconds": 346.5194748999993
+  }
+}

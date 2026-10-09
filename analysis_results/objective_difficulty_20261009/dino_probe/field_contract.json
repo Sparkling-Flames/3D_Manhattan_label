@@ -1,0 +1,55 @@
+{
+  "schema": "difficulty_dino_probe_20261009_v1",
+  "cache": "D:\\Work\\HOHONET\\output\\image_portrait_20260914_v1\\raw\\dinov3",
+  "layer": "fixed block12 norm=True patch, float16 cache -> float32 summary; no CLS/register mixing",
+  "descriptor": "each of six cube faces mean patch vector L2-normalized, mean six then L2-normalized; 768 dims",
+  "dispersion": "four horizontal faces separately mean cosine distance of patch token to that face mean vector, average four; pixel patches equal weight",
+  "novelty": "mean five nearest cosine distances to ordinary training images of other buildings; recomputed within each outer AND inner fold",
+  "primary_panel": 216,
+  "all_images": 259,
+  "labels": 112,
+  "role": "visual distribution deviation and within-view visual heterogeneity; NOT structure/occlusion/difficulty ground truth",
+  "source_boundary": "cached recorded paths match HoHo research source; historical extraction bytes not frozen, not certified current-byte-identical",
+  "validation": "retrospective design; mixed subjective labels; building nested only separates this run refs/ranks/weight tuning; no checkpoint training independence proof",
+  "directions": "both larger as exploratory hypothesis; directions/layer/neighbour5 fixed before current DINO subjective evaluation",
+  "fitting": "same nonnegative .25 weight grid plus equal weight; simple/middle/hard working targets0/.5/1; building equal MSE",
+  "exclusions": "OOS/doorway/pending retain individual dispersion/descriptors only; excluded from ordinary references and calibration",
+  "source_metadata": "D:\\Work\\HOHONET\\output\\links\\repo\\analysis_results\\image_portrait_20260914_v1\\metadata\\images.jsonl",
+  "neighbour_audit": "outer all queries; inner labelled validation queries; reference sizes and exact5 identities/buildings",
+  "deployment": "does not overwrite earlier scores or establish three-class cutoffs",
+  "candidates": {
+    "point_only": [
+      0
+    ],
+    "current_three": [
+      0,
+      1,
+      2
+    ],
+    "dino_novelty_only": [
+      3
+    ],
+    "dino_dispersion_only": [
+      4
+    ],
+    "three_plus_novelty": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "three_plus_dispersion": [
+      0,
+      1,
+      2,
+      4
+    ],
+    "all_five": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  }
+}

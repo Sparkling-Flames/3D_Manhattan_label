@@ -1,0 +1,19 @@
+{
+  "checkpoint": "D:\\Work\\Manhattan_3D\\Bi_layout\\checkpoints\\Bi_Layout_Net\\mp3d\\mp3d_best_model.pkl",
+  "config": "D:\\Work\\Manhattan_3D\\Bi_layout\\src\\config\\mp3d.yaml",
+  "backend": "D:\\Work\\Manhattan_3D\\Bi_layout",
+  "branch_mapping": {
+    "extended": "depth",
+    "enclosed": "new_depth"
+  },
+  "n": 259,
+  "device": "cpu",
+  "torch": "2.10.0+cu130",
+  "numpy": "1.26.4",
+  "seconds": 305.69748570000047,
+  "preprocessing": "original exporter read_image; RGB/255; AREA resize only if needed; no GT",
+  "network_download_disabled": true,
+  "checkpoint_load": "strict",
+  "fixed_reference_training_overlap": "not_independently_verified",
+  "outputs": "unfitted 256-bin radial depth heads and shared predicted ratio; not probability/confidence"
+}

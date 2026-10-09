@@ -1,0 +1,48 @@
+{
+  "counts": {
+    "all_images": 259,
+    "hohonet_complete": 259,
+    "bilayout_raw_complete": 259,
+    "old_common": 136,
+    "old_common_labelled": 42,
+    "expanded_raw": 216,
+    "expanded_raw_labelled": 112,
+    "correction_available": 162,
+    "correction_labelled": 84
+  },
+  "outcomes": [
+    {
+      "panel": "old_common",
+      "candidate_mse": 0.06456244650158516,
+      "point_count_mse": 0.06456244650158516,
+      "candidate_lower_loss_than_point_only": false,
+      "weights_frequency": {
+        "[1.0, 0.0, 0.0]": 22
+      },
+      "evaluated_weights_frequency": {
+        "[1.0, 0.0, 0.0]": 14
+      }
+    },
+    {
+      "panel": "expanded_raw",
+      "candidate_mse": 0.12371830680024723,
+      "point_count_mse": 0.11666584366539284,
+      "candidate_lower_loss_than_point_only": false,
+      "weights_frequency": {
+        "[1.0, 0.0, 0.0]": 19,
+        "[0.75, 0.0, 0.25]": 3
+      },
+      "evaluated_weights_frequency": {
+        "[1.0, 0.0, 0.0]": 15,
+        "[0.75, 0.0, 0.25]": 3
+      }
+    }
+  ],
+  "image_source_audit": {
+    "images": 259,
+    "rgb_mae_255_median": 0.0,
+    "rgb_mae_255_max": 0.0,
+    "best_nonzero_quarter_roll": 0,
+    "method": "RGB uint8, HoHo source BOX resize to Bi source size; four quarter rolls only diagnostic, no input alteration"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "difficulty_bilayout_probe_20261009_v1",
+  "population": "current load_current_bundle research.images; all 259; no scene/difficulty exclusion",
+  "input": "inputs.json",
+  "geometry": "geometry.csv",
+  "raw": "raw.csv",
+  "yaw": "yaw.csv",
+  "branches": {
+    "extended": "depth",
+    "enclosed": "new_depth"
+  },
+  "model_config": "D:\\Work\\Manhattan_3D\\Bi_layout\\src\\config\\mp3d.yaml",
+  "model_checkpoint": "D:\\Work\\Manhattan_3D\\Bi_layout\\checkpoints\\Bi_Layout_Net\\mp3d\\mp3d_best_model.pkl",
+  "postprocessed_export": "D:\\Work\\Manhattan_3D\\Bi_layout\\exports\\mp3d_dual_predictions",
+  "geometry_metric": "existing audit.footprint/dp; source-order BEV 1-IoU at camera floor height normalization; no repair",
+  "raw_relative_gap": "mean(abs(extended-enclosed))/mean((extended+enclosed)/2), positive finite 256-bin heads only",
+  "raw_signed": "mean(extended-enclosed)/same denominator; positive means extended mean depth larger",
+  "yaw_alignment": "input horizontal positive roll 128/256 px; inverse depth np.roll by -32/-64 bins before relative-gap comparison",
+  "missing": "None/empty CSV for missing, invalid, nonfinite, nonpositive; genuine equal positive heads yield zero",
+  "interpretation": "model head variation/equivariance; not confidence, occlusion, human annotation difficulty or validated objective score",
+  "boundary": "fixed downloaded checkpoint; supplied split building separation is not proof of actual checkpoint training/selection independence",
+  "provenance": "backend export_split/run_metadata + no-download runtime; no source edits, no training, no human difficulty/GT input"
+}

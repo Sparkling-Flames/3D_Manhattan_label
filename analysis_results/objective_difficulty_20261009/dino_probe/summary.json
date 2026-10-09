@@ -1,0 +1,173 @@
+{
+  "all_images": 259,
+  "ordinary": 216,
+  "metrics": [
+    {
+      "candidate": "point_only",
+      "score": "baseline_score",
+      "n": 112,
+      "spearman": 0.6880787163609164,
+      "concordance": 0.8714635473340587,
+      "comparable_pairs": 3676,
+      "buildings": 18,
+      "building_equal_mse": 0.11666584366539284
+    },
+    {
+      "candidate": "point_only",
+      "score": "calibrated_score",
+      "n": 112,
+      "spearman": 0.6880787163609164,
+      "concordance": 0.8714635473340587,
+      "comparable_pairs": 3676,
+      "buildings": 18,
+      "building_equal_mse": 0.11666584366539284
+    },
+    {
+      "candidate": "current_three",
+      "score": "baseline_score",
+      "n": 112,
+      "spearman": 0.513251339270408,
+      "concordance": 0.7704026115342764,
+      "comparable_pairs": 3676,
+      "buildings": 18,
+      "building_equal_mse": 0.1439425928898941
+    },
+    {
+      "candidate": "current_three",
+      "score": "calibrated_score",
+      "n": 112,
+      "spearman": 0.6660082311722059,
+      "concordance": 0.8584058759521219,
+      "comparable_pairs": 3676,
+      "buildings": 18,
+      "building_equal_mse": 0.12371830680024723
+    },
+    {
+      "candidate": "dino_novelty_only",
+      "score": "baseline_score",
+      "n": 112,
+      "spearman": -0.10918643778168732,
+      "concordance": 0.4428726877040261,
+      "comparable_pairs": 3676,
+      "buildings": 18,
+      "building_equal_mse": 0.3111772967831049
+    },
+    {
+      "candidate": "dino_novelty_only",
+      "score": "calibrated_score",
+      "n": 112,
+      "spearman": -0.10918643778168732,
+      "concordance": 0.4428726877040261,
+      "comparable_pairs": 3676,
+      "buildings": 18,
+      "building_equal_mse": 0.3111772967831049
+    },
+    {
+      "candidate": "dino_dispersion_only",
+      "score": "baseline_score",
+      "n": 112,
+      "spearman": 0.014294898167930099,
+      "concordance": 0.5063928182807399,
+      "comparable_pairs": 3676,
+      "buildings": 18,
+      "building_equal_mse": 0.25041600527732893
+    },
+    {
+      "candidate": "dino_dispersion_only",
+      "score": "calibrated_score",
+      "n": 112,
+      "spearman": 0.014294898167930099,
+      "concordance": 0.5063928182807399,
+      "comparable_pairs": 3676,
+      "buildings": 18,
+      "building_equal_mse": 0.25041600527732893
+    },
+    {
+      "candidate": "three_plus_novelty",
+      "score": "baseline_score",
+      "n": 112,
+      "spearman": 0.42835950409305396,
+      "concordance": 0.7289173014145811,
+      "comparable_pairs": 3676,
+      "buildings": 18,
+      "building_equal_mse": 0.16089373238266055
+    },
+    {
+      "candidate": "three_plus_novelty",
+      "score": "calibrated_score",
+      "n": 112,
+      "spearman": 0.6660082311722059,
+      "concordance": 0.8584058759521219,
+      "comparable_pairs": 3676,
+      "buildings": 18,
+      "building_equal_mse": 0.12371830680024723
+    },
+    {
+      "candidate": "three_plus_dispersion",
+      "score": "baseline_score",
+      "n": 112,
+      "spearman": 0.5527179928444997,
+      "concordance": 0.7913492927094669,
+      "comparable_pairs": 3676,
+      "buildings": 18,
+      "building_equal_mse": 0.13870537184455267
+    },
+    {
+      "candidate": "three_plus_dispersion",
+      "score": "calibrated_score",
+      "n": 112,
+      "spearman": 0.6660082311722059,
+      "concordance": 0.8584058759521219,
+      "comparable_pairs": 3676,
+      "buildings": 18,
+      "building_equal_mse": 0.12371830680024723
+    },
+    {
+      "candidate": "all_five",
+      "score": "baseline_score",
+      "n": 112,
+      "spearman": 0.4399351666449235,
+      "concordance": 0.7315016322089227,
+      "comparable_pairs": 3676,
+      "buildings": 18,
+      "building_equal_mse": 0.15490246865233614
+    },
+    {
+      "candidate": "all_five",
+      "score": "calibrated_score",
+      "n": 112,
+      "spearman": 0.6660082311722059,
+      "concordance": 0.8584058759521219,
+      "comparable_pairs": 3676,
+      "buildings": 18,
+      "building_equal_mse": 0.12371830680024723
+    }
+  ],
+  "evaluated_weight_frequencies": {
+    "point_only": {
+      "[1.0]": 18
+    },
+    "current_three": {
+      "[1.0, 0.0, 0.0]": 15,
+      "[0.75, 0.0, 0.25]": 3
+    },
+    "dino_novelty_only": {
+      "[1.0]": 18
+    },
+    "dino_dispersion_only": {
+      "[1.0]": 18
+    },
+    "three_plus_novelty": {
+      "[1.0, 0.0, 0.0, 0.0]": 15,
+      "[0.75, 0.0, 0.25, 0.0]": 3
+    },
+    "three_plus_dispersion": {
+      "[1.0, 0.0, 0.0, 0.0]": 15,
+      "[0.75, 0.0, 0.25, 0.0]": 3
+    },
+    "all_five": {
+      "[1.0, 0.0, 0.0, 0.0, 0.0]": 15,
+      "[0.75, 0.0, 0.25, 0.0, 0.0]": 3
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "schema": "objective_difficulty_20261009_v1",
+  "features": [
+    "hohonet_offline_pair_count",
+    "d_model_feat_static",
+    "bilayout_floor_gap"
+  ],
+  "feature_definitions": {
+    "hohonet_offline_pair_count": {
+      "meaning": "HoHoNet ep300离线重放原数组中的上下点对数，未经新的人为修正；不是历史实际预标注暴露点数。",
+      "source": "analysis_results/uncertainty_cloud_inputs_20260906_v1/models/layouts.jsonl",
+      "source_role": "offline_ep300_replay",
+      "limitation": "约束后处理和四角回退可能简化输出；不等同真实角数、几何复杂度或已验证难度。",
+      "training_overlap_status": "not_independently_verified",
+      "checkpoint_selection_target_gt_use": "unknown_not_verified"
+    },
+    "d_model_feat_static": {
+      "meaning": "历史global图像描述符经冻结reference PCA与scale变换后，到reference描述符5近邻的平均欧氏距离；图像分布偏离。",
+      "source": "analysis_results/c2b_validation_static_20260802_v16/static/c2b_static_model_risk.csv",
+      "manifest": "analysis_results/c2b_validation_static_20260802_v16/static/c2_feature_freeze_manifest.json",
+      "definition_code": "tools/thesis_main/analysis/c2b_static_evidence.py:materialize_static_model_risk",
+      "limitation": "历史reference图像池与尺度；不是几何失败、人员质量或当前任务已验证难度。",
+      "reference_pool": "冻结历史reference，1647图；原审计路径/内容不重合通过，但本次未证明建筑独立。",
+      "target_building_overlap_status": "unknown_not_verified",
+      "evaluation_limit": "固定历史特征下的回顾性留建筑评估，不能声称整个PCA/5NN/模型链条在新建筑上独立泛化。"
+    },
+    "bilayout_floor_gap": {
+      "meaning": "同一BiLayout模型enclosed/extended头，按源点序、相机高度归一化声明底面之间的1-IoU；只接floor_status=computable。",
+      "source": "analysis_results/independent_direction_worker_review_20260908_v1/recomputed/bilayout_recomputed_per_image.csv",
+      "upstream_layouts": "analysis_results/uncertainty_cloud_inputs_20260906_v1/models/layouts.jsonl",
+      "definition_code": "tools/thesis_main/analysis/review_bilayout_logic_20260908.py + archive audit.footprint/dp",
+      "limitation": "双头差异可反映范围差异；不是模型到GT误差；原顺序不可计算保留None，不做x排序修补。",
+      "training_overlap_status": "not_independently_verified_do_not_infer_from_split_name",
+      "checkpoint_selection_target_gt_use": "unknown_not_verified"
+    },
+    "bilayout_legacy_band": {
+      "meaning": "历史球面投影ERP墙带1-IoU；与BEV floor分别存储，未进入基线评分。",
+      "source": "analysis_results/independent_direction_worker_review_20260908_v1/recomputed/bilayout_recomputed_per_image.csv"
+    },
+    "hohonet_floor_valid": {
+      "meaning": "已有审计中源点序声明底面是否有效且包含相机；未知None，不代表曼哈顿正交性或人类可标性。",
+      "source": "analysis_results/uncertainty_visual_review_20260907_v1/reproduced_numerical/measurement/layout_audit.csv"
+    },
+    "hohonet_fallback_used": {
+      "meaning": "原模型资料未逐图记录回退，全部None；不能由四点输出猜测。",
+      "source": "analysis_results/uncertainty_cloud_inputs_20260906_v1/models/MODEL_PROVENANCE.json"
+    },
+    "hohonet_legacy_pair_count": {
+      "meaning": "candidate_prescreen_legacy_output原数组点对数，保持与ep300重放独立；不假定等于所有阶段实际暴露。",
+      "source": "analysis_results/uncertainty_cloud_inputs_20260906_v1/models/layouts.jsonl"
+    }
+  },
+  "unit": "图片；分数为模型代理难度的样本相对百分位，不是固有难度或错误概率",
+  "baseline": "特征越大暂定代理难度越高；共同完整特征面板经验中秩/样本量，各轴等权均值乘100；不读人工标签/人员作答/GT；reference.json冻结参照，holdout文件的baseline另用外层训练普通场景参照，不混称同一数值",
+  "missing": "缺任一评分特征总分为null；可用单轴百分位另列，不补0、不改权重、不比较缺失组合的总分",
+  "subjective": "简单/中等/困难编码0/1/2；是主观评价，不是真值；仅普通场景校准",
+  "subjective_source_counts": {
+    "analysis_results/candidate_selection_review_20260913_v2/用户审查原始记录.json": 24,
+    "resolved_image_traits": 15,
+    "analysis_results/difficulty_full_20261007/updated/human_review.json": 3
+  },
+  "subjective_construct": "历史标签混合审图对共识过程的预期和后续主观难度；未证实统一执行难度口径，不宣称盲标",
+  "calibration": "外层整建筑留出；内层整建筑留出，每折仅训练建筑特征经验分布；非负权重步长0.25且和1，另含等权候选；最小建筑等权MSE，标签映射0/0.5/1；不足两内层标签建筑回退等权",
+  "evaluation": "外层留出预测与等权同折基线比较；Spearman、序对一致率及建筑等权MSE；无显著性或因果结论，已见历史资料的回顾性检验；上游模型训练和静态特征库没有在每折重训，故不是全链条新建筑独立验证",
+  "validation": "已有Lee普通Manual质量兼容、原GT、固定k面板；两规则分别；相关不分离人员/图片噪声，不用于评分调参",
+  "sources": [
+    "analysis_results/research_input_20260929/manifest.json",
+    "analysis_results/difficulty_full_20261007/updated/coverage.csv",
+    "analysis_results/difficulty_full_20261007/updated/curves.csv",
+    "analysis_results/consensus_response_20261006/all_pool_summary.csv"
+  ],
+  "counts": {
+    "images": 259,
+    "complete": 156,
+    "ordinary_complete": 136,
+    "ordinary_labelled": 42
+  },
+  "calibrated_weights": [
+    1.0,
+    0.0,
+    0.0
+  ],
+  "deployment": "保留标签盲基线为研究v1；calibrated_reference保存全普通面板选权后的主观校准候选，不默认替换基线；性能仅从外层留出评价；未拟合自然难度等级或通用阈值"
+}

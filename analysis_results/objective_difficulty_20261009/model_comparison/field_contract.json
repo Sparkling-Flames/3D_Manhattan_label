@@ -1,0 +1,67 @@
+{
+  "schema": "difficulty_model_comparison_20261009_v1",
+  "counts": {
+    "all_images": 259,
+    "hohonet_complete": 259,
+    "bilayout_raw_complete": 259,
+    "old_common": 136,
+    "old_common_labelled": 42,
+    "expanded_raw": 216,
+    "expanded_raw_labelled": 112,
+    "correction_available": 162,
+    "correction_labelled": 84
+  },
+  "features": [
+    "hohonet_replay_pair_count",
+    "hohonet_rotation_mae_deg",
+    "bilayout_raw_relative_gap"
+  ],
+  "feature_directions": "larger temporarily means stronger model proxy signal; not validated human difficulty",
+  "source_paths": [
+    "stratified/features_and_scores.csv",
+    "hohonet_probe/per_image.csv",
+    "bilayout_probe/research_source/raw.csv"
+  ],
+  "primary": "同面板普通图的新3候选：重放点数/raw边界yaw变化/Bi raw双头差；嵌套建筑留出，首先对比同折点数单轴",
+  "supplementary": "raw到最终边界综合改变量仅在可计算普通图上单轴检查；多值/相机外/无效底面不补0，不纳入主3轴",
+  "panel": "old_common新旧特征共同可算普通图，双方重新同面板留出；expanded_raw另算更大普通面板，不将样本增多当性能提升",
+  "fitting": "复用既有经验百分位、0.25非负权重网格加等权、内外建筑留出；主观标签0/0.5/1仅为工作损失",
+  "validation_boundary": "看过历史标签/个案后设计特征，嵌套只隔离本轮归一化和选权；非新盲验证，不报告因果或显著性；模型训练/选参独立性未证明",
+  "deployment": "新候选不默认替换首轮分数；特殊图只保存原轴/原始信号，不参与普通主观校准",
+  "image_source_audit": {
+    "images": 259,
+    "rgb_mae_255_median": 0.0,
+    "rgb_mae_255_max": 0.0,
+    "best_nonzero_quarter_roll": 0,
+    "method": "RGB uint8, HoHo source BOX resize to Bi source size; four quarter rolls only diagnostic, no input alteration"
+  },
+  "superseded_source_comparison": "model_comparison_external_source_snapshot retains first comparison on distinct model-local copies; not primary evidence",
+  "outcomes": [
+    {
+      "panel": "old_common",
+      "candidate_mse": 0.06456244650158516,
+      "point_count_mse": 0.06456244650158516,
+      "candidate_lower_loss_than_point_only": false,
+      "weights_frequency": {
+        "[1.0, 0.0, 0.0]": 22
+      },
+      "evaluated_weights_frequency": {
+        "[1.0, 0.0, 0.0]": 14
+      }
+    },
+    {
+      "panel": "expanded_raw",
+      "candidate_mse": 0.12371830680024723,
+      "point_count_mse": 0.11666584366539284,
+      "candidate_lower_loss_than_point_only": false,
+      "weights_frequency": {
+        "[1.0, 0.0, 0.0]": 19,
+        "[0.75, 0.0, 0.25]": 3
+      },
+      "evaluated_weights_frequency": {
+        "[1.0, 0.0, 0.0]": 15,
+        "[0.75, 0.0, 0.25]": 3
+      }
+    }
+  ]
+}

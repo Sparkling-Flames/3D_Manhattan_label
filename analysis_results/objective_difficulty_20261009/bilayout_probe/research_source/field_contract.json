@@ -1,0 +1,30 @@
+{
+  "schema": "bilayout_research_source_raw_20261009_v1",
+  "population": "same259 image_id as base inputs.json and HoHoNet per_image.csv; file existence + code/building exact match",
+  "source_table": "D:\\Work\\HOHONET\\analysis_results\\objective_difficulty_20261009\\hohonet_probe\\per_image.csv",
+  "input": "inputs.json",
+  "outputs": "raw.csv",
+  "raw_arrays": "raw/*.npz",
+  "branch_mapping": {
+    "extended": "depth",
+    "enclosed": "new_depth"
+  },
+  "checkpoint": "D:\\Work\\Manhattan_3D\\Bi_layout\\checkpoints\\Bi_Layout_Net\\mp3d\\mp3d_best_model.pkl",
+  "config": "D:\\Work\\Manhattan_3D\\Bi_layout\\src\\config\\mp3d.yaml",
+  "relative_gap": "mean(abs(extended-enclosed))/mean((extended+enclosed)/2); positive finite 256 heads only",
+  "signed": "mean(extended-enclosed)/same denominator; direction retained",
+  "preprocessing": "Bi original read_image RGB/255; OpenCV INTER_AREA resize when needed; same source bytes as HoHo, model-specific preprocessing retained",
+  "unknown": "checkpoint training/selection overlap not independently verified",
+  "purpose": "same-source re-inference; external dataset copy prior results preserved as historical source-difference diagnostics",
+  "no_yaw": "no new same-source yaw; earlier external-source yaw remains separate",
+  "interpretation": "model head discrepancy, not calibrated confidence/human difficulty/occlusion",
+  "source_change_diagnostic": {
+    "source": "source_change.csv",
+    "old_raw": "../raw.csv and ../raw/*.npz",
+    "new_raw": "raw.csv and raw/*.npz",
+    "same_head_formula": "mean(abs(research_depth-external_depth))/mean((research_depth+external_depth)/2)",
+    "head_gap_delta": "research relative_gap minus external relative_gap",
+    "alignment": "no best-roll fitting; this comparison preserves original input orientation",
+    "interpretation": "source replacement includes orientation/render/pixel/preprocessing differences; cannot call it pure rotation or human difficulty"
+  }
+}
