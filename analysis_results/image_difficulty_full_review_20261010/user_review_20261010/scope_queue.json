@@ -1,0 +1,548 @@
+{
+  "schema": "difficulty_target_decision_queue_v1",
+  "source": "source_review.json",
+  "cases": [
+    {
+      "image": "S9hNv5qa7GM-04",
+      "image_id": "S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e",
+      "gt_object_id": "gt:S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e:data/mp3d_layout/valid/label_cor/S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e.txt",
+      "original_working_class": "简单",
+      "proposed_class": "简单",
+      "grade": "简单",
+      "scope": "目标基本一致",
+      "note": "gt的范围肯呢个略有不同,有些人可能会标的里面一点.gt是把柜边、门扇边当墙角",
+      "updated_at": "2026-10-10T09:55:45.833Z",
+      "queue_reason": "局部边界取舍：柜边/门扇边与更内侧墙面",
+      "case_type": "备注补充/局部边界",
+      "machine_area_screen": false,
+      "previous_scope_category": "insufficient_records",
+      "condition_gate_groups": [
+        {
+          "condition": "manual",
+          "gate": "main_candidate",
+          "n": 1,
+          "workers": 1,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 1,
+            "0.3": 1,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 1.0,
+          "fraction_upper": 1.0
+        }
+      ],
+      "selected_target": null,
+      "adjudication_status": "awaiting_user_target_decision",
+      "second_review_status": "blocked_on_target_decision",
+      "current_difficulty_not_final": true,
+      "card": "../all_cards/S9hNv5qa7GM-04.jpg"
+    },
+    {
+      "image": "pa4otMbVnkk-14",
+      "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+      "gt_object_id": "gt:pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3:data/mp3d_layout/valid/label_cor/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.txt",
+      "original_working_class": "简单",
+      "proposed_class": "待复核",
+      "grade": "中等",
+      "scope": "未审",
+      "note": "这个是靠近门洞,所以出现了不同范围的标注,同时遮挡较多",
+      "updated_at": "2026-10-10T09:59:46.789Z",
+      "queue_reason": "备注明确指出靠近门洞导致不同范围",
+      "case_type": "备注补充/局部边界",
+      "machine_area_screen": true,
+      "previous_scope_category": "geometry_or_reference_uncertain",
+      "condition_gate_groups": [
+        {
+          "condition": "manual",
+          "gate": "excluded",
+          "n": 1,
+          "workers": 1,
+          "invalid": 1,
+          "flagged_counts": {
+            "0.2": 0,
+            "0.3": 0,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.0,
+          "fraction_upper": 1.0
+        },
+        {
+          "condition": "manual",
+          "gate": "main_candidate",
+          "n": 5,
+          "workers": 5,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 4,
+            "0.3": 3,
+            "0.4": 3
+          },
+          "geometry_signal": true,
+          "fraction_lower": 0.6,
+          "fraction_upper": 0.6
+        }
+      ],
+      "selected_target": null,
+      "adjudication_status": "awaiting_user_target_decision",
+      "second_review_status": "blocked_on_target_decision",
+      "current_difficulty_not_final": true,
+      "card": "../all_cards/pa4otMbVnkk-14.jpg"
+    },
+    {
+      "image": "q9vSo1VnCiC-11",
+      "image_id": "q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd",
+      "gt_object_id": "gt:q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd.txt",
+      "original_working_class": "困难",
+      "proposed_class": "困难",
+      "grade": "简单",
+      "scope": "范围明显不同",
+      "note": "标注范围不同",
+      "updated_at": "2026-10-10T10:10:14.184Z",
+      "queue_reason": "范围选项明确不同",
+      "case_type": "范围明显不同",
+      "machine_area_screen": false,
+      "previous_scope_category": "local_or_minority_candidate",
+      "condition_gate_groups": [
+        {
+          "condition": "manual",
+          "gate": "main_candidate",
+          "n": 5,
+          "workers": 5,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 2,
+            "0.3": 1,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.2,
+          "fraction_upper": 0.2
+        }
+      ],
+      "selected_target": null,
+      "adjudication_status": "awaiting_user_target_decision",
+      "second_review_status": "blocked_on_target_decision",
+      "current_difficulty_not_final": true,
+      "card": "../all_cards/q9vSo1VnCiC-11.jpg"
+    },
+    {
+      "image": "q9vSo1VnCiC-12",
+      "image_id": "q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5",
+      "gt_object_id": "gt:q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5.txt",
+      "original_working_class": "困难",
+      "proposed_class": "困难",
+      "grade": "简单",
+      "scope": "范围明显不同",
+      "note": "标注范围不同",
+      "updated_at": "2026-10-10T10:10:26.530Z",
+      "queue_reason": "范围选项明确不同",
+      "case_type": "范围明显不同",
+      "machine_area_screen": true,
+      "previous_scope_category": "geometry_or_reference_uncertain",
+      "condition_gate_groups": [
+        {
+          "condition": "manual",
+          "gate": "main_candidate",
+          "n": 6,
+          "workers": 6,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 2,
+            "0.3": 2,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.3333333333333333,
+          "fraction_upper": 0.3333333333333333
+        },
+        {
+          "condition": "semi",
+          "gate": "main_candidate",
+          "n": 4,
+          "workers": 4,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 3,
+            "0.3": 2,
+            "0.4": 1
+          },
+          "geometry_signal": true,
+          "fraction_lower": 0.5,
+          "fraction_upper": 0.5
+        }
+      ],
+      "selected_target": null,
+      "adjudication_status": "awaiting_user_target_decision",
+      "second_review_status": "blocked_on_target_decision",
+      "current_difficulty_not_final": true,
+      "card": "../all_cards/q9vSo1VnCiC-12.jpg"
+    },
+    {
+      "image": "uNb9QFRL6hY-44",
+      "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+      "gt_object_id": "gt:uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.txt",
+      "original_working_class": "困难",
+      "proposed_class": "待复核",
+      "grade": "简单",
+      "scope": "范围明显不同",
+      "note": "gt范围不同",
+      "updated_at": "2026-10-10T10:11:40.581Z",
+      "queue_reason": "范围选项明确不同",
+      "case_type": "范围明显不同",
+      "machine_area_screen": false,
+      "previous_scope_category": "local_or_minority_candidate",
+      "condition_gate_groups": [
+        {
+          "condition": "manual",
+          "gate": "main_candidate",
+          "n": 5,
+          "workers": 5,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 3,
+            "0.3": 0,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.0,
+          "fraction_upper": 0.0
+        },
+        {
+          "condition": "semi",
+          "gate": "main_candidate",
+          "n": 5,
+          "workers": 5,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 2,
+            "0.3": 2,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.4,
+          "fraction_upper": 0.4
+        }
+      ],
+      "selected_target": null,
+      "adjudication_status": "awaiting_user_target_decision",
+      "second_review_status": "blocked_on_target_decision",
+      "current_difficulty_not_final": true,
+      "card": "../all_cards/uNb9QFRL6hY-44.jpg"
+    },
+    {
+      "image": "uNb9QFRL6hY-55",
+      "image_id": "uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78",
+      "gt_object_id": "gt:uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78.txt",
+      "original_working_class": "困难",
+      "proposed_class": "待复核",
+      "grade": "简单",
+      "scope": "范围明显不同",
+      "note": "gt范围不同",
+      "updated_at": "2026-10-10T10:11:55.520Z",
+      "queue_reason": "范围选项明确不同",
+      "case_type": "范围明显不同",
+      "machine_area_screen": false,
+      "previous_scope_category": "local_or_minority_candidate",
+      "condition_gate_groups": [
+        {
+          "condition": "manual",
+          "gate": "main_candidate",
+          "n": 15,
+          "workers": 15,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 7,
+            "0.3": 4,
+            "0.4": 3
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.26666666666666666,
+          "fraction_upper": 0.26666666666666666
+        }
+      ],
+      "selected_target": null,
+      "adjudication_status": "awaiting_user_target_decision",
+      "second_review_status": "blocked_on_target_decision",
+      "current_difficulty_not_final": true,
+      "card": "../all_cards/uNb9QFRL6hY-55.jpg"
+    },
+    {
+      "image": "uNb9QFRL6hY-68",
+      "image_id": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+      "gt_object_id": "gt:uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d.txt",
+      "original_working_class": "困难",
+      "proposed_class": "待复核",
+      "grade": "简单",
+      "scope": "范围明显不同",
+      "note": "标注范围不同",
+      "updated_at": "2026-10-10T10:13:42.085Z",
+      "queue_reason": "范围选项明确不同",
+      "case_type": "范围明显不同",
+      "machine_area_screen": false,
+      "previous_scope_category": "local_or_minority_candidate",
+      "condition_gate_groups": [
+        {
+          "condition": "manual",
+          "gate": "excluded",
+          "n": 1,
+          "workers": 1,
+          "invalid": 1,
+          "flagged_counts": {
+            "0.2": 0,
+            "0.3": 0,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.0,
+          "fraction_upper": 1.0
+        },
+        {
+          "condition": "manual",
+          "gate": "main_candidate",
+          "n": 14,
+          "workers": 14,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 7,
+            "0.3": 1,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.07142857142857142,
+          "fraction_upper": 0.07142857142857142
+        },
+        {
+          "condition": "semi",
+          "gate": "main_candidate",
+          "n": 5,
+          "workers": 5,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 1,
+            "0.3": 0,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.0,
+          "fraction_upper": 0.0
+        }
+      ],
+      "selected_target": null,
+      "adjudication_status": "awaiting_user_target_decision",
+      "second_review_status": "blocked_on_target_decision",
+      "current_difficulty_not_final": true,
+      "card": "../all_cards/uNb9QFRL6hY-68.jpg"
+    },
+    {
+      "image": "uNb9QFRL6hY-81",
+      "image_id": "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+      "gt_object_id": "gt:uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd.txt",
+      "original_working_class": "困难",
+      "proposed_class": "待复核",
+      "grade": "简单",
+      "scope": "范围明显不同",
+      "note": "和gt的标注范围不同",
+      "updated_at": "2026-10-10T10:14:23.627Z",
+      "queue_reason": "范围选项明确不同",
+      "case_type": "范围明显不同",
+      "machine_area_screen": false,
+      "previous_scope_category": "local_or_minority_candidate",
+      "condition_gate_groups": [
+        {
+          "condition": "manual",
+          "gate": "excluded",
+          "n": 1,
+          "workers": 1,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 1,
+            "0.3": 1,
+            "0.4": 1
+          },
+          "geometry_signal": false,
+          "fraction_lower": 1.0,
+          "fraction_upper": 1.0
+        },
+        {
+          "condition": "manual",
+          "gate": "main_candidate",
+          "n": 14,
+          "workers": 14,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 5,
+            "0.3": 3,
+            "0.4": 2
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.21428571428571427,
+          "fraction_upper": 0.21428571428571427
+        }
+      ],
+      "selected_target": null,
+      "adjudication_status": "awaiting_user_target_decision",
+      "second_review_status": "blocked_on_target_decision",
+      "current_difficulty_not_final": true,
+      "card": "../all_cards/uNb9QFRL6hY-81.jpg"
+    },
+    {
+      "image": "wc2JMjhGNzB-22",
+      "image_id": "wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66",
+      "gt_object_id": "gt:wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66.txt",
+      "original_working_class": "困难",
+      "proposed_class": "困难",
+      "grade": "简单",
+      "scope": "范围明显不同",
+      "note": "标注范围不同",
+      "updated_at": "2026-10-10T10:16:47.007Z",
+      "queue_reason": "范围选项明确不同",
+      "case_type": "范围明显不同",
+      "machine_area_screen": false,
+      "previous_scope_category": "local_or_minority_candidate",
+      "condition_gate_groups": [
+        {
+          "condition": "manual",
+          "gate": "main_candidate",
+          "n": 8,
+          "workers": 8,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 3,
+            "0.3": 1,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.125,
+          "fraction_upper": 0.125
+        }
+      ],
+      "selected_target": null,
+      "adjudication_status": "awaiting_user_target_decision",
+      "second_review_status": "blocked_on_target_decision",
+      "current_difficulty_not_final": true,
+      "card": "../all_cards/wc2JMjhGNzB-22.jpg"
+    },
+    {
+      "image": "wc2JMjhGNzB-26",
+      "image_id": "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+      "gt_object_id": "gt:wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd:export_label/groudTruth.json",
+      "original_working_class": "困难",
+      "proposed_class": "待复核",
+      "grade": "困难",
+      "scope": "目标基本一致",
+      "note": "这图细节难,而且存在有标注者标注了不同的标注范围",
+      "updated_at": "2026-10-10T10:17:13.987Z",
+      "queue_reason": "总体基本一致，但备注指出部分人员标不同范围",
+      "case_type": "备注补充/局部边界",
+      "machine_area_screen": true,
+      "previous_scope_category": "extent_candidate",
+      "condition_gate_groups": [
+        {
+          "condition": "manual",
+          "gate": "main_candidate",
+          "n": 6,
+          "workers": 6,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 5,
+            "0.3": 4,
+            "0.4": 4
+          },
+          "geometry_signal": true,
+          "fraction_lower": 0.6666666666666666,
+          "fraction_upper": 0.6666666666666666
+        }
+      ],
+      "selected_target": null,
+      "adjudication_status": "awaiting_user_target_decision",
+      "second_review_status": "blocked_on_target_decision",
+      "current_difficulty_not_final": true,
+      "card": "../all_cards/wc2JMjhGNzB-26.jpg"
+    },
+    {
+      "image": "wc2JMjhGNzB-29",
+      "image_id": "wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366",
+      "gt_object_id": "gt:wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366.txt",
+      "original_working_class": "困难",
+      "proposed_class": "困难",
+      "grade": "简单",
+      "scope": "范围明显不同",
+      "note": "gt范围不同",
+      "updated_at": "2026-10-10T10:17:23.751Z",
+      "queue_reason": "范围选项明确不同",
+      "case_type": "范围明显不同",
+      "machine_area_screen": false,
+      "previous_scope_category": "local_or_minority_candidate",
+      "condition_gate_groups": [
+        {
+          "condition": "manual",
+          "gate": "excluded",
+          "n": 1,
+          "workers": 1,
+          "invalid": 1,
+          "flagged_counts": {
+            "0.2": 0,
+            "0.3": 0,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.0,
+          "fraction_upper": 1.0
+        },
+        {
+          "condition": "manual",
+          "gate": "main_candidate",
+          "n": 8,
+          "workers": 8,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 1,
+            "0.3": 0,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.0,
+          "fraction_upper": 0.0
+        }
+      ],
+      "selected_target": null,
+      "adjudication_status": "awaiting_user_target_decision",
+      "second_review_status": "blocked_on_target_decision",
+      "current_difficulty_not_final": true,
+      "card": "../all_cards/wc2JMjhGNzB-29.jpg"
+    }
+  ],
+  "separate_reference_or_oos_holds": [
+    {
+      "image": "jtcxE69GiFV-05",
+      "image_id": "jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037",
+      "gt_object_id": "gt:jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037.txt",
+      "original_working_class": "简单",
+      "proposed_class": "待复核",
+      "grade": "中等",
+      "scope": "GT需核查",
+      "note": "这gt是错误的",
+      "updated_at": "2026-10-10T09:57:47.017Z"
+    },
+    {
+      "image": "jtcxE69GiFV-10",
+      "image_id": "jtcxE69GiFV_44661972414d44fabc0799f237e4d7f0",
+      "gt_object_id": "gt:jtcxE69GiFV_44661972414d44fabc0799f237e4d7f0:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_44661972414d44fabc0799f237e4d7f0.txt",
+      "original_working_class": "简单",
+      "proposed_class": "简单",
+      "grade": "待复核",
+      "scope": "不能确定",
+      "note": "有可能算作oos",
+      "updated_at": "2026-10-10T09:59:09.880Z"
+    }
+  ],
+  "excluded_by_user": [
+    {
+      "image": "yqstnuAEVhm-07",
+      "reason": "本轮按用户要求接受GT，暂不处理壁炉细节；顺序核查为独立事项"
+    }
+  ]
+}

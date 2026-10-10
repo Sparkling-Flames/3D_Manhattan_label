@@ -164,6 +164,8 @@ def build():
                   summary=summary, objects=output, images=list(image_map.values()), room_registry=registry, duplicate_versions=duplicates,
                   model_unchanged_audit=rows(FINAL / '预标注未改动与影响评语汇总.csv'),
                   explicit_model_influence_comments=rows(FINAL / '用户comment明确记录_模型误导影响.csv'))
+    from .apply_difficulty_orders_20261010 import apply_data
+    result = apply_data(result)
     OUT.mkdir(exist_ok=True)
     dump(OUT / 'preprocessed_source.json', result)
     dump(OUT / 'summary.json', summary)

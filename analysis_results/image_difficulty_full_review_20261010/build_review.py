@@ -9,7 +9,18 @@ def read(name):
 
 def main():
     scopes = read('all_scope_evidence.json')
+    external_rows = read('external_review_20261010/source_review.json')['records']
+    external = {r['image']: r for r in external_rows}
+    assert len(external) == len(external_rows) == 143
     visual = {r['image']:r for r in read('agent_visual/visual_review.json')}
+    decisions = read('external_review_20261010/adjudication.json')['records']
+    assert len(decisions) == len({d['image'] for d in decisions}) == 25
+    for d in decisions:
+        v = visual[d['image']]
+        assert (v['image_id'], v['gt_object_id'], v['difficulty_recommendation']) == (d['image_id'], d['gt_object_id'], d['previous_recommendation'])
+        v['conflict_review'] = d
+        for key in ('difficulty_recommendation', 'occlusion_level', 'visible_evidence', 'uncertainty_reason', 'gt_target_confidence', 'needs_user_review'):
+            v[key] = d[key]
     old = {r['image']:r for r in read('scope_evidence.json')}
     notes = {}
     for filename in ('scope_visual_notes.json','scope_extra_notes.json'):
@@ -19,6 +30,7 @@ def main():
                 notes[code] = (category,note)
     codes = {r['image'] for r in scopes}
     assert len(codes)==259 and codes==set(visual) and set(notes)<=codes
+    assert set(external) <= codes
     contact = {c:s['sheet'] for s in read('all_scope_contact_index.json') for c in s['images']}
     records=[]
     for r in scopes:
@@ -35,6 +47,10 @@ def main():
         if r['n']<3 and cat=='no_major_mismatch_seen':
             cat,note='insufficient_records','已逐图查看；作答少于3份，不判断“大量人员”或稳定人群范围差异。'
         rec={k:r[k] for k in ('image','image_id','legacy137','in_current178','n','valid_geometry','invalid_geometry','gt_object_id','original_gt_object_id','N','H','structure_class','working_class','scene','reference_flags','condition_gate_groups')}
+        review = external.get(r['image'])
+        if review is not None:
+            assert (review['image_id'], review['gt_object_id']) == (r['image_id'], r['gt_object_id'])
+        rec['external_review'] = review
         rec.update(scope_category=cat,scope_note=note,scope_reviewed=True,scope_review_depth='photo + aggregate individual footprints screening; not per-record semantic adjudication',scope_sheet=contact[r['image']],card='all_cards/'+r['image']+'.jpg',
             visual=v,changed_grade=v['difficulty_recommendation'] in ('简单','中等','困难') and r['working_class'] in ('简单','中等','困难') and v['difficulty_recommendation']!=r['working_class'],
             meaningful_geometry_signal=meaningful_signal,main_manual_panel=({k:old[r['image']][k] for k in ('n','valid_geometry','invalid_geometry','flagged_counts','majority_geometry_signal')} if r['image'] in old else None),

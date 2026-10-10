@@ -14,7 +14,7 @@ def pair():
 
 def test_formal_integration_and_nonmutation(pair):
     raw,b=pair;old={o['object_id']:o for o in raw['objects']};new={o['object_id']:o for o in b['data']['objects']}
-    assert set(old)==set(new) and b['validation']['confirmed_orders']==1309
+    assert set(old)==set(new) and b['validation']['confirmed_orders']==1312
     patched=[o for o in new.values() if o.get('quality_review_provenance')]
     assert len(patched)==14 and all(o['ring_confirmed'] for o in patched)
     effects={o['quality_review_provenance']['record_id']:o['quality_review_provenance']['order_effect'] for o in patched}

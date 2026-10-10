@@ -1,10 +1,12 @@
 # HOHONET 文档入口
 
+- 用户复审后[11图范围待裁定](../analysis_results/image_difficulty_full_review_20261010/user_review_20261010/scope_review.html)与[3份人员作答排序台](../analysis_results/image_difficulty_full_review_20261010/user_review_20261010/order_workbench/index.html)：三份顺序已采用主数据（有效确认1312）；GT不改，范围裁定后再审难度。
+
 - [质量范围：3张最小人工试审与24张对照](../analysis_results/quality_scope_human_review_20261010/README.md)
 
 - 质量研究最新：[正式输入与边界](thesis_main/质量研究正式输入与待研究问题_20261010.md)、[Pro独立研究资料](../research/quality_scope_handoff_20261010/README.md)。14份点位审核已接入正式loader；共同小范围和非正交质量方案仍待研究。
 
-- 259图全量难度/范围复核：[分层标准与字段合同](thesis_main/图片难度全量复核与分层标准_20261010.md)、[全量报告](../analysis_results/image_difficulty_full_review_20261010/REPORT.md)、[人工粗审页](../analysis_results/image_difficulty_full_review_20261010/review.html)。259图3152份台账，13张范围优先候选、20张改档建议；尚待用户粗审，旧工作表保留。
+- 259图全量难度/范围复核：[分层标准与字段合同](thesis_main/图片难度全量复核与分层标准_20261010.md)、[全量报告](../analysis_results/image_difficulty_full_review_20261010/REPORT.md)、[人工粗审页](../analysis_results/image_difficulty_full_review_20261010/review.html)。259图3152份台账；25张分歧已重审（10改简单、8保留、7待核），当前115/18/24/60/42视觉建议；13张范围优先候选，旧工作表保留，待用户裁定。
 
 更新：2026-10-09。本页只列当前入口。逐阶段历史结果见[旧版研究与实验导航](thesis_main/history/研究与实验导航_旧版_20261009.md)；不从旧报告中的“下一步”推导当前任务。
 

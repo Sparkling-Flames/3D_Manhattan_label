@@ -96,6 +96,9 @@ def build():
     data=build_input(); research=build_research(); comments=build_comments()
     final_dir=ROOT/'analysis_results/final_review_summary_20260929'
     final=read(final_dir/'summary.json')
+    from .apply_difficulty_orders_20261010 import apply_bundle
+    updated=apply_bundle(dict(data=data, research=research, final_summary=final,
+                             final_orders=read(final_dir/'received_orders.json')))
     validation=validate_bundle(data,research,comments,final)
     # 单目录快照；原目录保留作为历史证据，后续消费只从manifest取入口。
     dump(OUT/'research_tables.json',research)
@@ -108,6 +111,8 @@ def build():
             files.append(dict(path='final_review/'+p.name,source=p.relative_to(ROOT).as_posix()))
     for name,src in [('research_tables_field_contract.json','review_research_tables_20260929/field_contract.json')]:
         shutil.copyfile(ROOT/'analysis_results'/src,OUT/name)
+    dump(archive/'summary.json',updated['final_summary'])
+    dump(archive/'received_orders.json',updated['final_orders'])
     dump(OUT/'validation.json',validation)
     manifest=dict(schema='research_analysis_bundle_v1',contract_version=data['contract_version'],
         entrypoints=dict(data='preprocessed_source.json',research='research_tables.json',comments='comments.json',
@@ -120,6 +125,7 @@ def build():
         manifest['entrypoints']['quality_update']=update_path.name
         manifest['effective_input_revision']=read(update_path)['revision']
         manifest['consumer_rule']='Use load_current_bundle/load_current_input; apply the authorized quality_update to the frozen baseline.'
+    manifest['order_update_revision'] = data['order_update_revision']
     dump(OUT/'manifest.json',manifest)
     return manifest
 
