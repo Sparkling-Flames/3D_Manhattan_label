@@ -1,0 +1,42 @@
+{
+  "algorithm_version": "geom_quality_research_v1.1.0",
+  "frozen_at_utc": "2026-10-08T16:20:18.693419+00:00",
+  "parameters": {
+    "boundary_half_deg": 4.0,
+    "direction_half_deg": 5.0,
+    "flatness_half_deg": 2.0,
+    "intrinsic_max_discount": 0.15,
+    "height_relative_half": 0.5
+  },
+  "height_definition": "max(relative_perimeter_mean_height_error, symmetric_nearest_floor_projection_relative_height_RMS)",
+  "height_tie_rule": "maximum_squared_height_residual_among_geometrically_nearest_projections",
+  "numerical_settings": {
+    "spherical_samples_per_direction": 2048,
+    "height_samples_per_direction": 4096,
+    "intrinsic_flatness_floor_samples": 512,
+    "float64_roundoff_multiplier": 64,
+    "spherical_min_arc_rad": 1e-12,
+    "spherical_antipodal_margin_rad": 1e-10
+  },
+  "point_handling": "preserve original coordinates, pair indices and ring order; strict validity without repair",
+  "reference_policy": "exact recorded reference ID/version for original 36; future batches must supply frozen reference bindings or one frozen per-image default; never maximize over references",
+  "target_applicability": "conditional geometry; known model/reference inapplicability requires explicit evidence, no scene/OOS label filtering",
+  "development_buildings": [
+    "wc2JMjhGNzB",
+    "7y3sRwLe3Va",
+    "rPc6DW4iMge",
+    "UwV83HsGsw3",
+    "yqstnuAEVhm",
+    "uNb9QFRL6hY"
+  ],
+  "additional_real_images_read_before_freeze": 0,
+  "validation_status": "no expanded bytes obtained; all available six buildings are historical and current development/replay",
+  "human_rating_use": "retained verbatim for auxiliary description only; not consumed by score or candidate selection",
+  "definition_freeze_code_sha256": {
+    "height_revision/height_revision.py": "c16a056d3772e4c63cc15edfbad8c6132f3f441eb450119a9640ed635bd01c6b",
+    "validity/strict_geometry.py": "ca61b548b5af196cd76faaae02efb1db0382f4e64611d5dcb808b4a3b3f5fc42",
+    "core/quality_v11.py": "35a9859d69336da4896aae6efeee60d75fc7a0a6aafc16e3dcf950798c76a313",
+    "traditional/traditional_metrics.py": "24b47f2147ce5f5d6f9d090b7ded6f41f1d48fa4df275ad8aedad00c8ba42a2c"
+  },
+  "implementation_audit_policy": "numerical or interface bug fixes may follow without changing the frozen definition/quality parameters; log every such change and rerun affected checks"
+}

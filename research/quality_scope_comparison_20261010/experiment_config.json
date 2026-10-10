@@ -1,0 +1,49 @@
+{
+  "schema": "scope_comparison_config_v1",
+  "reference_policy": "G fixed original workbench GT; T exactly confirmed floor polygon; ceiling conditional GT-only",
+  "e9z17_top_rule": "reuse frozen retained GT endpoints; substitute confirmed floor xz differing only by floating roundoff",
+  "other_top_rule": "constant median original GT vertex top_y, vertical over confirmed floor polygon, floor_y=-1",
+  "height_sensitivity": [
+    "original_GT_min_top_y",
+    "original_GT_max_top_y"
+  ],
+  "score_parameters": "frozen quality_v11 defaults unchanged",
+  "score_samples": {
+    "spherical_samples": 2048,
+    "height_samples": 4096
+  },
+  "set_policy": "conditional exploratory max(Q_G,Q_T), accepted floor choices; full top boundaries and protocol not approved",
+  "geometric_rules": {
+    "nearest_bev": {
+      "definition": "Choose reference with larger BEV IoU only when |IoU_T-IoU_G| > margin, else uncertain. No Q, tops, height, identity, or observed labels. This is geometric routing, not historical intent.",
+      "margins": [
+        0.0,
+        0.05,
+        0.1,
+        0.2,
+        0.3
+      ]
+    },
+    "exclusive_region": {
+      "definition": "If T coverage >= c_min and occupancy(G\\T) <= low choose T; if G coverage >= c_min and occupancy(G\\T) >= high choose G; otherwise uncertain. No Q or top geometry. T\\G remains separately reported; not assumed nested.",
+      "small_max_exclusive_G_coverage": [
+        0.05,
+        0.1,
+        0.2
+      ],
+      "large_min_exclusive_G_coverage": [
+        0.5,
+        0.75,
+        0.9
+      ],
+      "min_chosen_reference_coverage": [
+        0.5,
+        0.75,
+        0.9
+      ]
+    }
+  },
+  "threshold_status": "Exploratory sensitivity grid declared before this run; no fitted/default/approved threshold",
+  "source_current_geometry_sha256": "7a73f9ba203d1c753e0f6f95197c1a9adb992f88fa3184cebed186605ec91076",
+  "floor_confirmation_scope": "floor only; no per-record intent required for set matching; no top approval implied"
+}
