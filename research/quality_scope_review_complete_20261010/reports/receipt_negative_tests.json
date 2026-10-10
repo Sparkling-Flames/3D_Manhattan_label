@@ -1,0 +1,56 @@
+{
+  "result": "PASS",
+  "count": 10,
+  "tests": [
+    {
+      "name": "tampered root polygon while alias remains original",
+      "rejected": true,
+      "message": "区域与修改历史不一致"
+    },
+    {
+      "name": "tampered cropped alias while polygon remains original",
+      "rejected": true,
+      "message": "区域与修改历史不一致"
+    },
+    {
+      "name": "wrong image identity in candidate binding",
+      "rejected": true,
+      "message": "空间区域 GT／来源绑定不匹配"
+    },
+    {
+      "name": "wrong GT version in candidate binding",
+      "rejected": true,
+      "message": "空间区域 GT／来源绑定不匹配"
+    },
+    {
+      "name": "wrong source commit in candidate binding",
+      "rejected": true,
+      "message": "空间区域 GT／来源绑定不匹配"
+    },
+    {
+      "name": "duplicate region identity",
+      "rejected": true,
+      "message": "空间区域编号无效或重复"
+    },
+    {
+      "name": "out of bounds edge operation",
+      "rejected": true,
+      "message": "区域自交、断开或未包含相机"
+    },
+    {
+      "name": "full GT decision cannot contain operations",
+      "rejected": true,
+      "message": "完整GT结论与修改不一致"
+    },
+    {
+      "name": "candidate cannot promote formal eligibility",
+      "rejected": true,
+      "message": "空间候选不能自动成为正式参考"
+    },
+    {
+      "name": "edge_follow stored line cannot disagree with polygon",
+      "rejected": true,
+      "message": "区域与修改历史不一致"
+    }
+  ]
+}
