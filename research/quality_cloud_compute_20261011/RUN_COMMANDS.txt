@@ -1,0 +1,30 @@
+# 独立目录解压后离线复算；Python 3.12。声明依赖见requirements.txt。
+# 所有分量状态、空值、原因与数值核验（约35秒，4进程）
+python code/replay_frozen_components.py --workers 4
+# 当前scope底面匹配，保留所有429事件（约12秒）
+python code/space_match.py
+# 42候选有限网格、解析临界点和同图排序（约12秒）
+python code/penalty_enumeration.py
+python code/audit_corner_mean_iou.py
+python code/replay_controls.py
+# 从仓库loader完整重新建立输入；先恢复仓库17分卷和旧两ZIP，再提供实际路径：
+python code/inventory_and_components.py --repo /path/to/3D_Manhattan_label --recovered /path/to/quality_scope_review_complete_20261010 --old /path/to/quality_research_20261009 --workers 4
+# 小样选择需要恢复照片目录；渲染可回退到另包已交付的原图；
+# 后续批量需主线程验收，当前不执行。
+
+# 返修目标限制与同图惩罚子集
+python code/target_alignment.py
+# 用户小样另包解压到blind_sample/user后，以实际原图离线重渲染
+python code/render_blind_sample.py
+python code/verify_revision.py
+# 选择脚本需要恢复的照片目录；历史六例映射已随history/review_v1保存。
+
+# 复算小样选择（完整照片目录从17分卷恢复）
+QUALITY_RESEARCH_ASSETS=/actual/recovered/workbench_v3.4.2/dist/assets python code/select_blind_sample.py
+
+# 原样Pro标量与官方IoU分支（当前几何）
+python code/Pro_source_replay.py
+python code/Pro_stage_enumeration.py
+python code/threshold_envelopes.py
+# 原样Pro当前3152条完整CLI；--out必须新目录
+python frozen/Pro_selected_original/experiments/run_quality.py --current-data inputs/current_formal_loader_data.json --admission frozen/Pro_selected_original/reference_scope/admission_run/admission_3152.csv --engine frozen/scope_engine --official-dir frozen/Pro_selected_original/official_audit --config frozen/Pro_selected_original/experiments/preregistered_candidates.json --out /new/results/Pro_current_replay --processes 4

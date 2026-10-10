@@ -1,0 +1,12 @@
+# 来源与许可证保留
+
+- frozen/scope_engine/traditional/vendor/eval_layout.py、post_proc.py：继承仓库冻结HoHoNet vendor文件；同目录LICENSE为MIT（Copyright (c) 2023 sunset），逐字节保留。其SHA见current_corner_mean_iou_audit_summary.json；上游commit未确立，不以master地址猜版本。
+- v1.1、height_revision、strict_geometry等：来源research/quality_scope_comparison_20261010/frozen_engine；逐文件哈希见code_preservation_inventory.csv。仓库没有发现另一个根许可证文件，本工件不擅自为它新增许可。
+- prepare_expanded_original.py、controls38_frozen.json及legacy_audit_evidence：来源旧仓库分片01_完整研究数值核心_20261009.zip，SHA256 769c802d7755149bfbeeca8b5ae411a6e013289fb43923e6498d8e7a27515062。原适配和历史审计保持不改。
+- 正式几何与范围快照：来源24360ad及42f7ea范围包；原始输入和GT保留在仓库/恢复包，本交付为只读派生研究层，没有赋予新数据许可证。
+- 小样照片：精确复制17分卷workbench_v3.4.2/dist/assets的真实1536×768 JPEG，未冒称2048×1024原始PNG；图片哈希和尺寸见另包render_manifest。未取得Pro全分辨率原件，也未为照片推断许可证。
+- Pro complete.zip：Library精确引用物化失败；其代码、已知数值失败及许可证仍缺，不能宣称已保存或已复现。
+
+精简Pro引用更新version1：libfile_de83abc6e0848191a0a852818e09aca9，6018438 bytes，247原件，SHA256 6250065ac14049c041b53ae12c70fa8fa8e8bb02ddd743bff9938713a4c47121。父线程说明新增两个原样MIT许可证（LICENSE/LICENCE），本执行器下载仍失败，未伪称已取得；待正常仓库转存后必须按文件清单保留无扩展名许可，不能仅按代码扩展名筛选。
+
+当前状态：上述Library失败缺口通过主线程指定研究归档64e8b645解除。247原件逐文件验证通过；官方源SHA和Git blob均验证，源commit为2bbc0866789cf7ad728064bc52aaf1d11b67c885。官方LICENCE原样保存在frozen/Pro_selected_original/official_audit/official_source/LICENCE；冻结vendor LICENSE仍保留。没有从上游现行master推断版本。完整原件留在原研究分支归档，本包只61精选原件及其逐文件清单。
