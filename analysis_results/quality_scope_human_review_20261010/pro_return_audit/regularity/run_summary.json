@@ -1,0 +1,33 @@
+{
+  "audit_utc": "2026-10-10T03:08:45.366513+00:00",
+  "wrapper_role": "Recovery packaging and targeted replay; no new parameter selection",
+  "source_commit": "3db905eb7cfd63c6055039dae621bb173bf75ac7",
+  "formal_input_revision": "quality_review_20261010_v1",
+  "source_hashes": {
+    "config/frozen_gt_local_tangent_l1.json": "f1bfa36dbe0f57f179d92c46899c87dbfddf928fcdabb897f8c255df15017ef3",
+    "code/relative_direction.py": "e0c75a94d3fc0c63b31c0325e311836af5d1ea30faef7b3156d3b1492ba487be",
+    "data/current_geometry.json": "7a73f9ba203d1c753e0f6f95197c1a9adb992f88fa3184cebed186605ec91076"
+  },
+  "real_records_replayed": 26,
+  "real_finite": 24,
+  "real_images": 1,
+  "new_independent_real_images": 0,
+  "gate_counts": {
+    "out_of_primary_scene": 24,
+    "excluded": 2
+  },
+  "selected_saved_controls_replayed": 10,
+  "scores_compared": 129,
+  "max_abs_score_delta": 0.0,
+  "checks": 223,
+  "failed_checks": [],
+  "new_numerical_origin_probe": {
+    "case": "R02075, D-only; same S/H/F/I",
+    "cyclic_offsets": 6,
+    "min_Q": 97.68666547909237,
+    "max_Q": 97.69089195421677,
+    "Q_range": 0.004226475124397666,
+    "interpretation": "Finite midpoint quadrature is not bitwise invariant to cyclic starting vertex; frozen definition unchanged."
+  },
+  "GT_formal_eligibility_or_default_scores_modified": false
+}
