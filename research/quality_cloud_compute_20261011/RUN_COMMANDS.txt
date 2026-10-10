@@ -28,3 +28,8 @@ python code/Pro_stage_enumeration.py
 python code/threshold_envelopes.py
 # 原样Pro当前3152条完整CLI；--out必须新目录
 python frozen/Pro_selected_original/experiments/run_quality.py --current-data inputs/current_formal_loader_data.json --admission frozen/Pro_selected_original/reference_scope/admission_run/admission_3152.csv --engine frozen/scope_engine --official-dir frozen/Pro_selected_original/official_audit --config frozen/Pro_selected_original/experiments/preregistered_candidates.json --out /new/results/Pro_current_replay --processes 4
+
+# 回执修订：仅重建页面，不重渲染图片（将当前回执代码复制到解压的计算目录code/）
+python code/build_review_receipt_page.py
+# 实际页面测试：需Playwright和执行器已有/usr/bin/chromium
+python code/test_review_receipt.py

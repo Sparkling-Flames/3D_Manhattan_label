@@ -22,6 +22,8 @@ def main():
   c['room_group']=room(lookup[c['record_1']]);ids=[c[k] for k in ['record_1','record_2'] if k in c]
   c['target_alignment_flags']=[alignment[r] for r in ids]
   c['pure_regularity_calibration_allowed']=all(alignment[r]['target_unconfounded_conservative'] for r in ids) and c['case_id']!='X01'
+  if c['case_id'] in ['C02','C05']:
+   c['case_use']='general_quality_observation_only';c['penalty_fitting_allowed']=False
   c['prior_sample_already_exposed']=True;chosen.append(c)
  candidates=read(ROOT/'results/regularity_sample_pair_candidates.json');audit=[]
  for kind,cid in [('direction','C06'),('flatness','C07')]:

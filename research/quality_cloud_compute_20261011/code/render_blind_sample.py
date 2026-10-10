@@ -71,13 +71,7 @@ def main():
   if source.resolve()!=raw.resolve():shutil.copyfile(source,raw)
   manifest.append({'case_id':c['case_id'],'rendered_path':'user/'+dest.name,'rendered_sha256':sha(dest),'original_path':'user/'+raw.name,'photo_sha256':sha(source),'photo_size':list(im.size),'render_size':list(canvas.size),'real_pixels_loaded':True,'B_top_created':False,'labels_contain_Q_worker_formula':False,'same_answer_both_panels':cross,'comparison_scales_shared':True});print(c['case_id'],dest.stat().st_size,flush=True)
  shutil.copyfile(ROOT/'blind_sample/user_response_blank.csv',user/'responses.csv')
- html='<!doctype html><meta charset="utf-8"><title>几何比较小样</title><style>body{font:17px sans-serif;max-width:1450px;margin:15px auto;line-height:1.6}img{width:100%}section{margin:35px 0}textarea{width:96%;min-height:65px}label{display:block;margin:8px 0}select{font-size:17px}</style><h1>几何比较小样</h1><p>全部来自历史材料，无历史未见声明。请先对每份答案作绝对评价，再比较优劣；表单没有预填判断。绿色为认可参考，答案1为橙色，答案2为蓝色。参考可能有语义或模型局限；无法判断时请选择无法判断。</p><p>X01是同一份答案对空间A/B的比较；B只确认底面，顶界待定。这里单独判断空间匹配。</p>'
- for m in manifest:
-  cid=m['case_id'];html+=f'<section><h2>{cid}</h2><a href="{cid}_original.jpg">查看原图像素</a><img src="{cid}.jpg">'
-  if cid=='X01':html+='<label>空间匹配：'+select(['仅 A 可匹配','仅 B 可匹配','两者均可匹配','两者均不匹配','无法判断'])+'</label><label>主要原因：<textarea></textarea></label>'
-  else:
-   for j in [1,2]:html+=f'<label>答案{j}：'+select(['可接受','明显问题','严重不可接受','无法判断'])+f'</label><label>答案{j}主要原因：<textarea></textarea></label>'
-   html+='<label>比较优劣：'+select(['答案1更好','答案2更好','相近','无法判断'])+'</label><label>差距：'+select(['小','中','大'])+'</label><label>比较主要原因：<textarea></textarea></label>'
-  html+='<label>信心及备注：<textarea></textarea></label></section>'
- html+='<p>页面输入不自动保存；请填写同目录 responses.csv 作为回执。</p>';(user/'index.html').write_text(html,encoding='utf-8');save(ROOT/'blind_sample/render_manifest.json',manifest)
+ from build_review_receipt_page import write_review_page
+ write_review_page(user,ROOT/'blind_sample/user_response_blank.csv')
+ save(ROOT/'blind_sample/render_manifest.json',manifest)
 if __name__=='__main__':main()
