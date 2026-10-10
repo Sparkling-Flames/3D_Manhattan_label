@@ -1,0 +1,89 @@
+{
+  "proposal_id": "e9z17_gt_neck_closure_counterfactual_v1",
+  "status": "research_counterfactual_not_user_approved_not_formal_GT",
+  "frozen_at_utc": "2026-10-09T18:49:22.396465+00:00",
+  "parent_reference_id": "R02594",
+  "parent_reference_version": "original",
+  "parent_geometry_file": "inputs/baseline/prepared/frozen_expanded_geometry.json",
+  "kept_gt_vertex_indices_zero_based": [
+    0,
+    1,
+    2,
+    3,
+    6,
+    7
+  ],
+  "closure_edge_parent_indices": [
+    3,
+    6
+  ],
+  "reason": "GT-only predeclared wing neck. Preserve every retained original GT point and its height; do not fit to annotation or Q.",
+  "reference": {
+    "top3d": [
+      [
+        0.49566495443463643,
+        0.6238928219537917,
+        -3.0518897955887994
+      ],
+      [
+        0.4955467093228848,
+        0.6239923539903697,
+        1.1718749958916814
+      ],
+      [
+        -2.5855179212511565,
+        0.6239182107047929,
+        1.171801634677088
+      ],
+      [
+        -2.5857176116585054,
+        0.6240023123253722,
+        -1.2612260339132053
+      ],
+      [
+        -2.585660133165989,
+        0.6240844791265419,
+        -2.477529349885679
+      ],
+      [
+        -2.5853246252727122,
+        0.6239044770504412,
+        -3.051587701436957
+      ]
+    ],
+    "bottom3d": [
+      [
+        0.49566495443463643,
+        -1.0,
+        -3.0518897955887994
+      ],
+      [
+        0.4955467093228848,
+        -1.0,
+        1.1718749958916814
+      ],
+      [
+        -2.5855179212511565,
+        -1.0,
+        1.171801634677088
+      ],
+      [
+        -2.5857176116585054,
+        -1.0,
+        -1.2612260339132053
+      ],
+      [
+        -2.585660133165989,
+        -1.0,
+        -2.477529349885679
+      ],
+      [
+        -2.5853246252727122,
+        -1.0,
+        -3.051587701436957
+      ]
+    ]
+  },
+  "annotation_assignment": "none: compute diagnostic Q_T for every e9z17 annotation; do not take max, do not issue official target labels",
+  "height_limit": "New closure uses linearly interpolated heights between existing neck endpoints; this is a conditional geometric definition, not a verified physical ceiling."
+}

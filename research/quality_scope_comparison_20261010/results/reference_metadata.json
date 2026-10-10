@@ -1,0 +1,596 @@
+[
+  {
+    "image_code": "e9zR4mvMWw7-17",
+    "G_id": "R02594",
+    "G_version": "original",
+    "reference_object_id": "gt:e9zR4mvMWw7_4273c4dd97974531b5256f96204fee47:data/mp3d_layout/test/label_cor/e9zR4mvMWw7_4273c4dd97974531b5256f96204fee47.txt",
+    "T_id": "e9zR4mvMWw7-17:confirmed_floor_conditional_top_v1",
+    "floor_confirmation": "confirmed",
+    "top_boundary_approval": "not established",
+    "set_scoring_protocol_approval": "exploratory_not_default",
+    "top_rule": "reuse retained original GT top heights; confirmed floor XZ exact, max legacy floor drift 8.881784197001252e-16",
+    "original_GT_top_y_min": 0.6238928219537917,
+    "original_GT_top_y_max": 0.6240844791265419,
+    "original_GT_top_y_median": 0.6239836774635177,
+    "original_GT_top_y_range_h": 0.00019165717275015925,
+    "original_GT_perimeter_height_relative_rms": 3.4901161661632984e-05,
+    "G_area_h2": 16.02283281368483,
+    "T_area_h2": 13.013799770472575,
+    "T_over_G_area": 0.8122034300549968,
+    "T_outside_G_h2": 0.0,
+    "T_outside_G_fraction": 0.0,
+    "G_outside_T_h2": 3.009033043212256,
+    "camera_inside_G": true,
+    "camera_inside_T": true,
+    "camera_distance_to_T_boundary_h": 0.49557951599570665,
+    "G_validity": {
+      "validator_version": "strict_geometry_v1.1.0",
+      "status": "available",
+      "available": true,
+      "valid_2d": true,
+      "valid_3d": true,
+      "spherical_boundary_available": true,
+      "role": "reference",
+      "source": null,
+      "role_impact": null,
+      "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+      "availability": {
+        "footprint_2d": true,
+        "paired_wall_ring_3d": true,
+        "spherical_full_boundary": true,
+        "complete_quality_input": true
+      },
+      "reason_codes": [],
+      "failure_classes": [],
+      "errors": [],
+      "warnings": [
+        {
+          "code": "non_star_shaped_about_camera",
+          "message": "地面环关于相机不是星形；完整球面边界仍可计算，逐方位单值 U/B 不适用。"
+        }
+      ],
+      "footprint_2d": {
+        "status": "available",
+        "available": true,
+        "simple_ring": true,
+        "vertex_count": 8,
+        "area_h2": 16.02283281368483,
+        "signed_area_h2": 16.02283281368483,
+        "perimeter_h": 19.557166748424695,
+        "errors": [],
+        "diagnostics": {
+          "orientation": "counterclockwise",
+          "camera_xz_location": "inside",
+          "camera_in_visibility_kernel": false,
+          "azimuth_single_valued_geometric_condition": false
+        },
+        "tolerances": {
+          "coordinate_scale_h": 5.55555004113939,
+          "length_roundoff_h": 7.894911449766638e-14,
+          "area_roundoff_h2": 4.752506179398926e-13,
+          "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+        }
+      },
+      "diagnostics": {
+        "orientation": "counterclockwise",
+        "camera_xz_location": "inside",
+        "camera_in_visibility_kernel": false,
+        "azimuth_single_valued_geometric_condition": false,
+        "vertex_count": 8,
+        "max_pair_xz_difference_h": 0.0,
+        "min_wall_height_h": 1.6238928219537918,
+        "max_wall_height_h": 1.6240844791265419,
+        "min_top_y_h": 0.6238928219537917,
+        "max_top_y_h": 0.6240844791265419,
+        "top_vertices_below_camera": 0,
+        "top_is_constant_height_within_roundoff": false
+      },
+      "spherical_diagnostics": {
+        "top3d": {
+          "min_vertex_camera_distance_h": 1.4171182042988901,
+          "min_edge_arc_rad": 0.10402386163784329,
+          "min_edge_antipodal_margin_rad": 0.8525387077875615
+        },
+        "bottom3d": {
+          "min_vertex_camera_distance_h": 1.618288462270206,
+          "min_edge_arc_rad": 0.10406473926005827,
+          "min_edge_antipodal_margin_rad": 1.111602870809481
+        }
+      },
+      "tolerances": {
+        "float64_epsilon": 2.220446049250313e-16,
+        "roundoff_multiplier": 64.0,
+        "floor_y_expected_h": -1.0,
+        "spherical_min_arc_rad": 1e-12,
+        "spherical_antipodal_margin_rad": 1e-10,
+        "coordinate_scale_h": 5.55555004113939,
+        "length_roundoff_h": 7.894911449766638e-14,
+        "area_roundoff_h2": 4.752506179398926e-13,
+        "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+        "floor_roundoff_h": 1.4210854715202004e-14,
+        "vertical_pair_roundoff_h": 7.190529184277854e-14,
+        "positive_height_roundoff_h": 1.4210854715202004e-14
+      }
+    },
+    "T_validity": {
+      "validator_version": "strict_geometry_v1.1.0",
+      "status": "available",
+      "available": true,
+      "valid_2d": true,
+      "valid_3d": true,
+      "spherical_boundary_available": true,
+      "role": "reference",
+      "source": null,
+      "role_impact": null,
+      "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+      "availability": {
+        "footprint_2d": true,
+        "paired_wall_ring_3d": true,
+        "spherical_full_boundary": true,
+        "complete_quality_input": true
+      },
+      "reason_codes": [],
+      "failure_classes": [],
+      "errors": [],
+      "warnings": [],
+      "footprint_2d": {
+        "status": "available",
+        "available": true,
+        "simple_ring": true,
+        "vertex_count": 6,
+        "area_h2": 13.013799770472573,
+        "signed_area_h2": 13.013799770472573,
+        "perimeter_h": 14.6092084628113,
+        "errors": [],
+        "diagnostics": {
+          "orientation": "counterclockwise",
+          "camera_xz_location": "inside",
+          "camera_in_visibility_kernel": true,
+          "azimuth_single_valued_geometric_condition": true
+        },
+        "tolerances": {
+          "coordinate_scale_h": 4.22376479148048,
+          "length_roundoff_h": 6.002330780291459e-14,
+          "area_roundoff_h2": 2.885146959990786e-13,
+          "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+        }
+      },
+      "diagnostics": {
+        "orientation": "counterclockwise",
+        "camera_xz_location": "inside",
+        "camera_in_visibility_kernel": true,
+        "azimuth_single_valued_geometric_condition": true,
+        "vertex_count": 6,
+        "max_pair_xz_difference_h": 0.0,
+        "min_wall_height_h": 1.6238928219537918,
+        "max_wall_height_h": 1.6240844791265419,
+        "min_top_y_h": 0.6238928219537917,
+        "max_top_y_h": 0.6240844791265419,
+        "top_vertices_below_camera": 0,
+        "top_is_constant_height_within_roundoff": false
+      },
+      "spherical_diagnostics": {
+        "top3d": {
+          "min_vertex_camera_distance_h": 1.4171182042988901,
+          "min_edge_arc_rad": 0.104023861637843,
+          "min_edge_antipodal_margin_rad": 0.8525387077875615
+        },
+        "bottom3d": {
+          "min_vertex_camera_distance_h": 1.618288462270206,
+          "min_edge_arc_rad": 0.10406473926005792,
+          "min_edge_antipodal_margin_rad": 1.111602870809481
+        }
+      },
+      "tolerances": {
+        "float64_epsilon": 2.220446049250313e-16,
+        "roundoff_multiplier": 64.0,
+        "floor_y_expected_h": -1.0,
+        "spherical_min_arc_rad": 1e-12,
+        "spherical_antipodal_margin_rad": 1e-10,
+        "coordinate_scale_h": 4.22376479148048,
+        "length_roundoff_h": 6.002330780291459e-14,
+        "area_roundoff_h2": 2.885146959990786e-13,
+        "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+        "floor_roundoff_h": 1.4210854715202004e-14,
+        "vertical_pair_roundoff_h": 4.336996249191997e-14,
+        "positive_height_roundoff_h": 1.4210854715202004e-14
+      }
+    }
+  },
+  {
+    "image_code": "e9zR4mvMWw7-09",
+    "G_id": "R02589",
+    "G_version": "original",
+    "reference_object_id": "gt:e9zR4mvMWw7_1d316dfbe35f41dd9203eaf88be5aae8:data/mp3d_layout/test/label_cor/e9zR4mvMWw7_1d316dfbe35f41dd9203eaf88be5aae8.txt",
+    "T_id": "e9zR4mvMWw7-09:confirmed_floor_conditional_top_v1",
+    "floor_confirmation": "confirmed",
+    "top_boundary_approval": "not established",
+    "set_scoring_protocol_approval": "exploratory_not_default",
+    "top_rule": "constant median of original GT vertex top_y; independent of annotations, their heights and all Q",
+    "original_GT_top_y_min": 0.5495029343741001,
+    "original_GT_top_y_max": 0.5497980348468938,
+    "original_GT_top_y_median": 0.5496282718410322,
+    "original_GT_top_y_range_h": 0.0002951004727936857,
+    "original_GT_perimeter_height_relative_rms": 5.0024518306562194e-05,
+    "G_area_h2": 19.62511418317518,
+    "T_area_h2": 7.538560937083453,
+    "T_over_G_area": 0.38412825865473643,
+    "T_outside_G_h2": 0.3025934974238323,
+    "T_outside_G_fraction": 0.04013942448025111,
+    "G_outside_T_h2": 12.389146743515562,
+    "camera_inside_G": true,
+    "camera_inside_T": true,
+    "camera_distance_to_T_boundary_h": 0.3687813729962236,
+    "G_validity": {
+      "validator_version": "strict_geometry_v1.1.0",
+      "status": "available",
+      "available": true,
+      "valid_2d": true,
+      "valid_3d": true,
+      "spherical_boundary_available": true,
+      "role": "reference",
+      "source": null,
+      "role_impact": null,
+      "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+      "availability": {
+        "footprint_2d": true,
+        "paired_wall_ring_3d": true,
+        "spherical_full_boundary": true,
+        "complete_quality_input": true
+      },
+      "reason_codes": [],
+      "failure_classes": [],
+      "errors": [],
+      "warnings": [
+        {
+          "code": "non_star_shaped_about_camera",
+          "message": "地面环关于相机不是星形；完整球面边界仍可计算，逐方位单值 U/B 不适用。"
+        }
+      ],
+      "footprint_2d": {
+        "status": "available",
+        "available": true,
+        "simple_ring": true,
+        "vertex_count": 10,
+        "area_h2": 19.62511418317518,
+        "signed_area_h2": 19.62511418317518,
+        "perimeter_h": 23.969735899136833,
+        "errors": [],
+        "diagnostics": {
+          "orientation": "counterclockwise",
+          "camera_xz_location": "inside",
+          "camera_in_visibility_kernel": false,
+          "azimuth_single_valued_geometric_condition": false
+        },
+        "tolerances": {
+          "coordinate_scale_h": 7.111682055773983,
+          "length_roundoff_h": 1.0106308047531318e-13,
+          "area_roundoff_h2": 8.328386897767124e-13,
+          "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+        }
+      },
+      "diagnostics": {
+        "orientation": "counterclockwise",
+        "camera_xz_location": "inside",
+        "camera_in_visibility_kernel": false,
+        "azimuth_single_valued_geometric_condition": false,
+        "vertex_count": 10,
+        "max_pair_xz_difference_h": 0.0,
+        "min_wall_height_h": 1.5495029343741002,
+        "max_wall_height_h": 1.5497980348468938,
+        "min_top_y_h": 0.5495029343741001,
+        "max_top_y_h": 0.5497980348468938,
+        "top_vertices_below_camera": 0,
+        "top_is_constant_height_within_roundoff": false
+      },
+      "spherical_diagnostics": {
+        "top3d": {
+          "min_vertex_camera_distance_h": 0.8181205059775172,
+          "min_edge_arc_rad": 0.22245346190314863,
+          "min_edge_antipodal_margin_rad": 1.394515180661658
+        },
+        "bottom3d": {
+          "min_vertex_camera_distance_h": 1.1692808977250835,
+          "min_edge_arc_rad": 0.3665377198055449,
+          "min_edge_antipodal_margin_rad": 1.550213655361883
+        }
+      },
+      "tolerances": {
+        "float64_epsilon": 2.220446049250313e-16,
+        "roundoff_multiplier": 64.0,
+        "floor_y_expected_h": -1.0,
+        "spherical_min_arc_rad": 1e-12,
+        "spherical_antipodal_margin_rad": 1e-10,
+        "coordinate_scale_h": 7.111682055773983,
+        "length_roundoff_h": 1.0106308047531318e-13,
+        "area_roundoff_h2": 8.328386897767124e-13,
+        "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+        "floor_roundoff_h": 1.4210854715202004e-14,
+        "vertical_pair_roundoff_h": 8.168919289585403e-14,
+        "positive_height_roundoff_h": 1.4210854715202004e-14
+      }
+    },
+    "T_validity": {
+      "validator_version": "strict_geometry_v1.1.0",
+      "status": "available",
+      "available": true,
+      "valid_2d": true,
+      "valid_3d": true,
+      "spherical_boundary_available": true,
+      "role": "reference",
+      "source": null,
+      "role_impact": null,
+      "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+      "availability": {
+        "footprint_2d": true,
+        "paired_wall_ring_3d": true,
+        "spherical_full_boundary": true,
+        "complete_quality_input": true
+      },
+      "reason_codes": [],
+      "failure_classes": [],
+      "errors": [],
+      "warnings": [],
+      "footprint_2d": {
+        "status": "available",
+        "available": true,
+        "simple_ring": true,
+        "vertex_count": 4,
+        "area_h2": 7.538560937083453,
+        "signed_area_h2": -7.538560937083453,
+        "perimeter_h": 11.714710188749901,
+        "errors": [],
+        "diagnostics": {
+          "orientation": "clockwise",
+          "camera_xz_location": "inside",
+          "camera_in_visibility_kernel": true,
+          "azimuth_single_valued_geometric_condition": true
+        },
+        "tolerances": {
+          "coordinate_scale_h": 3.9477905136031675,
+          "length_roundoff_h": 5.610147743486731e-14,
+          "area_roundoff_h2": 1.0712939423859002e-13,
+          "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+        }
+      },
+      "diagnostics": {
+        "orientation": "clockwise",
+        "camera_xz_location": "inside",
+        "camera_in_visibility_kernel": true,
+        "azimuth_single_valued_geometric_condition": true,
+        "vertex_count": 4,
+        "max_pair_xz_difference_h": 0.0,
+        "min_wall_height_h": 1.5496282718410321,
+        "max_wall_height_h": 1.5496282718410321,
+        "min_top_y_h": 0.5496282718410322,
+        "max_top_y_h": 0.5496282718410322,
+        "top_vertices_below_camera": 0,
+        "top_is_constant_height_within_roundoff": true
+      },
+      "spherical_diagnostics": {
+        "top3d": {
+          "min_vertex_camera_distance_h": 1.5153379036399826,
+          "min_edge_arc_rad": 0.6665587046080831,
+          "min_edge_antipodal_margin_rad": 0.7027227301058683
+        },
+        "bottom3d": {
+          "min_vertex_camera_distance_h": 1.7303634661541654,
+          "min_edge_arc_rad": 0.6397051452326729,
+          "min_edge_antipodal_margin_rad": 1.0547276978848292
+        }
+      },
+      "tolerances": {
+        "float64_epsilon": 2.220446049250313e-16,
+        "roundoff_multiplier": 64.0,
+        "floor_y_expected_h": -1.0,
+        "spherical_min_arc_rad": 1e-12,
+        "spherical_antipodal_margin_rad": 1e-10,
+        "coordinate_scale_h": 3.9477905136031675,
+        "length_roundoff_h": 5.610147743486731e-14,
+        "area_roundoff_h2": 1.0712939423859002e-13,
+        "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+        "floor_roundoff_h": 1.4210854715202004e-14,
+        "vertical_pair_roundoff_h": 3.6730054551519204e-14,
+        "positive_height_roundoff_h": 1.4210854715202004e-14
+      }
+    }
+  },
+  {
+    "image_code": "b8cTxDM8gDG-18",
+    "G_id": "R02585",
+    "G_version": "original",
+    "reference_object_id": "gt:b8cTxDM8gDG_f3748786c3704532abb2358581488f3f:data/mp3d_layout/test/label_cor/b8cTxDM8gDG_f3748786c3704532abb2358581488f3f.txt",
+    "T_id": "b8cTxDM8gDG-18:confirmed_floor_conditional_top_v1",
+    "floor_confirmation": "confirmed",
+    "top_boundary_approval": "not established",
+    "set_scoring_protocol_approval": "exploratory_not_default",
+    "top_rule": "constant median of original GT vertex top_y; independent of annotations, their heights and all Q",
+    "original_GT_top_y_min": 0.9533756920650497,
+    "original_GT_top_y_max": 0.9535647180723883,
+    "original_GT_top_y_median": 0.9534727180251187,
+    "original_GT_top_y_range_h": 0.00018902600733861075,
+    "original_GT_perimeter_height_relative_rms": 2.4061356100504206e-05,
+    "G_area_h2": 10.119754844229439,
+    "T_area_h2": 4.15891955040262,
+    "T_over_G_area": 0.4109703855893456,
+    "T_outside_G_h2": 5.836495417397286e-16,
+    "T_outside_G_fraction": 1.4033681937493264e-16,
+    "G_outside_T_h2": 5.960835293826817,
+    "camera_inside_G": true,
+    "camera_inside_T": true,
+    "camera_distance_to_T_boundary_h": 0.10789402295419258,
+    "G_validity": {
+      "validator_version": "strict_geometry_v1.1.0",
+      "status": "available",
+      "available": true,
+      "valid_2d": true,
+      "valid_3d": true,
+      "spherical_boundary_available": true,
+      "role": "reference",
+      "source": null,
+      "role_impact": null,
+      "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+      "availability": {
+        "footprint_2d": true,
+        "paired_wall_ring_3d": true,
+        "spherical_full_boundary": true,
+        "complete_quality_input": true
+      },
+      "reason_codes": [],
+      "failure_classes": [],
+      "errors": [],
+      "warnings": [
+        {
+          "code": "non_star_shaped_about_camera",
+          "message": "地面环关于相机不是星形；完整球面边界仍可计算，逐方位单值 U/B 不适用。"
+        }
+      ],
+      "footprint_2d": {
+        "status": "available",
+        "available": true,
+        "simple_ring": true,
+        "vertex_count": 10,
+        "area_h2": 10.119754844229439,
+        "signed_area_h2": 10.119754844229439,
+        "perimeter_h": 15.917761003902118,
+        "errors": [],
+        "diagnostics": {
+          "orientation": "counterclockwise",
+          "camera_xz_location": "inside",
+          "camera_in_visibility_kernel": false,
+          "azimuth_single_valued_geometric_condition": false
+        },
+        "tolerances": {
+          "coordinate_scale_h": 4.703068267013931,
+          "length_roundoff_h": 6.683461985821184e-14,
+          "area_roundoff_h2": 5.272120768525077e-13,
+          "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+        }
+      },
+      "diagnostics": {
+        "orientation": "counterclockwise",
+        "camera_xz_location": "inside",
+        "camera_in_visibility_kernel": false,
+        "azimuth_single_valued_geometric_condition": false,
+        "vertex_count": 10,
+        "max_pair_xz_difference_h": 0.0,
+        "min_wall_height_h": 1.9533756920650496,
+        "max_wall_height_h": 1.9535647180723883,
+        "min_top_y_h": 0.9533756920650497,
+        "max_top_y_h": 0.9535647180723883,
+        "top_vertices_below_camera": 0,
+        "top_is_constant_height_within_roundoff": false
+      },
+      "spherical_diagnostics": {
+        "top3d": {
+          "min_vertex_camera_distance_h": 1.1218577071227493,
+          "min_edge_arc_rad": 0.051139589783675256,
+          "min_edge_antipodal_margin_rad": 1.8297861974554044
+        },
+        "bottom3d": {
+          "min_vertex_camera_distance_h": 1.1616618384772752,
+          "min_edge_arc_rad": 0.052239774349000706,
+          "min_edge_antipodal_margin_rad": 1.8508195003839516
+        }
+      },
+      "tolerances": {
+        "float64_epsilon": 2.220446049250313e-16,
+        "roundoff_multiplier": 64.0,
+        "floor_y_expected_h": -1.0,
+        "spherical_min_arc_rad": 1e-12,
+        "spherical_antipodal_margin_rad": 1e-10,
+        "coordinate_scale_h": 4.703068267013931,
+        "length_roundoff_h": 6.683461985821184e-14,
+        "area_roundoff_h2": 5.272120768525077e-13,
+        "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+        "floor_roundoff_h": 1.4210854715202004e-14,
+        "vertical_pair_roundoff_h": 3.7668938271191416e-14,
+        "positive_height_roundoff_h": 1.4210854715202004e-14
+      }
+    },
+    "T_validity": {
+      "validator_version": "strict_geometry_v1.1.0",
+      "status": "available",
+      "available": true,
+      "valid_2d": true,
+      "valid_3d": true,
+      "spherical_boundary_available": true,
+      "role": "reference",
+      "source": null,
+      "role_impact": null,
+      "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+      "availability": {
+        "footprint_2d": true,
+        "paired_wall_ring_3d": true,
+        "spherical_full_boundary": true,
+        "complete_quality_input": true
+      },
+      "reason_codes": [],
+      "failure_classes": [],
+      "errors": [],
+      "warnings": [],
+      "footprint_2d": {
+        "status": "available",
+        "available": true,
+        "simple_ring": true,
+        "vertex_count": 5,
+        "area_h2": 4.15891955040262,
+        "signed_area_h2": 4.15891955040262,
+        "perimeter_h": 8.17089914651011,
+        "errors": [],
+        "diagnostics": {
+          "orientation": "counterclockwise",
+          "camera_xz_location": "inside",
+          "camera_in_visibility_kernel": true,
+          "azimuth_single_valued_geometric_condition": true
+        },
+        "tolerances": {
+          "coordinate_scale_h": 2.160260453386828,
+          "length_roundoff_h": 3.0699147450076625e-14,
+          "area_roundoff_h2": 5.910189777103887e-14,
+          "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+        }
+      },
+      "diagnostics": {
+        "orientation": "counterclockwise",
+        "camera_xz_location": "inside",
+        "camera_in_visibility_kernel": true,
+        "azimuth_single_valued_geometric_condition": true,
+        "vertex_count": 5,
+        "max_pair_xz_difference_h": 0.0,
+        "min_wall_height_h": 1.9534727180251186,
+        "max_wall_height_h": 1.9534727180251186,
+        "min_top_y_h": 0.9534727180251187,
+        "max_top_y_h": 0.9534727180251187,
+        "top_vertices_below_camera": 0,
+        "top_is_constant_height_within_roundoff": true
+      },
+      "spherical_diagnostics": {
+        "top3d": {
+          "min_vertex_camera_distance_h": 1.1218593721998362,
+          "min_edge_arc_rad": 0.34369667305581497,
+          "min_edge_antipodal_margin_rad": 1.9370206817557512
+        },
+        "bottom3d": {
+          "min_vertex_camera_distance_h": 1.1616618384772752,
+          "min_edge_arc_rad": 0.341182230815615,
+          "min_edge_antipodal_margin_rad": 1.9803047721670517
+        }
+      },
+      "tolerances": {
+        "float64_epsilon": 2.220446049250313e-16,
+        "roundoff_multiplier": 64.0,
+        "floor_y_expected_h": -1.0,
+        "spherical_min_arc_rad": 1e-12,
+        "spherical_antipodal_margin_rad": 1e-10,
+        "coordinate_scale_h": 2.160260453386828,
+        "length_roundoff_h": 3.0699147450076625e-14,
+        "area_roundoff_h2": 5.910189777103887e-14,
+        "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+        "floor_roundoff_h": 1.4210854715202004e-14,
+        "vertical_pair_roundoff_h": 2.916568158702043e-14,
+        "positive_height_roundoff_h": 1.4210854715202004e-14
+      }
+    }
+  }
+]

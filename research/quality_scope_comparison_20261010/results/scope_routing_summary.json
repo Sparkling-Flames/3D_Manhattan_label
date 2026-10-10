@@ -1,0 +1,472 @@
+[
+  {
+    "rule": "nearest_BEV",
+    "parameters": {
+      "margin": 0.0
+    },
+    "n": 18,
+    "G": 2,
+    "T": 16,
+    "uncertain": 0,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "nearest_BEV",
+    "parameters": {
+      "margin": 0.05
+    },
+    "n": 18,
+    "G": 2,
+    "T": 16,
+    "uncertain": 0,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "nearest_BEV",
+    "parameters": {
+      "margin": 0.1
+    },
+    "n": 18,
+    "G": 2,
+    "T": 16,
+    "uncertain": 0,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "nearest_BEV",
+    "parameters": {
+      "margin": 0.2
+    },
+    "n": 18,
+    "G": 2,
+    "T": 10,
+    "uncertain": 6,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "nearest_BEV",
+    "parameters": {
+      "margin": 0.3
+    },
+    "n": 18,
+    "G": 2,
+    "T": 10,
+    "uncertain": 6,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.05,
+      "high": 0.5,
+      "cmin": 0.5
+    },
+    "n": 18,
+    "G": 2,
+    "T": 15,
+    "uncertain": 1,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.05,
+      "high": 0.5,
+      "cmin": 0.75
+    },
+    "n": 18,
+    "G": 2,
+    "T": 8,
+    "uncertain": 8,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.05,
+      "high": 0.5,
+      "cmin": 0.9
+    },
+    "n": 18,
+    "G": 1,
+    "T": 2,
+    "uncertain": 15,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.05,
+      "high": 0.75,
+      "cmin": 0.5
+    },
+    "n": 18,
+    "G": 2,
+    "T": 15,
+    "uncertain": 1,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.05,
+      "high": 0.75,
+      "cmin": 0.75
+    },
+    "n": 18,
+    "G": 2,
+    "T": 8,
+    "uncertain": 8,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.05,
+      "high": 0.75,
+      "cmin": 0.9
+    },
+    "n": 18,
+    "G": 1,
+    "T": 2,
+    "uncertain": 15,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.05,
+      "high": 0.9,
+      "cmin": 0.5
+    },
+    "n": 18,
+    "G": 1,
+    "T": 15,
+    "uncertain": 2,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.05,
+      "high": 0.9,
+      "cmin": 0.75
+    },
+    "n": 18,
+    "G": 1,
+    "T": 8,
+    "uncertain": 9,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.05,
+      "high": 0.9,
+      "cmin": 0.9
+    },
+    "n": 18,
+    "G": 1,
+    "T": 2,
+    "uncertain": 15,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.1,
+      "high": 0.5,
+      "cmin": 0.5
+    },
+    "n": 18,
+    "G": 2,
+    "T": 16,
+    "uncertain": 0,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.1,
+      "high": 0.5,
+      "cmin": 0.75
+    },
+    "n": 18,
+    "G": 2,
+    "T": 9,
+    "uncertain": 7,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.1,
+      "high": 0.5,
+      "cmin": 0.9
+    },
+    "n": 18,
+    "G": 1,
+    "T": 3,
+    "uncertain": 14,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.1,
+      "high": 0.75,
+      "cmin": 0.5
+    },
+    "n": 18,
+    "G": 2,
+    "T": 16,
+    "uncertain": 0,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.1,
+      "high": 0.75,
+      "cmin": 0.75
+    },
+    "n": 18,
+    "G": 2,
+    "T": 9,
+    "uncertain": 7,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.1,
+      "high": 0.75,
+      "cmin": 0.9
+    },
+    "n": 18,
+    "G": 1,
+    "T": 3,
+    "uncertain": 14,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.1,
+      "high": 0.9,
+      "cmin": 0.5
+    },
+    "n": 18,
+    "G": 1,
+    "T": 16,
+    "uncertain": 1,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.1,
+      "high": 0.9,
+      "cmin": 0.75
+    },
+    "n": 18,
+    "G": 1,
+    "T": 9,
+    "uncertain": 8,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.1,
+      "high": 0.9,
+      "cmin": 0.9
+    },
+    "n": 18,
+    "G": 1,
+    "T": 3,
+    "uncertain": 14,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.2,
+      "high": 0.5,
+      "cmin": 0.5
+    },
+    "n": 18,
+    "G": 2,
+    "T": 16,
+    "uncertain": 0,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.2,
+      "high": 0.5,
+      "cmin": 0.75
+    },
+    "n": 18,
+    "G": 2,
+    "T": 9,
+    "uncertain": 7,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.2,
+      "high": 0.5,
+      "cmin": 0.9
+    },
+    "n": 18,
+    "G": 1,
+    "T": 3,
+    "uncertain": 14,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.2,
+      "high": 0.75,
+      "cmin": 0.5
+    },
+    "n": 18,
+    "G": 2,
+    "T": 16,
+    "uncertain": 0,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.2,
+      "high": 0.75,
+      "cmin": 0.75
+    },
+    "n": 18,
+    "G": 2,
+    "T": 9,
+    "uncertain": 7,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.2,
+      "high": 0.75,
+      "cmin": 0.9
+    },
+    "n": 18,
+    "G": 1,
+    "T": 3,
+    "uncertain": 14,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.2,
+      "high": 0.9,
+      "cmin": 0.5
+    },
+    "n": 18,
+    "G": 1,
+    "T": 16,
+    "uncertain": 1,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.2,
+      "high": 0.9,
+      "cmin": 0.75
+    },
+    "n": 18,
+    "G": 1,
+    "T": 9,
+    "uncertain": 8,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  },
+  {
+    "rule": "exclusive_region",
+    "parameters": {
+      "low": 0.2,
+      "high": 0.9,
+      "cmin": 0.9
+    },
+    "n": 18,
+    "G": 1,
+    "T": 3,
+    "uncertain": 14,
+    "assigned_disagree_with_max": 0,
+    "max_Q_loss_of_assigned": 0.0,
+    "mean_Q_loss_of_assigned": 0.0
+  }
+]

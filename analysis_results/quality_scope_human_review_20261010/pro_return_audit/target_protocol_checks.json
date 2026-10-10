@@ -1,0 +1,17 @@
+{
+  "scope": "synthetic contract checks; no real target or qualification approved",
+  "checks": {
+    "no_assignment_does_not_pick_better_target": true,
+    "unapproved_target_is_pending": true,
+    "synthetic_preassigned_small_target_returns_100": true,
+    "explicit_full_does_not_take_best_of_two": true,
+    "full_coverage_preserved_when_target_changes": true,
+    "missing_assignment_provenance_rejected": true,
+    "reference_parent_mismatch_rejected": true,
+    "suspended_parent_cannot_be_bypassed_by_crop": true,
+    "invalid_annotation_not_repaired_by_target_switch": true,
+    "invalid_parent_not_bypassed_by_crop": true,
+    "source_geometries_unchanged": true
+  },
+  "all_passed": true
+}

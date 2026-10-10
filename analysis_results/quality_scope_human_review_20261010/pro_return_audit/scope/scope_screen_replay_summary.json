@@ -1,0 +1,54 @@
+{
+  "scope": "New portable scope-screen replay. Q is read from already recomputed current Q; Q not refit.",
+  "input_revision": "quality_review_20261010_v1",
+  "images": 259,
+  "all_records": 3152,
+  "candidate_and_control_records": 362,
+  "candidate_counts": {
+    "strict": 4,
+    "base": 16,
+    "relaxed": 31
+  },
+  "population": {
+    "all_condition_unique_workers_n": 2879,
+    "manual_oos_n": 2363,
+    "images_ge3": 193
+  },
+  "compared_fields": 23440,
+  "differences": [],
+  "all_passed": true,
+  "runtime_seconds": 5.470414172996243,
+  "profiles_unchanged": {
+    "strict": {
+      "D": 3.0,
+      "flat": 1.5,
+      "internal_h": 0.04,
+      "missing": 0.2,
+      "outside": 0.1,
+      "shared": 0.15,
+      "agreement": 0.55
+    },
+    "base": {
+      "D": 5.0,
+      "flat": 3.0,
+      "internal_h": 0.08,
+      "missing": 0.15,
+      "outside": 0.15,
+      "shared": 0.1,
+      "agreement": 0.4
+    },
+    "relaxed": {
+      "D": 10.0,
+      "flat": 4.0,
+      "internal_h": 0.12,
+      "missing": 0.1,
+      "outside": 0.2,
+      "shared": 0.075,
+      "agreement": 0.3
+    }
+  },
+  "upstream_kernel_sha256": "f96da94874eb9d8fce2cbfa787067211a0a01ca53e49d168d47f1db89534c52d",
+  "copied_old_semantic_labels_into_new_statistics": false,
+  "semantic_approvals_created": false,
+  "qualification_changes": false
+}
