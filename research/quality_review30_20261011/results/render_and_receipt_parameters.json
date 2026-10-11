@@ -1,0 +1,54 @@
+{
+  "ERP_overlay": {
+    "size": [
+      1536,
+      768
+    ],
+    "line_samples_per_edge": 161,
+    "panorama_seam_split_u_jump": 0.5,
+    "aspect": 0.5,
+    "geometry_registration": "none"
+  },
+  "BEV": {
+    "size": [
+      840,
+      840
+    ],
+    "span_factor": 1.2,
+    "shared_for_same_image": true
+  },
+  "3D": {
+    "size": [
+      840,
+      840
+    ],
+    "span_factor": 1.2,
+    "elev": 24,
+    "azim": -60,
+    "shared_for_same_image": true,
+    "new_B_top_created": false,
+    "space_cases_floor_only": true
+  },
+  "colors": {
+    "annotation": "#ed6a05",
+    "reference_A": "#149341",
+    "reference_B": "#1978c9"
+  },
+  "versions": {
+    "numpy": "2.3.5",
+    "matplotlib": "3.10.8",
+    "Pillow": "12.3.0",
+    "playwright": "1.62.0"
+  },
+  "python": "3.12.14",
+  "fonts": {
+    "regular_path": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+    "regular_sha256": "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a"
+  },
+  "receipt_format_version": "quality_review30_receipt_v1",
+  "display_seed": 2026101130,
+  "case_id_order_unchanged": true,
+  "selection_modified": false,
+  "primary_completion_rule": "nonempty absolute_quality or space_compatibility; unknown counts; blank/view/reason-only does not",
+  "optional_pair_completion_separate": true
+}

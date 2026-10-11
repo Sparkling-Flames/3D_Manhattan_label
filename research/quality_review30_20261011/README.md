@@ -1,27 +1,24 @@
-# 30份唯一标注的选样交付（主审私有）
+# 30份独立标注审核：最终渲染交付（待主审验收）
 
-已冻结候选清单，先供dot主线程审核。**不是最后用户审核包；未生成最终叠线、页面、回执或人工答案。**
+主审已批准冻结30行清单并实际查看24张原图；现已生成最终用户包及独立私有映射。该批准不表示每段墙/顶面或参考语义已被严格认证。用户仍可选参考/目标有疑问、无法判断并说明原因。最终审图、复核和统一main发布由dot主线程负责。
 
-- [30份完整清单与覆盖/缺口](research/COVERAGE_AND_GAPS.md)
-- [30行直接可审CSV](results/selection_private.csv)
-- [完整私有来源和五原方案数值](results/selection_private.json)
-- [边界覆盖及实际距离](results/boundary_coverage_private.json)
-- [24张原字节照片](results/selected_original_photos_private.zip)
-- [选定几何及6份待顶界B底面](results/selected_geometry_private.json)
-- [真实像素观察及适用性疑点](results/pixel_audit_private.json)
-- [去重、留出、字节重跑和原照片哈希检查](results/selection_checks.json)
-- [数值初筛规则](research/SELECTION_RULES_V1.md)
+- [用户ZIP：30独立作答＋可选成对题](artifacts/quality_review30_user_20261011.zip)
+- [私有映射ZIP：不得交给用户](artifacts/quality_review30_private_mapping_20261011.zip)
+- [最终交付说明](research/FINAL_DELIVERY.md)
+- [复现与浏览器测试命令](research/RUN_COMMANDS.md)
+- [精确字节数与SHA256](results/final_delivery_summary.json)
+- [实际浏览器14组测试](results/review30_browser_tests.json)
+- [固定种子展示顺序](results/display_order.json)
+- [六例渲染抽查图](results/render_small_preview_private.jpg)
+- [初始30行清单及边界缺口](research/COVERAGE_AND_GAPS.md)
+- [私有选择CSV](results/selection_private.csv)
+- [完整来源/资格/五原方案](results/selection_private.json)
+- [24原照片ZIP](results/selected_original_photos_private.zip)
 
-24质量+6空间，30个不同record_id和object_id；24图，质量12个房间分组。907质量开发池/83图，冻结282留出无交集。已合入main `9c1d91173bf8ec50de4983daaff325b339965e04`，不推main。旧8例不修改。
+24质量＋6空间，30个不同record_id及object_id。120张主视图，成对题P01复用T23/T24的8图，不新增作答。固定种子2026101130打乱展示；case_id和原选择映射不改。同图几何视图共享坐标范围，所有空间B仅底面、top_pending，不造完整B GT/Q。用户页隐藏Q、公式、身份和选样理由；默认回答全空。
 
-Q95/85/50两侧真实最近邻全部覆盖。D20/F8上侧缺失、受控F6上侧缺失；F7.640835例仅混合诊断。补充Q90/60和Q75上侧缺紧邻；照片语义适用性仍归主审终审。全空间B仍top_pending，不造完整GT/Q，连续量与不确定性保留，不能用最高Q指定目标。
+Q95/85/50双侧全池真实最近邻仍全部覆盖。D20/F8上侧、受控F6上侧及补充Q90/60和Q75上侧紧邻缺口保留。F7.640835是混杂诊断。质量开发池907/83图，冻结282留出交集0。阈值导向30份不能估计总体严重比例，不能调66组后宣称泛化成功。
 
-运行：
+旧8例、原数据、GT、资格、分数均未改。选样阶段清单和报告保留原历史状态文本；当前状态以FINAL_DELIVERY.md及本README为准。原ARTIFACT_MANIFEST另存为SELECTION_STAGE_ARTIFACT_MANIFEST，不删除选样证据。
 
-```bash
-python code/freeze_selection.py --frozen-root /path/to/unpacked/cloud_compute --photo-root /path/to/original/assets --out /path/to/new_results
-```
-
-输入来自既有[完整云端计算工件](../quality_cloud_compute_20261011/README.md)。24原图可解压本目录ZIP，以originals为photo-root。冻结入口重跑四项选样文件逐字节相同。包照片脚本另支持--frozen-root、--photo-root、--out-root；不涉及最终用户渲染。本文目录完全是新增研究适配，不修改Pro原件或其许可证。
-
-私有工件包含人员、分数和阈值导向理由，禁止整包作为用户盲评文件。阈值导向30份不能估计总体严重比例，不能调66组后宣称泛化成功。主审通过清单及小样后再做最后渲染和独立30份回执。
+当前main基线9c1d91173bf8ec50de4983daaff325b339965e04；只提交研究分支，不推main。测试使用云端预装Chromium、本地回环HTTP，因管理策略阻止file://，不声称实际验证了Windows双击路径。独立原Pro/官方IoU与许可证仍在既有归档中，本目录是新增适配。
