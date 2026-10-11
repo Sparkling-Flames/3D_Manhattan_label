@@ -1,0 +1,69 @@
+{
+  "case_id": "T03",
+  "image_code": "7y3sRwLe3Va-13",
+  "W": 1024,
+  "H": 512,
+  "horizon_y": 256,
+  "formula": "r/h = 1/tan(pi*(y/512-0.5))",
+  "pairs": [
+    {
+      "annotation_pair": 1,
+      "reference_pair": 3,
+      "annotation_floor_y": 283.0,
+      "GT_floor_y": 285.75,
+      "vertical_delta_px": -2.75,
+      "annotation_radius_h": 5.980773963370527,
+      "GT_radius_h": 5.417156382523733,
+      "radius_relative_error": 0.10404307002564628
+    },
+    {
+      "annotation_pair": 2,
+      "reference_pair": 4,
+      "annotation_floor_y": 282.4451142926017,
+      "GT_floor_y": 285.73,
+      "vertical_delta_px": -3.2848857073983027,
+      "annotation_radius_h": 6.108567693099774,
+      "GT_radius_h": 5.420882823163671,
+      "radius_relative_error": 0.1268584642703574
+    },
+    {
+      "annotation_pair": 3,
+      "reference_pair": 1,
+      "annotation_floor_y": 357.0,
+      "GT_floor_y": 356.05,
+      "vertical_delta_px": 0.9499999999999886,
+      "annotation_radius_h": 1.4015440200074016,
+      "GT_radius_h": 1.4189659814994229,
+      "radius_relative_error": -0.012277927532562405
+    },
+    {
+      "annotation_pair": 4,
+      "reference_pair": 2,
+      "annotation_floor_y": 358.0,
+      "GT_floor_y": 357.1,
+      "vertical_delta_px": 0.8999999999999773,
+      "annotation_radius_h": 1.383510007652874,
+      "GT_radius_h": 1.399726695203878,
+      "radius_relative_error": -0.011585609966981547
+    }
+  ],
+  "frozen_components": {
+    "Q": 84.9647132876837,
+    "iou_2d": 0.8877210115438373,
+    "iou_3d_corner_mean": 0.8760870124605039,
+    "boundary_rms_deg": 0.7144088018952708,
+    "S_top_deg": 0.9837812499874086,
+    "S_bottom_deg": 0.23007460664767979,
+    "Hmean": 0.014478397457783907,
+    "Hlocal": 0.019388873690305786,
+    "Hstar": 0.019388873690305786,
+    "dir": 1.7338292627955043,
+    "flat": 0.3988846580439714,
+    "annotation_strict_available": true,
+    "reference_strict_available": true,
+    "annotation_strict_reasons": [],
+    "reference_strict_reasons": [],
+    "Manhattan_applicability_group": "ordinary_scene_supports_Manhattan"
+  },
+  "interpretation": "Projection sensitivity explains distal wall expansion; not a label change or proof of universally reduced penalties."
+}
