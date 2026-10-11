@@ -1,5 +1,7 @@
 # 259张已标注图片：范围与难度全量复核
 
+**2026-10-11当前：** 全259图已重新核验，见[完整再核验报告](../difficulty_scope_preferred_20261011/REPORT.md)与[按类型复审](../difficulty_scope_preferred_20261011/review.html)。当前144简单／30中等／38困难／5待核／42特殊；本页及review_data.json保留历史快照，旧“范围待裁定”不是当前状态。CURRENT.json为机器入口。
+
 **三份人员环序已更新主数据：** 见[回执接收与验证](user_review_20261010/REPORT.md)。本目录原照片/人员底面卡片仍是重排前审查快照，范围队列不变；后续量化须读最新主包。
 
 **最新用户回执：** 已收26图复审，按最新指示排除壁炉细节图，单列[11图范围待裁定清单](user_review_20261010/scope_review.html)。这些图原难度建议暂不作为最终结果，待目标范围裁定后二次复核。[3份人员作答排序台](user_review_20261010/order_workbench/index.html)独立处理yq-07顺序，GT不改。
