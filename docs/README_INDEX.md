@@ -1,5 +1,7 @@
 # HOHONET 文档入口
 
+- **2026-10-11图片难度当前版本：** [259图工作表](../analysis_results/difficulty_scope_preferred_20261011/current_259.csv)、[全部类型复审](../analysis_results/difficulty_scope_preferred_20261011/review.html)、[规则与OOS/门洞讨论](../analysis_results/difficulty_scope_preferred_20261011/REPORT.md)。144简单／30中等／38困难／5待核／42特殊。构建工具 `tools/thesis_main/analysis/difficulty_scope_preferred_20261011.py`；早版 `scope_difficulty_review_20261011.py` 与输出仅保留历史，不改正式GT/资格。
+
 - 用户复审后[11图范围待裁定](../analysis_results/image_difficulty_full_review_20261010/user_review_20261010/scope_review.html)与[3份人员作答排序台](../analysis_results/image_difficulty_full_review_20261010/user_review_20261010/order_workbench/index.html)：三份顺序已采用主数据（有效确认1312）；GT不改，范围裁定后再审难度。
 
 - [质量范围：3张最小人工试审与24张对照](../analysis_results/quality_scope_human_review_20261010/README.md)
