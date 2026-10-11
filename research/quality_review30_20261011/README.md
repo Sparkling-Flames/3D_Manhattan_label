@@ -1,9 +1,9 @@
-# 30份独立标注审核：最终渲染交付（待主审验收）
+# 30份独立标注审核：最终渲染交付（已主审验收）
 
-主审已批准冻结30行清单并实际查看24张原图；现已生成最终用户包及独立私有映射。该批准不表示每段墙/顶面或参考语义已被严格认证。用户仍可选参考/目标有疑问、无法判断并说明原因。最终审图、复核和统一main发布由dot主线程负责。
+主审已批准冻结30行清单并实际查看24张原图；现已生成最终用户包及独立私有映射。该批准不表示每段墙/顶面或参考语义已被严格认证。用户仍可选参考/目标有疑问、无法判断并说明原因。主审已核对30个唯一作答、留出隔离、照片哈希，查看全部30份叠线/BEV/3D，并核验空白回执。详见[主审报告](owner_review/README.md)和[交付检查](owner_review/delivery_validation.json)。人类质量判断仍为空，尚未选定最终阈值。
 
 - [用户ZIP：30独立作答＋可选成对题](artifacts/quality_review30_user_20261011.zip)
-- [私有映射ZIP：不得交给用户](artifacts/quality_review30_private_mapping_20261011.zip)
+- [评分与来源映射ZIP：建议完成盲审后再查看](artifacts/quality_review30_private_mapping_20261011.zip)
 - [最终交付说明](research/FINAL_DELIVERY.md)
 - [复现与浏览器测试命令](research/RUN_COMMANDS.md)
 - [精确字节数与SHA256](results/final_delivery_summary.json)
@@ -21,4 +21,6 @@ Q95/85/50双侧全池真实最近邻仍全部覆盖。D20/F8上侧、受控F6上
 
 旧8例、原数据、GT、资格、分数均未改。选样阶段清单和报告保留原历史状态文本；当前状态以FINAL_DELIVERY.md及本README为准。原ARTIFACT_MANIFEST另存为SELECTION_STAGE_ARTIFACT_MANIFEST，不删除选样证据。
 
-当前main基线9c1d91173bf8ec50de4983daaff325b339965e04；只提交研究分支，不推main。测试使用云端预装Chromium、本地回环HTTP，因管理策略阻止file://，不声称实际验证了Windows双击路径。独立原Pro/官方IoU与许可证仍在既有归档中，本目录是新增适配。
+本轮源main基线9c1d91173bf8ec50de4983daaff325b339965e04；云端完成后由主线程统一验收并发布。测试使用云端预装Chromium、本地回环HTTP，因管理策略阻止file://，不声称实际验证了Windows双击路径。独立原Pro/官方IoU与许可证仍在既有归档中，本目录是新增适配。
+
+使用：解压用户 ZIP，打开 user/index.html；填写后下载 JSON 回执返回。新30份与旧8例格式独立，旧回执不能直接导入。浏览器草稿不替代下载保存。
