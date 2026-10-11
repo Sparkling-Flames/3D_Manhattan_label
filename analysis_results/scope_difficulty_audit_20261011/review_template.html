@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>确认新范围后的难度复核</title>
+<style>
+body{font:16px/1.65 system-ui,sans-serif;background:#f3f5f8;color:#192735;margin:0}header,main{max-width:1500px;margin:auto;padding:20px}header{position:sticky;top:0;background:#f3f5f8ee;z-index:1;border-bottom:1px solid #ccd5df}h1{font-size:24px;margin:0}button,select,input,textarea{font:inherit;padding:7px;border:1px solid #91a5b9;border-radius:5px}button{cursor:pointer;background:white}article{background:white;padding:20px;margin:0 0 24px;border-radius:10px;border:1px solid #d5dfe8}h2{margin:0;font-size:22px}.pending{color:#924500}.evidence{width:100%;display:block}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.box{background:#eef4f9;padding:12px}.question{border-left:4px solid #d58924;background:#fff5e6;padding:12px}textarea{width:95%;height:72px}.muted{color:#54687a}a{color:#14599a}#status{margin-left:12px}pre{white-space:pre-wrap}@media(max-width:800px){.grid{grid-template-columns:1fr}header{position:static}}
+</style><p style="padding:16px;background:#fff1cc">历史35图早版；11待核已重新定档。<a href="../difficulty_scope_preferred_20261011/review.html">进入当前全259图分类复审</a></p>
+<header><h1>按已确认的新范围，复核难度</h1>
+<div class="muted">33张研究图＋2张仅参考图。默认展示11张待核。青色点只表示已确认底面，未补造顶边；橙色为原编辑GT。旧评分仅作对照。</div>
+<label>查看 <select id="filter"><option value="pending">需要你复核</option><option value="all">全部35张</option><option value="简单">简单</option><option value="中等">中等</option></select></label>
+<label>图片 <input id="search" placeholder="输入编号"></label>
+<button id="export">导出本次复核</button><span id="status" role="status"></span>
+<div><a href="current_259.csv">259图当前难度表</a> · <a href="REPORT.md">逐图报告与规则</a></div></header>
+<main id="cards"></main>
+<script>
+const data=__DATA__;
+const version='scope_conditioned_difficulty_20261011_v1';
+const key=version+'_human_draft';
+let draft={};
+try{draft=JSON.parse(localStorage.getItem(key)||'{}')}catch(e){document.getElementById('status').textContent='草稿读取失败，请勿关闭页面；导出保存。'}
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function prior(r){if(!r)return '未提供审核';const grade=r.grade==='认可建议'?`认可当时建议（${r.proposed_class}）`:r.grade;return `${esc(grade)}；范围：${esc(r.scope)}<br>${esc(r.note||'无备注')}<br><small>原建议：${esc(r.proposed_class)}；属于旧目标版本，不自动迁移。</small>`}
+function render(){
+ const filter=document.getElementById('filter').value, search=document.getElementById('search').value.toLowerCase();
+ const shown=data.filter(r=>(filter==='all'||filter==='pending'&&r.needs_user_review||r.current_class===filter)&&r.image.toLowerCase().includes(search));
+ document.getElementById('cards').innerHTML=shown.map(r=>{const f=r.features,d=draft[r.image]||{};return `<article id="${esc(r.image)}"><h2>${esc(r.image)} · <span class="${r.needs_user_review?'pending':''}">${esc(r.current_class)}</span> ${r.in_corpus?'':'（仅参考）'}</h2>
+ <div>旧视觉类：${esc(r.previous_visual_class||'无')}；旧工作类：${esc(r.previous_working_class||'无')} → 本轮：${esc(r.current_class)}<br>原GT N/H：${esc(r.previous_N??'—')}/${esc(r.previous_H??'—')}；新底面点/转折/H：${f.N_floor}/${f.N_turn}/${f.H}；环序：${esc(f.ring_class)}<br>既有OOS：${esc(r.oos_subtype)}；门洞：${esc(r.doorway_status)}（未知/旧状态不因范围确认而自动消除）</div>
+ <a href="${esc(r.evidence_card)}" target="_blank"><img class="evidence" src="${esc(r.evidence_card)}" alt="${esc(r.image)} 照片与新旧底面对照"></a>
+ <p><b>我的判断依据：</b>${esc(r.visible_evidence)}</p>${r.question?`<p class="question"><b>请你裁定：</b>${esc(r.question)}</p>`:'<p>本轮未发现需要额外裁定的难度疑点；顶边坐标仍未正式确认。</p>'}
+ <div class="grid"><div class="box"><b>你上次的审核</b><div>${prior(r.previous_user_review)}</div></div><div class="box"><b>另一位审核者的结论</b><div>${prior(r.external_review)}</div></div></div>
+ <p><label>本次意见 <select data-image="${esc(r.image)}" data-field="grade">${['未审','认可本次建议','简单','中等','困难','特殊单列','仍不确定'].map(v=>`<option ${d.grade===v?'selected':''}>${v}</option>`).join('')}</select></label></p>
+ <label>裁定说明（如门洞/玻璃/停止边/顶边对应）<br><textarea data-image="${esc(r.image)}" data-field="note">${esc(d.note||'')}</textarea></label></article>`}).join('');
+ document.getElementById('status').textContent=`显示${shown.length}张；本地已填写${Object.keys(draft).length}张`;
+}
+document.getElementById('cards').addEventListener('change',e=>{const code=e.target.dataset.image;if(!code)return;const r=data.find(r=>r.image===code);draft[code]={...draft[code],image:code,image_id:r.image_id,reference_id:r.reference_id,proposed_class:r.current_class,grade:draft[code]?.grade||'未审',note:draft[code]?.note||'',[e.target.dataset.field]:e.target.value,updated_at:new Date().toISOString()};try{localStorage.setItem(key,JSON.stringify(draft));document.getElementById('status').textContent=`草稿已保存${Object.keys(draft).length}张`}catch(e){document.getElementById('status').textContent='无法本地保存，请立即导出。'}});
+document.getElementById('filter').addEventListener('change',render);document.getElementById('search').addEventListener('input',render);
+document.getElementById('export').addEventListener('click',()=>{const blob=new Blob([JSON.stringify({schema:'scope_conditioned_difficulty_user_review_v1',review_version:version,exported_at:new Date().toISOString(),records:Object.values(draft)},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='新范围难度复核.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});
+render();
+</script></html>
