@@ -1,0 +1,81 @@
+{
+  "selection_version": "quality_review30_selection_v1",
+  "main_checked_and_merged": "9c1d91173bf8ec50de4983daaff325b339965e04",
+  "formal_input_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+  "source_handoff_commit": "f485d49f0ccd57a7a7bf64931a81b770a37ff4df",
+  "scope_baseline_commit": "42f7ea569c591c0cb3472e1b8bb8c0d883bbd3cb",
+  "official_HoHoNet_IoU_upstream_commit": "2bbc0866789cf7ad728064bc52aaf1d11b67c885",
+  "Pro_original_archive_sha256": "d54895af3620d8dd6bc3bd04537c1842dcd1fc79b0f7d729453af52dbe9ba292",
+  "selection_status": "frozen_candidate_list_for_owner_review_before_final_render",
+  "counting_unit": "distinct record_id AND object_id; optional pair is not another record",
+  "selection_adaptations_disclosed": [
+    "S means frozen boundary_rms_deg, not S_top+S_bottom. First unsaved diagnostic accidentally used sum; corrected before freezing.",
+    "F6 upper has no controlled record. One uncontrolled global-nearest high D/F record reserved as mixed diagnostic, not controlled endpoint evidence.",
+    "Six spatial fine choices use observed metric conflicts and distinct photos; not a fully blinded or wholly predeclared fine selection.",
+    "Hstar, I and Hlocal-Hmean are auxiliary sampling proxies; they do not label human severity or causes."
+  ],
+  "sources": [
+    {
+      "relative_path": "results/current_components.json",
+      "sha256": "18b7cad5f23beab29d80de6eb4f5a64a2df6dda41633be075a5b3ba27b356d45"
+    },
+    {
+      "relative_path": "results/target_alignment_ledger.json",
+      "sha256": "9e8cbe29b06091de77ffcdd004c2f7fef4da9b9af61b2b9bd4e936e21866bd79"
+    },
+    {
+      "relative_path": "results/room_holdout_manifest.csv",
+      "sha256": "31945d9a91158dd7724de5ecaab7a64c1921fa25dbbfbe37f3f71c37b2854696"
+    },
+    {
+      "relative_path": "results/AB_mapping.json",
+      "sha256": "59d7fa52e0ce6991337230d5e50108e949aece768addf71e6ebe752cd7e8b749"
+    },
+    {
+      "relative_path": "results/AB_margins_all_events.json",
+      "sha256": "4ca5dd9d334b9e60d8c384f427515e65a6160cdf4351f50bd36d600639ebbda2"
+    },
+    {
+      "relative_path": "results/Pro_variants_replayed_current.csv",
+      "sha256": "5ff2b2584acd9fc763de6e98b1682c275afcbf8f4748a91214dc671bcc4c8f68"
+    }
+  ],
+  "case_count": 30,
+  "quality_count": 24,
+  "space_count": 6,
+  "quality_pool_n": 907,
+  "quality_pool_images": 83,
+  "frozen_holdout_n": 282,
+  "strict_1059_held_overlap": 152,
+  "space_pool_n": 272,
+  "space_pool_images": 21,
+  "quality_selected_room_groups": 12,
+  "selected_images": 24,
+  "optional_pair_questions": [
+    {
+      "pair_id": "P01",
+      "left_case_id": "T23",
+      "right_case_id": "T24",
+      "independent_of_30_single_answers": true,
+      "same_image": true,
+      "same_reference": true,
+      "private_reason": "known alpha30 vs v11 ranking inversion",
+      "not_cross_image_ranking": true
+    }
+  ],
+  "no_final_thresholds_selected": true,
+  "no_human_judgments_generated": true,
+  "cannot_estimate_population_severity_prevalence": true,
+  "not_66_candidate_joint_tuning_or_generalization_claim": true,
+  "record_ids_unique": true,
+  "object_ids_unique": true,
+  "quality_all_in_907": true,
+  "holdout_intersection": [],
+  "errors_or_holds_restored": false,
+  "current_main_pushed": false,
+  "photo_bytes_decoded": 30,
+  "all_quality_mathematics_available": true,
+  "max_quality_records_per_image": 2,
+  "source_photo_unique_hash_count": 24,
+  "private_mapping_sha256": "bf1c3265184fe21d313c96415c80741a65ce6f531f1141aa7ff79ea1e40d2bf8"
+}
