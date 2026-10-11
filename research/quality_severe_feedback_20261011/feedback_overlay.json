@@ -4,7 +4,8 @@
   "original_receipt_sha256": "8e069a33330bcca46097c7bb530058b5b3fdcea91e2a24215f551877a61e32c0",
   "source_message_ids": [
     "Sentinel_590ece10e12c8191a7c6e0284c7f743b",
-    "Sentinel_68e87cf21c3481919cc7d9de15bdca16"
+    "Sentinel_68e87cf21c3481919cc7d9de15bdca16",
+    "Sentinel_dc07f661e0f8819191c4ce2fa5ae45b0"
   ],
   "raw_counts": {
     "severe": 25,
@@ -25,7 +26,11 @@
     "fewer_corners_alone_implies_severe": false,
     "raw_x_misalignment_must_be_retained": true,
     "user_stopped_detailed_comments_after_41": true,
-    "view_exposure_is_not_confirmation": true
+    "view_exposure_is_not_confirmation": true,
+    "unmarked_effective_status": "not_reviewed",
+    "comments_on_unmarked_are_grade_labels": false,
+    "further_human_review_required_before_exploratory_Pro_research": false,
+    "borderline_labels_are_definitive": false
   },
   "records": [
     {
@@ -42,7 +47,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S002",
@@ -58,7 +65,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S003",
@@ -74,7 +83,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S004",
@@ -90,7 +101,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S005",
@@ -101,12 +114,14 @@
       "original_judgment": "unmarked",
       "comment": "用户：标注质量太差，一对角点上下相差较大；未指定严重档",
       "calibration_scope_hold_reasons": [],
-      "needs_user_rereview": true,
-      "rereview_basis": "all borderline per latest user; S005/S014 poor-quality comments with unmarked severity",
+      "needs_user_rereview": false,
+      "rereview_basis": null,
       "geometry_mode": "automatic_preview",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S006",
@@ -122,7 +137,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S007",
@@ -138,7 +155,9 @@
       "geometry_mode": "raw_points_only",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S008",
@@ -154,7 +173,9 @@
       "geometry_mode": "raw_points_only",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S009",
@@ -170,7 +191,9 @@
       "geometry_mode": "automatic_preview",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S010",
@@ -186,7 +209,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S011",
@@ -202,7 +227,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S012",
@@ -218,7 +245,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S013",
@@ -234,7 +263,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S014",
@@ -245,12 +276,14 @@
       "original_judgment": "unmarked",
       "comment": "用户：标注质量太差，一对角点上下相差较大；未指定严重档",
       "calibration_scope_hold_reasons": [],
-      "needs_user_rereview": true,
-      "rereview_basis": "all borderline per latest user; S005/S014 poor-quality comments with unmarked severity",
+      "needs_user_rereview": false,
+      "rereview_basis": null,
       "geometry_mode": "automatic_preview",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S015",
@@ -266,7 +299,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S016",
@@ -284,7 +319,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S017",
@@ -300,7 +337,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S018",
@@ -318,7 +357,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S019",
@@ -336,7 +377,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S020",
@@ -352,7 +395,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S021",
@@ -368,7 +413,9 @@
       "geometry_mode": "raw_points_only",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S022",
@@ -384,7 +431,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S023",
@@ -400,7 +449,9 @@
       "geometry_mode": "raw_points_only",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S024",
@@ -416,7 +467,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S025",
@@ -434,7 +487,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S026",
@@ -446,11 +501,13 @@
       "comment": null,
       "calibration_scope_hold_reasons": [],
       "needs_user_rereview": true,
-      "rereview_basis": "all borderline per latest user; S005/S014 poor-quality comments with unmarked severity",
+      "rereview_basis": "latest user retains borderline as pending; target followup after exploratory analysis",
       "geometry_mode": "automatic_preview",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_borderline_pending",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S027",
@@ -468,7 +525,9 @@
       "geometry_mode": "automatic_preview",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S028",
@@ -486,7 +545,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S029",
@@ -502,7 +563,9 @@
       "geometry_mode": "raw_points_only",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S030",
@@ -518,7 +581,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S031",
@@ -536,7 +601,9 @@
       "geometry_mode": "automatic_preview",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S032",
@@ -548,11 +615,13 @@
       "comment": "用户：犹豫，因为不理解所标对象且三维质量差，部分角点仍准确",
       "calibration_scope_hold_reasons": [],
       "needs_user_rereview": true,
-      "rereview_basis": "all borderline per latest user; S005/S014 poor-quality comments with unmarked severity",
+      "rereview_basis": "latest user retains borderline as pending; target followup after exploratory analysis",
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_borderline_pending",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S033",
@@ -568,7 +637,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S034",
@@ -580,11 +651,13 @@
       "comment": "用户：犹豫，因为不理解所标对象且三维质量差，部分角点仍准确",
       "calibration_scope_hold_reasons": [],
       "needs_user_rereview": true,
-      "rereview_basis": "all borderline per latest user; S005/S014 poor-quality comments with unmarked severity",
+      "rereview_basis": "latest user retains borderline as pending; target followup after exploratory analysis",
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_borderline_pending",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S035",
@@ -600,7 +673,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S036",
@@ -616,7 +691,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S037",
@@ -632,7 +709,9 @@
       "geometry_mode": "automatic_preview",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S038",
@@ -648,7 +727,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S039",
@@ -664,7 +745,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S040",
@@ -680,7 +763,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S041",
@@ -696,7 +781,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S042",
@@ -712,7 +799,9 @@
       "geometry_mode": "raw_points_only",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S043",
@@ -728,7 +817,9 @@
       "geometry_mode": "automatic_preview",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S044",
@@ -740,11 +831,13 @@
       "comment": null,
       "calibration_scope_hold_reasons": [],
       "needs_user_rereview": true,
-      "rereview_basis": "all borderline per latest user; S005/S014 poor-quality comments with unmarked severity",
+      "rereview_basis": "latest user retains borderline as pending; target followup after exploratory analysis",
       "geometry_mode": "raw_points_only",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_borderline_pending",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S045",
@@ -760,7 +853,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S046",
@@ -776,7 +871,9 @@
       "geometry_mode": "raw_points_only",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S047",
@@ -792,7 +889,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S048",
@@ -810,7 +909,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S049",
@@ -826,7 +927,9 @@
       "geometry_mode": "automatic_preview",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S050",
@@ -842,7 +945,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S051",
@@ -858,7 +963,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S052",
@@ -870,11 +977,13 @@
       "comment": null,
       "calibration_scope_hold_reasons": [],
       "needs_user_rereview": true,
-      "rereview_basis": "all borderline per latest user; S005/S014 poor-quality comments with unmarked severity",
+      "rereview_basis": "latest user retains borderline as pending; target followup after exploratory analysis",
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_borderline_pending",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S053",
@@ -890,7 +999,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S054",
@@ -906,7 +1017,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S055",
@@ -924,7 +1037,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S056",
@@ -940,7 +1055,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S057",
@@ -956,7 +1073,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S058",
@@ -974,7 +1093,9 @@
       "geometry_mode": "automatic_preview",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S059",
@@ -990,7 +1111,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S060",
@@ -1006,7 +1129,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S061",
@@ -1024,7 +1149,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S062",
@@ -1040,7 +1167,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S063",
@@ -1056,7 +1185,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S064",
@@ -1072,7 +1203,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S065",
@@ -1090,7 +1223,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S066",
@@ -1106,7 +1241,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S067",
@@ -1122,7 +1259,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S068",
@@ -1138,7 +1277,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S069",
@@ -1156,7 +1297,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S070",
@@ -1172,7 +1315,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S071",
@@ -1184,11 +1329,13 @@
       "comment": null,
       "calibration_scope_hold_reasons": [],
       "needs_user_rereview": true,
-      "rereview_basis": "all borderline per latest user; S005/S014 poor-quality comments with unmarked severity",
+      "rereview_basis": "latest user retains borderline as pending; target followup after exploratory analysis",
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_borderline_pending",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S072",
@@ -1204,7 +1351,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S073",
@@ -1216,11 +1365,13 @@
       "comment": null,
       "calibration_scope_hold_reasons": [],
       "needs_user_rereview": true,
-      "rereview_basis": "all borderline per latest user; S005/S014 poor-quality comments with unmarked severity",
+      "rereview_basis": "latest user retains borderline as pending; target followup after exploratory analysis",
       "geometry_mode": "raw_points_only",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_borderline_pending",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S074",
@@ -1236,7 +1387,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S075",
@@ -1252,7 +1405,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S076",
@@ -1268,7 +1423,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S077",
@@ -1284,7 +1441,9 @@
       "geometry_mode": "raw_points_only",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S078",
@@ -1300,7 +1459,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S079",
@@ -1312,11 +1473,13 @@
       "comment": null,
       "calibration_scope_hold_reasons": [],
       "needs_user_rereview": true,
-      "rereview_basis": "all borderline per latest user; S005/S014 poor-quality comments with unmarked severity",
+      "rereview_basis": "latest user retains borderline as pending; target followup after exploratory analysis",
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_borderline_pending",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S080",
@@ -1332,7 +1495,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S081",
@@ -1350,7 +1515,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S082",
@@ -1366,7 +1533,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S083",
@@ -1378,11 +1547,13 @@
       "comment": null,
       "calibration_scope_hold_reasons": [],
       "needs_user_rereview": true,
-      "rereview_basis": "all borderline per latest user; S005/S014 poor-quality comments with unmarked severity",
+      "rereview_basis": "latest user retains borderline as pending; target followup after exploratory analysis",
       "geometry_mode": "automatic_preview",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_borderline_pending",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S084",
@@ -1398,7 +1569,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S085",
@@ -1416,7 +1589,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S086",
@@ -1432,7 +1607,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S087",
@@ -1448,7 +1625,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S088",
@@ -1464,7 +1643,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S089",
@@ -1480,7 +1661,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S090",
@@ -1498,7 +1681,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S091",
@@ -1514,7 +1699,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S092",
@@ -1530,7 +1717,9 @@
       "geometry_mode": "automatic_preview",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S093",
@@ -1546,7 +1735,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S094",
@@ -1562,7 +1753,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S095",
@@ -1578,7 +1771,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S096",
@@ -1596,7 +1791,9 @@
       "geometry_mode": "automatic_preview",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S097",
@@ -1612,7 +1809,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S098",
@@ -1628,7 +1827,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S099",
@@ -1644,7 +1845,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S100",
@@ -1660,7 +1863,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S101",
@@ -1676,7 +1881,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S102",
@@ -1692,7 +1899,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S103",
@@ -1708,7 +1917,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S104",
@@ -1724,7 +1935,9 @@
       "geometry_mode": "raw_points_only",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S105",
@@ -1740,7 +1953,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S106",
@@ -1756,7 +1971,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S107",
@@ -1768,11 +1985,13 @@
       "comment": null,
       "calibration_scope_hold_reasons": [],
       "needs_user_rereview": true,
-      "rereview_basis": "all borderline per latest user; S005/S014 poor-quality comments with unmarked severity",
+      "rereview_basis": "latest user retains borderline as pending; target followup after exploratory analysis",
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_borderline_pending",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S108",
@@ -1788,7 +2007,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S109",
@@ -1800,11 +2021,13 @@
       "comment": null,
       "calibration_scope_hold_reasons": [],
       "needs_user_rereview": true,
-      "rereview_basis": "all borderline per latest user; S005/S014 poor-quality comments with unmarked severity",
+      "rereview_basis": "latest user retains borderline as pending; target followup after exploratory analysis",
       "geometry_mode": "raw_points_only",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_borderline_pending",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S110",
@@ -1820,7 +2043,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S111",
@@ -1836,7 +2061,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S112",
@@ -1852,7 +2079,9 @@
       "geometry_mode": "automatic_preview",
       "numeric_calibration_geometry_ready": false,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S113",
@@ -1868,7 +2097,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S114",
@@ -1884,7 +2115,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "reviewed_severe",
+      "comment_is_independent_grade_label": false
     },
     {
       "case_id": "S115",
@@ -1900,7 +2133,9 @@
       "geometry_mode": "frozen_geometry",
       "numeric_calibration_geometry_ready": true,
       "formal_eligibility_changed": false,
-      "unmarked_is_negative_label": false
+      "unmarked_is_negative_label": false,
+      "effective_review_status": "not_reviewed",
+      "comment_is_independent_grade_label": false
     }
   ]
 }
