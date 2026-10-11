@@ -1,0 +1,31 @@
+/* Adapter for archived v3.4.2 operations. Its geometry implementation is unchanged. */
+(function(root){
+ 'use strict';const Original=root.ReviewState,G=root.Geo,clone=Original.clone;
+ const SPACE_SCHEMA='quality_four_space_regions_v1';
+ function empty(){return {polygon:[],cuts:[],operations:[],decision:'',note:'',top_boundary_pending:true,completed:false,axis_angle:0,empty_draft:true};}
+ function verifyOps(c,r){
+  if(Array.isArray(r.polygon||r.cropped_floor_xz_h)&&!(r.polygon||r.cropped_floor_xz_h).length){
+   if((r.operations||[]).length||(r.cuts||[]).length||r.decision||r.completed||r.confirmed_version||r.top_boundary_pending===false||(r.polygon&&r.polygon.length)||(r.cropped_floor_xz_h&&r.cropped_floor_xz_h.length))throw Error('空空间只能是未确认草稿，不得含修改、确认或顶界');
+   return {...empty(),note:String(r.note||'').slice(0,10000),axis_angle:Number.isFinite(r.axis_angle)?r.axis_angle:0,...(r.updated_at?{updated_at:r.updated_at}:{})};
+  }
+  if(r.top_boundary_pending===false)throw Error('此工作台只确认底面，不能确认顶界');return {...Original.verifyOps(c,r),empty_draft:false};
+ }
+ function verifyConfirmation(c,r){if(!r||!G.valid(r.polygon||r.cropped_floor_xz_h))throw Error('空空间不能确认');if(r.top_boundary_pending===false)throw Error('不得借用或确认顶界');return Original.verifyConfirmation(c,r);}
+ function support(value,c){
+  const v=value||{status:'not_assessed',source:'not_assessed',record_ids:[],note:''};
+  if(!['not_assessed','user_reports_observed','user_reports_not_observed'].includes(v.status)||!['not_assessed','user_statement'].includes(v.source)||!Array.isArray(v.record_ids)||new Set(v.record_ids).size!==v.record_ids.length||v.record_ids.some(id=>!c.annotations.some(a=>a.record_id===id))||typeof v.note!=='string'||v.note.length>2000)throw Error('作答支持状态无效');
+  if(v.status==='not_assessed'&&(v.source!=='not_assessed'||v.record_ids.length))throw Error('待核查状态不得偷偷赋予支持');if(v.status!=='not_assessed'&&v.source!=='user_statement')throw Error('支持状态只能注明用户观察，不是自动统计');return clone(v);
+ }
+ function metadata(r,c){return {visible:r.visible!==false,observation_support:support(r.observation_support,c)};}
+ function exportRegions(c,regions,activeId,sourceCommit){return {schema:SPACE_SCHEMA,active_region_id:activeId,meaning:'named alternative floor references; independent drafts and explicit confirmations; observed support is separate; no full GT',regions:regions.map(r=>({region_id:r.region_id,name:r.name,source_binding:Original.sourceBinding(c,sourceCommit),...clone(r.draft),...metadata(r,c),cropped_floor_xz_h:clone(r.draft.polygon),confirmed_version:r.confirmed_version?clone(r.confirmed_version):null,floor_region_confirmed:Original.regionStatus(r)==='confirmed',empty_draft:r.draft.polygon.length===0,reference_ready:false,formal_eligibility_changed:false}))};}
+ function verifyRegions(c,value,sourceCommit){
+  if(!value||value.schema!==SPACE_SCHEMA||!Array.isArray(value.regions)||value.regions.length<4||value.regions.length>50)throw Error('应保留至少A/B/C/D四个独立空间');const seen=new Set();
+  const regions=value.regions.map(r=>{if(!r||typeof r.region_id!=='string'||!/^[a-z][a-z0-9_-]{0,63}$/.test(r.region_id)||seen.has(r.region_id))throw Error('空间ID无效或重复');seen.add(r.region_id);if(typeof r.name!=='string'||!r.name.trim()||r.name.length>80)throw Error('空间名称无效');Original.verifyBinding(c,r.source_binding,sourceCommit);if(r.reference_ready!==false||r.formal_eligibility_changed!==false)throw Error('底面草稿不能直接成为正式GT');const d=verifyOps(c,r),cf=r.confirmed_version?verifyConfirmation(c,r.confirmed_version):null;if(r.polygon&&!Original.samePoly(r.polygon,d.polygon))throw Error('空间坐标字段冲突');if(r.empty_draft!==(d.polygon.length===0)||r.floor_region_confirmed!==(Original.regionStatus({draft:d,confirmed_version:cf})==='confirmed'))throw Error('空草稿/底面确认标志与实际状态不一致');d.completed=!!cf&&Original.sameReview(d,cf);return {region_id:r.region_id,name:r.name.trim(),draft:d,confirmed_version:cf,...metadata(r,c)};});
+  if(['primary','space_b','space_c','space_d'].some(id=>!seen.has(id))||!seen.has(value.active_region_id))throw Error('缺少A/B/C/D或当前空间');return {active_region_id:value.active_region_id,regions};
+ }
+ function seed(c){const b=verifyConfirmation(c,c.seed_B);return {active_region_id:'space_c',primary_name:'A · 原GT底面',primary_visible:true,primary_observation_support:support(null,c),alternatives:[{region_id:'space_b',name:'B · 已有认可底面',draft:verifyOps(c,b),confirmed_version:b,visible:true,observation_support:support(null,c)},{region_id:'space_c',name:'C · 待用户补画',draft:empty(),confirmed_version:null,visible:true,observation_support:support(null,c)},{region_id:'space_d',name:'D · 待用户补画',draft:empty(),confirmed_version:null,visible:true,observation_support:support(null,c)}]};}
+ function initialize(data,saved){const out=Original.initialize(data,saved);if(saved?.source_commit===data.source_commit)for(const c of data.images){const raw=saved.drafts?.[c.image_code];if(raw?.polygon?.length===0){try{out.drafts[c.image_code]=verifyOps(c,raw);}catch(e){out.unrecovered_drafts[c.image_code+':empty']=clone(raw);}}}return out;}
+ function initializeRegions(data,saved,state){const result={};for(const c of data.images){result[c.image_code]=seed(c);if(!saved?.space_regions?.[c.image_code]||saved.source_commit!==data.source_commit)continue;try{const x=verifyRegions(c,saved.space_regions[c.image_code],data.source_commit),a=x.regions.find(r=>r.region_id==='primary');if(saved.drafts?.[c.image_code]&&!Original.sameReview(verifyOps(c,saved.drafts[c.image_code]),a.draft))throw Error('A草稿副本不一致');state.drafts[c.image_code]=a.draft;if(a.confirmed_version)state.confirmations[c.image_code]=a.confirmed_version;result[c.image_code]={active_region_id:x.active_region_id,primary_name:a.name,primary_visible:a.visible,primary_observation_support:a.observation_support,alternatives:x.regions.filter(r=>r.region_id!=='primary')};}catch(e){state.unrecovered_drafts[c.image_code+':four_spaces']=clone(saved.space_regions[c.image_code]);state.warnings.push('四空间草稿不匹配，完整原副本保留：'+e.message);}}return result;}
+ function confirm(c,d,now){if(!G.valid(d.polygon))throw Error('请先画出有效底面，再明确确认');return Original.confirm(c,{...clone(d),top_boundary_pending:true},now);}
+ root.ReviewState={...Original,SPACE_SCHEMA,emptyFresh:empty,verifyOps,verifyConfirmation,exportRegions,verifyRegions,initialize,initializeRegions,confirm,support};
+})(window);

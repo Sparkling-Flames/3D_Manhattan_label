@@ -1,0 +1,2437 @@
+{
+  "schema": "quality_four_space_recheck_v1",
+  "editor_version": "four-space-recheck-v1",
+  "historical_feedback_binding": {
+    "library_file_id": "libfile_f704466496208191a307dced921787ab",
+    "version": 0,
+    "size_bytes": 11986,
+    "original_bytes_verified": true,
+    "read_text_sha256": "51390599aeb1d43dd89c53c305313849391bfb04533ee7764019b0fba7663075",
+    "original_sha256": "8e26b9cd8fa4fc1f978fb0b71453e2142878eca667cd5c525dd913d8077ad35c",
+    "verification_method": "Library complete read plus terminal LF; cross-checked against parent independently materialized original SHA256"
+  },
+  "historical_feedback": {
+    "format_version": "quality_review30_receipt_v1",
+    "dataset_id": "quality_review30_selection_v1:bf1c3265184fe21d313c96415c80741a65ce6f531f1141aa7ff79ea1e40d2bf8:seed2026101130",
+    "case_ids": [
+      "T01",
+      "T02",
+      "T03",
+      "T04",
+      "T05",
+      "T06",
+      "T07",
+      "T08",
+      "T09",
+      "T10",
+      "T11",
+      "T12",
+      "T13",
+      "T14",
+      "T15",
+      "T16",
+      "T17",
+      "T18",
+      "T19",
+      "T20",
+      "T21",
+      "T22",
+      "T23",
+      "T24",
+      "T25",
+      "T26",
+      "T27",
+      "T28",
+      "T29",
+      "T30"
+    ],
+    "display_order": [
+      "T28",
+      "T01",
+      "T07",
+      "T25",
+      "T29",
+      "T18",
+      "T20",
+      "T06",
+      "T27",
+      "T17",
+      "T26",
+      "T16",
+      "T14",
+      "T15",
+      "T05",
+      "T03",
+      "T13",
+      "T22",
+      "T12",
+      "T24",
+      "T30",
+      "T04",
+      "T08",
+      "T19",
+      "T11",
+      "T23",
+      "T02",
+      "T10",
+      "T09",
+      "T21"
+    ],
+    "fields": [
+      "case_id",
+      "case_type",
+      "absolute_quality",
+      "space_compatibility",
+      "reference_question",
+      "difference_to_reference",
+      "reason",
+      "confidence",
+      "notes"
+    ],
+    "answers": [
+      {
+        "case_id": "T01",
+        "case_type": "quality",
+        "absolute_quality": "可接受",
+        "space_compatibility": "",
+        "reference_question": "",
+        "difference_to_reference": "很小",
+        "reason": "",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T02",
+        "case_type": "quality",
+        "absolute_quality": "可接受",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "很小",
+        "reason": "",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T03",
+        "case_type": "quality",
+        "absolute_quality": "有轻微问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "很小",
+        "reason": "2d来看没什么问题,但是不知道为什么底面和3d有这么大差异",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T04",
+        "case_type": "quality",
+        "absolute_quality": "有轻微问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "很小",
+        "reason": "2d上差距不大",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T05",
+        "case_type": "quality",
+        "absolute_quality": "明显问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "很小",
+        "reason": "我记得这张图挺多人都忽略了最左边还有个转角,导致3d空间遗失,效果不好.2d的标注看的话,已经标注的点倒是还行的",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T06",
+        "case_type": "quality",
+        "absolute_quality": "有轻微问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "中等",
+        "reason": "右边的两队点标的有些偏差",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T07",
+        "case_type": "quality",
+        "absolute_quality": "明显问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "中等",
+        "reason": "拐角处是墙面细节问题,他注意到了,但是只标了一对点. 还有壁炉那里多标了,以及墙角标的不准确.这问题挺多, 和参考的差距应该 比正常中等多,但是又没到特别大的地步",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T08",
+        "case_type": "quality",
+        "absolute_quality": "明显问题",
+        "space_compatibility": "",
+        "reference_question": "",
+        "difference_to_reference": "中等",
+        "reason": "角点标注确实有偏移",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T09",
+        "case_type": "quality",
+        "absolute_quality": "明显问题",
+        "space_compatibility": "",
+        "reference_question": "",
+        "difference_to_reference": "中等",
+        "reason": "有对点标歪了,导致3d很畸形",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T10",
+        "case_type": "quality",
+        "absolute_quality": "明显问题",
+        "space_compatibility": "",
+        "reference_question": "",
+        "difference_to_reference": "中等",
+        "reason": "墙角标的有点差,3d表现有问题",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T11",
+        "case_type": "quality",
+        "absolute_quality": "明显问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "中等",
+        "reason": "少标了很多墙角",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T12",
+        "case_type": "quality",
+        "absolute_quality": "明显问题",
+        "space_compatibility": "",
+        "reference_question": "",
+        "difference_to_reference": "中等",
+        "reason": "但是这图很难,能稍微标注细节 已经超越很多人了,但是细节确实错误和缺漏有点多",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T13",
+        "case_type": "quality",
+        "absolute_quality": "明显问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "中等",
+        "reason": "就是最左边那个墙角标的太歪了,其他的点标的都很不错",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T14",
+        "case_type": "quality",
+        "absolute_quality": "有轻微问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "很小",
+        "reason": "",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T15",
+        "case_type": "quality",
+        "absolute_quality": "明显问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "中等",
+        "reason": "一个是标的高度不同,一个是墙面转折处只标了一对点",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T16",
+        "case_type": "quality",
+        "absolute_quality": "明显问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "中等",
+        "reason": "最左边的一堆点标的偏差, bottom y 标的不是特别统一",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T17",
+        "case_type": "quality",
+        "absolute_quality": "明显问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "中等",
+        "reason": "这墙角的标注确实有些地方有一定的偏差,但是2d观感上来看没有差的特别多(除了最左边一对角点),3d表现确实有点差",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T18",
+        "case_type": "quality",
+        "absolute_quality": "有轻微问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "中等",
+        "reason": "2对点标的不是特别好",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T19",
+        "case_type": "quality",
+        "absolute_quality": "明显问题",
+        "space_compatibility": "",
+        "reference_question": "",
+        "difference_to_reference": "中等",
+        "reason": "多标了一对点,而且角点标注有点偏差",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T20",
+        "case_type": "quality",
+        "absolute_quality": "有轻微问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "很小",
+        "reason": "主要是 标的天花板高度不同,标的偏低了,4对点标的都相对来说比较准确",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T21",
+        "case_type": "quality",
+        "absolute_quality": "有轻微问题",
+        "space_compatibility": "",
+        "reference_question": "",
+        "difference_to_reference": "中等",
+        "reason": "标注停止的空间不一样",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T22",
+        "case_type": "quality",
+        "absolute_quality": "有轻微问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "中等",
+        "reason": "主要是空间停止的位置不同,他标了小空间",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T23",
+        "case_type": "quality",
+        "absolute_quality": "有轻微问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "很小",
+        "reason": "2d上差距不大,但是3d上有点差距,偏大了一点",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T24",
+        "case_type": "quality",
+        "absolute_quality": "有轻微问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "很小",
+        "reason": "我个人在2d上感觉和参考没什么差异,但是3d上有点差异",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T25",
+        "case_type": "space",
+        "absolute_quality": "",
+        "space_compatibility": "仅 B 可匹配",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "",
+        "reason": "",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T26",
+        "case_type": "space",
+        "absolute_quality": "",
+        "space_compatibility": "仅 B 可匹配",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "",
+        "reason": "",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T27",
+        "case_type": "space",
+        "absolute_quality": "",
+        "space_compatibility": "仅 B 可匹配",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "",
+        "reason": "",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T28",
+        "case_type": "space",
+        "absolute_quality": "",
+        "space_compatibility": "无法判断",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "",
+        "reason": "在玻璃处停止了,但是也没标玻璃",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T29",
+        "case_type": "space",
+        "absolute_quality": "",
+        "space_compatibility": "两者均不匹配",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "",
+        "reason": "标了大空间的较小空间,实际计算的时候按照空间A进行匹配",
+        "confidence": "",
+        "notes": ""
+      },
+      {
+        "case_id": "T30",
+        "case_type": "space",
+        "absolute_quality": "",
+        "space_compatibility": "两者均不匹配",
+        "reference_question": "",
+        "difference_to_reference": "",
+        "reason": "另一种空间",
+        "confidence": "",
+        "notes": ""
+      }
+    ],
+    "pair_ids": [
+      "P01"
+    ],
+    "pair_fields": [
+      "pair_id",
+      "left_case_id",
+      "right_case_id",
+      "preference",
+      "gap",
+      "reason",
+      "confidence",
+      "notes"
+    ],
+    "pair_answers": [
+      {
+        "pair_id": "P01",
+        "left_case_id": "T23",
+        "right_case_id": "T24",
+        "preference": "",
+        "gap": "",
+        "reason": "",
+        "confidence": "",
+        "notes": ""
+      }
+    ]
+  },
+  "independent_T30_rereview": {
+    "case_id": "T30",
+    "status": "reviewed",
+    "verdict": "matches_selected",
+    "matching_region_ids": [
+      "space_c"
+    ],
+    "reason": "QA临时判断，不是用户反馈",
+    "confidence": "",
+    "source": "new_independent_rereview",
+    "original_history_overwritten": false
+  },
+  "user_target_directives": [
+    {
+      "case_id": "T29",
+      "record_id": "R03192",
+      "target_space_label": "A",
+      "routing_source": "user_specified",
+      "source_field": "answers[T29].reason",
+      "verbatim": "标了大空间的较小空间,实际计算的时候按照空间A进行匹配",
+      "automatic_routing": false
+    }
+  ],
+  "scores_recomputed": false,
+  "latest_scope_review_source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+  "source_commit": "159eac10e077834dd0f8e7fd3f9832b5242c529b",
+  "exported_at": "2026-10-11T07:06:15.546Z",
+  "coordinate_frame": "camera_height_normalized_xz; original ERP 1024x512",
+  "GT_modified": false,
+  "legacy_field_notice": "original_GT_points_1024x512 and original_GT_floor_xz_h mean the unchanged editing baseline in this legacy schema, not necessarily the historical original dataset GT; use editing_reference_* and historical_original_GT_* for explicit versions.",
+  "unrecovered_drafts": {},
+  "records": [
+    {
+      "image_code": "uNb9QFRL6hY-88",
+      "image_id": "uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14",
+      "baseline_spaces": {
+        "A": {
+          "polygon_source": "original_GT",
+          "points_1024x512": [
+            [
+              569.89,
+              211.22
+            ],
+            [
+              569.89,
+              305.9
+            ],
+            [
+              707.74,
+              150.53
+            ],
+            [
+              707.74,
+              370.58
+            ],
+            [
+              650.41,
+              102.12
+            ],
+            [
+              650.41,
+              418.58
+            ],
+            [
+              873.06,
+              97.32
+            ],
+            [
+              873.06,
+              423.17
+            ],
+            [
+              893.91,
+              86.31
+            ],
+            [
+              893.91,
+              433.59
+            ],
+            [
+              999.59,
+              200.26
+            ],
+            [
+              999.59,
+              317.9
+            ],
+            [
+              21.88,
+              200.15
+            ],
+            [
+              21.88,
+              318.03
+            ],
+            [
+              125.5,
+              80.56
+            ],
+            [
+              125.5,
+              438.99
+            ],
+            [
+              206.55,
+              148.82
+            ],
+            [
+              206.55,
+              372.32
+            ],
+            [
+              320.5,
+              151.47
+            ],
+            [
+              320.5,
+              369.61
+            ],
+            [
+              290.21,
+              193.48
+            ],
+            [
+              290.21,
+              325.26
+            ],
+            [
+              382.35,
+              209.29
+            ],
+            [
+              382.35,
+              308.02
+            ],
+            [
+              429.3,
+              198.53
+            ],
+            [
+              429.3,
+              319.78
+            ],
+            [
+              450.4,
+              211.59
+            ],
+            [
+              450.4,
+              305.49
+            ]
+          ],
+          "object_id": "gt:uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14.txt",
+          "reference_version": "original_GT",
+          "floor_reasonableness_status": "previously_acknowledged",
+          "coordinates_reapproved_by_this_task": false
+        },
+        "B": {
+          "polygon": [
+            [
+              1.1001585114440635,
+              -2.965847237121703
+            ],
+            [
+              1.1001681883304166,
+              -0.42639924641508414
+            ],
+            [
+              0.48465518909770094,
+              -0.42638336635520846
+            ],
+            [
+              0.48464182505878783,
+              0.36434460053425893
+            ],
+            [
+              0.3738359196031905,
+              0.3643686071540866
+            ],
+            [
+              0.3737969912003019,
+              2.476985324539765
+            ],
+            [
+              -0.33452584421824094,
+              2.4767499079423656
+            ],
+            [
+              -0.33456236955232804,
+              0.3449873493976255
+            ],
+            [
+              -1.1019397843540992,
+              0.34500525372382784
+            ],
+            [
+              -1.101934217064075,
+              -0.4604018765266019
+            ],
+            [
+              -2.1611880235937244,
+              -0.4604374028474687
+            ],
+            [
+              -2.161074149230013,
+              -2.9656853306519686
+            ],
+            [
+              -1.1776834872815283,
+              -2.9659782851841694
+            ]
+          ],
+          "original_confirmation": {
+            "polygon": [
+              [
+                1.1001585114440635,
+                -2.965847237121703
+              ],
+              [
+                1.1001681883304166,
+                -0.42639924641508414
+              ],
+              [
+                0.48465518909770094,
+                -0.42638336635520846
+              ],
+              [
+                0.48464182505878783,
+                0.36434460053425893
+              ],
+              [
+                0.3738359196031905,
+                0.3643686071540866
+              ],
+              [
+                0.3737969912003019,
+                2.476985324539765
+              ],
+              [
+                -0.33452584421824094,
+                2.4767499079423656
+              ],
+              [
+                -0.33456236955232804,
+                0.3449873493976255
+              ],
+              [
+                -1.1019397843540992,
+                0.34500525372382784
+              ],
+              [
+                -1.101934217064075,
+                -0.4604018765266019
+              ],
+              [
+                -2.1611880235937244,
+                -0.4604374028474687
+              ],
+              [
+                -2.161074149230013,
+                -2.9656853306519686
+              ],
+              [
+                -1.1776834872815283,
+                -2.9659782851841694
+              ]
+            ],
+            "operations": [
+              {
+                "type": "edge_move",
+                "index": 11,
+                "offset": -0.8478948561575355,
+                "gt_snap": {
+                  "version": 1,
+                  "mode": "edge_move",
+                  "matches": [
+                    {
+                      "edge": 11,
+                      "kind": "vertex",
+                      "gt_vertex": 13,
+                      "exact": false,
+                      "distance_px": 5.927266479520189
+                    }
+                  ]
+                }
+              }
+            ],
+            "cuts": [],
+            "decision": "allow",
+            "note": "",
+            "top_boundary_pending": true,
+            "axis_angle": 0,
+            "completed": true,
+            "updated_at": "2026-10-10T13:02:11.190Z",
+            "confirmed_at": "2026-10-10T13:02:11.190Z",
+            "source": "workbench_button",
+            "confirmation_message_id": null,
+            "source_sha256": null,
+            "floor_region_confirmed": true,
+            "top_boundary_validation": "not established by this floor-region confirmation"
+          },
+          "operations": [
+            {
+              "type": "edge_move",
+              "index": 11,
+              "offset": -0.8478948561575355,
+              "gt_snap": {
+                "version": 1,
+                "mode": "edge_move",
+                "matches": [
+                  {
+                    "edge": 11,
+                    "kind": "vertex",
+                    "gt_vertex": 13,
+                    "exact": false,
+                    "distance_px": 5.927266479520189
+                  }
+                ]
+              }
+            }
+          ],
+          "top_status": "top_pending",
+          "floor_reasonableness_status": "previously_acknowledged",
+          "coordinates_reapproved_by_this_task": false
+        },
+        "C": null,
+        "D": null
+      },
+      "reference_object_id": "gt:uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14.txt",
+      "original_GT_points_1024x512": [
+        [
+          569.89,
+          211.22
+        ],
+        [
+          569.89,
+          305.9
+        ],
+        [
+          707.74,
+          150.53
+        ],
+        [
+          707.74,
+          370.58
+        ],
+        [
+          650.41,
+          102.12
+        ],
+        [
+          650.41,
+          418.58
+        ],
+        [
+          873.06,
+          97.32
+        ],
+        [
+          873.06,
+          423.17
+        ],
+        [
+          893.91,
+          86.31
+        ],
+        [
+          893.91,
+          433.59
+        ],
+        [
+          999.59,
+          200.26
+        ],
+        [
+          999.59,
+          317.9
+        ],
+        [
+          21.88,
+          200.15
+        ],
+        [
+          21.88,
+          318.03
+        ],
+        [
+          125.5,
+          80.56
+        ],
+        [
+          125.5,
+          438.99
+        ],
+        [
+          206.55,
+          148.82
+        ],
+        [
+          206.55,
+          372.32
+        ],
+        [
+          320.5,
+          151.47
+        ],
+        [
+          320.5,
+          369.61
+        ],
+        [
+          290.21,
+          193.48
+        ],
+        [
+          290.21,
+          325.26
+        ],
+        [
+          382.35,
+          209.29
+        ],
+        [
+          382.35,
+          308.02
+        ],
+        [
+          429.3,
+          198.53
+        ],
+        [
+          429.3,
+          319.78
+        ],
+        [
+          450.4,
+          211.59
+        ],
+        [
+          450.4,
+          305.49
+        ]
+      ],
+      "original_GT_floor_xz_h": [
+        [
+          1.1001585114440635,
+          -2.965847237121703
+        ],
+        [
+          1.1001681883304164,
+          -0.426399246415084
+        ],
+        [
+          0.48465518909770094,
+          -0.42638336635520846
+        ],
+        [
+          0.48464182505878783,
+          0.36434460053425893
+        ],
+        [
+          0.3738359196031905,
+          0.3643686071540866
+        ],
+        [
+          0.3737969912003019,
+          2.476985324539765
+        ],
+        [
+          -0.33452584421824094,
+          2.4767499079423656
+        ],
+        [
+          -0.33456236955232804,
+          0.3449873493976255
+        ],
+        [
+          -1.1019397843540992,
+          0.34500525372382784
+        ],
+        [
+          -1.101934217064075,
+          -0.4604018765266019
+        ],
+        [
+          -2.1611880235937244,
+          -0.4604374028474687
+        ],
+        [
+          -2.1611126897240527,
+          -2.1177904253895297
+        ],
+        [
+          -1.1776620823828665,
+          -2.1180833977796127
+        ],
+        [
+          -1.1776834872815283,
+          -2.965978285184169
+        ]
+      ],
+      "polygon": [
+        [
+          -2,
+          -2
+        ],
+        [
+          2,
+          -2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          -2,
+          2
+        ]
+      ],
+      "operations": [
+        {
+          "type": "rectangle",
+          "a": [
+            -2,
+            -2
+          ],
+          "b": [
+            2,
+            2
+          ],
+          "angle": 0
+        },
+        {
+          "type": "cut",
+          "a": [
+            1,
+            2
+          ],
+          "b": [
+            2,
+            1
+          ],
+          "side": -1
+        }
+      ],
+      "cuts": [
+        {
+          "a": [
+            1,
+            2
+          ],
+          "b": [
+            2,
+            1
+          ],
+          "side": -1
+        }
+      ],
+      "decision": "allow",
+      "note": "",
+      "top_boundary_pending": true,
+      "axis_angle": 0,
+      "completed": true,
+      "updated_at": "2026-10-11T07:06:15.320Z",
+      "floor_region_confirmed": true,
+      "confirmed_version": {
+        "polygon": [
+          [
+            -2,
+            -2
+          ],
+          [
+            2,
+            -2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            -2,
+            2
+          ]
+        ],
+        "operations": [
+          {
+            "type": "rectangle",
+            "a": [
+              -2,
+              -2
+            ],
+            "b": [
+              2,
+              2
+            ],
+            "angle": 0
+          },
+          {
+            "type": "cut",
+            "a": [
+              1,
+              2
+            ],
+            "b": [
+              2,
+              1
+            ],
+            "side": -1
+          }
+        ],
+        "cuts": [
+          {
+            "a": [
+              1,
+              2
+            ],
+            "b": [
+              2,
+              1
+            ],
+            "side": -1
+          }
+        ],
+        "decision": "allow",
+        "note": "",
+        "top_boundary_pending": true,
+        "axis_angle": 0,
+        "completed": true,
+        "updated_at": "2026-10-11T07:06:15.320Z",
+        "confirmed_at": "2026-10-11T07:06:15.320Z",
+        "source": "workbench_button",
+        "confirmation_message_id": null,
+        "source_sha256": null,
+        "floor_region_confirmed": true,
+        "top_boundary_validation": "not established by this floor-region confirmation"
+      },
+      "active_space_region_id": "space_c",
+      "space_regions": {
+        "schema": "quality_four_space_regions_v1",
+        "active_region_id": "space_c",
+        "meaning": "named alternative floor references; independent drafts and explicit confirmations; observed support is separate; no full GT",
+        "regions": [
+          {
+            "region_id": "primary",
+            "name": "A · 原GT底面",
+            "source_binding": {
+              "source_commit": "159eac10e077834dd0f8e7fd3f9832b5242c529b",
+              "image_code": "uNb9QFRL6hY-88",
+              "image_id": "uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14",
+              "editing_reference_object_id": "gt:uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14.txt",
+              "editing_reference_version": "original",
+              "editing_reference_points_1024x512": [
+                [
+                  569.89,
+                  211.22
+                ],
+                [
+                  569.89,
+                  305.9
+                ],
+                [
+                  707.74,
+                  150.53
+                ],
+                [
+                  707.74,
+                  370.58
+                ],
+                [
+                  650.41,
+                  102.12
+                ],
+                [
+                  650.41,
+                  418.58
+                ],
+                [
+                  873.06,
+                  97.32
+                ],
+                [
+                  873.06,
+                  423.17
+                ],
+                [
+                  893.91,
+                  86.31
+                ],
+                [
+                  893.91,
+                  433.59
+                ],
+                [
+                  999.59,
+                  200.26
+                ],
+                [
+                  999.59,
+                  317.9
+                ],
+                [
+                  21.88,
+                  200.15
+                ],
+                [
+                  21.88,
+                  318.03
+                ],
+                [
+                  125.5,
+                  80.56
+                ],
+                [
+                  125.5,
+                  438.99
+                ],
+                [
+                  206.55,
+                  148.82
+                ],
+                [
+                  206.55,
+                  372.32
+                ],
+                [
+                  320.5,
+                  151.47
+                ],
+                [
+                  320.5,
+                  369.61
+                ],
+                [
+                  290.21,
+                  193.48
+                ],
+                [
+                  290.21,
+                  325.26
+                ],
+                [
+                  382.35,
+                  209.29
+                ],
+                [
+                  382.35,
+                  308.02
+                ],
+                [
+                  429.3,
+                  198.53
+                ],
+                [
+                  429.3,
+                  319.78
+                ],
+                [
+                  450.4,
+                  211.59
+                ],
+                [
+                  450.4,
+                  305.49
+                ]
+              ]
+            },
+            "polygon": [
+              [
+                1.1001585114440635,
+                -2.965847237121703
+              ],
+              [
+                1.1001681883304164,
+                -0.426399246415084
+              ],
+              [
+                0.48465518909770094,
+                -0.42638336635520846
+              ],
+              [
+                0.48464182505878783,
+                0.36434460053425893
+              ],
+              [
+                0.3738359196031905,
+                0.3643686071540866
+              ],
+              [
+                0.3737969912003019,
+                2.476985324539765
+              ],
+              [
+                -0.33452584421824094,
+                2.4767499079423656
+              ],
+              [
+                -0.33456236955232804,
+                0.3449873493976255
+              ],
+              [
+                -1.1019397843540992,
+                0.34500525372382784
+              ],
+              [
+                -1.101934217064075,
+                -0.4604018765266019
+              ],
+              [
+                -2.1611880235937244,
+                -0.4604374028474687
+              ],
+              [
+                -2.1611126897240527,
+                -2.1177904253895297
+              ],
+              [
+                -1.1776620823828665,
+                -2.1180833977796127
+              ],
+              [
+                -1.1776834872815283,
+                -2.965978285184169
+              ]
+            ],
+            "cuts": [],
+            "operations": [],
+            "decision": "",
+            "note": "",
+            "top_boundary_pending": true,
+            "completed": false,
+            "axis_angle": 0,
+            "visible": true,
+            "observation_support": {
+              "status": "not_assessed",
+              "source": "not_assessed",
+              "record_ids": [],
+              "note": ""
+            },
+            "cropped_floor_xz_h": [
+              [
+                1.1001585114440635,
+                -2.965847237121703
+              ],
+              [
+                1.1001681883304164,
+                -0.426399246415084
+              ],
+              [
+                0.48465518909770094,
+                -0.42638336635520846
+              ],
+              [
+                0.48464182505878783,
+                0.36434460053425893
+              ],
+              [
+                0.3738359196031905,
+                0.3643686071540866
+              ],
+              [
+                0.3737969912003019,
+                2.476985324539765
+              ],
+              [
+                -0.33452584421824094,
+                2.4767499079423656
+              ],
+              [
+                -0.33456236955232804,
+                0.3449873493976255
+              ],
+              [
+                -1.1019397843540992,
+                0.34500525372382784
+              ],
+              [
+                -1.101934217064075,
+                -0.4604018765266019
+              ],
+              [
+                -2.1611880235937244,
+                -0.4604374028474687
+              ],
+              [
+                -2.1611126897240527,
+                -2.1177904253895297
+              ],
+              [
+                -1.1776620823828665,
+                -2.1180833977796127
+              ],
+              [
+                -1.1776834872815283,
+                -2.965978285184169
+              ]
+            ],
+            "confirmed_version": null,
+            "floor_region_confirmed": false,
+            "empty_draft": false,
+            "reference_ready": false,
+            "formal_eligibility_changed": false
+          },
+          {
+            "region_id": "space_b",
+            "name": "B · 已有认可底面",
+            "source_binding": {
+              "source_commit": "159eac10e077834dd0f8e7fd3f9832b5242c529b",
+              "image_code": "uNb9QFRL6hY-88",
+              "image_id": "uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14",
+              "editing_reference_object_id": "gt:uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14.txt",
+              "editing_reference_version": "original",
+              "editing_reference_points_1024x512": [
+                [
+                  569.89,
+                  211.22
+                ],
+                [
+                  569.89,
+                  305.9
+                ],
+                [
+                  707.74,
+                  150.53
+                ],
+                [
+                  707.74,
+                  370.58
+                ],
+                [
+                  650.41,
+                  102.12
+                ],
+                [
+                  650.41,
+                  418.58
+                ],
+                [
+                  873.06,
+                  97.32
+                ],
+                [
+                  873.06,
+                  423.17
+                ],
+                [
+                  893.91,
+                  86.31
+                ],
+                [
+                  893.91,
+                  433.59
+                ],
+                [
+                  999.59,
+                  200.26
+                ],
+                [
+                  999.59,
+                  317.9
+                ],
+                [
+                  21.88,
+                  200.15
+                ],
+                [
+                  21.88,
+                  318.03
+                ],
+                [
+                  125.5,
+                  80.56
+                ],
+                [
+                  125.5,
+                  438.99
+                ],
+                [
+                  206.55,
+                  148.82
+                ],
+                [
+                  206.55,
+                  372.32
+                ],
+                [
+                  320.5,
+                  151.47
+                ],
+                [
+                  320.5,
+                  369.61
+                ],
+                [
+                  290.21,
+                  193.48
+                ],
+                [
+                  290.21,
+                  325.26
+                ],
+                [
+                  382.35,
+                  209.29
+                ],
+                [
+                  382.35,
+                  308.02
+                ],
+                [
+                  429.3,
+                  198.53
+                ],
+                [
+                  429.3,
+                  319.78
+                ],
+                [
+                  450.4,
+                  211.59
+                ],
+                [
+                  450.4,
+                  305.49
+                ]
+              ]
+            },
+            "polygon": [
+              [
+                1.1001585114440635,
+                -2.965847237121703
+              ],
+              [
+                1.1001681883304164,
+                -0.426399246415084
+              ],
+              [
+                0.48465518909770094,
+                -0.42638336635520846
+              ],
+              [
+                0.48464182505878783,
+                0.36434460053425893
+              ],
+              [
+                0.3738359196031905,
+                0.3643686071540866
+              ],
+              [
+                0.3737969912003019,
+                2.476985324539765
+              ],
+              [
+                -0.33452584421824094,
+                2.4767499079423656
+              ],
+              [
+                -0.33456236955232804,
+                0.3449873493976255
+              ],
+              [
+                -1.1019397843540992,
+                0.34500525372382784
+              ],
+              [
+                -1.101934217064075,
+                -0.4604018765266019
+              ],
+              [
+                -2.1611880235937244,
+                -0.4604374028474687
+              ],
+              [
+                -2.161074149230012,
+                -2.9656853306519686
+              ],
+              [
+                -1.1776834872815283,
+                -2.9659782851841694
+              ]
+            ],
+            "operations": [
+              {
+                "type": "edge_move",
+                "index": 11,
+                "offset": -0.8478948561575355,
+                "gt_snap": {
+                  "version": 1,
+                  "mode": "edge_move",
+                  "matches": [
+                    {
+                      "edge": 11,
+                      "kind": "vertex",
+                      "gt_vertex": 13,
+                      "exact": false,
+                      "distance_px": 5.927266479520189
+                    }
+                  ]
+                }
+              }
+            ],
+            "cuts": [],
+            "decision": "allow",
+            "note": "",
+            "top_boundary_pending": true,
+            "axis_angle": 0,
+            "completed": true,
+            "updated_at": "2026-10-10T13:02:11.190Z",
+            "empty_draft": false,
+            "visible": true,
+            "observation_support": {
+              "status": "not_assessed",
+              "source": "not_assessed",
+              "record_ids": [],
+              "note": ""
+            },
+            "cropped_floor_xz_h": [
+              [
+                1.1001585114440635,
+                -2.965847237121703
+              ],
+              [
+                1.1001681883304164,
+                -0.426399246415084
+              ],
+              [
+                0.48465518909770094,
+                -0.42638336635520846
+              ],
+              [
+                0.48464182505878783,
+                0.36434460053425893
+              ],
+              [
+                0.3738359196031905,
+                0.3643686071540866
+              ],
+              [
+                0.3737969912003019,
+                2.476985324539765
+              ],
+              [
+                -0.33452584421824094,
+                2.4767499079423656
+              ],
+              [
+                -0.33456236955232804,
+                0.3449873493976255
+              ],
+              [
+                -1.1019397843540992,
+                0.34500525372382784
+              ],
+              [
+                -1.101934217064075,
+                -0.4604018765266019
+              ],
+              [
+                -2.1611880235937244,
+                -0.4604374028474687
+              ],
+              [
+                -2.161074149230012,
+                -2.9656853306519686
+              ],
+              [
+                -1.1776834872815283,
+                -2.9659782851841694
+              ]
+            ],
+            "confirmed_version": {
+              "polygon": [
+                [
+                  1.1001585114440635,
+                  -2.965847237121703
+                ],
+                [
+                  1.1001681883304164,
+                  -0.426399246415084
+                ],
+                [
+                  0.48465518909770094,
+                  -0.42638336635520846
+                ],
+                [
+                  0.48464182505878783,
+                  0.36434460053425893
+                ],
+                [
+                  0.3738359196031905,
+                  0.3643686071540866
+                ],
+                [
+                  0.3737969912003019,
+                  2.476985324539765
+                ],
+                [
+                  -0.33452584421824094,
+                  2.4767499079423656
+                ],
+                [
+                  -0.33456236955232804,
+                  0.3449873493976255
+                ],
+                [
+                  -1.1019397843540992,
+                  0.34500525372382784
+                ],
+                [
+                  -1.101934217064075,
+                  -0.4604018765266019
+                ],
+                [
+                  -2.1611880235937244,
+                  -0.4604374028474687
+                ],
+                [
+                  -2.161074149230012,
+                  -2.9656853306519686
+                ],
+                [
+                  -1.1776834872815283,
+                  -2.9659782851841694
+                ]
+              ],
+              "operations": [
+                {
+                  "type": "edge_move",
+                  "index": 11,
+                  "offset": -0.8478948561575355,
+                  "gt_snap": {
+                    "version": 1,
+                    "mode": "edge_move",
+                    "matches": [
+                      {
+                        "edge": 11,
+                        "kind": "vertex",
+                        "gt_vertex": 13,
+                        "exact": false,
+                        "distance_px": 5.927266479520189
+                      }
+                    ]
+                  }
+                }
+              ],
+              "cuts": [],
+              "decision": "allow",
+              "note": "",
+              "top_boundary_pending": true,
+              "axis_angle": 0,
+              "completed": true,
+              "updated_at": "2026-10-10T13:02:11.190Z",
+              "confirmed_at": "2026-10-10T13:02:11.190Z",
+              "source": "workbench_button",
+              "confirmation_message_id": null,
+              "source_sha256": null,
+              "floor_region_confirmed": true,
+              "top_boundary_validation": "not established by this floor-region confirmation"
+            },
+            "floor_region_confirmed": true,
+            "reference_ready": false,
+            "formal_eligibility_changed": false
+          },
+          {
+            "region_id": "space_c",
+            "name": "C · QA临时独立空间",
+            "source_binding": {
+              "source_commit": "159eac10e077834dd0f8e7fd3f9832b5242c529b",
+              "image_code": "uNb9QFRL6hY-88",
+              "image_id": "uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14",
+              "editing_reference_object_id": "gt:uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14.txt",
+              "editing_reference_version": "original",
+              "editing_reference_points_1024x512": [
+                [
+                  569.89,
+                  211.22
+                ],
+                [
+                  569.89,
+                  305.9
+                ],
+                [
+                  707.74,
+                  150.53
+                ],
+                [
+                  707.74,
+                  370.58
+                ],
+                [
+                  650.41,
+                  102.12
+                ],
+                [
+                  650.41,
+                  418.58
+                ],
+                [
+                  873.06,
+                  97.32
+                ],
+                [
+                  873.06,
+                  423.17
+                ],
+                [
+                  893.91,
+                  86.31
+                ],
+                [
+                  893.91,
+                  433.59
+                ],
+                [
+                  999.59,
+                  200.26
+                ],
+                [
+                  999.59,
+                  317.9
+                ],
+                [
+                  21.88,
+                  200.15
+                ],
+                [
+                  21.88,
+                  318.03
+                ],
+                [
+                  125.5,
+                  80.56
+                ],
+                [
+                  125.5,
+                  438.99
+                ],
+                [
+                  206.55,
+                  148.82
+                ],
+                [
+                  206.55,
+                  372.32
+                ],
+                [
+                  320.5,
+                  151.47
+                ],
+                [
+                  320.5,
+                  369.61
+                ],
+                [
+                  290.21,
+                  193.48
+                ],
+                [
+                  290.21,
+                  325.26
+                ],
+                [
+                  382.35,
+                  209.29
+                ],
+                [
+                  382.35,
+                  308.02
+                ],
+                [
+                  429.3,
+                  198.53
+                ],
+                [
+                  429.3,
+                  319.78
+                ],
+                [
+                  450.4,
+                  211.59
+                ],
+                [
+                  450.4,
+                  305.49
+                ]
+              ]
+            },
+            "polygon": [
+              [
+                -2,
+                -2
+              ],
+              [
+                2,
+                -2
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                -2,
+                2
+              ]
+            ],
+            "operations": [
+              {
+                "type": "rectangle",
+                "a": [
+                  -2,
+                  -2
+                ],
+                "b": [
+                  2,
+                  2
+                ],
+                "angle": 0
+              },
+              {
+                "type": "cut",
+                "a": [
+                  1,
+                  2
+                ],
+                "b": [
+                  2,
+                  1
+                ],
+                "side": -1
+              }
+            ],
+            "cuts": [
+              {
+                "a": [
+                  1,
+                  2
+                ],
+                "b": [
+                  2,
+                  1
+                ],
+                "side": -1
+              }
+            ],
+            "decision": "allow",
+            "note": "",
+            "top_boundary_pending": true,
+            "axis_angle": 0,
+            "completed": true,
+            "updated_at": "2026-10-11T07:06:15.320Z",
+            "visible": true,
+            "observation_support": {
+              "status": "not_assessed",
+              "source": "not_assessed",
+              "record_ids": [],
+              "note": ""
+            },
+            "cropped_floor_xz_h": [
+              [
+                -2,
+                -2
+              ],
+              [
+                2,
+                -2
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                -2,
+                2
+              ]
+            ],
+            "confirmed_version": {
+              "polygon": [
+                [
+                  -2,
+                  -2
+                ],
+                [
+                  2,
+                  -2
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  -2,
+                  2
+                ]
+              ],
+              "operations": [
+                {
+                  "type": "rectangle",
+                  "a": [
+                    -2,
+                    -2
+                  ],
+                  "b": [
+                    2,
+                    2
+                  ],
+                  "angle": 0
+                },
+                {
+                  "type": "cut",
+                  "a": [
+                    1,
+                    2
+                  ],
+                  "b": [
+                    2,
+                    1
+                  ],
+                  "side": -1
+                }
+              ],
+              "cuts": [
+                {
+                  "a": [
+                    1,
+                    2
+                  ],
+                  "b": [
+                    2,
+                    1
+                  ],
+                  "side": -1
+                }
+              ],
+              "decision": "allow",
+              "note": "",
+              "top_boundary_pending": true,
+              "axis_angle": 0,
+              "completed": true,
+              "updated_at": "2026-10-11T07:06:15.320Z",
+              "confirmed_at": "2026-10-11T07:06:15.320Z",
+              "source": "workbench_button",
+              "confirmation_message_id": null,
+              "source_sha256": null,
+              "floor_region_confirmed": true,
+              "top_boundary_validation": "not established by this floor-region confirmation"
+            },
+            "floor_region_confirmed": true,
+            "empty_draft": false,
+            "reference_ready": false,
+            "formal_eligibility_changed": false
+          },
+          {
+            "region_id": "space_d",
+            "name": "D · 待用户补画",
+            "source_binding": {
+              "source_commit": "159eac10e077834dd0f8e7fd3f9832b5242c529b",
+              "image_code": "uNb9QFRL6hY-88",
+              "image_id": "uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14",
+              "editing_reference_object_id": "gt:uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14.txt",
+              "editing_reference_version": "original",
+              "editing_reference_points_1024x512": [
+                [
+                  569.89,
+                  211.22
+                ],
+                [
+                  569.89,
+                  305.9
+                ],
+                [
+                  707.74,
+                  150.53
+                ],
+                [
+                  707.74,
+                  370.58
+                ],
+                [
+                  650.41,
+                  102.12
+                ],
+                [
+                  650.41,
+                  418.58
+                ],
+                [
+                  873.06,
+                  97.32
+                ],
+                [
+                  873.06,
+                  423.17
+                ],
+                [
+                  893.91,
+                  86.31
+                ],
+                [
+                  893.91,
+                  433.59
+                ],
+                [
+                  999.59,
+                  200.26
+                ],
+                [
+                  999.59,
+                  317.9
+                ],
+                [
+                  21.88,
+                  200.15
+                ],
+                [
+                  21.88,
+                  318.03
+                ],
+                [
+                  125.5,
+                  80.56
+                ],
+                [
+                  125.5,
+                  438.99
+                ],
+                [
+                  206.55,
+                  148.82
+                ],
+                [
+                  206.55,
+                  372.32
+                ],
+                [
+                  320.5,
+                  151.47
+                ],
+                [
+                  320.5,
+                  369.61
+                ],
+                [
+                  290.21,
+                  193.48
+                ],
+                [
+                  290.21,
+                  325.26
+                ],
+                [
+                  382.35,
+                  209.29
+                ],
+                [
+                  382.35,
+                  308.02
+                ],
+                [
+                  429.3,
+                  198.53
+                ],
+                [
+                  429.3,
+                  319.78
+                ],
+                [
+                  450.4,
+                  211.59
+                ],
+                [
+                  450.4,
+                  305.49
+                ]
+              ]
+            },
+            "polygon": [],
+            "cuts": [],
+            "operations": [],
+            "decision": "",
+            "note": "",
+            "top_boundary_pending": true,
+            "completed": false,
+            "axis_angle": 0,
+            "empty_draft": true,
+            "visible": true,
+            "observation_support": {
+              "status": "not_assessed",
+              "source": "not_assessed",
+              "record_ids": [],
+              "note": ""
+            },
+            "cropped_floor_xz_h": [],
+            "confirmed_version": null,
+            "floor_region_confirmed": false,
+            "reference_ready": false,
+            "formal_eligibility_changed": false
+          }
+        ]
+      },
+      "received_confirmed_version": null,
+      "received_confirmed_history": [],
+      "scope_receipt_evidence": null,
+      "cropped_floor_xz_h": [
+        [
+          -2,
+          -2
+        ],
+        [
+          2,
+          -2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          -2,
+          2
+        ]
+      ],
+      "manual_region_may_extend_GT": true,
+      "reference_ready": false,
+      "review_scope": "floor_region_only; top boundary must be separately validated",
+      "reference_version": "original",
+      "editing_reference_version": "original",
+      "editing_reference_object_id": "gt:uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14.txt",
+      "editing_reference_points_1024x512": [
+        [
+          569.89,
+          211.22
+        ],
+        [
+          569.89,
+          305.9
+        ],
+        [
+          707.74,
+          150.53
+        ],
+        [
+          707.74,
+          370.58
+        ],
+        [
+          650.41,
+          102.12
+        ],
+        [
+          650.41,
+          418.58
+        ],
+        [
+          873.06,
+          97.32
+        ],
+        [
+          873.06,
+          423.17
+        ],
+        [
+          893.91,
+          86.31
+        ],
+        [
+          893.91,
+          433.59
+        ],
+        [
+          999.59,
+          200.26
+        ],
+        [
+          999.59,
+          317.9
+        ],
+        [
+          21.88,
+          200.15
+        ],
+        [
+          21.88,
+          318.03
+        ],
+        [
+          125.5,
+          80.56
+        ],
+        [
+          125.5,
+          438.99
+        ],
+        [
+          206.55,
+          148.82
+        ],
+        [
+          206.55,
+          372.32
+        ],
+        [
+          320.5,
+          151.47
+        ],
+        [
+          320.5,
+          369.61
+        ],
+        [
+          290.21,
+          193.48
+        ],
+        [
+          290.21,
+          325.26
+        ],
+        [
+          382.35,
+          209.29
+        ],
+        [
+          382.35,
+          308.02
+        ],
+        [
+          429.3,
+          198.53
+        ],
+        [
+          429.3,
+          319.78
+        ],
+        [
+          450.4,
+          211.59
+        ],
+        [
+          450.4,
+          305.49
+        ]
+      ],
+      "historical_original_GT_object_id": "gt:uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14.txt",
+      "historical_original_GT_points_1024x512": [
+        [
+          569.89,
+          211.22
+        ],
+        [
+          569.89,
+          305.9
+        ],
+        [
+          707.74,
+          150.53
+        ],
+        [
+          707.74,
+          370.58
+        ],
+        [
+          650.41,
+          102.12
+        ],
+        [
+          650.41,
+          418.58
+        ],
+        [
+          873.06,
+          97.32
+        ],
+        [
+          873.06,
+          423.17
+        ],
+        [
+          893.91,
+          86.31
+        ],
+        [
+          893.91,
+          433.59
+        ],
+        [
+          999.59,
+          200.26
+        ],
+        [
+          999.59,
+          317.9
+        ],
+        [
+          21.88,
+          200.15
+        ],
+        [
+          21.88,
+          318.03
+        ],
+        [
+          125.5,
+          80.56
+        ],
+        [
+          125.5,
+          438.99
+        ],
+        [
+          206.55,
+          148.82
+        ],
+        [
+          206.55,
+          372.32
+        ],
+        [
+          320.5,
+          151.47
+        ],
+        [
+          320.5,
+          369.61
+        ],
+        [
+          290.21,
+          193.48
+        ],
+        [
+          290.21,
+          325.26
+        ],
+        [
+          382.35,
+          209.29
+        ],
+        [
+          382.35,
+          308.02
+        ],
+        [
+          429.3,
+          198.53
+        ],
+        [
+          429.3,
+          319.78
+        ],
+        [
+          450.4,
+          211.59
+        ],
+        [
+          450.4,
+          305.49
+        ]
+      ],
+      "evidence_source_commit": "d905d7dbb31dccabb3b190cb317d38b034b7cd65",
+      "source_documents": [],
+      "reference_provenance": null,
+      "in_current_corpus": true,
+      "recovered_reference_view": false,
+      "formal_eligibility_changed": false,
+      "scope_batch_id": null,
+      "latest_user_scope_review": null
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "exact_formula": "Q=100*I*R/(1+T), T=(S/4)^2+(Hstar/.5)^2; R=frozen intrinsic retention",
+  "exact_necessary_and_sufficient_condition_for_fixed_finite_components": "Q>=q iff 100*I*R>=q*(1+T)",
+  "individual_bounds_not_sufficient_counterexample": {
+    "q": 95,
+    "I": 1,
+    "R": 1,
+    "S": 0.9176629354822465,
+    "Hstar": 0.11470786693528082,
+    "each_single_error_envelope_reaches_q": true,
+    "joint_Q": 90.47619047619048
+  },
+  "sufficient_box_condition": "For declared I>=I0, R>=R0, T<=100*I0*R0/q-1 with nonnegative budget, Q>=q. Choosing this box is not calibration.",
+  "D5_F2_are_half_loss_scales_not_pass_thresholds": true,
+  "no_final_quality_categories_selected": true
+}

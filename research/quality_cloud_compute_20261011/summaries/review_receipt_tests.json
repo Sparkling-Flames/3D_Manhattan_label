@@ -1,0 +1,45 @@
+{
+  "engine": "preinstalled /usr/bin/chromium, actual offline UI served on loopback; file:// blocked by managed policy",
+  "tests": [
+    {
+      "name": "fresh_context_all_answers_blank",
+      "passed": true
+    },
+    {
+      "name": "JSON_export_then_import_restores_answers",
+      "passed": true
+    },
+    {
+      "name": "CSV_export_then_import_handles_quotes_commas_newlines",
+      "passed": true
+    },
+    {
+      "name": "invalid_imports_keep_existing_answers:missing_field,invalid_case_id,duplicate_case_id,wrong_version,extra_field,overlong_answer,changed_field_schema",
+      "passed": true
+    },
+    {
+      "name": "oversize_import_rejected_without_erasing_answers",
+      "passed": true
+    },
+    {
+      "name": "HTML_like_user_text_imported_as_plain_values_only",
+      "passed": true
+    },
+    {
+      "name": "actual_page_refresh_restores_valid_local_draft",
+      "passed": true
+    },
+    {
+      "name": "storage_getter_failure_warns_and_still_exports_current_inputs",
+      "passed": true
+    },
+    {
+      "name": "storage_write_failure_warns_and_still_exports_current_inputs",
+      "passed": true
+    }
+  ],
+  "passed": 9,
+  "failed": 0,
+  "synthetic_test_answers_in_default_delivery": false,
+  "downloaded_browser_install_used": false
+}

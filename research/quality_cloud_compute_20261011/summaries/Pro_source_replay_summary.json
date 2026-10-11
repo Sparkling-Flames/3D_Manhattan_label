@@ -1,0 +1,73 @@
+{
+  "all_objects": 3152,
+  "available": 3021,
+  "all_ids_and_references_equal": true,
+  "six_component_null_patterns_equal": true,
+  "maximum_absolute_differences": {
+    "iou_2d": 3.6637359812630166e-15,
+    "boundary_rms_deg": 7.904787935331115e-14,
+    "Hstar": 5.689893001203927e-16,
+    "dir": 4.618527782440651e-14,
+    "flat": 3.552713678800501e-15,
+    "Q": 1.0587086762825493e-12,
+    "q_before_intrinsic": 1.1084466677857563e-12,
+    "Q_v11": 1.0516032489249483e-12,
+    "Q_alpha30": 9.947598300641403e-13,
+    "Q_alpha45": 9.379164112033322e-13,
+    "Q_stage13": 1.0516032489249483e-12,
+    "Q_stage24": 1.0516032489249483e-12,
+    "official_iou3d_vs_Pro": 4.6629367034256575e-15
+  },
+  "Pro_policy_population": {
+    "conservative_fixed_gt_quality_candidate": 2003,
+    "conservative_fixed_gt_primary_candidate": 2001,
+    "target_aligned_quality_candidate": 1725,
+    "target_aligned_primary_candidate": 1724
+  },
+  "nested_1725_membership_exactly_matches_Pro": true,
+  "quality_1725_minus_independent_primary_1724": [
+    {
+      "record_id": "R03372",
+      "object_id": "new_95_3660_7273_W034",
+      "image_code": "e9zR4mvMWw7-26",
+      "worker_id": "W034",
+      "available": true,
+      "conservative_fixed_gt_quality_candidate": true,
+      "conservative_fixed_gt_primary_candidate": false,
+      "target_aligned_quality_candidate": true,
+      "target_aligned_primary_candidate": false,
+      "independent_vote_eligible": false,
+      "Pro_group_key": "room:e9zR4mvMWw7:G090",
+      "Pro_group_split": "validation",
+      "current_strict_target_subset": true,
+      "frozen_coordinates_changed": false
+    }
+  ],
+  "target_1725_mild_count": 1240,
+  "stage13_mild_max_abs_change": 0.0,
+  "target_1725_Dge10_count": 161,
+  "stage13_Dge10_mean_extra_deduction": 4.1971263971476445,
+  "official_source_commit": "2bbc0866789cf7ad728064bc52aaf1d11b67c885",
+  "official_IoU_branch_3021_locally_executed": true,
+  "official_full_CLI_depth_model_not_run": true,
+  "original_frozen_scalar_code_reexecuted": true,
+  "full_Pro_experiment_standalone_reproduced": false,
+  "stage13_population_specific_effects": [
+    {
+      "population": "conservative_fixed_gt_quality_candidate",
+      "n": 2003,
+      "mild": 1367,
+      "mild_stage13_max_delta": 0.0,
+      "Dge10": 208,
+      "stage13_Dge10_mean_extra_deduction": 4.067422137480985
+    },
+    {
+      "population": "target_aligned_quality_candidate",
+      "n": 1725,
+      "mild": 1240,
+      "mild_stage13_max_delta": 0.0,
+      "Dge10": 161,
+      "stage13_Dge10_mean_extra_deduction": 4.1971263971476445
+    }
+  ]
+}
