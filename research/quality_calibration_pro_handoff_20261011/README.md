@@ -1,3 +1,6 @@
+> 最新更新（11:04 UTC）：T25 已明确纠正为仅 A；T20 顶界应适度扣分但自身较规整；历史筛除需逐份区分几何错误与任务语义错误。见 USER_DECISIONS.json 与 LATEST_USER_CLARIFICATIONS.txt。
+> 新 Pro 返回已收到并完成首轮独立抽核；旧文中“尚未启动”保留为当时交付状态，不代表当前状态。尚未完成全部13项独立重跑。
+
 > 本轮核查及修正见 [审计报告](audit/AUDIT_REPORT.md)；最新人工确认另存 [USER_DECISIONS.json](USER_DECISIONS.json)，原始回执与历史数值不改。
 
 # 质量校准与投影敏感性研究交接

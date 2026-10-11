@@ -1,6 +1,6 @@
 {
   "schema": "quality_human_feedback_overlay_v1",
-  "as_of_utc": "2026-10-11T08:33:00Z",
+  "as_of_utc": "2026-10-11T11:04:09Z",
   "precedence": "Additive interpretation layer after raw receipts; never rewrite raw user choices, geometry, gates or scores.",
   "original_receipt_sha256": "8e26b9cd8fa4fc1f978fb0b71453e2142878eca667cd5c525dd913d8077ad35c",
   "four_space_receipt_sha256": "754507bd4774baacdb2a8f4336b6a7af84387e4c39f2db39515180b4e9b4276e",
@@ -75,6 +75,28 @@
       "exact_reference_label": null,
       "quality_good_confirmed": false,
       "structural_defect_still_evaluated": "missing entrance turn / diagonal connection"
+    },
+    {
+      "case_id": "T25",
+      "record_id": "R00169",
+      "source_message_id": "Sentinel_e0439021b2188191a485c328aef83556",
+      "original_receipt_choice": "仅 B 可匹配",
+      "effective_choice": "仅 A 可匹配",
+      "reference_label": "A",
+      "routing_source": "explicit_user_correction",
+      "supersedes": "original receipt T25 only B choice and Pro request to resolve that conflict",
+      "raw_receipt_preserved": true
+    },
+    {
+      "case_id": "T20",
+      "record_id": "R00397",
+      "source_message_id": "Sentinel_e0439021b2188191a485c328aef83556",
+      "interpretation": "User judges the ceiling boundary clearly too low and requiring some penalty, but the existing severe penalty is excessive; reconstructed shape remains reasonably regular.",
+      "penalty_required": true,
+      "existing_penalty_excessive_user_judgment": true,
+      "new_numeric_score": null,
+      "new_quality_grade": null,
+      "automatic_formula_change": false
     }
   ],
   "unchanged": [
@@ -84,5 +106,19 @@
     "hold_and_excluded",
     "frozen_scores",
     "unconfirmed_top_boundaries"
-  ]
+  ],
+  "excluded_example_selection_guidance": {
+    "source_message_id": "Sentinel_e0439021b2188191a485c328aef83556",
+    "worker_label_as_supplied": "P19",
+    "canonical_worker_identity": "not yet verified; do not assume W019 or numeric user 19",
+    "selection_unit": "individual annotation, not blanket worker label",
+    "candidate_types": [
+      "severe misplaced points and poor 3D geometry",
+      "task-semantic mismatch such as inexplicable door annotation, possibly geometrically regular",
+      "marginally usable annotations from excluded worker as contrasts"
+    ],
+    "excluded_is_automatic_worst_grade": false,
+    "original_eligibility_unchanged": true,
+    "review_before_using_as_severe_quality_anchor": true
+  }
 }
