@@ -1,3 +1,5 @@
+> 本轮核查及修正见 [审计报告](audit/AUDIT_REPORT.md)；最新人工确认另存 [USER_DECISIONS.json](USER_DECISIONS.json)，原始回执与历史数值不改。
+
 # 质量校准与投影敏感性研究交接
 
 日期：2026-10-11。先读 PRO_PROMPT.txt（完整任务），再读 LATEST_USER_CLARIFICATIONS.txt。最新讨论优先于旧报告中的“等待八例”“T21/T22替代范围待定”等状态。

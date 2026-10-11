@@ -91,11 +91,6 @@
       "sha256": "2c53998c40f1f21e070ab6ddb6994b17aedda4345793bbd58051adbd40b8417e"
     },
     {
-      "path": "results/run_summary.log",
-      "bytes": 4294,
-      "sha256": "d6020842cb10238686e7e028385b87b2bad98dcfb9e6e4909e0dc5098ac47171"
-    },
-    {
       "path": "results/summary.json",
       "bytes": 19515,
       "sha256": "8ddbe1ef362027b2981f708e08a686972b65a1dfcaaf7841fb5814173c7893a5"
@@ -126,5 +121,15 @@
       "sha256": "7a9e4584bbcf3b2bd37ca146c7e3d6ba5541349c1041db6db622810360bd5207"
     }
   ],
-  "root_documents_not_self_hashed": true
+  "root_documents_not_self_hashed": true,
+  "uncommitted_runtime_artifacts": [
+    {
+      "path": "results/run_summary.log",
+      "bytes": 4294,
+      "sha256": "d6020842cb10238686e7e028385b87b2bad98dcfb9e6e4909e0dc5098ac47171",
+      "status": "not_in_git_tree",
+      "required_for_reproduction": false
+    }
+  ],
+  "audit_note": "The historical runtime log was never committed; its original hash is retained separately, not claimed as a delivered repository file. No original data or existing file deleted."
 }

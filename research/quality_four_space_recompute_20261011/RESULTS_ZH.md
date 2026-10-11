@@ -1,3 +1,5 @@
+> 最新状态（2026-10-11）：本文件保留原阶段的结果和时间语境；后续30份回执、四空间增量及用户澄清以 [最新交接](../quality_calibration_pro_handoff_20261011/README.md) 和 [人工确认叠加记录](../quality_calibration_pro_handoff_20261011/USER_DECISIONS.json) 为准。旧“等待八例”或“未在新实验应用”等句子不是当前状态，也不表示撤销既有排除。
+
 # uNb88四空间回执落实与底面复算
 
 用户明确指定T30对应D，优先于自动比较。原历史“T30两者均不匹配 / 另一种空间”保留；补充C/D后新增人工复核为`reviewed / matches_selected / D`，并非把旧判断删掉。T29原人工指定A不变。

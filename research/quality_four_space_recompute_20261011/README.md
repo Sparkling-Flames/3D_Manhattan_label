@@ -1,3 +1,5 @@
+> 最新状态（2026-10-11）：本文件保留原阶段的结果和时间语境；后续30份回执、四空间增量及用户澄清以 [最新交接](../quality_calibration_pro_handoff_20261011/README.md) 和 [人工确认叠加记录](../quality_calibration_pro_handoff_20261011/USER_DECISIONS.json) 为准。旧“等待八例”或“未在新实验应用”等句子不是当前状态，也不表示撤销既有排除。
+
 # uNb88四空间确认增量与复算
 
 结论和局部结构证据见 [RESULTS_ZH.md](RESULTS_ZH.md)。本轮只落实新回执、核验数据绑定与确认版本、重算底面量，不修改工作台UI、旧公式、旧结果、GT、资格或hold，也不追加旧功能测试。
