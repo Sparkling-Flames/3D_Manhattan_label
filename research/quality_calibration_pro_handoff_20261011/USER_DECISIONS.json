@@ -1,6 +1,6 @@
 {
   "schema": "quality_human_feedback_overlay_v1",
-  "as_of_utc": "2026-10-11T11:04:09Z",
+  "as_of_utc": "2026-10-11T11:11:34Z",
   "precedence": "Additive interpretation layer after raw receipts; never rewrite raw user choices, geometry, gates or scores.",
   "original_receipt_sha256": "8e26b9cd8fa4fc1f978fb0b71453e2142878eca667cd5c525dd913d8077ad35c",
   "four_space_receipt_sha256": "754507bd4774baacdb2a8f4336b6a7af84387e4c39f2db39515180b4e9b4276e",
@@ -109,8 +109,8 @@
   ],
   "excluded_example_selection_guidance": {
     "source_message_id": "Sentinel_e0439021b2188191a485c328aef83556",
-    "worker_label_as_supplied": "P19",
-    "canonical_worker_identity": "not yet verified; do not assume W019 or numeric user 19",
+    "worker_label_as_supplied": "W019",
+    "canonical_worker_identity": "W019 explicitly clarified by user",
     "selection_unit": "individual annotation, not blanket worker label",
     "candidate_types": [
       "severe misplaced points and poor 3D geometry",
@@ -119,6 +119,10 @@
     ],
     "excluded_is_automatic_worst_grade": false,
     "original_eligibility_unchanged": true,
-    "review_before_using_as_severe_quality_anchor": true
+    "review_before_using_as_severe_quality_anchor": true,
+    "prior_worker_label_as_supplied": "P19",
+    "identity_clarification_source_message_id": "Sentinel_4e57204dc76081919e7eb587eb6f8cbc",
+    "authorized_use": "selected W019 annotations for quality algorithm parameter calibration, excluded from formal personnel analysis",
+    "calibration_examples_are_independent_validation": false
   }
 }
