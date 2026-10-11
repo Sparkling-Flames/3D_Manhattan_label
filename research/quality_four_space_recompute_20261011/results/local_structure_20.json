@@ -756,8 +756,8 @@
         -3.730970100528506
       ],
       "GT8_max_adjacent_extension_over_L": 0.9990897745988033,
-      "local_family": "AB_family_extension_expressed",
-      "local_evidence_strength": "strong_local_extension_evidence",
+      "local_family": "AB_family_partial_extension_missing_entry_turn",
+      "local_evidence_strength": "partial_or_ambiguous_entry_structure_parent_pixel_audit",
       "geometric_candidate_space": "B",
       "geometric_candidate_route": "local_family_then_floor_IoU_fallback",
       "candidate_confidence": "low_geometric_fallback_not_intent",
@@ -886,5 +886,8 @@
       "effective_target_source": "not_manually_assigned",
       "true_intent_established": false
     }
-  ]
+  ],
+  "parent_pixel_audit_verified": true,
+  "parent_exception_comparison_library_id": "libfile_020896ee46e081918d5e248a561961f2",
+  "screenshot_transfer_not_required_or_blocking": true
 }

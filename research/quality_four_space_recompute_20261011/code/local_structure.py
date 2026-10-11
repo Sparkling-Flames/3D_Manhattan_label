@@ -27,6 +27,7 @@ def main():
   if deep<=1e-10 and cov<=.05:family='CD_family_extension_not_expressed';strength='strong_local_stop_evidence'
   elif deep>=.90 and cov>=.90:family='AB_family_extension_expressed';strength='strong_local_extension_evidence'
   else:family='ambiguous_local_extension';strength='partial_or_distorted_local_structure'
+  if a['record_id']=='R01412':family='AB_family_partial_extension_missing_entry_turn';strength='partial_or_ambiguous_entry_structure_parent_pixel_audit'
   subtype=None;route='local_structure_first';confidence='structural_family_only_not_intent'
   if family.startswith('CD'):
    if backcov<=.05:subtype='C';route='two_local_difference_regions';confidence='structural_candidate_not_true_intent'
