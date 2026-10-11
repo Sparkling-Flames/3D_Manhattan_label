@@ -1,0 +1,184 @@
+{
+  "manual_pool_denominator": 18,
+  "family_counts": {
+    "CD_family_extension_not_expressed": 16,
+    "AB_family_extension_expressed": 2
+  },
+  "local_candidate_counts": {
+    "D": 13,
+    "C": 3,
+    "B": 2
+  },
+  "low_confidence_fallback_records": [
+    "R03260",
+    "R03258",
+    "R01412",
+    "R03262"
+  ],
+  "AB_structural_exceptions": [
+    {
+      "record_id": "R03258",
+      "worker_id": "W031",
+      "geometry_status": "valid",
+      "in_manual_pool": true,
+      "quality_primary_included": true,
+      "cached_footprint_status": "present_matches_current",
+      "front_difference_area_h2": 1.5122933825631217,
+      "front_difference_coverage": 0.9915110915900363,
+      "GT5_6_7_8_quad_coverage": 0.9914601678929328,
+      "far_half_coverage": 0.9999543472815028,
+      "far_wall_boundary_distance_h": 0.026543098509739203,
+      "back_B_minus_A_difference_coverage": 0.7820539962425118,
+      "global_best_floor_IoU": "B",
+      "global_best_IoU": 0.6631186184754639,
+      "global_gap": 0.040561141954819746,
+      "GT5_nearest_annotation_vertex_1based": 9,
+      "GT5_nearest_corner_distance_h": 0.12095508961562637,
+      "GT5_adjacent_depth_gains_h": [
+        -0.7897804577713261,
+        2.1668820376694553
+      ],
+      "GT5_max_adjacent_extension_over_L": 1.0210595692789974,
+      "GT8_nearest_annotation_vertex_1based": 2,
+      "GT8_nearest_corner_distance_h": 0.13812474558706272,
+      "GT8_adjacent_depth_gains_h": [
+        2.040599562717403,
+        -0.12409451227711164
+      ],
+      "GT8_max_adjacent_extension_over_L": 0.9615538245081796,
+      "local_family": "AB_family_extension_expressed",
+      "local_evidence_strength": "strong_local_extension_evidence",
+      "geometric_candidate_space": "B",
+      "geometric_candidate_route": "local_family_then_floor_IoU_fallback",
+      "candidate_confidence": "low_geometric_fallback_not_intent",
+      "manual_target": null,
+      "effective_target": null,
+      "effective_target_source": "not_manually_assigned",
+      "true_intent_established": false
+    },
+    {
+      "record_id": "R01412",
+      "worker_id": "W034",
+      "geometry_status": "valid",
+      "in_manual_pool": true,
+      "quality_primary_included": true,
+      "cached_footprint_status": "present_matches_current",
+      "front_difference_area_h2": 1.5122933825631217,
+      "front_difference_coverage": 0.9999999831445051,
+      "GT5_6_7_8_quad_coverage": 1.0,
+      "far_half_coverage": 1.0,
+      "far_wall_boundary_distance_h": 0.004525180840052564,
+      "back_B_minus_A_difference_coverage": 0.847561548969419,
+      "global_best_floor_IoU": "B",
+      "global_best_IoU": 0.7242584800777199,
+      "global_gap": 0.04800417120702749,
+      "GT5_nearest_annotation_vertex_1based": 5,
+      "GT5_nearest_corner_distance_h": 0.1270822902259979,
+      "GT5_adjacent_depth_gains_h": [
+        -3.326164828382337,
+        2.1501585835765056
+      ],
+      "GT5_max_adjacent_extension_over_L": 1.0131792866719342,
+      "GT8_nearest_annotation_vertex_1based": 2,
+      "GT8_nearest_corner_distance_h": 0.7611000898782238,
+      "GT8_adjacent_depth_gains_h": [
+        2.1202579670509167,
+        -3.730970100528506
+      ],
+      "GT8_max_adjacent_extension_over_L": 0.9990897745988033,
+      "local_family": "AB_family_extension_expressed",
+      "local_evidence_strength": "strong_local_extension_evidence",
+      "geometric_candidate_space": "B",
+      "geometric_candidate_route": "local_family_then_floor_IoU_fallback",
+      "candidate_confidence": "low_geometric_fallback_not_intent",
+      "manual_target": null,
+      "effective_target": null,
+      "effective_target_source": "not_manually_assigned",
+      "true_intent_established": false
+    }
+  ],
+  "excluded_diagnostic_records": [
+    {
+      "record_id": "R01808",
+      "worker_id": "W001",
+      "geometry_status": "valid",
+      "in_manual_pool": false,
+      "quality_primary_included": false,
+      "cached_footprint_status": "present_matches_current",
+      "front_difference_area_h2": 1.5122933825631217,
+      "front_difference_coverage": 0.02309843179609341,
+      "GT5_6_7_8_quad_coverage": 0.017238144800802237,
+      "far_half_coverage": 0.0,
+      "far_wall_boundary_distance_h": 2.082204400072074,
+      "back_B_minus_A_difference_coverage": 1.0000000000000002,
+      "global_best_floor_IoU": "D",
+      "global_best_IoU": 0.47708603595636273,
+      "global_gap": 0.03215411783048783,
+      "GT5_nearest_annotation_vertex_1based": 10,
+      "GT5_nearest_corner_distance_h": 0.2150891868467355,
+      "GT5_adjacent_depth_gains_h": [
+        -0.8326901915569338,
+        -0.017205333948194762
+      ],
+      "GT5_max_adjacent_extension_over_L": -0.008107349899554106,
+      "GT8_nearest_annotation_vertex_1based": 1,
+      "GT8_nearest_corner_distance_h": 0.8589275096532456,
+      "GT8_adjacent_depth_gains_h": [
+        0.017205333948194762,
+        -0.10761523608933689
+      ],
+      "GT8_max_adjacent_extension_over_L": 0.008107349899554106,
+      "local_family": "CD_family_extension_not_expressed",
+      "local_evidence_strength": "strong_local_stop_evidence",
+      "geometric_candidate_space": "D",
+      "geometric_candidate_route": "two_local_difference_regions",
+      "candidate_confidence": "structural_candidate_not_true_intent",
+      "manual_target": null,
+      "effective_target": null,
+      "effective_target_source": "not_manually_assigned",
+      "true_intent_established": false
+    },
+    {
+      "record_id": "R02963",
+      "worker_id": "W012",
+      "geometry_status": "valid",
+      "in_manual_pool": false,
+      "quality_primary_included": false,
+      "cached_footprint_status": "missing",
+      "front_difference_area_h2": 1.5122933825631217,
+      "front_difference_coverage": 0.020095669888269448,
+      "GT5_6_7_8_quad_coverage": 0.014220705409427018,
+      "far_half_coverage": 0.0,
+      "far_wall_boundary_distance_h": 2.074723932501885,
+      "back_B_minus_A_difference_coverage": 0.49048039030024965,
+      "global_best_floor_IoU": "D",
+      "global_best_IoU": 0.7188652199834702,
+      "global_gap": 0.008738751397763145,
+      "GT5_nearest_annotation_vertex_1based": 11,
+      "GT5_nearest_corner_distance_h": 0.18109152500673556,
+      "GT5_adjacent_depth_gains_h": [
+        -0.8956004161362875,
+        -0.03831167752036343
+      ],
+      "GT5_max_adjacent_extension_over_L": -0.018052900096662033,
+      "GT8_nearest_annotation_vertex_1based": 1,
+      "GT8_nearest_corner_distance_h": 0.0251845149720732,
+      "GT8_adjacent_depth_gains_h": [
+        0.03831167752036343,
+        -0.04929704977560611
+      ],
+      "GT8_max_adjacent_extension_over_L": 0.018052900096662033,
+      "local_family": "CD_family_extension_not_expressed",
+      "local_evidence_strength": "strong_local_stop_evidence",
+      "geometric_candidate_space": "D",
+      "geometric_candidate_route": "local_family_then_floor_IoU_fallback",
+      "candidate_confidence": "low_geometric_fallback_not_intent",
+      "manual_target": null,
+      "effective_target": null,
+      "effective_target_source": "not_manually_assigned",
+      "true_intent_established": false
+    }
+  ],
+  "all_20_object_statuses_preserved": true,
+  "T30_explicit_D_preserved": true
+}

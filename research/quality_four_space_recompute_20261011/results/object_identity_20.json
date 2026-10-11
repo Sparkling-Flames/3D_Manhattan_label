@@ -1,0 +1,1121 @@
+{
+  "objects": [
+    {
+      "record_id": "R01808",
+      "object_id": "b593f337fea5cb8bf3f2",
+      "worker_id": "W001",
+      "condition": "manual",
+      "source_path": "export_label/stage2_Chinese/project-71-at-2026-07-30-14-18-54a73158.json",
+      "source_file_sha256": "9caa6d1ffad1f6496e45883708437e4e230c87ed6d1a594716beedfcbdd57ece",
+      "project": 71,
+      "task": 3322,
+      "annotation": 6312,
+      "ground_truth": false,
+      "was_cancelled": false,
+      "parent_annotation": null,
+      "parent_prediction": null,
+      "prediction": {},
+      "created_at": "2026-07-16T05:01:02.051490Z",
+      "declared_derivation": "none_in_export_metadata",
+      "current_selected_points_sha256": "54c1e48c29bf8f84e995f8d6ea136afc1902a82da22a0fc297ce38a0fe861a44",
+      "current_points_changed_from_prior": false,
+      "point_review_source": null,
+      "cached_footprint_missing": false,
+      "independent_vote_eligible": false,
+      "in_current_manual_pool": false,
+      "main_consensus_gate": {
+        "status": "main_candidate",
+        "reasons": [
+          "main_candidate"
+        ],
+        "scope_policy": "retain_scope_variation"
+      },
+      "main_quality_gate": {
+        "status": "hold_individual_review",
+        "reasons": [
+          "representation_pending"
+        ]
+      },
+      "primary_included": false,
+      "cleaning_disposition": "retained_pending",
+      "primary_exclusion_reasons": [
+        "cleaning:retained_pending",
+        "quality_gate:hold_individual_review"
+      ],
+      "original_choices": [
+        {
+          "value": {
+            "choices": [
+              "normal"
+            ]
+          },
+          "id": "e_ws5kSbU9",
+          "from_name": "scope",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        },
+        {
+          "value": {
+            "choices": [
+              "low_texture"
+            ]
+          },
+          "id": "7zAzUjK2US",
+          "from_name": "difficulty",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        }
+      ]
+    },
+    {
+      "record_id": "R01571",
+      "object_id": "9e5409147dcedaf906b7",
+      "worker_id": "W002",
+      "condition": "manual",
+      "source_path": "export_label/stage2_Chinese/project-71-at-2026-07-30-14-18-54a73158.json",
+      "source_file_sha256": "9caa6d1ffad1f6496e45883708437e4e230c87ed6d1a594716beedfcbdd57ece",
+      "project": 71,
+      "task": 3322,
+      "annotation": 6140,
+      "ground_truth": false,
+      "was_cancelled": false,
+      "parent_annotation": null,
+      "parent_prediction": null,
+      "prediction": {},
+      "created_at": "2026-07-11T17:49:53.311976Z",
+      "declared_derivation": "none_in_export_metadata",
+      "current_selected_points_sha256": "85a8a417ac144eed47172d9e611d56e625b35eaea1bb2e1aabbdebdca5cbbd0b",
+      "current_points_changed_from_prior": false,
+      "point_review_source": null,
+      "cached_footprint_missing": false,
+      "independent_vote_eligible": true,
+      "in_current_manual_pool": true,
+      "main_consensus_gate": {
+        "status": "main_candidate",
+        "reasons": [
+          "main_candidate"
+        ],
+        "scope_policy": "retain_scope_variation"
+      },
+      "main_quality_gate": {
+        "status": "candidate_pending_geometry",
+        "reasons": []
+      },
+      "primary_included": true,
+      "cleaning_disposition": "retained",
+      "primary_exclusion_reasons": [],
+      "original_choices": [
+        {
+          "value": {
+            "choices": [
+              "normal"
+            ]
+          },
+          "id": "l8-v22tjtC",
+          "from_name": "scope",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        },
+        {
+          "value": {
+            "choices": [
+              "occlusion",
+              "low_texture",
+              "reflection"
+            ]
+          },
+          "id": "oqhL6eDmqx",
+          "from_name": "difficulty",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        }
+      ]
+    },
+    {
+      "record_id": "R02962",
+      "object_id": "new_93_3608_7113_W006",
+      "worker_id": "W006",
+      "condition": "manual",
+      "source_path": "export_label/新增中文20图/project-93-at-2026-09-21-09-42-4609125d.json",
+      "source_file_sha256": "56e721887a8cfff664d29396f5bbe61b9f2763fd4446845fb939392f3978f686",
+      "project": 93,
+      "task": 3608,
+      "annotation": 7113,
+      "ground_truth": false,
+      "was_cancelled": false,
+      "parent_annotation": null,
+      "parent_prediction": null,
+      "prediction": {},
+      "created_at": "2026-09-15T13:02:55.867812Z",
+      "declared_derivation": "none_in_export_metadata",
+      "current_selected_points_sha256": "5c906e3fb874bdaf5adac4decaf5c528cd6a5f6e1b57297ced1a884bf3568898",
+      "current_points_changed_from_prior": false,
+      "point_review_source": null,
+      "cached_footprint_missing": false,
+      "independent_vote_eligible": true,
+      "in_current_manual_pool": true,
+      "main_consensus_gate": {
+        "status": "main_candidate",
+        "reasons": [
+          "main_candidate"
+        ],
+        "scope_policy": "retain_scope_variation"
+      },
+      "main_quality_gate": {
+        "status": "candidate_pending_geometry",
+        "reasons": []
+      },
+      "primary_included": true,
+      "cleaning_disposition": "retained",
+      "primary_exclusion_reasons": [],
+      "original_choices": [
+        {
+          "value": {
+            "choices": [
+              "in_scope"
+            ]
+          },
+          "id": "z2M-6KcmKT",
+          "from_name": "worker_scope_response",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        }
+      ]
+    },
+    {
+      "record_id": "R02966",
+      "object_id": "new_93_3608_7399_W008",
+      "worker_id": "W008",
+      "condition": "manual",
+      "source_path": "export_label/新增中文20图/project-93-at-2026-09-21-09-42-4609125d.json",
+      "source_file_sha256": "56e721887a8cfff664d29396f5bbe61b9f2763fd4446845fb939392f3978f686",
+      "project": 93,
+      "task": 3608,
+      "annotation": 7399,
+      "ground_truth": false,
+      "was_cancelled": false,
+      "parent_annotation": null,
+      "parent_prediction": null,
+      "prediction": {},
+      "created_at": "2026-09-18T17:07:57.188051Z",
+      "declared_derivation": "none_in_export_metadata",
+      "current_selected_points_sha256": "cd6df72cc1620e89e790b939993ab8941d9f26763aa621eec4f56f92e7ed3818",
+      "current_points_changed_from_prior": false,
+      "point_review_source": null,
+      "cached_footprint_missing": false,
+      "independent_vote_eligible": true,
+      "in_current_manual_pool": true,
+      "main_consensus_gate": {
+        "status": "main_candidate",
+        "reasons": [
+          "main_candidate"
+        ],
+        "scope_policy": "retain_scope_variation"
+      },
+      "main_quality_gate": {
+        "status": "candidate_pending_geometry",
+        "reasons": []
+      },
+      "primary_included": true,
+      "cleaning_disposition": "retained",
+      "primary_exclusion_reasons": [],
+      "original_choices": [
+        {
+          "value": {
+            "choices": [
+              "in_scope"
+            ]
+          },
+          "id": "3nPUiwL58M",
+          "from_name": "worker_scope_response",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        }
+      ]
+    },
+    {
+      "record_id": "R02967",
+      "object_id": "new_93_3608_7489_W010",
+      "worker_id": "W010",
+      "condition": "manual",
+      "source_path": "export_label/新增中文20图/project-93-at-2026-09-21-09-42-4609125d.json",
+      "source_file_sha256": "56e721887a8cfff664d29396f5bbe61b9f2763fd4446845fb939392f3978f686",
+      "project": 93,
+      "task": 3608,
+      "annotation": 7489,
+      "ground_truth": false,
+      "was_cancelled": false,
+      "parent_annotation": null,
+      "parent_prediction": null,
+      "prediction": {},
+      "created_at": "2026-09-20T04:06:28.267306Z",
+      "declared_derivation": "none_in_export_metadata",
+      "current_selected_points_sha256": "b9c95ddbcc0c1c6476ee5c73487be3c7f44e12bb05ab421449a1a712785191d0",
+      "current_points_changed_from_prior": false,
+      "point_review_source": null,
+      "cached_footprint_missing": false,
+      "independent_vote_eligible": true,
+      "in_current_manual_pool": true,
+      "main_consensus_gate": {
+        "status": "main_candidate",
+        "reasons": [
+          "main_candidate"
+        ],
+        "scope_policy": "retain_scope_variation"
+      },
+      "main_quality_gate": {
+        "status": "candidate_pending_geometry",
+        "reasons": []
+      },
+      "primary_included": true,
+      "cleaning_disposition": "retained",
+      "primary_exclusion_reasons": [],
+      "original_choices": [
+        {
+          "value": {
+            "choices": [
+              "in_scope"
+            ]
+          },
+          "id": "x_W5TzxB25",
+          "from_name": "worker_scope_response",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        }
+      ]
+    },
+    {
+      "record_id": "R00219",
+      "object_id": "16f88794bfabdd24c227",
+      "worker_id": "W012",
+      "condition": "manual",
+      "source_path": "export_label/stage2_Chinese/project-71-at-2026-07-30-14-18-54a73158.json",
+      "source_file_sha256": "9caa6d1ffad1f6496e45883708437e4e230c87ed6d1a594716beedfcbdd57ece",
+      "project": 71,
+      "task": 3322,
+      "annotation": 6318,
+      "ground_truth": false,
+      "was_cancelled": false,
+      "parent_annotation": null,
+      "parent_prediction": null,
+      "prediction": {},
+      "created_at": "2026-07-16T05:04:11.648959Z",
+      "declared_derivation": "none_in_export_metadata",
+      "current_selected_points_sha256": "9b032fa624162e499ed6f25d28b93a760c04ecd243985ebb83b65f62c4aa0dd6",
+      "current_points_changed_from_prior": false,
+      "point_review_source": null,
+      "cached_footprint_missing": false,
+      "independent_vote_eligible": true,
+      "in_current_manual_pool": true,
+      "main_consensus_gate": {
+        "status": "main_candidate",
+        "reasons": [
+          "main_candidate"
+        ],
+        "scope_policy": "retain_scope_variation"
+      },
+      "main_quality_gate": {
+        "status": "candidate_pending_geometry",
+        "reasons": []
+      },
+      "primary_included": true,
+      "cleaning_disposition": "retained",
+      "primary_exclusion_reasons": [],
+      "original_choices": [
+        {
+          "value": {
+            "choices": [
+              "normal"
+            ]
+          },
+          "id": "V-WjKAKjLL",
+          "from_name": "scope",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        },
+        {
+          "value": {
+            "choices": [
+              "occlusion",
+              "low_texture"
+            ]
+          },
+          "id": "TH7ZkFwfol",
+          "from_name": "difficulty",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        }
+      ]
+    },
+    {
+      "record_id": "R02963",
+      "object_id": "new_93_3608_7137_W012",
+      "worker_id": "W012",
+      "condition": "manual",
+      "source_path": "export_label/新增中文20图/project-93-at-2026-09-21-09-42-4609125d.json",
+      "source_file_sha256": "56e721887a8cfff664d29396f5bbe61b9f2763fd4446845fb939392f3978f686",
+      "project": 93,
+      "task": 3608,
+      "annotation": 7137,
+      "ground_truth": false,
+      "was_cancelled": false,
+      "parent_annotation": null,
+      "parent_prediction": null,
+      "prediction": {},
+      "created_at": "2026-09-15T14:08:00.934570Z",
+      "declared_derivation": "none_in_export_metadata",
+      "current_selected_points_sha256": "addb2ae91319ce28632813752bc406f8b0b9627ca9d4dca6943e9885fe5c8c8e",
+      "current_points_changed_from_prior": true,
+      "point_review_source": "analysis_results/research_input_20260929/quality_update_20261010.json",
+      "cached_footprint_missing": true,
+      "independent_vote_eligible": false,
+      "in_current_manual_pool": false,
+      "main_consensus_gate": {
+        "status": "excluded",
+        "reasons": [
+          "excluded"
+        ],
+        "scope_policy": "retain_scope_variation"
+      },
+      "main_quality_gate": {
+        "status": "excluded",
+        "reasons": [
+          "historical_not_accepted"
+        ]
+      },
+      "primary_included": false,
+      "cleaning_disposition": "historical_not_accepted",
+      "primary_exclusion_reasons": [
+        "cleaning:historical_not_accepted",
+        "quality_gate:excluded"
+      ],
+      "original_choices": [
+        {
+          "value": {
+            "choices": [
+              "in_scope"
+            ]
+          },
+          "id": "XVd7Ram05R",
+          "from_name": "worker_scope_response",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        }
+      ]
+    },
+    {
+      "record_id": "R02965",
+      "object_id": "new_93_3608_7282_W013",
+      "worker_id": "W013",
+      "condition": "manual",
+      "source_path": "export_label/新增中文20图/project-93-at-2026-09-21-09-42-4609125d.json",
+      "source_file_sha256": "56e721887a8cfff664d29396f5bbe61b9f2763fd4446845fb939392f3978f686",
+      "project": 93,
+      "task": 3608,
+      "annotation": 7282,
+      "ground_truth": false,
+      "was_cancelled": false,
+      "parent_annotation": 7186,
+      "parent_prediction": null,
+      "prediction": {},
+      "created_at": "2026-09-18T08:09:22.011544Z",
+      "declared_derivation": "declared_parent_or_prediction_present",
+      "current_selected_points_sha256": "3651ccdd9b46ed8d68cd1e80817a9176b00f9dc915ba57cdb8df1eef69ac2c10",
+      "current_points_changed_from_prior": false,
+      "point_review_source": null,
+      "cached_footprint_missing": false,
+      "independent_vote_eligible": true,
+      "in_current_manual_pool": true,
+      "main_consensus_gate": {
+        "status": "main_candidate",
+        "reasons": [
+          "main_candidate"
+        ],
+        "scope_policy": "retain_scope_variation"
+      },
+      "main_quality_gate": {
+        "status": "candidate_pending_geometry",
+        "reasons": []
+      },
+      "primary_included": true,
+      "cleaning_disposition": "retained",
+      "primary_exclusion_reasons": [],
+      "original_choices": [
+        {
+          "value": {
+            "choices": [
+              "in_scope"
+            ]
+          },
+          "id": "6fcc1xG21I",
+          "from_name": "worker_scope_response",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        }
+      ]
+    },
+    {
+      "record_id": "R02964",
+      "object_id": "new_93_3608_7186_W015",
+      "worker_id": "W015",
+      "condition": "manual",
+      "source_path": "export_label/新增中文20图/project-93-at-2026-09-21-09-42-4609125d.json",
+      "source_file_sha256": "56e721887a8cfff664d29396f5bbe61b9f2763fd4446845fb939392f3978f686",
+      "project": 93,
+      "task": 3608,
+      "annotation": 7186,
+      "ground_truth": false,
+      "was_cancelled": false,
+      "parent_annotation": 6903,
+      "parent_prediction": null,
+      "prediction": {},
+      "created_at": "2026-09-17T06:49:56.895658Z",
+      "declared_derivation": "declared_parent_or_prediction_present",
+      "current_selected_points_sha256": "3651ccdd9b46ed8d68cd1e80817a9176b00f9dc915ba57cdb8df1eef69ac2c10",
+      "current_points_changed_from_prior": false,
+      "point_review_source": null,
+      "cached_footprint_missing": false,
+      "independent_vote_eligible": true,
+      "in_current_manual_pool": true,
+      "main_consensus_gate": {
+        "status": "main_candidate",
+        "reasons": [
+          "main_candidate"
+        ],
+        "scope_policy": "retain_scope_variation"
+      },
+      "main_quality_gate": {
+        "status": "candidate_pending_geometry",
+        "reasons": []
+      },
+      "primary_included": true,
+      "cleaning_disposition": "retained",
+      "primary_exclusion_reasons": [],
+      "original_choices": [
+        {
+          "value": {
+            "choices": [
+              "in_scope"
+            ]
+          },
+          "id": "6fcc1xG21I",
+          "from_name": "worker_scope_response",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        }
+      ]
+    },
+    {
+      "record_id": "R02961",
+      "object_id": "new_93_3608_6903_W017",
+      "worker_id": "W017",
+      "condition": "manual",
+      "source_path": "export_label/新增中文20图/project-93-at-2026-09-21-09-42-4609125d.json",
+      "source_file_sha256": "56e721887a8cfff664d29396f5bbe61b9f2763fd4446845fb939392f3978f686",
+      "project": 93,
+      "task": 3608,
+      "annotation": 6903,
+      "ground_truth": false,
+      "was_cancelled": false,
+      "parent_annotation": null,
+      "parent_prediction": null,
+      "prediction": {},
+      "created_at": "2026-09-14T11:55:25.332651Z",
+      "declared_derivation": "none_in_export_metadata",
+      "current_selected_points_sha256": "26f3c94e01b0bf1886d64598777176849db92e2c2ce7150043c3a69bff963f20",
+      "current_points_changed_from_prior": false,
+      "point_review_source": null,
+      "cached_footprint_missing": false,
+      "independent_vote_eligible": true,
+      "in_current_manual_pool": true,
+      "main_consensus_gate": {
+        "status": "main_candidate",
+        "reasons": [
+          "main_candidate"
+        ],
+        "scope_policy": "retain_scope_variation"
+      },
+      "main_quality_gate": {
+        "status": "candidate_pending_geometry",
+        "reasons": []
+      },
+      "primary_included": true,
+      "cleaning_disposition": "retained",
+      "primary_exclusion_reasons": [],
+      "original_choices": [
+        {
+          "value": {
+            "choices": [
+              "in_scope"
+            ]
+          },
+          "id": "6fcc1xG21I",
+          "from_name": "worker_scope_response",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        }
+      ]
+    },
+    {
+      "record_id": "R03265",
+      "object_id": "new_94_3645_7433_W028",
+      "worker_id": "W028",
+      "condition": "manual",
+      "source_path": "export_label/新增英文30+20图/project-94-at-2026-09-20-13-45-d09d9d53.json",
+      "source_file_sha256": "219f040672ffc92ca6f76c01ed9180ff317bf872200b202fe6de0f7bd00fea86",
+      "project": 94,
+      "task": 3645,
+      "annotation": 7433,
+      "ground_truth": false,
+      "was_cancelled": false,
+      "parent_annotation": null,
+      "parent_prediction": null,
+      "prediction": {},
+      "created_at": "2026-09-19T17:20:23.559035Z",
+      "declared_derivation": "none_in_export_metadata",
+      "current_selected_points_sha256": "4b1ae5edef4614e9616ecb0b8cadf021544d7f936e9239e1ae5a36f6583562e2",
+      "current_points_changed_from_prior": false,
+      "point_review_source": null,
+      "cached_footprint_missing": false,
+      "independent_vote_eligible": true,
+      "in_current_manual_pool": true,
+      "main_consensus_gate": {
+        "status": "main_candidate",
+        "reasons": [
+          "main_candidate"
+        ],
+        "scope_policy": "retain_scope_variation"
+      },
+      "main_quality_gate": {
+        "status": "candidate_pending_geometry",
+        "reasons": []
+      },
+      "primary_included": true,
+      "cleaning_disposition": "retained",
+      "primary_exclusion_reasons": [],
+      "original_choices": [
+        {
+          "value": {
+            "choices": [
+              "out_of_scope"
+            ]
+          },
+          "id": "W51JN1Q6qZ",
+          "from_name": "worker_scope_response",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        }
+      ]
+    },
+    {
+      "record_id": "R03260",
+      "object_id": "new_94_3645_7092_W029",
+      "worker_id": "W029",
+      "condition": "manual",
+      "source_path": "export_label/新增英文30+20图/project-94-at-2026-09-20-13-45-d09d9d53.json",
+      "source_file_sha256": "219f040672ffc92ca6f76c01ed9180ff317bf872200b202fe6de0f7bd00fea86",
+      "project": 94,
+      "task": 3645,
+      "annotation": 7092,
+      "ground_truth": false,
+      "was_cancelled": false,
+      "parent_annotation": null,
+      "parent_prediction": null,
+      "prediction": {},
+      "created_at": "2026-09-15T12:06:04.512732Z",
+      "declared_derivation": "none_in_export_metadata",
+      "current_selected_points_sha256": "56c8cd052d0580ca84c2db82e46ba83be0a87b4d8027e92aa0f3a627db2273d1",
+      "current_points_changed_from_prior": false,
+      "point_review_source": null,
+      "cached_footprint_missing": false,
+      "independent_vote_eligible": true,
+      "in_current_manual_pool": true,
+      "main_consensus_gate": {
+        "status": "main_candidate",
+        "reasons": [
+          "main_candidate"
+        ],
+        "scope_policy": "retain_scope_variation"
+      },
+      "main_quality_gate": {
+        "status": "candidate_pending_geometry",
+        "reasons": []
+      },
+      "primary_included": true,
+      "cleaning_disposition": "retained",
+      "primary_exclusion_reasons": [],
+      "original_choices": [
+        {
+          "value": {
+            "choices": [
+              "out_of_scope"
+            ]
+          },
+          "id": "L7_doh-ROm",
+          "from_name": "worker_scope_response",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        }
+      ]
+    },
+    {
+      "record_id": "R03263",
+      "object_id": "new_94_3645_7320_W030",
+      "worker_id": "W030",
+      "condition": "manual",
+      "source_path": "export_label/新增英文30+20图/project-94-at-2026-09-20-13-45-d09d9d53.json",
+      "source_file_sha256": "219f040672ffc92ca6f76c01ed9180ff317bf872200b202fe6de0f7bd00fea86",
+      "project": 94,
+      "task": 3645,
+      "annotation": 7320,
+      "ground_truth": false,
+      "was_cancelled": false,
+      "parent_annotation": null,
+      "parent_prediction": null,
+      "prediction": {},
+      "created_at": "2026-09-18T13:45:02.899762Z",
+      "declared_derivation": "none_in_export_metadata",
+      "current_selected_points_sha256": "9487986bf3415f1d6875b6a2bab4da50b1b448b9e0540c88fcbd265f4e76f06d",
+      "current_points_changed_from_prior": false,
+      "point_review_source": null,
+      "cached_footprint_missing": false,
+      "independent_vote_eligible": true,
+      "in_current_manual_pool": true,
+      "main_consensus_gate": {
+        "status": "main_candidate",
+        "reasons": [
+          "main_candidate"
+        ],
+        "scope_policy": "retain_scope_variation"
+      },
+      "main_quality_gate": {
+        "status": "candidate_pending_geometry",
+        "reasons": []
+      },
+      "primary_included": true,
+      "cleaning_disposition": "retained",
+      "primary_exclusion_reasons": [],
+      "original_choices": [
+        {
+          "value": {
+            "choices": [
+              "in_scope"
+            ]
+          },
+          "id": "FEpkUDvDQX",
+          "from_name": "worker_scope_response",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        }
+      ]
+    },
+    {
+      "record_id": "R03258",
+      "object_id": "new_94_3645_6949_W031",
+      "worker_id": "W031",
+      "condition": "manual",
+      "source_path": "export_label/新增英文30+20图/project-94-at-2026-09-20-13-45-d09d9d53.json",
+      "source_file_sha256": "219f040672ffc92ca6f76c01ed9180ff317bf872200b202fe6de0f7bd00fea86",
+      "project": 94,
+      "task": 3645,
+      "annotation": 6949,
+      "ground_truth": false,
+      "was_cancelled": false,
+      "parent_annotation": null,
+      "parent_prediction": null,
+      "prediction": {},
+      "created_at": "2026-09-14T13:47:16.628341Z",
+      "declared_derivation": "none_in_export_metadata",
+      "current_selected_points_sha256": "ba6ac0fc306d78d96cac77622aa663137cc8d4d01f3e72acb05906beb0a4efd1",
+      "current_points_changed_from_prior": false,
+      "point_review_source": null,
+      "cached_footprint_missing": false,
+      "independent_vote_eligible": true,
+      "in_current_manual_pool": true,
+      "main_consensus_gate": {
+        "status": "main_candidate",
+        "reasons": [
+          "main_candidate"
+        ],
+        "scope_policy": "retain_scope_variation"
+      },
+      "main_quality_gate": {
+        "status": "candidate_pending_geometry",
+        "reasons": []
+      },
+      "primary_included": true,
+      "cleaning_disposition": "retained",
+      "primary_exclusion_reasons": [],
+      "original_choices": [
+        {
+          "value": {
+            "choices": [
+              "in_scope"
+            ]
+          },
+          "id": "-GOWYJ9JBR",
+          "from_name": "worker_scope_response",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        }
+      ]
+    },
+    {
+      "record_id": "R03264",
+      "object_id": "new_94_3645_7358_W032",
+      "worker_id": "W032",
+      "condition": "manual",
+      "source_path": "export_label/新增英文30+20图/project-94-at-2026-09-20-13-45-d09d9d53.json",
+      "source_file_sha256": "219f040672ffc92ca6f76c01ed9180ff317bf872200b202fe6de0f7bd00fea86",
+      "project": 94,
+      "task": 3645,
+      "annotation": 7358,
+      "ground_truth": false,
+      "was_cancelled": false,
+      "parent_annotation": null,
+      "parent_prediction": null,
+      "prediction": {},
+      "created_at": "2026-09-18T15:12:48.966638Z",
+      "declared_derivation": "none_in_export_metadata",
+      "current_selected_points_sha256": "a4f67fc83a531f33fdfe3b382c59fce7e2eee68b6950589609a3dbf1ef5148c0",
+      "current_points_changed_from_prior": false,
+      "point_review_source": null,
+      "cached_footprint_missing": false,
+      "independent_vote_eligible": true,
+      "in_current_manual_pool": true,
+      "main_consensus_gate": {
+        "status": "main_candidate",
+        "reasons": [
+          "main_candidate"
+        ],
+        "scope_policy": "retain_scope_variation"
+      },
+      "main_quality_gate": {
+        "status": "candidate_pending_geometry",
+        "reasons": []
+      },
+      "primary_included": true,
+      "cleaning_disposition": "retained",
+      "primary_exclusion_reasons": [],
+      "original_choices": [
+        {
+          "value": {
+            "choices": [
+              "in_scope"
+            ]
+          },
+          "id": "TcjA19-b0t",
+          "from_name": "worker_scope_response",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        }
+      ]
+    },
+    {
+      "record_id": "R03261",
+      "object_id": "new_94_3645_7161_W033",
+      "worker_id": "W033",
+      "condition": "manual",
+      "source_path": "export_label/新增英文30+20图/project-94-at-2026-09-20-13-45-d09d9d53.json",
+      "source_file_sha256": "219f040672ffc92ca6f76c01ed9180ff317bf872200b202fe6de0f7bd00fea86",
+      "project": 94,
+      "task": 3645,
+      "annotation": 7161,
+      "ground_truth": false,
+      "was_cancelled": false,
+      "parent_annotation": null,
+      "parent_prediction": null,
+      "prediction": {},
+      "created_at": "2026-09-16T01:24:58.818898Z",
+      "declared_derivation": "none_in_export_metadata",
+      "current_selected_points_sha256": "58e7053f6d5003b9fbf83fa547c4e3aa300e28d56a70da363bdd2116b65e4387",
+      "current_points_changed_from_prior": false,
+      "point_review_source": null,
+      "cached_footprint_missing": false,
+      "independent_vote_eligible": true,
+      "in_current_manual_pool": true,
+      "main_consensus_gate": {
+        "status": "main_candidate",
+        "reasons": [
+          "main_candidate"
+        ],
+        "scope_policy": "retain_scope_variation"
+      },
+      "main_quality_gate": {
+        "status": "candidate_pending_geometry",
+        "reasons": []
+      },
+      "primary_included": true,
+      "cleaning_disposition": "retained",
+      "primary_exclusion_reasons": [],
+      "original_choices": [
+        {
+          "value": {
+            "choices": [
+              "in_scope"
+            ]
+          },
+          "id": "aGK9HlhhC-",
+          "from_name": "worker_scope_response",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        }
+      ]
+    },
+    {
+      "record_id": "R01412",
+      "object_id": "8f3735d531f44f7b44c8",
+      "worker_id": "W034",
+      "condition": "manual",
+      "source_path": "export_label/stage2_English/project-67-at-2026-07-30-13-01-f5126135.json",
+      "source_file_sha256": "f20c24a83f2288c15bedb7042dd3061186dfe073e1cb3573854df5de5c080a31",
+      "project": 67,
+      "task": 3210,
+      "annotation": 6065,
+      "ground_truth": false,
+      "was_cancelled": false,
+      "parent_annotation": null,
+      "parent_prediction": null,
+      "prediction": {},
+      "created_at": "2026-07-08T10:18:23.521573Z",
+      "declared_derivation": "none_in_export_metadata",
+      "current_selected_points_sha256": "05c2d8f9035442292e7884c00242b3440e2ee5547a774817a45ef344d06c7ad9",
+      "current_points_changed_from_prior": false,
+      "point_review_source": null,
+      "cached_footprint_missing": false,
+      "independent_vote_eligible": true,
+      "in_current_manual_pool": true,
+      "main_consensus_gate": {
+        "status": "main_candidate",
+        "reasons": [
+          "main_candidate"
+        ],
+        "scope_policy": "retain_scope_variation"
+      },
+      "main_quality_gate": {
+        "status": "candidate_pending_geometry",
+        "reasons": []
+      },
+      "primary_included": true,
+      "cleaning_disposition": "retained",
+      "primary_exclusion_reasons": [],
+      "original_choices": [
+        {
+          "value": {
+            "choices": [
+              "normal"
+            ]
+          },
+          "id": "VneLACKeZO",
+          "from_name": "scope",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        },
+        {
+          "value": {
+            "choices": [
+              "occlusion"
+            ]
+          },
+          "id": "nO50YcWbqr",
+          "from_name": "difficulty",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        }
+      ]
+    },
+    {
+      "record_id": "R03259",
+      "object_id": "new_94_3645_6972_W035",
+      "worker_id": "W035",
+      "condition": "manual",
+      "source_path": "export_label/新增英文30+20图/project-94-at-2026-09-20-13-45-d09d9d53.json",
+      "source_file_sha256": "219f040672ffc92ca6f76c01ed9180ff317bf872200b202fe6de0f7bd00fea86",
+      "project": 94,
+      "task": 3645,
+      "annotation": 6972,
+      "ground_truth": false,
+      "was_cancelled": false,
+      "parent_annotation": null,
+      "parent_prediction": null,
+      "prediction": {},
+      "created_at": "2026-09-14T14:30:40.497580Z",
+      "declared_derivation": "none_in_export_metadata",
+      "current_selected_points_sha256": "1bb06f99c8fd565e228109e4cdb4c8f036912a439503bcd38baea9923c10e1f7",
+      "current_points_changed_from_prior": false,
+      "point_review_source": null,
+      "cached_footprint_missing": false,
+      "independent_vote_eligible": true,
+      "in_current_manual_pool": true,
+      "main_consensus_gate": {
+        "status": "main_candidate",
+        "reasons": [
+          "main_candidate"
+        ],
+        "scope_policy": "retain_scope_variation"
+      },
+      "main_quality_gate": {
+        "status": "candidate_pending_geometry",
+        "reasons": []
+      },
+      "primary_included": true,
+      "cleaning_disposition": "retained",
+      "primary_exclusion_reasons": [],
+      "original_choices": [
+        {
+          "value": {
+            "choices": [
+              "out_of_scope"
+            ]
+          },
+          "id": "TN3Mv1_AD0",
+          "from_name": "worker_scope_response",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        }
+      ]
+    },
+    {
+      "record_id": "R03262",
+      "object_id": "new_94_3645_7223_W036",
+      "worker_id": "W036",
+      "condition": "manual",
+      "source_path": "export_label/新增英文30+20图/project-94-at-2026-09-20-13-45-d09d9d53.json",
+      "source_file_sha256": "219f040672ffc92ca6f76c01ed9180ff317bf872200b202fe6de0f7bd00fea86",
+      "project": 94,
+      "task": 3645,
+      "annotation": 7223,
+      "ground_truth": false,
+      "was_cancelled": false,
+      "parent_annotation": null,
+      "parent_prediction": null,
+      "prediction": {},
+      "created_at": "2026-09-17T18:07:33.160658Z",
+      "declared_derivation": "none_in_export_metadata",
+      "current_selected_points_sha256": "5414fd4c614019a324c423e63d5cadeb3529bb09c2a1ffc8e59d0ea46264bcbc",
+      "current_points_changed_from_prior": false,
+      "point_review_source": null,
+      "cached_footprint_missing": false,
+      "independent_vote_eligible": true,
+      "in_current_manual_pool": true,
+      "main_consensus_gate": {
+        "status": "main_candidate",
+        "reasons": [
+          "main_candidate"
+        ],
+        "scope_policy": "retain_scope_variation"
+      },
+      "main_quality_gate": {
+        "status": "candidate_pending_geometry",
+        "reasons": []
+      },
+      "primary_included": true,
+      "cleaning_disposition": "retained",
+      "primary_exclusion_reasons": [],
+      "original_choices": [
+        {
+          "value": {
+            "choices": [
+              "in_scope"
+            ]
+          },
+          "id": "VPPdNySx--",
+          "from_name": "worker_scope_response",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        }
+      ]
+    },
+    {
+      "record_id": "R01038",
+      "object_id": "6bcb7c06bee48a668fc1",
+      "worker_id": "W037",
+      "condition": "manual",
+      "source_path": "export_label/stage2_English/project-67-at-2026-07-30-13-01-f5126135.json",
+      "source_file_sha256": "f20c24a83f2288c15bedb7042dd3061186dfe073e1cb3573854df5de5c080a31",
+      "project": 67,
+      "task": 3210,
+      "annotation": 5881,
+      "ground_truth": false,
+      "was_cancelled": false,
+      "parent_annotation": null,
+      "parent_prediction": null,
+      "prediction": {},
+      "created_at": "2026-07-06T08:47:40.349712Z",
+      "declared_derivation": "none_in_export_metadata",
+      "current_selected_points_sha256": "695028c9e66f7e2cdbb65de33f4375737f572f1b526ff985be44d57b4af2084e",
+      "current_points_changed_from_prior": false,
+      "point_review_source": null,
+      "cached_footprint_missing": false,
+      "independent_vote_eligible": true,
+      "in_current_manual_pool": true,
+      "main_consensus_gate": {
+        "status": "main_candidate",
+        "reasons": [
+          "main_candidate"
+        ],
+        "scope_policy": "retain_scope_variation"
+      },
+      "main_quality_gate": {
+        "status": "candidate_pending_geometry",
+        "reasons": []
+      },
+      "primary_included": true,
+      "cleaning_disposition": "retained",
+      "primary_exclusion_reasons": [],
+      "original_choices": [
+        {
+          "value": {
+            "choices": [
+              "oos_open_boundary"
+            ]
+          },
+          "id": "yVa0W7LDGl",
+          "from_name": "scope",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        },
+        {
+          "value": {
+            "choices": [
+              "occlusion"
+            ]
+          },
+          "id": "vMMCWdSXtu",
+          "from_name": "difficulty",
+          "to_name": "img",
+          "type": "choices",
+          "origin": "manual"
+        }
+      ]
+    }
+  ],
+  "GT_or_derived_workbench_reference_objects_in_this_list": 0,
+  "manual_pool_records": 18,
+  "quality_primary_included_records": 18,
+  "no_eligibility_changed": true
+}
