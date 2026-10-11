@@ -1,0 +1,678 @@
+{
+  "version": "scope_preferred_difficulty_20261011_v2",
+  "records": [
+    {
+      "image": "e9zR4mvMWw7-16",
+      "image_id": "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45",
+      "current_class": "待复核",
+      "conditional_difficulty": "待复核",
+      "target_version": "gt:e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45:export_label/groudTruth.json",
+      "selected": {
+        "target_id": "gt:e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45:export_label/groudTruth.json",
+        "role": "selected_gt",
+        "floor": [
+          [
+            -3.0594091768033413,
+            0.3864151867488329
+          ],
+          [
+            -3.058697637857998,
+            -2.472645043613288
+          ],
+          [
+            0.9222299467443696,
+            -2.4706099949585605
+          ],
+          [
+            0.9226045687942201,
+            0.38569853465947823
+          ]
+        ],
+        "features": {
+          "N_floor": 4,
+          "N_turn": 4,
+          "straight_vertices_1based": [],
+          "H": 0,
+          "hidden_vertices_1based": [],
+          "geometry_status": "valid_camera_inside",
+          "ring_class": "cyclic_increasing"
+        }
+      },
+      "candidates": [
+        {
+          "target_id": "gt:e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45:export_label/groudTruth.json",
+          "role": "selected_gt",
+          "floor": [
+            [
+              -3.0594091768033413,
+              0.3864151867488329
+            ],
+            [
+              -3.058697637857998,
+              -2.472645043613288
+            ],
+            [
+              0.9222299467443696,
+              -2.4706099949585605
+            ],
+            [
+              0.9226045687942201,
+              0.38569853465947823
+            ]
+          ],
+          "features": {
+            "N_floor": 4,
+            "N_turn": 4,
+            "straight_vertices_1based": [],
+            "H": 0,
+            "hidden_vertices_1based": [],
+            "geometry_status": "valid_camera_inside",
+            "ring_class": "cyclic_increasing"
+          }
+        }
+      ],
+      "N_floor": 4,
+      "N_turn": 4,
+      "H": 0,
+      "scene": "clear",
+      "oos_subtype": "not_oos",
+      "doorway_status": "none",
+      "previous_visual_class": "待复核",
+      "previous_scope_class": "待复核",
+      "external_review": {
+        "image": "e9zR4mvMWw7-16",
+        "image_id": "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45",
+        "gt_object_id": "gt:e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45:export_label/groudTruth.json",
+        "original_working_class": "简单",
+        "proposed_class": "待复核",
+        "grade": "简单",
+        "scope": "目标基本一致",
+        "note": "",
+        "updated_at": "2026-10-10T03:54:51.994Z"
+      },
+      "previous_user_review": null,
+      "old_visual_evidence": "起居室GT四点跨楼梯开口，点4下端落在楼梯上，地面并非完整同层闭合。",
+      "old_visual_question": "新增楼梯/表示适配疑点，不应只按四点判普通简单。",
+      "previous_reference_issue": "not_newly_adjudicated",
+      "previous_scope_note": "逐图照片与全部可画底面对照中，未见明确的大范围目标差异；不认证GT正确或所有人员目标一致。",
+      "reference_flags": {
+        "scope_explicit_tag": "False",
+        "scope_existing_ledger": "False",
+        "scope_comment_candidate": "True",
+        "gt_substantive_error_mark": "False",
+        "gt_detail_omission_mark": "False"
+      },
+      "selection_reason": "single_accepted_reference",
+      "photo": "D:\\Work\\HOHONET\\data\\mp3d_layout\\test\\img\\e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45.png",
+      "card": "cards/e9zR4mvMWw7-16.jpg",
+      "old_card": "../image_difficulty_full_review_20261010/all_cards/e9zR4mvMWw7-16.jpg",
+      "scope_comparison": null,
+      "top_boundary_pending": null,
+      "classification_basis": "geometry_and_codex_photo_review_not_blind",
+      "reviewed": true,
+      "review_artifact": "recheck_22.jpg",
+      "review_method": "Codex逐张全景总览复核，非盲法；新范围另有旧轮35图对照",
+      "inference_burden": "undetermined",
+      "H_interpretation": "none",
+      "evidence": "这张现有GT的底面跨楼梯/开放区域：当前评价允许哪种单底面表示？不是要求重审已确认的替代范围。",
+      "question": "这张现有GT的底面跨楼梯/开放区域：当前评价允许哪种单底面表示？不是要求重审已确认的替代范围。",
+      "applicability_note": "按所选底面目标评价；完整三维顶边适用性不由本档认证。"
+    },
+    {
+      "image": "jtcxE69GiFV-05",
+      "image_id": "jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037",
+      "current_class": "待复核",
+      "conditional_difficulty": "待复核",
+      "target_version": "gt:jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037.txt",
+      "selected": {
+        "target_id": "gt:jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037.txt",
+        "role": "selected_gt",
+        "floor": [
+          [
+            0.27632152843835883,
+            -3.3406038552380637
+          ],
+          [
+            0.2762845611905821,
+            0.864736819361389
+          ],
+          [
+            -3.0121440787571423,
+            0.864896430656533
+          ],
+          [
+            -3.0121162708846594,
+            -3.341031524156579
+          ]
+        ],
+        "features": {
+          "N_floor": 4,
+          "N_turn": 4,
+          "straight_vertices_1based": [],
+          "H": 0,
+          "hidden_vertices_1based": [],
+          "geometry_status": "valid_camera_inside",
+          "ring_class": "cyclic_increasing"
+        }
+      },
+      "candidates": [
+        {
+          "target_id": "gt:jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037.txt",
+          "role": "selected_gt",
+          "floor": [
+            [
+              0.27632152843835883,
+              -3.3406038552380637
+            ],
+            [
+              0.2762845611905821,
+              0.864736819361389
+            ],
+            [
+              -3.0121440787571423,
+              0.864896430656533
+            ],
+            [
+              -3.0121162708846594,
+              -3.341031524156579
+            ]
+          ],
+          "features": {
+            "N_floor": 4,
+            "N_turn": 4,
+            "straight_vertices_1based": [],
+            "H": 0,
+            "hidden_vertices_1based": [],
+            "geometry_status": "valid_camera_inside",
+            "ring_class": "cyclic_increasing"
+          }
+        }
+      ],
+      "N_floor": 4,
+      "N_turn": 4,
+      "H": 0,
+      "scene": "unflagged",
+      "oos_subtype": "not_recorded",
+      "doorway_status": "not_recorded",
+      "previous_visual_class": "待复核",
+      "previous_scope_class": "待复核",
+      "external_review": {
+        "image": "jtcxE69GiFV-05",
+        "image_id": "jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037",
+        "gt_object_id": "gt:jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037.txt",
+        "original_working_class": "简单",
+        "proposed_class": "中等",
+        "grade": "简单",
+        "scope": "目标基本一致",
+        "note": "",
+        "updated_at": "2026-10-10T03:57:42.389Z"
+      },
+      "previous_user_review": {
+        "image": "jtcxE69GiFV-05",
+        "image_id": "jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037",
+        "gt_object_id": "gt:jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037.txt",
+        "original_working_class": "简单",
+        "proposed_class": "待复核",
+        "grade": "中等",
+        "scope": "GT需核查",
+        "note": "这gt是错误的",
+        "updated_at": "2026-10-10T09:57:47.017Z"
+      },
+      "old_visual_evidence": "点1落在厚帘附近；点2落在床头板区域，点3/4与远端开口和镜面关系在本图中不够明确。不能把GT红线位置当作图像已提供的定位线索。",
+      "old_visual_question": "请确认四个GT角对应真实墙角还是矩形化参考；确认后再区分简单或中等。",
+      "previous_reference_issue": "not_newly_adjudicated",
+      "previous_scope_note": "人员四边形方向与GT明显不同，优先核查参考几何/朝向，不以多数一致证明GT错误。",
+      "reference_flags": {
+        "scope_explicit_tag": "False",
+        "scope_existing_ledger": "False",
+        "scope_comment_candidate": "False",
+        "gt_substantive_error_mark": "True",
+        "gt_detail_omission_mark": "False"
+      },
+      "selection_reason": "single_accepted_reference",
+      "photo": "D:\\Work\\HOHONET\\data\\mp3d_layout\\valid\\img\\jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037.png",
+      "card": "cards/jtcxE69GiFV-05.jpg",
+      "old_card": "../image_difficulty_full_review_20261010/all_cards/jtcxE69GiFV-05.jpg",
+      "scope_comparison": null,
+      "top_boundary_pending": null,
+      "classification_basis": "geometry_and_codex_photo_review_not_blind",
+      "reviewed": true,
+      "review_artifact": "recheck_26.jpg",
+      "review_method": "Codex逐张全景总览复核，非盲法；新范围另有旧轮35图对照",
+      "inference_burden": "undetermined",
+      "H_interpretation": "none",
+      "evidence": "用户此前明确指出GT错误；尚无已确认的更正参考。请指出应采用的正确角位/范围。",
+      "question": "用户此前明确指出GT错误；尚无已确认的更正参考。请指出应采用的正确角位/范围。",
+      "applicability_note": "按所选底面目标评价；完整三维顶边适用性不由本档认证。"
+    },
+    {
+      "image": "jtcxE69GiFV-11",
+      "image_id": "jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8",
+      "current_class": "待复核",
+      "conditional_difficulty": "待复核",
+      "target_version": "gt:jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8.txt",
+      "selected": {
+        "target_id": "gt:jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8.txt",
+        "role": "selected_gt",
+        "floor": [
+          [
+            -0.2032196892165518,
+            -0.9911068365205605
+          ],
+          [
+            -0.20321049944236724,
+            -0.2593386938783644
+          ],
+          [
+            0.3306220280293445,
+            -0.25932815366183876
+          ],
+          [
+            0.33064677590950575,
+            0.27939500573132464
+          ],
+          [
+            -1.9583680859260881,
+            0.27933006897942597
+          ],
+          [
+            -1.958480064676289,
+            -0.9910933771017421
+          ]
+        ],
+        "features": {
+          "N_floor": 6,
+          "N_turn": 6,
+          "straight_vertices_1based": [],
+          "H": 1,
+          "hidden_vertices_1based": [
+            1
+          ],
+          "geometry_status": "valid_camera_inside",
+          "ring_class": "local_backtracking"
+        }
+      },
+      "candidates": [
+        {
+          "target_id": "gt:jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8.txt",
+          "role": "selected_gt",
+          "floor": [
+            [
+              -0.2032196892165518,
+              -0.9911068365205605
+            ],
+            [
+              -0.20321049944236724,
+              -0.2593386938783644
+            ],
+            [
+              0.3306220280293445,
+              -0.25932815366183876
+            ],
+            [
+              0.33064677590950575,
+              0.27939500573132464
+            ],
+            [
+              -1.9583680859260881,
+              0.27933006897942597
+            ],
+            [
+              -1.958480064676289,
+              -0.9910933771017421
+            ]
+          ],
+          "features": {
+            "N_floor": 6,
+            "N_turn": 6,
+            "straight_vertices_1based": [],
+            "H": 1,
+            "hidden_vertices_1based": [
+              1
+            ],
+            "geometry_status": "valid_camera_inside",
+            "ring_class": "local_backtracking"
+          }
+        }
+      ],
+      "N_floor": 6,
+      "N_turn": 6,
+      "H": 1,
+      "scene": "unflagged",
+      "oos_subtype": "not_recorded",
+      "doorway_status": "not_recorded",
+      "previous_visual_class": "待复核",
+      "previous_scope_class": "待复核",
+      "external_review": {
+        "image": "jtcxE69GiFV-11",
+        "image_id": "jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8",
+        "gt_object_id": "gt:jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8.txt",
+        "original_working_class": "",
+        "proposed_class": "待复核",
+        "grade": "困难",
+        "scope": "GT需核查",
+        "note": "",
+        "updated_at": "2026-10-10T03:58:01.187Z"
+      },
+      "previous_user_review": null,
+      "old_visual_evidence": "走道门扇与近墙遮住部分GT转折，布局包含相邻空间。",
+      "old_visual_question": "保留既有暂停状态；需明确门后与走道目标范围。",
+      "previous_reference_issue": "not_newly_adjudicated",
+      "previous_scope_note": "已逐图查看；作答少于3份，不判断“大量人员”或稳定人群范围差异。",
+      "reference_flags": {
+        "scope_explicit_tag": "True",
+        "scope_existing_ledger": "True",
+        "scope_comment_candidate": "True",
+        "gt_substantive_error_mark": "False",
+        "gt_detail_omission_mark": "False"
+      },
+      "selection_reason": "single_accepted_reference",
+      "photo": "D:\\Work\\HOHONET\\data\\mp3d_layout\\valid\\img\\jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8.png",
+      "card": "cards/jtcxE69GiFV-11.jpg",
+      "old_card": "../image_difficulty_full_review_20261010/all_cards/jtcxE69GiFV-11.jpg",
+      "scope_comparison": null,
+      "top_boundary_pending": null,
+      "classification_basis": "geometry_and_codex_photo_review_not_blind",
+      "reviewed": true,
+      "review_artifact": "recheck_26.jpg",
+      "review_method": "Codex逐张全景总览复核，非盲法；新范围另有旧轮35图对照",
+      "inference_burden": "undetermined",
+      "H_interpretation": "unresolved",
+      "evidence": "既有暂停状态尚未解除；请裁定门后必要角与参考适用性后再分档。",
+      "question": "既有暂停状态尚未解除；请裁定门后必要角与参考适用性后再分档。",
+      "applicability_note": "按所选底面目标评价；完整三维顶边适用性不由本档认证。"
+    },
+    {
+      "image": "jtcxE69GiFV-18",
+      "image_id": "jtcxE69GiFV_67790605390f4d439c3c59395967ec84",
+      "current_class": "待复核",
+      "conditional_difficulty": "待复核",
+      "target_version": "gt:jtcxE69GiFV_67790605390f4d439c3c59395967ec84:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_67790605390f4d439c3c59395967ec84.txt",
+      "selected": {
+        "target_id": "gt:jtcxE69GiFV_67790605390f4d439c3c59395967ec84:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_67790605390f4d439c3c59395967ec84.txt",
+        "role": "selected_gt",
+        "floor": [
+          [
+            3.223956109732395,
+            -1.2654834710843579
+          ],
+          [
+            3.2239541806375978,
+            1.0403137264364746
+          ],
+          [
+            -3.549753303306,
+            1.0402801640298065
+          ],
+          [
+            -3.5498663292153787,
+            -1.0746997927298463
+          ],
+          [
+            -1.2603213140610534,
+            -1.0748121874943277
+          ],
+          [
+            -1.2604045995939903,
+            -0.5150233037558413
+          ],
+          [
+            0.3424351533939711,
+            -0.5150177478859841
+          ],
+          [
+            0.34236205467600267,
+            -1.2654878206563303
+          ]
+        ],
+        "features": {
+          "N_floor": 8,
+          "N_turn": 8,
+          "straight_vertices_1based": [],
+          "H": 2,
+          "hidden_vertices_1based": [
+            5,
+            8
+          ],
+          "geometry_status": "valid_camera_inside",
+          "ring_class": "local_backtracking"
+        }
+      },
+      "candidates": [
+        {
+          "target_id": "gt:jtcxE69GiFV_67790605390f4d439c3c59395967ec84:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_67790605390f4d439c3c59395967ec84.txt",
+          "role": "selected_gt",
+          "floor": [
+            [
+              3.223956109732395,
+              -1.2654834710843579
+            ],
+            [
+              3.2239541806375978,
+              1.0403137264364746
+            ],
+            [
+              -3.549753303306,
+              1.0402801640298065
+            ],
+            [
+              -3.5498663292153787,
+              -1.0746997927298463
+            ],
+            [
+              -1.2603213140610534,
+              -1.0748121874943277
+            ],
+            [
+              -1.2604045995939903,
+              -0.5150233037558413
+            ],
+            [
+              0.3424351533939711,
+              -0.5150177478859841
+            ],
+            [
+              0.34236205467600267,
+              -1.2654878206563303
+            ]
+          ],
+          "features": {
+            "N_floor": 8,
+            "N_turn": 8,
+            "straight_vertices_1based": [],
+            "H": 2,
+            "hidden_vertices_1based": [
+              5,
+              8
+            ],
+            "geometry_status": "valid_camera_inside",
+            "ring_class": "local_backtracking"
+          }
+        }
+      ],
+      "N_floor": 8,
+      "N_turn": 8,
+      "H": 2,
+      "scene": "unflagged",
+      "oos_subtype": "not_recorded",
+      "doorway_status": "not_recorded",
+      "previous_visual_class": "待复核",
+      "previous_scope_class": "待复核",
+      "external_review": {
+        "image": "jtcxE69GiFV-18",
+        "image_id": "jtcxE69GiFV_67790605390f4d439c3c59395967ec84",
+        "gt_object_id": "gt:jtcxE69GiFV_67790605390f4d439c3c59395967ec84:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_67790605390f4d439c3c59395967ec84.txt",
+        "original_working_class": "困难",
+        "proposed_class": "待复核",
+        "grade": "困难",
+        "scope": "目标基本一致",
+        "note": "",
+        "updated_at": "2026-10-10T03:58:25.602Z"
+      },
+      "previous_user_review": null,
+      "old_visual_evidence": "衣帽间满高镜柜覆盖实际墙面，GT部分点投影在镜面内与柜外。",
+      "old_visual_question": "镜柜轮廓、反射空间和实墙角对应需确认。",
+      "previous_reference_issue": "not_newly_adjudicated",
+      "previous_scope_note": "淋浴/玻璃附近的局部轮廓与深度不同，范围和局部形状未分开。",
+      "reference_flags": {
+        "scope_explicit_tag": "False",
+        "scope_existing_ledger": "False",
+        "scope_comment_candidate": "False",
+        "gt_substantive_error_mark": "False",
+        "gt_detail_omission_mark": "False"
+      },
+      "selection_reason": "single_accepted_reference",
+      "photo": "D:\\Work\\HOHONET\\data\\mp3d_layout\\valid\\img\\jtcxE69GiFV_67790605390f4d439c3c59395967ec84.png",
+      "card": "cards/jtcxE69GiFV-18.jpg",
+      "old_card": "../image_difficulty_full_review_20261010/all_cards/jtcxE69GiFV-18.jpg",
+      "scope_comparison": null,
+      "top_boundary_pending": null,
+      "classification_basis": "geometry_and_codex_photo_review_not_blind",
+      "reviewed": true,
+      "review_artifact": "recheck_27.jpg",
+      "review_method": "Codex逐张全景总览复核，非盲法；新范围另有旧轮35图对照",
+      "inference_burden": "undetermined",
+      "H_interpretation": "unresolved",
+      "evidence": "镜柜前缘、反射空间与真实墙角对应仍不清：现有GT的隐藏点是否对应真实墙体？",
+      "question": "镜柜前缘、反射空间与真实墙角对应仍不清：现有GT的隐藏点是否对应真实墙体？",
+      "applicability_note": "按所选底面目标评价；完整三维顶边适用性不由本档认证。"
+    },
+    {
+      "image": "pRbA3pwrgk9-16",
+      "image_id": "pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad",
+      "current_class": "待复核",
+      "conditional_difficulty": "待复核",
+      "target_version": "gt:pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad:data/mp3d_layout/valid/label_cor/pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad.txt",
+      "selected": {
+        "target_id": "gt:pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad:data/mp3d_layout/valid/label_cor/pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad.txt",
+        "role": "selected_gt",
+        "floor": [
+          [
+            -0.24905152282871149,
+            -0.2277954528153919
+          ],
+          [
+            0.24047368758950513,
+            -0.2277993954708917
+          ],
+          [
+            0.24045019714473007,
+            -0.8582132446683585
+          ],
+          [
+            3.1753581711199854,
+            -0.8582174852881568
+          ],
+          [
+            3.174845945943721,
+            1.4138437275685714
+          ],
+          [
+            -0.24901461240971737,
+            1.4139794924964093
+          ]
+        ],
+        "features": {
+          "N_floor": 6,
+          "N_turn": 6,
+          "straight_vertices_1based": [],
+          "H": 1,
+          "hidden_vertices_1based": [
+            3
+          ],
+          "geometry_status": "valid_camera_inside",
+          "ring_class": "local_backtracking"
+        }
+      },
+      "candidates": [
+        {
+          "target_id": "gt:pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad:data/mp3d_layout/valid/label_cor/pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad.txt",
+          "role": "selected_gt",
+          "floor": [
+            [
+              -0.24905152282871149,
+              -0.2277954528153919
+            ],
+            [
+              0.24047368758950513,
+              -0.2277993954708917
+            ],
+            [
+              0.24045019714473007,
+              -0.8582132446683585
+            ],
+            [
+              3.1753581711199854,
+              -0.8582174852881568
+            ],
+            [
+              3.174845945943721,
+              1.4138437275685714
+            ],
+            [
+              -0.24901461240971737,
+              1.4139794924964093
+            ]
+          ],
+          "features": {
+            "N_floor": 6,
+            "N_turn": 6,
+            "straight_vertices_1based": [],
+            "H": 1,
+            "hidden_vertices_1based": [
+              3
+            ],
+            "geometry_status": "valid_camera_inside",
+            "ring_class": "local_backtracking"
+          }
+        }
+      ],
+      "N_floor": 6,
+      "N_turn": 6,
+      "H": 1,
+      "scene": "oos_pending",
+      "oos_subtype": "subtype_not_resolved",
+      "doorway_status": "not_recorded",
+      "previous_visual_class": "待复核",
+      "previous_scope_class": "待复核",
+      "external_review": {
+        "image": "pRbA3pwrgk9-16",
+        "image_id": "pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad",
+        "gt_object_id": "gt:pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad:data/mp3d_layout/valid/label_cor/pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad.txt",
+        "original_working_class": "",
+        "proposed_class": "待复核",
+        "grade": "困难",
+        "scope": "目标基本一致",
+        "note": "",
+        "updated_at": "2026-10-10T04:02:14.782Z"
+      },
+      "previous_user_review": null,
+      "old_visual_evidence": "近墙占据中央，GT包含卧室远角与门边遮挡部分。",
+      "old_visual_question": "保留既有OOS待定/暂停；先确认目标表示，不强分困难。",
+      "previous_reference_issue": "not_newly_adjudicated",
+      "previous_scope_note": "已逐图查看；作答少于3份，不判断“大量人员”或稳定人群范围差异。",
+      "reference_flags": {
+        "scope_explicit_tag": "False",
+        "scope_existing_ledger": "False",
+        "scope_comment_candidate": "False",
+        "gt_substantive_error_mark": "False",
+        "gt_detail_omission_mark": "False"
+      },
+      "selection_reason": "single_accepted_reference",
+      "photo": "D:\\Work\\HOHONET\\data\\mp3d_layout\\valid\\img\\pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad.png",
+      "card": "cards/pRbA3pwrgk9-16.jpg",
+      "old_card": "../image_difficulty_full_review_20261010/all_cards/pRbA3pwrgk9-16.jpg",
+      "scope_comparison": null,
+      "top_boundary_pending": null,
+      "classification_basis": "geometry_and_codex_photo_review_not_blind",
+      "reviewed": true,
+      "review_artifact": "recheck_32.jpg",
+      "review_method": "Codex逐张全景总览复核，非盲法；新范围另有旧轮35图对照",
+      "inference_burden": "undetermined",
+      "H_interpretation": "unresolved",
+      "evidence": "既有OOS待定/暂停，当前GT目标与表示适用性仍未解决；需裁定后恢复普通或特殊评价。",
+      "question": "既有OOS待定/暂停，当前GT目标与表示适用性仍未解决；需裁定后恢复普通或特殊评价。",
+      "applicability_note": "按所选底面目标评价；完整三维顶边适用性不由本档认证。"
+    }
+  ]
+}
