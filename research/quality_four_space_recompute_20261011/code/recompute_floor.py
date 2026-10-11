@@ -55,6 +55,6 @@ def main():
  dump(ROOT/'results/floor_recompute_20.json',dict(coordinate_frame=x['coordinate_frame'],area_unit='h^2',rows=results));dump(ROOT/'results/summary.json',summary)
  for name,data in [('floor_recompute_20.csv',rows),('floor_metrics_80_long.csv',long)]:
   fields=list(dict.fromkeys(k for r in data for k in r));p=ROOT/'results'/name
-  with p.open('w',newline='',encoding='utf-8-sig') as f:w=csv.DictWriter(f,fieldnames=fields);w.writeheader();w.writerows(data)
+  with p.open('w',newline='',encoding='utf-8-sig') as f:w=csv.DictWriter(f,fieldnames=fields,lineterminator="\n");w.writeheader();w.writerows(data)
  print(json.dumps({k:summary[k] for k in ['record_count','distinct_worker_ids','valid_current_points_geometries','automatic_max_floor_IoU_counts','small_margin_descriptive_counts','non_CD_exceptions','largest_reference_scope_gains']},ensure_ascii=False,indent=2))
 if __name__=='__main__':main()
