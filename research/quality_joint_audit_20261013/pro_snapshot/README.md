@@ -1,0 +1,4 @@
+# Pro标量实现快照
+仅保存新包method_core.py和config/method_candidates.json精确内容，供审查及本地接入参考；不替换正式算法，不是完整复现包。
+完整包 quality_independent_method_20261013.zip：SHA256 c59555160a3ac8c21e4c753b66ba457c5142dd51bfb76140af6341ebb1438d70，33,761,228字节。Library ID libfile_58654ed5cb1c8191ba4075510af043bd。
+完整几何重放、全部输入、图像与代码须使用原包；不要仅运行本快照就宣称整套实验已复现。

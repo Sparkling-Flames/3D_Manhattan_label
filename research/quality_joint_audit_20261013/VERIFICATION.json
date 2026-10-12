@@ -1,0 +1,484 @@
+{
+  "bundle": {
+    "schema": "verified_research_zip_v1",
+    "passed": true,
+    "archive_name": "quality_independent_method_20261013.zip",
+    "archive_bytes": 33761228,
+    "archive_sha256": "c59555160a3ac8c21e4c753b66ba457c5142dd51bfb76140af6341ebb1438d70",
+    "top_level_directory": "quality_independent_method_20261013",
+    "zip_entries": 207,
+    "payload_files_verified": 206,
+    "payload_bytes": 70060685,
+    "png_files_fully_decoded": 18,
+    "safe_paths": true,
+    "duplicate_paths": false,
+    "symlinks": false,
+    "crc_passed": true,
+    "all_manifest_sizes_and_sha256_match": true,
+    "extracted_to": null,
+    "scientific_reproduction_is_separate": "Run reproduce.py from this extraction; archive integrity alone does not reproduce the science"
+  },
+  "full_replay": {
+    "schema": "fresh_offline_reproduction_v1",
+    "mode": "full",
+    "passed": true,
+    "source_files_verified": 51,
+    "source_files_unchanged": true,
+    "steps": [
+      {
+        "step": "height",
+        "exit_code": 0,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "-B",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/height_study.py",
+          "--source",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/baseline",
+          "--out",
+          "/tmp/pro1637_replay/height_results",
+          "--mode",
+          "full"
+        ]
+      },
+      {
+        "step": "record_adapter",
+        "exit_code": 0,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "-B",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/score_record.py",
+          "--source",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/baseline",
+          "--record",
+          "R00464",
+          "--candidate",
+          "N_anchor4_beta2_v1",
+          "--recompute",
+          "--out",
+          "/tmp/pro1637_replay/example_record.json"
+        ]
+      },
+      {
+        "step": "independent_analytic",
+        "exit_code": 0,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "-B",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/literature/analytic_checks.py",
+          "--output",
+          "/tmp/pro1637_replay/analytic_results.json"
+        ]
+      },
+      {
+        "step": "geometry",
+        "exit_code": 0,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "-B",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/geometry/run_geometry_study.py",
+          "--source",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/baseline",
+          "--out",
+          "/tmp/pro1637_replay/geometry/results"
+        ]
+      },
+      {
+        "step": "reference_condition",
+        "exit_code": 0,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "-B",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/geometry/run_reference_condition.py",
+          "--source",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/baseline",
+          "--out",
+          "/tmp/pro1637_replay/geometry/results/reference_condition"
+        ]
+      },
+      {
+        "step": "geometry_verification",
+        "exit_code": 0,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "-B",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/geometry/verify_results.py",
+          "--source",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/baseline",
+          "--results",
+          "/tmp/pro1637_replay/geometry/results",
+          "--out",
+          "/tmp/pro1637_replay/geometry_verification.json"
+        ]
+      },
+      {
+        "step": "input_scale",
+        "exit_code": 0,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "-B",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/input_scale/run_input_scale.py",
+          "--source",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/baseline",
+          "--latest-feedback",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/input_scale/inputs/U05_CHAT_FEEDBACK.json",
+          "--out",
+          "/tmp/pro1637_replay/input_scale/results"
+        ]
+      },
+      {
+        "step": "received_candidates",
+        "exit_code": 0,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "-B",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/input_scale/compare_received_candidates.py",
+          "--source",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/baseline",
+          "--scores",
+          "/tmp/pro1637_replay/height_results/all_scores.json",
+          "--out",
+          "/tmp/pro1637_replay/input_scale/received_comparison"
+        ]
+      },
+      {
+        "step": "independent_code_review",
+        "exit_code": 0,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "-B",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/literature/review_root_height.py",
+          "--source",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/baseline",
+          "--out",
+          "/tmp/pro1637_replay/root_height_review_checks.json"
+        ]
+      },
+      {
+        "step": "height_domain_review",
+        "exit_code": 0,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "-B",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/provenance/review_height_geometry_domain.py",
+          "--source",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/baseline",
+          "--out",
+          "/tmp/pro1637_replay/height_geometry_domain_review.json"
+        ]
+      },
+      {
+        "step": "height_figures",
+        "exit_code": 0,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "-B",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/render_height_figures.py",
+          "--results",
+          "/tmp/pro1637_replay/height_results",
+          "--out",
+          "/tmp/pro1637_replay/figures"
+        ]
+      },
+      {
+        "step": "case_figures",
+        "exit_code": 0,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "-B",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/render_review_cases.py",
+          "--source",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/baseline",
+          "--out",
+          "/tmp/pro1637_replay/figures"
+        ]
+      },
+      {
+        "step": "geometry_figures",
+        "exit_code": 0,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "-B",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/geometry/render_geometry_study.py",
+          "--source",
+          "/tmp/pro1637_extract/quality_independent_method_20261013/baseline",
+          "--results",
+          "/tmp/pro1637_replay/geometry/results",
+          "--out",
+          "/tmp/pro1637_replay/geometry/figures"
+        ]
+      }
+    ],
+    "compared": [
+      {
+        "path": "height_results/all_scores.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "height_results/height_coupling_counterexamples.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "height_results/ideal_height_controls.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "height_results/p04_coordinate_sensitivity.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "height_results/p04_coordinate_sensitivity_summary.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "height_results/pooled_height_diagnostics.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "height_results/real_reference_transform_scores.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "height_results/real_reference_transforms.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "height_results/scalar_parity.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "height_results/score_components_long.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "height_results/scores_wide.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "height_results/selected_real_records.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "height_results/summary.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "geometry/results/analytic_checks.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "geometry/results/applicable_real_diagnostics.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "geometry/results/applicable_real_diagnostics.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "geometry/results/candidate_manifest.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "geometry/results/constructed_cases.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "geometry/results/full_geometry_results.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "geometry/results/new_diagnostic_invariance.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "geometry/results/omission_visibility_checks.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "geometry/results/record_reference_input_bindings.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "geometry/results/reference_condition/constructed_real_reference_perturbations.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "geometry/results/reference_condition/full_results.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "geometry/results/reference_condition/paired_consequence_checks.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "geometry/results/reference_condition/scores.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "geometry/results/reference_condition/summary.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "geometry/results/summary.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "geometry/results/synthetic_scores.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "input_scale/results/assessments_922.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "input_scale/results/controls.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "input_scale/results/controls_analytic.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "input_scale/results/controls_geometric.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "input_scale/results/controls_latitude.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "input_scale/results/controls_pair_density.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "input_scale/results/grade_threshold_intervals.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "input_scale/results/grouped_midpoint_predictions.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "input_scale/results/input_projection_922.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "input_scale/results/midpoint_application_changes.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "input_scale/results/paired_projection_details.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "input_scale/results/score_map_panel_margins.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "input_scale/results/selected_cases.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "input_scale/results/selected_cases_with_scoped_feedback.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "input_scale/results/summary.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "input_scale/received_comparison/panel_scores.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "input_scale/received_comparison/summary.json",
+        "comparison": "all semantic fields; absolute numeric tolerance 1e-9",
+        "maximum_absolute_numeric_difference": 0
+      },
+      {
+        "path": "input_scale/received_comparison/threshold_intervals.csv",
+        "comparison": "byte identical",
+        "maximum_absolute_numeric_difference": 0
+      }
+    ],
+    "compared_files": 47,
+    "maximum_absolute_numeric_difference": 0,
+    "independent_human_validation": false,
+    "elapsed_seconds": 153.40148282051086,
+    "excluded_from_replay_equality": [
+      "provenance.json",
+      "run_manifest.json",
+      "visual_observation_bindings.json"
+    ],
+    "exclusion_reason": "run/environment metadata and historical human visual-observation bindings are not recomputed observations",
+    "ignored_runtime_fields": [
+      "geometry/results/summary.json/runtime_seconds"
+    ],
+    "generated_pngs_fully_decoded": 8
+  },
+  "dot_independent": {
+    "own_scalar_fusion_max_delta": 2.842170943040401e-14,
+    "fusion_scored_versions": 60,
+    "fusion_images": 54,
+    "all_fusion_formal_eligible_false": true,
+    "fusion_rows": 220,
+    "own_worker_score_max_delta": 4.263256414560601e-14,
+    "own_worker_center_max_delta": 0,
+    "own_worker_aggregate_max_delta": 0,
+    "worker_rows": 48,
+    "worker_rows_1_to_3_images": 40,
+    "own_P04_g_lower": 0.7434583333831967,
+    "own_P04_beta4_upper": 3.658375642636386,
+    "own_quad_mix_crossing": 0.2440703023720829,
+    "own_D_upper": 25.98076211353316,
+    "own_D_only_Q_lower": 41.30434782608695,
+    "limitations": [
+      "Local full loader, 3152 ledger and 5 tests not rerun. Fusion scalar checked from saved metrics, not full geometry reconstruction."
+    ],
+    "raw_X_rms_half_equals_Eperp_max_delta": 8.43769498715119e-15
+  }
+}
