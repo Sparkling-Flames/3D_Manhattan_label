@@ -1,0 +1,59 @@
+{
+  "package_source_sha": "9571b78942c0afd62adac5ab9a3798b9f3d7751c",
+  "checkout_sha": "36079bedb76610a14f891b643a0569c4a4ce76fa",
+  "expected_remote_main": "36079bedb76610a14f891b643a0569c4a4ce76fa",
+  "sources": [
+    {
+      "path": "research/quality_parallel_local_20261012/source_package/quality_parameter_calibration_20261012/config/frozen_selected_candidates.json",
+      "sha256": "fb1b6f0d79249bd922e6cd5b11cce346c8cda1b51db0c9c929e6dad4b48272fb"
+    },
+    {
+      "path": "research/quality_parallel_local_20261012/source_package/quality_parameter_calibration_20261012/inputs/calibration_records.json",
+      "sha256": "88ddf7af482285f7513ef6839eb02ddac2ad2617787159550112477e43b52626"
+    },
+    {
+      "path": "research/quality_parallel_local_20261012/source_package/quality_parameter_calibration_20261012/scripts/scoring.py",
+      "sha256": "23daf37722c8bc23b37a8d60ee3b119e205b6e4c982313b3b30945ddfdf29943"
+    },
+    {
+      "path": "research/quality_scope_review_complete_20261010/data/reference_registry.json",
+      "sha256": "200e422a4e057f2808b88e5ba2912a77feb20cb08e3b77ad5d9831ce20ffe7c0"
+    },
+    {
+      "path": "research/quality_next_stage_handoff_20261010/reference_exclusion_registry_20261010.json",
+      "sha256": "6e8678bb6686f763a99ca0acdc0fb7ebaa78db7080d3039f9fcdc2fba2fc85f7"
+    },
+    {
+      "path": "research/quality_holdout_exposure_correction_20261011/exposure_registry.json",
+      "sha256": "6dc3705f58557dfecc93cac4c572f6c10b4e2daefcc76c427e3eeaf9f64dc33f"
+    },
+    {
+      "path": "analysis_results/research_input_20260929/manifest.json",
+      "sha256": "5cb5bfdfd7fdd331a0866abe3c9b4eb96f5ca8cd4712b0eaf39a14e70eb54cf7"
+    }
+  ],
+  "loader_validation": {
+    "status": "passed",
+    "objects": 3441,
+    "annotations": 3152,
+    "ready_coordinate_objects": 3312,
+    "confirmed_orders": 1312,
+    "research_images": 259,
+    "reference_only_images": 2,
+    "comment_occurrences": 32462,
+    "unresolved_comment_occurrences": 1,
+    "checks": [
+      "完整配对",
+      "周期平均x及y不变",
+      "Matterport数组源点身份",
+      "确认环绑定",
+      "人员/GT/图片引用",
+      "清洗及研究表字段一致",
+      "交叉表ID及计数",
+      "评论来源覆盖"
+    ],
+    "limitation": "机器一致性验证，不宣称所有标注人工确认或方法可计算；人工未决和未知来源继续保留。"
+  },
+  "new_parameter_search": false,
+  "new_fusion_run": false
+}
