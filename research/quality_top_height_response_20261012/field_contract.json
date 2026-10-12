@@ -135,5 +135,16 @@
     "quartic_vs_mean1": "907/143记录原分数差描述，1e-8仅数值容差，非质量阈值；共享图像/参考不独立",
     "P01_direction_ablation": "原分量及D置零后的标量分数；不是可实现的几何修复或因果解释",
     "human_review": "直接嵌入已有回执，保留三维未知；非新的统一质量标签"
+  },
+  "real_impact.json": {
+    "schema": "quality_real_impact_v1",
+    "records": "907既有开发作答、4固定候选的标量结果；既有门禁验证，不重建几何、不搜索参数",
+    "coordinate_groups": "739精确坐标组，保留所有成员和字典序首id；同图同参考，不作统计独立假设",
+    "strata": "confirmed143/114组/641对，unknown764/625组/4199对；分开，不按未知层校准",
+    "contrasts": "6种候选对之间的同图同参考排序反转；1e-8数值容差；largest_smaller_margin为反转两侧较小绝对分差的最大值；无误排标签",
+    "quartic_gain_ge2": "2分仅描述切片，保留图片及建筑来源，不是等级线",
+    "known_anchors": "P02/P03原审核池的原话与固定候选分数；不扩开发分母，不创建人工分数阈值",
+    "review": "探索后选择L01：旧审核及相同坐标成员排除，按底面近邻刻度选绝对分差扩张最大对；明确记录prior_image_exposure、所有绑定、profile及answer=null。不是盲选或独立验证",
+    "verification": "2721个已保存分数回放最大差0；不代表评分有效性"
   }
 }

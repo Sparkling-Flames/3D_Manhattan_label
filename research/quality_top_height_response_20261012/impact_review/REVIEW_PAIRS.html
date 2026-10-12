@@ -1,0 +1,38 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>质量研究：待判别材料</title><style>body{max-width:1450px;margin:30px auto;padding:20px;font:17px/1.65 sans-serif;background:#f5f5f3}section{background:white;padding:20px;margin:30px 0}img{width:100%}h1{font-size:26px}</style><h1>真实作答：整体偏差与局部不平的取舍</h1><p>人工回执按题目及观察视图另行保存；未展示候选分数，也没有预设正确答案。请按各题说明比较，近似或无法判断均为有效回答。绿色参考不是不可质疑的真值；如参考不可信请直接指出。这是既有开发图片，不是独立验证。图片是原照片上的声明几何投影，不推断边界可见性。</p><section><h2>L01</h2><p>局部顶部起伏的差异是否明显？结合照片和底面，两份整体质量接近，还是其中一份明显更好？可回答无法判断，并指出参考可能的问题。</p><a href="review_assets/L01.jpg"><img src="review_assets/L01.jpg"></a><section><h2>同步旋转三维</h2><p>绿线参考，橙线作答；底面虚线，相机黑点。相机高=1，非米制。两侧保持同尺度、同视角；线框不表示遮挡或真实可见性。</p>
+<label>水平旋转 <input id="yaw" type="range" min="-180" max="180" value="30"></label>
+<label>俯仰 <input id="pitch" type="range" min="-80" max="80" value="20"></label>
+<div style="display:flex;flex-wrap:wrap"><figure style="flex:1;min-width:300px;margin:0"><figcaption>A</figcaption><canvas id="left" width="850" height="560" style="width:100%" aria-label="A与参考三维线框"></canvas></figure>
+<figure style="flex:1;min-width:300px;margin:0"><figcaption>B</figcaption><canvas id="right" width="850" height="560" style="width:100%" aria-label="B与参考三维线框"></canvas></figure></div></section><h3>固定视角备查</h3><a href="review_assets/L01_3d.png"><img src="review_assets/L01_3d.png"></a><p>三维为处理后声明几何，非房间实测；绿色参考也可能有误。请区分底面、二维顶部投影和三维高度判断。</p><p>答复格式：L01：A / B / 近似 / 无法判断；差异：不明显 / 明显 / 不确定；位置与理由。</p></section><script>
+const geos=[{"top3d":[[-3.0594091768033413,0.6069023863444882,0.38641518674883324],[-3.0586976378579975,0.5683894110699371,-2.472645043613288],[0.9222299467443689,0.571483826149065,-2.4706099949585605],[0.9226045687942203,0.5620331770310752,0.38569853465947784]],"bottom3d":[[-3.0594091768033413,-1.0,0.38641518674883324],[-3.0586976378579975,-1.0,-2.472645043613288],[0.9222299467443689,-1.0,-2.4706099949585605],[0.9226045687942203,-1.0,0.38569853465947784]]},{"top3d":[[-3.0031914028433273,0.6633144070395655,0.2663350663264542],[-3.0519643931292078,0.5723188739925843,-2.531082657659701],[0.9493436398696357,0.39119715294349683,-2.3068298792986206],[0.7978045616491436,0.48369389685829844,0.33689432987119117]],"bottom3d":[[-3.0031914028433273,-1.0,0.2663350663264542],[-3.0519643931292078,-1.0,-2.531082657659701],[0.9493436398696357,-1.0,-2.3068298792986206],[0.7978045616491436,-1.0,0.33689432987119117]]},{"top3d":[[-3.1247340602827802,0.5665670078742866,0.3728300723543749],[-3.0026193268839987,0.4976036634127022,-2.420402822734045],[0.8671927149882068,0.4559289979519207,-2.208605327269654],[0.811587137374453,0.4723363893522421,0.34777755153335993]],"bottom3d":[[-3.1247340602827802,-1.0,0.3728300723543749],[-3.0026193268839987,-1.0,-2.420402822734045],[0.8671927149882068,-1.0,-2.208605327269654],[0.811587137374453,-1.0,0.34777755153335993]]}];
+const xyz=p=>[p[0],p[2],p[1]+1];
+const points=geos.flatMap(g=>[...g.bottom3d,...g.top3d].map(xyz)).concat([[0,0,1]]);
+const low=[0,1,2].map(i=>Math.min(...points.map(p=>p[i])));
+const high=[0,1,2].map(i=>Math.max(...points.map(p=>p[i])));
+const center=low.map((v,i)=>(v+high[i])/2);
+const radius=Math.hypot(...high.map((v,i)=>(v-low[i])/2));
+function project(p,yaw,pitch,w,h){
+ const [x,y,z]=p.map((v,i)=>v-center[i]),a=yaw*Math.PI/180,b=pitch*Math.PI/180;
+ const u=Math.cos(a)*x-Math.sin(a)*y,v=Math.sin(a)*x+Math.cos(a)*y;
+ const vertical=Math.cos(b)*z-Math.sin(b)*v,scale=Math.min(w,h)*.44/radius;
+ return [w/2+u*scale,h/2-vertical*scale];
+}
+function draw(canvas,annotation){
+ const ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;
+ const yaw=Number(document.getElementById('yaw').value),pitch=Number(document.getElementById('pitch').value);
+ const p=point=>project(xyz(point),yaw,pitch,w,h);
+ ctx.clearRect(0,0,w,h);
+ for(const [g,color] of [[geos[0],'#218944'],[annotation,'#d66c00']]){
+  ctx.strokeStyle=color;
+  for(const k of ['bottom3d','top3d']){
+   ctx.globalAlpha=1;ctx.lineWidth=2.5;ctx.setLineDash(k==='bottom3d'?[7,5]:[]);ctx.beginPath();
+   g[k].forEach((point,i)=>{const q=p(point);if(i===0)ctx.moveTo(...q);else ctx.lineTo(...q);});ctx.closePath();ctx.stroke();
+  }
+  ctx.setLineDash([]);ctx.globalAlpha=.35;ctx.lineWidth=1;
+  g.bottom3d.forEach((point,i)=>{ctx.beginPath();ctx.moveTo(...p(point));ctx.lineTo(...p(g.top3d[i]));ctx.stroke();});
+ }
+ ctx.globalAlpha=1;ctx.fillStyle='#111';ctx.beginPath();ctx.arc(...project([0,0,1],yaw,pitch,w,h),4,0,2*Math.PI);ctx.fill();
+}
+function redraw(){draw(document.getElementById('left'),geos[1]);draw(document.getElementById('right'),geos[2]);}
+for(const id of ['yaw','pitch'])document.getElementById(id).addEventListener('input',redraw);
+redraw();
+</script></html>

@@ -142,11 +142,11 @@ def render_reviews(inputs,out,study):
                 axes[1,i].plot(b[:,0],b[:,1],color=color,label=label)
             axes[1,i].scatter([0],[0],c='black',marker='+',label='相机');axes[1,i].set_aspect('equal')
             axes[1,i].set(xlim=(lo[0]-pad,hi[0]+pad),ylim=(lo[1]-pad,hi[1]+pad));axes[1,i].legend(fontsize=8)
-        fig.suptitle('绿色：现有参考；橙色：处理后作答。下排底面同尺度；判断顶部表现，不推断原始点对正确。',fontsize=12)
+        fig.suptitle('绿色：现有参考；橙色：处理后作答。下排底面同尺度；观察声明几何，不推断原始点对正确。',fontsize=12)
         fig.savefig(asset/f'{pair["id"]}.jpg',dpi=120);plt.close(fig)
     render_3d_reviews(inputs,out,study)
     cards=''.join(f'<section><h2>{p["id"]}</h2><p>{p["question"]}</p><a href="review_assets/{p["id"]}.jpg"><img src="review_assets/{p["id"]}.jpg"></a><h3>同尺度三维对照</h3><a href="review_assets/{p["id"]}_3d.png"><img src="review_assets/{p["id"]}_3d.png"></a><p>三维为处理后声明几何，非房间实测；绿色参考也可能有误。请区分底面、二维顶部投影和三维高度判断。</p><p>答复格式：{p["id"]}：A / B / 近似 / 无法判断；差异：不明显 / 明显 / 不确定；位置与理由。</p></section>' for p in out['review_pairs'])
-    (study/'REVIEW_PAIRS.html').write_text('<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>质量研究：两对待判别材料</title><style>body{max-width:1450px;margin:30px auto;padding:20px;font:17px/1.65 sans-serif;background:#f5f5f3}section{background:white;padding:20px;margin:30px 0}img{width:100%}h1{font-size:26px}</style><h1>两对真实作答：整体偏差与局部不平的取舍</h1><p>人工答复另存 human_review_feedback.json；目前底面及二维意见已收到，三维高度待续审。未展示候选分数，也没有预设正确答案。请只比较顶部表现，底面辅助查看其他差异。近似或无法判断均为有效回答。绿色参考不是不可质疑的真值；如参考不可信请直接指出。这是既有开发图片，不是独立验证。图片是原照片上的声明几何投影，不推断边界可见性。</p>'+cards+'</html>',encoding='utf-8')
+    (study/'REVIEW_PAIRS.html').write_text('<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>质量研究：待判别材料</title><style>body{max-width:1450px;margin:30px auto;padding:20px;font:17px/1.65 sans-serif;background:#f5f5f3}section{background:white;padding:20px;margin:30px 0}img{width:100%}h1{font-size:26px}</style><h1>真实作答：整体偏差与局部不平的取舍</h1><p>人工回执按题目及观察视图另行保存；未展示候选分数，也没有预设正确答案。请按各题说明比较，近似或无法判断均为有效回答。绿色参考不是不可质疑的真值；如参考不可信请直接指出。这是既有开发图片，不是独立验证。图片是原照片上的声明几何投影，不推断边界可见性。</p>'+cards+'</html>',encoding='utf-8')
 
 
 def main():
