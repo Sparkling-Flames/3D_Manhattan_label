@@ -1,0 +1,52 @@
+{
+  "schema": "quality_local_height_chat_feedback_v1",
+  "received_utc": "2026-10-12T14:14:42Z",
+  "source_message_id": "Sentinel_2938935587588191aca775569820716d",
+  "verbatim": "这两者都不平,如果再加上底面的 形状,那b的综合质量就小于a了",
+  "panel": "U05",
+  "A": {
+    "record_id": "R00464",
+    "image_code": "wc2JMjhGNzB-40"
+  },
+  "B": {
+    "record_id": "R00481",
+    "image_code": "jtcxE69GiFV-22"
+  },
+  "dataset_id": "024c54ec53cb9a3f4a899fd1e9e690c29f7c5b743a69b26c77cf8259f10349bc",
+  "interpretation": {
+    "A_top_nonflat": true,
+    "B_top_nonflat": true,
+    "overall_preference": "A",
+    "reason": "结合底面形状后，B综合质量低于A",
+    "local_height_preference": null,
+    "A_local_height_severity": null,
+    "B_local_height_severity": null,
+    "numeric_margin": null,
+    "confidence": null,
+    "raw_input_semantics_reviewed": false
+  },
+  "candidate_comparison": {
+    "P_tied_quad08": {
+      "A": 48.6450444952222,
+      "B": 26.47774321876692
+    },
+    "P_tied_mix08": {
+      "A": 48.64509132909387,
+      "B": 26.48265610286036
+    },
+    "B_main_relative2": {
+      "A": 49.06566548165215,
+      "B": 29.547070956218356
+    },
+    "Q_official_iou3d": {
+      "A": 76.40518673931999,
+      "B": 70.37442144792283
+    }
+  },
+  "inference_limits": [
+    "该整体排序同时被列出的新候选、旧分控和3D IoU满足，不能用于认定某方案胜出。",
+    "两者不平未表达不平程度相等，也未表达局部处罚排序。",
+    "未赋分差、等级或局部阈值；开发样本不升级为独立验证。"
+  ],
+  "source_zip_sha256": "f87dd139eaa650759717fae7410309c2a2ae08c61fe7ecb0e8cea8015dab711c"
+}
