@@ -1,0 +1,665 @@
+{
+  "schema": "fresh_full_scientific_replay_v1",
+  "status": "failed",
+  "steps": [
+    {
+      "stage": "experiments_export_real_descriptors",
+      "command": [
+        "-B",
+        "experiments/export_real_descriptors.py",
+        "--source",
+        "baseline"
+      ],
+      "returncode": 0,
+      "seconds": 3.143110755999942,
+      "log": "logs/experiments_export_real_descriptors.log"
+    },
+    {
+      "stage": "experiments_axis_switch_and_joint_hinge",
+      "command": [
+        "-B",
+        "experiments/axis_switch_and_joint_hinge.py",
+        "--descriptors",
+        "experiments/results/real_direction_descriptors.json"
+      ],
+      "returncode": 0,
+      "seconds": 2.64730059600015,
+      "log": "logs/experiments_axis_switch_and_joint_hinge.log"
+    },
+    {
+      "stage": "experiments_run_targeted_experiments",
+      "command": [
+        "-B",
+        "experiments/run_targeted_experiments.py",
+        "--source",
+        "baseline"
+      ],
+      "returncode": 0,
+      "seconds": 9.688205832999984,
+      "log": "logs/experiments_run_targeted_experiments.log"
+    },
+    {
+      "stage": "routing_run_routing",
+      "command": [
+        "-B",
+        "routing/run_routing.py",
+        "--baseline",
+        "baseline"
+      ],
+      "returncode": 0,
+      "seconds": 21.963481741000123,
+      "log": "logs/routing_run_routing.log"
+    },
+    {
+      "stage": "experiments_verify_sampling",
+      "command": [
+        "-B",
+        "experiments/verify_sampling.py",
+        "--source",
+        "baseline"
+      ],
+      "returncode": 0,
+      "seconds": 32.136274003999915,
+      "log": "logs/experiments_verify_sampling.log"
+    },
+    {
+      "stage": "experiments_projection_extreme_extension",
+      "command": [
+        "-B",
+        "experiments/projection_extreme_extension.py",
+        "--source",
+        "baseline"
+      ],
+      "returncode": 0,
+      "seconds": 11.657955055000002,
+      "log": "logs/experiments_projection_extreme_extension.log"
+    },
+    {
+      "stage": "experiments_verify_input_alignment",
+      "command": [
+        "-B",
+        "experiments/verify_input_alignment.py",
+        "--source",
+        "baseline",
+        "--local-results",
+        "sources/main/research/quality_parallel_local_20261012/record_results.json"
+      ],
+      "returncode": 0,
+      "seconds": 0.3494898609999382,
+      "log": "logs/experiments_verify_input_alignment.log"
+    },
+    {
+      "stage": "experiments_validate_candidates",
+      "command": [
+        "-B",
+        "experiments/validate_candidates.py",
+        "--source",
+        "baseline",
+        "--config",
+        "calibration/recommended_parameters.json"
+      ],
+      "returncode": 0,
+      "seconds": 2.051758788999905,
+      "log": "logs/experiments_validate_candidates.log"
+    },
+    {
+      "stage": "experiments_summarize_analytic_diagnostics",
+      "command": [
+        "-B",
+        "experiments/summarize_analytic_diagnostics.py",
+        "--source",
+        "baseline"
+      ],
+      "returncode": 0,
+      "seconds": 0.4057088899999144,
+      "log": "logs/experiments_summarize_analytic_diagnostics.log"
+    },
+    {
+      "stage": "experiments_render_experiments",
+      "command": [
+        "-B",
+        "experiments/render_experiments.py"
+      ],
+      "returncode": 0,
+      "seconds": 4.580382530999941,
+      "log": "logs/experiments_render_experiments.log"
+    },
+    {
+      "stage": "routing_verify_routing",
+      "command": [
+        "-B",
+        "routing/verify_routing.py",
+        "--baseline",
+        "baseline"
+      ],
+      "returncode": 0,
+      "seconds": 50.21365654800002,
+      "log": "logs/routing_verify_routing.log"
+    },
+    {
+      "stage": "routing_numerical_spot_check",
+      "command": [
+        "-B",
+        "routing/numerical_spot_check.py",
+        "--baseline",
+        "baseline"
+      ],
+      "returncode": 0,
+      "seconds": 1.372618798000076,
+      "log": "logs/routing_numerical_spot_check.log"
+    },
+    {
+      "stage": "calibration_prepare_inputs",
+      "command": [
+        "-B",
+        "calibration/prepare_inputs.py"
+      ],
+      "returncode": 0,
+      "seconds": 3.093269156999895,
+      "log": "logs/calibration_prepare_inputs.log"
+    },
+    {
+      "stage": "calibration_run_search",
+      "command": [
+        "-B",
+        "calibration/run_search.py"
+      ],
+      "returncode": 0,
+      "seconds": 18.54671075599981,
+      "log": "logs/calibration_run_search.log"
+    },
+    {
+      "stage": "calibration_physical_controls",
+      "command": [
+        "-B",
+        "calibration/physical_controls.py"
+      ],
+      "returncode": 0,
+      "seconds": 2.8006547859999955,
+      "log": "logs/calibration_physical_controls.log"
+    },
+    {
+      "stage": "calibration_analyze_candidates",
+      "command": [
+        "-B",
+        "calibration/analyze_candidates.py"
+      ],
+      "returncode": 0,
+      "seconds": 5.932691062999993,
+      "log": "logs/calibration_analyze_candidates.log"
+    },
+    {
+      "stage": "calibration_verify_calibration",
+      "command": [
+        "-B",
+        "calibration/verify_calibration.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.8906546629998502,
+      "log": "logs/calibration_verify_calibration.log"
+    },
+    {
+      "stage": "calibration_render_calibration",
+      "command": [
+        "-B",
+        "calibration/render_calibration.py"
+      ],
+      "returncode": 0,
+      "seconds": 1.6802767929998481,
+      "log": "logs/calibration_render_calibration.log"
+    },
+    {
+      "stage": "integration",
+      "command": [
+        "-B",
+        "integration/run_impact.py"
+      ],
+      "returncode": 0,
+      "seconds": 6.589219088999926,
+      "log": "logs/integration.log"
+    },
+    {
+      "stage": "w019_ledger",
+      "command": [
+        "-B",
+        "integration/verify_w019.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.06509641000002375,
+      "log": "logs/w019_ledger.log"
+    },
+    {
+      "stage": "cli_R00397",
+      "command": [
+        "-B",
+        "assess.py",
+        "--record-id",
+        "R00397",
+        "--out",
+        "integration/results/cli_R00397.json"
+      ],
+      "returncode": 0,
+      "seconds": 0.7586195490000591,
+      "log": "logs/cli_R00397.log"
+    },
+    {
+      "stage": "cli_R03197",
+      "command": [
+        "-B",
+        "assess.py",
+        "--record-id",
+        "R03197",
+        "--out",
+        "integration/results/cli_R03197.json"
+      ],
+      "returncode": 0,
+      "seconds": 0.6157418509999388,
+      "log": "logs/cli_R03197.log"
+    },
+    {
+      "stage": "cli_interfaces",
+      "command": [
+        "-B",
+        "verification/verify_interfaces.py"
+      ],
+      "returncode": 0,
+      "seconds": 4.724316476000013,
+      "log": "logs/cli_interfaces.log"
+    },
+    {
+      "stage": "review_build",
+      "command": [
+        "-B",
+        "review/build_review.py"
+      ],
+      "returncode": 0,
+      "seconds": 4.14592103300015,
+      "log": "logs/review_build.log"
+    },
+    {
+      "stage": "review_dom_canvas",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "review/verify_review.mjs",
+        "review"
+      ],
+      "returncode": 0,
+      "seconds": 0.9937047789999269,
+      "log": "logs/review_dom_canvas.log"
+    }
+  ],
+  "compared": [
+    {
+      "file": "experiments/results/axis_switch_counterexample.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/candidate_precision.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/candidate_validation_controls.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/candidate_validation_real.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/candidate_validation_summary.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/descriptor_invariance.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/descriptor_summary.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/extreme_projection_cases.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/extreme_projection_results.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/input_alignment_cross_version_verification.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/joint_hinge_descriptors.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/real_direction_descriptors.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/real_tail_pair_candidates.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/real_topology_diagnostics.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/reference_intrinsic_self_response.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/response_transition_ranges.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/sampling_verification.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/targeted_constructed_cases.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/targeted_metrics.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/targeted_summary.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/SCALAR_VERIFICATION.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/SEARCH_DESIGN.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/ablation_summary.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/all_controls_rescored.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/component_association.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/family_summary.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/grade_cut_identification.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/leave_group_sensitivity.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/matched_priority_triplets.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/physical_control_dependencies.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/physical_controls.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/readable_candidates.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/response_policy_sensitivity.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/search_summary.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/selected_candidate_summary.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/selected_scores_922.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/top_candidates.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/all_search_configs.json.gz",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/all_search_results.csv.gz",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/all_candidate_metrics.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/human_space_development_check.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/image_manifest.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/old_T30_route_comparison.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/oracle_diagnostic_separate.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/prior_floor_recompute_check.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/raw_x_diagnostics.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/reference_candidates.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/routes.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/run_provenance.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/sampling_convergence_1024_2048.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/summary.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/validation/collinear_invariance.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/validation/frozen_metric_consistency.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/validation/intent_nonidentifiability.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/validation/numerical_spot_check.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/validation/reference_self_route.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/validation/rotation_scale_invariance.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/validation/sensitivity_and_ablation.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/validation/single_corner_removal.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/validation/source_git_blob_verification.json",
+      "semantic_equal": false
+    },
+    {
+      "file": "routing/validation/summary.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/validation/synthetic_counterexamples.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "integration/results/W019_unavailable_ledger.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "integration/results/cli_R00397.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "integration/results/cli_R03197.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "integration/results/fixed_reference_922.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "integration/results/fusion_220_ledger_and_scores.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "integration/results/fusion_geometries_60.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "integration/results/reference_formula_four_way.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "integration/results/same_condition_pairs.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "integration/results/summary.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "integration/results/worker_conditions_new.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "review/blind_data.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "review/diagnostic_data.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "review/build_verification.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "verification/CLI_VERIFICATION.json",
+      "semantic_equal": true
+    }
+  ],
+  "scientific_files_compared": 76,
+  "numeric_values_compared": 1174173,
+  "max_absolute_numeric_difference": 0.0,
+  "comparison_tolerance": {
+    "atol": 1e-09,
+    "rtol": 1e-11
+  },
+  "metadata_exclusions": {
+    "elapsed_seconds": 4,
+    "timing_seconds": 2
+  },
+  "metadata_path_normalization": [
+    "baseline_argument"
+  ],
+  "failures": [
+    "routing/validation/source_git_blob_verification.json/1/git_blob_sha: value differs '46afc5d05a6ccbb93def68741b97f239ea7d55f8' != 'fff896c64f43c95e4b39ed476da5d25fd64b90cf'",
+    "routing/validation/source_git_blob_verification.json/1/sha256: value differs '766c33bcda277bec297b5f9474cdf51389e1b7f83f983e8ce0ff9aadff3e83bd' != 'bca66a0d0f9292479afa36ae5db8e5f3b39eeee36833f9b13419c193222a9013'",
+    "routing/validation/source_git_blob_verification.json/1/path: value differs 'sources/routing/research/quality_scope_review_complete_20261010/README.md' != 'sources/routing/research/quality_scope_handoff_20261010/README.md'",
+    "routing/validation/source_git_blob_verification.json/2/git_blob_sha: value differs 'd65402a1690205e4698039424323d16c02144c3b' != 'c16f0467a21c14a0673c9f1f825883378a811225'",
+    "routing/validation/source_git_blob_verification.json/2/sha256: value differs '44df196c7f5fc09dcec5f41067b6c938c5eb6ffce3fa66a4bc8307f871767d5b' != '5abe616f795266844c983be1fd50a058446428f10380e1c39ac9ac3c1b4730b2'",
+    "routing/validation/source_git_blob_verification.json/2/path: value differs 'sources/routing/research/quality_scope_full_review_20261010/README.md' != 'sources/routing/research/quality_calibration_pro_handoff_20261011/README.md'",
+    "routing/validation/source_git_blob_verification.json/3/git_blob_sha: value differs 'fff896c64f43c95e4b39ed476da5d25fd64b90cf' != '61ec5a88abfe7ba945288b976271ccf88a865fcc'",
+    "routing/validation/source_git_blob_verification.json/3/sha256: value differs 'bca66a0d0f9292479afa36ae5db8e5f3b39eeee36833f9b13419c193222a9013' != 'a48d91137d811461b77ba7351a28f17611eb0f46bf1f2765a92a8da6edb8d842'",
+    "routing/validation/source_git_blob_verification.json/3/path: value differs 'sources/routing/research/quality_scope_handoff_20261010/README.md' != 'sources/routing/research/quality_calibration_pro_handoff_20261011/USER_DECISIONS.json'",
+    "routing/validation/source_git_blob_verification.json/4/git_blob_sha: value differs 'c16f0467a21c14a0673c9f1f825883378a811225' != 'd65402a1690205e4698039424323d16c02144c3b'",
+    "routing/validation/source_git_blob_verification.json/4/sha256: value differs '5abe616f795266844c983be1fd50a058446428f10380e1c39ac9ac3c1b4730b2' != '44df196c7f5fc09dcec5f41067b6c938c5eb6ffce3fa66a4bc8307f871767d5b'",
+    "routing/validation/source_git_blob_verification.json/4/path: value differs 'sources/routing/research/quality_calibration_pro_handoff_20261011/README.md' != 'sources/routing/research/quality_scope_full_review_20261010/README.md'",
+    "routing/validation/source_git_blob_verification.json/5/git_blob_sha: value differs '61ec5a88abfe7ba945288b976271ccf88a865fcc' != '46afc5d05a6ccbb93def68741b97f239ea7d55f8'",
+    "routing/validation/source_git_blob_verification.json/5/sha256: value differs 'a48d91137d811461b77ba7351a28f17611eb0f46bf1f2765a92a8da6edb8d842' != '766c33bcda277bec297b5f9474cdf51389e1b7f83f983e8ce0ff9aadff3e83bd'",
+    "routing/validation/source_git_blob_verification.json/5/path: value differs 'sources/routing/research/quality_calibration_pro_handoff_20261011/USER_DECISIONS.json' != 'sources/routing/research/quality_scope_review_complete_20261010/README.md'",
+    "routing/validation/source_git_blob_verification.json/6/git_blob_sha: value differs '887cf05c59b2c613e0ade58909f60e51a98c643c' != 'd9862fdb2fd857e9e797631f2dbb6c35170be6a4'",
+    "routing/validation/source_git_blob_verification.json/6/sha256: value differs '200e422a4e057f2808b88e5ba2912a77feb20cb08e3b77ad5d9831ce20ffe7c0' != 'c4b1470e41422807740abe35ea90ea1eb140b7f56999204cee5515000e89e067'",
+    "routing/validation/source_git_blob_verification.json/6/path: value differs 'sources/routing/research/quality_scope_review_complete_20261010/data/reference_registry.json' != 'sources/routing/research/quality_review30_20261011/results/selected_geometry_private.json'",
+    "routing/validation/source_git_blob_verification.json/7/git_blob_sha: value differs '5769976ba966f74c7954e1e51716b50f10ad5257' != 'dfc4e8cea82d6bebc6f36486771d8a535901764a'",
+    "routing/validation/source_git_blob_verification.json/7/sha256: value differs 'a80c6ffc0e95b691631a2343095f9d801d93c5bd67d806fea29a24366d9a7c30' != 'bf1c3265184fe21d313c96415c80741a65ce6f531f1141aa7ff79ea1e40d2bf8'",
+    "routing/validation/source_git_blob_verification.json/7/path: value differs 'sources/routing/research/quality_scope_review_complete_20261010/data/normalized_confirmation_overlay.json' != 'sources/routing/research/quality_review30_20261011/results/selection_private.json'",
+    "routing/validation/source_git_blob_verification.json/8/git_blob_sha: value differs '16802b7f5be4fe12e13d653737277975026d2a23' != 'e3f0f79c771f78df49995efa30dec0d700c2abda'",
+    "routing/validation/source_git_blob_verification.json/8/sha256: value differs 'f332610ff9824800c4c00b032cbaf92bce8f119cb3de8401e6f0c66d4b33c910' != '7d1fb70b014386ebdfb63026634aed151f93fd636553751a702a377bd67cf028'",
+    "routing/validation/source_git_blob_verification.json/8/path: value differs 'sources/routing/research/quality_scope_review_complete_20261010/data/source_bindings.json' != 'sources/routing/research/quality_four_space_recompute_20261011/results/parent_source_and_pixel_audit.json'",
+    "routing/validation/source_git_blob_verification.json/9/git_blob_sha: value differs '1c3f818743198cc552197c838c16db9336bf12f2' != '0e0593912430c6a5d938c8e5f5e337723047b801'",
+    "routing/validation/source_git_blob_verification.json/9/sha256: value differs 'bd997fc28745470521b7b798f7e6f6a4ce0a83deba587a2f45a6a091b1d74bf0' != '592ab8f00c2835e557beedd0a9a62fdfd133314df6d23b36e6aad63ac13f157e'",
+    "routing/validation/source_git_blob_verification.json/9/path: value differs 'sources/routing/research/quality_scope_review_complete_20261010/data/record_metrics.json' != 'sources/routing/research/quality_four_space_recompute_20261011/results/local_structure_20.json'",
+    "routing/validation/source_git_blob_verification.json/10/git_blob_sha: value differs 'b176677f434abb3502d7de56a5c39446fab9c5fc' != '7ffc8c6b5d7213886b33a107985e6bfaa94fdf26'",
+    "routing/validation/source_git_blob_verification.json/10/sha256: value differs '9037b3872f605fb5d15244b14d766c79e33f4d10ae13b6cc4f7debbc8261d501' != '2c53998c40f1f21e070ab6ddb6994b17aedda4345793bbd58051adbd40b8417e'",
+    "routing/validation/source_git_blob_verification.json/10/path: value differs 'sources/routing/research/quality_scope_review_complete_20261010/data/raw_scope_receipt.json' != 'sources/routing/research/quality_four_space_recompute_20261011/results/reference_ledger.json'",
+    "routing/validation/source_git_blob_verification.json/11/git_blob_sha: value differs 'dfc4e8cea82d6bebc6f36486771d8a535901764a' != '887cf05c59b2c613e0ade58909f60e51a98c643c'",
+    "routing/validation/source_git_blob_verification.json/11/sha256: value differs 'bf1c3265184fe21d313c96415c80741a65ce6f531f1141aa7ff79ea1e40d2bf8' != '200e422a4e057f2808b88e5ba2912a77feb20cb08e3b77ad5d9831ce20ffe7c0'",
+    "routing/validation/source_git_blob_verification.json/11/path: value differs 'sources/routing/research/quality_review30_20261011/results/selection_private.json' != 'sources/routing/research/quality_scope_review_complete_20261010/data/reference_registry.json'",
+    "routing/validation/source_git_blob_verification.json/12/git_blob_sha: value differs 'd9862fdb2fd857e9e797631f2dbb6c35170be6a4' != '1c3f818743198cc552197c838c16db9336bf12f2'",
+    "routing/validation/source_git_blob_verification.json/12/sha256: value differs 'c4b1470e41422807740abe35ea90ea1eb140b7f56999204cee5515000e89e067' != 'bd997fc28745470521b7b798f7e6f6a4ce0a83deba587a2f45a6a091b1d74bf0'",
+    "routing/validation/source_git_blob_verification.json/12/path: value differs 'sources/routing/research/quality_review30_20261011/results/selected_geometry_private.json' != 'sources/routing/research/quality_scope_review_complete_20261010/data/record_metrics.json'",
+    "routing/validation/source_git_blob_verification.json/13/git_blob_sha: value differs '0e0593912430c6a5d938c8e5f5e337723047b801' != '16802b7f5be4fe12e13d653737277975026d2a23'",
+    "routing/validation/source_git_blob_verification.json/13/sha256: value differs '592ab8f00c2835e557beedd0a9a62fdfd133314df6d23b36e6aad63ac13f157e' != 'f332610ff9824800c4c00b032cbaf92bce8f119cb3de8401e6f0c66d4b33c910'",
+    "routing/validation/source_git_blob_verification.json/13/path: value differs 'sources/routing/research/quality_four_space_recompute_20261011/results/local_structure_20.json' != 'sources/routing/research/quality_scope_review_complete_20261010/data/source_bindings.json'",
+    "routing/validation/source_git_blob_verification.json/14/git_blob_sha: value differs '7ffc8c6b5d7213886b33a107985e6bfaa94fdf26' != 'b176677f434abb3502d7de56a5c39446fab9c5fc'",
+    "routing/validation/source_git_blob_verification.json/14/sha256: value differs '2c53998c40f1f21e070ab6ddb6994b17aedda4345793bbd58051adbd40b8417e' != '9037b3872f605fb5d15244b14d766c79e33f4d10ae13b6cc4f7debbc8261d501'",
+    "routing/validation/source_git_blob_verification.json/14/path: value differs 'sources/routing/research/quality_four_space_recompute_20261011/results/reference_ledger.json' != 'sources/routing/research/quality_scope_review_complete_20261010/data/raw_scope_receipt.json'",
+    "routing/validation/source_git_blob_verification.json/15/git_blob_sha: value differs 'e3f0f79c771f78df49995efa30dec0d700c2abda' != '5769976ba966f74c7954e1e51716b50f10ad5257'",
+    "routing/validation/source_git_blob_verification.json/15/sha256: value differs '7d1fb70b014386ebdfb63026634aed151f93fd636553751a702a377bd67cf028' != 'a80c6ffc0e95b691631a2343095f9d801d93c5bd67d806fea29a24366d9a7c30'",
+    "routing/validation/source_git_blob_verification.json/15/path: value differs 'sources/routing/research/quality_four_space_recompute_20261011/results/parent_source_and_pixel_audit.json' != 'sources/routing/research/quality_scope_review_complete_20261010/data/normalized_confirmation_overlay.json'"
+  ],
+  "failure_count": 45,
+  "delivered_source_unchanged": true,
+  "delivered_source_file_count": 348,
+  "review_actual_dom_canvas_executed": true,
+  "native_browser_layout_test": false,
+  "no_new_human_labels": true,
+  "total_seconds": 127.80519914000001
+}

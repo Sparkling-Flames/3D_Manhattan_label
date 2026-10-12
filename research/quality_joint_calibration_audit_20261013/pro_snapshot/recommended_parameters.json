@@ -1,0 +1,74 @@
+{
+  "schema": "joint_quality_parameters_20261013_v1",
+  "recommended": "J_main_hill_tail12_g1_l025",
+  "status": "provisional_research_recommendation_after_executed_broad_search_and_controls",
+  "reference_protocol": "Select an approved reference from floor-local evidence before computing quality. Missing confirmed reference height means floor-only; no ceiling grafting.",
+  "human_grade_thresholds": null,
+  "raw_input_penalty_included": false,
+  "raw_input_requirement": "Retain X_rms_deg and Eperp_deg=X_rms_deg/2, source points and mean-x geometry. This Q is conditional geometric quality, not a standalone certification of raw input.",
+  "metric_units": {
+    "I": "floor polygon IoU in [0,1]",
+    "Sb": "degrees; symmetric mean nearest spherical floor-boundary arc distance, not RMS",
+    "D": "degrees; floor-edge-length-weighted RMS residual to jointly optimized common orthogonal axes",
+    "Hm": "absolute perimeter-mean wall-height difference divided by reference perimeter-mean wall height",
+    "Hc": "centered local wall-height residual divided by reference perimeter-mean wall height, frozen correspondence/tie rule"
+  },
+  "candidates": {
+    "J_main_hill_tail12_g1_l025": {
+      "name": "J_main_hill_tail12_g1_l025",
+      "family": "hill_tail",
+      "combine": "additive",
+      "iou_power": 1.0,
+      "boundary_scale": 5.656854249492381,
+      "boundary_power": 2.0,
+      "direction_scale": 6.123724356957945,
+      "direction_cap": 1.5,
+      "direction_power": 2.0,
+      "tail_scale": 12.0,
+      "global_scale": 1.0,
+      "local_scale": 0.25,
+      "global_power": 2.0,
+      "local_power": 2.0
+    },
+    "J_simple_power8_g1_l025": {
+      "name": "J_simple_power8_g1_l025",
+      "family": "power",
+      "combine": "additive",
+      "iou_power": 1.0,
+      "boundary_scale": 5.656854249492381,
+      "boundary_power": 2.0,
+      "direction_scale": 8.0,
+      "direction_power": 2.0,
+      "global_scale": 1.0,
+      "local_scale": 0.25,
+      "global_power": 2.0,
+      "local_power": 2.0
+    },
+    "J_local_joint_hinge10_w2_s8": {
+      "name": "J_local_joint_hinge10_w2_s8",
+      "family": "joint_hinge",
+      "combine": "additive",
+      "iou_power": 1.0,
+      "boundary_scale": 5.656854249492381,
+      "boundary_power": 2.0,
+      "direction_scale": 8.0,
+      "tail_threshold": 10.0,
+      "hinge_weight": 2.0,
+      "global_scale": 1.0,
+      "local_scale": 0.25,
+      "global_power": 2.0,
+      "local_power": 2.0
+    }
+  },
+  "candidate_roles": {
+    "J_main_hill_tail12_g1_l025": "Primary: adds a smooth unsaturated serious-direction tail without changing the mild-error Hill term; global/local height scale ratio is four.",
+    "J_simple_power8_g1_l025": "Alternative for lower formula complexity; light/moderate D gets less penalty, changing many more ordinary-record scores. Human data do not decide uniquely.",
+    "J_local_joint_hinge10_w2_s8": "Alternative for length-supported local direction; minimizes the combined loss over axes to avoid the old fixed-L2-axis discontinuity. Requires extra real comparison evidence before replacing the primary."
+  },
+  "selection_limits": [
+    "Not the spurious decimal minimizer of a single fitted objective.",
+    "Existing human cases are development evidence, all old blind judgements retain unknown confidence.",
+    "Response-policy boundaries are analyst choices instantiating the user's priority, not human good/problem/severe class cuts.",
+    "Neither D nor its tail catches all orthogonal corner omissions; floor-reference comparison remains necessary."
+  ]
+}
