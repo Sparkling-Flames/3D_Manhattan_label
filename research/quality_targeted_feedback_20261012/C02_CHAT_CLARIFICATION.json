@@ -1,0 +1,25 @@
+{
+  "schema": "numeric_assisted_chat_clarification_v1",
+  "group": "C02",
+  "source_messages": [
+    "Sentinel_42ac63d344b8819184ad5794adb32600",
+    "Sentinel_f6d3b624c67081918ea943eaf4d657cb"
+  ],
+  "user_choice": "不确定",
+  "comment_verbatim": "我选的不确定.comment:A的标注形成的3d ,和gt更近,但是3d表现是差于 b的.b 的标注区域和gt偏差更大,但是3d表现明显好于a.  如果单看形成的3d立方体我会偏向b,但是结合gt参考,我觉得这俩 不是很好客观的比较,大差不差吧",
+  "group_confirmation_verbatim": "这是c02的",
+  "interpretation": {
+    "reference_proximity": "A优于B",
+    "intrinsic_3d_regularity": "B优于A",
+    "overall": "大差不差，难以明确排序",
+    "strict_overall_preference": null,
+    "numeric_tie_margin": null,
+    "original_uncertain_choice_preserved": true,
+    "needs_repeat_review": false
+  },
+  "evidence_type": "chat_clarification_after_numeric_assisted_workbench_delivered",
+  "receipt_uploaded": false,
+  "actual_interactions_or_numbers_viewed_not_verified": true,
+  "independent_blind_test": false,
+  "algorithm_or_reference_changed": false
+}
