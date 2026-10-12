@@ -1,6 +1,6 @@
 # HOHONET 文档入口
 
-- **2026-10-12顶部与高度研究当前入口：** [候选决策、阶段证据与待判断问题](../research/quality_top_height_response_20261012/DECISION_STATUS.md)。统一登记阶段机制证据和16参考定向复核；两对真实顶部判别材料已备，二维意见已收、三维高度待续审。未选定新正式评分，不以控制性质或测试通过宣称质量有效。
+- **2026-10-12顶部与高度研究当前入口：** [候选决策、阶段证据与待判断问题](../research/quality_top_height_response_20261012/DECISION_STATUS.md)。统一登记阶段机制证据和16参考定向复核；两对真实顶部判别材料已备，二维意见已收、三维高度待续审。未选定新正式评分，不以控制性质或测试通过宣称质量有效。 已完成[13候选约束/代价比较及四候选收敛](../research/quality_top_height_response_20261012/CANDIDATE_DIRECTION.md)。
 
 - **2026-10-12质量审核约束核查：** [现有审核、顶部处罚冲突与输入双层诊断](../research/quality_review_constraints_20261012/README.md)。已接收九组开发复审，独立复算17个既有候选并完成两项机制探针；公式、阈值和正式资格未变。
 
