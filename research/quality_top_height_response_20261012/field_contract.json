@@ -146,5 +146,12 @@
     "known_anchors": "P02/P03原审核池的原话与固定候选分数；不扩开发分母，不创建人工分数阈值",
     "review": "探索后选择L01：旧审核及相同坐标成员排除，按底面近邻刻度选绝对分差扩张最大对；明确记录prior_image_exposure、所有绑定、profile及answer=null。不是盲选或独立验证",
     "verification": "2721个已保存分数回放最大差0；不代表评分有效性"
+  },
+  "local_impact_feedback.json": {
+    "schema": "quality_local_impact_feedback_v1",
+    "messages": "L01原答复及随后澄清按顺序原文保留，后者明确三维B略好/二维图A更接近GT",
+    "interpretation": "整体接近；3D仅弱偏好B；二维GT贴合A；顶部单独二维偏好未知；无强制胜负或数值容差，原始语义未经审核",
+    "candidate_B_minus_A": "仅引用real_impact中原分数，human_endorsed=false，不因用户回执改分",
+    "scope": "开发审核；与生成时answer=null快照分开保存，不覆盖原始证据"
   }
 }

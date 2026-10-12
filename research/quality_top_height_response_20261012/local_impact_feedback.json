@@ -1,0 +1,40 @@
+{
+  "schema": "quality_local_impact_feedback_v1",
+  "date": "2026-10-12",
+  "panel": "L01",
+  "A": "R01609",
+  "B": "R02297",
+  "image_id": "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45",
+  "reference_object_id": "gt:e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45:export_label/groudTruth.json",
+  "source": "本对话用户直接答复及紧接的澄清",
+  "messages": [
+    {
+      "order": 1,
+      "verbatim": "2d上面来看,a相对于b  顶部差异明显一点,3d差异没有这么大. 整体质量接近,硬说的话 是B 略好"
+    },
+    {
+      "order": 2,
+      "verbatim": "b是在3d上略好,但是看2d图,a的标注离gt更相近一些"
+    }
+  ],
+  "interpretation": {
+    "overall_quality": "close",
+    "geometry_3d_weak_preference": "B",
+    "image_2d_gt_closeness_preference": "A",
+    "top_only_2d_strict_preference": null,
+    "exact_tie": false,
+    "numeric_margin": null,
+    "confidence": null,
+    "raw_input_semantics_reviewed": false,
+    "precedence": "第二条澄清B略好指三维，二维图A离GT更近；第一条顶部差异观察保留，不将其改写为A顶部更差，也不将最新二维整图意见强制赋给顶部St。"
+  },
+  "candidate_B_minus_A": {
+    "relative2": 3.7751509108817203,
+    "relative4": 4.210834324878405,
+    "relative2_mean1": 4.105334876757809,
+    "probe_local0125_noTop": 8.697065698101738
+  },
+  "candidate_score_gaps_human_endorsed": false,
+  "decision": "整体接近且三维仅B略好，对局部统一加强探针把差距扩大提供负向约束；不能由单题定量否定8.697分或认证基线3.775分，也不能决定整体高度曲线。",
+  "scope": "已曝光开发图和候选分歧取例，不是独立验证；原生成待答快照保留，人工回执单独保存。"
+}
