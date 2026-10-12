@@ -1,0 +1,41 @@
+{
+  "schema": "numeric_assisted_chat_clarification_v1",
+  "group": "C01",
+  "source_message": "Sentinel_47648db6b8c88191b8688c60c21aa1b4",
+  "comment_verbatim": "c01的,这个如果和gt比较,b相对来说比较接近,但是a是不是更符合曼哈顿的约束?    我觉得这两个c02和c01,其实否是差不多的问题",
+  "original_choice": "不确定",
+  "new_overall_choice": null,
+  "interpretation": {
+    "user_observation": "B相对更接近GT",
+    "user_question": "A是否更符合曼哈顿约束",
+    "user_comparison": "与C02属于相似的范围接近和结构规整之间的权衡",
+    "do_not_impute_strict_preference_or_tie": true
+  },
+  "verified_geometry_explained_to_user": {
+    "A": {
+      "floor_iou": 0.854802099756146,
+      "D_deg": 0.48389715344573675,
+      "interior_angles_deg": [
+        91.136,
+        89.78,
+        90.377,
+        88.708
+      ]
+    },
+    "B": {
+      "floor_iou": 0.8907542064717535,
+      "D_deg": 1.4087795191708665,
+      "interior_angles_deg": [
+        86.768,
+        89.334,
+        90.782,
+        93.117
+      ]
+    },
+    "note": "这里只用底面IoU支持范围接近，用D与内角支持曼哈顿规整；不将其推广为全3D参考接近度或最终Q总分。"
+  },
+  "evidence_type": "chat_clarification_after_numeric_assisted_workbench_delivered",
+  "independent_blind_test": false,
+  "receipt_uploaded": false,
+  "algorithm_or_reference_changed": false
+}
