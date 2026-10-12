@@ -1,0 +1,124 @@
+{
+  "rows": 922,
+  "independently_written_primary_formula_max_abs_delta": 4.263256414560601e-14,
+  "P04_top_neutral_penalty_percent": [
+    8.010404300909704,
+    8.872772186899946
+  ],
+  "geometry_inputs_or_eligibility_reimplemented": false,
+  "source_zip_sha256": "f87dd139eaa650759717fae7410309c2a2ae08c61fe7ecb0e8cea8015dab711c",
+  "core_replay": {
+    "frozen_config_unchanged": true,
+    "frozen_config_sha256": "fb1b6f0d79249bd922e6cd5b11cce346c8cda1b51db0c9c929e6dad4b48272fb",
+    "steps": [
+      {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "scripts/run_parameter_study.py",
+          "--run"
+        ],
+        "returncode": 0,
+        "seconds": 78.98215234000008
+      },
+      {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "scripts/export_selected.py"
+        ],
+        "returncode": 0,
+        "seconds": 9.793347794000056
+      },
+      {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "scripts/analyze_current_input.py"
+        ],
+        "returncode": 0,
+        "seconds": 18.084894506000182
+      },
+      {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "scripts/score_frozen_geometry.py",
+          "--verify-key-cases",
+          "--out",
+          "results/full_geometry_key_replay.json"
+        ],
+        "returncode": 0,
+        "seconds": 4.5292824299999666
+      },
+      {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "scripts/assess_record.py",
+          "--all",
+          "--out",
+          "results/record_assessments.json"
+        ],
+        "returncode": 0,
+        "seconds": 1.5861964529999568
+      },
+      {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "evidence_audit/analyze_selected_candidates.py",
+          "--scores",
+          "results/selected_scores.json",
+          "--out",
+          "evidence_audit/fair_comparison/reproduced"
+        ],
+        "returncode": 0,
+        "seconds": 24.533792319999975
+      }
+    ],
+    "exact_file_checks": [
+      {
+        "path": "results/parameter_summary.csv",
+        "original_sha256": "2523b8fed60441c9ca990516c40795c28a80c779aad9a7bed1db9f0af0a60c83",
+        "replayed_sha256": "2523b8fed60441c9ca990516c40795c28a80c779aad9a7bed1db9f0af0a60c83",
+        "identical": true
+      },
+      {
+        "path": "results/selected_scores.json",
+        "original_sha256": "960829c8b36da3df83b64d62ebfbbae8419a8069963077454e003df4bf8682a5",
+        "replayed_sha256": "960829c8b36da3df83b64d62ebfbbae8419a8069963077454e003df4bf8682a5",
+        "identical": true
+      },
+      {
+        "path": "results/selected_scores_wide.csv",
+        "original_sha256": "074c2d74420c879fe3ed9db83d3211f3db1dce696425df1c42c0f28570cf6ea8",
+        "replayed_sha256": "074c2d74420c879fe3ed9db83d3211f3db1dce696425df1c42c0f28570cf6ea8",
+        "identical": true
+      },
+      {
+        "path": "results/selected_components_long.csv",
+        "original_sha256": "c8257a1da7e07b636d7361ced1423b7b590830494719f3674391af9449f025ed",
+        "replayed_sha256": "c8257a1da7e07b636d7361ced1423b7b590830494719f3674391af9449f025ed",
+        "identical": true
+      },
+      {
+        "path": "input_quality/results/current_input_922.csv",
+        "original_sha256": "9c4c095fa613dd1ea56ca50cfb204de2282ec8498b34dccfaacf35c220054525",
+        "replayed_sha256": "9c4c095fa613dd1ea56ca50cfb204de2282ec8498b34dccfaacf35c220054525",
+        "identical": true
+      },
+      {
+        "path": "input_quality/results/residual_score_probes.csv",
+        "original_sha256": "0bdfb590208f81f6f464098c802b25ac08d642d608349113af66a28eceb151d2",
+        "replayed_sha256": "0bdfb590208f81f6f464098c802b25ac08d642d608349113af66a28eceb151d2",
+        "identical": true
+      },
+      {
+        "path": "results/full_geometry_key_replay.json",
+        "original_sha256": "7e9d361e867bd5f70be22d117d82de02026b4c52ac7fc2a5190e83650eb11016",
+        "replayed_sha256": "7e9d361e867bd5f70be22d117d82de02026b4c52ac7fc2a5190e83650eb11016",
+        "identical": true
+      }
+    ],
+    "all_exact": true,
+    "status": "passed",
+    "source_data_modified": false,
+    "independent_human_validation": false
+  },
+  "scope": "Independent scalar formula plus original-code fresh core replay. No full pressure matrix rerun; no new human validation."
+}
