@@ -1,5 +1,9 @@
 # HOHONET 文档入口
 
+- **2026-10-12顶部与高度研究当前入口：** [候选决策、阶段证据与待判断问题](../research/quality_top_height_response_20261012/DECISION_STATUS.md)。统一登记阶段机制证据和16参考定向复核；两对真实顶部判别材料已备，二维意见已收、三维高度待续审。未选定新正式评分，不以控制性质或测试通过宣称质量有效。
+
+- **2026-10-12质量审核约束核查：** [现有审核、顶部处罚冲突与输入双层诊断](../research/quality_review_constraints_20261012/README.md)。已接收九组开发复审，独立复算17个既有候选并完成两项机制探针；公式、阈值和正式资格未变。
+
 - **2026-10-11图片难度当前版本：** [259图工作表](../analysis_results/difficulty_scope_preferred_20261011/current_259.csv)、[全部类型复审](../analysis_results/difficulty_scope_preferred_20261011/review.html)、[规则与OOS/门洞讨论](../analysis_results/difficulty_scope_preferred_20261011/REPORT.md)。144简单／30中等／38困难／5待核／42特殊。构建工具 `tools/thesis_main/analysis/difficulty_scope_preferred_20261011.py`；早版 `scope_difficulty_review_20261011.py` 与输出仅保留历史，不改正式GT/资格。
 
 - 用户复审后[11图范围待裁定](../analysis_results/image_difficulty_full_review_20261010/user_review_20261010/scope_review.html)与[3份人员作答排序台](../analysis_results/image_difficulty_full_review_20261010/user_review_20261010/order_workbench/index.html)：三份顺序已采用主数据（有效确认1312）；GT不改，范围裁定后再审难度。

@@ -1,0 +1,130 @@
+{
+  "schema": "quality_top_height_response_field_contract_v1",
+  "scope": "离线开发机制研究，不是正式质量合同或人员资格schema",
+  "protocol.json": {
+    "schema": "quality_top_height_response_protocol_v1",
+    "meaning": "本次运行前保存9个固定探针；已知旧审核之后制定，不是独立预注册验证。指数也是模型选择。"
+  },
+  "inputs.json": {
+    "schema": "quality_top_height_response_inputs_v1",
+    "rows": "907个唯一id，原record_id；metrics保留七分量和实际height_mean_ratio；applicability_confirmed是适用性而非好坏标签",
+    "profile": "周长加权自身std/参考均高、参考std/参考均高及既有支持比例；无人工质量标签",
+    "gates": "原开发筛选与资格；new_descriptive_development_allowed须为真且explicit_exposure_barriers为空；对象/图/参考/建筑身份与分量及profile表一致",
+    "geometries": "990个既有对象的bottom3d/top3d；y竖直、底面y=-1，水平x/z；冻结的处理后几何，不重新配对或改GT",
+    "previous_review": "上轮冻结证据，包括原回执、最新解释、原输入诊断及不可算控制；不因候选改变解释"
+  },
+  "results.json": {
+    "schema": "quality_top_height_response_results_v1",
+    "development": "907条9个候选分数和中性top_only_penalties；分数变化不等于质量改善",
+    "strata": "all907、confirmed、unknown分别报告；记录不是独立图片或建筑；分位数为线性插值描述统计",
+    "selected_real_cases": "排除已有45条审核计算并集，两层五准则各取前三，合并27条；保留所有选择原因、分量、精确自身高度profile；human_grade=null、semantic_acceptance_newly_confirmed=false",
+    "reviewed_development_overlap_ids": "旧45条中30条也属于907；其余877条另报敏感性，不称独立留出",
+    "inherited_controls": "179条，1条不可算保留；65匹配中4条相机域外状态保留，原metadata布尔有字符串True/False，不自动按字符串非空解释真假",
+    "analytic_controls": "70个矩形几何整体×局部控制，65个相机位于顶下；human_grade=null；angular_terms_evaluated=false表示St/F未计算，metrics中0仅占位，只评估top_weight=0且flat=false分支",
+    "terms": "沿用旧components含义，增加top_boundary_loss_share=St损失/组合损失；不包含F分子，不等于实际总分损失占比；零分母记0",
+    "reviewed_terms": "全部45条有实际均高比或已核对身份的907补充值，不由绝对Hmean猜方向；P04单独比顶部处罚",
+    "overall_pairs": "C01/C02/C04只列分差，numeric_tolerance=null，无强制胜负；原P01/C03语义保持",
+    "skipped": "缺失实际均高比等情况显式列出，本轮为空；不可算原控制另在inherited_controls保留",
+    "verification": "4535个原分数组合复核、907条精确周长均高/std几何复核；未重新计算全部IoU/St/Hcenter",
+    "scope": "正式分数、资格、GT、留出和原输入均未变，无新人工等级或独立人工验证"
+  },
+  "conditioning_design.json": {
+    "schema": "quality_height_conditioning_design_v1",
+    "meaning": "复核后固定的512高ERP底点±1px诊断；不是噪声分布。两条review_means来自原39表，与原参考对象和Hmean核对，S034不加入907。"
+  },
+  "conditioning.json": {
+    "schema": "quality_height_conditioning_results_v1",
+    "records": "907条；height为固定相机高1下的整墙/净空解释量；净空参考均值非正则ratio/error/multiplier=null；自身std不替代冻结Hcenter",
+    "coordinate_groups": "739组，按同image_id、reference_object_id及顶底原坐标序列精确相等分组；代表id按字典序最小，成员全部保留；不旋转或近似匹配，不删除人员记录",
+    "strata": "all/confirmed/unknown；record_statistics保留人员作答权重，coordinate_group_statistics每组一票；均非独立图片或建筑推断",
+    "single_max_mean_change": "在逐角±1px控制中，绝对delta_mean_over_reference_height最大者；并列按原角序/设计delta顺序；delta保留符号，分母固定原参考墙高",
+    "single_max_std_change": "独立按绝对delta_std_over_reference_height选最大者，不保证与最大均高变化为同一场景；自身std单位归一化，不是Hcenter",
+    "all_bottom_changes": "全部底角同方向±1px；正delta远离地平线，负delta靠近地平线。status=out_of_projection_domain时无after值，不剪裁或假定变化为0",
+    "changed_corner_indices": "既有处理后环的零基角索引，不能直接当作原导出点索引",
+    "maximum_top_unit_ray_change": "顶点单位射线向量最大欧氏变化，用于数值不变性核查；不是角度、质量项或真实定位误差",
+    "selected_cases": "先按相同坐标分组后，在明确适用/未知两层按四准则各取前三合并17条；可含旧审核，全部human_grade=null，无新独立审核",
+    "verification": "8188个按坐标组计算的场景均投影可用；未验证扰动后完整多边形合法性，未算扰动后IoU/Hcenter/Q；单位射线差小于4e-16",
+    "scope": "未改变原始配对、原输入、正式分数、资格或留出；未估计人员噪声分布，不做自动误差修正"
+  },
+  "top_residual_design.json": {
+    "schema": "quality_top_residual_design_v1",
+    "meaning": "固定28几何控制、2048/8192采样和两种均高对齐诊断；已知旧审核后制定，不是独立预注册；正文设计数值与生成器常量一致，JSON不作为任意可调实验配置"
+  },
+  "top_residual.json": {
+    "schema": "quality_top_residual_results_v1",
+    "records": "907原开发记录；original_deg重算冻结St；Hcenter_frozen/S_bottom_frozen/iou_2d_frozen仅抄录未重算",
+    "coordinate_groups": "739组，沿用conditioning的同图/参考/顶底原坐标序列精确相等规则，保留所有成员与字典序首id；不是独立人员、图片或建筑样本",
+    "mean_delta": "作答均高减参考均高；相机高为1，无真实米制标定",
+    "to_reference": "作答顶点y加上参考减作答均高后的球面距离；deg单位度，minimum_top_y为比较双方最小顶点y；status=out_of_camera_domain则deg=null",
+    "to_annotation": "参考顶点平移到作答均高；字段同to_reference。这是另一投影高度诊断，不是另一种定向最近距离",
+    "change_deg": "to_reference.deg-original_deg，可正可负，不是分解出的纯高度误差；任一不可用则null",
+    "alignment_gap_deg": "两种对齐后的距离绝对差，任一不可用则null；不是置信区间或人员噪声",
+    "strata": "all/confirmed/unknown同时给记录和坐标组描述统计；increased_count以1e-8度数值容差计数，不代表明显恶化",
+    "controls": "28个解析控制全部保留几何，diagnostic为2048采样，high_resolution为8192；一条主对齐越域仍保留null及另一方向结果",
+    "selected_cases": "按设计分层取极值合并18组，保留reasons、human_grade=null、high_resolution；包括原T20，不是新人工验证",
+    "verification": "907原标量回放、18选例和全部28控制高采样复核；未对全部739组重算8192，未重算Hcenter/IoU/Q或认证完整布局",
+    "scope": "不使用留出、不修复原输入、不生成新分或新等级；既有正式合同不变"
+  },
+  "local_profile_design.json": {
+    "schema": "quality_local_profile_design_v1",
+    "meaning": "24固定同底面控制，均高2.4、RMS5%/10%、三角形支撑4%/10%/18%、近远位置、平顶/非平参考；阅看首次选例后追加的参考摊平副本对照单列记录；不是独立预注册或评分配置"
+  },
+  "local_profile.json": {
+    "schema": "quality_local_profile_results_v1",
+    "records": "907原开发记录，Hcenter为4096点/向复算，St_frozen为原值；Hcenter_own_std_gap为Hcenter与自身std/参考均高的绝对差，无正确性/因果标签",
+    "coordinate_groups": "739精确坐标组，规则沿用conditioning；完整保留成员，未旋转或近似合并",
+    "controls": "24条全部保留顶底几何、目标支撑/RMS和实际矩；Hcenter_exact是同底面同分段时的精确中心化高度差积分，其他真实底面不同不应用；St是2048点/向",
+    "tent_support_fraction": "减去均值之前的三角形支撑占比；减均值后支撑外仍有小幅负偏移，不是实际偏差非零周长比例",
+    "peak_over_own_std": "相对于自身均高的最大绝对偏差除以自身std；std恰为0则null；高比值不是严重度标签",
+    "support10/support20": "精确积分计算绝对偏离自身均高超过参考均高10%/20%的底面周长比例；显示刻度不是评分阈值",
+    "strata": "all/confirmed/unknown保留记录数与坐标组数，分布统计以坐标组为分母；共享参考/图片/建筑不是独立重复证据",
+    "selected_cases": "按设计四准则各层取前三、并列按id，合并20组；包含support20零值并列，非自动异常队列；human_grade=null",
+    "high_resolution": "全部24控制与20真实取例：Hcenter16384点/向、St8192点/向；不代表全部739组的高采样认证",
+    "flat_reference_Hcenter": "仅选例中的事后条件对照：参考副本保持底面和均高，将高度profile摊平后计算4096点/向Hcenter；不改GT或宣称平顶正确",
+    "verification": "907Hcenter和四项已有profile统计回放；控制与精确积分比较；有限高采样复核；不重算正式Q/IoU或给新质量等级",
+    "scope": "正式输入/配对、GT、资格、留出和评分均不修改；独立性/因果性不由极值表推断"
+  },
+  "joint_response_design.json": {
+    "schema": "quality_joint_response_design_v1",
+    "meaning": "120个固定整体比/局部RMS/尺度控制；9既有响应候选加2原max配置；算子消融不解释为几何变换，数值容差不作质量阈值"
+  },
+  "joint_response.json": {
+    "schema": "quality_joint_response_results_v1",
+    "controls": "120条全部保存几何，108有效；域外metrics/effects=null而非零分。St2048/F512实算，同底面Hmean/Hcenter解析精确；high_resolution_metrics为St8192/F2048",
+    "effects": "11个既有候选的原分、整体/局部/顶部损失和冻结其余项的高度消融；算子消融不代表可实现几何干预，不证明独立因果或双罚",
+    "local_marginal_points": "保留当前整体误差，移除Hcenter项所得分数减原分；global_marginal_points类似，整体归零同时将ratio设为1",
+    "local_isolated_points": "整体误差归零时，加入原Hcenter导致的分差；St/F等保持原值，没有声称物理一致",
+    "local_visibility_fraction": "local_marginal_points/local_isolated_points；分母<=1e-12分则null；可>1，不是概率，null也不表示局部总是不起作用",
+    "local_structurally_blocked": "局部损失>1e-12且max高度中G>=L，或max顶部中T>=G+L；表示当前组合算子的局部完全遮盖，不是人员好坏分类",
+    "local_unmasked_by_global": "孤立局部边际作用<=1e-12分，但有当前整体误差时局部边际作用>1e-12分；与visibility=null可同时出现",
+    "monotonicity": "每候选177个有效相邻网格比较，score_delta=误差分量增大后的分数减原分；保留高采样分差；增分不自动表示人工质量判断错误，有限网格不证明全域单调",
+    "strata": "all/confirmed/unknown，分别保留记录与坐标组口径。原始数值零边际计数与结构遮盖计数分开；0.5/0.25只用于既有尺度覆盖描述，不是合格阈值",
+    "records/coordinate_groups": "907记录/739组，原精确坐标分组规则不变，成员保留，未使用留出；不是独立图片或建筑重复实验",
+    "selected_cases": "13组含T20，按设计固定准则合并，human_grade=null，不按分数改变追加标签",
+    "verification": "8163个已有分数回放；108有效控制全量高采样比较；未重新标注真实图像或改正式评分"
+  },
+  "figures": "六张可复算研究图；真实高度曲线各自周长起点不作对应，不证明物理同墙角；conditioning和top_residual图按坐标组显示；local_profile与joint_response图为固定控制。未生成检查截图或新图片评级；review_assets/V01.jpg、V02.jpg为待人工判断的照片/几何叠加卡片，不是新人工结论。",
+  "decision_check_design.json": {
+    "schema": "quality_decision_check_design_v1",
+    "meaning": "16个既有明确适用参考，两条固定路径各正反相位；在既有反例后制定，不是独立预注册。真实选例规则在查看数据后固定，不按候选分数选择。"
+  },
+  "decision_check.json": {
+    "schema": "quality_decision_check_results_v1",
+    "references": "16参考/11建筑；相位、路径不是独立图片",
+    "controls/comparisons": "128状态组成64比较，仅30比较两端均在相机域内；域外effects/high_scores及比较delta/high_delta为null；底面固定，Hcenter解析积分，原高度profile作为基准再叠加扰动",
+    "summary": "增分以1e-8分容差计数；报告比较数、参考数、最大增幅和高采样增分数；不是人员误排率",
+    "verification": "Hcenter构造误差及全部域内状态的两种采样分数差；不证明人类质量效度",
+    "review_pairs": "与review_pairs.json相同待答记录；没有人工答案或质量等级"
+  },
+  "review_pairs.json": {
+    "schema": "quality_review_pairs_v1",
+    "pairs": "V01/V02保留A/B原记录、图像与参考绑定；answer/confidence=null表示待答，不默认近似",
+    "image_in_previous_review_material": "仅查绑定旧材料中的图片身份，不表示某作答已经人工审核；false也不证明干净留出",
+    "photo_source": "使用--reviews生成时记录仓库相对MP3D原图路径；普通数值复算不读取照片，因而没有此字段",
+    "scope": "仅审核处理后顶部表现，不认证原始点对语义；筛选和选例数值不出现在盲显示页面，报告公开可影响阅看者，故不称双盲验证"
+  },
+  "human_review_feedback.json": {
+    "schema": "quality_review_feedback_v1",
+    "meaning": "用户原话及按底面/二维顶部投影/三维高度分开的解释；null为未评，unable_to_judge为明确无法判断；不改生成材料中的原始待答快照。"
+  }
+}

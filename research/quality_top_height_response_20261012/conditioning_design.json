@@ -1,0 +1,19 @@
+{
+  "schema": "quality_height_conditioning_design_v1",
+  "stage": "existing_feedback_and_review_informed_diagnostic_not_new_quality_calibration",
+  "source_inputs": "inputs.json",
+  "source_scores": "results.json",
+  "erp_height_px": 512,
+  "bottom_pixel_deltas": [-1, 1],
+  "design": "逐个底角上下移动1像素，并另作全部底角同向1像素控制；固定顶点球面方向、水平角、点数、环序和参考。以相机高1重建既有共享x垂直墙角。逐点结果按每个作答的最大绝对均高变化与最大自身std变化分别汇总，保留对应角索引。不得把自身std当作Hcenter，不重算或猜测扰动后Q。",
+  "domain": "新底点须位于地平线与正下方之间；失败状态显式保留，不剪裁；不推断1像素是真实标注噪声分布。仅研究既有处理后表示，不修复原输入。",
+  "height_diagnostics": "整墙比与相机以上净空比是同一均高偏差的两种归一化，不增加第二个整体扣分项。净空参考均值非正时标不可用。",
+  "duplicate_grouping": "同image_id、reference_object_id及原top3d/bottom3d坐标序列完全相同；不旋转环、不近似合并、不删人员记录、不推断抄袭；分别统计记录与坐标组，并保留成员id。",
+  "real_cases": "按最小地平线余量、最大单点均高敏感性、最大单点std敏感性、最大整体下压分别在明确适用/未知层取前三；合并保留理由，无新人工等级。",
+  "review_mean_source": "C:\\Users\\ASUS\\Downloads\\quality_structure_height_extension_20261012_v1\\quality_top_structure_research_20261012\\structure_height_preference_20261012\\height\\results\\candidate_scores_39.csv",
+  "review_means": [
+    {"id":"R00397","reference_object_id":"gt:B6ByNegPMKs_48ee619d38b142f88914e7e2582bc1d8:export_label/groudTruth.json","annotation_mean":1.5091484411197758,"reference_mean":1.9691297677492903},
+    {"id":"R00418","reference_object_id":"gt:pRbA3pwrgk9_285b697fed754f86a09602c93628cfb4:data/mp3d_layout/valid/label_cor/pRbA3pwrgk9_285b697fed754f86a09602c93628cfb4.txt","annotation_mean":1.5935879382946188,"reference_mean":1.7974836578810465}
+  ],
+  "scope": "907原开发边界不变。上述两条仅为原P04均高解释，不把S034加入907。无新参数拟合、质量等级、资格或正式分数变更。"
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "quality_top_residual_design_v1",
+  "status": "既有审核后制定的固定机制诊断，不是独立预注册或评分校准",
+  "inputs": "inputs.json中的907开发记录及几何；按conditioning既定精确坐标规则分组；不引入留出",
+  "engine": "research/quality_scope_comparison_20261010/frozen_engine/legacy_geometry/geometric_components.py:spherical_sym_distance",
+  "samples": 2048,
+  "verification_samples": 8192,
+  "alignment": "主诊断将作答所有top3d的y平移muG-muA，底面不变；反向诊断将参考顶部平移muA-muG。mu为各自底面周长加权整墙均高。两者是不同投影高度上的残差，不相加、不从原St标量扣减。",
+  "domain": "原几何和被平移几何须全部top_y>0；不满足则返回不可用，保留最小top_y，不剪裁。不重新认证原布局的语义正确性或完整有效性。",
+  "controls": {
+    "horizontal_scales": [0.5, 2, 10],
+    "reference_wall_height": 2.4,
+    "families": ["exact", "global_low_20pct", "global_high_20pct", "local_rms_10pct", "global_low_plus_local", "floor_radial_20pct", "floor_radial_and_cancelled_projection", "fixed_top_all_bottom_plus1px", "nonflat_exact"],
+    "description": "每个尺度9种，共27种。参考正方形；局部顶高四角交替+-sqrt(3)*0.24，使沿周长RMS=参考墙高10%；底面径向放大1.2时固定顶高，另将顶y也放大1.2构造原St=0的抵消例；底点控制沿用512像素ERP+1像素且固定顶射线。另加一条平移后顶点越过相机高度的域外控制。"
+  },
+  "selection": "在适用明确/未知两层各按原St最大、残差增加最多、两种对齐结果差最大、主残差最大取前三坐标组，另保留T20；只是诊断取例，不附质量标签。选中组及所有控制用8192采样作有限数值复核。",
+  "scope": "不计算新总分、权重、阈值或人员等级，不修复原输入。Hcenter只展示冻结值，不重算、不宣称残差独立于底面或等于局部起伏。"
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "quality_local_profile_design_v1",
+  "stage": "既有审核后制定的机制诊断，无新质量校准或独立留出",
+  "controls": "固定相机在原点、底面y=-1；矩形x[-1,5],z[-2,2]。所有控制共用包含全部支撑端点/峰值位置的细分底面，环序和顶底配对不变。近墙与远墙中心的周长坐标分别18和8，周长20。三角形起伏减去精确周长均值，再归一化到指定RMS，最后加整墙均高2.4。",
+  "support_fractions": [0.04, 0.1, 0.18],
+  "rms_over_reference_mean": [0.05, 0.1],
+  "reference_types": ["flat", "nonflat_near"],
+  "locations": ["near", "far"],
+  "control_count": 24,
+  "support_meaning": "支撑比例指减均值前的三角形非零支撑；减均值后支撑外是共同负偏移，不能称为只有该比例的墙高有变化。另精确报告偏离自身均高超过参考均高10%和20%的周长占比；显示刻度不是质量阈值。",
+  "height_samples": 4096,
+  "top_samples": 2048,
+  "verification_height_samples": 16384,
+  "verification_top_samples": 8192,
+  "height_engine": "research/quality_scope_comparison_20261010/frozen_engine/height_revision/height_revision.py:directed_nearest_footprint_height_mse；先作答均高对齐参考，沿用归档centered_height.py公式和max并列规则",
+  "top_engine": "research/quality_scope_comparison_20261010/frozen_engine/legacy_geometry/geometric_components.py:spherical_sym_distance",
+  "real_cases": "907原开发记录、739精确坐标组；先全量复算冻结Hcenter。各适用性层按peak/own_std最大、超过20%均高的周长占比最大、参考自身std最大、abs(Hcenter-own_std/参考均高)最大各取前三，合并保留理由。own_std为0时peak/std=null。并列按id，所有选择为几何极值诊断，无人工标签或因果判断。",
+  "verification": "全部24控制及选出的真实组高采样复核；同底面控制另用分段线性残差的精确周长积分独立核对Hcenter。真实数据不假设同底面，无解析Hcenter真值。",
+  "supplement_after_first_run": "看到20个固定取例后，增加参考轮廓摊平副本的条件对照：保留各自参考底面与均高，将参考顶部y设为均高-1，再算选例Hcenter。它只区分参考高度profile参与及底面投影加权的影响，不修改GT、不认定参考应该平顶，不扩大选例或重新选参数。",
+  "scope": "不改变底面、GT、原输入配对、资格、留出或正式分数；不拟合参数，不根据St变化宣称位置变化更严重，不把自身RMS当作所有情形下的Hcenter。"
+}

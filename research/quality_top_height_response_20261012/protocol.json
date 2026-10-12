@@ -1,0 +1,40 @@
+{
+  "schema": "quality_top_height_response_protocol_v1",
+  "stage": "post_feedback_mechanism_study_defined_before_this_run_not_preregistered_validation",
+  "purpose": "区分高度响应形状、顶部重复处罚与局部表示，不以审核图胜率选参数",
+  "inherited_scales": {"global": 0.5, "local": 0.25, "direction_deg": 5, "direction_cap": 1, "weak_top_weight": 0.0625},
+  "candidates": [
+    {"name": "relative2", "representation": "relative", "power": 2, "top_weight": 0, "flat": false, "global_scale": 0.5},
+    {"name": "relative4", "representation": "relative", "power": 4, "top_weight": 0, "flat": false, "global_scale": 0.5},
+    {"name": "log2", "representation": "log", "power": 2, "top_weight": 0, "flat": false, "global_scale": 0.5},
+    {"name": "log4", "representation": "log", "power": 4, "top_weight": 0, "flat": false, "global_scale": 0.5},
+    {"name": "relative2_weakTop", "representation": "relative", "power": 2, "top_weight": 0.0625, "flat": false, "global_scale": 0.5},
+    {"name": "relative4_weakTop", "representation": "relative", "power": 4, "top_weight": 0.0625, "flat": false, "global_scale": 0.5},
+    {"name": "relative2_Fguard", "representation": "relative", "power": 2, "top_weight": 0, "flat": true, "global_scale": 0.5},
+    {"name": "relative4_Fguard", "representation": "relative", "power": 4, "top_weight": 0, "flat": true, "global_scale": 0.5},
+    {"name": "relative2_mean1", "representation": "relative", "power": 2, "top_weight": 0, "flat": false, "global_scale": 1}
+  ],
+  "comparisons": {
+    "response": "只改变整体项幂次；局部始终平方且尺度0.25。指数是模型选择，不称无参数。不得搜索其它指数或移动交叉尺度。",
+    "representation": "相对误差与真实均高比的绝对log并列；不得由绝对Hmean猜高低方向。",
+    "retained_top": "无St、既有1/16 St、既有Fguard作信息保留对照；不由两项相关就证明冗余。",
+    "local": "将Hcenter与自身周长加权高度标准差及参考标准差比较，检查最近边匹配影响，不当作相互可替换的真值。"
+  },
+  "inputs": {
+    "development907": "沿用已有907开发边界；143明确适用/764未知分别报告；不使用留出，不补标签，不推断总体误报率。",
+    "controls": "保留既有71高度、65匹配/极限、43结构控制及不可算/域外状态；控制无人工质量等级。",
+    "feedback": "审核45条计算并集只作已暴露约束，C01/C02/C04不设数值通过线，P04只比顶部。"
+  },
+  "analytic_controls": {
+    "global_ratios": [0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 2, 3, 5],
+    "local_rms": [0, 0.025, 0.05, 0.1, 0.2],
+    "construction": "相同矩形底面、参考均高2.4相机高1；顶面线性起伏、保持均高，Hcenter为周长RMS。检验全部顶点在相机上方，域外保留但不解释为正常任务。解析控制未计算St/F，因此仅比较无St/F分支。"
+  },
+  "descriptive_reporting": {
+    "change_counts_points": [2, 5, 10],
+    "interpretation": "以上仅改分幅度计数，不是好坏/严重/通过阈值；报告记录、图片、建筑分母，无显著性或胜率筛选。",
+    "real_case_selection": "排除已审核45条；分别在明确适用与未知层按Hmean、Hcenter、弱St加罚分、F加罚分、abs(Hcenter-自身std/GT均高)各取前三，record_id打破并列；保留全部选择原因并检查真实几何，不能当代表性样本。"
+  },
+  "decisions_not_authorized_by_results": ["部署新总分", "确定合格阈值", "改GT", "改正式人员资格", "给未知样本补人工等级", "用T20/P04胜负挑模型"],
+  "human_review": "先完成可计算机制证据；仅当具体不可辨别性会改变技术决定时，再提出少量有目的的审核。"
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "quality_joint_response_design_v1",
+  "stage": "旧审核后固定的组合机制诊断；不拟合模型或发布分数",
+  "global_ratios": [0.5, 0.6, 0.8, 1, 1.2, 1.5, 2, 3],
+  "local_rms": [0, 0.025, 0.05, 0.1, 0.2],
+  "horizontal_scales": [0.5, 2, 10],
+  "controls": "120条：沿用analytic_case的相同正方形底面、参考整墙均高2.4及交替角点起伏；作答均高=ratio*2.4，精确周长RMS=local_rms*2.4。分别复制A/G后缩放水平坐标。全部top_y>0才算分量/候选，否则保留域外，不赋零分。",
+  "candidates": "protocol.json九个既有响应探针，加原previous_review.configs中的Q_dbounded1_max_height与Q_dbounded1_max_top；无新增权重/尺度。",
+  "angular": "St用既有球面引擎2048点/向，F用既有flatness每周长512点；同底面给IoU=1,Sb=0,dir=0。Hmean/Hcenter采用解析精确值；不将占位St/F当实算。固定复核所有有效控制St8192、F2048。",
+  "monotonicity": "各固定尺度下，分别增加局部RMS，或从ratio1向偏低/偏高方向走相邻阶梯；仅比较两端均有效的控制，列出候选增分/不变/降分及变化值。1e-8分只是数值判断容差，不是质量阈值；有限网格未发现反转不证明全域单调。",
+  "operator_diagnostic": "原开发907记录/739坐标组上，冻结其IoU、Sb、D、St、F，分别把整体Hmean/ratio归零、局部Hcenter归零或同时归零，观察各候选的边际分差。仅评分算子消融，不是可实现几何变换，也不能以分差小/相减证明重复处罚。",
+  "local_visibility_fraction": "原整体误差下去除局部项的分差，除以整体误差归零时加入局部项的分差；分母不超过1e-12分记为数值零并返回null。该容差只避免浮点微差比值，不是质量阈值。比例可超过1；null不表示局部永远不起作用。max组合的完全遮盖和倒数总分的边际压缩分开解释。",
+  "real_selection": "明确适用/未知各取Hmean最大、Hcenter最大、relative4局部可见比例最小的前三坐标组，加T20；保留理由，不追加人工质量等级。",
+  "coverage": "报告真实Hmean/Hcenter范围及两者同时达到既有尺度0.5/0.25的数量，不把尺度当合格阈值。真实样本不视作独立留出，候选分差不当改善率。"
+}

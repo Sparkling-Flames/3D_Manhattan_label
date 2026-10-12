@@ -1,0 +1,34 @@
+{
+  "schema": "quality_review_feedback_v1",
+  "date": "2026-10-12",
+  "source": "本对话用户直接答复",
+  "verbatim": "从底面角度来看,v01 差不多,02是B 更好,但是我没有看到3d的,我没法评判高度.仅从2d来看高度的话,v02是a 更好,v01暂时判断不出",
+  "pairs": [
+    {
+      "id": "V01",
+      "A": "R00017",
+      "B": "R02442",
+      "floor_preference": "similar",
+      "top_2d_preference": "unable_to_judge",
+      "height_3d_preference": null,
+      "difference_strength": null
+    },
+    {
+      "id": "V02",
+      "A": "R02070",
+      "B": "R01304",
+      "floor_preference": "B",
+      "top_2d_preference": "A",
+      "height_3d_preference": null,
+      "difference_strength": null
+    }
+  ],
+  "interpretation": "底面、二维顶部投影、三维高度分别记录；不合成整体优劣，不推断三维意见或数值阈值。",
+  "git_status": "后续用户已授权汇总后提交本地main；不推送远端。",
+  "conclusions": [
+    "V02底面偏好B、二维顶部投影偏好A，说明本对真实作答的分项偏好不同；未给出整体偏好。",
+    "V01底面接近，顶部无法判断；未知不等于整体等质。",
+    "未收到三维高度判断、差异强度或分数间隔；不据此确定顶部/高度权重，不认证严重高度错误的处罚。",
+    "二维投影偏好不是纯整体高度与局部不平的单变量判断：底面、投影与局部形状仍混合。"
+  ]
+}

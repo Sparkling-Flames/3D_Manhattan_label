@@ -1,0 +1,35 @@
+{
+  "schema": "quality_review_constraint_contract_v1",
+  "status": "development_only",
+  "evidence_schema": "quality_review_constraint_evidence_v1",
+  "audit_schema": "quality_review_constraint_audit_v1",
+  "scope": "Frozen external research evidence and received development feedback; not the current formal input loader or a new quality algorithm.",
+  "evidence": {
+    "configs": "17 unchanged prior scalar configurations; source order preserved.",
+    "tables": "Selected numeric metrics, saved candidate scores, record identity and source status; unavailable rows retained.",
+    "feedback": "Latest received interpretation; raw_receipt and dataset_mapping retain distinct provenance.",
+    "qualification_snapshot": "Prior qualification and exposure summary; copied for context, not new eligibility certification.",
+    "p05_input": "Existing source point and pair indices are zero based. ERP coordinates use the declared 1024x512 frame.",
+    "provenance": "Source roots, archive member, table filenames and extraction description. No SHA verification requested or performed."
+  },
+  "audit": {
+    "parity": "Scalar recomputation compared only with saved cells. Missing expected cells and unavailable rows are reported separately.",
+    "overall_pairs": "Scores and signed A-minus-B differences. No numeric closeness threshold. Preference agreement stays null for C01/C02/C04.",
+    "P04.top_only_penalty": "Dimensionless 1-(1-flat_fraction)/(1+combined_top_height_loss), with neutral floor, bottom and structure; includes F where configured. Not a causal or independently reconstructed geometry component.",
+    "P04.actual_top_height_score_drop": "Score points lost against removal of top/height/F while retaining each record's floor, bottom and direction terms; cross-image baselines differ.",
+    "P04.actual_top_height_relative_drop": "Fraction lost relative to that record-specific counterfactual; null when its score is zero.",
+    "P04.P04_direction_agrees_under_declared_top_operator": "S034 has larger top_only_penalty than T20 under this declared interpretation. Development agreement, not correctness certification or human accuracy.",
+    "P04_conditional_boundaries": "Strict upper bound on hc only for fixed T20/S034 metrics, relative mean-error square sum and no F; not a universal threshold.",
+    "P05.pairs": "Existing pairing, current before-preprocessing x, periodic shared midpoint and pair azimuth gap. Gap degrees are not full ray angles.",
+    "P05.input_quality_grade": "Null; no grade inferred from residuals or processed geometry.",
+    "controlled_results": "Existing synthetic cases and two post-feedback scalar probes; no synthetic human grades. Camera-domain and unavailable states preserved.",
+    "probe_definitions": "Two declared post-feedback identification probes; no grid search, cutpoint fitting or independent-validation claim."
+  },
+  "invariants": [
+    "Raw feedback is not overwritten; unknown confidence and unreviewed input are not imputed.",
+    "Geometries, references, pairing, rings and formal worker eligibility are not modified.",
+    "The new evidence snapshot is not an additional independent sample or official input.",
+    "Mean-height direction is never inferred from absolute Hmean for log scoring.",
+    "No aggregate human pass rate is formed from unlike overall, close, top-only and input-review protocols."
+  ]
+}

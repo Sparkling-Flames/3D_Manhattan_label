@@ -1,0 +1,171 @@
+{
+  "schema": "quality_review_pairs_v1",
+  "pairs": [
+    {
+      "id": "V01",
+      "records": [
+        {
+          "id": "R00017",
+          "image_id": "wc2JMjhGNzB_77962388887942148ee65c2892600e02",
+          "image_code": "wc2JMjhGNzB-40",
+          "worker_id": "W029",
+          "building_id": "wc2JMjhGNzB",
+          "applicability_confirmed": true,
+          "object_id": "0256fe8a53c60eb1",
+          "reference_object_id": "gt:wc2JMjhGNzB_77962388887942148ee65c2892600e02:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_77962388887942148ee65c2892600e02.txt",
+          "height_center_AG_distinct_tied_height_fraction": 0.0,
+          "height_center_GA_distinct_tied_height_fraction": 0.0,
+          "metrics": {
+            "iou_2d": 0.9639153858815881,
+            "dir": 0.5345216923378195,
+            "flat": 0.5137737120554231,
+            "Hmean": 0.04272474542428566,
+            "Hcenter": 0.010982489843277047,
+            "S_top_deg": 0.978357020886535,
+            "S_bottom_deg": 0.8230180883764078,
+            "height_mean_ratio": 0.9572752545757144
+          },
+          "profile": {
+            "annotation_own_height_std_over_gt_mean": 0.010921086297876813,
+            "reference_own_height_std_over_gt_mean": 1.5467029775087834e-05,
+            "annotation_support_gtmean_10": 0.0,
+            "annotation_support_gtmean_20": 0.0,
+            "annotation_max_abs_deviation_from_own_mean_over_gt_mean": 0.023222076840209264
+          },
+          "expected_scores": {
+            "Q_dbounded1_hsplit": 92.53306518467274,
+            "Q_dbounded1_hsplit_weakTop": 92.36729705326039,
+            "Q_dbounded1_Fguard": 92.1034412192163,
+            "Q_dbounded1_mean1": 93.02208258933209,
+            "Q_dbounded1_hsplit_logMean": 92.50423394042643
+          }
+        },
+        {
+          "id": "R02442",
+          "image_id": "wc2JMjhGNzB_77962388887942148ee65c2892600e02",
+          "image_code": "wc2JMjhGNzB-40",
+          "worker_id": "W028",
+          "building_id": "wc2JMjhGNzB",
+          "applicability_confirmed": true,
+          "object_id": "fa48c94941765bf5",
+          "reference_object_id": "gt:wc2JMjhGNzB_77962388887942148ee65c2892600e02:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_77962388887942148ee65c2892600e02.txt",
+          "height_center_AG_distinct_tied_height_fraction": 0.0,
+          "height_center_GA_distinct_tied_height_fraction": 0.0,
+          "metrics": {
+            "iou_2d": 0.9574997011460746,
+            "dir": 0.4767312822364165,
+            "flat": 1.135746355747262,
+            "Hmean": 0.004213492752714096,
+            "Hcenter": 0.025436470217597113,
+            "S_top_deg": 0.8335595215549589,
+            "S_bottom_deg": 1.1147132085330138,
+            "height_mean_ratio": 1.004213492752714
+          },
+          "profile": {
+            "annotation_own_height_std_over_gt_mean": 0.025230780276901617,
+            "reference_own_height_std_over_gt_mean": 1.5467029775087834e-05,
+            "annotation_support_gtmean_10": 0.0,
+            "annotation_support_gtmean_20": 0.0,
+            "annotation_max_abs_deviation_from_own_mean_over_gt_mean": 0.055609361798410445
+          },
+          "expected_scores": {
+            "Q_dbounded1_hsplit": 90.47842176109482,
+            "Q_dbounded1_hsplit_weakTop": 90.3625445341341,
+            "Q_dbounded1_Fguard": 88.82371935925049,
+            "Q_dbounded1_mean1": 90.48297561402792,
+            "Q_dbounded1_hsplit_logMean": 90.47844724488527
+          }
+        }
+      ],
+      "answer": null,
+      "confidence": null,
+      "image_in_previous_review_material": true,
+      "question": "仅比较顶部边界/高度表现：A较好、B较好、近似，还是无法判断？差异是否明显？哪些可见位置支持判断？",
+      "scope": "已处理几何，不认证原始上下点语义对应；不是独立留出；不展示候选分数",
+      "photo_source": "data/mp3d_layout/test/img/wc2JMjhGNzB_77962388887942148ee65c2892600e02.png"
+    },
+    {
+      "id": "V02",
+      "records": [
+        {
+          "id": "R02070",
+          "image_id": "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45",
+          "image_code": "e9zR4mvMWw7-16",
+          "worker_id": "W031",
+          "building_id": "e9zR4mvMWw7",
+          "applicability_confirmed": true,
+          "object_id": "d2d4c49ab227aa87",
+          "reference_object_id": "gt:e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45:export_label/groudTruth.json",
+          "height_center_AG_distinct_tied_height_fraction": 0.0,
+          "height_center_GA_distinct_tied_height_fraction": 0.0,
+          "metrics": {
+            "iou_2d": 0.9203147586992149,
+            "dir": 1.4663297340440617,
+            "flat": 0.9973538603641237,
+            "Hmean": 0.010789381777869998,
+            "Hcenter": 0.018632105668502135,
+            "S_top_deg": 0.31438938217141105,
+            "S_bottom_deg": 0.8509649086772758,
+            "height_mean_ratio": 1.01078938177787
+          },
+          "profile": {
+            "annotation_own_height_std_over_gt_mean": 0.024504865650800935,
+            "reference_own_height_std_over_gt_mean": 0.007836638758745561,
+            "annotation_support_gtmean_10": 0.0,
+            "annotation_support_gtmean_20": 0.0,
+            "annotation_max_abs_deviation_from_own_mean_over_gt_mean": 0.043306191701603686
+          },
+          "expected_scores": {
+            "Q_dbounded1_hsplit": 83.07264004828075,
+            "Q_dbounded1_hsplit_weakTop": 83.05816667556265,
+            "Q_dbounded1_Fguard": 81.83182476598495,
+            "Q_dbounded1_mean1": 83.09883580457765,
+            "Q_dbounded1_hsplit_logMean": 83.07301308941769
+          }
+        },
+        {
+          "id": "R01304",
+          "image_id": "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45",
+          "image_code": "e9zR4mvMWw7-16",
+          "worker_id": "W015",
+          "building_id": "e9zR4mvMWw7",
+          "applicability_confirmed": true,
+          "object_id": "8516eea42fb75c88",
+          "reference_object_id": "gt:e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45:export_label/groudTruth.json",
+          "height_center_AG_distinct_tied_height_fraction": 0.0,
+          "height_center_GA_distinct_tied_height_fraction": 0.0,
+          "metrics": {
+            "iou_2d": 0.9637141639105667,
+            "dir": 1.2448765548728284,
+            "flat": 0.058690705630100266,
+            "Hmean": 0.04515305604003186,
+            "Hcenter": 0.006676121598489138,
+            "S_top_deg": 2.0844943725757044,
+            "S_bottom_deg": 0.30878919862730203,
+            "height_mean_ratio": 1.045153056040032
+          },
+          "profile": {
+            "annotation_own_height_std_over_gt_mean": 0.0018076145526633959,
+            "reference_own_height_std_over_gt_mean": 0.007836638758745561,
+            "annotation_support_gtmean_10": 0.0,
+            "annotation_support_gtmean_20": 0.0,
+            "annotation_max_abs_deviation_from_own_mean_over_gt_mean": 0.003846204242596938
+          },
+          "expected_scores": {
+            "Q_dbounded1_hsplit": 90.04836138446557,
+            "Q_dbounded1_hsplit_weakTop": 89.33991886452365,
+            "Q_dbounded1_Fguard": 90.04255050433402,
+            "Q_dbounded1_mean1": 90.56595402475334,
+            "Q_dbounded1_hsplit_logMean": 90.07812247045713
+          }
+        }
+      ],
+      "answer": null,
+      "confidence": null,
+      "image_in_previous_review_material": false,
+      "question": "仅比较顶部边界/高度表现：A较好、B较好、近似，还是无法判断？差异是否明显？哪些可见位置支持判断？",
+      "scope": "已处理几何，不认证原始上下点语义对应；不是独立留出；不展示候选分数",
+      "photo_source": "data/mp3d_layout/test/img/e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45.png"
+    }
+  ]
+}
