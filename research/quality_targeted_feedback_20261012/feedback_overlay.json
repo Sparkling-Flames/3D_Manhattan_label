@@ -1,0 +1,24 @@
+{
+ "schema": "targeted_review_feedback_overlay_v1",
+ "source_library_file_id": "libfile_cc447ae89d948191965809d46609cb2c",
+ "source_user_message": "Sentinel_c877c7c0e2bc819183dbde319b0c4f40",
+ "dataset_id": "470c4c19769159139d77f8db0e2f75d91647571e7d7832de51276046d47e26ec",
+ "review_type": "development_targeted_rereview",
+ "confidence_null_not_imputed": true,
+ "empty_report_exposures_not_proof_of_no_external_exposure": true,
+ "all_input_choices_remain_missing": true,
+ "interpretations": {
+  "P01": {"choice": "B01更好", "scope": "overall_current_unmodified_annotations", "status": "clarified", "clarification_message": "Sentinel_e31d770b7ca08191a8fdce7c8d82bc7b", "clarification_verbatim": "b01的标注空间是偏小,但是我个人来说,我认为 标注的3d  不歪斜反而比标注范围的 更加重要.标的小,但是基本符合曼哈顿世界约束,那我也可以认为这是不同空间的标注嘛(虽然这种空间范围不太好,没有标完整个空间).我仍然认为b01整体更好. 其他需要我复核的你给出我具体数值和可旋转的3d展示给我观察", "reference_addition_approved": false, "note": "明确整体偏好，范围偏小仍是缺点；不能推广为任意小矩形均优于范围合理标注，也不新增参考。"},
+  "C02": {"choice": "不确定", "reason": "visual_resolution_and_structure_scope_tradeoff", "needs_clearer_geometry": true},
+  "C03": {"choice": "A更好", "both_described_as_good": true, "large_score_margin_not_implied": true},
+  "C04": {"choice": "两者接近", "tie_tolerance_not_estimated": true},
+  "P04": {"choice": "B06应罚更重", "scope": "top_penalty_only", "not_overall_quality_ranking": true},
+  "C01": {"choice": "不确定", "numeric_assistance_requested": true, "not_forced_order": true},
+  "P02": {"choice": "介于相邻两档", "interval": ["明显问题", "严重不符"], "retention_due_to_image_difficulty_is_separate_from_quality": true},
+  "P03": {"choice": "明显问题", "reason": "多标了第三对点"},
+  "P05": {"choice": "不确定", "reported_mechanism": "上点与下点分别位于不同墙角，平均x落在两者中间，可能掩盖对应错误", "mechanism_source": "user_observation_not_independent_visual_confirmation", "do_not_convert_to_fixed_numeric_penalty": true}
+ },
+ "algorithm_weights_changed": false,
+ "formal_reference_set_changed": false,
+ "numeric_assisted_followup": {"groups": ["C02", "C01"], "separate_schema": "quality_geometry_supplement_v1", "answers": null, "is_independent_blind_test": false}
+}

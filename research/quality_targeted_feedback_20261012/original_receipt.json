@@ -1,0 +1,101 @@
+{
+  "schema_version": "quality_targeted_review_v1",
+  "dataset_id": "470c4c19769159139d77f8db0e2f75d91647571e7d7832de51276046d47e26ec",
+  "created_at": "2026-10-12T03:11:00.590Z",
+  "report_exposures": [],
+  "answers": {
+    "P01": {
+      "choice": "B01更好",
+      "input_choice": null,
+      "confidence": null,
+      "comment": "如果单单从3d 角度来看,显然b01更好,但是b01有个不容忽视的问题,它标注的空间较小. B02 的问题主要是在 它的一个bottom y 标的太低了,导致整体3d效果不好,但是如果调整这个点后,他标注的范围显然更合理",
+      "updated_at": "2026-10-12T03:40:09.608Z",
+      "scope": "processed",
+      "status": "answered",
+      "input_status": "not_reviewed"
+    },
+    "C02": {
+      "choice": "不确定",
+      "input_choice": null,
+      "confidence": null,
+      "comment": "这个可能得结合3d的数据进行再次判断(看不太清),因为目前看来b的3d表现 好像还挺规整.两者都是偏离了gt的标注的.A detail 1,2 都有偏离,B 是detail 1 偏的很少,detail2 偏的很大(比A偏的还多)",
+      "updated_at": "2026-10-12T03:47:48.190Z",
+      "scope": "processed",
+      "status": "answered",
+      "input_status": "not_reviewed"
+    },
+    "C03": {
+      "choice": "A更好",
+      "input_choice": null,
+      "confidence": null,
+      "comment": "两者都很不错,不过a 更接近gt",
+      "updated_at": "2026-10-12T06:37:12.285Z",
+      "scope": "processed",
+      "status": "answered",
+      "input_status": "not_reviewed"
+    },
+    "C04": {
+      "choice": "两者接近",
+      "input_choice": null,
+      "confidence": null,
+      "comment": "基本差不多,我没有看出明显的差别",
+      "updated_at": "2026-10-12T06:39:32.346Z",
+      "scope": "processed",
+      "status": "answered",
+      "input_status": "not_reviewed"
+    },
+    "P04": {
+      "choice": "B06应罚更重",
+      "input_choice": null,
+      "confidence": null,
+      "comment": "如果我没看错的话,b05是整体更低,顶面高度也相对更平均.06 是有两个 角点标的特别矮,导致整体高度不一",
+      "updated_at": "2026-10-12T06:42:00.005Z",
+      "scope": "top_penalty",
+      "status": "answered",
+      "input_status": "not_reviewed"
+    },
+    "C01": {
+      "choice": "不确定",
+      "input_choice": null,
+      "confidence": null,
+      "comment": "不是很好判断,除非给我具体的数值. 都是有点小偏移",
+      "updated_at": "2026-10-12T06:43:18.487Z",
+      "scope": "processed",
+      "status": "answered",
+      "input_status": "not_reviewed"
+    },
+    "P02": {
+      "choice": "介于相邻两档",
+      "input_choice": null,
+      "confidence": null,
+      "comment": "明显问题和严重不符之间,但是因为这图是困难图,所以当时我并没有把它直接排除出标注数据",
+      "updated_at": "2026-10-12T06:45:57.096Z",
+      "scope": "overall_grade",
+      "status": "answered",
+      "input_status": "not_reviewed"
+    },
+    "P03": {
+      "choice": "明显问题",
+      "input_choice": null,
+      "confidence": null,
+      "comment": "多标了第三对点",
+      "updated_at": "2026-10-12T06:48:15.471Z",
+      "scope": "overall_grade",
+      "status": "answered",
+      "input_status": "not_reviewed"
+    },
+    "P05": {
+      "choice": "不确定",
+      "input_choice": null,
+      "confidence": null,
+      "comment": "这个标注比较特殊,原始标注的确实比较差,x坐标并没有一致,有些地方相差的蛮大的. 平均x 后确直接在那个拐角的中间了. 实际上他的标点是标在了第一个拐角的上面 和第二个拐角的下面.",
+      "updated_at": "2026-10-12T06:52:45.295Z",
+      "scope": "input_vs_processed",
+      "status": "answered",
+      "input_status": "not_reviewed"
+    }
+  },
+  "exported_at": "2026-10-12T06:52:53.380Z",
+  "review_type": "development_targeted_rereview",
+  "unanswered_is_negative": false
+}
