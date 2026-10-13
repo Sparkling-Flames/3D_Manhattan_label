@@ -1,0 +1,127 @@
+{
+  "schema": "quality_targeted_review_receipt_v1",
+  "dataset_id": "joint_calibration_20261013_dot_four_cases_v1",
+  "exported_utc": "2026-10-13T03:03:16.412Z",
+  "view": "diagnostic",
+  "exposures": [
+    {
+      "kind": "opened_diagnostic_link",
+      "case_id": "J01",
+      "time": "2026-10-13T02:46:25.714Z"
+    },
+    {
+      "kind": "diagnostic_case_rendered",
+      "case_id": "J01",
+      "time": "2026-10-13T02:46:41.678Z"
+    },
+    {
+      "kind": "diagnostic_case_rendered",
+      "case_id": "J02",
+      "time": "2026-10-13T02:48:48.259Z"
+    },
+    {
+      "kind": "diagnostic_case_rendered",
+      "case_id": "J03",
+      "time": "2026-10-13T02:50:41.687Z"
+    },
+    {
+      "kind": "diagnostic_case_rendered",
+      "case_id": "J02",
+      "time": "2026-10-13T02:50:44.734Z"
+    },
+    {
+      "kind": "diagnostic_case_rendered",
+      "case_id": "J01",
+      "time": "2026-10-13T02:50:44.901Z"
+    },
+    {
+      "kind": "diagnostic_case_rendered",
+      "case_id": "J02",
+      "time": "2026-10-13T02:52:17.517Z"
+    },
+    {
+      "kind": "diagnostic_case_rendered",
+      "case_id": "J03",
+      "time": "2026-10-13T02:52:18.117Z"
+    },
+    {
+      "kind": "diagnostic_case_rendered",
+      "case_id": "J02",
+      "time": "2026-10-13T02:52:19.082Z"
+    },
+    {
+      "kind": "diagnostic_case_rendered",
+      "case_id": "J01",
+      "time": "2026-10-13T02:52:19.251Z"
+    },
+    {
+      "kind": "diagnostic_case_rendered",
+      "case_id": "J02",
+      "time": "2026-10-13T02:52:20.077Z"
+    },
+    {
+      "kind": "diagnostic_case_rendered",
+      "case_id": "J01",
+      "time": "2026-10-13T02:52:24.228Z"
+    },
+    {
+      "kind": "diagnostic_case_rendered",
+      "case_id": "J02",
+      "time": "2026-10-13T02:52:24.996Z"
+    },
+    {
+      "kind": "diagnostic_case_rendered",
+      "case_id": "J03",
+      "time": "2026-10-13T02:53:11.860Z"
+    },
+    {
+      "kind": "diagnostic_case_rendered",
+      "case_id": "J04",
+      "time": "2026-10-13T03:01:03.555Z"
+    },
+    {
+      "kind": "diagnostic_case_rendered",
+      "case_id": "J01",
+      "time": "2026-10-13T03:03:13.186Z"
+    },
+    {
+      "kind": "diagnostic_case_rendered",
+      "case_id": "J04",
+      "time": "2026-10-13T03:03:14.206Z"
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "J01",
+      "judgment": "uncertain",
+      "comment": "如果单看规整程度,a好,但是a和gt的IOU相差有点大.其实如果只参照gt进行比较,a 应该离得可能略远的,因为不管是整体高度,整体底面面积都离得有点远. 但是如果加上3d的表现,a在这个方面比b的好. 但是总体得分只有20多,我感觉这也没有差到这个地步,2d上看没有特别差",
+      "reviewed": true,
+      "last_changed": "2026-10-13T02:52:15.003Z",
+      "diagnostic_view_opened": true
+    },
+    {
+      "case_id": "J02",
+      "judgment": "A",
+      "comment": "高度更平整且接近 gt,墙之间的夹角也更好.   不过我不认为只差3分这样,可能可以更大一点.",
+      "reviewed": true,
+      "last_changed": "2026-10-13T02:53:08.866Z",
+      "diagnostic_view_opened": true
+    },
+    {
+      "case_id": "J03",
+      "judgment": "uncertain",
+      "comment": "可能想标大空间(参考A),但是又标了大空间里较小的区域",
+      "reviewed": true,
+      "last_changed": "2026-10-13T03:01:01.363Z",
+      "diagnostic_view_opened": true
+    },
+    {
+      "case_id": "J04",
+      "judgment": "borderline",
+      "comment": "只有一个点偏离比较大,而且是bottom y,导致说整体3d质量很低,但是也不至于只有个位数的分数",
+      "reviewed": true,
+      "last_changed": "2026-10-13T03:02:52.721Z",
+      "diagnostic_view_opened": true
+    }
+  ]
+}

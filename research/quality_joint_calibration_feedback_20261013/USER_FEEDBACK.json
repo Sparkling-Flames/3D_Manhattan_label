@@ -1,0 +1,197 @@
+{
+  "schema": "quality_joint_feedback_overlay_20261013_v1",
+  "status": "recorded_only_no_parameter_change",
+  "source_main": "bfe1545909f8c54fc1e56ba9b6b96fb1b4498d80",
+  "dataset_id": "joint_calibration_20261013_dot_four_cases_v1",
+  "source_receipt": {
+    "file": "raw/layout_quality_review_receipt.json",
+    "sha256": "fa0116228bc752626085db3e7672250da0bbc4e4a8d2bf06ce2930d25b60a9ec",
+    "bytes": 3715,
+    "library_file_id": "libfile_70c407e922648191b6d92e7950687d85",
+    "exported_utc": "2026-10-13T03:03:16.412Z"
+  },
+  "source_chat_message_id": "Sentinel_925a46884580819182162dc0a41860cd",
+  "exposure": {
+    "receipt_view": "diagnostic",
+    "diagnostic_exposures": 17,
+    "all_four_marked_diagnostic_opened": true,
+    "independent_unexposed_validation": false,
+    "judgments_remain_valid_subjective_feedback": true,
+    "confidence_not_collected": true
+  },
+  "case_feedback": [
+    {
+      "case_id": "J01",
+      "record_ids": [
+        "R03346",
+        "R03347"
+      ],
+      "judgment": "uncertain",
+      "scope": "overall_quality",
+      "summary": "A自身3D规整性更好；A整体高度和底面面积与GT可能更远。综合仍不确定；用户认为当前二十多分偏低，2D看起来没有特别差。",
+      "not_inferred": [
+        "不新增整体A>B或B>A硬约束",
+        "不把规整性偏好转为GT接近程度偏好",
+        "不指定目标分或质量等级"
+      ],
+      "original_answer": {
+        "case_id": "J01",
+        "judgment": "uncertain",
+        "comment": "如果单看规整程度,a好,但是a和gt的IOU相差有点大.其实如果只参照gt进行比较,a 应该离得可能略远的,因为不管是整体高度,整体底面面积都离得有点远. 但是如果加上3d的表现,a在这个方面比b的好. 但是总体得分只有20多,我感觉这也没有差到这个地步,2d上看没有特别差",
+        "reviewed": true,
+        "last_changed": "2026-10-13T02:52:15.003Z",
+        "diagnostic_view_opened": true
+      },
+      "binding": [
+        {
+          "label": "A",
+          "subtitle": "R03346 | Z6MFQCViBuw-08"
+        },
+        {
+          "label": "B",
+          "subtitle": "R03347 | Z6MFQCViBuw-08"
+        }
+      ]
+    },
+    {
+      "case_id": "J02",
+      "record_ids": [
+        "R02049",
+        "R02244"
+      ],
+      "judgment": "A",
+      "scope": "overall_quality",
+      "summary": "整体A优于B；评论认为高度更平且更接近GT，墙间夹角也更好。主观认为约3分的差距可能偏小，可以更大一些。",
+      "not_inferred": [
+        "没有精确目标分差或置信值",
+        "不是只对单一方向指标的纯控制标签",
+        "不据此认证场景/参考资格或人员等级"
+      ],
+      "original_answer": {
+        "case_id": "J02",
+        "judgment": "A",
+        "comment": "高度更平整且接近 gt,墙之间的夹角也更好.   不过我不认为只差3分这样,可能可以更大一点.",
+        "reviewed": true,
+        "last_changed": "2026-10-13T02:53:08.866Z",
+        "diagnostic_view_opened": true
+      },
+      "binding": [
+        {
+          "label": "A",
+          "subtitle": "R02049 | q9vSo1VnCiC-15"
+        },
+        {
+          "label": "B",
+          "subtitle": "R02244 | q9vSo1VnCiC-15"
+        }
+      ]
+    },
+    {
+      "case_id": "J03",
+      "record_ids": [
+        "R03197"
+      ],
+      "judgment": "uncertain",
+      "scope": "reference_assignment",
+      "summary": "可能想标大空间A，但实际又画了大空间里的较小区域；最终仍选不确定。",
+      "not_inferred": [
+        "不将可能A改写为明确指定A",
+        "不升级为合法小空间或质量合格",
+        "不新增GT候选"
+      ],
+      "original_answer": {
+        "case_id": "J03",
+        "judgment": "uncertain",
+        "comment": "可能想标大空间(参考A),但是又标了大空间里较小的区域",
+        "reviewed": true,
+        "last_changed": "2026-10-13T03:01:01.363Z",
+        "diagnostic_view_opened": true
+      },
+      "binding": [
+        {
+          "label": "参考 A",
+          "subtitle": "R03197 | uNb9QFRL6hY-67 | 同一作答"
+        },
+        {
+          "label": "参考 B",
+          "subtitle": "R03197 | uNb9QFRL6hY-67 | 同一作答"
+        }
+      ]
+    },
+    {
+      "case_id": "J04",
+      "record_ids": [
+        "R03274"
+      ],
+      "old_case_id": "T13",
+      "judgment": "borderline",
+      "scope": "overall_severity_not_pairwise",
+      "summary": "介于明显问题与严重错误之间。用户观察一个bottom y偏离较大导致3D质量很低，但不应只有个位数分；聊天补充应重罚但不能几乎扣光。",
+      "not_inferred": [
+        "右侧是参考不是第二份作答，不作A/B胜负",
+        "因果描述属于用户观察，本次未另行做几何干预证明",
+        "不是自动设定Q下限为10或改变人工原历史记录"
+      ],
+      "original_answer": {
+        "case_id": "J04",
+        "judgment": "borderline",
+        "comment": "只有一个点偏离比较大,而且是bottom y,导致说整体3d质量很低,但是也不至于只有个位数的分数",
+        "reviewed": true,
+        "last_changed": "2026-10-13T03:02:52.721Z",
+        "diagnostic_view_opened": true
+      },
+      "binding": [
+        {
+          "label": "作答",
+          "subtitle": "R03274 | yqstnuAEVhm-05"
+        },
+        {
+          "label": "参考单独展示",
+          "subtitle": "仅供核对，不是第二份作答"
+        }
+      ]
+    }
+  ],
+  "chat_feedback": [
+    {
+      "id": "T20_height_penalty",
+      "record_ids": [
+        "R00397"
+      ],
+      "current_penalty_discussed": 3.5256,
+      "unit": "quality_score_points",
+      "direction": "slightly_increase_global_height_penalty",
+      "interpretation": "整体高度偏差是一点小错误，应稍多扣分；整体高度较统一时仍勉强可接受。识别错天花板只是一种可能解释。",
+      "exact_target": null,
+      "not_inferred": [
+        "不恢复旧v1.1顶部投影重罚",
+        "不把勉强可接受当新增旧30题绝对质量标签",
+        "不把3.5256当惩罚参数或等级阈值"
+      ]
+    },
+    {
+      "id": "single_corner_3d_and_2d_tradeoff",
+      "record_ids": [
+        "R03274"
+      ],
+      "direction": "substantial_but_not_near_total_penalty",
+      "interpretation": "单点偏差导致3D严重歪斜应重罚，同时考虑其余点的2D接近程度是否应保留在整体评价中。",
+      "research_questions": [
+        "是否加入或重新组织相对参考的2D标注点位偏差",
+        "点数不同时如何比较，避免漏点反而获得好分",
+        "如何区别单点误差经投影放大与广泛结构错误，同时保留3D规整性优先"
+      ],
+      "method_selected": null,
+      "numeric_score_floor": null
+    }
+  ],
+  "changes_applied": {
+    "parameters": false,
+    "formula": false,
+    "gt": false,
+    "routing_assignments": false,
+    "formal_eligibility": false,
+    "previous_human_receipts": false
+  },
+  "next_step": "保留为后续研究输入，本次不求解、不调参、不新增研究任务"
+}
