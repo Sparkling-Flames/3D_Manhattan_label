@@ -1,0 +1,30 @@
+{
+  "schema": "quality_overall_calibration_preparation_v1",
+  "preparation_complete": true,
+  "parameter_search_performed": false,
+  "parameter_files_changed": false,
+  "ordinary_records": 574,
+  "ordinary_images": 70,
+  "severe_records": 9,
+  "severe_images": 7,
+  "question_groups": 13,
+  "weak_grade_count": 11,
+  "new_bottom_controls": 34,
+  "control_statuses": {
+    "complete": 34
+  },
+  "response_reversal_pairs": 2,
+  "existing_height_controls_reused_by_reference": 110,
+  "existing_height_path": "research/quality_height_calibration_ready_20261013/CONTROLS.json",
+  "existing_structure_path": "research/quality_pro_joint_archive_20261013/source/experiments/results/targeted_constructed_cases.json",
+  "gate_boundaries": "普通/严重单列；门洞第二阶段，OOS不调参；缺参考/配对保持不可算",
+  "holdout_policy": "原282保留，已知148曾进入融合诊断；不得宣称新增盲验证",
+  "unresolved_research_questions": [
+    "方向集中与广泛畸变如何取舍",
+    "总分严重端标尺",
+    "高度适度加重的幅度"
+  ],
+  "independent_validation_ready": false,
+  "human_review_required_now": false,
+  "current_run_readiness": "输入、来源、控制与规则已备齐；尚未搜索或选新参数"
+}

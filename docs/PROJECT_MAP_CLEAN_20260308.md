@@ -1,5 +1,7 @@
 # HOHONET 项目地图
 
+- **2026-10-13整体质量调参前准备：** [输入、证据、固定基线、底点控制与选择规则](../research/quality_calibration_preparation_20261013/README.md)；工具`tools/thesis_main/analysis/quality_calibration_preparation_20261013.py`及同名测试。单独使用已审严重例外，保留高度适度加重方向，不搜索参数或改正式算法。
+
 - **2026-10-13质量研究日结与归档：** [当日汇总](../research/quality_data_closeout_20261013/DAY_SUMMARY.md)，统一串联用途账本、Pro选择性快照、人工回执与高度比较；不重复原始ZIP或大网格。
 
 - **2026-10-13高度校准准备与小范围比较：** [设计、账本与结果](../research/quality_height_calibration_ready_20261013/README.md)；工具`tools/thesis_main/analysis/quality_height_calibration_ready_20261013.py`及同名测试。复用48份控制、补62份形态控制，只比较五组高度尺度；保留正式合同、旧数据和融合。

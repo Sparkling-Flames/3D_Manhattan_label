@@ -1,0 +1,26 @@
+{
+  "schema": "quality_preparation_response_findings_v1",
+  "records": [
+    {
+      "case_ids": [
+        "1x4:distributed_bottom:-1:8",
+        "1x4:distributed_bottom:-1:16"
+      ],
+      "score_change": 7.465263042810861,
+      "kind": "input_error_increases_iou_decreases_score_increases",
+      "human_order_not_assumed": true,
+      "source": "BOTTOM_CONTROLS.json"
+    },
+    {
+      "case_ids": [
+        "1x4:distributed_bottom:1:8",
+        "1x4:distributed_bottom:1:16"
+      ],
+      "score_change": 7.465145670193223,
+      "kind": "input_error_increases_iou_decreases_score_increases",
+      "human_order_not_assumed": true,
+      "source": "BOTTOM_CONTROLS.json"
+    }
+  ],
+  "use": "predeclared_controls_reveal_tradeoff_not_new_human_labels"
+}
