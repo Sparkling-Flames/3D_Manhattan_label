@@ -1,0 +1,582 @@
+{
+  "schema": "quality_human_constraints_v1",
+  "constraints": [
+    {
+      "constraint_id": "P01:processed_overall_quality",
+      "panel": "P01",
+      "dimension": "processed_overall_quality",
+      "evidence_type": "explicit_direction",
+      "preferred_display": "B01",
+      "record_ids": [
+        "R02015",
+        "R00637"
+      ],
+      "image_ids": [
+        "B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "如果单单从3d 角度来看,显然b01更好,但是b01有个不容忽视的问题,它标注的空间较小. B02 的问题主要是在 它的一个bottom y 标的太低了,导致整体3d效果不好,但是如果调整这个点后,他标注的范围显然更合理",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "P01",
+      "count_dimensions_as_independent": false,
+      "preferred_record_id": "R02015",
+      "other_record_id": "R00637",
+      "constraint_direction": "higher_quality",
+      "reference_addition_approved": false,
+      "current_unmodified_annotations": true,
+      "interpretation": "整体偏好有效；不能先修正B02底点再比较，范围偏小仍为缺点。"
+    },
+    {
+      "constraint_id": "C01:processed_overall_quality",
+      "panel": "C01",
+      "dimension": "processed_overall_quality",
+      "evidence_type": "uncertain_and_qualitatively_close",
+      "preferred_display": null,
+      "record_ids": [
+        "R01810",
+        "R01385"
+      ],
+      "image_ids": [
+        "wc2JMjhGNzB_3504ff17bcae4d6c85bdc61fc3a5bf0c"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "不是很好判断,除非给我具体的数值. 都是有点小偏移",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "C01",
+      "count_dimensions_as_independent": false,
+      "strict_preference": null,
+      "interpretation": "不确定与定性接近并存；不是固定容差内平局，不能按符号计算胜负。"
+    },
+    {
+      "constraint_id": "C02:processed_overall_quality",
+      "panel": "C02",
+      "dimension": "processed_overall_quality",
+      "evidence_type": "uncertain_and_qualitatively_close",
+      "preferred_display": null,
+      "record_ids": [
+        "R03351",
+        "R03350"
+      ],
+      "image_ids": [
+        "Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "这个可能得结合3d的数据进行再次判断(看不太清),因为目前看来b的3d表现 好像还挺规整.两者都是偏离了gt的标注的.A detail 1,2 都有偏离,B 是detail 1 偏的很少,detail2 偏的很大(比A偏的还多)",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "C02",
+      "count_dimensions_as_independent": false,
+      "strict_preference": null,
+      "interpretation": "不确定与定性接近并存；不是固定容差内平局，不能按符号计算胜负。"
+    },
+    {
+      "constraint_id": "C01:reference_closeness",
+      "panel": "C01",
+      "dimension": "reference_closeness",
+      "evidence_type": "qualitative_component_direction",
+      "preferred_display": "B",
+      "record_ids": [
+        "R01810",
+        "R01385"
+      ],
+      "image_ids": [
+        "wc2JMjhGNzB_3504ff17bcae4d6c85bdc61fc3a5bf0c"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "不是很好判断,除非给我具体的数值. 都是有点小偏移",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "C01",
+      "count_dimensions_as_independent": false,
+      "preferred_record_id": "R01385",
+      "other_record_id": "R01810",
+      "interpretation": "用户说相对参考B较接近；A更符合曼哈顿以提问形式出现，不另补人评确定标签。"
+    },
+    {
+      "constraint_id": "C02:self_geometry_without_reference",
+      "panel": "C02",
+      "dimension": "self_geometry_without_reference",
+      "evidence_type": "conditional_component_direction",
+      "preferred_display": "B",
+      "record_ids": [
+        "R03351",
+        "R03350"
+      ],
+      "image_ids": [
+        "Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "这个可能得结合3d的数据进行再次判断(看不太清),因为目前看来b的3d表现 好像还挺规整.两者都是偏离了gt的标注的.A detail 1,2 都有偏离,B 是detail 1 偏的很少,detail2 偏的很大(比A偏的还多)",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "C02",
+      "count_dimensions_as_independent": false,
+      "preferred_record_id": "R03350",
+      "other_record_id": "R03351",
+      "interpretation": "仅看形成三维体时倾向B；综合参考后的整体仍不确定且接近。"
+    },
+    {
+      "constraint_id": "C02:reference_closeness",
+      "panel": "C02",
+      "dimension": "reference_closeness",
+      "evidence_type": "qualitative_component_direction",
+      "preferred_display": "A",
+      "record_ids": [
+        "R03351",
+        "R03350"
+      ],
+      "image_ids": [
+        "Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "这个可能得结合3d的数据进行再次判断(看不太清),因为目前看来b的3d表现 好像还挺规整.两者都是偏离了gt的标注的.A detail 1,2 都有偏离,B 是detail 1 偏的很少,detail2 偏的很大(比A偏的还多)",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "C02",
+      "count_dimensions_as_independent": false,
+      "preferred_record_id": "R03351",
+      "other_record_id": "R03350"
+    },
+    {
+      "constraint_id": "C03:processed_overall_quality",
+      "panel": "C03",
+      "dimension": "processed_overall_quality",
+      "evidence_type": "explicit_direction_and_both_good",
+      "preferred_display": "A",
+      "record_ids": [
+        "R01033",
+        "R01022"
+      ],
+      "image_ids": [
+        "wc2JMjhGNzB_77962388887942148ee65c2892600e02"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "两者都很不错,不过a 更接近gt",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "C03",
+      "count_dimensions_as_independent": false,
+      "preferred_record_id": "R01033",
+      "other_record_id": "R01022",
+      "constraint_direction": "higher_quality",
+      "both_qualitatively_good": true,
+      "strict_acceptable_grade_assigned": false,
+      "interpretation": "A更接近GT、两者都不错；不支持把B归入旧严格可接受档，亦不认可具体分差。"
+    },
+    {
+      "constraint_id": "C04:processed_overall_quality",
+      "panel": "C04",
+      "dimension": "processed_overall_quality",
+      "evidence_type": "qualitatively_close",
+      "preferred_display": null,
+      "record_ids": [
+        "R02447",
+        "R01973"
+      ],
+      "image_ids": [
+        "wc2JMjhGNzB_3504ff17bcae4d6c85bdc61fc3a5bf0c"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "基本差不多,我没有看出明显的差别",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "C04",
+      "count_dimensions_as_independent": false,
+      "strict_preference": null,
+      "interpretation": "未见明显差别；接近不等于精确同分。"
+    },
+    {
+      "constraint_id": "P04:top_height_penalty",
+      "panel": "P04",
+      "dimension": "top_height_penalty",
+      "evidence_type": "explicit_component_penalty_direction",
+      "preferred_display": "B06",
+      "record_ids": [
+        "R00397",
+        "R00418"
+      ],
+      "image_ids": [
+        "B6ByNegPMKs_48ee619d38b142f88914e7e2582bc1d8",
+        "pRbA3pwrgk9_285b697fed754f86a09602c93628cfb4"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "如果我没看错的话,b05是整体更低,顶面高度也相对更平均.06 是有两个 角点标的特别矮,导致整体高度不一",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "P04",
+      "count_dimensions_as_independent": false,
+      "preferred_record_id": "R00418",
+      "other_record_id": "R00397",
+      "constraint_direction": "higher_top_penalty",
+      "overall_direction": null,
+      "observation_qualification": "如果我没看错的话",
+      "comparison_is_cross_image": true,
+      "interpretation": "顶面相对均匀但整体偏低B05，与局部高度不一致B06比较；不得用于总分胜率。"
+    },
+    {
+      "constraint_id": "P02:processed_overall_grade",
+      "panel": "P02",
+      "dimension": "processed_overall_grade",
+      "evidence_type": "adjacent_grade_interval",
+      "preferred_display": null,
+      "record_ids": [
+        "R00272"
+      ],
+      "image_ids": [
+        "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "明显问题和严重不符之间,但是因为这图是困难图,所以当时我并没有把它直接排除出标注数据",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "P02",
+      "count_dimensions_as_independent": false,
+      "grade_interval": [
+        "明显问题",
+        "严重不符"
+      ],
+      "fixed_grade": null,
+      "interpretation": "困难图而保留是筛除决策，不能转质量加分。"
+    },
+    {
+      "constraint_id": "P03:processed_overall_grade",
+      "panel": "P03",
+      "dimension": "processed_overall_grade",
+      "evidence_type": "explicit_grade",
+      "preferred_display": null,
+      "record_ids": [
+        "R00991"
+      ],
+      "image_ids": [
+        "wc2JMjhGNzB_dc4a9f470b834de1983c7e605ff06b2e"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "多标了第三对点",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "P03",
+      "count_dimensions_as_independent": false,
+      "grade": "明显问题",
+      "old_screen_grade": "pending_borderline",
+      "interpretation": "新协议的明确问题意见另层生效，旧screen犹豫回执保留。"
+    },
+    {
+      "constraint_id": "P05:current_input_pair_semantics",
+      "panel": "P05",
+      "dimension": "current_input_pair_semantics",
+      "evidence_type": "specific_mechanism_observation_no_grade",
+      "preferred_display": null,
+      "record_ids": [
+        "R00678"
+      ],
+      "image_ids": [
+        "uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "这个标注比较特殊,原始标注的确实比较差,x坐标并没有一致,有些地方相差的蛮大的. 平均x 后确直接在那个拐角的中间了. 实际上他的标点是标在了第一个拐角的上面 和第二个拐角的下面.",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "P05",
+      "count_dimensions_as_independent": false,
+      "grade": null,
+      "input_choice": null,
+      "input_status": "not_reviewed",
+      "reported_mechanism": "两个物理墙角的上下点被配成一对，平均x掩盖差异",
+      "independent_visual_confirmation": false,
+      "automatic_pairing_repair": false,
+      "interpretation": "未填输入选择不抹去文字中的问题线索；亦不把线索转固定等级或罚分。"
+    },
+    {
+      "constraint_id": "V01:floor_result",
+      "panel": "V01",
+      "dimension": "floor_result",
+      "evidence_type": "qualitatively_close",
+      "preferred_display": null,
+      "record_ids": [
+        "R00017",
+        "R02442"
+      ],
+      "image_ids": [
+        "wc2JMjhGNzB_77962388887942148ee65c2892600e02"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "从底面角度来看,v01 差不多,02是B 更好,但是我没有看到3d的,我没法评判高度.仅从2d来看高度的话,v02是a 更好,v01暂时判断不出",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "V01",
+      "count_dimensions_as_independent": false,
+      "preferred_record_id": null,
+      "overall_direction": null,
+      "interpretation": "投影、底面、三维高度分层，未知不补相等。"
+    },
+    {
+      "constraint_id": "V01:top_projection_2d",
+      "panel": "V01",
+      "dimension": "top_projection_2d",
+      "evidence_type": "unknown",
+      "preferred_display": null,
+      "record_ids": [
+        "R00017",
+        "R02442"
+      ],
+      "image_ids": [
+        "wc2JMjhGNzB_77962388887942148ee65c2892600e02"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "从底面角度来看,v01 差不多,02是B 更好,但是我没有看到3d的,我没法评判高度.仅从2d来看高度的话,v02是a 更好,v01暂时判断不出",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "V01",
+      "count_dimensions_as_independent": false,
+      "preferred_record_id": null,
+      "overall_direction": null,
+      "interpretation": "投影、底面、三维高度分层，未知不补相等。"
+    },
+    {
+      "constraint_id": "V01:height_geometry_3d",
+      "panel": "V01",
+      "dimension": "height_geometry_3d",
+      "evidence_type": "unknown",
+      "preferred_display": null,
+      "record_ids": [
+        "R00017",
+        "R02442"
+      ],
+      "image_ids": [
+        "wc2JMjhGNzB_77962388887942148ee65c2892600e02"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "从底面角度来看,v01 差不多,02是B 更好,但是我没有看到3d的,我没法评判高度.仅从2d来看高度的话,v02是a 更好,v01暂时判断不出",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "V01",
+      "count_dimensions_as_independent": false,
+      "preferred_record_id": null,
+      "overall_direction": null,
+      "interpretation": "投影、底面、三维高度分层，未知不补相等。"
+    },
+    {
+      "constraint_id": "V02:floor_result",
+      "panel": "V02",
+      "dimension": "floor_result",
+      "evidence_type": "explicit_component_direction",
+      "preferred_display": "B",
+      "record_ids": [
+        "R02070",
+        "R01304"
+      ],
+      "image_ids": [
+        "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "从底面角度来看,v01 差不多,02是B 更好,但是我没有看到3d的,我没法评判高度.仅从2d来看高度的话,v02是a 更好,v01暂时判断不出",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "V02",
+      "count_dimensions_as_independent": false,
+      "preferred_record_id": "R01304",
+      "overall_direction": null,
+      "interpretation": "投影、底面、三维高度分层，未知不补相等。"
+    },
+    {
+      "constraint_id": "V02:top_projection_2d",
+      "panel": "V02",
+      "dimension": "top_projection_2d",
+      "evidence_type": "explicit_component_direction",
+      "preferred_display": "A",
+      "record_ids": [
+        "R02070",
+        "R01304"
+      ],
+      "image_ids": [
+        "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "从底面角度来看,v01 差不多,02是B 更好,但是我没有看到3d的,我没法评判高度.仅从2d来看高度的话,v02是a 更好,v01暂时判断不出",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "V02",
+      "count_dimensions_as_independent": false,
+      "preferred_record_id": "R02070",
+      "overall_direction": null,
+      "interpretation": "投影、底面、三维高度分层，未知不补相等。"
+    },
+    {
+      "constraint_id": "V02:height_geometry_3d",
+      "panel": "V02",
+      "dimension": "height_geometry_3d",
+      "evidence_type": "unknown",
+      "preferred_display": null,
+      "record_ids": [
+        "R02070",
+        "R01304"
+      ],
+      "image_ids": [
+        "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "从底面角度来看,v01 差不多,02是B 更好,但是我没有看到3d的,我没法评判高度.仅从2d来看高度的话,v02是a 更好,v01暂时判断不出",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "V02",
+      "count_dimensions_as_independent": false,
+      "preferred_record_id": null,
+      "overall_direction": null,
+      "interpretation": "投影、底面、三维高度分层，未知不补相等。"
+    },
+    {
+      "constraint_id": "L01:processed_overall_quality",
+      "panel": "L01",
+      "dimension": "processed_overall_quality",
+      "evidence_type": "qualitatively_close",
+      "preferred_display": null,
+      "record_ids": [
+        "R01609",
+        "R02297"
+      ],
+      "image_ids": [
+        "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": [
+        {
+          "order": 1,
+          "verbatim": "2d上面来看,a相对于b  顶部差异明显一点,3d差异没有这么大. 整体质量接近,硬说的话 是B 略好"
+        },
+        {
+          "order": 2,
+          "verbatim": "b是在3d上略好,但是看2d图,a的标注离gt更相近一些"
+        }
+      ],
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "L01",
+      "count_dimensions_as_independent": false,
+      "strict_preference": null,
+      "candidate_score_gaps_endorsed": false
+    },
+    {
+      "constraint_id": "L01:geometry_3d",
+      "panel": "L01",
+      "dimension": "geometry_3d",
+      "evidence_type": "weak_component_direction",
+      "preferred_display": "B",
+      "record_ids": [
+        "R01609",
+        "R02297"
+      ],
+      "image_ids": [
+        "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": [
+        {
+          "order": 1,
+          "verbatim": "2d上面来看,a相对于b  顶部差异明显一点,3d差异没有这么大. 整体质量接近,硬说的话 是B 略好"
+        },
+        {
+          "order": 2,
+          "verbatim": "b是在3d上略好,但是看2d图,a的标注离gt更相近一些"
+        }
+      ],
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "L01",
+      "count_dimensions_as_independent": false,
+      "preferred_record_id": "R02297",
+      "other_record_id": "R01609",
+      "overall_direction": null
+    },
+    {
+      "constraint_id": "L01:image_2d_reference_closeness",
+      "panel": "L01",
+      "dimension": "image_2d_reference_closeness",
+      "evidence_type": "qualitative_component_direction",
+      "preferred_display": "A",
+      "record_ids": [
+        "R01609",
+        "R02297"
+      ],
+      "image_ids": [
+        "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": [
+        {
+          "order": 1,
+          "verbatim": "2d上面来看,a相对于b  顶部差异明显一点,3d差异没有这么大. 整体质量接近,硬说的话 是B 略好"
+        },
+        {
+          "order": 2,
+          "verbatim": "b是在3d上略好,但是看2d图,a的标注离gt更相近一些"
+        }
+      ],
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "L01",
+      "count_dimensions_as_independent": false,
+      "preferred_record_id": "R01609",
+      "other_record_id": "R02297",
+      "top_only_2d_direction": null,
+      "interpretation": "二维整图更贴GT不能被强行赋给顶部S；最初顶部差异观察保留。"
+    }
+  ],
+  "general_preference": {
+    "source": "latest_user_message",
+    "criterion": "comparable error conditions",
+    "order": [
+      "structure_angle_or_slant",
+      "local_height_inconsistency",
+      "uniform_global_height_offset"
+    ],
+    "universal_error_magnitude_order": false,
+    "weight_number_order_not_sufficient": true
+  },
+  "no_numeric_closeness_tolerance_assigned": true,
+  "grade_protocols_kept_separate": true,
+  "confidence_not_imputed": true
+}

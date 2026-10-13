@@ -1,0 +1,1420 @@
+{
+  "previous_schema": "quality_full_data_admission_20261013_v2",
+  "previous_summary": {
+    "all_annotations": 3152,
+    "conditions": {
+      "manual": 2344,
+      "oos": 234,
+      "semi": 574
+    },
+    "pro_922_conditions": {
+      "manual": 589,
+      "semi": 333
+    },
+    "outside_pro_conditions": {
+      "manual": 1755,
+      "oos": 234,
+      "semi": 241
+    },
+    "source_cohorts": {
+      "manual_priority": 2344,
+      "other_condition_separate": 234,
+      "semi_trap_separate": 288,
+      "semi_unverified_separate": 181,
+      "semi_unchanged_separate": 64,
+      "semi_nontrap_changed_candidate": 41
+    },
+    "roles": {
+      "manual_development_candidate": 1327,
+      "held_or_diagnostic": 1770,
+      "severe_exception_candidate": 16,
+      "semi_secondary_candidate": 39
+    },
+    "roles_manual": {
+      "manual_development_candidate": 1327,
+      "held_or_diagnostic": 1001,
+      "severe_exception_candidate": 16
+    },
+    "original_holdout": 282,
+    "main_full_q_ready": 574,
+    "secondary_full_q_ready": 39,
+    "exception_full_q_ready": 9,
+    "explicit_applicability_manual_subset": 71,
+    "old24_main_admitted": 11,
+    "constraints_main_admitted": 5,
+    "excluded_workers": {
+      "W019": {
+        "records": 57,
+        "reviewed_severe": 12,
+        "severe_candidates": 6,
+        "full_q_ready": 0
+      },
+      "W026": {
+        "records": 56,
+        "reviewed_severe": 0,
+        "severe_candidates": 0,
+        "full_q_ready": 0
+      }
+    },
+    "joint_rows_with_personnel_exclusion": [
+      "R00162",
+      "R02199",
+      "R02391",
+      "R00418",
+      "R00084",
+      "R00739",
+      "R01025",
+      "R01052",
+      "R02053",
+      "R01542",
+      "R00991",
+      "R00035",
+      "R00187",
+      "R00272",
+      "R00067"
+    ]
+  },
+  "records": [
+    {
+      "record_id": "R00412",
+      "object_id": "285a5ac1de5efeac",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W001",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R01471",
+      "object_id": "941c0898a57d3f1a",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W002",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R00372",
+      "object_id": "2498d239ddfc8870",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W006",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R01566",
+      "object_id": "9ddd4523d7b7906f",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W008",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R02496",
+      "object_id": "ffabc19f537baebf",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W010",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": {
+        "case_id": "S072",
+        "record_id": "R02496",
+        "object_id": "ffabc19f537baebf",
+        "image_code": "uNb9QFRL6hY-63",
+        "worker_id": "W010",
+        "original_judgment": "unmarked",
+        "comment": null,
+        "calibration_scope_hold_reasons": [],
+        "needs_user_rereview": false,
+        "rereview_basis": null,
+        "geometry_mode": "frozen_geometry",
+        "numeric_calibration_geometry_ready": true,
+        "formal_eligibility_changed": false,
+        "unmarked_is_negative_label": false,
+        "effective_review_status": "not_reviewed",
+        "comment_is_independent_grade_label": false
+      },
+      "severe_historical_full_q_ready": true,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R00888",
+      "object_id": "5d4b529359890ec3",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W011",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R01928",
+      "object_id": "c1e19602fd26903e",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W012",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R02272",
+      "object_id": "e944c8e11ed36c40",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W013",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R01339",
+      "object_id": "883cd9a83e580954",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W014",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R00267",
+      "object_id": "1afc429f5faf7c65",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W015",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R01475",
+      "object_id": "94914c8bd46805c9",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W017",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R01454",
+      "object_id": "9296d36ebe81d569",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W018",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R00254",
+      "object_id": "19e349a755afd389",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W019",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked",
+      "cleaning_disposition": "historical_not_accepted",
+      "current_personnel_gate": "excluded",
+      "source_geometry_status": "pairing_unavailable",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": {
+        "case_id": "S021",
+        "record_id": "R00254",
+        "object_id": "19e349a755afd389",
+        "image_code": "uNb9QFRL6hY-63",
+        "worker_id": "W019",
+        "original_judgment": "unmarked",
+        "comment": null,
+        "calibration_scope_hold_reasons": [],
+        "needs_user_rereview": false,
+        "rereview_basis": null,
+        "geometry_mode": "raw_points_only",
+        "numeric_calibration_geometry_ready": false,
+        "formal_eligibility_changed": false,
+        "unmarked_is_negative_label": false,
+        "effective_review_status": "not_reviewed",
+        "comment_is_independent_grade_label": false
+      },
+      "severe_historical_full_q_ready": false,
+      "personnel_barriers": [
+        "excluded_worker:W019",
+        "cleaning:historical_not_accepted",
+        "formal_gate:excluded",
+        "not_independent_vote"
+      ],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics",
+        "pairing_unavailable"
+      ],
+      "role": "held_or_diagnostic",
+      "personnel_gate_compatible": false,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R00091",
+      "object_id": "08589c3af25a8b0d",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W021",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R01514",
+      "object_id": "98d0bb643510adc2",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W026",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked",
+      "cleaning_disposition": "historical_not_accepted",
+      "current_personnel_gate": "excluded",
+      "source_geometry_status": "pairing_unavailable",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [
+        "excluded_worker:W026",
+        "cleaning:historical_not_accepted",
+        "formal_gate:excluded",
+        "not_independent_vote"
+      ],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics",
+        "pairing_unavailable"
+      ],
+      "role": "held_or_diagnostic",
+      "personnel_gate_compatible": false,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R00489",
+      "object_id": "317410f693c7379d",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W027",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R01252",
+      "object_id": "80fbe67225c21eb2",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W028",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R02099",
+      "object_id": "d6563b79ad01a3ad",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W029",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R00846",
+      "object_id": "5658951cb26b6a74",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W030",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R00069",
+      "object_id": "069c8d013f9ff384",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W031",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R02406",
+      "object_id": "f6377d1bf3f1d93a",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W032",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R01696",
+      "object_id": "abffbe9ff5e5e049",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W033",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R01804",
+      "object_id": "b5310b5a5c856240",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W034",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "excluded_by_review",
+      "current_personnel_gate": "excluded",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": {
+        "case_id": "S013",
+        "record_id": "R01804",
+        "object_id": "b5310b5a5c856240",
+        "image_code": "uNb9QFRL6hY-63",
+        "worker_id": "W034",
+        "original_judgment": "unmarked",
+        "comment": null,
+        "calibration_scope_hold_reasons": [],
+        "needs_user_rereview": false,
+        "rereview_basis": null,
+        "geometry_mode": "frozen_geometry",
+        "numeric_calibration_geometry_ready": true,
+        "formal_eligibility_changed": false,
+        "unmarked_is_negative_label": false,
+        "effective_review_status": "not_reviewed",
+        "comment_is_independent_grade_label": false
+      },
+      "severe_historical_full_q_ready": true,
+      "personnel_barriers": [
+        "cleaning:excluded_by_review",
+        "formal_gate:excluded",
+        "not_independent_vote"
+      ],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "held_or_diagnostic",
+      "personnel_gate_compatible": false,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R01295",
+      "object_id": "84737c49b7cb43cb",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W035",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R02222",
+      "object_id": "e37769f9a2907705",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W036",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    },
+    {
+      "record_id": "R00640",
+      "object_id": "3f5307c8e24eadb4",
+      "image_id": "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+      "image_code": "uNb9QFRL6hY-63",
+      "worker_id": "W037",
+      "condition": "manual",
+      "source_cohort": "manual_priority",
+      "trap_status": "unknown",
+      "model_edit_status": "not_checked_non_semi",
+      "cleaning_disposition": "retained",
+      "current_personnel_gate": "candidate_pending_geometry",
+      "source_geometry_status": "surface_valid",
+      "geometry_issues": [],
+      "in_pro_922": false,
+      "reference_object_id": null,
+      "explicit_applicability_subset": null,
+      "existing_conditional_development_allowed": false,
+      "existing_development_gate": null,
+      "final_reference_acceptance_newly_granted": false,
+      "scored_input": "processed_mean_x_geometry",
+      "raw_input_penalty_included": false,
+      "available_reference_versions": {
+        "gt_original": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a.txt",
+          "restrictions": []
+        },
+        "gt_manual_revision": {
+          "object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+          "restrictions": []
+        }
+      },
+      "original_room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "original_holdout": false,
+      "exposure": "not_certified_unexposed",
+      "severe_review": null,
+      "severe_historical_full_q_ready": null,
+      "personnel_barriers": [],
+      "context_barriers": [],
+      "numeric_barriers": [
+        "fixed_reference_binding_not_audited_in_922",
+        "outside_frozen_metrics"
+      ],
+      "role": "manual_development_candidate",
+      "personnel_gate_compatible": true,
+      "full_q_calibration_ready": false,
+      "severe_exception": false,
+      "formal_eligibility_newly_granted": false
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "schema": "joint_search_design_v1",
+  "seed": 20261013,
+  "coarse_count": 16384,
+  "bounds": {
+    "iou_power": [
+      0.5,
+      2.0
+    ],
+    "boundary_scale": [
+      2.0,
+      20.0
+    ],
+    "direction_scale": [
+      2.0,
+      20.0
+    ],
+    "direction_cap": [
+      0.5,
+      16.0
+    ],
+    "tail_scale": [
+      6.0,
+      48.0
+    ],
+    "global_scale": [
+      0.15,
+      3.0
+    ],
+    "local_scale": [
+      0.05,
+      0.8
+    ]
+  },
+  "categorical": {
+    "boundary_power": [
+      1.0,
+      2.0,
+      3.0
+    ],
+    "direction_power": [
+      1.5,
+      2.0,
+      3.0,
+      4.0,
+      6.0
+    ],
+    "global_power": [
+      1.5,
+      2.0,
+      3.0
+    ],
+    "local_power": [
+      1.5,
+      2.0,
+      3.0
+    ],
+    "tail_threshold": [
+      2.0,
+      5.0,
+      10.0,
+      15.0
+    ]
+  },
+  "families": [
+    "hill",
+    "power",
+    "accelerated",
+    "hill_tail",
+    "moment4",
+    "supported_tail",
+    "joint_hinge"
+  ],
+  "combinations": [
+    "additive",
+    "product_height",
+    "product_all",
+    "max_floor"
+  ],
+  "evidence_policy": "Explicit overall and conditional directions separate; no numeric target score or exact tie; all human cases are development.",
+  "uncertainty_policy": "All old30 judgements remain hesitant; old24 grades are weak ordinal development evidence, not 164 independent labels.",
+  "scope_sensitivity": "All24 preserved; T21/T22 omitted only from clean22 sensitivity because their small ranges were never accepted.",
+  "response_requirements": {
+    "D2_loss_max": 0.2,
+    "D15_loss_min": 2.0,
+    "D15_to_D5_loss_ratio_min": 4.0,
+    "Hm_point2_loss_max": 0.35,
+    "Hm1_loss_min": 0.5,
+    "same_fraction_local_ge_global": true
+  },
+  "response_requirements_are_model_design_not_human_grades": true,
+  "response_requirements_sensitivity": "Report candidates without this screen and several expanded bounds; no claim that these exact endpoints are human-calibrated.",
+  "soft_closeness": "Abs log score ratio is descriptive/Pareto tie-break only; no numerical equality tolerance is imposed.",
+  "input_sha256": "00d40bb4ae83c24f40fee545e1255ecc6b9a433b05f6c1ebec88318afbbb83a8",
+  "selection_key": "hard signs; response requirements; clean22 macro error; weak log-closeness; full old24 is reported, not optimized because of latest scope confounding"
+}

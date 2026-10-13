@@ -1,0 +1,41 @@
+{
+  "schema": "quality_height_bounded_design_20261013_v1",
+  "written_before_candidate_evaluation": true,
+  "scope": "普通manual已许可开发输入；条件参考不升级为正式认证；保留旧算法和全部原件",
+  "base_candidate": "J_main_hill_tail12_g1_l025",
+  "candidates": [
+    {"name": "main", "global_scale": 1.0, "local_scale": 0.25},
+    {"name": "global_stronger", "global_scale": 0.8, "local_scale": 0.25},
+    {"name": "global_weaker", "global_scale": 1.2, "local_scale": 0.25},
+    {"name": "local_stronger", "global_scale": 1.0, "local_scale": 0.20},
+    {"name": "local_weaker", "global_scale": 1.0, "local_scale": 0.30}
+  ],
+  "fixed": ["参考绑定", "处理后点对及环序", "底面指标", "方向项及尾项", "高度二次幂", "加法组合", "正式算法", "融合算法"],
+  "controls": {
+    "reuse": "原physical_controls中48份整体升降及交替高低；不重复几何重算",
+    "new": "正方形与狭长矩形：两轴倾斜、单角点正负异常；补严重整体升降及均高偏低叠加倾斜",
+    "peak_relative_amplitudes": [0.02, 0.10, 0.20, 0.40],
+    "severe_uniform_amplitudes": [0.40, 0.60],
+    "mixed_mean_shift": -0.25,
+    "mixed_tilt_amplitude": 0.20,
+    "comparison": "按相同最大角点位移列出，并报告实际周长RMS；不宣称同幅度或同RMS等感知严重度",
+    "pass": "固定同底面时Hm等于相对均值偏移；Hc等于去均值周长RMS，绝对误差<0.000005；不改输入；纯单因素幅度增加不得涨分"
+  },
+  "data": {
+    "primary": "research/quality_data_admission_audit_20261013/MANUAL_PRIMARY_SEARCH_INPUTS.json",
+    "expected_records": 574,
+    "expected_weak_grades": 11,
+    "expected_constraint_entries": 5,
+    "exclude": ["原留出", "OOS及疑似OOS", "门洞交界", "台阶未决", "semi", "严重例外", "人员或参考限制"],
+    "exposure": "全部人评为开发；原282留出保留，已知148曾进入新增融合诊断，不能声称新独立验证",
+    "recent_review": "5完整问卷加1仅评论；用于形态解释，不转成总分等级或数值罚分；轻微GT问题沿用参考"
+  },
+  "decision": {
+    "hard_gate": "不破坏P01现有明确总质量方向，底面分不变，控制算术与单调性通过",
+    "weak_evidence": "11弱等级仅做逆序诊断；按涉及建筑留一检查，仅为开发敏感性；C02接近不拟合为精确相等",
+    "selection": "只有现有独立问题组对同一高度调整给出重复方向支持，且不损害明确约束，才考虑更换工作候选；仅弱等级逆序减少、分数普涨或控制符合设计不足以选优",
+    "stop": "控制测量不符则停止调参查原因；证据不识别唯一参数则保留main并报告区间响应，不追加网格或强行选赢家",
+    "formal_promotion": false
+  },
+  "historical_regression_addendum": "主比较完成后发现旧入口没有带入L01：在计算这些诊断分前补记，仅旁列T20/P04/L01及已许可的9份严重反例。保持semi/排除/严重例外身份，不入574份拟合或选优，不把P04分项方向变成总分方向，不把L01接近变成分差目标。"
+}

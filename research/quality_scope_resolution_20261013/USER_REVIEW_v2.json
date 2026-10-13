@@ -1,0 +1,216 @@
+{
+  "schema": "quality_scope_review_20261013_v2",
+  "decisions": [
+    {
+      "questionnaire_version": "quality_scope_review_20261013_v2",
+      "case_id": "R01977",
+      "image_id": "B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993",
+      "source": "c811ff3e51132e75",
+      "references": [
+        {
+          "candidate_id": "current",
+          "object_id": "gt:B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993:data/mp3d_layout/test/label_cor/B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993.txt"
+        }
+      ],
+      "answers": {
+        "space_extent": {
+          "question": "1. 橙线和绿线围住的是同一段空间吗？",
+          "purpose": "先区分范围选择不同与同一空间内的高度误差，避免把“走廊截取长度不同”直接当作高度标错。",
+          "value": "orange_more",
+          "label": "橙线包含得更多／停得更远"
+        },
+        "top_in_photo": {
+          "question": "2. 对照照片，哪条顶部线标得更合理？",
+          "purpose": "核实高度差是否真有标注错误依据；不能仅因橙线离绿色GT远，就认定橙线错误。",
+          "value": "reference_better",
+          "label": "绿线更符合照片里的墙顶"
+        },
+        "height_in_3d": {
+          "question": "3. 只看三维形状，橙线与绿线的高度差主要是哪一种？",
+          "purpose": "区分算法的“整体高度偏差”和“局部高度不一致”两项，不请你决定扣多少分。",
+          "value": "local_uneven",
+          "label": "主要是部分角点忽高忽低"
+        }
+      },
+      "comment": "橙色是一侧低,另一侧更低",
+      "reviewed_at": "2026-10-13T07:42:15.982Z"
+    },
+    {
+      "questionnaire_version": "quality_scope_review_20261013_v2",
+      "case_id": "R02135",
+      "image_id": "B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993",
+      "source": "d97a4c0b5bbe5fb7",
+      "references": [
+        {
+          "candidate_id": "current",
+          "object_id": "gt:B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993:data/mp3d_layout/test/label_cor/B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993.txt"
+        }
+      ],
+      "answers": {
+        "space_extent": {
+          "question": "1. 橙线和绿线围住的是同一段空间吗？",
+          "purpose": "先区分范围选择不同与同一空间内的高度误差，避免把“走廊截取长度不同”直接当作高度标错。",
+          "value": "same",
+          "label": "基本是同一段空间"
+        },
+        "top_in_photo": {
+          "question": "2. 对照照片，哪条顶部线标得更合理？",
+          "purpose": "核实高度差是否真有标注错误依据；不能仅因橙线离绿色GT远，就认定橙线错误。",
+          "value": "both_similar",
+          "label": "两条都合理，差异不明显"
+        },
+        "height_in_3d": {
+          "question": "3. 只看三维形状，橙线与绿线的高度差主要是哪一种？",
+          "purpose": "区分算法的“整体高度偏差”和“局部高度不一致”两项，不请你决定扣多少分。",
+          "value": "local_uneven",
+          "label": "主要是部分角点忽高忽低"
+        }
+      },
+      "comment": "橙色右边的角点标的低了,导致一侧高度偏低",
+      "reviewed_at": "2026-10-13T07:43:00.985Z"
+    },
+    {
+      "questionnaire_version": "quality_scope_review_20261013_v2",
+      "case_id": "R00961",
+      "image_id": "B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624",
+      "source": "645a19e0d1eff33f",
+      "references": [
+        {
+          "candidate_id": "current",
+          "object_id": "gt:B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624:data/mp3d_layout/test/label_cor/B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624.txt"
+        }
+      ],
+      "answers": {
+        "space_extent": {
+          "question": "1. 橙线和绿线围住的是同一段空间吗？",
+          "purpose": "先区分范围选择不同与同一空间内的高度误差，避免把“走廊截取长度不同”直接当作高度标错。",
+          "value": "orange_less",
+          "label": "橙线包含得更少／停得更近"
+        },
+        "top_in_photo": {
+          "question": "2. 对照照片，哪条顶部线标得更合理？",
+          "purpose": "核实高度差是否真有标注错误依据；不能仅因橙线离绿色GT远，就认定橙线错误。",
+          "value": "reference_better",
+          "label": "绿线更符合照片里的墙顶"
+        },
+        "height_in_3d": {
+          "question": "3. 只看三维形状，橙线与绿线的高度差主要是哪一种？",
+          "purpose": "区分算法的“整体高度偏差”和“局部高度不一致”两项，不请你决定扣多少分。",
+          "value": "uniform_lower",
+          "label": "橙线大致平，但整体更低"
+        }
+      },
+      "comment": "",
+      "reviewed_at": "2026-10-13T07:44:31.456Z"
+    },
+    {
+      "questionnaire_version": "quality_scope_review_20261013_v2",
+      "case_id": "R00848",
+      "image_id": "B6ByNegPMKs_e52609aae11f42a79f6cf50360180fd5",
+      "source": "56c9aa0348514ab3cc5b",
+      "references": [
+        {
+          "candidate_id": "current",
+          "object_id": "gt:B6ByNegPMKs_e52609aae11f42a79f6cf50360180fd5:data/mp3d_layout/test/label_cor/B6ByNegPMKs_e52609aae11f42a79f6cf50360180fd5.txt"
+        }
+      ],
+      "answers": {
+        "space_extent": {
+          "question": "1. 橙线和绿线围住的是同一段空间吗？",
+          "purpose": "先区分范围选择不同与同一空间内的高度误差，避免把“走廊截取长度不同”直接当作高度标错。",
+          "value": "orange_more",
+          "label": "橙线包含得更多／停得更远"
+        },
+        "top_in_photo": {
+          "question": "2. 对照照片，哪条顶部线标得更合理？",
+          "purpose": "核实高度差是否真有标注错误依据；不能仅因橙线离绿色GT远，就认定橙线错误。",
+          "value": "reference_better",
+          "label": "绿线更符合照片里的墙顶"
+        },
+        "height_in_3d": {
+          "question": "3. 只看三维形状，橙线与绿线的高度差主要是哪一种？",
+          "purpose": "区分算法的“整体高度偏差”和“局部高度不一致”两项，不请你决定扣多少分。",
+          "value": "uniform_lower",
+          "label": "橙线大致平，但整体更低"
+        }
+      },
+      "comment": "",
+      "reviewed_at": "2026-10-13T07:45:08.455Z"
+    },
+    {
+      "questionnaire_version": "quality_scope_review_20261013_v2",
+      "case_id": "R00687",
+      "image_id": "jtcxE69GiFV_3fb4bb890d7f4964b496a46db647e72a",
+      "source": "44c73224857604910e05",
+      "references": [
+        {
+          "candidate_id": "current",
+          "object_id": "gt:jtcxE69GiFV_3fb4bb890d7f4964b496a46db647e72a:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_3fb4bb890d7f4964b496a46db647e72a.txt"
+        }
+      ],
+      "answers": {
+        "space_extent": {
+          "question": "1. 橙线和绿线围住的是同一段空间吗？",
+          "purpose": "先区分范围选择不同与同一空间内的高度误差，避免把“走廊截取长度不同”直接当作高度标错。",
+          "value": "same",
+          "label": "基本是同一段空间"
+        },
+        "top_in_photo": {
+          "question": "2. 对照照片，哪条顶部线标得更合理？",
+          "purpose": "核实高度差是否真有标注错误依据；不能仅因橙线离绿色GT远，就认定橙线错误。",
+          "value": "both_wrong",
+          "label": "两条都有明显问题"
+        },
+        "height_in_3d": {
+          "question": "3. 只看三维形状，橙线与绿线的高度差主要是哪一种？",
+          "purpose": "区分算法的“整体高度偏差”和“局部高度不一致”两项，不请你决定扣多少分。",
+          "value": "local_uneven",
+          "label": "主要是部分角点忽高忽低"
+        }
+      },
+      "comment": "gt好像标的略高了. 橙色一边标的可能低了点",
+      "reviewed_at": "2026-10-13T07:50:42.645Z"
+    },
+    {
+      "questionnaire_version": "quality_scope_review_20261013_v2",
+      "case_id": "R00977",
+      "image_id": "uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d",
+      "source": "6608319ee6b1e7808937",
+      "references": [
+        {
+          "candidate_id": "current",
+          "object_id": "gt:uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d.txt"
+        }
+      ],
+      "answers": {
+        "space_extent": {
+          "question": "1. 橙线和绿线围住的是同一段空间吗？",
+          "purpose": "先区分范围选择不同与同一空间内的高度误差，避免把“走廊截取长度不同”直接当作高度标错。",
+          "value": null,
+          "label": null
+        },
+        "top_in_photo": {
+          "question": "2. 对照照片，哪条顶部线标得更合理？",
+          "purpose": "核实高度差是否真有标注错误依据；不能仅因橙线离绿色GT远，就认定橙线错误。",
+          "value": null,
+          "label": null
+        },
+        "height_in_3d": {
+          "question": "3. 只看三维形状，橙线与绿线的高度差主要是哪一种？",
+          "purpose": "区分算法的“整体高度偏差”和“局部高度不一致”两项，不请你决定扣多少分。",
+          "value": null,
+          "label": null
+        },
+        "floor_steps": {
+          "question": "补充：橙色底点有没有分别落在台阶上、台阶下？",
+          "purpose": "若地面本来有高低差，现算法把所有底点画在同一高度可能造成假高度差，不能都算作顶部标错。",
+          "value": null,
+          "label": null
+        }
+      },
+      "comment": "这图好像是有争议的,这gt标的都是在台阶外的",
+      "reviewed_at": "2026-10-13T07:51:35.310Z"
+    }
+  ],
+  "legacy_v1_receipts_uninterpreted": {}
+}

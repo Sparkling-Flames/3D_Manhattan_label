@@ -1,0 +1,534 @@
+{
+  "schema": "joint_impact_summary_v1",
+  "recommended": "J_main_hill_tail12_g1_l025",
+  "config_sha256": "815ab24e4646ae65a41719cc36c4bef01ff23b519871d4b18d831c8cd267185d",
+  "fixed_reference": {
+    "fixed_rows": 922,
+    "eligible_rows": 143,
+    "eligible_images": 16,
+    "worker_condition_rows": 48,
+    "same_condition_pairs": 1192,
+    "same_coordinate_hash_pairs": 124,
+    "strict_geometry_distinct_pairs": {
+      "J_main_hill_tail12_g1_l025": 1066,
+      "J_simple_power8_g1_l025": 1066,
+      "J_local_joint_hinge10_w2_s8": 1066
+    },
+    "baseline_scalar_max_abs_difference": 4.263256414560601e-14,
+    "raw_X_max_abs_difference_deg": 1.4127587988355117e-14,
+    "centering_max_abs_difference": 7.105427357601002e-15,
+    "all922_changes": {
+      "J_main_hill_tail12_g1_l025": {
+        "n": 922,
+        "min": -19.824413186183484,
+        "median": -0.0022328260024195856,
+        "mean": -0.7304844224183262,
+        "max": 1.727051499800055
+      },
+      "J_simple_power8_g1_l025": {
+        "n": 922,
+        "min": -17.420468269583086,
+        "median": 2.90779029996731,
+        "mean": 2.914616573317598,
+        "max": 10.090887136235054
+      },
+      "J_local_joint_hinge10_w2_s8": {
+        "n": 922,
+        "min": -21.523308875115763,
+        "median": 2.682788308484618,
+        "mean": 2.3973697567386814,
+        "max": 10.090887136235054
+      }
+    },
+    "eligible143_changes": {
+      "J_main_hill_tail12_g1_l025": {
+        "n": 143,
+        "min": -6.960896850575768,
+        "median": 0.0037668600930800267,
+        "mean": -0.314493438403202,
+        "max": 0.5298796903003549
+      },
+      "J_simple_power8_g1_l025": {
+        "n": 143,
+        "min": -7.275600948017338,
+        "median": 1.8135227648731416,
+        "mean": 2.426689450397197,
+        "max": 9.60318471829963
+      },
+      "J_local_joint_hinge10_w2_s8": {
+        "n": 143,
+        "min": -9.385347574781296,
+        "median": 1.757651912182368,
+        "mean": 2.2991474140425483,
+        "max": 9.60318471829963
+      }
+    },
+    "eligible143_strict_reversals": {
+      "J_main_hill_tail12_g1_l025": 2,
+      "J_simple_power8_g1_l025": 55,
+      "J_local_joint_hinge10_w2_s8": 55
+    }
+  },
+  "four_way": {
+    "J_main_hill_tail12_g1_l025": {
+      "full": {
+        "n_common": 131,
+        "images": 22,
+        "reference_changed_count": 1,
+        "reference_changed_images": [
+          "wc2JMjhGNzB-26"
+        ],
+        "reference_effect": {
+          "n": 131,
+          "min": 0.0,
+          "median": 0.0,
+          "mean": 0.015483207631660346,
+          "max": 2.0283001997475054
+        },
+        "formula_effect_at_new_reference": {
+          "n": 131,
+          "min": -20.700030152483233,
+          "median": -0.704918451722989,
+          "mean": -3.4455140129634367,
+          "max": 0.055352760045309424
+        },
+        "interaction": {
+          "n": 131,
+          "min": -0.005266207779799359,
+          "median": 0.0,
+          "mean": -4.0200059387835607e-05,
+          "max": 0.0
+        },
+        "subset_two_distinct_legal_full_references": {
+          "n": 6,
+          "record_ids": [
+            "R00105",
+            "R00629",
+            "R00660",
+            "R02017",
+            "R02052",
+            "R02373"
+          ],
+          "changed": 1
+        },
+        "historical_original_protocol": {
+          "n_common": 131,
+          "changed": 5,
+          "reference_effect": {
+            "n": 131,
+            "min": 0.0,
+            "median": 0.0,
+            "mean": 0.0634755719534669,
+            "max": 2.6965820758749075
+          }
+        }
+      },
+      "floor": {
+        "n_common": 409,
+        "images": 32,
+        "reference_changed_count": 279,
+        "reference_changed_images": [
+          "b8cTxDM8gDG-18",
+          "e9zR4mvMWw7-09",
+          "e9zR4mvMWw7-17",
+          "pRbA3pwrgk9-02",
+          "q9vSo1VnCiC-11",
+          "q9vSo1VnCiC-12",
+          "q9vSo1VnCiC-29",
+          "rPc6DW4iMge-05",
+          "rPc6DW4iMge-06",
+          "rPc6DW4iMge-22",
+          "uNb9QFRL6hY-18",
+          "uNb9QFRL6hY-26",
+          "uNb9QFRL6hY-41",
+          "uNb9QFRL6hY-44",
+          "uNb9QFRL6hY-55",
+          "uNb9QFRL6hY-59",
+          "uNb9QFRL6hY-66",
+          "uNb9QFRL6hY-67",
+          "uNb9QFRL6hY-68",
+          "uNb9QFRL6hY-81",
+          "uNb9QFRL6hY-88",
+          "wc2JMjhGNzB-03",
+          "wc2JMjhGNzB-22",
+          "wc2JMjhGNzB-26",
+          "wc2JMjhGNzB-29",
+          "wc2JMjhGNzB-54",
+          "wc2JMjhGNzB-61"
+        ],
+        "reference_effect": {
+          "n": 409,
+          "min": 0.0,
+          "median": 5.808476915551751,
+          "mean": 10.365600221026522,
+          "max": 86.49619502322766
+        },
+        "formula_effect_at_new_reference": {
+          "n": 409,
+          "min": -21.10162718296487,
+          "median": -0.3724451738024399,
+          "mean": -2.5308094941570913,
+          "max": -7.247535904753022e-13
+        },
+        "interaction": {
+          "n": 409,
+          "min": -9.265421498760272,
+          "median": -0.011485653334482038,
+          "mean": -0.41493666330587536,
+          "max": 3.552713678800501e-15
+        },
+        "subset_two_distinct_legal_full_references": {
+          "n": 6,
+          "record_ids": [
+            "R00105",
+            "R00629",
+            "R00660",
+            "R02017",
+            "R02052",
+            "R02373"
+          ],
+          "changed": 1
+        },
+        "historical_original_protocol": {
+          "n_common": 409,
+          "changed": 283,
+          "reference_effect": {
+            "n": 409,
+            "min": 0.0,
+            "median": 5.808476915551751,
+            "mean": 10.38152889073702,
+            "max": 86.49619502322766
+          }
+        }
+      }
+    },
+    "J_simple_power8_g1_l025": {
+      "full": {
+        "n_common": 131,
+        "images": 22,
+        "reference_changed_count": 1,
+        "reference_changed_images": [
+          "wc2JMjhGNzB-26"
+        ],
+        "reference_effect": {
+          "n": 131,
+          "min": 0.0,
+          "median": 0.0,
+          "mean": 0.015483207631660346,
+          "max": 2.0283001997475054
+        },
+        "formula_effect_at_new_reference": {
+          "n": 131,
+          "min": -17.75761656579705,
+          "median": 0.003439930243317235,
+          "mean": -1.2937499360506481,
+          "max": 8.39393324268098
+        },
+        "interaction": {
+          "n": 131,
+          "min": 0.0,
+          "median": 0.0,
+          "mean": 0.0010274206419337015,
+          "max": 0.13459210409331135
+        },
+        "subset_two_distinct_legal_full_references": {
+          "n": 6,
+          "record_ids": [
+            "R00105",
+            "R00629",
+            "R00660",
+            "R02017",
+            "R02052",
+            "R02373"
+          ],
+          "changed": 1
+        },
+        "historical_original_protocol": {
+          "n_common": 131,
+          "changed": 5,
+          "reference_effect": {
+            "n": 131,
+            "min": 0.0,
+            "median": 0.0,
+            "mean": 0.0634755719534669,
+            "max": 2.6965820758749075
+          }
+        }
+      },
+      "floor": {
+        "n_common": 409,
+        "images": 32,
+        "reference_changed_count": 279,
+        "reference_changed_images": [
+          "b8cTxDM8gDG-18",
+          "e9zR4mvMWw7-09",
+          "e9zR4mvMWw7-17",
+          "pRbA3pwrgk9-02",
+          "q9vSo1VnCiC-11",
+          "q9vSo1VnCiC-12",
+          "q9vSo1VnCiC-29",
+          "rPc6DW4iMge-05",
+          "rPc6DW4iMge-06",
+          "rPc6DW4iMge-22",
+          "uNb9QFRL6hY-18",
+          "uNb9QFRL6hY-26",
+          "uNb9QFRL6hY-41",
+          "uNb9QFRL6hY-44",
+          "uNb9QFRL6hY-55",
+          "uNb9QFRL6hY-59",
+          "uNb9QFRL6hY-66",
+          "uNb9QFRL6hY-67",
+          "uNb9QFRL6hY-68",
+          "uNb9QFRL6hY-81",
+          "uNb9QFRL6hY-88",
+          "wc2JMjhGNzB-03",
+          "wc2JMjhGNzB-22",
+          "wc2JMjhGNzB-26",
+          "wc2JMjhGNzB-29",
+          "wc2JMjhGNzB-54",
+          "wc2JMjhGNzB-61"
+        ],
+        "reference_effect": {
+          "n": 409,
+          "min": 0.0,
+          "median": 5.808476915551751,
+          "mean": 10.365600221026522,
+          "max": 86.49619502322766
+        },
+        "formula_effect_at_new_reference": {
+          "n": 409,
+          "min": -18.135412782105874,
+          "median": 2.4189576987906385,
+          "mean": 0.9690652021402764,
+          "max": 10.201822970682315
+        },
+        "interaction": {
+          "n": 409,
+          "min": -9.016255481659567,
+          "median": 0.08921258789912656,
+          "mean": 0.5559058204684979,
+          "max": 7.882241559070427
+        },
+        "subset_two_distinct_legal_full_references": {
+          "n": 6,
+          "record_ids": [
+            "R00105",
+            "R00629",
+            "R00660",
+            "R02017",
+            "R02052",
+            "R02373"
+          ],
+          "changed": 1
+        },
+        "historical_original_protocol": {
+          "n_common": 409,
+          "changed": 283,
+          "reference_effect": {
+            "n": 409,
+            "min": 0.0,
+            "median": 5.808476915551751,
+            "mean": 10.38152889073702,
+            "max": 86.49619502322766
+          }
+        }
+      }
+    },
+    "J_local_joint_hinge10_w2_s8": {
+      "full": {
+        "n_common": 131,
+        "images": 22,
+        "reference_changed_count": 1,
+        "reference_changed_images": [
+          "wc2JMjhGNzB-26"
+        ],
+        "reference_effect": {
+          "n": 131,
+          "min": 0.0,
+          "median": 0.0,
+          "mean": 0.015483207631660346,
+          "max": 2.0283001997475054
+        },
+        "formula_effect_at_new_reference": {
+          "n": 131,
+          "min": -21.765392522323477,
+          "median": 0.00010287466199088158,
+          "mean": -3.0080152797712856,
+          "max": 8.352348211166365
+        },
+        "interaction": {
+          "n": 131,
+          "min": 0.0,
+          "median": 0.0,
+          "mean": 0.0010274206419337286,
+          "max": 0.13459210409331135
+        },
+        "subset_two_distinct_legal_full_references": {
+          "n": 6,
+          "record_ids": [
+            "R00105",
+            "R00629",
+            "R00660",
+            "R02017",
+            "R02052",
+            "R02373"
+          ],
+          "changed": 1
+        },
+        "historical_original_protocol": {
+          "n_common": 131,
+          "changed": 5,
+          "reference_effect": {
+            "n": 131,
+            "min": 0.0,
+            "median": 0.0,
+            "mean": 0.0634755719534669,
+            "max": 2.6965820758749075
+          }
+        }
+      },
+      "floor": {
+        "n_common": 409,
+        "images": 32,
+        "reference_changed_count": 279,
+        "reference_changed_images": [
+          "b8cTxDM8gDG-18",
+          "e9zR4mvMWw7-09",
+          "e9zR4mvMWw7-17",
+          "pRbA3pwrgk9-02",
+          "q9vSo1VnCiC-11",
+          "q9vSo1VnCiC-12",
+          "q9vSo1VnCiC-29",
+          "rPc6DW4iMge-05",
+          "rPc6DW4iMge-06",
+          "rPc6DW4iMge-22",
+          "uNb9QFRL6hY-18",
+          "uNb9QFRL6hY-26",
+          "uNb9QFRL6hY-41",
+          "uNb9QFRL6hY-44",
+          "uNb9QFRL6hY-55",
+          "uNb9QFRL6hY-59",
+          "uNb9QFRL6hY-66",
+          "uNb9QFRL6hY-67",
+          "uNb9QFRL6hY-68",
+          "uNb9QFRL6hY-81",
+          "uNb9QFRL6hY-88",
+          "wc2JMjhGNzB-03",
+          "wc2JMjhGNzB-22",
+          "wc2JMjhGNzB-26",
+          "wc2JMjhGNzB-29",
+          "wc2JMjhGNzB-54",
+          "wc2JMjhGNzB-61"
+        ],
+        "reference_effect": {
+          "n": 409,
+          "min": 0.0,
+          "median": 5.808476915551751,
+          "mean": 10.365600221026522,
+          "max": 86.49619502322766
+        },
+        "formula_effect_at_new_reference": {
+          "n": 409,
+          "min": -25.491025229964485,
+          "median": 1.836073890740444,
+          "mean": -0.2329606561963706,
+          "max": 10.201822970682358
+        },
+        "interaction": {
+          "n": 409,
+          "min": -11.945408870553916,
+          "median": 0.06121160295320749,
+          "mean": 0.3735148047169132,
+          "max": 7.882241559070427
+        },
+        "subset_two_distinct_legal_full_references": {
+          "n": 6,
+          "record_ids": [
+            "R00105",
+            "R00629",
+            "R00660",
+            "R02017",
+            "R02052",
+            "R02373"
+          ],
+          "changed": 1
+        },
+        "historical_original_protocol": {
+          "n_common": 409,
+          "changed": 283,
+          "reference_effect": {
+            "n": 409,
+            "min": 0.0,
+            "median": 5.808476915551751,
+            "mean": 10.38152889073702,
+            "max": 86.49619502322766
+          }
+        }
+      }
+    }
+  },
+  "fusion": {
+    "total_versions": 220,
+    "scored_versions": 60,
+    "scored_images": 54,
+    "all_diagnostic_only": true,
+    "metric_reconstruction_max_abs_difference": 1.709743457922741e-14,
+    "baseline_reconstruction_max_abs_difference": 1.2789769243681803e-13,
+    "by_version": {
+      "automatic": {
+        "n": 54,
+        "changes": {
+          "J_main_hill_tail12_g1_l025": {
+            "n": 54,
+            "min": -12.604019159648796,
+            "median": -0.03818440657376598,
+            "mean": -0.9947516154198744,
+            "max": 1.362788529285261
+          },
+          "J_simple_power8_g1_l025": {
+            "n": 54,
+            "min": -10.553279837485787,
+            "median": 4.045691314546485,
+            "mean": 3.2574526757351823,
+            "max": 10.029750394818151
+          },
+          "J_local_joint_hinge10_w2_s8": {
+            "n": 54,
+            "min": -16.141755725035022,
+            "median": 4.045691314546509,
+            "mean": 2.2752744015160475,
+            "max": 9.745523277253625
+          }
+        }
+      },
+      "assisted": {
+        "n": 6,
+        "changes": {
+          "J_main_hill_tail12_g1_l025": {
+            "n": 6,
+            "min": -12.604019159648796,
+            "median": -1.833940572654381,
+            "mean": -3.3343432794633547,
+            "max": 0.009339037197491962
+          },
+          "J_simple_power8_g1_l025": {
+            "n": 6,
+            "min": -10.553279837485787,
+            "median": 0.4266439676289657,
+            "mean": -0.045942523988467286,
+            "max": 8.287856652099734
+          },
+          "J_local_joint_hinge10_w2_s8": {
+            "n": 6,
+            "min": -13.934586318117454,
+            "median": -4.34007222921756,
+            "mean": -4.439728540686995,
+            "max": 6.665166596580278
+          }
+        }
+      }
+    }
+  },
+  "not_independent_human_validation": true,
+  "formal_eligibility_unchanged": true
+}

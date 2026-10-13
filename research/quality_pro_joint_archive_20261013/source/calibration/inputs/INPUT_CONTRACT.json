@@ -1,0 +1,53 @@
+{
+  "provenance": {
+    "frozen": {
+      "file_name": "inputs/calibration_records.json",
+      "sha256": "88ddf7af482285f7513ef6839eb02ddac2ad2617787159550112477e43b52626",
+      "bytes": 4193337
+    },
+    "grades": {
+      "file_name": "inputs/old24_labels_preserved.json",
+      "sha256": "33ab56f6ee5c9b8a1661ca959a15f5337249f6639ffc10f3cefdecc65d10df0f",
+      "bytes": 149467
+    },
+    "constraints": {
+      "file_name": "evidence_audit/results/constraints.json",
+      "sha256": "b9625d51d8275e31adb32776d62def27976a9c9d0b907e1291b1eaf64cee95f9",
+      "bytes": 22190
+    },
+    "latest_local": {
+      "file_name": "record_results.json",
+      "sha256": "70d2710c7ba67d5f0e128450fdc0c51443da7da3210c10a512932de2159f1ade",
+      "bytes": 4514748
+    },
+    "u05": {
+      "file_name": "U05_CHAT_FEEDBACK.json",
+      "sha256": "4ce0fe4a45d66b3d62bac13bb10588531fa6b9dcba437b27e3c524ca7516f559",
+      "bytes": 1697
+    },
+    "descriptors": {
+      "file_name": "real_direction_descriptors.json",
+      "sha256": "bff28f01873b1804781fcf2b33b0d287cd8de5fa50774773fb1092fd1a8cbe4f",
+      "bytes": 9530982
+    },
+    "joint_hinge": {
+      "file_name": "joint_hinge_descriptors.json",
+      "sha256": "64a9b21ef3a51606e2441017d8137f56121067c12309acfcd38fe5980c8af595",
+      "bytes": 3255939
+    }
+  },
+  "records": 922,
+  "conditional_personnel_eligible": 143,
+  "raw_field_identity": "X_rms_deg = 2 * Eperp_deg; neither is an automatic semantic-pairing quality label",
+  "source_sampling": "Frozen baseline metrics retained; reference-changing evaluations record their separate precision.",
+  "baseline_scalar_max_delta": 2.842170943040401e-14,
+  "additional_source_files": [
+    "frozen",
+    "grades",
+    "constraints",
+    "latest_local",
+    "u05",
+    "descriptors",
+    "joint_hinge"
+  ]
+}

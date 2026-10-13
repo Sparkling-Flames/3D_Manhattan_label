@@ -1,5 +1,23 @@
 # HOHONET 项目地图
 
+- **2026-10-13质量研究日结与归档：** [当日汇总](../research/quality_data_closeout_20261013/DAY_SUMMARY.md)，统一串联用途账本、Pro选择性快照、人工回执与高度比较；不重复原始ZIP或大网格。
+
+- **2026-10-13高度校准准备与小范围比较：** [设计、账本与结果](../research/quality_height_calibration_ready_20261013/README.md)；工具`tools/thesis_main/analysis/quality_height_calibration_ready_20261013.py`及同名测试。复用48份控制、补62份形态控制，只比较五组高度尺度；保留正式合同、旧数据和融合。
+
+- **2026-10-13质量范围核查与场景用途修正：** [51融合终点/5图6高度案例及场景分步安排](../research/quality_scope_resolution_20261013/README.md)。普通先定参数，门洞逐图后小幅调整，OOS不调参；uNb-63的23份隔离，工具`quality_scope_resolution_20261013.py`及HTML模板、同名测试。
+
+- **2026-10-13质量数据收尾：** [统一核查入口](../research/quality_data_closeout_20261013/README.md)、[高度对应](../research/quality_height_correspondence_20261013/README.md)、[人员/融合审计](../research/quality_downstream_audit_20261013/README.md)。工具`tools/thesis_main/analysis/quality_data_closeout_20261013.py`、`quality_height_correspondence_20261013.py`、`quality_downstream_audit_20261013.py`及同名测试；输出保留来源与受限原因，不更改正式合同或融合算法。
+
+- **2026-10-13质量分歧研究：** [条件结果与解释边界](../research/quality_candidate_disagreement_20261013/README.md)；工具`tools/thesis_main/analysis/quality_candidate_disagreement_20261013.py`及同名测试。保留144份历史参考摘录与范围限制，分解冻结公式响应；不改规范评分或资格。
+
+- **2026-10-13质量并行核对与视图接入：** [参考覆盖](../research/quality_reference_coverage_20261013/README.md)、[冻结候选及路由视图](../research/quality_current_candidate_view_20261013/README.md)、[处理后输入定义](../research/quality_processed_input_20261013/README.md)、[749份manual条件补算](../research/quality_manual_expansion_20261013/README.md)、[多参考筛选依据](../research/quality_reference_selection_20261013/README.md)。工具`tools/thesis_main/analysis/quality_reference_coverage_20261013.py`、`quality_current_candidate_view_20261013.py`、`quality_manual_expansion_20261013.py`，后两者有同名测试；用途审计v2纠正显式适用标志与条件开发授权的混淆，不更改正式资格。
+
+- **2026-10-13质量Pro选择性归档与下一阶段：** [当前方案](thesis_main/质量研究推进方案_20261013.md)；[97份冻结研究文件及清单](../research/quality_pro_joint_archive_20261013/README.md)，验证`tests/test_quality_pro_joint_archive_20261013.py`。`source/`是外部研究快照，不替换正式算法；只承诺已验证的指标到分数复算。
+
+- **2026-10-13质量全量用途审计：** [研究入口及字段约定](../research/quality_data_admission_audit_20261013/README.md)；工具`tools/thesis_main/analysis/quality_data_admission_20261013.py`及同名测试。覆盖3152份作答，区分2344份manual与旧包589份；保留排除人员的逐份严重反例，不恢复正式资格。
+
+- **2026-10-13质量校准来源分层与J02更正：** [最新反馈及来源账本](../research/quality_joint_calibration_feedback_20261013/README.md)；工具`tools/thesis_main/analysis/quality_calibration_cohorts_20261013.py`及同名测试。manual优先，semi trap/未改预标注单列；不更改正式资格或旧搜索结果。
+
 - **2026-10-13冻结质量候选应用：** [研究入口](../research/quality_parallel_local_20261012/README.md)；工具 `tools/thesis_main/analysis/quality_parallel_local_20261013.py`、`quality_frozen_fusion_rescore_20261013.py`，对应两个同名测试文件。原包只读、本地保留；Git登记逐份结果和资格/曝光/复算锚点，不重复归档网格或图片分包。
 
 - **2026-10-12顶部与高度研究当前入口：** [候选决策、阶段证据与待判断问题](../research/quality_top_height_response_20261012/DECISION_STATUS.md)。统一登记响应形状、底点敏感性、顶部残差、局部形状及组合诊断；本轮定向复核/审核材料工具 `tools/thesis_main/analysis/quality_decision_check_20261012.py`，测试 `tests/test_quality_decision_check_20261012.py`。16参考复核已完成，两题二维意见已收、三维高度待续审；不以控制性质或测试通过宣称质量有效。 已完成[13候选约束/代价比较及四候选收敛](../research/quality_top_height_response_20261012/CANDIDATE_DIRECTION.md)。 工具 `tools/thesis_main/analysis/quality_candidate_matrix_20261012.py`，对应单项测试 `tests/test_quality_candidate_matrix_20261012.py`。 已核实[真实影响与L01已收回执](../research/quality_top_height_response_20261012/REAL_IMPACT.md)。 工具 `tools/thesis_main/analysis/quality_real_impact_20261012.py`，测试 `tests/test_quality_real_impact_20261012.py`；可旋转材料位于研究目录 `impact_review/`。

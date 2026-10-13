@@ -1,0 +1,76 @@
+{
+  "issue": "Arbitrary argmin target edge at equidistant nearest vertices changed tangent support under collinear subdivision. No route/reason changed, but local support did.",
+  "tests": 1332,
+  "route_changes": 0,
+  "support_change_over_1e_6": 243,
+  "maximum_support_change_before_fix": 0.050960908776985336,
+  "fix": "Best aligned tangent among the unchanged equidistant nearest geometric point set, with relative roundoff tolerance; no coordinate or final scoring changes.",
+  "new_full_validation_required": false,
+  "post_fix_full_validation": {
+    "exact_legal_reference_tests": 65,
+    "exact_legal_reference_failures": 0,
+    "collinear_invariance_tests": 1332,
+    "collinear_route_changes": 0,
+    "collinear_reason_changes": 0,
+    "maximum_collinear_local_support_change": 2.038681445881707e-10,
+    "rotation_and_scale_tests": 48,
+    "rigid_scale_route_changes": 0,
+    "single_corner_removal_tests": 362,
+    "single_corner_removal_same_candidate": 339,
+    "sensitivity_records_per_variant": 333,
+    "sensitivity_summary": {
+      "distance_015": {
+        "routes_changed": 0,
+        "local_single_winners": 45
+      },
+      "distance_020": {
+        "routes_changed": 0,
+        "local_single_winners": 59
+      },
+      "distance_045": {
+        "routes_changed": 0,
+        "local_single_winners": 112
+      },
+      "distance_060": {
+        "routes_changed": 0,
+        "local_single_winners": 128
+      },
+      "support_045": {
+        "routes_changed": 0,
+        "local_single_winners": 100
+      },
+      "support_065": {
+        "routes_changed": 0,
+        "local_single_winners": 69
+      },
+      "margin_010": {
+        "routes_changed": 0,
+        "local_single_winners": 85
+      },
+      "margin_030": {
+        "routes_changed": 0,
+        "local_single_winners": 85
+      },
+      "boundary_only": {
+        "routes_changed": 0,
+        "local_single_winners": 89
+      },
+      "corner_only": {
+        "routes_changed": 0,
+        "local_single_winners": 67
+      },
+      "coverage_unguarded": {
+        "routes_changed": 0,
+        "local_single_winners": 94
+      }
+    },
+    "frozen_922_overlap_metric_pairs_checked": 24,
+    "full_top_pending_rows_checked": 375,
+    "source_git_blobs_verified": 16,
+    "synthetic_controls": 7,
+    "human_labels_added": 0,
+    "human_development_not_independent_validation": true,
+    "quick_mode": false
+  },
+  "validation_summary_sha256": "758c33b4d8aeb053fa8330386964a4aa5e9a288f7c1eb37a210808e62cb4d5a5"
+}

@@ -1,0 +1,41 @@
+{
+  "schema": "quality_joint_field_contract_v1",
+  "coordinate_convention": "continuous ERP x/W,y/H; 1024x512 normalized coordinates; camera height h=1; floor y=-1",
+  "units": {
+    "I": "floor polygon intersection / union; dimensionless",
+    "Sb": "degrees; half the sum of two directed mean nearest-arc spherical distances; NOT per-boundary RMS",
+    "D": "degrees; minimum common-orthogonal-axis length-weighted RMS residual, modulo 90 degrees; NOT mean adjacent corner error",
+    "Hm": "absolute difference of own perimeter-mean whole-wall heights / reference perimeter-mean whole-wall height",
+    "Hc": "symmetric local height residual after removing each geometry's own global mean difference, normalized by reference perimeter-mean whole-wall height; frozen nearest-floor correspondence and tie rule",
+    "pair_delta_rms_deg": "RMS wrapped upper/lower longitude difference; historical local X_rms_deg",
+    "endpoint_adjustment_rms_deg": "half of pair_delta_rms_deg; historical Pro Eperp_deg; minimum per-endpoint longitude correction, not spherical minimum distance",
+    "floor_boundary_mean_h": "symmetric mean nearest Euclidean floor-boundary distance in camera-height units; routing fallback diagnostic, not Sb",
+    "reference_area_h2": "camera-height squared, not square metres"
+  },
+  "sampling": {
+    "primary_spherical_samples_per_direction": 2048,
+    "primary_height_samples_per_direction": 4096,
+    "historical_922_frozen_metric_reconstruction": "Verified with 2048 spherical / 4096 height. Some prior independent experiments explicitly used 1024; saved results retain that identity.",
+    "convergence_checks": "Separate 1024/2048/4096 spherical and 4096/16384 height runs; final-candidate response is checked from the resulting metric pairs."
+  },
+  "version_fields": {
+    "dataset_sha256": "sha256 of the complete named source dataset bytes",
+    "current_points_sha256": "historical hash of ordered mean-x ERP points; preserve original field verbatim",
+    "reference_points_sha256": "historical hash of that exact reference point version",
+    "raw_before_preprocessing_points_sha256_canonical": "hash of raw source endpoints before x averaging; canonical JSON protocol recorded by producer",
+    "annotation_geometry_sha256": "hash of 3D geometry arrays, not interchangeable with ERP point hash",
+    "reference_candidate_id": "externally admitted candidate identity; floor-equivalent aliases may be recorded",
+    "reference_version": "actual confirmation/revision version; unknown remains unknown",
+    "legacy_input_version": "preserved Pro dataset-hash or local calibration_20261012:point-hash string; never joined by fuzzy equality",
+    "formula_config_sha256": "hash of exact delivered candidate configuration"
+  },
+  "missing_and_qualification": {
+    "missing_confirmed_reference_top": "floor-only score available when valid; complete Q, height losses and 3D IoU are null",
+    "invalid_or_missing_geometry": "null with explicit reason, never a zero-score substitute",
+    "no_new_scope_admission": true,
+    "route_does_not_pass_quality": true,
+    "formal_eligibility_not_granted_by_score": true,
+    "raw_input_high_quality_not_certified_by_mean_x_score": true,
+    "human_grade": null
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "schema": "calibration_freeze_v1",
+  "frozen_at_utc": "2026-10-12T17:47:13.055904+00:00",
+  "recommended": "J_main_hill_tail12_g1_l025",
+  "parameter_sha256": "815ab24e4646ae65a41719cc36c4bef01ff23b519871d4b18d831c8cd267185d",
+  "score_py_sha256": "4c9806ed37cff1f6e0c56de1323a4ce91eea812b21ee38a427092aa68dec8d8b",
+  "search_inputs_sha256": "00d40bb4ae83c24f40fee545e1255ecc6b9a433b05f6c1ebec88318afbbb83a8",
+  "code_files": {
+    "analyze_candidates.py": "735ea5acc5b77998de8e76b4afb67cec20d999f055dff10ed191559f847a013c",
+    "physical_controls.py": "9867d57f6a3852936a489cd7fd52aee3d96dc45397ea204ea81123de33a605a2",
+    "prepare_inputs.py": "801e24fdee0ca1cea003a38d03c3370072b1642997d32ba37209e3d16b87201b",
+    "render_calibration.py": "ba43929e462b128b43d0bde8f2b4c6c87b233aa0c596d98d349d3d6ed2b65c5f",
+    "reproduce_calibration.py": "e3486d511565e4379f1a227697567ad7d28c51fa26f88f0e2398cd32977e013b",
+    "run_search.py": "18fd2800c688f99699a5c12e1768a17f57f8ed5539f7ab529c036faf7f61e0e2",
+    "score.py": "4c9806ed37cff1f6e0c56de1323a4ce91eea812b21ee38a427092aa68dec8d8b",
+    "verify_calibration.py": "48370c3e233c23628d9c453d64deaeac4181633d59eb77e019eb878d0fd3bc1d"
+  },
+  "cold_replay_status": "passed",
+  "cold_replay_maximum_score_difference": 0.0,
+  "cold_replay_seconds": 38.30166420900059,
+  "actual_human_validation_performed": false,
+  "main_commit": "fdfc8a51ad668c83172ca4a9cf0105f417dac61c",
+  "rule": "Code, configuration and scientific results are frozen for parent packaging; later changes require a new manifest."
+}

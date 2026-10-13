@@ -1,0 +1,47 @@
+{
+  "counts": {
+    "confirmed_images": 35,
+    "raw_receipt_rows": 261,
+    "new_floor_geometry_vs_displayed": 28,
+    "different_vs_historical_original": 29,
+    "candidate_count_including_restricted": 66,
+    "admitted_unique_candidate_count": 65,
+    "images_with_multiple_admitted_unique_candidates": 28,
+    "formal_corpus_images": 33,
+    "records": 429,
+    "records_in_calibration922": 24,
+    "manual_explicit_routes": 5,
+    "manual_family_only": 2
+  },
+  "routes_available": 417,
+  "routes_unavailable": 12,
+  "multi_candidate_record_count": 333,
+  "route_reason_counts": {
+    "one_admitted_unique_floor": 84,
+    "local_evidence_insufficient_floor_iou_fallback": 227,
+    "local_differentiating_structure": 82,
+    "explicit_user_reference_assignment": 5,
+    "local_family_then_floor_iou_fallback": 17,
+    "manual_structural_family_then_local_evidence_insufficient_floor_iou_fallback": 2
+  },
+  "uncertainty_counts": {
+    "not_applicable_single_reference": 84,
+    "geometric_fallback_provisional": 216,
+    "structural_evidence_not_verified_historical_intent": 82,
+    "manual_directive_quality_and_confidence_not_inferred": 5,
+    "low_margin": 30
+  },
+  "selected_floor_only_count": 286,
+  "selected_full_quality_available_count": 131,
+  "switches_vs_previous_fixed": 287,
+  "auto_vs_global_IoU_disagreement_count": 0,
+  "area_only_vs_main_auto_disagreement_count": 88,
+  "boundary_only_vs_main_auto_disagreement_count": 9,
+  "maximum_prior_floor_IoU_recompute_difference": 2.220446049250313e-16,
+  "prior_comparison_rows": 417,
+  "max_Sb_1024_2048_deg": 0.00011823080296391453,
+  "max_Q_floor_1024_2048": 0.0006535421909958927,
+  "all_noncomputable_kept_not_zeroed": true,
+  "top_grafting_performed": false,
+  "parameters_are_provisional_evidence_bands_not_quality_grade_cuts": true
+}

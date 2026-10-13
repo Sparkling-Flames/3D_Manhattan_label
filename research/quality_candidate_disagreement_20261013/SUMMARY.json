@@ -1,0 +1,190 @@
+{
+  "ordinary_manual_records": 1304,
+  "reference_basis_counts": {
+    "frozen_fixed_reference": 574,
+    "single_existing_reference_conditional": 293,
+    "routed_floor_only": 217,
+    "routed_full": 95,
+    "unresolved_versions": 121,
+    "route_unavailable": 1,
+    "geometry_unavailable": 3
+  },
+  "scored_records": 1179,
+  "full": 962,
+  "floor_only": 217,
+  "images": 123,
+  "buildings": 21,
+  "by_score_kind": {
+    "full": {
+      "J_main_hill_tail12_g1_l025": {
+        "n": 962,
+        "min": -20.70003015248325,
+        "median": -0.05926836207780184,
+        "mean": -1.2977775785995984,
+        "max": 2.231473464303299,
+        "decrease_ge5": 86,
+        "increase_ge5": 0
+      },
+      "J_simple_power8_g1_l025": {
+        "n": 962,
+        "min": -17.75761656579707,
+        "median": 3.1283655554391636,
+        "mean": 2.5089160151020877,
+        "max": 10.090887136235054,
+        "decrease_ge5": 84,
+        "increase_ge5": 333
+      }
+    },
+    "floor_only": {
+      "J_main_hill_tail12_g1_l025": {
+        "n": 217,
+        "min": -18.721260896867065,
+        "median": -0.23614232579890881,
+        "mean": -1.9408359497950909,
+        "max": -8.831261766317766e-08,
+        "decrease_ge5": 26,
+        "increase_ge5": 0
+      },
+      "J_simple_power8_g1_l025": {
+        "n": 217,
+        "min": -17.53468026841163,
+        "median": 3.3222387029591403,
+        "mean": 2.194109645254985,
+        "max": 10.201822970682315,
+        "decrease_ge5": 26,
+        "increase_ge5": 70
+      }
+    }
+  },
+  "main_full_contributions": {
+    "boundary_loss": {
+      "n": 962,
+      "min": -0.0,
+      "median": -0.0,
+      "mean": 0.0,
+      "max": -0.0
+    },
+    "direction_loss": {
+      "n": 962,
+      "min": -20.70221005725119,
+      "median": -0.1049092002865457,
+      "mean": -1.3923194877688687,
+      "max": -7.39331943554314e-13
+    },
+    "global_height_loss": {
+      "n": 962,
+      "min": -0.0,
+      "median": 0.018246889567936343,
+      "mean": 0.09454190916926965,
+      "max": 2.2338019827212094
+    },
+    "local_height_loss": {
+      "n": 962,
+      "min": -0.0,
+      "median": -0.0,
+      "mean": 0.0,
+      "max": -0.0
+    }
+  },
+  "full_context_strata": {
+    "recorded_scope_or_detail": {
+      "records": 547,
+      "images": 62,
+      "mean_main_delta": -1.881788595334421
+    },
+    "no_recorded_flag_not_confirmed_clean": {
+      "records": 415,
+      "images": 54,
+      "mean_main_delta": -0.5280088408792419
+    }
+  },
+  "height_coverage_descriptive_only": {
+    "global_ge_20percent_by_building": {
+      "B6ByNegPMKs": 26,
+      "UwV83HsGsw3": 2,
+      "VLzqgDo317F": 2,
+      "Z6MFQCViBuw": 1,
+      "uNb9QFRL6hY": 1
+    },
+    "local_ge_10percent_by_building": {
+      "B6ByNegPMKs": 3,
+      "UwV83HsGsw3": 3,
+      "jh4fc5c5qoQ": 2,
+      "jtcxE69GiFV": 1,
+      "pa4otMbVnkk": 1,
+      "rPc6DW4iMge": 2,
+      "uNb9QFRL6hY": 4
+    },
+    "cutoffs_are_descriptive_not_quality_grades": true
+  },
+  "equal_image_mean_delta_full": {
+    "J_main_hill_tail12_g1_l025": {
+      "n": 115,
+      "min": -19.04207245898391,
+      "median": -0.4385093249270895,
+      "mean": -1.3457089863272647,
+      "max": 0.9757279339467116
+    },
+    "J_simple_power8_g1_l025": {
+      "n": 115,
+      "min": -16.903613372317427,
+      "median": 2.921686499300152,
+      "mean": 2.5297872865155053,
+      "max": 8.26215199595633
+    }
+  },
+  "existing_version_sensitivity_not_main_selection": {
+    "baseline_quad08": {
+      "n": 150,
+      "min": 0.013214150365147503,
+      "median": 6.203853401667416,
+      "mean": 7.726948210391294,
+      "max": 38.383838945329096
+    },
+    "J_main_hill_tail12_g1_l025": {
+      "n": 150,
+      "min": 0.01613301657212221,
+      "median": 5.949456991274641,
+      "mean": 7.446878459502986,
+      "max": 38.384972969413255
+    },
+    "J_simple_power8_g1_l025": {
+      "n": 150,
+      "min": 0.016113221214416218,
+      "median": 6.5895513276984845,
+      "mean": 8.096683609130201,
+      "max": 38.41715412432258
+    }
+  },
+  "historical_fixed_reference_replay": {
+    "records": 121,
+    "images": 6,
+    "all_target_confounded": true,
+    "included_in_single_reference_summary": false,
+    "main_deltas": {
+      "n": 121,
+      "min": -18.79185524731011,
+      "median": -0.07110841567103421,
+      "mean": -2.4192188543054414,
+      "max": 1.0505530141386146
+    }
+  },
+  "routed_four_way": {
+    "full": {
+      "rows": 313,
+      "comparable": 95,
+      "changed_comparable": 1
+    },
+    "floor": {
+      "rows": 313,
+      "comparable": 312,
+      "changed_comparable": 218
+    }
+  },
+  "main_simple_order_reversals": {
+    "pairs": 220,
+    "images": 47,
+    "both_gaps_ge2": 18,
+    "threshold_role": "descriptive_gap_only_not_human_significance"
+  }
+}

@@ -61,7 +61,33 @@
       ],
       "judgment": "A",
       "scope": "overall_quality",
-      "summary": "整体A优于B；评论认为高度更平且更接近GT，墙间夹角也更好。主观认为约3分的差距可能偏小，可以更大一些。",
+      "summary": "首次回执选A并认为差距偏小；后续用户发现左上角实际有两个点，修正原评论并认为当前分数大体合理。旧A偏好与拉大分差意见不再作为当前校准约束。A已核实为合成semi trap且提交坐标未改，单列诊断。",
+      "current_calibration_use": {
+        "pairwise_order": false,
+        "increase_score_gap": false,
+        "numeric_target": null,
+        "qualitative_current_score_acceptance": true,
+        "source_cohort": "semi_trap_separate"
+      },
+      "follow_up": {
+        "date": "2026-10-13",
+        "source": "本对话用户后续补充；按消息先后保存，不改原始回执",
+        "messages": [
+          "j02我补充一下: 我刚刚复核了一下,因为我没看到左上角这个是两个点,这应该是之前模型预标注没有进行改动的.我记得当时筛选标注的时候,我也做了这些记录的. 所以我之前的评论确实有点不太准确",
+          "现在我来看的话,这个分数也算是比较合理,两个点集中在一块,虽然其他的地方标的不错"
+        ],
+        "verified_object_id": "d0df2148541db2cf",
+        "verified_record_id": "R02049",
+        "historical_comment": "这可能是我当时的semi trap,他没有修正",
+        "historical_review": "analysis_results/review_final_20260928/evidence/latest.json#/annotation_decisions/d0df2148541db2cf",
+        "later_review_status": "resolved/usable; annotation_traits=model_unchanged",
+        "verified_source": "analysis_results/research_input_20260929/research_tables.json#/annotations; trap_evidence",
+        "formal_import": "import_json/stage1_prescreen_final_20260325/stage1_prescreen_semi_import_v5.json",
+        "synthetic_candidate_id": "legacy_disjoint_source_004_over_parsing",
+        "trap_status": "confirmed_trap",
+        "model_edit_status": "unchanged_coordinates",
+        "interpretation": "当前分数大体合理不等于精确目标分，不推定改选B或认可全部备选；撤回用J02指控局部备选违背当前明确人评的论据。坐标未改不证明没有检查；历史usable不等于准入新的主校准池。"
+      },
       "not_inferred": [
         "没有精确目标分差或置信值",
         "不是只对单一方向指标的纯控制标签",
@@ -193,5 +219,13 @@
     "formal_eligibility": false,
     "previous_human_receipts": false
   },
-  "next_step": "保留为后续研究输入，本次不求解、不调参、不新增研究任务"
+  "calibration_source_policy": {
+    "date": "2026-10-13",
+    "user_original": "我建议把semi trap 的单独拎出来,避免混入校准,优先使用纯 manual 的,和没有什么问题,没有出现不改模型预标注的标注进行 质量校准",
+    "implementation": "CALIBRATION_COHORTS.json",
+    "priority": "manual优先；已核实非trap且改过坐标的semi仅作第二层候选，仍检查既有参考、审核与曝光条件",
+    "separate": "已确认semi trap、未改坐标、模型问题记录、来源未核实分别保留，不混入主校准",
+    "boundary": "不按最终质量好坏筛选，不删除真实manual错误；不改同一几何的评分，不改变旧人员资格与历史搜索结果"
+  },
+  "next_step": "后续校准先使用新来源分层并叠加原有参考/曝光资格。J02只保留定性认可与诊断；不再要求拉大分差。本次不重新搜索参数。"
 }

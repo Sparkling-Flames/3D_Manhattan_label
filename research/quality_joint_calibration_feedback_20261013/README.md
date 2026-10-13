@@ -20,11 +20,19 @@ A自身3D规整性更好；但整体高度、底面范围与GT可能更远。综
 用户认为总体只有二十多分偏低，2D看没有特别差。
 不把这条解释为整体A>B，不编造目标分、等级或精确平局。
 
-### J02 A更好
+### J02 后续更正：当前分数大体合理，A属于未改坐标的semi trap
 
 A=R02049，B=R02244，q9vSo1VnCiC-15。
-评论认为A高度更平、更接近GT，墙间夹角更好；约3分的差距可能偏小，希望可以更大。
-这是总体偏好及分差方向意见，不是精确分差标签，也不能孤立成方向项的纯实验结论；原资格保持。
+首次回执认为A高度更平、更接近GT，墙间夹角更好；约3分的差距可能偏小。**该解释已被2026-10-13后续补充修正，不再作为当前排序或拉大分差的校准约束。**
+用户复核发现左上角实际是两个点，承认原评论不准确，随后表示“这个分数也算是比较合理,两个点集中在一块,虽然其他的地方标的不错”。这不是改选B、精确分数标签或对全部备选的认可。
+
+已找回后续复核依据，不再只引用“可能是semi trap”的早期评论：
+- A绑定`d0df2148541db2cf`，W006，项目29/任务3100/标注3292。
+- 正式导入`import_json/stage1_prescreen_final_20260325/stage1_prescreen_semi_import_v5.json`唯一匹配：`semi_role=trap`、`source_type=trap_synthetic`、`trap_family=over_parsing`、`synthetic_candidate_id=legacy_disjoint_source_004_over_parsing`。
+- 当前manifest统一数据的`trap_evidence`记录`confirmed_trap`和`unchanged_coordinates`；初始化/最终10点按既有1e-6像素规则完全一致，顺序一致，增删改点列表为空。
+- `analysis_results/review_final_20260928/evidence/latest.json`将该条记为`resolved/usable`，并有`model_unchanged`标签；后续补审证据也已归档。历史保留作答不等于准入本轮主校准池，坐标相同不证明没有检查。
+
+本轮撤回“J02分差过小”和“局部备选违背当前明确人评”的论据。误差集中程度与D汇总值相近仍是几何事实，但不能单靠此例证明哪种惩罚更合理。
 
 ### J03 不确定
 
@@ -55,4 +63,30 @@ T20/R00397当前讨论的实际高度扣分为3.5256分。
 ## 本次实施边界
 
 新增原始附件、聊天原文、逐项结构化解释与校验文件。未改分、未调参、未重新路由、未更新GT，未开启额外研究任务。
-下一步研究应同时考虑J01绝对量表偏低、J02相对差距偏小、J04不应近乎扣光与T20稍加强高度处罚，避免只迎合其中一例。
+下一步研究保留J01量表、J04严重端与T20高度处罚问题；J02按上述更正解释，不再以拉大差距为目标。
+
+## 来源分层与字段合同（2026-10-13追加）
+
+**统计范围更正：本节只覆盖Pro的922份输入，其中manual589份；全量实际为3152份作答，其中manual2344份。包外1755份manual不视为排除。后续用途应读取[全量数据与准入复核](../quality_data_admission_audit_20261013/README.md)，本节的来源筛选不能直接替代完整校准条件。**
+
+用户要求semi trap单列，优先纯manual及无未改预标注问题的作答。已通过当前`load_current_bundle()`关联Pro的922条搜索输入，生成[来源账本](CALIBRATION_COHORTS.json)：
+
+|来源层|份数|用途|
+|---|---:|---|
+|manual_priority|589|优先来源池，包含真实好坏作答|
+|semi_nontrap_changed_candidate|39|已核实非trap且改过坐标；仅为第二层候选，不自动认证修正成功|
+|semi_trap_separate|160|所有已确认trap单列，含改过和未改的作答|
+|semi_unchanged_separate|49|非上述trap的未改坐标作答单列|
+|semi_unverified_separate|85|来源或编辑情况未充分核实，单列待核|
+
+分层互斥，160份trap中已包含15份未改坐标作答。不能将“没写问题”解释成“已人工确认无问题”。当前39份第二层候选尚不满足旧条件人员资格交集；589份manual与旧条件人员资格交集为71份，其余既有障碍继续保留。来源分层不是新的正式资格裁决。
+
+- `records`保留每条来源状态、原资格障碍和当前人员gate；不读取质量分数决定来源分层。
+- `cohort_ids`是来源筛选ID，`prior_eligibility_intersection_ids`只是与旧条件人员资格交集，不替代参考及曝光复核。
+- `evidence_by_source_cohort`保留各来源层的旧等级和比较证据；只有比较双方都属于同一层才进入该层。manual层保留13条旧等级和7项分维度约束；约束项不是独立人审次数，也不是全部具备拟合资格。旧24条等级中5条来自trap，不再混入主校准。
+- `j02_a_verified_evidence`保留对应的正式导入、坐标核验和复核证据。原始来源不修改。
+- `USER_FEEDBACK.json`中的`judgment`及`original_answer`保留首次回执；存在`follow_up`时，当前解释以其及`current_calibration_use`为准。J02排序和拉大分差用途均关闭，只保留对当前分数的定性认可；`numeric_target=null`不猜分数。
+
+复现：`python -B -m tools.thesis_main.analysis.quality_calibration_cohorts_20261013 --search-inputs <完整Pro包>/calibration/inputs/search_inputs.json`。只生成新来源账本，不运行参数搜索。对应测试覆盖trap即使改过也分开、低分manual保留、未知/未改semi不升级、跨层比较不单边截取。
+
+此次分层约束后续校准，不追改Pro旧搜索结果，不更改几何评分、GT、正式合同或旧人员资格；trap继续可作独立诊断集。相同几何不因manual/semi来源而改分。项目地图和文档索引只登记本入口，不扩大旧研究路线。

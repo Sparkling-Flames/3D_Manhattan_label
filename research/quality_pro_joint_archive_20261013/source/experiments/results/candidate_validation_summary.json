@@ -1,0 +1,173 @@
+{
+  "config_path_relative": "recommended_parameters.json",
+  "config_sha256": "815ab24e4646ae65a41719cc36c4bef01ff23b519871d4b18d831c8cd267185d",
+  "n_real_scalar_replays": 922,
+  "n_control_attempts": 479,
+  "n_complete_controls": 473,
+  "maximum_independent_vs_public_evaluator_difference": 7.105427357601002e-14,
+  "n_matched_priority_triples": 30,
+  "priority_count_by_candidate": {
+    "baseline_quad08": 29,
+    "J_main_hill_tail12_g1_l025": 29,
+    "J_simple_power8_g1_l025": 27,
+    "J_local_joint_hinge10_w2_s8": 27,
+    "official_corner_mean_iou3d": 0
+  },
+  "matched_priority_is_design_sensitivity_not_human_validation": true,
+  "sampling_precision_by_candidate": {
+    "baseline_quad08": {
+      "actual_response_sphere1024_to_2048": {
+        "max_absolute_score_difference": 0.00017072423089814492,
+        "case_id": "R01579",
+        "n_pairs": 39
+      },
+      "actual_response_sphere2048_to_4096": {
+        "max_absolute_score_difference": 7.869470176302684e-05,
+        "case_id": "R01579",
+        "n_pairs": 39
+      },
+      "actual_response_height4096_to_16384": {
+        "max_absolute_score_difference": 0.00016130564323546537,
+        "case_id": "R00272",
+        "n_pairs": 39
+      },
+      "constructed_sphere1024_to_2048": {
+        "max_absolute_score_difference": 0.0002820621981811655,
+        "case_id": "R00046__extreme_all_-16px_fixed_world_top_height",
+        "n_pairs": 473
+      },
+      "constructed_sphere2048_to_4096": {
+        "max_absolute_score_difference": 8.397252031500102e-05,
+        "case_id": "R00046__extreme_all_16px_fixed_world_top_height",
+        "n_pairs": 473
+      }
+    },
+    "J_main_hill_tail12_g1_l025": {
+      "actual_response_sphere1024_to_2048": {
+        "max_absolute_score_difference": 0.0001691957856451154,
+        "case_id": "R01579",
+        "n_pairs": 39
+      },
+      "actual_response_sphere2048_to_4096": {
+        "max_absolute_score_difference": 7.79901699416996e-05,
+        "case_id": "R01579",
+        "n_pairs": 39
+      },
+      "actual_response_height4096_to_16384": {
+        "max_absolute_score_difference": 0.00014756950569250193,
+        "case_id": "R00464",
+        "n_pairs": 39
+      },
+      "constructed_sphere1024_to_2048": {
+        "max_absolute_score_difference": 0.0002819621001322048,
+        "case_id": "R00046__extreme_all_-16px_fixed_world_top_height",
+        "n_pairs": 473
+      },
+      "constructed_sphere2048_to_4096": {
+        "max_absolute_score_difference": 8.39503308611711e-05,
+        "case_id": "R00046__extreme_all_16px_fixed_world_top_height",
+        "n_pairs": 473
+      }
+    },
+    "J_simple_power8_g1_l025": {
+      "actual_response_sphere1024_to_2048": {
+        "max_absolute_score_difference": 0.0002223637809990464,
+        "case_id": "R01579",
+        "n_pairs": 39
+      },
+      "actual_response_sphere2048_to_4096": {
+        "max_absolute_score_difference": 0.00010249778767246198,
+        "case_id": "R01579",
+        "n_pairs": 39
+      },
+      "actual_response_height4096_to_16384": {
+        "max_absolute_score_difference": 0.00017184911934009506,
+        "case_id": "R00464",
+        "n_pairs": 39
+      },
+      "constructed_sphere1024_to_2048": {
+        "max_absolute_score_difference": 0.00030188014222432,
+        "case_id": "R00046__extreme_all_-16px_fixed_world_top_height",
+        "n_pairs": 473
+      },
+      "constructed_sphere2048_to_4096": {
+        "max_absolute_score_difference": 8.931700940451037e-05,
+        "case_id": "R00046__extreme_all_16px_fixed_world_top_height",
+        "n_pairs": 473
+      }
+    },
+    "J_local_joint_hinge10_w2_s8": {
+      "actual_response_sphere1024_to_2048": {
+        "max_absolute_score_difference": 0.0002223637809990464,
+        "case_id": "R01579",
+        "n_pairs": 39
+      },
+      "actual_response_sphere2048_to_4096": {
+        "max_absolute_score_difference": 0.00010249778767956741,
+        "case_id": "R01579",
+        "n_pairs": 39
+      },
+      "actual_response_height4096_to_16384": {
+        "max_absolute_score_difference": 0.00017184911934009506,
+        "case_id": "R00464",
+        "n_pairs": 39
+      },
+      "constructed_sphere1024_to_2048": {
+        "max_absolute_score_difference": 0.0003018801422172146,
+        "case_id": "R00046__extreme_all_-16px_fixed_world_top_height",
+        "n_pairs": 473
+      },
+      "constructed_sphere2048_to_4096": {
+        "max_absolute_score_difference": 8.931700940451037e-05,
+        "case_id": "R00046__extreme_all_16px_fixed_world_top_height",
+        "n_pairs": 473
+      }
+    }
+  },
+  "max_extra_height_coupling_by_candidate": {
+    "baseline_quad08": {
+      "anchor_record_id": "R03345",
+      "corner_selection": "farthest_one",
+      "bottom_px": -16.0,
+      "extra_height_score_drop": {
+        "baseline_quad08": 9.969940272932057,
+        "J_main_hill_tail12_g1_l025": 0.9845350152667991,
+        "J_simple_power8_g1_l025": 1.757174404616035,
+        "J_local_joint_hinge10_w2_s8": 0.7469343025808195
+      }
+    },
+    "J_main_hill_tail12_g1_l025": {
+      "anchor_record_id": "R03345",
+      "corner_selection": "farthest_two",
+      "bottom_px": -8.0,
+      "extra_height_score_drop": {
+        "baseline_quad08": 3.7325337115491273,
+        "J_main_hill_tail12_g1_l025": 3.149965396985454,
+        "J_simple_power8_g1_l025": 3.8078278323248718,
+        "J_local_joint_hinge10_w2_s8": 3.803138036368125
+      }
+    },
+    "J_simple_power8_g1_l025": {
+      "anchor_record_id": "R03345",
+      "corner_selection": "farthest_two",
+      "bottom_px": -8.0,
+      "extra_height_score_drop": {
+        "baseline_quad08": 3.7325337115491273,
+        "J_main_hill_tail12_g1_l025": 3.149965396985454,
+        "J_simple_power8_g1_l025": 3.8078278323248718,
+        "J_local_joint_hinge10_w2_s8": 3.803138036368125
+      }
+    },
+    "J_local_joint_hinge10_w2_s8": {
+      "anchor_record_id": "R03345",
+      "corner_selection": "farthest_two",
+      "bottom_px": -8.0,
+      "extra_height_score_drop": {
+        "baseline_quad08": 3.7325337115491273,
+        "J_main_hill_tail12_g1_l025": 3.149965396985454,
+        "J_simple_power8_g1_l025": 3.8078278323248718,
+        "J_local_joint_hinge10_w2_s8": 3.803138036368125
+      }
+    }
+  }
+}

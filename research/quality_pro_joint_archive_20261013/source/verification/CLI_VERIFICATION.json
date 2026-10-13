@@ -1,0 +1,88 @@
+{
+  "schema": "delivered_cli_verification_v1",
+  "status": "passed",
+  "case_count": 10,
+  "cases": [
+    {
+      "case": "T20_full_score_and_separate_hash_identity",
+      "status": "passed",
+      "output_status": "complete",
+      "score": 74.28801834510428,
+      "floor_score": 77.81360506414018,
+      "reason": "one_admitted_unique_floor"
+    },
+    {
+      "case": "floor_only_reference_preserves_nulls",
+      "status": "passed",
+      "output_status": "floor_only",
+      "score": null,
+      "floor_score": 14.741249340898177,
+      "reason": "local_evidence_insufficient_floor_iou_fallback"
+    },
+    {
+      "case": "manual_family_reason_agrees_with_batch",
+      "status": "passed",
+      "output_status": "floor_only",
+      "score": null,
+      "floor_score": 10.542759644244226,
+      "reason": "manual_structural_family_then_local_evidence_insufficient_floor_iou_fallback"
+    },
+    {
+      "case": "unavailable_record_not_zero",
+      "status": "passed",
+      "output_status": "unavailable",
+      "score": null,
+      "floor_score": null,
+      "reason": "record_has_no_certified_scoring_geometry_in_delivered_inputs"
+    },
+    {
+      "case": "empty_bottom",
+      "status": "passed",
+      "output_status": "unavailable",
+      "score": null,
+      "floor_score": null,
+      "reason": "bottom3d must be a finite N by 3 array with at least three vertices"
+    },
+    {
+      "case": "two_coordinates",
+      "status": "passed",
+      "output_status": "unavailable",
+      "score": null,
+      "floor_score": null,
+      "reason": "bottom3d must be a finite N by 3 array with at least three vertices"
+    },
+    {
+      "case": "missing_bottom",
+      "status": "passed",
+      "output_status": "unavailable",
+      "score": null,
+      "floor_score": null,
+      "reason": "'bottom3d'"
+    },
+    {
+      "case": "wrong_floor_unit",
+      "status": "passed",
+      "output_status": "unavailable",
+      "score": null,
+      "floor_score": null,
+      "reason": "expected floor y=-1 camera-height units"
+    },
+    {
+      "case": "wrong_top_shape",
+      "status": "passed",
+      "output_status": "unavailable",
+      "score": null,
+      "floor_score": null,
+      "reason": "top3d must be a finite array with the same N by 3 shape as bottom3d"
+    },
+    {
+      "case": "new_geometry_routes_without_fabricating_raw_input_or_eligibility",
+      "status": "passed",
+      "output_status": "floor_only",
+      "score": null,
+      "floor_score": 14.741249340898177,
+      "reason": "local_evidence_insufficient_floor_iou_fallback"
+    }
+  ],
+  "entry_point_sha256": "07f11d621cfccca113aee3fead4d906712d04d74f469e29760d391ed66f1c2ac"
+}

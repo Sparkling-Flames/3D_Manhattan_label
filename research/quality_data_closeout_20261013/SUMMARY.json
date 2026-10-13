@@ -1,0 +1,273 @@
+{
+  "status": "computable_data_checks_complete_with_explicit_semantic_and_source_limits",
+  "loader_validation": {
+    "status": "passed",
+    "objects": 3441,
+    "annotations": 3152,
+    "ready_coordinate_objects": 3312,
+    "confirmed_orders": 1312,
+    "research_images": 259,
+    "reference_only_images": 2,
+    "comment_occurrences": 32462,
+    "unresolved_comment_occurrences": 1,
+    "checks": [
+      "完整配对",
+      "周期平均x及y不变",
+      "Matterport数组源点身份",
+      "确认环绑定",
+      "人员/GT/图片引用",
+      "清洗及研究表字段一致",
+      "交叉表ID及计数",
+      "评论来源覆盖"
+    ],
+    "limitation": "机器一致性验证，不宣称所有标注人工确认或方法可计算；人工未决和未知来源继续保留。"
+  },
+  "conditions": {
+    "manual": 2344,
+    "oos": 234,
+    "semi": 574
+  },
+  "source_cohorts": {
+    "manual_priority": 2344,
+    "other_condition_separate": 234,
+    "semi_trap_separate": 288,
+    "semi_unverified_separate": 181,
+    "semi_unchanged_separate": 64,
+    "semi_nontrap_changed_candidate": 41
+  },
+  "roles": {
+    "manual_development_candidate": 1304,
+    "held_or_diagnostic": 1793,
+    "severe_exception_candidate": 16,
+    "semi_secondary_candidate": 39
+  },
+  "materialized_numeric_status": {
+    "current_full": 962,
+    "no_computable_score_in_authorized_views": 1400,
+    "frozen_score_outside_current_manual_panel": 348,
+    "other_reference_conditioned_diagnostic": 104,
+    "historical_fixed_reference_scope_confounded": 121,
+    "current_floor_only": 217
+  },
+  "permitted_use_counts": {
+    "manual_conditional_comparison": 1300,
+    "historical_diagnostic_only": 1793,
+    "explicitly_unavailable_no_score_imputed": 11,
+    "separate_reviewed_severe_diagnostic": 9,
+    "separate_semi_conditional_diagnostic": 39
+  },
+  "raw_diagnostic_status": {
+    "available": 3023,
+    "unavailable_trusted_pairing_missing": 129
+  },
+  "original_holdout": 282,
+  "filtered_old_grade_count": 11,
+  "filtered_constraint_entries": 5,
+  "original_holdout_members_in_new_frozen_fusion_diagnostics": 148,
+  "constraint_question_groups": {
+    "P01": 1,
+    "C02": 3,
+    "P05": 1
+  },
+  "routing": {
+    "source_records_checked": 429,
+    "floor_geometry_recomputed": 417,
+    "full_geometry_recomputed": 131,
+    "unavailable_retained": 12,
+    "max_score_error": 1.1368683772161603e-13,
+    "max_geometry_error": 8.881784197001252e-16,
+    "max_iou3d_error": 5.551115123125783e-16,
+    "max_raw_X_error": 8.881784197001252e-16,
+    "full_reference_snapshots_matched_current": 34,
+    "external_reference_only_snapshots": [
+      {
+        "candidate_id": "q9vSo1VnCiC-21:A",
+        "reason": "outside_current_259_no_research_annotations",
+        "used_by_current_annotations": false
+      },
+      {
+        "candidate_id": "q9vSo1VnCiC-25:A",
+        "reason": "outside_current_259_no_research_annotations",
+        "used_by_current_annotations": false
+      }
+    ],
+    "explicit_human_assignments_checked": 5,
+    "family_restrictions_checked": 2
+  },
+  "height": {
+    "records": 1083,
+    "layers": {
+      "current_conditional_full": 962,
+      "historical_scope_confounded_fixed_reference": 121
+    },
+    "max_height_metric_replay_error": 7.216449660063518e-16,
+    "max_Hcenter_max_minus_min_tie": 1.4892254096565694e-13,
+    "records_with_distinct_nearest_tied_heights": 1,
+    "ray_status_counts": {
+      "unique_reference_depth": 5175,
+      "multiple_reference_depths": 265
+    },
+    "records_with_all_corners_unique_reference_depth": 937,
+    "ray_residual_is_corner_based_not_Hcenter": true,
+    "missing_confirmed_top_not_processed": true
+  },
+  "downstream": {
+    "workers": {
+      "records": 143,
+      "worker_condition_rows": 48,
+      "workers": 24,
+      "by_condition": {
+        "semi": 72,
+        "manual": 71
+      },
+      "by_source_cohort": {
+        "semi_unverified_separate": 72,
+        "manual_priority": 71
+      },
+      "by_current_role": {
+        "held_or_diagnostic": 72,
+        "manual_development_candidate": 71
+      },
+      "original_holdout_records": 0,
+      "personnel_or_context_blocked": 0,
+      "max_independent_centering_difference": 1.4210854715202004e-14,
+      "legacy_local_record_set_equal": true,
+      "max_worker_aggregate_or_leave_building_difference": 1.4210854715202004e-14,
+      "no_worker_ability_ranking": true,
+      "current_expanded_manual_full_coverage": {
+        "records": 962,
+        "workers": 24,
+        "images": 115,
+        "reference_cells": 116,
+        "common_reference_cells_all_workers": 4,
+        "per_worker_reference_cells": {
+          "W001": 41,
+          "W002": 43,
+          "W006": 43,
+          "W008": 40,
+          "W010": 38,
+          "W011": 30,
+          "W012": 40,
+          "W013": 38,
+          "W014": 24,
+          "W015": 45,
+          "W017": 42,
+          "W018": 24,
+          "W021": 11,
+          "W027": 27,
+          "W028": 44,
+          "W029": 48,
+          "W030": 45,
+          "W031": 54,
+          "W032": 50,
+          "W033": 49,
+          "W034": 53,
+          "W035": 53,
+          "W036": 42,
+          "W037": 38
+        },
+        "coverage_only_not_worker_ranking": true
+      }
+    },
+    "fusion": {
+      "endpoints": 220,
+      "images": 177,
+      "scope": "legacy_220_endpoint_inventory_and_60_scores; additional coverage is in REFERENCE_GAP_AUDIT.json",
+      "by_version": {
+        "automatic": {
+          "endpoints": 177,
+          "scored": 54,
+          "unavailable_reasons": {
+            "missing_reference": 103,
+            "two_person_sorting_deferred": 17,
+            "no_source_ring_covering_all_selected_nodes": 3
+          }
+        },
+        "assisted": {
+          "endpoints": 43,
+          "scored": 6,
+          "unavailable_reasons": {
+            "missing_reference": 36,
+            "projection:wrong_hemisphere": 1
+          }
+        }
+      },
+      "scored_images": 54,
+      "current_source_issues": {},
+      "endpoints_with_current_member_barriers": 83,
+      "scored_endpoints_with_current_member_barriers": 0,
+      "scored_endpoints_with_current_reference_barriers": 0,
+      "scored_endpoints_missing_current_reference_registry": 0,
+      "scored_member_occurrences": 685,
+      "scored_member_roles": {
+        "manual_development_candidate": 685
+      },
+      "max_frozen_score_difference": 1.2789769243681803e-13,
+      "current_k_sequence_available": false,
+      "sequence_claim_basis": "Inspected endpoint sources provide full-pool assignments and rings, not entry order or per-k candidates; listed historical artifacts are different methods.",
+      "formal_comparison_eligible_endpoints": 0
+    },
+    "reference_gaps": {
+      "legacy_missing_reference_endpoints": 139,
+      "images": 106,
+      "true_reference_absence": 0,
+      "classifications": {
+        "unique_existing_full_reference_conditional": 84,
+        "existing_reference_not_bound_to_fused_target": 51,
+        "no_unrestricted_full_reference": 3,
+        "only_confirmed_floor_available": 1
+      },
+      "calculation_status": {
+        "complete": 84,
+        "binding_unresolved_or_reference_restricted": 54,
+        "floor_only": 1
+      },
+      "new_complete_scores": 84,
+      "new_floor_only_scores": 1,
+      "new_complete_with_member_barriers": 51,
+      "new_complete_with_original_holdout_members": 18,
+      "merged_current_coverage": {
+        "full": 144,
+        "floor_only": 1,
+        "unavailable": 75,
+        "formal_qualified": 0
+      },
+      "existing_fusion_metric_parity_max_difference": 3.1086244689504383e-15,
+      "no_individual_route_inherited": true,
+      "no_scope_qualification_granted": true
+    }
+  },
+  "unresolved_global_comment": {
+    "text": "OOS/门洞GT空白不算漏审；非正交稳定可标x8同房例外。",
+    "field": "gt_blank_policy",
+    "json_pointer": "/gt_blank_policy",
+    "object_id": null,
+    "image_id": null,
+    "worker_id": null,
+    "image_code": null,
+    "reviewer": null,
+    "updated_at": null,
+    "recorded_status": null,
+    "recorded_verdict": null,
+    "embedded_source": "用户2026-09-28本轮消息",
+    "original_record_metadata": {},
+    "condition": null,
+    "coordinate_source": null,
+    "binding_status": "unresolved",
+    "text_role": "recorded_text",
+    "source_file": "analysis_results/review_closeout_20260928/clarifications.json",
+    "phase": "compliance",
+    "source_kind": "consolidated_or_interpreted",
+    "source_owner_hint": null,
+    "occurrence_id": "occurrence_000006"
+  },
+  "remaining_computable_checks": [],
+  "remaining_noncomputational_limits": [
+    "未确认顶面不制造完整分",
+    "范围或语义墙对应未决保留条件结果",
+    "缺可信配对不自动修复排除人员作答",
+    "来源未核实semi不入manual校准",
+    "缺真实融合逐人数序列不插值",
+    "未以弱开发标签宣称唯一参数或独立验证"
+  ]
+}

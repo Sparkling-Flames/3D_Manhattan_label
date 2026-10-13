@@ -1,0 +1,35 @@
+{
+  "schema": "quality_closeout_verification_20261013_v1",
+  "date": "2026-10-13",
+  "pytest": {
+    "passed": 33,
+    "failed": 0,
+    "seconds": 3.8,
+    "scope": "9 targeted quality data, provenance, score, reference, height and downstream test files"
+  },
+  "executed_checks": [
+    "current complete loader validation",
+    "all 3152 ledger identity and count closure",
+    "417 selected-floor and 131 full routed geometry replays",
+    "1106 Hmean/Hcenter geometry replays",
+    "original/follow-up feedback and 282 holdout preservation",
+    "worker centering and leave-building parity",
+    "220 fusion endpoint identity/order/source audit and 139 missing-reference reclassification",
+    "84 full plus 1 floor-only frozen fusion score additions",
+    "current report/plan links",
+    "git diff whitespace with CRLF handling"
+  ],
+  "preserved_boundaries": [
+    "raw exports",
+    "formal contract and worker gates",
+    "reference and point order decisions",
+    "frozen source archive",
+    "fusion algorithm"
+  ],
+  "not_run": [
+    "parameter grid search",
+    "unrelated repository test suite",
+    "new per-image human adjudication"
+  ],
+  "screenshots_created": 0
+}

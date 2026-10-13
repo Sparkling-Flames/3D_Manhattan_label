@@ -1,0 +1,1492 @@
+{
+  "summary": {
+    "n_real_descriptors": 922,
+    "n_hinge_configs": 9,
+    "n_counterexamples": 9,
+    "n_grid_checks": 21,
+    "grid_axis_spacing_deg": 0.0024999305574845143,
+    "near_switch_D_difference_deg": 2.6497097849187412e-08,
+    "near_switch_M4_difference_deg4": 188999.99832780124,
+    "near_switch_L2_axis_hinge_difference_deg2": 104.70833047383428,
+    "near_switch_joint_min_hinge_difference_deg2": 9.222222843163763e-07,
+    "n_real_L2_axis_ties": 0,
+    "max_dense_grid_minus_exact": 2.9353996069403365e-06,
+    "descriptors_sha256": "bff28f01873b1804781fcf2b33b0d287cd8de5fa50774773fb1092fd1a8cbe4f",
+    "structural_features_sha256": "46859ee14c55cdf6831d296f9fb805e859d320a50a4e80120e06d3634a3a2e12"
+  },
+  "cases": [
+    {
+      "length_weight_w": 0.11566666666666667,
+      "epsilon": -0.001,
+      "floor_ring": [
+        [
+          -0.34487055978455294,
+          -0.30432677697120375
+        ],
+        [
+          -0.22920389311788628,
+          -0.30432677697120375
+        ],
+        [
+          0.05270389311788626,
+          -0.20172073397350315
+        ],
+        [
+          0.34487055978455294,
+          0.30432677697120375
+        ],
+        [
+          0.22920389311788625,
+          0.30432677697120375
+        ],
+        [
+          -0.05270389311788626,
+          0.20172073397350315
+        ]
+      ],
+      "descriptor": {
+        "status": "available",
+        "D_rms_deg": 22.612808317411623,
+        "axis_deg": 51.46999999999999,
+        "axis_tie_count": 1,
+        "axis_tie_candidates": [
+          {
+            "axis_deg": 51.46999999999999,
+            "weighted_abs_moment_p4_deg4": 552258.1644335705
+          }
+        ],
+        "edge_direction_deg": [
+          0.0,
+          19.999999999999996,
+          59.99999999999999,
+          180.0,
+          -160.00000000000003,
+          -120.00000000000001
+        ],
+        "signed_residual_deg": [
+          38.53,
+          -31.469999999999995,
+          8.530000000000001,
+          38.53,
+          -31.470000000000027,
+          8.530000000000001
+        ],
+        "abs_residual_deg": [
+          38.53,
+          31.469999999999995,
+          8.530000000000001,
+          38.53,
+          31.470000000000027,
+          8.530000000000001
+        ],
+        "edge_length_h": [
+          0.11566666666666667,
+          0.3,
+          0.5843333333333333,
+          0.1156666666666667,
+          0.3,
+          0.5843333333333333
+        ],
+        "length_weight": [
+          0.057833333333333334,
+          0.15,
+          0.29216666666666663,
+          0.05783333333333335,
+          0.15,
+          0.29216666666666663
+        ],
+        "perimeter_h": 2.0,
+        "Dmax_deg": 38.53,
+        "weighted_abs_moments_deg_power": {
+          "p1": 18.882000000000005,
+          "p2": 511.3391000000003,
+          "p3": 16328.812559800012,
+          "p4": 552258.1644335705,
+          "p5": 19108335.09067125,
+          "p6": 670077818.053048
+        },
+        "excess_by_threshold_deg": {
+          "2": {
+            "threshold_deg": 2.0,
+            "fraction_above": 1.0,
+            "positive_part_mean_deg": 16.882,
+            "positive_part_m2_deg2": 439.8111000000002,
+            "positive_part_m4_deg4": 433311.5783551704,
+            "normalized_excess_p2": 109.95277500000005,
+            "normalized_excess_p4": 27081.97364719815
+          },
+          "5": {
+            "threshold_deg": 5.0,
+            "fraction_above": 1.0,
+            "positive_part_mean_deg": 13.882000000000005,
+            "positive_part_m2_deg2": 347.51910000000015,
+            "positive_part_m4_deg4": 293566.7782375703,
+            "normalized_excess_p2": 13.900764000000008,
+            "normalized_excess_p4": 469.70684518011245
+          },
+          "10": {
+            "threshold_deg": 10.0,
+            "fraction_above": 0.41566666666666663,
+            "positive_part_mean_deg": 9.740970000000004,
+            "positive_part_m2_deg2": 232.43641410000018,
+            "positive_part_m4_deg4": 140378.39350360885,
+            "normalized_excess_p2": 2.3243641410000015,
+            "normalized_excess_p4": 14.037839350360887
+          },
+          "15": {
+            "threshold_deg": 15.0,
+            "fraction_above": 0.41566666666666663,
+            "positive_part_mean_deg": 7.66263666666667,
+            "positive_part_m2_deg2": 145.4183807666668,
+            "positive_part_m4_deg4": 57531.24812381542,
+            "normalized_excess_p2": 0.646303914518519,
+            "normalized_excess_p4": 1.1364197160259835
+          },
+          "20": {
+            "threshold_deg": 20.0,
+            "fraction_above": 0.41566666666666663,
+            "positive_part_mean_deg": 5.584303333333337,
+            "positive_part_m2_deg2": 79.18368076666675,
+            "positive_part_m4_deg4": 18829.200307355382,
+            "normalized_excess_p2": 0.1979592019166669,
+            "normalized_excess_p4": 0.11768250192097114
+          }
+        },
+        "descriptor_axis": "annotation_optimized_common_orthogonal_L2_axes",
+        "reference_independent": true
+      },
+      "jointly_optimized_hinge": {
+        "optimized_axis_deg": 79.59444444444443,
+        "value_deg2": 871.6732407407403,
+        "threshold_deg": 10.0,
+        "excess_weight": 2.0,
+        "L2_selected_axis_value_deg2": 976.2119282000006,
+        "definition": "min_axis sum(length_weight*(residual_deg^2+gamma*max(abs(residual_deg)-threshold_deg,0)^2))"
+      }
+    },
+    {
+      "length_weight_w": 0.11665666666666667,
+      "epsilon": -1e-05,
+      "floor_ring": [
+        [
+          -0.34511805978455296,
+          -0.3038980943963305
+        ],
+        [
+          -0.22846139311788627,
+          -0.3038980943963305
+        ],
+        [
+          0.05344639311788624,
+          -0.20129205139862988
+        ],
+        [
+          0.34511805978455296,
+          0.3038980943963305
+        ],
+        [
+          0.22846139311788632,
+          0.3038980943963305
+        ],
+        [
+          -0.05344639311788618,
+          0.20129205139862988
+        ]
+      ],
+      "descriptor": {
+        "status": "available",
+        "D_rms_deg": 22.64367240334483,
+        "axis_deg": 51.49969999999999,
+        "axis_tie_count": 1,
+        "axis_tie_candidates": [
+          {
+            "axis_deg": 51.49969999999999,
+            "weighted_abs_moment_p4_deg4": 554712.5607494479
+          }
+        ],
+        "edge_direction_deg": [
+          0.0,
+          19.999999999999996,
+          59.99999999999999,
+          180.0,
+          -160.00000000000003,
+          -120.00000000000001
+        ],
+        "signed_residual_deg": [
+          38.50030000000001,
+          -31.499699999999994,
+          8.500300000000003,
+          38.50030000000001,
+          -31.49970000000002,
+          8.500299999999982
+        ],
+        "abs_residual_deg": [
+          38.50030000000001,
+          31.499699999999994,
+          8.500300000000003,
+          38.50030000000001,
+          31.49970000000002,
+          8.500299999999982
+        ],
+        "edge_length_h": [
+          0.11665666666666669,
+          0.3,
+          0.5833433333333333,
+          0.11665666666666663,
+          0.3,
+          0.5833433333333333
+        ],
+        "length_weight": [
+          0.05832833333333334,
+          0.15,
+          0.29167166666666666,
+          0.058328333333333315,
+          0.15,
+          0.29167166666666666
+        ],
+        "perimeter_h": 2.0,
+        "Dmax_deg": 38.50030000000001,
+        "weighted_abs_moments_deg_power": {
+          "p1": 18.89982,
+          "p2": 512.7358999100002,
+          "p3": 16392.13612741294,
+          "p4": 554712.5607494479,
+          "p5": 19197559.863694064,
+          "p6": 673204050.3545042
+        },
+        "excess_by_threshold_deg": {
+          "2": {
+            "threshold_deg": 2.0,
+            "fraction_above": 1.0,
+            "positive_part_mean_deg": 16.89982,
+            "positive_part_m2_deg2": 441.1366199100001,
+            "positive_part_m4_deg4": 435292.33908798435,
+            "normalized_excess_p2": 110.28415497750002,
+            "normalized_excess_p4": 27205.771192999022
+          },
+          "5": {
+            "threshold_deg": 5.0,
+            "fraction_above": 1.0,
+            "positive_part_mean_deg": 13.899819999999998,
+            "positive_part_m2_deg2": 348.7376999100001,
+            "positive_part_m4_deg4": 294955.3131876891,
+            "normalized_excess_p2": 13.949507996400007,
+            "normalized_excess_p4": 471.9285011003026
+          },
+          "10": {
+            "threshold_deg": 10.0,
+            "fraction_above": 0.4166566666666667,
+            "positive_part_mean_deg": 9.774659997000002,
+            "positive_part_m2_deg2": 233.42750236649923,
+            "positive_part_m4_deg4": 141066.4247851372,
+            "normalized_excess_p2": 2.334275023664992,
+            "normalized_excess_p4": 14.106642478513722
+          },
+          "15": {
+            "threshold_deg": 15.0,
+            "fraction_above": 0.4166566666666667,
+            "positive_part_mean_deg": 7.691376663666669,
+            "positive_part_m2_deg2": 146.09731906316588,
+            "positive_part_m4_deg4": 57814.175901700284,
+            "normalized_excess_p2": 0.649321418058515,
+            "normalized_excess_p4": 1.1420084128730918
+          },
+          "20": {
+            "threshold_deg": 20.0,
+            "fraction_above": 0.4166566666666667,
+            "positive_part_mean_deg": 5.608093330333336,
+            "positive_part_m2_deg2": 79.59996909316584,
+            "positive_part_m4_deg4": 18911.943570546468,
+            "normalized_excess_p2": 0.19899992273291464,
+            "normalized_excess_p4": 0.11819964731591542
+          }
+        },
+        "descriptor_axis": "annotation_optimized_common_orthogonal_L2_axes",
+        "reference_independent": true
+      },
+      "jointly_optimized_hinge": {
+        "optimized_axis_deg": 79.61094444444443,
+        "value_deg2": 871.2175739907409,
+        "threshold_deg": 10.0,
+        "excess_weight": 2.0,
+        "L2_selected_axis_value_deg2": 979.5909046429986,
+        "definition": "min_axis sum(length_weight*(residual_deg^2+gamma*max(abs(residual_deg)-threshold_deg,0)^2))"
+      }
+    },
+    {
+      "length_weight_w": 0.11666656666666667,
+      "epsilon": -1e-07,
+      "floor_ring": [
+        [
+          -0.34512053478455296,
+          -0.30389380757058176
+        ],
+        [
+          -0.2284539681178863,
+          -0.30389380757058176
+        ],
+        [
+          0.05345381811788619,
+          -0.20128776457288117
+        ],
+        [
+          0.34512053478455296,
+          0.30389380757058176
+        ],
+        [
+          0.22845396811788632,
+          0.30389380757058176
+        ],
+        [
+          -0.05345381811788619,
+          0.20128776457288117
+        ]
+      ],
+      "descriptor": {
+        "status": "available",
+        "D_rms_deg": 22.643980635038332,
+        "axis_deg": 51.49999699999999,
+        "axis_tie_count": 1,
+        "axis_tie_candidates": [
+          {
+            "axis_deg": 51.49999699999999,
+            "weighted_abs_moment_p4_deg4": 554737.06498646
+          }
+        ],
+        "edge_direction_deg": [
+          0.0,
+          19.999999999999996,
+          59.99999999999999,
+          180.0,
+          -160.00000000000003,
+          -120.00000000000001
+        ],
+        "signed_residual_deg": [
+          38.50000300000001,
+          -31.499996999999997,
+          8.500003,
+          38.50000299999999,
+          -31.499997000000008,
+          8.500002999999992
+        ],
+        "abs_residual_deg": [
+          38.50000300000001,
+          31.499996999999997,
+          8.500003,
+          38.50000299999999,
+          31.499997000000008,
+          8.500002999999992
+        ],
+        "edge_length_h": [
+          0.11666656666666667,
+          0.3,
+          0.5833334333333334,
+          0.11666656666666664,
+          0.3,
+          0.5833334333333334
+        ],
+        "length_weight": [
+          0.05833328333333333,
+          0.15,
+          0.2916667166666667,
+          0.05833328333333332,
+          0.15,
+          0.2916667166666667
+        ],
+        "perimeter_h": 2.0,
+        "Dmax_deg": 38.50000300000001,
+        "weighted_abs_moments_deg_power": {
+          "p1": 18.899998199999995,
+          "p2": 512.749858999991,
+          "p3": 16392.768611349242,
+          "p4": 554737.06498646,
+          "p5": 19198450.312003877,
+          "p6": 673235235.861978
+        },
+        "excess_by_threshold_deg": {
+          "2": {
+            "threshold_deg": 2.0,
+            "fraction_above": 1.0,
+            "positive_part_mean_deg": 16.8999982,
+            "positive_part_m2_deg2": 441.149866199991,
+            "positive_part_m4_deg4": 435312.1127692658,
+            "normalized_excess_p2": 110.28746654999775,
+            "normalized_excess_p4": 27207.00704807911
+          },
+          "5": {
+            "threshold_deg": 5.0,
+            "fraction_above": 1.0,
+            "positive_part_mean_deg": 13.899998199999997,
+            "positive_part_m2_deg2": 348.749876999991,
+            "positive_part_m4_deg4": 294969.17250947375,
+            "normalized_excess_p2": 13.94999507999964,
+            "normalized_excess_p4": 471.950676015158
+          },
+          "10": {
+            "threshold_deg": 10.0,
+            "fraction_above": 0.4166665666666667,
+            "positive_part_mean_deg": 9.7749965999997,
+            "positive_part_m2_deg2": 233.43740002498666,
+            "positive_part_m4_deg4": 141073.2900306036,
+            "normalized_excess_p2": 2.3343740002498663,
+            "normalized_excess_p4": 14.107329003060357
+          },
+          "15": {
+            "threshold_deg": 15.0,
+            "fraction_above": 0.4166665666666667,
+            "positive_part_mean_deg": 7.691663766666366,
+            "positive_part_m2_deg2": 146.1040981916563,
+            "positive_part_m4_deg4": 57816.99754102774,
+            "normalized_excess_p2": 0.6493515475184725,
+            "normalized_excess_p4": 1.1420641489585726
+          },
+          "20": {
+            "threshold_deg": 20.0,
+            "fraction_above": 0.4166665666666667,
+            "positive_part_mean_deg": 5.608330933333034,
+            "positive_part_m2_deg2": 79.60412469165932,
+            "positive_part_m4_deg4": 18912.767717282117,
+            "normalized_excess_p2": 0.19901031172914832,
+            "normalized_excess_p4": 0.11820479823301323
+          }
+        },
+        "descriptor_axis": "annotation_optimized_common_orthogonal_L2_axes",
+        "reference_independent": true
+      },
+      "jointly_optimized_hinge": {
+        "optimized_axis_deg": 79.61110944444442,
+        "value_deg2": 871.2130090740654,
+        "threshold_deg": 10.0,
+        "excess_weight": 2.0,
+        "L2_selected_axis_value_deg2": 979.6246590499642,
+        "definition": "min_axis sum(length_weight*(residual_deg^2+gamma*max(abs(residual_deg)-threshold_deg,0)^2))"
+      }
+    },
+    {
+      "length_weight_w": 0.11666666566666667,
+      "epsilon": -1e-09,
+      "floor_ring": [
+        [
+          -0.34512055953455295,
+          -0.30389376470232426
+        ],
+        [
+          -0.22845389386788628,
+          -0.30389376470232426
+        ],
+        [
+          0.053453892367886224,
+          -0.20128772170462367
+        ],
+        [
+          0.34512055953455295,
+          0.30389376470232426
+        ],
+        [
+          0.22845389386788623,
+          0.30389376470232426
+        ],
+        [
+          -0.05345389236788628,
+          0.20128772170462367
+        ]
+      ],
+      "descriptor": {
+        "status": "available",
+        "D_rms_deg": 22.643983717314416,
+        "axis_deg": 51.49999996999999,
+        "axis_tie_count": 1,
+        "axis_tie_candidates": [
+          {
+            "axis_deg": 51.49999996999999,
+            "weighted_abs_moment_p4_deg4": 554737.310024866
+          }
+        ],
+        "edge_direction_deg": [
+          0.0,
+          19.999999999999996,
+          59.99999999999999,
+          180.0,
+          -160.00000000000003,
+          -120.00000000000001
+        ],
+        "signed_residual_deg": [
+          38.50000003000001,
+          -31.499999969999994,
+          8.500000030000002,
+          38.500000030000024,
+          -31.499999970000033,
+          8.500000029999995
+        ],
+        "abs_residual_deg": [
+          38.50000003000001,
+          31.499999969999994,
+          8.500000030000002,
+          38.500000030000024,
+          31.499999970000033,
+          8.500000029999995
+        ],
+        "edge_length_h": [
+          0.11666666566666667,
+          0.3,
+          0.5833333343333333,
+          0.11666666566666672,
+          0.3,
+          0.5833333343333333
+        ],
+        "length_weight": [
+          0.058333332833333335,
+          0.15,
+          0.29166666716666667,
+          0.05833333283333336,
+          0.15,
+          0.29166666716666667
+        ],
+        "perimeter_h": 2.0,
+        "Dmax_deg": 38.500000030000024,
+        "weighted_abs_moments_deg_power": {
+          "p1": 18.899999982000008,
+          "p2": 512.7499985900005,
+          "p3": 16392.77493611352,
+          "p4": 554737.310024866,
+          "p5": 19198459.2163076,
+          "p6": 673235547.7094036
+        },
+        "excess_by_threshold_deg": {
+          "2": {
+            "threshold_deg": 2.0,
+            "fraction_above": 1.0,
+            "positive_part_mean_deg": 16.899999982000008,
+            "positive_part_m2_deg2": 441.14999866200037,
+            "positive_part_m4_deg4": 435312.3105026938,
+            "normalized_excess_p2": 110.28749966550009,
+            "normalized_excess_p4": 27207.019406418363
+          },
+          "5": {
+            "threshold_deg": 5.0,
+            "fraction_above": 1.0,
+            "positive_part_mean_deg": 13.899999982000006,
+            "positive_part_m2_deg2": 348.7499987700004,
+            "positive_part_m4_deg4": 294969.31110009557,
+            "normalized_excess_p2": 13.949999950800015,
+            "normalized_excess_p4": 471.95089776015294
+          },
+          "10": {
+            "threshold_deg": 10.0,
+            "fraction_above": 0.41666666566666666,
+            "positive_part_mean_deg": 9.774999966000006,
+            "positive_part_m2_deg2": 233.43749900025028,
+            "positive_part_m4_deg4": 141073.35868155654,
+            "normalized_excess_p2": 2.334374990002503,
+            "normalized_excess_p4": 14.107335868155653
+          },
+          "15": {
+            "threshold_deg": 15.0,
+            "fraction_above": 0.41666666566666666,
+            "positive_part_mean_deg": 7.691666637666673,
+            "positive_part_m2_deg2": 146.1041659819169,
+            "positive_part_m4_deg4": 57817.025756660536,
+            "normalized_excess_p2": 0.6493518488085195,
+            "normalized_excess_p4": 1.1420647063044056
+          },
+          "20": {
+            "threshold_deg": 20.0,
+            "fraction_above": 0.41666666566666666,
+            "positive_part_mean_deg": 5.608333309333339,
+            "positive_part_m2_deg2": 79.60416624691685,
+            "positive_part_m4_deg4": 18912.77595842293,
+            "normalized_excess_p2": 0.1990104156172921,
+            "normalized_excess_p4": 0.11820484974014332
+          }
+        },
+        "descriptor_axis": "annotation_optimized_common_orthogonal_L2_axes",
+        "reference_independent": true
+      },
+      "jointly_optimized_hinge": {
+        "optimized_axis_deg": 79.61111109444442,
+        "value_deg2": 871.2129634240737,
+        "threshold_deg": 10.0,
+        "excess_weight": 2.0,
+        "L2_selected_axis_value_deg2": 979.624996590501,
+        "definition": "min_axis sum(length_weight*(residual_deg^2+gamma*max(abs(residual_deg)-threshold_deg,0)^2))"
+      }
+    },
+    {
+      "length_weight_w": 0.11666666666666667,
+      "epsilon": 0.0,
+      "floor_ring": [
+        [
+          -0.34512055978455297,
+          -0.30389376426931153
+        ],
+        [
+          -0.2284538931178863,
+          -0.30389376426931153
+        ],
+        [
+          0.05345389311788623,
+          -0.20128772127161093
+        ],
+        [
+          0.34512055978455286,
+          0.30389376426931153
+        ],
+        [
+          0.22845389311788616,
+          0.30389376426931153
+        ],
+        [
+          -0.05345389311788634,
+          0.20128772127161093
+        ]
+      ],
+      "descriptor": {
+        "status": "available",
+        "D_rms_deg": 22.6439837484485,
+        "axis_deg": 51.49999999999999,
+        "axis_tie_count": 2,
+        "axis_tie_candidates": [
+          {
+            "axis_deg": 51.49999999999999,
+            "weighted_abs_moment_p4_deg4": 554737.3125000005
+          },
+          {
+            "axis_deg": 78.5,
+            "weighted_abs_moment_p4_deg4": 365737.3124999995
+          }
+        ],
+        "edge_direction_deg": [
+          0.0,
+          19.999999999999996,
+          59.99999999999999,
+          180.0,
+          -160.00000000000003,
+          -120.00000000000001
+        ],
+        "signed_residual_deg": [
+          38.5,
+          -31.499999999999996,
+          8.5,
+          38.5,
+          -31.50000000000003,
+          8.5
+        ],
+        "abs_residual_deg": [
+          38.5,
+          31.499999999999996,
+          8.5,
+          38.5,
+          31.50000000000003,
+          8.5
+        ],
+        "edge_length_h": [
+          0.11666666666666667,
+          0.3,
+          0.5833333333333333,
+          0.1166666666666667,
+          0.3,
+          0.5833333333333333
+        ],
+        "length_weight": [
+          0.058333333333333334,
+          0.15,
+          0.29166666666666663,
+          0.05833333333333335,
+          0.15,
+          0.29166666666666663
+        ],
+        "perimeter_h": 2.0,
+        "Dmax_deg": 38.5,
+        "weighted_abs_moments_deg_power": {
+          "p1": 18.900000000000006,
+          "p2": 512.7500000000002,
+          "p3": 16392.775000000012,
+          "p4": 554737.3125000005,
+          "p5": 19198459.30625002,
+          "p6": 673235550.8593757
+        },
+        "excess_by_threshold_deg": {
+          "2": {
+            "threshold_deg": 2.0,
+            "fraction_above": 1.0,
+            "positive_part_mean_deg": 16.900000000000002,
+            "positive_part_m2_deg2": 441.15000000000026,
+            "positive_part_m4_deg4": 435312.3125000004,
+            "normalized_excess_p2": 110.28750000000007,
+            "normalized_excess_p4": 27207.019531250025
+          },
+          "5": {
+            "threshold_deg": 5.0,
+            "fraction_above": 1.0,
+            "positive_part_mean_deg": 13.900000000000006,
+            "positive_part_m2_deg2": 348.75000000000017,
+            "positive_part_m4_deg4": 294969.3125000003,
+            "normalized_excess_p2": 13.950000000000006,
+            "normalized_excess_p4": 471.9509000000005
+          },
+          "10": {
+            "threshold_deg": 10.0,
+            "fraction_above": 0.41666666666666663,
+            "positive_part_mean_deg": 9.775000000000004,
+            "positive_part_m2_deg2": 233.43750000000017,
+            "positive_part_m4_deg4": 141073.35937500015,
+            "normalized_excess_p2": 2.334375000000002,
+            "normalized_excess_p4": 14.107335937500016
+          },
+          "15": {
+            "threshold_deg": 15.0,
+            "fraction_above": 0.41666666666666663,
+            "positive_part_mean_deg": 7.691666666666671,
+            "positive_part_m2_deg2": 146.1041666666668,
+            "positive_part_m4_deg4": 57817.02604166674,
+            "normalized_excess_p2": 0.6493518518518525,
+            "normalized_excess_p4": 1.1420647119341578
+          },
+          "20": {
+            "threshold_deg": 20.0,
+            "fraction_above": 0.41666666666666663,
+            "positive_part_mean_deg": 5.608333333333337,
+            "positive_part_m2_deg2": 79.60416666666676,
+            "positive_part_m4_deg4": 18912.77604166669,
+            "normalized_excess_p2": 0.1990104166666669,
+            "normalized_excess_p4": 0.11820485026041684
+          }
+        },
+        "descriptor_axis": "annotation_optimized_common_orthogonal_L2_axes",
+        "reference_independent": true
+      },
+      "jointly_optimized_hinge": {
+        "optimized_axis_deg": 79.6111111111111,
+        "value_deg2": 871.2129629629626,
+        "threshold_deg": 10.0,
+        "excess_weight": 2.0,
+        "L2_selected_axis_value_deg2": 979.6250000000006,
+        "definition": "min_axis sum(length_weight*(residual_deg^2+gamma*max(abs(residual_deg)-threshold_deg,0)^2))"
+      }
+    },
+    {
+      "length_weight_w": 0.11666666766666667,
+      "epsilon": 1e-09,
+      "floor_ring": [
+        [
+          -0.3451205600345529,
+          -0.30389376383629885
+        ],
+        [
+          -0.2284538923678862,
+          -0.30389376383629885
+        ],
+        [
+          0.05345389386788629,
+          -0.20128772083859825
+        ],
+        [
+          0.345120560034553,
+          0.30389376383629885
+        ],
+        [
+          0.22845389236788632,
+          0.30389376383629885
+        ],
+        [
+          -0.05345389386788618,
+          0.20128772083859825
+        ]
+      ],
+      "descriptor": {
+        "status": "available",
+        "D_rms_deg": 22.643983743811514,
+        "axis_deg": 78.50000003,
+        "axis_tie_count": 1,
+        "axis_tie_candidates": [
+          {
+            "axis_deg": 78.50000003,
+            "weighted_abs_moment_p4_deg4": 365737.3116970648
+          }
+        ],
+        "edge_direction_deg": [
+          0.0,
+          19.999999999999996,
+          59.99999999999999,
+          180.0,
+          -160.00000000000003,
+          -120.00000000000001
+        ],
+        "signed_residual_deg": [
+          11.499999970000005,
+          31.499999970000005,
+          -18.500000030000002,
+          11.499999970000005,
+          31.499999969999976,
+          -18.500000030000024
+        ],
+        "abs_residual_deg": [
+          11.499999970000005,
+          31.499999970000005,
+          18.500000030000002,
+          11.499999970000005,
+          31.499999969999976,
+          18.500000030000024
+        ],
+        "edge_length_h": [
+          0.11666666766666667,
+          0.3,
+          0.5833333323333333,
+          0.11666666766666667,
+          0.3,
+          0.5833333323333333
+        ],
+        "length_weight": [
+          0.058333333833333334,
+          0.15,
+          0.29166666616666664,
+          0.058333333833333334,
+          0.15,
+          0.29166666616666664
+        ],
+        "perimeter_h": 2.0,
+        "Dmax_deg": 31.499999970000005,
+        "weighted_abs_moments_deg_power": {
+          "p1": 21.58333333133334,
+          "p2": 512.7499997900002,
+          "p3": 13247.645818311332,
+          "p4": 365737.3116970648,
+          "p5": 10591640.9376305,
+          "p6": 316734299.37017244
+        },
+        "excess_by_threshold_deg": {
+          "2": {
+            "threshold_deg": 2.0,
+            "fraction_above": 1.0,
+            "positive_part_mean_deg": 19.58333333133334,
+            "positive_part_m2_deg2": 430.4166664646667,
+            "positive_part_m4_deg4": 271387.4784789315,
+            "normalized_excess_p2": 107.60416661616668,
+            "normalized_excess_p4": 16961.717404933217
+          },
+          "5": {
+            "threshold_deg": 5.0,
+            "fraction_above": 1.0,
+            "positive_part_mean_deg": 16.583333331333336,
+            "positive_part_m2_deg2": 321.9166664766667,
+            "positive_part_m4_deg4": 167530.2286336715,
+            "normalized_excess_p2": 12.876666659066668,
+            "normalized_excess_p4": 268.0483658138744
+          },
+          "10": {
+            "threshold_deg": 10.0,
+            "fraction_above": 1.0,
+            "positive_part_mean_deg": 11.583333331333337,
+            "positive_part_m2_deg2": 181.08333316333332,
+            "positive_part_m4_deg4": 67148.14551327824,
+            "normalized_excess_p2": 1.8108333316333332,
+            "normalized_excess_p4": 6.714814551327823
+          },
+          "15": {
+            "threshold_deg": 15.0,
+            "fraction_above": 0.8833333323333332,
+            "positive_part_mean_deg": 6.991666671666671,
+            "positive_part_m2_deg2": 88.8208331465833,
+            "positive_part_m4_deg4": 22323.55504946797,
+            "normalized_excess_p2": 0.394759258429259,
+            "normalized_excess_p4": 0.4409591120882562
+          },
+          "20": {
+            "threshold_deg": 20.0,
+            "fraction_above": 0.3,
+            "positive_part_mean_deg": 3.4499999909999968,
+            "positive_part_m2_deg2": 39.674999792999934,
+            "positive_part_m4_deg4": 5247.018695248483,
+            "normalized_excess_p2": 0.09918749948249984,
+            "normalized_excess_p4": 0.03279386684530302
+          }
+        },
+        "descriptor_axis": "annotation_optimized_common_orthogonal_L2_axes",
+        "reference_independent": true
+      },
+      "jointly_optimized_hinge": {
+        "optimized_axis_deg": 79.61111112777776,
+        "value_deg2": 871.2129625018514,
+        "threshold_deg": 10.0,
+        "excess_weight": 2.0,
+        "L2_selected_axis_value_deg2": 874.9166661166668,
+        "definition": "min_axis sum(length_weight*(residual_deg^2+gamma*max(abs(residual_deg)-threshold_deg,0)^2))"
+      }
+    },
+    {
+      "length_weight_w": 0.11666676666666667,
+      "epsilon": 1e-07,
+      "floor_ring": [
+        [
+          -0.34512058478455293,
+          -0.3038937209680414
+        ],
+        [
+          -0.22845381811788626,
+          -0.3038937209680414
+        ],
+        [
+          0.05345396811788622,
+          -0.2012876779703408
+        ],
+        [
+          0.34512058478455293,
+          0.3038937209680413
+        ],
+        [
+          0.2284538181178863,
+          0.3038937209680413
+        ],
+        [
+          -0.05345396811788622,
+          0.2012876779703407
+        ]
+      ],
+      "descriptor": {
+        "status": "available",
+        "D_rms_deg": 22.643983284748973,
+        "axis_deg": 78.50000299999999,
+        "axis_tie_count": 1,
+        "axis_tie_candidates": [
+          {
+            "axis_deg": 78.50000299999999,
+            "weighted_abs_moment_p4_deg4": 365737.23220651795
+          }
+        ],
+        "edge_direction_deg": [
+          0.0,
+          19.999999999999996,
+          59.99999999999999,
+          180.0,
+          -160.00000000000003,
+          -120.00000000000001
+        ],
+        "signed_residual_deg": [
+          11.499997000000008,
+          31.499997000000008,
+          -18.500003,
+          11.499997000000008,
+          31.49999699999998,
+          -18.500002999999992
+        ],
+        "abs_residual_deg": [
+          11.499997000000008,
+          31.499997000000008,
+          18.500003,
+          11.499997000000008,
+          31.49999699999998,
+          18.500002999999992
+        ],
+        "edge_length_h": [
+          0.11666676666666667,
+          0.3,
+          0.5833332333333333,
+          0.11666676666666664,
+          0.3,
+          0.5833332333333333
+        ],
+        "length_weight": [
+          0.058333383333333336,
+          0.15,
+          0.29166661666666666,
+          0.05833338333333332,
+          0.15,
+          0.29166661666666666
+        ],
+        "perimeter_h": 2.0,
+        "Dmax_deg": 31.499997000000008,
+        "weighted_abs_moments_deg_power": {
+          "p1": 21.583333133332733,
+          "p2": 512.7499789999908,
+          "p3": 13247.64433113348,
+          "p4": 365737.23220651795,
+          "p5": 10591637.341176925,
+          "p6": 316734151.9392125
+        },
+        "excess_by_threshold_deg": {
+          "2": {
+            "threshold_deg": 2.0,
+            "fraction_above": 1.0,
+            "positive_part_mean_deg": 19.58333313333273,
+            "positive_part_m2_deg2": 430.41664646665987,
+            "positive_part_m4_deg4": 271387.41039318324,
+            "normalized_excess_p2": 107.60416161666497,
+            "normalized_excess_p4": 16961.713149573952
+          },
+          "5": {
+            "threshold_deg": 5.0,
+            "fraction_above": 1.0,
+            "positive_part_mean_deg": 16.58333313333273,
+            "positive_part_m2_deg2": 321.9166476666635,
+            "positive_part_m4_deg4": 167530.1758671806,
+            "normalized_excess_p2": 12.87666590666654,
+            "normalized_excess_p4": 268.0482813874889
+          },
+          "10": {
+            "threshold_deg": 10.0,
+            "fraction_above": 1.0,
+            "positive_part_mean_deg": 11.583333133332731,
+            "positive_part_m2_deg2": 181.0833163333362,
+            "positive_part_m4_deg4": 67148.11382784227,
+            "normalized_excess_p2": 1.8108331633333619,
+            "normalized_excess_p4": 6.7148113827842275
+          },
+          "15": {
+            "threshold_deg": 15.0,
+            "fraction_above": 0.8833332333333332,
+            "positive_part_mean_deg": 6.991667166666362,
+            "positive_part_m2_deg2": 88.8208146583391,
+            "positive_part_m4_deg4": 22323.539321806787,
+            "normalized_excess_p2": 0.3947591762592848,
+            "normalized_excess_p4": 0.4409588014184057
+          },
+          "20": {
+            "threshold_deg": 20.0,
+            "fraction_above": 0.3,
+            "positive_part_mean_deg": 3.4499990999999977,
+            "positive_part_m2_deg2": 39.674979300002654,
+            "positive_part_m4_deg4": 5247.01327485213,
+            "normalized_excess_p2": 0.09918744825000664,
+            "normalized_excess_p4": 0.03279383296782582
+          }
+        },
+        "descriptor_axis": "annotation_optimized_common_orthogonal_L2_axes",
+        "reference_independent": true
+      },
+      "jointly_optimized_hinge": {
+        "optimized_axis_deg": 79.61111277777776,
+        "value_deg2": 871.212916851843,
+        "threshold_deg": 10.0,
+        "excess_weight": 2.0,
+        "L2_selected_axis_value_deg2": 874.9166116666631,
+        "definition": "min_axis sum(length_weight*(residual_deg^2+gamma*max(abs(residual_deg)-threshold_deg,0)^2))"
+      }
+    },
+    {
+      "length_weight_w": 0.11667666666666666,
+      "epsilon": 1e-05,
+      "floor_ring": [
+        [
+          -0.34512305978455293,
+          -0.30388943414229264
+        ],
+        [
+          -0.22844639311788628,
+          -0.30388943414229264
+        ],
+        [
+          0.053461393117886225,
+          -0.20128339114459204
+        ],
+        [
+          0.34512305978455293,
+          0.30388943414229264
+        ],
+        [
+          0.22844639311788628,
+          0.30388943414229264
+        ],
+        [
+          -0.053461393117886225,
+          0.20128339114459204
+        ]
+      ],
+      "descriptor": {
+        "status": "available",
+        "D_rms_deg": 22.643937376481144,
+        "axis_deg": 78.5003,
+        "axis_tie_count": 1,
+        "axis_tie_candidates": [
+          {
+            "axis_deg": 78.5003,
+            "weighted_abs_moment_p4_deg4": 365729.2833326533
+          }
+        ],
+        "edge_direction_deg": [
+          0.0,
+          19.999999999999996,
+          59.99999999999999,
+          180.0,
+          -160.00000000000003,
+          -120.00000000000001
+        ],
+        "signed_residual_deg": [
+          11.499700000000004,
+          31.499700000000004,
+          -18.500300000000003,
+          11.499700000000018,
+          31.49969999999996,
+          -18.50030000000001
+        ],
+        "abs_residual_deg": [
+          11.499700000000004,
+          31.499700000000004,
+          18.500300000000003,
+          11.499700000000018,
+          31.49969999999996,
+          18.50030000000001
+        ],
+        "edge_length_h": [
+          0.11667666666666665,
+          0.3,
+          0.5833233333333333,
+          0.11667666666666665,
+          0.3,
+          0.5833233333333333
+        ],
+        "length_weight": [
+          0.058338333333333325,
+          0.15,
+          0.29166166666666665,
+          0.058338333333333325,
+          0.15,
+          0.29166166666666665
+        ],
+        "perimeter_h": 2.0,
+        "Dmax_deg": 31.499700000000004,
+        "weighted_abs_moments_deg_power": {
+          "p1": 21.583313327333332,
+          "p2": 512.7478999099998,
+          "p3": 13247.495614890307,
+          "p4": 365729.2833326533,
+          "p5": 10591277.70562299,
+          "p6": 316719409.28976977
+        },
+        "excess_by_threshold_deg": {
+          "2": {
+            "threshold_deg": 2.0,
+            "fraction_above": 1.0,
+            "positive_part_mean_deg": 19.583313327333332,
+            "positive_part_m2_deg2": 430.4146466006665,
+            "positive_part_m4_deg4": 271380.6019848962,
+            "normalized_excess_p2": 107.60366165016663,
+            "normalized_excess_p4": 16961.28762405601
+          },
+          "5": {
+            "threshold_deg": 5.0,
+            "fraction_above": 1.0,
+            "positive_part_mean_deg": 16.583313327333332,
+            "positive_part_m2_deg2": 321.9147666366665,
+            "positive_part_m4_deg4": 167524.89935768046,
+            "normalized_excess_p2": 12.876590665466662,
+            "normalized_excess_p4": 268.0398389722888
+          },
+          "10": {
+            "threshold_deg": 10.0,
+            "fraction_above": 1.0,
+            "positive_part_mean_deg": 11.583313327333332,
+            "positive_part_m2_deg2": 181.0816333633332,
+            "positive_part_m4_deg4": 67144.94537370758,
+            "normalized_excess_p2": 1.8108163336333318,
+            "normalized_excess_p4": 6.714494537370758
+          },
+          "15": {
+            "threshold_deg": 15.0,
+            "fraction_above": 0.8833233333333332,
+            "positive_part_mean_deg": 6.991716663666665,
+            "positive_part_m2_deg2": 88.81896589183228,
+            "positive_part_m4_deg4": 22321.96660265661,
+            "normalized_excess_p2": 0.3947509595192546,
+            "normalized_excess_p4": 0.44092773536111823
+          },
+          "20": {
+            "threshold_deg": 20.0,
+            "fraction_above": 0.3,
+            "positive_part_mean_deg": 3.4499099999999947,
+            "positive_part_m2_deg2": 39.67293002699988,
+            "positive_part_m4_deg4": 5246.471256424095,
+            "normalized_excess_p2": 0.0991823250674997,
+            "normalized_excess_p4": 0.0327904453526506
+          }
+        },
+        "descriptor_axis": "annotation_optimized_common_orthogonal_L2_axes",
+        "reference_independent": true
+      },
+      "jointly_optimized_hinge": {
+        "optimized_axis_deg": 79.61127777777777,
+        "value_deg2": 871.2083517685187,
+        "threshold_deg": 10.0,
+        "excess_weight": 2.0,
+        "L2_selected_axis_value_deg2": 874.9111666366662,
+        "definition": "min_axis sum(length_weight*(residual_deg^2+gamma*max(abs(residual_deg)-threshold_deg,0)^2))"
+      }
+    },
+    {
+      "length_weight_w": 0.11766666666666667,
+      "epsilon": 0.001,
+      "floor_ring": [
+        [
+          -0.34537055978455294,
+          -0.3034607515674193
+        ],
+        [
+          -0.22770389311788627,
+          -0.3034607515674193
+        ],
+        [
+          0.05420389311788626,
+          -0.2008547085697187
+        ],
+        [
+          0.34537055978455294,
+          0.3034607515674193
+        ],
+        [
+          0.22770389311788625,
+          0.3034607515674193
+        ],
+        [
+          -0.05420389311788626,
+          0.2008547085697187
+        ]
+      ],
+      "descriptor": {
+        "status": "available",
+        "D_rms_deg": 22.639326403406972,
+        "axis_deg": 78.53,
+        "axis_tie_count": 1,
+        "axis_tie_candidates": [
+          {
+            "axis_deg": 78.53,
+            "weighted_abs_moment_p4_deg4": 364936.2029135697
+          }
+        ],
+        "edge_direction_deg": [
+          0.0,
+          19.999999999999996,
+          59.99999999999999,
+          180.0,
+          -160.00000000000003,
+          -120.00000000000001
+        ],
+        "signed_residual_deg": [
+          11.469999999999999,
+          31.47,
+          -18.53000000000001,
+          11.469999999999999,
+          31.46999999999997,
+          -18.53000000000003
+        ],
+        "abs_residual_deg": [
+          11.469999999999999,
+          31.47,
+          18.53000000000001,
+          11.469999999999999,
+          31.46999999999997,
+          18.53000000000003
+        ],
+        "edge_length_h": [
+          0.11766666666666667,
+          0.3,
+          0.5823333333333333,
+          0.1176666666666667,
+          0.3,
+          0.5823333333333333
+        ],
+        "length_weight": [
+          0.058833333333333335,
+          0.15,
+          0.29116666666666663,
+          0.05883333333333335,
+          0.15,
+          0.29116666666666663
+        ],
+        "perimeter_h": 2.0,
+        "Dmax_deg": 31.47,
+        "weighted_abs_moments_deg_power": {
+          "p1": 21.58127333333334,
+          "p2": 512.5391000000001,
+          "p3": 13232.63938887933,
+          "p4": 364936.2029135697,
+          "p5": 10555412.11115584,
+          "p6": 315249605.469005
+        },
+        "excess_by_threshold_deg": {
+          "2": {
+            "threshold_deg": 2.0,
+            "fraction_above": 1.0,
+            "positive_part_mean_deg": 19.581273333333336,
+            "positive_part_m2_deg2": 430.21400666666676,
+            "positive_part_m4_deg4": 270701.42545586836,
+            "normalized_excess_p2": 107.55350166666669,
+            "normalized_excess_p4": 16918.839090991773
+          },
+          "5": {
+            "threshold_deg": 5.0,
+            "fraction_above": 1.0,
+            "positive_part_mean_deg": 16.58127333333334,
+            "positive_part_m2_deg2": 321.7263666666667,
+            "positive_part_m4_deg4": 166998.64346931642,
+            "normalized_excess_p2": 12.869054666666669,
+            "normalized_excess_p4": 267.1978295509063
+          },
+          "10": {
+            "threshold_deg": 10.0,
+            "fraction_above": 1.0,
+            "positive_part_mean_deg": 11.581273333333339,
+            "positive_part_m2_deg2": 180.9136333333333,
+            "positive_part_m4_deg4": 66828.99402506318,
+            "normalized_excess_p2": 1.809136333333333,
+            "normalized_excess_p4": 6.682899402506317
+          },
+          "15": {
+            "threshold_deg": 15.0,
+            "fraction_above": 0.8823333333333332,
+            "positive_part_mean_deg": 6.996636666666673,
+            "positive_part_m2_deg2": 88.63466743333325,
+            "positive_part_m4_deg4": 22165.164003419944,
+            "normalized_excess_p2": 0.39393185525925895,
+            "normalized_excess_p4": 0.43783040006755436
+          },
+          "20": {
+            "threshold_deg": 20.0,
+            "fraction_above": 0.3,
+            "positive_part_mean_deg": 3.4409999999999954,
+            "positive_part_m2_deg2": 39.46826999999989,
+            "positive_part_m4_deg4": 5192.481122642972,
+            "normalized_excess_p2": 0.09867067499999974,
+            "normalized_excess_p4": 0.03245300701651858
+          }
+        },
+        "descriptor_axis": "annotation_optimized_common_orthogonal_L2_axes",
+        "reference_independent": true
+      },
+      "jointly_optimized_hinge": {
+        "optimized_axis_deg": 79.62777777777775,
+        "value_deg2": 870.7510185185181,
+        "threshold_deg": 10.0,
+        "excess_weight": 2.0,
+        "L2_selected_axis_value_deg2": 874.3663666666667,
+        "definition": "min_axis sum(length_weight*(residual_deg^2+gamma*max(abs(residual_deg)-threshold_deg,0)^2))"
+      }
+    }
+  ],
+  "grid_checks": [
+    {
+      "case": "-0.001",
+      "exact_deg2": 871.6732407407403,
+      "dense_grid_min_deg2": 871.6732428806631,
+      "exact_minus_dense_grid": -2.1399227989604697e-06
+    },
+    {
+      "case": "-1e-05",
+      "exact_deg2": 871.2175739907409,
+      "dense_grid_min_deg2": 871.2175752811245,
+      "exact_minus_dense_grid": -1.290383579544141e-06
+    },
+    {
+      "case": "-1e-07",
+      "exact_deg2": 871.2130090740654,
+      "dense_grid_min_deg2": 871.2130110954075,
+      "exact_minus_dense_grid": -2.0213420839354512e-06
+    },
+    {
+      "case": "-1e-09",
+      "exact_deg2": 871.2129634240737,
+      "dense_grid_min_deg2": 871.2129654535503,
+      "exact_minus_dense_grid": -2.0294766045481083e-06
+    },
+    {
+      "case": "0.0",
+      "exact_deg2": 871.2129629629626,
+      "dense_grid_min_deg2": 871.2129649925214,
+      "exact_minus_dense_grid": -2.029558800131781e-06
+    },
+    {
+      "case": "1e-09",
+      "exact_deg2": 871.2129625018514,
+      "dense_grid_min_deg2": 871.2129645314924,
+      "exact_minus_dense_grid": -2.0296409957154538e-06
+    },
+    {
+      "case": "1e-07",
+      "exact_deg2": 871.212916851843,
+      "dense_grid_min_deg2": 871.2129188896353,
+      "exact_minus_dense_grid": -2.037792228293256e-06
+    },
+    {
+      "case": "1e-05",
+      "exact_deg2": 871.2083517685187,
+      "dense_grid_min_deg2": 871.2083547039183,
+      "exact_minus_dense_grid": -2.9353996069403365e-06
+    },
+    {
+      "case": "0.001",
+      "exact_deg2": 870.7510185185181,
+      "dense_grid_min_deg2": 870.7510185188394,
+      "exact_minus_dense_grid": -3.212790034012869e-10
+    },
+    {
+      "case": "R00002",
+      "exact_deg2": 8.043050850082915,
+      "dense_grid_min_deg2": 8.043050891513023,
+      "exact_minus_dense_grid": -4.1430107344808675e-08
+    },
+    {
+      "case": "R00253",
+      "exact_deg2": 18.230721459533676,
+      "dense_grid_min_deg2": 18.230721463749592,
+      "exact_minus_dense_grid": -4.2159165047905844e-09
+    },
+    {
+      "case": "R00557",
+      "exact_deg2": 25.704888111785376,
+      "dense_grid_min_deg2": 25.704888143183013,
+      "exact_minus_dense_grid": -3.139763649073757e-08
+    },
+    {
+      "case": "R00827",
+      "exact_deg2": 0.034170670199682694,
+      "dense_grid_min_deg2": 0.03417188435119855,
+      "exact_minus_dense_grid": -1.2141515158548e-06
+    },
+    {
+      "case": "R01071",
+      "exact_deg2": 8.821464397006912,
+      "dense_grid_min_deg2": 8.821464599381516,
+      "exact_minus_dense_grid": -2.0237460418570663e-07
+    },
+    {
+      "case": "R01342",
+      "exact_deg2": 0.35547645500064073,
+      "dense_grid_min_deg2": 0.355477891317722,
+      "exact_minus_dense_grid": -1.4363170812714543e-06
+    },
+    {
+      "case": "R01589",
+      "exact_deg2": 7.615724679690528,
+      "dense_grid_min_deg2": 7.615725275784889,
+      "exact_minus_dense_grid": -5.96094360538757e-07
+    },
+    {
+      "case": "R01869",
+      "exact_deg2": 17.200907880807968,
+      "dense_grid_min_deg2": 17.200907883301447,
+      "exact_minus_dense_grid": -2.493479200893489e-09
+    },
+    {
+      "case": "R02117",
+      "exact_deg2": 14.495314618448056,
+      "dense_grid_min_deg2": 14.495314755589245,
+      "exact_minus_dense_grid": -1.37141189071599e-07
+    },
+    {
+      "case": "R02383",
+      "exact_deg2": 1.2809185409282369,
+      "dense_grid_min_deg2": 1.2809187092577254,
+      "exact_minus_dense_grid": -1.683294885701514e-07
+    },
+    {
+      "case": "R03001",
+      "exact_deg2": 58.99196874648391,
+      "dense_grid_min_deg2": 58.99197047594879,
+      "exact_minus_dense_grid": -1.729464877087139e-06
+    },
+    {
+      "case": "R03352",
+      "exact_deg2": 13.089548303761271,
+      "dense_grid_min_deg2": 13.089548324314672,
+      "exact_minus_dense_grid": -2.0553400759126816e-08
+    }
+  ]
+}

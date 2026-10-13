@@ -1,0 +1,126 @@
+{
+  "workers": {
+    "records": 143,
+    "worker_condition_rows": 48,
+    "workers": 24,
+    "by_condition": {
+      "semi": 72,
+      "manual": 71
+    },
+    "by_source_cohort": {
+      "semi_unverified_separate": 72,
+      "manual_priority": 71
+    },
+    "by_current_role": {
+      "held_or_diagnostic": 72,
+      "manual_development_candidate": 71
+    },
+    "original_holdout_records": 0,
+    "personnel_or_context_blocked": 0,
+    "max_independent_centering_difference": 1.4210854715202004e-14,
+    "legacy_local_record_set_equal": true,
+    "max_worker_aggregate_or_leave_building_difference": 1.4210854715202004e-14,
+    "no_worker_ability_ranking": true,
+    "current_expanded_manual_full_coverage": {
+      "records": 962,
+      "workers": 24,
+      "images": 115,
+      "reference_cells": 116,
+      "common_reference_cells_all_workers": 4,
+      "per_worker_reference_cells": {
+        "W001": 41,
+        "W002": 43,
+        "W006": 43,
+        "W008": 40,
+        "W010": 38,
+        "W011": 30,
+        "W012": 40,
+        "W013": 38,
+        "W014": 24,
+        "W015": 45,
+        "W017": 42,
+        "W018": 24,
+        "W021": 11,
+        "W027": 27,
+        "W028": 44,
+        "W029": 48,
+        "W030": 45,
+        "W031": 54,
+        "W032": 50,
+        "W033": 49,
+        "W034": 53,
+        "W035": 53,
+        "W036": 42,
+        "W037": 38
+      },
+      "coverage_only_not_worker_ranking": true
+    }
+  },
+  "fusion": {
+    "endpoints": 220,
+    "images": 177,
+    "scope": "legacy_220_endpoint_inventory_and_60_scores; additional coverage is in REFERENCE_GAP_AUDIT.json",
+    "by_version": {
+      "automatic": {
+        "endpoints": 177,
+        "scored": 54,
+        "unavailable_reasons": {
+          "missing_reference": 103,
+          "two_person_sorting_deferred": 17,
+          "no_source_ring_covering_all_selected_nodes": 3
+        }
+      },
+      "assisted": {
+        "endpoints": 43,
+        "scored": 6,
+        "unavailable_reasons": {
+          "missing_reference": 36,
+          "projection:wrong_hemisphere": 1
+        }
+      }
+    },
+    "scored_images": 54,
+    "current_source_issues": {},
+    "endpoints_with_current_member_barriers": 83,
+    "scored_endpoints_with_current_member_barriers": 0,
+    "scored_endpoints_with_current_reference_barriers": 0,
+    "scored_endpoints_missing_current_reference_registry": 0,
+    "scored_member_occurrences": 685,
+    "scored_member_roles": {
+      "manual_development_candidate": 685
+    },
+    "max_frozen_score_difference": 1.2789769243681803e-13,
+    "current_k_sequence_available": false,
+    "sequence_claim_basis": "Inspected endpoint sources provide full-pool assignments and rings, not entry order or per-k candidates; listed historical artifacts are different methods.",
+    "formal_comparison_eligible_endpoints": 0
+  },
+  "reference_gaps": {
+    "legacy_missing_reference_endpoints": 139,
+    "images": 106,
+    "true_reference_absence": 0,
+    "classifications": {
+      "unique_existing_full_reference_conditional": 84,
+      "existing_reference_not_bound_to_fused_target": 51,
+      "no_unrestricted_full_reference": 3,
+      "only_confirmed_floor_available": 1
+    },
+    "calculation_status": {
+      "complete": 84,
+      "binding_unresolved_or_reference_restricted": 54,
+      "floor_only": 1
+    },
+    "new_complete_scores": 84,
+    "new_floor_only_scores": 1,
+    "new_complete_with_member_barriers": 51,
+    "new_complete_with_original_holdout_members": 18,
+    "merged_current_coverage": {
+      "full": 144,
+      "floor_only": 1,
+      "unavailable": 75,
+      "formal_qualified": 0
+    },
+    "existing_fusion_metric_parity_max_difference": 3.1086244689504383e-15,
+    "no_individual_route_inherited": true,
+    "no_scope_qualification_granted": true
+  }
+}

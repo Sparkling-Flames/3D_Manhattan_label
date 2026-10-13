@@ -1,0 +1,3386 @@
+{
+  "records": [
+    {
+      "record_id": "R00412",
+      "object_id": "285a5ac1de5efeac",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.6542658206529155,
+        "height_std_h": 0.08248667671922859,
+        "height_variance_h2": 0.006804051836182528,
+        "floor_perimeter_h": 6.155962043730501,
+        "height_min_h": 1.4511675310833283,
+        "height_max_h": 1.743572836491471
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.8431961681233102,
+        "S_bottom_deg": 1.987931726999475,
+        "dir": 6.077120930526021,
+        "Hmean": 0.0013208967624126489,
+        "Hcenter": 0.048461673695474404,
+        "height_mean_ratio": 0.9986791032375874,
+        "iou_3d_corner_mean": 0.8401337659889709
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.048461673695474404,
+        "height_center_shift_h": 0.002188004494723561,
+        "height_center_signed_global_relative": -0.001320896762412647,
+        "height_centered_min_wall_height_h": 1.4533555355780519,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 0.006146613074732538,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.04207968054808227,
+        "arithmetic_tie_tolerance_h2": 9.24670111106064e-14
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 0.006741385578057772,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.044728635778762404,
+        "arithmetic_tie_tolerance_h2": 8.873292376612355e-14
+      },
+      "Hcenter_under_min_tie": 0.048461673695474404,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 0.4623939151574149,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.36544807556882636,
+            "annotation_height": 1.6790545876006924,
+            "reference_height_at_ray": 1.6475570693146702,
+            "top_ray_height_at_reference_depth": 1.5366835161755406,
+            "observed_height_residual_relative": 0.019015029461032423,
+            "top_ray_residual_at_reference_depth_relative": -0.06693428543306813,
+            "depth_contribution_relative": 0.08594931489410056,
+            "radial_relative_difference": 0.26527938185935346
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 0.2684941127960075,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.3020679644382105,
+            "annotation_height": 1.4511675310833283,
+            "reference_height_at_ray": 1.647471298754576,
+            "top_ray_height_at_reference_depth": 1.507583783926381,
+            "observed_height_residual_relative": -0.11850844538558225,
+            "top_ray_residual_at_reference_depth_relative": -0.08444999353708332,
+            "depth_contribution_relative": -0.034058451848498934,
+            "radial_relative_difference": -0.11114668086251397
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 2.1117179367963637,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 1,
+            "reference_radius": 1.8921031910796096,
+            "annotation_height": 1.743572836491471,
+            "reference_height_at_ray": 1.6622872332969392,
+            "top_ray_height_at_reference_depth": 1.6662426416948604,
+            "observed_height_residual_relative": 0.04907206102608201,
+            "top_ray_residual_at_reference_depth_relative": 0.0023878772458801535,
+            "depth_contribution_relative": 0.04668418378020186,
+            "radial_relative_difference": 0.11606911650069401
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 2.3283788683875812,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 2.1630382359461575,
+            "annotation_height": 1.7252525418639153,
+            "reference_height_at_ray": 1.6642600131746215,
+            "top_ray_height_at_reference_depth": 1.673751596042941,
+            "observed_height_residual_relative": 0.03682114633280381,
+            "top_ray_residual_at_reference_depth_relative": 0.005730061849127333,
+            "depth_contribution_relative": 0.031091084483676475,
+            "radial_relative_difference": 0.07643907060621159
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.06739749061300564,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.0539688232718323,
+        "depth_contribution_rms_relative": 0.0540678541803643
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "",
+        "current_decision_comment": "",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    },
+    {
+      "record_id": "R01471",
+      "object_id": "941c0898a57d3f1a",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.5576557838790384,
+        "height_std_h": 0.009105523189312128,
+        "height_variance_h2": 8.29105525511009e-05,
+        "floor_perimeter_h": 5.664308495800219,
+        "height_min_h": 1.5373820777761973,
+        "height_max_h": 1.5784457611698648
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.8412453009246703,
+        "S_bottom_deg": 0.7142681175966831,
+        "dir": 1.074384735087928,
+        "Hmean": 0.05964430747702543,
+        "Hcenter": 0.004209642999017205,
+        "height_mean_ratio": 0.9403556925229746,
+        "iou_3d_corner_mean": 0.7922950168595738
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.004209642999017205,
+        "height_center_shift_h": 0.0987980412686007,
+        "height_center_signed_global_relative": -0.05964430747702543,
+        "height_centered_min_wall_height_h": 1.636180119044798,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 4.4915380720673506e-05,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.03217325218632784,
+        "arithmetic_tie_tolerance_h2": 8.717664610410563e-14
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 5.233228768346323e-05,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.052051945801232576,
+        "arithmetic_tie_tolerance_h2": 8.651849938346321e-14
+      },
+      "Hcenter_under_min_tie": 0.004209642999017205,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 0.38793482706845983,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 0.3679076741958127,
+            "annotation_height": 1.5594800397015418,
+            "reference_height_at_ray": 1.6475666441269414,
+            "top_ray_height_at_reference_depth": 1.5305968575212523,
+            "observed_height_residual_relative": -0.053177820648002964,
+            "top_ray_residual_at_reference_depth_relative": -0.07061457725527825,
+            "depth_contribution_relative": 0.017436756607275283,
+            "radial_relative_difference": 0.054435268077577516
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 0.3421023413072131,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 1,
+            "reference_radius": 0.3409577822334416,
+            "annotation_height": 1.5373820777761973,
+            "reference_height_at_ray": 1.6474781198788673,
+            "top_ray_height_at_reference_depth": 1.5355841785544302,
+            "observed_height_residual_relative": -0.06646490257152636,
+            "top_ray_residual_at_reference_depth_relative": -0.06755029305719647,
+            "depth_contribution_relative": 0.0010853904856701034,
+            "radial_relative_difference": 0.003356893825018768
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 2.015283714711366,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 2,
+            "reference_radius": 2.2933230869724417,
+            "annotation_height": 1.5784457611698648,
+            "reference_height_at_ray": 1.665204963437486,
+            "top_ray_height_at_reference_depth": 1.6582512471908661,
+            "observed_height_residual_relative": -0.05237646890633267,
+            "top_ray_residual_at_reference_depth_relative": -0.0041979535686725205,
+            "depth_contribution_relative": -0.04817851533766015,
+            "radial_relative_difference": -0.12123864005055343
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 2.05577863525596,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 1.9510899193449538,
+            "annotation_height": 1.5551836828588403,
+            "reference_height_at_ray": 1.662726272886437,
+            "top_ray_height_at_reference_depth": 1.5269114429121504,
+            "observed_height_residual_relative": -0.06492338536391823,
+            "top_ray_residual_at_reference_depth_relative": -0.08199131657785956,
+            "depth_contribution_relative": 0.017067931213941345,
+            "radial_relative_difference": 0.05365653057453838
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.0595898572429099,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.06381547504600726,
+        "depth_contribution_rms_relative": 0.027007879264914197
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "",
+        "current_decision_comment": "",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    },
+    {
+      "record_id": "R00372",
+      "object_id": "2498d239ddfc8870",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.6839779019697172,
+        "height_std_h": 0.06544242366841095,
+        "height_variance_h2": 0.004282710815595794,
+        "floor_perimeter_h": 5.882983278045479,
+        "height_min_h": 1.5714513247894097,
+        "height_max_h": 1.7838540432823229
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.7676138949467213,
+        "S_bottom_deg": 2.4662718266147294,
+        "dir": 2.074090504855062,
+        "Hmean": 0.016616265665977625,
+        "Hcenter": 0.04367017313608628,
+        "height_mean_ratio": 1.0166162656659776,
+        "iou_3d_corner_mean": 0.7573429701918502
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.04367017313608628,
+        "height_center_shift_h": -0.027524076822078136,
+        "height_center_signed_global_relative": 0.016616265665977695,
+        "height_centered_min_wall_height_h": 1.5439272479673316,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 0.0050327510907341826,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.058241387993691204,
+        "arithmetic_tie_tolerance_h2": 9.091878639430137e-14
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 0.00543271298780639,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.07691932995564779,
+        "arithmetic_tie_tolerance_h2": 8.651849938346321e-14
+      },
+      "Hcenter_under_min_tie": 0.04367017313608628,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 0.47958380090812236,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.36455231889049616,
+            "annotation_height": 1.7838540432823229,
+            "reference_height_at_ray": 1.6475568998226917,
+            "top_ray_height_at_reference_depth": 1.5958412452821915,
+            "observed_height_residual_relative": 0.0822824888870555,
+            "top_ray_residual_at_reference_depth_relative": -0.03122070398544964,
+            "depth_contribution_relative": 0.11350319287250514,
+            "radial_relative_difference": 0.31554176467103817
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 0.4317309323003532,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 1,
+            "reference_radius": 0.34146220796058324,
+            "annotation_height": 1.7626620803229407,
+            "reference_height_at_ray": 1.6474715428987183,
+            "top_ray_height_at_reference_depth": 1.603200415794414,
+            "observed_height_residual_relative": 0.06954044578571665,
+            "top_ray_residual_at_reference_depth_relative": -0.02672644804956063,
+            "depth_contribution_relative": 0.09626689383527728,
+            "radial_relative_difference": 0.2643593411959374
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 1.9948264740774497,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 2,
+            "reference_radius": 2.2923429582936032,
+            "annotation_height": 1.5714513247894097,
+            "reference_height_at_ray": 1.665204963437486,
+            "top_ray_height_at_reference_depth": 1.6566798853992424,
+            "observed_height_residual_relative": -0.05659900519093549,
+            "top_ray_residual_at_reference_depth_relative": -0.005146583568354948,
+            "depth_contribution_relative": -0.05145242162258055,
+            "radial_relative_difference": -0.12978707358763705
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 2.0487334787754277,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 1.9550655390739473,
+            "annotation_height": 1.6088720780858448,
+            "reference_height_at_ray": 1.6627550783669367,
+            "top_ray_height_at_reference_depth": 1.5810344927254742,
+            "observed_height_residual_relative": -0.03252912907263767,
+            "top_ray_residual_at_reference_depth_relative": -0.04933465962093977,
+            "depth_contribution_relative": 0.016805530548302097,
+            "radial_relative_difference": 0.04791038347791036
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.06298387334142065,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.032208039931952474,
+        "depth_contribution_rms_relative": 0.07918343764447107
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "",
+        "current_decision_comment": "",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    },
+    {
+      "record_id": "R01566",
+      "object_id": "9ddd4523d7b7906f",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.5590162081058867,
+        "height_std_h": 0.03646990618650465,
+        "height_variance_h2": 0.00133005405725245,
+        "floor_perimeter_h": 5.5340226629840945,
+        "height_min_h": 1.4792264484179376,
+        "height_max_h": 1.6065827651040558
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.8224084554155399,
+        "S_bottom_deg": 0.7434935771296716,
+        "dir": 1.0281739119963693,
+        "Hmean": 0.058823020335666665,
+        "Hcenter": 0.019579162525109724,
+        "height_mean_ratio": 0.9411769796643333,
+        "iou_3d_corner_mean": 0.774164993043266
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.019579162525109724,
+        "height_center_shift_h": 0.09743761704175236,
+        "height_center_signed_global_relative": -0.05882302033566664,
+        "height_centered_min_wall_height_h": 1.5766640654596902,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 0.0010689002530894932,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.033886206780131975,
+        "arithmetic_tie_tolerance_h2": 8.671179552265649e-14
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 0.0010347662262441579,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.05920537076262482,
+        "arithmetic_tie_tolerance_h2": 8.651849938346321e-14
+      },
+      "Hcenter_under_min_tie": 0.019579162525109724,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 0.3551023546774854,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.35019091419083154,
+            "annotation_height": 1.5611053410663454,
+            "reference_height_at_ray": 1.6475541578665018,
+            "top_ray_height_at_reference_depth": 1.553344661777429,
+            "observed_height_residual_relative": -0.052189089419653056,
+            "top_ray_residual_at_reference_depth_relative": -0.056874206004912976,
+            "depth_contribution_relative": 0.00468511658525992,
+            "radial_relative_difference": 0.014025036880247137
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 0.35510235467748535,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 1,
+            "reference_radius": 0.33757891818252855,
+            "annotation_height": 1.4792264484179376,
+            "reference_height_at_ray": 1.6475227689422394,
+            "top_ray_height_at_reference_depth": 1.4555777901509925,
+            "observed_height_residual_relative": -0.10160036939713764,
+            "top_ray_residual_at_reference_depth_relative": -0.11587704762862246,
+            "depth_contribution_relative": 0.014276678231484824,
+            "radial_relative_difference": 0.05190915531485262
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 1.9866083864708686,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 2,
+            "reference_radius": 2.2886178207969725,
+            "annotation_height": 1.5888392350158638,
+            "reference_height_at_ray": 1.665204963437486,
+            "top_ray_height_at_reference_depth": 1.6783561249511134,
+            "observed_height_residual_relative": -0.046101936113320696,
+            "top_ray_residual_at_reference_depth_relative": 0.007939346883065296,
+            "depth_contribution_relative": -0.05404128299638599,
+            "radial_relative_difference": -0.13196149727652398
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 2.021006690940825,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 2.0052394216364355,
+            "annotation_height": 1.6065827651040558,
+            "reference_height_at_ray": 1.6631184857578312,
+            "top_ray_height_at_reference_depth": 1.601850393927024,
+            "observed_height_residual_relative": -0.03413057448114276,
+            "top_ray_residual_at_reference_depth_relative": -0.036987503605991706,
+            "depth_contribution_relative": 0.0028569291248489474,
+            "radial_relative_difference": 0.007863035772317886
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.06390739539344585,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.06725562082039725,
+        "depth_contribution_rms_relative": 0.028082005673841736
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "",
+        "current_decision_comment": "",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    },
+    {
+      "record_id": "R02496",
+      "object_id": "ffabc19f537baebf",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.564011865251071,
+        "height_std_h": 0.07327697008482909,
+        "height_variance_h2": 0.0053695143448129375,
+        "floor_perimeter_h": 7.756239227977934,
+        "height_min_h": 1.4449106471843072,
+        "height_max_h": 1.7409791609034175
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.7202168282266747,
+        "S_bottom_deg": 1.824399659117008,
+        "dir": 9.954702660490193,
+        "Hmean": 0.055807145658484436,
+        "Hcenter": 0.04466187568238418,
+        "height_mean_ratio": 0.9441928543415156,
+        "iou_3d_corner_mean": 0.689394313596649
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.04466187568238418,
+        "height_center_shift_h": 0.092441959896568,
+        "height_center_signed_global_relative": -0.055807145658484436,
+        "height_centered_min_wall_height_h": 1.5373526070808752,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 0.006210337270487367,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.14908974748420628,
+        "arithmetic_tie_tolerance_h2": 1.672024694577842e-13
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 0.004735842607408509,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.04136994169217525,
+        "arithmetic_tie_tolerance_h2": 1.5797473870470515e-13
+      },
+      "Hcenter_under_min_tie": 0.04466187568238418,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 0.5013570268198103,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.33669012518350916,
+            "annotation_height": 1.7409791609034175,
+            "reference_height_at_ray": 1.6475515327713908,
+            "top_ray_height_at_reference_depth": 1.497610192132816,
+            "observed_height_residual_relative": 0.05640219287350168,
+            "top_ray_residual_at_reference_depth_relative": -0.09051948105176465,
+            "depth_contribution_relative": 0.14692167392526634,
+            "radial_relative_difference": 0.4890755306427574
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 0.3269761237760343,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.3165068994418161,
+            "annotation_height": 1.5704133074566546,
+            "reference_height_at_ray": 1.6474683169587327,
+            "top_ray_height_at_reference_depth": 1.552149634837312,
+            "observed_height_residual_relative": -0.0465180546129683,
+            "top_ray_residual_at_reference_depth_relative": -0.057543820826351726,
+            "depth_contribution_relative": 0.011025766213383432,
+            "radial_relative_difference": 0.03307739689934557
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 3.1573766615336503,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 2,
+            "reference_radius": 2.28346680930699,
+            "annotation_height": 1.503088069309379,
+            "reference_height_at_ray": 1.665204963437486,
+            "top_ray_height_at_reference_depth": 1.3638415784920308,
+            "observed_height_residual_relative": -0.09786985406228114,
+            "top_ray_residual_at_reference_depth_relative": -0.18193286185843105,
+            "depth_contribution_relative": 0.08406300779614989,
+            "radial_relative_difference": 0.38271186980461663
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 2.792255629945575,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 2,
+            "reference_radius": 2.276868277870366,
+            "annotation_height": 1.4449106471843072,
+            "reference_height_at_ray": 1.665204963437486,
+            "top_ray_height_at_reference_depth": 1.3627901858972948,
+            "observed_height_residual_relative": -0.1329915225578618,
+            "top_ray_residual_at_reference_depth_relative": -0.18256758682255267,
+            "depth_contribution_relative": 0.04957606426469085,
+            "radial_relative_difference": 0.2263580010685856
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.09029173574079921,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.13958470344864557,
+        "depth_contribution_rms_relative": 0.08836277668977303
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "",
+        "current_decision_comment": "",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    },
+    {
+      "record_id": "R00888",
+      "object_id": "5d4b529359890ec3",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.6399097610512847,
+        "height_std_h": 0.015464303514347797,
+        "height_variance_h2": 0.00023914468318386966,
+        "floor_perimeter_h": 5.783600953686714,
+        "height_min_h": 1.6074203650136312,
+        "height_max_h": 1.659887583176782
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.8345949039389958,
+        "S_bottom_deg": 1.278147522093299,
+        "dir": 1.2797195759271638,
+        "Hmean": 0.009987639767066736,
+        "Hcenter": 0.01286501698362713,
+        "height_mean_ratio": 0.9900123602329333,
+        "iou_3d_corner_mean": 0.8265783204975814
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.01286501698362713,
+        "height_center_shift_h": 0.01654406409635434,
+        "height_center_signed_global_relative": -0.009987639767066717,
+        "height_centered_min_wall_height_h": 1.6239644291099857,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 0.00043063217988621966,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.036359410352329986,
+        "arithmetic_tie_tolerance_h2": 8.875133019259606e-14
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 0.0004776261542991999,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.05332444295875559,
+        "arithmetic_tie_tolerance_h2": 8.651849938346321e-14
+      },
+      "Hcenter_under_min_tie": 0.01286501698362713,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 0.4107236185046318,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.3537387220609975,
+            "annotation_height": 1.659887583176782,
+            "reference_height_at_ray": 1.6475548397342255,
+            "top_ray_height_at_reference_depth": 1.5683330099855035,
+            "observed_height_residual_relative": 0.007445268473727256,
+            "top_ray_residual_at_reference_depth_relative": -0.04782616245983248,
+            "depth_contribution_relative": 0.05527143093355974,
+            "radial_relative_difference": 0.1610931823115707
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 0.4107236185046318,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.3377588461658984,
+            "annotation_height": 1.659887583176782,
+            "reference_height_at_ray": 1.6474640768220474,
+            "top_ray_height_at_reference_depth": 1.5426590014581296,
+            "observed_height_residual_relative": 0.007500061979468312,
+            "top_ray_residual_at_reference_depth_relative": -0.06327074970204893,
+            "depth_contribution_relative": 0.07077081168151725,
+            "radial_relative_difference": 0.2160262363724886
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 2.057734085900204,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 2,
+            "reference_radius": 2.291517617082618,
+            "annotation_height": 1.6074203650136312,
+            "reference_height_at_ray": 1.665204963437486,
+            "top_ray_height_at_reference_depth": 1.6764306802035427,
+            "observed_height_residual_relative": -0.0348845211056242,
+            "top_ray_residual_at_reference_depth_relative": 0.006776957253883142,
+            "depth_contribution_relative": -0.04166147835950734,
+            "radial_relative_difference": -0.10202126723339328
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 2.0334725137749383,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 2.1538448209219374,
+            "annotation_height": 1.6314258082982556,
+            "reference_height_at_ray": 1.6641935602753162,
+            "top_ray_height_at_reference_depth": 1.6688033390109387,
+            "observed_height_residual_relative": -0.01978186863985782,
+            "top_ray_residual_at_reference_depth_relative": 0.0027829201548746152,
+            "depth_contribution_relative": -0.022564788794732435,
+            "radial_relative_difference": -0.05588717719017223
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.02073605008189285,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.03982524757519714,
+        "depth_contribution_rms_relative": 0.05076486810766532
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "",
+        "current_decision_comment": "",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    },
+    {
+      "record_id": "R01928",
+      "object_id": "c1e19602fd26903e",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.6505533320451515,
+        "height_std_h": 0.08558584663589527,
+        "height_variance_h2": 0.0073249371443829875,
+        "floor_perimeter_h": 5.868219545069141,
+        "height_min_h": 1.520242038976391,
+        "height_max_h": 1.8064374700585262
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.6938264049137229,
+        "S_bottom_deg": 3.7906935727244937,
+        "dir": 5.812961464377535,
+        "Hmean": 0.003562123503177972,
+        "Hcenter": 0.05529799408794702,
+        "height_mean_ratio": 0.996437876496822,
+        "iou_3d_corner_mean": 0.6900143923665969
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.05529799408794702,
+        "height_center_shift_h": 0.005900493102487525,
+        "height_center_signed_global_relative": -0.0035621235031780113,
+        "height_centered_min_wall_height_h": 1.5261425320788788,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 0.008213734431003684,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.07922929703693449,
+        "arithmetic_tie_tolerance_h2": 9.554116419741215e-14
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 0.008566863024365746,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.11089647644886487,
+        "arithmetic_tie_tolerance_h2": 8.651849938346321e-14
+      },
+      "Hcenter_under_min_tie": 0.05529799408794702,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 0.5534264828602541,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.33767912555444496,
+            "annotation_height": 1.8064374700585262,
+            "reference_height_at_ray": 1.6475517268189528,
+            "top_ray_height_at_reference_depth": 1.4920565027829809,
+            "observed_height_residual_relative": 0.09591921056140032,
+            "top_ray_residual_at_reference_depth_relative": -0.09387235652168735,
+            "depth_contribution_relative": 0.18979156708308767,
+            "radial_relative_difference": 0.6389123312007143
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 0.48834877055224435,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.3233288415121787,
+            "annotation_height": 1.7116080621855385,
+            "reference_height_at_ray": 1.6474669385983967,
+            "top_ray_height_at_reference_depth": 1.4711456734026156,
+            "observed_height_residual_relative": 0.03872195084063088,
+            "top_ray_residual_at_reference_depth_relative": -0.10644502280651598,
+            "depth_contribution_relative": 0.14516697364714684,
+            "radial_relative_difference": 0.5103780048457257
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 1.8206485329732531,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 1,
+            "reference_radius": 1.792061579596192,
+            "annotation_height": 1.520242038976391,
+            "reference_height_at_ray": 1.6615587344614258,
+            "top_ray_height_at_reference_depth": 1.512073447046834,
+            "observed_height_residual_relative": -0.08531278888648718,
+            "top_ray_residual_at_reference_depth_relative": -0.09024416204373714,
+            "depth_contribution_relative": 0.004931373157249969,
+            "radial_relative_difference": 0.01595199277889916
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 1.9988346435983726,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 2,
+            "reference_radius": 2.2926816110190322,
+            "annotation_height": 1.5435902018051184,
+            "reference_height_at_ray": 1.665204963437486,
+            "top_ray_height_at_reference_depth": 1.6235029313706129,
+            "observed_height_residual_relative": -0.07341874538611304,
+            "top_ray_residual_at_reference_depth_relative": -0.025175487196666152,
+            "depth_contribution_relative": -0.04824325818944688,
+            "radial_relative_difference": -0.1281673678579613
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.07643374345354234,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.08502995962862188,
+        "depth_contribution_rms_relative": 0.12190777208167991
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "",
+        "current_decision_comment": "",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    },
+    {
+      "record_id": "R02272",
+      "object_id": "e944c8e11ed36c40",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.6839779019697172,
+        "height_std_h": 0.06544242366841095,
+        "height_variance_h2": 0.004282710815595794,
+        "floor_perimeter_h": 5.882983278045479,
+        "height_min_h": 1.5714513247894097,
+        "height_max_h": 1.7838540432823229
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.7676138949467213,
+        "S_bottom_deg": 2.4662718266147294,
+        "dir": 2.074090504855062,
+        "Hmean": 0.016616265665977625,
+        "Hcenter": 0.04367017313608628,
+        "height_mean_ratio": 1.0166162656659776,
+        "iou_3d_corner_mean": 0.7573429701918502
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.04367017313608628,
+        "height_center_shift_h": -0.027524076822078136,
+        "height_center_signed_global_relative": 0.016616265665977695,
+        "height_centered_min_wall_height_h": 1.5439272479673316,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 0.0050327510907341826,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.058241387993691204,
+        "arithmetic_tie_tolerance_h2": 9.091878639430137e-14
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 0.00543271298780639,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.07691932995564779,
+        "arithmetic_tie_tolerance_h2": 8.651849938346321e-14
+      },
+      "Hcenter_under_min_tie": 0.04367017313608628,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 0.47958380090812236,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.36455231889049616,
+            "annotation_height": 1.7838540432823229,
+            "reference_height_at_ray": 1.6475568998226917,
+            "top_ray_height_at_reference_depth": 1.5958412452821915,
+            "observed_height_residual_relative": 0.0822824888870555,
+            "top_ray_residual_at_reference_depth_relative": -0.03122070398544964,
+            "depth_contribution_relative": 0.11350319287250514,
+            "radial_relative_difference": 0.31554176467103817
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 0.4317309323003532,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 1,
+            "reference_radius": 0.34146220796058324,
+            "annotation_height": 1.7626620803229407,
+            "reference_height_at_ray": 1.6474715428987183,
+            "top_ray_height_at_reference_depth": 1.603200415794414,
+            "observed_height_residual_relative": 0.06954044578571665,
+            "top_ray_residual_at_reference_depth_relative": -0.02672644804956063,
+            "depth_contribution_relative": 0.09626689383527728,
+            "radial_relative_difference": 0.2643593411959374
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 1.9948264740774497,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 2,
+            "reference_radius": 2.2923429582936032,
+            "annotation_height": 1.5714513247894097,
+            "reference_height_at_ray": 1.665204963437486,
+            "top_ray_height_at_reference_depth": 1.6566798853992424,
+            "observed_height_residual_relative": -0.05659900519093549,
+            "top_ray_residual_at_reference_depth_relative": -0.005146583568354948,
+            "depth_contribution_relative": -0.05145242162258055,
+            "radial_relative_difference": -0.12978707358763705
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 2.0487334787754277,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 1.9550655390739473,
+            "annotation_height": 1.6088720780858448,
+            "reference_height_at_ray": 1.6627550783669367,
+            "top_ray_height_at_reference_depth": 1.5810344927254742,
+            "observed_height_residual_relative": -0.03252912907263767,
+            "top_ray_residual_at_reference_depth_relative": -0.04933465962093977,
+            "depth_contribution_relative": 0.016805530548302097,
+            "radial_relative_difference": 0.04791038347791036
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.06298387334142065,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.032208039931952474,
+        "depth_contribution_rms_relative": 0.07918343764447107
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "",
+        "current_decision_comment": "",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    },
+    {
+      "record_id": "R01339",
+      "object_id": "883cd9a83e580954",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.6668858789958314,
+        "height_std_h": 0.060277843142716094,
+        "height_variance_h2": 0.0036334183739378852,
+        "floor_perimeter_h": 5.882335535533848,
+        "height_min_h": 1.5714513247894097,
+        "height_max_h": 1.7838540432823229
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.7674408124085825,
+        "S_bottom_deg": 2.470855769507926,
+        "dir": 2.105095178353513,
+        "Hmean": 0.006297823512987133,
+        "Hcenter": 0.03971229141628158,
+        "height_mean_ratio": 1.0062978235129871,
+        "iou_3d_corner_mean": 0.7639858863943901
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.03971229141628158,
+        "height_center_shift_h": -0.010432053848192346,
+        "height_center_signed_global_relative": 0.006297823512987174,
+        "height_centered_min_wall_height_h": 1.5610192709412174,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 0.004250190476447507,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.0583240231853793,
+        "arithmetic_tie_tolerance_h2": 9.091878639430137e-14
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 0.004404241274522864,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.0769971839512556,
+        "arithmetic_tie_tolerance_h2": 8.651849938346321e-14
+      },
+      "Hcenter_under_min_tie": 0.03971229141628158,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 0.47958380090812236,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.36455231889049616,
+            "annotation_height": 1.7838540432823229,
+            "reference_height_at_ray": 1.6475568998226917,
+            "top_ray_height_at_reference_depth": 1.5958412452821915,
+            "observed_height_residual_relative": 0.0822824888870555,
+            "top_ray_residual_at_reference_depth_relative": -0.03122070398544964,
+            "depth_contribution_relative": 0.11350319287250514,
+            "radial_relative_difference": 0.31554176467103817
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 0.43173093230035325,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 1,
+            "reference_radius": 0.3399402401465273,
+            "annotation_height": 1.6950606448909578,
+            "reference_height_at_ray": 1.6474914555853366,
+            "top_ray_height_at_reference_depth": 1.5472831915973397,
+            "observed_height_residual_relative": 0.02871748586253609,
+            "top_ray_residual_at_reference_depth_relative": -0.06049565793303375,
+            "depth_contribution_relative": 0.08921314379556984,
+            "radial_relative_difference": 0.27002008386609555
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 1.9948264740774497,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 2,
+            "reference_radius": 2.2923429582936032,
+            "annotation_height": 1.5714513247894097,
+            "reference_height_at_ray": 1.665204963437486,
+            "top_ray_height_at_reference_depth": 1.6566798853992424,
+            "observed_height_residual_relative": -0.05659900519093549,
+            "top_ray_residual_at_reference_depth_relative": -0.005146583568354948,
+            "depth_contribution_relative": -0.05145242162258055,
+            "radial_relative_difference": -0.12978707358763705
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 2.0487334787754277,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 1.9550655390739473,
+            "annotation_height": 1.6088720780858448,
+            "reference_height_at_ray": 1.6627550783669367,
+            "top_ray_height_at_reference_depth": 1.5810344927254742,
+            "observed_height_residual_relative": -0.03252912907263767,
+            "top_ray_residual_at_reference_depth_relative": -0.04933465962093977,
+            "depth_contribution_relative": 0.016805530548302097,
+            "radial_relative_difference": 0.04791038347791036
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.05444422283066688,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.04211547503126893,
+        "depth_contribution_rms_relative": 0.07709042963620684
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "",
+        "current_decision_comment": "",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    },
+    {
+      "record_id": "R00267",
+      "object_id": "1afc429f5faf7c65",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.6102781851443309,
+        "height_std_h": 0.031625920749728365,
+        "height_variance_h2": 0.0010001988632680993,
+        "floor_perimeter_h": 5.724214019338011,
+        "height_min_h": 1.5703688228441175,
+        "height_max_h": 1.6737602755358945
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.8077158043103677,
+        "S_bottom_deg": 1.5971768427067017,
+        "dir": 1.3056084683570282,
+        "Hmean": 0.027876201136601275,
+        "Hcenter": 0.020886970171268917,
+        "height_mean_ratio": 0.9721237988633987,
+        "iou_3d_corner_mean": 0.7866197305307383
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.020886970171268917,
+        "height_center_shift_h": 0.046175640003308205,
+        "height_center_signed_global_relative": -0.02787620113660131,
+        "height_centered_min_wall_height_h": 1.6165444628474257,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 0.0012056481824316099,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.04024790248086539,
+        "arithmetic_tie_tolerance_h2": 8.872992209339852e-14
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 0.0011884367697517868,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.06633141118679614,
+        "arithmetic_tie_tolerance_h2": 8.651849938346321e-14
+      },
+      "Hcenter_under_min_tie": 0.020886970171268917,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 0.4260601827158178,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.36743480418934515,
+            "annotation_height": 1.6737602755358945,
+            "reference_height_at_ray": 1.6475574446375918,
+            "top_ray_height_at_reference_depth": 1.5810516564445432,
+            "observed_height_residual_relative": 0.015818630438410933,
+            "top_ray_residual_at_reference_depth_relative": -0.040149497186932455,
+            "depth_contribution_relative": 0.05596812762534339,
+            "radial_relative_difference": 0.1595531448247402
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 0.4050677473105941,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.3412359924311113,
+            "annotation_height": 1.5924961627609646,
+            "reference_height_at_ray": 1.647463396944499,
+            "top_ray_height_at_reference_depth": 1.4991288925216169,
+            "observed_height_residual_relative": -0.03318368031094083,
+            "top_ray_residual_at_reference_depth_relative": -0.08954943516741923,
+            "depth_contribution_relative": 0.056365754856478406,
+            "radial_relative_difference": 0.18706043997503907
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 1.9691416093712828,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 1,
+            "reference_radius": 2.000983875833833,
+            "annotation_height": 1.5703688228441175,
+            "reference_height_at_ray": 1.6630790871280177,
+            "top_ray_height_at_reference_depth": 1.5795920478029015,
+            "observed_height_residual_relative": -0.05596912082691888,
+            "top_ray_residual_at_reference_depth_relative": -0.0504010664575422,
+            "depth_contribution_relative": -0.00556805436937668,
+            "radial_relative_difference": -0.015913304873224603
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 2.013581812149898,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 2.0618139286634074,
+            "annotation_height": 1.6028268218271067,
+            "reference_height_at_ray": 1.6635279814546986,
+            "top_ray_height_at_reference_depth": 1.6172665696100834,
+            "observed_height_residual_relative": -0.03664524703680264,
+            "top_ray_residual_at_reference_depth_relative": -0.027927981536395634,
+            "depth_contribution_relative": -0.008717265500407011,
+            "radial_relative_difference": -0.02339305009195303
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.03816674705962076,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.05690194002826739,
+        "depth_contribution_rms_relative": 0.04005160289455425
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "",
+        "current_decision_comment": "",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    },
+    {
+      "record_id": "R01475",
+      "object_id": "94914c8bd46805c9",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.6983276943305652,
+        "height_std_h": 0.05353586224297421,
+        "height_variance_h2": 0.002866088546098711,
+        "floor_perimeter_h": 6.10169396344427,
+        "height_min_h": 1.6173104331741834,
+        "height_max_h": 1.7838540432823229
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.823056162618149,
+        "S_bottom_deg": 2.2931890645706186,
+        "dir": 2.5025529479101603,
+        "Hmean": 0.02527922514181391,
+        "Hcenter": 0.03608252543401433,
+        "height_mean_ratio": 1.025279225141814,
+        "iou_3d_corner_mean": 0.8048166773711204
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.03608252543401433,
+        "height_center_shift_h": -0.04187386918292613,
+        "height_center_signed_global_relative": 0.025279225141813976,
+        "height_centered_min_wall_height_h": 1.575436563991257,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 0.0035312006142568407,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.048106765832955846,
+        "arithmetic_tie_tolerance_h2": 9.091878639430137e-14
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 0.0036134750195811693,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.05253821021086323,
+        "arithmetic_tie_tolerance_h2": 8.651849938346321e-14
+      },
+      "Hcenter_under_min_tie": 0.03608252543401433,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 0.47958380090812236,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.36455231889049616,
+            "annotation_height": 1.7838540432823229,
+            "reference_height_at_ray": 1.6475568998226917,
+            "top_ray_height_at_reference_depth": 1.5958412452821915,
+            "observed_height_residual_relative": 0.0822824888870555,
+            "top_ray_residual_at_reference_depth_relative": -0.03122070398544964,
+            "depth_contribution_relative": 0.11350319287250514,
+            "radial_relative_difference": 0.31554176467103817
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 0.4317309323003532,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 1,
+            "reference_radius": 0.34146220796058324,
+            "annotation_height": 1.7626620803229407,
+            "reference_height_at_ray": 1.6474715428987183,
+            "top_ray_height_at_reference_depth": 1.603200415794414,
+            "observed_height_residual_relative": 0.06954044578571665,
+            "top_ray_residual_at_reference_depth_relative": -0.02672644804956063,
+            "depth_contribution_relative": 0.09626689383527728,
+            "radial_relative_difference": 0.2643593411959374
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 2.1631262904057253,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 2,
+            "reference_radius": 2.292890760833675,
+            "annotation_height": 1.6224756156307238,
+            "reference_height_at_ray": 1.665204963437486,
+            "top_ray_height_at_reference_depth": 1.6598175031455218,
+            "observed_height_residual_relative": -0.02579567698058449,
+            "top_ray_residual_at_reference_depth_relative": -0.0032524059591482715,
+            "depth_contribution_relative": -0.022543271021436218,
+            "radial_relative_difference": -0.056594266349073025
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 2.100366939823549,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 2.241467214870939,
+            "annotation_height": 1.6173104331741834,
+            "reference_height_at_ray": 1.6648266850971407,
+            "top_ray_height_at_reference_depth": 1.6587806497630135,
+            "observed_height_residual_relative": -0.02868552760214863,
+            "top_ray_residual_at_reference_depth_relative": -0.0036499872452456046,
+            "depth_contribution_relative": -0.025035540356903023,
+            "radial_relative_difference": -0.06294996157484033
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.057215727781408356,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.02069381510322887,
+        "depth_contribution_rms_relative": 0.0762975540077362
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "",
+        "current_decision_comment": "",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    },
+    {
+      "record_id": "R01454",
+      "object_id": "9296d36ebe81d569",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.5576557838790384,
+        "height_std_h": 0.009105523189312128,
+        "height_variance_h2": 8.29105525511009e-05,
+        "floor_perimeter_h": 5.664308495800219,
+        "height_min_h": 1.5373820777761973,
+        "height_max_h": 1.5784457611698648
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.8412453009246703,
+        "S_bottom_deg": 0.7142681175966831,
+        "dir": 1.074384735087928,
+        "Hmean": 0.05964430747702543,
+        "Hcenter": 0.004209642999017205,
+        "height_mean_ratio": 0.9403556925229746,
+        "iou_3d_corner_mean": 0.7922950168595738
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.004209642999017205,
+        "height_center_shift_h": 0.0987980412686007,
+        "height_center_signed_global_relative": -0.05964430747702543,
+        "height_centered_min_wall_height_h": 1.636180119044798,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 4.4915380720673506e-05,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.03217325218632784,
+        "arithmetic_tie_tolerance_h2": 8.717664610410563e-14
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 5.233228768346323e-05,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.052051945801232576,
+        "arithmetic_tie_tolerance_h2": 8.651849938346321e-14
+      },
+      "Hcenter_under_min_tie": 0.004209642999017205,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 0.38793482706845983,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 0.3679076741958127,
+            "annotation_height": 1.5594800397015418,
+            "reference_height_at_ray": 1.6475666441269414,
+            "top_ray_height_at_reference_depth": 1.5305968575212523,
+            "observed_height_residual_relative": -0.053177820648002964,
+            "top_ray_residual_at_reference_depth_relative": -0.07061457725527825,
+            "depth_contribution_relative": 0.017436756607275283,
+            "radial_relative_difference": 0.054435268077577516
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 0.3421023413072131,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 1,
+            "reference_radius": 0.3409577822334416,
+            "annotation_height": 1.5373820777761973,
+            "reference_height_at_ray": 1.6474781198788673,
+            "top_ray_height_at_reference_depth": 1.5355841785544302,
+            "observed_height_residual_relative": -0.06646490257152636,
+            "top_ray_residual_at_reference_depth_relative": -0.06755029305719647,
+            "depth_contribution_relative": 0.0010853904856701034,
+            "radial_relative_difference": 0.003356893825018768
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 2.015283714711366,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 2,
+            "reference_radius": 2.2933230869724417,
+            "annotation_height": 1.5784457611698648,
+            "reference_height_at_ray": 1.665204963437486,
+            "top_ray_height_at_reference_depth": 1.6582512471908661,
+            "observed_height_residual_relative": -0.05237646890633267,
+            "top_ray_residual_at_reference_depth_relative": -0.0041979535686725205,
+            "depth_contribution_relative": -0.04817851533766015,
+            "radial_relative_difference": -0.12123864005055343
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 2.05577863525596,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 1.9510899193449538,
+            "annotation_height": 1.5551836828588403,
+            "reference_height_at_ray": 1.662726272886437,
+            "top_ray_height_at_reference_depth": 1.5269114429121504,
+            "observed_height_residual_relative": -0.06492338536391823,
+            "top_ray_residual_at_reference_depth_relative": -0.08199131657785956,
+            "depth_contribution_relative": 0.017067931213941345,
+            "radial_relative_difference": 0.05365653057453838
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.0595898572429099,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.06381547504600726,
+        "depth_contribution_rms_relative": 0.027007879264914197
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "",
+        "current_decision_comment": "",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    },
+    {
+      "record_id": "R00091",
+      "object_id": "08589c3af25a8b0d",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.620608466663977,
+        "height_std_h": 0.028785646130160335,
+        "height_variance_h2": 0.0008286134231308147,
+        "floor_perimeter_h": 5.6809035838957875,
+        "height_min_h": 1.5703688228441175,
+        "height_max_h": 1.6737602755358945
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.8229094546711584,
+        "S_bottom_deg": 1.2561898991672504,
+        "dir": 1.3978450085133731,
+        "Hmean": 0.021639817506212133,
+        "Hcenter": 0.020496403084970884,
+        "height_mean_ratio": 0.9783601824937879,
+        "iou_3d_corner_mean": 0.8059076897086298
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.020496403084970884,
+        "height_center_shift_h": 0.03584535848366199,
+        "height_center_signed_global_relative": -0.02163981750621217,
+        "height_centered_min_wall_height_h": 1.6062141813277795,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 0.0011142656006827133,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.03481810836939436,
+        "arithmetic_tie_tolerance_h2": 8.872992209339852e-14
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 0.001191122093572567,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.06159321324245869,
+        "arithmetic_tie_tolerance_h2": 8.651849938346321e-14
+      },
+      "Hcenter_under_min_tie": 0.020496403084970884,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 0.4260601827158178,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.36743480418934515,
+            "annotation_height": 1.6737602755358945,
+            "reference_height_at_ray": 1.6475574446375918,
+            "top_ray_height_at_reference_depth": 1.5810516564445432,
+            "observed_height_residual_relative": 0.015818630438410933,
+            "top_ray_residual_at_reference_depth_relative": -0.040149497186932455,
+            "depth_contribution_relative": 0.05596812762534339,
+            "radial_relative_difference": 0.1595531448247402
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 0.37471739458035896,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 1,
+            "reference_radius": 0.33954340886743095,
+            "annotation_height": 1.6339814283317964,
+            "reference_height_at_ray": 1.647496681647403,
+            "top_ray_height_at_reference_depth": 1.574470837083751,
+            "observed_height_residual_relative": -0.008159148845819501,
+            "top_ray_residual_at_reference_depth_relative": -0.044085650595870524,
+            "depth_contribution_relative": 0.03592650175005102,
+            "radial_relative_difference": 0.10359201443565971
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 1.9691416093712828,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 1,
+            "reference_radius": 2.000983875833833,
+            "annotation_height": 1.5703688228441175,
+            "reference_height_at_ray": 1.6630790871280177,
+            "top_ray_height_at_reference_depth": 1.5795920478029015,
+            "observed_height_residual_relative": -0.05596912082691888,
+            "top_ray_residual_at_reference_depth_relative": -0.0504010664575422,
+            "depth_contribution_relative": -0.00556805436937668,
+            "radial_relative_difference": -0.015913304873224603
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 2.013581812149898,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 2.0618139286634074,
+            "annotation_height": 1.6028268218271067,
+            "reference_height_at_ray": 1.6635279814546986,
+            "top_ray_height_at_reference_depth": 1.6172665696100834,
+            "observed_height_residual_relative": -0.03664524703680264,
+            "top_ray_residual_at_reference_depth_relative": -0.027927981536395634,
+            "depth_contribution_relative": -0.008717265500407011,
+            "radial_relative_difference": -0.02339305009195303
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.03461292170332417,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.04146012049421563,
+        "depth_contribution_rms_relative": 0.03365315284318865
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "",
+        "current_decision_comment": "",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    },
+    {
+      "record_id": "R00489",
+      "object_id": "317410f693c7379d",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.670963492230396,
+        "height_std_h": 0.00837700831270688,
+        "height_variance_h2": 7.017426827116015e-05,
+        "floor_perimeter_h": 6.321538822042429,
+        "height_min_h": 1.653312127020676,
+        "height_max_h": 1.6819535659627434
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.953097336017234,
+        "S_bottom_deg": 0.3111877120048602,
+        "dir": 0.7923466996604606,
+        "Hmean": 0.008759475732119215,
+        "Hcenter": 0.0022828979527068764,
+        "height_mean_ratio": 1.0087594757321192,
+        "iou_3d_corner_mean": 0.9448422360476227
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.0022828979527068764,
+        "height_center_shift_h": -0.014509667082756916,
+        "height_center_signed_global_relative": 0.008759475732119291,
+        "height_centered_min_wall_height_h": 1.6388024599379192,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 1.4256187281171911e-05,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.012451650766187806,
+        "arithmetic_tie_tolerance_h2": 9.006465413040751e-14
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 1.4343524807845215e-05,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.011867561463934945,
+        "arithmetic_tie_tolerance_h2": 8.983528419821752e-14
+      },
+      "Hcenter_under_min_tie": 0.0022828979527068764,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 0.3769859420832206,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 0.3676579831317412,
+            "annotation_height": 1.6660980375657601,
+            "reference_height_at_ray": 1.6475700379032414,
+            "top_ray_height_at_reference_depth": 1.6496164278862597,
+            "observed_height_residual_relative": 0.011185340261970376,
+            "top_ray_residual_at_reference_depth_relative": 0.0012354041820851367,
+            "depth_contribution_relative": 0.009949936079885239,
+            "radial_relative_difference": 0.02537129446237803
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 0.3478519096866151,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 1,
+            "reference_radius": 0.3416726369263723,
+            "annotation_height": 1.653312127020676,
+            "reference_height_at_ray": 1.6474688057466604,
+            "top_ray_height_at_reference_depth": 1.6417066313542237,
+            "observed_height_residual_relative": 0.003527608910858015,
+            "top_ray_residual_at_reference_depth_relative": -0.0034786205959729533,
+            "depth_contribution_relative": 0.007006229506830969,
+            "radial_relative_difference": 0.01808536034910636
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 2.342795294494027,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 2,
+            "reference_radius": 2.293408163590005,
+            "annotation_height": 1.6819535659627434,
+            "reference_height_at_ray": 1.665204963437486,
+            "top_ray_height_at_reference_depth": 1.6675776919323404,
+            "observed_height_residual_relative": 0.010111119471600516,
+            "top_ray_residual_at_reference_depth_relative": 0.0014324145103429013,
+            "depth_contribution_relative": 0.008678704961257614,
+            "radial_relative_difference": 0.021534383494438075
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 2.342795294494027,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 2.2166534095265855,
+            "annotation_height": 1.6819535659627434,
+            "reference_height_at_ray": 1.6646474428563525,
+            "top_ray_height_at_reference_depth": 1.6452355016602507,
+            "observed_height_residual_relative": 0.010447694251210664,
+            "top_ray_residual_at_reference_depth_relative": -0.011718975139178184,
+            "depth_contribution_relative": 0.02216666939038885,
+            "radial_relative_difference": 0.05690645385756628
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.009340033639390436,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.006184925512606395,
+        "depth_contribution_rms_relative": 0.013367587960843483
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "",
+        "current_decision_comment": "",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    },
+    {
+      "record_id": "R01252",
+      "object_id": "80fbe67225c21eb2",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.3610904035710607,
+        "height_std_h": 0.14769795228564453,
+        "height_variance_h2": 0.021814685109372525,
+        "floor_perimeter_h": 7.2521468656570836,
+        "height_min_h": 1.1399667391319934,
+        "height_max_h": 1.615364753441246
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.7830435208105176,
+        "S_bottom_deg": 0.8677099790662385,
+        "dir": 2.0410773996210514,
+        "Hmean": 0.1783106882259472,
+        "Hcenter": 0.08766345981861669,
+        "height_mean_ratio": 0.8216893117740528,
+        "iou_3d_corner_mean": 0.6682660121247679
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.08766345981861669,
+        "height_center_shift_h": 0.29536342157657836,
+        "height_center_signed_global_relative": -0.17831068822594723,
+        "height_centered_min_wall_height_h": 1.4353301607085718,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 0.023707238268760228,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.09664617811449666,
+        "arithmetic_tie_tolerance_h2": 1.2924452665343562e-13
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 0.018464924867785254,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.0288371520299368,
+        "arithmetic_tie_tolerance_h2": 1.3026944246514381e-13
+      },
+      "Hcenter_under_min_tie": 0.08766345981861669,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 0.3383967500659718,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.36014955521088804,
+            "annotation_height": 1.547074811795723,
+            "reference_height_at_ray": 1.6475560642370597,
+            "top_ray_height_at_reference_depth": 1.5822418510133396,
+            "observed_height_residual_relative": -0.060660460868796576,
+            "top_ray_residual_at_reference_depth_relative": -0.039430144222643015,
+            "depth_contribution_relative": -0.02123031664615356,
+            "radial_relative_difference": -0.06039936695792593
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 0.37258785578129877,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 1,
+            "reference_radius": 0.336132223195329,
+            "annotation_height": 1.615364753441246,
+            "reference_height_at_ray": 1.6475422190140119,
+            "top_ray_height_at_reference_depth": 1.555154762670699,
+            "observed_height_residual_relative": -0.019425513156032484,
+            "top_ray_residual_at_reference_depth_relative": -0.0557742419020213,
+            "depth_contribution_relative": 0.036348728745988816,
+            "radial_relative_difference": 0.10845622665811824
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 2.8489994848007494,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 2,
+            "reference_radius": 2.2834587644181936,
+            "annotation_height": 1.1511737229983954,
+            "reference_height_at_ray": 1.665204963437486,
+            "top_ray_height_at_reference_depth": 1.1211649789942157,
+            "observed_height_residual_relative": -0.31032029546206946,
+            "top_ray_residual_at_reference_depth_relative": -0.328436552944529,
+            "depth_contribution_relative": 0.018116257482459534,
+            "radial_relative_difference": 0.2476684620694917
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 2.7779441301854537,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 2,
+            "reference_radius": 2.290174641199494,
+            "annotation_height": 1.1399667391319934,
+            "reference_height_at_ray": 1.665204963437486,
+            "top_ray_height_at_reference_depth": 1.115390469192077,
+            "observed_height_residual_relative": -0.31708594367771054,
+            "top_ray_residual_at_reference_depth_relative": -0.3319226204185946,
+            "depth_contribution_relative": 0.014836676740884026,
+            "radial_relative_difference": 0.2129835341860599
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.224108915221952,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.2359601118774074,
+        "depth_contribution_rms_relative": 0.024084653766608722
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "",
+        "current_decision_comment": "",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    },
+    {
+      "record_id": "R02099",
+      "object_id": "d6563b79ad01a3ad",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.5007923764177924,
+        "height_std_h": 0.038434731709262475,
+        "height_variance_h2": 0.0014772286015629864,
+        "floor_perimeter_h": 5.857007291096837,
+        "height_min_h": 1.4412752030763039,
+        "height_max_h": 1.5672585569099167
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.7729833111028098,
+        "S_bottom_deg": 2.435763367586582,
+        "dir": 1.8862363733515064,
+        "Hmean": 0.09397270625154475,
+        "Hcenter": 0.026995289783564337,
+        "height_mean_ratio": 0.9060272937484553,
+        "iou_3d_corner_mean": 0.707105948634707
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.026995289783564337,
+        "height_center_shift_h": 0.15566144872984666,
+        "height_center_signed_global_relative": -0.09397270625154469,
+        "height_centered_min_wall_height_h": 1.5969366518061505,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 0.0019327376435477753,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.055703576771806346,
+        "arithmetic_tie_tolerance_h2": 9.110631771312783e-14
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 0.0020663843406287354,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.0755500552228427,
+        "arithmetic_tie_tolerance_h2": 8.651849938346321e-14
+      },
+      "Hcenter_under_min_tie": 0.026995289783564337,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 0.47421572309464954,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.3568693773885437,
+            "annotation_height": 1.5672585569099167,
+            "reference_height_at_ray": 1.6475554388987803,
+            "top_ray_height_at_reference_depth": 1.4268884352920557,
+            "observed_height_residual_relative": -0.048475170735113496,
+            "top_ray_residual_at_reference_depth_relative": -0.13321651364900358,
+            "depth_contribution_relative": 0.08474134291389007,
+            "radial_relative_difference": 0.3288215608882135
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 0.44245853566503046,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 1,
+            "reference_radius": 0.34123235848319095,
+            "annotation_height": 1.5398305848415745,
+            "reference_height_at_ray": 1.6474745370486354,
+            "top_ray_height_at_reference_depth": 1.4163275172666299,
+            "observed_height_residual_relative": -0.06498457763980632,
+            "top_ray_residual_at_reference_depth_relative": -0.13954329198485418,
+            "depth_contribution_relative": 0.07455871434504785,
+            "radial_relative_difference": 0.29664882202789655
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 2.021630455631323,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 2,
+            "reference_radius": 2.2918172167930453,
+            "annotation_height": 1.449183983276067,
+            "reference_height_at_ray": 1.665204963437486,
+            "top_ray_height_at_reference_depth": 1.509216500727028,
+            "observed_height_residual_relative": -0.13041171258858675,
+            "top_ray_residual_at_reference_depth_relative": -0.09417012435982318,
+            "depth_contribution_relative": -0.03624158822876356,
+            "radial_relative_difference": -0.11789193273440735
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 2.0002679475656873,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 2.003346860214115,
+            "annotation_height": 1.4412752030763039,
+            "reference_height_at_ray": 1.6631047822378178,
+            "top_ray_height_at_reference_depth": 1.441954435978997,
+            "observed_height_residual_relative": -0.13391835968729301,
+            "top_ray_residual_at_reference_depth_relative": -0.13350830726543775,
+            "depth_contribution_relative": -0.0004100524218552774,
+            "radial_relative_difference": -0.001536884455495034
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.10187514337467919,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.126403570239919,
+        "depth_contribution_rms_relative": 0.05927418903698277
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "",
+        "current_decision_comment": "",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    },
+    {
+      "record_id": "R00846",
+      "object_id": "5658951cb26b6a74",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.6453792528426734,
+        "height_std_h": 0.028859885744659416,
+        "height_variance_h2": 0.0008328930051947958,
+        "floor_perimeter_h": 6.011795136579732,
+        "height_min_h": 1.5999630350372196,
+        "height_max_h": 1.700903271449865
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.7974454142897489,
+        "S_bottom_deg": 2.1984435532966144,
+        "dir": 1.4679502771184132,
+        "Hmean": 0.006685711449867071,
+        "Hcenter": 0.020786189276082025,
+        "height_mean_ratio": 0.9933142885501329,
+        "iou_3d_corner_mean": 0.7926064304595049
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.020786189276082025,
+        "height_center_shift_h": 0.011074572304965669,
+        "height_center_signed_global_relative": -0.006685711449867066,
+        "height_centered_min_wall_height_h": 1.6110376073421853,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 0.0011655345834164373,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.05303365403822228,
+        "arithmetic_tie_tolerance_h2": 9.033147348422977e-14
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 0.001205502896383443,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.06366904228257929,
+        "arithmetic_tie_tolerance_h2": 8.651849938346321e-14
+      },
+      "Hcenter_under_min_tie": 0.020786189276082025,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 0.45136357957265705,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.35432254287142706,
+            "annotation_height": 1.700903271449865,
+            "reference_height_at_ray": 1.6475549516463508,
+            "top_ray_height_at_reference_depth": 1.5502123801883787,
+            "observed_height_residual_relative": 0.03220634284735306,
+            "top_ray_residual_at_reference_depth_relative": -0.05876564138411525,
+            "depth_contribution_relative": 0.09097198423146831,
+            "radial_relative_difference": 0.2738776819414599
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 0.4269890436219876,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.33642066894204664,
+            "annotation_height": 1.6630530930990295,
+            "reference_height_at_ray": 1.6474643394182347,
+            "top_ray_height_at_reference_depth": 1.5224133229093986,
+            "observed_height_residual_relative": 0.009410919546402328,
+            "top_ray_residual_at_reference_depth_relative": -0.0754932100191144,
+            "depth_contribution_relative": 0.08490412956551671,
+            "radial_relative_difference": 0.26921168358874725
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 2.0591956245015046,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 1,
+            "reference_radius": 2.2325763609138987,
+            "annotation_height": 1.5999630350372196,
+            "reference_height_at_ray": 1.6647605846418763,
+            "top_ray_height_at_reference_depth": 1.6504788925872522,
+            "observed_height_residual_relative": -0.03911823476207149,
+            "top_ray_residual_at_reference_depth_relative": -0.008621847369244427,
+            "depth_contribution_relative": -0.030496387392827066,
+            "radial_relative_difference": -0.07765948768776766
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 2.113885804193785,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 1.8840586463971307,
+            "annotation_height": 1.6158974541883164,
+            "reference_height_at_ray": 1.6622403545539122,
+            "top_ray_height_at_reference_depth": 1.5489354824917037,
+            "observed_height_residual_relative": -0.027977176098745293,
+            "top_ray_residual_at_reference_depth_relative": -0.06840207094339602,
+            "depth_contribution_relative": 0.04042489484465073,
+            "radial_relative_difference": 0.12198514002531234
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.029320524379992125,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.05896143851637374,
+        "depth_contribution_rms_relative": 0.06717293893284523
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "",
+        "current_decision_comment": "",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    },
+    {
+      "record_id": "R00069",
+      "object_id": "069c8d013f9ff384",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.6124730333471051,
+        "height_std_h": 0.013512818495423755,
+        "height_variance_h2": 0.0001825962636902663,
+        "floor_perimeter_h": 5.760096669813789,
+        "height_min_h": 1.5903697003688553,
+        "height_max_h": 1.6328759856988304
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.8872416194814504,
+        "S_bottom_deg": 0.46220252506552917,
+        "dir": 0.5078920574131572,
+        "Hmean": 0.026551172832489867,
+        "Hcenter": 0.004817917928625613,
+        "height_mean_ratio": 0.9734488271675101,
+        "iou_3d_corner_mean": 0.8636564664135167
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.004817917928625613,
+        "height_center_shift_h": 0.043980791800533936,
+        "height_center_signed_global_relative": -0.02655117283248988,
+        "height_centered_min_wall_height_h": 1.6343504921693892,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 6.243305233138223e-05,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.02392612326595133,
+        "arithmetic_tie_tolerance_h2": 8.657004210367845e-14
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 6.49487704773262e-05,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.034175689864738346,
+        "arithmetic_tie_tolerance_h2": 8.651849938346321e-14
+      },
+      "Hcenter_under_min_tie": 0.004817917928625613,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 0.35866128196622227,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.35732595799442324,
+            "annotation_height": 1.5952507219098493,
+            "reference_height_at_ray": 1.6475555260896353,
+            "top_ray_height_at_reference_depth": 1.5930345569704965,
+            "observed_height_residual_relative": -0.031576373205044875,
+            "top_ray_residual_at_reference_depth_relative": -0.03291427040791759,
+            "depth_contribution_relative": 0.0013378972028727165,
+            "radial_relative_difference": 0.0037369912314623105
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 0.34085428091905096,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 1,
+            "reference_radius": 0.3419922893286263,
+            "annotation_height": 1.5903697003688553,
+            "reference_height_at_ray": 1.6474646551624093,
+            "top_ray_height_at_reference_depth": 1.5923407646077046,
+            "observed_height_residual_relative": -0.03446818373489229,
+            "top_ray_residual_at_reference_depth_relative": -0.033278253651164415,
+            "depth_contribution_relative": -0.0011899300837278793,
+            "radial_relative_difference": -0.003327584992659907
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 2.1024553296473503,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 2,
+            "reference_radius": 2.2925191580533864,
+            "annotation_height": 1.6307921819161129,
+            "reference_height_at_ray": 1.665204963437486,
+            "top_ray_height_at_reference_depth": 1.687816355192452,
+            "observed_height_residual_relative": -0.020774971809616162,
+            "top_ray_residual_at_reference_depth_relative": 0.013650481173509824,
+            "depth_contribution_relative": -0.034425452983125986,
+            "radial_relative_difference": -0.08290610254590947
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 2.109400730200042,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 2.1023823527286027,
+            "annotation_height": 1.6328759856988304,
+            "reference_height_at_ray": 1.6638214582043236,
+            "top_ray_height_at_reference_depth": 1.6307702869111835,
+            "observed_height_residual_relative": -0.01868175981466614,
+            "top_ray_residual_at_reference_depth_relative": -0.019952968680062192,
+            "depth_contribution_relative": 0.0012712088653960526,
+            "radial_relative_difference": 0.0033382973664759508
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.027229261090919225,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.02634031111230772,
+        "depth_contribution_rms_relative": 0.01724770772887295
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "",
+        "current_decision_comment": "",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    },
+    {
+      "record_id": "R02406",
+      "object_id": "f6377d1bf3f1d93a",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.4508181353613547,
+        "height_std_h": 0.16522090221900038,
+        "height_variance_h2": 0.02729794653006048,
+        "floor_perimeter_h": 5.864769849949665,
+        "height_min_h": 1.2034209360432477,
+        "height_max_h": 1.696117986940735
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.829284056612716,
+        "S_bottom_deg": 1.55844665611853,
+        "dir": 1.4373748899327208,
+        "Hmean": 0.12414212015113435,
+        "Hcenter": 0.10488694408228562,
+        "height_mean_ratio": 0.8758578798488657,
+        "iou_3d_corner_mean": 0.7296140647079039
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.10488694408228562,
+        "height_center_shift_h": 0.20563568978628433,
+        "height_center_signed_global_relative": -0.12414212015113436,
+        "height_centered_min_wall_height_h": 1.409056625829532,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 0.029217533603971606,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.040474954091594295,
+        "arithmetic_tie_tolerance_h2": 8.914274029553702e-14
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 0.03115390549566571,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.05324210919601004,
+        "arithmetic_tie_tolerance_h2": 8.651849938346321e-14
+      },
+      "Hcenter_under_min_tie": 0.10488694408228562,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 0.4216781061965126,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.35461263980765534,
+            "annotation_height": 1.672588955870637,
+            "reference_height_at_ray": 1.6475550072243665,
+            "top_ray_height_at_reference_depth": 1.5656175685716303,
+            "observed_height_residual_relative": 0.015112977051466704,
+            "top_ray_residual_at_reference_depth_relative": -0.0494655736301211,
+            "depth_contribution_relative": 0.0645785506815878,
+            "radial_relative_difference": 0.18912316951035382
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 0.42940885365581954,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.3409957931205649,
+            "annotation_height": 1.696117986940735,
+            "reference_height_at_ray": 1.6474634437982332,
+            "top_ray_height_at_reference_depth": 1.5527908962319783,
+            "observed_height_residual_relative": 0.029372713204465738,
+            "top_ray_residual_at_reference_depth_relative": -0.057153749853435694,
+            "depth_contribution_relative": 0.08652646305790143,
+            "radial_relative_difference": 0.2592790360436931
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 2.0710947640186643,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 2,
+            "reference_radius": 2.2900741502648323,
+            "annotation_height": 1.2108868590405142,
+            "reference_height_at_ray": 1.665204963437486,
+            "top_ray_height_at_reference_depth": 1.233184184958363,
+            "observed_height_residual_relative": -0.27427151756341805,
+            "top_ray_residual_at_reference_depth_relative": -0.2608106377131383,
+            "depth_contribution_relative": -0.013460879850279779,
+            "radial_relative_difference": -0.09562108992009906
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 2.0710947640186643,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 2.2347254848744686,
+            "annotation_height": 1.2034209360432477,
+            "reference_height_at_ray": 1.6647779902412392,
+            "top_ray_height_at_reference_depth": 1.2194925880894016,
+            "observed_height_residual_relative": -0.2785209265684607,
+            "top_ray_residual_at_reference_depth_relative": -0.26881848162121236,
+            "depth_contribution_relative": -0.009702444947248347,
+            "radial_relative_difference": -0.07322184400872662
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.19614403523905857,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.19104905057493352,
+        "depth_contribution_rms_relative": 0.0546181076698535
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "",
+        "current_decision_comment": "",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    },
+    {
+      "record_id": "R01696",
+      "object_id": "abffbe9ff5e5e049",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.6284237414908722,
+        "height_std_h": 0.016861691043629196,
+        "height_variance_h2": 0.000284316624850805,
+        "floor_perimeter_h": 5.779696172796017,
+        "height_min_h": 1.603935466112841,
+        "height_max_h": 1.6629409926440668
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.820300995700738,
+        "S_bottom_deg": 1.4486752280892352,
+        "dir": 1.5191039989970512,
+        "Hmean": 0.016921741633376675,
+        "Hcenter": 0.013518998448422843,
+        "height_mean_ratio": 0.9830782583666233,
+        "iou_3d_corner_mean": 0.8070120288513362
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.013518998448422843,
+        "height_center_shift_h": 0.028030083656766847,
+        "height_center_signed_global_relative": -0.01692174163337667,
+        "height_centered_min_wall_height_h": 1.631965549769608,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 0.0004814386264791833,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.04027787446410974,
+        "arithmetic_tie_tolerance_h2": 8.890658972614611e-14
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 0.0005215077191336513,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.058000904650107495,
+        "arithmetic_tie_tolerance_h2": 8.651849938346321e-14
+      },
+      "Hcenter_under_min_tie": 0.013518998448422843,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 0.40454030040049616,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.34510535922713736,
+            "annotation_height": 1.6629409926440668,
+            "reference_height_at_ray": 1.6475531748768824,
+            "top_ray_height_at_reference_depth": 1.5655418982640996,
+            "observed_height_residual_relative": 0.009289614677796976,
+            "top_ray_residual_at_reference_depth_relative": -0.04951014955425824,
+            "depth_contribution_relative": 0.05879976423205521,
+            "radial_relative_difference": 0.17222259690913871
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 0.43573212301317876,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.34071500966622686,
+            "annotation_height": 1.6356474484911478,
+            "reference_height_at_ray": 1.6474634985891532,
+            "top_ray_height_at_reference_depth": 1.4970361722686751,
+            "observed_height_residual_relative": -0.007133341067899788,
+            "top_ray_residual_at_reference_depth_relative": -0.09081287026341983,
+            "depth_contribution_relative": 0.08367952919552005,
+            "radial_relative_difference": 0.27887563110305325
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 2.0374983460267577,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 2,
+            "reference_radius": 2.289193096359088,
+            "annotation_height": 1.603935466112841,
+            "reference_height_at_ray": 1.665204963437486,
+            "top_ray_height_at_reference_depth": 1.6785403788758548,
+            "observed_height_residual_relative": -0.036988352101625224,
+            "top_ray_residual_at_reference_depth_relative": 0.00805058084681614,
+            "depth_contribution_relative": -0.045038932948441364,
+            "radial_relative_difference": -0.10994911295715734
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 2.0374983460267577,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 2.1589406611823945,
+            "annotation_height": 1.6096211029898078,
+            "reference_height_at_ray": 1.6642303953632853,
+            "top_ray_height_at_reference_depth": 1.645956738922561,
+            "observed_height_residual_relative": -0.03296759109395051,
+            "top_ray_residual_at_reference_depth_relative": -0.011031793439274231,
+            "depth_contribution_relative": -0.02193579765467628,
+            "radial_relative_difference": -0.056250881434196535
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.025456736580837767,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.05216498977480892,
+        "depth_contribution_rms_relative": 0.05694155025113531
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "",
+        "current_decision_comment": "",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    },
+    {
+      "record_id": "R01295",
+      "object_id": "84737c49b7cb43cb",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.5686739857256848,
+        "height_std_h": 0.01613995782304472,
+        "height_variance_h2": 0.0002604982385296624,
+        "floor_perimeter_h": 12.547190529613527,
+        "height_min_h": 1.537800638109163,
+        "height_max_h": 1.594434037844516
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.3081761296218919,
+        "S_bottom_deg": 10.41960932650898,
+        "dir": 2.183343167581146,
+        "Hmean": 0.0529926268328853,
+        "Hcenter": 0.008896757764434271,
+        "height_mean_ratio": 0.9470073731671147,
+        "iou_3d_corner_mean": 0.30236100345155603
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.008896757764434271,
+        "height_center_shift_h": 0.08777983942195422,
+        "height_center_signed_global_relative": -0.05299262683288527,
+        "height_centered_min_wall_height_h": 1.6255804775311171,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 0.00017524539861149075,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 1.1247061499759476,
+        "arithmetic_tie_tolerance_h2": 4.766159694868666e-13
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 0.0002591169732277358,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.08211663979295612,
+        "arithmetic_tie_tolerance_h2": 1.57000839673179e-13
+      },
+      "Hcenter_under_min_tie": 0.008896757764434271,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 3.541021711704071,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.19752587627558468,
+            "annotation_height": 1.537800638109163,
+            "reference_height_at_ray": 1.647511320655603,
+            "top_ray_height_at_reference_depth": 1.0299996868002708,
+            "observed_height_residual_relative": -0.06623226128060741,
+            "top_ray_residual_at_reference_depth_relative": -0.3727913356113585,
+            "depth_contribution_relative": 0.30655907433075114,
+            "radial_relative_difference": 16.92687509338624
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 3.456234884484485,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.19898502932937723,
+            "annotation_height": 1.5523398995993225,
+            "reference_height_at_ray": 1.6475027760030434,
+            "top_ray_height_at_reference_depth": 1.031799740120368,
+            "observed_height_residual_relative": -0.057449761025025296,
+            "top_ray_residual_at_reference_depth_relative": -0.3716994862973606,
+            "depth_contribution_relative": 0.3142497252723353,
+            "radial_relative_difference": 16.369321180255355
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 2.05534104710705,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 2,
+            "reference_radius": 2.2922803611775326,
+            "annotation_height": 1.5927966622924532,
+            "reference_height_at_ray": 1.665204963437486,
+            "top_ray_height_at_reference_depth": 1.6611341456237683,
+            "observed_height_residual_relative": -0.043712840071819685,
+            "top_ray_residual_at_reference_depth_relative": -0.002457549828384032,
+            "depth_contribution_relative": -0.041255290243435654,
+            "radial_relative_difference": -0.1033640204240846
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 2.037823079893362,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 2.0374205954495594,
+            "annotation_height": 1.594434037844516,
+            "reference_height_at_ray": 1.6633514522360493,
+            "top_ray_height_at_reference_depth": 1.5943166329257772,
+            "observed_height_residual_relative": -0.04160539421338269,
+            "top_ray_residual_at_reference_depth_relative": -0.041676271479598334,
+            "depth_contribution_relative": 7.08772662156409e-05,
+            "radial_relative_difference": 0.00019754607600490725
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.05321890803786429,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.2640439542842358,
+        "depth_contribution_rms_relative": 0.22047299147793717
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "标的空间范围不同,",
+        "current_decision_comment": "标的空间范围不同,",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    },
+    {
+      "record_id": "R02222",
+      "object_id": "e37769f9a2907705",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.6224219276687075,
+        "height_std_h": 0.008438087476806471,
+        "height_variance_h2": 7.120132026623821e-05,
+        "floor_perimeter_h": 5.819503265300742,
+        "height_min_h": 1.601192359481335,
+        "height_max_h": 1.6370905857972249
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.835522560274107,
+        "S_bottom_deg": 1.3010037036781754,
+        "dir": 1.602121197570753,
+        "Hmean": 0.020545032383198714,
+        "Hcenter": 0.007942066836138392,
+        "height_mean_ratio": 0.9794549676168013,
+        "iou_3d_corner_mean": 0.8193024611239167
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.007942066836138392,
+        "height_center_shift_h": 0.03403189747893154,
+        "height_center_signed_global_relative": -0.02054503238319866,
+        "height_centered_min_wall_height_h": 1.6352242569602664,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 0.00015977279013672753,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.037407820248343555,
+        "arithmetic_tie_tolerance_h2": 8.878303374707824e-14
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 0.00018637035778259207,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.05221913457159846,
+        "arithmetic_tie_tolerance_h2": 8.651849938346321e-14
+      },
+      "Hcenter_under_min_tie": 0.007942066836138392,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 0.4260601827158178,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.36623207872330366,
+            "annotation_height": 1.6219218020215114,
+            "reference_height_at_ray": 1.647557217522652,
+            "top_ray_height_at_reference_depth": 1.5345904724206583,
+            "observed_height_residual_relative": -0.015476082165378685,
+            "top_ray_residual_at_reference_depth_relative": -0.06819794393720882,
+            "depth_contribution_relative": 0.05272186177183013,
+            "radial_relative_difference": 0.1633611785212174
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 0.3871723064542058,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 1,
+            "reference_radius": 0.33862408056947285,
+            "annotation_height": 1.6370905857972249,
+            "reference_height_at_ray": 1.647508844467575,
+            "top_ray_height_at_reference_depth": 1.5572046612289634,
+            "observed_height_residual_relative": -0.006289495373903038,
+            "top_ray_residual_at_reference_depth_relative": -0.05451657140552214,
+            "depth_contribution_relative": 0.048227076031619104,
+            "radial_relative_difference": 0.1433690888228863
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 2.0379220691982765,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 2,
+            "reference_radius": 2.292030589944855,
+            "annotation_height": 1.601192359481335,
+            "reference_height_at_ray": 1.665204963437486,
+            "top_ray_height_at_reference_depth": 1.6761550400768923,
+            "observed_height_residual_relative": -0.03864436363050772,
+            "top_ray_residual_at_reference_depth_relative": 0.006610553504822518,
+            "depth_contribution_relative": -0.045254917135330246,
+            "radial_relative_difference": -0.1108661122854789
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 2.088994754734913,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 2.0875153355048166,
+            "annotation_height": 1.6290172895632153,
+            "reference_height_at_ray": 1.6637139237371883,
+            "top_ray_height_at_reference_depth": 1.6285718215829184,
+            "observed_height_residual_relative": -0.02094633345477074,
+            "top_ray_residual_at_reference_depth_relative": -0.02121526215868875,
+            "depth_contribution_relative": 0.00026892870391801175,
+            "radial_relative_difference": 0.0007086986164527692
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.02351171302166888,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.045046650489182,
+        "depth_contribution_rms_relative": 0.0422892581479651
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "",
+        "current_decision_comment": "",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    },
+    {
+      "record_id": "R00640",
+      "object_id": "3f5307c8e24eadb4",
+      "image_code": "uNb9QFRL6hY-63",
+      "reference_object_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "analysis_layer": "historical_scope_confounded_fixed_reference",
+      "annotation_moments": {
+        "height_mean_h": 1.5899878418948028,
+        "height_std_h": 0.004714959437194754,
+        "height_variance_h2": 2.223084249439187e-05,
+        "floor_perimeter_h": 5.99098406905166,
+        "height_min_h": 1.583076669080503,
+        "height_max_h": 1.5983780082271195
+      },
+      "reference_moments": {
+        "height_mean_h": 1.656453825147639,
+        "height_std_h": 0.006053106478147394,
+        "height_variance_h2": 3.6640098035789944e-05,
+        "floor_perimeter_h": 6.184743675960908,
+        "height_min_h": 1.6474632280864712,
+        "height_max_h": 1.665204963437486
+      },
+      "original_metrics": {
+        "iou_2d": 0.7977272690148669,
+        "S_bottom_deg": 2.382790092246404,
+        "dir": 2.518625016414206,
+        "Hmean": 0.04012546697274355,
+        "Hcenter": 0.004397567975240407,
+        "height_mean_ratio": 0.9598745330272564,
+        "iou_3d_corner_mean": 0.7690573169501157
+      },
+      "metric_replay_absolute_errors": {
+        "Hmean": 0.0,
+        "Hcenter": 0.0
+      },
+      "centered_diagnostics": {
+        "Hcenter": 0.004397567975240407,
+        "height_center_shift_h": 0.06646598325283626,
+        "height_center_signed_global_relative": -0.040125466972743516,
+        "height_centered_min_wall_height_h": 1.6495426523333392,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "nearest_floor_AG": {
+        "mse_h2": 5.03692687206478e-05,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.05313531901695284,
+        "arithmetic_tie_tolerance_h2": 9.22712763159104e-14
+      },
+      "nearest_floor_GA": {
+        "mse_h2": 5.575477416268624e-05,
+        "distinct_tied_height_fraction": 0.0,
+        "max_distinct_tied_height_range_h": 0.0,
+        "footprint_distance_mean_h": 0.062661062390959,
+        "arithmetic_tie_tolerance_h2": 8.651849938346321e-14
+      },
+      "Hcenter_under_min_tie": 0.004397567975240407,
+      "Hcenter_max_minus_min_tie": 0.0,
+      "ray_depth_diagnostic": {
+        "corners": [
+          {
+            "corner_index": 0,
+            "annotation_radius": 0.4991333353608242,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.353746031903959,
+            "annotation_height": 1.5873444636293812,
+            "reference_height_at_ray": 1.6475548411359506,
+            "top_ray_height_at_reference_depth": 1.41626306770205,
+            "observed_height_residual_relative": -0.03634896221825133,
+            "top_ray_residual_at_reference_depth_relative": -0.13963067966188897,
+            "depth_contribution_relative": 0.10328171744363762,
+            "radial_relative_difference": 0.4109934539034984
+          },
+          {
+            "corner_index": 1,
+            "annotation_radius": 0.4262097558714838,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 0,
+            "reference_radius": 0.341236428087778,
+            "annotation_height": 1.5912192777051817,
+            "reference_height_at_ray": 1.6474633968595338,
+            "top_ray_height_at_reference_depth": 1.473348044622388,
+            "observed_height_residual_relative": -0.033954534862654026,
+            "top_ray_residual_at_reference_depth_relative": -0.10511331471713488,
+            "depth_contribution_relative": 0.07115877985448085,
+            "radial_relative_difference": 0.24901599240116207
+          },
+          {
+            "corner_index": 2,
+            "annotation_radius": 2.0967903186303816,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 2,
+            "reference_radius": 2.29065322412286,
+            "annotation_height": 1.5983780082271195,
+            "reference_height_at_ray": 1.665204963437486,
+            "top_ray_height_at_reference_depth": 1.653702233175604,
+            "observed_height_residual_relative": -0.04034338548761548,
+            "top_ray_residual_at_reference_depth_relative": -0.006944190104941044,
+            "depth_contribution_relative": -0.03339919538267443,
+            "radial_relative_difference": -0.0846321492275256
+          },
+          {
+            "corner_index": 3,
+            "annotation_radius": 2.0588166992982613,
+            "status": "unique_reference_depth",
+            "reference_segment_index": 3,
+            "reference_radius": 2.227803136565752,
+            "annotation_height": 1.583076669080503,
+            "reference_height_at_ray": 1.6647279877428918,
+            "top_ray_height_at_reference_depth": 1.6309352516319724,
+            "observed_height_residual_relative": -0.049292843194775615,
+            "top_ray_residual_at_reference_depth_relative": -0.02040065083486854,
+            "depth_contribution_relative": -0.028892192359907073,
+            "radial_relative_difference": -0.07585339767857133
+          }
+        ],
+        "corner_count": 4,
+        "unique_reference_depth_corners": 4,
+        "correspondence_is_geometric_not_semantic": true,
+        "geometry_repaired": false,
+        "score_changed": false,
+        "observed_height_residual_rms_relative": 0.040408942806358254,
+        "top_ray_residual_at_reference_depth_rms_relative": 0.08804820265678949,
+        "depth_contribution_rms_relative": 0.0664848669624483
+      },
+      "current_geometry_issues": [],
+      "reference_geometry_issues": [],
+      "scope_and_detail_flags": {
+        "scope_difference_image": true,
+        "scope_difference_annotation": false,
+        "detail_difference_image": false,
+        "detail_difference_annotation": false
+      },
+      "review_evidence": {
+        "current_comment": "",
+        "current_decision_comment": "",
+        "image_comment": "这图是有人标到房间里了",
+        "gt_version_note": ""
+      },
+      "no_new_semantic_wall_correspondence": true
+    }
+  ],
+  "policy": "先前23份OOS数值，保留诊断；不参与校准。"
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "quality_pro_archive_local_verification_20261013_v1",
+  "archive_files_byte_equal": 97,
+  "archive_bytes": 28904426,
+  "routing_source_counts": {
+    "images": 35,
+    "records": 429,
+    "admitted_reference_candidates": 65
+  },
+  "routing_identity_matches_current_all_data": 429,
+  "pytest": {
+    "command": "python -B -m pytest -q tests/test_quality_pro_joint_archive_20261013.py",
+    "passed": 3,
+    "frozen_score_comparisons": 3688,
+    "independent_primary_formula_comparisons": 922,
+    "tolerance": 1e-09
+  },
+  "not_run": [
+    "large_parameter_search",
+    "full_geometry_replay",
+    "browser_review",
+    "independent_human_validation"
+  ],
+  "formal_algorithm_replaced": false
+}

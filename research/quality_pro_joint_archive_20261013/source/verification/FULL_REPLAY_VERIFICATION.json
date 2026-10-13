@@ -1,0 +1,619 @@
+{
+  "schema": "fresh_full_scientific_replay_v1",
+  "status": "passed",
+  "steps": [
+    {
+      "stage": "experiments_export_real_descriptors",
+      "command": [
+        "-B",
+        "experiments/export_real_descriptors.py",
+        "--source",
+        "baseline"
+      ],
+      "returncode": 0,
+      "seconds": 2.760446555999806,
+      "log": "logs/experiments_export_real_descriptors.log"
+    },
+    {
+      "stage": "experiments_axis_switch_and_joint_hinge",
+      "command": [
+        "-B",
+        "experiments/axis_switch_and_joint_hinge.py",
+        "--descriptors",
+        "experiments/results/real_direction_descriptors.json"
+      ],
+      "returncode": 0,
+      "seconds": 3.217069864000223,
+      "log": "logs/experiments_axis_switch_and_joint_hinge.log"
+    },
+    {
+      "stage": "experiments_run_targeted_experiments",
+      "command": [
+        "-B",
+        "experiments/run_targeted_experiments.py",
+        "--source",
+        "baseline"
+      ],
+      "returncode": 0,
+      "seconds": 10.037578978000965,
+      "log": "logs/experiments_run_targeted_experiments.log"
+    },
+    {
+      "stage": "routing_run_routing",
+      "command": [
+        "-B",
+        "routing/run_routing.py",
+        "--baseline",
+        "baseline"
+      ],
+      "returncode": 0,
+      "seconds": 22.083794686001056,
+      "log": "logs/routing_run_routing.log"
+    },
+    {
+      "stage": "experiments_verify_sampling",
+      "command": [
+        "-B",
+        "experiments/verify_sampling.py",
+        "--source",
+        "baseline"
+      ],
+      "returncode": 0,
+      "seconds": 32.067400296000415,
+      "log": "logs/experiments_verify_sampling.log"
+    },
+    {
+      "stage": "experiments_projection_extreme_extension",
+      "command": [
+        "-B",
+        "experiments/projection_extreme_extension.py",
+        "--source",
+        "baseline"
+      ],
+      "returncode": 0,
+      "seconds": 10.502284836999024,
+      "log": "logs/experiments_projection_extreme_extension.log"
+    },
+    {
+      "stage": "experiments_verify_input_alignment",
+      "command": [
+        "-B",
+        "experiments/verify_input_alignment.py",
+        "--source",
+        "baseline",
+        "--local-results",
+        "sources/main/research/quality_parallel_local_20261012/record_results.json"
+      ],
+      "returncode": 0,
+      "seconds": 0.3510334419988794,
+      "log": "logs/experiments_verify_input_alignment.log"
+    },
+    {
+      "stage": "experiments_validate_candidates",
+      "command": [
+        "-B",
+        "experiments/validate_candidates.py",
+        "--source",
+        "baseline",
+        "--config",
+        "calibration/recommended_parameters.json"
+      ],
+      "returncode": 0,
+      "seconds": 2.0903954669993254,
+      "log": "logs/experiments_validate_candidates.log"
+    },
+    {
+      "stage": "experiments_summarize_analytic_diagnostics",
+      "command": [
+        "-B",
+        "experiments/summarize_analytic_diagnostics.py",
+        "--source",
+        "baseline"
+      ],
+      "returncode": 0,
+      "seconds": 0.35024928499842645,
+      "log": "logs/experiments_summarize_analytic_diagnostics.log"
+    },
+    {
+      "stage": "experiments_render_experiments",
+      "command": [
+        "-B",
+        "experiments/render_experiments.py"
+      ],
+      "returncode": 0,
+      "seconds": 3.2618946350012266,
+      "log": "logs/experiments_render_experiments.log"
+    },
+    {
+      "stage": "routing_verify_routing",
+      "command": [
+        "-B",
+        "routing/verify_routing.py",
+        "--baseline",
+        "baseline"
+      ],
+      "returncode": 0,
+      "seconds": 48.21196130300086,
+      "log": "logs/routing_verify_routing.log"
+    },
+    {
+      "stage": "routing_numerical_spot_check",
+      "command": [
+        "-B",
+        "routing/numerical_spot_check.py",
+        "--baseline",
+        "baseline"
+      ],
+      "returncode": 0,
+      "seconds": 1.310468226998637,
+      "log": "logs/routing_numerical_spot_check.log"
+    },
+    {
+      "stage": "calibration_prepare_inputs",
+      "command": [
+        "-B",
+        "calibration/prepare_inputs.py"
+      ],
+      "returncode": 0,
+      "seconds": 3.0575448399977176,
+      "log": "logs/calibration_prepare_inputs.log"
+    },
+    {
+      "stage": "calibration_run_search",
+      "command": [
+        "-B",
+        "calibration/run_search.py"
+      ],
+      "returncode": 0,
+      "seconds": 18.120454407999205,
+      "log": "logs/calibration_run_search.log"
+    },
+    {
+      "stage": "calibration_physical_controls",
+      "command": [
+        "-B",
+        "calibration/physical_controls.py"
+      ],
+      "returncode": 0,
+      "seconds": 3.199765909001144,
+      "log": "logs/calibration_physical_controls.log"
+    },
+    {
+      "stage": "calibration_analyze_candidates",
+      "command": [
+        "-B",
+        "calibration/analyze_candidates.py"
+      ],
+      "returncode": 0,
+      "seconds": 6.499774500000058,
+      "log": "logs/calibration_analyze_candidates.log"
+    },
+    {
+      "stage": "calibration_verify_calibration",
+      "command": [
+        "-B",
+        "calibration/verify_calibration.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.9377831719975802,
+      "log": "logs/calibration_verify_calibration.log"
+    },
+    {
+      "stage": "calibration_render_calibration",
+      "command": [
+        "-B",
+        "calibration/render_calibration.py"
+      ],
+      "returncode": 0,
+      "seconds": 1.7568285320012365,
+      "log": "logs/calibration_render_calibration.log"
+    },
+    {
+      "stage": "integration",
+      "command": [
+        "-B",
+        "integration/run_impact.py"
+      ],
+      "returncode": 0,
+      "seconds": 7.385438391000207,
+      "log": "logs/integration.log"
+    },
+    {
+      "stage": "w019_ledger",
+      "command": [
+        "-B",
+        "integration/verify_w019.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.054936529999395134,
+      "log": "logs/w019_ledger.log"
+    },
+    {
+      "stage": "cli_R00397",
+      "command": [
+        "-B",
+        "assess.py",
+        "--record-id",
+        "R00397",
+        "--out",
+        "integration/results/cli_R00397.json"
+      ],
+      "returncode": 0,
+      "seconds": 0.83386734600208,
+      "log": "logs/cli_R00397.log"
+    },
+    {
+      "stage": "cli_R03197",
+      "command": [
+        "-B",
+        "assess.py",
+        "--record-id",
+        "R03197",
+        "--out",
+        "integration/results/cli_R03197.json"
+      ],
+      "returncode": 0,
+      "seconds": 0.750261015000433,
+      "log": "logs/cli_R03197.log"
+    },
+    {
+      "stage": "cli_interfaces",
+      "command": [
+        "-B",
+        "verification/verify_interfaces.py"
+      ],
+      "returncode": 0,
+      "seconds": 5.08739893999882,
+      "log": "logs/cli_interfaces.log"
+    },
+    {
+      "stage": "review_build",
+      "command": [
+        "-B",
+        "review/build_review.py"
+      ],
+      "returncode": 0,
+      "seconds": 4.398512995998317,
+      "log": "logs/review_build.log"
+    },
+    {
+      "stage": "review_dom_canvas",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "review/verify_review.mjs",
+        "review"
+      ],
+      "returncode": 0,
+      "seconds": 1.0994017589982832,
+      "log": "logs/review_dom_canvas.log"
+    }
+  ],
+  "compared": [
+    {
+      "file": "experiments/results/axis_switch_counterexample.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/candidate_precision.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/candidate_validation_controls.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/candidate_validation_real.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/candidate_validation_summary.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/descriptor_invariance.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/descriptor_summary.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/extreme_projection_cases.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/extreme_projection_results.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/input_alignment_cross_version_verification.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/joint_hinge_descriptors.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/real_direction_descriptors.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/real_tail_pair_candidates.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/real_topology_diagnostics.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/reference_intrinsic_self_response.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/response_transition_ranges.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/sampling_verification.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/targeted_constructed_cases.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/targeted_metrics.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "experiments/results/targeted_summary.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/SCALAR_VERIFICATION.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/SEARCH_DESIGN.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/ablation_summary.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/all_controls_rescored.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/component_association.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/family_summary.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/grade_cut_identification.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/leave_group_sensitivity.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/matched_priority_triplets.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/physical_control_dependencies.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/physical_controls.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/readable_candidates.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/response_policy_sensitivity.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/search_summary.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/selected_candidate_summary.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/selected_scores_922.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/top_candidates.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/all_search_configs.json.gz",
+      "semantic_equal": true
+    },
+    {
+      "file": "calibration/results/all_search_results.csv.gz",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/all_candidate_metrics.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/human_space_development_check.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/image_manifest.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/old_T30_route_comparison.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/oracle_diagnostic_separate.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/prior_floor_recompute_check.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/raw_x_diagnostics.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/reference_candidates.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/routes.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/run_provenance.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/sampling_convergence_1024_2048.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/results/summary.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/validation/collinear_invariance.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/validation/frozen_metric_consistency.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/validation/intent_nonidentifiability.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/validation/numerical_spot_check.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/validation/reference_self_route.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/validation/rotation_scale_invariance.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/validation/sensitivity_and_ablation.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/validation/single_corner_removal.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/validation/source_git_blob_verification.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/validation/summary.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "routing/validation/synthetic_counterexamples.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "integration/results/W019_unavailable_ledger.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "integration/results/cli_R00397.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "integration/results/cli_R03197.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "integration/results/fixed_reference_922.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "integration/results/fusion_220_ledger_and_scores.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "integration/results/fusion_geometries_60.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "integration/results/reference_formula_four_way.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "integration/results/same_condition_pairs.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "integration/results/summary.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "integration/results/worker_conditions_new.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "review/blind_data.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "review/diagnostic_data.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "review/build_verification.json",
+      "semantic_equal": true
+    },
+    {
+      "file": "verification/CLI_VERIFICATION.json",
+      "semantic_equal": true
+    }
+  ],
+  "scientific_files_compared": 76,
+  "numeric_values_compared": 1174173,
+  "max_absolute_numeric_difference": 0.0,
+  "comparison_tolerance": {
+    "atol": 1e-09,
+    "rtol": 1e-11
+  },
+  "metadata_exclusions": {
+    "elapsed_seconds": 4,
+    "timing_seconds": 2
+  },
+  "metadata_path_normalization": [
+    "baseline_argument"
+  ],
+  "failures": [],
+  "failure_count": 0,
+  "delivered_source_unchanged": true,
+  "delivered_source_file_count": 343,
+  "review_actual_dom_canvas_executed": true,
+  "native_browser_layout_test": false,
+  "no_new_human_labels": true,
+  "total_seconds": 128.73348276199977
+}
