@@ -1,5 +1,11 @@
 # HOHONET 项目地图
 
+- **2026-10-14质量模型收尾交接：** [当前资料与目标导向任务书](../research/quality_model_closeout_20261014/README.md)。复用既有冻结输入和全量账本，接入最新人工回执；完成Pro分析后再组织批量图片核验，不自动改变评分与资格。
+
+- **2026-10-14九组质量案例复核：** [可旋转三维与可展开分数的审核页](../research/quality_candidate_review_20261014/README.md)。8卡覆盖9组、15份作答；回执独立，T20/P04仅比较高度，不调参或修改资格。
+
+- **2026-10-14质量Pro返回审查：** [独立结论、复现回执与增量归档](../research/quality_pro_return_review_20261014/README.md)；独立核验工具`tools/thesis_main/analysis/quality_pro_return_review_20261014.py`。复用READY的119个不变输入，保留108个新增交付文件；仅纳入研究候选与证据，正式评分和资格不变。
+
 - **2026-10-14质量补充与Pro离线包：** [三维审核及交接入口](../research/quality_pro_handoff_20261014/README.md)。沿用旧三维查看器并标注相机；3例回执已接收、16组备查，217门洞账本和151控制可追溯；新回执与修订见入口，唯一推荐READY包；目标导向任务书保留粗调后门洞细调，具体方法由Pro决定，尚未自动发送Pro。
 
 - **2026-10-14质量分阶段研究工作版：** [普通粗调、门洞邻近比较与回归](../research/quality_staged_calibration_20261014/README.md)；工具`tools/thesis_main/analysis/quality_staged_calibration_20261014.py`及同名测试。去尾项、整体0.8/局部0.25仅为研究决定；门洞125份可条件评分、92份暂缓，正式算法与资格不变。

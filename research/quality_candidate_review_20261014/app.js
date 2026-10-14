@@ -1,0 +1,25 @@
+'use strict';
+const $=id=>document.getElementById(id), KEY='quality_candidate_review_20261014_v1';
+const FACTORS=[['scope','范围／遗漏细节'],['floor','底点／墙体方向'],['global_height','整体偏高或偏低'],['local_height','顶部起伏／两侧倾斜'],['isolated','孤立异常点'],['reference','参考有问题'],['uncertain','看不清']];
+let receipts={},index=0,scoreVisible=false;
+try{receipts=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){$('saveStatus').textContent='历史草稿无法读取，请导出当前结果另存。'}
+function collect(){const c=CARDS[index],answers={};for(const q of c.questions){const v=document.querySelector(`input[name="${q.id}"]:checked`)?.value||null;answers[q.id]={question:q.title,value:v,label:q.options.find(o=>o[0]===v)?.[1]||null}}
+return {case_id:c.id,kind:c.kind,bindings:c.bindings,answers,factors:[...document.querySelectorAll('#factors input:checked')].map(x=>x.value),comment:$('comment').value,reviewed_at:new Date().toISOString(),overall_conditions_complete:c.kind==='height_cross_image'?null:Boolean(answers.floor?.value&&answers.height?.value),prior_score_exposure:'user_previously_received_score_table'};}
+function save(){const c=CARDS[index],r=collect(),old=receipts[c.id]||{};if(!Object.values(r.answers).some(a=>a.value)&&!r.comment&&!r.factors.length&&!old.score_revealed_at)return;
+receipts[c.id]={...old,...r};try{localStorage.setItem(KEY,JSON.stringify(receipts));$('saveStatus').textContent='已保存到当前浏览器；完成后请导出'}catch(e){$('saveStatus').textContent='本地保存失败，请立即导出JSON'}updateCondition();}
+function updateCondition(){const c=CARDS[index],r=collect();$('condition').textContent=c.kind==='height_cross_image'?'本卡只讨论高度处罚；不同图片不强排整体质量。':r.overall_conditions_complete?'已记录底面与高度观察；“无法判断”也如实保留，不当成平局。':'请先记录底面与高度观察；可以选无法判断。未观察完整时，整体答案仅作为暂定意见。';}
+function scoreTable(){const c=CARDS[index],rows=SCORES.find(s=>s.id===c.id).records;const heading='<tr><th>作答</th><th>上轮工作版</th><th>新候选</th><th>上轮／新候选的高度实际扣分</th></tr>';
+$('scores').innerHTML='<table>'+heading+rows.map((r,i)=>`<tr><td>${c.bindings[i].label}</td><td>${r.current_Q.toFixed(2)}</td><td>${r.working_Q.toFixed(2)}</td><td>${r.current_height_drop.toFixed(2)} / ${r.working_height_drop.toFixed(2)}</td></tr>`).join('')+'</table><p class="hint">高度实际扣分＝同一算法的去高度分减完整分；不是参数大小，也不是已认可的处罚额度。</p>';}
+function show(){const c=CARDS[index],r=receipts[c.id];$('case').value=String(index);$('title').textContent=c.title;$('progress').textContent=`${index+1} / ${CARDS.length}`;
+$('scope').textContent=c.kind==='height_cross_image'?'A＝T20，B＝P04另一例；来自两张不同图片，各有自己的固定参考。只比较高度问题，不比较谁的整体质量更好。':c.kind==='single'?'只有一份实际作答（A）与固定参考。请评价实际错误及剩余有效内容，不预设是单点还是多处问题。':'A/B为同图的两份实际作答，采用相同固定参考。先分开记录底面和高度，再作整体判断。';
+for(const kind of ['2d','3d']){$('image'+kind).src=`assets/${c.id}_${kind}.${kind==='2d'?'jpg':'png'}`;$('link'+kind).href=$('image'+kind).src;}
+Review3D.open(c);
+$('photos').replaceChildren(...c.bindings.map(b=>{const a=document.createElement('a');a.textContent=b.label+' · 打开原图';a.href=b.photo;a.target='_blank';return a}));
+$('questions').replaceChildren();for(const q of c.questions){const f=document.createElement('fieldset'),l=document.createElement('legend'),box=document.createElement('div');l.textContent=q.title;box.className='options';for(const [v,text]of q.options){const label=document.createElement('label'),input=document.createElement('input');label.className='option';input.type='radio';input.name=q.id;input.value=v;input.checked=r?.answers?.[q.id]?.value===v;input.onchange=save;label.append(input,document.createTextNode(text));box.append(label)}f.append(l,box);$('questions').append(f)}
+$('factors').replaceChildren(...FACTORS.map(([v,text])=>{const l=document.createElement('label'),x=document.createElement('input');l.className='option';x.type='checkbox';x.value=v;x.checked=r?.factors?.includes(v)||false;x.onchange=save;l.append(x,document.createTextNode(text));return l}));$('comment').value=r?.comment||'';scoreVisible=false;$('scores').hidden=true;$('reveal').textContent=r?.score_revealed_at?'再次查看新旧分数（曾展开）':'查看新旧分数';updateCondition();}
+$('case').replaceChildren(...CARDS.map((c,i)=>new Option(c.title,String(i))));$('case').onchange=e=>{save();index=Number(e.target.value);show()};
+for(const [id,step]of [['prev',-1],['next',1]])$(id).onclick=()=>{if(index+step<0||index+step>=CARDS.length)return;save();index+=step;show();window.scrollTo(0,0)};
+$('comment').oninput=save;$('save').onclick=save;
+$('reveal').onclick=()=>{if(!scoreVisible){save();const c=CARDS[index];receipts[c.id]||=collect();if(!receipts[c.id].score_revealed_at){receipts[c.id].score_revealed_at=new Date().toISOString();receipts[c.id].answers_at_first_score_reveal=JSON.parse(JSON.stringify(collect().answers));}save();scoreTable();}scoreVisible=!scoreVisible;$('scores').hidden=!scoreVisible;$('reveal').textContent=scoreVisible?'隐藏分数':'再次查看新旧分数（曾展开）';};
+$('export').onclick=()=>{save();const blob=new Blob([JSON.stringify({schema:KEY,decisions:Object.values(receipts)},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=KEY+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+show();

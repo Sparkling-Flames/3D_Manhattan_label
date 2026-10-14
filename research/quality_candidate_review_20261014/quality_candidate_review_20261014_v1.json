@@ -1,0 +1,490 @@
+{
+  "schema": "quality_candidate_review_20261014_v1",
+  "decisions": [
+    {
+      "case_id": "P01",
+      "kind": "pair",
+      "bindings": [
+        {
+          "label": "A",
+          "record_id": "R02015",
+          "object_id": "cd59ff6392d0007b",
+          "image_id": "B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086",
+          "image_code": "B6ByNegPMKs-11",
+          "reference_object_id": "gt:B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086:data/mp3d_layout/test/label_cor/B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086.txt",
+          "photo": "photos/B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086.png"
+        },
+        {
+          "label": "B",
+          "record_id": "R00637",
+          "object_id": "3f1d4cacc3faf7d7",
+          "image_id": "B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086",
+          "image_code": "B6ByNegPMKs-11",
+          "reference_object_id": "gt:B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086:data/mp3d_layout/test/label_cor/B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086.txt",
+          "photo": "photos/B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086.png"
+        }
+      ],
+      "answers": {
+        "floor": {
+          "question": "只看照片和底面：范围、底点及墙体形状，哪份更好？",
+          "value": "A_clear",
+          "label": "A明显更好"
+        },
+        "height": {
+          "question": "只看高度：整体高低及顶部不平，哪份问题更少？",
+          "value": "A_slight",
+          "label": "A略好"
+        },
+        "overall": {
+          "question": "综合底面与高度，整体质量如何？",
+          "value": "A_slight",
+          "label": "A略好"
+        }
+      },
+      "factors": [],
+      "comment": "a主要是相对gt标注范围小了",
+      "reviewed_at": "2026-10-14T08:30:04.549Z",
+      "overall_conditions_complete": true,
+      "prior_score_exposure": "user_previously_received_score_table",
+      "score_revealed_at": "2026-10-14T08:19:29.906Z",
+      "answers_at_first_score_reveal": {
+        "floor": {
+          "question": "只看照片和底面：范围、底点及墙体形状，哪份更好？",
+          "value": null,
+          "label": null
+        },
+        "height": {
+          "question": "只看高度：整体高低及顶部不平，哪份问题更少？",
+          "value": null,
+          "label": null
+        },
+        "overall": {
+          "question": "综合底面与高度，整体质量如何？",
+          "value": null,
+          "label": null
+        }
+      }
+    },
+    {
+      "case_id": "J01",
+      "kind": "pair",
+      "bindings": [
+        {
+          "label": "A",
+          "record_id": "R03346",
+          "object_id": "new_95_3657_7030_W031",
+          "image_id": "Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45",
+          "image_code": "Z6MFQCViBuw-08",
+          "reference_object_id": "gt:Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45:data/mp3d_layout/test/label_cor/Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45.txt",
+          "photo": "photos/Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45.png"
+        },
+        {
+          "label": "B",
+          "record_id": "R03347",
+          "object_id": "new_95_3657_7093_W037",
+          "image_id": "Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45",
+          "image_code": "Z6MFQCViBuw-08",
+          "reference_object_id": "gt:Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45:data/mp3d_layout/test/label_cor/Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45.txt",
+          "photo": "photos/Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45.png"
+        }
+      ],
+      "answers": {
+        "floor": {
+          "question": "只看照片和底面：范围、底点及墙体形状，哪份更好？",
+          "value": "A_slight",
+          "label": "A略好"
+        },
+        "height": {
+          "question": "只看高度：整体高低及顶部不平，哪份问题更少？",
+          "value": "close",
+          "label": "接近，没有明确优劣"
+        },
+        "overall": {
+          "question": "综合底面与高度，整体质量如何？",
+          "value": "close",
+          "label": "接近，没有明确优劣"
+        }
+      },
+      "factors": [],
+      "comment": "不是很好判断",
+      "reviewed_at": "2026-10-14T08:32:53.058Z",
+      "overall_conditions_complete": true,
+      "prior_score_exposure": "user_previously_received_score_table",
+      "score_revealed_at": "2026-10-14T08:31:21.312Z",
+      "answers_at_first_score_reveal": {
+        "floor": {
+          "question": "只看照片和底面：范围、底点及墙体形状，哪份更好？",
+          "value": "A_slight",
+          "label": "A略好"
+        },
+        "height": {
+          "question": "只看高度：整体高低及顶部不平，哪份问题更少？",
+          "value": "close",
+          "label": "接近，没有明确优劣"
+        },
+        "overall": {
+          "question": "综合底面与高度，整体质量如何？",
+          "value": "close",
+          "label": "接近，没有明确优劣"
+        }
+      }
+    },
+    {
+      "case_id": "J04",
+      "kind": "single",
+      "bindings": [
+        {
+          "label": "A",
+          "record_id": "R03274",
+          "object_id": "new_94_3647_7412_W032",
+          "image_id": "yqstnuAEVhm_2b3fb4746d414cc6a31729b222ed79b2",
+          "image_code": "yqstnuAEVhm-05",
+          "reference_object_id": "gt:yqstnuAEVhm_2b3fb4746d414cc6a31729b222ed79b2:data/mp3d_layout/test/label_cor/yqstnuAEVhm_2b3fb4746d414cc6a31729b222ed79b2.txt",
+          "photo": "photos/yqstnuAEVhm_2b3fb4746d414cc6a31729b222ed79b2.png"
+        }
+      ],
+      "answers": {
+        "floor": {
+          "question": "看照片与底面：位置、范围和形状偏差有多大？",
+          "value": "moderate",
+          "label": "中等：问题清楚，其余部分仍有价值"
+        },
+        "height": {
+          "question": "看两个三维视角：高度和顶部起伏问题有多大？",
+          "value": "minor",
+          "label": "轻微：有偏差，但整体仍较好"
+        },
+        "overall": {
+          "question": "综合全部视图，这份标注属于哪种情况？",
+          "value": "local",
+          "label": "有明显局部错误，但其余多数内容仍较好"
+        }
+      },
+      "factors": [],
+      "comment": "",
+      "reviewed_at": "2026-10-14T08:37:15.936Z",
+      "overall_conditions_complete": true,
+      "prior_score_exposure": "user_previously_received_score_table"
+    },
+    {
+      "case_id": "C02",
+      "kind": "pair",
+      "bindings": [
+        {
+          "label": "A",
+          "record_id": "R03351",
+          "object_id": "new_95_3657_7460_W032",
+          "image_id": "Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45",
+          "image_code": "Z6MFQCViBuw-08",
+          "reference_object_id": "gt:Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45:data/mp3d_layout/test/label_cor/Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45.txt",
+          "photo": "photos/Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45.png"
+        },
+        {
+          "label": "B",
+          "record_id": "R03350",
+          "object_id": "new_95_3657_7440_W028",
+          "image_id": "Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45",
+          "image_code": "Z6MFQCViBuw-08",
+          "reference_object_id": "gt:Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45:data/mp3d_layout/test/label_cor/Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45.txt",
+          "photo": "photos/Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45.png"
+        }
+      ],
+      "answers": {
+        "floor": {
+          "question": "只看照片和底面：范围、底点及墙体形状，哪份更好？",
+          "value": "B_slight",
+          "label": "B略好"
+        },
+        "height": {
+          "question": "只看高度：整体高低及顶部不平，哪份问题更少？",
+          "value": "B_slight",
+          "label": "B略好"
+        },
+        "overall": {
+          "question": "综合底面与高度，整体质量如何？",
+          "value": "close",
+          "label": "接近，没有明确优劣"
+        }
+      },
+      "factors": [],
+      "comment": "b离gt 差异大一些,不过3d效果是好于a",
+      "reviewed_at": "2026-10-14T08:37:22.332Z",
+      "overall_conditions_complete": true,
+      "prior_score_exposure": "user_previously_received_score_table",
+      "score_revealed_at": "2026-10-14T08:33:36.659Z",
+      "answers_at_first_score_reveal": {
+        "floor": {
+          "question": "只看照片和底面：范围、底点及墙体形状，哪份更好？",
+          "value": "B_slight",
+          "label": "B略好"
+        },
+        "height": {
+          "question": "只看高度：整体高低及顶部不平，哪份问题更少？",
+          "value": "B_slight",
+          "label": "B略好"
+        },
+        "overall": {
+          "question": "综合底面与高度，整体质量如何？",
+          "value": "close",
+          "label": "接近，没有明确优劣"
+        }
+      }
+    },
+    {
+      "case_id": "T20_P04",
+      "kind": "height_cross_image",
+      "bindings": [
+        {
+          "label": "A",
+          "record_id": "R00397",
+          "object_id": "272f8ef889915150",
+          "image_id": "B6ByNegPMKs_48ee619d38b142f88914e7e2582bc1d8",
+          "image_code": "B6ByNegPMKs-10",
+          "reference_object_id": "gt:B6ByNegPMKs_48ee619d38b142f88914e7e2582bc1d8:export_label/groudTruth.json",
+          "photo": "photos/B6ByNegPMKs_48ee619d38b142f88914e7e2582bc1d8.png"
+        },
+        {
+          "label": "B",
+          "record_id": "R00418",
+          "object_id": "291127d705ad112ccb7b",
+          "image_id": "pRbA3pwrgk9_285b697fed754f86a09602c93628cfb4",
+          "image_code": "pRbA3pwrgk9-06",
+          "reference_object_id": "gt:pRbA3pwrgk9_285b697fed754f86a09602c93628cfb4:data/mp3d_layout/valid/label_cor/pRbA3pwrgk9_285b697fed754f86a09602c93628cfb4.txt",
+          "photo": "photos/pRbA3pwrgk9_285b697fed754f86a09602c93628cfb4.png"
+        }
+      ],
+      "answers": {
+        "height_A": {
+          "question": "A（T20）：只考虑高度，问题有多大？",
+          "value": "minor",
+          "label": "轻微：有偏差，但整体仍较好"
+        },
+        "height_B": {
+          "question": "B（P04另一例）：只考虑高度，问题有多大？",
+          "value": "moderate",
+          "label": "中等：问题清楚，其余部分仍有价值"
+        },
+        "height_penalty": {
+          "question": "只比较高度问题，哪份应该扣得更多？",
+          "value": "B_slight",
+          "label": "B应略多扣"
+        }
+      },
+      "factors": [],
+      "comment": "b是一边高一边低,a是整体高度较平均,但是整体低了一些",
+      "reviewed_at": "2026-10-14T08:37:34.059Z",
+      "overall_conditions_complete": null,
+      "prior_score_exposure": "user_previously_received_score_table",
+      "score_revealed_at": "2026-10-14T08:35:21.038Z",
+      "answers_at_first_score_reveal": {
+        "height_A": {
+          "question": "A（T20）：只考虑高度，问题有多大？",
+          "value": "minor",
+          "label": "轻微：有偏差，但整体仍较好"
+        },
+        "height_B": {
+          "question": "B（P04另一例）：只考虑高度，问题有多大？",
+          "value": "moderate",
+          "label": "中等：问题清楚，其余部分仍有价值"
+        },
+        "height_penalty": {
+          "question": "只比较高度问题，哪份应该扣得更多？",
+          "value": "B_slight",
+          "label": "B应略多扣"
+        }
+      }
+    },
+    {
+      "case_id": "L01",
+      "kind": "pair",
+      "bindings": [
+        {
+          "label": "A",
+          "record_id": "R01609",
+          "object_id": "a30abcda8418bd75",
+          "image_id": "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45",
+          "image_code": "e9zR4mvMWw7-16",
+          "reference_object_id": "gt:e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45:export_label/groudTruth.json",
+          "photo": "photos/e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45.png"
+        },
+        {
+          "label": "B",
+          "record_id": "R02297",
+          "object_id": "ebe5710d577ed718",
+          "image_id": "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45",
+          "image_code": "e9zR4mvMWw7-16",
+          "reference_object_id": "gt:e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45:export_label/groudTruth.json",
+          "photo": "photos/e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45.png"
+        }
+      ],
+      "answers": {
+        "floor": {
+          "question": "只看照片和底面：范围、底点及墙体形状，哪份更好？",
+          "value": "close",
+          "label": "接近，没有明确优劣"
+        },
+        "height": {
+          "question": "只看高度：整体高低及顶部不平，哪份问题更少？",
+          "value": "B_slight",
+          "label": "B略好"
+        },
+        "overall": {
+          "question": "综合底面与高度，整体质量如何？",
+          "value": "close",
+          "label": "接近，没有明确优劣"
+        }
+      },
+      "factors": [],
+      "comment": "没有差很多",
+      "reviewed_at": "2026-10-14T08:38:03.353Z",
+      "overall_conditions_complete": true,
+      "prior_score_exposure": "user_previously_received_score_table",
+      "score_revealed_at": "2026-10-14T08:36:35.689Z",
+      "answers_at_first_score_reveal": {
+        "floor": {
+          "question": "只看照片和底面：范围、底点及墙体形状，哪份更好？",
+          "value": "close",
+          "label": "接近，没有明确优劣"
+        },
+        "height": {
+          "question": "只看高度：整体高低及顶部不平，哪份问题更少？",
+          "value": "A_slight",
+          "label": "A略好"
+        },
+        "overall": {
+          "question": "综合底面与高度，整体质量如何？",
+          "value": "close",
+          "label": "接近，没有明确优劣"
+        }
+      }
+    },
+    {
+      "case_id": "Q02",
+      "kind": "pair",
+      "bindings": [
+        {
+          "label": "A",
+          "record_id": "R02200",
+          "object_id": "e1491be3f4b0b29f0ac5",
+          "image_id": "jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6",
+          "image_code": "jh4fc5c5qoQ-14",
+          "reference_object_id": "gt:jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6:data/mp3d_layout/valid/label_cor/jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6.txt",
+          "photo": "photos/jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6.png"
+        },
+        {
+          "label": "B",
+          "record_id": "R00990",
+          "object_id": "6730e7fbd93c5c0d1875",
+          "image_id": "jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6",
+          "image_code": "jh4fc5c5qoQ-14",
+          "reference_object_id": "gt:jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6:data/mp3d_layout/valid/label_cor/jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6.txt",
+          "photo": "photos/jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6.png"
+        }
+      ],
+      "answers": {
+        "floor": {
+          "question": "只看照片和底面：范围、底点及墙体形状，哪份更好？",
+          "value": "scope",
+          "label": "目标范围不同，难以直接比较"
+        },
+        "height": {
+          "question": "只看高度：整体高低及顶部不平，哪份问题更少？",
+          "value": "B_clear",
+          "label": "B明显更好"
+        },
+        "overall": {
+          "question": "综合底面与高度，整体质量如何？",
+          "value": "B_slight",
+          "label": "B略好"
+        }
+      },
+      "factors": [],
+      "comment": "都不是很好,因为这是门洞交界,标都不好标,而且gt标的范围是和他们有点不同的",
+      "reviewed_at": "2026-10-14T08:41:09.168Z",
+      "overall_conditions_complete": true,
+      "prior_score_exposure": "user_previously_received_score_table",
+      "score_revealed_at": "2026-10-14T08:41:04.184Z",
+      "answers_at_first_score_reveal": {
+        "floor": {
+          "question": "只看照片和底面：范围、底点及墙体形状，哪份更好？",
+          "value": "scope",
+          "label": "目标范围不同，难以直接比较"
+        },
+        "height": {
+          "question": "只看高度：整体高低及顶部不平，哪份问题更少？",
+          "value": "B_clear",
+          "label": "B明显更好"
+        },
+        "overall": {
+          "question": "综合底面与高度，整体质量如何？",
+          "value": "scope",
+          "label": "目标范围不同，难以直接比较"
+        }
+      }
+    },
+    {
+      "case_id": "Q03",
+      "kind": "pair",
+      "bindings": [
+        {
+          "label": "A",
+          "record_id": "R01501",
+          "object_id": "974f94a2b16103ea9324",
+          "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+          "image_code": "B6ByNegPMKs-47",
+          "reference_object_id": "gt:B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b:data/mp3d_layout/test/label_cor/B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b.txt",
+          "photo": "photos/B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b.png"
+        },
+        {
+          "label": "B",
+          "record_id": "R01191",
+          "object_id": "79f3478ea5e43fc1f95a",
+          "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+          "image_code": "B6ByNegPMKs-47",
+          "reference_object_id": "gt:B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b:data/mp3d_layout/test/label_cor/B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b.txt",
+          "photo": "photos/B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b.png"
+        }
+      ],
+      "answers": {
+        "floor": {
+          "question": "只看照片和底面：范围、底点及墙体形状，哪份更好？",
+          "value": "close",
+          "label": "接近，没有明确优劣"
+        },
+        "height": {
+          "question": "只看高度：整体高低及顶部不平，哪份问题更少？",
+          "value": "close",
+          "label": "接近，没有明确优劣"
+        },
+        "overall": {
+          "question": "综合底面与高度，整体质量如何？",
+          "value": "close",
+          "label": "接近，没有明确优劣"
+        }
+      },
+      "factors": [],
+      "comment": "都不是很好",
+      "reviewed_at": "2026-10-14T08:41:57.485Z",
+      "overall_conditions_complete": true,
+      "prior_score_exposure": "user_previously_received_score_table",
+      "score_revealed_at": "2026-10-14T08:41:34.075Z",
+      "answers_at_first_score_reveal": {
+        "floor": {
+          "question": "只看照片和底面：范围、底点及墙体形状，哪份更好？",
+          "value": null,
+          "label": null
+        },
+        "height": {
+          "question": "只看高度：整体高低及顶部不平，哪份问题更少？",
+          "value": null,
+          "label": null
+        },
+        "overall": {
+          "question": "综合底面与高度，整体质量如何？",
+          "value": null,
+          "label": null
+        }
+      }
+    }
+  ]
+}
