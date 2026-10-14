@@ -1,0 +1,66 @@
+{
+  "study": "component_aggregation_research_20261014",
+  "repository": "Sparkling-Flames/3D_Manhattan_label",
+  "pinned_commit": "134e7c775b9ea25a076851c0605571ba0ea0ac31",
+  "baseline": {
+    "boundary_scale_squared": 32.0,
+    "direction_scale_squared": 37.5,
+    "direction_cap": 1.5,
+    "global_scale": 0.8,
+    "local_scale": 0.25
+  },
+  "component_order": [
+    "direction",
+    "overlap",
+    "boundary",
+    "local_height",
+    "global_height"
+  ],
+  "weights": {
+    "direction": 0.35,
+    "overlap": 0.3,
+    "boundary": 0.1,
+    "local_height": 0.2,
+    "global_height": 0.05
+  },
+  "weight_sensitivity": {
+    "less_concentrated": {
+      "direction": 0.3,
+      "overlap": 0.25,
+      "boundary": 0.15,
+      "local_height": 0.2,
+      "global_height": 0.1
+    },
+    "more_structure": {
+      "direction": 0.4,
+      "overlap": 0.3,
+      "boundary": 0.08,
+      "local_height": 0.18,
+      "global_height": 0.04
+    }
+  },
+  "component_score": "s_j=1/(1+p_j/w_j)",
+  "models": [
+    "WQ_LS08",
+    "harmonic_exact_rewrite",
+    "arithmetic_candidate",
+    "geometric_control",
+    "range_anchored_A",
+    "raw_3d_iou"
+  ],
+  "weight_status": "explicit_design_swing_budgets_not_fitted_human_importance",
+  "parameter_fitting": false,
+  "doorway_parameter_change": false,
+  "minimum_worker_records": 5,
+  "illustrative_score_cuts": [
+    60,
+    80,
+    90
+  ],
+  "score_cuts_status": "numerical_migration_only_not_human_quality_classes",
+  "unknown_condition_policy": "retain_unknown_do_not_infer_manual_or_semi_do_not_rank_workers",
+  "full_718_reproduced_in_this_study": false,
+  "formal_defaults_raw_data_reference_eligibility_changed": false,
+  "range_anchored_A": "100 * I * sum_j(v_j/(1+p_j/v_j)), j != overlap, v_j=w_j/(1-w_overlap)",
+  "range_anchored_status": "analytic_challenger_added_to_test_whether_range_veto_repairs_pure_arithmetic_no_fitted_parameters"
+}

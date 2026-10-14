@@ -1,5 +1,9 @@
 # HOHONET 项目地图
 
+- **2026-10-15两份Pro联合审查：** [来源核验、组合比较、下游敏感性和粗分档](../research/quality_joint_closeout_review_20261015/README.md)；工具`tools/thesis_main/analysis/quality_joint_closeout_review_20261015.py`。复用已有READY归档，保留原Pro增量与1145份联合表；不调参、不改变正式资格。
+
+- **2026-10-14分项得分研究审查：** [原交付归档、独立公式核验与完整比较](../research/quality_component_return_review_20261014/README.md)；工具`tools/thesis_main/analysis/quality_component_return_review_20261014.py`。补齐冻结718条，不等于3152全量；正式评分、资格、原始几何不变。
+
 - **2026-10-14质量模型收尾交接：** [当前资料与目标导向任务书](../research/quality_model_closeout_20261014/README.md)。复用既有冻结输入和全量账本，接入最新人工回执；完成Pro分析后再组织批量图片核验，不自动改变评分与资格。
 
 - **2026-10-14九组质量案例复核：** [可旋转三维与可展开分数的审核页](../research/quality_candidate_review_20261014/README.md)。8卡覆盖9组、15份作答；回执独立，T20/P04仅比较高度，不调参或修改资格。
