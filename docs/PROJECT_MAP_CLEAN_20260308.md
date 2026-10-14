@@ -1,5 +1,11 @@
 # HOHONET 项目地图
 
+- **2026-10-14质量补充与Pro离线包：** [三维审核及交接入口](../research/quality_pro_handoff_20261014/README.md)。沿用旧三维查看器并标注相机；3例回执已接收、16组备查，217门洞账本和151控制可追溯；新回执与修订见入口，唯一推荐READY包；目标导向任务书保留粗调后门洞细调，具体方法由Pro决定，尚未自动发送Pro。
+
+- **2026-10-14质量分阶段研究工作版：** [普通粗调、门洞邻近比较与回归](../research/quality_staged_calibration_20261014/README.md)；工具`tools/thesis_main/analysis/quality_staged_calibration_20261014.py`及同名测试。去尾项、整体0.8/局部0.25仅为研究决定；门洞125份可条件评分、92份暂缓，正式算法与资格不变。
+
+- **2026-10-14研究审查与质量接手：** [四模块审查记录](thesis_main/四模块审查与不确定性论文收束记录_20261014.md)、[质量诊断及调参交接](thesis_main/质量两轮Pro诊断复核与调参交接_20261014.md)。研究支撑记录；普通粗调、门洞细调、普通回归顺序不变，无新算法或正式资格变更。
+
 - **2026-10-13整体质量调参前准备：** [输入、证据、固定基线、底点控制与选择规则](../research/quality_calibration_preparation_20261013/README.md)；工具`tools/thesis_main/analysis/quality_calibration_preparation_20261013.py`及同名测试。单独使用已审严重例外，保留高度适度加重方向，不搜索参数或改正式算法。
 
 - **2026-10-13质量研究日结与归档：** [当日汇总](../research/quality_data_closeout_20261013/DAY_SUMMARY.md)，统一串联用途账本、Pro选择性快照、人工回执与高度比较；不重复原始ZIP或大网格。

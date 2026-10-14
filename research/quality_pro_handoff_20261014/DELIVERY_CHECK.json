@@ -1,0 +1,56 @@
+{
+  "zip": "quality_pro_handoff_20261014_READY.zip",
+  "zip_integrity": "passed",
+  "frozen_data_engine_receipts_unchanged": true,
+  "packed_state_function": {
+    "review_status": "received_with_amendments",
+    "historical_review_status": "awaiting_receipt",
+    "review_details": {
+      "schema": "quality_pro_effective_review_status_v1",
+      "status": "received_with_amendments",
+      "received_cases": [
+        "Q01",
+        "Q02",
+        "Q03"
+      ],
+      "amended_cases": [
+        "Q02",
+        "Q03"
+      ],
+      "overall_order_not_established": [
+        "Q02",
+        "Q03"
+      ],
+      "needs_repeated_review": false,
+      "receipt": "human_review/quality_pro_review_20261014_v1.json",
+      "amendment": "human_review/quality_pro_review_20261014_amendment_01.json",
+      "interpretation": "human_review/REVIEW_FINDINGS.md"
+    },
+    "open_review": "REVIEW.html",
+    "read_report": "CURRENT_STATUS.md",
+    "review_findings": "human_review/REVIEW_FINDINGS.md"
+  },
+  "numerical_recalculation_repeated": true,
+  "publication_update": {
+    "task": "outcome_oriented",
+    "allowed_changes": [
+      "PRO_TASK.md",
+      "CURRENT_STATUS.md",
+      "START_HERE.md",
+      "history/PRO_TASK_before_publication.md",
+      "READY_STARTUP.json"
+    ],
+    "all_other_members_unchanged": true
+  },
+  "ready_actual_startup": {
+    "passed": true,
+    "report": "READY_STARTUP.json",
+    "review_status": "received_with_amendments",
+    "coverage": "583 stored-metric rescoring; R03274, 2 bottom controls, 7 rhombi reconstruction; not full geometry recalibration"
+  },
+  "targeted_tests": {
+    "passed": 7,
+    "javascript_syntax": "passed",
+    "tests_read_final_zip": true
+  }
+}
