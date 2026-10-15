@@ -1,0 +1,9 @@
+ordinary 100 of 593 failures 0
+ordinary 200 of 593 failures 0
+ordinary 300 of 593 failures 0
+ordinary 400 of 593 failures 0
+D:\Work\HOHONET\analysis_results\quality_pro_return_review_20261014\local_replay\src\core.py:136: RuntimeWarning: invalid value encountered in subtract
+  multi=np.isfinite(hits[:,1]) & (abs(hits[:,1]-hits[:,0])>1e-7)
+ordinary 500 of 593 failures 0
+{'phase': 'ordinary', 'count': 593, 'requested': 593, 'failures': [], 'statuses': {'complete': 593}, 'max_geometry_difference': 0.0, 'max_metric_difference': {'iou_2d': 1.6653345369377348e-15, 'S_bottom_deg': 2.1316282072803006e-14, 'dir': 3.108624468950438e-14, 'Hmean': 7.216449660063518e-16, 'Hcenter': 2.324480035606926e-16, 'iou_3d_corner_mean': 1.887379141862766e-15}, 'seconds': 12.160312414169312, 'method': 'all_admitted_pairs_rebuilt_from_frozen_processed_points_not_saved_metrics'}
+controls 151 remeasured

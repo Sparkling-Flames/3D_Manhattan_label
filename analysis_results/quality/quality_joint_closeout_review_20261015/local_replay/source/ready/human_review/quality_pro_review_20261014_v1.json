@@ -1,0 +1,110 @@
+{
+  "schema": "quality_pro_review_20261014_v1",
+  "decisions": [
+    {
+      "case_id": "Q01",
+      "source_pair": "D06",
+      "image_id": "B6ByNegPMKs_d2dcbd73533446dcaf50e6be98c30386",
+      "bindings": {
+        "A": {
+          "id": "R03332",
+          "image_id": "B6ByNegPMKs_d2dcbd73533446dcaf50e6be98c30386",
+          "reference_object_id": "gt:B6ByNegPMKs_d2dcbd73533446dcaf50e6be98c30386:data/mp3d_layout/test/label_cor/B6ByNegPMKs_d2dcbd73533446dcaf50e6be98c30386.txt",
+          "object_id": "new_95_3655_7234_W036"
+        },
+        "B": {
+          "id": "R03329",
+          "image_id": "B6ByNegPMKs_d2dcbd73533446dcaf50e6be98c30386",
+          "reference_object_id": "gt:B6ByNegPMKs_d2dcbd73533446dcaf50e6be98c30386:data/mp3d_layout/test/label_cor/B6ByNegPMKs_d2dcbd73533446dcaf50e6be98c30386.txt",
+          "object_id": "new_95_3655_6982_W035"
+        }
+      },
+      "answers": {
+        "reference_scope": {
+          "question": "绿色静态参考／紫色交互参考包含右侧长廊，能否作为这张图的评价目标？",
+          "purpose": "核实小房间与门外长廊的范围依据，不因分数高而选择。",
+          "value": "both_valid",
+          "label": "完整范围可以，但只标小房间也合理"
+        },
+        "reference_top": {
+          "question": "参考的顶部边界，是否有严重到不宜用作参考的问题？",
+          "purpose": "沿用小瑕疵仍按正确参考的口径，仅确认实质性问题。",
+          "value": "usable",
+          "label": "可用；即使有小偏差也不影响参考"
+        }
+      },
+      "comment": "",
+      "reviewed_at": "2026-10-14T04:24:33.745Z"
+    },
+    {
+      "case_id": "Q02",
+      "source_pair": "D09",
+      "image_id": "jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6",
+      "bindings": {
+        "A": {
+          "id": "R02200",
+          "image_id": "jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6",
+          "reference_object_id": "gt:jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6:data/mp3d_layout/valid/label_cor/jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6.txt",
+          "object_id": "e1491be3f4b0b29f0ac5"
+        },
+        "B": {
+          "id": "R00990",
+          "image_id": "jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6",
+          "reference_object_id": "gt:jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6:data/mp3d_layout/valid/label_cor/jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6.txt",
+          "object_id": "6730e7fbd93c5c0d1875"
+        }
+      },
+      "answers": {
+        "overall": {
+          "question": "结合照片、底面和三维，两份整体质量如何？",
+          "purpose": "确认不同错误的取舍；不要求给分。",
+          "value": "A_slight",
+          "label": "A略好"
+        },
+        "main_issue": {
+          "question": "影响判断的主要问题在哪里？",
+          "purpose": "把范围、底面和高度区分，避免只调高度。",
+          "value": "mixed",
+          "label": "多个问题共同影响"
+        }
+      },
+      "comment": "都不咋地,因为是门洞交界,所以也难标, a略好一点",
+      "reviewed_at": "2026-10-14T04:24:37.083Z"
+    },
+    {
+      "case_id": "Q03",
+      "source_pair": "N01",
+      "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+      "bindings": {
+        "A": {
+          "id": "R01501",
+          "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+          "reference_object_id": "gt:B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b:data/mp3d_layout/test/label_cor/B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b.txt",
+          "object_id": "974f94a2b16103ea9324"
+        },
+        "B": {
+          "id": "R01191",
+          "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+          "reference_object_id": "gt:B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b:data/mp3d_layout/test/label_cor/B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b.txt",
+          "object_id": "79f3478ea5e43fc1f95a"
+        }
+      },
+      "answers": {
+        "overall": {
+          "question": "结合照片、底面和三维，两份整体质量如何？",
+          "purpose": "确认不同错误的取舍；不要求给分。",
+          "value": "B_slight",
+          "label": "B略好"
+        },
+        "main_issue": {
+          "question": "影响判断的主要问题在哪里？",
+          "purpose": "把范围、底面和高度区分，避免只调高度。",
+          "value": "mixed",
+          "label": "多个问题共同影响"
+        }
+      },
+      "comment": "都不太好,但是标中间的拐角处,橙色略好",
+      "reviewed_at": "2026-10-14T04:26:01.065Z"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "editor_version": "3.4.2",
+  "checks_passed": 5932,
+  "old_valid_edge_moves_preserved": 5118,
+  "screenshot_case": "uNb9QFRL6hY-88",
+  "dragged_edge": "12–13",
+  "target_edge": "14–1",
+  "parallel_corner_merge_vertices": [
+    14,
+    13
+  ],
+  "explicit_exact_line_vertices": [
+    14,
+    12
+  ],
+  "data_sha256_unchanged": "abcd1e7ba7b395ea68a10d7d05d4d98c796511d571e77f3aac4008db82b90b22",
+  "extension_default_enabled": true,
+  "extension_acquire_css_pixels": 10,
+  "extension_release_css_pixels": 14,
+  "extension_reach": "At most one moving/reference segment span beyond its finite extent; finite/vertex candidates preferred.",
+  "coverage": [
+    "actual screenshot before/after and all cyclic index positions",
+    "zero-overlap extension-only attraction, master/extension off, remote and angular rejection",
+    "finite/extension boundary transitions and hysteresis",
+    "exact extension fit, local junction collapse and stored-line replay",
+    "same/different handle after topology change",
+    "CSS scales, zoom and release-only gestures",
+    "undo/redo, candidate isolation, all 16 prior confirmations",
+    "export/import/reload and malformed operation rejection",
+    "old-valid edge move byte equality across corpus"
+  ],
+  "browser_QA": "Pure geometry and mock DOM/pointer tests only; no real browser visual or interaction pass claimed.",
+  "tested_on": "2026-10-10"
+}

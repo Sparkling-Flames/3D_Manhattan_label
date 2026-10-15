@@ -1,0 +1,1445 @@
+{
+  "schema": "confirmed_floor_reference_registry_v1",
+  "records": [
+    {
+      "image_code": "S9hNv5qa7GM-04",
+      "image_id": "S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e",
+      "decision": "full_gt",
+      "reference_id": "gt:S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e:data/mp3d_layout/valid/label_cor/S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e.txt",
+      "new_floor_alternative": false,
+      "role": "confirmed_existing_selected_gt_floor",
+      "selected_gt_object_id": "gt:S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e:data/mp3d_layout/valid/label_cor/S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e.txt",
+      "selected_gt_kind": "gt_original",
+      "original_gt_object_id": "gt:S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e:data/mp3d_layout/valid/label_cor/S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e.txt",
+      "original_gt_kind": "gt_original",
+      "selected_differs_from_original": false,
+      "floor_xz_h": [
+        [
+          0.7824521452020166,
+          -0.6033259644187192
+        ],
+        [
+          0.782368890165593,
+          0.245425597401724
+        ],
+        [
+          -0.426880502832721,
+          0.24543619590128893
+        ],
+        [
+          -0.4269053627096885,
+          -0.6033237410123874
+        ]
+      ],
+      "floor_polygon_sha256": "c9ce08c32d3946efdf83f7726f1de866d29684f97d7bde7ea90c5d2d3949e738",
+      "area_h2": 1.0264032561159282,
+      "perimeter_h": 4.116118404139988,
+      "confirmed_vs_selected_gt": {
+        "annotation_area_h2": 1.0264032561159282,
+        "reference_area_h2": 1.0264032561159282,
+        "intersection_area_h2": 1.0264032561159284,
+        "union_area_h2": 1.0264032561159284,
+        "annotation_area_over_reference": 1.0,
+        "bev_iou": 1.0,
+        "reference_coverage_fraction": 1.0000000000000002,
+        "reference_missing_fraction": 0.0,
+        "annotation_outside_fraction": 0.0,
+        "excess_area_over_reference": 0.0,
+        "missing_area_h2": 0.0,
+        "outside_area_h2": 0.0,
+        "symmetric_difference_over_reference": 0.0
+      },
+      "confirmed_vs_original_gt": {
+        "annotation_area_h2": 1.0264032561159282,
+        "reference_area_h2": 1.0264032561159282,
+        "intersection_area_h2": 1.0264032561159284,
+        "union_area_h2": 1.0264032561159284,
+        "annotation_area_over_reference": 1.0,
+        "bev_iou": 1.0,
+        "reference_coverage_fraction": 1.0000000000000002,
+        "reference_missing_fraction": 0.0,
+        "annotation_outside_fraction": 0.0,
+        "excess_area_over_reference": 0.0,
+        "missing_area_h2": 0.0,
+        "outside_area_h2": 0.0,
+        "symmetric_difference_over_reference": 0.0
+      },
+      "camera_inside": true,
+      "camera_distance_to_floor_boundary_h": 0.24543245448595397,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "new_top_coordinates": null,
+      "accepted_set_scoring_protocol": "not_established_by_this_floor_confirmation",
+      "formal_gt_changed": false,
+      "formal_eligibility_changed": false,
+      "diagnostic_use": "BEV_only; not a formal reference replacement or scope routing decision",
+      "confirmation_provenance": {
+        "receipt_filename": "空间范围人工审核_2026-10-10(2).json",
+        "receipt_sha256": "3f5cf3c4d0d3eb70b4c1457795ab50cd40bebd16b585c4f413576855ed5c51a7",
+        "receipt_exported_at": "2026-10-10T11:52:40.335Z",
+        "receipt_record_index": 20,
+        "receipt_json_pointer": "/records/20",
+        "receipt_editor_version": "3.2",
+        "source_commit": "90ed861c5ee7db845a10b0bdad5f32d2184c0194",
+        "latest_scope_review_source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+        "evidence_source_commit": "d905d7dbb31dccabb3b190cb317d38b034b7cd65",
+        "confirmation_basis": "matching_workbench_button_snapshot",
+        "raw_draft_completed": true,
+        "raw_floor_region_confirmed": true,
+        "user_message_id": "Sentinel_9ed00ac0b1388191a64819aae866107b",
+        "user_message_at": "2026-10-10T11:53:17Z"
+      }
+    },
+    {
+      "image_code": "b8cTxDM8gDG-18",
+      "image_id": "b8cTxDM8gDG_f3748786c3704532abb2358581488f3f",
+      "decision": "allow",
+      "reference_id": "b8cTxDM8gDG-18:manual_floor:f146bb6adc1669e6",
+      "new_floor_alternative": true,
+      "role": "confirmed_manual_floor_alternative",
+      "selected_gt_object_id": "gt:b8cTxDM8gDG_f3748786c3704532abb2358581488f3f:data/mp3d_layout/test/label_cor/b8cTxDM8gDG_f3748786c3704532abb2358581488f3f.txt",
+      "selected_gt_kind": "gt_original",
+      "original_gt_object_id": "gt:b8cTxDM8gDG_f3748786c3704532abb2358581488f3f:data/mp3d_layout/test/label_cor/b8cTxDM8gDG_f3748786c3704532abb2358581488f3f.txt",
+      "original_gt_kind": "gt_original",
+      "selected_differs_from_original": false,
+      "floor_xz_h": [
+        [
+          -2.0523295806775823,
+          1.1805466106696227
+        ],
+        [
+          0.1078774092659743,
+          1.1805466106696227
+        ],
+        [
+          0.1078774092659743,
+          -0.7446834623582977
+        ],
+        [
+          -2.0523295806775823,
+          -0.7446834623582977
+        ]
+      ],
+      "floor_polygon_sha256": "f146bb6adc1669e6503239d136239c0f689fd797c171ee9591621919c9c57642",
+      "area_h2": 4.158895461004458,
+      "perimeter_h": 8.170874125942955,
+      "confirmed_vs_selected_gt": {
+        "annotation_area_h2": 4.158895461004458,
+        "reference_area_h2": 10.119754844229439,
+        "intersection_area_h2": 4.158846908801269,
+        "union_area_h2": 10.119803396432626,
+        "annotation_area_over_reference": 0.4109680051563674,
+        "bev_iou": 0.4109612356962707,
+        "reference_coverage_fraction": 0.4109632073916057,
+        "reference_missing_fraction": 0.5890367926083941,
+        "annotation_outside_fraction": 1.1674302382235735e-05,
+        "excess_area_over_reference": 4.797764761619648e-06,
+        "missing_area_h2": 5.960907935428168,
+        "outside_area_h2": 4.855220318787373e-05,
+        "symmetric_difference_over_reference": 0.5890415903731558
+      },
+      "confirmed_vs_original_gt": {
+        "annotation_area_h2": 4.158895461004458,
+        "reference_area_h2": 10.119754844229439,
+        "intersection_area_h2": 4.158846908801269,
+        "union_area_h2": 10.119803396432626,
+        "annotation_area_over_reference": 0.4109680051563674,
+        "bev_iou": 0.4109612356962707,
+        "reference_coverage_fraction": 0.4109632073916057,
+        "reference_missing_fraction": 0.5890367926083941,
+        "annotation_outside_fraction": 1.1674302382235735e-05,
+        "excess_area_over_reference": 4.797764761619648e-06,
+        "missing_area_h2": 5.960907935428168,
+        "outside_area_h2": 4.855220318787373e-05,
+        "symmetric_difference_over_reference": 0.5890415903731558
+      },
+      "camera_inside": true,
+      "camera_distance_to_floor_boundary_h": 0.1078774092659743,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "new_top_coordinates": null,
+      "accepted_set_scoring_protocol": "not_established_by_this_floor_confirmation",
+      "formal_gt_changed": false,
+      "formal_eligibility_changed": false,
+      "diagnostic_use": "BEV_only; not a formal reference replacement or scope routing decision",
+      "confirmation_provenance": {
+        "receipt_filename": "空间范围人工审核_2026-10-10(2).json",
+        "receipt_sha256": "3f5cf3c4d0d3eb70b4c1457795ab50cd40bebd16b585c4f413576855ed5c51a7",
+        "receipt_exported_at": "2026-10-10T11:52:40.335Z",
+        "receipt_record_index": 1,
+        "receipt_json_pointer": "/records/1",
+        "receipt_editor_version": "3.2",
+        "source_commit": "90ed861c5ee7db845a10b0bdad5f32d2184c0194",
+        "latest_scope_review_source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+        "evidence_source_commit": "d905d7dbb31dccabb3b190cb317d38b034b7cd65",
+        "confirmation_basis": "explicit_user_message_adopts_updated_draft_despite_missing_button",
+        "raw_draft_completed": false,
+        "raw_floor_region_confirmed": false,
+        "user_message_id": "Sentinel_9ed00ac0b1388191a64819aae866107b",
+        "user_message_at": "2026-10-10T11:53:17Z"
+      }
+    },
+    {
+      "image_code": "e9zR4mvMWw7-09",
+      "image_id": "e9zR4mvMWw7_1d316dfbe35f41dd9203eaf88be5aae8",
+      "decision": "allow",
+      "reference_id": "e9zR4mvMWw7-09:manual_floor:e015160fd9afed75",
+      "new_floor_alternative": true,
+      "role": "confirmed_manual_floor_alternative",
+      "selected_gt_object_id": "gt:e9zR4mvMWw7_1d316dfbe35f41dd9203eaf88be5aae8:data/mp3d_layout/test/label_cor/e9zR4mvMWw7_1d316dfbe35f41dd9203eaf88be5aae8.txt",
+      "selected_gt_kind": "gt_original",
+      "original_gt_object_id": "gt:e9zR4mvMWw7_1d316dfbe35f41dd9203eaf88be5aae8:data/mp3d_layout/test/label_cor/e9zR4mvMWw7_1d316dfbe35f41dd9203eaf88be5aae8.txt",
+      "original_gt_kind": "gt_original",
+      "selected_differs_from_original": false,
+      "floor_xz_h": [
+        [
+          -1.5409091752343067,
+          2.5846478661240972
+        ],
+        [
+          0.36877199442187747,
+          2.5846478661240972
+        ],
+        [
+          0.36877199442187747,
+          -1.3632294200207264
+        ],
+        [
+          -1.5409091752343067,
+          -1.3632294200207264
+        ]
+      ],
+      "floor_polygon_sha256": "e015160fd9afed75bb232dd8e5a46aabb44d17cff41edd5ab799d3fb7ca1fb2d",
+      "area_h2": 7.539186913464128,
+      "perimeter_h": 11.715116911602015,
+      "confirmed_vs_selected_gt": {
+        "annotation_area_h2": 7.539186913464128,
+        "reference_area_h2": 19.625114183175175,
+        "intersection_area_h2": 7.236448244045854,
+        "union_area_h2": 19.927852852593453,
+        "annotation_area_over_reference": 0.3841601553547931,
+        "bev_iou": 0.36313236039898233,
+        "reference_coverage_fraction": 0.3687340708697502,
+        "reference_missing_fraction": 0.6312659291302499,
+        "annotation_outside_fraction": 0.04015534737275431,
+        "excess_area_over_reference": 0.015426084485042976,
+        "missing_area_h2": 12.388665939129323,
+        "outside_area_h2": 0.30273866941827543,
+        "symmetric_difference_over_reference": 0.6466920136152929
+      },
+      "confirmed_vs_original_gt": {
+        "annotation_area_h2": 7.539186913464128,
+        "reference_area_h2": 19.625114183175175,
+        "intersection_area_h2": 7.236448244045854,
+        "union_area_h2": 19.927852852593453,
+        "annotation_area_over_reference": 0.3841601553547931,
+        "bev_iou": 0.36313236039898233,
+        "reference_coverage_fraction": 0.3687340708697502,
+        "reference_missing_fraction": 0.6312659291302499,
+        "annotation_outside_fraction": 0.04015534737275431,
+        "excess_area_over_reference": 0.015426084485042976,
+        "missing_area_h2": 12.388665939129323,
+        "outside_area_h2": 0.30273866941827543,
+        "symmetric_difference_over_reference": 0.6466920136152929
+      },
+      "camera_inside": true,
+      "camera_distance_to_floor_boundary_h": 0.36877199442187747,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "new_top_coordinates": null,
+      "accepted_set_scoring_protocol": "not_established_by_this_floor_confirmation",
+      "formal_gt_changed": false,
+      "formal_eligibility_changed": false,
+      "diagnostic_use": "BEV_only; not a formal reference replacement or scope routing decision",
+      "confirmation_provenance": {
+        "receipt_filename": "空间范围人工审核_2026-10-10(2).json",
+        "receipt_sha256": "3f5cf3c4d0d3eb70b4c1457795ab50cd40bebd16b585c4f413576855ed5c51a7",
+        "receipt_exported_at": "2026-10-10T11:52:40.335Z",
+        "receipt_record_index": 2,
+        "receipt_json_pointer": "/records/2",
+        "receipt_editor_version": "3.2",
+        "source_commit": "90ed861c5ee7db845a10b0bdad5f32d2184c0194",
+        "latest_scope_review_source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+        "evidence_source_commit": "d905d7dbb31dccabb3b190cb317d38b034b7cd65",
+        "confirmation_basis": "explicit_user_message_adopts_updated_draft_despite_missing_button",
+        "raw_draft_completed": false,
+        "raw_floor_region_confirmed": false,
+        "user_message_id": "Sentinel_9ed00ac0b1388191a64819aae866107b",
+        "user_message_at": "2026-10-10T11:53:17Z"
+      }
+    },
+    {
+      "image_code": "e9zR4mvMWw7-17",
+      "image_id": "e9zR4mvMWw7_4273c4dd97974531b5256f96204fee47",
+      "decision": "allow",
+      "reference_id": "e9zR4mvMWw7-17:manual_floor:4d7867ad4377d12a",
+      "new_floor_alternative": true,
+      "role": "confirmed_manual_floor_alternative",
+      "selected_gt_object_id": "gt:e9zR4mvMWw7_4273c4dd97974531b5256f96204fee47:data/mp3d_layout/test/label_cor/e9zR4mvMWw7_4273c4dd97974531b5256f96204fee47.txt",
+      "selected_gt_kind": "gt_original",
+      "original_gt_object_id": "gt:e9zR4mvMWw7_4273c4dd97974531b5256f96204fee47:data/mp3d_layout/test/label_cor/e9zR4mvMWw7_4273c4dd97974531b5256f96204fee47.txt",
+      "original_gt_kind": "gt_original",
+      "selected_differs_from_original": false,
+      "floor_xz_h": [
+        [
+          -2.585618430379534,
+          1.1718370886290634
+        ],
+        [
+          0.49560605936597507,
+          1.1718370886290634
+        ],
+        [
+          0.49560605936597507,
+          -3.0517336913487543
+        ],
+        [
+          -2.585618430379534,
+          -3.0517336913487543
+        ]
+      ],
+      "floor_polygon_sha256": "4d7867ad4377d12aa70465eca2f9777dd6d9181735d5bc87fc563e1313259aca",
+      "area_h2": 13.013769721441195,
+      "perimeter_h": 14.609590539446653,
+      "confirmed_vs_selected_gt": {
+        "annotation_area_h2": 13.013769721441195,
+        "reference_area_h2": 16.02283281368483,
+        "intersection_area_h2": 13.013436296271921,
+        "union_area_h2": 16.0231662388541,
+        "annotation_area_over_reference": 0.81220155466681,
+        "bev_iou": 0.8121638446661077,
+        "reference_coverage_fraction": 0.8121807452897697,
+        "reference_missing_fraction": 0.18781925471023034,
+        "annotation_outside_fraction": 2.5620951992207977e-05,
+        "excess_area_over_reference": 2.080937704011502e-05,
+        "missing_area_h2": 3.0093965174129074,
+        "outside_area_h2": 0.0003334251692706946,
+        "symmetric_difference_over_reference": 0.18784006408727044
+      },
+      "confirmed_vs_original_gt": {
+        "annotation_area_h2": 13.013769721441195,
+        "reference_area_h2": 16.02283281368483,
+        "intersection_area_h2": 13.013436296271921,
+        "union_area_h2": 16.0231662388541,
+        "annotation_area_over_reference": 0.81220155466681,
+        "bev_iou": 0.8121638446661077,
+        "reference_coverage_fraction": 0.8121807452897697,
+        "reference_missing_fraction": 0.18781925471023034,
+        "annotation_outside_fraction": 2.5620951992207977e-05,
+        "excess_area_over_reference": 2.080937704011502e-05,
+        "missing_area_h2": 3.0093965174129074,
+        "outside_area_h2": 0.0003334251692706946,
+        "symmetric_difference_over_reference": 0.18784006408727044
+      },
+      "camera_inside": true,
+      "camera_distance_to_floor_boundary_h": 0.4956060593659751,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "new_top_coordinates": null,
+      "accepted_set_scoring_protocol": "not_established_by_this_floor_confirmation",
+      "formal_gt_changed": false,
+      "formal_eligibility_changed": false,
+      "diagnostic_use": "BEV_only; not a formal reference replacement or scope routing decision",
+      "confirmation_provenance": {
+        "receipt_filename": "空间范围人工审核_2026-10-10(2).json",
+        "receipt_sha256": "3f5cf3c4d0d3eb70b4c1457795ab50cd40bebd16b585c4f413576855ed5c51a7",
+        "receipt_exported_at": "2026-10-10T11:52:40.335Z",
+        "receipt_record_index": 3,
+        "receipt_json_pointer": "/records/3",
+        "receipt_editor_version": "3.2",
+        "source_commit": "90ed861c5ee7db845a10b0bdad5f32d2184c0194",
+        "latest_scope_review_source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+        "evidence_source_commit": "d905d7dbb31dccabb3b190cb317d38b034b7cd65",
+        "confirmation_basis": "explicit_user_message_adopts_updated_draft_despite_missing_button",
+        "raw_draft_completed": false,
+        "raw_floor_region_confirmed": false,
+        "user_message_id": "Sentinel_9ed00ac0b1388191a64819aae866107b",
+        "user_message_at": "2026-10-10T11:53:17Z"
+      }
+    },
+    {
+      "image_code": "pRbA3pwrgk9-02",
+      "image_id": "pRbA3pwrgk9_03de6e2562bb4f56a88db3ceb681af78",
+      "decision": "allow",
+      "reference_id": "pRbA3pwrgk9-02:manual_floor:42f1be0a6bc4bf5d",
+      "new_floor_alternative": true,
+      "role": "confirmed_manual_floor_alternative",
+      "selected_gt_object_id": "gt:pRbA3pwrgk9_03de6e2562bb4f56a88db3ceb681af78:data/mp3d_layout/valid/label_cor/pRbA3pwrgk9_03de6e2562bb4f56a88db3ceb681af78.txt",
+      "selected_gt_kind": "gt_original",
+      "original_gt_object_id": "gt:pRbA3pwrgk9_03de6e2562bb4f56a88db3ceb681af78:data/mp3d_layout/valid/label_cor/pRbA3pwrgk9_03de6e2562bb4f56a88db3ceb681af78.txt",
+      "original_gt_kind": "gt_original",
+      "selected_differs_from_original": false,
+      "floor_xz_h": [
+        [
+          -0.49991678812580853,
+          0.4190741873598025
+        ],
+        [
+          0.33367062726686236,
+          0.4190741873598025
+        ],
+        [
+          0.33367062726686236,
+          -0.3335073958350185
+        ],
+        [
+          -0.49991678812580853,
+          -0.3335073958350185
+        ]
+      ],
+      "floor_polygon_sha256": "42f1be0a6bc4bf5d47e66573717c431536f5c834fd303941fb094864a236ac92",
+      "area_h2": 0.6273425368074952,
+      "perimeter_h": 3.172337997174984,
+      "confirmed_vs_selected_gt": {
+        "annotation_area_h2": 0.6273425368074952,
+        "reference_area_h2": 5.339764195074196,
+        "intersection_area_h2": 0.6273381328819004,
+        "union_area_h2": 5.339768598999791,
+        "annotation_area_over_reference": 0.11748506373862044,
+        "bev_iou": 0.11748414210297597,
+        "reference_coverage_fraction": 0.11748423899703377,
+        "reference_missing_fraction": 0.8825157610029666,
+        "annotation_outside_fraction": 7.019969691651232e-06,
+        "excess_area_over_reference": 8.247415866668287e-07,
+        "missing_area_h2": 4.712426062192297,
+        "outside_area_h2": 4.403925594672214e-06,
+        "symmetric_difference_over_reference": 0.8825165857445528
+      },
+      "confirmed_vs_original_gt": {
+        "annotation_area_h2": 0.6273425368074952,
+        "reference_area_h2": 5.339764195074196,
+        "intersection_area_h2": 0.6273381328819004,
+        "union_area_h2": 5.339768598999791,
+        "annotation_area_over_reference": 0.11748506373862044,
+        "bev_iou": 0.11748414210297597,
+        "reference_coverage_fraction": 0.11748423899703377,
+        "reference_missing_fraction": 0.8825157610029666,
+        "annotation_outside_fraction": 7.019969691651232e-06,
+        "excess_area_over_reference": 8.247415866668287e-07,
+        "missing_area_h2": 4.712426062192297,
+        "outside_area_h2": 4.403925594672214e-06,
+        "symmetric_difference_over_reference": 0.8825165857445528
+      },
+      "camera_inside": true,
+      "camera_distance_to_floor_boundary_h": 0.3335073958350184,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "new_top_coordinates": null,
+      "accepted_set_scoring_protocol": "not_established_by_this_floor_confirmation",
+      "formal_gt_changed": false,
+      "formal_eligibility_changed": false,
+      "diagnostic_use": "BEV_only; not a formal reference replacement or scope routing decision",
+      "confirmation_provenance": {
+        "receipt_filename": "空间范围人工审核_2026-10-10(2).json",
+        "receipt_sha256": "3f5cf3c4d0d3eb70b4c1457795ab50cd40bebd16b585c4f413576855ed5c51a7",
+        "receipt_exported_at": "2026-10-10T11:52:40.335Z",
+        "receipt_record_index": 4,
+        "receipt_json_pointer": "/records/4",
+        "receipt_editor_version": "3.2",
+        "source_commit": "90ed861c5ee7db845a10b0bdad5f32d2184c0194",
+        "latest_scope_review_source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+        "evidence_source_commit": "d905d7dbb31dccabb3b190cb317d38b034b7cd65",
+        "confirmation_basis": "explicit_user_message_adopts_updated_draft_despite_missing_button",
+        "raw_draft_completed": false,
+        "raw_floor_region_confirmed": false,
+        "user_message_id": "Sentinel_9ed00ac0b1388191a64819aae866107b",
+        "user_message_at": "2026-10-10T11:53:17Z"
+      }
+    },
+    {
+      "image_code": "pa4otMbVnkk-14",
+      "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+      "decision": "full_gt",
+      "reference_id": "gt:pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3:data/mp3d_layout/valid/label_cor/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.txt",
+      "new_floor_alternative": false,
+      "role": "confirmed_existing_selected_gt_floor",
+      "selected_gt_object_id": "gt:pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3:data/mp3d_layout/valid/label_cor/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.txt",
+      "selected_gt_kind": "gt_original",
+      "original_gt_object_id": "gt:pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3:data/mp3d_layout/valid/label_cor/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.txt",
+      "original_gt_kind": "gt_original",
+      "selected_differs_from_original": false,
+      "floor_xz_h": [
+        [
+          1.1651411082134695,
+          -0.04248515908749639
+        ],
+        [
+          1.165034886783831,
+          2.3441780283034963
+        ],
+        [
+          -1.2858966318838552,
+          2.3441453381969573
+        ],
+        [
+          -1.2860439979202833,
+          -0.042469369247534625
+        ]
+      ],
+      "floor_polygon_sha256": "1de71ae2efad18afe53bf423874aa3d816543122c6b0efd4d7ab220a1b49ad42",
+      "area_h2": 5.849791230593722,
+      "perimeter_h": 9.675394526819243,
+      "confirmed_vs_selected_gt": {
+        "annotation_area_h2": 5.849791230593722,
+        "reference_area_h2": 5.849791230593722,
+        "intersection_area_h2": 5.849791230593722,
+        "union_area_h2": 5.849791230593722,
+        "annotation_area_over_reference": 1.0,
+        "bev_iou": 1.0,
+        "reference_coverage_fraction": 1.0,
+        "reference_missing_fraction": 0.0,
+        "annotation_outside_fraction": 0.0,
+        "excess_area_over_reference": 0.0,
+        "missing_area_h2": 0.0,
+        "outside_area_h2": 0.0,
+        "symmetric_difference_over_reference": 0.0
+      },
+      "confirmed_vs_original_gt": {
+        "annotation_area_h2": 5.849791230593722,
+        "reference_area_h2": 5.849791230593722,
+        "intersection_area_h2": 5.849791230593722,
+        "union_area_h2": 5.849791230593722,
+        "annotation_area_over_reference": 1.0,
+        "bev_iou": 1.0,
+        "reference_coverage_fraction": 1.0,
+        "reference_missing_fraction": 0.0,
+        "annotation_outside_fraction": 0.0,
+        "excess_area_over_reference": 0.0,
+        "missing_area_h2": 0.0,
+        "outside_area_h2": 0.0,
+        "symmetric_difference_over_reference": 0.0
+      },
+      "camera_inside": true,
+      "camera_distance_to_floor_boundary_h": 0.042477653577714276,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "new_top_coordinates": null,
+      "accepted_set_scoring_protocol": "not_established_by_this_floor_confirmation",
+      "formal_gt_changed": false,
+      "formal_eligibility_changed": false,
+      "diagnostic_use": "BEV_only; not a formal reference replacement or scope routing decision",
+      "confirmation_provenance": {
+        "receipt_filename": "空间范围人工审核_2026-10-10(2).json",
+        "receipt_sha256": "3f5cf3c4d0d3eb70b4c1457795ab50cd40bebd16b585c4f413576855ed5c51a7",
+        "receipt_exported_at": "2026-10-10T11:52:40.335Z",
+        "receipt_record_index": 51,
+        "receipt_json_pointer": "/records/51",
+        "receipt_editor_version": "3.2",
+        "source_commit": "90ed861c5ee7db845a10b0bdad5f32d2184c0194",
+        "latest_scope_review_source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+        "evidence_source_commit": "d905d7dbb31dccabb3b190cb317d38b034b7cd65",
+        "confirmation_basis": "matching_workbench_button_snapshot",
+        "raw_draft_completed": true,
+        "raw_floor_region_confirmed": true,
+        "user_message_id": "Sentinel_9ed00ac0b1388191a64819aae866107b",
+        "user_message_at": "2026-10-10T11:53:17Z"
+      }
+    },
+    {
+      "image_code": "q9vSo1VnCiC-11",
+      "image_id": "q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd",
+      "decision": "allow",
+      "reference_id": "q9vSo1VnCiC-11:manual_floor:f81067829276df66",
+      "new_floor_alternative": true,
+      "role": "confirmed_manual_floor_alternative",
+      "selected_gt_object_id": "gt:q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd.txt",
+      "selected_gt_kind": "gt_original",
+      "original_gt_object_id": "gt:q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd.txt",
+      "original_gt_kind": "gt_original",
+      "selected_differs_from_original": false,
+      "floor_xz_h": [
+        [
+          -1.9869487620819435,
+          3.5169900738666144
+        ],
+        [
+          0.6878759982337721,
+          3.5169900738666144
+        ],
+        [
+          0.6878759982337721,
+          -0.7374725511552753
+        ],
+        [
+          -1.9869487620819435,
+          -0.7374725511552753
+        ]
+      ],
+      "floor_polygon_sha256": "f81067829276df6643639a5b56d4894bea5dfb705dace50ccdde9620d46ab7da",
+      "area_h2": 11.379941971246344,
+      "perimeter_h": 13.858574770675212,
+      "confirmed_vs_selected_gt": {
+        "annotation_area_h2": 11.379941971246344,
+        "reference_area_h2": 12.817029935703697,
+        "intersection_area_h2": 11.379860854706568,
+        "union_area_h2": 12.817111052243474,
+        "annotation_area_over_reference": 0.8878766787885752,
+        "bev_iou": 0.8878647308524854,
+        "reference_coverage_fraction": 0.8878703499791565,
+        "reference_missing_fraction": 0.1121296500208434,
+        "annotation_outside_fraction": 7.128027540214545e-06,
+        "excess_area_over_reference": 6.328809418719187e-06,
+        "missing_area_h2": 1.4371690809971285,
+        "outside_area_h2": 8.111653977708734e-05,
+        "symmetric_difference_over_reference": 0.1121359788302621
+      },
+      "confirmed_vs_original_gt": {
+        "annotation_area_h2": 11.379941971246344,
+        "reference_area_h2": 12.817029935703697,
+        "intersection_area_h2": 11.379860854706568,
+        "union_area_h2": 12.817111052243474,
+        "annotation_area_over_reference": 0.8878766787885752,
+        "bev_iou": 0.8878647308524854,
+        "reference_coverage_fraction": 0.8878703499791565,
+        "reference_missing_fraction": 0.1121296500208434,
+        "annotation_outside_fraction": 7.128027540214545e-06,
+        "excess_area_over_reference": 6.328809418719187e-06,
+        "missing_area_h2": 1.4371690809971285,
+        "outside_area_h2": 8.111653977708734e-05,
+        "symmetric_difference_over_reference": 0.1121359788302621
+      },
+      "camera_inside": true,
+      "camera_distance_to_floor_boundary_h": 0.6878759982337721,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "new_top_coordinates": null,
+      "accepted_set_scoring_protocol": "not_established_by_this_floor_confirmation",
+      "formal_gt_changed": false,
+      "formal_eligibility_changed": false,
+      "diagnostic_use": "BEV_only; not a formal reference replacement or scope routing decision",
+      "confirmation_provenance": {
+        "receipt_filename": "空间范围人工审核_2026-10-10(2).json",
+        "receipt_sha256": "3f5cf3c4d0d3eb70b4c1457795ab50cd40bebd16b585c4f413576855ed5c51a7",
+        "receipt_exported_at": "2026-10-10T11:52:40.335Z",
+        "receipt_record_index": 55,
+        "receipt_json_pointer": "/records/55",
+        "receipt_editor_version": "3.2",
+        "source_commit": "90ed861c5ee7db845a10b0bdad5f32d2184c0194",
+        "latest_scope_review_source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+        "evidence_source_commit": "d905d7dbb31dccabb3b190cb317d38b034b7cd65",
+        "confirmation_basis": "matching_workbench_button_snapshot",
+        "raw_draft_completed": true,
+        "raw_floor_region_confirmed": true,
+        "user_message_id": "Sentinel_9ed00ac0b1388191a64819aae866107b",
+        "user_message_at": "2026-10-10T11:53:17Z"
+      }
+    },
+    {
+      "image_code": "q9vSo1VnCiC-12",
+      "image_id": "q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5",
+      "decision": "allow",
+      "reference_id": "q9vSo1VnCiC-12:manual_floor:308a07fb86f0d531",
+      "new_floor_alternative": true,
+      "role": "confirmed_manual_floor_alternative",
+      "selected_gt_object_id": "gt:q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5.txt",
+      "selected_gt_kind": "gt_original",
+      "original_gt_object_id": "gt:q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5.txt",
+      "original_gt_kind": "gt_original",
+      "selected_differs_from_original": false,
+      "floor_xz_h": [
+        [
+          -0.9327028922112901,
+          1.2937194556430158
+        ],
+        [
+          1.560959081694886,
+          1.2937194556430158
+        ],
+        [
+          1.560959081694886,
+          -2.665796884092004
+        ],
+        [
+          -0.9327028922112901,
+          -2.665796884092004
+        ]
+      ],
+      "floor_polygon_sha256": "308a07fb86f0d531af2bb4cbcfa2cb1e9cb9c119936f891a5bc03281fb96557a",
+      "area_h2": 9.873695331457386,
+      "perimeter_h": 12.906356627282392,
+      "confirmed_vs_selected_gt": {
+        "annotation_area_h2": 9.873695331457386,
+        "reference_area_h2": 11.153958339910007,
+        "intersection_area_h2": 9.873621949197457,
+        "union_area_h2": 11.154031722169936,
+        "annotation_area_over_reference": 0.8852189537169322,
+        "bev_iou": 0.8852065508808339,
+        "reference_coverage_fraction": 0.8852123746839384,
+        "reference_missing_fraction": 0.11478762531606157,
+        "annotation_outside_fraction": 7.432096845785421e-06,
+        "excess_area_over_reference": 6.579032993749082e-06,
+        "missing_area_h2": 1.28033639071255,
+        "outside_area_h2": 7.338225992917067e-05,
+        "symmetric_difference_over_reference": 0.11479420434905531
+      },
+      "confirmed_vs_original_gt": {
+        "annotation_area_h2": 9.873695331457386,
+        "reference_area_h2": 11.153958339910007,
+        "intersection_area_h2": 9.873621949197457,
+        "union_area_h2": 11.154031722169936,
+        "annotation_area_over_reference": 0.8852189537169322,
+        "bev_iou": 0.8852065508808339,
+        "reference_coverage_fraction": 0.8852123746839384,
+        "reference_missing_fraction": 0.11478762531606157,
+        "annotation_outside_fraction": 7.432096845785421e-06,
+        "excess_area_over_reference": 6.579032993749082e-06,
+        "missing_area_h2": 1.28033639071255,
+        "outside_area_h2": 7.338225992917067e-05,
+        "symmetric_difference_over_reference": 0.11479420434905531
+      },
+      "camera_inside": true,
+      "camera_distance_to_floor_boundary_h": 0.9327028922112901,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "new_top_coordinates": null,
+      "accepted_set_scoring_protocol": "not_established_by_this_floor_confirmation",
+      "formal_gt_changed": false,
+      "formal_eligibility_changed": false,
+      "diagnostic_use": "BEV_only; not a formal reference replacement or scope routing decision",
+      "confirmation_provenance": {
+        "receipt_filename": "空间范围人工审核_2026-10-10(2).json",
+        "receipt_sha256": "3f5cf3c4d0d3eb70b4c1457795ab50cd40bebd16b585c4f413576855ed5c51a7",
+        "receipt_exported_at": "2026-10-10T11:52:40.335Z",
+        "receipt_record_index": 56,
+        "receipt_json_pointer": "/records/56",
+        "receipt_editor_version": "3.2",
+        "source_commit": "90ed861c5ee7db845a10b0bdad5f32d2184c0194",
+        "latest_scope_review_source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+        "evidence_source_commit": "d905d7dbb31dccabb3b190cb317d38b034b7cd65",
+        "confirmation_basis": "matching_workbench_button_snapshot",
+        "raw_draft_completed": true,
+        "raw_floor_region_confirmed": true,
+        "user_message_id": "Sentinel_9ed00ac0b1388191a64819aae866107b",
+        "user_message_at": "2026-10-10T11:53:17Z"
+      }
+    },
+    {
+      "image_code": "q9vSo1VnCiC-29",
+      "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+      "decision": "allow",
+      "reference_id": "q9vSo1VnCiC-29:manual_floor:fdddd3811a7462cf",
+      "new_floor_alternative": true,
+      "role": "confirmed_manual_floor_alternative",
+      "selected_gt_object_id": "gt:q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.txt",
+      "selected_gt_kind": "gt_original",
+      "original_gt_object_id": "gt:q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.txt",
+      "original_gt_kind": "gt_original",
+      "selected_differs_from_original": false,
+      "floor_xz_h": [
+        [
+          -0.35966428494840696,
+          0.3013216303976707
+        ],
+        [
+          0.6562950925527565,
+          0.3013216303976707
+        ],
+        [
+          0.6562950925527565,
+          -0.7136418818689938
+        ],
+        [
+          -0.35966428494840696,
+          -0.7136418818689938
+        ]
+      ],
+      "floor_polygon_sha256": "fdddd3811a7462cf43ce9a8a14b41ef81099b37202faf7bb9474d3a873c6533d",
+      "area_h2": 1.031161698108835,
+      "perimeter_h": 4.0618457795356555,
+      "confirmed_vs_selected_gt": {
+        "annotation_area_h2": 1.031161698108835,
+        "reference_area_h2": 4.586934177928434,
+        "intersection_area_h2": 1.0311549273244107,
+        "union_area_h2": 4.586940948712859,
+        "annotation_area_over_reference": 0.2248041192896584,
+        "bev_iou": 0.2248023113560603,
+        "reference_coverage_fraction": 0.22480264318728554,
+        "reference_missing_fraction": 0.7751973568127145,
+        "annotation_outside_fraction": 6.566171374156959e-06,
+        "excess_area_over_reference": 1.4761023728723214e-06,
+        "missing_area_h2": 3.5557792506040236,
+        "outside_area_h2": 6.770784424249312e-06,
+        "symmetric_difference_over_reference": 0.7751988329150875
+      },
+      "confirmed_vs_original_gt": {
+        "annotation_area_h2": 1.031161698108835,
+        "reference_area_h2": 4.586934177928434,
+        "intersection_area_h2": 1.0311549273244107,
+        "union_area_h2": 4.586940948712859,
+        "annotation_area_over_reference": 0.2248041192896584,
+        "bev_iou": 0.2248023113560603,
+        "reference_coverage_fraction": 0.22480264318728554,
+        "reference_missing_fraction": 0.7751973568127145,
+        "annotation_outside_fraction": 6.566171374156959e-06,
+        "excess_area_over_reference": 1.4761023728723214e-06,
+        "missing_area_h2": 3.5557792506040236,
+        "outside_area_h2": 6.770784424249312e-06,
+        "symmetric_difference_over_reference": 0.7751988329150875
+      },
+      "camera_inside": true,
+      "camera_distance_to_floor_boundary_h": 0.30132163039767074,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "new_top_coordinates": null,
+      "accepted_set_scoring_protocol": "not_established_by_this_floor_confirmation",
+      "formal_gt_changed": false,
+      "formal_eligibility_changed": false,
+      "diagnostic_use": "BEV_only; not a formal reference replacement or scope routing decision",
+      "confirmation_provenance": {
+        "receipt_filename": "空间范围人工审核_2026-10-10(2).json",
+        "receipt_sha256": "3f5cf3c4d0d3eb70b4c1457795ab50cd40bebd16b585c4f413576855ed5c51a7",
+        "receipt_exported_at": "2026-10-10T11:52:40.335Z",
+        "receipt_record_index": 5,
+        "receipt_json_pointer": "/records/5",
+        "receipt_editor_version": "3.2",
+        "source_commit": "90ed861c5ee7db845a10b0bdad5f32d2184c0194",
+        "latest_scope_review_source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+        "evidence_source_commit": "d905d7dbb31dccabb3b190cb317d38b034b7cd65",
+        "confirmation_basis": "explicit_user_message_adopts_updated_draft_despite_missing_button",
+        "raw_draft_completed": false,
+        "raw_floor_region_confirmed": false,
+        "user_message_id": "Sentinel_9ed00ac0b1388191a64819aae866107b",
+        "user_message_at": "2026-10-10T11:53:17Z"
+      }
+    },
+    {
+      "image_code": "uNb9QFRL6hY-44",
+      "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+      "decision": "allow",
+      "reference_id": "uNb9QFRL6hY-44:manual_floor:4196deabaa8cffde",
+      "new_floor_alternative": true,
+      "role": "confirmed_manual_floor_alternative",
+      "selected_gt_object_id": "gt:uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.txt",
+      "selected_gt_kind": "gt_original",
+      "original_gt_object_id": "gt:uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.txt",
+      "original_gt_kind": "gt_original",
+      "selected_differs_from_original": false,
+      "floor_xz_h": [
+        [
+          -0.9738355355857372,
+          2.2507045262501997
+        ],
+        [
+          1.5595473223840581,
+          2.2507045262501997
+        ],
+        [
+          1.5595473223840581,
+          -0.3799511667601446
+        ],
+        [
+          -0.9738355355857372,
+          -0.3799511667601446
+        ]
+      ],
+      "floor_polygon_sha256": "4196deabaa8cffde40a10096279aa4db5f89979a09d43e6f4aaa7e8794639d2d",
+      "area_h2": 6.664458037893058,
+      "perimeter_h": 10.328077101960279,
+      "confirmed_vs_selected_gt": {
+        "annotation_area_h2": 6.664458037893058,
+        "reference_area_h2": 7.4640842511829595,
+        "intersection_area_h2": 6.664369954484337,
+        "union_area_h2": 7.464172334591681,
+        "annotation_area_over_reference": 0.8928701517318524,
+        "bev_iou": 0.8928478142980742,
+        "reference_coverage_fraction": 0.8928583507652826,
+        "reference_missing_fraction": 0.10714164923471732,
+        "annotation_outside_fraction": 1.321688998873505e-05,
+        "excess_area_over_reference": 1.1800966569665063e-05,
+        "missing_area_h2": 0.7997142966986224,
+        "outside_area_h2": 8.808340872137359e-05,
+        "symmetric_difference_over_reference": 0.10715345020128698
+      },
+      "confirmed_vs_original_gt": {
+        "annotation_area_h2": 6.664458037893058,
+        "reference_area_h2": 7.4640842511829595,
+        "intersection_area_h2": 6.664369954484337,
+        "union_area_h2": 7.464172334591681,
+        "annotation_area_over_reference": 0.8928701517318524,
+        "bev_iou": 0.8928478142980742,
+        "reference_coverage_fraction": 0.8928583507652826,
+        "reference_missing_fraction": 0.10714164923471732,
+        "annotation_outside_fraction": 1.321688998873505e-05,
+        "excess_area_over_reference": 1.1800966569665063e-05,
+        "missing_area_h2": 0.7997142966986224,
+        "outside_area_h2": 8.808340872137359e-05,
+        "symmetric_difference_over_reference": 0.10715345020128698
+      },
+      "camera_inside": true,
+      "camera_distance_to_floor_boundary_h": 0.3799511667601446,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "new_top_coordinates": null,
+      "accepted_set_scoring_protocol": "not_established_by_this_floor_confirmation",
+      "formal_gt_changed": false,
+      "formal_eligibility_changed": false,
+      "diagnostic_use": "BEV_only; not a formal reference replacement or scope routing decision",
+      "confirmation_provenance": {
+        "receipt_filename": "空间范围人工审核_2026-10-10(2).json",
+        "receipt_sha256": "3f5cf3c4d0d3eb70b4c1457795ab50cd40bebd16b585c4f413576855ed5c51a7",
+        "receipt_exported_at": "2026-10-10T11:52:40.335Z",
+        "receipt_record_index": 81,
+        "receipt_json_pointer": "/records/81",
+        "receipt_editor_version": "3.2",
+        "source_commit": "90ed861c5ee7db845a10b0bdad5f32d2184c0194",
+        "latest_scope_review_source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+        "evidence_source_commit": "d905d7dbb31dccabb3b190cb317d38b034b7cd65",
+        "confirmation_basis": "matching_workbench_button_snapshot",
+        "raw_draft_completed": true,
+        "raw_floor_region_confirmed": true,
+        "user_message_id": "Sentinel_9ed00ac0b1388191a64819aae866107b",
+        "user_message_at": "2026-10-10T11:53:17Z"
+      }
+    },
+    {
+      "image_code": "uNb9QFRL6hY-55",
+      "image_id": "uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78",
+      "decision": "allow",
+      "reference_id": "uNb9QFRL6hY-55:manual_floor:e965f9f189856ad5",
+      "new_floor_alternative": true,
+      "role": "confirmed_manual_floor_alternative",
+      "selected_gt_object_id": "gt:uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78.txt",
+      "selected_gt_kind": "gt_original",
+      "original_gt_object_id": "gt:uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78.txt",
+      "original_gt_kind": "gt_original",
+      "selected_differs_from_original": false,
+      "floor_xz_h": [
+        [
+          1.3849861489691673,
+          2.411481193164601
+        ],
+        [
+          -1.30554080058686,
+          2.411481193164601
+        ],
+        [
+          -1.30554080058686,
+          -0.25965583135306775
+        ],
+        [
+          1.3849861489691673,
+          -0.25965583135306775
+        ]
+      ],
+      "floor_polygon_sha256": "e965f9f189856ad58782508a75213928285659bfacc1fa8b4bd9eef0ddd473b8",
+      "area_h2": 7.186766150421686,
+      "perimeter_h": 10.723327948147393,
+      "confirmed_vs_selected_gt": {
+        "annotation_area_h2": 7.186766150421686,
+        "reference_area_h2": 8.135010574881886,
+        "intersection_area_h2": 7.186608572725302,
+        "union_area_h2": 8.13516815257827,
+        "annotation_area_over_reference": 0.8834366082586232,
+        "bev_iou": 0.8834001262097647,
+        "reference_coverage_fraction": 0.8834172379462023,
+        "reference_missing_fraction": 0.11658276205379763,
+        "annotation_outside_fraction": 2.1926092081722072e-05,
+        "excess_area_over_reference": 1.9370312421042805e-05,
+        "missing_area_h2": 0.9484020021565823,
+        "outside_area_h2": 0.00015757769638394915,
+        "symmetric_difference_over_reference": 0.11660213236621869
+      },
+      "confirmed_vs_original_gt": {
+        "annotation_area_h2": 7.186766150421686,
+        "reference_area_h2": 8.135010574881886,
+        "intersection_area_h2": 7.186608572725302,
+        "union_area_h2": 8.13516815257827,
+        "annotation_area_over_reference": 0.8834366082586232,
+        "bev_iou": 0.8834001262097647,
+        "reference_coverage_fraction": 0.8834172379462023,
+        "reference_missing_fraction": 0.11658276205379763,
+        "annotation_outside_fraction": 2.1926092081722072e-05,
+        "excess_area_over_reference": 1.9370312421042805e-05,
+        "missing_area_h2": 0.9484020021565823,
+        "outside_area_h2": 0.00015757769638394915,
+        "symmetric_difference_over_reference": 0.11660213236621869
+      },
+      "camera_inside": true,
+      "camera_distance_to_floor_boundary_h": 0.2596558313530678,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "new_top_coordinates": null,
+      "accepted_set_scoring_protocol": "not_established_by_this_floor_confirmation",
+      "formal_gt_changed": false,
+      "formal_eligibility_changed": false,
+      "diagnostic_use": "BEV_only; not a formal reference replacement or scope routing decision",
+      "confirmation_provenance": {
+        "receipt_filename": "空间范围人工审核_2026-10-10(2).json",
+        "receipt_sha256": "3f5cf3c4d0d3eb70b4c1457795ab50cd40bebd16b585c4f413576855ed5c51a7",
+        "receipt_exported_at": "2026-10-10T11:52:40.335Z",
+        "receipt_record_index": 87,
+        "receipt_json_pointer": "/records/87",
+        "receipt_editor_version": "3.2",
+        "source_commit": "90ed861c5ee7db845a10b0bdad5f32d2184c0194",
+        "latest_scope_review_source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+        "evidence_source_commit": "d905d7dbb31dccabb3b190cb317d38b034b7cd65",
+        "confirmation_basis": "matching_workbench_button_snapshot",
+        "raw_draft_completed": true,
+        "raw_floor_region_confirmed": true,
+        "user_message_id": "Sentinel_9ed00ac0b1388191a64819aae866107b",
+        "user_message_at": "2026-10-10T11:53:17Z"
+      }
+    },
+    {
+      "image_code": "uNb9QFRL6hY-68",
+      "image_id": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+      "decision": "allow",
+      "reference_id": "uNb9QFRL6hY-68:manual_floor:2bc89387944138cc",
+      "new_floor_alternative": true,
+      "role": "confirmed_manual_floor_alternative",
+      "selected_gt_object_id": "gt:uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d.txt",
+      "selected_gt_kind": "gt_original",
+      "original_gt_object_id": "gt:uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d.txt",
+      "original_gt_kind": "gt_original",
+      "selected_differs_from_original": false,
+      "floor_xz_h": [
+        [
+          1.8700682335440453,
+          1.3692604440783416
+        ],
+        [
+          -0.700767407917525,
+          1.3692604440783416
+        ],
+        [
+          -0.700767407917525,
+          -1.2204919148587126
+        ],
+        [
+          1.8700682335440453,
+          -1.2204919148587126
+        ]
+      ],
+      "floor_polygon_sha256": "2bc89387944138cc04c5a724a964813c646becd72173f075a8569ccc35c0fb3e",
+      "area_h2": 6.657827666914557,
+      "perimeter_h": 10.321176000797248,
+      "confirmed_vs_selected_gt": {
+        "annotation_area_h2": 6.657827666914557,
+        "reference_area_h2": 7.498212708951472,
+        "intersection_area_h2": 6.657697886781513,
+        "union_area_h2": 7.498342489084518,
+        "annotation_area_over_reference": 0.8879219522495472,
+        "bev_iou": 0.8878892763931833,
+        "reference_coverage_fraction": 0.887904644107183,
+        "reference_missing_fraction": 0.11209535589281723,
+        "annotation_outside_fraction": 1.949286457042674e-05,
+        "excess_area_over_reference": 1.7308142364309344e-05,
+        "missing_area_h2": 0.8405148221699604,
+        "outside_area_h2": 0.0001297801330444057,
+        "symmetric_difference_over_reference": 0.11211266403518155
+      },
+      "confirmed_vs_original_gt": {
+        "annotation_area_h2": 6.657827666914557,
+        "reference_area_h2": 7.498212708951472,
+        "intersection_area_h2": 6.657697886781513,
+        "union_area_h2": 7.498342489084518,
+        "annotation_area_over_reference": 0.8879219522495472,
+        "bev_iou": 0.8878892763931833,
+        "reference_coverage_fraction": 0.887904644107183,
+        "reference_missing_fraction": 0.11209535589281723,
+        "annotation_outside_fraction": 1.949286457042674e-05,
+        "excess_area_over_reference": 1.7308142364309344e-05,
+        "missing_area_h2": 0.8405148221699604,
+        "outside_area_h2": 0.0001297801330444057,
+        "symmetric_difference_over_reference": 0.11211266403518155
+      },
+      "camera_inside": true,
+      "camera_distance_to_floor_boundary_h": 0.7007674079175249,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "new_top_coordinates": null,
+      "accepted_set_scoring_protocol": "not_established_by_this_floor_confirmation",
+      "formal_gt_changed": false,
+      "formal_eligibility_changed": false,
+      "diagnostic_use": "BEV_only; not a formal reference replacement or scope routing decision",
+      "confirmation_provenance": {
+        "receipt_filename": "空间范围人工审核_2026-10-10(2).json",
+        "receipt_sha256": "3f5cf3c4d0d3eb70b4c1457795ab50cd40bebd16b585c4f413576855ed5c51a7",
+        "receipt_exported_at": "2026-10-10T11:52:40.335Z",
+        "receipt_record_index": 94,
+        "receipt_json_pointer": "/records/94",
+        "receipt_editor_version": "3.2",
+        "source_commit": "90ed861c5ee7db845a10b0bdad5f32d2184c0194",
+        "latest_scope_review_source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+        "evidence_source_commit": "d905d7dbb31dccabb3b190cb317d38b034b7cd65",
+        "confirmation_basis": "matching_workbench_button_snapshot",
+        "raw_draft_completed": true,
+        "raw_floor_region_confirmed": true,
+        "user_message_id": "Sentinel_9ed00ac0b1388191a64819aae866107b",
+        "user_message_at": "2026-10-10T11:53:17Z"
+      }
+    },
+    {
+      "image_code": "uNb9QFRL6hY-81",
+      "image_id": "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+      "decision": "allow",
+      "reference_id": "uNb9QFRL6hY-81:manual_floor:201606a19d34a838",
+      "new_floor_alternative": true,
+      "role": "confirmed_manual_floor_alternative",
+      "selected_gt_object_id": "gt:uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd.txt",
+      "selected_gt_kind": "gt_original",
+      "original_gt_object_id": "gt:uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd.txt",
+      "original_gt_kind": "gt_original",
+      "selected_differs_from_original": false,
+      "floor_xz_h": [
+        [
+          0.4495693460785247,
+          2.475270357960808
+        ],
+        [
+          -2.2646977430362263,
+          2.475270357960808
+        ],
+        [
+          -2.2646977430362263,
+          -0.2876368572814958
+        ],
+        [
+          0.4495693460785247,
+          -0.2876368572814958
+        ]
+      ],
+      "floor_polygon_sha256": "201606a19d34a83865090e6338f51e87c9399ac4404673c075f50c209f996847",
+      "area_h2": 7.4992681246098725,
+      "perimeter_h": 10.95434860871411,
+      "confirmed_vs_selected_gt": {
+        "annotation_area_h2": 7.4992681246098725,
+        "reference_area_h2": 8.091777850918803,
+        "intersection_area_h2": 7.4991527885467235,
+        "union_area_h2": 8.09189318698195,
+        "annotation_area_over_reference": 0.9267763231733244,
+        "bev_iou": 0.9267488602804578,
+        "reference_coverage_fraction": 0.9267620696847495,
+        "reference_missing_fraction": 0.07323793031525043,
+        "annotation_outside_fraction": 1.537964255059457e-05,
+        "excess_area_over_reference": 1.4253488574760043e-05,
+        "missing_area_h2": 0.5926250623720781,
+        "outside_area_h2": 0.00011533606314756752,
+        "symmetric_difference_over_reference": 0.07325218380382519
+      },
+      "confirmed_vs_original_gt": {
+        "annotation_area_h2": 7.4992681246098725,
+        "reference_area_h2": 8.091777850918803,
+        "intersection_area_h2": 7.4991527885467235,
+        "union_area_h2": 8.09189318698195,
+        "annotation_area_over_reference": 0.9267763231733244,
+        "bev_iou": 0.9267488602804578,
+        "reference_coverage_fraction": 0.9267620696847495,
+        "reference_missing_fraction": 0.07323793031525043,
+        "annotation_outside_fraction": 1.537964255059457e-05,
+        "excess_area_over_reference": 1.4253488574760043e-05,
+        "missing_area_h2": 0.5926250623720781,
+        "outside_area_h2": 0.00011533606314756752,
+        "symmetric_difference_over_reference": 0.07325218380382519
+      },
+      "camera_inside": true,
+      "camera_distance_to_floor_boundary_h": 0.2876368572814958,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "new_top_coordinates": null,
+      "accepted_set_scoring_protocol": "not_established_by_this_floor_confirmation",
+      "formal_gt_changed": false,
+      "formal_eligibility_changed": false,
+      "diagnostic_use": "BEV_only; not a formal reference replacement or scope routing decision",
+      "confirmation_provenance": {
+        "receipt_filename": "空间范围人工审核_2026-10-10(2).json",
+        "receipt_sha256": "3f5cf3c4d0d3eb70b4c1457795ab50cd40bebd16b585c4f413576855ed5c51a7",
+        "receipt_exported_at": "2026-10-10T11:52:40.335Z",
+        "receipt_record_index": 100,
+        "receipt_json_pointer": "/records/100",
+        "receipt_editor_version": "3.2",
+        "source_commit": "90ed861c5ee7db845a10b0bdad5f32d2184c0194",
+        "latest_scope_review_source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+        "evidence_source_commit": "d905d7dbb31dccabb3b190cb317d38b034b7cd65",
+        "confirmation_basis": "matching_workbench_button_snapshot",
+        "raw_draft_completed": true,
+        "raw_floor_region_confirmed": true,
+        "user_message_id": "Sentinel_9ed00ac0b1388191a64819aae866107b",
+        "user_message_at": "2026-10-10T11:53:17Z"
+      }
+    },
+    {
+      "image_code": "wc2JMjhGNzB-22",
+      "image_id": "wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66",
+      "decision": "allow",
+      "reference_id": "wc2JMjhGNzB-22:manual_floor:bd3b70949c5d17e9",
+      "new_floor_alternative": true,
+      "role": "confirmed_manual_floor_alternative",
+      "selected_gt_object_id": "gt:wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66.txt",
+      "selected_gt_kind": "gt_original",
+      "original_gt_object_id": "gt:wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66.txt",
+      "original_gt_kind": "gt_original",
+      "selected_differs_from_original": false,
+      "floor_xz_h": [
+        [
+          -0.20125783732760888,
+          0.28527013918984057
+        ],
+        [
+          2.484733883073424,
+          0.28527013918984057
+        ],
+        [
+          2.484733883073424,
+          -2.5493540133419064
+        ],
+        [
+          -0.20125783732760888,
+          -2.5493540133419064
+        ]
+      ],
+      "floor_polygon_sha256": "bd3b70949c5d17e93eeafa64674bb295d54868ac7be069b975aa4aab4b2dfbeb",
+      "area_h2": 7.6137770041490676,
+      "perimeter_h": 11.04123174586556,
+      "confirmed_vs_selected_gt": {
+        "annotation_area_h2": 7.6137770041490676,
+        "reference_area_h2": 8.623141253377131,
+        "intersection_area_h2": 7.613638395440052,
+        "union_area_h2": 8.623279862086148,
+        "annotation_area_over_reference": 0.8829470352427823,
+        "bev_iou": 0.8829167691651558,
+        "reference_coverage_fraction": 0.8829309612037584,
+        "reference_missing_fraction": 0.11706903879624193,
+        "annotation_outside_fraction": 1.820498668932685e-05,
+        "excess_area_over_reference": 1.6074039023975456e-05,
+        "missing_area_h2": 1.0095028579370817,
+        "outside_area_h2": 0.00013860870901603664,
+        "symmetric_difference_over_reference": 0.11708511283526589
+      },
+      "confirmed_vs_original_gt": {
+        "annotation_area_h2": 7.6137770041490676,
+        "reference_area_h2": 8.623141253377131,
+        "intersection_area_h2": 7.613638395440052,
+        "union_area_h2": 8.623279862086148,
+        "annotation_area_over_reference": 0.8829470352427823,
+        "bev_iou": 0.8829167691651558,
+        "reference_coverage_fraction": 0.8829309612037584,
+        "reference_missing_fraction": 0.11706903879624193,
+        "annotation_outside_fraction": 1.820498668932685e-05,
+        "excess_area_over_reference": 1.6074039023975456e-05,
+        "missing_area_h2": 1.0095028579370817,
+        "outside_area_h2": 0.00013860870901603664,
+        "symmetric_difference_over_reference": 0.11708511283526589
+      },
+      "camera_inside": true,
+      "camera_distance_to_floor_boundary_h": 0.20125783732760888,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "new_top_coordinates": null,
+      "accepted_set_scoring_protocol": "not_established_by_this_floor_confirmation",
+      "formal_gt_changed": false,
+      "formal_eligibility_changed": false,
+      "diagnostic_use": "BEV_only; not a formal reference replacement or scope routing decision",
+      "confirmation_provenance": {
+        "receipt_filename": "空间范围人工审核_2026-10-10(2).json",
+        "receipt_sha256": "3f5cf3c4d0d3eb70b4c1457795ab50cd40bebd16b585c4f413576855ed5c51a7",
+        "receipt_exported_at": "2026-10-10T11:52:40.335Z",
+        "receipt_record_index": 104,
+        "receipt_json_pointer": "/records/104",
+        "receipt_editor_version": "3.2",
+        "source_commit": "90ed861c5ee7db845a10b0bdad5f32d2184c0194",
+        "latest_scope_review_source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+        "evidence_source_commit": "d905d7dbb31dccabb3b190cb317d38b034b7cd65",
+        "confirmation_basis": "matching_workbench_button_snapshot",
+        "raw_draft_completed": true,
+        "raw_floor_region_confirmed": true,
+        "user_message_id": "Sentinel_9ed00ac0b1388191a64819aae866107b",
+        "user_message_at": "2026-10-10T11:53:17Z"
+      }
+    },
+    {
+      "image_code": "wc2JMjhGNzB-26",
+      "image_id": "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+      "decision": "full_gt",
+      "reference_id": "gt:wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd:export_label/groudTruth.json",
+      "new_floor_alternative": false,
+      "role": "confirmed_existing_selected_gt_floor",
+      "selected_gt_object_id": "gt:wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd:export_label/groudTruth.json",
+      "selected_gt_kind": "gt_manual_revision",
+      "original_gt_object_id": "gt:wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd.txt",
+      "original_gt_kind": "gt_original",
+      "selected_differs_from_original": true,
+      "floor_xz_h": [
+        [
+          -0.2106951079365866,
+          0.4997582076160473
+        ],
+        [
+          -0.21069390070058636,
+          0.3121314851555222
+        ],
+        [
+          -1.985096067225689,
+          0.3121328503433285
+        ],
+        [
+          -1.9851033668644427,
+          -2.6091901017378625
+        ],
+        [
+          -0.03979152015266238,
+          -2.6091864922516224
+        ],
+        [
+          -0.03979484900814911,
+          -0.37686139812938213
+        ],
+        [
+          0.1816952668750669,
+          -0.37686133204034283
+        ],
+        [
+          0.18169936107909382,
+          0.499757893986652
+        ]
+      ],
+      "floor_polygon_sha256": "aa9ec2c148d8b71ed12a4705759d388a3e5d0b61b4cb6bcb3eacaa5be0d00457",
+      "area_h2": 5.9090921659893745,
+      "perimeter_h": 10.551492592855785,
+      "confirmed_vs_selected_gt": {
+        "annotation_area_h2": 5.9090921659893745,
+        "reference_area_h2": 5.9090921659893745,
+        "intersection_area_h2": 5.909092165989376,
+        "union_area_h2": 5.909092165989376,
+        "annotation_area_over_reference": 1.0,
+        "bev_iou": 1.0,
+        "reference_coverage_fraction": 1.0000000000000002,
+        "reference_missing_fraction": 0.0,
+        "annotation_outside_fraction": 0.0,
+        "excess_area_over_reference": 0.0,
+        "missing_area_h2": 0.0,
+        "outside_area_h2": 0.0,
+        "symmetric_difference_over_reference": 0.0
+      },
+      "confirmed_vs_original_gt": {
+        "annotation_area_h2": 5.9090921659893745,
+        "reference_area_h2": 6.2643705340162015,
+        "intersection_area_h2": 5.886391882022105,
+        "union_area_h2": 6.287070817983472,
+        "annotation_area_over_reference": 0.9432858631050594,
+        "bev_iou": 0.9362693776543332,
+        "reference_coverage_fraction": 0.939662149621956,
+        "reference_missing_fraction": 0.060337850378043956,
+        "annotation_outside_fraction": 0.0038415857004100956,
+        "excess_area_over_reference": 0.003623713483103391,
+        "missing_area_h2": 0.37797865199409686,
+        "outside_area_h2": 0.0227002839672701,
+        "symmetric_difference_over_reference": 0.06396156386114735
+      },
+      "camera_inside": true,
+      "camera_distance_to_floor_boundary_h": 0.18169702698413165,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "new_top_coordinates": null,
+      "accepted_set_scoring_protocol": "not_established_by_this_floor_confirmation",
+      "formal_gt_changed": false,
+      "formal_eligibility_changed": false,
+      "diagnostic_use": "BEV_only; not a formal reference replacement or scope routing decision",
+      "confirmation_provenance": {
+        "receipt_filename": "空间范围人工审核_2026-10-10(2).json",
+        "receipt_sha256": "3f5cf3c4d0d3eb70b4c1457795ab50cd40bebd16b585c4f413576855ed5c51a7",
+        "receipt_exported_at": "2026-10-10T11:52:40.335Z",
+        "receipt_record_index": 105,
+        "receipt_json_pointer": "/records/105",
+        "receipt_editor_version": "3.2",
+        "source_commit": "90ed861c5ee7db845a10b0bdad5f32d2184c0194",
+        "latest_scope_review_source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+        "evidence_source_commit": "d905d7dbb31dccabb3b190cb317d38b034b7cd65",
+        "confirmation_basis": "matching_workbench_button_snapshot",
+        "raw_draft_completed": true,
+        "raw_floor_region_confirmed": true,
+        "user_message_id": "Sentinel_9ed00ac0b1388191a64819aae866107b",
+        "user_message_at": "2026-10-10T11:53:17Z"
+      }
+    },
+    {
+      "image_code": "wc2JMjhGNzB-29",
+      "image_id": "wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366",
+      "decision": "allow",
+      "reference_id": "wc2JMjhGNzB-29:manual_floor:97a19e0309ab43c4",
+      "new_floor_alternative": true,
+      "role": "confirmed_manual_floor_alternative",
+      "selected_gt_object_id": "gt:wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366.txt",
+      "selected_gt_kind": "gt_original",
+      "original_gt_object_id": "gt:wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366.txt",
+      "original_gt_kind": "gt_original",
+      "selected_differs_from_original": false,
+      "floor_xz_h": [
+        [
+          -0.32363876076395953,
+          1.4240966939914612
+        ],
+        [
+          2.4652135045422914,
+          1.4240966939914612
+        ],
+        [
+          2.4652135045422914,
+          -1.5054258340822941
+        ],
+        [
+          -0.32363876076395953,
+          -1.5054258340822941
+        ]
+      ],
+      "floor_polygon_sha256": "97a19e0309ab43c4d06819d2ff912b1b37731a15b2ea1f58fea4076b36e3030b",
+      "area_h2": 8.170005538684189,
+      "perimeter_h": 11.436749586760014,
+      "confirmed_vs_selected_gt": {
+        "annotation_area_h2": 8.170005538684189,
+        "reference_area_h2": 9.335196726843282,
+        "intersection_area_h2": 8.169918525041618,
+        "union_area_h2": 9.33528374048585,
+        "annotation_area_over_reference": 0.8751830066088917,
+        "bev_iou": 0.8751655281359898,
+        "reference_coverage_fraction": 0.8751736855795533,
+        "reference_missing_fraction": 0.12482631442044649,
+        "annotation_outside_fraction": 1.0650377427121555e-05,
+        "excess_area_over_reference": 9.321029338187715e-06,
+        "missing_area_h2": 1.1652782018016625,
+        "outside_area_h2": 8.701364256866016e-05,
+        "symmetric_difference_over_reference": 0.12483563544978467
+      },
+      "confirmed_vs_original_gt": {
+        "annotation_area_h2": 8.170005538684189,
+        "reference_area_h2": 9.335196726843282,
+        "intersection_area_h2": 8.169918525041618,
+        "union_area_h2": 9.33528374048585,
+        "annotation_area_over_reference": 0.8751830066088917,
+        "bev_iou": 0.8751655281359898,
+        "reference_coverage_fraction": 0.8751736855795533,
+        "reference_missing_fraction": 0.12482631442044649,
+        "annotation_outside_fraction": 1.0650377427121555e-05,
+        "excess_area_over_reference": 9.321029338187715e-06,
+        "missing_area_h2": 1.1652782018016625,
+        "outside_area_h2": 8.701364256866016e-05,
+        "symmetric_difference_over_reference": 0.12483563544978467
+      },
+      "camera_inside": true,
+      "camera_distance_to_floor_boundary_h": 0.32363876076395953,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "new_top_coordinates": null,
+      "accepted_set_scoring_protocol": "not_established_by_this_floor_confirmation",
+      "formal_gt_changed": false,
+      "formal_eligibility_changed": false,
+      "diagnostic_use": "BEV_only; not a formal reference replacement or scope routing decision",
+      "confirmation_provenance": {
+        "receipt_filename": "空间范围人工审核_2026-10-10(2).json",
+        "receipt_sha256": "3f5cf3c4d0d3eb70b4c1457795ab50cd40bebd16b585c4f413576855ed5c51a7",
+        "receipt_exported_at": "2026-10-10T11:52:40.335Z",
+        "receipt_record_index": 106,
+        "receipt_json_pointer": "/records/106",
+        "receipt_editor_version": "3.2",
+        "source_commit": "90ed861c5ee7db845a10b0bdad5f32d2184c0194",
+        "latest_scope_review_source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+        "evidence_source_commit": "d905d7dbb31dccabb3b190cb317d38b034b7cd65",
+        "confirmation_basis": "matching_workbench_button_snapshot",
+        "raw_draft_completed": true,
+        "raw_floor_region_confirmed": true,
+        "user_message_id": "Sentinel_9ed00ac0b1388191a64819aae866107b",
+        "user_message_at": "2026-10-10T11:53:17Z"
+      }
+    }
+  ]
+}

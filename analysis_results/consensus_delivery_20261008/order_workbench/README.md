@@ -1,6 +1,6 @@
 # 融合审核工作台与回执
 
-本批35图快照已回收。当前结果、数量和待办统一看[交付报告](../REPORT.md)，操作看[融合SOP](../../../docs/thesis_main/融合共识操作SOP_20261008.md)。
+本批35图快照已回收。当前结果、数量和待办统一看[交付报告](../REPORT.md)，操作看[融合SOP](../../../docs/thesis_main/topics/fusion/融合共识操作SOP_20261008.md)。
 
 - `index.html`／`sources.json`保留用户实际审查的冻结节点，33条排序已采用；不重建覆盖旧输入。
 - `user_order_review_20261008.json`保存原35图回执。rPc已按x排序，Uw保留不完整共识，均无需重复填写；见[收尾说明](../closeout/review.html)。

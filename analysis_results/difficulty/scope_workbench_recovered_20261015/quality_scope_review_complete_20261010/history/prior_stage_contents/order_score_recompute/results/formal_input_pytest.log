@@ -1,0 +1,69 @@
+......F..........F.                                                      [100%]
+=================================== FAILURES ===================================
+____________________ test_rebuild_retains_confirmed_orders _____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_rebuild_retains_confirmed0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4b7ccc5a30>
+
+    def test_rebuild_retains_confirmed_orders(tmp_path, monkeypatch):
+        from tools.thesis_main.data_prep import materialize_current_research_input as builder
+        monkeypatch.setattr(builder, 'OUT', tmp_path)
+>       rebuilt = builder.build()
+                  ^^^^^^^^^^^^^^^
+
+../current_order_review_20261010/tests/test_difficulty_order_update_20261010.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../current_order_review_20261010/tools/thesis_main/data_prep/materialize_current_research_input.py:43: in build
+    source = read(SOURCE)
+             ^^^^^^^^^^^^
+../current_order_review_20261010/tools/thesis_main/analysis/finalize_review_20260928.py:49: in read
+    with (gzip.open(path, 'rt', encoding='utf-8-sig') if path.suffix == '.gz' else path.open(encoding='utf-8-sig')) as f:
+                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/workspace/scratch/a365811da80c/current_order_review_20261010/analysis_results/pairing_applied_20260929/preprocessed_source.json')
+mode = 'r', buffering = -1, encoding = 'utf-8-sig', errors = None
+newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/a365811da80c/current_order_review_20261010/analysis_results/pairing_applied_20260929/preprocessed_source.json'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1013: FileNotFoundError
+_____________ test_published_reconciliation_has_no_human_decisions _____________
+
+    def test_published_reconciliation_has_no_human_decisions():
+>       with (OUT/'candidate_reconciliation_24.csv').open(encoding='utf-8-sig',newline='') as f:rows=list(csv.DictReader(f))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../current_order_review_20261010/tests/test_quality_scope_human_review_20261010.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/workspace/scratch/a365811da80c/current_order_review_20261010/analysis_results/quality_scope_human_review_20261010/candidate_reconciliation_24.csv')
+mode = 'r', buffering = -1, encoding = 'utf-8-sig', errors = None, newline = ''
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/a365811da80c/current_order_review_20261010/analysis_results/quality_scope_human_review_20261010/candidate_reconciliation_24.csv'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1013: FileNotFoundError
+=========================== short test summary info ============================
+FAILED ../current_order_review_20261010/tests/test_difficulty_order_update_20261010.py::test_rebuild_retains_confirmed_orders
+FAILED ../current_order_review_20261010/tests/test_quality_scope_human_review_20261010.py::test_published_reconciliation_has_no_human_decisions
+2 failed, 17 passed in 41.63s

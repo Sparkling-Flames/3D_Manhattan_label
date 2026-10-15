@@ -17,10 +17,10 @@ from .research_round_20260929 import prepare_record, reconstruct
 from .same_room_similarity_20261003 import relation_index, correlation
 
 ROOT = Path(__file__).resolve().parents[3]
-OUT = ROOT/'research/same_room_quality_curves_20261015'
-DIFF = ROOT/'research/difficulty_target_integration_20261015'
-QUALITY = ROOT/'research/quality_joint_closeout_review_20261015'
-POP = ROOT/'research/wall_consensus_population_20261014'
+OUT = ROOT/'research/same_room/same_room_quality_curves_20261015'
+DIFF = ROOT/'research/difficulty/difficulty_target_integration_20261015'
+QUALITY = ROOT/'research/quality/quality_joint_closeout_review_20261015'
+POP = ROOT/'research/fusion/wall_consensus_population_20261014'
 LEE = ROOT/'analysis_results/lee_expanded_20261003'
 REGISTRY = ROOT/'analysis_results/research_input_20260929/final_review/同房分类_原始完整记录.json'
 METRICS = ['WQ', 'IoU3D100', 'iou_2d', 'S_bottom_deg', 'dir', 'Hmean', 'Hcenter']
@@ -177,7 +177,7 @@ def main(out=OUT):
     metadata = {i: (g.building_id.iloc[0], g.difficulty_class.iloc[0]) for i, g in gp.items()}
     all_pairs = quality_pairs(primary, images, relations, 'ordinary_same_target_conditional')
     # 旧明确参考条件下的补充描述，新增范围未决及多参考混合不能进入主面板。
-    old_conditional = pd.read_csv(ROOT/'research/worker_wq_integration_20261015/quality_panel.csv')
+    old_conditional = pd.read_csv(ROOT/'research/workers/worker_wq_integration_20261015/quality_panel.csv')
     prior = quality.set_index('record_id').loc[old_conditional.record_id]
     assert list(prior.reference_id) == list(old_conditional.reference_id)
     assert np.allclose(prior[METRICS], old_conditional[METRICS], rtol=0, atol=1e-10)

@@ -1,0 +1,40 @@
+{
+  "status": "passed",
+  "scope": "saved-file integrity and exact joins; not quality recomputation",
+  "source_commit": "d905d7dbb31dccabb3b190cb317d38b034b7cd65",
+  "checks_count": 418908,
+  "checks_by_category": {
+    "comment_joins": 20082,
+    "csv_json": 378182,
+    "file_integrity": 192,
+    "geometry_joins": 7216,
+    "invariants": 44,
+    "local_joins": 331,
+    "local_raw_sources": 633,
+    "metrics": 12228
+  },
+  "bundle_files_hashed": 84,
+  "counts": {
+    "images": 259,
+    "geometry_records": 3152,
+    "cloud_comments": 1648,
+    "cloud_source_occurrences": 6340,
+    "local_provenance_records": 69,
+    "local_distinct_image_text_pairs": 66,
+    "local_images": 36,
+    "local_exact_annotation_records": 22,
+    "local_exact_pairs": 7,
+    "local_cross_image_contexts": 12,
+    "local_outside_comments": 19,
+    "candidate_audit_rows": 11705,
+    "frozen_search_error_rows": 123
+  },
+  "limitations": [
+    "Original source files and desktop files are not reopened; cloud pointer rereads are historical checks in cloud_inventory/verification.json.",
+    "Only embedded raw records in saved local results are checked against text, identifiers, pointers, hashes and timestamp tiers.",
+    "Saved metrics are checked for internal consistency, not recomputed or promoted to scope truth.",
+    "Frozen pending-source classifications predate the newly received audit archive; reconciliation and the awaited image batch are separate work.",
+    "workbench_source is a code-only snapshot; its saved 3386 state/data checks are not rerun here, and browser QA remains unverified.",
+    "The manifest excludes itself and this generated report to avoid self-referential hashes; later appended files need a refreshed manifest."
+  ]
+}

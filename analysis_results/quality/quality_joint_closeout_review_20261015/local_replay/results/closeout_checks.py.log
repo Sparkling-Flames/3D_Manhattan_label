@@ -1,0 +1,64 @@
+subdivision 0
+subdivision 100
+subdivision 200
+subdivision 300
+subdivision 400
+subdivision 500
+subdivision 600
+subdivision 700
+subdivision 800
+subdivision 900
+{
+  "input_audit": {
+    "objects": 3441,
+    "annotations": 3152,
+    "ready_overlap": 907,
+    "checks": {
+      "ready": 3312,
+      "geometry_rebuilt": 3303,
+      "unavailable": 129
+    },
+    "raw_x_available": 3023,
+    "raw_x_unavailable": 129,
+    "errors": [],
+    "native_loader_run": false,
+    "full_comment_cross_tables_revalidated": false
+  },
+  "controls": 151,
+  "control_statuses": {
+    "complete": 151
+  },
+  "real_subdivision_records": 962,
+  "WQ_subdivision_remeasured_records": 49,
+  "subdivision_IoU_change": {
+    "min": -6.050320276292176,
+    "median": -0.03031151687563627,
+    "max": 4.020168120371781,
+    "n_ge1": 149,
+    "n_ge5": 2
+  },
+  "subdivision_WQ_change": {
+    "min": -1.8474111129762605e-13,
+    "median": 0.0,
+    "max": 1.2789769243681803e-13,
+    "n_ge1": 0,
+    "n_ge5": 0
+  },
+  "height_estimator_sensitivity": {
+    "min": -3.607836688256383,
+    "median": 0.001821745278313136,
+    "max": 3.021827686803946,
+    "n_ge1": 32,
+    "n_ge5": 0
+  },
+  "reference_cells": 116,
+  "reference_self_WQ": {
+    "min": 94.68580009136406,
+    "median": 99.99996782800655,
+    "max": 99.99999997925298,
+    "n_ge1": 116,
+    "n_ge5": 116
+  },
+  "hypotheses_tested_not_assumed": true,
+  "no_modified_responses_fitted": true
+}

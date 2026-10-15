@@ -1,0 +1,1 @@
+此目录是已发布v3.4.2的代码与验证记录快照，不含全部图片、按图数据和fixtures，不能直接作为完整离线工作台运行，测试脚本也需要完整Site源码中的这些输入。现行应用：https://layout-scope-crop-review.fringnb.chatgpt.site 。本目录deployment_receipt.json记录实际部署与Site源码提交。16图回执验证、地面指标和同房间来源审计分别在本包独立目录提供可复算证据。

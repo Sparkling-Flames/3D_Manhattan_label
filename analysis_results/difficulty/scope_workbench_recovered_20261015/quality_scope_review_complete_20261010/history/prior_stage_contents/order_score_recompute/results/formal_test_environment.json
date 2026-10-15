@@ -1,0 +1,67 @@
+{
+  "hydrated_exact_committed_fixture": {
+    "path": "analysis_results/quality_scope_human_review_20261010/candidate_reconciliation_24.csv",
+    "sha256": "f13d9d24e421cb38a7bc6fe440d7821a6142ef00f5cf0127ea4fec34edbb423e"
+  },
+  "raw_rebuild_missing_inputs": [
+    {
+      "path": "analysis_results/pairing_applied_20260929/preprocessed_source.json",
+      "committed_blob_bytes": 16247499,
+      "lfs_pointer": null
+    },
+    {
+      "path": "analysis_results/final_review_summary_20260929/received_orders.json",
+      "committed_blob_bytes": 2720497,
+      "lfs_pointer": null
+    },
+    {
+      "path": "analysis_results/final_review_summary_20260929/全量3152份最终台账.csv",
+      "committed_blob_bytes": 911319,
+      "lfs_pointer": null
+    },
+    {
+      "path": "analysis_results/review_final_20260928/全量复核.csv",
+      "committed_blob_bytes": 53785385,
+      "lfs_pointer": null
+    },
+    {
+      "path": "analysis_results/final_review_summary_20260929/同房汇集_Matterport.json",
+      "committed_blob_bytes": 13378056,
+      "lfs_pointer": null
+    },
+    {
+      "path": "analysis_results/final_review_summary_20260929/同房分类_原始完整记录.json",
+      "committed_blob_bytes": 9782088,
+      "lfs_pointer": null
+    },
+    {
+      "path": "analysis_results/final_review_summary_20260929/逐图分类及覆盖.csv",
+      "committed_blob_bytes": 405703,
+      "lfs_pointer": null
+    }
+  ],
+  "raw_rebuild_status": "passed_on_bounded_exact_blob_fixture_retry",
+  "current_formal_loader_status": "passed",
+  "bounded_source_chain_materialized_exactly": [
+    "analysis_results/pairing_applied_20260929/preprocessed_source.json",
+    "analysis_results/final_review_summary_20260929/received_orders.json",
+    "analysis_results/final_review_summary_20260929/全量3152份最终台账.csv",
+    "analysis_results/review_final_20260928/全量复核.csv",
+    "analysis_results/final_review_summary_20260929/同房汇集_Matterport.json",
+    "analysis_results/final_review_summary_20260929/同房分类_原始完整记录.json",
+    "analysis_results/final_review_summary_20260929/逐图分类及覆盖.csv",
+    "analysis_results/quality_scope_human_review_20261010/validation.json",
+    "analysis_results/final_review_summary_20260929/预标注未改动与影响评语汇总.csv",
+    "analysis_results/final_review_summary_20260929/用户comment明确记录_模型误导影响.csv"
+  ],
+  "reconciliation_test_status": "passed_on_bounded_exact_blob_fixture_retry",
+  "initial_suite": {
+    "passed": 17,
+    "environment_missing_fixture_failures": 2
+  },
+  "final_retry": {
+    "passed": 2,
+    "failed": 0
+  },
+  "combined_unique_repository_tests_passed": 19
+}

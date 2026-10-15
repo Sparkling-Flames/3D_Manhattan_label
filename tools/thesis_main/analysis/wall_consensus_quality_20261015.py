@@ -13,10 +13,10 @@ from .worker_wq_integration_20261015 import frozen_engine, read
 from .wall_consensus_population_20261014 import prepare_input, summarize_state
 
 ROOT = Path(__file__).resolve().parents[3]
-OUT = ROOT/'research/wall_consensus_quality_20261015'
-POP = ROOT/'research/wall_consensus_population_20261014'
-BIND = ROOT/'research/difficulty_target_integration_20261015'
-ARCHIVE = ROOT/'research/quality_joint_closeout_review_20261015/pro_closeout_delta.zip'
+OUT = ROOT/'research/fusion/wall_consensus_quality_20261015'
+POP = ROOT/'research/fusion/wall_consensus_population_20261014'
+BIND = ROOT/'research/difficulty/difficulty_target_integration_20261015'
+ARCHIVE = ROOT/'research/quality/quality_joint_closeout_review_20261015/pro_closeout_delta.zip'
 VERSION = 'WQ-LS08-20261014'
 
 
@@ -190,7 +190,7 @@ def endpoints_and_validation():
     pd.DataFrame(rows).to_csv(OUT/'endpoint_comparison.csv',index=False,encoding='utf-8-sig')
     save(OUT/'member_registry.json',members)
     # Reuse already-scored exact member/reference cases as an integration check, not a second scorer.
-    scores=pd.read_csv(OUT/'subset_scores.csv');prior=pd.read_csv(ROOT/'research/worker_wq_integration_20261015/cached_team_scores.csv')
+    scores=pd.read_csv(OUT/'subset_scores.csv');prior=pd.read_csv(ROOT/'research/workers/worker_wq_integration_20261015/cached_team_scores.csv')
     comparison=scores[~scores.reference_axis.eq('selected_target')].merge(prior,on=['image','subset','reference_id'],suffixes=('_new','_old'))
     comparison=comparison.dropna(subset=['WQ_new','WQ_old'])
     assert len(comparison)>0

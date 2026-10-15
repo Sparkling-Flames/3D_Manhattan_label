@@ -1,0 +1,17 @@
+# normalized_confirmation_overlay.json字段约定
+
+- schema=manual_floor_scope_confirmation_overlay_v1；extension_schema=region_identity_and_confirmation_origin_v1。
+- records每条是一个独立确认的底面候选，唯一键(image_code, region_id)。本次35条、35图、全部primary。未确认草稿不进入records。
+- region_id、region_name、is_primary、is_active保留空间身份。主空间和替代空间不能合并确认，不允许按GT最高分自动选择。
+- polygon与cropped_floor_xz_h：相机高度归一化xz底面，按回执原数值/原顺序保留，不旋转起点、不排序、不裁回GT。
+- operations、cuts、decision、note、axis_angle、completed、updated_at沿用实际确认快照；confirmed_review完整保存原确认快照。
+- source、confirmed_at、confirmation_message_id、source_sha256为确认自身的历史来源，不能用最新交回时间覆盖。最新回执hash位于provenance.receipt_sha256。
+- confirmation_origin为inherited_prior_confirmation（16）或new_explicit_confirmation（19）；预留policy_no_operation_confirmation，本次0。
+- 编辑GT绑定：editing_reference_version / editing_reference_object_id / editing_reference_points_1024x512。reference_object_id为兼容字段。
+- historical_original_GT_*仅保存收到的历史来源字段；两张recovered_original_equivalent_snapshot并非取得原TXT字节，详情见reference_provenance。
+- provenance包含最新回执文件名、SHA256、导出时刻、JSON pointer、editor版本、逐图证据来源提交、原空间source_binding。
+- in_current_corpus=true共33条；false共2条（q9vSo1VnCiC-21、q9vSo1VnCiC-25），后者recovered_reference_view=true且没有研究标注，不扩大259图研究基集。
+- previous_confirmation_history保存工作台收到的旧历史及上一接回快照。protected_site_metadata保存资格/暂停等元数据，不能由底面确认推导解禁。
+- GT_modified=false、formal_eligibility_changed=false、reference_ready=false、top_boundary_pending=true始终保留；只允许独立底面指标接入，不当完整3D参考。
+
+消费建议：先确认validation_report.json和independent_audit.json均PASS，按image_code+region_id读取polygon，按各记录in_current_corpus筛选正式研究语料，并与对应编辑GT和正式标注身份绑定。不要把顶层evidence_source_commit覆盖逐图provenance.evidence_source_commit。

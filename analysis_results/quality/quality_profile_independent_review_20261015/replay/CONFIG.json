@@ -1,0 +1,73 @@
+{
+  "name": "Q-Profile-20261015",
+  "version": "research-v1",
+  "adopt": "unchanged WQ index + ordinary ordinal readout + reference-relative tolerance/structure diagnostics",
+  "production_default_changed": false,
+  "numeric_index": "WQ-LS08 unchanged",
+  "readout": {
+    "slope": 14.21059705934833,
+    "thresholds": [
+      3.3130866818136697,
+      4.2355842331909805,
+      8.243055312430476,
+      11.739616736164773
+    ],
+    "q_at_cumulative_half": [
+      23.314197622922403,
+      29.805814741644753,
+      58.00639676154808,
+      82.61170651124723
+    ],
+    "ridge": 0.01,
+    "converged": true,
+    "objective": 20.67784951676404,
+    "n": 30,
+    "class_counts": [
+      1,
+      2,
+      12,
+      10,
+      5
+    ]
+  },
+  "grade_order_low_to_high": [
+    "较差",
+    "一般与较差之间",
+    "一般",
+    "较好与一般之间",
+    "较好"
+  ],
+  "readout_scope": "conditional ordinary manual same-target/full-reference only; not automatic eligibility",
+  "low_end_warning": "only 1 poor and 2 average-poor fit examples; two lower cuts unstable",
+  "boundary_profile": {
+    "tolerances_spherical_deg": [
+      0.5,
+      1.0,
+      2.0
+    ],
+    "sampling_per_direction": 4096,
+    "recommended_as_total": false,
+    "noise_calibrated": false
+  },
+  "corner_diagnostic": {
+    "position_gate_spherical_deg": 2.0,
+    "angle_gate_BEV_deg": 10.0,
+    "correspondence": "cyclic maximum-cardinality minimum-position-distance; no Q or angle fitting",
+    "unmatched_angle": "NA with precision/recall denominator retained",
+    "recommended_as_hard_total_guard": false
+  },
+  "rejected_for_adoption_now": [
+    "T1/T2/T4 global-D deadband",
+    "MAX floor-family max loss",
+    "RGP max floor geometry without D",
+    "BC tolerance total",
+    "BC hard corner guard"
+  ],
+  "aggregation": "retain WQ scale for existing worker/fusion statistics; do not average grade labels or transformed readouts as if same estimand",
+  "next_panel": {
+    "n": 20,
+    "current_fit_images_excluded": true,
+    "historical_exposure_certified": false,
+    "geometry_hydrated_in_this_run": false
+  }
+}

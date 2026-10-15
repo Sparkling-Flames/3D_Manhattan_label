@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Downloads\hohonet_component_study_20261014\hohonet_component_study\reproduce.py", line 274, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\ASUS\Downloads\hohonet_component_study_20261014\hohonet_component_study\reproduce.py", line 73, in main
+    meta=recover_metadata(args.source_audit) if args.source_audit.exists() else {}
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Downloads\hohonet_component_study_20261014\hohonet_component_study\reproduce.py", line 49, in recover_metadata
+    src=r.get('source',{});c=src.get('condition')
+                             ^^^^^^^
+AttributeError: 'str' object has no attribute 'get'

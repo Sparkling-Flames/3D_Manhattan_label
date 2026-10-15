@@ -1,0 +1,46 @@
+{
+  "target_shear": {
+    "I": 0.9047619047619047,
+    "D": 5.654694409370882,
+    "Sb": 0.9016104477876817,
+    "Hm": 0.0,
+    "Hc": 0.0,
+    "WQ": 54.9140014026158,
+    "Q_half": 67.75766614429203,
+    "Q_noD": 88.44342282481102,
+    "IoU3D100": 90.47619047619047,
+    "direction_penalty": 0.6903628725858946,
+    "candidate_area": 16.0,
+    "candidate_perimeter": 16.158431221748458,
+    "reference_area": 16.0
+  },
+  "orthogonal_match": {
+    "I": 0.9091002328344937,
+    "D": 0.0,
+    "Sb": 0.9449844002600694,
+    "Hm": 0.0,
+    "Hc": 0.0,
+    "WQ": 88.66074876160907,
+    "Q_half": 88.66074876160907,
+    "Q_noD": 88.66074876160907,
+    "IoU3D100": 90.91002328344938,
+    "direction_penalty": 0.0,
+    "candidate_area": 17.59980312936283,
+    "candidate_perimeter": 16.79990195427605,
+    "reference_area": 16.0,
+    "case": "attempted_I_Sb_orthogonal_match",
+    "group": "failed_exact_overlap_boundary_match",
+    "amplitude": 0.2
+  },
+  "parameters": [
+    0.9999995129493875,
+    1.0999882313351186,
+    5.043003907492693e-07
+  ],
+  "I_difference": 0.004338328072589048,
+  "Sb_difference": 0.04337395247238762,
+  "exact_match_succeeded": false,
+  "failure_retained": "The orthogonal rectangle search did not exactly match both I and Sb; do not cite this as an exact information-redundancy counterexample.",
+  "not_human_evidence": true,
+  "not_an_argument_that_more_D_penalty_is_better": true
+}

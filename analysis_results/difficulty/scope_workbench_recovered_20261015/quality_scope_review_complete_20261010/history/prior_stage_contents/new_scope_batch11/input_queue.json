@@ -1,0 +1,4240 @@
+{
+  "schema": "scope_workbench_incremental_queue_v1",
+  "batch_id": "user_scope_review_11_20261010",
+  "source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+  "purpose": "将最新11图设为现有裁剪/重定义工作台的独立待裁定队列，保留已有5份底面确认。",
+  "counts": {
+    "new_scope_queue": 11,
+    "explicit_scope_different": 8,
+    "note_only_or_local_boundary": 3,
+    "prior_confirmed_floor_regions": 5,
+    "overlap_by_image_id": 0,
+    "overlap_by_gt_object_id": 0,
+    "separate_reference_or_oos_holds": 2,
+    "excluded_fireplace": 1,
+    "machine_area_screen_triggered": 3
+  },
+  "cases": [
+    {
+      "image": "S9hNv5qa7GM-04",
+      "image_id": "S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e",
+      "gt_object_id": "gt:S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e:data/mp3d_layout/valid/label_cor/S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e.txt",
+      "original_working_class": "简单",
+      "proposed_class": "简单",
+      "grade": "简单",
+      "scope": "目标基本一致",
+      "note": "gt的范围肯呢个略有不同,有些人可能会标的里面一点.gt是把柜边、门扇边当墙角",
+      "updated_at": "2026-10-10T09:55:45.833Z",
+      "queue_reason": "局部边界取舍：柜边/门扇边与更内侧墙面",
+      "case_type": "备注补充/局部边界",
+      "machine_area_screen": false,
+      "previous_scope_category": "insufficient_records",
+      "condition_gate_groups": [
+        {
+          "condition": "manual",
+          "gate": "main_candidate",
+          "n": 1,
+          "workers": 1,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 1,
+            "0.3": 1,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 1.0,
+          "fraction_upper": 1.0
+        }
+      ],
+      "selected_target": null,
+      "adjudication_status": "awaiting_user_target_decision",
+      "second_review_status": "blocked_on_target_decision",
+      "current_difficulty_not_final": true,
+      "card": "../all_cards/S9hNv5qa7GM-04.jpg",
+      "image_code": "S9hNv5qa7GM-04",
+      "reference_object_id": "gt:S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e:data/mp3d_layout/valid/label_cor/S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e.txt",
+      "source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+      "latest_user_review": {
+        "image": "S9hNv5qa7GM-04",
+        "image_id": "S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e",
+        "gt_object_id": "gt:S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e:data/mp3d_layout/valid/label_cor/S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e.txt",
+        "original_working_class": "简单",
+        "proposed_class": "简单",
+        "grade": "简单",
+        "scope": "目标基本一致",
+        "note": "gt的范围肯呢个略有不同,有些人可能会标的里面一点.gt是把柜边、门扇边当墙角",
+        "updated_at": "2026-10-10T09:55:45.833Z"
+      },
+      "latest_user_review_source": {
+        "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/source_review.json",
+        "json_pointer": "/records/1",
+        "review_version": "image-difficulty-review-259-20261010-v2",
+        "exported_at": "2026-10-10T10:19:20.996Z"
+      },
+      "queue_source": {
+        "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/scope_queue.json",
+        "json_pointer": "/cases/0"
+      },
+      "requested_operation_type": "local_boundary_redefinition",
+      "requested_operation_zh": "柜边、门扇边与更内侧真实墙面的取舍；请用户重新画定或保留边界。",
+      "operation_is_adjudication_prompt_not_user_confirmed_geometry": true,
+      "uncertainty_and_conflict_zh": "最新备注把 GT 解释为柜边/门扇边，旧 W011/R00672 备注却说 GT 到柜后墙角而人员停柜处，方向相反。不得沿用旧备注替用户预选内/外。",
+      "existing_workbench_inventory_match": true,
+      "existing_broad_review_queue": true,
+      "overlap_with_prior_confirmed_five": false,
+      "initial_review_state": {
+        "decision": "pending",
+        "completed": false,
+        "floor_region_confirmed": false,
+        "confirmed_version": null,
+        "received_confirmed_version": null,
+        "selected_target": null,
+        "operations": [],
+        "top_boundary_pending": true,
+        "reference_ready": false,
+        "GT_modified": false
+      },
+      "current_selected_gt_object_id": "gt:S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e:data/mp3d_layout/valid/label_cor/S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e.txt",
+      "historical_original_gt_object_id": "gt:S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e:data/mp3d_layout/valid/label_cor/S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e.txt",
+      "historical_reference_version_pending": false,
+      "hold_layers_in_frozen_inventory": [],
+      "hold_corpus_is_exhaustive_current_policy": false,
+      "historical_image_comment_summary": "目前只有一个标注结果,尚不能完全确定有没有标注空间范围的歧义\n最终确定存在空间范围的歧义",
+      "historical_original_comments": [
+        {
+          "comment_id": "C3f475d711865b8c7",
+          "comment": "标注的空间略有不同,gt是标注在了被柜子挡住的墙角,而他是在柜子处停止",
+          "object_kind": "annotation",
+          "object_id": "4283c99baaf5b8a1dd84",
+          "record_id": "R00672",
+          "worker_id": "W011",
+          "condition": "manual",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/145",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+              "pointer": "/annotation_decisions/4283c99baaf5b8a1dd84/comment",
+              "field": "comment",
+              "record_key": "4283c99baaf5b8a1dd84",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/continuation.json",
+              "pointer": "/annotation_decisions/4283c99baaf5b8a1dd84/comment",
+              "field": "comment",
+              "record_key": "4283c99baaf5b8a1dd84",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/latest.json",
+              "pointer": "/annotation_decisions/4283c99baaf5b8a1dd84/comment",
+              "field": "comment",
+              "record_key": "4283c99baaf5b8a1dd84",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/previous_return.json",
+              "pointer": "/annotation_decisions/4283c99baaf5b8a1dd84/comment",
+              "field": "comment",
+              "record_key": "4283c99baaf5b8a1dd84",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/second.json",
+              "pointer": "/annotation_decisions/4283c99baaf5b8a1dd84/comment",
+              "field": "comment",
+              "record_key": "4283c99baaf5b8a1dd84",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/review_return_original.json",
+              "pointer": "/annotation_decisions/4283c99baaf5b8a1dd84/comment",
+              "field": "comment",
+              "record_key": "4283c99baaf5b8a1dd84",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/second_review.json",
+              "pointer": "/annotation_decisions/4283c99baaf5b8a1dd84/comment",
+              "field": "comment",
+              "record_key": "4283c99baaf5b8a1dd84",
+              "role": "raw_review_export"
+            }
+          ]
+        },
+        {
+          "comment_id": "Ce26d05a1ba6f866a",
+          "comment": "目前只有一个标注结果,尚不能完全确定有没有标注空间范围的歧义",
+          "object_kind": "image",
+          "object_id": "S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e",
+          "record_id": "",
+          "worker_id": "",
+          "condition": "",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/146",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+              "pointer": "/image_decisions/S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e/comment",
+              "field": "comment",
+              "record_key": "S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/current_semantic_findings.json",
+              "pointer": "/findings/0/record/comment",
+              "field": "comment",
+              "record_key": "",
+              "role": "derived_review_or_classification"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/continuation.json",
+              "pointer": "/image_decisions/S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e/comment",
+              "field": "comment",
+              "record_key": "S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/latest.json",
+              "pointer": "/image_decisions/S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e/comment",
+              "field": "comment",
+              "record_key": "S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/previous_return.json",
+              "pointer": "/image_decisions/S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e/comment",
+              "field": "comment",
+              "record_key": "S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/second.json",
+              "pointer": "/image_decisions/S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e/comment",
+              "field": "comment",
+              "record_key": "S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/semantic_findings.json",
+              "pointer": "/findings/0/record/comment",
+              "field": "comment",
+              "record_key": "",
+              "role": "derived_review_or_classification"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/review_return_original.json",
+              "pointer": "/image_decisions/S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e/comment",
+              "field": "comment",
+              "record_key": "S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/second_review.json",
+              "pointer": "/image_decisions/S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e/comment",
+              "field": "comment",
+              "record_key": "S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e",
+              "role": "raw_review_export"
+            }
+          ]
+        },
+        {
+          "comment_id": "C0b0d625665b8f581",
+          "comment": "最终确定存在空间范围的歧义",
+          "object_kind": "image",
+          "object_id": "S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e",
+          "record_id": "",
+          "worker_id": "",
+          "condition": "",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/review_final_20260928/current_semantic_findings.json",
+              "pointer": "/image_overrides/S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e/reason",
+              "field": "reason",
+              "record_key": "S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e",
+              "role": "derived_review_or_classification"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/continuation.json",
+              "pointer": "/issue_decisions/S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e:continue/comment",
+              "field": "comment",
+              "record_key": "S9hNv5qa7GM_2ea5348654d24115bba3dcdb21fa655e:continue",
+              "role": "raw_review_export"
+            }
+          ]
+        }
+      ],
+      "additional_historical_context": [],
+      "review_card_path": "/workspace/scratch/a365811da80c/current_order_review_20261010/analysis_results/image_difficulty_full_review_20261010/all_cards/S9hNv5qa7GM-04.jpg"
+    },
+    {
+      "image": "pa4otMbVnkk-14",
+      "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+      "gt_object_id": "gt:pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3:data/mp3d_layout/valid/label_cor/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.txt",
+      "original_working_class": "简单",
+      "proposed_class": "待复核",
+      "grade": "中等",
+      "scope": "未审",
+      "note": "这个是靠近门洞,所以出现了不同范围的标注,同时遮挡较多",
+      "updated_at": "2026-10-10T09:59:46.789Z",
+      "queue_reason": "备注明确指出靠近门洞导致不同范围",
+      "case_type": "备注补充/局部边界",
+      "machine_area_screen": true,
+      "previous_scope_category": "geometry_or_reference_uncertain",
+      "condition_gate_groups": [
+        {
+          "condition": "manual",
+          "gate": "excluded",
+          "n": 1,
+          "workers": 1,
+          "invalid": 1,
+          "flagged_counts": {
+            "0.2": 0,
+            "0.3": 0,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.0,
+          "fraction_upper": 1.0
+        },
+        {
+          "condition": "manual",
+          "gate": "main_candidate",
+          "n": 5,
+          "workers": 5,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 4,
+            "0.3": 3,
+            "0.4": 3
+          },
+          "geometry_signal": true,
+          "fraction_lower": 0.6,
+          "fraction_upper": 0.6
+        }
+      ],
+      "selected_target": null,
+      "adjudication_status": "awaiting_user_target_decision",
+      "second_review_status": "blocked_on_target_decision",
+      "current_difficulty_not_final": true,
+      "card": "../all_cards/pa4otMbVnkk-14.jpg",
+      "image_code": "pa4otMbVnkk-14",
+      "reference_object_id": "gt:pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3:data/mp3d_layout/valid/label_cor/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.txt",
+      "source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+      "latest_user_review": {
+        "image": "pa4otMbVnkk-14",
+        "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+        "gt_object_id": "gt:pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3:data/mp3d_layout/valid/label_cor/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.txt",
+        "original_working_class": "简单",
+        "proposed_class": "待复核",
+        "grade": "中等",
+        "scope": "未审",
+        "note": "这个是靠近门洞,所以出现了不同范围的标注,同时遮挡较多",
+        "updated_at": "2026-10-10T09:59:46.789Z"
+      },
+      "latest_user_review_source": {
+        "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/source_review.json",
+        "json_pointer": "/records/6",
+        "review_version": "image-difficulty-review-259-20261010-v2",
+        "exported_at": "2026-10-10T10:19:20.996Z"
+      },
+      "queue_source": {
+        "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/scope_queue.json",
+        "json_pointer": "/cases/1"
+      },
+      "requested_operation_type": "doorway_target_redefinition",
+      "requested_operation_zh": "确认靠近门洞时以外侧区域还是房间内部为目标，并明确门口停止线。",
+      "operation_is_adjudication_prompt_not_user_confirmed_geometry": true,
+      "uncertainty_and_conflict_zh": "最新 scope 选项为未审。旧原话偏好 GT 标法并强调外侧区域；新增意见未给出新 polygon，也未明确推翻旧偏好。",
+      "existing_workbench_inventory_match": true,
+      "existing_broad_review_queue": true,
+      "overlap_with_prior_confirmed_five": false,
+      "initial_review_state": {
+        "decision": "pending",
+        "completed": false,
+        "floor_region_confirmed": false,
+        "confirmed_version": null,
+        "received_confirmed_version": null,
+        "selected_target": null,
+        "operations": [],
+        "top_boundary_pending": true,
+        "reference_ready": false,
+        "GT_modified": false
+      },
+      "current_selected_gt_object_id": "gt:pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3:data/mp3d_layout/valid/label_cor/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.txt",
+      "historical_original_gt_object_id": "gt:pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3:data/mp3d_layout/valid/label_cor/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.txt",
+      "historical_reference_version_pending": false,
+      "hold_layers_in_frozen_inventory": [],
+      "hold_corpus_is_exhaustive_current_policy": false,
+      "historical_image_comment_summary": "这图里门框下很近,而且存在不同的标注范围.有些人会标上房间里的空间,但是最好的还是像gt那样的标法.\nbi 的enclosed 标注有点错,HOHONET 和gt 属于enclosed\nHOHONET 和gt 属于enclosed\nbi 的enclosed 标注有点错",
+      "historical_original_comments": [
+        {
+          "comment_id": "C7174ac7548dc65fd",
+          "comment": "这图里门框下很近,而且存在不同的标注范围.有些人会标上房间里的空间,但是最好的还是像gt那样的标法.",
+          "object_kind": "image",
+          "object_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+          "record_id": "",
+          "worker_id": "",
+          "condition": "",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/477",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+              "pointer": "/image_decisions/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3/comment",
+              "field": "comment",
+              "record_key": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/latest.json",
+              "pointer": "/image_decisions/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3/comment",
+              "field": "comment",
+              "record_key": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/previous_return.json",
+              "pointer": "/image_decisions/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3/comment",
+              "field": "comment",
+              "record_key": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/second.json",
+              "pointer": "/image_decisions/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3/comment",
+              "field": "comment",
+              "record_key": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/review_return_original.json",
+              "pointer": "/image_decisions/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3/comment",
+              "field": "comment",
+              "record_key": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/second_review.json",
+              "pointer": "/image_decisions/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3/comment",
+              "field": "comment",
+              "record_key": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+              "role": "raw_review_export"
+            }
+          ]
+        },
+        {
+          "comment_id": "Cf484b6064c3a0e87",
+          "comment": "标了房间里的空间,标的勉强还行",
+          "object_kind": "annotation",
+          "object_id": "ed0dcc14c4c690d68ad7",
+          "record_id": "R02309",
+          "worker_id": "W028",
+          "condition": "manual",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/478",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+              "pointer": "/annotation_decisions/ed0dcc14c4c690d68ad7/comment",
+              "field": "comment",
+              "record_key": "ed0dcc14c4c690d68ad7",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/latest.json",
+              "pointer": "/annotation_decisions/ed0dcc14c4c690d68ad7/comment",
+              "field": "comment",
+              "record_key": "ed0dcc14c4c690d68ad7",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/previous_return.json",
+              "pointer": "/annotation_decisions/ed0dcc14c4c690d68ad7/comment",
+              "field": "comment",
+              "record_key": "ed0dcc14c4c690d68ad7",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/second.json",
+              "pointer": "/annotation_decisions/ed0dcc14c4c690d68ad7/comment",
+              "field": "comment",
+              "record_key": "ed0dcc14c4c690d68ad7",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/review_return_original.json",
+              "pointer": "/annotation_decisions/ed0dcc14c4c690d68ad7/comment",
+              "field": "comment",
+              "record_key": "ed0dcc14c4c690d68ad7",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/second_review.json",
+              "pointer": "/annotation_decisions/ed0dcc14c4c690d68ad7/comment",
+              "field": "comment",
+              "record_key": "ed0dcc14c4c690d68ad7",
+              "role": "raw_review_export"
+            }
+          ]
+        },
+        {
+          "comment_id": "C80da78ec5713c1a0",
+          "comment": "标注空间的范围不同,是个特别经典的不同范围的标注典例",
+          "object_kind": "annotation",
+          "object_id": "ed0dcc14c4c690d68ad7",
+          "record_id": "R02309",
+          "worker_id": "W028",
+          "condition": "manual",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/479",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/user.json",
+              "pointer": "/decisions/ed0dcc14c4c690d68ad7/comment",
+              "field": "comment",
+              "record_key": "ed0dcc14c4c690d68ad7",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_reconciliation_20260925/evidence/user_review.json",
+              "pointer": "/decisions/ed0dcc14c4c690d68ad7/comment",
+              "field": "comment",
+              "record_key": "ed0dcc14c4c690d68ad7",
+              "role": "raw_review_export"
+            }
+          ]
+        },
+        {
+          "comment_id": "Cb13536cefad547a1",
+          "comment": "只有6点",
+          "object_kind": "annotation",
+          "object_id": "3bb435208d6ac7f802e0",
+          "record_id": "R00596",
+          "worker_id": "W032",
+          "condition": "manual",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/480",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+              "pointer": "/annotation_decisions/3bb435208d6ac7f802e0/comment",
+              "field": "comment",
+              "record_key": "3bb435208d6ac7f802e0",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/latest.json",
+              "pointer": "/annotation_decisions/3bb435208d6ac7f802e0/comment",
+              "field": "comment",
+              "record_key": "3bb435208d6ac7f802e0",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/previous_return.json",
+              "pointer": "/annotation_decisions/3bb435208d6ac7f802e0/comment",
+              "field": "comment",
+              "record_key": "3bb435208d6ac7f802e0",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/second.json",
+              "pointer": "/annotation_decisions/3bb435208d6ac7f802e0/comment",
+              "field": "comment",
+              "record_key": "3bb435208d6ac7f802e0",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/review_return_original.json",
+              "pointer": "/annotation_decisions/3bb435208d6ac7f802e0/comment",
+              "field": "comment",
+              "record_key": "3bb435208d6ac7f802e0",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/second_review.json",
+              "pointer": "/annotation_decisions/3bb435208d6ac7f802e0/comment",
+              "field": "comment",
+              "record_key": "3bb435208d6ac7f802e0",
+              "role": "raw_review_export"
+            }
+          ]
+        },
+        {
+          "comment_id": "C4d60353403756a65",
+          "comment": "标了房间里的空间,但没标好",
+          "object_kind": "annotation",
+          "object_id": "356ed9fcc445e03fdd8d",
+          "record_id": "R00530",
+          "worker_id": "W037",
+          "condition": "manual",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/481",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+              "pointer": "/annotation_decisions/356ed9fcc445e03fdd8d/comment",
+              "field": "comment",
+              "record_key": "356ed9fcc445e03fdd8d",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/latest.json",
+              "pointer": "/annotation_decisions/356ed9fcc445e03fdd8d/comment",
+              "field": "comment",
+              "record_key": "356ed9fcc445e03fdd8d",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/previous_return.json",
+              "pointer": "/annotation_decisions/356ed9fcc445e03fdd8d/comment",
+              "field": "comment",
+              "record_key": "356ed9fcc445e03fdd8d",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/second.json",
+              "pointer": "/annotation_decisions/356ed9fcc445e03fdd8d/comment",
+              "field": "comment",
+              "record_key": "356ed9fcc445e03fdd8d",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/review_return_original.json",
+              "pointer": "/annotation_decisions/356ed9fcc445e03fdd8d/comment",
+              "field": "comment",
+              "record_key": "356ed9fcc445e03fdd8d",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/second_review.json",
+              "pointer": "/annotation_decisions/356ed9fcc445e03fdd8d/comment",
+              "field": "comment",
+              "record_key": "356ed9fcc445e03fdd8d",
+              "role": "raw_review_export"
+            }
+          ]
+        }
+      ],
+      "additional_historical_context": [
+        {
+          "source_path": "/workspace/scratch/a365811da80c/scope_release_staging_20261010/full_review/local_increment/integration_verified69.json",
+          "json_pointer": "/60",
+          "record": {
+            "local_comment_id": "LOCAL_EXTRA_25",
+            "image_code": "pa4otMbVnkk-14",
+            "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+            "object_id": null,
+            "record_id": null,
+            "comment": "b12的 14和05不算同房,我觉得14的标注重点应该是外面的区域,而不是房间里的05区域,但是05和47算同房,这个归为离交界区域很近,但还是暂且不算",
+            "binding_level": "image_or_cross_image_context",
+            "pair_bindings": [],
+            "content_role": "original_user_cross_image_relationship_context",
+            "schema": "scene_open_layout_user_review_v3",
+            "reference_version": null,
+            "reference_id": null,
+            "interpretation_status": "context_requires_manual_semantics",
+            "cloud_status": "absent_image_text",
+            "raw_text_verified": true,
+            "sources": [
+              {
+                "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+                "json_pointer": "/source_user/rows/336/discussion/batch_records/0/source_comment",
+                "reported_updated_at": null,
+                "raw_updated_at": null,
+                "raw_created_at": null,
+                "raw_record_sha256": "a2a7eacd38fba54ba339380e3216028a17255b773465b8cff77d1d30780d9a81"
+              },
+              {
+                "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+                "json_pointer": "/source_user/rows/336/discussion/batch_records/0/source_comment",
+                "reported_updated_at": null,
+                "raw_updated_at": null,
+                "raw_created_at": null,
+                "raw_record_sha256": "a2a7eacd38fba54ba339380e3216028a17255b773465b8cff77d1d30780d9a81"
+              },
+              {
+                "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+                "json_pointer": "/rows/336/discussion/batch_records/0/source_comment",
+                "reported_updated_at": null,
+                "raw_updated_at": null,
+                "raw_created_at": null,
+                "raw_record_sha256": "a2a7eacd38fba54ba339380e3216028a17255b773465b8cff77d1d30780d9a81"
+              },
+              {
+                "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+                "json_pointer": "/rows/336/discussion/batch_records/0/source_comment",
+                "reported_updated_at": null,
+                "raw_updated_at": null,
+                "raw_created_at": null,
+                "raw_record_sha256": "a2a7eacd38fba54ba339380e3216028a17255b773465b8cff77d1d30780d9a81"
+              }
+            ],
+            "scope_difference_confirmed": false,
+            "no_gt_score_or_eligibility_change": true
+          }
+        },
+        {
+          "source_path": "/workspace/scratch/a365811da80c/scope_release_staging_20261010/full_review/archive_reconciliation/new_early_image_comments_21.json",
+          "json_pointer": "/17",
+          "record": {
+            "record_key": "EARLY_IMAGE_035",
+            "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+            "image_code": "pa4otMbVnkk-14",
+            "text": "确实离门框很近",
+            "binding_level": "image",
+            "evidence_level": "original_human_image_comment_historical",
+            "source_saved_at": "2026-09-10T15:16:04.389Z",
+            "source_time_scope": "entire_export_not_individual_edit",
+            "known_inventory_exact_image_text": false,
+            "in_current_259": true,
+            "scope_difference_confirmed": false,
+            "classification": "historical_scene_boundary_oos_visibility_or_room_context",
+            "sources": [
+              {
+                "bundle_relative_path": "图片分类与复审来源/analysis_results/scene_image_exploration_20260910_v1/user_group_review_20260912.json",
+                "json_pointer": "/source_user/source_user/rows/336/user_note",
+                "file_sha256": "014770c25862e73317481389f1ddd6b8c87d6e1de1f7c16a5e33bcceb90e9349",
+                "canonical_json_record_sha256": "552339d765c1d3cf6fca26af9d65b85074eca51d6acdaf6382c4bb0ac5b99afb"
+              },
+              {
+                "bundle_relative_path": "图片分类与复审来源/analysis_results/scene_image_exploration_20260910_v1/comment_semantics_review.json",
+                "json_pointer": "/rows/35/original_comment",
+                "file_sha256": "458c203f117cafa28f54ac2d546536d8a08f0e4faa1487af02d6b26a74d7dfd5",
+                "canonical_json_record_sha256": "f66b98e9f5a3e037b99180cb6fcfb42148186129d1c87093b7bdba86cc45b1f2"
+              }
+            ],
+            "raw_record": {
+              "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+              "building": "pa4otMbVnkk",
+              "split": "valid",
+              "user_room": "r23",
+              "user_type": "复合／待定  , 厨房 客厅",
+              "user_boundary": "",
+              "user_doorway": "疑似",
+              "user_artifact": "未见明显异常",
+              "user_status": "已复核",
+              "user_note": "确实离门框很近",
+              "user_audit_status": "待我复核"
+            }
+          }
+        }
+      ],
+      "review_card_path": "/workspace/scratch/a365811da80c/current_order_review_20261010/analysis_results/image_difficulty_full_review_20261010/all_cards/pa4otMbVnkk-14.jpg"
+    },
+    {
+      "image": "q9vSo1VnCiC-11",
+      "image_id": "q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd",
+      "gt_object_id": "gt:q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd.txt",
+      "original_working_class": "困难",
+      "proposed_class": "困难",
+      "grade": "简单",
+      "scope": "范围明显不同",
+      "note": "标注范围不同",
+      "updated_at": "2026-10-10T10:10:14.184Z",
+      "queue_reason": "范围选项明确不同",
+      "case_type": "范围明显不同",
+      "machine_area_screen": false,
+      "previous_scope_category": "local_or_minority_candidate",
+      "condition_gate_groups": [
+        {
+          "condition": "manual",
+          "gate": "main_candidate",
+          "n": 5,
+          "workers": 5,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 2,
+            "0.3": 1,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.2,
+          "fraction_upper": 0.2
+        }
+      ],
+      "selected_target": null,
+      "adjudication_status": "awaiting_user_target_decision",
+      "second_review_status": "blocked_on_target_decision",
+      "current_difficulty_not_final": true,
+      "card": "../all_cards/q9vSo1VnCiC-11.jpg",
+      "image_code": "q9vSo1VnCiC-11",
+      "reference_object_id": "gt:q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd.txt",
+      "source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+      "latest_user_review": {
+        "image": "q9vSo1VnCiC-11",
+        "image_id": "q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd",
+        "gt_object_id": "gt:q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd.txt",
+        "original_working_class": "困难",
+        "proposed_class": "困难",
+        "grade": "简单",
+        "scope": "范围明显不同",
+        "note": "标注范围不同",
+        "updated_at": "2026-10-10T10:10:14.184Z"
+      },
+      "latest_user_review_source": {
+        "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/source_review.json",
+        "json_pointer": "/records/7",
+        "review_version": "image-difficulty-review-259-20261010-v2",
+        "exported_at": "2026-10-10T10:19:20.996Z"
+      },
+      "queue_source": {
+        "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/scope_queue.json",
+        "json_pointer": "/cases/2"
+      },
+      "requested_operation_type": "doorway_branch_decision",
+      "requested_operation_zh": "核对右侧门洞后区域是否纳入，若不纳入由用户指定停止线。",
+      "operation_is_adjudication_prompt_not_user_confirmed_geometry": true,
+      "uncertainty_and_conflict_zh": "最新只说范围不同；旧原话“我觉得可以不标”提供候选方向，不是本轮坐标确认。",
+      "existing_workbench_inventory_match": true,
+      "existing_broad_review_queue": true,
+      "overlap_with_prior_confirmed_five": false,
+      "initial_review_state": {
+        "decision": "pending",
+        "completed": false,
+        "floor_region_confirmed": false,
+        "confirmed_version": null,
+        "received_confirmed_version": null,
+        "selected_target": null,
+        "operations": [],
+        "top_boundary_pending": true,
+        "reference_ready": false,
+        "GT_modified": false
+      },
+      "current_selected_gt_object_id": "gt:q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd.txt",
+      "historical_original_gt_object_id": "gt:q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd.txt",
+      "historical_reference_version_pending": false,
+      "hold_layers_in_frozen_inventory": [],
+      "hold_corpus_is_exhaustive_current_policy": false,
+      "historical_image_comment_summary": "gt标了右边门洞后的区域(我觉得可以不标的),空间范围不同",
+      "historical_original_comments": [
+        {
+          "comment_id": "Cea6b143c6e507fbf",
+          "comment": "gt标了右边门洞后的区域(我觉得可以不标的),空间范围不同",
+          "object_kind": "image",
+          "object_id": "q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd",
+          "record_id": "",
+          "worker_id": "",
+          "condition": "",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/510",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/coverage.json",
+              "pointer": "/decisions/q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd/comment",
+              "field": "comment",
+              "record_key": "q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/图片覆盖补审_已合并.json",
+              "pointer": "/decisions/q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd/comment",
+              "field": "comment",
+              "record_key": "q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd",
+              "role": "derived_review_or_classification"
+            }
+          ]
+        }
+      ],
+      "additional_historical_context": [
+        {
+          "source_path": "/workspace/scratch/a365811da80c/scope_release_staging_20261010/full_review/archive_reconciliation/historical_group_comments_55.json",
+          "json_pointer": "/29",
+          "record": {
+            "record_key": "GROUP_154",
+            "text": "q9vSo1VnCiC · 12 / 25和q9vSo1VnCiC · 11 / 16 和q9vSo1VnCiC · 15 / 21  这6张图其实是同一房间",
+            "text_hash": "71068c10dd3a807cc43b5267d2aceafc9ba352460f16427b920165b812c0e985",
+            "binding_level": "group_not_individual_votes",
+            "evidence_level": "original_human_group_comment_historical",
+            "group_id": "q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd|q9vSo1VnCiC_a424533651804a38a55b1252daccc81e",
+            "group_review_index": 154,
+            "associated_images": [
+              {
+                "image_id": "q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd",
+                "image_code": "q9vSo1VnCiC-11",
+                "in_current_259": true
+              },
+              {
+                "image_id": "q9vSo1VnCiC_a424533651804a38a55b1252daccc81e",
+                "image_code": "q9vSo1VnCiC-16",
+                "in_current_259": true
+              }
+            ],
+            "source_saved_at": "2026-09-11T18:17:28.630Z",
+            "source_time_scope": "entire_export_not_individual_edit",
+            "recorded_status": "",
+            "recorded_decision": "优先候选",
+            "source_resolves_previous_pending9": false,
+            "scope_difference_confirmed": false,
+            "classification": "oos_difficulty_visibility_or_same_room_context",
+            "sources": [
+              {
+                "bundle_relative_path": "图片分类与复审来源/analysis_results/scene_image_exploration_20260910_v1/user_group_review_20260912.json",
+                "json_pointer": "/group_reviews/154/current/note",
+                "file_sha256": "014770c25862e73317481389f1ddd6b8c87d6e1de1f7c16a5e33bcceb90e9349",
+                "canonical_json_record_sha256": "976fe12f389d7301bba368e8c49d11a552cdd69ccf4e02c867df8aefc5e980a1"
+              },
+              {
+                "bundle_relative_path": "图片分类与复审来源/analysis_results/scene_image_exploration_20260910_v1/user_group_review_20260912.json",
+                "json_pointer": "/group_reviews/154/user_revision/note",
+                "file_sha256": "014770c25862e73317481389f1ddd6b8c87d6e1de1f7c16a5e33bcceb90e9349",
+                "canonical_json_record_sha256": "976fe12f389d7301bba368e8c49d11a552cdd69ccf4e02c867df8aefc5e980a1"
+              },
+              {
+                "bundle_relative_path": "原清单123项/004_same_room_selection_registry_v2_20260912.json",
+                "json_pointer": "/groups/154/raw_current/note",
+                "file_sha256": "d43d0e92657fd00a2b034e305c9b33776c74716f12d826a1907ba773386fa0df",
+                "canonical_json_record_sha256": "e5aff6b1e3445548e1835bbed5f7e2c9227195151f9da693371b17abf00040e4"
+              }
+            ],
+            "raw_record": {
+              "group_id": "q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd|q9vSo1VnCiC_a424533651804a38a55b1252daccc81e",
+              "image_ids": [
+                "q9vSo1VnCiC_830eb252ae01401a8fe55f9538e627dd",
+                "q9vSo1VnCiC_a424533651804a38a55b1252daccc81e"
+              ],
+              "pair_ids": [
+                "q9vSo1VnCiC:11-16"
+              ],
+              "prefill": {
+                "physical_same": "支持",
+                "main_visual_alignment": "一致",
+                "extent_alignment": "预期相近",
+                "difficulty_similarity": "预期相近",
+                "decision": "优先候选",
+                "status": "",
+                "note": ""
+              },
+              "current": {
+                "physical_same": "支持",
+                "main_visual_alignment": "一致",
+                "extent_alignment": "预期相近",
+                "difficulty_similarity": "预期相近",
+                "decision": "优先候选",
+                "status": "",
+                "note": "q9vSo1VnCiC · 12 / 25和q9vSo1VnCiC · 11 / 16 和q9vSo1VnCiC · 15 / 21  这6张图其实是同一房间"
+              },
+              "changed_fields": [
+                "note"
+              ],
+              "user_revision": {
+                "note": "q9vSo1VnCiC · 12 / 25和q9vSo1VnCiC · 11 / 16 和q9vSo1VnCiC · 15 / 21  这6张图其实是同一房间"
+              }
+            }
+          }
+        }
+      ],
+      "review_card_path": "/workspace/scratch/a365811da80c/current_order_review_20261010/analysis_results/image_difficulty_full_review_20261010/all_cards/q9vSo1VnCiC-11.jpg"
+    },
+    {
+      "image": "q9vSo1VnCiC-12",
+      "image_id": "q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5",
+      "gt_object_id": "gt:q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5.txt",
+      "original_working_class": "困难",
+      "proposed_class": "困难",
+      "grade": "简单",
+      "scope": "范围明显不同",
+      "note": "标注范围不同",
+      "updated_at": "2026-10-10T10:10:26.530Z",
+      "queue_reason": "范围选项明确不同",
+      "case_type": "范围明显不同",
+      "machine_area_screen": true,
+      "previous_scope_category": "geometry_or_reference_uncertain",
+      "condition_gate_groups": [
+        {
+          "condition": "manual",
+          "gate": "main_candidate",
+          "n": 6,
+          "workers": 6,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 2,
+            "0.3": 2,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.3333333333333333,
+          "fraction_upper": 0.3333333333333333
+        },
+        {
+          "condition": "semi",
+          "gate": "main_candidate",
+          "n": 4,
+          "workers": 4,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 3,
+            "0.3": 2,
+            "0.4": 1
+          },
+          "geometry_signal": true,
+          "fraction_lower": 0.5,
+          "fraction_upper": 0.5
+        }
+      ],
+      "selected_target": null,
+      "adjudication_status": "awaiting_user_target_decision",
+      "second_review_status": "blocked_on_target_decision",
+      "current_difficulty_not_final": true,
+      "card": "../all_cards/q9vSo1VnCiC-12.jpg",
+      "image_code": "q9vSo1VnCiC-12",
+      "reference_object_id": "gt:q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5.txt",
+      "source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+      "latest_user_review": {
+        "image": "q9vSo1VnCiC-12",
+        "image_id": "q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5",
+        "gt_object_id": "gt:q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5.txt",
+        "original_working_class": "困难",
+        "proposed_class": "困难",
+        "grade": "简单",
+        "scope": "范围明显不同",
+        "note": "标注范围不同",
+        "updated_at": "2026-10-10T10:10:26.530Z"
+      },
+      "latest_user_review_source": {
+        "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/source_review.json",
+        "json_pointer": "/records/8",
+        "review_version": "image-difficulty-review-259-20261010-v2",
+        "exported_at": "2026-10-10T10:19:20.996Z"
+      },
+      "queue_source": {
+        "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/scope_queue.json",
+        "json_pointer": "/cases/3"
+      },
+      "requested_operation_type": "two_doorway_branch_decision",
+      "requested_operation_zh": "核对 GT 两处门后区域是否纳入，可展示旧 W032/R01744 的简化标法作证据。",
+      "operation_is_adjudication_prompt_not_user_confirmed_geometry": true,
+      "uncertainty_and_conflict_zh": "最新未指明哪两条停止线，也未批准复制任何人员 polygon。",
+      "existing_workbench_inventory_match": true,
+      "existing_broad_review_queue": true,
+      "overlap_with_prior_confirmed_five": false,
+      "initial_review_state": {
+        "decision": "pending",
+        "completed": false,
+        "floor_region_confirmed": false,
+        "confirmed_version": null,
+        "received_confirmed_version": null,
+        "selected_target": null,
+        "operations": [],
+        "top_boundary_pending": true,
+        "reference_ready": false,
+        "GT_modified": false
+      },
+      "current_selected_gt_object_id": "gt:q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5.txt",
+      "historical_original_gt_object_id": "gt:q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5.txt",
+      "historical_reference_version_pending": false,
+      "hold_layers_in_frozen_inventory": [],
+      "hold_corpus_is_exhaustive_current_policy": false,
+      "historical_image_comment_summary": "",
+      "historical_original_comments": [
+        {
+          "comment_id": "C008493e602de5ab7",
+          "comment": "gt 标了两处门后的东西,其实他现在的标法才是最简洁的标法",
+          "object_kind": "annotation",
+          "object_id": "af75f69b47040e315e88",
+          "record_id": "R01744",
+          "worker_id": "W032",
+          "condition": "semi",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/511",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/user.json",
+              "pointer": "/decisions/af75f69b47040e315e88/comment",
+              "field": "comment",
+              "record_key": "af75f69b47040e315e88",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_reconciliation_20260925/evidence/user_review.json",
+              "pointer": "/decisions/af75f69b47040e315e88/comment",
+              "field": "comment",
+              "record_key": "af75f69b47040e315e88",
+              "role": "raw_review_export"
+            }
+          ]
+        }
+      ],
+      "additional_historical_context": [
+        {
+          "source_path": "/workspace/scratch/a365811da80c/scope_release_staging_20261010/full_review/archive_reconciliation/historical_group_comments_55.json",
+          "json_pointer": "/30",
+          "record": {
+            "record_key": "GROUP_155",
+            "text": "q9vSo1VnCiC · 12 / 25和q9vSo1VnCiC · 11 / 16 和q9vSo1VnCiC · 15 / 21  这6张图其实是同一房间",
+            "text_hash": "71068c10dd3a807cc43b5267d2aceafc9ba352460f16427b920165b812c0e985",
+            "binding_level": "group_not_individual_votes",
+            "evidence_level": "original_human_group_comment_historical",
+            "group_id": "q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5|q9vSo1VnCiC_ca6944f5dd334193bb86058ba5ab5dc3",
+            "group_review_index": 155,
+            "associated_images": [
+              {
+                "image_id": "q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5",
+                "image_code": "q9vSo1VnCiC-12",
+                "in_current_259": true
+              },
+              {
+                "image_id": "q9vSo1VnCiC_ca6944f5dd334193bb86058ba5ab5dc3",
+                "image_code": "q9vSo1VnCiC-25",
+                "in_current_259": false
+              }
+            ],
+            "source_saved_at": "2026-09-11T18:17:28.630Z",
+            "source_time_scope": "entire_export_not_individual_edit",
+            "recorded_status": "",
+            "recorded_decision": "优先候选",
+            "source_resolves_previous_pending9": false,
+            "scope_difference_confirmed": false,
+            "classification": "oos_difficulty_visibility_or_same_room_context",
+            "sources": [
+              {
+                "bundle_relative_path": "图片分类与复审来源/analysis_results/scene_image_exploration_20260910_v1/user_group_review_20260912.json",
+                "json_pointer": "/group_reviews/155/current/note",
+                "file_sha256": "014770c25862e73317481389f1ddd6b8c87d6e1de1f7c16a5e33bcceb90e9349",
+                "canonical_json_record_sha256": "52f0a162ae811e4cfc358984e40611a885fc0d8b3f6348159c4e35acf603abad"
+              },
+              {
+                "bundle_relative_path": "图片分类与复审来源/analysis_results/scene_image_exploration_20260910_v1/user_group_review_20260912.json",
+                "json_pointer": "/group_reviews/155/user_revision/note",
+                "file_sha256": "014770c25862e73317481389f1ddd6b8c87d6e1de1f7c16a5e33bcceb90e9349",
+                "canonical_json_record_sha256": "52f0a162ae811e4cfc358984e40611a885fc0d8b3f6348159c4e35acf603abad"
+              },
+              {
+                "bundle_relative_path": "原清单123项/004_same_room_selection_registry_v2_20260912.json",
+                "json_pointer": "/groups/155/raw_current/note",
+                "file_sha256": "d43d0e92657fd00a2b034e305c9b33776c74716f12d826a1907ba773386fa0df",
+                "canonical_json_record_sha256": "4ceb260db30f270e92c1b606932e5eab3be23dab8f985c0eb1b27b067f84de7a"
+              }
+            ],
+            "raw_record": {
+              "group_id": "q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5|q9vSo1VnCiC_ca6944f5dd334193bb86058ba5ab5dc3",
+              "image_ids": [
+                "q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5",
+                "q9vSo1VnCiC_ca6944f5dd334193bb86058ba5ab5dc3"
+              ],
+              "pair_ids": [
+                "q9vSo1VnCiC:12-25"
+              ],
+              "prefill": {
+                "physical_same": "支持",
+                "main_visual_alignment": "一致",
+                "extent_alignment": "预期相近",
+                "difficulty_similarity": "预期相近",
+                "decision": "优先候选",
+                "status": "",
+                "note": ""
+              },
+              "current": {
+                "physical_same": "支持",
+                "main_visual_alignment": "一致",
+                "extent_alignment": "预期相近",
+                "difficulty_similarity": "预期相近",
+                "decision": "优先候选",
+                "status": "",
+                "note": "q9vSo1VnCiC · 12 / 25和q9vSo1VnCiC · 11 / 16 和q9vSo1VnCiC · 15 / 21  这6张图其实是同一房间"
+              },
+              "changed_fields": [
+                "note"
+              ],
+              "user_revision": {
+                "note": "q9vSo1VnCiC · 12 / 25和q9vSo1VnCiC · 11 / 16 和q9vSo1VnCiC · 15 / 21  这6张图其实是同一房间"
+              }
+            }
+          }
+        }
+      ],
+      "review_card_path": "/workspace/scratch/a365811da80c/current_order_review_20261010/analysis_results/image_difficulty_full_review_20261010/all_cards/q9vSo1VnCiC-12.jpg"
+    },
+    {
+      "image": "uNb9QFRL6hY-44",
+      "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+      "gt_object_id": "gt:uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.txt",
+      "original_working_class": "困难",
+      "proposed_class": "待复核",
+      "grade": "简单",
+      "scope": "范围明显不同",
+      "note": "gt范围不同",
+      "updated_at": "2026-10-10T10:11:40.581Z",
+      "queue_reason": "范围选项明确不同",
+      "case_type": "范围明显不同",
+      "machine_area_screen": false,
+      "previous_scope_category": "local_or_minority_candidate",
+      "condition_gate_groups": [
+        {
+          "condition": "manual",
+          "gate": "main_candidate",
+          "n": 5,
+          "workers": 5,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 3,
+            "0.3": 0,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.0,
+          "fraction_upper": 0.0
+        },
+        {
+          "condition": "semi",
+          "gate": "main_candidate",
+          "n": 5,
+          "workers": 5,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 2,
+            "0.3": 2,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.4,
+          "fraction_upper": 0.4
+        }
+      ],
+      "selected_target": null,
+      "adjudication_status": "awaiting_user_target_decision",
+      "second_review_status": "blocked_on_target_decision",
+      "current_difficulty_not_final": true,
+      "card": "../all_cards/uNb9QFRL6hY-44.jpg",
+      "image_code": "uNb9QFRL6hY-44",
+      "reference_object_id": "gt:uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.txt",
+      "source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+      "latest_user_review": {
+        "image": "uNb9QFRL6hY-44",
+        "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+        "gt_object_id": "gt:uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.txt",
+        "original_working_class": "困难",
+        "proposed_class": "待复核",
+        "grade": "简单",
+        "scope": "范围明显不同",
+        "note": "gt范围不同",
+        "updated_at": "2026-10-10T10:11:40.581Z"
+      },
+      "latest_user_review_source": {
+        "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/source_review.json",
+        "json_pointer": "/records/11",
+        "review_version": "image-difficulty-review-259-20261010-v2",
+        "exported_at": "2026-10-10T10:19:20.996Z"
+      },
+      "queue_source": {
+        "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/scope_queue.json",
+        "json_pointer": "/cases/4"
+      },
+      "requested_operation_type": "entrance_step_region_decision",
+      "requested_operation_zh": "核对入口台阶区域及其停止边，区分台阶不同平面与房间底面。",
+      "operation_is_adjudication_prompt_not_user_confirmed_geometry": true,
+      "uncertainty_and_conflict_zh": "旧评论偏向不标门口台阶；几何约束和同房讨论只作历史说明，不能自动删去区域。",
+      "existing_workbench_inventory_match": true,
+      "existing_broad_review_queue": true,
+      "overlap_with_prior_confirmed_five": false,
+      "initial_review_state": {
+        "decision": "pending",
+        "completed": false,
+        "floor_region_confirmed": false,
+        "confirmed_version": null,
+        "received_confirmed_version": null,
+        "selected_target": null,
+        "operations": [],
+        "top_boundary_pending": true,
+        "reference_ready": false,
+        "GT_modified": false
+      },
+      "current_selected_gt_object_id": "gt:uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.txt",
+      "historical_original_gt_object_id": "gt:uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.txt",
+      "historical_reference_version_pending": false,
+      "hold_layers_in_frozen_inventory": [],
+      "hold_corpus_is_exhaustive_current_policy": false,
+      "historical_image_comment_summary": "gt是标了门口台阶那块区域,严格按照曼哈顿世界约束来说是不需要标的.",
+      "historical_original_comments": [
+        {
+          "comment_id": "C2117e33fc520007a",
+          "comment": "gt是标了门口台阶那块区域,严格按照曼哈顿世界约束来说是不需要标的.",
+          "object_kind": "image",
+          "object_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+          "record_id": "",
+          "worker_id": "",
+          "condition": "",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/794",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+              "pointer": "/image_decisions/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13/comment",
+              "field": "comment",
+              "record_key": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/latest.json",
+              "pointer": "/image_decisions/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13/comment",
+              "field": "comment",
+              "record_key": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/previous_return.json",
+              "pointer": "/image_decisions/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13/comment",
+              "field": "comment",
+              "record_key": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/second.json",
+              "pointer": "/image_decisions/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13/comment",
+              "field": "comment",
+              "record_key": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/review_return_original.json",
+              "pointer": "/image_decisions/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13/comment",
+              "field": "comment",
+              "record_key": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/second_review.json",
+              "pointer": "/image_decisions/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13/comment",
+              "field": "comment",
+              "record_key": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+              "role": "raw_review_export"
+            }
+          ]
+        },
+        {
+          "comment_id": "Cfb7b4a096e41a396",
+          "comment": "标的不好",
+          "object_kind": "annotation",
+          "object_id": "9b6b9dee2aafeae77550",
+          "record_id": "R01543",
+          "worker_id": "W012",
+          "condition": "manual",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/795",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+              "pointer": "/annotation_decisions/9b6b9dee2aafeae77550/comment",
+              "field": "comment",
+              "record_key": "9b6b9dee2aafeae77550",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/latest.json",
+              "pointer": "/annotation_decisions/9b6b9dee2aafeae77550/comment",
+              "field": "comment",
+              "record_key": "9b6b9dee2aafeae77550",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/previous_return.json",
+              "pointer": "/annotation_decisions/9b6b9dee2aafeae77550/comment",
+              "field": "comment",
+              "record_key": "9b6b9dee2aafeae77550",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/second.json",
+              "pointer": "/annotation_decisions/9b6b9dee2aafeae77550/comment",
+              "field": "comment",
+              "record_key": "9b6b9dee2aafeae77550",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/review_return_original.json",
+              "pointer": "/annotation_decisions/9b6b9dee2aafeae77550/comment",
+              "field": "comment",
+              "record_key": "9b6b9dee2aafeae77550",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/second_review.json",
+              "pointer": "/annotation_decisions/9b6b9dee2aafeae77550/comment",
+              "field": "comment",
+              "record_key": "9b6b9dee2aafeae77550",
+              "role": "raw_review_export"
+            }
+          ]
+        },
+        {
+          "comment_id": "C6a8968fbf137cc7a",
+          "comment": "标的不好",
+          "object_kind": "annotation",
+          "object_id": "cc8da8c5dab40220ed0e",
+          "record_id": "R02008",
+          "worker_id": "W028",
+          "condition": "manual",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/796",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+              "pointer": "/annotation_decisions/cc8da8c5dab40220ed0e/comment",
+              "field": "comment",
+              "record_key": "cc8da8c5dab40220ed0e",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/latest.json",
+              "pointer": "/annotation_decisions/cc8da8c5dab40220ed0e/comment",
+              "field": "comment",
+              "record_key": "cc8da8c5dab40220ed0e",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/previous_return.json",
+              "pointer": "/annotation_decisions/cc8da8c5dab40220ed0e/comment",
+              "field": "comment",
+              "record_key": "cc8da8c5dab40220ed0e",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/second.json",
+              "pointer": "/annotation_decisions/cc8da8c5dab40220ed0e/comment",
+              "field": "comment",
+              "record_key": "cc8da8c5dab40220ed0e",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/review_return_original.json",
+              "pointer": "/annotation_decisions/cc8da8c5dab40220ed0e/comment",
+              "field": "comment",
+              "record_key": "cc8da8c5dab40220ed0e",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/second_review.json",
+              "pointer": "/annotation_decisions/cc8da8c5dab40220ed0e/comment",
+              "field": "comment",
+              "record_key": "cc8da8c5dab40220ed0e",
+              "role": "raw_review_export"
+            }
+          ]
+        },
+        {
+          "comment_id": "Cdceb1b422012da28",
+          "comment": "标了门口的台阶区域",
+          "object_kind": "annotation",
+          "object_id": "d0c65178d1ddfcac1748",
+          "record_id": "R02048",
+          "worker_id": "W032",
+          "condition": "semi",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/797",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+              "pointer": "/annotation_decisions/d0c65178d1ddfcac1748/comment",
+              "field": "comment",
+              "record_key": "d0c65178d1ddfcac1748",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/latest.json",
+              "pointer": "/annotation_decisions/d0c65178d1ddfcac1748/comment",
+              "field": "comment",
+              "record_key": "d0c65178d1ddfcac1748",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/previous_return.json",
+              "pointer": "/annotation_decisions/d0c65178d1ddfcac1748/comment",
+              "field": "comment",
+              "record_key": "d0c65178d1ddfcac1748",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/second.json",
+              "pointer": "/annotation_decisions/d0c65178d1ddfcac1748/comment",
+              "field": "comment",
+              "record_key": "d0c65178d1ddfcac1748",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/review_return_original.json",
+              "pointer": "/annotation_decisions/d0c65178d1ddfcac1748/comment",
+              "field": "comment",
+              "record_key": "d0c65178d1ddfcac1748",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/second_review.json",
+              "pointer": "/annotation_decisions/d0c65178d1ddfcac1748/comment",
+              "field": "comment",
+              "record_key": "d0c65178d1ddfcac1748",
+              "role": "raw_review_export"
+            }
+          ]
+        }
+      ],
+      "additional_historical_context": [
+        {
+          "source_path": "/workspace/scratch/a365811da80c/scope_release_staging_20261010/full_review/local_increment/integration_verified69.json",
+          "json_pointer": "/68",
+          "record": {
+            "local_comment_id": "LOCAL_EXTRA_33",
+            "image_code": "uNb9QFRL6hY-44",
+            "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+            "object_id": null,
+            "record_id": null,
+            "comment": "b15我终于明白了,不是凸字型的空间,只是说02 在28的楼梯处拍摄,实际上28和44都不会标注这个楼梯处的.(因为有台阶,这就不算同一平面)但是02 的标注如果不标这个楼梯处,左边的的墙角就会有很大的误导性,我想大部分人都会标那里,但是如果对照28 来看,其实应该标这个地方的延长线,也就是02墙的右侧. 把他们暂且算是同房吧, 不过02 在同房预测的时候可以考虑排除.",
+            "binding_level": "image_or_cross_image_context",
+            "pair_bindings": [],
+            "content_role": "original_user_cross_image_relationship_context",
+            "schema": "scene_open_layout_user_review_v3",
+            "reference_version": null,
+            "reference_id": null,
+            "interpretation_status": "context_requires_manual_semantics",
+            "cloud_status": "absent_image_text",
+            "raw_text_verified": true,
+            "sources": [
+              {
+                "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+                "json_pointer": "/source_user/rows/472/discussion/batch_records/0/source_comment",
+                "reported_updated_at": null,
+                "raw_updated_at": null,
+                "raw_created_at": null,
+                "raw_record_sha256": "98243179c40b0e56fcd92b7ad4079bf7326d927b05b4cf934f4b98cceb910208"
+              },
+              {
+                "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+                "json_pointer": "/source_user/rows/472/discussion/batch_records/0/source_comment",
+                "reported_updated_at": null,
+                "raw_updated_at": null,
+                "raw_created_at": null,
+                "raw_record_sha256": "98243179c40b0e56fcd92b7ad4079bf7326d927b05b4cf934f4b98cceb910208"
+              },
+              {
+                "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+                "json_pointer": "/rows/472/discussion/batch_records/0/source_comment",
+                "reported_updated_at": null,
+                "raw_updated_at": null,
+                "raw_created_at": null,
+                "raw_record_sha256": "98243179c40b0e56fcd92b7ad4079bf7326d927b05b4cf934f4b98cceb910208"
+              },
+              {
+                "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+                "json_pointer": "/rows/472/discussion/batch_records/0/source_comment",
+                "reported_updated_at": null,
+                "raw_updated_at": null,
+                "raw_created_at": null,
+                "raw_record_sha256": "98243179c40b0e56fcd92b7ad4079bf7326d927b05b4cf934f4b98cceb910208"
+              }
+            ],
+            "scope_difference_confirmed": false,
+            "no_gt_score_or_eligibility_change": true
+          }
+        },
+        {
+          "source_path": "/workspace/scratch/a365811da80c/scope_release_staging_20261010/full_review/archive_reconciliation/historical_group_comments_55.json",
+          "json_pointer": "/33",
+          "record": {
+            "record_key": "GROUP_173",
+            "text": "2是门洞交界处,排除掉2就还好",
+            "text_hash": "31660dc9cf56c161da5d8e95b2ba5298d594859609beea87e89c9cc328d9a162",
+            "binding_level": "group_not_individual_votes",
+            "evidence_level": "original_human_group_comment_historical",
+            "group_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086|uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b|uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13|uNb9QFRL6hY_e39b52c7eedc4d859fca7888cab531ae",
+            "group_review_index": 173,
+            "associated_images": [
+              {
+                "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+                "image_code": "uNb9QFRL6hY-02",
+                "in_current_259": false
+              },
+              {
+                "image_id": "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b",
+                "image_code": "uNb9QFRL6hY-28",
+                "in_current_259": false
+              },
+              {
+                "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+                "image_code": "uNb9QFRL6hY-44",
+                "in_current_259": true
+              },
+              {
+                "image_id": "uNb9QFRL6hY_e39b52c7eedc4d859fca7888cab531ae",
+                "image_code": "uNb9QFRL6hY-80",
+                "in_current_259": false
+              }
+            ],
+            "source_saved_at": "2026-09-11T18:17:28.630Z",
+            "source_time_scope": "entire_export_not_individual_edit",
+            "recorded_status": "已确认",
+            "recorded_decision": "优先候选",
+            "source_resolves_previous_pending9": false,
+            "scope_difference_confirmed": false,
+            "classification": "candidate_subset_excludes_02_not_global_gate",
+            "sources": [
+              {
+                "bundle_relative_path": "图片分类与复审来源/analysis_results/scene_image_exploration_20260910_v1/user_group_review_20260912.json",
+                "json_pointer": "/group_reviews/173/current/note",
+                "file_sha256": "014770c25862e73317481389f1ddd6b8c87d6e1de1f7c16a5e33bcceb90e9349",
+                "canonical_json_record_sha256": "07548c68a0c0d4a1b7fa0d906a7a002990e7d03836fd508861a4354272b5d960"
+              },
+              {
+                "bundle_relative_path": "图片分类与复审来源/analysis_results/scene_image_exploration_20260910_v1/user_group_review_20260912.json",
+                "json_pointer": "/group_reviews/173/user_revision/note",
+                "file_sha256": "014770c25862e73317481389f1ddd6b8c87d6e1de1f7c16a5e33bcceb90e9349",
+                "canonical_json_record_sha256": "07548c68a0c0d4a1b7fa0d906a7a002990e7d03836fd508861a4354272b5d960"
+              },
+              {
+                "bundle_relative_path": "原清单123项/004_same_room_selection_registry_v2_20260912.json",
+                "json_pointer": "/groups/173/raw_current/note",
+                "file_sha256": "d43d0e92657fd00a2b034e305c9b33776c74716f12d826a1907ba773386fa0df",
+                "canonical_json_record_sha256": "757c1b583ce660401922544552c3f50e88b02be8cbac1a744537b21d5d41cc44"
+              }
+            ],
+            "raw_record": {
+              "group_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086|uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b|uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13|uNb9QFRL6hY_e39b52c7eedc4d859fca7888cab531ae",
+              "image_ids": [
+                "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+                "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b",
+                "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+                "uNb9QFRL6hY_e39b52c7eedc4d859fca7888cab531ae"
+              ],
+              "pair_ids": [
+                "uNb9QFRL6hY:02-28",
+                "uNb9QFRL6hY:28-44",
+                "uNb9QFRL6hY:28-80"
+              ],
+              "prefill": {
+                "physical_same": "支持",
+                "main_visual_alignment": "一致",
+                "extent_alignment": "待定",
+                "difficulty_similarity": "待定",
+                "decision": "待定",
+                "status": "",
+                "note": ""
+              },
+              "current": {
+                "physical_same": "支持",
+                "main_visual_alignment": "一致",
+                "extent_alignment": "预期相近",
+                "difficulty_similarity": "预期相近",
+                "decision": "优先候选",
+                "status": "已确认",
+                "note": "2是门洞交界处,排除掉2就还好"
+              },
+              "changed_fields": [
+                "extent_alignment",
+                "difficulty_similarity",
+                "decision",
+                "status",
+                "note"
+              ],
+              "user_revision": {
+                "difficulty_similarity": "预期相近",
+                "decision": "优先候选",
+                "status": "已确认",
+                "note": "2是门洞交界处,排除掉2就还好",
+                "extent_alignment": "预期相近"
+              }
+            }
+          }
+        }
+      ],
+      "review_card_path": "/workspace/scratch/a365811da80c/current_order_review_20261010/analysis_results/image_difficulty_full_review_20261010/all_cards/uNb9QFRL6hY-44.jpg"
+    },
+    {
+      "image": "uNb9QFRL6hY-55",
+      "image_id": "uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78",
+      "gt_object_id": "gt:uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78.txt",
+      "original_working_class": "困难",
+      "proposed_class": "待复核",
+      "grade": "简单",
+      "scope": "范围明显不同",
+      "note": "gt范围不同",
+      "updated_at": "2026-10-10T10:11:55.520Z",
+      "queue_reason": "范围选项明确不同",
+      "case_type": "范围明显不同",
+      "machine_area_screen": false,
+      "previous_scope_category": "local_or_minority_candidate",
+      "condition_gate_groups": [
+        {
+          "condition": "manual",
+          "gate": "main_candidate",
+          "n": 15,
+          "workers": 15,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 7,
+            "0.3": 4,
+            "0.4": 3
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.26666666666666666,
+          "fraction_upper": 0.26666666666666666
+        }
+      ],
+      "selected_target": null,
+      "adjudication_status": "awaiting_user_target_decision",
+      "second_review_status": "blocked_on_target_decision",
+      "current_difficulty_not_final": true,
+      "card": "../all_cards/uNb9QFRL6hY-55.jpg",
+      "image_code": "uNb9QFRL6hY-55",
+      "reference_object_id": "gt:uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78.txt",
+      "source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+      "latest_user_review": {
+        "image": "uNb9QFRL6hY-55",
+        "image_id": "uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78",
+        "gt_object_id": "gt:uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78.txt",
+        "original_working_class": "困难",
+        "proposed_class": "待复核",
+        "grade": "简单",
+        "scope": "范围明显不同",
+        "note": "gt范围不同",
+        "updated_at": "2026-10-10T10:11:55.520Z"
+      },
+      "latest_user_review_source": {
+        "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/source_review.json",
+        "json_pointer": "/records/13",
+        "review_version": "image-difficulty-review-259-20261010-v2",
+        "exported_at": "2026-10-10T10:19:20.996Z"
+      },
+      "queue_source": {
+        "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/scope_queue.json",
+        "json_pointer": "/cases/5"
+      },
+      "requested_operation_type": "entrance_branch_decision",
+      "requested_operation_zh": "核对是否舍去 GT 的门口区域，并分开处理人员额外 p9/p10。",
+      "operation_is_adjudication_prompt_not_user_confirmed_geometry": true,
+      "uncertainty_and_conflict_zh": "旧 W033/R03156、W037/R03157 支持不标入口；W028/R03160 同时有多余点问题。不得把多余点误认成范围裁定。",
+      "existing_workbench_inventory_match": true,
+      "existing_broad_review_queue": true,
+      "overlap_with_prior_confirmed_five": false,
+      "initial_review_state": {
+        "decision": "pending",
+        "completed": false,
+        "floor_region_confirmed": false,
+        "confirmed_version": null,
+        "received_confirmed_version": null,
+        "selected_target": null,
+        "operations": [],
+        "top_boundary_pending": true,
+        "reference_ready": false,
+        "GT_modified": false
+      },
+      "current_selected_gt_object_id": "gt:uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78.txt",
+      "historical_original_gt_object_id": "gt:uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78.txt",
+      "historical_reference_version_pending": false,
+      "hold_layers_in_frozen_inventory": [],
+      "hold_corpus_is_exhaustive_current_policy": false,
+      "historical_image_comment_summary": "来源或点集资格待确认；未用距离作裁决",
+      "historical_original_comments": [
+        {
+          "comment_id": "Cb27bae383b7d8bbf",
+          "comment": "对比gt,没有标门口的区域,但是不知道为什么标了p9 p10",
+          "object_kind": "annotation",
+          "object_id": "new_94_3633_7311_W028",
+          "record_id": "R03160",
+          "worker_id": "W028",
+          "condition": "manual",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/870",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/user.json",
+              "pointer": "/decisions/new_94_3633_7311_W028/comment",
+              "field": "comment",
+              "record_key": "new_94_3633_7311_W028",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_reconciliation_20260925/evidence/user_review.json",
+              "pointer": "/decisions/new_94_3633_7311_W028/comment",
+              "field": "comment",
+              "record_key": "new_94_3633_7311_W028",
+              "role": "raw_review_export"
+            }
+          ]
+        },
+        {
+          "comment_id": "C664f39aa3420b5e8",
+          "comment": "和w32基本一致",
+          "object_kind": "annotation",
+          "object_id": "new_94_3633_6923_W031",
+          "record_id": "R03154",
+          "worker_id": "W031",
+          "condition": "manual",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/871",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/user.json",
+              "pointer": "/decisions/new_94_3633_6923_W031/comment",
+              "field": "comment",
+              "record_key": "new_94_3633_6923_W031",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_reconciliation_20260925/evidence/user_review.json",
+              "pointer": "/decisions/new_94_3633_6923_W031/comment",
+              "field": "comment",
+              "record_key": "new_94_3633_6923_W031",
+              "role": "raw_review_export"
+            }
+          ]
+        },
+        {
+          "comment_id": "Ce5e5f05677b0d0a7",
+          "comment": "和gt范围不同,没有标门口的区域,标的不错",
+          "object_kind": "annotation",
+          "object_id": "new_94_3633_7013_W033",
+          "record_id": "R03156",
+          "worker_id": "W033",
+          "condition": "manual",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/872",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/user.json",
+              "pointer": "/decisions/new_94_3633_7013_W033/comment",
+              "field": "comment",
+              "record_key": "new_94_3633_7013_W033",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_reconciliation_20260925/evidence/user_review.json",
+              "pointer": "/decisions/new_94_3633_7013_W033/comment",
+              "field": "comment",
+              "record_key": "new_94_3633_7013_W033",
+              "role": "raw_review_export"
+            }
+          ]
+        },
+        {
+          "comment_id": "C3b0a19be79cd65ff",
+          "comment": "和gt相比就是门口区域不标,我觉得这也是对的标法,我还更认可这种",
+          "object_kind": "annotation",
+          "object_id": "new_94_3633_7056_W037",
+          "record_id": "R03157",
+          "worker_id": "W037",
+          "condition": "manual",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/873",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/user.json",
+              "pointer": "/decisions/new_94_3633_7056_W037/comment",
+              "field": "comment",
+              "record_key": "new_94_3633_7056_W037",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_reconciliation_20260925/evidence/user_review.json",
+              "pointer": "/decisions/new_94_3633_7056_W037/comment",
+              "field": "comment",
+              "record_key": "new_94_3633_7056_W037",
+              "role": "raw_review_export"
+            }
+          ]
+        },
+        {
+          "comment_id": "Ce287dd154fbb34c1",
+          "comment": "来源或点集资格待确认；未用距离作裁决",
+          "object_kind": "image",
+          "object_id": "uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78",
+          "record_id": "",
+          "worker_id": "",
+          "condition": "Manual",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/new_manual_reviewed_20260921/evidence/用户审核_原始.json",
+              "pointer": "/evidence/28/pairs_by_method/representative/0/reason",
+              "field": "reason",
+              "record_key": "",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/new_manual_reviewed_20260921/evidence/用户审核_原始.json",
+              "pointer": "/evidence/28/pairs_by_method/complete/0/reason",
+              "field": "reason",
+              "record_key": "",
+              "role": "raw_review_export"
+            }
+          ]
+        }
+      ],
+      "additional_historical_context": [
+        {
+          "source_path": "/workspace/scratch/a365811da80c/scope_release_staging_20261010/full_review/local_increment/integration_verified69.json",
+          "json_pointer": "/46",
+          "record": {
+            "local_comment_id": "LOCAL_EXTRA_11",
+            "image_code": "uNb9QFRL6hY-55",
+            "image_id": "uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78",
+            "object_id": null,
+            "record_id": null,
+            "comment": "可能有些人会标注门口的区域,不过我认为这几率较少",
+            "binding_level": "image_or_cross_image_context",
+            "pair_bindings": [],
+            "content_role": "original_user_comment",
+            "schema": "candidate_review_user_decisions_v5",
+            "reference_version": null,
+            "reference_id": null,
+            "interpretation_status": "context_requires_manual_semantics",
+            "cloud_status": "absent_image_text",
+            "raw_text_verified": true,
+            "sources": [
+              {
+                "source_file": "C:\\Users\\ASUS\\Downloads\\candidate_review_decisions_20260912(1).json",
+                "json_pointer": "/decisions/4/note",
+                "reported_updated_at": null,
+                "raw_updated_at": null,
+                "raw_created_at": null,
+                "raw_record_sha256": "9e4579ad8b28e40f6594d7ebb99f30a2267ec8a44280703fe610d999038d3a1c"
+              }
+            ],
+            "scope_difference_confirmed": false,
+            "no_gt_score_or_eligibility_change": true
+          }
+        },
+        {
+          "source_path": "/workspace/scratch/a365811da80c/scope_release_staging_20261010/full_review/archive_reconciliation/historical_group_comments_55.json",
+          "json_pointer": "/35",
+          "record": {
+            "record_key": "GROUP_178",
+            "text": "uNb9QFRL6hY · 02 / 28 / 44 / 80  和这个是极其类似的房间,甚至可以放在一起预测.可能就是门口那里标不标有点歧义,29优先级低",
+            "text_hash": "75edcba823815e950924525bd8e6f27367cfb04457ef77004bf3d77d09e3b8e4",
+            "binding_level": "group_not_individual_votes",
+            "evidence_level": "original_human_group_comment_historical",
+            "group_id": "uNb9QFRL6hY_1096f195d3294cefa462add5ab0c342e|uNb9QFRL6hY_1434b965c3c147419c4ff40310633b58|uNb9QFRL6hY_33dd9892d10e474ead8f7ad38a8da562|uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd|uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78|uNb9QFRL6hY_c1ebb8b34eb846ba9b5ce23b30b299a7|uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d|uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd|uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269",
+            "group_review_index": 178,
+            "associated_images": [
+              {
+                "image_id": "uNb9QFRL6hY_1096f195d3294cefa462add5ab0c342e",
+                "image_code": "uNb9QFRL6hY-08",
+                "in_current_259": true
+              },
+              {
+                "image_id": "uNb9QFRL6hY_1434b965c3c147419c4ff40310633b58",
+                "image_code": "uNb9QFRL6hY-10",
+                "in_current_259": false
+              },
+              {
+                "image_id": "uNb9QFRL6hY_33dd9892d10e474ead8f7ad38a8da562",
+                "image_code": "uNb9QFRL6hY-19",
+                "in_current_259": true
+              },
+              {
+                "image_id": "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+                "image_code": "uNb9QFRL6hY-29",
+                "in_current_259": true
+              },
+              {
+                "image_id": "uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78",
+                "image_code": "uNb9QFRL6hY-55",
+                "in_current_259": true
+              },
+              {
+                "image_id": "uNb9QFRL6hY_c1ebb8b34eb846ba9b5ce23b30b299a7",
+                "image_code": "uNb9QFRL6hY-65",
+                "in_current_259": true
+              },
+              {
+                "image_id": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+                "image_code": "uNb9QFRL6hY-68",
+                "in_current_259": true
+              },
+              {
+                "image_id": "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+                "image_code": "uNb9QFRL6hY-81",
+                "in_current_259": true
+              },
+              {
+                "image_id": "uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269",
+                "image_code": "uNb9QFRL6hY-86",
+                "in_current_259": true
+              }
+            ],
+            "source_saved_at": "2026-09-11T18:17:28.630Z",
+            "source_time_scope": "entire_export_not_individual_edit",
+            "recorded_status": "仍需讨论",
+            "recorded_decision": "优先候选",
+            "source_resolves_previous_pending9": false,
+            "scope_difference_confirmed": false,
+            "classification": "group_level_doorway_inclusion_ambiguity",
+            "sources": [
+              {
+                "bundle_relative_path": "图片分类与复审来源/analysis_results/scene_image_exploration_20260910_v1/user_group_review_20260912.json",
+                "json_pointer": "/group_reviews/178/current/note",
+                "file_sha256": "014770c25862e73317481389f1ddd6b8c87d6e1de1f7c16a5e33bcceb90e9349",
+                "canonical_json_record_sha256": "090f4509de91a53912a93a3fa84bf82d70d13c48b76f1cf72f1131288805e520"
+              },
+              {
+                "bundle_relative_path": "图片分类与复审来源/analysis_results/scene_image_exploration_20260910_v1/user_group_review_20260912.json",
+                "json_pointer": "/group_reviews/178/user_revision/note",
+                "file_sha256": "014770c25862e73317481389f1ddd6b8c87d6e1de1f7c16a5e33bcceb90e9349",
+                "canonical_json_record_sha256": "090f4509de91a53912a93a3fa84bf82d70d13c48b76f1cf72f1131288805e520"
+              },
+              {
+                "bundle_relative_path": "原清单123项/004_same_room_selection_registry_v2_20260912.json",
+                "json_pointer": "/groups/178/raw_current/note",
+                "file_sha256": "d43d0e92657fd00a2b034e305c9b33776c74716f12d826a1907ba773386fa0df",
+                "canonical_json_record_sha256": "419f1a822e4f888dcbd7eed982f6ded779a5c7304f9fd33a568bab00b5225d26"
+              }
+            ],
+            "raw_record": {
+              "group_id": "uNb9QFRL6hY_1096f195d3294cefa462add5ab0c342e|uNb9QFRL6hY_1434b965c3c147419c4ff40310633b58|uNb9QFRL6hY_33dd9892d10e474ead8f7ad38a8da562|uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd|uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78|uNb9QFRL6hY_c1ebb8b34eb846ba9b5ce23b30b299a7|uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d|uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd|uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269",
+              "image_ids": [
+                "uNb9QFRL6hY_1096f195d3294cefa462add5ab0c342e",
+                "uNb9QFRL6hY_1434b965c3c147419c4ff40310633b58",
+                "uNb9QFRL6hY_33dd9892d10e474ead8f7ad38a8da562",
+                "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+                "uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78",
+                "uNb9QFRL6hY_c1ebb8b34eb846ba9b5ce23b30b299a7",
+                "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+                "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+                "uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269"
+              ],
+              "pair_ids": [
+                "uNb9QFRL6hY:08-10",
+                "uNb9QFRL6hY:08-19",
+                "uNb9QFRL6hY:08-29",
+                "uNb9QFRL6hY:08-55",
+                "uNb9QFRL6hY:08-65",
+                "uNb9QFRL6hY:08-68",
+                "uNb9QFRL6hY:08-81",
+                "uNb9QFRL6hY:08-86"
+              ],
+              "prefill": {
+                "physical_same": "支持",
+                "main_visual_alignment": "一致",
+                "extent_alignment": "待定",
+                "difficulty_similarity": "待定",
+                "decision": "待定",
+                "status": "",
+                "note": ""
+              },
+              "current": {
+                "physical_same": "支持",
+                "main_visual_alignment": "一致",
+                "extent_alignment": "待定",
+                "difficulty_similarity": "可能出现小幅歧义",
+                "decision": "优先候选",
+                "status": "仍需讨论",
+                "note": "uNb9QFRL6hY · 02 / 28 / 44 / 80  和这个是极其类似的房间,甚至可以放在一起预测.可能就是门口那里标不标有点歧义,29优先级低"
+              },
+              "changed_fields": [
+                "difficulty_similarity",
+                "decision",
+                "status",
+                "note"
+              ],
+              "user_revision": {
+                "note": "uNb9QFRL6hY · 02 / 28 / 44 / 80  和这个是极其类似的房间,甚至可以放在一起预测.可能就是门口那里标不标有点歧义,29优先级低",
+                "status": "仍需讨论",
+                "decision": "优先候选",
+                "difficulty_similarity": "可能出现小幅歧义"
+              }
+            }
+          }
+        }
+      ],
+      "review_card_path": "/workspace/scratch/a365811da80c/current_order_review_20261010/analysis_results/image_difficulty_full_review_20261010/all_cards/uNb9QFRL6hY-55.jpg"
+    },
+    {
+      "image": "uNb9QFRL6hY-68",
+      "image_id": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+      "gt_object_id": "gt:uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d.txt",
+      "original_working_class": "困难",
+      "proposed_class": "待复核",
+      "grade": "简单",
+      "scope": "范围明显不同",
+      "note": "标注范围不同",
+      "updated_at": "2026-10-10T10:13:42.085Z",
+      "queue_reason": "范围选项明确不同",
+      "case_type": "范围明显不同",
+      "machine_area_screen": false,
+      "previous_scope_category": "local_or_minority_candidate",
+      "condition_gate_groups": [
+        {
+          "condition": "manual",
+          "gate": "excluded",
+          "n": 1,
+          "workers": 1,
+          "invalid": 1,
+          "flagged_counts": {
+            "0.2": 0,
+            "0.3": 0,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.0,
+          "fraction_upper": 1.0
+        },
+        {
+          "condition": "manual",
+          "gate": "main_candidate",
+          "n": 14,
+          "workers": 14,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 7,
+            "0.3": 1,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.07142857142857142,
+          "fraction_upper": 0.07142857142857142
+        },
+        {
+          "condition": "semi",
+          "gate": "main_candidate",
+          "n": 5,
+          "workers": 5,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 1,
+            "0.3": 0,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.0,
+          "fraction_upper": 0.0
+        }
+      ],
+      "selected_target": null,
+      "adjudication_status": "awaiting_user_target_decision",
+      "second_review_status": "blocked_on_target_decision",
+      "current_difficulty_not_final": true,
+      "card": "../all_cards/uNb9QFRL6hY-68.jpg",
+      "image_code": "uNb9QFRL6hY-68",
+      "reference_object_id": "gt:uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d.txt",
+      "source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+      "latest_user_review": {
+        "image": "uNb9QFRL6hY-68",
+        "image_id": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+        "gt_object_id": "gt:uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d.txt",
+        "original_working_class": "困难",
+        "proposed_class": "待复核",
+        "grade": "简单",
+        "scope": "范围明显不同",
+        "note": "标注范围不同",
+        "updated_at": "2026-10-10T10:13:42.085Z"
+      },
+      "latest_user_review_source": {
+        "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/source_review.json",
+        "json_pointer": "/records/15",
+        "review_version": "image-difficulty-review-259-20261010-v2",
+        "exported_at": "2026-10-10T10:19:20.996Z"
+      },
+      "queue_source": {
+        "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/scope_queue.json",
+        "json_pointer": "/cases/6"
+      },
+      "requested_operation_type": "entrance_branch_decision",
+      "requested_operation_zh": "核对是否舍去 GT 门口区域，选择实际停止线。",
+      "operation_is_adjudication_prompt_not_user_confirmed_geometry": true,
+      "uncertainty_and_conflict_zh": "旧记录包含 W036/R03200 与 GT 类似的范围，也有 W032 等不同范围；不能升级为“无人同 GT”。同一范围中的点位错误须分开。",
+      "existing_workbench_inventory_match": true,
+      "existing_broad_review_queue": true,
+      "overlap_with_prior_confirmed_five": false,
+      "initial_review_state": {
+        "decision": "pending",
+        "completed": false,
+        "floor_region_confirmed": false,
+        "confirmed_version": null,
+        "received_confirmed_version": null,
+        "selected_target": null,
+        "operations": [],
+        "top_boundary_pending": true,
+        "reference_ready": false,
+        "GT_modified": false
+      },
+      "current_selected_gt_object_id": "gt:uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d.txt",
+      "historical_original_gt_object_id": "gt:uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d.txt",
+      "historical_reference_version_pending": false,
+      "hold_layers_in_frozen_inventory": [],
+      "hold_corpus_is_exhaustive_current_policy": false,
+      "historical_image_comment_summary": "存在不同的标注范围,gt是标了门口的区域, 很多人是选择不标这个区域(我觉得更好)\n来源或点集资格待确认；未用距离作裁决",
+      "historical_original_comments": [
+        {
+          "comment_id": "C575e2e69b0e28244",
+          "comment": "存在不同的标注范围,gt是标了门口的区域, 很多人是选择不标这个区域(我觉得更好)",
+          "object_kind": "image",
+          "object_id": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+          "record_id": "",
+          "worker_id": "",
+          "condition": "",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/936",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+              "pointer": "/image_decisions/uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d/comment",
+              "field": "comment",
+              "record_key": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/latest.json",
+              "pointer": "/image_decisions/uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d/comment",
+              "field": "comment",
+              "record_key": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/previous_return.json",
+              "pointer": "/image_decisions/uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d/comment",
+              "field": "comment",
+              "record_key": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/second.json",
+              "pointer": "/image_decisions/uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d/comment",
+              "field": "comment",
+              "record_key": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/review_return_original.json",
+              "pointer": "/image_decisions/uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d/comment",
+              "field": "comment",
+              "record_key": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/second_review.json",
+              "pointer": "/image_decisions/uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d/comment",
+              "field": "comment",
+              "record_key": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+              "role": "raw_review_export"
+            }
+          ]
+        },
+        {
+          "comment_id": "Cad5a83e3b8b0d550",
+          "comment": "没有标门口区域(其实可以不标这个地方),但是不知道为什么多标了p9,p10",
+          "object_kind": "annotation",
+          "object_id": "new_94_3638_7423_W028",
+          "record_id": "R03203",
+          "worker_id": "W028",
+          "condition": "manual",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/937",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/user.json",
+              "pointer": "/decisions/new_94_3638_7423_W028/comment",
+              "field": "comment",
+              "record_key": "new_94_3638_7423_W028",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_reconciliation_20260925/evidence/user_review.json",
+              "pointer": "/decisions/new_94_3638_7423_W028/comment",
+              "field": "comment",
+              "record_key": "new_94_3638_7423_W028",
+              "role": "raw_review_export"
+            }
+          ]
+        },
+        {
+          "comment_id": "C24fc5b814777a2e8",
+          "comment": "只有4点",
+          "object_kind": "annotation",
+          "object_id": "bcadc37ee0819d4ead2d",
+          "record_id": "R01879",
+          "worker_id": "W034",
+          "condition": "manual",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/938",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+              "pointer": "/annotation_decisions/bcadc37ee0819d4ead2d/comment",
+              "field": "comment",
+              "record_key": "bcadc37ee0819d4ead2d",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/latest.json",
+              "pointer": "/annotation_decisions/bcadc37ee0819d4ead2d/comment",
+              "field": "comment",
+              "record_key": "bcadc37ee0819d4ead2d",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/previous_return.json",
+              "pointer": "/annotation_decisions/bcadc37ee0819d4ead2d/comment",
+              "field": "comment",
+              "record_key": "bcadc37ee0819d4ead2d",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/second.json",
+              "pointer": "/annotation_decisions/bcadc37ee0819d4ead2d/comment",
+              "field": "comment",
+              "record_key": "bcadc37ee0819d4ead2d",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/review_return_original.json",
+              "pointer": "/annotation_decisions/bcadc37ee0819d4ead2d/comment",
+              "field": "comment",
+              "record_key": "bcadc37ee0819d4ead2d",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/second_review.json",
+              "pointer": "/annotation_decisions/bcadc37ee0819d4ead2d/comment",
+              "field": "comment",
+              "record_key": "bcadc37ee0819d4ead2d",
+              "role": "raw_review_export"
+            }
+          ]
+        },
+        {
+          "comment_id": "Cb56df159af5909a7",
+          "comment": "标了门口的区域",
+          "object_kind": "annotation",
+          "object_id": "new_94_3638_7138_W036",
+          "record_id": "R03200",
+          "worker_id": "W036",
+          "condition": "manual",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/939",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+              "pointer": "/annotation_decisions/new_94_3638_7138_W036/comment",
+              "field": "comment",
+              "record_key": "new_94_3638_7138_W036",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/latest.json",
+              "pointer": "/annotation_decisions/new_94_3638_7138_W036/comment",
+              "field": "comment",
+              "record_key": "new_94_3638_7138_W036",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/previous_return.json",
+              "pointer": "/annotation_decisions/new_94_3638_7138_W036/comment",
+              "field": "comment",
+              "record_key": "new_94_3638_7138_W036",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/second.json",
+              "pointer": "/annotation_decisions/new_94_3638_7138_W036/comment",
+              "field": "comment",
+              "record_key": "new_94_3638_7138_W036",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/review_return_original.json",
+              "pointer": "/annotation_decisions/new_94_3638_7138_W036/comment",
+              "field": "comment",
+              "record_key": "new_94_3638_7138_W036",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/second_review.json",
+              "pointer": "/annotation_decisions/new_94_3638_7138_W036/comment",
+              "field": "comment",
+              "record_key": "new_94_3638_7138_W036",
+              "role": "raw_review_export"
+            }
+          ]
+        },
+        {
+          "comment_id": "C032adc7a3dd30dee",
+          "comment": "和gt 范围是类似的,但是他标了p1 p2 那个拐弯的墙角,但是他左边又没有标好.     w032 那种标法和gt是不同 的,这个更好",
+          "object_kind": "annotation",
+          "object_id": "new_94_3638_7138_W036",
+          "record_id": "R03200",
+          "worker_id": "W036",
+          "condition": "manual",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/940",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/user.json",
+              "pointer": "/decisions/new_94_3638_7138_W036/comment",
+              "field": "comment",
+              "record_key": "new_94_3638_7138_W036",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_reconciliation_20260925/evidence/user_review.json",
+              "pointer": "/decisions/new_94_3638_7138_W036/comment",
+              "field": "comment",
+              "record_key": "new_94_3638_7138_W036",
+              "role": "raw_review_export"
+            }
+          ]
+        },
+        {
+          "comment_id": "Cbde8cddc56af1230",
+          "comment": "来源或点集资格待确认；未用距离作裁决",
+          "object_kind": "image",
+          "object_id": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+          "record_id": "",
+          "worker_id": "",
+          "condition": "Manual",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/new_manual_reviewed_20260921/evidence/用户审核_原始.json",
+              "pointer": "/evidence/32/pairs_by_method/representative/0/reason",
+              "field": "reason",
+              "record_key": "",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/new_manual_reviewed_20260921/evidence/用户审核_原始.json",
+              "pointer": "/evidence/32/pairs_by_method/representative/1/reason",
+              "field": "reason",
+              "record_key": "",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/new_manual_reviewed_20260921/evidence/用户审核_原始.json",
+              "pointer": "/evidence/32/pairs_by_method/complete/0/reason",
+              "field": "reason",
+              "record_key": "",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/new_manual_reviewed_20260921/evidence/用户审核_原始.json",
+              "pointer": "/evidence/32/pairs_by_method/complete/1/reason",
+              "field": "reason",
+              "record_key": "",
+              "role": "raw_review_export"
+            }
+          ]
+        }
+      ],
+      "additional_historical_context": [
+        {
+          "source_path": "/workspace/scratch/a365811da80c/scope_release_staging_20261010/full_review/local_increment/integration_verified69.json",
+          "json_pointer": "/47",
+          "record": {
+            "local_comment_id": "LOCAL_EXTRA_12",
+            "image_code": "uNb9QFRL6hY-68",
+            "image_id": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+            "object_id": null,
+            "record_id": null,
+            "comment": "可能有些人会标注门口的区域,不过我认为这几率较少",
+            "binding_level": "image_or_cross_image_context",
+            "pair_bindings": [],
+            "content_role": "original_user_comment",
+            "schema": "candidate_review_user_decisions_v5",
+            "reference_version": null,
+            "reference_id": null,
+            "interpretation_status": "context_requires_manual_semantics",
+            "cloud_status": "absent_image_text",
+            "raw_text_verified": true,
+            "sources": [
+              {
+                "source_file": "C:\\Users\\ASUS\\Downloads\\candidate_review_decisions_20260912(1).json",
+                "json_pointer": "/decisions/6/note",
+                "reported_updated_at": null,
+                "raw_updated_at": null,
+                "raw_created_at": null,
+                "raw_record_sha256": "91bf98f176ca0a66c7da0a77a4d93132f2427c46bb2da45aa62743c05beb98d1"
+              }
+            ],
+            "scope_difference_confirmed": false,
+            "no_gt_score_or_eligibility_change": true
+          }
+        },
+        {
+          "source_path": "/workspace/scratch/a365811da80c/scope_release_staging_20261010/full_review/archive_reconciliation/historical_group_comments_55.json",
+          "json_pointer": "/35",
+          "record": {
+            "record_key": "GROUP_178",
+            "text": "uNb9QFRL6hY · 02 / 28 / 44 / 80  和这个是极其类似的房间,甚至可以放在一起预测.可能就是门口那里标不标有点歧义,29优先级低",
+            "text_hash": "75edcba823815e950924525bd8e6f27367cfb04457ef77004bf3d77d09e3b8e4",
+            "binding_level": "group_not_individual_votes",
+            "evidence_level": "original_human_group_comment_historical",
+            "group_id": "uNb9QFRL6hY_1096f195d3294cefa462add5ab0c342e|uNb9QFRL6hY_1434b965c3c147419c4ff40310633b58|uNb9QFRL6hY_33dd9892d10e474ead8f7ad38a8da562|uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd|uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78|uNb9QFRL6hY_c1ebb8b34eb846ba9b5ce23b30b299a7|uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d|uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd|uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269",
+            "group_review_index": 178,
+            "associated_images": [
+              {
+                "image_id": "uNb9QFRL6hY_1096f195d3294cefa462add5ab0c342e",
+                "image_code": "uNb9QFRL6hY-08",
+                "in_current_259": true
+              },
+              {
+                "image_id": "uNb9QFRL6hY_1434b965c3c147419c4ff40310633b58",
+                "image_code": "uNb9QFRL6hY-10",
+                "in_current_259": false
+              },
+              {
+                "image_id": "uNb9QFRL6hY_33dd9892d10e474ead8f7ad38a8da562",
+                "image_code": "uNb9QFRL6hY-19",
+                "in_current_259": true
+              },
+              {
+                "image_id": "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+                "image_code": "uNb9QFRL6hY-29",
+                "in_current_259": true
+              },
+              {
+                "image_id": "uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78",
+                "image_code": "uNb9QFRL6hY-55",
+                "in_current_259": true
+              },
+              {
+                "image_id": "uNb9QFRL6hY_c1ebb8b34eb846ba9b5ce23b30b299a7",
+                "image_code": "uNb9QFRL6hY-65",
+                "in_current_259": true
+              },
+              {
+                "image_id": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+                "image_code": "uNb9QFRL6hY-68",
+                "in_current_259": true
+              },
+              {
+                "image_id": "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+                "image_code": "uNb9QFRL6hY-81",
+                "in_current_259": true
+              },
+              {
+                "image_id": "uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269",
+                "image_code": "uNb9QFRL6hY-86",
+                "in_current_259": true
+              }
+            ],
+            "source_saved_at": "2026-09-11T18:17:28.630Z",
+            "source_time_scope": "entire_export_not_individual_edit",
+            "recorded_status": "仍需讨论",
+            "recorded_decision": "优先候选",
+            "source_resolves_previous_pending9": false,
+            "scope_difference_confirmed": false,
+            "classification": "group_level_doorway_inclusion_ambiguity",
+            "sources": [
+              {
+                "bundle_relative_path": "图片分类与复审来源/analysis_results/scene_image_exploration_20260910_v1/user_group_review_20260912.json",
+                "json_pointer": "/group_reviews/178/current/note",
+                "file_sha256": "014770c25862e73317481389f1ddd6b8c87d6e1de1f7c16a5e33bcceb90e9349",
+                "canonical_json_record_sha256": "090f4509de91a53912a93a3fa84bf82d70d13c48b76f1cf72f1131288805e520"
+              },
+              {
+                "bundle_relative_path": "图片分类与复审来源/analysis_results/scene_image_exploration_20260910_v1/user_group_review_20260912.json",
+                "json_pointer": "/group_reviews/178/user_revision/note",
+                "file_sha256": "014770c25862e73317481389f1ddd6b8c87d6e1de1f7c16a5e33bcceb90e9349",
+                "canonical_json_record_sha256": "090f4509de91a53912a93a3fa84bf82d70d13c48b76f1cf72f1131288805e520"
+              },
+              {
+                "bundle_relative_path": "原清单123项/004_same_room_selection_registry_v2_20260912.json",
+                "json_pointer": "/groups/178/raw_current/note",
+                "file_sha256": "d43d0e92657fd00a2b034e305c9b33776c74716f12d826a1907ba773386fa0df",
+                "canonical_json_record_sha256": "419f1a822e4f888dcbd7eed982f6ded779a5c7304f9fd33a568bab00b5225d26"
+              }
+            ],
+            "raw_record": {
+              "group_id": "uNb9QFRL6hY_1096f195d3294cefa462add5ab0c342e|uNb9QFRL6hY_1434b965c3c147419c4ff40310633b58|uNb9QFRL6hY_33dd9892d10e474ead8f7ad38a8da562|uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd|uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78|uNb9QFRL6hY_c1ebb8b34eb846ba9b5ce23b30b299a7|uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d|uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd|uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269",
+              "image_ids": [
+                "uNb9QFRL6hY_1096f195d3294cefa462add5ab0c342e",
+                "uNb9QFRL6hY_1434b965c3c147419c4ff40310633b58",
+                "uNb9QFRL6hY_33dd9892d10e474ead8f7ad38a8da562",
+                "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+                "uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78",
+                "uNb9QFRL6hY_c1ebb8b34eb846ba9b5ce23b30b299a7",
+                "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+                "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+                "uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269"
+              ],
+              "pair_ids": [
+                "uNb9QFRL6hY:08-10",
+                "uNb9QFRL6hY:08-19",
+                "uNb9QFRL6hY:08-29",
+                "uNb9QFRL6hY:08-55",
+                "uNb9QFRL6hY:08-65",
+                "uNb9QFRL6hY:08-68",
+                "uNb9QFRL6hY:08-81",
+                "uNb9QFRL6hY:08-86"
+              ],
+              "prefill": {
+                "physical_same": "支持",
+                "main_visual_alignment": "一致",
+                "extent_alignment": "待定",
+                "difficulty_similarity": "待定",
+                "decision": "待定",
+                "status": "",
+                "note": ""
+              },
+              "current": {
+                "physical_same": "支持",
+                "main_visual_alignment": "一致",
+                "extent_alignment": "待定",
+                "difficulty_similarity": "可能出现小幅歧义",
+                "decision": "优先候选",
+                "status": "仍需讨论",
+                "note": "uNb9QFRL6hY · 02 / 28 / 44 / 80  和这个是极其类似的房间,甚至可以放在一起预测.可能就是门口那里标不标有点歧义,29优先级低"
+              },
+              "changed_fields": [
+                "difficulty_similarity",
+                "decision",
+                "status",
+                "note"
+              ],
+              "user_revision": {
+                "note": "uNb9QFRL6hY · 02 / 28 / 44 / 80  和这个是极其类似的房间,甚至可以放在一起预测.可能就是门口那里标不标有点歧义,29优先级低",
+                "status": "仍需讨论",
+                "decision": "优先候选",
+                "difficulty_similarity": "可能出现小幅歧义"
+              }
+            }
+          }
+        }
+      ],
+      "review_card_path": "/workspace/scratch/a365811da80c/current_order_review_20261010/analysis_results/image_difficulty_full_review_20261010/all_cards/uNb9QFRL6hY-68.jpg"
+    },
+    {
+      "image": "uNb9QFRL6hY-81",
+      "image_id": "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+      "gt_object_id": "gt:uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd.txt",
+      "original_working_class": "困难",
+      "proposed_class": "待复核",
+      "grade": "简单",
+      "scope": "范围明显不同",
+      "note": "和gt的标注范围不同",
+      "updated_at": "2026-10-10T10:14:23.627Z",
+      "queue_reason": "范围选项明确不同",
+      "case_type": "范围明显不同",
+      "machine_area_screen": false,
+      "previous_scope_category": "local_or_minority_candidate",
+      "condition_gate_groups": [
+        {
+          "condition": "manual",
+          "gate": "excluded",
+          "n": 1,
+          "workers": 1,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 1,
+            "0.3": 1,
+            "0.4": 1
+          },
+          "geometry_signal": false,
+          "fraction_lower": 1.0,
+          "fraction_upper": 1.0
+        },
+        {
+          "condition": "manual",
+          "gate": "main_candidate",
+          "n": 14,
+          "workers": 14,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 5,
+            "0.3": 3,
+            "0.4": 2
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.21428571428571427,
+          "fraction_upper": 0.21428571428571427
+        }
+      ],
+      "selected_target": null,
+      "adjudication_status": "awaiting_user_target_decision",
+      "second_review_status": "blocked_on_target_decision",
+      "current_difficulty_not_final": true,
+      "card": "../all_cards/uNb9QFRL6hY-81.jpg",
+      "image_code": "uNb9QFRL6hY-81",
+      "reference_object_id": "gt:uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd.txt",
+      "source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+      "latest_user_review": {
+        "image": "uNb9QFRL6hY-81",
+        "image_id": "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+        "gt_object_id": "gt:uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd.txt",
+        "original_working_class": "困难",
+        "proposed_class": "待复核",
+        "grade": "简单",
+        "scope": "范围明显不同",
+        "note": "和gt的标注范围不同",
+        "updated_at": "2026-10-10T10:14:23.627Z"
+      },
+      "latest_user_review_source": {
+        "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/source_review.json",
+        "json_pointer": "/records/19",
+        "review_version": "image-difficulty-review-259-20261010-v2",
+        "exported_at": "2026-10-10T10:19:20.996Z"
+      },
+      "queue_source": {
+        "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/scope_queue.json",
+        "json_pointer": "/cases/7"
+      },
+      "requested_operation_type": "entrance_branch_decision",
+      "requested_operation_zh": "核对 GT 的门口细长区域是否纳入，并确认停止边。",
+      "operation_is_adjudication_prompt_not_user_confirmed_geometry": true,
+      "uncertainty_and_conflict_zh": "历史措辞是“大部分”未标，不能写成全部；最新未给坐标。",
+      "existing_workbench_inventory_match": true,
+      "existing_broad_review_queue": true,
+      "overlap_with_prior_confirmed_five": false,
+      "initial_review_state": {
+        "decision": "pending",
+        "completed": false,
+        "floor_region_confirmed": false,
+        "confirmed_version": null,
+        "received_confirmed_version": null,
+        "selected_target": null,
+        "operations": [],
+        "top_boundary_pending": true,
+        "reference_ready": false,
+        "GT_modified": false
+      },
+      "current_selected_gt_object_id": "gt:uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd.txt",
+      "historical_original_gt_object_id": "gt:uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd.txt",
+      "historical_reference_version_pending": false,
+      "hold_layers_in_frozen_inventory": [],
+      "hold_corpus_is_exhaustive_current_policy": false,
+      "historical_image_comment_summary": "存在不同的标注范围,gt是标了门口的区域,标注者大部分都没标\n来源或点集资格待确认；未用距离作裁决",
+      "historical_original_comments": [
+        {
+          "comment_id": "C779978ff767c2d83",
+          "comment": "存在不同的标注范围,gt是标了门口的区域,标注者大部分都没标",
+          "object_kind": "image",
+          "object_id": "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+          "record_id": "",
+          "worker_id": "",
+          "condition": "",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/950",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+              "pointer": "/image_decisions/uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd/comment",
+              "field": "comment",
+              "record_key": "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/latest.json",
+              "pointer": "/image_decisions/uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd/comment",
+              "field": "comment",
+              "record_key": "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/previous_return.json",
+              "pointer": "/image_decisions/uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd/comment",
+              "field": "comment",
+              "record_key": "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/second.json",
+              "pointer": "/image_decisions/uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd/comment",
+              "field": "comment",
+              "record_key": "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/review_return_original.json",
+              "pointer": "/image_decisions/uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd/comment",
+              "field": "comment",
+              "record_key": "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/second_review.json",
+              "pointer": "/image_decisions/uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd/comment",
+              "field": "comment",
+              "record_key": "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+              "role": "raw_review_export"
+            }
+          ]
+        },
+        {
+          "comment_id": "C155eb04f9b34a988",
+          "comment": "空间没什么大问题,就是p8 标的不太好,和gt 的空间范围有点区别.这图人工大部分不会标gt那种标法",
+          "object_kind": "annotation",
+          "object_id": "new_94_3642_6941_W031",
+          "record_id": "R03230",
+          "worker_id": "W031",
+          "condition": "manual",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/951",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/user.json",
+              "pointer": "/decisions/new_94_3642_6941_W031/comment",
+              "field": "comment",
+              "record_key": "new_94_3642_6941_W031",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_reconciliation_20260925/evidence/user_review.json",
+              "pointer": "/decisions/new_94_3642_6941_W031/comment",
+              "field": "comment",
+              "record_key": "new_94_3642_6941_W031",
+              "role": "raw_review_export"
+            }
+          ]
+        },
+        {
+          "comment_id": "C75696b18abba748c",
+          "comment": "来源或点集资格待确认；未用距离作裁决",
+          "object_kind": "image",
+          "object_id": "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+          "record_id": "",
+          "worker_id": "",
+          "condition": "Manual",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/new_manual_reviewed_20260921/evidence/用户审核_原始.json",
+              "pointer": "/evidence/34/pairs_by_method/representative/0/reason",
+              "field": "reason",
+              "record_key": "",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/new_manual_reviewed_20260921/evidence/用户审核_原始.json",
+              "pointer": "/evidence/34/pairs_by_method/complete/0/reason",
+              "field": "reason",
+              "record_key": "",
+              "role": "raw_review_export"
+            }
+          ]
+        }
+      ],
+      "additional_historical_context": [
+        {
+          "source_path": "/workspace/scratch/a365811da80c/scope_release_staging_20261010/full_review/archive_reconciliation/historical_group_comments_55.json",
+          "json_pointer": "/35",
+          "record": {
+            "record_key": "GROUP_178",
+            "text": "uNb9QFRL6hY · 02 / 28 / 44 / 80  和这个是极其类似的房间,甚至可以放在一起预测.可能就是门口那里标不标有点歧义,29优先级低",
+            "text_hash": "75edcba823815e950924525bd8e6f27367cfb04457ef77004bf3d77d09e3b8e4",
+            "binding_level": "group_not_individual_votes",
+            "evidence_level": "original_human_group_comment_historical",
+            "group_id": "uNb9QFRL6hY_1096f195d3294cefa462add5ab0c342e|uNb9QFRL6hY_1434b965c3c147419c4ff40310633b58|uNb9QFRL6hY_33dd9892d10e474ead8f7ad38a8da562|uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd|uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78|uNb9QFRL6hY_c1ebb8b34eb846ba9b5ce23b30b299a7|uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d|uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd|uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269",
+            "group_review_index": 178,
+            "associated_images": [
+              {
+                "image_id": "uNb9QFRL6hY_1096f195d3294cefa462add5ab0c342e",
+                "image_code": "uNb9QFRL6hY-08",
+                "in_current_259": true
+              },
+              {
+                "image_id": "uNb9QFRL6hY_1434b965c3c147419c4ff40310633b58",
+                "image_code": "uNb9QFRL6hY-10",
+                "in_current_259": false
+              },
+              {
+                "image_id": "uNb9QFRL6hY_33dd9892d10e474ead8f7ad38a8da562",
+                "image_code": "uNb9QFRL6hY-19",
+                "in_current_259": true
+              },
+              {
+                "image_id": "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+                "image_code": "uNb9QFRL6hY-29",
+                "in_current_259": true
+              },
+              {
+                "image_id": "uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78",
+                "image_code": "uNb9QFRL6hY-55",
+                "in_current_259": true
+              },
+              {
+                "image_id": "uNb9QFRL6hY_c1ebb8b34eb846ba9b5ce23b30b299a7",
+                "image_code": "uNb9QFRL6hY-65",
+                "in_current_259": true
+              },
+              {
+                "image_id": "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+                "image_code": "uNb9QFRL6hY-68",
+                "in_current_259": true
+              },
+              {
+                "image_id": "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+                "image_code": "uNb9QFRL6hY-81",
+                "in_current_259": true
+              },
+              {
+                "image_id": "uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269",
+                "image_code": "uNb9QFRL6hY-86",
+                "in_current_259": true
+              }
+            ],
+            "source_saved_at": "2026-09-11T18:17:28.630Z",
+            "source_time_scope": "entire_export_not_individual_edit",
+            "recorded_status": "仍需讨论",
+            "recorded_decision": "优先候选",
+            "source_resolves_previous_pending9": false,
+            "scope_difference_confirmed": false,
+            "classification": "group_level_doorway_inclusion_ambiguity",
+            "sources": [
+              {
+                "bundle_relative_path": "图片分类与复审来源/analysis_results/scene_image_exploration_20260910_v1/user_group_review_20260912.json",
+                "json_pointer": "/group_reviews/178/current/note",
+                "file_sha256": "014770c25862e73317481389f1ddd6b8c87d6e1de1f7c16a5e33bcceb90e9349",
+                "canonical_json_record_sha256": "090f4509de91a53912a93a3fa84bf82d70d13c48b76f1cf72f1131288805e520"
+              },
+              {
+                "bundle_relative_path": "图片分类与复审来源/analysis_results/scene_image_exploration_20260910_v1/user_group_review_20260912.json",
+                "json_pointer": "/group_reviews/178/user_revision/note",
+                "file_sha256": "014770c25862e73317481389f1ddd6b8c87d6e1de1f7c16a5e33bcceb90e9349",
+                "canonical_json_record_sha256": "090f4509de91a53912a93a3fa84bf82d70d13c48b76f1cf72f1131288805e520"
+              },
+              {
+                "bundle_relative_path": "原清单123项/004_same_room_selection_registry_v2_20260912.json",
+                "json_pointer": "/groups/178/raw_current/note",
+                "file_sha256": "d43d0e92657fd00a2b034e305c9b33776c74716f12d826a1907ba773386fa0df",
+                "canonical_json_record_sha256": "419f1a822e4f888dcbd7eed982f6ded779a5c7304f9fd33a568bab00b5225d26"
+              }
+            ],
+            "raw_record": {
+              "group_id": "uNb9QFRL6hY_1096f195d3294cefa462add5ab0c342e|uNb9QFRL6hY_1434b965c3c147419c4ff40310633b58|uNb9QFRL6hY_33dd9892d10e474ead8f7ad38a8da562|uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd|uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78|uNb9QFRL6hY_c1ebb8b34eb846ba9b5ce23b30b299a7|uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d|uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd|uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269",
+              "image_ids": [
+                "uNb9QFRL6hY_1096f195d3294cefa462add5ab0c342e",
+                "uNb9QFRL6hY_1434b965c3c147419c4ff40310633b58",
+                "uNb9QFRL6hY_33dd9892d10e474ead8f7ad38a8da562",
+                "uNb9QFRL6hY_6115ed700b5144cfa3443346381cb7cd",
+                "uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78",
+                "uNb9QFRL6hY_c1ebb8b34eb846ba9b5ce23b30b299a7",
+                "uNb9QFRL6hY_cdca0a1a2fc343bb94bacdc3045b2d8d",
+                "uNb9QFRL6hY_e8fcf8c5bd324655a25186117151ccbd",
+                "uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269"
+              ],
+              "pair_ids": [
+                "uNb9QFRL6hY:08-10",
+                "uNb9QFRL6hY:08-19",
+                "uNb9QFRL6hY:08-29",
+                "uNb9QFRL6hY:08-55",
+                "uNb9QFRL6hY:08-65",
+                "uNb9QFRL6hY:08-68",
+                "uNb9QFRL6hY:08-81",
+                "uNb9QFRL6hY:08-86"
+              ],
+              "prefill": {
+                "physical_same": "支持",
+                "main_visual_alignment": "一致",
+                "extent_alignment": "待定",
+                "difficulty_similarity": "待定",
+                "decision": "待定",
+                "status": "",
+                "note": ""
+              },
+              "current": {
+                "physical_same": "支持",
+                "main_visual_alignment": "一致",
+                "extent_alignment": "待定",
+                "difficulty_similarity": "可能出现小幅歧义",
+                "decision": "优先候选",
+                "status": "仍需讨论",
+                "note": "uNb9QFRL6hY · 02 / 28 / 44 / 80  和这个是极其类似的房间,甚至可以放在一起预测.可能就是门口那里标不标有点歧义,29优先级低"
+              },
+              "changed_fields": [
+                "difficulty_similarity",
+                "decision",
+                "status",
+                "note"
+              ],
+              "user_revision": {
+                "note": "uNb9QFRL6hY · 02 / 28 / 44 / 80  和这个是极其类似的房间,甚至可以放在一起预测.可能就是门口那里标不标有点歧义,29优先级低",
+                "status": "仍需讨论",
+                "decision": "优先候选",
+                "difficulty_similarity": "可能出现小幅歧义"
+              }
+            }
+          }
+        }
+      ],
+      "review_card_path": "/workspace/scratch/a365811da80c/current_order_review_20261010/analysis_results/image_difficulty_full_review_20261010/all_cards/uNb9QFRL6hY-81.jpg"
+    },
+    {
+      "image": "wc2JMjhGNzB-22",
+      "image_id": "wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66",
+      "gt_object_id": "gt:wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66.txt",
+      "original_working_class": "困难",
+      "proposed_class": "困难",
+      "grade": "简单",
+      "scope": "范围明显不同",
+      "note": "标注范围不同",
+      "updated_at": "2026-10-10T10:16:47.007Z",
+      "queue_reason": "范围选项明确不同",
+      "case_type": "范围明显不同",
+      "machine_area_screen": false,
+      "previous_scope_category": "local_or_minority_candidate",
+      "condition_gate_groups": [
+        {
+          "condition": "manual",
+          "gate": "main_candidate",
+          "n": 8,
+          "workers": 8,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 3,
+            "0.3": 1,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.125,
+          "fraction_upper": 0.125
+        }
+      ],
+      "selected_target": null,
+      "adjudication_status": "awaiting_user_target_decision",
+      "second_review_status": "blocked_on_target_decision",
+      "current_difficulty_not_final": true,
+      "card": "../all_cards/wc2JMjhGNzB-22.jpg",
+      "image_code": "wc2JMjhGNzB-22",
+      "reference_object_id": "gt:wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66.txt",
+      "source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+      "latest_user_review": {
+        "image": "wc2JMjhGNzB-22",
+        "image_id": "wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66",
+        "gt_object_id": "gt:wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66.txt",
+        "original_working_class": "困难",
+        "proposed_class": "困难",
+        "grade": "简单",
+        "scope": "范围明显不同",
+        "note": "标注范围不同",
+        "updated_at": "2026-10-10T10:16:47.007Z"
+      },
+      "latest_user_review_source": {
+        "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/source_review.json",
+        "json_pointer": "/records/21",
+        "review_version": "image-difficulty-review-259-20261010-v2",
+        "exported_at": "2026-10-10T10:19:20.996Z"
+      },
+      "queue_source": {
+        "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/scope_queue.json",
+        "json_pointer": "/cases/8"
+      },
+      "requested_operation_type": "entrance_branch_decision",
+      "requested_operation_zh": "核对 GT 的门口区域是否保留，用户指定保留区域或新停止线。",
+      "operation_is_adjudication_prompt_not_user_confirmed_geometry": true,
+      "uncertainty_and_conflict_zh": "旧 W037/R03419 所说“目前的标注者都没有标”是当时描述；不是当前全体语义统计。",
+      "existing_workbench_inventory_match": true,
+      "existing_broad_review_queue": true,
+      "overlap_with_prior_confirmed_five": false,
+      "initial_review_state": {
+        "decision": "pending",
+        "completed": false,
+        "floor_region_confirmed": false,
+        "confirmed_version": null,
+        "received_confirmed_version": null,
+        "selected_target": null,
+        "operations": [],
+        "top_boundary_pending": true,
+        "reference_ready": false,
+        "GT_modified": false
+      },
+      "current_selected_gt_object_id": "gt:wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66.txt",
+      "historical_original_gt_object_id": "gt:wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66.txt",
+      "historical_reference_version_pending": false,
+      "hold_layers_in_frozen_inventory": [],
+      "hold_corpus_is_exhaustive_current_policy": false,
+      "historical_image_comment_summary": "",
+      "historical_original_comments": [
+        {
+          "comment_id": "Cd2a7c4ac07938da3",
+          "comment": "gt是标了 门口的区域,但是其实这图,目前的标注者都没有标那个地方",
+          "object_kind": "annotation",
+          "object_id": "new_95_3666_7103_W037",
+          "record_id": "R03419",
+          "worker_id": "W037",
+          "condition": "manual",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/988",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/user.json",
+              "pointer": "/decisions/new_95_3666_7103_W037/comment",
+              "field": "comment",
+              "record_key": "new_95_3666_7103_W037",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_reconciliation_20260925/evidence/user_review.json",
+              "pointer": "/decisions/new_95_3666_7103_W037/comment",
+              "field": "comment",
+              "record_key": "new_95_3666_7103_W037",
+              "role": "raw_review_export"
+            }
+          ]
+        }
+      ],
+      "additional_historical_context": [],
+      "review_card_path": "/workspace/scratch/a365811da80c/current_order_review_20261010/analysis_results/image_difficulty_full_review_20261010/all_cards/wc2JMjhGNzB-22.jpg"
+    },
+    {
+      "image": "wc2JMjhGNzB-26",
+      "image_id": "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+      "gt_object_id": "gt:wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd:export_label/groudTruth.json",
+      "original_working_class": "困难",
+      "proposed_class": "待复核",
+      "grade": "困难",
+      "scope": "目标基本一致",
+      "note": "这图细节难,而且存在有标注者标注了不同的标注范围",
+      "updated_at": "2026-10-10T10:17:13.987Z",
+      "queue_reason": "总体基本一致，但备注指出部分人员标不同范围",
+      "case_type": "备注补充/局部边界",
+      "machine_area_screen": true,
+      "previous_scope_category": "extent_candidate",
+      "condition_gate_groups": [
+        {
+          "condition": "manual",
+          "gate": "main_candidate",
+          "n": 6,
+          "workers": 6,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 5,
+            "0.3": 4,
+            "0.4": 4
+          },
+          "geometry_signal": true,
+          "fraction_lower": 0.6666666666666666,
+          "fraction_upper": 0.6666666666666666
+        }
+      ],
+      "selected_target": null,
+      "adjudication_status": "awaiting_user_target_decision",
+      "second_review_status": "blocked_on_target_decision",
+      "current_difficulty_not_final": true,
+      "card": "../all_cards/wc2JMjhGNzB-26.jpg",
+      "image_code": "wc2JMjhGNzB-26",
+      "reference_object_id": "gt:wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd:export_label/groudTruth.json",
+      "source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+      "latest_user_review": {
+        "image": "wc2JMjhGNzB-26",
+        "image_id": "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+        "gt_object_id": "gt:wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd:export_label/groudTruth.json",
+        "original_working_class": "困难",
+        "proposed_class": "待复核",
+        "grade": "困难",
+        "scope": "目标基本一致",
+        "note": "这图细节难,而且存在有标注者标注了不同的标注范围",
+        "updated_at": "2026-10-10T10:17:13.987Z"
+      },
+      "latest_user_review_source": {
+        "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/source_review.json",
+        "json_pointer": "/records/22",
+        "review_version": "image-difficulty-review-259-20261010-v2",
+        "exported_at": "2026-10-10T10:19:20.996Z"
+      },
+      "queue_source": {
+        "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/scope_queue.json",
+        "json_pointer": "/cases/9"
+      },
+      "requested_operation_type": "bathroom_corridor_target_redefinition",
+      "requested_operation_zh": "以当前修订 GT 为编辑基底，确认浴室与相连走廊边界；另保留左侧墙面细节。",
+      "operation_is_adjudication_prompt_not_user_confirmed_geometry": true,
+      "uncertainty_and_conflict_zh": "当前 GT 是 export_label/groudTruth.json，历史原 GT 不同。旧原话 GT 不含走廊、人员可能多标走廊；不得套用“GT 一律裁小”。最新 scope 为目标基本一致，备注指出部分人员不同。",
+      "existing_workbench_inventory_match": true,
+      "existing_broad_review_queue": true,
+      "overlap_with_prior_confirmed_five": false,
+      "initial_review_state": {
+        "decision": "pending",
+        "completed": false,
+        "floor_region_confirmed": false,
+        "confirmed_version": null,
+        "received_confirmed_version": null,
+        "selected_target": null,
+        "operations": [],
+        "top_boundary_pending": true,
+        "reference_ready": false,
+        "GT_modified": false
+      },
+      "current_selected_gt_object_id": "gt:wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd:export_label/groudTruth.json",
+      "historical_original_gt_object_id": "gt:wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd.txt",
+      "historical_reference_version_pending": true,
+      "hold_layers_in_frozen_inventory": [],
+      "hold_corpus_is_exhaustive_current_policy": false,
+      "historical_image_comment_summary": "这图较难,存在不同的标注空间范围,有些人是会把走廊区域标注,但是我觉得没必要,gt是没有标的;还有很多人忽略了左侧墙面的变化\n严格来说,只有我改过的gt 是算enclosed ,其余的都是extended,但是他们标注的也不好,他们包括长廊的这个东西,或者左边墙面有些标注不准\n只有我改过的gt 是算enclosed\n其余的都是extended\n他们包括长廊的这个东西,或者左边墙面有些标注不准",
+      "historical_original_comments": [
+        {
+          "comment_id": "C0912bcfc11e5d358",
+          "comment": "这图较难,存在不同的标注空间范围,有些人是会把走廊区域标注,但是我觉得没必要,gt是没有标的;还有很多人忽略了左侧墙面的变化",
+          "object_kind": "image",
+          "object_id": "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+          "record_id": "",
+          "worker_id": "",
+          "condition": "",
+          "reference_binding_status": "historical_version_pending",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/989",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+              "pointer": "/image_decisions/wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd/comment",
+              "field": "comment",
+              "record_key": "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/latest.json",
+              "pointer": "/image_decisions/wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd/comment",
+              "field": "comment",
+              "record_key": "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/previous_return.json",
+              "pointer": "/image_decisions/wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd/comment",
+              "field": "comment",
+              "record_key": "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/second.json",
+              "pointer": "/image_decisions/wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd/comment",
+              "field": "comment",
+              "record_key": "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/review_return_original.json",
+              "pointer": "/image_decisions/wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd/comment",
+              "field": "comment",
+              "record_key": "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_return_20260927/evidence/second_review.json",
+              "pointer": "/image_decisions/wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd/comment",
+              "field": "comment",
+              "record_key": "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+              "role": "raw_review_export"
+            }
+          ]
+        },
+        {
+          "comment_id": "C3caf96fb27170de0",
+          "comment": "空间不同,但是他这标的也太奇怪了",
+          "object_kind": "annotation",
+          "object_id": "3e41c936412b1a992027",
+          "record_id": "R00629",
+          "worker_id": "W034",
+          "condition": "manual",
+          "reference_binding_status": "historical_version_pending",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/990",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/user.json",
+              "pointer": "/decisions/3e41c936412b1a992027/comment",
+              "field": "comment",
+              "record_key": "3e41c936412b1a992027",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_reconciliation_20260925/evidence/user_review.json",
+              "pointer": "/decisions/3e41c936412b1a992027/comment",
+              "field": "comment",
+              "record_key": "3e41c936412b1a992027",
+              "role": "raw_review_export"
+            }
+          ]
+        },
+        {
+          "comment_id": "C6102f0a26b78526c",
+          "comment": "不同范围的标注,这算是标注走廊内空间很合理的标注了",
+          "object_kind": "annotation",
+          "object_id": "d1099761985f8bcdd357",
+          "record_id": "R02052",
+          "worker_id": "W035",
+          "condition": "manual",
+          "reference_binding_status": "historical_version_pending",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/991",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/user.json",
+              "pointer": "/decisions/d1099761985f8bcdd357/comment",
+              "field": "comment",
+              "record_key": "d1099761985f8bcdd357",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_reconciliation_20260925/evidence/user_review.json",
+              "pointer": "/decisions/d1099761985f8bcdd357/comment",
+              "field": "comment",
+              "record_key": "d1099761985f8bcdd357",
+              "role": "raw_review_export"
+            }
+          ]
+        }
+      ],
+      "additional_historical_context": [
+        {
+          "source_path": "/workspace/scratch/a365811da80c/scope_release_staging_20261010/full_review/archive_reconciliation/historical_group_comments_55.json",
+          "json_pointer": "/43",
+          "record": {
+            "record_key": "GROUP_201",
+            "text": "这组图难标,特别是26歧义很大,但是可不可以作为歧义很大的预测候选?",
+            "text_hash": "2967f3b0ab5088e0b51dbcd8c7c94269b83ef162d10240323cdaf8b5f183f5d7",
+            "binding_level": "group_not_individual_votes",
+            "evidence_level": "original_human_group_comment_historical",
+            "group_id": "wc2JMjhGNzB_02bbd23673904a6980dc0e22b11c6a35|wc2JMjhGNzB_479b5e13d201492086bb3b69be5b124d|wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd|wc2JMjhGNzB_aeb3199e10354e45a4884bb185c03257|wc2JMjhGNzB_b41b10699d614f24851b56a9a0e743c6",
+            "group_review_index": 201,
+            "associated_images": [
+              {
+                "image_id": "wc2JMjhGNzB_02bbd23673904a6980dc0e22b11c6a35",
+                "image_code": "wc2JMjhGNzB-02",
+                "in_current_259": false
+              },
+              {
+                "image_id": "wc2JMjhGNzB_479b5e13d201492086bb3b69be5b124d",
+                "image_code": "wc2JMjhGNzB-25",
+                "in_current_259": false
+              },
+              {
+                "image_id": "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+                "image_code": "wc2JMjhGNzB-26",
+                "in_current_259": true
+              },
+              {
+                "image_id": "wc2JMjhGNzB_aeb3199e10354e45a4884bb185c03257",
+                "image_code": "wc2JMjhGNzB-51",
+                "in_current_259": false
+              },
+              {
+                "image_id": "wc2JMjhGNzB_b41b10699d614f24851b56a9a0e743c6",
+                "image_code": "wc2JMjhGNzB-53",
+                "in_current_259": true
+              }
+            ],
+            "source_saved_at": "2026-09-11T18:17:28.630Z",
+            "source_time_scope": "entire_export_not_individual_edit",
+            "recorded_status": "仍需讨论",
+            "recorded_decision": "基础候选",
+            "source_resolves_previous_pending9": false,
+            "scope_difference_confirmed": false,
+            "classification": "unspecified_ambiguity_candidate",
+            "sources": [
+              {
+                "bundle_relative_path": "图片分类与复审来源/analysis_results/scene_image_exploration_20260910_v1/user_group_review_20260912.json",
+                "json_pointer": "/group_reviews/201/current/note",
+                "file_sha256": "014770c25862e73317481389f1ddd6b8c87d6e1de1f7c16a5e33bcceb90e9349",
+                "canonical_json_record_sha256": "8037b64bfc942cef0e9b48ba9fcf76ae3f984ef7d2c7f0174726a0c28df70022"
+              },
+              {
+                "bundle_relative_path": "图片分类与复审来源/analysis_results/scene_image_exploration_20260910_v1/user_group_review_20260912.json",
+                "json_pointer": "/group_reviews/201/user_revision/note",
+                "file_sha256": "014770c25862e73317481389f1ddd6b8c87d6e1de1f7c16a5e33bcceb90e9349",
+                "canonical_json_record_sha256": "8037b64bfc942cef0e9b48ba9fcf76ae3f984ef7d2c7f0174726a0c28df70022"
+              },
+              {
+                "bundle_relative_path": "原清单123项/004_same_room_selection_registry_v2_20260912.json",
+                "json_pointer": "/groups/201/raw_current/note",
+                "file_sha256": "d43d0e92657fd00a2b034e305c9b33776c74716f12d826a1907ba773386fa0df",
+                "canonical_json_record_sha256": "3f75c792366ec3b49d19f7ca3afdfb70a5d4ef9fa74321050fe4cbf5a648b77a"
+              }
+            ],
+            "raw_record": {
+              "group_id": "wc2JMjhGNzB_02bbd23673904a6980dc0e22b11c6a35|wc2JMjhGNzB_479b5e13d201492086bb3b69be5b124d|wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd|wc2JMjhGNzB_aeb3199e10354e45a4884bb185c03257|wc2JMjhGNzB_b41b10699d614f24851b56a9a0e743c6",
+              "image_ids": [
+                "wc2JMjhGNzB_02bbd23673904a6980dc0e22b11c6a35",
+                "wc2JMjhGNzB_479b5e13d201492086bb3b69be5b124d",
+                "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+                "wc2JMjhGNzB_aeb3199e10354e45a4884bb185c03257",
+                "wc2JMjhGNzB_b41b10699d614f24851b56a9a0e743c6"
+              ],
+              "pair_ids": [
+                "wc2JMjhGNzB:02-25",
+                "wc2JMjhGNzB:02-26",
+                "wc2JMjhGNzB:02-51",
+                "wc2JMjhGNzB:02-53"
+              ],
+              "prefill": {
+                "physical_same": "支持",
+                "main_visual_alignment": "待定",
+                "extent_alignment": "待定",
+                "difficulty_similarity": "待定",
+                "decision": "待定",
+                "status": "",
+                "note": ""
+              },
+              "current": {
+                "physical_same": "支持",
+                "main_visual_alignment": "一致",
+                "extent_alignment": "预期相近",
+                "difficulty_similarity": "可能出现小幅歧义",
+                "decision": "基础候选",
+                "status": "仍需讨论",
+                "note": "这组图难标,特别是26歧义很大,但是可不可以作为歧义很大的预测候选?"
+              },
+              "changed_fields": [
+                "main_visual_alignment",
+                "extent_alignment",
+                "difficulty_similarity",
+                "decision",
+                "status",
+                "note"
+              ],
+              "user_revision": {
+                "decision": "基础候选",
+                "difficulty_similarity": "可能出现小幅歧义",
+                "extent_alignment": "预期相近",
+                "main_visual_alignment": "一致",
+                "status": "仍需讨论",
+                "note": "这组图难标,特别是26歧义很大,但是可不可以作为歧义很大的预测候选?"
+              }
+            }
+          }
+        }
+      ],
+      "review_card_path": "/workspace/scratch/a365811da80c/current_order_review_20261010/analysis_results/image_difficulty_full_review_20261010/all_cards/wc2JMjhGNzB-26.jpg",
+      "restored_historical_reference": {
+        "image_code": "wc2JMjhGNzB-26",
+        "image_id": "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+        "original_gt_object_id": "gt:wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd.txt",
+        "selected_gt_object_id": "gt:wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd:export_label/groudTruth.json",
+        "original_points_1024x512": [
+          [
+            509.81,
+            206.63
+          ],
+          [
+            509.81,
+            315.51
+          ],
+          [
+            493.71,
+            59.82
+          ],
+          [
+            493.71,
+            462.35
+          ],
+          [
+            610.2,
+            70.77
+          ],
+          [
+            610.2,
+            452.93
+          ],
+          [
+            957.54,
+            95.38
+          ],
+          [
+            957.54,
+            431.07
+          ],
+          [
+            215.93,
+            193.98
+          ],
+          [
+            215.93,
+            330.16
+          ],
+          [
+            406.3,
+            216.21
+          ],
+          [
+            406.3,
+            304.2
+          ]
+        ],
+        "selected_points_1024x512": [
+          [
+            65.02400207519531,
+            95.44806671142578
+          ],
+          [
+            65.02400207519531,
+            431.0087585449219
+          ],
+          [
+            96.76799774169922,
+            70.34009552001953
+          ],
+          [
+            96.76799774169922,
+            453.30279541015625
+          ],
+          [
+            230.582275390625,
+            193.0188751220703
+          ],
+          [
+            230.582275390625,
+            331.2547912597656
+          ],
+          [
+            406.00372314453125,
+            216.1658935546875
+          ],
+          [
+            406.00372314453125,
+            304.2493591308594
+          ],
+          [
+            509.5147399902344,
+            206.5121307373047
+          ],
+          [
+            509.5147399902344,
+            315.641357421875
+          ],
+          [
+            494.8541564941406,
+            70.72921752929688
+          ],
+          [
+            494.8541564941406,
+            452.9648742675781
+          ],
+          [
+            585.2160034179688,
+            77.07647705078125
+          ],
+          [
+            585.2160034179688,
+            447.4219665527344
+          ],
+          [
+            967.1680297851562,
+            93.97350311279297
+          ],
+          [
+            967.1680297851562,
+            432.3486633300781
+          ]
+        ],
+        "source_commit": "fae48e69aa4ae879b8268c34afb8f8221ee53022",
+        "note": "Historical original reference restored from hash-verified formal baseline. Does not change current selected reference or interpret which version historical comments referenced."
+      }
+    },
+    {
+      "image": "wc2JMjhGNzB-29",
+      "image_id": "wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366",
+      "gt_object_id": "gt:wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366.txt",
+      "original_working_class": "困难",
+      "proposed_class": "困难",
+      "grade": "简单",
+      "scope": "范围明显不同",
+      "note": "gt范围不同",
+      "updated_at": "2026-10-10T10:17:23.751Z",
+      "queue_reason": "范围选项明确不同",
+      "case_type": "范围明显不同",
+      "machine_area_screen": false,
+      "previous_scope_category": "local_or_minority_candidate",
+      "condition_gate_groups": [
+        {
+          "condition": "manual",
+          "gate": "excluded",
+          "n": 1,
+          "workers": 1,
+          "invalid": 1,
+          "flagged_counts": {
+            "0.2": 0,
+            "0.3": 0,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.0,
+          "fraction_upper": 1.0
+        },
+        {
+          "condition": "manual",
+          "gate": "main_candidate",
+          "n": 8,
+          "workers": 8,
+          "invalid": 0,
+          "flagged_counts": {
+            "0.2": 1,
+            "0.3": 0,
+            "0.4": 0
+          },
+          "geometry_signal": false,
+          "fraction_lower": 0.0,
+          "fraction_upper": 0.0
+        }
+      ],
+      "selected_target": null,
+      "adjudication_status": "awaiting_user_target_decision",
+      "second_review_status": "blocked_on_target_decision",
+      "current_difficulty_not_final": true,
+      "card": "../all_cards/wc2JMjhGNzB-29.jpg",
+      "image_code": "wc2JMjhGNzB-29",
+      "reference_object_id": "gt:wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366.txt",
+      "source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+      "latest_user_review": {
+        "image": "wc2JMjhGNzB-29",
+        "image_id": "wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366",
+        "gt_object_id": "gt:wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366.txt",
+        "original_working_class": "困难",
+        "proposed_class": "困难",
+        "grade": "简单",
+        "scope": "范围明显不同",
+        "note": "gt范围不同",
+        "updated_at": "2026-10-10T10:17:23.751Z"
+      },
+      "latest_user_review_source": {
+        "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/source_review.json",
+        "json_pointer": "/records/23",
+        "review_version": "image-difficulty-review-259-20261010-v2",
+        "exported_at": "2026-10-10T10:19:20.996Z"
+      },
+      "queue_source": {
+        "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/scope_queue.json",
+        "json_pointer": "/cases/10"
+      },
+      "requested_operation_type": "entrance_branch_decision",
+      "requested_operation_zh": "核对 GT 的门口区域是否纳入，用户明确停止边。",
+      "operation_is_adjudication_prompt_not_user_confirmed_geometry": true,
+      "uncertainty_and_conflict_zh": "历史“所有标注者都没标”只属于当时原话；最新未确认具体 polygon。与已确认 q9vSo1VnCiC-29 是不同建筑、不同 image_id。",
+      "existing_workbench_inventory_match": true,
+      "existing_broad_review_queue": true,
+      "overlap_with_prior_confirmed_five": false,
+      "initial_review_state": {
+        "decision": "pending",
+        "completed": false,
+        "floor_region_confirmed": false,
+        "confirmed_version": null,
+        "received_confirmed_version": null,
+        "selected_target": null,
+        "operations": [],
+        "top_boundary_pending": true,
+        "reference_ready": false,
+        "GT_modified": false
+      },
+      "current_selected_gt_object_id": "gt:wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366.txt",
+      "historical_original_gt_object_id": "gt:wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366.txt",
+      "historical_reference_version_pending": false,
+      "hold_layers_in_frozen_inventory": [],
+      "hold_corpus_is_exhaustive_current_policy": false,
+      "historical_image_comment_summary": "gt标了门口的那块区域,目前所有标注者都没标,空间范围不同\n来源或点集资格待确认；未用距离作裁决",
+      "historical_original_comments": [
+        {
+          "comment_id": "C6eaa4ff8c2d62b3f",
+          "comment": "gt标了门口的那块区域,目前所有标注者都没标,空间范围不同",
+          "object_kind": "image",
+          "object_id": "wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366",
+          "record_id": "",
+          "worker_id": "",
+          "condition": "",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv",
+              "pointer": "/rows/992",
+              "field": "comment",
+              "record_key": "",
+              "role": "historical_deduplicated_index"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/evidence/coverage.json",
+              "pointer": "/decisions/wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366/comment",
+              "field": "comment",
+              "record_key": "wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/review_final_20260928/图片覆盖补审_已合并.json",
+              "pointer": "/decisions/wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366/comment",
+              "field": "comment",
+              "record_key": "wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366",
+              "role": "derived_review_or_classification"
+            }
+          ]
+        },
+        {
+          "comment_id": "C1e9cefe55ec519ae",
+          "comment": "来源或点集资格待确认；未用距离作裁决",
+          "object_kind": "image",
+          "object_id": "wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366",
+          "record_id": "",
+          "worker_id": "",
+          "condition": "Manual",
+          "reference_binding_status": "historical_view_version_not_guaranteed",
+          "source_occurrences": [
+            {
+              "path": "analysis_results/new_manual_reviewed_20260921/evidence/用户审核_原始.json",
+              "pointer": "/evidence/3/pairs_by_method/representative/0/reason",
+              "field": "reason",
+              "record_key": "",
+              "role": "raw_review_export"
+            },
+            {
+              "path": "analysis_results/new_manual_reviewed_20260921/evidence/用户审核_原始.json",
+              "pointer": "/evidence/3/pairs_by_method/complete/0/reason",
+              "field": "reason",
+              "record_key": "",
+              "role": "raw_review_export"
+            }
+          ]
+        }
+      ],
+      "additional_historical_context": [],
+      "review_card_path": "/workspace/scratch/a365811da80c/current_order_review_20261010/analysis_results/image_difficulty_full_review_20261010/all_cards/wc2JMjhGNzB-29.jpg"
+    }
+  ],
+  "prior_confirmed_preserve": [
+    {
+      "image_code": "e9zR4mvMWw7-17",
+      "image_id": "e9zR4mvMWw7_4273c4dd97974531b5256f96204fee47",
+      "reference_object_id": "gt:e9zR4mvMWw7_4273c4dd97974531b5256f96204fee47:data/mp3d_layout/test/label_cor/e9zR4mvMWw7_4273c4dd97974531b5256f96204fee47.txt",
+      "floor_region_confirmed": true,
+      "completed": true,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "confirmed_at": "2026-10-10T03:04:42Z",
+      "confirmation_source": "user_chat",
+      "action": "preserve_confirmation_and_geometry_do_not_requeue",
+      "hold_layers": []
+    },
+    {
+      "image_code": "e9zR4mvMWw7-09",
+      "image_id": "e9zR4mvMWw7_1d316dfbe35f41dd9203eaf88be5aae8",
+      "reference_object_id": "gt:e9zR4mvMWw7_1d316dfbe35f41dd9203eaf88be5aae8:data/mp3d_layout/test/label_cor/e9zR4mvMWw7_1d316dfbe35f41dd9203eaf88be5aae8.txt",
+      "floor_region_confirmed": true,
+      "completed": true,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "confirmed_at": "2026-10-10T03:04:42Z",
+      "confirmation_source": "user_chat",
+      "action": "preserve_confirmation_and_geometry_do_not_requeue",
+      "hold_layers": []
+    },
+    {
+      "image_code": "b8cTxDM8gDG-18",
+      "image_id": "b8cTxDM8gDG_f3748786c3704532abb2358581488f3f",
+      "reference_object_id": "gt:b8cTxDM8gDG_f3748786c3704532abb2358581488f3f:data/mp3d_layout/test/label_cor/b8cTxDM8gDG_f3748786c3704532abb2358581488f3f.txt",
+      "floor_region_confirmed": true,
+      "completed": true,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "confirmed_at": "2026-10-10T03:04:42Z",
+      "confirmation_source": "user_chat",
+      "action": "preserve_confirmation_and_geometry_do_not_requeue",
+      "hold_layers": []
+    },
+    {
+      "image_code": "q9vSo1VnCiC-29",
+      "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+      "reference_object_id": "gt:q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.txt",
+      "floor_region_confirmed": true,
+      "completed": true,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "confirmed_at": "2026-10-10T09:08:34.978Z",
+      "confirmation_source": "workbench_button",
+      "action": "preserve_confirmation_and_geometry_do_not_requeue",
+      "hold_layers": [
+        {
+          "layer": "formal_quality_gate",
+          "status": "hold_scene_or_reference",
+          "evidence": [
+            {
+              "status": "hold_scene_or_reference",
+              "source_path": "analysis_results/quality_scope_human_review_20261010/record_evidence.json",
+              "source_pointer": "/14/examples/0/current_quality_gate",
+              "record_id": "R02324"
+            },
+            {
+              "status": "hold_scene_or_reference",
+              "source_path": "analysis_results/quality_scope_human_review_20261010/record_evidence.json",
+              "source_pointer": "/14/examples/1/current_quality_gate",
+              "record_id": "R01003"
+            },
+            {
+              "status": "hold_scene_or_reference",
+              "source_path": "analysis_results/quality_scope_human_review_20261010/record_evidence.json",
+              "source_pointer": "/14/examples/2/current_quality_gate",
+              "record_id": "R01124"
+            }
+          ],
+          "note": "范围确认不自动解除正式质量暂停；本次只核到24图证据中的这些记录，未声称全259正式gate完整重载"
+        }
+      ]
+    },
+    {
+      "image_code": "pRbA3pwrgk9-02",
+      "image_id": "pRbA3pwrgk9_03de6e2562bb4f56a88db3ceb681af78",
+      "reference_object_id": "gt:pRbA3pwrgk9_03de6e2562bb4f56a88db3ceb681af78:data/mp3d_layout/valid/label_cor/pRbA3pwrgk9_03de6e2562bb4f56a88db3ceb681af78.txt",
+      "floor_region_confirmed": true,
+      "completed": true,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "confirmed_at": "2026-10-10T09:10:01.595Z",
+      "confirmation_source": "workbench_button",
+      "action": "preserve_confirmation_and_geometry_do_not_requeue",
+      "hold_layers": []
+    }
+  ],
+  "separate_reference_or_oos_holds": [
+    {
+      "image": "jtcxE69GiFV-05",
+      "image_id": "jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037",
+      "gt_object_id": "gt:jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037.txt",
+      "original_working_class": "简单",
+      "proposed_class": "待复核",
+      "grade": "中等",
+      "scope": "GT需核查",
+      "note": "这gt是错误的",
+      "updated_at": "2026-10-10T09:57:47.017Z",
+      "queue_action": "keep_separate_not_in_new_scope_queue",
+      "reference_ready": false
+    },
+    {
+      "image": "jtcxE69GiFV-10",
+      "image_id": "jtcxE69GiFV_44661972414d44fabc0799f237e4d7f0",
+      "gt_object_id": "gt:jtcxE69GiFV_44661972414d44fabc0799f237e4d7f0:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_44661972414d44fabc0799f237e4d7f0.txt",
+      "original_working_class": "简单",
+      "proposed_class": "简单",
+      "grade": "待复核",
+      "scope": "不能确定",
+      "note": "有可能算作oos",
+      "updated_at": "2026-10-10T09:59:09.880Z",
+      "queue_action": "keep_separate_not_in_new_scope_queue",
+      "reference_ready": false
+    }
+  ],
+  "excluded_by_user": [
+    {
+      "image_code": "yqstnuAEVhm-07",
+      "image_id": "yqstnuAEVhm_30f3ce4575234a7ba5ff97797f059ae1",
+      "gt_object_id": "gt:yqstnuAEVhm_30f3ce4575234a7ba5ff97797f059ae1:data/mp3d_layout/test/label_cor/yqstnuAEVhm_30f3ce4575234a7ba5ff97797f059ae1.txt",
+      "reason": "本轮按用户要求接受GT，暂不处理壁炉细节；顺序核查为独立事项",
+      "historical_user_review": {
+        "image": "yqstnuAEVhm-07",
+        "image_id": "yqstnuAEVhm_30f3ce4575234a7ba5ff97797f059ae1",
+        "gt_object_id": "gt:yqstnuAEVhm_30f3ce4575234a7ba5ff97797f059ae1:data/mp3d_layout/test/label_cor/yqstnuAEVhm_30f3ce4575234a7ba5ff97797f059ae1.txt",
+        "original_working_class": "简单",
+        "proposed_class": "简单",
+        "grade": "中等",
+        "scope": "不能确定",
+        "note": "这个歌同意去山谷gt忽略了壁炉,忽略了壁炉就是简单,不忽略就是困难了(角点顺序要调整),我看到你战士的一个标注者,他的交代你顺序好像没有调整过来 ,你复核一下,就是那个多标了4个点的,你看看我之前有没有调整过他的",
+        "updated_at": "2026-10-10T10:19:01.300Z"
+      },
+      "latest_applicable_instruction_source": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/REPORT.md",
+      "scope_action": "do_not_reintroduce_fireplace_scope",
+      "order_review_is_separate": true
+    }
+  ],
+  "invariants": [
+    "不得改写已有5份确认 polygon 或要求重复完成。",
+    "不得把本轮加入队列等同于用户已确认具体裁剪区域。",
+    "原GT、原作答、人员资格、质量hold和难度正式分层不因本队列改变。",
+    "所有底面范围确认不等同顶界或完整3D参考获准，reference_ready保持false。",
+    "当前选定GT与历史GT必须区分；历史评论不替代最新目标裁定。",
+    "没有把全部11图描述成机器独立自动发现；面积筛查只触发3图。"
+  ],
+  "source_files": [
+    {
+      "path": "/workspace/scratch/a365811da80c/current_order_review_20261010/analysis_results/image_difficulty_full_review_20261010/user_review_20261010/scope_queue.json",
+      "sha256": "db3a4bcf78c3e4a037b0f6592d8814e906d31f0d13647d733c00afc51204d2b6",
+      "bytes": 19411
+    },
+    {
+      "path": "/workspace/scratch/a365811da80c/current_order_review_20261010/analysis_results/image_difficulty_full_review_20261010/user_review_20261010/source_review.json",
+      "sha256": "3e62af7d0e4fab659b07aa67494a83cc40d67d8e49ac0c458d657f17390113cb",
+      "bytes": 12962
+    },
+    {
+      "path": "/workspace/scratch/a365811da80c/current_order_review_20261010/analysis_results/image_difficulty_full_review_20261010/user_review_20261010/REPORT.md",
+      "sha256": "0c1cfb2dc5366fdfda64b6d159112ccbd818196b608a283db3febfe75e3e1d2c",
+      "bytes": 5485
+    },
+    {
+      "path": "/workspace/scratch/a365811da80c/current_order_review_20261010/analysis_results/image_difficulty_full_review_20261010/user_review_20261010/scope_review.html",
+      "sha256": "bc116a7443724f54f703e1da7be90f5787648a6035ccbea1f079d79c5b51449c",
+      "bytes": 5838
+    },
+    {
+      "path": "/workspace/scratch/a365811da80c/manual_scope_review_received_20261010_batch2.json",
+      "sha256": "665945d7a3b14227e9de0189d2304ed472a636496edbd6f494b4cacc6de2a51e",
+      "bytes": 34126
+    },
+    {
+      "path": "/workspace/scratch/a365811da80c/scope_release_staging_20261010/full_review/cloud_inventory/inventory.json.gz",
+      "sha256": "ca3af4bcb5445a4eacb84c94503b0cd92b9b2ad84517215cca6c5def60e96910",
+      "bytes": 1307357
+    },
+    {
+      "path": "/workspace/scratch/a365811da80c/scope_release_staging_20261010/full_review/cloud_inventory/policy_hold_evidence.json",
+      "sha256": "215a10788b0413b12233ab417fd5780a63e9dcf0984c9166d559f11a637957fe",
+      "bytes": 3538
+    },
+    {
+      "path": "/workspace/scratch/a365811da80c/scope_release_staging_20261010/full_review/archive_reconciliation/restored_historical_reference_coordinates.json",
+      "sha256": "79f7cb66ad23780efc428487f8d1a35f045dd5a57ad4f503155483820a89a35e",
+      "bytes": 64573
+    },
+    {
+      "path": "/workspace/scratch/a365811da80c/scope_release_staging_20261010/full_review/local_increment/integration_verified69.json",
+      "sha256": "0baa3db67a74de053595434d7ee000c33e00f899d785c3cab038eb3b234752e0",
+      "bytes": 126929
+    },
+    {
+      "path": "/workspace/scratch/a365811da80c/scope_release_staging_20261010/full_review/archive_reconciliation/new_early_image_comments_21.json",
+      "sha256": "34404c3266ff7599033db251358903548697091a3899fbed960e7d9dc4b4bbb4",
+      "bytes": 39854
+    },
+    {
+      "path": "/workspace/scratch/a365811da80c/scope_release_staging_20261010/full_review/archive_reconciliation/historical_group_comments_55.json",
+      "sha256": "f2794571b8dcde83a75afa3986d203acacb8239269efd2ab8d3f123378e58a8d",
+      "bytes": 236485
+    },
+    {
+      "path": "/workspace/scratch/a365811da80c/scope_release_staging_20261010/full_review/archive_reconciliation/historical_image_notes_39_reconfirmed.json",
+      "sha256": "20078e99700eb7f07ad21a45ec5c1a4e4f8cd6bfce78a47e6e280131b3a0a66a",
+      "bytes": 42428
+    },
+    {
+      "path": "/workspace/scratch/a365811da80c/scope_release_staging_20261010/full_review/archive_reconciliation/new_batch_discussion_records_3.json",
+      "sha256": "9fac2ae71b7735db2f6aa66f7ff5156b1442585fde4dadf8cbd66548dd63fb74",
+      "bytes": 12302
+    }
+  ],
+  "known_hold_layers_all": [
+    {
+      "image_code": "jtcxE69GiFV-11",
+      "image_id": "jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8",
+      "hold_layers": [
+        {
+          "layer": "historical_geometry_snapshot",
+          "status": "hold_all_analysis",
+          "source_path": "analysis_results/image_difficulty_full_review_20261010/all_scope_evidence.json",
+          "source_pointer": "/103/condition_gate_groups",
+          "note": "旧几何快照gate；不是完整现行正式质量政策"
+        }
+      ]
+    },
+    {
+      "image_code": "jtcxE69GiFV-18",
+      "image_id": "jtcxE69GiFV_67790605390f4d439c3c59395967ec84",
+      "hold_layers": [
+        {
+          "layer": "formal_quality_gate",
+          "status": "hold_scene_or_reference",
+          "evidence": [
+            {
+              "status": "hold_scene_or_reference",
+              "source_path": "analysis_results/quality_scope_human_review_20261010/record_evidence.json",
+              "source_pointer": "/11/examples/0/current_quality_gate",
+              "record_id": "R01685"
+            },
+            {
+              "status": "hold_scene_or_reference",
+              "source_path": "analysis_results/quality_scope_human_review_20261010/record_evidence.json",
+              "source_pointer": "/11/examples/1/current_quality_gate",
+              "record_id": "R00122"
+            },
+            {
+              "status": "hold_scene_or_reference",
+              "source_path": "analysis_results/quality_scope_human_review_20261010/record_evidence.json",
+              "source_pointer": "/11/examples/2/current_quality_gate",
+              "record_id": "R02494"
+            }
+          ],
+          "note": "范围确认不自动解除正式质量暂停；本次只核到24图证据中的这些记录，未声称全259正式gate完整重载"
+        }
+      ]
+    },
+    {
+      "image_code": "pRbA3pwrgk9-16",
+      "image_id": "pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad",
+      "hold_layers": [
+        {
+          "layer": "historical_geometry_snapshot",
+          "status": "hold_all_analysis",
+          "source_path": "analysis_results/image_difficulty_full_review_20261010/all_scope_evidence.json",
+          "source_pointer": "/124/condition_gate_groups",
+          "note": "旧几何快照gate；不是完整现行正式质量政策"
+        }
+      ]
+    },
+    {
+      "image_code": "q9vSo1VnCiC-29",
+      "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+      "hold_layers": [
+        {
+          "layer": "formal_quality_gate",
+          "status": "hold_scene_or_reference",
+          "evidence": [
+            {
+              "status": "hold_scene_or_reference",
+              "source_path": "analysis_results/quality_scope_human_review_20261010/record_evidence.json",
+              "source_pointer": "/14/examples/0/current_quality_gate",
+              "record_id": "R02324"
+            },
+            {
+              "status": "hold_scene_or_reference",
+              "source_path": "analysis_results/quality_scope_human_review_20261010/record_evidence.json",
+              "source_pointer": "/14/examples/1/current_quality_gate",
+              "record_id": "R01003"
+            },
+            {
+              "status": "hold_scene_or_reference",
+              "source_path": "analysis_results/quality_scope_human_review_20261010/record_evidence.json",
+              "source_pointer": "/14/examples/2/current_quality_gate",
+              "record_id": "R01124"
+            }
+          ],
+          "note": "范围确认不自动解除正式质量暂停；本次只核到24图证据中的这些记录，未声称全259正式gate完整重载"
+        }
+      ]
+    },
+    {
+      "image_code": "uNb9QFRL6hY-32",
+      "image_id": "uNb9QFRL6hY_6a500a9a43a340eb817c58bb084327fe",
+      "hold_layers": [
+        {
+          "layer": "historical_geometry_snapshot",
+          "status": "hold_main_analysis",
+          "source_path": "analysis_results/image_difficulty_full_review_20261010/all_scope_evidence.json",
+          "source_pointer": "/178/condition_gate_groups",
+          "note": "旧几何快照gate；不是完整现行正式质量政策"
+        }
+      ]
+    },
+    {
+      "image_code": "uNb9QFRL6hY-51",
+      "image_id": "uNb9QFRL6hY_a372582c11864f31a9dd174e4a0ae6ad",
+      "hold_layers": [
+        {
+          "layer": "historical_geometry_snapshot",
+          "status": "inner_space_only_reference_hold",
+          "source_path": "analysis_results/image_difficulty_full_review_20261010/all_scope_evidence.json",
+          "source_pointer": "/188/condition_gate_groups",
+          "note": "旧几何快照gate；不是完整现行正式质量政策"
+        }
+      ]
+    },
+    {
+      "image_code": "wc2JMjhGNzB-14",
+      "image_id": "wc2JMjhGNzB_1d8917d25abb4a77a0da9583dc82c17c",
+      "hold_layers": [
+        {
+          "layer": "current_user_quality_reference",
+          "status": "quality_reference_hold_user",
+          "reason": "原始及修订GT均有问题、人数少，暂缓质量研究，非照片不可标。",
+          "source_path": "docs/thesis_main/质量研究正式输入与待研究问题_20261010.md",
+          "source_lines": "25",
+          "message_id": "Sentinel_f31f77a0aef88191984f34bfd5aa2713",
+          "user_quote": "wc2JMjhGNzB-14 的原始 GT 和修订 GT都不太对,这张图有多少人标注的? 如果人数不多,暂时搁置这张图"
+        }
+      ]
+    },
+    {
+      "image_code": "x8F5xyUWy9e-01",
+      "image_id": "x8F5xyUWy9e_1be9a97aada84e4795f64583ac0e3b76",
+      "hold_layers": [
+        {
+          "layer": "current_user_quality_reference",
+          "status": "quality_reference_hold_user",
+          "reason": "非正交可标OOS；GT不太准确，质量参考暂缓，非个人资格否定。",
+          "source_path": "docs/thesis_main/质量研究正式输入与待研究问题_20261010.md",
+          "source_lines": "24",
+          "message_id": "Sentinel_8e1da2394c7c8191ab3b31dcd9c31898",
+          "user_quote": "01和09都是oos,只是说墙面不是正交. 不过01的gt有点问题,不太准确"
+        }
+      ]
+    },
+    {
+      "image_code": "zsNo4HB9uLZ-13",
+      "image_id": "zsNo4HB9uLZ_aabf649f606a48a1b16d5bdcd5970602",
+      "hold_layers": [
+        {
+          "layer": "formal_quality_gate",
+          "status": "hold_scene_or_reference",
+          "evidence": [
+            {
+              "status": "hold_scene_or_reference",
+              "source_path": "analysis_results/quality_scope_human_review_20261010/record_evidence.json",
+              "source_pointer": "/23/examples/0/current_quality_gate",
+              "record_id": "R01170"
+            },
+            {
+              "status": "hold_scene_or_reference",
+              "source_path": "analysis_results/quality_scope_human_review_20261010/record_evidence.json",
+              "source_pointer": "/23/examples/1/current_quality_gate",
+              "record_id": "R02475"
+            },
+            {
+              "status": "hold_scene_or_reference",
+              "source_path": "analysis_results/quality_scope_human_review_20261010/record_evidence.json",
+              "source_pointer": "/23/examples/2/current_quality_gate",
+              "record_id": "R00909"
+            }
+          ],
+          "note": "范围确认不自动解除正式质量暂停；本次只核到24图证据中的这些记录，未声称全259正式gate完整重载"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "原图卡存在性与身份绑定已检查；本任务未做新一轮视觉范围裁定。",
+    "旧 hold 记录为分层证据，并非最新全3152份正式资格的重新穷举。",
+    "本目录仅为输入队列和核对报告，没有修改工作台或仓库，也未发布。"
+  ]
+}

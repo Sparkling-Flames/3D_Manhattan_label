@@ -9,8 +9,8 @@ import numpy as np
 from .worker_wq_integration_20261015 import frozen_engine
 
 ROOT = Path(__file__).resolve().parents[3]
-ARCHIVE = ROOT / 'research/quality_joint_closeout_review_20261015/pro_closeout_delta.zip'
-MODEL_SOURCE = ROOT / 'research/quality_ab_feedback_handoff_20261015/prior_AB/src/working_models.py'
+ARCHIVE = ROOT / 'research/quality/quality_joint_closeout_review_20261015/pro_closeout_delta.zip'
+MODEL_SOURCE = ROOT / 'research/quality/quality_ab_feedback_handoff_20261015/prior_AB/src/working_models.py'
 IDENTITY = ('object_id', 'image_id', 'worker_id', 'condition', 'current_target_id', 'reference_version')
 METRICS = ('iou_2d', 'S_bottom_deg', 'dir', 'Hmean', 'Hcenter',
            'height_mean_ratio', 'iou_3d_corner_mean')

@@ -2,7 +2,7 @@
 
 合同版本：`consensus_research_20260923_v1`。
 
-更新：2026-10-02。当前先运行固定方法的tile人数小实验；难度只要求粗略对应，人员类型组合和同房预测后置。模型信号可以先准备，但不与所有人员及三维变量一起建模。当前规范见 [方法合同](PAPER_A_METHOD_CONTRACT_CURRENT.json)、[统计计划](STATISTICAL_ANALYSIS_PLAN_v1.md)及 [区域共识SOP](相似场景标注稳定性分析SOP.md)。[修订前工作副本](../legacy/paper_a_before_consensus_20260928/source_snapshots/history/research_before_20260923/图片分类与同房间收敛预测研究SOP.md)保留早期判断和采集历史。
+更新：2026-10-02。当前先运行固定方法的tile人数小实验；难度只要求粗略对应，人员类型组合和同房预测后置。模型信号可以先准备，但不与所有人员及三维变量一起建模。当前规范见 [方法合同](PAPER_A_METHOD_CONTRACT_CURRENT.json)、[统计计划](STATISTICAL_ANALYSIS_PLAN_v1.md)及 [区域共识SOP](topics/same_room/相似场景标注稳定性分析SOP.md)。[修订前工作副本](../legacy/paper_a_before_consensus_20260928/source_snapshots/history/research_before_20260923/图片分类与同房间收敛预测研究SOP.md)保留早期判断和采集历史。
 
 ## 1. 目标与分析对象
 

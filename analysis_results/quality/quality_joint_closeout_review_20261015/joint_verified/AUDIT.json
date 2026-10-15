@@ -1,0 +1,183 @@
+{
+  "schema": "quality_joint_closeout_independent_review_v1",
+  "date": "2026-10-15",
+  "native_data_equals_pro_snapshot": true,
+  "native_validation": {
+    "status": "passed",
+    "objects": 3441,
+    "annotations": 3152,
+    "ready_coordinate_objects": 3312,
+    "confirmed_orders": 1312,
+    "research_images": 259,
+    "reference_only_images": 2,
+    "comment_occurrences": 32462,
+    "unresolved_comment_occurrences": 1,
+    "checks": [
+      "完整配对",
+      "周期平均x及y不变",
+      "Matterport数组源点身份",
+      "确认环绑定",
+      "人员/GT/图片引用",
+      "清洗及研究表字段一致",
+      "交叉表ID及计数",
+      "评论来源覆盖"
+    ],
+    "limitation": "机器一致性验证，不宣称所有标注人工确认或方法可计算；人工未决和未知来源继续保留。"
+  },
+  "local_reproduction": {
+    "seconds": 31.630229000000327,
+    "steps": [
+      {
+        "script": "recover_ledger.py",
+        "exit_code": 0,
+        "seconds": 0.7683876000000964
+      },
+      {
+        "script": "compute_all.py",
+        "exit_code": 0,
+        "seconds": 8.57321469999988
+      },
+      {
+        "script": "analyze_downstream.py",
+        "exit_code": 0,
+        "seconds": 3.4598111000000245
+      },
+      {
+        "script": "fusion_bindings.py",
+        "exit_code": 0,
+        "seconds": 1.199958599999718
+      },
+      {
+        "script": "analyze_fusion.py",
+        "exit_code": 0,
+        "seconds": 3.042196299999887
+      },
+      {
+        "script": "closeout_checks.py",
+        "exit_code": 0,
+        "seconds": 6.507172399999945
+      },
+      {
+        "script": "additional_sensitivity.py",
+        "exit_code": 0,
+        "seconds": 2.650441899999805
+      },
+      {
+        "script": "model_regression.py",
+        "exit_code": 0,
+        "seconds": 0.9979529000002003
+      },
+      {
+        "script": "build_review.py",
+        "exit_code": 0,
+        "seconds": 1.6787698999996792
+      },
+      {
+        "script": "pytest",
+        "exit_code": 0
+      }
+    ],
+    "passed": true
+  },
+  "pairs": 1610,
+  "complete": 1145,
+  "replay_max_numeric_difference": 1.1368683772161603e-13,
+  "independent_formula_errors": {
+    "WQ": 4.263256414560601e-14,
+    "current": 4.263256414560601e-14
+  },
+  "complete_with_explicit_target_hold": 13,
+  "ordinary_step_pending": 3,
+  "previous_component_718_errors": {
+    "WQ": 3.268496584496461e-13,
+    "A": 2.5579538487363607e-13,
+    "RA": 2.984279490192421e-13
+  },
+  "summaries": {
+    "ordinary_962": {
+      "n": 962,
+      "images": 115,
+      "means": {
+        "WQ": 60.268496271158334,
+        "current": 57.243687445211464,
+        "A": 67.58603246460805,
+        "RA": 62.36246141182715,
+        "IoU3D100": 78.27033942494197
+      }
+    },
+    "severe_9": {
+      "n": 9,
+      "images": 7,
+      "means": {
+        "WQ": 15.96018460642616,
+        "current": 9.002183256305994,
+        "A": 36.948276972003256,
+        "RA": 21.36893373361372,
+        "IoU3D100": 40.97158254159488
+      }
+    },
+    "semi_39": {
+      "n": 39,
+      "images": 3,
+      "means": {
+        "WQ": 74.31375375203736,
+        "current": 72.5935348452501,
+        "A": 77.75634630785011,
+        "RA": 75.19921955360688,
+        "IoU3D100": 86.42781911713703
+      }
+    },
+    "doorway_115": {
+      "n": 115,
+      "images": 10,
+      "means": {
+        "WQ": 28.896359791303414,
+        "current": 23.08306349606698,
+        "A": 44.877639999649986,
+        "RA": 33.002702655872326,
+        "IoU3D100": 56.92928291262194
+      }
+    },
+    "scope_diagnostic_10": {
+      "n": 10,
+      "images": 2,
+      "means": {
+        "WQ": 23.841905636566974,
+        "current": 17.488402023795544,
+        "A": 36.465484018456536,
+        "RA": 24.643753534742682,
+        "IoU3D100": 47.99737561793779
+      }
+    },
+    "historical_10": {
+      "n": 10,
+      "images": 5,
+      "means": {
+        "WQ": 79.51173885433828,
+        "current": 78.48395511751389,
+        "A": 82.18794384988223,
+        "RA": 80.12271186906887,
+        "IoU3D100": 84.52136234264427
+      }
+    }
+  },
+  "ordinary_same_cell_pairs": 6829,
+  "identical_baseline_pairs_excluded": 107,
+  "reversals_against_WQ": {
+    "current": 75,
+    "A": 482,
+    "RA": 262,
+    "IoU3D100": 1388
+  },
+  "both_gap_at_least_5_reversals": {
+    "current": 0,
+    "A": 61,
+    "RA": 8,
+    "IoU3D100": 225
+  },
+  "not_human_validation": true,
+  "parameters_changed": false,
+  "formal_eligibility_changed": false,
+  "floor_only_and_held_excluded_from_joint_full_table": true,
+  "caveat": "反序是指标敏感性；同图配对不独立，5分只是描述界线，不是人类效度阈值。"
+}

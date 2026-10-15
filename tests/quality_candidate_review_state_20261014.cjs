@@ -1,6 +1,6 @@
 // Test score disclosure and receipt persistence without opening a browser.
 const fs=require('fs'),vm=require('vm'),assert=require('assert');
-const base='research/quality_candidate_review_20261014/';
+const base='research/quality/quality_candidate_review_20261014/';
 const elements={},selected={},saved={};
 class Element{constructor(){this.value='';this.hidden=false;this.children=[];}append(...x){this.children.push(...x)}replaceChildren(...x){this.children=x}click(){}}
 const context={Review3D:{open(){}},console,Date,JSON,setTimeout,Blob,URL,Option:class extends Element{},window:{scrollTo(){}},

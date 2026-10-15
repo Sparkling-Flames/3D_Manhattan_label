@@ -1,0 +1,42 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+____________________ test_rebuild_retains_confirmed_orders _____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-1/test_rebuild_retains_confirmed0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f9388eab2f0>
+
+    def test_rebuild_retains_confirmed_orders(tmp_path, monkeypatch):
+        from tools.thesis_main.data_prep import materialize_current_research_input as builder
+        monkeypatch.setattr(builder, 'OUT', tmp_path)
+>       rebuilt = builder.build()
+                  ^^^^^^^^^^^^^^^
+
+tests/test_difficulty_order_update_20261010.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/thesis_main/data_prep/materialize_current_research_input.py:165: in build
+    model_unchanged_audit=rows(FINAL / '预标注未改动与影响评语汇总.csv'),
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tools/thesis_main/data_prep/materialize_current_research_input.py:20: in rows
+    with Path(path).open(encoding='utf-8-sig', newline='') as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/workspace/scratch/a365811da80c/current_order_review_20261010/analysis_results/final_review_summary_20260929/预标注未改动与影响评语汇总.csv')
+mode = 'r', buffering = -1, encoding = 'utf-8-sig', errors = None, newline = ''
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/a365811da80c/current_order_review_20261010/analysis_results/final_review_summary_20260929/预标注未改动与影响评语汇总.csv'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1013: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_difficulty_order_update_20261010.py::test_rebuild_retains_confirmed_orders
+1 failed, 1 passed in 2.36s

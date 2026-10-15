@@ -1,0 +1,279 @@
+[
+  {
+    "id": "arxiv-2407.10439",
+    "title": "PolyRoom: Room-aware Transformer for Floorplan Reconstruction",
+    "abstract": "Reconstructing geometry and topology structures from raw unstructured data has always been an important research topic in indoor mapping research. In this paper, we aim to reconstruct the floorplan with a vectorized representation from point clouds. Despite significant advancements achieved in recent years, current methods still encounter several challenges, such as missing corners or edges, inaccuracies in corner positions or angles, self-intersecting or overlapping polygons, and potentially implausible topology. To tackle these challenges, we present PolyRoom, a room-aware Transformer that leverages uniform sampling representation, room-aware query initialization, and room-aware self-attention for floorplan reconstruction. Specifically, we adopt a uniform sampling floorplan representation to enable dense supervision during training and effective utilization of angle information. Additionally, we propose a room-aware query initialization scheme to prevent non-polygonal sequences and introduce room-aware self-attention to enhance memory efficiency and model performance. Experimental results on two widely used datasets demonstrate that PolyRoom surpasses current state-of-the-art methods both quantitatively and qualitatively. Our code is available at: this https URL†github.com .",
+    "abstract_status": "complete_primary_source",
+    "authors": [
+      "Yuzhou Liu",
+      "Lingjie Zhu",
+      "Xiaodong Ma",
+      "Hanqiao Ye",
+      "Xiang Gao",
+      "Xianwei Zheng",
+      "Shuhan Shen"
+    ],
+    "year": 2024,
+    "venue": "ECCV 2024",
+    "doi": "10.48550/arXiv.2407.10439",
+    "source_url": "https://arxiv.org/abs/2407.10439",
+    "verification_status": "primary_abstract_verified",
+    "discovery_sources": [
+      {
+        "round": "R2-R5",
+        "source_url": "https://arxiv.org/abs/2407.10439"
+      }
+    ],
+    "screening_status": "awaiting_independent_reviews",
+    "frozen_batch": "B2",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction"
+  },
+  {
+    "id": "arxiv-2407.10687",
+    "title": "FRI-Net: Floorplan Reconstruction via Room-wise Implicit Representation",
+    "abstract": "In this paper, we introduce a novel method called FRI-Net for 2D floorplan reconstruction from 3D point cloud. Existing methods typically rely on corner regression or box regression, which lack consideration for the global shapes of rooms. To address these issues, we propose a novel approach using a room-wise implicit representation with structural regularization to characterize the shapes of rooms in floorplans. By incorporating geometric priors of room layouts in floorplans into our training strategy, the generated room polygons are more geometrically regular. We have conducted experiments on two challenging datasets, Structured3D and SceneCAD. Our method demonstrates improved performance compared to state-of-the-art methods, validating the effectiveness of our proposed representation for floorplan reconstruction.",
+    "abstract_status": "complete_primary_source",
+    "authors": [
+      "Honghao Xu",
+      "Juzhan Xu",
+      "Zeyu Huang",
+      "Pengfei Xu",
+      "Hui Huang",
+      "Ruizhen Hu"
+    ],
+    "year": 2024,
+    "venue": "ECCV 2024",
+    "doi": "10.48550/arXiv.2407.10687",
+    "source_url": "https://arxiv.org/abs/2407.10687",
+    "verification_status": "primary_abstract_verified",
+    "discovery_sources": [
+      {
+        "round": "R2-R5",
+        "source_url": "https://arxiv.org/abs/2407.10687"
+      }
+    ],
+    "screening_status": "awaiting_independent_reviews",
+    "frozen_batch": "B2",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction"
+  },
+  {
+    "id": "arxiv-2107.09858",
+    "title": "Weighted Intersection over Union (wIoU) for Evaluating Image Segmentation",
+    "abstract": "In recent years, many semantic segmentation methods have been proposed to predict label of pixels in the scene. In general, we measure area prediction errors or boundary prediction errors for comparing methods. However, there is no intuitive evaluation metric that evaluates both aspects. In this work, we propose a new evaluation measure called weighted Intersection over Union (wIoU) for semantic segmentation. First, it builds a weight map generated from a boundary distance map, allowing weighted evaluation for each pixel based on a boundary importance factor. The proposed wIoU can evaluate both contour and region by setting a boundary importance factor. We validated the effectiveness of wIoU on a dataset of 33 scenes and demonstrated its flexibility. Using the proposed metric, we expect more flexible and intuitive evaluation in semantic segmentation field are possible.",
+    "abstract_status": "complete_primary_source",
+    "authors": [
+      "Yeong-Jun Cho"
+    ],
+    "year": 2024,
+    "venue": "Pattern Recognition Letters",
+    "doi": "10.1016/j.patrec.2024.07.011",
+    "source_url": "https://arxiv.org/abs/2107.09858",
+    "verification_status": "primary_abstract_verified",
+    "discovery_sources": [
+      {
+        "round": "R2-R5",
+        "source_url": "https://arxiv.org/abs/2107.09858"
+      }
+    ],
+    "screening_status": "awaiting_independent_reviews",
+    "frozen_batch": "B2",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "version_relation": "2021预印本，2024期刊版，同一候选"
+  },
+  {
+    "id": "arxiv-2403.09746",
+    "title": "Pairwise Comparisons Are All You Need",
+    "abstract": "Blind image quality assessment (BIQA) approaches, while promising for automating image quality evaluation, often fall short in real-world scenarios due to their reliance on a generic quality standard applied uniformly across diverse images. This one-size-fits-all approach overlooks the crucial perceptual relationship between image content and quality, leading to a 'domain shift' challenge where a single quality metric inadequately represents various content types. Furthermore, BIQA techniques typically overlook the inherent differences in the human visual system among different observers. In response to these challenges, this paper introduces PICNIQ, a pairwise comparison framework designed to bypass the limitations of conventional BIQA by emphasizing relative, rather than absolute, quality assessment. PICNIQ is specifically designed to estimate the preference likelihood of quality between image pairs. By employing psychometric scaling algorithms, PICNIQ transforms pairwise comparisons into just-objectionable-difference (JOD) quality scores, offering a granular and interpretable measure of image quality. The proposed framework implements a deep learning architecture in combination with a specialized loss function, and a training strategy optimized for sparse pairwise comparison settings. We conduct our research using comparison matrices from the PIQ23 dataset, which are published in this paper. Our extensive experimental analysis showcases PICNIQ's broad applicability and competitive performance, highlighting its potential to set new standards in the field of BIQA.",
+    "abstract_status": "complete_primary_source",
+    "authors": [
+      "Nicolas Chahine",
+      "Sira Ferradans",
+      "Jean Ponce"
+    ],
+    "year": 2024,
+    "venue": "arXiv; formal venue noted below",
+    "doi": "10.48550/arXiv.2403.09746",
+    "source_url": "https://arxiv.org/abs/2403.09746",
+    "verification_status": "primary_abstract_verified",
+    "discovery_sources": [
+      {
+        "round": "R2-R5",
+        "source_url": "https://arxiv.org/abs/2403.09746"
+      }
+    ],
+    "screening_status": "awaiting_independent_reviews",
+    "frozen_batch": "B2",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction"
+  },
+  {
+    "id": "arxiv-1902.09630",
+    "title": "Generalized Intersection over Union: A Metric and A Loss for Bounding Box Regression",
+    "abstract": "Intersection over Union (IoU) is the most popular evaluation metric used in the object detection benchmarks. However, there is a gap between optimizing the commonly used distance losses for regressing the parameters of a bounding box and maximizing this metric value. The optimal objective for a metric is the metric itself. In the case of axis-aligned 2D bounding boxes, it can be shown that $IoU$ can be directly used as a regression loss. However, $IoU$ has a plateau making it infeasible to optimize in the case of non-overlapping bounding boxes. In this paper, we address the weaknesses of $IoU$ by introducing a generalized version as both a new loss and a new metric. By incorporating this generalized $IoU$ ($GIoU$) as a loss into the state-of-the art object detection frameworks, we show a consistent improvement on their performance using both the standard, $IoU$ based, and new, $GIoU$ based, performance measures on popular object detection benchmarks such as PASCAL VOC and MS COCO.",
+    "abstract_status": "complete_primary_source",
+    "authors": [
+      "Hamid Rezatofighi",
+      "Nathan Tsoi",
+      "JunYoung Gwak",
+      "Amir Sadeghian",
+      "Ian Reid",
+      "Silvio Savarese"
+    ],
+    "year": 2019,
+    "venue": "CVPR 2019",
+    "doi": "10.48550/arXiv.1902.09630",
+    "source_url": "https://arxiv.org/abs/1902.09630",
+    "verification_status": "primary_abstract_verified",
+    "discovery_sources": [
+      {
+        "round": "R2-R5",
+        "source_url": "https://arxiv.org/abs/1902.09630"
+      }
+    ],
+    "screening_status": "awaiting_independent_reviews",
+    "frozen_batch": "B2",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction"
+  },
+  {
+    "id": "arxiv-1812.07032",
+    "title": "Boundary loss for highly unbalanced segmentation",
+    "abstract": "Widely used loss functions for CNN segmentation, e.g., Dice or cross-entropy, are based on integrals over the segmentation regions. Unfortunately, for highly unbalanced segmentations, such regional summations have values that differ by several orders of magnitude across classes, which affects training performance and stability. We propose a boundary loss, which takes the form of a distance metric on the space of contours, not regions. This can mitigate the difficulties of highly unbalanced problems because it uses integrals over the interface between regions instead of unbalanced integrals over the regions. Furthermore, a boundary loss complements regional information. Inspired by graph-based optimization techniques for computing active-contour flows, we express a non-symmetric $L_2$ distance on the space of contours as a regional integral, which avoids completely local differential computations involving contour points. This yields a boundary loss expressed with the regional softmax probability outputs of the network, which can be easily combined with standard regional losses and implemented with any existing deep network architecture for N-D segmentation. We report comprehensive evaluations and comparisons on different unbalanced problems, showing that our boundary loss can yield significant increases in performances while improving training stability. Our code is publicly available: this https URL†github.com .",
+    "abstract_status": "complete_primary_source",
+    "authors": [
+      "Hoel Kervadec",
+      "Jihene Bouchtiba",
+      "Christian Desrosiers",
+      "Eric Granger",
+      "Jose Dolz",
+      "Ismail Ben Ayed"
+    ],
+    "year": 2021,
+    "venue": "Medical Image Analysis 67:101851; MIDL 2019 earlier",
+    "doi": "10.1016/j.media.2020.101851",
+    "source_url": "https://arxiv.org/abs/1812.07032",
+    "verification_status": "primary_abstract_verified",
+    "discovery_sources": [
+      {
+        "round": "R2-R5",
+        "source_url": "https://arxiv.org/abs/1812.07032"
+      }
+    ],
+    "screening_status": "awaiting_independent_reviews",
+    "frozen_batch": "B2",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction"
+  },
+  {
+    "id": "arxiv-1911.08287",
+    "title": "Distance-IoU Loss: Faster and Better Learning for Bounding Box Regression",
+    "abstract": "Bounding box regression is the crucial step in object detection. In existing methods, while $\\ell_n$-norm loss is widely adopted for bounding box regression, it is not tailored to the evaluation metric, i.e., Intersection over Union (IoU). Recently, IoU loss and generalized IoU (GIoU) loss have been proposed to benefit the IoU metric, but still suffer from the problems of slow convergence and inaccurate regression. In this paper, we propose a Distance-IoU (DIoU) loss by incorporating the normalized distance between the predicted box and the target box, which converges much faster in training than IoU and GIoU losses. Furthermore, this paper summarizes three geometric factors in bounding box regression, \\ie, overlap area, central point distance and aspect ratio, based on which a Complete IoU (CIoU) loss is proposed, thereby leading to faster convergence and better performance. By incorporating DIoU and CIoU losses into state-of-the-art object detection algorithms, e.g., YOLO v3, SSD and Faster RCNN, we achieve notable performance gains in terms of not only IoU metric but also GIoU metric. Moreover, DIoU can be easily adopted into non-maximum suppression (NMS) to act as the criterion, further boosting performance improvement. The source code and trained models are available at this https URL†github.com .",
+    "abstract_status": "complete_primary_source",
+    "authors": [
+      "Zhaohui Zheng",
+      "Ping Wang",
+      "Wei Liu",
+      "Jinze Li",
+      "Rongguang Ye",
+      "Dongwei Ren"
+    ],
+    "year": 2020,
+    "venue": "AAAI 2020",
+    "doi": "10.48550/arXiv.1911.08287",
+    "source_url": "https://arxiv.org/abs/1911.08287",
+    "verification_status": "primary_abstract_verified",
+    "discovery_sources": [
+      {
+        "round": "R2-R5",
+        "source_url": "https://arxiv.org/abs/1911.08287"
+      }
+    ],
+    "screening_status": "awaiting_independent_reviews",
+    "frozen_batch": "B2",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction"
+  },
+  {
+    "verification_status": "primary_abstract_verified",
+    "abstract_status": "complete_primary_source",
+    "screening_status": "awaiting_independent_reviews",
+    "frozen_batch": "B2",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "id": "mccullagh-1980",
+    "title": "Regression Models for Ordinal Data",
+    "abstract": "A general class of regression models for ordinal data is developed and discussed. These models utilize the ordinal nature of the data by describing various modes of stochastic ordering and this eliminates the need for assigning scores or otherwise assuming cardinality instead of ordinality. Two models in particular, the proportional odds and the proportional hazards models are likely to be most useful in practice because of the simplicity of their interpretation. These linear models are shown to be multivariate extensions of generalized linear models. Extensions to non-linear models are discussed and it is shown that even here the method of iteratively reweighted least squares converges to the maximum likelihood estimate, a property which greatly simplifies the necessary computation. Applications are discussed with the aid of examples.",
+    "authors": [
+      "Peter McCullagh"
+    ],
+    "year": 1980,
+    "venue": "JRSS Series B 42(2),109–127",
+    "doi": "10.1111/j.2517-6161.1980.tb01109.x",
+    "source_url": "https://rss.onlinelibrary.wiley.com/doi/10.1111/j.2517-6161.1980.tb01109.x",
+    "discovery_sources": [
+      {
+        "round": "R3/R4/root-R2",
+        "source_url": "https://www.stat.uchicago.edu/~pmcc/pubs/paper2.pdf"
+      }
+    ]
+  },
+  {
+    "verification_status": "primary_abstract_verified",
+    "abstract_status": "complete_primary_source",
+    "screening_status": "awaiting_independent_reviews",
+    "frozen_batch": "B2",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "id": "perezortiz-2020",
+    "title": "From Pairwise Comparisons and Rating to a Unified Quality Scale",
+    "abstract": "The goal of psychometric scaling is the quantification of perceptual experiences, understanding the relationship between an external stimulus, the internal representation and the response. In this paper, we propose a probabilistic framework to fuse the outcome of different psychophysical experimental protocols, namely rating and pairwise comparisons experiments. Such a method can be used for merging existing datasets of subjective nature and for experiments in which both measurements are collected. We analyze and compare the outcomes of both types of experimental protocols in terms of time and accuracy in a set of simulations and experiments with benchmark and real-world image quality assessment datasets, showing the necessity of scaling and the advantages of each protocol and mixing. Although most of our examples focus on image quality assessment, our findings generalize to any other subjective quality-of-experience task.",
+    "authors": [
+      "M. Pérez-Ortiz",
+      "A. Mikhailiuk",
+      "E. Zerman",
+      "V. Hulusic",
+      "G. Valenzise",
+      "R. K. Mantiuk"
+    ],
+    "year": 2020,
+    "online_year": 2019,
+    "venue": "IEEE Transactions on Image Processing 29:1139–1151",
+    "doi": "10.1109/TIP.2019.2936103",
+    "source_url": "https://discovery.ucl.ac.uk/id/eprint/10081517/",
+    "discovery_sources": [
+      {
+        "round": "R5",
+        "source_url": "https://discovery.ucl.ac.uk/id/eprint/10081517/"
+      }
+    ]
+  },
+  {
+    "verification_status": "primary_abstract_verified",
+    "abstract_status": "complete_primary_source",
+    "screening_status": "awaiting_independent_reviews",
+    "frozen_batch": "B2",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "id": "zadrozny-elkan-2002",
+    "title": "Transforming Classifier Scores into Accurate Multiclass Probability Estimates",
+    "abstract": "Class membership probability estimates are important for many applications of data mining in which classification outputs are combined with other sources of information for decision-making, such as example-dependent misclassification costs, the outputs of other classifiers, or domain knowledge. Previous calibration methods apply only to two-class problems. Here, we show how to obtain accurate probability estimates for multiclass problems by combining calibrated binary probability estimates. We also propose a new method for obtaining calibrated two-class probability estimatesthat can be applied to any classifier that produces a ranking of examples. Using naive Bayes and support vector machine classifiers, we give experimental results from a variety of two-class and multiclass domains, including direct marketing, text categorization and digit recognition.",
+    "authors": [
+      "Bianca Zadrozny",
+      "Charles Elkan"
+    ],
+    "year": 2002,
+    "venue": "ACM SIGKDD",
+    "doi": "10.1145/775107.775151",
+    "doi_status": "secondary-metadata; primary-PDF title/authors/year verified",
+    "source_url": "https://www.cs.columbia.edu/~djhsu/ML/handouts/zadrozny2002kdd.pdf",
+    "discovery_sources": [
+      {
+        "round": "R4",
+        "source_url": "https://www.cs.columbia.edu/~djhsu/ML/handouts/zadrozny2002kdd.pdf"
+      }
+    ]
+  }
+]

@@ -1,0 +1,75 @@
+{
+  "passed": true,
+  "core_files_byte_identical": 10,
+  "checks": [
+    {
+      "file": "reference_registry.json",
+      "sha256": "49144f6b9c99bc26351ab6c19b1365bb17c4193c95cc9fb6e81c8bdb9b1e8780",
+      "relocated_sha256": "49144f6b9c99bc26351ab6c19b1365bb17c4193c95cc9fb6e81c8bdb9b1e8780",
+      "byte_identical": true
+    },
+    {
+      "file": "record_metrics.json",
+      "sha256": "adc4a8b5e87348540054dcea042a579b9f21d8302973273d47af746640227163",
+      "relocated_sha256": "adc4a8b5e87348540054dcea042a579b9f21d8302973273d47af746640227163",
+      "byte_identical": true
+    },
+    {
+      "file": "record_metrics.csv",
+      "sha256": "74cd3abb38706b11aea6e863ec8b25e62d1280dd3997f261b073a815d91e5de8",
+      "relocated_sha256": "74cd3abb38706b11aea6e863ec8b25e62d1280dd3997f261b073a815d91e5de8",
+      "byte_identical": true
+    },
+    {
+      "file": "image_summary.json",
+      "sha256": "ac25e0ee0334401efd4e8c4f966a96628fcfd96850b0aa62763ebef8002d1833",
+      "relocated_sha256": "ac25e0ee0334401efd4e8c4f966a96628fcfd96850b0aa62763ebef8002d1833",
+      "byte_identical": true
+    },
+    {
+      "file": "image_summary.csv",
+      "sha256": "68cd55a7cacb44a72c1bae5753fb733d8de1061f438731f4a211cf773c9c75c8",
+      "relocated_sha256": "68cd55a7cacb44a72c1bae5753fb733d8de1061f438731f4a211cf773c9c75c8",
+      "byte_identical": true
+    },
+    {
+      "file": "condition_gate_summary.json",
+      "sha256": "f71035ac55398fdab9c8e453088f7e9c8e38523bfcc026317f445f0c3234b70c",
+      "relocated_sha256": "f71035ac55398fdab9c8e453088f7e9c8e38523bfcc026317f445f0c3234b70c",
+      "byte_identical": true
+    },
+    {
+      "file": "condition_gate_summary.csv",
+      "sha256": "c8bc9417badc5d2de60c81b3e07c602ebc91069bfde06c4ae956f50b77b6fa3e",
+      "relocated_sha256": "c8bc9417badc5d2de60c81b3e07c602ebc91069bfde06c4ae956f50b77b6fa3e",
+      "byte_identical": true
+    },
+    {
+      "file": "previous_confirmed_floor_delta.json",
+      "sha256": "3ce3236916c0db05fcfbdf4ff744c1313ddb76eba3466c600e3e76fee05d71df",
+      "relocated_sha256": "3ce3236916c0db05fcfbdf4ff744c1313ddb76eba3466c600e3e76fee05d71df",
+      "byte_identical": true
+    },
+    {
+      "file": "historical_artifact_applicability.json",
+      "sha256": "0ffebf915e802091af8cb09b8d2252d1254b72db7ff12c72061a5cc4a54a5a08",
+      "relocated_sha256": "0ffebf915e802091af8cb09b8d2252d1254b72db7ff12c72061a5cc4a54a5a08",
+      "byte_identical": true
+    },
+    {
+      "file": "validation.json",
+      "sha256": "10bbe3c3d8ba613e7e456b6cf2c2443e81a1ed200d2f78eb9c029cd4f8dc8286",
+      "relocated_sha256": "10bbe3c3d8ba613e7e456b6cf2c2443e81a1ed200d2f78eb9c029cd4f8dc8286",
+      "byte_identical": true
+    }
+  ],
+  "portable_inputs": [
+    "current_formal_subset.json",
+    "input_manifest.json",
+    "normalized_confirmation_overlay.json",
+    "raw_scope_return.json"
+  ],
+  "repository_required_for_replay": false,
+  "network_required_for_replay": false,
+  "operation": "Copied only recompute_bev.py and inputs into a fresh temporary directory, ran with relocated defaults."
+}

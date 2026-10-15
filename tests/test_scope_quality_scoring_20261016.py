@@ -32,7 +32,7 @@ def test_frozen_controls_reproduce_metrics_scores_and_leave_points_unchanged():
     tasks, expected = controls()
     original = deepcopy(tasks)
     measured = score_records(tasks)
-    ab = pd.read_csv(ROOT / 'research/quality_ab_feedback_handoff_20261015/prior_AB/results/SCORES_1145.csv')
+    ab = pd.read_csv(ROOT / 'research/quality/quality_ab_feedback_handoff_20261015/prior_AB/results/SCORES_1145.csv')
     by_id = ab.set_index('record_id')
     for result, old in zip(measured, expected):
         assert result['score_status'] == 'complete'

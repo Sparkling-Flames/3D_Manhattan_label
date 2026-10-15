@@ -86,7 +86,7 @@ def review(source, replay, output):
     assert (full.A >= full.WQ - 1e-8).all()
     assert (full.RA <= 100 * full.iou_2d + 1e-8).all()
 
-    previous = pd.read_csv(ROOT / "research/quality_component_return_review_20261014/FULL_COMPARISON.csv")
+    previous = pd.read_csv(ROOT / "research/quality/quality_component_return_review_20261014/FULL_COMPARISON.csv")
     previous = previous[previous.execution_status == "scored"].rename(columns={
         "reference_object_id": "reference_id", "WQ_LS08": "previous_WQ",
         "arithmetic_candidate": "previous_A", "range_anchored_A": "previous_RA"})

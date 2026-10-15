@@ -1,0 +1,59 @@
+{
+  "status": "passed",
+  "python_syntax": "All packaged Python files parsed with ast; no historical scripts executed.",
+  "javascript_syntax": [
+    "dist/app.js",
+    "dist/review-state.js",
+    "dist/catalogue.js",
+    "dist/geometry.js"
+  ],
+  "geometry_assertions_rerun": 49,
+  "state_data_assertions_rerun": false,
+  "browser_QA_rerun": false,
+  "portable_tests": [
+    {
+      "test": "relocated bundle default root independent of cwd",
+      "status": "passed",
+      "observed_exit": 0,
+      "expected_failure": false
+    },
+    {
+      "test": "relocated bundle explicit root",
+      "status": "passed",
+      "observed_exit": 0,
+      "expected_failure": false
+    },
+    {
+      "test": "modified file rejected by SHA256",
+      "status": "passed",
+      "observed_exit": 1,
+      "expected_failure": true
+    },
+    {
+      "test": "changed embedded raw text rejected even after outer manifest refresh",
+      "status": "passed",
+      "observed_exit": 1,
+      "expected_failure": true
+    },
+    {
+      "test": "missing required file rejected",
+      "status": "passed",
+      "observed_exit": 1,
+      "expected_failure": true
+    },
+    {
+      "test": "restored relocated snapshot passes again",
+      "status": "passed",
+      "observed_exit": 0,
+      "expected_failure": false
+    }
+  ],
+  "publication_base_commit": "fae48e69aa4ae879b8268c34afb8f8221ee53022",
+  "existing_files_preserved": [
+    "research/quality_scope_full_review_20261010/README.md",
+    "research/quality_scope_full_review_20261010/batch2_validation.json",
+    "research/quality_scope_full_review_20261010/received_scope_review_batch2.json"
+  ],
+  "snapshot_existing_path_overlap": [],
+  "scope": "Local verification only; no publication or repository edits."
+}

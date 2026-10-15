@@ -1,0 +1,26 @@
+{
+  "classification_version": "research_bands_v1.1.0",
+  "frozen_at_utc": "2026-10-08T16:20:18.693419+00:00",
+  "quality_version": "geom_quality_research_v1.1.0",
+  "thresholds": {
+    "high": 95.0,
+    "good": 85.0,
+    "fair": 50.0
+  },
+  "labels_zh": {
+    "high": "高",
+    "good": "较好",
+    "fair": "一般",
+    "poor": "较差",
+    "unavailable": "不可评价"
+  },
+  "boundary_rule": "lower bound inclusive; quality unavailable is never assigned poor",
+  "basis": "Coarse research conventions anchored to original isolated relative-height responses: H=.10 ->96.1538; H=.20 ->86.2069; H=.50 ->50, rounded conservatively to95/85/50. Combined errors can cross bands even if individual errors are small. Not learned from grades or quantiles, not an 80-point pass rule.",
+  "sensitivity_threshold_shift_points": [
+    -3.0,
+    0.0,
+    3.0
+  ],
+  "not_a_subjective_calibration": true,
+  "selection_note": "Initial threshold proposal documented before counting its band populations; no adjustment after observing the resulting counts."
+}

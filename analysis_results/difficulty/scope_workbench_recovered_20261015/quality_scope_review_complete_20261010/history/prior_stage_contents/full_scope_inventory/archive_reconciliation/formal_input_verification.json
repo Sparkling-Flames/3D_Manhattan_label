@@ -1,0 +1,55 @@
+{
+  "source_commit": "fae48e69aa4ae879b8268c34afb8f8221ee53022",
+  "archive_sha256": "7f752b62e303f126ecd05a09b1db001ea70e7bb59ac506bac7d1c154b3b788bb",
+  "archive_bytes": 12939203,
+  "archive_members": 143,
+  "zip_crc": "passed",
+  "indexed_originals_nonempty_and_size_matched": 123,
+  "lfs_payloads": {
+    "preprocessed_source.json": {
+      "sha256": "7b8d6fca2756e66d1bacfe74d6569f069e5c65075b67aa92f178c8874970fc35",
+      "bytes": 59485508,
+      "matches_committed_lfs_pointer": true
+    },
+    "comments.json": {
+      "sha256": "9d904b302119062774dd08a4ae72966ddac80722c20e6980eb8c225ae39d4d9f",
+      "bytes": 108396834,
+      "matches_committed_lfs_pointer": true
+    }
+  },
+  "formal_loader_validation": {
+    "status": "passed",
+    "objects": 3441,
+    "annotations": 3152,
+    "ready_coordinate_objects": 3312,
+    "confirmed_orders": 1309,
+    "research_images": 259,
+    "reference_only_images": 2,
+    "comment_occurrences": 32462,
+    "unresolved_comment_occurrences": 1,
+    "checks": [
+      "完整配对",
+      "周期平均x及y不变",
+      "Matterport数组源点身份",
+      "确认环绑定",
+      "人员/GT/图片引用",
+      "清洗及研究表字段一致",
+      "交叉表ID及计数",
+      "评论来源覆盖"
+    ],
+    "limitation": "机器一致性验证，不宣称所有标注人工确认或方法可计算；人工未决和未知来源继续保留。"
+  },
+  "both_loaders_identical": true,
+  "quality_update_revision": "quality_review_20261010_v1",
+  "patched_records": 14,
+  "patch_effects": {
+    "review_x_candidate_retained": 11,
+    "review_x_adjacency_changed": 3
+  },
+  "quality_scores_recomputed": false,
+  "limitations": [
+    "Current loader validates input consistency; not a new quality-score evaluation.",
+    "Package source snapshots and early group candidates do not replace current formal input or constitute new user adjudications.",
+    "The promised additional image batch is still pending."
+  ]
+}

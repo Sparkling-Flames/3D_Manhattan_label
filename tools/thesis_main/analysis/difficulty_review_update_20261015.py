@@ -12,8 +12,8 @@ from ..data_prep.consolidate_research_input import load_current_bundle
 from .difficulty_user_revision_20261015 import remove_pairs, floor, floor_features, write
 
 ROOT=Path(__file__).resolve().parents[3]
-BASE=ROOT/'research/difficulty_scope_received_20261015'
-OUT=ROOT/'research/difficulty_review_update_20261015'
+BASE=ROOT/'research/difficulty/difficulty_scope_received_20261015'
+OUT=ROOT/'research/difficulty/difficulty_review_update_20261015'
 VERSION='scope_preferred_difficulty_review_20261015_v3'
 GT_ERRORS={'jtcxE69GiFV-05','jtcxE69GiFV-17','wc2JMjhGNzB-14'}
 
@@ -146,8 +146,8 @@ def main():
     page=page.replace('<b>你此前的审核</b>', '<b>本次你的审核</b><pre>${esc(opinion(r.latest_user_review))}</pre><p>分析状态：${r.difficulty_analysis_eligible?\'可用\':esc(r.difficulty_analysis_exclusion)}</p><b>你此前的审核</b>')
     (OUT/'review.html').write_text(page,encoding='utf-8')
     write(ROOT/'analysis_results/image_difficulty_full_review_20261010/CURRENT.json',dict(version=VERSION,
-        table='../../research/difficulty_review_update_20261015/current_259.csv',details='../../research/difficulty_review_update_20261015/current_259.json',
-        review='../../research/difficulty_review_update_20261015/review.html',analysis_table='../../research/difficulty_review_update_20261015/analysis_eligible.csv',
+        table='../../research/difficulty/difficulty_review_update_20261015/current_259.csv',details='../../research/difficulty/difficulty_review_update_20261015/current_259.json',
+        review='../../research/difficulty/difficulty_review_update_20261015/review.html',analysis_table='../../research/difficulty/difficulty_review_update_20261015/analysis_eligible.csv',
         status='vertical whole-space targets; unresolved GT errors excluded; user review separate from rule class'))
     assert sum(counts.values())==259 and sum(r['selected']['role']=='confirmed_scope' for r in rows)==39
     print(json.dumps(summary,ensure_ascii=False))

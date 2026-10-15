@@ -1,0 +1,37 @@
+{
+  "unresolved_scoring_execution_failures": [],
+  "resolved": [
+    {
+      "component": "file_retrieval",
+      "error": "ZIP semantic search returned zero results",
+      "resolution": "Read mounted ZIP bytes; CRC and all 119 source hashes checked"
+    },
+    {
+      "component": "mechanisms",
+      "error": "20/60s container command timeouts; StreamingExecNotEnabledContainerError for session request",
+      "resolution": "Single-thread full run completed; then clean reproduction completed"
+    },
+    {
+      "component": "render",
+      "path": "figures/J04_bev.png",
+      "error": "PermissionError [Errno 13]",
+      "resolution": "Work figure directory permission corrected; all figures rerendered"
+    },
+    {
+      "component": "measure_geometry_delta_report",
+      "error": "Duplicate array-field keys retained only last reference delta in an intermediate report",
+      "resolution": "Separate object:field keys; independent audit rebuilt all 902 available objects; complete clean reproduction rechecked"
+    },
+    {
+      "component": "report_generation",
+      "error": "SyntaxError due to literal braces in f-string",
+      "resolution": "Escaped literal braces and reran report generation"
+    }
+  ],
+  "not_inferred": [
+    "Files missing",
+    "GT invalid",
+    "New human preference",
+    "Independent validation"
+  ]
+}

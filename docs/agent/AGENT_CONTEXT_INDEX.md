@@ -1,15 +1,17 @@
 # Agent 上下文入口
 
-2026-10-16最新统计：[参考重算后891份完整质量](../../research/descriptive_statistics_rescored_20261016/README.md)，[41图506份逐条核验与后续接入](../../research/scope_quality_rescore_20261016/README.md)。39新空间12份完整参考可确定、27份仍待补；两修订GT的10份作答已重算。807份版本为上一阶段快照，原资格与人数规则未改变。
+研究资料、算法版本、结果快照与迁移前路径统一从[研究资料目录](../../research/catalog/INDEX.md)查找；专题页由机器登记生成。线程摘要仅是可核查的状态提示，不代表保存了原对话全文。
 
-最新统计接续：[当前口径报告](../../research/descriptive_statistics_current_20261015/README.md)已落实CURRENT v3、同条件至少3名有效真人、GT／既有暂停及当前完整参考；旧统计快照保留，206仅为门前候选。
+2026-10-16最新统计：[参考重算后891份完整质量](../../research/statistics/descriptive_statistics_rescored_20261016/README.md)，[41图506份逐条核验与后续接入](../../research/data/scope_quality_rescore_20261016/README.md)。39新空间12份完整参考可确定、27份仍待补；两修订GT的10份作答已重算。807份版本为上一阶段快照，原资格与人数规则未改变。
+
+最新统计接续：[当前口径报告](../../research/statistics/descriptive_statistics_current_20261015/README.md)已落实CURRENT v3、同条件至少3名有效真人、GT／既有暂停及当前完整参考；旧统计快照保留，206仅为门前候选。
 当前研究：`consensus_research_20260923_v1`。先读 `AGENTS.md`、`docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`、执行/统计 SOP，再按任务读取专题。历史 v23 合同固定为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_20260811_v23.json`，不可用当前 schema 解释旧阶段。
 
 最新接续：[图片v3、GT排除和至少3人规则](../thesis_main/四线程成果与论文主线核对_20261015.md)第3.1节。读取难度CURRENT指针；旧836/931统计不能直接当新口径结果，整空间范围确认与精确顶角几何完备性分开。
 
 ## 当前入口（2026-10-15）
 
-- 接手先读[统一研究模型](../thesis_main/研究模型_人员图片与融合不确定性_20261006.md)、[术语](../thesis_main/CONTEXT.md)和[数据说明](../thesis_main/研究数据说明_来源预处理与用途_20261006.md)，再按任务读取合同与执行／统计 SOP。当前状态和任务从[四线程统一入口](../thesis_main/四线程成果与论文主线核对_20261015.md)读取；后续新授权已启动[现有数据描述统计](../../research/descriptive_statistics_20261015/README.md)，上一轮仅整理文档的事实保留；不固定论文大纲，保留后续新增人员、图片和多评分版本。统一模型第8节为历史安排；[完整交接](../thesis_main/线程交接_连线质量与完整共识_20261004.md)保留原意与证据，推进台账记录带日期的实验，不继承旧待办顺序。
+- 接手先读[统一研究模型](../thesis_main/研究模型_人员图片与融合不确定性_20261006.md)、[术语](../thesis_main/CONTEXT.md)和[数据说明](../thesis_main/研究数据说明_来源预处理与用途_20261006.md)，再按任务读取合同与执行／统计 SOP。当前状态和任务从[四线程统一入口](../thesis_main/四线程成果与论文主线核对_20261015.md)读取；后续新授权已启动[现有数据描述统计](../../research/statistics/descriptive_statistics_20261015/README.md)，上一轮仅整理文档的事实保留；不固定论文大纲，保留后续新增人员、图片和多评分版本。统一模型第8节为历史安排；[完整交接](../thesis_main/线程交接_连线质量与完整共识_20261004.md)保留原意与证据，推进台账记录带日期的实验，不继承旧待办顺序。
 - 人员原作答分歧、融合人数过程、实际全员结果分别观察；融合稳定不代表原作答一致。增加人数后出现新标法仍是待检验猜想；困难、OOS、门洞不预设不一致，非正交但可标及门洞可标／不可标分别保留。
 - Lee区域投票与点／点对融合并行。最新输入、人工补标及结果覆盖沿数据说明定位，不从旧快照猜测是否已完成实验。
 

@@ -1,0 +1,118 @@
+{
+  "schema": "quality_scope_final_delivery_v1",
+  "date": "2026-10-10",
+  "formal_input_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+  "site_source_commit": "e44b52969f0d18a352773a83c4b9575f720bc5a7",
+  "original_upload_filename": "空间范围人工审核_2026-10-10(3).json",
+  "receipt_sha256": "9037b3872f605fb5d15244b14d766c79e33f4d10ae13b6cc4f7debbc8261d501",
+  "normalized_overlay_sha256": "a80c6ffc0e95b691631a2343095f9d801d93c5bd67d806fea29a24366d9a7c30",
+  "receipt": {
+    "receipt_records": 261,
+    "site_catalogue_images": 282,
+    "omitted_historical_nonexportable_images": 21,
+    "total_candidate_regions": 261,
+    "alternative_candidate_regions": 0,
+    "explicit_confirmed_images": 35,
+    "confirmed_regions": 35,
+    "confirmation_sources": {
+      "workbench_button": 30,
+      "user_chat": 5
+    },
+    "confirmation_origins": {
+      "new_explicit_confirmation": 19,
+      "inherited_prior_confirmation": 16
+    },
+    "decisions": {
+      "allow": 28,
+      "full_gt": 7
+    },
+    "new_confirmed_decisions": {
+      "allow": 15,
+      "full_gt": 4
+    },
+    "geometrically_modified_confirmed_images": 28,
+    "unconfirmed_pristine_images": 226,
+    "modified_unconfirmed_regions": 0,
+    "uncertain_regions": 0,
+    "policy_auto_confirmation_count": 0,
+    "assigned_23_confirmed": 23,
+    "priority_19_confirmed": 19,
+    "confirmed_current_corpus_images": 33,
+    "confirmed_recovered_external_images": 2,
+    "operation_counts": {
+      "edge_move": 13,
+      "rectangle": 15,
+      "cut": 4
+    },
+    "operation_steps": 32,
+    "current_and_historical_confirmation_snapshots_checked": 56,
+    "snap_metadata_records": 61,
+    "snap_kinds": {
+      "vertex": 5,
+      "finite_edge": 55,
+      "extension": 1
+    },
+    "numerical_checks": 60989,
+    "baseline_projection_max_abs_error": 8.881784197001252e-16
+  },
+  "research": {
+    "receipt_images": 261,
+    "confirmed_images": 35,
+    "confirmed_spaces": 35,
+    "declared_primary_spaces": 35,
+    "declared_alternative_spaces": 0,
+    "existing_gt_floor_decisions": 7,
+    "modified_floor_decisions": 28,
+    "previous_confirmed_images": 16,
+    "newly_confirmed_images": 19,
+    "unconfirmed_receipt_images": 226,
+    "research_images": 33,
+    "reference_only_images": [
+      "q9vSo1VnCiC-21",
+      "q9vSo1VnCiC-25"
+    ],
+    "assigned_room_batch_images": 23,
+    "assigned_room_batch_confirmed_images": 23,
+    "batch_policy_automatically_confirmed_images": 0,
+    "annotation_records": 429,
+    "space_annotation_pairs": 429,
+    "valid_geometry_records": 417,
+    "geometry_status_counts": {
+      "valid": 417,
+      "camera_not_inside": 1,
+      "invalid_pairs": 10,
+      "outside_canvas": 1
+    },
+    "condition_counts": {
+      "manual": 380,
+      "semi": 49
+    },
+    "main_quality_gate_counts": {
+      "candidate_pending_geometry": 367,
+      "excluded": 22,
+      "hold_scene_or_reference": 38,
+      "hold_individual_review": 2
+    },
+    "n_distinct_workers": 26,
+    "prior_134_record_metrics_byte_value_identical": 134,
+    "modified_floor_change_kind_counts": {
+      "mixed_addition_and_removal": 15,
+      "shrinkage_only_within_tolerance": 7,
+      "expansion_only_within_tolerance": 6
+    }
+  },
+  "boundaries": {
+    "floor_only": true,
+    "top_boundary_pending": true,
+    "reference_ready": false,
+    "GT_modified": false,
+    "formal_eligibility_changed": false,
+    "full_3d_Q_recomputed": false,
+    "fusion_or_worker_curves_recomputed": false,
+    "entire_catalogue_semantically_reviewed": false,
+    "remaining_unconfirmed_receipt_images": 226,
+    "source_clues_total": 122,
+    "unavailable_or_readonly_related_views": 30,
+    "browser_visual_or_real_interaction_tested": false
+  }
+}

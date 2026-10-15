@@ -1,0 +1,4057 @@
+{
+  "audit_id": "gt_edge_snap_audit_20261010",
+  "scope": "Read-only audit of five imported confirmed floor regions; no confirmed geometry changed",
+  "source": {
+    "filename": "audit_input.json",
+    "sha256": "b1d7800f5acb83346c87d65242e07d6f0c21bb5946250d6846e8258eb6c1ac52",
+    "source_commit": "90ed861c5ee7db845a10b0bdad5f32d2184c0194",
+    "editor_data_revision": "full_scope_catalogue_batch11_20261010",
+    "original_source_provenance": {
+      "original_data_filename": "scope-crop-workbench/dist/data.json",
+      "original_data_sha256": "c65098c184e976038deeb53d6ac7a8dd05c3627f91ea640109622888a3019f73",
+      "original_catalogue_count": 280,
+      "original_confirmed_count": 5,
+      "original_screenshot_candidate_count": 35,
+      "frozen_geometry_sha256": "4a1f67992de5d5f9e37b5d7f1a3a4bad7445c79cf1886b9afe4798bbee0455b6",
+      "fixture_selection": "All five confirmed_review records plus every selected GT with exactly eight floor vertices from the original 280-entry catalogue; no photo data",
+      "screenshot_filename": "screenshot_q9vSo1VnCiC-12.png",
+      "screenshot_sha256": "19baeeab4039504a12f1196712a4a40ec1886a7ae94df0a682a582044c081ac9"
+    },
+    "geometry_js_sha256": "4a1f67992de5d5f9e37b5d7f1a3a4bad7445c79cf1886b9afe4798bbee0455b6"
+  },
+  "units": "camera_height_normalized_xz; h is camera height, not metres",
+  "method": {
+    "gt_conversion": "Same ERP floor formula as geometry.js: odd-numbered 0-based entries; camera-height-normalized x,z",
+    "angle_parallel_threshold_deg": 1,
+    "very_small_support_offset_threshold_h": 0.0005,
+    "near_support_screen_threshold_fit_svg_px": 20,
+    "thresholds_are_heuristics_not_semantic_judgments": true,
+    "screen_estimate": "SVG viewBox pixels at initial fit and zoom=1; actual CSS/screenshot pixels and later zoom may differ",
+    "fit_scale_formula": "max(x_extent/460, z_extent/390, 0.0001) over selected GT and confirmed polygon",
+    "distance": "Signed perpendicular distances to exact selected GT supporting line; overlap is projection intersection with the finite GT segment",
+    "limitations": [
+      "Only five confirmed_review snapshots frozen from the original data.json, not newer browser-only drafts or confirmations.",
+      "Nearness cannot establish user intent; no proposed snap is approved.",
+      "Small deviations in axis-aligned rectangles are compatible with projecting slightly non-axis-aligned ERP-rounded GT into angle=0 rectangles; no attribution beyond geometry.",
+      "Supporting-line-only matches are separated from actual finite wall-segment overlap.",
+      "Top boundaries and formal reference eligibility are outside this audit."
+    ]
+  },
+  "images": [
+    {
+      "image_code": "b8cTxDM8gDG-18",
+      "image_id": "b8cTxDM8gDG_f3748786c3704532abb2358581488f3f",
+      "reference_object_id": "gt:b8cTxDM8gDG_f3748786c3704532abb2358581488f3f:data/mp3d_layout/test/label_cor/b8cTxDM8gDG_f3748786c3704532abb2358581488f3f.txt",
+      "reference_version": "original",
+      "confirmed_at": "2026-10-10T03:04:42Z",
+      "confirmed_record_sha256": "1f9cc8b742414a2ee27b6b3b85a71faa87f1fa78ed7436f2e7393464e7eed0ec",
+      "selected_gt_floor_xz_h": [
+        [
+          2.3164537552688853,
+          -2.0753014218162154
+        ],
+        [
+          2.3163787420518114,
+          -0.6217890771472377
+        ],
+        [
+          2.6505016204099077,
+          -0.6217267360943964
+        ],
+        [
+          2.6507158806496856,
+          0.5812443552710855
+        ],
+        [
+          0.10788306120681666,
+          0.5812223946812866
+        ],
+        [
+          0.10787175732513196,
+          1.1805846547011596
+        ],
+        [
+          -2.052352386364246,
+          1.1805087507511969
+        ],
+        [
+          -2.0523067494388774,
+          -0.7447134539966374
+        ],
+        [
+          0.33958201075162553,
+          -0.744646875152233
+        ],
+        [
+          0.339549261063015,
+          -2.075366851044912
+        ]
+      ],
+      "confirmed_polygon_xz_h": [
+        [
+          0.10788306120681668,
+          0.5812223946812866
+        ],
+        [
+          0.10787175732513196,
+          1.1805846547011596
+        ],
+        [
+          -2.052352386364246,
+          1.1805087507511969
+        ],
+        [
+          -2.0523067494388774,
+          -0.7447134539966374
+        ],
+        [
+          0.10790806702258227,
+          -0.7446533238565829
+        ]
+      ],
+      "operations": [
+        {
+          "type": "cut",
+          "a": [
+            0.10787175732513196,
+            1.1805846547011596
+          ],
+          "b": [
+            0.10788306120681666,
+            0.5812223946812866
+          ],
+          "side": -1
+        }
+      ],
+      "fit_world_units_per_svg_pixel": 0.010224061450030285,
+      "fit_svg_pixels_per_h": 97.80848881703835,
+      "edges": [
+        {
+          "manual_edge_1based": [
+            1,
+            2
+          ],
+          "endpoints_xz_h": [
+            [
+              0.10788306120681668,
+              0.5812223946812866
+            ],
+            [
+              0.10787175732513196,
+              1.1805846547011596
+            ]
+          ],
+          "classification": "exact_inherited_gt_edge_or_subsegment",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 0.0,
+            "manual_edge_length_h": 0.5993622601264678,
+            "gt_edge_length_h": 0.5993622601264678,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              -1.3877787805346334e-17,
+              0.0
+            ],
+            "max_abs_support_offset_h": 1.3877787805346334e-17,
+            "max_abs_support_offset_fit_svg_px": 1.357365453364448e-15,
+            "finite_segment_projection_overlap_h": 0.5993622601264678,
+            "overlap_fraction_of_manual_projection": 1.0,
+            "overlap_signed_offset_range_h": [
+              -1.3877787805346334e-17,
+              0.0
+            ],
+            "gt_edge_1based": [
+              5,
+              6
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 0.0,
+              "manual_edge_length_h": 0.5993622601264678,
+              "gt_edge_length_h": 0.5993622601264678,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -1.3877787805346334e-17,
+                0.0
+              ],
+              "max_abs_support_offset_h": 1.3877787805346334e-17,
+              "max_abs_support_offset_fit_svg_px": 1.357365453364448e-15,
+              "finite_segment_projection_overlap_h": 0.5993622601264678,
+              "overlap_fraction_of_manual_projection": 1.0,
+              "overlap_signed_offset_range_h": [
+                -1.3877787805346334e-17,
+                0.0
+              ],
+              "gt_edge_1based": [
+                5,
+                6
+              ]
+            },
+            {
+              "angle_difference_deg": 0.002490667868107207,
+              "manual_edge_length_h": 0.5993622601264678,
+              "gt_edge_length_h": 1.3307199762956723,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -0.23173157978492379,
+                -0.23175763427359244
+              ],
+              "max_abs_support_offset_h": 0.23175763427359244,
+              "max_abs_support_offset_fit_svg_px": 22.667863980111928,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                9,
+                10
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0002775933117316837,
+              "manual_edge_length_h": 0.5993622601264678,
+              "gt_edge_length_h": 1.9252222052887404,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                2.160221241026428,
+                2.1602241448817305
+              ],
+              "max_abs_support_offset_h": 2.1602241448817305,
+              "max_abs_support_offset_fit_svg_px": 211.28825911696097,
+              "finite_segment_projection_overlap_h": 0.599337563758805,
+              "overlap_fraction_of_manual_projection": 0.9999587956028073,
+              "overlap_signed_offset_range_h": [
+                2.160221241026428,
+                2.160224144762079
+              ],
+              "gt_edge_1based": [
+                7,
+                8
+              ]
+            },
+            {
+              "angle_difference_deg": 0.001876344696113595,
+              "manual_edge_length_h": 0.5993622601264678,
+              "gt_edge_length_h": 1.4535123466046278,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                2.2084335925966463,
+                2.2084139644456977
+              ],
+              "max_abs_support_offset_h": 2.2084335925966463,
+              "max_abs_support_offset_fit_svg_px": 216.0035523446609,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                1,
+                2
+              ]
+            },
+            {
+              "angle_difference_deg": 0.011285496085070363,
+              "manual_edge_length_h": 0.5993622601264678,
+              "gt_edge_length_h": 1.2029711104463439,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                2.542832775198479,
+                2.5429508310214324
+              ],
+              "max_abs_support_offset_h": 2.5429508310214324,
+              "max_abs_support_offset_fit_svg_px": 248.72217791823815,
+              "finite_segment_projection_overlap_h": 0.0004748625460131439,
+              "overlap_fraction_of_manual_projection": 0.0007922797059736841,
+              "overlap_signed_offset_range_h": [
+                2.542832775198479,
+                2.5428328687317117
+              ],
+              "gt_edge_1based": [
+                3,
+                4
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "几何邻近关系；不能据此判断用户有意范围或批准吸附。"
+        },
+        {
+          "manual_edge_1based": [
+            2,
+            3
+          ],
+          "endpoints_xz_h": [
+            [
+              0.10787175732513196,
+              1.1805846547011596
+            ],
+            [
+              -2.052352386364246,
+              1.1805087507511969
+            ]
+          ],
+          "classification": "exact_inherited_gt_edge_or_subsegment",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 0.0,
+            "manual_edge_length_h": 2.160224145022899,
+            "gt_edge_length_h": 2.160224145022899,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              0.0,
+              0.0
+            ],
+            "max_abs_support_offset_h": 0.0,
+            "max_abs_support_offset_fit_svg_px": 0.0,
+            "finite_segment_projection_overlap_h": 2.160224145022899,
+            "overlap_fraction_of_manual_projection": 1.0,
+            "overlap_signed_offset_range_h": [
+              0.0,
+              0.0
+            ],
+            "gt_edge_1based": [
+              6,
+              7
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 0.0,
+              "manual_edge_length_h": 2.160224145022899,
+              "gt_edge_length_h": 2.160224145022899,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.0,
+                0.0
+              ],
+              "max_abs_support_offset_h": 0.0,
+              "max_abs_support_offset_fit_svg_px": 0.0,
+              "finite_segment_projection_overlap_h": 2.160224145022899,
+              "overlap_fraction_of_manual_projection": 1.0,
+              "overlap_signed_offset_range_h": [
+                0.0,
+                0.0
+              ],
+              "gt_edge_1based": [
+                6,
+                7
+              ]
+            },
+            {
+              "angle_difference_deg": 0.001518384043253275,
+              "manual_edge_length_h": 2.160224145022899,
+              "gt_edge_length_h": 2.5428328195376975,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -0.5993622600951447,
+                -0.5993050124233046
+              ],
+              "max_abs_support_offset_h": 0.5993622600951447,
+              "max_abs_support_offset_fit_svg_px": 58.62271691387079,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                4,
+                5
+              ]
+            },
+            {
+              "angle_difference_deg": 0.008677110122584535,
+              "manual_edge_length_h": 2.160224145022899,
+              "gt_edge_length_h": 0.33412288417393093,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                1.8027857663867317,
+                1.8031129196780151
+              ],
+              "max_abs_support_offset_h": 1.8031129196780151,
+              "max_abs_support_offset_fit_svg_px": 176.3597498401845,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                2,
+                3
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0004183621544240881,
+              "manual_edge_length_h": 2.160224145022899,
+              "gt_edge_length_h": 2.3918887611171225,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                1.9252379788225935,
+                1.9252222052723174
+              ],
+              "max_abs_support_offset_h": 1.9252379788225935,
+              "max_abs_support_offset_fit_svg_px": 188.30461732180714,
+              "finite_segment_projection_overlap_h": 2.1602241449653112,
+              "overlap_fraction_of_manual_projection": 1.0,
+              "overlap_signed_offset_range_h": [
+                1.9252222052723174,
+                1.9252379788225935
+              ],
+              "gt_edge_1based": [
+                8,
+                9
+              ]
+            },
+            {
+              "angle_difference_deg": 0.00011690153601646701,
+              "manual_edge_length_h": 2.160224145022899,
+              "gt_edge_length_h": 1.9769044952886194,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                3.25595917174867,
+                3.2559547643226683
+              ],
+              "max_abs_support_offset_h": 3.25595917174867,
+              "max_abs_support_offset_fit_svg_px": 318.4604462387132,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                10,
+                1
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "几何邻近关系；不能据此判断用户有意范围或批准吸附。"
+        },
+        {
+          "manual_edge_1based": [
+            3,
+            4
+          ],
+          "endpoints_xz_h": [
+            [
+              -2.052352386364246,
+              1.1805087507511969
+            ],
+            [
+              -2.0523067494388774,
+              -0.7447134539966374
+            ]
+          ],
+          "classification": "exact_inherited_gt_edge_or_subsegment",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 0.0,
+            "manual_edge_length_h": 1.9252222052887404,
+            "gt_edge_length_h": 1.9252222052887404,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              0.0,
+              -6.776263578034403e-21
+            ],
+            "max_abs_support_offset_h": 6.776263578034403e-21,
+            "max_abs_support_offset_fit_svg_px": 6.627761003934822e-19,
+            "finite_segment_projection_overlap_h": 1.9252222052887402,
+            "overlap_fraction_of_manual_projection": 1.0,
+            "overlap_signed_offset_range_h": [
+              -6.776263578034403e-21,
+              0.0
+            ],
+            "gt_edge_1based": [
+              7,
+              8
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 0.0,
+              "manual_edge_length_h": 1.9252222052887404,
+              "gt_edge_length_h": 1.9252222052887404,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.0,
+                -6.776263578034403e-21
+              ],
+              "max_abs_support_offset_h": 6.776263578034403e-21,
+              "max_abs_support_offset_fit_svg_px": 6.627761003934822e-19,
+              "finite_segment_projection_overlap_h": 1.9252222052887402,
+              "overlap_fraction_of_manual_projection": 1.0,
+              "overlap_signed_offset_range_h": [
+                -6.776263578034403e-21,
+                0.0
+              ],
+              "gt_edge_1based": [
+                7,
+                8
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0002775933117316837,
+              "manual_edge_length_h": 1.9252222052887404,
+              "gt_edge_length_h": 0.5993622601264678,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                2.1602241447367256,
+                2.160214817211317
+              ],
+              "max_abs_support_offset_h": 2.1602241447367256,
+              "max_abs_support_offset_fit_svg_px": 211.28825910277826,
+              "finite_segment_projection_overlap_h": 0.5993270976775392,
+              "overlap_fraction_of_manual_projection": 0.311302817949104,
+              "overlap_signed_offset_range_h": [
+                2.1602212410517816,
+                2.1602241447367256
+              ],
+              "gt_edge_1based": [
+                5,
+                6
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0027682606934585807,
+              "manual_edge_length_h": 1.9252222052887404,
+              "gt_edge_length_h": 1.3307199762956723,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -2.391981775440737,
+                -2.391888757827608
+              ],
+              "max_abs_support_offset_h": 2.391981775440737,
+              "max_abs_support_offset_fit_svg_px": 233.95612273375485,
+              "finite_segment_projection_overlap_h": 0.00012544443104602553,
+              "overlap_fraction_of_manual_projection": 6.515841695978578e-05,
+              "overlap_signed_offset_range_h": [
+                -2.3918887638884883,
+                -2.391888757827608
+              ],
+              "gt_edge_1based": [
+                9,
+                10
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0015987519643505543,
+              "manual_edge_length_h": 1.9252222052887404,
+              "gt_edge_length_h": 1.4535123466046278,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                4.368638109175563,
+                4.368691829583887
+              ],
+              "max_abs_support_offset_h": 4.368691829583887,
+              "max_abs_support_offset_fit_svg_px": 427.2951459589424,
+              "finite_segment_projection_overlap_h": 0.12269891650721187,
+              "overlap_fraction_of_manual_projection": 0.06373234020359574,
+              "overlap_signed_offset_range_h": [
+                4.368688405856548,
+                4.368691829583887
+              ],
+              "gt_edge_1based": [
+                1,
+                2
+              ]
+            },
+            {
+              "angle_difference_deg": 0.01156308896873403,
+              "manual_edge_length_h": 1.9252222052887404,
+              "gt_edge_length_h": 1.2029711104463439,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                4.703174926927337,
+                4.7027863901877
+              ],
+              "max_abs_support_offset_h": 4.703174926927337,
+              "max_abs_support_offset_fit_svg_px": 460.0104322449476,
+              "finite_segment_projection_overlap_h": 1.2029711104463439,
+              "overlap_fraction_of_manual_projection": 0.6248479430787359,
+              "overlap_signed_offset_range_h": [
+                4.702811379667928,
+                4.703054156050501
+              ],
+              "gt_edge_1based": [
+                3,
+                4
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "几何邻近关系；不能据此判断用户有意范围或批准吸附。"
+        },
+        {
+          "manual_edge_1based": [
+            4,
+            5
+          ],
+          "endpoints_xz_h": [
+            [
+              -2.0523067494388774,
+              -0.7447134539966374
+            ],
+            [
+              0.10790806702258227,
+              -0.7446533238565829
+            ]
+          ],
+          "classification": "exact_inherited_gt_edge_or_subsegment",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 1.2074182697257333e-06,
+            "manual_edge_length_h": 2.160214817298329,
+            "gt_edge_length_h": 2.3918887611171225,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              0.0,
+              -5.256347657481286e-17
+            ],
+            "max_abs_support_offset_h": 5.256347657481286e-17,
+            "max_abs_support_offset_fit_svg_px": 5.141154210752241e-15,
+            "finite_segment_projection_overlap_h": 2.160214817298329,
+            "overlap_fraction_of_manual_projection": 1.0,
+            "overlap_signed_offset_range_h": [
+              -5.256347657481287e-17,
+              0.0
+            ],
+            "gt_edge_1based": [
+              8,
+              9
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 1.2074182697257333e-06,
+              "manual_edge_length_h": 2.160214817298329,
+              "gt_edge_length_h": 2.3918887611171225,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.0,
+                -5.256347657481286e-17
+              ],
+              "max_abs_support_offset_h": 5.256347657481286e-17,
+              "max_abs_support_offset_fit_svg_px": 5.141154210752241e-15,
+              "finite_segment_projection_overlap_h": 2.160214817298329,
+              "overlap_fraction_of_manual_projection": 1.0,
+              "overlap_signed_offset_range_h": [
+                -5.256347657481287e-17,
+                0.0
+              ],
+              "gt_edge_1based": [
+                8,
+                9
+              ]
+            },
+            {
+              "angle_difference_deg": 0.009095473180062083,
+              "manual_edge_length_h": 2.160214817298329,
+              "gt_edge_length_h": 0.33412288417393093,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -0.12210926007386574,
+                -0.1224521854344971
+              ],
+              "max_abs_support_offset_h": 0.1224521854344971,
+              "max_abs_support_offset_fit_svg_px": 11.976863209691915,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                2,
+                3
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0011000209973337915,
+              "manual_edge_length_h": 2.160214817298329,
+              "gt_edge_length_h": 2.5428328195376975,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                1.3259171926468662,
+                1.3258757187043813
+              ],
+              "max_abs_support_offset_h": 1.3259171926468662,
+              "max_abs_support_offset_fit_svg_px": 129.68595690931988,
+              "finite_segment_projection_overlap_h": 1.3555195591763436e-05,
+              "overlap_fraction_of_manual_projection": 6.274929458735248e-06,
+              "overlap_signed_offset_range_h": [
+                1.3258757187043813,
+                1.3258757189646273
+              ],
+              "gt_edge_1based": [
+                4,
+                5
+              ]
+            },
+            {
+              "angle_difference_deg": 0.00030146431906714845,
+              "manual_edge_length_h": 2.160214817298329,
+              "gt_edge_length_h": 1.9769044952886194,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                1.3307325591188401,
+                1.3307211930436436
+              ],
+              "max_abs_support_offset_h": 1.3307325591188401,
+              "max_abs_support_offset_fit_svg_px": 130.1569406270439,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                10,
+                1
+              ]
+            },
+            {
+              "angle_difference_deg": 0.000418363025593567,
+              "manual_edge_length_h": 2.160214817298329,
+              "gt_edge_length_h": 2.160224145022899,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                1.9252222051629293,
+                1.9252379786450962
+              ],
+              "max_abs_support_offset_h": 1.9252379786450962,
+              "max_abs_support_offset_fit_svg_px": 188.3046173044464,
+              "finite_segment_projection_overlap_h": 2.160192807496067,
+              "overlap_fraction_of_manual_projection": 0.9999898113166807,
+              "overlap_signed_offset_range_h": [
+                1.9252222053236403,
+                1.9252379786450962
+              ],
+              "gt_edge_1based": [
+                6,
+                7
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "几何邻近关系；不能据此判断用户有意范围或批准吸附。"
+        },
+        {
+          "manual_edge_1based": [
+            5,
+            1
+          ],
+          "endpoints_xz_h": [
+            [
+              0.10790806702258227,
+              -0.7446533238565829
+            ],
+            [
+              0.10788306120681668,
+              0.5812223946812866
+            ]
+          ],
+          "classification": "gt_support_extension_scope_cut",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 0.0,
+            "manual_edge_length_h": 1.3258757187736725,
+            "gt_edge_length_h": 0.5993622601264678,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              9.809657968741503e-17,
+              -1.3877787805346334e-17
+            ],
+            "max_abs_support_offset_h": 9.809657968741503e-17,
+            "max_abs_support_offset_fit_svg_px": 9.594678217346244e-15,
+            "finite_segment_projection_overlap_h": 0,
+            "overlap_fraction_of_manual_projection": 0.0,
+            "overlap_signed_offset_range_h": null,
+            "gt_edge_1based": [
+              5,
+              6
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 0.0,
+              "manual_edge_length_h": 1.3258757187736725,
+              "gt_edge_length_h": 0.5993622601264678,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                9.809657968741503e-17,
+                -1.3877787805346334e-17
+              ],
+              "max_abs_support_offset_h": 9.809657968741503e-17,
+              "max_abs_support_offset_fit_svg_px": 9.594678217346244e-15,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                5,
+                6
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0024906677217750783,
+              "manual_edge_length_h": 1.3258757187736725,
+              "gt_edge_length_h": 1.3307199762956723,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -0.23167394350017764,
+                -0.23173157978492379
+              ],
+              "max_abs_support_offset_h": 0.23173157978492379,
+              "max_abs_support_offset_fit_svg_px": 22.665315629948346,
+              "finite_segment_projection_overlap_h": 1.215031674679128e-05,
+              "overlap_fraction_of_manual_projection": 9.16399371843795e-06,
+              "overlap_signed_offset_range_h": [
+                -0.2316739440283562,
+                -0.23167394350017764
+              ],
+              "gt_edge_1based": [
+                9,
+                10
+              ]
+            },
+            {
+              "angle_difference_deg": 0.00027759462467346653,
+              "manual_edge_length_h": 1.3258757187736725,
+              "gt_edge_length_h": 1.9252222052887404,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                2.160214817279901,
+                2.160221241026428
+              ],
+              "max_abs_support_offset_h": 2.160221241026428,
+              "max_abs_support_offset_fit_svg_px": 211.28797509526208,
+              "finite_segment_projection_overlap_h": 1.3258757187581112,
+              "overlap_fraction_of_manual_projection": 1.0,
+              "overlap_signed_offset_range_h": [
+                2.160214817279901,
+                2.160221241026428
+              ],
+              "gt_edge_1based": [
+                7,
+                8
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0018763445018717057,
+              "manual_edge_length_h": 1.3258757187736725,
+              "gt_edge_length_h": 1.4535123466046278,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                2.2084770128959863,
+                2.2084335925966463
+              ],
+              "max_abs_support_offset_h": 2.2084770128959863,
+              "max_abs_support_offset_fit_svg_px": 216.00779921852333,
+              "finite_segment_projection_overlap_h": 0.12275027125646609,
+              "overlap_fraction_of_manual_projection": 0.09258052590013668,
+              "overlap_signed_offset_range_h": [
+                2.2084729930218385,
+                2.2084770128959863
+              ],
+              "gt_edge_1based": [
+                1,
+                2
+              ]
+            },
+            {
+              "angle_difference_deg": 0.01128549611736533,
+              "manual_edge_length_h": 1.3258757187736725,
+              "gt_edge_length_h": 1.2029711104463439,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                2.542571618700103,
+                2.542832775198479
+              ],
+              "max_abs_support_offset_h": 2.542832775198479,
+              "max_abs_support_offset_fit_svg_px": 248.710631056599,
+              "finite_segment_projection_overlap_h": 1.2024962479003307,
+              "overlap_fraction_of_manual_projection": 0.9069449377495604,
+              "overlap_signed_offset_range_h": [
+                2.5425959206343163,
+                2.542832775198479
+              ],
+              "gt_edge_1based": [
+                3,
+                4
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "操作记录明确为cut新增截断边，沿GT 5→6支持线延伸；不是误移现有墙边。"
+        }
+      ],
+      "conclusion_zh": "旧 cut 的新截断边沿 GT 5→6 所在直线延伸，原有保留 GT 边精确继承；未发现明显误对齐。"
+    },
+    {
+      "image_code": "e9zR4mvMWw7-09",
+      "image_id": "e9zR4mvMWw7_1d316dfbe35f41dd9203eaf88be5aae8",
+      "reference_object_id": "gt:e9zR4mvMWw7_1d316dfbe35f41dd9203eaf88be5aae8:data/mp3d_layout/test/label_cor/e9zR4mvMWw7_1d316dfbe35f41dd9203eaf88be5aae8.txt",
+      "reference_version": "original",
+      "confirmed_at": "2026-10-10T03:04:42Z",
+      "confirmed_record_sha256": "18e213c9a0258dbc916efe0855f3ad1ef6ee34f5395e05dd1e58c0dd00a06fda",
+      "selected_gt_floor_xz_h": [
+        [
+          0.3687813729962236,
+          -1.3631427012356694
+        ],
+        [
+          0.36876261584753134,
+          0.4808658346545978
+        ],
+        [
+          1.3723018217708172,
+          0.48087788044669977
+        ],
+        [
+          1.3722833183123693,
+          1.6735973797338302
+        ],
+        [
+          0.03666611312828934,
+          1.6735830725102074
+        ],
+        [
+          0.03668289070593272,
+          5.7483659169682
+        ],
+        [
+          -3.501300138793317,
+          5.747587159732653
+        ],
+        [
+          -3.501205739072711,
+          2.5847027984225917
+        ],
+        [
+          -1.540783207775559,
+          2.584647812367498
+        ],
+        [
+          -1.5410332580145147,
+          -1.3633161388057835
+        ]
+      ],
+      "confirmed_polygon_xz_h": [
+        [
+          -1.540783207775559,
+          2.584647812367498
+        ],
+        [
+          0.3687813729962236,
+          2.584647812367498
+        ],
+        [
+          0.3687813729962236,
+          -1.3631427012356694
+        ],
+        [
+          -1.540783207775559,
+          -1.3631427012356694
+        ]
+      ],
+      "operations": [
+        {
+          "type": "cut",
+          "a": [
+            -1.5397237201632636,
+            5.702817304943289
+          ],
+          "b": [
+            -1.540783207775559,
+            2.584647812367498
+          ],
+          "side": 1
+        },
+        {
+          "type": "cut",
+          "a": [
+            -1.540783207775559,
+            2.584647812367498
+          ],
+          "b": [
+            -3.4507484252274194,
+            2.560963923470498
+          ],
+          "side": 1
+        },
+        {
+          "type": "rectangle",
+          "a": [
+            -1.540783207775559,
+            2.584647812367498
+          ],
+          "b": [
+            0.3687813729962236,
+            -1.3631427012356694
+          ],
+          "angle": 0
+        }
+      ],
+      "fit_world_units_per_svg_pixel": 0.018235082194292263,
+      "fit_svg_pixels_per_h": 54.83934699855691,
+      "edges": [
+        {
+          "manual_edge_1based": [
+            1,
+            2
+          ],
+          "endpoints_xz_h": [
+            [
+              -1.540783207775559,
+              2.584647812367498
+            ],
+            [
+              0.3687813729962236,
+              2.584647812367498
+            ]
+          ],
+          "classification": "very_small_axis_or_corner_difference_not_material_snap_candidate",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 0.0016070358430480317,
+            "manual_edge_length_h": 1.9095645807717827,
+            "gt_edge_length_h": 1.9604225320682784,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              0.0,
+              5.3559588060988786e-05
+            ],
+            "max_abs_support_offset_h": 5.3559588060988786e-05,
+            "max_abs_support_offset_fit_svg_px": 0.00293717283477633,
+            "finite_segment_projection_overlap_h": 2.220446049250313e-16,
+            "overlap_fraction_of_manual_projection": 1.1628022809400292e-16,
+            "overlap_signed_offset_range_h": null,
+            "gt_edge_1based": [
+              8,
+              9
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 0.0016070358430480317,
+              "manual_edge_length_h": 1.9095645807717827,
+              "gt_edge_length_h": 1.9604225320682784,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.0,
+                5.3559588060988786e-05
+              ],
+              "max_abs_support_offset_h": 5.3559588060988786e-05,
+              "max_abs_support_offset_fit_svg_px": 0.00293717283477633,
+              "finite_segment_projection_overlap_h": 2.220446049250313e-16,
+              "overlap_fraction_of_manual_projection": 1.1628022809400292e-16,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                8,
+                9
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0006137569660430236,
+              "manual_edge_length_h": 1.9095645807717827,
+              "gt_edge_length_h": 1.33561720526071,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -0.9110816375509441,
+                -0.9110611821634487
+              ],
+              "max_abs_support_offset_h": 0.9110816375509441,
+              "max_abs_support_offset_fit_svg_px": 49.96312206566968,
+              "finite_segment_projection_overlap_h": 0.3321250192372105,
+              "overlap_fraction_of_manual_projection": 0.17392709448037205,
+              "overlap_signed_offset_range_h": [
+                -0.9110647399095622,
+                -0.9110611821634487
+              ],
+              "gt_edge_1based": [
+                4,
+                5
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0006877389175320364,
+              "manual_edge_length_h": 1.9095645807717827,
+              "gt_edge_length_h": 1.0035392059955806,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                2.1038048984316635,
+                2.1037819773361965
+              ],
+              "max_abs_support_offset_h": 2.1038048984316635,
+              "max_abs_support_offset_fit_svg_px": 115.37128684235778,
+              "finite_segment_projection_overlap_h": 4.400949576411657e-05,
+              "overlap_fraction_of_manual_projection": 2.304687477471949e-05,
+              "overlap_signed_offset_range_h": [
+                2.1037819773361965,
+                2.103781977864456
+              ],
+              "gt_edge_1based": [
+                2,
+                3
+              ]
+            },
+            {
+              "angle_difference_deg": 0.012611564799794119,
+              "manual_edge_length_h": 1.9095645807717827,
+              "gt_edge_length_h": 3.537983115206674,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                3.163370806648128,
+                3.1637911272617645
+              ],
+              "max_abs_support_offset_h": 3.1637911272617645,
+              "max_abs_support_offset_fit_svg_px": 173.50023945886343,
+              "finite_segment_projection_overlap_h": 1.5781624367862288,
+              "overlap_fraction_of_manual_projection": 0.8264514805669874,
+              "overlap_signed_offset_range_h": [
+                3.163370806648128,
+                3.1637181812415807
+              ],
+              "gt_edge_1based": [
+                6,
+                7
+              ]
+            },
+            {
+              "angle_difference_deg": 0.005203248803276116,
+              "manual_edge_length_h": 1.9095645807717827,
+              "gt_edge_length_h": 1.9098146388860027,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                3.947963912185537,
+                3.947790497324156
+              ],
+              "max_abs_support_offset_h": 3.947963912185537,
+              "max_abs_support_offset_fit_svg_px": 216.50376291812293,
+              "finite_segment_projection_overlap_h": 1.9092060589454316,
+              "overlap_fraction_of_manual_projection": 0.999812253559159,
+              "overlap_signed_offset_range_h": [
+                3.947790529882179,
+                3.947963912185537
+              ],
+              "gt_edge_1based": [
+                10,
+                1
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "矩形上边从GT点9向右延伸；与GT 8→9有限线段没有实质重叠，是范围截断边。"
+        },
+        {
+          "manual_edge_1based": [
+            2,
+            3
+          ],
+          "endpoints_xz_h": [
+            [
+              0.3687813729962236,
+              2.584647812367498
+            ],
+            [
+              0.3687813729962236,
+              -1.3631427012356694
+            ]
+          ],
+          "classification": "very_small_axis_or_corner_difference_not_material_snap_candidate",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 0.0005828091797525771,
+            "manual_edge_length_h": 3.9477905136031675,
+            "gt_edge_length_h": 1.8440085359856655,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              -4.015669788099505e-05,
+              0.0
+            ],
+            "max_abs_support_offset_h": 4.015669788099505e-05,
+            "max_abs_support_offset_fit_svg_px": 0.002202167089412103,
+            "finite_segment_projection_overlap_h": 1.8440085359856655,
+            "overlap_fraction_of_manual_projection": 0.4670988822043722,
+            "overlap_signed_offset_range_h": [
+              -1.8757148693231468e-05,
+              0.0
+            ],
+            "gt_edge_1based": [
+              1,
+              2
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 0.0005828091797525771,
+              "manual_edge_length_h": 3.9477905136031675,
+              "gt_edge_length_h": 1.8440085359856655,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -4.015669788099505e-05,
+                0.0
+              ],
+              "max_abs_support_offset_h": 4.015669788099505e-05,
+              "max_abs_support_offset_fit_svg_px": 0.002202167089412103,
+              "finite_segment_projection_overlap_h": 1.8440085359856655,
+              "overlap_fraction_of_manual_projection": 0.4670988822043722,
+              "overlap_signed_offset_range_h": [
+                -1.8757148693231468e-05,
+                0.0
+              ],
+              "gt_edge_1based": [
+                1,
+                2
+              ]
+            },
+            {
+              "angle_difference_deg": 0.00023591358699571094,
+              "manual_edge_length_h": 3.9477905136031675,
+              "gt_edge_length_h": 4.074782844492533,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -0.33211150863223265,
+                -0.3321277633295722
+              ],
+              "max_abs_support_offset_h": 0.3321277633295722,
+              "max_abs_support_offset_fit_svg_px": 18.213669661084996,
+              "finite_segment_projection_overlap_h": 0.91106610730638,
+              "overlap_fraction_of_manual_projection": 0.23077873665656295,
+              "overlap_signed_offset_range_h": [
+                -0.3321152598707494,
+                -0.33211150863223265
+              ],
+              "gt_edge_1based": [
+                5,
+                6
+              ]
+            },
+            {
+              "angle_difference_deg": 0.000888867757349247,
+              "manual_edge_length_h": 3.9477905136031675,
+              "gt_edge_length_h": 1.1927194994306587,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                1.0034878114582997,
+                1.003549056183287
+              ],
+              "max_abs_support_offset_h": 1.003549056183287,
+              "max_abs_support_offset_fit_svg_px": 55.03397492210956,
+              "finite_segment_projection_overlap_h": 1.1927194994306587,
+              "overlap_fraction_of_manual_projection": 0.3021233004801934,
+              "overlap_signed_offset_range_h": [
+                1.003501945436904,
+                1.0035204488953542
+              ],
+              "gt_edge_1based": [
+                3,
+                4
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0036289144416046465,
+              "manual_edge_length_h": 3.9477905136031675,
+              "gt_edge_length_h": 3.9479639590919358,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                1.9095645769416612,
+                1.9098146161951859
+              ],
+              "max_abs_support_offset_h": 1.9098146161951859,
+              "max_abs_support_offset_fit_svg_px": 104.7329864404436,
+              "finite_segment_projection_overlap_h": 3.9476695605382814,
+              "overlap_fraction_of_manual_projection": 0.9999693638387332,
+              "overlap_signed_offset_range_h": [
+                1.909564584601904,
+                1.9098146161951859
+              ],
+              "gt_edge_1based": [
+                9,
+                10
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0017100549054830851,
+              "manual_edge_length_h": 3.9477905136031675,
+              "gt_edge_length_h": 3.1628843627187924,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                3.8699871087041453,
+                3.869869282606585
+              ],
+              "max_abs_support_offset_h": 3.8699871087041453,
+              "max_abs_support_offset_fit_svg_px": 212.2275659341686,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                7,
+                8
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "矩形右边仅46.7%的投影与GT 1→2重叠，其余属于范围重构。"
+        },
+        {
+          "manual_edge_1based": [
+            3,
+            4
+          ],
+          "endpoints_xz_h": [
+            [
+              0.3687813729962236,
+              -1.3631427012356694
+            ],
+            [
+              -1.540783207775559,
+              -1.3631427012356694
+            ]
+          ],
+          "classification": "very_small_axis_or_corner_difference_not_material_snap_candidate",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 0.005203248803276116,
+            "manual_edge_length_h": 1.9095645807717827,
+            "gt_edge_length_h": 1.9098146388860027,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              0.0,
+              0.00017341486138059553
+            ],
+            "max_abs_support_offset_h": 0.00017341486138059553,
+            "max_abs_support_offset_fit_svg_px": 0.009509957757957125,
+            "finite_segment_projection_overlap_h": 1.909564572897549,
+            "overlap_fraction_of_manual_projection": 1.0,
+            "overlap_signed_offset_range_h": [
+              0.0,
+              0.00017341486138059553
+            ],
+            "gt_edge_1based": [
+              10,
+              1
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 0.005203248803276116,
+              "manual_edge_length_h": 1.9095645807717827,
+              "gt_edge_length_h": 1.9098146388860027,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.0,
+                0.00017341486138059553
+              ],
+              "max_abs_support_offset_h": 0.00017341486138059553,
+              "max_abs_support_offset_fit_svg_px": 0.009509957757957125,
+              "finite_segment_projection_overlap_h": 1.909564572897549,
+              "overlap_fraction_of_manual_projection": 1.0,
+              "overlap_signed_offset_range_h": [
+                0.0,
+                0.00017341486138059553
+              ],
+              "gt_edge_1based": [
+                10,
+                1
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0006877389175320364,
+              "manual_edge_length_h": 1.9095645807717827,
+              "gt_edge_length_h": 1.0035392059955806,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -1.8440085359825733,
+                -1.8439856148871065
+              ],
+              "max_abs_support_offset_h": 1.8440085359825733,
+              "max_abs_support_offset_fit_svg_px": 101.12422397304925,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                2,
+                3
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0006137569660430236,
+              "manual_edge_length_h": 1.9095645807717827,
+              "gt_edge_length_h": 1.33561720526071,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                3.0367293312132175,
+                3.036708875825722
+              ],
+              "max_abs_support_offset_h": 3.0367293312132175,
+              "max_abs_support_offset_fit_svg_px": 166.5322535350973,
+              "finite_segment_projection_overlap_h": 0.3320827302329423,
+              "overlap_fraction_of_manual_projection": 0.17390494859188185,
+              "overlap_signed_offset_range_h": [
+                3.036725773920107,
+                3.0367293312132175
+              ],
+              "gt_edge_1based": [
+                4,
+                5
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0016070358430480317,
+              "manual_edge_length_h": 1.9095645807717827,
+              "gt_edge_length_h": 1.9604225320682784,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -3.9477369524622548,
+                -3.947790512050316
+              ],
+              "max_abs_support_offset_h": 3.947790512050316,
+              "max_abs_support_offset_fit_svg_px": 216.49425376793795,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                8,
+                9
+              ]
+            },
+            {
+              "angle_difference_deg": 0.012611564799794119,
+              "manual_edge_length_h": 1.9095645807717827,
+              "gt_edge_length_h": 3.537983115206674,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                7.111581545229949,
+                7.111161224616312
+              ],
+              "max_abs_support_offset_h": 7.111581545229949,
+              "max_abs_support_offset_fit_svg_px": 389.9944880673988,
+              "finite_segment_projection_overlap_h": 1.5790313980918036,
+              "overlap_fraction_of_manual_projection": 0.826906537879725,
+              "overlap_signed_offset_range_h": [
+                7.111161224616312,
+                7.111508790479735
+              ],
+              "gt_edge_1based": [
+                6,
+                7
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "几何邻近关系；不能据此判断用户有意范围或批准吸附。"
+        },
+        {
+          "manual_edge_1based": [
+            4,
+            1
+          ],
+          "endpoints_xz_h": [
+            [
+              -1.540783207775559,
+              -1.3631427012356694
+            ],
+            [
+              -1.540783207775559,
+              2.584647812367498
+            ]
+          ],
+          "classification": "very_small_axis_or_corner_difference_not_material_snap_candidate",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 0.0036289144416046465,
+            "manual_edge_length_h": 3.9477905136031675,
+            "gt_edge_length_h": 3.9479639590919358,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              0.0002500392535246826,
+              0.0
+            ],
+            "max_abs_support_offset_h": 0.0002500392535246826,
+            "max_abs_support_offset_fit_svg_px": 0.013711989387300214,
+            "finite_segment_projection_overlap_h": 3.947790505684861,
+            "overlap_fraction_of_manual_projection": 1.0,
+            "overlap_signed_offset_range_h": [
+              0.0,
+              0.0002500392535246826
+            ],
+            "gt_edge_1based": [
+              9,
+              10
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 0.0036289144416046465,
+              "manual_edge_length_h": 3.9477905136031675,
+              "gt_edge_length_h": 3.9479639590919358,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.0002500392535246826,
+                0.0
+              ],
+              "max_abs_support_offset_h": 0.0002500392535246826,
+              "max_abs_support_offset_fit_svg_px": 0.013711989387300214,
+              "finite_segment_projection_overlap_h": 3.947790505684861,
+              "overlap_fraction_of_manual_projection": 1.0,
+              "overlap_signed_offset_range_h": [
+                0.0,
+                0.0002500392535246826
+              ],
+              "gt_edge_1based": [
+                9,
+                10
+              ]
+            },
+            {
+              "angle_difference_deg": 0.00023591358699571094,
+              "manual_edge_length_h": 3.9477905136031675,
+              "gt_edge_length_h": 4.074782844492533,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                1.5774368174260236,
+                1.577453072123363
+              ],
+              "max_abs_support_offset_h": 1.577453072123363,
+              "max_abs_support_offset_fit_svg_px": 86.50649639611274,
+              "finite_segment_projection_overlap_h": 0.9110582448338896,
+              "overlap_fraction_of_manual_projection": 0.23077674504316215,
+              "overlap_signed_offset_range_h": [
+                1.5774493209172193,
+                1.577453072123363
+              ],
+              "gt_edge_1based": [
+                5,
+                6
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0005828091797525771,
+              "manual_edge_length_h": 3.9477905136031675,
+              "gt_edge_length_h": 1.8440085359856655,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                1.909564580672993,
+                1.9095244239751121
+              ],
+              "max_abs_support_offset_h": 1.909564580672993,
+              "max_abs_support_offset_fit_svg_px": 104.7192746556801,
+              "finite_segment_projection_overlap_h": 1.843989112004659,
+              "overlap_fraction_of_manual_projection": 0.4670939619886361,
+              "overlap_signed_offset_range_h": [
+                1.9095458237218794,
+                1.909564580672993
+              ],
+              "gt_edge_1based": [
+                1,
+                2
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0017100549054830851,
+              "manual_edge_length_h": 3.9477905136031675,
+              "gt_edge_length_h": 3.1628843627187924,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                1.960304702685312,
+                1.9604225287828723
+              ],
+              "max_abs_support_offset_h": 1.9604225287828723,
+              "max_abs_support_offset_fit_svg_px": 107.50829131971236,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                7,
+                8
+              ]
+            },
+            {
+              "angle_difference_deg": 0.000888867757349247,
+              "manual_edge_length_h": 3.9477905136031675,
+              "gt_edge_length_h": 1.1927194994306587,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                2.9131136367252783,
+                2.9130523920002913
+              ],
+              "max_abs_support_offset_h": 2.9131136367252783,
+              "max_abs_support_offset_fit_svg_px": 159.75324957060562,
+              "finite_segment_projection_overlap_h": 1.1927194994306587,
+              "overlap_fraction_of_manual_projection": 0.3021233004801934,
+              "overlap_signed_offset_range_h": [
+                2.9130665264384783,
+                2.913085029896928
+              ],
+              "gt_edge_1based": [
+                3,
+                4
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "几何邻近关系；不能据此判断用户有意范围或批准吸附。"
+        }
+      ],
+      "conclusion_zh": "矩形上边是从 GT 点9向右延伸的范围截断，右边仅部分跟随 GT 1→2；其他区域差异属于范围选择。轴对齐造成的最近 GT 支持线偏差小于0.000251h，初始适配小于0.014px，不是明显漏吸附证据。"
+    },
+    {
+      "image_code": "e9zR4mvMWw7-17",
+      "image_id": "e9zR4mvMWw7_4273c4dd97974531b5256f96204fee47",
+      "reference_object_id": "gt:e9zR4mvMWw7_4273c4dd97974531b5256f96204fee47:data/mp3d_layout/test/label_cor/e9zR4mvMWw7_4273c4dd97974531b5256f96204fee47.txt",
+      "reference_version": "original",
+      "confirmed_at": "2026-10-10T03:04:42Z",
+      "confirmed_record_sha256": "69e28a6f8355b13d1547119f73fc9aae229bcb278078c13c34d212dbaf6a76e0",
+      "selected_gt_floor_xz_h": [
+        [
+          0.4956649544346364,
+          -3.0518897955887994
+        ],
+        [
+          0.4955467093228847,
+          1.1718749958916814
+        ],
+        [
+          -2.5855179212511565,
+          1.1718016346770879
+        ],
+        [
+          -2.5857176116585054,
+          -1.2612260339132055
+        ],
+        [
+          -5.059571712419647,
+          -1.2610898894754936
+        ],
+        [
+          -5.059885086704753,
+          -2.47727238065548
+        ],
+        [
+          -2.5856601331659883,
+          -2.47752934988568
+        ],
+        [
+          -2.5853246252727122,
+          -3.051587701436957
+        ]
+      ],
+      "confirmed_polygon_xz_h": [
+        [
+          0.4956649544346364,
+          -3.0518897955887994
+        ],
+        [
+          0.4955467093228847,
+          1.1718749958916814
+        ],
+        [
+          -2.5855179212511565,
+          1.1718016346770879
+        ],
+        [
+          -2.5857176116585054,
+          -1.2612260339132055
+        ],
+        [
+          -2.5856601331659883,
+          -2.47752934988568
+        ],
+        [
+          -2.5853246252727122,
+          -3.051587701436957
+        ]
+      ],
+      "operations": [
+        {
+          "type": "cut",
+          "a": [
+            -2.5857176116585054,
+            -1.2612260339132055
+          ],
+          "b": [
+            -2.5856601331659883,
+            -2.47752934988568
+          ],
+          "side": 1
+        }
+      ],
+      "fit_world_units_per_svg_pixel": 0.012077282698129108,
+      "fit_svg_pixels_per_h": 82.80008218694012,
+      "edges": [
+        {
+          "manual_edge_1based": [
+            1,
+            2
+          ],
+          "endpoints_xz_h": [
+            [
+              0.4956649544346364,
+              -3.0518897955887994
+            ],
+            [
+              0.4955467093228847,
+              1.1718749958916814
+            ]
+          ],
+          "classification": "exact_inherited_gt_edge_or_subsegment",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 0.0,
+            "manual_edge_length_h": 4.2237647931356275,
+            "gt_edge_length_h": 4.2237647931356275,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              0.0,
+              1.3552527156068805e-20
+            ],
+            "max_abs_support_offset_h": 1.3552527156068805e-20,
+            "max_abs_support_offset_fit_svg_px": 1.1221503623632349e-18,
+            "finite_segment_projection_overlap_h": 4.2237647931356275,
+            "overlap_fraction_of_manual_projection": 0.9999999999999998,
+            "overlap_signed_offset_range_h": [
+              0.0,
+              1.3552527156068802e-20
+            ],
+            "gt_edge_1based": [
+              1,
+              2
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 0.0,
+              "manual_edge_length_h": 4.2237647931356275,
+              "gt_edge_length_h": 4.2237647931356275,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.0,
+                1.3552527156068805e-20
+              ],
+              "max_abs_support_offset_h": 1.3552527156068805e-20,
+              "max_abs_support_offset_fit_svg_px": 1.1221503623632349e-18,
+              "finite_segment_projection_overlap_h": 4.2237647931356275,
+              "overlap_fraction_of_manual_projection": 0.9999999999999998,
+              "overlap_signed_offset_range_h": [
+                0.0,
+                1.3552527156068802e-20
+              ],
+              "gt_edge_1based": [
+                1,
+                2
+              ]
+            },
+            {
+              "angle_difference_deg": 0.006306549517536591,
+              "manual_edge_length_h": 4.2237647931356275,
+              "gt_edge_length_h": 2.4330276767850747,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                3.081529524193187,
+                3.0810646141754683
+              ],
+              "max_abs_support_offset_h": 3.081529524193187,
+              "max_abs_support_offset_fit_svg_px": 255.15089786467834,
+              "finite_segment_projection_overlap_h": 2.4330276767850747,
+              "overlap_fraction_of_manual_projection": 0.576032949438319,
+              "overlap_signed_offset_range_h": [
+                3.081064650084631,
+                3.081332453573361
+              ],
+              "gt_edge_1based": [
+                3,
+                4
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0318824571772385,
+              "manual_edge_length_h": 4.2237647931356275,
+              "gt_edge_length_h": 0.5740584495949136,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                3.0809888769454683,
+                3.0833392070101238
+              ],
+              "max_abs_support_offset_h": 3.0833392070101238,
+              "max_abs_support_offset_fit_svg_px": 255.300739750653,
+              "finite_segment_projection_overlap_h": 0.5740584495949136,
+              "overlap_fraction_of_manual_projection": 0.13591157807931373,
+              "overlap_signed_offset_range_h": [
+                3.0809900470430662,
+                3.081309484111161
+              ],
+              "gt_edge_1based": [
+                7,
+                8
+              ]
+            },
+            {
+              "angle_difference_deg": 0.016367435189321353,
+              "manual_edge_length_h": 4.2237647931356275,
+              "gt_edge_length_h": 1.2161825315536319,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                5.555697918632399,
+                5.554491334202434
+              ],
+              "max_abs_support_offset_h": 5.555697918632399,
+              "max_abs_support_offset_fit_svg_px": 460.01224426857476,
+              "finite_segment_projection_overlap_h": 1.2161825315536319,
+              "overlap_fraction_of_manual_projection": 0.2879380459710603,
+              "overlap_signed_offset_range_h": [
+                5.555186757552983,
+                5.555534179116046
+              ],
+              "gt_edge_1based": [
+                5,
+                6
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "几何邻近关系；不能据此判断用户有意范围或批准吸附。"
+        },
+        {
+          "manual_edge_1based": [
+            2,
+            3
+          ],
+          "endpoints_xz_h": [
+            [
+              0.4955467093228847,
+              1.1718749958916814
+            ],
+            [
+              -2.5855179212511565,
+              1.1718016346770879
+            ]
+          ],
+          "classification": "exact_inherited_gt_edge_or_subsegment",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 0.0,
+            "manual_edge_length_h": 3.0810646314474193,
+            "gt_edge_length_h": 3.0810646314474193,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              0.0,
+              0.0
+            ],
+            "max_abs_support_offset_h": 0.0,
+            "max_abs_support_offset_fit_svg_px": 0.0,
+            "finite_segment_projection_overlap_h": 3.0810646314474193,
+            "overlap_fraction_of_manual_projection": 0.9999999999999999,
+            "overlap_signed_offset_range_h": [
+              0.0,
+              0.0
+            ],
+            "gt_edge_1based": [
+              2,
+              3
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 0.0,
+              "manual_edge_length_h": 3.0810646314474193,
+              "gt_edge_length_h": 3.0810646314474193,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.0,
+                0.0
+              ],
+              "max_abs_support_offset_h": 0.0,
+              "max_abs_support_offset_fit_svg_px": 0.0,
+              "finite_segment_projection_overlap_h": 3.0810646314474193,
+              "overlap_fraction_of_manual_projection": 0.9999999999999999,
+              "overlap_signed_offset_range_h": [
+                0.0,
+                0.0
+              ],
+              "gt_edge_1based": [
+                2,
+                3
+              ]
+            },
+            {
+              "angle_difference_deg": 0.004517409953278449,
+              "manual_edge_length_h": 3.0810646314474193,
+              "gt_edge_length_h": 2.4738541045073825,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -2.4332705983670246,
+                -2.433027675895506
+              ],
+              "max_abs_support_offset_h": 2.4332705983670246,
+              "max_abs_support_offset_fit_svg_px": 201.4750055278546,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                4,
+                5
+              ]
+            },
+            {
+              "angle_difference_deg": 0.007314884531176008,
+              "manual_edge_length_h": 3.0810646314474193,
+              "gt_edge_length_h": 2.4742249668829808,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                3.649724335536805,
+                3.649330979650775
+              ],
+              "max_abs_support_offset_h": 3.649724335536805,
+              "max_abs_support_offset_fit_svg_px": 302.1974749421228,
+              "finite_segment_projection_overlap_h": 0.00023680203430220814,
+              "overlap_fraction_of_manual_projection": 7.685721156742516e-05,
+              "overlap_signed_offset_range_h": [
+                3.649330979650775,
+                3.649331009883012
+              ],
+              "gt_edge_1based": [
+                6,
+                7
+              ]
+            },
+            {
+              "angle_difference_deg": 0.006982141465156078,
+              "manual_edge_length_h": 3.0810646314474193,
+              "gt_edge_length_h": 3.0809895945176673,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                4.223764759582789,
+                4.223389296859343
+              ],
+              "max_abs_support_offset_h": 4.223764759582789,
+              "max_abs_support_offset_fit_svg_px": 349.72806923175625,
+              "finite_segment_projection_overlap_h": 3.080457204988556,
+              "overlap_fraction_of_manual_projection": 0.9998028591870568,
+              "overlap_signed_offset_range_h": [
+                4.22338937087837,
+                4.223764759582789
+              ],
+              "gt_edge_1based": [
+                8,
+                1
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "几何邻近关系；不能据此判断用户有意范围或批准吸附。"
+        },
+        {
+          "manual_edge_1based": [
+            3,
+            4
+          ],
+          "endpoints_xz_h": [
+            [
+              -2.5855179212511565,
+              1.1718016346770879
+            ],
+            [
+              -2.5857176116585054,
+              -1.2612260339132055
+            ]
+          ],
+          "classification": "exact_inherited_gt_edge_or_subsegment",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 8.537736462515939e-07,
+            "manual_edge_length_h": 2.4330276767850747,
+            "gt_edge_length_h": 2.4330276767850747,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              0.0,
+              0.0
+            ],
+            "max_abs_support_offset_h": 0.0,
+            "max_abs_support_offset_fit_svg_px": 0.0,
+            "finite_segment_projection_overlap_h": 2.4330276767850743,
+            "overlap_fraction_of_manual_projection": 1.0,
+            "overlap_signed_offset_range_h": [
+              0.0,
+              0.0
+            ],
+            "gt_edge_1based": [
+              3,
+              4
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 8.537736462515939e-07,
+              "manual_edge_length_h": 2.4330276767850747,
+              "gt_edge_length_h": 2.4330276767850747,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.0,
+                0.0
+              ],
+              "max_abs_support_offset_h": 0.0,
+              "max_abs_support_offset_fit_svg_px": 0.0,
+              "finite_segment_projection_overlap_h": 2.4330276767850743,
+              "overlap_fraction_of_manual_projection": 1.0,
+              "overlap_signed_offset_range_h": [
+                0.0,
+                0.0
+              ],
+              "gt_edge_1based": [
+                3,
+                4
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0381890067209357,
+              "manual_edge_length_h": 2.4330276767850747,
+              "gt_edge_length_h": 0.5740584495949136,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.0022750597762625697,
+                0.0006533887877223474
+              ],
+              "max_abs_support_offset_h": 0.0022750597762625697,
+              "max_abs_support_offset_fit_svg_px": 0.18837513645474235,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                7,
+                8
+              ]
+            },
+            {
+              "angle_difference_deg": 0.010060885650319717,
+              "manual_edge_length_h": 2.4330276767850747,
+              "gt_edge_length_h": 1.2161825315536319,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                2.4734268248135973,
+                2.473854053716935
+              ],
+              "max_abs_support_offset_h": 2.473854053716935,
+              "max_abs_support_offset_fit_svg_px": 204.83531896625718,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                5,
+                6
+              ]
+            },
+            {
+              "angle_difference_deg": 0.006306549517536591,
+              "manual_edge_length_h": 2.4330276767850747,
+              "gt_edge_length_h": 4.2237647931356275,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                3.08106463142044,
+                3.081332434907548
+              ],
+              "max_abs_support_offset_h": 3.081332434907548,
+              "max_abs_support_offset_fit_svg_px": 255.13457885562926,
+              "finite_segment_projection_overlap_h": 2.433014768261226,
+              "overlap_fraction_of_manual_projection": 0.9999947005184208,
+              "overlap_signed_offset_range_h": [
+                3.08106463283966,
+                3.081332434907548
+              ],
+              "gt_edge_1based": [
+                1,
+                2
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "几何邻近关系；不能据此判断用户有意范围或批准吸附。"
+        },
+        {
+          "manual_edge_1based": [
+            4,
+            5
+          ],
+          "endpoints_xz_h": [
+            [
+              -2.5857176116585054,
+              -1.2612260339132055
+            ],
+            [
+              -2.5856601331659883,
+              -2.47752934988568
+            ]
+          ],
+          "classification": "very_small_axis_or_corner_difference_not_material_snap_candidate",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 0.007410153162371345,
+            "manual_edge_length_h": 1.2163033173305968,
+            "gt_edge_length_h": 2.4330276767850747,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              0.0,
+              0.00015730641739972098
+            ],
+            "max_abs_support_offset_h": 0.00015730641739972098,
+            "max_abs_support_offset_fit_svg_px": 0.013024984289230003,
+            "finite_segment_projection_overlap_h": 4.440892098500626e-16,
+            "overlap_fraction_of_manual_projection": 3.6511387187429715e-16,
+            "overlap_signed_offset_range_h": null,
+            "gt_edge_1based": [
+              3,
+              4
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 0.007410153162371345,
+              "manual_edge_length_h": 1.2163033173305968,
+              "gt_edge_length_h": 2.4330276767850747,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.0,
+                0.00015730641739972098
+              ],
+              "max_abs_support_offset_h": 0.00015730641739972098,
+              "max_abs_support_offset_fit_svg_px": 0.013024984289230003,
+              "finite_segment_projection_overlap_h": 4.440892098500626e-16,
+              "overlap_fraction_of_manual_projection": 3.6511387187429715e-16,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                3,
+                4
+              ]
+            },
+            {
+              "angle_difference_deg": 0.030778853595133073,
+              "manual_edge_length_h": 1.2163033173305968,
+              "gt_edge_length_h": 0.5740584495949136,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.0006533887877223474,
+                0.0
+              ],
+              "max_abs_support_offset_h": 0.0006533887877223474,
+              "max_abs_support_offset_fit_svg_px": 0.05410064532343553,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                7,
+                8
+              ]
+            },
+            {
+              "angle_difference_deg": 0.017471038779389717,
+              "manual_edge_length_h": 1.2163033173305968,
+              "gt_edge_length_h": 1.2161825315536319,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                2.473854053716935,
+                2.4742249376152246
+              ],
+              "max_abs_support_offset_h": 2.4742249376152246,
+              "max_abs_support_offset_fit_svg_px": 204.86602818351736,
+              "finite_segment_projection_overlap_h": 1.2158019661488033,
+              "overlap_fraction_of_manual_projection": 0.9995878539080912,
+              "overlap_signed_offset_range_h": [
+                2.473854206575284,
+                2.4742249376152246
+              ],
+              "gt_edge_1based": [
+                5,
+                6
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0011036037465185999,
+              "manual_edge_length_h": 1.2163033173305968,
+              "gt_edge_length_h": 4.2237647931356275,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                3.081332434907548,
+                3.0813090070614706
+              ],
+              "max_abs_support_offset_h": 3.081332434907548,
+              "max_abs_support_offset_fit_svg_px": 255.13457885562926,
+              "finite_segment_projection_overlap_h": 1.216303317104969,
+              "overlap_fraction_of_manual_projection": 1.0,
+              "overlap_signed_offset_range_h": [
+                3.0813090070614706,
+                3.081332434907548
+              ],
+              "gt_edge_1based": [
+                1,
+                2
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "操作记录明确为cut，精确连接GT点4与7；与附近GT 3→4实际线段没有实质重叠，不能按最近支持线强行改写。"
+        },
+        {
+          "manual_edge_1based": [
+            5,
+            6
+          ],
+          "endpoints_xz_h": [
+            [
+              -2.5856601331659883,
+              -2.47752934988568
+            ],
+            [
+              -2.5853246252727122,
+              -3.051587701436957
+            ]
+          ],
+          "classification": "exact_inherited_gt_edge_or_subsegment",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 1.2074182697257333e-06,
+            "manual_edge_length_h": 0.5740584495949136,
+            "gt_edge_length_h": 0.5740584495949136,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              0.0,
+              5.421010862427522e-20
+            ],
+            "max_abs_support_offset_h": 5.421010862427522e-20,
+            "max_abs_support_offset_fit_svg_px": 4.4886014494529396e-18,
+            "finite_segment_projection_overlap_h": 0.5740584495949136,
+            "overlap_fraction_of_manual_projection": 1.0,
+            "overlap_signed_offset_range_h": [
+              0.0,
+              5.421010862427522e-20
+            ],
+            "gt_edge_1based": [
+              7,
+              8
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 1.2074182697257333e-06,
+              "manual_edge_length_h": 0.5740584495949136,
+              "gt_edge_length_h": 0.5740584495949136,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.0,
+                5.421010862427522e-20
+              ],
+              "max_abs_support_offset_h": 5.421010862427522e-20,
+              "max_abs_support_offset_fit_svg_px": 4.4886014494529396e-18,
+              "finite_segment_projection_overlap_h": 0.5740584495949136,
+              "overlap_fraction_of_manual_projection": 1.0,
+              "overlap_signed_offset_range_h": [
+                0.0,
+                5.421010862427522e-20
+              ],
+              "gt_edge_1based": [
+                7,
+                8
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0381890067209357,
+              "manual_edge_length_h": 0.5740584495949136,
+              "gt_edge_length_h": 2.4330276767850747,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.00015730641739972098,
+                0.0005399300687116359
+              ],
+              "max_abs_support_offset_h": 0.0005399300687116359,
+              "max_abs_support_offset_fit_svg_px": 0.04470625406452367,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                3,
+                4
+              ]
+            },
+            {
+              "angle_difference_deg": 0.04824989234082106,
+              "manual_edge_length_h": 0.5740584495949136,
+              "gt_edge_length_h": 1.2161825315536319,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                2.4742249376152246,
+                2.4747083633640146
+              ],
+              "max_abs_support_offset_h": 2.4747083633640146,
+              "max_abs_support_offset_fit_svg_px": 204.90605587524846,
+              "finite_segment_projection_overlap_h": 0.00038056540482855894,
+              "overlap_fraction_of_manual_projection": 0.0006629386607566218,
+              "overlap_signed_offset_range_h": [
+                2.4742249376152246,
+                2.474225258096843
+              ],
+              "gt_edge_1based": [
+                5,
+                6
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0318824571772385,
+              "manual_edge_length_h": 0.5740584495949136,
+              "gt_edge_length_h": 4.2237647931356275,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                3.0813090070614706,
+                3.0809895700428314
+              ],
+              "max_abs_support_offset_h": 3.0813090070614706,
+              "max_abs_support_offset_fit_svg_px": 255.1326390280486,
+              "finite_segment_projection_overlap_h": 0.5740583607189317,
+              "overlap_fraction_of_manual_projection": 1.0,
+              "overlap_signed_offset_range_h": [
+                3.0809895700428314,
+                3.0813090070614706
+              ],
+              "gt_edge_1based": [
+                1,
+                2
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "几何邻近关系；不能据此判断用户有意范围或批准吸附。"
+        },
+        {
+          "manual_edge_1based": [
+            6,
+            1
+          ],
+          "endpoints_xz_h": [
+            [
+              -2.5853246252727122,
+              -3.051587701436957
+            ],
+            [
+              0.4956649544346364,
+              -3.0518897955887994
+            ]
+          ],
+          "classification": "exact_inherited_gt_edge_or_subsegment",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 0.0,
+            "manual_edge_length_h": 3.0809895945176673,
+            "gt_edge_length_h": 3.0809895945176673,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              0.0,
+              5.421010862427522e-20
+            ],
+            "max_abs_support_offset_h": 5.421010862427522e-20,
+            "max_abs_support_offset_fit_svg_px": 4.4886014494529396e-18,
+            "finite_segment_projection_overlap_h": 3.0809895945176673,
+            "overlap_fraction_of_manual_projection": 1.0,
+            "overlap_signed_offset_range_h": [
+              0.0,
+              5.421010862427522e-20
+            ],
+            "gt_edge_1based": [
+              8,
+              1
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 0.0,
+              "manual_edge_length_h": 3.0809895945176673,
+              "gt_edge_length_h": 3.0809895945176673,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.0,
+                5.421010862427522e-20
+              ],
+              "max_abs_support_offset_h": 5.421010862427522e-20,
+              "max_abs_support_offset_fit_svg_px": 4.4886014494529396e-18,
+              "finite_segment_projection_overlap_h": 3.0809895945176673,
+              "overlap_fraction_of_manual_projection": 1.0,
+              "overlap_signed_offset_range_h": [
+                0.0,
+                5.421010862427522e-20
+              ],
+              "gt_edge_1based": [
+                8,
+                1
+              ]
+            },
+            {
+              "angle_difference_deg": 0.00033274178050726695,
+              "manual_edge_length_h": 3.0809895945176673,
+              "gt_edge_length_h": 2.4742249668829808,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -0.574058313609875,
+                -0.5740404208829253
+              ],
+              "max_abs_support_offset_h": 0.574058313609875,
+              "max_abs_support_offset_fit_svg_px": 47.532075546993894,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                6,
+                7
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0024647312495751604,
+              "manual_edge_length_h": 3.0809895945176673,
+              "gt_edge_length_h": 2.4738541045073825,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                1.7903616431851954,
+                1.7904941802098437
+              ],
+              "max_abs_support_offset_h": 1.7904941802098437,
+              "max_abs_support_offset_fit_svg_px": 148.25306527661303,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                4,
+                5
+              ]
+            },
+            {
+              "angle_difference_deg": 0.006982141465156078,
+              "manual_edge_length_h": 3.0809895945176673,
+              "gt_edge_length_h": 3.0810646314474193,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                4.223389339519301,
+                4.223764793098643
+              ],
+              "max_abs_support_offset_h": 4.223764793098643,
+              "max_abs_support_offset_fit_svg_px": 349.72807200687174,
+              "finite_segment_projection_overlap_h": 3.0809718958299634,
+              "overlap_fraction_of_manual_projection": 0.9999942629435604,
+              "overlap_signed_offset_range_h": [
+                4.223389339519301,
+                4.223764790944644
+              ],
+              "gt_edge_1based": [
+                2,
+                3
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "几何邻近关系；不能据此判断用户有意范围或批准吸附。"
+        }
+      ],
+      "conclusion_zh": "cut 直接连接 GT 点4与7，其他保留边继承 GT；靠近此切线的既有左墙段不能误当成应吸附的新墙边。未发现明显误对齐。"
+    },
+    {
+      "image_code": "pRbA3pwrgk9-02",
+      "image_id": "pRbA3pwrgk9_03de6e2562bb4f56a88db3ceb681af78",
+      "reference_object_id": "gt:pRbA3pwrgk9_03de6e2562bb4f56a88db3ceb681af78:data/mp3d_layout/valid/label_cor/pRbA3pwrgk9_03de6e2562bb4f56a88db3ceb681af78.txt",
+      "reference_version": "original",
+      "confirmed_at": "2026-10-10T09:10:01.595Z",
+      "confirmed_record_sha256": "6fde801f8004c91eb1936ffcff8bb332aeabea41a60ae4b73a186394dea2d6b9",
+      "selected_gt_floor_xz_h": [
+        [
+          1.979238505604588,
+          -2.036406445323765
+        ],
+        [
+          1.9791349147332007,
+          0.7646924195420431
+        ],
+        [
+          0.4462684816586824,
+          0.7646301325829886
+        ],
+        [
+          0.44628198220702414,
+          0.4190866765125257
+        ],
+        [
+          -0.49990565647276203,
+          0.41906426318474604
+        ],
+        [
+          -0.49992791977885503,
+          -0.333508971960944
+        ],
+        [
+          0.09820305232587352,
+          -0.33350584247948467
+        ],
+        [
+          0.09819607591025648,
+          -1.5669187527517996
+        ],
+        [
+          0.6489894748730933,
+          -1.5667991920760147
+        ],
+        [
+          0.6490133882853157,
+          -2.0360716587961276
+        ]
+      ],
+      "confirmed_polygon_xz_h": [
+        [
+          -0.49990565647276203,
+          0.41906426318474604
+        ],
+        [
+          0.35473335852901305,
+          0.41906426318474604
+        ],
+        [
+          0.35473335852901305,
+          -0.3376472492951668
+        ],
+        [
+          -0.49990565647276203,
+          -0.3376472492951668
+        ]
+      ],
+      "operations": [
+        {
+          "type": "rectangle",
+          "a": [
+            -0.49990565647276203,
+            0.41906426318474604
+          ],
+          "b": [
+            0.35473335852901305,
+            -0.3376472492951668
+          ],
+          "angle": 0
+        }
+      ],
+      "fit_world_units_per_svg_pixel": 0.0071823047817071994,
+      "fit_svg_pixels_per_h": 139.23107280923614,
+      "edges": [
+        {
+          "manual_edge_1based": [
+            1,
+            2
+          ],
+          "endpoints_xz_h": [
+            [
+              -0.49990565647276203,
+              0.41906426318474604
+            ],
+            [
+              0.35473335852901305,
+              0.41906426318474604
+            ]
+          ],
+          "classification": "very_small_axis_or_corner_difference_not_material_snap_candidate",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 0.0013572243382630044,
+            "manual_edge_length_h": 0.8546390150017751,
+            "gt_edge_length_h": 0.94618763894525,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              0.0,
+              2.024472059036078e-05
+            ],
+            "max_abs_support_offset_h": 2.024472059036078e-05,
+            "max_abs_support_offset_fit_svg_px": 0.002818694166519164,
+            "finite_segment_projection_overlap_h": 0.8546390147619962,
+            "overlap_fraction_of_manual_projection": 1.0,
+            "overlap_signed_offset_range_h": [
+              0.0,
+              2.024472059036078e-05
+            ],
+            "gt_edge_1based": [
+              4,
+              5
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 0.0013572243382630044,
+              "manual_edge_length_h": 0.8546390150017751,
+              "gt_edge_length_h": 0.94618763894525,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.0,
+                2.024472059036078e-05
+              ],
+              "max_abs_support_offset_h": 2.024472059036078e-05,
+              "max_abs_support_offset_fit_svg_px": 0.002818694166519164,
+              "finite_segment_projection_overlap_h": 0.8546390147619962,
+              "overlap_fraction_of_manual_projection": 1.0,
+              "overlap_signed_offset_range_h": [
+                0.0,
+                2.024472059036078e-05
+              ],
+              "gt_edge_1based": [
+                4,
+                5
+              ]
+            },
+            {
+              "angle_difference_deg": 0.002328174046142802,
+              "manual_edge_length_h": 0.8546390150017751,
+              "gt_edge_length_h": 1.5328664343400118,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.3455274219863929,
+                0.34556214964703
+              ],
+              "max_abs_support_offset_h": 0.34556214964703,
+              "max_abs_support_offset_fit_svg_px": 48.11298881762179,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                2,
+                3
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0002997779091609635,
+              "manual_edge_length_h": 0.8546390150017751,
+              "gt_edge_length_h": 0.5981309721129154,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.7525732350189053,
+                0.7525687634615431
+              ],
+              "max_abs_support_offset_h": 0.7525732350189053,
+              "max_abs_support_offset_fit_svg_px": 104.78157887919959,
+              "finite_segment_projection_overlap_h": 0.5981047712678957,
+              "overlap_fraction_of_manual_projection": 0.699833217039407,
+              "overlap_signed_offset_range_h": [
+                0.7525701056745313,
+                0.7525732350189053
+              ],
+              "gt_edge_1based": [
+                6,
+                7
+              ]
+            },
+            {
+              "angle_difference_deg": 0.012437189717610741,
+              "manual_edge_length_h": 0.8546390150017751,
+              "gt_edge_length_h": 0.5507934119393495,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                1.9861127990360319,
+                1.9859272826228527
+              ],
+              "max_abs_support_offset_h": 1.9861127990360319,
+              "max_abs_support_offset_fit_svg_px": 276.5286157299416,
+              "finite_segment_projection_overlap_h": 0.2569683737272856,
+              "overlap_fraction_of_manual_projection": 0.30067475889904566,
+              "overlap_signed_offset_range_h": [
+                1.9859272826228527,
+                1.9859830627256572
+              ],
+              "gt_edge_1based": [
+                8,
+                9
+              ]
+            },
+            {
+              "angle_difference_deg": 0.014420006341860012,
+              "manual_edge_length_h": 0.8546390150017751,
+              "gt_edge_length_h": 1.3302251594482382,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                2.454846688201813,
+                2.4550617808319473
+              ],
+              "max_abs_support_offset_h": 2.4550617808319473,
+              "max_abs_support_offset_fit_svg_px": 341.8208855581858,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                10,
+                1
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "几何邻近关系；不能据此判断用户有意范围或批准吸附。"
+        },
+        {
+          "manual_edge_1based": [
+            2,
+            3
+          ],
+          "endpoints_xz_h": [
+            [
+              0.35473335852901305,
+              0.41906426318474604
+            ],
+            [
+              0.35473335852901305,
+              -0.3376472492951668
+            ]
+          ],
+          "classification": "nearby_support_only_scope_cut_position_uncertain",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 0.0022385736608857257,
+            "manual_edge_length_h": 0.7567115124799129,
+            "gt_edge_length_h": 0.34554345633419936,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              -0.09154862448383595,
+              -0.09157818956506592
+            ],
+            "max_abs_support_offset_h": 0.09157818956506592,
+            "max_abs_support_offset_fit_svg_px": 12.750529579071722,
+            "finite_segment_projection_overlap_h": 0,
+            "overlap_fraction_of_manual_projection": 0.0,
+            "overlap_signed_offset_range_h": null,
+            "gt_edge_1based": [
+              3,
+              4
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 0.0022385736608857257,
+              "manual_edge_length_h": 0.7567115124799129,
+              "gt_edge_length_h": 0.34554345633419936,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -0.09154862448383595,
+                -0.09157818956506592
+              ],
+              "max_abs_support_offset_h": 0.09157818956506592,
+              "max_abs_support_offset_fit_svg_px": 12.750529579071722,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                3,
+                4
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0003240765518132091,
+              "manual_edge_length_h": 0.7567115124799129,
+              "gt_edge_length_h": 1.2334129102920448,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.2565260495208431,
+                0.2565303296236126
+              ],
+              "max_abs_support_offset_h": 0.2565303296236126,
+              "max_abs_support_offset_fit_svg_px": 35.71699300160255,
+              "finite_segment_projection_overlap_h": 0.004139955831910842,
+              "overlap_fraction_of_manual_projection": 0.00547098301492666,
+              "overlap_signed_offset_range_h": [
+                0.25653030620724304,
+                0.2565303296236126
+              ],
+              "gt_edge_1based": [
+                7,
+                8
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0029197059008738606,
+              "manual_edge_length_h": 0.7567115124799129,
+              "gt_edge_length_h": 0.46927246732940847,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -0.29415491937639476,
+                -0.2941934802458069
+              ],
+              "max_abs_support_offset_h": 0.2941934802458069,
+              "max_abs_support_offset_fit_svg_px": 40.96087386810651,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                9,
+                10
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0016949761581986893,
+              "manual_edge_length_h": 0.7567115124799129,
+              "gt_edge_length_h": 0.7525732354749967,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.854639014627807,
+                0.8546614003561751
+              ],
+              "max_abs_support_offset_h": 0.8546614003561751,
+              "max_abs_support_offset_fit_svg_px": 118.99542366023434,
+              "finite_segment_projection_overlap_h": 0.7525732354749967,
+              "overlap_fraction_of_manual_projection": 0.9945312360029419,
+              "overlap_signed_offset_range_h": [
+                0.854639015375743,
+                0.8546612786818458
+              ],
+              "gt_edge_1based": [
+                5,
+                6
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0021189254951075303,
+              "manual_edge_length_h": 0.7567115124799129,
+              "gt_edge_length_h": 2.8010988667813184,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                1.6244143371919488,
+                1.624442322068133
+              ],
+              "max_abs_support_offset_h": 1.624442322068133,
+              "max_abs_support_offset_fit_svg_px": 226.17284721827286,
+              "finite_segment_projection_overlap_h": 0.7567115119624412,
+              "overlap_fraction_of_manual_projection": 1.0,
+              "overlap_signed_offset_range_h": [
+                1.6244143371919488,
+                1.624442322068133
+              ],
+              "gt_edge_1based": [
+                1,
+                2
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "相邻GT竖边3→4的延长线邻近，但实际线段零重叠；右侧范围截断位置仍取决于用户意图，不能宣称错误。"
+        },
+        {
+          "manual_edge_1based": [
+            3,
+            4
+          ],
+          "endpoints_xz_h": [
+            [
+              0.35473335852901305,
+              -0.3376472492951668
+            ],
+            [
+              -0.49990565647276203,
+              -0.3376472492951668
+            ]
+          ],
+          "classification": "nearby_finite_gt_edge_review_candidate",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 0.0002997779091609635,
+            "manual_edge_length_h": 0.8546390150017751,
+            "gt_edge_length_h": 0.5981309721129154,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              -0.004142749008012151,
+              -0.004138277450650056
+            ],
+            "max_abs_support_offset_h": 0.004142749008012151,
+            "max_abs_support_offset_fit_svg_px": 0.5767993887649306,
+            "finite_segment_projection_overlap_h": 0.5981087304587064,
+            "overlap_fraction_of_manual_projection": 0.6998378496278347,
+            "overlap_signed_offset_range_h": [
+              -0.004141406815738832,
+              -0.004138277450650056
+            ],
+            "gt_edge_1based": [
+              6,
+              7
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 0.0002997779091609635,
+              "manual_edge_length_h": 0.8546390150017751,
+              "gt_edge_length_h": 0.5981309721129154,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -0.004142749008012151,
+                -0.004138277450650056
+              ],
+              "max_abs_support_offset_h": 0.004142749008012151,
+              "max_abs_support_offset_fit_svg_px": 0.5767993887649306,
+              "finite_segment_projection_overlap_h": 0.5981087304587064,
+              "overlap_fraction_of_manual_projection": 0.6998378496278347,
+              "overlap_signed_offset_range_h": [
+                -0.004141406815738832,
+                -0.004138277450650056
+              ],
+              "gt_edge_1based": [
+                6,
+                7
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0013572243382630044,
+              "manual_edge_length_h": 0.8546390150017751,
+              "gt_edge_length_h": 0.94618763894525,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.7567317569881991,
+                0.7567115122676087
+              ],
+              "max_abs_support_offset_h": 0.7567317569881991,
+              "max_abs_support_offset_fit_svg_px": 105.36057435428513,
+              "finite_segment_projection_overlap_h": 0.8546210897517068,
+              "overlap_fraction_of_manual_projection": 0.9999790262204512,
+              "overlap_signed_offset_range_h": [
+                0.756711512692217,
+                0.7567317569881991
+              ],
+              "gt_edge_1based": [
+                4,
+                5
+              ]
+            },
+            {
+              "angle_difference_deg": 0.002328174046142802,
+              "manual_edge_length_h": 0.8546390150017751,
+              "gt_edge_length_h": 1.5328664343400118,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                1.1022736615022222,
+                1.102238933841585
+              ],
+              "max_abs_support_offset_h": 1.1022736615022222,
+              "max_abs_support_offset_fit_svg_px": 153.47074442031922,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                2,
+                3
+              ]
+            },
+            {
+              "angle_difference_deg": 0.012437189717610741,
+              "manual_edge_length_h": 0.8546390150017751,
+              "gt_edge_length_h": 0.5507934119393495,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                1.2292157879708154,
+                1.2294013043839946
+              ],
+              "max_abs_support_offset_h": 1.2294013043839946,
+              "max_abs_support_offset_fit_svg_px": 171.17086252245784,
+              "finite_segment_projection_overlap_h": 0.25680411442816337,
+              "overlap_fraction_of_manual_projection": 0.30048256160860043,
+              "overlap_signed_offset_range_h": [
+                1.2292157879708154,
+                1.229271532417868
+              ],
+              "gt_edge_1based": [
+                8,
+                9
+              ]
+            },
+            {
+              "angle_difference_deg": 0.014420006341860012,
+              "manual_edge_length_h": 0.8546390150017751,
+              "gt_edge_length_h": 1.3302251594482382,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                1.698350292317506,
+                1.6981351996873724
+              ],
+              "max_abs_support_offset_h": 1.698350292317506,
+              "max_abs_support_offset_fit_svg_px": 236.46313320524618,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                10,
+                1
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "下边在重叠区向GT外侧偏移0.004138277–0.004141407h；约70%的底边投影覆盖GT 6→7，属于较明确可复核小偏移候选，尚不能确定为误操作。"
+        },
+        {
+          "manual_edge_1based": [
+            4,
+            1
+          ],
+          "endpoints_xz_h": [
+            [
+              -0.49990565647276203,
+              -0.3376472492951668
+            ],
+            [
+              -0.49990565647276203,
+              0.41906426318474604
+            ]
+          ],
+          "classification": "very_small_axis_or_corner_difference_not_material_snap_candidate",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 0.0016949761581986893,
+            "manual_edge_length_h": 0.7567115124799129,
+            "gt_edge_length_h": 0.7525732354749967,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              2.2385728368095855e-05,
+              0.0
+            ],
+            "max_abs_support_offset_h": 2.2385728368095855e-05,
+            "max_abs_support_offset_fit_svg_px": 0.003116788976306137,
+            "finite_segment_projection_overlap_h": 0.7525732354749967,
+            "overlap_fraction_of_manual_projection": 0.9945312360029419,
+            "overlap_signed_offset_range_h": [
+              0.0,
+              2.226330610274849e-05
+            ],
+            "gt_edge_1based": [
+              5,
+              6
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 0.0016949761581986893,
+              "manual_edge_length_h": 0.7567115124799129,
+              "gt_edge_length_h": 0.7525732354749967,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                2.2385728368095855e-05,
+                0.0
+              ],
+              "max_abs_support_offset_h": 2.2385728368095855e-05,
+              "max_abs_support_offset_fit_svg_px": 0.003116788976306137,
+              "finite_segment_projection_overlap_h": 0.7525732354749967,
+              "overlap_fraction_of_manual_projection": 0.9945312360029419,
+              "overlap_signed_offset_range_h": [
+                0.0,
+                2.226330610274849e-05
+              ],
+              "gt_edge_1based": [
+                5,
+                6
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0003240765518132091,
+              "manual_edge_length_h": 0.7567115124799129,
+              "gt_edge_length_h": 1.2334129102920448,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -0.5981086853644914,
+                -0.5981129654672609
+              ],
+              "max_abs_support_offset_h": 0.5981129654672609,
+              "max_abs_support_offset_fit_svg_px": 83.27590984312035,
+              "finite_segment_projection_overlap_h": 0.004144789831069959,
+              "overlap_fraction_of_manual_projection": 0.005477371181459706,
+              "overlap_signed_offset_range_h": [
+                -0.5981087088082029,
+                -0.5981086853644914
+              ],
+              "gt_edge_1based": [
+                7,
+                8
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0022385736608857257,
+              "manual_edge_length_h": 0.7567115124799129,
+              "gt_edge_length_h": 0.34554345633419936,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -0.9462172039145368,
+                -0.9461876388333068
+              ],
+              "max_abs_support_offset_h": 0.9462172039145368,
+              "max_abs_support_offset_fit_svg_px": 131.74283641157672,
+              "finite_segment_projection_overlap_h": 1.4554676470213135e-05,
+              "overlap_fraction_of_manual_projection": 1.9234115301910868e-05,
+              "overlap_signed_offset_range_h": [
+                -0.946187639401965,
+                -0.9461876388333068
+              ],
+              "gt_edge_1based": [
+                3,
+                4
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0029197059008738606,
+              "manual_edge_length_h": 0.7567115124799129,
+              "gt_edge_length_h": 0.46927246732940847,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -1.1488324941379329,
+                -1.1487939332685209
+              ],
+              "max_abs_support_offset_h": 1.1488324941379329,
+              "max_abs_support_offset_fit_svg_px": 159.9531806369349,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                9,
+                10
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0021189254951075303,
+              "manual_edge_length_h": 0.7567115124799129,
+              "gt_edge_length_h": 2.8010988667813184,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                2.4790813364854696,
+                2.4790533516092856
+              ],
+              "max_abs_support_offset_h": 2.4790813364854696,
+              "max_abs_support_offset_fit_svg_px": 345.1651540602269,
+              "finite_segment_projection_overlap_h": 0.7567115119624415,
+              "overlap_fraction_of_manual_projection": 1.0,
+              "overlap_signed_offset_range_h": [
+                2.4790533516092856,
+                2.4790813364854696
+              ],
+              "gt_edge_1based": [
+                1,
+                2
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "几何邻近关系；不能据此判断用户有意范围或批准吸附。"
+        }
+      ],
+      "conclusion_zh": "唯一较明确的小偏移候选：下边 z=-0.3376472493 相对 GT 6→7 向外约0.00414h；有70.0%横向重叠。右边 x=0.3547333585 离 GT 3→4 延长线约0.09154–0.09158h，但实际线段零重叠，应单列为范围截断位置待用户判断，不能自动改。"
+    },
+    {
+      "image_code": "q9vSo1VnCiC-29",
+      "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+      "reference_object_id": "gt:q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.txt",
+      "reference_version": "original",
+      "confirmed_at": "2026-10-10T09:08:34.978Z",
+      "confirmed_record_sha256": "5b038088eecd350944db5618927e878920a57eb1ff8688063df0565942653082",
+      "selected_gt_floor_xz_h": [
+        [
+          0.6562898596136382,
+          -0.7136512674546288
+        ],
+        [
+          0.6563272430637284,
+          2.9652841217608428
+        ],
+        [
+          -0.7029697078100366,
+          2.964921385925137
+        ],
+        [
+          -0.7029558290661219,
+          0.4090594898666894
+        ],
+        [
+          -0.09935722437529143,
+          0.4090945466787008
+        ],
+        [
+          -0.0993373178464437,
+          0.3013189665588077
+        ],
+        [
+          -0.35967663223162516,
+          0.30132429423653356
+        ],
+        [
+          -0.35965193766518877,
+          -0.7136332060588283
+        ]
+      ],
+      "confirmed_polygon_xz_h": [
+        [
+          0.6562898596136382,
+          -0.7136512674546288
+        ],
+        [
+          -0.35967663223162516,
+          -0.7136512674546288
+        ],
+        [
+          -0.35967663223162516,
+          0.3013242942365336
+        ],
+        [
+          0.6562898596136382,
+          0.3013242942365336
+        ]
+      ],
+      "operations": [
+        {
+          "type": "rectangle",
+          "a": [
+            0.6562898596136382,
+            -0.7136512674546288
+          ],
+          "b": [
+            -0.35967663223162516,
+            0.3013242942365336
+          ],
+          "angle": 0
+        }
+      ],
+      "fit_world_units_per_svg_pixel": 0.009433167664655054,
+      "fit_svg_pixels_per_h": 106.0089288719928,
+      "edges": [
+        {
+          "manual_edge_1based": [
+            1,
+            2
+          ],
+          "endpoints_xz_h": [
+            [
+              0.6562898596136382,
+              -0.7136512674546288
+            ],
+            [
+              -0.35967663223162516,
+              -0.7136512674546288
+            ]
+          ],
+          "classification": "very_small_axis_or_corner_difference_not_material_snap_candidate",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 0.0010186031278728938,
+            "manual_edge_length_h": 1.0159664918452633,
+            "gt_edge_length_h": 1.0159417974393745,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              0.0,
+              -1.8061834817240274e-05
+            ],
+            "max_abs_support_offset_h": 1.8061834817240274e-05,
+            "max_abs_support_offset_fit_svg_px": 0.0019147157624385073,
+            "finite_segment_projection_overlap_h": 1.0159417974393745,
+            "overlap_fraction_of_manual_projection": 0.9999756938387837,
+            "overlap_signed_offset_range_h": [
+              -1.8061395803371342e-05,
+              0.0
+            ],
+            "gt_edge_1based": [
+              8,
+              1
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 0.0010186031278728938,
+              "manual_edge_length_h": 1.0159664918452633,
+              "gt_edge_length_h": 1.0159417974393745,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.0,
+                -1.8061834817240274e-05
+              ],
+              "max_abs_support_offset_h": 1.8061834817240274e-05,
+              "max_abs_support_offset_fit_svg_px": 0.0019147157624385073,
+              "finite_segment_projection_overlap_h": 1.0159417974393745,
+              "overlap_fraction_of_manual_projection": 0.9999756938387837,
+              "overlap_signed_offset_range_h": [
+                -1.8061395803371342e-05,
+                0.0
+              ],
+              "gt_edge_1based": [
+                8,
+                1
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0011725218861708786,
+              "manual_edge_length_h": 1.0159664918452633,
+              "gt_edge_length_h": 0.2603393144396952,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                1.014954770373529,
+                1.0149755614786315
+              ],
+              "max_abs_support_offset_h": 1.0149755614786315,
+              "max_abs_support_offset_fit_svg_px": 107.5964721035992,
+              "finite_segment_projection_overlap_h": 0.26031854361334505,
+              "overlap_fraction_of_manual_projection": 0.25622748954549407,
+              "overlap_signed_offset_range_h": [
+                1.0149702342259663,
+                1.0149755614786315
+              ],
+              "gt_edge_1based": [
+                6,
+                7
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0033277203241418867,
+              "manual_edge_length_h": 1.0159664918452633,
+              "gt_edge_length_h": 0.6035986057088746,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -1.1227896999781857,
+                -1.1227306929725736
+              ],
+              "max_abs_support_offset_h": 1.1227896999781857,
+              "max_abs_support_offset_fit_svg_px": 119.02573344319362,
+              "finite_segment_projection_overlap_h": 0.26038461613142544,
+              "overlap_fraction_of_manual_projection": 0.25629252407495184,
+              "overlap_signed_offset_range_h": [
+                -1.12274581602698,
+                -1.1227306929725736
+              ],
+              "gt_edge_1based": [
+                4,
+                5
+              ]
+            },
+            {
+              "angle_difference_deg": 0.015289692156628832,
+              "manual_edge_length_h": 1.0159664918452633,
+              "gt_edge_length_h": 1.3592969992727864,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                3.678935248247612,
+                3.6786641320348448
+              ],
+              "max_abs_support_offset_h": 3.678935248247612,
+              "max_abs_support_offset_fit_svg_px": 389.9999850561482,
+              "finite_segment_projection_overlap_h": 1.015966455670841,
+              "overlap_fraction_of_manual_projection": 1.0,
+              "overlap_signed_offset_range_h": [
+                3.6786641320348448,
+                3.678935248247612
+              ],
+              "gt_edge_1based": [
+                2,
+                3
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "几何邻近关系；不能据此判断用户有意范围或批准吸附。"
+        },
+        {
+          "manual_edge_1based": [
+            2,
+            3
+          ],
+          "endpoints_xz_h": [
+            [
+              -0.35967663223162516,
+              -0.7136512674546288
+            ],
+            [
+              -0.35967663223162516,
+              0.3013242942365336
+            ]
+          ],
+          "classification": "very_small_axis_or_corner_difference_not_material_snap_candidate",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 0.001394042697243304,
+            "manual_edge_length_h": 1.0149755616911624,
+            "gt_edge_length_h": 1.0149575005957792,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              -2.4695005874414893e-05,
+              1.3506218844001767e-21
+            ],
+            "max_abs_support_offset_h": 2.4695005874414893e-05,
+            "max_abs_support_offset_fit_svg_px": 0.002617891121234293,
+            "finite_segment_projection_overlap_h": 1.0149575005957792,
+            "overlap_fraction_of_manual_projection": 0.9999822056848975,
+            "overlap_signed_offset_range_h": [
+              -2.4694566443698907e-05,
+              0.0
+            ],
+            "gt_edge_1based": [
+              7,
+              8
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 0.001394042697243304,
+              "manual_edge_length_h": 1.0149755616911624,
+              "gt_edge_length_h": 1.0149575005957792,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -2.4695005874414893e-05,
+                1.3506218844001767e-21
+              ],
+              "max_abs_support_offset_h": 2.4695005874414893e-05,
+              "max_abs_support_offset_fit_svg_px": 0.002617891121234293,
+              "finite_segment_projection_overlap_h": 1.0149575005957792,
+              "overlap_fraction_of_manual_projection": 0.9999822056848975,
+              "overlap_signed_offset_range_h": [
+                -2.4694566443698907e-05,
+                0.0
+              ],
+              "gt_edge_1based": [
+                7,
+                8
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0105827319296459,
+              "manual_edge_length_h": 1.0149755616911624,
+              "gt_edge_length_h": 0.10777558195829608,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -0.2605267785145074,
+                -0.2603393089603521
+              ],
+              "max_abs_support_offset_h": 0.2605267785145074,
+              "max_abs_support_offset_fit_svg_px": 27.618164732793833,
+              "finite_segment_projection_overlap_h": 5.341326416441472e-05,
+              "overlap_fraction_of_manual_projection": 5.262517354262614e-05,
+              "overlap_signed_offset_range_h": [
+                -0.26033931882596995,
+                -0.2603393089603521
+              ],
+              "gt_edge_1based": [
+                5,
+                6
+              ]
+            },
+            {
+              "angle_difference_deg": 0.00031112523810543336,
+              "manual_edge_length_h": 1.0149755616911624,
+              "gt_edge_length_h": 2.5558618960961295,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.34327310032824554,
+                0.34327861180987995
+              ],
+              "max_abs_support_offset_h": 0.34327861180987995,
+              "max_abs_support_offset_fit_svg_px": 36.39059794262999,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                3,
+                4
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0005822104040041747,
+              "manual_edge_length_h": 1.0149755616911624,
+              "gt_edge_length_h": 3.678935389405407,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                1.015966491792811,
+                1.015976805452671
+              ],
+              "max_abs_support_offset_h": 1.015976805452671,
+              "max_abs_support_offset_fit_svg_px": 107.70261290482667,
+              "finite_segment_projection_overlap_h": 1.0149652379095786,
+              "overlap_fraction_of_manual_projection": 0.9999898285933445,
+              "overlap_signed_offset_range_h": [
+                1.0159664918977156,
+                1.015976805452671
+              ],
+              "gt_edge_1based": [
+                1,
+                2
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "几何邻近关系；不能据此判断用户有意范围或批准吸附。"
+        },
+        {
+          "manual_edge_1based": [
+            3,
+            4
+          ],
+          "endpoints_xz_h": [
+            [
+              -0.35967663223162516,
+              0.3013242942365336
+            ],
+            [
+              0.6562898596136382,
+              0.3013242942365336
+            ]
+          ],
+          "classification": "very_small_axis_or_corner_difference_not_material_snap_candidate",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 0.0011725218861708786,
+            "manual_edge_length_h": 1.0159664918452633,
+            "gt_edge_length_h": 0.2603393144396952,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              -5.551115123125783e-17,
+              -2.079110510259664e-05
+            ],
+            "max_abs_support_offset_h": 2.079110510259664e-05,
+            "max_abs_support_offset_fit_svg_px": 0.0022040427819912936,
+            "finite_segment_projection_overlap_h": 0.26033931443969516,
+            "overlap_fraction_of_manual_projection": 0.2562479339464868,
+            "overlap_signed_offset_range_h": [
+              -5.327677727045935e-06,
+              -5.551115123125783e-17
+            ],
+            "gt_edge_1based": [
+              6,
+              7
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 0.0011725218861708786,
+              "manual_edge_length_h": 1.0159664918452633,
+              "gt_edge_length_h": 0.2603393144396952,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -5.551115123125783e-17,
+                -2.079110510259664e-05
+              ],
+              "max_abs_support_offset_h": 2.079110510259664e-05,
+              "max_abs_support_offset_fit_svg_px": 0.0022040427819912936,
+              "finite_segment_projection_overlap_h": 0.26033931443969516,
+              "overlap_fraction_of_manual_projection": 0.2562479339464868,
+              "overlap_signed_offset_range_h": [
+                -5.327677727045935e-06,
+                -5.551115123125783e-17
+              ],
+              "gt_edge_1based": [
+                6,
+                7
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0033277203241418867,
+              "manual_edge_length_h": 1.0159664918452633,
+              "gt_edge_length_h": 0.6035986057088746,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                -0.10775513299329388,
+                -0.107814139998906
+              ],
+              "max_abs_support_offset_h": 0.107814139998906,
+              "max_abs_support_offset_fit_svg_px": 11.4292614985391,
+              "finite_segment_projection_overlap_h": 0.26032566667871654,
+              "overlap_fraction_of_manual_projection": 0.2562345010463565,
+              "overlap_signed_offset_range_h": [
+                -0.10777025262393514,
+                -0.10775513299329388
+              ],
+              "gt_edge_1based": [
+                4,
+                5
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0010186031278728938,
+              "manual_edge_length_h": 1.0159664918452633,
+              "gt_edge_length_h": 1.0159417974393745,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                1.0149574996959503,
+                1.0149755615307674
+              ],
+              "max_abs_support_offset_h": 1.0149755615307674,
+              "max_abs_support_offset_fit_svg_px": 107.59647210912607,
+              "finite_segment_projection_overlap_h": 1.0159237532212966,
+              "overlap_fraction_of_manual_projection": 0.999957933195863,
+              "overlap_signed_offset_range_h": [
+                1.014957500455754,
+                1.0149755615307674
+              ],
+              "gt_edge_1based": [
+                8,
+                1
+              ]
+            },
+            {
+              "angle_difference_deg": 0.015289692156628832,
+              "manual_edge_length_h": 1.0159664918452633,
+              "gt_edge_length_h": 1.3592969992727864,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                2.663688606482822,
+                2.663959722695589
+              ],
+              "max_abs_support_offset_h": 2.663959722695589,
+              "max_abs_support_offset_fit_svg_px": 282.4035167610903,
+              "finite_segment_projection_overlap_h": 1.0159664556708408,
+              "overlap_fraction_of_manual_projection": 1.0,
+              "overlap_signed_offset_range_h": [
+                2.663688606482822,
+                2.663959722695589
+              ],
+              "gt_edge_1based": [
+                2,
+                3
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "矩形上边25.6%的投影覆盖GT 6→7，其余向右延伸，是范围截断边，不是应拉回整段GT的证据。"
+        },
+        {
+          "manual_edge_1based": [
+            4,
+            1
+          ],
+          "endpoints_xz_h": [
+            [
+              0.6562898596136382,
+              0.3013242942365336
+            ],
+            [
+              0.6562898596136382,
+              -0.7136512674546288
+            ]
+          ],
+          "classification": "very_small_axis_or_corner_difference_not_material_snap_candidate",
+          "nearest_parallel_gt_support": {
+            "angle_difference_deg": 0.0005822104040041747,
+            "manual_edge_length_h": 1.0149755616911624,
+            "gt_edge_length_h": 3.678935389405407,
+            "manual_endpoint_signed_offsets_to_gt_support_h": [
+              1.0313659859999835e-05,
+              0.0
+            ],
+            "max_abs_support_offset_h": 1.0313659859999835e-05,
+            "max_abs_support_offset_fit_svg_px": 0.0010933400345086496,
+            "finite_segment_projection_overlap_h": 1.0149755616387615,
+            "overlap_fraction_of_manual_projection": 1.0,
+            "overlap_signed_offset_range_h": [
+              0.0,
+              1.0313659859999835e-05
+            ],
+            "gt_edge_1based": [
+              1,
+              2
+            ]
+          },
+          "all_parallel_gt_pairs": [
+            {
+              "angle_difference_deg": 0.0005822104040041747,
+              "manual_edge_length_h": 1.0149755616911624,
+              "gt_edge_length_h": 3.678935389405407,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                1.0313659859999835e-05,
+                0.0
+              ],
+              "max_abs_support_offset_h": 1.0313659859999835e-05,
+              "max_abs_support_offset_fit_svg_px": 0.0010933400345086496,
+              "finite_segment_projection_overlap_h": 1.0149755616387615,
+              "overlap_fraction_of_manual_projection": 1.0,
+              "overlap_signed_offset_range_h": [
+                0.0,
+                1.0313659859999835e-05
+              ],
+              "gt_edge_1based": [
+                1,
+                2
+              ]
+            },
+            {
+              "angle_difference_deg": 0.0105827319296459,
+              "manual_edge_length_h": 1.0149755616911624,
+              "gt_edge_length_h": 0.10777558195829608,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                0.7556271655548651,
+                0.7554396960007098
+              ],
+              "max_abs_support_offset_h": 0.7556271655548651,
+              "max_abs_support_offset_fit_svg_px": 80.10322644705121,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                5,
+                6
+              ]
+            },
+            {
+              "angle_difference_deg": 0.001394042697243304,
+              "manual_edge_length_h": 1.0149755616911624,
+              "gt_edge_length_h": 1.0149575005957792,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                1.0159664915445474,
+                1.015941796538673
+              ],
+              "max_abs_support_offset_h": 1.0159664915445474,
+              "max_abs_support_offset_fit_svg_px": 107.701519538474,
+              "finite_segment_projection_overlap_h": 1.0149327814799392,
+              "overlap_fraction_of_manual_projection": 0.9999578512897965,
+              "overlap_signed_offset_range_h": [
+                1.0159417975795357,
+                1.0159664915445474
+              ],
+              "gt_edge_1based": [
+                7,
+                8
+              ]
+            },
+            {
+              "angle_difference_deg": 0.00031112523810543336,
+              "manual_edge_length_h": 1.0149755616911624,
+              "gt_edge_length_h": 2.5558618960961295,
+              "manual_endpoint_signed_offsets_to_gt_support_h": [
+                1.3592451036401647,
+                1.3592395921585303
+              ],
+              "max_abs_support_offset_h": 1.3592451036401647,
+              "max_abs_support_offset_fit_svg_px": 144.0921175113947,
+              "finite_segment_projection_overlap_h": 0,
+              "overlap_fraction_of_manual_projection": 0.0,
+              "overlap_signed_offset_range_h": null,
+              "gt_edge_1based": [
+                3,
+                4
+              ]
+            }
+          ],
+          "classification_is_geometric_heuristic_not_semantic_judgment": true,
+          "interpretation_zh": "几何邻近关系；不能据此判断用户有意范围或批准吸附。"
+        }
+      ],
+      "conclusion_zh": "矩形上边从 GT 6→7 延长，用于截去门外区域；其余最近 GT 支持线误差至多约0.0000247h，初始适配约0.00262px，未发现明显误对齐。"
+    }
+  ],
+  "screenshot": {
+    "filename": "fixtures/screenshot_q9vSo1VnCiC-12.png",
+    "sha256": "19baeeab4039504a12f1196712a4a40ec1886a7ae94df0a682a582044c081ac9",
+    "observed_gt_vertices_px": [
+      [
+        395,
+        494
+      ],
+      [
+        395,
+        415
+      ],
+      [
+        326,
+        415
+      ],
+      [
+        326,
+        139
+      ],
+      [
+        449,
+        139
+      ],
+      [
+        449,
+        55
+      ],
+      [
+        49,
+        55
+      ],
+      [
+        49,
+        494
+      ]
+    ],
+    "compared_candidate_count": 35,
+    "all_candidate_fits": [
+      {
+        "image_code": "q9vSo1VnCiC-12",
+        "image_id": "q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5",
+        "coordinate_rmse_screenshot_px": 0.23648257736467815,
+        "screenshot_pixels_per_h": 110.95664640794496,
+        "translation_px": [
+          152.8035301114486,
+          198.45535663203276
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "pa4otMbVnkk-11",
+        "image_id": "pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e",
+        "coordinate_rmse_screenshot_px": 77.7486711573251,
+        "screenshot_pixels_per_h": 103.64945045934891,
+        "translation_px": [
+          325.44558926978715,
+          273.52461704174505
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "uNb9QFRL6hY-52",
+        "image_id": "uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2",
+        "coordinate_rmse_screenshot_px": 85.42590163546288,
+        "screenshot_pixels_per_h": 134.56955028802338,
+        "translation_px": [
+          353.5777394518407,
+          292.5091274144352
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "UwV83HsGsw3-23",
+        "image_id": "UwV83HsGsw3_fcd79f4b6a6642e99227caffb51bf407",
+        "coordinate_rmse_screenshot_px": 99.4202815494827,
+        "screenshot_pixels_per_h": 80.82535470074119,
+        "translation_px": [
+          326.7793521956863,
+          252.9465337798508
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "uNb9QFRL6hY-21",
+        "image_id": "uNb9QFRL6hY_3b9e548b46af4410b97e1d12781ec3c9",
+        "coordinate_rmse_screenshot_px": 100.93532007341382,
+        "screenshot_pixels_per_h": 200.13116688283722,
+        "translation_px": [
+          308.76657714077203,
+          243.63088545383533
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "UwV83HsGsw3-06",
+        "image_id": "UwV83HsGsw3_528d342bf5494b3b94983545d6a1a282",
+        "coordinate_rmse_screenshot_px": 101.43750057121318,
+        "screenshot_pixels_per_h": 52.34260466733629,
+        "translation_px": [
+          298.6366975856497,
+          316.38123318499885
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "7y3sRwLe3Va-19",
+        "image_id": "7y3sRwLe3Va_ad77d6eeca5b492b8fe3317177f4f03f",
+        "coordinate_rmse_screenshot_px": 116.39829331902487,
+        "screenshot_pixels_per_h": 88.62148047878458,
+        "translation_px": [
+          302.5868493950766,
+          288.32859925755173
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "uNb9QFRL6hY-25",
+        "image_id": "uNb9QFRL6hY_5948424345f541b9a570b48f1cfcf622",
+        "coordinate_rmse_screenshot_px": 119.22509266491521,
+        "screenshot_pixels_per_h": 185.99007390004687,
+        "translation_px": [
+          351.27866984873856,
+          269.0175555867462
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "7y3sRwLe3Va-06",
+        "image_id": "7y3sRwLe3Va_1679b5de39e548d38ba240f2fd99cae9",
+        "coordinate_rmse_screenshot_px": 124.25188931123947,
+        "screenshot_pixels_per_h": 51.98083329464621,
+        "translation_px": [
+          300.4069839366355,
+          349.1217568587426
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "jtcxE69GiFV-28",
+        "image_id": "jtcxE69GiFV_dce110162b244b2ab76a0804fc830a9e",
+        "coordinate_rmse_screenshot_px": 128.0557107790118,
+        "screenshot_pixels_per_h": 95.58149629602865,
+        "translation_px": [
+          302.6484701977811,
+          343.2553568962527
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "yqstnuAEVhm-27",
+        "image_id": "yqstnuAEVhm_b26ae45c6c12443cbcfc3997f2e63347",
+        "coordinate_rmse_screenshot_px": 128.15028635970287,
+        "screenshot_pixels_per_h": 111.34143193428602,
+        "translation_px": [
+          327.61946795337576,
+          306.9444287402269
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "yqstnuAEVhm-01",
+        "image_id": "yqstnuAEVhm_08e2145b15fc4d2497c084af41dc7089",
+        "coordinate_rmse_screenshot_px": 128.23416711780985,
+        "screenshot_pixels_per_h": 73.18084343141192,
+        "translation_px": [
+          345.0292530806328,
+          248.38637578181962
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "jh4fc5c5qoQ-14",
+        "image_id": "jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6",
+        "coordinate_rmse_screenshot_px": 132.41955654142907,
+        "screenshot_pixels_per_h": 55.99813837333201,
+        "translation_px": [
+          241.26287701118432,
+          231.67528028304082
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "wc2JMjhGNzB-53",
+        "image_id": "wc2JMjhGNzB_b41b10699d614f24851b56a9a0e743c6",
+        "coordinate_rmse_screenshot_px": 134.0704169899819,
+        "screenshot_pixels_per_h": 94.01362060054184,
+        "translation_px": [
+          391.1278177782233,
+          438.0842480036686
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "wc2JMjhGNzB-26",
+        "image_id": "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+        "coordinate_rmse_screenshot_px": 147.64166331693096,
+        "screenshot_pixels_per_h": -77.74425173922842,
+        "translation_px": [
+          264.8304629113531,
+          318.00709977473156
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "wc2JMjhGNzB-54",
+        "image_id": "wc2JMjhGNzB_c7c84bf01a834489ad11d8450a7dc2bc",
+        "coordinate_rmse_screenshot_px": 149.9880601206305,
+        "screenshot_pixels_per_h": -57.480598160811745,
+        "translation_px": [
+          290.69663453173433,
+          409.89965248756226
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "wc2JMjhGNzB-22",
+        "image_id": "wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66",
+        "coordinate_rmse_screenshot_px": 150.45840593073888,
+        "screenshot_pixels_per_h": -59.491057803453,
+        "translation_px": [
+          386.78642929948387,
+          406.24578489061065
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "wc2JMjhGNzB-03",
+        "image_id": "wc2JMjhGNzB_03c1aca95e254bf4b0db303a28d79aee",
+        "coordinate_rmse_screenshot_px": 150.72017769306436,
+        "screenshot_pixels_per_h": -58.423925064847,
+        "translation_px": [
+          289.18846469260006,
+          330.8340047716961
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "jtcxE69GiFV-26",
+        "image_id": "jtcxE69GiFV_c90412ad99334d3aa7a1ec74d8e543a1",
+        "coordinate_rmse_screenshot_px": 156.05608395149844,
+        "screenshot_pixels_per_h": 57.271032488564636,
+        "translation_px": [
+          287.698685121285,
+          316.7061648312813
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "uNb9QFRL6hY-47",
+        "image_id": "uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5",
+        "coordinate_rmse_screenshot_px": 156.4974652782859,
+        "screenshot_pixels_per_h": -93.31037304274223,
+        "translation_px": [
+          289.37758891884914,
+          268.72287870592237
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "jh4fc5c5qoQ-12",
+        "image_id": "jh4fc5c5qoQ_a59a3a61089343a8ba2834e7d3cd1066",
+        "coordinate_rmse_screenshot_px": 157.49309860489316,
+        "screenshot_pixels_per_h": 130.4592063947868,
+        "translation_px": [
+          348.31253862634185,
+          308.28125470840723
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "x8F5xyUWy9e-03",
+        "image_id": "x8F5xyUWy9e_3a127fd2c5f34d978cba253145dae7d6",
+        "coordinate_rmse_screenshot_px": 160.1470635588656,
+        "screenshot_pixels_per_h": -62.17991432730812,
+        "translation_px": [
+          316.09616268159556,
+          331.9092363881441
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "wc2JMjhGNzB-29",
+        "image_id": "wc2JMjhGNzB_52ed6a0219e84a0bb6db8037ae700366",
+        "coordinate_rmse_screenshot_px": 160.43396869187498,
+        "screenshot_pixels_per_h": 39.83018608389755,
+        "translation_px": [
+          250.09008033904448,
+          230.3489115650334
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "uNb9QFRL6hY-51",
+        "image_id": "uNb9QFRL6hY_a372582c11864f31a9dd174e4a0ae6ad",
+        "coordinate_rmse_screenshot_px": 162.47488819008498,
+        "screenshot_pixels_per_h": -22.321088331891172,
+        "translation_px": [
+          287.3601489905853,
+          292.47373241695016
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "yqstnuAEVhm-15",
+        "image_id": "yqstnuAEVhm_66ecc07f3cda4d8ebaf84288325669f5",
+        "coordinate_rmse_screenshot_px": 164.9725822102719,
+        "screenshot_pixels_per_h": 33.79312615888004,
+        "translation_px": [
+          352.31982746313975,
+          254.77806893966437
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "uNb9QFRL6hY-83",
+        "image_id": "uNb9QFRL6hY_f7944295a76541b186e6a557ebdbba14",
+        "coordinate_rmse_screenshot_px": 165.37387619806722,
+        "screenshot_pixels_per_h": 33.31994155623643,
+        "translation_px": [
+          287.4658700104149,
+          273.2308523065277
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "pa4otMbVnkk-10",
+        "image_id": "pa4otMbVnkk_48321c1bb20244f1b43b2c41b4dc9657",
+        "coordinate_rmse_screenshot_px": 167.17145608284025,
+        "screenshot_pixels_per_h": 11.384771900399572,
+        "translation_px": [
+          279.74157566262534,
+          254.2825956251828
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "uNb9QFRL6hY-50",
+        "image_id": "uNb9QFRL6hY_9f199750b00c4f5484a546d79e06a0f8",
+        "coordinate_rmse_screenshot_px": 167.43529389831852,
+        "screenshot_pixels_per_h": 19.434384825259947,
+        "translation_px": [
+          290.4277412911532,
+          279.24784738292226
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "B6ByNegPMKs-42",
+        "image_id": "B6ByNegPMKs_d19d2ae4bddf4445a3c623edc0346937",
+        "coordinate_rmse_screenshot_px": 167.46575045780187,
+        "screenshot_pixels_per_h": 8.182581087152762,
+        "translation_px": [
+          306.0487898347895,
+          264.3551360707841
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "7y3sRwLe3Va-26",
+        "image_id": "7y3sRwLe3Va_fdab6422162e49db822a37178ab70481",
+        "coordinate_rmse_screenshot_px": 168.03630247676668,
+        "screenshot_pixels_per_h": 21.43550554021046,
+        "translation_px": [
+          302.2685180508315,
+          268.4891306308939
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "e9zR4mvMWw7-17",
+        "image_id": "e9zR4mvMWw7_4273c4dd97974531b5256f96204fee47",
+        "coordinate_rmse_screenshot_px": 168.0471661489701,
+        "screenshot_pixels_per_h": -11.338909313410538,
+        "translation_px": [
+          277.1532697795726,
+          291.6768000081062
+        ],
+        "is_in_imported_confirmed_five": true
+      },
+      {
+        "image_code": "UwV83HsGsw3-09",
+        "image_id": "UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+        "coordinate_rmse_screenshot_px": 168.4313700225295,
+        "screenshot_pixels_per_h": -19.79316774187201,
+        "translation_px": [
+          318.2961565118412,
+          283.5988028340149
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "jtcxE69GiFV-18",
+        "image_id": "jtcxE69GiFV_67790605390f4d439c3c59395967ec84",
+        "coordinate_rmse_screenshot_px": 168.83849510019138,
+        "screenshot_pixels_per_h": -6.638279677774141,
+        "translation_px": [
+          302.68579536275666,
+          278.7620616782562
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "uNb9QFRL6hY-54",
+        "image_id": "uNb9QFRL6hY_a7ab19b1a9f044f0905592de1414e8b3",
+        "coordinate_rmse_screenshot_px": 169.20154059017398,
+        "screenshot_pixels_per_h": 6.349957323990091,
+        "translation_px": [
+          304.5504543562107,
+          276.036449891521
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "q9vSo1VnCiC-29",
+        "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+        "coordinate_rmse_screenshot_px": 169.28087657748964,
+        "screenshot_pixels_per_h": -1.5219287007066336,
+        "translation_px": [
+          304.5576031867162,
+          274.623065382046
+        ],
+        "is_in_imported_confirmed_five": true
+      }
+    ],
+    "matching_method": "Isotropic scale+translation fit to eight manually read labelled GT vertices; no draft coordinates reconstructed",
+    "top_matches": [
+      {
+        "image_code": "q9vSo1VnCiC-12",
+        "image_id": "q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5",
+        "coordinate_rmse_screenshot_px": 0.23648257736467815,
+        "screenshot_pixels_per_h": 110.95664640794496,
+        "translation_px": [
+          152.8035301114486,
+          198.45535663203276
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "pa4otMbVnkk-11",
+        "image_id": "pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e",
+        "coordinate_rmse_screenshot_px": 77.7486711573251,
+        "screenshot_pixels_per_h": 103.64945045934891,
+        "translation_px": [
+          325.44558926978715,
+          273.52461704174505
+        ],
+        "is_in_imported_confirmed_five": false
+      },
+      {
+        "image_code": "uNb9QFRL6hY-52",
+        "image_id": "uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2",
+        "coordinate_rmse_screenshot_px": 85.42590163546288,
+        "screenshot_pixels_per_h": 134.56955028802338,
+        "translation_px": [
+          353.5777394518407,
+          292.5091274144352
+        ],
+        "is_in_imported_confirmed_five": false
+      }
+    ],
+    "conclusion_zh": "截图GT对应q9vSo1VnCiC-12；不是旧5份确认之一。截图本身不能给出用户当前草稿的精确坐标，也不能证明已确认。"
+  },
+  "summary": {
+    "clearer_small_offset_candidates": [
+      {
+        "image_code": "pRbA3pwrgk9-02",
+        "manual_edge_1based": [
+          3,
+          4
+        ],
+        "gt_edge_1based": [
+          6,
+          7
+        ],
+        "status": "requires_user_review_not_a_proven_error"
+      }
+    ],
+    "ambiguous_scope_cut_candidates": [
+      {
+        "image_code": "pRbA3pwrgk9-02",
+        "manual_edge_1based": [
+          2,
+          3
+        ],
+        "gt_edge_1based": [
+          3,
+          4
+        ],
+        "reason": "near supporting line only; no finite segment overlap"
+      }
+    ],
+    "confirmed_geometry_modified": false
+  }
+}

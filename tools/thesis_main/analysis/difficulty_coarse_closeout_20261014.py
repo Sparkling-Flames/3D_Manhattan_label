@@ -8,9 +8,9 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[3]
-OUT = ROOT / 'research/difficulty_coarse_closeout_20261014'
+OUT = ROOT / 'research/difficulty/difficulty_coarse_closeout_20261014'
 SOURCE = ROOT / 'analysis_results/difficulty_scope_preferred_20261011/current_259.json'
-QUALITY = ROOT / 'research/quality_pro_handoff_20261014/quality_pro_handoff_20261014_READY.zip'
+QUALITY = ROOT / 'research/quality/quality_pro_handoff_20261014/quality_pro_handoff_20261014_READY.zip'
 
 
 def same_floor(a, b):

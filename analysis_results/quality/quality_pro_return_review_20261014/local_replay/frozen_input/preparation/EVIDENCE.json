@@ -1,0 +1,1221 @@
+{
+  "schema": "quality_overall_preparation_evidence_v1",
+  "question_groups": [
+    {
+      "group": "P01",
+      "source": "research/quality_review_constraints_20261012/evidence.json",
+      "original_and_interpretation": {
+        "raw": {
+          "choice": "B01更好",
+          "input_choice": null,
+          "confidence": null,
+          "comment": "如果单单从3d 角度来看,显然b01更好,但是b01有个不容忽视的问题,它标注的空间较小. B02 的问题主要是在 它的一个bottom y 标的太低了,导致整体3d效果不好,但是如果调整这个点后,他标注的范围显然更合理",
+          "updated_at": "2026-10-12T03:40:09.608Z",
+          "scope": "processed",
+          "status": "answered",
+          "input_status": "not_reviewed"
+        },
+        "current": {
+          "choice": "B01更好",
+          "scope": "overall_current_unmodified_annotations",
+          "status": "clarified",
+          "clarification_message": "Sentinel_e31d770b7ca08191a8fdce7c8d82bc7b",
+          "clarification_verbatim": "b01的标注空间是偏小,但是我个人来说,我认为 标注的3d  不歪斜反而比标注范围的 更加重要.标的小,但是基本符合曼哈顿世界约束,那我也可以认为这是不同空间的标注嘛(虽然这种空间范围不太好,没有标完整个空间).我仍然认为b01整体更好. 其他需要我复核的你给出我具体数值和可旋转的3d展示给我观察",
+          "reference_addition_approved": false,
+          "note": "明确整体偏好，范围偏小仍是缺点；不能推广为任意小矩形均优于范围合理标注，也不新增参考。"
+        }
+      },
+      "use": "conditional_question_group_evidence_respect_each_binding",
+      "numeric_target": null,
+      "independent_validation": false,
+      "bindings": [
+        {
+          "record_id": "R02015",
+          "role": "manual_development_candidate",
+          "condition": "manual",
+          "reference_object_id": "gt:B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086:data/mp3d_layout/test/label_cor/B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086.txt",
+          "context_barriers": [],
+          "original_holdout": false
+        },
+        {
+          "record_id": "R00637",
+          "role": "manual_development_candidate",
+          "condition": "manual",
+          "reference_object_id": "gt:B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086:data/mp3d_layout/test/label_cor/B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086.txt",
+          "context_barriers": [],
+          "original_holdout": false
+        }
+      ]
+    },
+    {
+      "group": "C01",
+      "source": "research/quality_review_constraints_20261012/evidence.json",
+      "original_and_interpretation": {
+        "raw": {
+          "choice": "不确定",
+          "input_choice": null,
+          "confidence": null,
+          "comment": "不是很好判断,除非给我具体的数值. 都是有点小偏移",
+          "updated_at": "2026-10-12T06:43:18.487Z",
+          "scope": "processed",
+          "status": "answered",
+          "input_status": "not_reviewed"
+        },
+        "current": {
+          "choice": "不确定",
+          "numeric_assistance_requested": true,
+          "not_forced_order": true,
+          "overall_difference_expected": "不应相差太多 定性软判断",
+          "strict_preference": null,
+          "exact_tie": false,
+          "numeric_margin": null,
+          "needs_clearer_geometry": false,
+          "status": "user_followup_received_do_not_force_ranking"
+        }
+      },
+      "use": "conditional_question_group_evidence_respect_each_binding",
+      "numeric_target": null,
+      "independent_validation": false,
+      "bindings": [
+        {
+          "record_id": "R01810",
+          "role": "held_or_diagnostic",
+          "condition": "semi",
+          "reference_object_id": "gt:wc2JMjhGNzB_3504ff17bcae4d6c85bdc61fc3a5bf0c:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_3504ff17bcae4d6c85bdc61fc3a5bf0c.txt",
+          "context_barriers": [],
+          "original_holdout": false
+        },
+        {
+          "record_id": "R01385",
+          "role": "held_or_diagnostic",
+          "condition": "semi",
+          "reference_object_id": "gt:wc2JMjhGNzB_3504ff17bcae4d6c85bdc61fc3a5bf0c:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_3504ff17bcae4d6c85bdc61fc3a5bf0c.txt",
+          "context_barriers": [],
+          "original_holdout": false
+        }
+      ]
+    },
+    {
+      "group": "C02",
+      "source": "research/quality_review_constraints_20261012/evidence.json",
+      "original_and_interpretation": {
+        "raw": {
+          "choice": "不确定",
+          "input_choice": null,
+          "confidence": null,
+          "comment": "这个可能得结合3d的数据进行再次判断(看不太清),因为目前看来b的3d表现 好像还挺规整.两者都是偏离了gt的标注的.A detail 1,2 都有偏离,B 是detail 1 偏的很少,detail2 偏的很大(比A偏的还多)",
+          "updated_at": "2026-10-12T03:47:48.190Z",
+          "scope": "processed",
+          "status": "answered",
+          "input_status": "not_reviewed"
+        },
+        "current": {
+          "choice": "不确定",
+          "reason": "visual_resolution_and_structure_scope_tradeoff",
+          "needs_clearer_geometry": false,
+          "overall_difference_expected": "不应相差太多 定性软判断",
+          "strict_preference": null,
+          "exact_tie": false,
+          "numeric_margin": null,
+          "status": "user_followup_received_do_not_force_ranking"
+        }
+      },
+      "use": "conditional_question_group_evidence_respect_each_binding",
+      "numeric_target": null,
+      "independent_validation": false,
+      "bindings": [
+        {
+          "record_id": "R03351",
+          "role": "manual_development_candidate",
+          "condition": "manual",
+          "reference_object_id": "gt:Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45:data/mp3d_layout/test/label_cor/Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45.txt",
+          "context_barriers": [],
+          "original_holdout": false
+        },
+        {
+          "record_id": "R03350",
+          "role": "manual_development_candidate",
+          "condition": "manual",
+          "reference_object_id": "gt:Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45:data/mp3d_layout/test/label_cor/Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45.txt",
+          "context_barriers": [],
+          "original_holdout": false
+        }
+      ]
+    },
+    {
+      "group": "C03",
+      "source": "research/quality_review_constraints_20261012/evidence.json",
+      "original_and_interpretation": {
+        "raw": {
+          "choice": "A更好",
+          "input_choice": null,
+          "confidence": null,
+          "comment": "两者都很不错,不过a 更接近gt",
+          "updated_at": "2026-10-12T06:37:12.285Z",
+          "scope": "processed",
+          "status": "answered",
+          "input_status": "not_reviewed"
+        },
+        "current": {
+          "choice": "A更好",
+          "both_described_as_good": true,
+          "large_score_margin_not_implied": true
+        }
+      },
+      "use": "conditional_question_group_evidence_respect_each_binding",
+      "numeric_target": null,
+      "independent_validation": false,
+      "bindings": [
+        {
+          "record_id": "R01033",
+          "role": "held_or_diagnostic",
+          "condition": "semi",
+          "reference_object_id": "gt:wc2JMjhGNzB_77962388887942148ee65c2892600e02:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_77962388887942148ee65c2892600e02.txt",
+          "context_barriers": [],
+          "original_holdout": false
+        },
+        {
+          "record_id": "R01022",
+          "role": "held_or_diagnostic",
+          "condition": "semi",
+          "reference_object_id": "gt:wc2JMjhGNzB_77962388887942148ee65c2892600e02:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_77962388887942148ee65c2892600e02.txt",
+          "context_barriers": [],
+          "original_holdout": false
+        }
+      ]
+    },
+    {
+      "group": "C04",
+      "source": "research/quality_review_constraints_20261012/evidence.json",
+      "original_and_interpretation": {
+        "raw": {
+          "choice": "两者接近",
+          "input_choice": null,
+          "confidence": null,
+          "comment": "基本差不多,我没有看出明显的差别",
+          "updated_at": "2026-10-12T06:39:32.346Z",
+          "scope": "processed",
+          "status": "answered",
+          "input_status": "not_reviewed"
+        },
+        "current": {
+          "choice": "两者接近",
+          "tie_tolerance_not_estimated": true
+        }
+      },
+      "use": "conditional_question_group_evidence_respect_each_binding",
+      "numeric_target": null,
+      "independent_validation": false,
+      "bindings": [
+        {
+          "record_id": "R02447",
+          "role": "held_or_diagnostic",
+          "condition": "semi",
+          "reference_object_id": "gt:wc2JMjhGNzB_3504ff17bcae4d6c85bdc61fc3a5bf0c:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_3504ff17bcae4d6c85bdc61fc3a5bf0c.txt",
+          "context_barriers": [],
+          "original_holdout": false
+        },
+        {
+          "record_id": "R01973",
+          "role": "held_or_diagnostic",
+          "condition": "semi",
+          "reference_object_id": "gt:wc2JMjhGNzB_3504ff17bcae4d6c85bdc61fc3a5bf0c:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_3504ff17bcae4d6c85bdc61fc3a5bf0c.txt",
+          "context_barriers": [],
+          "original_holdout": false
+        }
+      ]
+    },
+    {
+      "group": "P04",
+      "source": "research/quality_review_constraints_20261012/evidence.json",
+      "original_and_interpretation": {
+        "raw": {
+          "choice": "B06应罚更重",
+          "input_choice": null,
+          "confidence": null,
+          "comment": "如果我没看错的话,b05是整体更低,顶面高度也相对更平均.06 是有两个 角点标的特别矮,导致整体高度不一",
+          "updated_at": "2026-10-12T06:42:00.005Z",
+          "scope": "top_penalty",
+          "status": "answered",
+          "input_status": "not_reviewed"
+        },
+        "current": {
+          "choice": "B06应罚更重",
+          "scope": "top_penalty_only",
+          "not_overall_quality_ranking": true
+        }
+      },
+      "use": "conditional_question_group_evidence_respect_each_binding",
+      "numeric_target": null,
+      "independent_validation": false,
+      "bindings": [
+        {
+          "record_id": "R00397",
+          "role": "held_or_diagnostic",
+          "condition": "semi",
+          "reference_object_id": "gt:B6ByNegPMKs_48ee619d38b142f88914e7e2582bc1d8:export_label/groudTruth.json",
+          "context_barriers": [],
+          "original_holdout": false
+        },
+        {
+          "record_id": "R00418",
+          "role": "held_or_diagnostic",
+          "condition": "manual",
+          "reference_object_id": "gt:pRbA3pwrgk9_285b697fed754f86a09602c93628cfb4:data/mp3d_layout/valid/label_cor/pRbA3pwrgk9_285b697fed754f86a09602c93628cfb4.txt",
+          "context_barriers": [
+            "no_existing_conditional_development_authority"
+          ],
+          "original_holdout": false
+        }
+      ]
+    },
+    {
+      "group": "P05",
+      "source": "research/quality_review_constraints_20261012/evidence.json",
+      "original_and_interpretation": {
+        "raw": {
+          "choice": "不确定",
+          "input_choice": null,
+          "confidence": null,
+          "comment": "这个标注比较特殊,原始标注的确实比较差,x坐标并没有一致,有些地方相差的蛮大的. 平均x 后确直接在那个拐角的中间了. 实际上他的标点是标在了第一个拐角的上面 和第二个拐角的下面.",
+          "updated_at": "2026-10-12T06:52:45.295Z",
+          "scope": "input_vs_processed",
+          "status": "answered",
+          "input_status": "not_reviewed"
+        },
+        "current": {
+          "choice": "不确定",
+          "reported_mechanism": "上点与下点分别位于不同墙角，平均x落在两者中间，可能掩盖对应错误",
+          "mechanism_source": "user_observation_not_independent_visual_confirmation",
+          "do_not_convert_to_fixed_numeric_penalty": true
+        }
+      },
+      "use": "conditional_question_group_evidence_respect_each_binding",
+      "numeric_target": null,
+      "independent_validation": false,
+      "bindings": [
+        {
+          "record_id": "R00678",
+          "role": "manual_development_candidate",
+          "condition": "manual",
+          "reference_object_id": "gt:uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97:export_label/groudTruth.json",
+          "context_barriers": [],
+          "original_holdout": false
+        }
+      ]
+    },
+    {
+      "group": "J01",
+      "source": "research/quality_joint_calibration_feedback_20261013/USER_FEEDBACK.json",
+      "original_and_interpretation": {
+        "case_id": "J01",
+        "record_ids": [
+          "R03346",
+          "R03347"
+        ],
+        "judgment": "uncertain",
+        "scope": "overall_quality",
+        "summary": "A自身3D规整性更好；A整体高度和底面面积与GT可能更远。综合仍不确定；用户认为当前二十多分偏低，2D看起来没有特别差。",
+        "not_inferred": [
+          "不新增整体A>B或B>A硬约束",
+          "不把规整性偏好转为GT接近程度偏好",
+          "不指定目标分或质量等级"
+        ],
+        "original_answer": {
+          "case_id": "J01",
+          "judgment": "uncertain",
+          "comment": "如果单看规整程度,a好,但是a和gt的IOU相差有点大.其实如果只参照gt进行比较,a 应该离得可能略远的,因为不管是整体高度,整体底面面积都离得有点远. 但是如果加上3d的表现,a在这个方面比b的好. 但是总体得分只有20多,我感觉这也没有差到这个地步,2d上看没有特别差",
+          "reviewed": true,
+          "last_changed": "2026-10-13T02:52:15.003Z",
+          "diagnostic_view_opened": true
+        },
+        "binding": [
+          {
+            "label": "A",
+            "subtitle": "R03346 | Z6MFQCViBuw-08"
+          },
+          {
+            "label": "B",
+            "subtitle": "R03347 | Z6MFQCViBuw-08"
+          }
+        ]
+      },
+      "use": "current_qualitative_feedback_no_hard_grade",
+      "numeric_target": null,
+      "independent_validation": false,
+      "bindings": [
+        {
+          "record_id": "R03346",
+          "role": "manual_development_candidate",
+          "condition": "manual",
+          "reference_object_id": "gt:Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45:data/mp3d_layout/test/label_cor/Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45.txt",
+          "context_barriers": [],
+          "original_holdout": false
+        },
+        {
+          "record_id": "R03347",
+          "role": "manual_development_candidate",
+          "condition": "manual",
+          "reference_object_id": "gt:Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45:data/mp3d_layout/test/label_cor/Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45.txt",
+          "context_barriers": [],
+          "original_holdout": false
+        }
+      ]
+    },
+    {
+      "group": "J02",
+      "source": "research/quality_joint_calibration_feedback_20261013/USER_FEEDBACK.json",
+      "original_and_interpretation": {
+        "case_id": "J02",
+        "record_ids": [
+          "R02049",
+          "R02244"
+        ],
+        "judgment": "A",
+        "scope": "overall_quality",
+        "summary": "首次回执选A并认为差距偏小；后续用户发现左上角实际有两个点，修正原评论并认为当前分数大体合理。旧A偏好与拉大分差意见不再作为当前校准约束。A已核实为合成semi trap且提交坐标未改，单列诊断。",
+        "current_calibration_use": {
+          "pairwise_order": false,
+          "increase_score_gap": false,
+          "numeric_target": null,
+          "qualitative_current_score_acceptance": true,
+          "source_cohort": "semi_trap_separate"
+        },
+        "follow_up": {
+          "date": "2026-10-13",
+          "source": "本对话用户后续补充；按消息先后保存，不改原始回执",
+          "messages": [
+            "j02我补充一下: 我刚刚复核了一下,因为我没看到左上角这个是两个点,这应该是之前模型预标注没有进行改动的.我记得当时筛选标注的时候,我也做了这些记录的. 所以我之前的评论确实有点不太准确",
+            "现在我来看的话,这个分数也算是比较合理,两个点集中在一块,虽然其他的地方标的不错"
+          ],
+          "verified_object_id": "d0df2148541db2cf",
+          "verified_record_id": "R02049",
+          "historical_comment": "这可能是我当时的semi trap,他没有修正",
+          "historical_review": "analysis_results/review_final_20260928/evidence/latest.json#/annotation_decisions/d0df2148541db2cf",
+          "later_review_status": "resolved/usable; annotation_traits=model_unchanged",
+          "verified_source": "analysis_results/research_input_20260929/research_tables.json#/annotations; trap_evidence",
+          "formal_import": "import_json/stage1_prescreen_final_20260325/stage1_prescreen_semi_import_v5.json",
+          "synthetic_candidate_id": "legacy_disjoint_source_004_over_parsing",
+          "trap_status": "confirmed_trap",
+          "model_edit_status": "unchanged_coordinates",
+          "interpretation": "当前分数大体合理不等于精确目标分，不推定改选B或认可全部备选；撤回用J02指控局部备选违背当前明确人评的论据。坐标未改不证明没有检查；历史usable不等于准入新的主校准池。"
+        },
+        "not_inferred": [
+          "没有精确目标分差或置信值",
+          "不是只对单一方向指标的纯控制标签",
+          "不据此认证场景/参考资格或人员等级"
+        ],
+        "original_answer": {
+          "case_id": "J02",
+          "judgment": "A",
+          "comment": "高度更平整且接近 gt,墙之间的夹角也更好.   不过我不认为只差3分这样,可能可以更大一点.",
+          "reviewed": true,
+          "last_changed": "2026-10-13T02:53:08.866Z",
+          "diagnostic_view_opened": true
+        },
+        "binding": [
+          {
+            "label": "A",
+            "subtitle": "R02049 | q9vSo1VnCiC-15"
+          },
+          {
+            "label": "B",
+            "subtitle": "R02244 | q9vSo1VnCiC-15"
+          }
+        ]
+      },
+      "use": "withdrawn_old_preference_diagnostic_only",
+      "numeric_target": null,
+      "independent_validation": false,
+      "bindings": [
+        {
+          "record_id": "R02049",
+          "role": "held_or_diagnostic",
+          "condition": "semi",
+          "reference_object_id": "gt:q9vSo1VnCiC_a412536ff52747d3b078f66e764cf103:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_a412536ff52747d3b078f66e764cf103.txt",
+          "context_barriers": [],
+          "original_holdout": false
+        },
+        {
+          "record_id": "R02244",
+          "role": "held_or_diagnostic",
+          "condition": "semi",
+          "reference_object_id": "gt:q9vSo1VnCiC_a412536ff52747d3b078f66e764cf103:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_a412536ff52747d3b078f66e764cf103.txt",
+          "context_barriers": [],
+          "original_holdout": false
+        }
+      ]
+    },
+    {
+      "group": "J03",
+      "source": "research/quality_joint_calibration_feedback_20261013/USER_FEEDBACK.json",
+      "original_and_interpretation": {
+        "case_id": "J03",
+        "record_ids": [
+          "R03197"
+        ],
+        "judgment": "uncertain",
+        "scope": "reference_assignment",
+        "summary": "可能想标大空间A，但实际又画了大空间里的较小区域；最终仍选不确定。",
+        "not_inferred": [
+          "不将可能A改写为明确指定A",
+          "不升级为合法小空间或质量合格",
+          "不新增GT候选"
+        ],
+        "original_answer": {
+          "case_id": "J03",
+          "judgment": "uncertain",
+          "comment": "可能想标大空间(参考A),但是又标了大空间里较小的区域",
+          "reviewed": true,
+          "last_changed": "2026-10-13T03:01:01.363Z",
+          "diagnostic_view_opened": true
+        },
+        "binding": [
+          {
+            "label": "参考 A",
+            "subtitle": "R03197 | uNb9QFRL6hY-67 | 同一作答"
+          },
+          {
+            "label": "参考 B",
+            "subtitle": "R03197 | uNb9QFRL6hY-67 | 同一作答"
+          }
+        ]
+      },
+      "use": "current_qualitative_feedback_no_hard_grade",
+      "numeric_target": null,
+      "independent_validation": false,
+      "bindings": [
+        {
+          "record_id": "R03197",
+          "role": "manual_development_candidate",
+          "condition": "manual",
+          "reference_object_id": null,
+          "context_barriers": [],
+          "original_holdout": false
+        }
+      ]
+    },
+    {
+      "group": "J04",
+      "source": "research/quality_joint_calibration_feedback_20261013/USER_FEEDBACK.json",
+      "original_and_interpretation": {
+        "case_id": "J04",
+        "record_ids": [
+          "R03274"
+        ],
+        "old_case_id": "T13",
+        "judgment": "borderline",
+        "scope": "overall_severity_not_pairwise",
+        "summary": "介于明显问题与严重错误之间。用户观察一个bottom y偏离较大导致3D质量很低，但不应只有个位数分；聊天补充应重罚但不能几乎扣光。",
+        "not_inferred": [
+          "右侧是参考不是第二份作答，不作A/B胜负",
+          "因果描述属于用户观察，本次未另行做几何干预证明",
+          "不是自动设定Q下限为10或改变人工原历史记录"
+        ],
+        "original_answer": {
+          "case_id": "J04",
+          "judgment": "borderline",
+          "comment": "只有一个点偏离比较大,而且是bottom y,导致说整体3d质量很低,但是也不至于只有个位数的分数",
+          "reviewed": true,
+          "last_changed": "2026-10-13T03:02:52.721Z",
+          "diagnostic_view_opened": true
+        },
+        "binding": [
+          {
+            "label": "作答",
+            "subtitle": "R03274 | yqstnuAEVhm-05"
+          },
+          {
+            "label": "参考单独展示",
+            "subtitle": "仅供核对，不是第二份作答"
+          }
+        ]
+      },
+      "use": "current_qualitative_feedback_no_hard_grade",
+      "numeric_target": null,
+      "independent_validation": false,
+      "bindings": [
+        {
+          "record_id": "R03274",
+          "role": "manual_development_candidate",
+          "condition": "manual",
+          "reference_object_id": "gt:yqstnuAEVhm_2b3fb4746d414cc6a31729b222ed79b2:data/mp3d_layout/test/label_cor/yqstnuAEVhm_2b3fb4746d414cc6a31729b222ed79b2.txt",
+          "context_barriers": [],
+          "original_holdout": false
+        }
+      ]
+    },
+    {
+      "group": "T20",
+      "source": "research/quality_joint_calibration_feedback_20261013/raw/CHAT_FEEDBACK.txt",
+      "original_and_interpretation": {
+        "verbatim": "t20 的实际高度扣分 **3.5256**  ,我觉得可以稍微扣多一点, 因为高度不同确实 是一点小错误,可能是他识别错了天花板这种,但是就像我之前强调的那样,如果整体高度比较统一,是勉强可以接受的.   之后我觉得 就是最后一个例子,如果标注者只标歪了一个点,但是导致3d特别歪斜,这应该扣很多分,但是不能几乎把所有分扣完了,我觉得这个东西是否也该考虑一下2d 的标注点位和gt的差距?(但是我不清楚点数不同怎么处理)\n\n你不用着急给出答案,你把我的思考和想法记录,上传云端github main.",
+        "interpretation": {
+          "id": "T20_height_penalty",
+          "record_ids": [
+            "R00397"
+          ],
+          "current_penalty_discussed": 3.5256,
+          "unit": "quality_score_points",
+          "direction": "slightly_increase_global_height_penalty",
+          "interpretation": "整体高度偏差是一点小错误，应稍多扣分；整体高度较统一时仍勉强可接受。识别错天花板只是一种可能解释。",
+          "exact_target": null,
+          "not_inferred": [
+            "不恢复旧v1.1顶部投影重罚",
+            "不把勉强可接受当新增旧30题绝对质量标签",
+            "不把3.5256当惩罚参数或等级阈值"
+          ]
+        }
+      },
+      "use": "slightly_increase_height_penalty_direction_separate_historical_source",
+      "numeric_target": null,
+      "independent_validation": false,
+      "bindings": [
+        {
+          "record_id": "R00397",
+          "role": "held_or_diagnostic",
+          "condition": "semi",
+          "reference_object_id": "gt:B6ByNegPMKs_48ee619d38b142f88914e7e2582bc1d8:export_label/groudTruth.json",
+          "context_barriers": [],
+          "original_holdout": false
+        }
+      ]
+    },
+    {
+      "group": "L01",
+      "source": "research/quality_top_height_response_20261012/local_impact_feedback.json",
+      "original_and_interpretation": {
+        "schema": "quality_local_impact_feedback_v1",
+        "date": "2026-10-12",
+        "panel": "L01",
+        "A": "R01609",
+        "B": "R02297",
+        "image_id": "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45",
+        "reference_object_id": "gt:e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45:export_label/groudTruth.json",
+        "source": "本对话用户直接答复及紧接的澄清",
+        "messages": [
+          {
+            "order": 1,
+            "verbatim": "2d上面来看,a相对于b  顶部差异明显一点,3d差异没有这么大. 整体质量接近,硬说的话 是B 略好"
+          },
+          {
+            "order": 2,
+            "verbatim": "b是在3d上略好,但是看2d图,a的标注离gt更相近一些"
+          }
+        ],
+        "interpretation": {
+          "overall_quality": "close",
+          "geometry_3d_weak_preference": "B",
+          "image_2d_gt_closeness_preference": "A",
+          "top_only_2d_strict_preference": null,
+          "exact_tie": false,
+          "numeric_margin": null,
+          "confidence": null,
+          "raw_input_semantics_reviewed": false,
+          "precedence": "第二条澄清B略好指三维，二维图A离GT更近；第一条顶部差异观察保留，不将其改写为A顶部更差，也不将最新二维整图意见强制赋给顶部St。"
+        },
+        "candidate_B_minus_A": {
+          "relative2": 3.7751509108817203,
+          "relative4": 4.210834324878405,
+          "relative2_mean1": 4.105334876757809,
+          "probe_local0125_noTop": 8.697065698101738
+        },
+        "candidate_score_gaps_human_endorsed": false,
+        "decision": "整体接近且三维仅B略好，对局部统一加强探针把差距扩大提供负向约束；不能由单题定量否定8.697分或认证基线3.775分，也不能决定整体高度曲线。",
+        "scope": "已曝光开发图和候选分歧取例，不是独立验证；原生成待答快照保留，人工回执单独保存。"
+      },
+      "use": "separate_semi_qualitative_tradeoff_no_numeric_gap",
+      "numeric_target": null,
+      "independent_validation": false,
+      "bindings": [
+        {
+          "record_id": "R01609",
+          "role": "held_or_diagnostic",
+          "condition": "semi",
+          "reference_object_id": "gt:e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45:export_label/groudTruth.json",
+          "context_barriers": [],
+          "original_holdout": false
+        },
+        {
+          "record_id": "R02297",
+          "role": "held_or_diagnostic",
+          "condition": "semi",
+          "reference_object_id": "gt:e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45:export_label/groudTruth.json",
+          "context_barriers": [],
+          "original_holdout": false
+        }
+      ]
+    }
+  ],
+  "existing_weak_grades": [
+    {
+      "id": "R01407",
+      "case_id": "T04",
+      "grade": 1,
+      "building_id": "rPc6DW4iMge",
+      "image_id": "rPc6DW4iMge_cc15fb105d86466faafdd633f89148de",
+      "room_group": "rPc6DW4iMge:whole_building_missing_room",
+      "known_confidence": null,
+      "protocol": "old24_subjective_development",
+      "answer_original": {
+        "case_id": "T04",
+        "case_type": "quality",
+        "absolute_quality": "有轻微问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "很小",
+        "reason": "2d上差距不大",
+        "confidence": "",
+        "notes": ""
+      },
+      "scope_confounded_latest": false,
+      "uncertainty_applies_even_without_comment": true
+    },
+    {
+      "id": "R03106",
+      "case_id": "T05",
+      "grade": 2,
+      "building_id": "uNb9QFRL6hY",
+      "image_id": "uNb9QFRL6hY_748279b5d6e740c4b2cba9fc78d6fc62",
+      "room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "known_confidence": null,
+      "protocol": "old24_subjective_development",
+      "answer_original": {
+        "case_id": "T05",
+        "case_type": "quality",
+        "absolute_quality": "明显问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "很小",
+        "reason": "我记得这张图挺多人都忽略了最左边还有个转角,导致3d空间遗失,效果不好.2d的标注看的话,已经标注的点倒是还行的",
+        "confidence": "",
+        "notes": ""
+      },
+      "scope_confounded_latest": false,
+      "uncertainty_applies_even_without_comment": true
+    },
+    {
+      "id": "R00678",
+      "case_id": "T07",
+      "grade": 2,
+      "building_id": "uNb9QFRL6hY",
+      "image_id": "uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97",
+      "room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "known_confidence": null,
+      "protocol": "old24_subjective_development",
+      "answer_original": {
+        "case_id": "T07",
+        "case_type": "quality",
+        "absolute_quality": "明显问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "中等",
+        "reason": "拐角处是墙面细节问题,他注意到了,但是只标了一对点. 还有壁炉那里多标了,以及墙角标的不准确.这问题挺多, 和参考的差距应该 比正常中等多,但是又没到特别大的地步",
+        "confidence": "",
+        "notes": ""
+      },
+      "scope_confounded_latest": false,
+      "uncertainty_applies_even_without_comment": true
+    },
+    {
+      "id": "R00637",
+      "case_id": "T09",
+      "grade": 2,
+      "building_id": "B6ByNegPMKs",
+      "image_id": "B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086",
+      "room_group": "B6ByNegPMKs:whole_building_missing_room",
+      "known_confidence": null,
+      "protocol": "old24_subjective_development",
+      "answer_original": {
+        "case_id": "T09",
+        "case_type": "quality",
+        "absolute_quality": "明显问题",
+        "space_compatibility": "",
+        "reference_question": "",
+        "difference_to_reference": "中等",
+        "reason": "有对点标歪了,导致3d很畸形",
+        "confidence": "",
+        "notes": ""
+      },
+      "scope_confounded_latest": false,
+      "uncertainty_applies_even_without_comment": true
+    },
+    {
+      "id": "R03347",
+      "case_id": "T10",
+      "grade": 2,
+      "building_id": "Z6MFQCViBuw",
+      "image_id": "Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45",
+      "room_group": "Z6MFQCViBuw:whole_building_missing_room",
+      "known_confidence": null,
+      "protocol": "old24_subjective_development",
+      "answer_original": {
+        "case_id": "T10",
+        "case_type": "quality",
+        "absolute_quality": "明显问题",
+        "space_compatibility": "",
+        "reference_question": "",
+        "difference_to_reference": "中等",
+        "reason": "墙角标的有点差,3d表现有问题",
+        "confidence": "",
+        "notes": ""
+      },
+      "scope_confounded_latest": false,
+      "uncertainty_applies_even_without_comment": true
+    },
+    {
+      "id": "R00825",
+      "case_id": "T11",
+      "grade": 2,
+      "building_id": "yqstnuAEVhm",
+      "image_id": "yqstnuAEVhm_b26ae45c6c12443cbcfc3997f2e63347",
+      "room_group": "yqstnuAEVhm:room:G253",
+      "known_confidence": null,
+      "protocol": "old24_subjective_development",
+      "answer_original": {
+        "case_id": "T11",
+        "case_type": "quality",
+        "absolute_quality": "明显问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "中等",
+        "reason": "少标了很多墙角",
+        "confidence": "",
+        "notes": ""
+      },
+      "scope_confounded_latest": false,
+      "uncertainty_applies_even_without_comment": true
+    },
+    {
+      "id": "R01501",
+      "case_id": "T12",
+      "grade": 2,
+      "building_id": "B6ByNegPMKs",
+      "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+      "room_group": "B6ByNegPMKs:whole_building_missing_room",
+      "known_confidence": null,
+      "protocol": "old24_subjective_development",
+      "answer_original": {
+        "case_id": "T12",
+        "case_type": "quality",
+        "absolute_quality": "明显问题",
+        "space_compatibility": "",
+        "reference_question": "",
+        "difference_to_reference": "中等",
+        "reason": "但是这图很难,能稍微标注细节 已经超越很多人了,但是细节确实错误和缺漏有点多",
+        "confidence": "",
+        "notes": ""
+      },
+      "scope_confounded_latest": false,
+      "uncertainty_applies_even_without_comment": true
+    },
+    {
+      "id": "R01727",
+      "case_id": "T14",
+      "grade": 1,
+      "building_id": "q9vSo1VnCiC",
+      "image_id": "q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e",
+      "room_group": "q9vSo1VnCiC:whole_building_missing_room",
+      "known_confidence": null,
+      "protocol": "old24_subjective_development",
+      "answer_original": {
+        "case_id": "T14",
+        "case_type": "quality",
+        "absolute_quality": "有轻微问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "很小",
+        "reason": "",
+        "confidence": "",
+        "notes": ""
+      },
+      "scope_confounded_latest": false,
+      "uncertainty_applies_even_without_comment": true
+    },
+    {
+      "id": "R02102",
+      "case_id": "T15",
+      "grade": 2,
+      "building_id": "uNb9QFRL6hY",
+      "image_id": "uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97",
+      "room_group": "uNb9QFRL6hY:whole_building_missing_room",
+      "known_confidence": null,
+      "protocol": "old24_subjective_development",
+      "answer_original": {
+        "case_id": "T15",
+        "case_type": "quality",
+        "absolute_quality": "明显问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "中等",
+        "reason": "一个是标的高度不同,一个是墙面转折处只标了一对点",
+        "confidence": "",
+        "notes": ""
+      },
+      "scope_confounded_latest": false,
+      "uncertainty_applies_even_without_comment": true
+    },
+    {
+      "id": "R00687",
+      "case_id": "T18",
+      "grade": 1,
+      "building_id": "jtcxE69GiFV",
+      "image_id": "jtcxE69GiFV_3fb4bb890d7f4964b496a46db647e72a",
+      "room_group": "jtcxE69GiFV:whole_building_missing_room",
+      "known_confidence": null,
+      "protocol": "old24_subjective_development",
+      "answer_original": {
+        "case_id": "T18",
+        "case_type": "quality",
+        "absolute_quality": "有轻微问题",
+        "space_compatibility": "",
+        "reference_question": "参考/目标可判断",
+        "difference_to_reference": "中等",
+        "reason": "2对点标的不是特别好",
+        "confidence": "",
+        "notes": ""
+      },
+      "scope_confounded_latest": false,
+      "uncertainty_applies_even_without_comment": true
+    },
+    {
+      "id": "R00421",
+      "case_id": "T19",
+      "grade": 2,
+      "building_id": "jh4fc5c5qoQ",
+      "image_id": "jh4fc5c5qoQ_30cdb6fe9aa6449788e271f2e24d76ec",
+      "room_group": "jh4fc5c5qoQ:whole_building_missing_room",
+      "known_confidence": null,
+      "protocol": "old24_subjective_development",
+      "answer_original": {
+        "case_id": "T19",
+        "case_type": "quality",
+        "absolute_quality": "明显问题",
+        "space_compatibility": "",
+        "reference_question": "",
+        "difference_to_reference": "中等",
+        "reason": "多标了一对点,而且角点标注有点偏差",
+        "confidence": "",
+        "notes": ""
+      },
+      "scope_confounded_latest": false,
+      "uncertainty_applies_even_without_comment": true
+    }
+  ],
+  "existing_primary_constraints": [
+    {
+      "constraint_id": "P01:processed_overall_quality",
+      "panel": "P01",
+      "dimension": "processed_overall_quality",
+      "evidence_type": "explicit_direction",
+      "preferred_display": "B01",
+      "record_ids": [
+        "R02015",
+        "R00637"
+      ],
+      "image_ids": [
+        "B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "如果单单从3d 角度来看,显然b01更好,但是b01有个不容忽视的问题,它标注的空间较小. B02 的问题主要是在 它的一个bottom y 标的太低了,导致整体3d效果不好,但是如果调整这个点后,他标注的范围显然更合理",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "P01",
+      "count_dimensions_as_independent": false,
+      "preferred_record_id": "R02015",
+      "other_record_id": "R00637",
+      "constraint_direction": "higher_quality",
+      "reference_addition_approved": false,
+      "current_unmodified_annotations": true,
+      "interpretation": "整体偏好有效；不能先修正B02底点再比较，范围偏小仍为缺点。"
+    },
+    {
+      "constraint_id": "C02:processed_overall_quality",
+      "panel": "C02",
+      "dimension": "processed_overall_quality",
+      "evidence_type": "uncertain_and_qualitatively_close",
+      "preferred_display": null,
+      "record_ids": [
+        "R03351",
+        "R03350"
+      ],
+      "image_ids": [
+        "Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "这个可能得结合3d的数据进行再次判断(看不太清),因为目前看来b的3d表现 好像还挺规整.两者都是偏离了gt的标注的.A detail 1,2 都有偏离,B 是detail 1 偏的很少,detail2 偏的很大(比A偏的还多)",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "C02",
+      "count_dimensions_as_independent": false,
+      "strict_preference": null,
+      "interpretation": "不确定与定性接近并存；不是固定容差内平局，不能按符号计算胜负。"
+    },
+    {
+      "constraint_id": "C02:self_geometry_without_reference",
+      "panel": "C02",
+      "dimension": "self_geometry_without_reference",
+      "evidence_type": "conditional_component_direction",
+      "preferred_display": "B",
+      "record_ids": [
+        "R03351",
+        "R03350"
+      ],
+      "image_ids": [
+        "Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "这个可能得结合3d的数据进行再次判断(看不太清),因为目前看来b的3d表现 好像还挺规整.两者都是偏离了gt的标注的.A detail 1,2 都有偏离,B 是detail 1 偏的很少,detail2 偏的很大(比A偏的还多)",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "C02",
+      "count_dimensions_as_independent": false,
+      "preferred_record_id": "R03350",
+      "other_record_id": "R03351",
+      "interpretation": "仅看形成三维体时倾向B；综合参考后的整体仍不确定且接近。"
+    },
+    {
+      "constraint_id": "C02:reference_closeness",
+      "panel": "C02",
+      "dimension": "reference_closeness",
+      "evidence_type": "qualitative_component_direction",
+      "preferred_display": "A",
+      "record_ids": [
+        "R03351",
+        "R03350"
+      ],
+      "image_ids": [
+        "Z6MFQCViBuw_bc4ec1f735f3446aa4b56165d9508b45"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "这个可能得结合3d的数据进行再次判断(看不太清),因为目前看来b的3d表现 好像还挺规整.两者都是偏离了gt的标注的.A detail 1,2 都有偏离,B 是detail 1 偏的很少,detail2 偏的很大(比A偏的还多)",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "C02",
+      "count_dimensions_as_independent": false,
+      "preferred_record_id": "R03351",
+      "other_record_id": "R03350"
+    },
+    {
+      "constraint_id": "P05:current_input_pair_semantics",
+      "panel": "P05",
+      "dimension": "current_input_pair_semantics",
+      "evidence_type": "specific_mechanism_observation_no_grade",
+      "preferred_display": null,
+      "record_ids": [
+        "R00678"
+      ],
+      "image_ids": [
+        "uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97"
+      ],
+      "source": "current_user_message_and_latest_layered_receipts",
+      "comment": "这个标注比较特殊,原始标注的确实比较差,x坐标并没有一致,有些地方相差的蛮大的. 平均x 后确直接在那个拐角的中间了. 实际上他的标点是标在了第一个拐角的上面 和第二个拐角的下面.",
+      "confidence": null,
+      "numeric_margin": null,
+      "exact_tie": false,
+      "independent_validation": false,
+      "source_question_group": "P05",
+      "count_dimensions_as_independent": false,
+      "grade": null,
+      "input_choice": null,
+      "input_status": "not_reviewed",
+      "reported_mechanism": "两个物理墙角的上下点被配成一对，平均x掩盖差异",
+      "independent_visual_confirmation": false,
+      "automatic_pairing_repair": false,
+      "interpretation": "未填输入选择不抹去文字中的问题线索；亦不把线索转固定等级或罚分。"
+    }
+  ],
+  "latest_height_shape_receipts": {
+    "schema": "quality_scope_review_interpretation_20261013_v1",
+    "source_file": "C:\\Users\\ASUS\\Downloads\\quality_scope_review_20261013_v2.json",
+    "archived_receipt": "USER_REVIEW_v2.json",
+    "summary": {
+      "records": 6,
+      "images": 5,
+      "complete_questionnaires": 5,
+      "comment_only": 1,
+      "unanswered_fields": 4,
+      "bindings_and_question_text_checked": true
+    },
+    "records": [
+      {
+        "record_id": "R01977",
+        "image_id": "B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993",
+        "image_code": "B6ByNegPMKs-33",
+        "object_id": "c811ff3e51132e75",
+        "reference_id": "gt:B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993:data/mp3d_layout/test/label_cor/B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993.txt",
+        "answers": {
+          "space_extent": "orange_more",
+          "top_in_photo": "reference_better",
+          "height_in_3d": "local_uneven"
+        },
+        "comment": "橙色是一侧低,另一侧更低",
+        "reviewed_at": "2026-10-13T07:42:15.982Z",
+        "complete": true,
+        "interpretation_code": "mixed_global_lower_and_visible_local_unevenness",
+        "interpretation": "原选项local_uneven及“一侧低，另一侧更低”保留：均高偏低伴两侧高差，不能当纯平移或孤立单点异常；总体澄清支持优先研究倾斜/成片高差。",
+        "existing_Hmean": 0.3140788957602948,
+        "existing_Hcenter": 0.028642653768355793,
+        "own_height_range_over_reference_mean": 0.1021440490752853,
+        "new_grade_or_penalty_target": null,
+        "formal_eligibility_changed": false,
+        "reference_geometry_changed": false
+      },
+      {
+        "record_id": "R02135",
+        "image_id": "B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993",
+        "image_code": "B6ByNegPMKs-33",
+        "object_id": "d97a4c0b5bbe5fb7",
+        "reference_id": "gt:B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993:data/mp3d_layout/test/label_cor/B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993.txt",
+        "answers": {
+          "space_extent": "same",
+          "top_in_photo": "both_similar",
+          "height_in_3d": "local_uneven"
+        },
+        "comment": "橙色右边的角点标的低了,导致一侧高度偏低",
+        "reviewed_at": "2026-10-13T07:43:00.985Z",
+        "complete": true,
+        "interpretation_code": "same_extent_local_height_case",
+        "interpretation": "同范围、照片两条都合理与右角偏低并列保存；二维差异小不等于三维无局部高差，未获得严重程度或扣分标签。",
+        "existing_Hmean": 0.10224549599095911,
+        "existing_Hcenter": 0.07136086248782364,
+        "own_height_range_over_reference_mean": 0.24253443444112774,
+        "new_grade_or_penalty_target": null,
+        "formal_eligibility_changed": false,
+        "reference_geometry_changed": false
+      },
+      {
+        "record_id": "R00961",
+        "image_id": "B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624",
+        "image_code": "B6ByNegPMKs-40",
+        "object_id": "645a19e0d1eff33f",
+        "reference_id": "gt:B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624:data/mp3d_layout/test/label_cor/B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624.txt",
+        "answers": {
+          "space_extent": "orange_less",
+          "top_in_photo": "reference_better",
+          "height_in_3d": "uniform_lower"
+        },
+        "comment": "",
+        "reviewed_at": "2026-10-13T07:44:31.456Z",
+        "complete": true,
+        "interpretation_code": "global_lower_with_extent_difference",
+        "interpretation": "用户确认更近范围且绿线更合理、整体更低；保留整体高度项的质性证据，仍不是同范围控制实验。",
+        "existing_Hmean": 0.2865265293064967,
+        "existing_Hcenter": 0.019340558049067633,
+        "own_height_range_over_reference_mean": 0.06451748211345723,
+        "new_grade_or_penalty_target": null,
+        "formal_eligibility_changed": false,
+        "reference_geometry_changed": false
+      },
+      {
+        "record_id": "R00848",
+        "image_id": "B6ByNegPMKs_e52609aae11f42a79f6cf50360180fd5",
+        "image_code": "B6ByNegPMKs-48",
+        "object_id": "56c9aa0348514ab3cc5b",
+        "reference_id": "gt:B6ByNegPMKs_e52609aae11f42a79f6cf50360180fd5:data/mp3d_layout/test/label_cor/B6ByNegPMKs_e52609aae11f42a79f6cf50360180fd5.txt",
+        "answers": {
+          "space_extent": "orange_more",
+          "top_in_photo": "reference_better",
+          "height_in_3d": "uniform_lower"
+        },
+        "comment": "",
+        "reviewed_at": "2026-10-13T07:45:08.455Z",
+        "complete": true,
+        "interpretation_code": "global_lower_with_extent_difference",
+        "interpretation": "用户确认更远范围且绿线更合理、整体更低；不能用范围不同直接免除高度评价，不据此拟合强度。",
+        "existing_Hmean": 0.2658601419397937,
+        "existing_Hcenter": 0.008153762454511335,
+        "own_height_range_over_reference_mean": 0.024906980223751332,
+        "new_grade_or_penalty_target": null,
+        "formal_eligibility_changed": false,
+        "reference_geometry_changed": false
+      },
+      {
+        "record_id": "R00687",
+        "image_id": "jtcxE69GiFV_3fb4bb890d7f4964b496a46db647e72a",
+        "image_code": "jtcxE69GiFV-09",
+        "object_id": "44c73224857604910e05",
+        "reference_id": "gt:jtcxE69GiFV_3fb4bb890d7f4964b496a46db647e72a:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_3fb4bb890d7f4964b496a46db647e72a.txt",
+        "answers": {
+          "space_extent": "same",
+          "top_in_photo": "both_wrong",
+          "height_in_3d": "local_uneven"
+        },
+        "comment": "gt好像标的略高了. 橙色一边标的可能低了点",
+        "reviewed_at": "2026-10-13T07:50:42.645Z",
+        "complete": true,
+        "interpretation_code": "approximate_reference_retained_local_height_case",
+        "interpretation": "用户指出GT略高，但最新工作口径仍按正确参考使用，不新增排除或参考不确定性模型；原轻微偏差备注保留。",
+        "existing_Hmean": 0.09784359752286823,
+        "existing_Hcenter": 0.07631652804601706,
+        "own_height_range_over_reference_mean": 0.21013282624385982,
+        "new_grade_or_penalty_target": null,
+        "formal_eligibility_changed": false,
+        "reference_geometry_changed": false
+      },
+      {
+        "record_id": "R00977",
+        "image_id": "uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d",
+        "image_code": "uNb9QFRL6hY-36",
+        "object_id": "6608319ee6b1e7808937",
+        "reference_id": "gt:uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d.txt",
+        "answers": {
+          "space_extent": null,
+          "top_in_photo": null,
+          "height_in_3d": null,
+          "floor_steps": null
+        },
+        "comment": "这图好像是有争议的,这gt标的都是在台阶外的",
+        "reviewed_at": "2026-10-13T07:51:35.310Z",
+        "complete": false,
+        "interpretation_code": "step_scope_pending_comment_only",
+        "interpretation": "四题全为null，仅有GT在台阶外的争议备注；不补成不同高程、GT错误或无法判断选项，暂缓作为高度校准依据。",
+        "existing_Hmean": 0.12922922165205364,
+        "existing_Hcenter": 0.08810338009347202,
+        "own_height_range_over_reference_mean": 0.2796800211016876,
+        "new_grade_or_penalty_target": null,
+        "formal_eligibility_changed": false,
+        "reference_geometry_changed": false
+      }
+    ],
+    "policy": {
+      "minor_reference_errors_do_not_exclude": true,
+      "step_case_separate": true,
+      "raw_nulls_preserved": true,
+      "no_score_or_parameter_change": true,
+      "no_new_quality_grade": true,
+      "independent_validation": false,
+      "prior_confirmed_wrong_reference_exclusions_preserved": true,
+      "reference_working_convention": "按正确参考使用，轻微GT问题不新增排除；明显离谱错误另行处理",
+      "height_shape_categories": [
+        "uniform_height_shift",
+        "side_to_side_tilt_or_regional_height_difference",
+        "isolated_corner_outlier"
+      ],
+      "most_cases_general_clarification_not_per_record_relabel": true
+    },
+    "user_clarifications": [
+      {
+        "source": "本对话：提交回执后的用户澄清",
+        "text": "除了台阶那里,如果其他gt有小问题,其实也无关紧要,我们主要要的是一个参考.",
+        "scope": "本轮审核的轻微GT问题；不撤销此前其他图片明确错误GT的排除"
+      },
+      {
+        "source": "本对话：回执后第二次澄清",
+        "text": "其实很多时候gt都会有点小问题.  但是我们还是把它当成正确的,除非太离谱的错误.\n你给我的这几份,其实大多都是一侧标的偏高,一侧标的偏低. 不是说3个点差不多高度,有一个莫名其妙的低/高",
+        "scope": "研究使用GT的工作口径，以及这批高度案例的总体形态；不替代逐份选项或撤销既有明显错误GT排除"
+      }
+    ]
+  },
+  "deduplicate_by_question_group_not_dimension": true,
+  "user_height_penalty_direction_preserved": true,
+  "new_grade_thresholds": null
+}

@@ -1,0 +1,3222 @@
+{
+  "passed": true,
+  "source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+  "verified_files": [
+    {
+      "path": "analysis_results/image_difficulty_full_review_20261010/build_scope_review.py",
+      "sha256": "0672fb71035caff58b201f86759cb748f741312e80e1af479dc6c6f5d3dc82a9",
+      "bytes": 9646,
+      "verification": "exact_committed_blob",
+      "read_from": "checkout"
+    },
+    {
+      "path": "analysis_results/objective_difficulty_20261009/structure_classification/images.csv",
+      "sha256": "228db782f01f39213768fa49fe1e8fd65de443f628ddcffdcfc209591e109ca3",
+      "bytes": 494985,
+      "verification": "exact_committed_blob",
+      "read_from": "committed_blob_missing_in_sparse_checkout"
+    },
+    {
+      "path": "analysis_results/research_input_20260929/comments.json",
+      "sha256": "9d904b302119062774dd08a4ae72966ddac80722c20e6980eb8c225ae39d4d9f",
+      "bytes": 108396834,
+      "verification": "lfs_content_sha256_and_size",
+      "read_from": "checkout"
+    },
+    {
+      "path": "analysis_results/research_input_20260929/field_contract.json",
+      "sha256": "104b771d290b0eb7063c67befd8d7d8ecf5e6e31ce88f3d47b2314a73dfd53ae",
+      "bytes": 713,
+      "verification": "exact_committed_blob",
+      "read_from": "checkout"
+    },
+    {
+      "path": "analysis_results/research_input_20260929/final_review/received_orders.json",
+      "sha256": "1c7332f6d72a3f3e2fc67e29c9c3ac6a5eebcfbd9382310e05bade64b5f950f1",
+      "bytes": 2724625,
+      "verification": "exact_committed_blob",
+      "read_from": "checkout"
+    },
+    {
+      "path": "analysis_results/research_input_20260929/final_review/summary.json",
+      "sha256": "f37211ec0233712632d997c3a1e60b9d7c28cac913c6b9c160d55e594a5fb1d5",
+      "bytes": 2727,
+      "verification": "exact_committed_blob",
+      "read_from": "checkout"
+    },
+    {
+      "path": "analysis_results/research_input_20260929/manifest.json",
+      "sha256": "5cb5bfdfd7fdd331a0866abe3c9b4eb96f5ca8cd4712b0eaf39a14e70eb54cf7",
+      "bytes": 6616,
+      "verification": "exact_committed_blob",
+      "read_from": "checkout"
+    },
+    {
+      "path": "analysis_results/research_input_20260929/preprocessed_source.json",
+      "sha256": "d4201b59acbfe0d2844ea073ca4888b4e5f3e894a0915b9c91ec14447c5a932e",
+      "bytes": 59490666,
+      "verification": "lfs_content_sha256_and_size",
+      "read_from": "checkout"
+    },
+    {
+      "path": "analysis_results/research_input_20260929/quality_update_20261010.json",
+      "sha256": "b8cc1b37f36d05f4541069ac54df86908e7fd1a8ed982bd01654ca24c52b2aad",
+      "bytes": 192147,
+      "verification": "exact_committed_blob",
+      "read_from": "checkout"
+    },
+    {
+      "path": "analysis_results/research_input_20260929/research_tables.json",
+      "sha256": "60c6f00ccc7911195aba2d11c0a58523e2049e029500db496a1d57113b2636a8",
+      "bytes": 34432984,
+      "verification": "exact_committed_blob",
+      "read_from": "checkout"
+    },
+    {
+      "path": "analysis_results/research_input_20260929/research_tables_field_contract.json",
+      "sha256": "6091dfbe48024b254f88627d10bdc8c25769bc7a3eda9b45a0ccf0d6c7416526",
+      "bytes": 2150,
+      "verification": "exact_committed_blob",
+      "read_from": "checkout"
+    },
+    {
+      "path": "analysis_results/research_input_20260929/validation.json",
+      "sha256": "07ba2ba959a4e80d3d1239e4369d33c1830abc3b1c79a7a36c769c2b426c8446",
+      "bytes": 670,
+      "verification": "exact_committed_blob",
+      "read_from": "checkout"
+    },
+    {
+      "path": "docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json",
+      "sha256": "6f5560dc5eb10188b4f2f3b347e524195bee95384b6e760f621cb8c7173cb893",
+      "bytes": 29340,
+      "verification": "exact_committed_blob",
+      "read_from": "checkout"
+    },
+    {
+      "path": "research/quality_scope_comparison_20261010/README_三图对照.md",
+      "sha256": "5ab141b1b8ef6f7f3e7d75157176c14358918df9485a7b66994d2030713ae148",
+      "bytes": 7543,
+      "verification": "exact_committed_blob",
+      "read_from": "checkout"
+    },
+    {
+      "path": "research/quality_scope_comparison_20261010/inputs/manual_scope_confirmation_20261010.json",
+      "sha256": "b94ea0069d62a0ded04ce1709228e922e1586faa8903c8be73e30d4d4bc92d8e",
+      "bytes": 2558,
+      "verification": "exact_committed_blob",
+      "read_from": "checkout"
+    },
+    {
+      "path": "research/quality_scope_comparison_20261010/reproduce.py",
+      "sha256": "3665d59f344a828ee3737752359139b5e38b6c26ead61f8b40534c062c2fd370",
+      "bytes": 15653,
+      "verification": "exact_committed_blob",
+      "read_from": "checkout"
+    },
+    {
+      "path": "tools/thesis_main/data_prep/apply_difficulty_orders_20261010.py",
+      "sha256": "eb1c83e7a1f5fa777b02592b4e5315f9350337b60e90da6b7e2e3e9c04e14707",
+      "bytes": 6863,
+      "verification": "exact_committed_blob",
+      "read_from": "checkout"
+    },
+    {
+      "path": "tools/thesis_main/data_prep/apply_quality_review_20261010.py",
+      "sha256": "a53dfcb59a6ed4cbd7435977c53e2216f328e3a0c816b229560e1cb26ba2a260",
+      "bytes": 12848,
+      "verification": "exact_committed_blob",
+      "read_from": "checkout"
+    },
+    {
+      "path": "tools/thesis_main/data_prep/consolidate_research_input.py",
+      "sha256": "69e01be0aebd5eaff24426f964ff4515f6941168d56307b8f352e85dbfd1806e",
+      "bytes": 10967,
+      "verification": "exact_committed_blob",
+      "read_from": "checkout"
+    },
+    {
+      "path": "tools/thesis_main/data_prep/materialize_current_research_input.py",
+      "sha256": "9c7b63d346f6e2f7e519f9bcbc1cfb3d9e92dacc6539fb4119b6ceb42dd76e48",
+      "bytes": 12093,
+      "verification": "exact_committed_blob",
+      "read_from": "checkout"
+    },
+    {
+      "path": "tools/thesis_main/data_prep/project_public_research_20260929.py",
+      "sha256": "1a95ab1eb21527f0adcc08bb466ddaa6f14ec10f130679531c6354c629b1e018",
+      "bytes": 7532,
+      "verification": "exact_committed_blob",
+      "read_from": "checkout"
+    },
+    {
+      "path": "export_label/人工精标/project-20-at-2026-03-27-14-57-e66c6481.json",
+      "sha256": "5e21032033f89b39977af0e703c40a8cd6ec6d71d806bef62de5a942a7ec8215",
+      "bytes": 3387004,
+      "verification": "exact_committed_blob",
+      "read_from": "committed_blob_missing_in_sparse_checkout"
+    },
+    {
+      "path": "import_json/groudTruth_458_tasks_import_from_updated_gt_20260701.json",
+      "sha256": "1b2a2d905f62d703a3e46a7a83e5dca6e90c6030988d6ca594d2eb69793b5cf6",
+      "bytes": 2806910,
+      "verification": "exact_committed_blob",
+      "read_from": "committed_blob_missing_in_sparse_checkout"
+    },
+    {
+      "path": "analysis_results/research_input_20260929/final_review/原始与人工GT审计.csv",
+      "sha256": "b2dac41c0c768ce6ef160e9ce915510c19865fab88b9ea4508c80e7e013dd115",
+      "bytes": 158048,
+      "verification": "exact_committed_blob",
+      "read_from": "checkout"
+    }
+  ],
+  "formal_bundle_validation": {
+    "status": "passed",
+    "objects": 3441,
+    "annotations": 3152,
+    "ready_coordinate_objects": 3312,
+    "confirmed_orders": 1312,
+    "research_images": 259,
+    "reference_only_images": 2,
+    "comment_occurrences": 32462,
+    "unresolved_comment_occurrences": 1,
+    "checks": [
+      "完整配对",
+      "周期平均x及y不变",
+      "Matterport数组源点身份",
+      "确认环绑定",
+      "人员/GT/图片引用",
+      "清洗及研究表字段一致",
+      "交叉表ID及计数",
+      "评论来源覆盖"
+    ],
+    "limitation": "机器一致性验证，不宣称所有标注人工确认或方法可计算；人工未决和未知来源继续保留。"
+  },
+  "both_current_loaders_identical": true,
+  "source_files_unchanged_after_extraction": true,
+  "all_formal_objects_fingerprinted": 3441,
+  "selected_reference_matches_current_structure_classification": true,
+  "recovered_reference_checks": [
+    {
+      "image_code": "q9vSo1VnCiC-21",
+      "committed_snapshot_and_independent_import_match": true,
+      "committed_audit_matches": true,
+      "in_current_formal_corpus": false,
+      "annotation_records": 0,
+      "raw_original_text_available": false,
+      "original_geometry_status": "audited_original_equivalent_snapshot_not_raw_label_cor"
+    },
+    {
+      "image_code": "q9vSo1VnCiC-25",
+      "committed_snapshot_and_independent_import_match": true,
+      "committed_audit_matches": true,
+      "in_current_formal_corpus": false,
+      "annotation_records": 0,
+      "raw_original_text_available": false,
+      "original_geometry_status": "audited_original_equivalent_snapshot_not_raw_label_cor"
+    }
+  ],
+  "projection_checks": [
+    {
+      "record_id": "R02538",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02538",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00672",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02585",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02585",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02073",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02164",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01897",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02278",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01624",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01139",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02589",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02589",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00154",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00353",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01655",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02290",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02098",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00367",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02594",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02594",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00626",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00240",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01013",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02101",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00479",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02128",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02625",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02625",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00847",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02154",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00186",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00352",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02424",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02061",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02640",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02640",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01430",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02309",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02041",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00596",
+      "status": "camera_not_inside",
+      "existing_helper_status": "camera_not_inside",
+      "max_coordinate_error_h": null
+    },
+    {
+      "record_id": "R00996",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00530",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02655",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02655",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00417",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00794",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01834",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00790",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01326",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02656",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02656",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00203",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00614",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00373",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00572",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00206",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02453",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01315",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00632",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 4.440892098500626e-16
+    },
+    {
+      "record_id": "R01744",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02269",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02659",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02659",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00547",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02085",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02049",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00437",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01967",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00422",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02189",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00409",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02244",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00462",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02235",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02261",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00658",
+      "status": "invalid_pairs",
+      "existing_helper_status": "unavailable_coordinates",
+      "max_coordinate_error_h": null
+    },
+    {
+      "record_id": "R01996",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00793",
+      "status": "invalid_pairs",
+      "existing_helper_status": "unavailable_coordinates",
+      "max_coordinate_error_h": null
+    },
+    {
+      "record_id": "R00170",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00856",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01716",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00193",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01775",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01574",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01861",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01262",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01995",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01415",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02037",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02660",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02660",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01210",
+      "status": "invalid_pairs",
+      "existing_helper_status": "unavailable_coordinates",
+      "max_coordinate_error_h": null
+    },
+    {
+      "record_id": "R01700",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02183",
+      "status": "invalid_pairs",
+      "existing_helper_status": "unavailable_coordinates",
+      "max_coordinate_error_h": null
+    },
+    {
+      "record_id": "R02458",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00361",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02020",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01081",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00795",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00806",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00469",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": null,
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": null,
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": null,
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": null,
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02663",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02663",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01124",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02324",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02305",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01485",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01003",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02669",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02669",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01465",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01937",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00728",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00251",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00520",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02670",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02670",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01784",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00020",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02452",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 1.1102230246251565e-16
+    },
+    {
+      "record_id": "R01886",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02165",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02468",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01986",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01798",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 1.1102230246251565e-16
+    },
+    {
+      "record_id": "R01341",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 1.1102230246251565e-16
+    },
+    {
+      "record_id": "R00525",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 1.1102230246251565e-16
+    },
+    {
+      "record_id": "R02407",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 1.1102230246251565e-16
+    },
+    {
+      "record_id": "R02456",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00733",
+      "status": "invalid_pairs",
+      "existing_helper_status": "unavailable_coordinates",
+      "max_coordinate_error_h": null
+    },
+    {
+      "record_id": "R00553",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 1.1102230246251565e-16
+    },
+    {
+      "record_id": "R01234",
+      "status": "invalid_pairs",
+      "existing_helper_status": "unavailable_coordinates",
+      "max_coordinate_error_h": null
+    },
+    {
+      "record_id": "R01518",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01905",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01662",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01489",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00634",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02190",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01557",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02094",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00500",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00233",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 2.220446049250313e-16
+    },
+    {
+      "record_id": "R01695",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02678",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02678",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01595",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01424",
+      "status": "outside_canvas",
+      "existing_helper_status": "outside_canvas",
+      "max_coordinate_error_h": null
+    },
+    {
+      "record_id": "R01314",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01021",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00594",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01661",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02332",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02346",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01023",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01605",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00490",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01547",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01010",
+      "status": "invalid_pairs",
+      "existing_helper_status": "unavailable_coordinates",
+      "max_coordinate_error_h": null
+    },
+    {
+      "record_id": "R02160",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00140",
+      "status": "invalid_pairs",
+      "existing_helper_status": "unavailable_coordinates",
+      "max_coordinate_error_h": null
+    },
+    {
+      "record_id": "R00169",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02014",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00771",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00642",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01387",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 4.440892098500626e-16
+    },
+    {
+      "record_id": "R02489",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01961",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00822",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01681",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00976",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00369",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02690",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02690",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02842",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02849",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02844",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02850",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02847",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02845",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 2.220446049250313e-16
+    },
+    {
+      "record_id": "R02848",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02846",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02843",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03067",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03066",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03068",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03061",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03069",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03060",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03064",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03062",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03063",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03065",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02695",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02695",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02861",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02866",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01129",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02867",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02864",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02862",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02865",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02863",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00137",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00602",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00532",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03095",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03090",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03096",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03092",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03094",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03091",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02483",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03093",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02700",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02700",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02877",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02884",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02879",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02885",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02882",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02880",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 4.440892098500626e-16
+    },
+    {
+      "record_id": "R02883",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02881",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02878",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03119",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03122",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03120",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03113",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03121",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 2.220446049250313e-16
+    },
+    {
+      "record_id": "R03116",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03118",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03114",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03115",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03117",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02702",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02702",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00030",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01014",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01543",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02100",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01107",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02008",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02119",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00436",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02048",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01195",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02708",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02708",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02344",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00743",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02204",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01676",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02153",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02091",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00460",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02333",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01090",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02158",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01068",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01828",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02353",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00006",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00293",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00664",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 4.440892098500626e-16
+    },
+    {
+      "record_id": "R00063",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01367",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00802",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00235",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01785",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01436",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01138",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02713",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02713",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02903",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02904",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02902",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02901",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02900",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03160",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03163",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03161",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03154",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03162",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03156",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03159",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03155",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03158",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03157",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02717",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02717",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02910",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02917",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02912",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02918",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02915",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02913",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 4.440892098500626e-16
+    },
+    {
+      "record_id": "R02916",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02914",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02911",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03183",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03178",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03181",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03174",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03182",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03176",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03180",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03175",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03179",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03177",
+      "status": "invalid_pairs",
+      "existing_helper_status": "unavailable_coordinates",
+      "max_coordinate_error_h": null
+    },
+    {
+      "record_id": "R02718",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02718",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00031",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00229",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02057",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01771",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00586",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02412",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01677",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01483",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01951",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01971",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01958",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01414",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00390",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01410",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01974",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00863",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01686",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01265",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00022",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02019",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02368",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02414",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00528",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02723",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02723",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02919",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02924",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02927",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02925",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02922",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01260",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02921",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 4.440892098500626e-16
+    },
+    {
+      "record_id": "R02923",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02417",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02920",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02926",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03191",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03189",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03190",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00955",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03184",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01938",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01425",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03188",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03185",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03187",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03186",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02724",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02724",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02930",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02932",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02210",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02929",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01956",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02928",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02931",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03197",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03196",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00144",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00854",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00526",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03195",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03192",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03194",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03193",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02725",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02725",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01242",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02936",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02934",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01531",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01180",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02935",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00619",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00062",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02933",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01832",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03203",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03198",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03201",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00320",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03202",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01192",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01879",
+      "status": "invalid_pairs",
+      "existing_helper_status": "invalid_pairs",
+      "max_coordinate_error_h": null
+    },
+    {
+      "record_id": "R03199",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03200",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01720",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02731",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02731",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02950",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02947",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02951",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02948",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02949",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03239",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03231",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03237",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03230",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03238",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03236",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03233",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 4.440892098500626e-16
+    },
+    {
+      "record_id": "R03232",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03235",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03234",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02736",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02736",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01808",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01571",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02962",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02966",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02967",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00219",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02963",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02965",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02964",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02961",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03265",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03260",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03263",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03258",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03264",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03261",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01412",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03259",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03262",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01038",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02737",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02737",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00609",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01152",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02184",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02274",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01134",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02743",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02743",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03422",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03423",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03418",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03424",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03420",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03417",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03421",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03419",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02746",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02745",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02373",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02017",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00105",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00660",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00629",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02052",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02747",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02747",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03431",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03432",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03426",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03433",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03428",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03429",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03425",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03430",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03427",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02752",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02752",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01552",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00515",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00836",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01814",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01968",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00327",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R01171",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00953",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R00177",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02756",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R02756",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03439",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03440",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03435",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03441",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 2.220446049250313e-16
+    },
+    {
+      "record_id": "R03437",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03434",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03438",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    },
+    {
+      "record_id": "R03436",
+      "status": "valid",
+      "existing_helper_status": "valid",
+      "max_coordinate_error_h": 0.0
+    }
+  ],
+  "max_coordinate_error_h": 4.440892098500626e-16,
+  "extracted_images": 35,
+  "extracted_annotations": 429,
+  "existing_scope_projection_path": "analysis_results/image_difficulty_full_review_20261010/build_scope_review.py",
+  "snapshot_sha256": "035c6849d54b2e0cbd807cf6d2e4a017fcbf847788027d89f558423a96788ad9",
+  "LFS_note": "Materialized LFS files may appear modified to sparse Git status; exact committed LFS SHA256 and size are verified here."
+}

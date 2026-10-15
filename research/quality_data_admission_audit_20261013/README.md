@@ -82,4 +82,4 @@ python -B -m pytest -q tests/test_quality_data_admission_20261013.py tests/test_
 
 v2验证增加旧显式适用标志不替代条件开发许可、范围混淆等级不进主视图，审计测试9项通过；早前来源分层4项已通过。输出检查覆盖3152份唯一身份、分母闭合、574份条件视图及282份原留出。项目地图和文档索引已登记；正式合同、采集原数据、GT、原始回执、旧结果及融合算法未改。
 
-已使用仓库归档刷新v2，并完成[503/758覆盖审计](../quality_reference_coverage_20261013/README.md)、[922冻结候选与429路由接入](../quality_current_candidate_view_20261013/README.md)、[749份manual的899个参考组合补算](../quality_manual_expansion_20261013/README.md)。503份无需重新索要已有条件授权。最新数据核查已[收尾](../quality_data_closeout_20261013/README.md)：新数值、恢复的144份历史参考、高度对应、人员条件与融合缺项均已核对。此处numeric_barriers保留当时旧包覆盖信息，最新数值是否落盘读取收尾FINAL_LEDGER，不因补算改变本表资格。算法研究安排见[当前方案](../../docs/thesis_main/质量研究推进方案_20261013.md)。
+已使用仓库归档刷新v2，并完成[503/758覆盖审计](../quality_reference_coverage_20261013/README.md)、[922冻结候选与429路由接入](../quality_current_candidate_view_20261013/README.md)、[749份manual的899个参考组合补算](../quality_manual_expansion_20261013/README.md)。503份无需重新索要已有条件授权。最新数据核查已[收尾](../quality_data_closeout_20261013/README.md)：新数值、恢复的144份历史参考、高度对应、人员条件与融合缺项均已核对。此处numeric_barriers保留当时旧包覆盖信息，最新数值是否落盘读取收尾FINAL_LEDGER，不因补算改变本表资格。算法研究安排见[当前方案](../../docs/thesis_main/topics/quality/质量研究推进方案_20261013.md)。

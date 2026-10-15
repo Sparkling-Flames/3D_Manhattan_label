@@ -202,7 +202,7 @@ def build_reference_catalog(bundle, difficulty_records):
                                   '|'.join(sorted({attempt['result']['minimal_gap'] for attempt in attempts})))
     # 两图交接明确旧GT保留且新空间为additional candidate；其余新范围不据“有旧GT”扩充合法空间。
     for provenance in sources.values():
-        if provenance['source'] == 'research/quality_scope_model_handoff_20261015/TWO_IMAGE_SCOPE_DELTA.json':
+        if provenance['source'] == 'research/quality/quality_scope_model_handoff_20261015/TWO_IMAGE_SCOPE_DELTA.json':
             for obj in by_image[provenance['image_id']]:
                 if obj['object_kind'] == 'gt_original':
                     catalog[obj['object_id']].update(is_admitted_space_candidate=True,
@@ -227,7 +227,7 @@ def write_catalog(catalog,out):
 if __name__ == '__main__':
     from ..data_prep.consolidate_research_input import load_current_bundle
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--out',type=Path,default=ROOT/'research/scope_quality_rescore_20261016/references')
+    parser.add_argument('--out',type=Path,default=ROOT/'research/data/scope_quality_rescore_20261016/references')
     args=parser.parse_args()
     pointer=ROOT/'analysis_results/image_difficulty_full_review_20261010/CURRENT.json'
     details=json.loads(pointer.read_text(encoding='utf-8'))

@@ -1,0 +1,1779 @@
+{
+  "schema": "quality_reference_research_exclusion_registry_v1",
+  "audit_date": "2026-10-10",
+  "audited_checkout_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+  "audited_input_kind": "load_current_bundle() over supplied working tree; not a claim of remote latest state",
+  "loader_validation": {
+    "status": "passed",
+    "objects": 3441,
+    "annotations": 3152,
+    "ready_coordinate_objects": 3312,
+    "confirmed_orders": 1312,
+    "research_images": 259,
+    "reference_only_images": 2,
+    "comment_occurrences": 32462,
+    "unresolved_comment_occurrences": 1,
+    "checks": [
+      "完整配对",
+      "周期平均x及y不变",
+      "Matterport数组源点身份",
+      "确认环绑定",
+      "人员/GT/图片引用",
+      "清洗及研究表字段一致",
+      "交叉表ID及计数",
+      "评论来源覆盖"
+    ],
+    "limitation": "机器一致性验证，不宣称所有标注人工确认或方法可计算；人工未决和未知来源继续保留。"
+  },
+  "source_files": [
+    {
+      "path": "analysis_results/research_input_20260929/manifest.json",
+      "sha256": "5cb5bfdfd7fdd331a0866abe3c9b4eb96f5ca8cd4712b0eaf39a14e70eb54cf7"
+    },
+    {
+      "path": "analysis_results/research_input_20260929/preprocessed_source.json",
+      "sha256": "d4201b59acbfe0d2844ea073ca4888b4e5f3e894a0915b9c91ec14447c5a932e"
+    },
+    {
+      "path": "analysis_results/research_input_20260929/research_tables.json",
+      "sha256": "60c6f00ccc7911195aba2d11c0a58523e2049e029500db496a1d57113b2636a8"
+    },
+    {
+      "path": "analysis_results/research_input_20260929/comments.json",
+      "sha256": "9d904b302119062774dd08a4ae72966ddac80722c20e6980eb8c225ae39d4d9f"
+    },
+    {
+      "path": "analysis_results/research_input_20260929/quality_update_20261010.json",
+      "sha256": "b8cc1b37f36d05f4541069ac54df86908e7fd1a8ed982bd01654ca24c52b2aad"
+    },
+    {
+      "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/source_review.json",
+      "sha256": "3e62af7d0e4fab659b07aa67494a83cc40d67d8e49ac0c458d657f17390113cb"
+    }
+  ],
+  "policy": {
+    "purpose": "按用户要求为质量分用于标注者不确定性研究建立研究使用约束，读取并落实已有资格；不是重写正式loader/gate。",
+    "scope": [
+      "质量参数选择",
+      "主GT质量比较/优劣论证",
+      "标注者不确定性校准"
+    ],
+    "explicit_reference_issues_excluded": true,
+    "prior_user_holds_preserved": true,
+    "historical_explicit_error_conflicts_quarantined_for_primary_research": true,
+    "pure_suspicions_scope_differences_minor_omissions_not_automatically_excluded": true,
+    "raw_gt_and_annotation_coordinates_unchanged": true,
+    "worker_cleaning_and_consensus_eligibility_unchanged": true,
+    "current_scores_not_recomputed": true,
+    "new_floor_confirmation_does_not_validate_old_top_or_full_gt": true
+  },
+  "implementation_warning": "多数GT对象自身worker_quality_gate仍为candidate_pending_geometry。人员行的hold_reference_quality不是GT对象级过滤保证。消费者必须先以image_id、GT对象ID和版本连接本登记，再叠加正式人员gate；本登记尚未挂入正式loader。",
+  "confirmed_reference_exclusions": [
+    {
+      "image_code": "jtcxE69GiFV-05",
+      "image_id": "jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037",
+      "classification": "user_confirmed_reference_issue",
+      "gt_versions": [
+        {
+          "gt_object_id": "gt:jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037.txt",
+          "version": "gt_original",
+          "source": "data/mp3d_layout/valid/label_cor/jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037.txt",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "c3bdb27da889a95090ab74d885f48a9b2fde56ad24edf23873c8fa653991dbf1"
+        }
+      ],
+      "evidence": [
+        {
+          "comment_id": "comment_000053",
+          "quote": "gt是错误的,不是空间的问题,是完全错误.而且这图可以标细节的墙角,但是目前标注者都没有标注.\n三个模型的预标注也都是错误的",
+          "updated_at": "2026-09-26T03:25:12.087Z",
+          "source_file": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+          "source_json_pointer": "/image_decisions/jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/52",
+          "occurrence_id": "occurrence_000057"
+        },
+        {
+          "quote": "这gt是错误的",
+          "updated_at": "2026-10-10T09:57:47.017Z",
+          "source_file": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/source_review.json",
+          "source_json_pointer": "/records/4"
+        },
+        {
+          "quote": "2.`jtcxE69GiFV-05`  还有这个图的gt是错误的.",
+          "message_id": "Sentinel_fe9642707cac8191afd331e9b42434ee",
+          "quote_kind": "verbatim_excerpt"
+        }
+      ],
+      "current_personnel_quality_gate_counts": {
+        "hold_reference_quality": 6
+      },
+      "current_personnel_gate_reasons": [
+        "{\"reasons\": [\"explicit_reference_error\"], \"status\": \"hold_reference_quality\"}"
+      ],
+      "existing_personnel_exclusions": 0,
+      "new_research_use": {
+        "exclude_this_reference_from_quality_parameter_selection": true,
+        "exclude_this_reference_from_primary_gt_quality_comparison": true,
+        "exclude_this_reference_from_annotator_uncertainty_calibration": true,
+        "keep_diagnostic_case_studies": true,
+        "change_formal_loader_or_gate": false,
+        "change_raw_data_coordinates_or_other_eligibility": false
+      },
+      "notes": "旧审核及2026-10-10上传回执与用户当前消息三次一致，现6份人员作答已hold。",
+      "decision_authority": "user_explicit_gt_issue",
+      "research_status": "exclude_confirmed_problem_reference_from_primary_quality_research"
+    },
+    {
+      "image_code": "jtcxE69GiFV-17",
+      "image_id": "jtcxE69GiFV_6723e18211d244f8b17ced91aae64d99",
+      "classification": "user_confirmed_reference_issue",
+      "gt_versions": [
+        {
+          "gt_object_id": "gt:jtcxE69GiFV_6723e18211d244f8b17ced91aae64d99:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_6723e18211d244f8b17ced91aae64d99.txt",
+          "version": "gt_original",
+          "source": "data/mp3d_layout/valid/label_cor/jtcxE69GiFV_6723e18211d244f8b17ced91aae64d99.txt",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "bec8363bcb4c0ca1185dc54f1aeefa57a7549919f61a525800bd76d02b2f8c96"
+        }
+      ],
+      "evidence": [
+        {
+          "comment_id": "comment_000056",
+          "quote": "这图遮挡较多,较难,而且gt标的是错误的,包括模型标的p3,p4这对点,是错误把门当成墙了,而且他们都忽略了墙面的的柱子凸起",
+          "updated_at": "2026-09-26T05:29:01.443Z",
+          "source_file": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+          "source_json_pointer": "/image_decisions/jtcxE69GiFV_6723e18211d244f8b17ced91aae64d99/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/55",
+          "occurrence_id": "occurrence_000060"
+        }
+      ],
+      "current_personnel_quality_gate_counts": {
+        "hold_reference_quality": 1
+      },
+      "current_personnel_gate_reasons": [
+        "{\"reasons\": [\"explicit_reference_error\"], \"status\": \"hold_reference_quality\"}"
+      ],
+      "existing_personnel_exclusions": 0,
+      "new_research_use": {
+        "exclude_this_reference_from_quality_parameter_selection": true,
+        "exclude_this_reference_from_primary_gt_quality_comparison": true,
+        "exclude_this_reference_from_annotator_uncertainty_calibration": true,
+        "keep_diagnostic_case_studies": true,
+        "change_formal_loader_or_gate": false,
+        "change_raw_data_coordinates_or_other_eligibility": false
+      },
+      "notes": "用户明确把门当墙及GT错误，非仅少标凸起。",
+      "decision_authority": "user_explicit_gt_issue",
+      "research_status": "exclude_confirmed_problem_reference_from_primary_quality_research"
+    },
+    {
+      "image_code": "pRbA3pwrgk9-12",
+      "image_id": "pRbA3pwrgk9_8caa90fc5528451f9e9f45634676499b",
+      "classification": "user_confirmed_reference_issue",
+      "gt_versions": [
+        {
+          "gt_object_id": "gt:pRbA3pwrgk9_8caa90fc5528451f9e9f45634676499b:data/mp3d_layout/valid/label_cor/pRbA3pwrgk9_8caa90fc5528451f9e9f45634676499b.txt",
+          "version": "gt_original",
+          "source": "data/mp3d_layout/valid/label_cor/pRbA3pwrgk9_8caa90fc5528451f9e9f45634676499b.txt",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "8f17edef5b7774c8ed1902cf3a1b13a9d04f72284ac70fa261c5a2a37708f74e"
+        }
+      ],
+      "evidence": [
+        {
+          "comment_id": "comment_000062",
+          "quote": "这个gt直接忽略了左边的墙面凸起,而且我认为它标的高度也有问题,是错误的,比较标准的是BiLayout enclosed的标法.",
+          "updated_at": "2026-09-26T06:28:30.446Z",
+          "source_file": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+          "source_json_pointer": "/image_decisions/pRbA3pwrgk9_8caa90fc5528451f9e9f45634676499b/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/61",
+          "occurrence_id": "occurrence_000066"
+        }
+      ],
+      "current_personnel_quality_gate_counts": {
+        "hold_reference_quality": 2
+      },
+      "current_personnel_gate_reasons": [
+        "{\"reasons\": [\"explicit_reference_error\"], \"status\": \"hold_reference_quality\"}"
+      ],
+      "existing_personnel_exclusions": 0,
+      "new_research_use": {
+        "exclude_this_reference_from_quality_parameter_selection": true,
+        "exclude_this_reference_from_primary_gt_quality_comparison": true,
+        "exclude_this_reference_from_annotator_uncertainty_calibration": true,
+        "keep_diagnostic_case_studies": true,
+        "change_formal_loader_or_gate": false,
+        "change_raw_data_coordinates_or_other_eligibility": false
+      },
+      "notes": "用户不仅指出细节遗漏，还明确高度有误，因此不能用忽略细微凸起政策解除。",
+      "decision_authority": "user_explicit_gt_issue",
+      "research_status": "exclude_confirmed_problem_reference_from_primary_quality_research"
+    },
+    {
+      "image_code": "uNb9QFRL6hY-32",
+      "image_id": "uNb9QFRL6hY_6a500a9a43a340eb817c58bb084327fe",
+      "classification": "user_explicit_main_analysis_hold",
+      "gt_versions": [
+        {
+          "gt_object_id": "gt:uNb9QFRL6hY_6a500a9a43a340eb817c58bb084327fe:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_6a500a9a43a340eb817c58bb084327fe.txt",
+          "version": "gt_original",
+          "source": "data/mp3d_layout/test/label_cor/uNb9QFRL6hY_6a500a9a43a340eb817c58bb084327fe.txt",
+          "observed_gt_object_worker_quality_gate": "hold_main_analysis",
+          "coordinates_sha256": "c8a77b3cf7d0baec74b63d8ff9cef4eecd4262935fc74873597624af99dbae3a"
+        }
+      ],
+      "evidence": [
+        {
+          "comment_id": "comment_000439",
+          "quote": "先不进入主分析,因为gt也不太对,这图也很怪",
+          "updated_at": "2026-09-27T17:11:11.626Z",
+          "source_file": "analysis_results/review_final_20260928/evidence/continuation.json",
+          "source_json_pointer": "/issue_decisions/uNb9QFRL6hY_6a500a9a43a340eb817c58bb084327fe:continue/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/438",
+          "occurrence_id": "occurrence_000460"
+        }
+      ],
+      "current_personnel_quality_gate_counts": {
+        "hold_main_analysis": 5
+      },
+      "current_personnel_gate_reasons": [
+        "{\"reasons\": [\"continuation_explicit_hold_main\"], \"status\": \"hold_main_analysis\"}"
+      ],
+      "existing_personnel_exclusions": 0,
+      "new_research_use": {
+        "exclude_this_reference_from_quality_parameter_selection": true,
+        "exclude_this_reference_from_primary_gt_quality_comparison": true,
+        "exclude_this_reference_from_annotator_uncertainty_calibration": true,
+        "keep_diagnostic_case_studies": true,
+        "change_formal_loader_or_gate": false,
+        "change_raw_data_coordinates_or_other_eligibility": false
+      },
+      "notes": "用户明确先不进入主分析；现hold_main_analysis，比参考层暂停范围更宽，保留原状态。",
+      "decision_authority": "user_explicit_main_analysis_hold",
+      "research_status": "preserve_user_confirmed_main_analysis_hold"
+    },
+    {
+      "image_code": "uNb9QFRL6hY-51",
+      "image_id": "uNb9QFRL6hY_a372582c11864f31a9dd174e4a0ae6ad",
+      "classification": "user_confirmed_reference_issue",
+      "gt_versions": [
+        {
+          "gt_object_id": "gt:uNb9QFRL6hY_a372582c11864f31a9dd174e4a0ae6ad:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_a372582c11864f31a9dd174e4a0ae6ad.txt",
+          "version": "gt_original",
+          "source": "data/mp3d_layout/test/label_cor/uNb9QFRL6hY_a372582c11864f31a9dd174e4a0ae6ad.txt",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "d8b59672e4a2e801e6d0a90d2ffce7fad81910ea8142b9be20a0760345bb39b6"
+        }
+      ],
+      "evidence": [
+        {
+          "comment_id": "comment_000103",
+          "quote": "这个房间比较奇怪,他有个向外的玻璃区域,这个玻璃区域的顶部是斜着的,肯定不符合曼哈顿世界约束,所以gt肯定不对.但是这个东西本身就具有很大的迷惑性,拍摄的相机位置正好处在玻璃外扩区域和客厅之间,簇1是只标内侧空间标的比较好的",
+          "updated_at": "2026-09-27T08:16:42.834Z",
+          "source_file": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+          "source_json_pointer": "/image_decisions/uNb9QFRL6hY_a372582c11864f31a9dd174e4a0ae6ad/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/102",
+          "occurrence_id": "occurrence_000107"
+        }
+      ],
+      "current_personnel_quality_gate_counts": {
+        "hold_reference_quality": 4,
+        "excluded": 2
+      },
+      "current_personnel_gate_reasons": [
+        "{\"reasons\": [\"excluded_by_review\"], \"status\": \"excluded\"}",
+        "{\"reasons\": [\"explicit_reference_error\"], \"status\": \"hold_reference_quality\"}"
+      ],
+      "existing_personnel_exclusions": 2,
+      "new_research_use": {
+        "exclude_this_reference_from_quality_parameter_selection": true,
+        "exclude_this_reference_from_primary_gt_quality_comparison": true,
+        "exclude_this_reference_from_annotator_uncertainty_calibration": true,
+        "keep_diagnostic_case_studies": true,
+        "change_formal_loader_or_gate": false,
+        "change_raw_data_coordinates_or_other_eligibility": false
+      },
+      "notes": "用户明确旧GT不对；随后允许只标内侧空间不是旧GT正确认证，后续底面确认也不认证旧顶界/完整3D。",
+      "decision_authority": "user_explicit_gt_issue",
+      "research_status": "exclude_confirmed_problem_reference_from_primary_quality_research"
+    },
+    {
+      "image_code": "zsNo4HB9uLZ-05",
+      "image_id": "zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b",
+      "classification": "user_confirmed_reference_issue",
+      "gt_versions": [
+        {
+          "gt_object_id": "gt:zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b:data/mp3d_layout/valid/label_cor/zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b.txt",
+          "version": "gt_original",
+          "source": "data/mp3d_layout/valid/label_cor/zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b.txt",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "97f63d3c9cd862c66249733a2a16d06142e31b03548de77ff8adeb7c705944ad"
+        }
+      ],
+      "evidence": [
+        {
+          "comment_id": "comment_000144",
+          "quote": "gt是肯定错的,但是因为这个门挡住了太多空间细节,标注有难度",
+          "updated_at": "2026-09-27T10:23:30.364Z",
+          "source_file": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+          "source_json_pointer": "/image_decisions/zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/143",
+          "occurrence_id": "occurrence_000148"
+        }
+      ],
+      "current_personnel_quality_gate_counts": {
+        "hold_reference_quality": 4
+      },
+      "current_personnel_gate_reasons": [
+        "{\"reasons\": [\"explicit_reference_error\"], \"status\": \"hold_reference_quality\"}"
+      ],
+      "existing_personnel_exclusions": 0,
+      "new_research_use": {
+        "exclude_this_reference_from_quality_parameter_selection": true,
+        "exclude_this_reference_from_primary_gt_quality_comparison": true,
+        "exclude_this_reference_from_annotator_uncertainty_calibration": true,
+        "keep_diagnostic_case_studies": true,
+        "change_formal_loader_or_gate": false,
+        "change_raw_data_coordinates_or_other_eligibility": false
+      },
+      "notes": "用户明确GT肯定错。",
+      "decision_authority": "user_explicit_gt_issue",
+      "research_status": "exclude_confirmed_problem_reference_from_primary_quality_research"
+    },
+    {
+      "image_code": "x8F5xyUWy9e-01",
+      "image_id": "x8F5xyUWy9e_1be9a97aada84e4795f64583ac0e3b76",
+      "classification": "user_confirmed_reference_issue",
+      "gt_versions": [
+        {
+          "gt_object_id": "gt:x8F5xyUWy9e_1be9a97aada84e4795f64583ac0e3b76:data/mp3d_layout/test/label_cor/x8F5xyUWy9e_1be9a97aada84e4795f64583ac0e3b76.txt",
+          "version": "gt_original",
+          "source": "data/mp3d_layout/test/label_cor/x8F5xyUWy9e_1be9a97aada84e4795f64583ac0e3b76.txt",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "717e6cd2d8ba10f6af967be18bcaf0b80ba9edb0e1b93deb31f7878a471f76d6"
+        }
+      ],
+      "evidence": [
+        {
+          "quote": "01和09都是oos,只是说墙面不是正交. 不过01的gt有点问题,不太准确",
+          "message_id": "Sentinel_8e1da2394c7c8191ab3b31dcd9c31898",
+          "source_file": "new_scope_batch_20261010/input_queue.json",
+          "source_json_pointer": "/known_hold_layers_all/7/hold_layers/0"
+        },
+        {
+          "source_file": "analysis_results/research_input_20260929/quality_update_20261010.json",
+          "source_json_pointer": "/image_decisions/0",
+          "source_message": "Sentinel_3f3b889f31308191bf25abeb17721246"
+        }
+      ],
+      "current_personnel_quality_gate_counts": {
+        "hold_reference_quality": 5
+      },
+      "current_personnel_gate_reasons": [
+        "{\"reasons\": [\"user_reported_gt_issue_20261010\"], \"status\": \"hold_reference_quality\"}"
+      ],
+      "existing_personnel_exclusions": 0,
+      "new_research_use": {
+        "exclude_this_reference_from_quality_parameter_selection": true,
+        "exclude_this_reference_from_primary_gt_quality_comparison": true,
+        "exclude_this_reference_from_annotator_uncertainty_calibration": true,
+        "keep_diagnostic_case_studies": true,
+        "change_formal_loader_or_gate": false,
+        "change_raw_data_coordinates_or_other_eligibility": false
+      },
+      "notes": "真实非正交可标OOS；因用户指出GT不太准确暂停参考，而非因非正交本身。",
+      "decision_authority": "user_explicit_gt_issue",
+      "research_status": "exclude_confirmed_problem_reference_from_primary_quality_research"
+    },
+    {
+      "image_code": "wc2JMjhGNzB-14",
+      "image_id": "wc2JMjhGNzB_1d8917d25abb4a77a0da9583dc82c17c",
+      "classification": "user_confirmed_reference_issue",
+      "gt_versions": [
+        {
+          "gt_object_id": "gt:wc2JMjhGNzB_1d8917d25abb4a77a0da9583dc82c17c:data/mp3d_layout/test/label_cor/wc2JMjhGNzB_1d8917d25abb4a77a0da9583dc82c17c.txt",
+          "version": "gt_original",
+          "source": "data/mp3d_layout/test/label_cor/wc2JMjhGNzB_1d8917d25abb4a77a0da9583dc82c17c.txt",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "1ffab234478ffd3cc0b4f1b0889d0221830529f32f6b3b86597618a8debe94cd"
+        },
+        {
+          "gt_object_id": "gt:wc2JMjhGNzB_1d8917d25abb4a77a0da9583dc82c17c:export_label/groudTruth.json",
+          "version": "gt_manual_revision",
+          "source": "export_label/groudTruth.json",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "49371fd3efa73ea458de288aebe8876809eb670311a9543e16eb0192458af826"
+        }
+      ],
+      "evidence": [
+        {
+          "comment_id": "comment_000829",
+          "quote": "这图是gt 有问题",
+          "updated_at": "2026-09-24T13:31:29.475Z",
+          "source_file": "analysis_results/review_final_20260928/evidence/user.json",
+          "source_json_pointer": "/decisions/2e6fc6fdc1ca28539391/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/828",
+          "occurrence_id": "occurrence_002117"
+        },
+        {
+          "quote": "wc2JMjhGNzB-14 的原始 GT 和修订 GT都不太对,这张图有多少人标注的? 如果人数不多,暂时搁置这张图",
+          "message_id": "Sentinel_f31f77a0aef88191984f34bfd5aa2713",
+          "source_file": "analysis_results/research_input_20260929/quality_update_20261010.json",
+          "source_json_pointer": "/image_decisions/2"
+        }
+      ],
+      "current_personnel_quality_gate_counts": {
+        "hold_reference_quality": 4,
+        "excluded": 1
+      },
+      "current_personnel_gate_reasons": [
+        "{\"reasons\": [\"user_reported_gt_issue_20261010\"], \"status\": \"hold_reference_quality\"}",
+        "{\"reasons\": [\"excluded_by_review\"], \"status\": \"excluded\"}"
+      ],
+      "existing_personnel_exclusions": 1,
+      "new_research_use": {
+        "exclude_this_reference_from_quality_parameter_selection": true,
+        "exclude_this_reference_from_primary_gt_quality_comparison": true,
+        "exclude_this_reference_from_annotator_uncertainty_calibration": true,
+        "keep_diagnostic_case_studies": true,
+        "change_formal_loader_or_gate": false,
+        "change_raw_data_coordinates_or_other_eligibility": false
+      },
+      "notes": "原始与人工修订GT均受用户明确否定；两个版本都登记，不以修订版替代绕过。",
+      "decision_authority": "user_explicit_gt_issue",
+      "research_status": "exclude_confirmed_problem_reference_from_primary_quality_research"
+    }
+  ],
+  "preserved_user_analysis_holds": [
+    {
+      "image_code": "jtcxE69GiFV-11",
+      "image_id": "jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8",
+      "classification": "prior_user_hold_without_confirmed_gt_error",
+      "gt_versions": [
+        {
+          "gt_object_id": "gt:jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8.txt",
+          "version": "gt_original",
+          "source": "data/mp3d_layout/valid/label_cor/jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8.txt",
+          "observed_gt_object_worker_quality_gate": "hold_all_analysis",
+          "coordinates_sha256": "a4680fb3bc38bdbff21a1fd4ddba53137e1044c56e38d98b648975dd157e95b4"
+        }
+      ],
+      "evidence": [
+        {
+          "source_file": "analysis_results/research_input_20260929/comments.json",
+          "source_json_pointer": "/chat_clarifications/image_analysis_holds/0",
+          "source_description": "用户2026-09-28本轮消息",
+          "recorded_reason": "用户无法判断GT正确性",
+          "recorded_scope": "全部分析暂缓"
+        }
+      ],
+      "current_personnel_quality_gate_counts": {
+        "hold_all_analysis": 2
+      },
+      "current_personnel_gate_reasons": [
+        "{\"reasons\": [\"explicit_user_hold\"], \"status\": \"hold_all_analysis\"}"
+      ],
+      "existing_personnel_exclusions": 0,
+      "new_research_use": {
+        "exclude_this_reference_from_quality_parameter_selection": true,
+        "exclude_this_reference_from_primary_gt_quality_comparison": true,
+        "exclude_this_reference_from_annotator_uncertainty_calibration": true,
+        "keep_diagnostic_case_studies": true,
+        "change_formal_loader_or_gate": false,
+        "change_raw_data_coordinates_or_other_eligibility": false
+      },
+      "notes": "用户无法判断GT正确性并明确全部分析暂缓；不是把不确定性升级成GT错误。",
+      "decision_authority": "user_explicit_pause_with_gt_correctness_unresolved",
+      "research_status": "preserve_existing_user_all_analysis_hold"
+    },
+    {
+      "image_code": "pRbA3pwrgk9-16",
+      "image_id": "pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad",
+      "classification": "prior_user_hold_without_confirmed_gt_error",
+      "gt_versions": [
+        {
+          "gt_object_id": "gt:pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad:data/mp3d_layout/valid/label_cor/pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad.txt",
+          "version": "gt_original",
+          "source": "data/mp3d_layout/valid/label_cor/pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad.txt",
+          "observed_gt_object_worker_quality_gate": "hold_all_analysis",
+          "coordinates_sha256": "fd5020d9afac2d7809a9578b4a24cb08cabc51ad23410008e9d4ea11aac28b73"
+        }
+      ],
+      "evidence": [
+        {
+          "comment_id": "comment_000444",
+          "quote": "不太确定是不是oos,而且这图很难,暂时先不搞,而且如果真的能标,gt也有点问题.先排除吧",
+          "updated_at": "2026-09-28T06:11:08.832Z",
+          "source_file": "analysis_results/review_final_20260928/evidence/coverage.json",
+          "source_json_pointer": "/decisions/pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/443",
+          "occurrence_id": "occurrence_000465"
+        }
+      ],
+      "current_personnel_quality_gate_counts": {
+        "hold_all_analysis": 2
+      },
+      "current_personnel_gate_reasons": [
+        "{\"reasons\": [\"explicit_user_hold\"], \"status\": \"hold_all_analysis\"}"
+      ],
+      "existing_personnel_exclusions": 0,
+      "new_research_use": {
+        "exclude_this_reference_from_quality_parameter_selection": true,
+        "exclude_this_reference_from_primary_gt_quality_comparison": true,
+        "exclude_this_reference_from_annotator_uncertainty_calibration": true,
+        "keep_diagnostic_case_studies": true,
+        "change_formal_loader_or_gate": false,
+        "change_raw_data_coordinates_or_other_eligibility": false
+      },
+      "notes": "OOS与GT问题有条件表达，但用户明确先排除，保留既有hold_all_analysis。",
+      "decision_authority": "user_explicit_pause_with_gt_correctness_unresolved",
+      "research_status": "preserve_existing_user_all_analysis_hold"
+    }
+  ],
+  "reference_evidence_conflicts_primary_research_quarantine": [
+    {
+      "image_code": "q9vSo1VnCiC-16",
+      "image_id": "q9vSo1VnCiC_a424533651804a38a55b1252daccc81e",
+      "classification": "historical_explicit_error_later_scope_interpretation_unresolved",
+      "gt_versions": [
+        {
+          "gt_object_id": "gt:q9vSo1VnCiC_a424533651804a38a55b1252daccc81e:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_a424533651804a38a55b1252daccc81e.txt",
+          "version": "gt_original",
+          "source": "data/mp3d_layout/test/label_cor/q9vSo1VnCiC_a424533651804a38a55b1252daccc81e.txt",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "9f303e99180bd79e0abe9679419473ea2def26033bcc3896f8cf0716415e4337"
+        }
+      ],
+      "evidence": [
+        {
+          "comment_id": "comment_000525",
+          "quote": "gt有误,这人标注的也有问题",
+          "updated_at": "2026-09-23T13:35:50.692Z",
+          "source_file": "analysis_results/review_final_20260928/evidence/user.json",
+          "source_json_pointer": "/decisions/7bed161c9c3ed689c7ae/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/524",
+          "occurrence_id": "occurrence_001813"
+        },
+        {
+          "comment_id": "comment_000542",
+          "quote": "不过gt也不对",
+          "updated_at": "2026-09-23T13:50:36.235Z",
+          "source_file": "analysis_results/review_final_20260928/evidence/user.json",
+          "source_json_pointer": "/decisions/df8caafef388df6a815e/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/541",
+          "occurrence_id": "occurrence_001830"
+        },
+        {
+          "comment_id": "comment_000072",
+          "quote": "gt是标了两个主标注区域外的空间,不一定好",
+          "updated_at": "2026-09-27T02:23:37.383Z",
+          "source_file": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+          "source_json_pointer": "/image_decisions/q9vSo1VnCiC_a424533651804a38a55b1252daccc81e/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/71",
+          "occurrence_id": "occurrence_000076"
+        }
+      ],
+      "current_personnel_quality_gate_counts": {
+        "excluded": 2,
+        "candidate_pending_geometry": 8
+      },
+      "current_personnel_gate_reasons": [
+        "{\"reasons\": [], \"status\": \"candidate_pending_geometry\"}",
+        "{\"reasons\": [\"excluded_by_review\"], \"status\": \"excluded\"}"
+      ],
+      "existing_personnel_exclusions": 2,
+      "new_research_use": {
+        "exclude_this_reference_from_quality_parameter_selection": true,
+        "exclude_this_reference_from_primary_gt_quality_comparison": true,
+        "exclude_this_reference_from_annotator_uncertainty_calibration": true,
+        "keep_diagnostic_case_studies": true,
+        "change_formal_loader_or_gate": false,
+        "change_raw_data_coordinates_or_other_eligibility": false
+      },
+      "notes": "早期原话明确GT有误；后续指门外两区范围不一定好，未找到GT版本修正或明确撤回。新研究主参数/优劣论证暂不使用该参考，保留诊断供Pro核查；不新增用户确认错误标签，不修改现8份candidate、2份excluded gate。",
+      "decision_authority": "conservative_research_constraint_derived_from_current_user_request_not_new_gt_verdict",
+      "research_status": "conservative_research_quarantine_pending_review"
+    }
+  ],
+  "nonautomatic_review_cases": [
+    {
+      "image_code": "jtcxE69GiFV-10",
+      "image_id": "jtcxE69GiFV_44661972414d44fabc0799f237e4d7f0",
+      "classification": "suspected_oos_only",
+      "gt_versions": [
+        {
+          "gt_object_id": "gt:jtcxE69GiFV_44661972414d44fabc0799f237e4d7f0:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_44661972414d44fabc0799f237e4d7f0.txt",
+          "version": "gt_original",
+          "source": "data/mp3d_layout/valid/label_cor/jtcxE69GiFV_44661972414d44fabc0799f237e4d7f0.txt",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "d8b8d7ade37f1b3e077edcb2a9471f98d6084f5feb59534eb88d58221c86c1b1"
+        }
+      ],
+      "evidence": [
+        {
+          "quote": "有可能算作oos",
+          "source_file": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/source_review.json",
+          "source_json_pointer": "/records/5",
+          "updated_at": "2026-10-10T09:59:09.880Z"
+        }
+      ],
+      "current_personnel_quality_gate_counts": {
+        "candidate_pending_geometry": 1
+      },
+      "current_personnel_gate_reasons": [
+        "{\"reasons\": [], \"status\": \"candidate_pending_geometry\"}"
+      ],
+      "existing_personnel_exclusions": 0,
+      "new_research_use": {
+        "exclude_this_reference_from_quality_parameter_selection": false,
+        "exclude_this_reference_from_primary_gt_quality_comparison": false,
+        "exclude_this_reference_from_annotator_uncertainty_calibration": false,
+        "keep_diagnostic_case_studies": true,
+        "change_formal_loader_or_gate": false,
+        "change_raw_data_coordinates_or_other_eligibility": false
+      },
+      "notes": "仅“有可能算作oos”；不等于GT错误、不可标或参考暂停。",
+      "decision_authority": "historical_user_evidence_interpreted_without_new_gt_verdict",
+      "research_status": "review_separately_no_additional_automatic_exclusion_preserve_formal_gates"
+    },
+    {
+      "image_code": "x8F5xyUWy9e-09",
+      "image_id": "x8F5xyUWy9e_a51a0e2811f342a599ae4cdb9b84ff23",
+      "classification": "true_nonorthogonal_no_user_gt_error_claim",
+      "gt_versions": [
+        {
+          "gt_object_id": "gt:x8F5xyUWy9e_a51a0e2811f342a599ae4cdb9b84ff23:data/mp3d_layout/test/label_cor/x8F5xyUWy9e_a51a0e2811f342a599ae4cdb9b84ff23.txt",
+          "version": "gt_original",
+          "source": "data/mp3d_layout/test/label_cor/x8F5xyUWy9e_a51a0e2811f342a599ae4cdb9b84ff23.txt",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "c8b88b0cbc20d5382dd607721e4b36b61cd8989b4b5286adc32f9385218d91ac"
+        },
+        {
+          "gt_object_id": "gt:x8F5xyUWy9e_a51a0e2811f342a599ae4cdb9b84ff23:export_label/groudTruth.json",
+          "version": "gt_manual_revision",
+          "source": "export_label/groudTruth.json",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "f3bb05c1f1b9d4d6101588476f22f828b317847ae7f5805fad220bf8c7fa4a3c"
+        }
+      ],
+      "evidence": [
+        {
+          "source_file": "analysis_results/research_input_20260929/quality_update_20261010.json",
+          "source_json_pointer": "/image_decisions/1",
+          "reference_status": "no_user_gt_error_claim",
+          "quality_reference_hold": false
+        }
+      ],
+      "current_personnel_quality_gate_counts": {
+        "out_of_primary_scene": 24,
+        "excluded": 2
+      },
+      "current_personnel_gate_reasons": [
+        "{\"reasons\": [\"historical_not_accepted\"], \"status\": \"excluded\"}",
+        "{\"reasons\": [\"oos_stable_nonorthogonal\"], \"status\": \"out_of_primary_scene\"}"
+      ],
+      "existing_personnel_exclusions": 2,
+      "new_research_use": {
+        "exclude_this_reference_from_quality_parameter_selection": false,
+        "exclude_this_reference_from_primary_gt_quality_comparison": false,
+        "exclude_this_reference_from_annotator_uncertainty_calibration": false,
+        "keep_diagnostic_case_studies": true,
+        "change_formal_loader_or_gate": false,
+        "change_raw_data_coordinates_or_other_eligibility": false
+      },
+      "notes": "quality_update明示quality_reference_hold=false。现24份out_of_primary_scene及2份excluded保留；允许非正交专题研究不等于自动恢复主分析资格。",
+      "decision_authority": "historical_user_evidence_interpreted_without_new_gt_verdict",
+      "research_status": "review_separately_no_additional_automatic_exclusion_preserve_formal_gates"
+    },
+    {
+      "image_code": "B6ByNegPMKs-37",
+      "image_id": "B6ByNegPMKs_c946db5792df4f90bea20f06a0030c37",
+      "classification": "historical_gt_issue_with_scope_clarification",
+      "gt_versions": [
+        {
+          "gt_object_id": "gt:B6ByNegPMKs_c946db5792df4f90bea20f06a0030c37:data/mp3d_layout/test/label_cor/B6ByNegPMKs_c946db5792df4f90bea20f06a0030c37.txt",
+          "version": "gt_original",
+          "source": "data/mp3d_layout/test/label_cor/B6ByNegPMKs_c946db5792df4f90bea20f06a0030c37.txt",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "7750943f6f2a51e4613bc20027bef7751c8e92c5cd1acb70d07650d60ee91781"
+        }
+      ],
+      "evidence": [
+        {
+          "comment_id": "comment_000598",
+          "quote": "他把柱子那里标注了,但是这图的gt 也是有点问题的",
+          "updated_at": "2026-09-24T02:58:10.680Z",
+          "source_file": "analysis_results/review_final_20260928/evidence/user.json",
+          "source_json_pointer": "/decisions/83822f0c9ce15f483174/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/597",
+          "occurrence_id": "occurrence_001886"
+        },
+        {
+          "comment_id": "comment_000013",
+          "quote": "本图是走廊,存在不同的停止点.gt 的标注区域有点奇怪",
+          "updated_at": "2026-09-25T13:12:15.231Z",
+          "source_file": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+          "source_json_pointer": "/image_decisions/B6ByNegPMKs_c946db5792df4f90bea20f06a0030c37/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/12",
+          "occurrence_id": "occurrence_000017"
+        }
+      ],
+      "current_personnel_quality_gate_counts": {
+        "candidate_pending_geometry": 9,
+        "excluded": 1
+      },
+      "current_personnel_gate_reasons": [
+        "{\"reasons\": [], \"status\": \"candidate_pending_geometry\"}",
+        "{\"reasons\": [\"excluded_by_review\"], \"status\": \"excluded\"}"
+      ],
+      "existing_personnel_exclusions": 1,
+      "new_research_use": {
+        "exclude_this_reference_from_quality_parameter_selection": false,
+        "exclude_this_reference_from_primary_gt_quality_comparison": false,
+        "exclude_this_reference_from_annotator_uncertainty_calibration": false,
+        "keep_diagnostic_case_studies": true,
+        "change_formal_loader_or_gate": false,
+        "change_raw_data_coordinates_or_other_eligibility": false
+      },
+      "notes": "旧“有点问题”后续细化为走廊不同停止点；不足以自动升级为实质GT错误。",
+      "decision_authority": "historical_user_evidence_interpreted_without_new_gt_verdict",
+      "research_status": "review_separately_no_additional_automatic_exclusion_preserve_formal_gates"
+    },
+    {
+      "image_code": "q9vSo1VnCiC-34",
+      "image_id": "q9vSo1VnCiC_f7452776f0604b508bb2b0263238deb0",
+      "classification": "vague_gt_issue_in_scope_review",
+      "gt_versions": [
+        {
+          "gt_object_id": "gt:q9vSo1VnCiC_f7452776f0604b508bb2b0263238deb0:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_f7452776f0604b508bb2b0263238deb0.txt",
+          "version": "gt_original",
+          "source": "data/mp3d_layout/test/label_cor/q9vSo1VnCiC_f7452776f0604b508bb2b0263238deb0.txt",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "59d22c571589af98c908cb66fe05ab6a4dc66cb3ce8a8cbbe44865d0b2044098"
+        }
+      ],
+      "evidence": [
+        {
+          "comment_id": "comment_000566",
+          "quote": "标注空间范围不同,但是gt 也存在一点问题",
+          "updated_at": "2026-09-24T02:12:13.825Z",
+          "source_file": "analysis_results/review_final_20260928/evidence/user.json",
+          "source_json_pointer": "/decisions/497bb847657d8053449f/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/565",
+          "occurrence_id": "occurrence_001854"
+        }
+      ],
+      "current_personnel_quality_gate_counts": {
+        "candidate_pending_geometry": 5
+      },
+      "current_personnel_gate_reasons": [
+        "{\"reasons\": [], \"status\": \"candidate_pending_geometry\"}"
+      ],
+      "existing_personnel_exclusions": 0,
+      "new_research_use": {
+        "exclude_this_reference_from_quality_parameter_selection": false,
+        "exclude_this_reference_from_primary_gt_quality_comparison": false,
+        "exclude_this_reference_from_annotator_uncertainty_calibration": false,
+        "keep_diagnostic_case_studies": true,
+        "change_formal_loader_or_gate": false,
+        "change_raw_data_coordinates_or_other_eligibility": false
+      },
+      "notes": "明确有一点问题但同条判定为gt_scope，具体问题未定性；单列给Pro复核，不自动加confirmed GT错误或改gate。",
+      "decision_authority": "historical_user_evidence_interpreted_without_new_gt_verdict",
+      "research_status": "review_separately_no_additional_automatic_exclusion_preserve_formal_gates"
+    },
+    {
+      "image_code": "uNb9QFRL6hY-01",
+      "image_id": "uNb9QFRL6hY_00b4950b469b4520b29f895aa029419c",
+      "classification": "detail_omission_not_global_error",
+      "gt_versions": [
+        {
+          "gt_object_id": "gt:uNb9QFRL6hY_00b4950b469b4520b29f895aa029419c:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_00b4950b469b4520b29f895aa029419c.txt",
+          "version": "gt_original",
+          "source": "data/mp3d_layout/test/label_cor/uNb9QFRL6hY_00b4950b469b4520b29f895aa029419c.txt",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "629f8502eb27a35054e8c9154b368a9b7f8659f29e64b2122f5753c8760dd1c6"
+        }
+      ],
+      "evidence": [
+        {
+          "comment_id": "comment_001098",
+          "quote": "这个gt 标的最左边有点问题.除了w002这种,我记得还有种是把最右边的点移到最左边,三对点挤在一块的(忘记是不是这张图了),但是这图的gt标的有点不好",
+          "updated_at": "2026-09-25T07:47:51.135Z",
+          "source_file": "analysis_results/review_final_20260928/evidence/user.json",
+          "source_json_pointer": "/decisions/new_93_3579_7375_W002/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/1097",
+          "occurrence_id": "occurrence_002386"
+        },
+        {
+          "comment_id": "comment_000081",
+          "quote": "这图gt是直接忽略掉了最左边的凸起,最精确细节的标法应该是类似簇2 的标法,甚至可以把簇2最右边的一对点,移动到最左边来(不过考虑到3对点挨得太近不好标,所以一般就放在在最左边了)",
+          "updated_at": "2026-09-27T03:42:31.235Z",
+          "source_file": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+          "source_json_pointer": "/image_decisions/uNb9QFRL6hY_00b4950b469b4520b29f895aa029419c/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/80",
+          "occurrence_id": "occurrence_000085"
+        }
+      ],
+      "current_personnel_quality_gate_counts": {
+        "candidate_pending_geometry": 15
+      },
+      "current_personnel_gate_reasons": [
+        "{\"reasons\": [], \"status\": \"candidate_pending_geometry\"}"
+      ],
+      "existing_personnel_exclusions": 0,
+      "new_research_use": {
+        "exclude_this_reference_from_quality_parameter_selection": false,
+        "exclude_this_reference_from_primary_gt_quality_comparison": false,
+        "exclude_this_reference_from_annotator_uncertainty_calibration": false,
+        "keep_diagnostic_case_studies": true,
+        "change_formal_loader_or_gate": false,
+        "change_raw_data_coordinates_or_other_eligibility": false
+      },
+      "notes": "后续明确最左边凸起遗漏；现规则不因GT遗漏细微凸起自动排除。",
+      "decision_authority": "historical_user_evidence_interpreted_without_new_gt_verdict",
+      "research_status": "review_separately_no_additional_automatic_exclusion_preserve_formal_gates"
+    },
+    {
+      "image_code": "uNb9QFRL6hY-88",
+      "image_id": "uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14",
+      "classification": "scope_and_order_difference_not_global_error",
+      "gt_versions": [
+        {
+          "gt_object_id": "gt:uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14.txt",
+          "version": "gt_original",
+          "source": "data/mp3d_layout/test/label_cor/uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14.txt",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "b8aa487ee8f2550bb4b927fbdd755fa1ccc3a8915c7d0370df0de11fa0e83e64"
+        }
+      ],
+      "evidence": [
+        {
+          "comment_id": "comment_000503",
+          "quote": "这图 是顺序问题,gt, 人员标注的顺序都得重新来排列",
+          "updated_at": "2026-09-23T13:15:41.356Z",
+          "source_file": "analysis_results/review_final_20260928/evidence/user.json",
+          "source_json_pointer": "/decisions/new_94_3645_7433_W028/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/502",
+          "occurrence_id": "occurrence_001791"
+        },
+        {
+          "comment_id": "comment_000678",
+          "quote": "这张图的gt 略微 有点问题 ,标注的空间范围不同",
+          "updated_at": "2026-09-24T08:35:23.133Z",
+          "source_file": "analysis_results/review_final_20260928/evidence/user.json",
+          "source_json_pointer": "/decisions/6bcb7c06bee48a668fc1/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/677",
+          "occurrence_id": "occurrence_001966"
+        },
+        {
+          "comment_id": "comment_000122",
+          "quote": "这图很困难,存在不同的标注区域,主要还是玻璃洗澡区域,标外面还是标里面的墙角,还有是否标马桶区域,这个gt标的范围很大,把左右两侧的走廊都标了,目前没有标注者这样标",
+          "updated_at": "2026-09-27T08:49:13.284Z",
+          "source_file": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+          "source_json_pointer": "/image_decisions/uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/121",
+          "occurrence_id": "occurrence_000126"
+        }
+      ],
+      "current_personnel_quality_gate_counts": {
+        "hold_individual_review": 1,
+        "candidate_pending_geometry": 18,
+        "excluded": 1
+      },
+      "current_personnel_gate_reasons": [
+        "{\"reasons\": [\"representation_pending\"], \"status\": \"hold_individual_review\"}",
+        "{\"reasons\": [\"historical_not_accepted\"], \"status\": \"excluded\"}",
+        "{\"reasons\": [], \"status\": \"candidate_pending_geometry\"}"
+      ],
+      "existing_personnel_exclusions": 1,
+      "new_research_use": {
+        "exclude_this_reference_from_quality_parameter_selection": false,
+        "exclude_this_reference_from_primary_gt_quality_comparison": false,
+        "exclude_this_reference_from_annotator_uncertainty_calibration": false,
+        "keep_diagnostic_case_studies": true,
+        "change_formal_loader_or_gate": false,
+        "change_raw_data_coordinates_or_other_eligibility": false
+      },
+      "notes": "后续明确玻璃内外与两侧走廊目标差异；旧顺序问题须与坐标/环修复另分，不自动判整个GT错误。",
+      "decision_authority": "historical_user_evidence_interpreted_without_new_gt_verdict",
+      "research_status": "review_separately_no_additional_automatic_exclusion_preserve_formal_gates"
+    },
+    {
+      "image_code": "uNb9QFRL6hY-36",
+      "image_id": "uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d",
+      "classification": "conditional_strict_manhattan_scope_critique",
+      "gt_versions": [
+        {
+          "gt_object_id": "gt:uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d.txt",
+          "version": "gt_original",
+          "source": "data/mp3d_layout/test/label_cor/uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d.txt",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "75308d37f6c78565e95d8413b082a11c36705137a21b6a7bc9b81ba6a009040a"
+        }
+      ],
+      "evidence": [
+        {
+          "comment_id": "comment_000094",
+          "quote": "这图在走廊,如果按照最严格的曼哈顿世界约束,目前所有人的标注都是错的,,包括gt,停止的位置都不太对",
+          "updated_at": "2026-09-27T07:17:36.137Z",
+          "source_file": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+          "source_json_pointer": "/image_decisions/uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/93",
+          "occurrence_id": "occurrence_000098"
+        }
+      ],
+      "current_personnel_quality_gate_counts": {
+        "candidate_pending_geometry": 10
+      },
+      "current_personnel_gate_reasons": [
+        "{\"reasons\": [], \"status\": \"candidate_pending_geometry\"}"
+      ],
+      "existing_personnel_exclusions": 0,
+      "new_research_use": {
+        "exclude_this_reference_from_quality_parameter_selection": false,
+        "exclude_this_reference_from_primary_gt_quality_comparison": false,
+        "exclude_this_reference_from_annotator_uncertainty_calibration": false,
+        "keep_diagnostic_case_studies": true,
+        "change_formal_loader_or_gate": false,
+        "change_raw_data_coordinates_or_other_eligibility": false
+      },
+      "notes": "有条件的停止边界评价，不无条件升级为当前GT实质错误。",
+      "decision_authority": "historical_user_evidence_interpreted_without_new_gt_verdict",
+      "research_status": "review_separately_no_additional_automatic_exclusion_preserve_formal_gates"
+    },
+    {
+      "image_code": "uNb9QFRL6hY-47",
+      "image_id": "uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5",
+      "classification": "doorway_conditional_scope_and_minor_omission",
+      "gt_versions": [
+        {
+          "gt_object_id": "gt:uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5.txt",
+          "version": "gt_original",
+          "source": "data/mp3d_layout/test/label_cor/uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5.txt",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "f08ab90659d737c7466566975ee4d34834bf286db18b96b22c17f420e27ef90d"
+        },
+        {
+          "gt_object_id": "gt:uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5:export_label/groudTruth.json",
+          "version": "gt_manual_revision",
+          "source": "export_label/groudTruth.json",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "d8ea1863d8ed1f46aa31e1b7e3304f947effa37285b77ce393d2160f3a9a4c39"
+        }
+      ],
+      "evidence": [
+        {
+          "comment_id": "comment_000100",
+          "quote": "这图很接近门洞交界,其实相机的位置是在门框下略前一点,理论上可以标注的话是只标浴室的空间,但是没有一个人这样标,都是标了左右两侧(也就是相机正后方的区域),如果按照这个标准来的话,连gt都是不太对的,gt的标法是忽略了略低一点的门框,我暂时列入门洞交界(可标),因为整体的标注还行",
+          "updated_at": "2026-09-27T15:35:24.733Z",
+          "source_file": "analysis_results/review_closeout_20260928/evidence/returned_review.json",
+          "source_json_pointer": "/image_decisions/uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/99",
+          "occurrence_id": "occurrence_000104"
+        }
+      ],
+      "current_personnel_quality_gate_counts": {
+        "hold_scene_or_reference": 23,
+        "excluded": 3
+      },
+      "current_personnel_gate_reasons": [
+        "{\"reasons\": [\"historical_not_accepted\"], \"status\": \"excluded\"}",
+        "{\"reasons\": [\"excluded_by_review\"], \"status\": \"excluded\"}",
+        "{\"reasons\": [\"doorway_annotatable\"], \"status\": \"hold_scene_or_reference\"}"
+      ],
+      "existing_personnel_exclusions": 3,
+      "new_research_use": {
+        "exclude_this_reference_from_quality_parameter_selection": false,
+        "exclude_this_reference_from_primary_gt_quality_comparison": false,
+        "exclude_this_reference_from_annotator_uncertainty_calibration": false,
+        "keep_diagnostic_case_studies": true,
+        "change_formal_loader_or_gate": false,
+        "change_raw_data_coordinates_or_other_eligibility": false
+      },
+      "notes": "用户暂列门洞交界可标。现已有23份hold_scene_or_reference、3份excluded，继续遵守原gate；本登记不另认定确认GT错误。",
+      "decision_authority": "historical_user_evidence_interpreted_without_new_gt_verdict",
+      "research_status": "review_separately_no_additional_automatic_exclusion_preserve_formal_gates"
+    },
+    {
+      "image_code": "yqstnuAEVhm-32",
+      "image_id": "yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65",
+      "classification": "tentative_detail_and_version_specific_scope",
+      "gt_versions": [
+        {
+          "gt_object_id": "gt:yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65:data/mp3d_layout/test/label_cor/yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65.txt",
+          "version": "gt_original",
+          "source": "data/mp3d_layout/test/label_cor/yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65.txt",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "5f0e39728300ebb8b5b0463b0f19c5baafc986f98ef11fcf5b693397467236f5"
+        },
+        {
+          "gt_object_id": "gt:yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65:export_label/groudTruth.json",
+          "version": "gt_manual_revision",
+          "source": "export_label/groudTruth.json",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "1e815522d6a997916c3e1bd62a16262fbe11bc8ed7b22204669ae5fb26ced4c7"
+        }
+      ],
+      "evidence": [
+        {
+          "comment_id": "comment_001081",
+          "quote": "门口的地方,标注的细节好像比gt更好,gt的可能都略有问题",
+          "updated_at": "2026-09-25T07:02:02.885Z",
+          "source_file": "analysis_results/review_final_20260928/evidence/user.json",
+          "source_json_pointer": "/decisions/1a628f7c69f6416b/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/1080",
+          "occurrence_id": "occurrence_002369"
+        }
+      ],
+      "current_personnel_quality_gate_counts": {
+        "candidate_pending_geometry": 24,
+        "excluded": 2
+      },
+      "current_personnel_gate_reasons": [
+        "{\"reasons\": [], \"status\": \"candidate_pending_geometry\"}",
+        "{\"reasons\": [\"historical_not_accepted\"], \"status\": \"excluded\"}"
+      ],
+      "existing_personnel_exclusions": 2,
+      "new_research_use": {
+        "exclude_this_reference_from_quality_parameter_selection": false,
+        "exclude_this_reference_from_primary_gt_quality_comparison": false,
+        "exclude_this_reference_from_annotator_uncertainty_calibration": false,
+        "keep_diagnostic_case_studies": true,
+        "change_formal_loader_or_gate": false,
+        "change_raw_data_coordinates_or_other_eligibility": false
+      },
+      "notes": "“可能”问题；原始MP3D与修订版范围不同，用户描述修订版提前停止小区域；不把两版本都判错。",
+      "decision_authority": "historical_user_evidence_interpreted_without_new_gt_verdict",
+      "research_status": "review_separately_no_additional_automatic_exclusion_preserve_formal_gates"
+    },
+    {
+      "image_code": "yqstnuAEVhm-07",
+      "image_id": "yqstnuAEVhm_30f3ce4575234a7ba5ff97797f059ae1",
+      "classification": "minor_fireplace_omission_accepted_for_current_study",
+      "gt_versions": [
+        {
+          "gt_object_id": "gt:yqstnuAEVhm_30f3ce4575234a7ba5ff97797f059ae1:data/mp3d_layout/test/label_cor/yqstnuAEVhm_30f3ce4575234a7ba5ff97797f059ae1.txt",
+          "version": "gt_original",
+          "source": "data/mp3d_layout/test/label_cor/yqstnuAEVhm_30f3ce4575234a7ba5ff97797f059ae1.txt",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "eea86bc7c40904e495d619178a75df49583887a04f73b03f8efc3ae9d8f2b5e7"
+        }
+      ],
+      "evidence": [],
+      "current_personnel_quality_gate_counts": {
+        "hold_scene_or_reference": 6
+      },
+      "current_personnel_gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ],
+      "existing_personnel_exclusions": 0,
+      "new_research_use": {
+        "exclude_this_reference_from_quality_parameter_selection": false,
+        "exclude_this_reference_from_primary_gt_quality_comparison": false,
+        "exclude_this_reference_from_annotator_uncertainty_calibration": false,
+        "keep_diagnostic_case_studies": true,
+        "change_formal_loader_or_gate": false,
+        "change_raw_data_coordinates_or_other_eligibility": false
+      },
+      "notes": "本轮用户接受GT且暂不处理壁炉细节；不因旧上传备注再加GT错误。其既有6份hold_scene_or_reference仍需按正式gate处理。",
+      "decision_authority": "historical_user_evidence_interpreted_without_new_gt_verdict",
+      "research_status": "review_separately_no_additional_automatic_exclusion_preserve_formal_gates"
+    }
+  ],
+  "version_resolved_not_global_exclusion": [
+    {
+      "image_code": "e9zR4mvMWw7-16",
+      "image_id": "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45",
+      "classification": "original_scope_revised_reference_user_accepted",
+      "gt_versions": [
+        {
+          "gt_object_id": "gt:e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45:data/mp3d_layout/test/label_cor/e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45.txt",
+          "version": "gt_original",
+          "source": "data/mp3d_layout/test/label_cor/e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45.txt",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "4f62933da81600ffd656275d3759f70d72960f63e6e05789c858568fee0e5cbb"
+        },
+        {
+          "gt_object_id": "gt:e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45:export_label/groudTruth.json",
+          "version": "gt_manual_revision",
+          "source": "export_label/groudTruth.json",
+          "observed_gt_object_worker_quality_gate": "candidate_pending_geometry",
+          "coordinates_sha256": "562e4f87a1f61607c77383c8a3331813912a4c8f43c5b114d2deab63e846c7d9"
+        }
+      ],
+      "evidence": [
+        {
+          "comment_id": "comment_000445",
+          "quote": "原始matterport gt是标的空间不同 ,但是我人工修正过后的旧没问题了",
+          "updated_at": "2026-09-28T06:14:14.324Z",
+          "source_file": "analysis_results/review_final_20260928/evidence/coverage.json",
+          "source_json_pointer": "/decisions/e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45/comment",
+          "comment_table": "analysis_results/research_input_20260929/comments.json",
+          "comment_table_pointer": "/comments/444",
+          "occurrence_id": "occurrence_000466"
+        }
+      ],
+      "current_personnel_quality_gate_counts": {
+        "candidate_pending_geometry": 24,
+        "excluded": 2
+      },
+      "current_personnel_gate_reasons": [
+        "{\"reasons\": [], \"status\": \"candidate_pending_geometry\"}",
+        "{\"reasons\": [\"historical_not_accepted\"], \"status\": \"excluded\"}"
+      ],
+      "existing_personnel_exclusions": 2,
+      "new_research_use": {
+        "exclude_this_reference_from_quality_parameter_selection": false,
+        "exclude_this_reference_from_primary_gt_quality_comparison": false,
+        "exclude_this_reference_from_annotator_uncertainty_calibration": false,
+        "keep_diagnostic_case_studies": true,
+        "change_formal_loader_or_gate": false,
+        "change_raw_data_coordinates_or_other_eligibility": false
+      },
+      "notes": "用户明确人工修订后没问题。旧原GT范围差异不能覆盖当前人工修订版；保留两版身份。",
+      "decision_authority": "user_explicit_revised_gt_acceptance",
+      "research_status": "preserve_version_specific_acceptance_not_global_gt_exclusion"
+    }
+  ],
+  "coverage": {
+    "research_images": 259,
+    "reference_only_images": 2,
+    "personnel_annotations": 3152,
+    "comment_records": 3121,
+    "comment_occurrences": 32462,
+    "latest_uploaded_difficulty_records": 26,
+    "source_review_records_preserved": true,
+    "known_limitations": [
+      "审核覆盖为所给正式输入、已合并历史审核评论、2026-10-10上传回执和当前会话声明，不声称未提供资料已全部核验。",
+      "历史语义标签不等于新用户裁定；原话与推断分栏。",
+      "普遍hold_scene_or_reference多为未确认场景，不等于GT错误，不合并入明确错误数量。"
+    ],
+    "supplemental_archive_reconciliation_scanned": true
+  },
+  "all_current_hold_images": [
+    {
+      "image_code": "7y3sRwLe3Va-19",
+      "image_id": "7y3sRwLe3Va_ad77d6eeca5b492b8fe3317177f4f03f",
+      "gate_counts": {
+        "hold_scene_or_reference": 10
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "7y3sRwLe3Va-23",
+      "image_id": "7y3sRwLe3Va_bbcc19afdad742eba89290ad2b5dbf6b",
+      "gate_counts": {
+        "hold_scene_or_reference": 5
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "B6ByNegPMKs-40",
+      "image_id": "B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624",
+      "gate_counts": {
+        "candidate_pending_geometry": 22,
+        "excluded": 3,
+        "hold_individual_review": 1
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"undetermined\"], \"status\": \"hold_individual_review\"}"
+      ]
+    },
+    {
+      "image_code": "S9hNv5qa7GM-12",
+      "image_id": "S9hNv5qa7GM_8b55e4f095374cfe8ddb0fda0f0dfa02",
+      "gate_counts": {
+        "hold_scene_or_reference": 2
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "UwV83HsGsw3-12",
+      "image_id": "UwV83HsGsw3_a3630444bbd94cd6ac4edbe2dc1221de",
+      "gate_counts": {
+        "hold_scene_or_reference": 10,
+        "excluded": 1
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "UwV83HsGsw3-22",
+      "image_id": "UwV83HsGsw3_f9641b59487a4b0ca0fe41a82edc0980",
+      "gate_counts": {
+        "hold_scene_or_reference": 5
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "VFuaQ6m2Qom-01",
+      "image_id": "VFuaQ6m2Qom_109e18c64a614dc49e41a33ae979f98a",
+      "gate_counts": {
+        "hold_scene_or_reference": 2
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "X7HyMhZNoso-19",
+      "image_id": "X7HyMhZNoso_b6f452209a62499795e5bd137214a7f9",
+      "gate_counts": {
+        "hold_individual_review": 1,
+        "candidate_pending_geometry": 8
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"representation_pending\"], \"status\": \"hold_individual_review\"}"
+      ]
+    },
+    {
+      "image_code": "b8cTxDM8gDG-17",
+      "image_id": "b8cTxDM8gDG_f339391e9479496e8652c972953f0ce4",
+      "gate_counts": {
+        "hold_scene_or_reference": 5
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "jh4fc5c5qoQ-04",
+      "image_id": "jh4fc5c5qoQ_4547d37b305e41bdad0de45ade6971ca",
+      "gate_counts": {
+        "hold_scene_or_reference": 2
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "jh4fc5c5qoQ-10",
+      "image_id": "jh4fc5c5qoQ_855bc326ad174253b57626daf123c608",
+      "gate_counts": {
+        "hold_scene_or_reference": 2
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "jh4fc5c5qoQ-12",
+      "image_id": "jh4fc5c5qoQ_a59a3a61089343a8ba2834e7d3cd1066",
+      "gate_counts": {
+        "hold_scene_or_reference": 2
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "jtcxE69GiFV-05",
+      "image_id": "jtcxE69GiFV_27535f650b78489abcf2397c1eaa3037",
+      "gate_counts": {
+        "hold_reference_quality": 6
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"explicit_reference_error\"], \"status\": \"hold_reference_quality\"}"
+      ]
+    },
+    {
+      "image_code": "jtcxE69GiFV-11",
+      "image_id": "jtcxE69GiFV_4d7ce55eeb6643079aba3b10360de8d8",
+      "gate_counts": {
+        "hold_all_analysis": 2
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"explicit_user_hold\"], \"status\": \"hold_all_analysis\"}"
+      ]
+    },
+    {
+      "image_code": "jtcxE69GiFV-12",
+      "image_id": "jtcxE69GiFV_539fb3f6f19b442285b593628a8ce14e",
+      "gate_counts": {
+        "hold_scene_or_reference": 9
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"doorway_annotatable\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "jtcxE69GiFV-17",
+      "image_id": "jtcxE69GiFV_6723e18211d244f8b17ced91aae64d99",
+      "gate_counts": {
+        "hold_reference_quality": 1
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"explicit_reference_error\"], \"status\": \"hold_reference_quality\"}"
+      ]
+    },
+    {
+      "image_code": "jtcxE69GiFV-18",
+      "image_id": "jtcxE69GiFV_67790605390f4d439c3c59395967ec84",
+      "gate_counts": {
+        "hold_scene_or_reference": 4
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "jtcxE69GiFV-26",
+      "image_id": "jtcxE69GiFV_c90412ad99334d3aa7a1ec74d8e543a1",
+      "gate_counts": {
+        "hold_scene_or_reference": 4
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "jtcxE69GiFV-28",
+      "image_id": "jtcxE69GiFV_dce110162b244b2ab76a0804fc830a9e",
+      "gate_counts": {
+        "hold_scene_or_reference": 4
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "pRbA3pwrgk9-12",
+      "image_id": "pRbA3pwrgk9_8caa90fc5528451f9e9f45634676499b",
+      "gate_counts": {
+        "hold_reference_quality": 2
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"explicit_reference_error\"], \"status\": \"hold_reference_quality\"}"
+      ]
+    },
+    {
+      "image_code": "pRbA3pwrgk9-16",
+      "image_id": "pRbA3pwrgk9_bc9ae89832854c19a69741f97291efad",
+      "gate_counts": {
+        "hold_all_analysis": 2
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"explicit_user_hold\"], \"status\": \"hold_all_analysis\"}"
+      ]
+    },
+    {
+      "image_code": "pa4otMbVnkk-10",
+      "image_id": "pa4otMbVnkk_48321c1bb20244f1b43b2c41b4dc9657",
+      "gate_counts": {
+        "hold_scene_or_reference": 3
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "pa4otMbVnkk-17",
+      "image_id": "pa4otMbVnkk_63bde48e974d42e59a664bc3b5d9566a",
+      "gate_counts": {
+        "hold_scene_or_reference": 3
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "q9vSo1VnCiC-03",
+      "image_id": "q9vSo1VnCiC_3e5aacbc10904d4b88660a3cb91efcb9",
+      "gate_counts": {
+        "hold_scene_or_reference": 5
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "q9vSo1VnCiC-12",
+      "image_id": "q9vSo1VnCiC_9ba6cd412cb04c5c9beb15ef9e6d22c5",
+      "gate_counts": {
+        "hold_scene_or_reference": 10
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "q9vSo1VnCiC-23",
+      "image_id": "q9vSo1VnCiC_c421f07780004647a7198c4ac5371e8a",
+      "gate_counts": {
+        "hold_scene_or_reference": 24,
+        "excluded": 2
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "q9vSo1VnCiC-24",
+      "image_id": "q9vSo1VnCiC_c4b0b6a41c2a4db3927f5fa9cafb6345",
+      "gate_counts": {
+        "hold_scene_or_reference": 6
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "q9vSo1VnCiC-29",
+      "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+      "gate_counts": {
+        "hold_scene_or_reference": 5
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "rPc6DW4iMge-16",
+      "image_id": "rPc6DW4iMge_a72230c911234d18b08568b9d8b02dd2",
+      "gate_counts": {
+        "hold_scene_or_reference": 6
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "uNb9QFRL6hY-03",
+      "image_id": "uNb9QFRL6hY_05285f9bc0234526bf0f6362679e38d0",
+      "gate_counts": {
+        "hold_scene_or_reference": 15
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "uNb9QFRL6hY-06",
+      "image_id": "uNb9QFRL6hY_07a43087f1e54e3f828851d8e457a283",
+      "gate_counts": {
+        "hold_scene_or_reference": 24,
+        "excluded": 2
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "uNb9QFRL6hY-08",
+      "image_id": "uNb9QFRL6hY_1096f195d3294cefa462add5ab0c342e",
+      "gate_counts": {
+        "hold_scene_or_reference": 23
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "uNb9QFRL6hY-19",
+      "image_id": "uNb9QFRL6hY_33dd9892d10e474ead8f7ad38a8da562",
+      "gate_counts": {
+        "hold_scene_or_reference": 15
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "uNb9QFRL6hY-32",
+      "image_id": "uNb9QFRL6hY_6a500a9a43a340eb817c58bb084327fe",
+      "gate_counts": {
+        "hold_main_analysis": 5
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"continuation_explicit_hold_main\"], \"status\": \"hold_main_analysis\"}"
+      ]
+    },
+    {
+      "image_code": "uNb9QFRL6hY-47",
+      "image_id": "uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5",
+      "gate_counts": {
+        "hold_scene_or_reference": 23,
+        "excluded": 3
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"doorway_annotatable\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "uNb9QFRL6hY-51",
+      "image_id": "uNb9QFRL6hY_a372582c11864f31a9dd174e4a0ae6ad",
+      "gate_counts": {
+        "hold_reference_quality": 4,
+        "excluded": 2
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"explicit_reference_error\"], \"status\": \"hold_reference_quality\"}"
+      ]
+    },
+    {
+      "image_code": "uNb9QFRL6hY-55",
+      "image_id": "uNb9QFRL6hY_ab84a27288034713b2c24e41b31acc78",
+      "gate_counts": {
+        "hold_scene_or_reference": 15
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "uNb9QFRL6hY-58",
+      "image_id": "uNb9QFRL6hY_b73ae36f994747e196380b1cb71cf407",
+      "gate_counts": {
+        "hold_scene_or_reference": 15
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "uNb9QFRL6hY-60",
+      "image_id": "uNb9QFRL6hY_ba24e5a57ef34c6dbc0458ed4c1e701d",
+      "gate_counts": {
+        "candidate_pending_geometry": 21,
+        "hold_individual_review": 1,
+        "excluded": 1
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"representation_pending\"], \"status\": \"hold_individual_review\"}"
+      ]
+    },
+    {
+      "image_code": "uNb9QFRL6hY-70",
+      "image_id": "uNb9QFRL6hY_d02f87bbb0414146a7a15070110a0384",
+      "gate_counts": {
+        "hold_scene_or_reference": 24,
+        "excluded": 2
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "uNb9QFRL6hY-88",
+      "image_id": "uNb9QFRL6hY_fd8d4da92ec14b668ed3d2986616bd14",
+      "gate_counts": {
+        "hold_individual_review": 1,
+        "candidate_pending_geometry": 18,
+        "excluded": 1
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"representation_pending\"], \"status\": \"hold_individual_review\"}"
+      ]
+    },
+    {
+      "image_code": "wc2JMjhGNzB-14",
+      "image_id": "wc2JMjhGNzB_1d8917d25abb4a77a0da9583dc82c17c",
+      "gate_counts": {
+        "hold_reference_quality": 4,
+        "excluded": 1
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"user_reported_gt_issue_20261010\"], \"status\": \"hold_reference_quality\"}"
+      ]
+    },
+    {
+      "image_code": "wc2JMjhGNzB-22",
+      "image_id": "wc2JMjhGNzB_3a035012369c4eb58295238d946fbc66",
+      "gate_counts": {
+        "hold_scene_or_reference": 8
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "wc2JMjhGNzB-30",
+      "image_id": "wc2JMjhGNzB_55b45b0f19c2460bbcd1fb1c86c6610d",
+      "gate_counts": {
+        "hold_scene_or_reference": 10
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "wc2JMjhGNzB-46",
+      "image_id": "wc2JMjhGNzB_9087f0358178420a8b9ac7b17a8919c7",
+      "gate_counts": {
+        "hold_scene_or_reference": 12
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "x8F5xyUWy9e-01",
+      "image_id": "x8F5xyUWy9e_1be9a97aada84e4795f64583ac0e3b76",
+      "gate_counts": {
+        "hold_reference_quality": 5
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"user_reported_gt_issue_20261010\"], \"status\": \"hold_reference_quality\"}"
+      ]
+    },
+    {
+      "image_code": "yqstnuAEVhm-07",
+      "image_id": "yqstnuAEVhm_30f3ce4575234a7ba5ff97797f059ae1",
+      "gate_counts": {
+        "hold_scene_or_reference": 6
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "yqstnuAEVhm-24",
+      "image_id": "yqstnuAEVhm_9cb726b170554b9bacd039d4db246040",
+      "gate_counts": {
+        "hold_scene_or_reference": 5
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "yqstnuAEVhm-26",
+      "image_id": "yqstnuAEVhm_a93ea1ea5702412c9ef9c82a436c4599",
+      "gate_counts": {
+        "hold_scene_or_reference": 24,
+        "excluded": 2
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "yqstnuAEVhm-29",
+      "image_id": "yqstnuAEVhm_c93bf298b1cb41a1b368a6ce8bcff53d",
+      "gate_counts": {
+        "hold_scene_or_reference": 5
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "yqstnuAEVhm-31",
+      "image_id": "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+      "gate_counts": {
+        "hold_individual_review": 1,
+        "candidate_pending_geometry": 21,
+        "excluded": 4
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"representation_pending\"], \"status\": \"hold_individual_review\"}"
+      ]
+    },
+    {
+      "image_code": "zsNo4HB9uLZ-05",
+      "image_id": "zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b",
+      "gate_counts": {
+        "hold_reference_quality": 4
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"explicit_reference_error\"], \"status\": \"hold_reference_quality\"}"
+      ]
+    },
+    {
+      "image_code": "zsNo4HB9uLZ-13",
+      "image_id": "zsNo4HB9uLZ_aabf649f606a48a1b16d5bdcd5970602",
+      "gate_counts": {
+        "hold_scene_or_reference": 4
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    },
+    {
+      "image_code": "zsNo4HB9uLZ-16",
+      "image_id": "zsNo4HB9uLZ_faad06c7cb2b4a6f9220e7f6f87c800b",
+      "gate_counts": {
+        "hold_scene_or_reference": 2
+      },
+      "gate_reasons": [
+        "{\"reasons\": [\"unconfirmed\"], \"status\": \"hold_scene_or_reference\"}"
+      ]
+    }
+  ],
+  "consumer_contract": {
+    "join_keys": [
+      "image_id",
+      "gt_object_id",
+      "version"
+    ],
+    "order": [
+      "先读取正式loader并保留原人员作答资格及其他gate",
+      "将所选参考通过完整GT对象ID与版本连接本登记",
+      "若对应研究用途的exclude字段为true，则该参考不得参与该用途",
+      "若exclude字段为false，仅表示本登记不额外排除；不覆盖原有hold/excluded/out_of_primary_scene",
+      "所有派生新参考须有独立ID和验证记录；底面确认不解除旧参考排除，也不等于完整3D参考可用"
+    ],
+    "forbidden_shortcut": "不得仅检查GT对象自身worker_quality_gate，也不得把非正交、范围不同、疑似或细节遗漏关键词自动升级为GT错误。",
+    "formal_loader_mutated_by_this_audit": false,
+    "registry_applied_in_actual_new_research_run": false,
+    "meaning": "这是新研究使用合同及已有gate审计，不是完成评分复算或正式代码接入的声明。"
+  },
+  "outside_current_population_historical_leads": [
+    {
+      "image_code": "q9vSo1VnCiC-19",
+      "image_id": "q9vSo1VnCiC_a84d84665ef94d0c86f38bc2250bab55",
+      "in_current_259": false,
+      "quote": "角点重复；GT错误且人工不适合",
+      "evidence_level": "old_calibration_candidate_summary_not_verified_verbatim_human_comment",
+      "latest_human_reviewed_at_snapshot": "false",
+      "historical_hard_exclude": "true",
+      "gt_object_id": null,
+      "reason_gt_object_id_null": "当前正式261图对象表无此图；不推测GT对象ID。",
+      "source_file": "scope_release_staging_20261010/full_review/archive_reconciliation/historical_c1_candidate_notes_46.json",
+      "source_json_pointer": "/18",
+      "source_sha256": "87be010ad4279959d557b8d64a33cb8383369c1b2072355ea9d3fb1d6c4fc991",
+      "original_bundle_source": [
+        {
+          "bundle_relative_path": "原清单123项/032_d6d4a454e6a2_calibration_full_candidate_inventory_v3.csv",
+          "csv_zero_based_data_row": 216,
+          "field": "notes",
+          "file_sha256": "d6d4a454e6a25a9e12e9142707598c3094509263f00fd3d6b912470ea049a244",
+          "logical_pointer": "/rows/216/notes"
+        }
+      ],
+      "action": "保留库外历史线索，不计为当前新用户确认GT错误；未来引入该图前另行核查。"
+    }
+  ]
+}

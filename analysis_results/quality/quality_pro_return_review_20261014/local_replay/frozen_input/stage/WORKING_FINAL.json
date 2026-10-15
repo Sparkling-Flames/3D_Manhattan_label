@@ -1,0 +1,29 @@
+{
+  "schema": "quality_staged_working_v1",
+  "candidate": "hill_global08",
+  "config": {
+    "name": "hill_global08",
+    "family": "hill",
+    "combine": "additive",
+    "iou_power": 1.0,
+    "boundary_scale": 5.656854249492381,
+    "boundary_power": 2.0,
+    "direction_scale": 6.123724356957945,
+    "direction_cap": 1.5,
+    "direction_power": 2.0,
+    "tail_scale": 12.0,
+    "global_scale": 0.8,
+    "local_scale": 0.25,
+    "global_power": 2.0,
+    "local_power": 2.0
+  },
+  "fine_selected": "center",
+  "doorway_fine_parameter_change": false,
+  "formal_algorithm_changed": false,
+  "status": "research_working_only",
+  "limitations": [
+    "门洞比较未提供独立人工标签，微调保持中心",
+    "J01绝对分数意见未解决",
+    "去尾项未修复方向指标对墙族坍缩的语义盲区"
+  ]
+}

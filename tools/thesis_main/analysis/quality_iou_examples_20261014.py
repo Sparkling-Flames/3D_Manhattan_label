@@ -7,8 +7,8 @@ from shapely.geometry import Polygon
 from lib.misc import post_proc
 
 ROOT=Path(__file__).resolve().parents[3]
-OUT=ROOT/'research/quality_iou_examples_20261014'
-PACK=ROOT/'research/quality_pro_handoff_20261014/package'
+OUT=ROOT/'research/quality/quality_iou_examples_20261014'
+PACK=ROOT/'research/quality/quality_pro_handoff_20261014/package'
 
 def read(p):
     return json.loads(p.read_text(encoding='utf-8-sig'))
@@ -106,7 +106,7 @@ def main():
             oid=cid+':'+str(i);geos[oid]=g
             bindings.append(dict(label='AB'[i]+' · '+label,object_id=oid,reference_object_id=rid,metrics=metrics(g,ref)))
         cards.append(dict(id=cid,title=title,kind='synthetic_control',bindings=bindings,note=note))
-    ledger={r['record_id']:r for r in read(ROOT/'research/quality_pro_return_review_20261014/evidence/effective_use_ledger.json')['records']}
+    ledger={r['record_id']:r for r in read(ROOT/'research/quality/quality_pro_return_review_20261014/evidence/effective_use_ledger.json')['records']}
     objects=read(PACK/'data/objects.json');identities={r['object_id']:r for r in objects['objects']}
     evidence=next(q for q in read(PACK/'preparation/EVIDENCE.json')['question_groups'] if q['group']=='P01')
     bindings=[]

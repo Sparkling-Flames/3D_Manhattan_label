@@ -9,7 +9,7 @@ const require = createRequire(path.join(process.cwd(), 'package.json'));
 const { Workbook, SpreadsheetFile } = await import(pathToFileURL(require.resolve('@oai/artifact-tool')).href);
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 const arg = name => process.argv.includes(name) ? process.argv[process.argv.indexOf(name)+1] : undefined;
-const out = path.resolve(arg('--source-dir') ?? path.join(root, 'research/descriptive_statistics_current_20261015'));
+const out = path.resolve(arg('--source-dir') ?? path.join(root, 'research/statistics/descriptive_statistics_current_20261015'));
 const tables = JSON.parse(await fs.readFile(path.join(out, 'tables.json'), 'utf8'));
 const contract = JSON.parse(await fs.readFile(path.join(out, 'FIELD_CONTRACT.json'), 'utf8'));
 const workbook = Workbook.create();

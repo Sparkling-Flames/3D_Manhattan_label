@@ -1,0 +1,5277 @@
+{
+  "schema": "quality_bottom_response_preparation_v1",
+  "rows": [
+    {
+      "case_id": "2x2:unchanged:0:0",
+      "mode": "unchanged",
+      "budget": 0,
+      "sign": 0,
+      "reference_half_sizes": [
+        2,
+        2
+      ],
+      "reference_points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 0.0,
+        "all_point_rms_px": 0.0,
+        "max_point_distance_px": 0.0,
+        "changed_points": 0,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 0.0,
+        "axis_deg": 0.0,
+        "moment4": 0.0,
+        "excess2": {
+          "2": 0.0,
+          "5": 0.0,
+          "10": 0.0,
+          "15": 0.0,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "length_weight": [
+          0.25000000000000006,
+          0.25,
+          0.25000000000000006,
+          0.25
+        ],
+        "two_largest_edges_squared_contribution_share": 0.0,
+        "reference_axis_0_rms_deg": 0.0,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 0.0
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 1.0,
+        "S_bottom_deg": 1.5476869973396515e-15,
+        "dir": 0.0,
+        "Hmean": 0.0,
+        "Hcenter": 0.0,
+        "height_mean_ratio": 1.0,
+        "iou_3d_corner_mean": 1.0
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 100.0,
+          "floor_score": 100.0,
+          "boundary_loss": 7.485422005419456e-32,
+          "direction_loss": 0.0,
+          "global_height_loss": 0.0,
+          "local_height_loss": 0.0,
+          "height_loss": 0.0,
+          "denominator": 1.0,
+          "height_score_drop": 0.0,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.0,
+        "height_center_shift_h": -0.0,
+        "height_center_signed_global_relative": 0.0,
+        "height_centered_min_wall_height_h": 2.5999999999999988,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "2x2:single_bottom:-1:1",
+      "mode": "single_bottom",
+      "budget": 1,
+      "sign": -1,
+      "reference_half_sizes": [
+        2,
+        2
+      ],
+      "reference_points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          309.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 1.0,
+        "all_point_rms_px": 0.7071067811865476,
+        "max_point_distance_px": 2.0,
+        "changed_points": 1,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 0.8071986410958307,
+        "axis_deg": 0.0,
+        "moment4": 0.8405870594879499,
+        "excess2": {
+          "2": 0.0,
+          "5": 0.0,
+          "10": 0.0,
+          "15": 0.0,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          1.135823703836003,
+          0.0,
+          0.0,
+          1.1358237038360102
+        ],
+        "length_weight": [
+          0.25252768231455314,
+          0.24747231768544686,
+          0.2474723176854469,
+          0.2525276823145531
+        ],
+        "two_largest_edges_squared_contribution_share": 1.0,
+        "reference_axis_0_rms_deg": 0.8071986410958307,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 1.3910942560781698
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.9801735394069242,
+        "S_bottom_deg": 0.20462402350991085,
+        "dir": 0.807198641095829,
+        "Hmean": 0.006286773880218588,
+        "Hcenter": 0.007963360658390494,
+        "height_mean_ratio": 1.0062867738802186,
+        "iou_3d_corner_mean": 0.9741108234059523
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 95.34754808947591,
+          "floor_score": 95.44542277765431,
+          "boundary_loss": 0.0013084684686682673,
+          "direction_loss": 0.02563814759933922,
+          "global_height_loss": 3.952352582099868e-05,
+          "local_height_loss": 0.0010146418076096236,
+          "height_loss": 0.0010541653334306222,
+          "denominator": 1.028000781401438,
+          "height_score_drop": 0.09787468817840761,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.007963360658390494,
+        "height_center_shift_h": -0.01634561208856855,
+        "height_center_signed_global_relative": 0.0062867738802186756,
+        "height_centered_min_wall_height_h": 2.58365438791143,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "2x2:single_bottom:1:1",
+      "mode": "single_bottom",
+      "budget": 1,
+      "sign": 1,
+      "reference_half_sizes": [
+        2,
+        2
+      ],
+      "reference_points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          313.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 1.0,
+        "all_point_rms_px": 0.7071067811865476,
+        "max_point_distance_px": 2.0,
+        "changed_points": 1,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 0.7754424103888148,
+        "axis_deg": 0.0,
+        "moment4": 0.7300358008306587,
+        "excess2": {
+          "2": 0.0,
+          "5": 0.0,
+          "10": 0.0,
+          "15": 0.0,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          1.1018501357153525,
+          0.0,
+          0.0,
+          1.101850135715324
+        ],
+        "length_weight": [
+          0.24764185285597518,
+          0.2523581471440248,
+          0.2523581471440248,
+          0.24764185285597515
+        ],
+        "two_largest_edges_squared_contribution_share": 1.0,
+        "reference_axis_0_rms_deg": 0.7754424103888173,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 1.3494853027595044
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.9811296549098225,
+        "S_bottom_deg": 0.2041862249887595,
+        "dir": 0.7754424103888213,
+        "Hmean": 0.005751491965739541,
+        "Hcenter": 0.007558274751476739,
+        "height_mean_ratio": 0.9942485080342605,
+        "iou_3d_corner_mean": 0.9754329610124826
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 95.63223876067394,
+          "floor_score": 95.72060539921901,
+          "boundary_loss": 0.0013028754523487596,
+          "direction_loss": 0.023690281264384157,
+          "global_height_loss": 3.30796598319665e-05,
+          "local_height_loss": 0.000914040275500972,
+          "height_loss": 0.0009471199353329386,
+          "denominator": 1.025940276652066,
+          "height_score_drop": 0.0883666385450681,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.007558274751476739,
+        "height_center_shift_h": 0.01495387911092294,
+        "height_center_signed_global_relative": -0.005751491965739594,
+        "height_centered_min_wall_height_h": 2.554568774822354,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "2x2:single_bottom:-1:4",
+      "mode": "single_bottom",
+      "budget": 4,
+      "sign": -1,
+      "reference_half_sizes": [
+        2,
+        2
+      ],
+      "reference_points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          303.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 4.0,
+        "all_point_rms_px": 2.8284271247461903,
+        "max_point_distance_px": 8.0,
+        "changed_points": 1,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 3.4388980303723504,
+        "axis_deg": 0.0,
+        "moment4": 267.6291752288142,
+        "excess2": {
+          "2": 3.972524102542013,
+          "5": 0.0,
+          "10": 0.0,
+          "15": 0.0,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          4.757156395640806,
+          0.0,
+          0.0,
+          4.757156395640777
+        ],
+        "length_weight": [
+          0.2612845571809563,
+          0.23871544281904375,
+          0.23871544281904378,
+          0.2612845571809563
+        ],
+        "two_largest_edges_squared_contribution_share": 1.0,
+        "reference_axis_0_rms_deg": 3.4388980303723526,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 5.826302897968762
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.9167806413842381,
+        "S_bottom_deg": 0.8211822872756444,
+        "dir": 3.438898030372354,
+        "Hmean": 0.02919102215968583,
+        "Hcenter": 0.03474187151749209,
+        "height_mean_ratio": 1.0291910221596858,
+        "iou_3d_corner_mean": 0.8918704343911682
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 65.13030232335896,
+          "floor_score": 66.0768563353685,
+          "boundary_loss": 0.02107313590422684,
+          "direction_loss": 0.366372775159068,
+          "global_height_loss": 0.0008521157747272693,
+          "local_height_loss": 0.019311962184606853,
+          "height_loss": 0.02016407795933412,
+          "denominator": 1.407609989022629,
+          "height_score_drop": 0.9465540120095426,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.03474187151749209,
+        "height_center_shift_h": -0.07589665761518294,
+        "height_center_signed_global_relative": 0.029191022159685755,
+        "height_centered_min_wall_height_h": 2.524103342384816,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "2x2:single_bottom:1:4",
+      "mode": "single_bottom",
+      "budget": 4,
+      "sign": 1,
+      "reference_half_sizes": [
+        2,
+        2
+      ],
+      "reference_points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          319.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 4.0,
+        "all_point_rms_px": 2.8284271247461903,
+        "max_point_distance_px": 8.0,
+        "changed_points": 1,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 2.9283851170328035,
+        "axis_deg": 0.0,
+        "moment4": 152.2812432322085,
+        "excess2": {
+          "2": 2.3671371867414708,
+          "5": 0.0,
+          "10": 0.0,
+          "15": 0.0,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          4.21400470252069,
+          0.0,
+          0.0,
+          4.214004702520683
+        ],
+        "length_weight": [
+          0.24145508413727176,
+          0.25854491586272826,
+          0.25854491586272826,
+          0.24145508413727174
+        ],
+        "two_largest_edges_squared_contribution_share": 1.0,
+        "reference_axis_0_rms_deg": 2.9283851170328035,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 5.161080647432262
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.9313751949426865,
+        "S_bottom_deg": 0.8141735805654278,
+        "dir": 2.928385117032804,
+        "Hmean": 0.020393609943406332,
+        "Hcenter": 0.028039632364298392,
+        "height_mean_ratio": 0.9796063900565937,
+        "iou_3d_corner_mean": 0.9117089053463295
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 70.74992101289509,
+          "floor_score": 71.45530663389745,
+          "boundary_loss": 0.02071495685283528,
+          "direction_loss": 0.28272244873357416,
+          "global_height_loss": 0.0004158993265238016,
+          "local_height_loss": 0.012579535730000157,
+          "height_loss": 0.012995435056523959,
+          "denominator": 1.3164328406429335,
+          "height_score_drop": 0.7053856210023639,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.028039632364298392,
+        "height_center_shift_h": 0.053023385852856375,
+        "height_center_signed_global_relative": -0.020393609943406305,
+        "height_centered_min_wall_height_h": 2.4334240096694515,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "2x2:single_bottom:-1:8",
+      "mode": "single_bottom",
+      "budget": 8,
+      "sign": -1,
+      "reference_half_sizes": [
+        2,
+        2
+      ],
+      "reference_points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          295.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 8.0,
+        "all_point_rms_px": 5.656854249492381,
+        "max_point_distance_px": 16.0,
+        "changed_points": 1,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 7.523037410464178,
+        "axis_deg": 0.0,
+        "moment4": 5793.723190458846,
+        "excess2": {
+          "2": 36.43264814228153,
+          "5": 14.480382052504083,
+          "10": 0.007670611316586107,
+          "15": 0.0,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          10.117789727316975,
+          0.0,
+          0.0,
+          10.11778972731696
+        ],
+        "length_weight": [
+          0.27642998385551976,
+          0.22357001614448024,
+          0.22357001614448027,
+          0.27642998385551976
+        ],
+        "two_largest_edges_squared_contribution_share": 1.0,
+        "reference_axis_0_rms_deg": 7.523037410464183,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 12.391711078349953
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.8215525111864582,
+        "S_bottom_deg": 1.649369060307788,
+        "dir": 7.523037410464181,
+        "Hmean": 0.07389871591444486,
+        "Hcenter": 0.08017644277436861,
+        "height_mean_ratio": 1.0738987159144449,
+        "iou_3d_corner_mean": 0.770085305607621
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 36.51337255733145,
+          "floor_score": 38.35998824435589,
+          "boundary_loss": 0.0850130717843936,
+          "direction_loss": 1.0566781767976172,
+          "global_height_loss": 0.005461020213803826,
+          "local_height_loss": 0.10285219161522567,
+          "height_loss": 0.1083132118290295,
+          "denominator": 2.25000446041104,
+          "height_score_drop": 1.846615687024439,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.08017644277436861,
+        "height_center_shift_h": -0.19213666137755636,
+        "height_center_signed_global_relative": 0.07389871591444477,
+        "height_centered_min_wall_height_h": 2.407863338622443,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "2x2:single_bottom:1:8",
+      "mode": "single_bottom",
+      "budget": 8,
+      "sign": 1,
+      "reference_half_sizes": [
+        2,
+        2
+      ],
+      "reference_points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          327.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 8.0,
+        "all_point_rms_px": 5.656854249492381,
+        "max_point_distance_px": 16.0,
+        "changed_points": 1,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 5.449836678303986,
+        "axis_deg": 0.0,
+        "moment4": 1877.8123825705984,
+        "excess2": {
+          "2": 16.63862325235631,
+          "5": 4.091971165475442,
+          "10": 0.0,
+          "15": 0.0,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          7.95138188086959,
+          0.0,
+          0.0,
+          7.951381880869576
+        ],
+        "length_weight": [
+          0.23488309216219294,
+          0.2651169078378071,
+          0.2651169078378071,
+          0.23488309216219294
+        ],
+        "two_largest_edges_squared_contribution_share": 1.0,
+        "reference_axis_0_rms_deg": 5.4498366783039875,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 9.738414179071032
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.8774426447780769,
+        "S_bottom_deg": 1.6213163391163188,
+        "dir": 5.449836678303987,
+        "Hmean": 0.035429723768302335,
+        "Hcenter": 0.05099381003659483,
+        "height_mean_ratio": 0.9645702762316977,
+        "iou_3d_corner_mean": 0.8443543217310215
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 47.93449653774028,
+          "floor_score": 49.08379147944071,
+          "boundary_loss": 0.08214583348392318,
+          "direction_loss": 0.7054965191766359,
+          "global_height_loss": 0.0012552653262982074,
+          "local_height_loss": 0.04160589859277312,
+          "height_loss": 0.04286116391907133,
+          "denominator": 1.8305035165796302,
+          "height_score_drop": 1.1492949417004326,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.05099381003659483,
+        "height_center_shift_h": 0.09211728179758616,
+        "height_center_signed_global_relative": -0.035429723768302376,
+        "height_centered_min_wall_height_h": 2.299933745087431,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "2x2:single_bottom:-1:16",
+      "mode": "single_bottom",
+      "budget": 16,
+      "sign": -1,
+      "reference_half_sizes": [
+        2,
+        2
+      ],
+      "reference_points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          279.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 16.0,
+        "all_point_rms_px": 11.313708498984761,
+        "max_point_distance_px": 32.0,
+        "changed_points": 1,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 18.380633211380616,
+        "axis_deg": 0.0,
+        "moment4": 175203.70849672955,
+        "excess2": {
+          "2": 281.1105476978652,
+          "5": 205.77699694874562,
+          "10": 106.28012858299918,
+          "15": 39.35707215406873,
+          "20": 5.0078276619543045
+        },
+        "abs_residual_deg": [
+          22.772524529634765,
+          0.0,
+          0.0,
+          22.772524529634765
+        ],
+        "length_weight": [
+          0.3257381193681601,
+          0.1742618806318399,
+          0.17426188063183992,
+          0.3257381193681601
+        ],
+        "two_largest_edges_squared_contribution_share": 1.0,
+        "reference_axis_0_rms_deg": 18.380633211380616,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 27.89053262630935
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.5802028666504333,
+        "S_bottom_deg": 3.325650518110076,
+        "dir": 18.38063321138062,
+        "Hmean": 0.2900713347922985,
+        "Hcenter": 0.2651946736234828,
+        "height_mean_ratio": 1.2900713347922985,
+        "iou_3d_corner_mean": 0.4745545902820328
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 6.166045640589842,
+          "floor_score": 7.075429058623482,
+          "boundary_loss": 0.34562348026893175,
+          "direction_loss": 6.8546264528893435,
+          "global_height_loss": 0.08414137926818574,
+          "local_height_loss": 1.1252514386922492,
+          "height_loss": 1.209392817960435,
+          "denominator": 9.40964275111871,
+          "height_score_drop": 0.9093834180336398,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.2651946736234828,
+        "height_center_shift_h": -0.754185470459976,
+        "height_center_signed_global_relative": 0.2900713347922985,
+        "height_centered_min_wall_height_h": 1.845814529540023,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "2x2:single_bottom:1:16",
+      "mode": "single_bottom",
+      "budget": 16,
+      "sign": 1,
+      "reference_half_sizes": [
+        2,
+        2
+      ],
+      "reference_points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          343.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 16.0,
+        "all_point_rms_px": 11.313708498984761,
+        "max_point_distance_px": 32.0,
+        "changed_points": 1,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 9.573598302881472,
+        "axis_deg": 0.0,
+        "moment4": 18610.094483142842,
+        "excess2": {
+          "2": 67.73103298550248,
+          "5": 38.617760326781024,
+          "10": 8.151251390051517,
+          "15": 0.0,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          14.249482358133818,
+          0.0,
+          0.0,
+          14.249482358133818
+        ],
+        "length_weight": [
+          0.22569515201424478,
+          0.2743048479857552,
+          0.2743048479857552,
+          0.22569515201424475
+        ],
+        "two_largest_edges_squared_contribution_share": 1.0,
+        "reference_axis_0_rms_deg": 9.573598302881472,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 17.451980438109327
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.7974748569728739,
+        "S_bottom_deg": 3.213331886239909,
+        "dir": 9.573598302881473,
+        "Hmean": 0.05625716054426322,
+        "Hcenter": 0.08591328205470737,
+        "height_mean_ratio": 0.9437428394557368,
+        "iou_3d_corner_mean": 0.7477798694439607
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 27.37152854651054,
+          "floor_score": 28.560221161774574,
+          "boundary_loss": 0.3226719315976916,
+          "direction_loss": 1.469585356802533,
+          "global_height_loss": 0.0031648681125030064,
+          "local_height_loss": 0.11809747253458726,
+          "height_loss": 0.12126234064709027,
+          "denominator": 2.913519629047315,
+          "height_score_drop": 1.188692615264035,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.08591328205470737,
+        "height_center_shift_h": 0.14626861741508446,
+        "height_center_signed_global_relative": -0.05625716054426327,
+        "height_centered_min_wall_height_h": 2.0981881597282808,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "2x2:distributed_bottom:-1:1",
+      "mode": "distributed_bottom",
+      "budget": 1,
+      "sign": -1,
+      "reference_half_sizes": [
+        2,
+        2
+      ],
+      "reference_points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          310.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          312.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          310.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          312.3848053603291
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 1.0,
+        "all_point_rms_px": 0.7071067811865476,
+        "max_point_distance_px": 1.0,
+        "changed_points": 4,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 1.1184948445001694,
+        "axis_deg": 0.0,
+        "moment4": 1.5650778553115372,
+        "excess2": {
+          "2": 0.0,
+          "5": 0.0,
+          "10": 0.0,
+          "15": 0.0,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          1.1184948445001766,
+          1.1184948445001623,
+          1.1184948445001623,
+          1.1184948445001766
+        ],
+        "length_weight": [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ],
+        "two_largest_edges_squared_contribution_share": 0.5000000000000064,
+        "reference_axis_0_rms_deg": 1.1184948445001694,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 2.2369896890003247
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.9806619216428918,
+        "S_bottom_deg": 0.17457782804400745,
+        "dir": 1.118494844500171,
+        "Hmean": 0.0002085886624494382,
+        "Hcenter": 0.0069376039496048866,
+        "height_mean_ratio": 1.0002085886624494,
+        "iou_3d_corner_mean": 0.9804593563483188
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 93.37647699162994,
+          "floor_score": 93.44500021236817,
+          "boundary_loss": 0.0009524193138925948,
+          "direction_loss": 0.04850118378331574,
+          "global_height_loss": 4.350923010244567e-08,
+          "local_height_loss": 0.0007700855769851732,
+          "height_loss": 0.0007701290862152756,
+          "denominator": 1.0502237321834236,
+          "height_score_drop": 0.06852322073822847,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.0069376039496048866,
+        "height_center_shift_h": -0.0005423305223684061,
+        "height_center_signed_global_relative": 0.00020858866244938701,
+        "height_centered_min_wall_height_h": 2.5687511750195524,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "2x2:distributed_bottom:1:1",
+      "mode": "distributed_bottom",
+      "budget": 1,
+      "sign": 1,
+      "reference_half_sizes": [
+        2,
+        2
+      ],
+      "reference_points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          312.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          310.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          312.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          310.3848053603291
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 1.0,
+        "all_point_rms_px": 0.7071067811865476,
+        "max_point_distance_px": 1.0,
+        "changed_points": 4,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 1.1184948445001677,
+        "axis_deg": 7.105427357601002e-15,
+        "moment4": 1.5650778553115274,
+        "excess2": {
+          "2": 0.0,
+          "5": 0.0,
+          "10": 0.0,
+          "15": 0.0,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          1.1184948445001837,
+          1.1184948445001623,
+          1.1184948445001623,
+          1.1184948445001623
+        ],
+        "length_weight": [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ],
+        "two_largest_edges_squared_contribution_share": 0.5000000000000047,
+        "reference_axis_0_rms_deg": 1.1184948445001694,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 2.2369896890003247
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.9806619216428915,
+        "S_bottom_deg": 0.17457782804400715,
+        "dir": 1.1184948445001726,
+        "Hmean": 0.0002085886624494382,
+        "Hcenter": 0.0069376039496048866,
+        "height_mean_ratio": 1.0002085886624494,
+        "iou_3d_corner_mean": 0.9804593563483185
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 93.37647699162991,
+          "floor_score": 93.44500021236814,
+          "boundary_loss": 0.0009524193138925914,
+          "direction_loss": 0.04850118378331589,
+          "global_height_loss": 4.350923010244567e-08,
+          "local_height_loss": 0.0007700855769851732,
+          "height_loss": 0.0007701290862152756,
+          "denominator": 1.0502237321834236,
+          "height_score_drop": 0.06852322073822847,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.0069376039496048866,
+        "height_center_shift_h": -0.0005423305223684061,
+        "height_center_signed_global_relative": 0.00020858866244938701,
+        "height_centered_min_wall_height_h": 2.5687511750195524,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "2x2:distributed_bottom:-1:4",
+      "mode": "distributed_bottom",
+      "budget": 4,
+      "sign": -1,
+      "reference_half_sizes": [
+        2,
+        2
+      ],
+      "reference_points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          307.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          315.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          307.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          315.3848053603291
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 4.0,
+        "all_point_rms_px": 2.8284271247461903,
+        "max_point_distance_px": 4.0,
+        "changed_points": 4,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 4.463810026460622,
+        "axis_deg": 0.0,
+        "moment4": 397.029533460308,
+        "excess2": {
+          "2": 6.070359846487885,
+          "5": 0.0,
+          "10": 0.0,
+          "15": 0.0,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          4.463810026460635,
+          4.463810026460635,
+          4.463810026460578,
+          4.463810026460635
+        ],
+        "length_weight": [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ],
+        "two_largest_edges_squared_contribution_share": 0.5000000000000032,
+        "reference_axis_0_rms_deg": 4.463810026460626,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 8.92762005292127
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.9246890774193967,
+        "S_bottom_deg": 0.6983092083812402,
+        "dir": 4.463810026460623,
+        "Hmean": 0.0033538390465783774,
+        "Hcenter": 0.02780807906253908,
+        "height_mean_ratio": 1.0033538390465784,
+        "iou_3d_corner_mean": 0.9217071464445006
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 59.001074867723965,
+          "floor_score": 59.470997135976454,
+          "boundary_loss": 0.015238617203438573,
+          "direction_loss": 0.5396185769767041,
+          "global_height_loss": 1.124823635035376e-05,
+          "local_height_loss": 0.01237262817837479,
+          "height_loss": 0.012383876414725145,
+          "denominator": 1.5672410705948678,
+          "height_score_drop": 0.46992226825248906,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.02780807906253908,
+        "height_center_shift_h": -0.008719981521103648,
+        "height_center_signed_global_relative": 0.003353839046578327,
+        "height_centered_min_wall_height_h": 2.4744133573356004,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "2x2:distributed_bottom:1:4",
+      "mode": "distributed_bottom",
+      "budget": 4,
+      "sign": 1,
+      "reference_half_sizes": [
+        2,
+        2
+      ],
+      "reference_points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          315.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          307.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          315.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          307.3848053603291
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 4.0,
+        "all_point_rms_px": 2.8284271247461903,
+        "max_point_distance_px": 4.0,
+        "changed_points": 4,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 4.463810026460626,
+        "axis_deg": 0.0,
+        "moment4": 397.0295334603099,
+        "excess2": {
+          "2": 6.070359846487912,
+          "5": 0.0,
+          "10": 0.0,
+          "15": 0.0,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          4.463810026460628,
+          4.463810026460635,
+          4.463810026460607,
+          4.463810026460635
+        ],
+        "length_weight": [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ],
+        "two_largest_edges_squared_contribution_share": 0.500000000000002,
+        "reference_axis_0_rms_deg": 4.463810026460626,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 8.92762005292127
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.9246890774193963,
+        "S_bottom_deg": 0.6983092083812398,
+        "dir": 4.463810026460621,
+        "Hmean": 0.0033538390465783774,
+        "Hcenter": 0.02780807906253908,
+        "height_mean_ratio": 1.0033538390465784,
+        "iou_3d_corner_mean": 0.9217071464444996
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 59.001074867723965,
+          "floor_score": 59.470997135976454,
+          "boundary_loss": 0.015238617203438552,
+          "direction_loss": 0.5396185769767039,
+          "global_height_loss": 1.124823635035376e-05,
+          "local_height_loss": 0.01237262817837479,
+          "height_loss": 0.012383876414725145,
+          "denominator": 1.5672410705948674,
+          "height_score_drop": 0.46992226825248906,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.02780807906253908,
+        "height_center_shift_h": -0.008719981521103648,
+        "height_center_signed_global_relative": 0.003353839046578327,
+        "height_centered_min_wall_height_h": 2.4744133573356004,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "2x2:distributed_bottom:-1:8",
+      "mode": "distributed_bottom",
+      "budget": 8,
+      "sign": -1,
+      "reference_half_sizes": [
+        2,
+        2
+      ],
+      "reference_points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          303.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          319.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          303.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          319.3848053603291
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 8.0,
+        "all_point_rms_px": 5.656854249492381,
+        "max_point_distance_px": 8.0,
+        "changed_points": 4,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 8.86356132149363,
+        "axis_deg": 0.0,
+        "moment4": 6172.10086379141,
+        "excess2": {
+          "2": 47.10847401390339,
+          "5": 14.92710608494161,
+          "10": 0.0,
+          "15": 0.0,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          8.863561321493634,
+          8.863561321493634,
+          8.86356132149362,
+          8.863561321493634
+        ],
+        "length_weight": [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ],
+        "two_largest_edges_squared_contribution_share": 0.5000000000000003,
+        "reference_axis_0_rms_deg": 8.86356132149363,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 17.72712264298726
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.8540084122852476,
+        "S_bottom_deg": 1.3961426912225703,
+        "dir": 8.863561321493622,
+        "Hmean": 0.013629946696142703,
+        "Hcenter": 0.05613337051124473,
+        "height_mean_ratio": 1.0136299466961427,
+        "iou_3d_corner_mean": 0.8432516607345583
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 35.223904975705686,
+          "floor_score": 35.9747190018722,
+          "boundary_loss": 0.06091295044544378,
+          "direction_loss": 1.3129997192846607,
+          "global_height_loss": 0.0001857754469396914,
+          "local_height_loss": 0.05041528455924287,
+          "height_loss": 0.050601060006182565,
+          "denominator": 2.424513729736287,
+          "height_score_drop": 0.7508140261665162,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.05613337051124473,
+        "height_center_shift_h": -0.03543786140997085,
+        "height_center_signed_global_relative": 0.013629946696142639,
+        "height_centered_min_wall_height_h": 2.3449627624066247,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "2x2:distributed_bottom:1:8",
+      "mode": "distributed_bottom",
+      "budget": 8,
+      "sign": 1,
+      "reference_half_sizes": [
+        2,
+        2
+      ],
+      "reference_points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          319.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          303.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          319.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          303.3848053603291
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 8.0,
+        "all_point_rms_px": 5.656854249492381,
+        "max_point_distance_px": 8.0,
+        "changed_points": 4,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 8.863561321493634,
+        "axis_deg": 0.0,
+        "moment4": 6172.10086379142,
+        "excess2": {
+          "2": 47.10847401390345,
+          "5": 14.927106084941636,
+          "10": 0.0,
+          "15": 0.0,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          8.863561321493634,
+          8.863561321493648,
+          8.86356132149362,
+          8.863561321493634
+        ],
+        "length_weight": [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ],
+        "two_largest_edges_squared_contribution_share": 0.5000000000000008,
+        "reference_axis_0_rms_deg": 8.863561321493634,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 17.72712264298726
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.8540084122852479,
+        "S_bottom_deg": 1.3961426912225696,
+        "dir": 8.863561321493627,
+        "Hmean": 0.013629946696142703,
+        "Hcenter": 0.05613337051124473,
+        "height_mean_ratio": 1.0136299466961427,
+        "iou_3d_corner_mean": 0.8432516607345585
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 35.22390497570569,
+          "floor_score": 35.9747190018722,
+          "boundary_loss": 0.060912950445443724,
+          "direction_loss": 1.3129997192846616,
+          "global_height_loss": 0.0001857754469396914,
+          "local_height_loss": 0.05041528455924287,
+          "height_loss": 0.050601060006182565,
+          "denominator": 2.424513729736288,
+          "height_score_drop": 0.750814026166509,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.05613337051124473,
+        "height_center_shift_h": -0.03543786140997085,
+        "height_center_signed_global_relative": 0.013629946696142639,
+        "height_centered_min_wall_height_h": 2.3449627624066247,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "2x2:distributed_bottom:-1:16",
+      "mode": "distributed_bottom",
+      "budget": 16,
+      "sign": -1,
+      "reference_half_sizes": [
+        2,
+        2
+      ],
+      "reference_points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          295.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          327.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          295.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          327.3848053603291
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 16.0,
+        "all_point_rms_px": 11.313708498984761,
+        "max_point_distance_px": 16.0,
+        "changed_points": 4,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 17.243653032153162,
+        "axis_deg": 0.0,
+        "moment4": 88413.19855688282,
+        "excess2": {
+          "2": 232.3689577646723,
+          "5": 149.90703957175333,
+          "10": 52.470509250221696,
+          "15": 5.033978928690077,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          17.243653032153162,
+          17.243653032153162,
+          17.243653032153162,
+          17.243653032153162
+        ],
+        "length_weight": [
+          0.25,
+          0.25,
+          0.24999999999999994,
+          0.25
+        ],
+        "two_largest_edges_squared_contribution_share": 0.5,
+        "reference_axis_0_rms_deg": 17.243653032153162,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 34.487306064306324
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.72184454281102,
+        "S_bottom_deg": 2.7876034801671357,
+        "dir": 17.243653032153155,
+        "Hmean": 0.05824633412981406,
+        "Hcenter": 0.1189148948541034,
+        "height_mean_ratio": 1.058246334129814,
+        "iou_3d_corner_mean": 0.6860730367487985
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 10.212500343375694,
+          "floor_score": 10.555442784061936,
+          "boundary_loss": 0.24283541133249764,
+          "direction_loss": 5.59576489732495,
+          "global_height_loss": 0.003392635439561942,
+          "local_height_loss": 0.2262520354905995,
+          "height_loss": 0.22964467093016144,
+          "denominator": 7.068244979587609,
+          "height_score_drop": 0.342942440686242,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.1189148948541034,
+        "height_center_shift_h": -0.15144046873751638,
+        "height_center_signed_global_relative": 0.05824633412981401,
+        "height_centered_min_wall_height_h": 2.0563759945523286,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "2x2:distributed_bottom:1:16",
+      "mode": "distributed_bottom",
+      "budget": 16,
+      "sign": 1,
+      "reference_half_sizes": [
+        2,
+        2
+      ],
+      "reference_points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          311.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          311.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          311.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          311.3848053603291
+        ]
+      ],
+      "points": [
+        [
+          384.0,
+          172.0996736097666
+        ],
+        [
+          384.0,
+          327.3848053603291
+        ],
+        [
+          640.0,
+          172.0996736097666
+        ],
+        [
+          640.0,
+          295.3848053603291
+        ],
+        [
+          896.0,
+          172.0996736097666
+        ],
+        [
+          896.0,
+          327.3848053603291
+        ],
+        [
+          128.0,
+          172.0996736097666
+        ],
+        [
+          128.0,
+          295.3848053603291
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 16.0,
+        "all_point_rms_px": 11.313708498984761,
+        "max_point_distance_px": 16.0,
+        "changed_points": 4,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 17.24365303215315,
+        "axis_deg": 8.881784197001252e-15,
+        "moment4": 88413.19855688265,
+        "excess2": {
+          "2": 232.36895776467202,
+          "5": 149.9070395717531,
+          "10": 52.47050925022156,
+          "15": 5.033978928690038,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          17.24365303215317,
+          17.243653032153134,
+          17.243653032153162,
+          17.243653032153148
+        ],
+        "length_weight": [
+          0.25,
+          0.25,
+          0.24999999999999994,
+          0.25
+        ],
+        "two_largest_edges_squared_contribution_share": 0.5000000000000007,
+        "reference_axis_0_rms_deg": 17.243653032153162,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 34.487306064306324
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.72184454281102,
+        "S_bottom_deg": 2.7876034801671357,
+        "dir": 17.24365303215316,
+        "Hmean": 0.05824633412981406,
+        "Hcenter": 0.1189148948541034,
+        "height_mean_ratio": 1.058246334129814,
+        "iou_3d_corner_mean": 0.6860730367487985
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 10.21250034337569,
+          "floor_score": 10.555442784061931,
+          "boundary_loss": 0.24283541133249764,
+          "direction_loss": 5.595764897324953,
+          "global_height_loss": 0.003392635439561942,
+          "local_height_loss": 0.2262520354905995,
+          "height_loss": 0.22964467093016144,
+          "denominator": 7.068244979587613,
+          "height_score_drop": 0.342942440686242,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.1189148948541034,
+        "height_center_shift_h": -0.15144046873751638,
+        "height_center_signed_global_relative": 0.05824633412981401,
+        "height_centered_min_wall_height_h": 2.0563759945523286,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "1x4:unchanged:0:0",
+      "mode": "unchanged",
+      "budget": 0,
+      "sign": 0,
+      "reference_half_sizes": [
+        1,
+        4
+      ],
+      "reference_points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          294.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          294.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 0.0,
+        "all_point_rms_px": 0.0,
+        "max_point_distance_px": 0.0,
+        "changed_points": 0,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 0.0,
+        "axis_deg": 0.0,
+        "moment4": 0.0,
+        "excess2": {
+          "2": 0.0,
+          "5": 0.0,
+          "10": 0.0,
+          "15": 0.0,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "length_weight": [
+          0.10000000000000005,
+          0.3999999999999999,
+          0.10000000000000007,
+          0.3999999999999999
+        ],
+        "two_largest_edges_squared_contribution_share": 0.0,
+        "reference_axis_0_rms_deg": 0.0,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 0.0
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 1.0,
+        "S_bottom_deg": 2.408725852923957e-15,
+        "dir": 0.0,
+        "Hmean": 0.0,
+        "Hcenter": 0.0,
+        "height_mean_ratio": 1.0,
+        "iou_3d_corner_mean": 1.0
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 100.0,
+          "floor_score": 100.0,
+          "boundary_loss": 1.813112573295076e-31,
+          "direction_loss": 0.0,
+          "global_height_loss": 0.0,
+          "local_height_loss": 0.0,
+          "height_loss": 0.0,
+          "denominator": 1.0,
+          "height_score_drop": 0.0,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.0,
+        "height_center_shift_h": -0.0,
+        "height_center_signed_global_relative": 0.0,
+        "height_centered_min_wall_height_h": 2.6,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "1x4:single_bottom:-1:1",
+      "mode": "single_bottom",
+      "budget": 1,
+      "sign": -1,
+      "reference_half_sizes": [
+        1,
+        4
+      ],
+      "reference_points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          294.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          292.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 1.0,
+        "all_point_rms_px": 0.7071067811865476,
+        "max_point_distance_px": 2.0,
+        "changed_points": 1,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 1.9577951604758146,
+        "axis_deg": 0.47923047472161073,
+        "moment4": 114.42449243000833,
+        "excess2": {
+          "2": 1.4603297427951558,
+          "5": 0.06280694763939075,
+          "10": 0.0,
+          "15": 0.0,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          5.784942090582369,
+          0.47923047472161784,
+          0.47923047472161784,
+          0.8723025162586282
+        ],
+        "length_weight": [
+          0.1019371417854748,
+          0.39419141206408403,
+          0.0985478530160211,
+          0.40532359313442
+        ],
+        "two_largest_edges_squared_contribution_share": 0.9704762495979758,
+        "reference_axis_0_rms_deg": 2.015595132531435,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 4.574747788486777
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.9725579641884451,
+        "S_bottom_deg": 0.27800291141120453,
+        "dir": 1.9577951604758121,
+        "Hmean": 0.008808028544575519,
+        "Hcenter": 0.011075100811475202,
+        "height_mean_ratio": 1.0088080285445755,
+        "iou_3d_corner_mean": 0.9641869377269282
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 84.9941596267444,
+          "floor_score": 85.14596621987567,
+          "boundary_loss": 0.002415175586034563,
+          "direction_loss": 0.13980918026538824,
+          "global_height_loss": 7.758136684205714e-05,
+          "local_height_loss": 0.001962525727749419,
+          "height_loss": 0.0020401070945914763,
+          "denominator": 1.1442644629460144,
+          "height_score_drop": 0.1518065931312691,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.011075100811475202,
+        "height_center_shift_h": -0.022900874215896483,
+        "height_center_signed_global_relative": 0.00880802854457557,
+        "height_centered_min_wall_height_h": 2.5770991257841036,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "1x4:single_bottom:1:1",
+      "mode": "single_bottom",
+      "budget": 1,
+      "sign": 1,
+      "reference_half_sizes": [
+        1,
+        4
+      ],
+      "reference_points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          294.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          296.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 1.0,
+        "all_point_rms_px": 0.7071067811865476,
+        "max_point_distance_px": 2.0,
+        "changed_points": 1,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 1.843586195739119,
+        "axis_deg": 89.55522611982359,
+        "moment4": 92.97413581446102,
+        "excess2": {
+          "2": 1.2361589039550955,
+          "5": 0.02788132754290028,
+          "10": 0.0,
+          "15": 0.0,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          5.530170063447457,
+          0.44477388017641317,
+          0.44477388017639896,
+          0.8195621223134992
+        ],
+        "length_weight": [
+          0.09919346152052602,
+          0.4049437751789199,
+          0.10123594379473005,
+          0.3946268195058241
+        ],
+        "two_largest_edges_squared_contribution_share": 0.9705383955087427,
+        "reference_axis_0_rms_deg": 1.8964793343474706,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 4.363471100705852
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.974501649333257,
+        "S_bottom_deg": 0.2725602206590535,
+        "dir": 1.8435861957391193,
+        "Hmean": 0.007748678579667434,
+        "Hcenter": 0.010234639063820064,
+        "height_mean_ratio": 0.9922513214203326,
+        "iou_3d_corner_mean": 0.9668560540163279
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 86.29490858538526,
+          "floor_score": 86.42777263624096,
+          "boundary_loss": 0.002321533558928498,
+          "direction_loss": 0.12521145683151036,
+          "global_height_loss": 6.0042019730996925e-05,
+          "local_height_loss": 0.0016759653882667462,
+          "height_loss": 0.0017360074079977431,
+          "denominator": 1.1292689977984365,
+          "height_score_drop": 0.13286405085570152,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.010234639063820064,
+        "height_center_shift_h": 0.02014656430713524,
+        "height_center_signed_global_relative": -0.007748678579667399,
+        "height_centered_min_wall_height_h": 2.5385518421735567,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "1x4:single_bottom:-1:4",
+      "mode": "single_bottom",
+      "budget": 4,
+      "sign": -1,
+      "reference_half_sizes": [
+        1,
+        4
+      ],
+      "reference_points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          294.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          286.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 4.0,
+        "all_point_rms_px": 2.8284271247461903,
+        "max_point_distance_px": 8.0,
+        "changed_points": 1,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 8.429125408258578,
+        "axis_deg": 2.236459971869987,
+        "moment4": 33405.17372598617,
+        "excess2": {
+          "2": 53.52883256619093,
+          "5": 38.231598597201575,
+          "10": 20.05261546068155,
+          "15": 7.688745718114391,
+          "20": 1.1399893695000929
+        },
+        "abs_residual_deg": [
+          23.130807092622092,
+          2.2364599718699765,
+          2.2364599718699765,
+          3.93383412312771
+        ],
+        "length_weight": [
+          0.11630226787905722,
+          0.37052760339043833,
+          0.09263190084760967,
+          0.4205382278828948
+        ],
+        "two_largest_edges_squared_contribution_share": 0.9673947293953391,
+        "reference_axis_0_rms_deg": 8.720774527180886,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 18.56659716714324
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.8814662515266277,
+        "S_bottom_deg": 1.145876536399898,
+        "dir": 8.42912540825858,
+        "Hmean": 0.04442508145927526,
+        "Hcenter": 0.05112085415876931,
+        "height_mean_ratio": 1.0444250814592753,
+        "iou_3d_corner_mean": 0.8464434473635192
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 38.15750531277776,
+          "floor_score": 38.89474889076056,
+          "boundary_loss": 0.04103228239599458,
+          "direction_loss": 1.2252537244948225,
+          "global_height_loss": 0.0019735878626632427,
+          "local_height_loss": 0.04181346767875459,
+          "height_loss": 0.04378705554141783,
+          "denominator": 2.3100730624322345,
+          "height_score_drop": 0.7372435779828024,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.05112085415876931,
+        "height_center_shift_h": -0.11550521179411577,
+        "height_center_signed_global_relative": 0.0444250814592753,
+        "height_centered_min_wall_height_h": 2.4844947882058843,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "1x4:single_bottom:1:4",
+      "mode": "single_bottom",
+      "budget": 4,
+      "sign": 1,
+      "reference_half_sizes": [
+        1,
+        4
+      ],
+      "reference_points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          294.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          302.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 4.0,
+        "all_point_rms_px": 2.8284271247461903,
+        "max_point_distance_px": 8.0,
+        "changed_points": 1,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 6.6736514101845605,
+        "axis_deg": 88.3570395421114,
+        "moment4": 15480.870426281932,
+        "excess2": {
+          "2": 32.41570018920569,
+          "5": 22.09506622116382,
+          "10": 9.649554232599058,
+          "15": 2.2867712168125283,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          19.74294277269128,
+          1.6429604578886057,
+          1.6429604578885915,
+          3.045037415751665
+        ],
+        "length_weight": [
+          0.1016545794555646,
+          0.41568895000692824,
+          0.10392223750173216,
+          0.37873423303577497
+        ],
+        "two_largest_edges_squared_contribution_share": 0.968507605785567,
+        "reference_axis_0_rms_deg": 6.872913662402859,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 15.641409126517054
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.9108272936098079,
+        "S_bottom_deg": 1.0588169742145657,
+        "dir": 6.673651410184556,
+        "Hmean": 0.02636158186426063,
+        "Hcenter": 0.03634921564494451,
+        "height_mean_ratio": 0.9736384181357394,
+        "iou_3d_corner_mean": 0.885836236740503
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 46.3085103146034,
+          "floor_score": 46.828375404978935,
+          "boundary_loss": 0.03503416827765275,
+          "direction_loss": 0.9099987006460165,
+          "global_height_loss": 0.000694932998386115,
+          "local_height_loss": 0.021140247648042863,
+          "height_loss": 0.02183518064642898,
+          "denominator": 1.9668680495700983,
+          "height_score_drop": 0.5198650903755322,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.03634921564494451,
+        "height_center_shift_h": 0.0685401128470775,
+        "height_center_signed_global_relative": -0.02636158186426058,
+        "height_centered_min_wall_height_h": 2.3831874523984626,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "1x4:single_bottom:-1:8",
+      "mode": "single_bottom",
+      "budget": 8,
+      "sign": -1,
+      "reference_half_sizes": [
+        1,
+        4
+      ],
+      "reference_points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          294.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          278.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 8.0,
+        "all_point_rms_px": 5.656854249492381,
+        "max_point_distance_px": 16.0,
+        "changed_points": 1,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 15.215612617014438,
+        "axis_deg": 81.42613663495904,
+        "moment4": 233230.13109096108,
+        "excess2": {
+          "2": 191.2169347728335,
+          "5": 145.74732087552684,
+          "10": 97.22165622287808,
+          "15": 61.81117608374037,
+          "20": 34.38547015805527
+        },
+        "abs_residual_deg": [
+          34.673751688231036,
+          8.573863365040964,
+          8.57386336504095,
+          4.7724331757292475
+        ],
+        "length_weight": [
+          0.1596954842690523,
+          0.32134104116512496,
+          0.08033526029128132,
+          0.43862821427454135
+        ],
+        "two_largest_edges_squared_contribution_share": 0.9313401150520303,
+        "reference_axis_0_rms_deg": 17.46499356751787,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 34.48160594614224
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.7342200064428555,
+        "S_bottom_deg": 2.385764871240311,
+        "dir": 15.215612617014438,
+        "Hmean": 0.1332842743412177,
+        "Hcenter": 0.13432934850821895,
+        "height_mean_ratio": 1.1332842743412177,
+        "iou_3d_corner_mean": 0.6606372932344132
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 13.697919108957455,
+          "floor_score": 14.528625419561092,
+          "boundary_loss": 0.17787106315138426,
+          "direction_loss": 3.8757385195852883,
+          "global_height_loss": 0.017764697786664983,
+          "local_height_loss": 0.28870998193028075,
+          "height_loss": 0.30647467971694575,
+          "denominator": 5.3600842624536185,
+          "height_score_drop": 0.8307063106036363,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.13432934850821895,
+        "height_center_shift_h": -0.34653911328716624,
+        "height_center_signed_global_relative": 0.13328427434121778,
+        "height_centered_min_wall_height_h": 2.253460886712834,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "1x4:single_bottom:1:8",
+      "mode": "single_bottom",
+      "budget": 8,
+      "sign": 1,
+      "reference_half_sizes": [
+        1,
+        4
+      ],
+      "reference_points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          294.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          310.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 8.0,
+        "all_point_rms_px": 5.656854249492381,
+        "max_point_distance_px": 16.0,
+        "changed_points": 1,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 11.63171502972556,
+        "axis_deg": 86.9617690981407,
+        "moment4": 128403.78706099867,
+        "excess2": {
+          "2": 110.25280523925503,
+          "5": 85.64768017213306,
+          "10": 57.50754381594705,
+          "15": 35.04232668550734,
+          "20": 18.113017349635975
+        },
+        "abs_residual_deg": [
+          32.79045457773145,
+          3.0382309018592935,
+          3.0382309018592935,
+          5.621893367911412
+        ],
+        "length_weight": [
+          0.11071815589136697,
+          0.42387860114067405,
+          0.10596965028516861,
+          0.3594335926827904
+        ],
+        "two_largest_edges_squared_contribution_share": 0.9638502289288118,
+        "reference_axis_0_rms_deg": 12.021964961925157,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 26.295809978165032
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.8471015394137323,
+        "S_bottom_deg": 2.0379566681365713,
+        "dir": 11.631715029725555,
+        "Hmean": 0.04423721759934196,
+        "Hcenter": 0.06209558196469589,
+        "height_mean_ratio": 0.955762782400658,
+        "iou_3d_corner_mean": 0.8072490713101576
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 26.059142573779223,
+          "floor_score": 26.57958918212483,
+          "boundary_loss": 0.12978960566257233,
+          "direction_loss": 2.057248138259447,
+          "global_height_loss": 0.00195693142093153,
+          "local_height_loss": 0.061693780792548246,
+          "height_loss": 0.06365071221347977,
+          "denominator": 3.250688456135499,
+          "height_score_drop": 0.5204466083456083,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.06209558196469589,
+        "height_center_shift_h": 0.11501676575828901,
+        "height_center_signed_global_relative": -0.044237217599341926,
+        "height_centered_min_wall_height_h": 2.2257416918822317,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "1x4:single_bottom:-1:16",
+      "mode": "single_bottom",
+      "budget": 16,
+      "sign": -1,
+      "reference_half_sizes": [
+        1,
+        4
+      ],
+      "reference_points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          294.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          262.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 16.0,
+        "all_point_rms_px": 11.313708498984761,
+        "max_point_distance_px": 32.0,
+        "changed_points": 1,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 6.789342404785068,
+        "axis_deg": 78.37338996866993,
+        "moment4": 4474.512580179296,
+        "excess2": {
+          "2": 27.938218463775026,
+          "5": 10.39047452162046,
+          "10": 0.45446698449947776,
+          "15": 0.0,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          7.845077004340723,
+          11.626610031330074,
+          11.626610031330074,
+          1.6018765642405128
+        ],
+        "length_weight": [
+          0.3518359592328508,
+          0.13741224438872823,
+          0.03435306109718209,
+          0.4763987352812387
+        ],
+        "two_largest_edges_squared_contribution_share": 0.8727367018594009,
+        "reference_axis_0_rms_deg": 13.463774771958938,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 53.76693105446615
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.2929115339232776,
+        "S_bottom_deg": 5.164569351647936,
+        "dir": 6.789342404785068,
+        "Hmean": 1.2303745342260886,
+        "Hcenter": 1.022374019470652,
+        "height_mean_ratio": 2.2303745342260886,
+        "iou_3d_corner_mean": 0.16807247032955133
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 1.3947566806663525,
+          "floor_score": 10.600807220484135,
+          "boundary_loss": 0.8335242683744117,
+          "direction_loss": 0.9295816709287691,
+          "global_height_loss": 1.5138214944720643,
+          "local_height_loss": 16.723978171017237,
+          "height_loss": 18.2377996654893,
+          "denominator": 21.000905604792482,
+          "height_score_drop": 9.206050539817783,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 1.022374019470652,
+        "height_center_shift_h": -3.1989737889878307,
+        "height_center_signed_global_relative": 1.2303745342260888,
+        "height_centered_min_wall_height_h": -0.5989737889878306,
+        "height_centered_profile_positive": false,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "1x4:single_bottom:1:16",
+      "mode": "single_bottom",
+      "budget": 16,
+      "sign": 1,
+      "reference_half_sizes": [
+        1,
+        4
+      ],
+      "reference_points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          294.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          326.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 16.0,
+        "all_point_rms_px": 11.313708498984761,
+        "max_point_distance_px": 32.0,
+        "changed_points": 1,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 12.634993670722166,
+        "axis_deg": 6.553703648940411,
+        "moment4": 139629.60320495866,
+        "excess2": {
+          "2": 129.9133315306156,
+          "5": 97.5016656141092,
+          "10": 63.908808958615204,
+          "15": 38.19752136364099,
+          "20": 19.066585494963874
+        },
+        "abs_residual_deg": [
+          32.036408283636305,
+          6.553703648940427,
+          6.553703648940399,
+          2.075433269604659
+        ],
+        "length_weight": [
+          0.13160703452594194,
+          0.4312245282151515,
+          0.10780613205378797,
+          0.32936230520511867
+        ],
+        "two_largest_edges_squared_contribution_share": 0.9621086739550532,
+        "reference_axis_0_rms_deg": 14.233555303483527,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 38.034582130166314
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.7614519734024394,
+        "S_bottom_deg": 3.7845921051391542,
+        "dir": 12.634993670722164,
+        "Hmean": 0.06766973927066133,
+        "Hcenter": 0.09510717172036451,
+        "height_mean_ratio": 0.9323302607293387,
+        "iou_3d_corner_mean": 0.7055618609089099
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 18.84482075221285,
+          "floor_score": 19.567870075840645,
+          "boundary_loss": 0.4475980438213004,
+          "direction_loss": 2.4437400039642965,
+          "global_height_loss": 0.0045791936129592845,
+          "local_height_loss": 0.14472598580235044,
+          "height_loss": 0.1493051794153097,
+          "denominator": 4.040643227200906,
+          "height_score_drop": 0.7230493236277944,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.09510717172036451,
+        "height_center_shift_h": 0.1759413221037196,
+        "height_center_signed_global_relative": -0.06766973927066139,
+        "height_centered_min_wall_height_h": 2.0125876369915257,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "1x4:distributed_bottom:-1:1",
+      "mode": "distributed_bottom",
+      "budget": 1,
+      "sign": -1,
+      "reference_half_sizes": [
+        1,
+        4
+      ],
+      "reference_points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          294.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          293.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          295.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          293.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          295.7783743299311
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 1.0,
+        "all_point_rms_px": 0.7071067811865476,
+        "max_point_distance_px": 1.0,
+        "changed_points": 4,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 2.6041830784141506,
+        "axis_deg": 0.9221144537385513,
+        "moment4": 148.49793844701344,
+        "excess2": {
+          "2": 2.0490864438049936,
+          "5": 0.007528965721975352,
+          "10": 0.0,
+          "15": 0.0,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          5.193582293804205,
+          1.305798025765199,
+          5.193582293804212,
+          1.305798025765199
+        ],
+        "length_weight": [
+          0.10045557895984938,
+          0.3995444210401506,
+          0.10045557895984941,
+          0.3995444210401506
+        ],
+        "two_largest_edges_squared_contribution_share": 0.799088842080299,
+        "reference_axis_0_rms_deg": 2.762619150677872,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 6.499380319569411
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.9735590728451912,
+        "S_bottom_deg": 0.15170427012081433,
+        "dir": 2.604183078414142,
+        "Hmean": 0.00041731877784290106,
+        "Hcenter": 0.009517077610563548,
+        "height_mean_ratio": 1.000417318777843,
+        "iou_3d_corner_mean": 0.9731581968649397
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 78.88740874862135,
+          "floor_score": 78.98016491923487,
+          "boundary_loss": 0.0007191932991527811,
+          "direction_loss": 0.2319435566973216,
+          "global_height_loss": 1.741549623402926e-07,
+          "local_height_loss": 0.0014491962599278397,
+          "height_loss": 0.00144937041489018,
+          "denominator": 1.2341121204113645,
+          "height_score_drop": 0.09275617061351227,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.009517077610563548,
+        "height_center_shift_h": -0.0010850288223918092,
+        "height_center_signed_global_relative": 0.0004173187778430035,
+        "height_centered_min_wall_height_h": 2.557112428803593,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "1x4:distributed_bottom:1:1",
+      "mode": "distributed_bottom",
+      "budget": 1,
+      "sign": 1,
+      "reference_half_sizes": [
+        1,
+        4
+      ],
+      "reference_points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          294.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          295.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          293.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          295.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          293.7783743299311
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 1.0,
+        "all_point_rms_px": 0.7071067811865476,
+        "max_point_distance_px": 1.0,
+        "changed_points": 4,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 2.6041830784141435,
+        "axis_deg": 89.07788554626144,
+        "moment4": 148.49793844701145,
+        "excess2": {
+          "2": 2.049086443804971,
+          "5": 0.0075289657219739705,
+          "10": 0.0,
+          "15": 0.0,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          5.193582293804198,
+          1.305798025765199,
+          5.193582293804184,
+          1.305798025765199
+        ],
+        "length_weight": [
+          0.10045557895984938,
+          0.3995444210401506,
+          0.10045557895984941,
+          0.3995444210401506
+        ],
+        "two_largest_edges_squared_contribution_share": 0.7990888420802978,
+        "reference_axis_0_rms_deg": 2.762619150677872,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 6.499380319569411
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.973559072845191,
+        "S_bottom_deg": 0.15170319266183852,
+        "dir": 2.604183078414142,
+        "Hmean": 0.00041731877784290106,
+        "Hcenter": 0.009516860759781962,
+        "height_mean_ratio": 1.000417318777843,
+        "iou_3d_corner_mean": 0.9731581968649393
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 78.88741362310734,
+          "floor_score": 78.98016557379685,
+          "boundary_loss": 0.0007191830832435903,
+          "direction_loss": 0.2319435566973216,
+          "global_height_loss": 1.741549623402926e-07,
+          "local_height_loss": 0.001449130219537243,
+          "height_loss": 0.0014493043744995833,
+          "denominator": 1.2341120441550648,
+          "height_score_drop": 0.09275195068951803,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.009516860759781962,
+        "height_center_shift_h": -0.0010850288223918092,
+        "height_center_signed_global_relative": 0.0004173187778430035,
+        "height_centered_min_wall_height_h": 2.557112428803593,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "1x4:distributed_bottom:-1:4",
+      "mode": "distributed_bottom",
+      "budget": 4,
+      "sign": -1,
+      "reference_half_sizes": [
+        1,
+        4
+      ],
+      "reference_points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          294.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          290.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          298.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          290.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          298.7783743299311
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 4.0,
+        "all_point_rms_px": 2.8284271247461903,
+        "max_point_distance_px": 4.0,
+        "changed_points": 4,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 10.136387449821774,
+        "axis_deg": 3.751512759573643,
+        "moment4": 31142.327559415302,
+        "excess2": {
+          "2": 73.50216953431415,
+          "5": 44.6358980364288,
+          "10": 19.048831979712666,
+          "15": 4.213886413165875,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          19.43992783200433,
+          5.285325718326533,
+          19.439927832004315,
+          5.285325718326547
+        ],
+        "length_weight": [
+          0.10688112272676403,
+          0.393118877273236,
+          0.10688112272676405,
+          0.393118877273236
+        ],
+        "two_largest_edges_squared_contribution_share": 0.786237754546472,
+        "reference_axis_0_rms_deg": 10.808339304358844,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 24.725253550330876
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.8978399633725831,
+        "S_bottom_deg": 0.6067618171104203,
+        "dir": 10.136387449821774,
+        "Hmean": 0.006744435187032716,
+        "Hcenter": 0.03811808054283051,
+        "height_mean_ratio": 1.0067444351870327,
+        "iou_3d_corner_mean": 0.8921012831026899
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 33.972750498241176,
+          "floor_score": 34.27484177847034,
+          "boundary_loss": 0.011504996959473096,
+          "direction_loss": 1.6080255881140348,
+          "global_height_loss": 4.548740599208502e-05,
+          "local_height_loss": 0.02324780902831542,
+          "height_loss": 0.023293296434307505,
+          "denominator": 2.6428238815078156,
+          "height_score_drop": 0.3020912802291633,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.03811808054283051,
+        "height_center_shift_h": -0.01753553148628484,
+        "height_center_signed_global_relative": 0.00674443518703263,
+        "height_centered_min_wall_height_h": 2.4267523500708386,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "1x4:distributed_bottom:1:4",
+      "mode": "distributed_bottom",
+      "budget": 4,
+      "sign": 1,
+      "reference_half_sizes": [
+        1,
+        4
+      ],
+      "reference_points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          294.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          298.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          290.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          298.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          290.7783743299311
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 4.0,
+        "all_point_rms_px": 2.8284271247461903,
+        "max_point_distance_px": 4.0,
+        "changed_points": 4,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 10.136387449821774,
+        "axis_deg": 86.24848724042636,
+        "moment4": 31142.327559415302,
+        "excess2": {
+          "2": 73.50216953431415,
+          "5": 44.6358980364288,
+          "10": 19.048831979712666,
+          "15": 4.213886413165875,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          19.43992783200433,
+          5.285325718326547,
+          19.439927832004315,
+          5.285325718326533
+        ],
+        "length_weight": [
+          0.10688112272676403,
+          0.393118877273236,
+          0.10688112272676405,
+          0.393118877273236
+        ],
+        "two_largest_edges_squared_contribution_share": 0.786237754546472,
+        "reference_axis_0_rms_deg": 10.808339304358844,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 24.725253550330876
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.8978399633725828,
+        "S_bottom_deg": 0.6067626291144722,
+        "dir": 10.136387449821774,
+        "Hmean": 0.006744435187032716,
+        "Hcenter": 0.03811545059183787,
+        "height_mean_ratio": 1.0067444351870327,
+        "iou_3d_corner_mean": 0.892101283102689
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 33.97279133841565,
+          "floor_score": 34.27484137555969,
+          "boundary_loss": 0.011505027752809578,
+          "direction_loss": 1.6080255881140348,
+          "global_height_loss": 4.548740599208502e-05,
+          "local_height_loss": 0.023244601181101346,
+          "height_loss": 0.02329008858709343,
+          "denominator": 2.642820704453938,
+          "height_score_drop": 0.302050037144042,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.03811545059183787,
+        "height_center_shift_h": -0.01753553148628484,
+        "height_center_signed_global_relative": 0.00674443518703263,
+        "height_centered_min_wall_height_h": 2.4267523500708386,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "1x4:distributed_bottom:-1:8",
+      "mode": "distributed_bottom",
+      "budget": 8,
+      "sign": -1,
+      "reference_half_sizes": [
+        1,
+        4
+      ],
+      "reference_points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          294.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          286.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          302.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          286.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          302.7783743299311
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 8.0,
+        "all_point_rms_px": 5.656854249492381,
+        "max_point_distance_px": 8.0,
+        "changed_points": 4,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 18.819647226936624,
+        "axis_deg": 7.726096958406593,
+        "moment4": 297543.7980973016,
+        "excess2": {
+          "2": 293.22067916488777,
+          "5": 216.78301529270428,
+          "10": 129.3869088390652,
+          "15": 78.63652816262305,
+          "20": 40.71927648862142
+        },
+        "abs_residual_deg": [
+          32.83132198314905,
+          10.787842229689346,
+          32.831321983149024,
+          10.787842229689346
+        ],
+        "length_weight": [
+          0.12365943300805123,
+          0.3763405669919488,
+          0.12365943300805123,
+          0.3763405669919488
+        ],
+        "two_largest_edges_squared_contribution_share": 0.7526811339838977,
+        "reference_axis_0_rms_deg": 20.34383680521064,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 43.61916421283839
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.8030611559813671,
+        "S_bottom_deg": 1.2126489392102,
+        "dir": 18.819647226936624,
+        "Hmean": 0.027877339194058548,
+        "Hcenter": 0.07727536237319231,
+        "height_mean_ratio": 1.0278773391940585,
+        "iou_3d_corner_mean": 0.7829725395022953
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 9.394525449444263,
+          "floor_score": 9.50158928485754,
+          "boundary_loss": 0.045953670305238226,
+          "direction_loss": 7.405907717359527,
+          "global_height_loss": 0.0007771460405405928,
+          "local_height_loss": 0.09554370607853098,
+          "height_loss": 0.09632085211907157,
+          "denominator": 8.548182239783836,
+          "height_score_drop": 0.10706383541327646,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.07727536237319231,
+        "height_center_shift_h": -0.07248108190455227,
+        "height_center_signed_global_relative": 0.027877339194058565,
+        "height_centered_min_wall_height_h": 2.242166257646833,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "1x4:distributed_bottom:1:8",
+      "mode": "distributed_bottom",
+      "budget": 8,
+      "sign": 1,
+      "reference_half_sizes": [
+        1,
+        4
+      ],
+      "reference_points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          294.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          302.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          286.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          302.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          286.7783743299311
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 8.0,
+        "all_point_rms_px": 5.656854249492381,
+        "max_point_distance_px": 8.0,
+        "changed_points": 4,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 18.819647226936628,
+        "axis_deg": 82.27390304159341,
+        "moment4": 297543.7980973019,
+        "excess2": {
+          "2": 293.2206791648879,
+          "5": 216.78301529270436,
+          "10": 129.38690883906526,
+          "15": 78.63652816262311,
+          "20": 40.71927648862146
+        },
+        "abs_residual_deg": [
+          32.83132198314905,
+          10.787842229689346,
+          32.83132198314904,
+          10.787842229689346
+        ],
+        "length_weight": [
+          0.12365943300805123,
+          0.3763405669919488,
+          0.12365943300805123,
+          0.3763405669919488
+        ],
+        "two_largest_edges_squared_contribution_share": 0.7526811339838977,
+        "reference_axis_0_rms_deg": 20.34383680521064,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 43.61916421283839
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.8030611559813672,
+        "S_bottom_deg": 1.2126481405932121,
+        "dir": 18.819647226936624,
+        "Hmean": 0.027877339194058548,
+        "Hcenter": 0.07726935010046865,
+        "height_mean_ratio": 1.0278773391940585,
+        "iou_3d_corner_mean": 0.7829725395022953
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 9.394541854557165,
+          "floor_score": 9.501589352902725,
+          "boundary_loss": 0.04595360977763045,
+          "direction_loss": 7.405907717359527,
+          "global_height_loss": 0.0007771460405405928,
+          "local_height_loss": 0.09552883943918071,
+          "height_loss": 0.0963059854797213,
+          "denominator": 8.54816731261688,
+          "height_score_drop": 0.10704749834556004,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.07726935010046865,
+        "height_center_shift_h": -0.07248108190455227,
+        "height_center_signed_global_relative": 0.027877339194058565,
+        "height_centered_min_wall_height_h": 2.242166257646833,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "1x4:distributed_bottom:-1:16",
+      "mode": "distributed_bottom",
+      "budget": 16,
+      "sign": -1,
+      "reference_half_sizes": [
+        1,
+        4
+      ],
+      "reference_points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          294.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          278.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          310.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          278.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          310.7783743299311
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 16.0,
+        "all_point_rms_px": 11.313708498984761,
+        "max_point_distance_px": 16.0,
+        "changed_points": 4,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 11.438443044899707,
+        "axis_deg": 75.90773595867174,
+        "moment4": 26149.60618933831,
+        "excess2": {
+          "2": 91.83238776455403,
+          "5": 48.324000474263386,
+          "10": 13.16831828927005,
+          "15": 0.5768106111266453,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          16.32344234442509,
+          8.015342384941192,
+          16.323442344425132,
+          8.015342384941192
+        ],
+        "length_weight": [
+          0.16466192692172862,
+          0.33533807307827135,
+          0.16466192692172862,
+          0.33533807307827135
+        ],
+        "two_largest_edges_squared_contribution_share": 0.6706761461565431,
+        "reference_axis_0_rms_deg": 18.15020344519389,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 65.6612152706337
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.6232340704635673,
+        "S_bottom_deg": 2.417282376556823,
+        "dir": 11.438443044899705,
+        "Hmean": 0.12867145960715876,
+        "Hcenter": 0.17783658525105164,
+        "height_mean_ratio": 1.1286714596071588,
+        "iou_3d_corner_mean": 0.5595630137015009
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 16.859788492255124,
+          "floor_score": 19.63559688397391,
+          "boundary_loss": 0.1826016902503813,
+          "direction_loss": 1.991399457492856,
+          "global_height_loss": 0.016556344517436688,
+          "local_height_loss": 0.506013616860073,
+          "height_loss": 0.5225699613775097,
+          "denominator": 3.6965711091207467,
+          "height_score_drop": 2.775808391718787,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.17783658525105164,
+        "height_center_shift_h": -0.3345457949786126,
+        "height_center_signed_global_relative": 0.12867145960715867,
+        "height_centered_min_wall_height_h": 1.7761791311453303,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    },
+    {
+      "case_id": "1x4:distributed_bottom:1:16",
+      "mode": "distributed_bottom",
+      "budget": 16,
+      "sign": 1,
+      "reference_half_sizes": [
+        1,
+        4
+      ],
+      "reference_points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          294.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          294.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          294.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          294.7783743299311
+        ]
+      ],
+      "points": [
+        [
+          472.0746852467869,
+          195.67191719491169
+        ],
+        [
+          472.0746852467869,
+          310.7783743299311
+        ],
+        [
+          551.9253147532131,
+          195.67191719491169
+        ],
+        [
+          551.9253147532131,
+          278.7783743299311
+        ],
+        [
+          984.0746852467869,
+          195.67191719491169
+        ],
+        [
+          984.0746852467869,
+          310.7783743299311
+        ],
+        [
+          39.925314753213115,
+          195.67191719491169
+        ],
+        [
+          39.925314753213115,
+          278.7783743299311
+        ]
+      ],
+      "diagnostic_2d": {
+        "bottom_y_rms_px": 16.0,
+        "all_point_rms_px": 11.313708498984761,
+        "max_point_distance_px": 16.0,
+        "changed_points": 4,
+        "known_synthetic_correspondence": true,
+        "included_in_quality": false
+      },
+      "direction_profile": {
+        "D_rms_deg": 11.438443044899707,
+        "axis_deg": 14.092264041328265,
+        "moment4": 26149.60618933831,
+        "excess2": {
+          "2": 91.83238776455403,
+          "5": 48.324000474263386,
+          "10": 13.16831828927005,
+          "15": 0.5768106111266453,
+          "20": 0.0
+        },
+        "abs_residual_deg": [
+          16.32344234442509,
+          8.015342384941192,
+          16.323442344425132,
+          8.015342384941192
+        ],
+        "length_weight": [
+          0.16466192692172862,
+          0.33533807307827135,
+          0.16466192692172862,
+          0.33533807307827135
+        ],
+        "two_largest_edges_squared_contribution_share": 0.6706761461565431,
+        "reference_axis_0_rms_deg": 18.15020344519388,
+        "known_rectangle_corner_turn_deviation_90_rms_deg": 65.6612152706337
+      },
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.6232340704635675,
+        "S_bottom_deg": 2.417291663679301,
+        "dir": 11.438443044899705,
+        "Hmean": 0.12867145960715876,
+        "Hcenter": 0.1778402287500124,
+        "height_mean_ratio": 1.1286714596071588,
+        "iou_3d_corner_mean": 0.5595630137015009
+      },
+      "candidate_components": {
+        "frozen_current": {
+          "score": 16.859687524750388,
+          "floor_score": 19.63558820384358,
+          "boundary_loss": 0.18260309335292005,
+          "direction_loss": 1.991399457492856,
+          "global_height_loss": 0.016556344517436688,
+          "local_height_loss": 0.5060343513897078,
+          "height_loss": 0.5225906959071445,
+          "denominator": 3.6965932467529203,
+          "height_score_drop": 2.7759006790931906,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.1778402287500124,
+        "height_center_shift_h": -0.3345457949786126,
+        "height_center_signed_global_relative": 0.12867145960715867,
+        "height_centered_min_wall_height_h": 1.7761791311453303,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": []
+    }
+  ],
+  "configuration_count": 1,
+  "equal_perceived_severity_claimed": false
+}

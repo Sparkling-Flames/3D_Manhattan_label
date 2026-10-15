@@ -8,12 +8,12 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const require = createRequire(path.join(process.cwd(), 'package.json'));
 const { Workbook, SpreadsheetFile } = await import(pathToFileURL(require.resolve('@oai/artifact-tool')).href);
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
-const out = path.join(root, 'research/descriptive_statistics_20261015');
+const out = path.join(root, 'research/statistics/descriptive_statistics_20261015');
 const input = path.join(out, 'tables.json');
 const tables = JSON.parse(await fs.readFile(input, 'utf8'));
 console.log('Loaded statistics tables');
 const workbook = Workbook.create();
-const checks = { source: 'research/descriptive_statistics_20261015/tables.json', sheets: [] };
+const checks = { source: 'research/statistics/descriptive_statistics_20261015/tables.json', sheets: [] };
 const previews = path.join(process.cwd(), 'statistics_workbook_preview');
 await fs.mkdir(previews, { recursive: true });
 

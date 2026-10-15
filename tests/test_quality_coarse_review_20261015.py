@@ -46,7 +46,7 @@ def test_receipt_round_trip_and_wrong_reference_rejected():
     script = r"""
 const assert=require('node:assert/strict'),fs=require('node:fs');
 const api=require('./tools/thesis_main/analysis/quality_coarse_review_20261015.js');
-const data=JSON.parse(fs.readFileSync('./research/quality_coarse_review_20261015/manifest.json','utf8'));
+const data=JSON.parse(fs.readFileSync('./research/quality/quality_coarse_review_20261015/manifest.json','utf8'));
 const state=api.fresh(data),id=data.cards[0].id;
 assert(Object.values(state.decisions).every(a=>a.grade===null && a.score_revealed_at===null));
 let result=api.receipt(state,data);

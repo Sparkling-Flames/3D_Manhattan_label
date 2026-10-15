@@ -1,0 +1,48 @@
+{
+  "schema": "quality_working_stage1_freeze_v1",
+  "name": "WQ-LS08-20261014",
+  "config": {
+    "name": "loss_sum",
+    "family": "hill",
+    "combine": "loss_sum",
+    "iou_power": 1.0,
+    "boundary_scale": 5.656854249492381,
+    "boundary_power": 2.0,
+    "direction_scale": 6.123724356957945,
+    "direction_cap": 1.5,
+    "direction_power": 2.0,
+    "global_scale": 0.8,
+    "local_scale": 0.25,
+    "global_power": 2.0,
+    "local_power": 2.0
+  },
+  "equation": "Q=100*I/(1+I*(Sb^2/32+1.5*D^2/(D^2+37.5)+(Hm/.8)^2+(Hc/.25)^2))",
+  "frozen_utc": "2026-10-14T06:15:46.574076+00:00",
+  "ordinary_n": 574,
+  "severe_n": 9,
+  "severe_use": "separate_constraint_not_pooled",
+  "doorway_rows_used_for_this_selection": 0,
+  "source": "quality_pro_handoff_20261014_READY.zip",
+  "input_archive_sha256": "85a30dff05b00261fab356c9d1d31e8a756d9fbb2cfe17b693f207f23de64058",
+  "rationale": [
+    "Remove interaction between overlap deficit and every other penalty, without adding a new metric or dropping information.",
+    "Preserve all neutral single-factor curves at perfect remaining metrics; preserve 0-overlap limit and Q<=100*I.",
+    "P01 remains correctly ordered; known controls pass; J04 no near-total penalty; J01 increase is modest, not a validated absolute target.",
+    "Nearest-normal replacement confounds target size and fails P01; ray-normal replacement loses 49 ordinary cases and direct substitution fails P01.",
+    "Max-floor discards boundary sensitivity where overlap dominates; not chosen despite larger score increases."
+  ],
+  "costs": [
+    "Structural priority relative to overlap is weakened when I<1; P01 margin shrinks.",
+    "C02 gap increases; severe scores also rise; no human numerical targets established.",
+    "D semantic blind spot not repaired; real-input trajectories are diagnostic, not monotonic human ordering labels."
+  ],
+  "evidence_status": "exposed_development_not_blind; investigator_choice_not_unique_optimum",
+  "formal_algorithm_changed": false,
+  "dependencies": {
+    "src/core.py": "77218952a1be8a50c9cce73cc4efea66c725d4c01f2bdf22755a7da2a432ee6c",
+    "configs/ordinary_candidates.json": "fa98e9413e65e44d78e90c7faa49a0a72eeeceece48de37c9cfc3bbc3aa852ee",
+    "results/ordinary_reconstruction.json": "ddc2f44518c060a8993070a2c4cb32cf9bed38aba37fe1a74b1b8b6651339750",
+    "results/ordinary_candidate_summary.json": "c06072453ece4347213e6e590df0b2fc62973bc5277d13d50851a05e64031d5c",
+    "results/mechanism_controls.json": "0d5dd1275222436963177f65d3d5442232773cb0e96809ef3fae2d9f9a3cb8c8"
+  }
+}

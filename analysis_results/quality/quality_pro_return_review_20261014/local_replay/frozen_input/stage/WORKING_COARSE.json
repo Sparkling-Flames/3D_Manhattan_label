@@ -1,0 +1,30 @@
+{
+  "schema": "quality_coarse_freeze_v1",
+  "candidate": "hill_global08",
+  "config": {
+    "name": "hill_global08",
+    "family": "hill",
+    "combine": "additive",
+    "iou_power": 1.0,
+    "boundary_scale": 5.656854249492381,
+    "boundary_power": 2.0,
+    "direction_scale": 6.123724356957945,
+    "direction_cap": 1.5,
+    "direction_power": 2.0,
+    "tail_scale": 12.0,
+    "global_scale": 0.8,
+    "local_scale": 0.25,
+    "global_power": 2.0,
+    "local_power": 2.0
+  },
+  "ordinary_n": 574,
+  "severe_separate_n": 9,
+  "reason": [
+    "同高度去四次尾项消除已知完整控制逆序并保留P01偏好",
+    "整体高度尺度0.8恢复旧baseline_quad08的数学形式，T20适度加重且P04局部高度损失仍较高",
+    "不是新算法，也不是唯一最优；J01绝对分数意见尚未解决"
+  ],
+  "status": "research_working_only",
+  "next_stage": "doorway_fine",
+  "formal_algorithm_changed": false
+}

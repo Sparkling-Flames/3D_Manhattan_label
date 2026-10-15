@@ -14,7 +14,7 @@ from .consensus_delivery_20261008 import fuse, WORKING_GAP
 from .research_artifact_io import ROOT, write_json, write_csv
 from .research_round_20260929 import prepare_record, reconstruct
 
-OUT = ROOT / 'research/wall_consensus_population_20261014'
+OUT = ROOT / 'research/fusion/wall_consensus_population_20261014'
 SEED = 20261014
 REPEATS = 24
 

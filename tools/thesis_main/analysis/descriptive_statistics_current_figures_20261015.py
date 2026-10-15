@@ -13,7 +13,7 @@ import pandas as pd
 from .descriptive_statistics_figures_20261015 import export, DIFFICULTIES, COLORS, METRICS
 
 ROOT = Path(__file__).resolve().parents[3]
-DEFAULT = ROOT/'research/descriptive_statistics_current_20261015'
+DEFAULT = ROOT/'research/statistics/descriptive_statistics_current_20261015'
 
 
 def ordinary_manual(records):

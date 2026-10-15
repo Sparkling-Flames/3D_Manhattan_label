@@ -19,10 +19,10 @@ from .wall_consensus_population_20261014 import footprint, summarize_state, prep
 from .consensus_delivery_20261008 import fuse, WORKING_GAP
 
 ROOT = Path(__file__).resolve().parents[3]
-OUT = ROOT / 'research/worker_wq_integration_20261015'
-OLD = ROOT / 'research/worker_classification_progress_20261014'
-POP = ROOT / 'research/wall_consensus_population_20261014'
-QUALITY = ROOT / 'research/quality_joint_closeout_review_20261015'
+OUT = ROOT / 'research/workers/worker_wq_integration_20261015'
+OLD = ROOT / 'research/workers/worker_classification_progress_20261014'
+POP = ROOT / 'research/fusion/wall_consensus_population_20261014'
+QUALITY = ROOT / 'research/quality/quality_joint_closeout_review_20261015'
 VERSION = 'WQ-LS08-20261014'
 AXES = ['WQ', 'IoU3D100', 'iou_2d', 'S_bottom_deg', 'dir', 'Hmean', 'Hcenter',
         'height_mean_ratio', 'height_vs_floor']

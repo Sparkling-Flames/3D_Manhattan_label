@@ -1,0 +1,100 @@
+{
+  "source_commit": "134e7c775b9ea25a076851c0605571ba0ea0ac31",
+  "source_path": "research/quality_candidate_review_20261014/quality_candidate_review_20261014_v1.json",
+  "source_git_blob": "23b4febf00ae7e6ff5eccba546c838ee08f029cc",
+  "representation": "reviewed_field_projection_not_original_receipt_bytes",
+  "all_cases_prior_score_exposure": true,
+  "used_to_fit_new_parameters": false,
+  "cases": [
+    {
+      "case_id": "P01",
+      "record_ids": [
+        "R02015",
+        "R00637"
+      ],
+      "floor": "A_clear",
+      "height": "A_slight",
+      "overall": "A_slight",
+      "comment": "a主要是相对gt标注范围小了"
+    },
+    {
+      "case_id": "J01",
+      "record_ids": [
+        "R03346",
+        "R03347"
+      ],
+      "floor": "A_slight",
+      "height": "close",
+      "overall": "close",
+      "comment": "不是很好判断"
+    },
+    {
+      "case_id": "J04",
+      "record_ids": [
+        "R03274"
+      ],
+      "floor": "moderate",
+      "height": "minor",
+      "overall": "local",
+      "comment": ""
+    },
+    {
+      "case_id": "C02",
+      "record_ids": [
+        "R03351",
+        "R03350"
+      ],
+      "floor": "B_slight",
+      "height": "B_slight",
+      "overall": "close",
+      "comment": "b离gt 差异大一些,不过3d效果是好于a"
+    },
+    {
+      "case_id": "T20_P04",
+      "record_ids": [
+        "R00397",
+        "R00418"
+      ],
+      "height_A": "minor",
+      "height_B": "moderate",
+      "height_penalty": "B_slight",
+      "comment": "b是一边高一边低,a是整体高度较平均,但是整体低了一些"
+    },
+    {
+      "case_id": "L01",
+      "record_ids": [
+        "R01609",
+        "R02297"
+      ],
+      "floor": "close",
+      "height": "B_slight",
+      "overall": "close",
+      "comment": "没有差很多",
+      "first_reveal_height": "A_slight"
+    },
+    {
+      "case_id": "Q02",
+      "record_ids": [
+        "R02200",
+        "R00990"
+      ],
+      "floor": "scope",
+      "height": "B_clear",
+      "overall": "B_slight",
+      "comment": "都不是很好,因为这是门洞交界,标都不好标,而且gt标的范围是和他们有点不同的",
+      "first_reveal_overall": "scope",
+      "scope_restriction_preserved": true
+    },
+    {
+      "case_id": "Q03",
+      "record_ids": [
+        "R01501",
+        "R01191"
+      ],
+      "floor": "close",
+      "height": "close",
+      "overall": "close",
+      "comment": "都不是很好"
+    }
+  ]
+}

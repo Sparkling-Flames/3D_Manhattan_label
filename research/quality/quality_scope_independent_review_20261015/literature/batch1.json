@@ -1,0 +1,228 @@
+[
+  {
+    "id": "arxiv-2011.11498",
+    "title": "HoHoNet: 360 Indoor Holistic Understanding with Latent Horizontal Features",
+    "abstract": "We present HoHoNet, a versatile and efficient framework for holistic understanding of an indoor 360-degree panorama using a Latent Horizontal Feature (LHFeat). The compact LHFeat flattens the features along the vertical direction and has shown success in modeling per-column modality for room layout reconstruction. HoHoNet advances in two important aspects. First, the deep architecture is redesigned to run faster with improved accuracy. Second, we propose a novel horizon-to-dense module, which relaxes the per-column output shape constraint, allowing per-pixel dense prediction from LHFeat. HoHoNet is fast: It runs at 52 FPS and 110 FPS with ResNet-50 and ResNet-34 backbones respectively, for modeling dense modalities from a high-resolution $512 \\times 1024$ panorama. HoHoNet is also accurate. On the tasks of layout estimation and semantic segmentation, HoHoNet achieves results on par with current state-of-the-art. On dense depth estimation, HoHoNet outperforms all the prior arts by a large margin.",
+    "abstract_status": "complete_primary_source",
+    "authors": [
+      "Cheng Sun",
+      "Min Sun",
+      "Hwann-Tzong Chen"
+    ],
+    "year": 2021,
+    "venue": "CVPR 2021",
+    "doi": "10.48550/arXiv.2011.11498",
+    "source_url": "https://arxiv.org/abs/2011.11498",
+    "verification_status": "primary_abstract_verified",
+    "discovery_sources": [
+      {
+        "round": "R2-R3",
+        "source_url": "https://arxiv.org/abs/2011.11498"
+      }
+    ],
+    "version_relation": "preprint; formal version to verify",
+    "screening_status": "awaiting_independent_reviews",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "frozen_batch": "B1"
+  },
+  {
+    "id": "arxiv-2404.09993",
+    "title": "No More Ambiguity in 360° Room Layout via Bi-Layout Estimation",
+    "abstract": "Inherent ambiguity in layout annotations poses significant challenges to developing accurate 360° room layout estimation models. To address this issue, we propose a novel Bi-Layout model capable of predicting two distinct layout types. One stops at ambiguous regions, while the other extends to encompass all visible areas. Our model employs two global context embeddings, where each embedding is designed to capture specific contextual information for each layout type. With our novel feature guidance module, the image feature retrieves relevant context from these embeddings, generating layout-aware features for precise bi-layout predictions. A unique property of our Bi-Layout model is its ability to inherently detect ambiguous regions by comparing the two predictions. To circumvent the need for manual correction of ambiguous annotations during testing, we also introduce a new metric for disambiguating ground truth layouts. Our method demonstrates superior performance on benchmark datasets, notably outperforming leading approaches. Specifically, on the MatterportLayout dataset, it improves 3DIoU from 81.70% to 82.57% across the full test set and notably from 54.80% to 59.97% in subsets with significant ambiguity. Project page: this https URL†liagm.github.io",
+    "abstract_status": "complete_primary_source",
+    "authors": [
+      "Yu-Ju Tsai",
+      "Jin-Cheng Jhang",
+      "Jingjing Zheng",
+      "Wei Wang",
+      "Albert Y. C. Chen",
+      "Min Sun",
+      "Cheng-Hao Kuo",
+      "Ming-Hsuan Yang"
+    ],
+    "year": 2024,
+    "venue": "CVPR 2024",
+    "doi": "10.48550/arXiv.2404.09993",
+    "source_url": "https://arxiv.org/abs/2404.09993",
+    "verification_status": "primary_abstract_verified",
+    "discovery_sources": [
+      {
+        "round": "R2-R3",
+        "source_url": "https://arxiv.org/abs/2404.09993"
+      }
+    ],
+    "version_relation": "preprint; formal version to verify",
+    "screening_status": "awaiting_independent_reviews",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "frozen_batch": "B1"
+  },
+  {
+    "id": "arxiv-2211.15658",
+    "title": "Connecting the Dots: Floorplan Reconstruction Using Two-Level Queries",
+    "abstract": "We address 2D floorplan reconstruction from 3D scans. Existing approaches typically employ heuristically designed multi-stage pipelines. Instead, we formulate floorplan reconstruction as a single-stage structured prediction task: find a variable-size set of polygons, which in turn are variable-length sequences of ordered vertices. To solve it we develop a novel Transformer architecture that generates polygons of multiple rooms in parallel, in a holistic manner without hand-crafted intermediate stages. The model features two-level queries for polygons and corners, and includes polygon matching to make the network end-to-end trainable. Our method achieves a new state-of-the-art for two challenging datasets, Structured3D and SceneCAD, along with significantly faster inference than previous methods. Moreover, it can readily be extended to predict additional information, i.e., semantic room types and architectural elements like doors and windows. Our code and models are available at: this https URL†github.com .",
+    "abstract_status": "complete_primary_source",
+    "authors": [
+      "Yuanwen Yue",
+      "Theodora Kontogianni",
+      "Konrad Schindler",
+      "Francis Engelmann"
+    ],
+    "year": 2023,
+    "venue": "CVPR 2023",
+    "doi": "10.48550/arXiv.2211.15658",
+    "source_url": "https://arxiv.org/abs/2211.15658",
+    "verification_status": "primary_abstract_verified",
+    "discovery_sources": [
+      {
+        "round": "R2-R3",
+        "source_url": "https://arxiv.org/abs/2211.15658"
+      }
+    ],
+    "version_relation": "preprint; formal version to verify",
+    "screening_status": "awaiting_independent_reviews",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "frozen_batch": "B1"
+  },
+  {
+    "id": "arxiv-2104.09403",
+    "title": "OmniLayout: Room Layout Reconstruction from Indoor Spherical Panoramas",
+    "abstract": "Given a single RGB panorama, the goal of 3D layout reconstruction is to estimate the room layout by predicting the corners, floor boundary, and ceiling boundary. A common approach has been to use standard convolutional networks to predict the corners and boundaries, followed by post-processing to generate the 3D layout. However, the space-varying distortions in panoramic images are not compatible with the translational equivariance property of standard convolutions, thus degrading performance. Instead, we propose to use spherical convolutions. The resulting network, which we call OmniLayout performs convolutions directly on the sphere surface, sampling according to inverse equirectangular projection and hence invariant to equirectangular distortions. Using a new evaluation metric, we show that our network reduces the error in the heavily distorted regions (near the poles) by approx 25 % when compared to standard convolutional networks. Experimental results show that OmniLayout outperforms the state-of-the-art by approx 4% on two different benchmark datasets (PanoContext and Stanford 2D-3D). Code is available at this https URL†github.com .",
+    "abstract_status": "complete_primary_source",
+    "authors": [
+      "Shivansh Rao",
+      "Vikas Kumar",
+      "Daniel Kifer",
+      "Lee Giles",
+      "Ankur Mali"
+    ],
+    "year": 2021,
+    "venue": "CVPR OmniCV Workshop 2021",
+    "doi": "10.48550/arXiv.2104.09403",
+    "source_url": "https://arxiv.org/abs/2104.09403",
+    "verification_status": "primary_abstract_verified",
+    "discovery_sources": [
+      {
+        "round": "R2-R3",
+        "source_url": "https://arxiv.org/abs/2104.09403"
+      }
+    ],
+    "version_relation": "preprint; formal version to verify",
+    "screening_status": "awaiting_independent_reviews",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "frozen_batch": "B1"
+  },
+  {
+    "id": "arxiv-2103.16562",
+    "title": "Boundary IoU: Improving Object-Centric Image Segmentation Evaluation",
+    "abstract": "We present Boundary IoU (Intersection-over-Union), a new segmentation evaluation measure focused on boundary quality. We perform an extensive analysis across different error types and object sizes and show that Boundary IoU is significantly more sensitive than the standard Mask IoU measure to boundary errors for large objects and does not over-penalize errors on smaller objects. The new quality measure displays several desirable characteristics like symmetry w.r.t. prediction/ground truth pairs and balanced responsiveness across scales, which makes it more suitable for segmentation evaluation than other boundary-focused measures like Trimap IoU and F-measure. Based on Boundary IoU, we update the standard evaluation protocols for instance and panoptic segmentation tasks by proposing the Boundary AP (Average Precision) and Boundary PQ (Panoptic Quality) metrics, respectively. Our experiments show that the new evaluation metrics track boundary quality improvements that are generally overlooked by current Mask IoU-based evaluation metrics. We hope that the adoption of the new boundary-sensitive evaluation metrics will lead to rapid progress in segmentation methods that improve boundary quality.",
+    "abstract_status": "complete_primary_source",
+    "authors": [
+      "Bowen Cheng",
+      "Ross Girshick",
+      "Piotr Dollár",
+      "Alexander C. Berg",
+      "Alexander Kirillov"
+    ],
+    "year": 2021,
+    "venue": "CVPR 2021",
+    "doi": "10.48550/arXiv.2103.16562",
+    "source_url": "https://arxiv.org/abs/2103.16562",
+    "verification_status": "primary_abstract_verified",
+    "discovery_sources": [
+      {
+        "round": "R2-R3",
+        "source_url": "https://arxiv.org/abs/2103.16562"
+      }
+    ],
+    "version_relation": "preprint; formal version to verify",
+    "screening_status": "awaiting_independent_reviews",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "frozen_batch": "B1"
+  },
+  {
+    "id": "arxiv-1908.06702",
+    "title": "Floor-SP: Inverse CAD for Floorplans by Sequential Room-wise Shortest Path",
+    "abstract": "This paper proposes a new approach for automated floorplan reconstruction from RGBD scans, a major milestone in indoor mapping research. The approach, dubbed Floor-SP, formulates a novel optimization problem, where room-wise coordinate descent sequentially solves dynamic programming to optimize the floorplan graph structure. The objective function consists of data terms guided by deep neural networks, consistency terms encouraging adjacent rooms to share corners and walls, and the model complexity term. The approach does not require corner/edge detection with thresholds, unlike most other methods. We have evaluated our system on production-quality RGBD scans of 527 apartments or houses, including many units with non-Manhattan structures. Qualitative and quantitative evaluations demonstrate a significant performance boost over the current state-of-the-art. Please refer to our project website this http URL†jcchen.me for code and data.",
+    "abstract_status": "complete_primary_source",
+    "authors": [
+      "Jiacheng Chen",
+      "Chen Liu",
+      "Jiaye Wu",
+      "Yasutaka Furukawa"
+    ],
+    "year": 2019,
+    "venue": "ICCV 2019",
+    "doi": "10.48550/arXiv.1908.06702",
+    "source_url": "https://arxiv.org/abs/1908.06702",
+    "verification_status": "primary_abstract_verified",
+    "discovery_sources": [
+      {
+        "round": "R2-R3",
+        "source_url": "https://arxiv.org/abs/1908.06702"
+      }
+    ],
+    "version_relation": "preprint; formal version to verify",
+    "screening_status": "awaiting_independent_reviews",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "frozen_batch": "B1"
+  },
+  {
+    "id": "arxiv-1809.04430",
+    "title": "Deep learning to achieve clinically applicable segmentation of head and neck anatomy for radiotherapy",
+    "abstract": "Over half a million individuals are diagnosed with head and neck cancer each year worldwide. Radiotherapy is an important curative treatment for this disease, but it requires manual time consuming delineation of radio-sensitive organs at risk (OARs). This planning process can delay treatment, while also introducing inter-operator variability with resulting downstream radiation dose differences. While auto-segmentation algorithms offer a potentially time-saving solution, the challenges in defining, quantifying and achieving expert performance remain. Adopting a deep learning approach, we demonstrate a 3D U-Net architecture that achieves expert-level performance in delineating 21 distinct head and neck OARs commonly segmented in clinical practice. The model was trained on a dataset of 663 deidentified computed tomography (CT) scans acquired in routine clinical practice and with both segmentations taken from clinical practice and segmentations created by experienced radiographers as part of this research, all in accordance with consensus OAR definitions. We demonstrate the model's clinical applicability by assessing its performance on a test set of 21 CT scans from clinical practice, each with the 21 OARs segmented by two independent experts. We also introduce surface Dice similarity coefficient (surface DSC), a new metric for the comparison of organ delineation, to quantify deviation between OAR surface contours rather than volumes, better reflecting the clinical task of correcting errors in the automated organ segmentations. The model's generalisability is then demonstrated on two distinct open source datasets, reflecting different centres and countries to model training. With appropriate validation studies and regulatory approvals, this system could improve the efficiency, consistency, and safety of radiotherapy pathways.",
+    "abstract_status": "complete_primary_source",
+    "authors": [
+      "Stanislav Nikolov",
+      "Sam Blackwell",
+      "Alexei Zverovitch",
+      "Ruheena Mendes",
+      "Michelle Livne",
+      "Jeffrey De Fauw",
+      "Yojan Patel",
+      "Clemens Meyer",
+      "Harry Askham",
+      "Bernardino Romera-Paredes",
+      "Christopher Kelly",
+      "Alan Karthikesalingam",
+      "Carlton Chu",
+      "Dawn Carnell",
+      "Cheng Boon",
+      "Derek D'Souza",
+      "Syed Ali Moinuddin",
+      "Bethany Garie",
+      "Yasmin McQuinlan",
+      "Sarah Ireland",
+      "Kiarna Hampton",
+      "Krystle Fuller",
+      "Hugh Montgomery",
+      "Geraint Rees",
+      "Mustafa Suleyman",
+      "Trevor Back",
+      "Cían Hughes",
+      "Joseph R. Ledsam",
+      "Olaf Ronneberger"
+    ],
+    "year": 2018,
+    "venue": "arXiv预印；2021正式版另见版本关系",
+    "doi": "10.48550/arXiv.1809.04430",
+    "source_url": "https://arxiv.org/abs/1809.04430",
+    "verification_status": "primary_abstract_verified",
+    "discovery_sources": [
+      {
+        "round": "R2-R3",
+        "source_url": "https://arxiv.org/abs/1809.04430"
+      }
+    ],
+    "version_relation": "preprint; formal version to verify",
+    "screening_status": "awaiting_independent_reviews",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "frozen_batch": "B1"
+  }
+]

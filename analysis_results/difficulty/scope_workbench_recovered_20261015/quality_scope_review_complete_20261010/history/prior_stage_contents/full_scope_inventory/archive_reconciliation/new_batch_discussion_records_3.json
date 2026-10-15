@@ -1,0 +1,315 @@
+[
+  {
+    "record_key": "BATCH_04",
+    "text": "b05确实同房,39是典型的 model issue 跨门扩张,不算交界处",
+    "new_current_image_bindings": [
+      {
+        "image_id": "e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814",
+        "image_code": "e9zR4mvMWw7-39"
+      }
+    ],
+    "associated_images": [
+      {
+        "image_id": "e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814",
+        "building": "e9zR4mvMWw7",
+        "number": 39,
+        "split": "test",
+        "path": "data/mp3d_layout/test/img/e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814.png"
+      },
+      {
+        "image_id": "e9zR4mvMWw7_5f9b1db7cc1748c2a71d9924bd1f4fa3",
+        "building": "e9zR4mvMWw7",
+        "number": 23,
+        "split": "test",
+        "path": "data/mp3d_layout/test/img/e9zR4mvMWw7_5f9b1db7cc1748c2a71d9924bd1f4fa3.png"
+      }
+    ],
+    "binding_level": "cross_image_discussion",
+    "evidence_level": "user_chat_quote_in_structured_historical_decisions",
+    "source_type": "current_conversation",
+    "date": "2026-09-11",
+    "scope_difference_confirmed": false,
+    "sources": [
+      {
+        "bundle_relative_path": "图片分类与复审来源/analysis_results/scene_image_exploration_20260910_v1/batch_user_decisions_20260911_v1.json",
+        "json_pointer": "/rows/4/source_comment",
+        "file_sha256": "cf3a404e6e70b6b85fb74f300a514271c3eeef73794d3a3de1d60c8a42399556",
+        "canonical_json_record_sha256": "3c9830bbceb3d5fe9ec2c87601bb9be6b8f9bf2b362063a841f735b028ab94ec"
+      }
+    ],
+    "raw_record": {
+      "case_id": "B05",
+      "source_comment": "b05确实同房,39是典型的 model issue 跨门扩张,不算交界处",
+      "images": [
+        {
+          "image_id": "e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814",
+          "building": "e9zR4mvMWw7",
+          "number": 39,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814.png"
+        },
+        {
+          "image_id": "e9zR4mvMWw7_5f9b1db7cc1748c2a71d9924bd1f4fa3",
+          "building": "e9zR4mvMWw7",
+          "number": 23,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/e9zR4mvMWw7_5f9b1db7cc1748c2a71d9924bd1f4fa3.png"
+        }
+      ],
+      "user_room_decision": "39与23同房",
+      "boundary_decisions": [
+        {
+          "image_id": "e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814",
+          "building": "e9zR4mvMWw7",
+          "number": 39,
+          "split": "test",
+          "path": "data/mp3d_layout/test/img/e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814.png",
+          "state": "暂不归入",
+          "priority": null
+        }
+      ],
+      "same_room_collection": "未另定",
+      "similar_scene_collection": "未排除",
+      "audit_note": "跨门扩张按用户报告记为模型问题；本轮没有复查模型输出，不能由此认定相机处在交界。",
+      "room_relations": [
+        {
+          "relation": "user_same_room",
+          "images": [
+            {
+              "image_id": "e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814",
+              "building": "e9zR4mvMWw7",
+              "number": 39,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814.png"
+            },
+            {
+              "image_id": "e9zR4mvMWw7_5f9b1db7cc1748c2a71d9924bd1f4fa3",
+              "building": "e9zR4mvMWw7",
+              "number": 23,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/e9zR4mvMWw7_5f9b1db7cc1748c2a71d9924bd1f4fa3.png"
+            }
+          ],
+          "status": "用户确认"
+        }
+      ]
+    }
+  },
+  {
+    "record_key": "BATCH_06",
+    "text": "b07 的02是 14图片左边的房间, 但是他们的标注有显著区别, 这个不优先作为后续标注图片的候选(研究同房预测,不影响研究类似场景的图片选择)",
+    "new_current_image_bindings": [
+      {
+        "image_id": "jh4fc5c5qoQ_30cdb6fe9aa6449788e271f2e24d76ec",
+        "image_code": "jh4fc5c5qoQ-02"
+      },
+      {
+        "image_id": "jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6",
+        "image_code": "jh4fc5c5qoQ-14"
+      }
+    ],
+    "associated_images": [
+      {
+        "image_id": "jh4fc5c5qoQ_30cdb6fe9aa6449788e271f2e24d76ec",
+        "building": "jh4fc5c5qoQ",
+        "number": 2,
+        "split": "valid",
+        "path": "data/mp3d_layout/valid/img/jh4fc5c5qoQ_30cdb6fe9aa6449788e271f2e24d76ec.png"
+      },
+      {
+        "image_id": "jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6",
+        "building": "jh4fc5c5qoQ",
+        "number": 14,
+        "split": "valid",
+        "path": "data/mp3d_layout/valid/img/jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6.png"
+      }
+    ],
+    "binding_level": "cross_image_discussion",
+    "evidence_level": "user_chat_quote_in_structured_historical_decisions",
+    "source_type": "current_conversation",
+    "date": "2026-09-11",
+    "scope_difference_confirmed": false,
+    "sources": [
+      {
+        "bundle_relative_path": "图片分类与复审来源/analysis_results/scene_image_exploration_20260910_v1/batch_user_decisions_20260911_v1.json",
+        "json_pointer": "/rows/6/source_comment",
+        "file_sha256": "cf3a404e6e70b6b85fb74f300a514271c3eeef73794d3a3de1d60c8a42399556",
+        "canonical_json_record_sha256": "8fcfac17be5fc927c1e1ea07f9bef950ad17b8d580183615c89f88d5c123485b"
+      }
+    ],
+    "raw_record": {
+      "case_id": "B07",
+      "source_comment": "b07 的02是 14图片左边的房间, 但是他们的标注有显著区别, 这个不优先作为后续标注图片的候选(研究同房预测,不影响研究类似场景的图片选择)",
+      "images": [
+        {
+          "image_id": "jh4fc5c5qoQ_30cdb6fe9aa6449788e271f2e24d76ec",
+          "building": "jh4fc5c5qoQ",
+          "number": 2,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/jh4fc5c5qoQ_30cdb6fe9aa6449788e271f2e24d76ec.png"
+        },
+        {
+          "image_id": "jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6",
+          "building": "jh4fc5c5qoQ",
+          "number": 14,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6.png"
+        }
+      ],
+      "user_room_decision": "02与14同房，14位于该房间与相邻区域的交界候选位置",
+      "boundary_decisions": [
+        {
+          "image_id": "jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6",
+          "building": "jh4fc5c5qoQ",
+          "number": 14,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6.png",
+          "state": "低优先级候选",
+          "priority": "低"
+        }
+      ],
+      "same_room_collection": "02／14这组比较不优先用于下一轮同房标注",
+      "similar_scene_collection": "不影响相似场景候选",
+      "audit_note": "显著标注差异为用户观察；采集优先级与同房身份分开，未从已有评价中删除。02的交界属性本条未重新判定。",
+      "room_relations": [
+        {
+          "relation": "user_same_room",
+          "images": [
+            {
+              "image_id": "jh4fc5c5qoQ_30cdb6fe9aa6449788e271f2e24d76ec",
+              "building": "jh4fc5c5qoQ",
+              "number": 2,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/jh4fc5c5qoQ_30cdb6fe9aa6449788e271f2e24d76ec.png"
+            },
+            {
+              "image_id": "jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6",
+              "building": "jh4fc5c5qoQ",
+              "number": 14,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/jh4fc5c5qoQ_b000c5baa76b454caa1c58c9aac585f6.png"
+            }
+          ],
+          "status": "用户确认"
+        }
+      ]
+    }
+  },
+  {
+    "record_key": "BATCH_10",
+    "text": "b11同房建议没问题,也不算交界处先",
+    "new_current_image_bindings": [
+      {
+        "image_id": "pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e",
+        "image_code": "pa4otMbVnkk-11"
+      }
+    ],
+    "associated_images": [
+      {
+        "image_id": "pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e",
+        "building": "pa4otMbVnkk",
+        "number": 11,
+        "split": "valid",
+        "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e.png"
+      },
+      {
+        "image_id": "pa4otMbVnkk_7be30830c80b4fb3a83d5f956c07e143",
+        "building": "pa4otMbVnkk",
+        "number": 22,
+        "split": "valid",
+        "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_7be30830c80b4fb3a83d5f956c07e143.png"
+      },
+      {
+        "image_id": "pa4otMbVnkk_8d4d0f90d2b145648e952352535c0f50",
+        "building": "pa4otMbVnkk",
+        "number": 28,
+        "split": "valid",
+        "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_8d4d0f90d2b145648e952352535c0f50.png"
+      }
+    ],
+    "binding_level": "cross_image_discussion",
+    "evidence_level": "user_chat_quote_in_structured_historical_decisions",
+    "source_type": "current_conversation",
+    "date": "2026-09-11",
+    "scope_difference_confirmed": false,
+    "sources": [
+      {
+        "bundle_relative_path": "图片分类与复审来源/analysis_results/scene_image_exploration_20260910_v1/batch_user_decisions_20260911_v1.json",
+        "json_pointer": "/rows/10/source_comment",
+        "file_sha256": "cf3a404e6e70b6b85fb74f300a514271c3eeef73794d3a3de1d60c8a42399556",
+        "canonical_json_record_sha256": "a16ff860ee63829920f48ba9628b881d2d0b19a1f208aa1af24a95739eaa36a7"
+      }
+    ],
+    "raw_record": {
+      "case_id": "B11",
+      "source_comment": "b11同房建议没问题,也不算交界处先",
+      "images": [
+        {
+          "image_id": "pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e",
+          "building": "pa4otMbVnkk",
+          "number": 11,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e.png"
+        },
+        {
+          "image_id": "pa4otMbVnkk_7be30830c80b4fb3a83d5f956c07e143",
+          "building": "pa4otMbVnkk",
+          "number": 22,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_7be30830c80b4fb3a83d5f956c07e143.png"
+        },
+        {
+          "image_id": "pa4otMbVnkk_8d4d0f90d2b145648e952352535c0f50",
+          "building": "pa4otMbVnkk",
+          "number": 28,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_8d4d0f90d2b145648e952352535c0f50.png"
+        }
+      ],
+      "user_room_decision": "11／22／28同房",
+      "boundary_decisions": [
+        {
+          "image_id": "pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e",
+          "building": "pa4otMbVnkk",
+          "number": 11,
+          "split": "valid",
+          "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e.png",
+          "state": "暂不归入",
+          "priority": null
+        }
+      ],
+      "same_room_collection": "未另定",
+      "similar_scene_collection": "未排除",
+      "audit_note": "同房建议获用户认可；11靠凹入口的位置描述保留，当前不归交界候选。",
+      "room_relations": [
+        {
+          "relation": "user_same_room",
+          "images": [
+            {
+              "image_id": "pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e",
+              "building": "pa4otMbVnkk",
+              "number": 11,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e.png"
+            },
+            {
+              "image_id": "pa4otMbVnkk_7be30830c80b4fb3a83d5f956c07e143",
+              "building": "pa4otMbVnkk",
+              "number": 22,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_7be30830c80b4fb3a83d5f956c07e143.png"
+            },
+            {
+              "image_id": "pa4otMbVnkk_8d4d0f90d2b145648e952352535c0f50",
+              "building": "pa4otMbVnkk",
+              "number": 28,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_8d4d0f90d2b145648e952352535c0f50.png"
+            }
+          ],
+          "status": "用户确认"
+        }
+      ]
+    }
+  }
+]

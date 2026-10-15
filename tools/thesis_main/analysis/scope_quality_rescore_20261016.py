@@ -14,8 +14,8 @@ from .scope_reference_reconstruction_20261016 import build_reference_catalog
 from .scope_quality_binding_20261016 import build_affected_records
 from .scope_quality_scoring_20261016 import score_records
 
-OUT = ROOT / 'research/scope_quality_rescore_20261016'
-STATS = ROOT / 'research/descriptive_statistics_rescored_20261016'
+OUT = ROOT / 'research/data/scope_quality_rescore_20261016'
+STATS = ROOT / 'research/statistics/descriptive_statistics_rescored_20261016'
 VERSION = 'confirmed_scope_fixed_quality_rescore_20261016_v1'
 
 
@@ -168,8 +168,8 @@ def run(out=OUT, stats_out=STATS):
         snapshot_version=VERSION,input_version='formal_loader_snapshot_20261016',
         source_manifest=bundle['manifest'],difficulty_pointer=pointer,
         reference_catalog='reference_catalog.json',annotation_geometry='unchanged full loader points_1024x512',
-        score_models='research/quality_ab_feedback_handoff_20261015/prior_AB/src/working_models.py',
-        scoring_archive='research/quality_joint_closeout_review_20261015/pro_closeout_delta.zip'),
+        score_models='research/quality/quality_ab_feedback_handoff_20261015/prior_AB/src/working_models.py',
+        scoring_archive='research/quality/quality_joint_closeout_review_20261015/pro_closeout_delta.zip'),
         ensure_ascii=False,indent=2),encoding='utf-8')
     audit_tables = dict(reference_catalog=frame(references), affected_records=frame(affected),
         record_targets=frame(binding['record_targets']), image_spaces=frame(binding['image_spaces']),

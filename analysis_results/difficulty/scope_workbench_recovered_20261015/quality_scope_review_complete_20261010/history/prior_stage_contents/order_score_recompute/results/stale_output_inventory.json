@@ -1,0 +1,99 @@
+{
+  "current_source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+  "records": [
+    {
+      "path": "analysis_results/image_difficulty_full_review_20261010/all_scope_metrics.json",
+      "sha256": "06428033f033cf07851fcc49b60c777652232c81ff205f1aa1c3339cd2a6e41b",
+      "status": "stale_three_metric_rows",
+      "image_rows": 6,
+      "changed_record_ids": [
+        "R01653",
+        "R01877",
+        "R02249"
+      ],
+      "scope": "Only yqstnuAEVhm-07 affected by this order delta; old snapshot must not be relabeled current without updating the indicated data."
+    },
+    {
+      "path": "analysis_results/image_difficulty_full_review_20261010/scope_metrics.json",
+      "sha256": "1505cab93704629eb866bdb7ff239ebcddc17dd4509d23526e29b504ff8e781c",
+      "status": "stale_three_metric_rows",
+      "image_rows": 6,
+      "changed_record_ids": [
+        "R01653",
+        "R01877",
+        "R02249"
+      ],
+      "scope": "Only yqstnuAEVhm-07 affected by this order delta; old snapshot must not be relabeled current without updating the indicated data."
+    },
+    {
+      "path": "analysis_results/image_difficulty_full_review_20261010/all_scope_evidence.json",
+      "sha256": "8b2da7ffbcd2410fc94738ebae26ba2e760408845d7e86f358e1dc291757a7b4",
+      "status": "stale_three_rings_and_metrics_in_one_image",
+      "image_rows": 1,
+      "changed_record_ids": [
+        "R01653",
+        "R01877",
+        "R02249"
+      ],
+      "scope": "Only yqstnuAEVhm-07 affected by this order delta; old snapshot must not be relabeled current without updating the indicated data."
+    },
+    {
+      "path": "analysis_results/image_difficulty_full_review_20261010/scope_evidence.json",
+      "sha256": "add05dbffad165cf8703eff1ef992b65b0ad62fb1d219647f4de764e451adc9d",
+      "status": "stale_three_rings_and_metrics_in_one_image",
+      "image_rows": 1,
+      "changed_record_ids": [
+        "R01653",
+        "R01877",
+        "R02249"
+      ],
+      "scope": "Only yqstnuAEVhm-07 affected by this order delta; old snapshot must not be relabeled current without updating the indicated data."
+    },
+    {
+      "path": "analysis_results/image_difficulty_full_review_20261010/review_data.json",
+      "sha256": "7c3424bec5f17fed82509eec19a8cfec7cdd5f6c8de806d0edb19d55297fa2a3",
+      "status": "stored_group_threshold_counts_unchanged_but_linked_card_is_historical",
+      "image_rows": 1,
+      "changed_record_ids": [
+        "R01653",
+        "R01877",
+        "R02249"
+      ],
+      "scope": "Only yqstnuAEVhm-07 affected by this order delta; old snapshot must not be relabeled current without updating the indicated data."
+    },
+    {
+      "path": "analysis_results/image_difficulty_full_review_20261010/all_cards/yqstnuAEVhm-07.jpg",
+      "exists": true,
+      "status": "historical_render_dependent_on_old_ring_geometry; not_redrawn_here"
+    },
+    {
+      "path": "analysis_results/image_difficulty_full_review_20261010/cards/yqstnuAEVhm-07.jpg",
+      "exists": true,
+      "status": "historical_render_dependent_on_old_ring_geometry; not_redrawn_here"
+    },
+    {
+      "path": "analysis_results/image_difficulty_full_review_20261010/all_scope_sheet_41.jpg",
+      "exists": true,
+      "status": "historical_render_dependent_on_old_ring_geometry; not_redrawn_here"
+    },
+    {
+      "path": "analysis_results/direct_fusion_20261007/**",
+      "status": "downstream_image_fusion_and_aggregates_may_be_affected; not_recomputed",
+      "scope": "Only recordwise fixed-GT diagnostics are proved to change for exactly three records. Do not extend that claim to fused candidates, worker rankings or corpus summaries."
+    },
+    {
+      "path": "analysis_results/image_difficulty_full_review_20261010/user_review_20261010/order_workbench/sources.json",
+      "status": "intentional_historical_receipt_binding_snapshot; preserve_unchanged"
+    },
+    {
+      "path": "research/quality_scope_comparison_20261010/results/**",
+      "status": "unaffected_by_this_delta; none_of_its_three_images_is_yqstnuAEVhm-07"
+    },
+    {
+      "path": "research/quality_scope_full_review_20261010/cloud_inventory/{inventory.json.gz,scope_by_image.json.gz,all_3152_geometry_records.csv}",
+      "status": "prior_publication_contains_old_three_scope_metrics; requires_delta_overlay_or_rebuild_before_current_claim",
+      "scope": "These files belong to the parent publication assembly; no in-place edit in this task."
+    }
+  ],
+  "no_historical_outputs_overwritten": true
+}

@@ -1,0 +1,55 @@
+{
+  "seconds": 31.630229000000327,
+  "steps": [
+    {
+      "script": "recover_ledger.py",
+      "exit_code": 0,
+      "seconds": 0.7683876000000964
+    },
+    {
+      "script": "compute_all.py",
+      "exit_code": 0,
+      "seconds": 8.57321469999988
+    },
+    {
+      "script": "analyze_downstream.py",
+      "exit_code": 0,
+      "seconds": 3.4598111000000245
+    },
+    {
+      "script": "fusion_bindings.py",
+      "exit_code": 0,
+      "seconds": 1.199958599999718
+    },
+    {
+      "script": "analyze_fusion.py",
+      "exit_code": 0,
+      "seconds": 3.042196299999887
+    },
+    {
+      "script": "closeout_checks.py",
+      "exit_code": 0,
+      "seconds": 6.507172399999945
+    },
+    {
+      "script": "additional_sensitivity.py",
+      "exit_code": 0,
+      "seconds": 2.650441899999805
+    },
+    {
+      "script": "model_regression.py",
+      "exit_code": 0,
+      "seconds": 0.9979529000002003
+    },
+    {
+      "script": "build_review.py",
+      "exit_code": 0,
+      "seconds": 1.6787698999996792
+    },
+    {
+      "script": "pytest",
+      "exit_code": 0
+    }
+  ],
+  "passed": true
+}

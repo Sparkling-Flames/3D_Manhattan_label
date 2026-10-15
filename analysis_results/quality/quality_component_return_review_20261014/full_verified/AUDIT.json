@@ -1,0 +1,137 @@
+{
+  "schema": "quality_component_independent_review_v1",
+  "rows": 810,
+  "scored": 718,
+  "held": 92,
+  "source_counts": {
+    "ordinary": 574,
+    "doorway": 125,
+    "historical_only": 10,
+    "severe": 9
+  },
+  "scored_condition_counts": {
+    "manual": 709,
+    "semi": 9
+  },
+  "independent_formula_errors": {
+    "WQ_LS08": 1.4210854715202004e-14,
+    "arithmetic_candidate": 2.842170943040401e-14,
+    "range_anchored_A": 4.263256414560601e-14
+  },
+  "original_subset_comparison_errors": {
+    "iou_2d": 8.881784197001252e-16,
+    "S_bottom_deg": 5.329070518200751e-15,
+    "dir": 1.2434497875801753e-14,
+    "Hmean": 7.008282842946301e-16,
+    "Hcenter": 1.1102230246251565e-16,
+    "working_Q": 8.526512829121202e-14,
+    "iou3d_pct": 1.1368683772161603e-13,
+    "WQ_LS08": 8.526512829121202e-14,
+    "arithmetic_candidate": 8.526512829121202e-14,
+    "range_anchored_A": 9.947598300641403e-14,
+    "geometric_control": 8.526512829121202e-14,
+    "raw_3d_iou": 1.1368683772161603e-13
+  },
+  "preserved_subset": 331,
+  "additional_scored": 387,
+  "q01_diagnostic_only": 8,
+  "conditional_doorway_regression": 117,
+  "binding_and_use_preserved": true,
+  "raw_geometry_rebuilt": false,
+  "personnel_ranking_validated": false,
+  "full_3152_scored": false,
+  "new_human_labels": false,
+  "formal_defaults_changed": false,
+  "source_runner_caveats": [
+    "FINAL_historical_only.csv requires FINAL_history.csv alias",
+    "source parser crashes on GT source strings; pass annotation metadata only",
+    "runner execution_audit contains hardcoded partial-run flags",
+    "worker means mix different image compositions; not adopted"
+  ],
+  "summaries": [
+    {
+      "effective_use": "Q01_image_scope_conditional_diagnostic_not_tuning",
+      "condition": "manual",
+      "n": 8,
+      "images": 1,
+      "WQ_LS08_mean": 20.93201259870032,
+      "arithmetic_candidate_mean": 33.59266676572329,
+      "range_anchored_A_mean": 20.622909229222053,
+      "geometric_control_mean": 26.727889441260427,
+      "raw_3d_iou_mean": 41.82700485491913,
+      "RA_higher": 4,
+      "RA_lower": 4,
+      "RA_equal": 0
+    },
+    {
+      "effective_use": "doorway_conditional_regression",
+      "condition": "manual",
+      "n": 117,
+      "images": 11,
+      "WQ_LS08_mean": 29.00892591090564,
+      "arithmetic_candidate_mean": 44.93027441041476,
+      "range_anchored_A_mean": 33.13474416187152,
+      "geometric_control_mean": 36.158626465821335,
+      "raw_3d_iou_mean": 57.19850642984229,
+      "RA_higher": 106,
+      "RA_lower": 11,
+      "RA_equal": 0
+    },
+    {
+      "effective_use": "historical_mechanism_only",
+      "condition": "manual",
+      "n": 1,
+      "images": 1,
+      "WQ_LS08_mean": 65.39731173398071,
+      "arithmetic_candidate_mean": 70.18037235849549,
+      "range_anchored_A_mean": 66.8412860646578,
+      "geometric_control_mean": 68.06224984718237,
+      "raw_3d_iou_mean": 75.65703859518031,
+      "RA_higher": 1,
+      "RA_lower": 0,
+      "RA_equal": 0
+    },
+    {
+      "effective_use": "historical_mechanism_only",
+      "condition": "semi",
+      "n": 9,
+      "images": 4,
+      "WQ_LS08_mean": 81.08000853437797,
+      "arithmetic_candidate_mean": 83.5221184600363,
+      "range_anchored_A_mean": 81.59842584733674,
+      "geometric_control_mean": 82.35085596845471,
+      "raw_3d_iou_mean": 85.50628720347358,
+      "RA_higher": 7,
+      "RA_lower": 2,
+      "RA_equal": 0
+    },
+    {
+      "effective_use": "ordinary_conditional_development",
+      "condition": "manual",
+      "n": 574,
+      "images": 70,
+      "WQ_LS08_mean": 66.38979295935876,
+      "arithmetic_candidate_mean": 71.67083540638247,
+      "range_anchored_A_mean": 67.74827428446041,
+      "geometric_control_mean": 68.94835462217307,
+      "raw_3d_iou_mean": 82.10775227354252,
+      "RA_higher": 338,
+      "RA_lower": 234,
+      "RA_equal": 2
+    },
+    {
+      "effective_use": "separate_severe_constraint",
+      "condition": "manual",
+      "n": 9,
+      "images": 7,
+      "WQ_LS08_mean": 15.960184606426164,
+      "arithmetic_candidate_mean": 36.94827697200324,
+      "range_anchored_A_mean": 21.368933733613716,
+      "geometric_control_mean": 25.2596883566832,
+      "raw_3d_iou_mean": 40.971582541594884,
+      "RA_higher": 9,
+      "RA_lower": 0,
+      "RA_equal": 0
+    }
+  ]
+}

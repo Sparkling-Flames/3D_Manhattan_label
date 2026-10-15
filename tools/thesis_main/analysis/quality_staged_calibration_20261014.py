@@ -6,7 +6,7 @@ import numpy as np
 from tools.thesis_main.analysis.quality_manual_expansion_20261013 import ROOT, ARCHIVE, PACKAGE, engine, read, evaluate_geometry
 from tools.thesis_main.analysis.quality_height_calibration_ready_20261013 import evidence
 
-OUT=ROOT/'research/quality_staged_calibration_20261014'
+OUT=ROOT/'research/quality/quality_staged_calibration_20261014'
 PREP=ROOT/'research/quality_calibration_preparation_20261013'
 
 

@@ -10,14 +10,14 @@ from tools.thesis_main.analysis.quality_manual_expansion_20261013 import ARCHIVE
 from tools.thesis_main.data_prep.consolidate_research_input import load_current_bundle
 
 ROOT = Path(__file__).resolve().parents[3]
-OUT = ROOT / 'research/quality_coarse_review_20261015'
-TABLE = ROOT / 'research/quality_joint_closeout_review_20261015/JOINT_COMPARISON_1145.csv'
+OUT = ROOT / 'research/quality/quality_coarse_review_20261015'
+TABLE = ROOT / 'research/quality/quality_joint_closeout_review_20261015/JOINT_COMPARISON_1145.csv'
 SCHEMA = 'quality_coarse_review_20261015_v1'
 
 
 def select_rows():
     frame = pd.read_csv(TABLE)
-    previous = json.loads((ROOT / 'research/quality_candidate_review_20261014/manifest.json').read_text(encoding='utf-8'))
+    previous = json.loads((ROOT / 'research/quality/quality_candidate_review_20261014/manifest.json').read_text(encoding='utf-8'))
     old_images = {b['image_id'] for c in previous['cards'] for b in c['bindings']}
     pool = frame[(frame.role == 'manual_development_candidate') & (frame.score_status == 'full') &
                  ~frame.same_target_quality_hold & ~frame.original_holdout & ~frame.image_id.isin(old_images)].copy()
@@ -107,7 +107,7 @@ def main():
     for original, name in [('quality_coarse_review_20261015.html', 'REVIEW.html'), ('quality_coarse_review_20261015.js', 'app.js')]:
         shutil.copyfile(Path(__file__).with_name(original), OUT / name)
     for name in ['geometry-core.js', 'viewer3d.js']:
-        shutil.copyfile(ROOT / 'research/quality_candidate_review_20261014' / name, OUT / name)
+        shutil.copyfile(ROOT / 'research/quality/quality_candidate_review_20261014' / name, OUT / name)
     print(f'准备完成：{len(cards)}份，普通32、门洞12；只复制所需原图、不缩图，几何及分数不变。')
 
 

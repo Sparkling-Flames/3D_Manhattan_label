@@ -16,10 +16,10 @@ from ..data_prep.consolidate_research_input import load_current_bundle
 from ..data_prep.project_public_research_20260929 import project_bundle
 
 ROOT = Path(__file__).resolve().parents[3]
-OUT = ROOT/'research/difficulty_target_integration_20261015'
+OUT = ROOT/'research/difficulty/difficulty_target_integration_20261015'
 DROOT = ROOT/'analysis_results/difficulty_scope_preferred_20261011'
-QROOT = ROOT/'research/quality_joint_closeout_review_20261015'
-FROOT = ROOT/'research/wall_consensus_population_20261014'
+QROOT = ROOT/'research/quality/quality_joint_closeout_review_20261015'
+FROOT = ROOT/'research/fusion/wall_consensus_population_20261014'
 
 
 def read(p):
@@ -77,7 +77,7 @@ def main():
     doc=read(DROOT/'current_259.json');ds={r['image_id']:r for r in doc['records']}
     joint=csvread(QROOT/'JOINT_COMPARISON_1145.csv')
     assert len(joint)==len({r['record_id'] for r in joint})==1145
-    delta=read(ROOT/'research/quality_scope_model_handoff_20261015/TWO_IMAGE_SCOPE_DELTA.json')['records']
+    delta=read(ROOT/'research/quality/quality_scope_model_handoff_20261015/TWO_IMAGE_SCOPE_DELTA.json')['records']
     new_scopes={r['image_id']:r for r in delta}
     output=[]
     for r in joint:
@@ -111,7 +111,7 @@ def main():
             evidence=('确认范围只保留直走道，墙面延续与端部停止边可定位，不再要求恢复近墙背后分支。'
                       if r['image_code']=='B6ByNegPMKs-37' else '确认四转折底面以可见门边和墙线确定停止位置，柜体局部遮脚不造成未知分支。'),
             top_boundary_pending=True,answer_to_candidate_assignments=r['answer_to_candidate_assignments'],
-            source='research/quality_scope_model_handoff_20261015/TWO_IMAGE_SCOPE_DELTA.json',
+            source='research/quality/quality_scope_model_handoff_20261015/TWO_IMAGE_SCOPE_DELTA.json',
             use='new_target_floor_only_not_applied_to_old_scores'))
     (OUT/'new_target_addendum.json').write_text(json.dumps(dict(version='difficulty_target_addendum_20261015',records=newrows),ensure_ascii=False,indent=2),encoding='utf-8')
     for r in newrows:
@@ -132,7 +132,7 @@ def main():
             equal=np.array_equal(np.asarray(r['points']),np.asarray(prepared['points']))
             pool_bindings.append(dict(image=im['image'],record_id=r['id'],object_id=obj['object_id'],
                 public_worker=r['worker'],worker_id=obj['worker_id'],condition=obj['condition'],
-                points_equal_live=equal,source_snapshot='research/wall_consensus_population_20261014/input_snapshot.json',
+                points_equal_live=equal,source_snapshot='research/fusion/wall_consensus_population_20261014/input_snapshot.json',
                 raw_object_points_equal_snapshot=np.array_equal(np.asarray(r['points']),np.asarray(obj['points_1024x512'])),
                 preparation='project_bundle + prepare_record with current source_pair_indices',
                 live_consensus_gate=json.dumps(obj['main_consensus_gate'],ensure_ascii=False)))
@@ -159,7 +159,7 @@ def main():
         assert len(ids)==int(r['k'])
         observation_bindings.append(dict(r,member_record_ids='|'.join(ids),condition='manual',
             difficulty_class=d['current_class'],difficulty_target_id=d['target_version'],difficulty_version=doc['version'],
-            score_version='existing_floor_metrics_not_WQ',source='research/wall_consensus_population_20261014/observations.csv'))
+            score_version='existing_floor_metrics_not_WQ',source='research/fusion/wall_consensus_population_20261014/observations.csv'))
     save('fusion_observation_bindings.csv',observation_bindings)
     # 已发表的同目标底面轨迹只作带分母描述，不新运行融合或推断WQ。
     curves=[]
@@ -170,7 +170,7 @@ def main():
             panel=r['panel'],k=r['k'],paths=r['paths'],evaluated=r['difficulty_selected_floor__iou_n'],
             floor_iou_mean=r['difficulty_selected_floor__iou_mean'],
             completeness=r['complete_floor_evaluable_mean'],metric='existing_bottom_iou_not_WQ',
-            source='research/wall_consensus_population_20261014/by_image_k.csv'))
+            source='research/fusion/wall_consensus_population_20261014/by_image_k.csv'))
     save('fusion_same_target_floor_curves.csv',curves)
     grouped=defaultdict(list)
     for r in curves:

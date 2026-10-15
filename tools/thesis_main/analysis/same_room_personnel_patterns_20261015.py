@@ -13,10 +13,10 @@ from .same_room_quality_curves_20261015 import (
 )
 from .same_room_similarity_20261003 import correlation
 
-OUT = ROOT/'research/same_room_personnel_patterns_20261015'
-PREVIOUS = ROOT/'research/same_room_quality_curves_20261015'
-PERSONNEL = ROOT/'research/worker_four_axis_update_20261015'
-TIME = ROOT/'research/worker_classification_progress_20261014'
+OUT = ROOT/'research/same_room/same_room_personnel_patterns_20261015'
+PREVIOUS = ROOT/'research/same_room/same_room_quality_curves_20261015'
+PERSONNEL = ROOT/'research/workers/worker_four_axis_update_20261015'
+TIME = ROOT/'research/workers/worker_classification_progress_20261014'
 
 
 def check_fold(rows, building):

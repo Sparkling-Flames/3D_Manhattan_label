@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[3]
-DEFAULT = ROOT / 'research/descriptive_statistics_20261015'
+DEFAULT = ROOT / 'research/statistics/descriptive_statistics_20261015'
 DIFFICULTIES = ['简单', '中等', '困难']
 COLORS = ['#3a8c94', '#d9a441', '#aa5778']
 METRICS = ['WQ', 'A10', 'B8L2', 'IoU3D100']

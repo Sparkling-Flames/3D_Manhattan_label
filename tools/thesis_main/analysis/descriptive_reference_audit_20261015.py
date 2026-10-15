@@ -9,9 +9,9 @@ from .difficulty_coarse_closeout_20261014 import floor, same_floor
 from .difficulty_target_integration_20261015 import compare_floor
 
 ROOT = Path(__file__).resolve().parents[3]
-SCORING_SOURCE = 'research/quality_joint_closeout_review_20261015/pro_closeout_delta.zip'
+SCORING_SOURCE = 'research/quality/quality_joint_closeout_review_20261015/pro_closeout_delta.zip'
 SCORING_MEMBER = 'source/historical_current_formal_loader_data.json'
-DETAILS_SOURCE = 'research/difficulty_review_update_20261015/current_259.json'
+DETAILS_SOURCE = 'research/difficulty/difficulty_review_update_20261015/current_259.json'
 GEOMETRY_FIELDS = ['points_1024x512', 'ordered_source_point_indices', 'ordered_source_pair_indices']
 
 
@@ -32,7 +32,7 @@ def scope_sources(bundle):
         sources[row['reference_id']] = dict(
             image_id=row['image_id'], floor=row['floor_xz_h'], source=registry,
             pointer=f'/records/{i}', receipt=json.dumps(row.get('confirmation_provenance', {}), ensure_ascii=False))
-    delta = 'research/quality_scope_model_handoff_20261015/TWO_IMAGE_SCOPE_DELTA.json'
+    delta = 'research/quality/quality_scope_model_handoff_20261015/TWO_IMAGE_SCOPE_DELTA.json'
     document = read_json(delta)
     for i, row in enumerate(document['records']):
         sources[row['new_floor_candidate_id']] = dict(
@@ -45,8 +45,8 @@ def scope_sources(bundle):
             source='analysis_results/research_input_20260929/floor_scope_update_20261015.json',
             pointer=f'/records/{i}', receipt=json.dumps(dict(source_receipt=row['source_receipt'],
                 pointer=row['source_pointer'], confirmed_at=row['confirmed_at']), ensure_ascii=False))
-    for path in ['research/difficulty_user_revision_20261015/user_revised_gt.json',
-                 'research/difficulty_review_update_20261015/x8F5xyUWy9e-03_user_gt.json']:
+    for path in ['research/difficulty/difficulty_user_revision_20261015/user_revised_gt.json',
+                 'research/difficulty/difficulty_review_update_20261015/x8F5xyUWy9e-03_user_gt.json']:
         row = read_json(path)
         sources[row['reference_id']] = dict(image_id=row['image_id'], source=path, pointer='',
             receipt=row['source'], floor=floor(row['points_1024x512']).tolist(),

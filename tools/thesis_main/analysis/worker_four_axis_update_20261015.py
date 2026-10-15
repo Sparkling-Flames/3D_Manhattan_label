@@ -9,8 +9,8 @@ from .worker_classification_progress_20261014 import half_stability
 from .prescreen_scope_adjudication import _worker_scope
 
 ROOT=wq.ROOT
-OUT=ROOT/'research/worker_four_axis_update_20261015'
-PREV=ROOT/'research/worker_wq_integration_20261015'
+OUT=ROOT/'research/workers/worker_four_axis_update_20261015'
+PREV=ROOT/'research/workers/worker_wq_integration_20261015'
 HISTORY=ROOT/'analysis_results/worker_four_block_exploration_20260910_v1'
 
 
@@ -182,7 +182,7 @@ def auxiliary_profiles(axes,qualityfits,panel):
 
 def main():
     OUT.mkdir(parents=True,exist_ok=True);wq.OUT=OUT
-    binding=pd.read_csv(ROOT/'research/difficulty_target_integration_20261015/quality_bindings_1145.csv')
+    binding=pd.read_csv(ROOT/'research/difficulty/difficulty_target_integration_20261015/quality_bindings_1145.csv')
     panel,held=apply_scope_hold(pd.read_csv(PREV/'quality_panel.csv'),binding)
     assert len(panel)==931 and len(held)==28
     wq.table('quality_panel_931.csv',panel);wq.table('held_new_scope_28.csv',held)

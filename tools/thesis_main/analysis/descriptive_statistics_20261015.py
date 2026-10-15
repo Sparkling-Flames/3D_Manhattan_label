@@ -8,11 +8,11 @@ import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[3]
-DEFAULT_OUT = ROOT / 'research/descriptive_statistics_20261015'
-QPATH = 'research/difficulty_target_integration_20261015/quality_bindings_1145.csv'
-APATH = 'research/quality_ab_feedback_handoff_20261015/prior_AB/results/SCORES_1145.csv'
-IPATH = 'research/difficulty_special_coverage_20261015/image_coverage_259.csv'
-PPATH = 'research/worker_four_axis_update_20261015/quality_panel_931.csv'
+DEFAULT_OUT = ROOT / 'research/statistics/descriptive_statistics_20261015'
+QPATH = 'research/difficulty/difficulty_target_integration_20261015/quality_bindings_1145.csv'
+APATH = 'research/quality/quality_ab_feedback_handoff_20261015/prior_AB/results/SCORES_1145.csv'
+IPATH = 'research/difficulty/difficulty_special_coverage_20261015/image_coverage_259.csv'
+PPATH = 'research/workers/worker_four_axis_update_20261015/quality_panel_931.csv'
 METRICS = ['WQ', 'A10', 'B8L2', 'IoU3D100', 'iou_2d', 'S_bottom_deg',
            'dir', 'Hmean', 'Hcenter', 'active_time_seconds']
 
@@ -105,7 +105,7 @@ def build_tables():
     from .descriptive_same_room_20261015 import build_same_room_tables
     from ..data_prep.consolidate_research_input import load_current_bundle
     bundle = load_current_bundle()
-    with zipfile.ZipFile(ROOT/'research/quality_joint_closeout_review_20261015/pro_closeout_delta.zip') as archive:
+    with zipfile.ZipFile(ROOT/'research/quality/quality_joint_closeout_review_20261015/pro_closeout_delta.zip') as archive:
         assert bundle['data'] == json.loads(archive.read('source/historical_current_formal_loader_data.json')), 'scoring geometry snapshot drift'
         import io
         ledger = pd.read_csv(io.BytesIO(archive.read('results/ALL_3152_LEDGER.csv')), dtype=str, keep_default_na=False)
@@ -240,7 +240,7 @@ def write_tables(tables, out):
     (out/'tables.json').write_text(json.dumps(payload, ensure_ascii=False, allow_nan=False), encoding='utf-8')
     contract = dict(version='descriptive_statistics_20261015_v1', protocol='consensus_research_20260923_v1',
         sources=[QPATH, APATH, IPATH, PPATH, 'analysis_results/research_input_20260929/manifest.json',
-                 'research/quality_joint_closeout_review_20261015/pro_closeout_delta.zip',
+                 'research/quality/quality_joint_closeout_review_20261015/pro_closeout_delta.zip',
                  'analysis_results/uncertainty_cloud_inputs_20260906_v1/facts/active_time_context.csv.gz',
                  'analysis_results/uncertainty_cloud_inputs_20260906_v1/facts/annotation_spine.csv.gz'],
         panels={'inventory':3152, 'scores':1145, 'workers':931, 'same_target':836},

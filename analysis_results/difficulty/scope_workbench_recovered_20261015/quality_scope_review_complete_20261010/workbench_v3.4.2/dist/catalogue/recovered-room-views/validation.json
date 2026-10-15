@@ -1,0 +1,53 @@
+{
+  "schema": "priority_room_recovery_validation_v1",
+  "passed": true,
+  "assertions": 77,
+  "geometry_implementation": "/workspace/scratch/a365811da80c/scope-crop-workbench/dist/geometry.js",
+  "geometry_implementation_sha256": "4a1f67992de5d5f9e37b5d7f1a3a4bad7445c79cf1886b9afe4798bbee0455b6",
+  "entries": [
+    {
+      "image_code": "q9vSo1VnCiC-21",
+      "reference_geometry_status": "valid_camera_inside",
+      "floor_polygon_valid": true,
+      "camera_inside": true,
+      "pair_count": 4,
+      "floor_area_normalized": 11.041609675329386,
+      "angular_backtracking_edges_1based": [],
+      "source_order_preserved": true,
+      "no_sorting_or_repair": true,
+      "photo_git_blob_match": true,
+      "all_source_git_blob_matches": true,
+      "independent_import_exact_coordinate_match": true,
+      "raw_original_txt_available": false
+    },
+    {
+      "image_code": "q9vSo1VnCiC-25",
+      "reference_geometry_status": "valid_camera_inside",
+      "floor_polygon_valid": true,
+      "camera_inside": true,
+      "pair_count": 12,
+      "floor_area_normalized": 11.65695778675529,
+      "angular_backtracking_edges_1based": [
+        [
+          4,
+          5
+        ],
+        [
+          6,
+          7
+        ]
+      ],
+      "source_order_preserved": true,
+      "no_sorting_or_repair": true,
+      "photo_git_blob_match": true,
+      "all_source_git_blob_matches": true,
+      "independent_import_exact_coordinate_match": true,
+      "raw_original_txt_available": false
+    }
+  ],
+  "limitations": [
+    "Raw original label_cor .txt bytes are absent from the current main Git tree. Snapshot coordinates are exactly source-backed, and original-equivalence is supported by the original-vs-manual audit; independent full-coordinate comparison against the unavailable raw text is not claimed.",
+    "Valid geometry and same-room identity do not constitute user approval of either floor scope.",
+    "Snapshot ground_truth=false is preserved as source metadata; no formal reference eligibility or research annotation is created."
+  ]
+}

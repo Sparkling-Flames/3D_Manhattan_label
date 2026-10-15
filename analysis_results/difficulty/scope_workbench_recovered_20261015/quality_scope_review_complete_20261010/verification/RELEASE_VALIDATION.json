@@ -1,0 +1,230 @@
+{
+  "passed": true,
+  "scope": "Tests actually executed while assembling this release; original worker reports also included.",
+  "workbench": {
+    "source_commit": "e44b52969f0d18a352773a83c4b9575f720bc5a7",
+    "original_files_git_blob_verified": 643,
+    "suites_executed": 8,
+    "assertions_passed": 26977,
+    "unchanged_original_test_assertions": true,
+    "fixtures_files": 12,
+    "record_files": 282,
+    "asset_files": 266,
+    "browser_visual_or_real_interaction_tested": false
+  },
+  "history": {
+    "old_files_preserved_byte_for_byte": 591,
+    "full_scope_inventory_files": 86,
+    "saved_inventory_assertions": 418908,
+    "order_score_recompute_assertions": 60,
+    "order_score_pytest_passed": 14,
+    "order_score_byte_identical_core_outputs": 6
+  },
+  "receipt": {
+    "javascript_numerical_checks": 60989,
+    "independent_audit": {
+      "result": "PASS",
+      "implementation": "independent Python standard-library JSON/ERP/line-intersection/clipping/winding audit; no JS execution",
+      "checks": 3103,
+      "audited_polygons_including_intermediate_and_historical": 662,
+      "independently_replayed_operation_instances": 84,
+      "max_projection_abs_error": 1.3322676295501878e-15,
+      "max_replay_abs_error": 1.3322676295501878e-15,
+      "errors": [],
+      "limits": "Geometry/source consistency is verified; this is not a new semantic image review or top-boundary/3D approval."
+    },
+    "negative_tests": {
+      "result": "PASS",
+      "count": 10,
+      "tests": [
+        {
+          "name": "tampered root polygon while alias remains original",
+          "rejected": true,
+          "message": "区域与修改历史不一致"
+        },
+        {
+          "name": "tampered cropped alias while polygon remains original",
+          "rejected": true,
+          "message": "区域与修改历史不一致"
+        },
+        {
+          "name": "wrong image identity in candidate binding",
+          "rejected": true,
+          "message": "空间区域 GT／来源绑定不匹配"
+        },
+        {
+          "name": "wrong GT version in candidate binding",
+          "rejected": true,
+          "message": "空间区域 GT／来源绑定不匹配"
+        },
+        {
+          "name": "wrong source commit in candidate binding",
+          "rejected": true,
+          "message": "空间区域 GT／来源绑定不匹配"
+        },
+        {
+          "name": "duplicate region identity",
+          "rejected": true,
+          "message": "空间区域编号无效或重复"
+        },
+        {
+          "name": "out of bounds edge operation",
+          "rejected": true,
+          "message": "区域自交、断开或未包含相机"
+        },
+        {
+          "name": "full GT decision cannot contain operations",
+          "rejected": true,
+          "message": "完整GT结论与修改不一致"
+        },
+        {
+          "name": "candidate cannot promote formal eligibility",
+          "rejected": true,
+          "message": "空间候选不能自动成为正式参考"
+        },
+        {
+          "name": "edge_follow stored line cannot disagree with polygon",
+          "rejected": true,
+          "message": "区域与修改历史不一致"
+        }
+      ]
+    }
+  },
+  "floor_research": {
+    "recompute_assertions": 1060,
+    "pytest_tests_passed": 31,
+    "portability": {
+      "passed": true,
+      "core_files_byte_identical": 18,
+      "checks": [
+        {
+          "file": "reference_registry.json",
+          "sha256": "200e422a4e057f2808b88e5ba2912a77feb20cb08e3b77ad5d9831ce20ffe7c0",
+          "relocated_sha256": "200e422a4e057f2808b88e5ba2912a77feb20cb08e3b77ad5d9831ce20ffe7c0",
+          "byte_identical": true
+        },
+        {
+          "file": "source_bindings.json",
+          "sha256": "f332610ff9824800c4c00b032cbaf92bce8f119cb3de8401e6f0c66d4b33c910",
+          "relocated_sha256": "f332610ff9824800c4c00b032cbaf92bce8f119cb3de8401e6f0c66d4b33c910",
+          "byte_identical": true
+        },
+        {
+          "file": "record_metrics.json",
+          "sha256": "bd997fc28745470521b7b798f7e6f6a4ce0a83deba587a2f45a6a091b1d74bf0",
+          "relocated_sha256": "bd997fc28745470521b7b798f7e6f6a4ce0a83deba587a2f45a6a091b1d74bf0",
+          "byte_identical": true
+        },
+        {
+          "file": "record_metrics.csv",
+          "sha256": "ded1e11db84f2d83fb492ec3e4dfbe5e7f07de4f91bbfff1ac3a54d73be721b2",
+          "relocated_sha256": "ded1e11db84f2d83fb492ec3e4dfbe5e7f07de4f91bbfff1ac3a54d73be721b2",
+          "byte_identical": true
+        },
+        {
+          "file": "space_record_metrics.json",
+          "sha256": "9dfdcb3a344ec12f905f92866dcbe4ce46c9ae02fdfa94ebdffccf51df30c9c2",
+          "relocated_sha256": "9dfdcb3a344ec12f905f92866dcbe4ce46c9ae02fdfa94ebdffccf51df30c9c2",
+          "byte_identical": true
+        },
+        {
+          "file": "space_record_metrics.csv",
+          "sha256": "740fe0f333864c44390c177041916fbbb0d52ea4de62642fbb34bf79f968875f",
+          "relocated_sha256": "740fe0f333864c44390c177041916fbbb0d52ea4de62642fbb34bf79f968875f",
+          "byte_identical": true
+        },
+        {
+          "file": "image_summary.json",
+          "sha256": "d73fa478dc4cecfd004b755db91d70949a314eeeeda07f6f8491abc7611734d6",
+          "relocated_sha256": "d73fa478dc4cecfd004b755db91d70949a314eeeeda07f6f8491abc7611734d6",
+          "byte_identical": true
+        },
+        {
+          "file": "image_summary.csv",
+          "sha256": "e57894921587ffad52d39b90f88b0147fa0ff98fe4c592cd05bd7fb4094bc216",
+          "relocated_sha256": "e57894921587ffad52d39b90f88b0147fa0ff98fe4c592cd05bd7fb4094bc216",
+          "byte_identical": true
+        },
+        {
+          "file": "condition_gate_summary.json",
+          "sha256": "81ba49ce461188a29da32f2c0cae8432df86079abb35f338c987f13cced43620",
+          "relocated_sha256": "81ba49ce461188a29da32f2c0cae8432df86079abb35f338c987f13cced43620",
+          "byte_identical": true
+        },
+        {
+          "file": "condition_gate_summary.csv",
+          "sha256": "58aad7c1d5ceb6cbefd8e9e0fe65cfc8a53453543815b3f71cd9d5a4137b77ad",
+          "relocated_sha256": "58aad7c1d5ceb6cbefd8e9e0fe65cfc8a53453543815b3f71cd9d5a4137b77ad",
+          "byte_identical": true
+        },
+        {
+          "file": "previous_confirmed_floor_delta.json",
+          "sha256": "1d8abd2ff5154cd33afaa11f9b1ad81af08d7ff619d31c22628093b29f640980",
+          "relocated_sha256": "1d8abd2ff5154cd33afaa11f9b1ad81af08d7ff619d31c22628093b29f640980",
+          "byte_identical": true
+        },
+        {
+          "file": "historical_artifact_applicability.json",
+          "sha256": "afdbd3ba88944af1ccfe106a3e762c8117ac447c125564e6ed5cecf9319e0ae6",
+          "relocated_sha256": "afdbd3ba88944af1ccfe106a3e762c8117ac447c125564e6ed5cecf9319e0ae6",
+          "byte_identical": true
+        },
+        {
+          "file": "floor_geometry_changes.json",
+          "sha256": "cbf986c7f3546f0519e454a7682dda971b5d7b38fa918722eaa695f91a577a78",
+          "relocated_sha256": "cbf986c7f3546f0519e454a7682dda971b5d7b38fa918722eaa695f91a577a78",
+          "byte_identical": true
+        },
+        {
+          "file": "floor_geometry_changes.csv",
+          "sha256": "11486cd96cd03dcc97c6a606a4ee32cce7305ed076ae4e4ff933d852a874022b",
+          "relocated_sha256": "11486cd96cd03dcc97c6a606a4ee32cce7305ed076ae4e4ff933d852a874022b",
+          "byte_identical": true
+        },
+        {
+          "file": "summary.json",
+          "sha256": "ebe15ebeb99b8eee8da7c9a0d716c5ef63155dffc9922d939fcbb1fe7ffd95cc",
+          "relocated_sha256": "ebe15ebeb99b8eee8da7c9a0d716c5ef63155dffc9922d939fcbb1fe7ffd95cc",
+          "byte_identical": true
+        },
+        {
+          "file": "unavailable_records.json",
+          "sha256": "eec361e1eeeb62f55fdaa9c5e53d2fea0754769411e5e920e91806ce80843af6",
+          "relocated_sha256": "eec361e1eeeb62f55fdaa9c5e53d2fea0754769411e5e920e91806ce80843af6",
+          "byte_identical": true
+        },
+        {
+          "file": "unavailable_records.csv",
+          "sha256": "2c40c9c84c960627f9dc75899501c432cfcb58f9ceced52cd7033e08fcbc01dc",
+          "relocated_sha256": "2c40c9c84c960627f9dc75899501c432cfcb58f9ceced52cd7033e08fcbc01dc",
+          "byte_identical": true
+        },
+        {
+          "file": "validation.json",
+          "sha256": "f82c6a16a463fe4040552097cd7ff7fa62e5b9388cbae2824cd0ce6aff89d9fe",
+          "relocated_sha256": "f82c6a16a463fe4040552097cd7ff7fa62e5b9388cbae2824cd0ce6aff89d9fe",
+          "byte_identical": true
+        }
+      ],
+      "portable_inputs": [
+        "current_formal_subset.json",
+        "input_manifest.json",
+        "normalized_confirmation_overlay.json",
+        "prior_confirmation_overlay.json",
+        "prior_record_metrics.json",
+        "prior_reference_registry.json",
+        "raw_scope_return.json",
+        "recovered"
+      ],
+      "repository_required_for_replay": false,
+      "network_required_for_replay": false,
+      "operation": "Copied only recompute_bev.py and inputs into a fresh temporary directory, ran with relocated defaults."
+    },
+    "pytest_log": "../final_scope_reference_integration/results/pytest.log"
+  },
+  "limits": [
+    "No real-browser visual/interaction acceptance is claimed.",
+    "Historical read-only source and reconciliation reports retain their own original scope and source commits.",
+    "No full new-reference 3D Q, fusion, worker rankings, or sample-size curves were recomputed."
+  ]
+}

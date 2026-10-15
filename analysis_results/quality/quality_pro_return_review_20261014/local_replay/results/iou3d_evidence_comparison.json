@@ -1,0 +1,267 @@
+{
+  "question_groups": [
+    {
+      "group": "P01",
+      "ids": [
+        "R02015",
+        "R00637"
+      ],
+      "scores": [
+        61.17527866407333,
+        70.45928278428163
+      ],
+      "signed_A_minus_B": -9.284004120208294,
+      "use": "conditional_question_group_evidence_respect_each_binding",
+      "source_layer": [
+        "ordinary",
+        "ordinary"
+      ]
+    },
+    {
+      "group": "C01",
+      "ids": [
+        "R01810",
+        "R01385"
+      ],
+      "scores": [
+        82.03036837781458,
+        85.48444286376336
+      ],
+      "signed_A_minus_B": -3.45407448594878,
+      "use": "conditional_question_group_evidence_respect_each_binding",
+      "source_layer": [
+        "historical_only",
+        "historical_only"
+      ]
+    },
+    {
+      "group": "C02",
+      "ids": [
+        "R03351",
+        "R03350"
+      ],
+      "scores": [
+        74.18776962556502,
+        57.54502246936419
+      ],
+      "signed_A_minus_B": 16.642747156200834,
+      "use": "conditional_question_group_evidence_respect_each_binding",
+      "source_layer": [
+        "ordinary",
+        "ordinary"
+      ]
+    },
+    {
+      "group": "C03",
+      "ids": [
+        "R01033",
+        "R01022"
+      ],
+      "scores": [
+        95.91939968009233,
+        94.56254397835123
+      ],
+      "signed_A_minus_B": 1.3568557017410967,
+      "use": "conditional_question_group_evidence_respect_each_binding",
+      "source_layer": [
+        "historical_only",
+        "historical_only"
+      ]
+    },
+    {
+      "group": "C04",
+      "ids": [
+        "R02447",
+        "R01973"
+      ],
+      "scores": [
+        83.55649696750923,
+        80.31619533358842
+      ],
+      "signed_A_minus_B": 3.240301633920808,
+      "use": "conditional_question_group_evidence_respect_each_binding",
+      "source_layer": [
+        "historical_only",
+        "historical_only"
+      ]
+    },
+    {
+      "group": "P04",
+      "ids": [
+        "R00397",
+        "R00418"
+      ],
+      "scores": [
+        71.41177058669912,
+        75.65703859518031
+      ],
+      "signed_A_minus_B": -4.24526800848119,
+      "use": "conditional_question_group_evidence_respect_each_binding",
+      "source_layer": [
+        "historical_only",
+        "historical_only"
+      ]
+    },
+    {
+      "group": "P05",
+      "ids": [
+        "R00678"
+      ],
+      "scores": [
+        83.21226421502368
+      ],
+      "signed_A_minus_B": null,
+      "use": "conditional_question_group_evidence_respect_each_binding",
+      "source_layer": [
+        "ordinary"
+      ]
+    },
+    {
+      "group": "J01",
+      "ids": [
+        "R03346",
+        "R03347"
+      ],
+      "scores": [
+        49.22832324139888,
+        66.09122304092779
+      ],
+      "signed_A_minus_B": -16.862899799528904,
+      "use": "current_qualitative_feedback_no_hard_grade",
+      "source_layer": [
+        "ordinary",
+        "ordinary"
+      ]
+    },
+    {
+      "group": "J02",
+      "ids": [
+        "R02049",
+        "R02244"
+      ],
+      "scores": [
+        null,
+        null
+      ],
+      "signed_A_minus_B": null,
+      "use": "withdrawn_old_preference_diagnostic_only",
+      "source_layer": [
+        "not_in_this_snapshot",
+        "not_in_this_snapshot"
+      ]
+    },
+    {
+      "group": "J03",
+      "ids": [
+        "R03197"
+      ],
+      "scores": [
+        null
+      ],
+      "signed_A_minus_B": null,
+      "use": "current_qualitative_feedback_no_hard_grade",
+      "source_layer": [
+        "not_in_this_snapshot"
+      ]
+    },
+    {
+      "group": "J04",
+      "ids": [
+        "R03274"
+      ],
+      "scores": [
+        67.80456040168833
+      ],
+      "signed_A_minus_B": null,
+      "use": "current_qualitative_feedback_no_hard_grade",
+      "source_layer": [
+        "ordinary"
+      ]
+    },
+    {
+      "group": "T20",
+      "ids": [
+        "R00397"
+      ],
+      "scores": [
+        71.41177058669912
+      ],
+      "signed_A_minus_B": null,
+      "use": "slightly_increase_height_penalty_direction_separate_historical_source",
+      "source_layer": [
+        "historical_only"
+      ]
+    },
+    {
+      "group": "L01",
+      "ids": [
+        "R01609",
+        "R02297"
+      ],
+      "scores": [
+        89.81413199130674,
+        86.46123505213708
+      ],
+      "signed_A_minus_B": 3.3528969391696535,
+      "use": "separate_semi_qualitative_tradeoff_no_numeric_gap",
+      "source_layer": [
+        "historical_only",
+        "historical_only"
+      ]
+    }
+  ],
+  "P01_margin": -9.284004120208294,
+  "weak_grade_pairs": 24,
+  "weak_grade_inversions": [
+    {
+      "better": "R00687",
+      "worse": "R00678",
+      "difference": -4.68319869880402
+    }
+  ],
+  "severe_vs_light_comparisons": 27,
+  "severe_vs_light_inversions": [],
+  "leave_one_evidence_building_out": [
+    {
+      "excluded_building": "B6ByNegPMKs",
+      "pairs": 18,
+      "inversions": 1
+    },
+    {
+      "excluded_building": "Z6MFQCViBuw",
+      "pairs": 21,
+      "inversions": 1
+    },
+    {
+      "excluded_building": "jh4fc5c5qoQ",
+      "pairs": 21,
+      "inversions": 1
+    },
+    {
+      "excluded_building": "jtcxE69GiFV",
+      "pairs": 16,
+      "inversions": 0
+    },
+    {
+      "excluded_building": "q9vSo1VnCiC",
+      "pairs": 16,
+      "inversions": 1
+    },
+    {
+      "excluded_building": "rPc6DW4iMge",
+      "pairs": 16,
+      "inversions": 1
+    },
+    {
+      "excluded_building": "uNb9QFRL6hY",
+      "pairs": 15,
+      "inversions": 0
+    },
+    {
+      "excluded_building": "yqstnuAEVhm",
+      "pairs": 21,
+      "inversions": 1
+    }
+  ],
+  "definition": "same-input/same-reference frozen HoHoNet vertex-mean-height prism 3D IoU, not exact non-flat-top solid volume IoU"
+}

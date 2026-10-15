@@ -12,7 +12,7 @@ from tools.thesis_main.analysis.quality_staged_calibration_20261014 import OUT a
 from tools.thesis_main.data_prep.consolidate_research_input import load_current_bundle
 from tools.thesis_main.analysis.quality_decision_check_20261012 import render_reviews
 
-OUT=ROOT/'research/quality_pro_handoff_20261014'
+OUT=ROOT/'research/quality/quality_pro_handoff_20261014'
 PACK=OUT/'package'
 
 

@@ -12,8 +12,8 @@ from ..data_prep.consolidate_research_input import load_current_bundle
 from .scope_difficulty_review_20261011 import floor_features
 
 ROOT=Path(__file__).resolve().parents[3]
-PRIOR=ROOT/'research/difficulty_user_revision_20261015'
-OUT=ROOT/'research/difficulty_scope_received_20261015'
+PRIOR=ROOT/'research/difficulty/difficulty_user_revision_20261015'
+OUT=ROOT/'research/difficulty/difficulty_scope_received_20261015'
 VERSION='scope_preferred_difficulty_received_20261015_v2'
 
 
@@ -25,15 +25,15 @@ def main():
     b=load_current_bundle(); scopes={r['image_id']:r for r in b['floor_scope_update']['records']
         if r['image_code'] in {'uNb9QFRL6hY-86','q9vSo1VnCiC-34'}}
     # 此前已确认的两图是独立增量，不能被本次整表导出的旧状态回滚。
-    delta=json.loads((ROOT/'research/quality_scope_model_handoff_20261015/TWO_IMAGE_SCOPE_DELTA.json').read_text(encoding='utf-8-sig'))
-    opinions=json.loads((ROOT/'research/difficulty_target_integration_20261015/new_target_addendum.json').read_text(encoding='utf-8-sig'))
+    delta=json.loads((ROOT/'research/quality/quality_scope_model_handoff_20261015/TWO_IMAGE_SCOPE_DELTA.json').read_text(encoding='utf-8-sig'))
+    opinions=json.loads((ROOT/'research/difficulty/difficulty_target_integration_20261015/new_target_addendum.json').read_text(encoding='utf-8-sig'))
     old_opinions={r['image_id']:r for r in opinions['records']}
     for s in delta['records']:
         opinion=old_opinions[s['image_id']]
         assert s['new_floor_polygon_xz_h']==opinion['new_floor']
         scopes[s['image_id']]=dict(image_id=s['image_id'],image_code=s['image_code'],
             reference_id=s['new_floor_candidate_id'],floor_xz_h=s['new_floor_polygon_xz_h'],
-            evidence=opinion['evidence'],source='research/quality_scope_model_handoff_20261015/TWO_IMAGE_SCOPE_DELTA.json')
+            evidence=opinion['evidence'],source='research/quality/quality_scope_model_handoff_20261015/TWO_IMAGE_SCOPE_DELTA.json')
     doc=json.loads((PRIOR/'current_259.json').read_text(encoding='utf-8-sig'))
     rows=copy.deepcopy(doc['records']); OUT.mkdir(exist_ok=True)
     for r in rows:
@@ -86,9 +86,9 @@ def main():
     page=page.replace('先在已接受的候选范围中优先采用 H=0 的范围，再评结构与定位负担。','凡已有用户确认的新增范围，一律按新增范围评结构与定位负担；旧范围仅作对照。')
     (OUT/'review.html').write_text(page,encoding='utf-8')
     pointer=ROOT/'analysis_results/image_difficulty_full_review_20261010/CURRENT.json'
-    write(pointer,dict(version=VERSION,table='../../research/difficulty_scope_received_20261015/current_259.csv',
-        details='../../research/difficulty_scope_received_20261015/current_259.json',
-        review='../../research/difficulty_scope_received_20261015/review.html',
+    write(pointer,dict(version=VERSION,table='../../research/difficulty/difficulty_scope_received_20261015/current_259.csv',
+        details='../../research/difficulty/difficulty_scope_received_20261015/current_259.json',
+        review='../../research/difficulty/difficulty_scope_received_20261015/review.html',
         status='all 37 confirmed new scopes adopted for difficulty; old scopes retained only for comparison'))
     with (OUT/'new_scope_adoption_37.csv').open('w',encoding='utf-8-sig',newline='') as f:
         w=csv.DictWriter(f,fieldnames=list(adoption[0]));w.writeheader();w.writerows(adoption)

@@ -9,7 +9,7 @@
 - [75条对应诊断](../../analysis_results/point_route_review_20261006/correspondence_audit.json)、[字段说明](../../analysis_results/point_route_review_20261006/field_contract.json)、[完整候选](../../analysis_results/point_route_review_20261006/candidates.json)。
 - [输入四图](../layout_reliability_20261005/pro_original/inputs/)，当前完整池3／24／24／15份，共66份记录、24个worker ID。
 - 工具：`tools/thesis_main/analysis/point_route_panel_20261005.py`、`point_route_review_20261006.py`、`global_pair_consensus_20261004.py`。图形入口在同名view模块。
-- [线程交接](../../docs/thesis_main/线程交接_连线质量与完整共识_20261004.md)及[点方法原意](../../docs/thesis_main/点投票与区域投票_方法溯源_20261003.md)。
+- [线程交接](../../docs/thesis_main/线程交接_连线质量与完整共识_20261004.md)及[点方法原意](../../docs/thesis_main/topics/fusion/点投票与区域投票_方法溯源_20261003.md)。
 
 ## 独立研究任务
 

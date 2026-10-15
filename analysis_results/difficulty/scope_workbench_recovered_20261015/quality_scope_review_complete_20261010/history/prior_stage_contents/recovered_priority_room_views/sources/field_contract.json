@@ -1,0 +1,17 @@
+{
+  "schema": "gt_order_visibility_audit_v1",
+  "input": "analysis_results/research_input_20260929/manifest.json via load_current_bundle()",
+  "coordinates": "continuous 1024x512; h=1, camera=(0,0); declared final ring, no sorting or geometry repair",
+  "x_order": "cyclic start allowed; complete reversal separate but equivalent adjacency; same-x separate, tolerance 1e-6 pixel",
+  "ray_test": "camera-to-vertex intersects nonincident boundary edge interior strictly before vertex; endpoint/collinear contact separate",
+  "index": "all vertex/edge numbers one-based final pair positions; ordered_source_pair_indices remains original zero-based mapping",
+  "preferred": "manual revision if present, else original, restricted to 259 research images; does not alter official reference policy",
+  "hidden_count": "number of transverse-occluded floor vertices, not number of backward edges, not physical 3D full-height visibility",
+  "vertical_wall_test": "floor z=-1, camera z=0; GT top z=-radius*tan(top_v). At each blocking wall interpolate its top by edge_fraction, then target z<=wall_top/ray_fraction is occluded. Union intervals to test the entire vertical pair; opaque solid walls without holes assumed.",
+  "limitations": [
+    "reference-dependent structural self-occlusion under opaque vertical wall assumptions",
+    "no furniture/material/opening or RGB visibility audit; full-height conclusion conditional on solid GT wall surfaces",
+    "not human difficulty or identified intrinsic uncertainty; GT may include scope or detail revisions",
+    "no worker responses, subjective difficulty labels or consensus outcomes used in feature calculation"
+  ]
+}

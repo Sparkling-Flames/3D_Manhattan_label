@@ -1,0 +1,159 @@
+{
+  "original": {
+    "status": "complete",
+    "WQ": 33.5339279871777,
+    "current": 27.07829891345884,
+    "floor_WQ": 34.036700498550694,
+    "floor_current": 27.56164840654536,
+    "boundary_loss": 0.10335456282305683,
+    "direction_loss": 1.364387450785905,
+    "global_height_loss": 1.2172852137531614e-06,
+    "local_height_loss": 0.044048146936603784,
+    "height_loss": 0.04404936422181754,
+    "height_drop_WQ": 0.5027725113729957,
+    "height_drop_current": 0.48334949308651787,
+    "WQ_no_D": 61.81741887374471,
+    "WQ_no_B": 34.737903591879586,
+    "WQ_no_H": 34.036700498550694,
+    "iou2d100": 68.01503773715048
+  },
+  "bottom_y_differences": [
+    21.133293768546025,
+    -2.3867062314540135,
+    -0.6551632047477938,
+    -2.4788724035608425
+  ],
+  "largest_square_share": 0.9732604612784418,
+  "counterfactuals": [
+    {
+      "bottom_index": 0,
+      "bottom_delta_px": 21.133293768546025,
+      "status": "complete",
+      "metrics": {
+        "iou_2d": 0.928368558160979,
+        "S_bottom_deg": 0.6372140068370971,
+        "dir": 2.2057978823141196,
+        "Hmean": 0.0501514425502354,
+        "Hcenter": 0.029374888167904817,
+        "iou_3d_corner_mean": 0.8842800049486326,
+        "height_mean_ratio": 1.0501514425502354
+      },
+      "scores": {
+        "status": "complete",
+        "WQ": 78.1339485389436,
+        "current": 77.19068948027628,
+        "floor_WQ": 79.23193761987105,
+        "floor_current": 78.34605553916907,
+        "boundary_loss": 0.012688802828418375,
+        "direction_loss": 0.17227009749151115,
+        "global_height_loss": 0.003929948734171191,
+        "local_height_loss": 0.01380614487803063,
+        "height_loss": 0.017736093612201822,
+        "height_drop_WQ": 1.097989080927448,
+        "height_drop_current": 1.1553660588927954,
+        "WQ_no_D": 90.28666233840634,
+        "WQ_no_B": 78.9163459215371,
+        "WQ_no_H": 79.23193761987105,
+        "iou2d100": 92.8368558160979
+      }
+    },
+    {
+      "bottom_index": 1,
+      "bottom_delta_px": -2.3867062314540135,
+      "status": "complete",
+      "metrics": {
+        "iou_2d": 0.6700881086935069,
+        "S_bottom_deg": 1.955921467638643,
+        "dir": 18.99101685771049,
+        "Hmean": 0.0047141610474652484,
+        "Hcenter": 0.050204813933241076,
+        "iou_3d_corner_mean": 0.6641468447468014,
+        "height_mean_ratio": 0.9952858389525348
+      },
+      "scores": {
+        "status": "complete",
+        "WQ": 33.21178107875734,
+        "current": 26.605170257274832,
+        "floor_WQ": 33.663044407310124,
+        "floor_current": 27.038482471014856,
+        "boundary_loss": 0.11955089961155321,
+        "direction_loss": 1.358724681911332,
+        "global_height_loss": 3.4723928720997885e-05,
+        "local_height_loss": 0.040328373473141714,
+        "height_loss": 0.04036309740186271,
+        "height_drop_WQ": 0.45126332855278406,
+        "height_drop_current": 0.4333122137400238,
+        "WQ_no_D": 60.52334319263405,
+        "WQ_no_B": 34.58497700474625,
+        "WQ_no_H": 33.663044407310124,
+        "iou2d100": 67.00881086935068
+      }
+    },
+    {
+      "bottom_index": 2,
+      "bottom_delta_px": -0.6551632047477938,
+      "status": "complete",
+      "metrics": {
+        "iou_2d": 0.6804388598844123,
+        "S_bottom_deg": 1.8027567460768956,
+        "dir": 19.43183374639453,
+        "Hmean": 0.000199481511485744,
+        "Hcenter": 0.05206870710877968,
+        "iou_3d_corner_mean": 0.6777081948900033,
+        "height_mean_ratio": 0.9998005184885143
+      },
+      "scores": {
+        "status": "complete",
+        "WQ": 33.567547254732276,
+        "current": 27.11529643786149,
+        "floor_WQ": 34.063549569874624,
+        "floor_current": 27.59226169124081,
+        "boundary_loss": 0.1015603714226799,
+        "direction_loss": 1.3644892315369002,
+        "global_height_loss": 6.217636472599534e-08,
+        "local_height_loss": 0.043378404159678134,
+        "height_loss": 0.04337846633604286,
+        "height_drop_WQ": 0.4960023151423485,
+        "height_drop_current": 0.4769652533793227,
+        "WQ_no_D": 61.935665682538804,
+        "WQ_no_B": 34.752299204679055,
+        "WQ_no_H": 34.063549569874624,
+        "iou2d100": 68.04388598844123
+      }
+    },
+    {
+      "bottom_index": 3,
+      "bottom_delta_px": -2.4788724035608425,
+      "status": "complete",
+      "metrics": {
+        "iou_2d": 0.6723538388779006,
+        "S_bottom_deg": 1.759663467921567,
+        "dir": 17.9877631882154,
+        "Hmean": 0.006912990457803581,
+        "Hcenter": 0.05091754210886735,
+        "iou_3d_corner_mean": 0.6650788428132641,
+        "height_mean_ratio": 0.9930870095421964
+      },
+      "scores": {
+        "status": "complete",
+        "WQ": 33.671849339963586,
+        "current": 27.08343698489623,
+        "floor_WQ": 34.14969730934254,
+        "floor_current": 27.544517720637707,
+        "boundary_loss": 0.09676298501055487,
+        "direction_loss": 1.3442085567570468,
+        "global_height_loss": 7.467099542138025e-05,
+        "local_height_loss": 0.041481537510532476,
+        "height_loss": 0.04155620850595386,
+        "height_drop_WQ": 0.47784796937895635,
+        "height_drop_current": 0.4610807357414757,
+        "WQ_no_D": 61.514563851535854,
+        "WQ_no_B": 34.80589092876649,
+        "WQ_no_H": 34.14969730934254,
+        "iou2d100": 67.23538388779005
+      }
+    }
+  ],
+  "used_for_fit": false,
+  "source_input_mutated": false
+}

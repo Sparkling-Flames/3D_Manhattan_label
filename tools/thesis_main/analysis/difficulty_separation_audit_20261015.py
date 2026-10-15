@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[3]
-OUT = ROOT / 'research/difficulty_separation_audit_20261015'
+OUT = ROOT / 'research/difficulty/difficulty_separation_audit_20261015'
 DR = ROOT / 'analysis_results/difficulty_scope_preferred_20261011'
 METRICS = ['WQ', 'A10', 'B8L2', 'IoU3D100', 'iou_2d', 'S_bottom_deg', 'dir', 'Hmean', 'Hcenter']
 PRIORITY = {
@@ -42,9 +42,9 @@ NOTES = {
 
 
 def main():
-    all_rows = pd.read_csv(ROOT / 'research/descriptive_statistics_20261015/records.csv')
-    panel = pd.read_csv(ROOT / 'research/difficulty_target_integration_20261015/ordinary_same_target_panel.csv')
-    scores = pd.read_csv(ROOT / 'research/quality_ab_feedback_handoff_20261015/prior_AB/results/SCORES_1145.csv')
+    all_rows = pd.read_csv(ROOT / 'research/statistics/descriptive_statistics_20261015/records.csv')
+    panel = pd.read_csv(ROOT / 'research/difficulty/difficulty_target_integration_20261015/ordinary_same_target_panel.csv')
+    scores = pd.read_csv(ROOT / 'research/quality/quality_ab_feedback_handoff_20261015/prior_AB/results/SCORES_1145.csv')
     a = all_rows[all_rows.in_target_836.eq(True)].copy()
     assert len(a) == a.object_id.nunique() == 836 and a.image_id.nunique() == 95
     assert not a.duplicated(['worker_id', 'image_id']).any()

@@ -1,0 +1,5201 @@
+{
+  "3e9187a077a7f151e049": {
+    "old": {
+      "geometry": {
+        "id": "3e9187a077a7f151e049",
+        "points": [
+          [
+            164.7674978766844,
+            207.77222742275038
+          ],
+          [
+            164.7674978766844,
+            297.3058103042599
+          ],
+          [
+            326.80050142547157,
+            200.43194405558853
+          ],
+          [
+            326.80050142547157,
+            315.038961567228
+          ],
+          [
+            686.4288131902729,
+            198.3490066966982
+          ],
+          [
+            686.4288131902729,
+            327.0335900721215
+          ],
+          [
+            869.6022172972113,
+            203.81765225648186
+          ],
+          [
+            869.6022172972113,
+            316.55465972106316
+          ]
+        ],
+        "sourcePointIndices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "sourcePairIndices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "bottom3d": [
+          [
+            -3.271430018989019,
+            -1.0,
+            2.050090233123961
+          ],
+          [
+            -2.3935380745821444,
+            -1.0,
+            -1.1105763409068239
+          ],
+          [
+            1.8837915222900319,
+            -1.0,
+            -1.0303789034502575
+          ],
+          [
+            2.083585249830178,
+            -1.0,
+            1.498285058422191
+          ]
+        ],
+        "top3d": [
+          [
+            -3.271430018989019,
+            1.1770299789767202,
+            2.050090233123961
+          ],
+          [
+            -2.3935380745821444,
+            0.9362381046142886,
+            -1.1105763409068239
+          ],
+          [
+            1.8837915222900319,
+            0.7928972360591849,
+            -1.0303789034502575
+          ],
+          [
+            2.083585249830178,
+            0.8509956396925967,
+            1.498285058422191
+          ]
+        ]
+      },
+      "result": {
+        "algorithm_version": "geom_quality_research_v1.1.0",
+        "status": "available",
+        "quality_score": 68.27554755643895,
+        "reason_codes": [],
+        "failure_classes": [],
+        "annotation_geometry_sha256": "a95266e4de5687c74de968e8092d44f4e9b51b6dd3e94408e0564cab6654da13",
+        "reference_geometry_sha256": "1f225933a3f181aa040793a092457301656adf764a043e249037d056f52f9437",
+        "target_applicability": "conditional_geometry",
+        "annotation_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "annotation",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 4,
+            "area_h2": 13.620449352760534,
+            "signed_area_h2": 13.620449352760534,
+            "perimeter_h": 15.47831774907906,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": true,
+              "azimuth_single_valued_geometric_condition": true
+            },
+            "tolerances": {
+              "coordinate_scale_h": 5.355015268819197,
+              "length_roundoff_h": 7.609934398287801e-14,
+              "area_roundoff_h2": 2.7241421656704084e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": true,
+            "azimuth_single_valued_geometric_condition": true,
+            "vertex_count": 4,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.792897236059185,
+            "max_wall_height_h": 2.1770299789767202,
+            "min_top_y_h": 0.7928972360591849,
+            "max_top_y_h": 1.1770299789767202,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 2.2888943206442374,
+              "min_edge_arc_rad": 0.9410284348501345,
+              "min_edge_antipodal_margin_rad": 1.14923212969959
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 2.3686179903325804,
+              "min_edge_arc_rad": 0.9491810600139386,
+              "min_edge_antipodal_margin_rad": 1.2091786361454693
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 5.355015268819197,
+            "length_roundoff_h": 7.609934398287801e-14,
+            "area_roundoff_h2": 2.7241421656704084e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 4.648981671080348e-14,
+            "positive_height_roundoff_h": 1.672660202667544e-14
+          }
+        },
+        "reference_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "reference",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 4,
+            "area_h2": 11.55090990877068,
+            "signed_area_h2": 11.55090990877068,
+            "perimeter_h": 14.128840575818991,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": true,
+              "azimuth_single_valued_geometric_condition": true
+            },
+            "tolerances": {
+              "coordinate_scale_h": 4.494518336906757,
+              "length_roundoff_h": 6.387094710059325e-14,
+              "area_roundoff_h2": 1.6415994794947922e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": true,
+            "azimuth_single_valued_geometric_condition": true,
+            "vertex_count": 4,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.8661453000746535,
+            "max_wall_height_h": 1.8662293531726617,
+            "min_top_y_h": 0.8661453000746535,
+            "max_top_y_h": 0.8662293531726617,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 2.4224673154926317,
+              "min_edge_arc_rad": 0.9002537522760857,
+              "min_edge_antipodal_margin_rad": 1.1053053154097374
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 2.4734874598001637,
+              "min_edge_arc_rad": 0.8867093539127441,
+              "min_edge_antipodal_margin_rad": 1.1613257264522798
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 4.494518336906757,
+            "length_roundoff_h": 6.387094710059325e-14,
+            "area_roundoff_h2": 1.6415994794947922e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 3.551283628644753e-14,
+            "positive_height_roundoff_h": 1.4210854715202004e-14
+          }
+        },
+        "metrics": {
+          "iou": 0.8303236795163098,
+          "C": 0.09429316605648372,
+          "omission": 0.01142415017902851,
+          "extension": 0.1905909396644557,
+          "area_h2": 13.620449352760534,
+          "reference_area_h2": 11.550909908770683,
+          "intersection_area_h2": 11.418950579268458,
+          "centroid_dx_h": -0.2607706607866595,
+          "centroid_dz_h": 0.18627969859876886,
+          "iou_2d": 0.8303236795163098,
+          "traditional_metric_version": "traditional_geometry_iou_v1.1.0",
+          "traditional_status": "available",
+          "iou2d_bev": 0.8303236795163098,
+          "hohonet_iou3d_vertex_mean": 0.79930949682471,
+          "conditional_iou3d_perimeter_mean": 0.794852928165271,
+          "height_vertex_mean_h": 1.9392902398356977,
+          "reference_height_vertex_mean_h": 1.866178700098948,
+          "height_perimeter_mean_h": 1.950264792289268,
+          "reference_height_perimeter_mean_h": 1.8661786996704768,
+          "hohonet_height_pred_at_camera1p6": 3.1028643837371166,
+          "hohonet_height_ref_at_camera1p6": 2.985885920158317,
+          "area_pred_h2": 13.620449352760534,
+          "area_ref_h2": 11.55090990877068,
+          "traditional_reason_codes": [],
+          "hohonet_complete_pipeline_run": false,
+          "iou_3d_corner_mean": 0.79930949682471,
+          "iou_3d_perimeter_mean": 0.794852928165271,
+          "height_mean_h": 1.950264792289268,
+          "height_internal_rms_h": 0.11473289076076715,
+          "height_internal_relative_rms": 0.05882939138028068,
+          "flat": 2.278593922378366,
+          "flat_top_fitted_height_h": 1.9184342364057008,
+          "dir": 8.131942014038296,
+          "axis_deg": 0.8001163040001885,
+          "max_depth_sensitivity_h_per_Cpx": 0.0975926206235868,
+          "bottom_horizon_margin_deg": 14.521573935091377,
+          "S_top_deg": 0.5953758562054766,
+          "S_bottom_deg": 1.4748191565144202,
+          "Hmean": 0.04505789967147241,
+          "Hlocal": 0.06960698611793992,
+          "Hstar": 0.06960698611793992,
+          "height_mean_relative_error": 0.04505789967147241,
+          "height_local_relative_rms": 0.06960698611793992,
+          "height_guard_relative_error": 0.06960698611793992,
+          "quality_score": 68.27554755643895,
+          "range_ceiling_points": 83.03236795163099,
+          "boundary_rms_deg": 1.1246252608256473,
+          "height_error_used": 0.06960698611793992,
+          "boundary_factor": 0.9267420822949836,
+          "reference_factor": 0.9103907785794774,
+          "direction_bounded_loss": 0.7256620570463093,
+          "flatness_bounded_loss": 0.5648385294686808,
+          "intrinsic_factor": 0.9032124560113758,
+          "range_deduction_points": 16.967632048369012,
+          "boundary_deduction_points": 6.082778378253224,
+          "height_deduction_points": 1.3576874665947827,
+          "intrinsic_deduction_points": 7.31635455034403,
+          "mean_height_only_score_same_parameters": 68.98266835106149,
+          "score_v1_recomputed": 68.98266835106149,
+          "U": 0.6048674991202704,
+          "B": 1.4990404670371793,
+          "T": 0.19689640260699853,
+          "F": 0.16450163638657056
+        },
+        "metric_availability": {
+          "iou_2d": "available",
+          "iou_3d_corner_mean": "available",
+          "iou_3d_perimeter_mean": "available",
+          "complete_quality": "available"
+        },
+        "parameters": {
+          "boundary_half_deg": 4.0,
+          "direction_half_deg": 5.0,
+          "flatness_half_deg": 2.0,
+          "intrinsic_max_discount": 0.15,
+          "height_relative_half": 0.5
+        },
+        "numerical_settings": {
+          "spherical_samples": 2048,
+          "height_samples": 4096
+        },
+        "geometry_digest_status": {
+          "annotation": "available",
+          "reference": "available"
+        },
+        "traditional_issues": [],
+        "height_diagnostics": {
+          "annotation_height_mean_h": 1.950264792289268,
+          "reference_height_mean_h": 1.8661786996704768,
+          "annotation_height_std_h": 0.11473289076076715,
+          "reference_height_std_h": 2.4560409686801328e-05,
+          "annotation_height_min_h": 1.792897236059185,
+          "annotation_height_max_h": 2.1770299789767202,
+          "direct_rms_about_gt_mean_check": 0.07622348392703437,
+          "height_nearest_samples_per_direction": 4096,
+          "nearest_AG_tied_height_fraction": 0.0,
+          "nearest_GA_tied_height_fraction": 0.0,
+          "nearest_AG_tied_height_range_h": 0.0,
+          "nearest_GA_tied_height_range_h": 0.0,
+          "nearest_footprint_tie_rule": "max"
+        },
+        "auxiliary_issues": [],
+        "issues": []
+      },
+      "independent_shapely_area": {
+        "symmetric_difference": 0.20201508984348407,
+        "excess": 0.19059093966445564,
+        "missing": 0.011424150179028427,
+        "iou_2d_independent": 0.8303236795163099,
+        "annotation_area_h2": 13.620449352760534,
+        "GT_area_h2": 11.55090990877068
+      }
+    },
+    "new": {
+      "geometry": {
+        "id": "3e9187a077a7f151e049",
+        "points": [
+          [
+            164.7674978766844,
+            207.77222742275038
+          ],
+          [
+            164.7674978766844,
+            297.3058103042599
+          ],
+          [
+            326.80050142547157,
+            200.43194405558853
+          ],
+          [
+            326.80050142547157,
+            315.038961567228
+          ],
+          [
+            686.4288131902729,
+            198.3490066966982
+          ],
+          [
+            686.4288131902729,
+            327.0335900721215
+          ],
+          [
+            869.6022172972113,
+            203.81765225648186
+          ],
+          [
+            869.6022172972113,
+            316.55465972106316
+          ]
+        ],
+        "sourcePointIndices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "sourcePairIndices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "bottom3d": [
+          [
+            -3.271430018989019,
+            -1.0,
+            2.050090233123961
+          ],
+          [
+            -2.3935380745821444,
+            -1.0,
+            -1.1105763409068239
+          ],
+          [
+            1.8837915222900319,
+            -1.0,
+            -1.0303789034502575
+          ],
+          [
+            2.083585249830178,
+            -1.0,
+            1.498285058422191
+          ]
+        ],
+        "top3d": [
+          [
+            -3.271430018989019,
+            1.1770299789767202,
+            2.050090233123961
+          ],
+          [
+            -2.3935380745821444,
+            0.9362381046142886,
+            -1.1105763409068239
+          ],
+          [
+            1.8837915222900319,
+            0.7928972360591849,
+            -1.0303789034502575
+          ],
+          [
+            2.083585249830178,
+            0.8509956396925967,
+            1.498285058422191
+          ]
+        ]
+      },
+      "result": {
+        "algorithm_version": "geom_quality_research_v1.1.0",
+        "status": "available",
+        "quality_score": 68.27554755643895,
+        "reason_codes": [],
+        "failure_classes": [],
+        "annotation_geometry_sha256": "a95266e4de5687c74de968e8092d44f4e9b51b6dd3e94408e0564cab6654da13",
+        "reference_geometry_sha256": "1f225933a3f181aa040793a092457301656adf764a043e249037d056f52f9437",
+        "target_applicability": "conditional_geometry",
+        "annotation_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "annotation",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 4,
+            "area_h2": 13.620449352760534,
+            "signed_area_h2": 13.620449352760534,
+            "perimeter_h": 15.47831774907906,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": true,
+              "azimuth_single_valued_geometric_condition": true
+            },
+            "tolerances": {
+              "coordinate_scale_h": 5.355015268819197,
+              "length_roundoff_h": 7.609934398287801e-14,
+              "area_roundoff_h2": 2.7241421656704084e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": true,
+            "azimuth_single_valued_geometric_condition": true,
+            "vertex_count": 4,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.792897236059185,
+            "max_wall_height_h": 2.1770299789767202,
+            "min_top_y_h": 0.7928972360591849,
+            "max_top_y_h": 1.1770299789767202,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 2.2888943206442374,
+              "min_edge_arc_rad": 0.9410284348501345,
+              "min_edge_antipodal_margin_rad": 1.14923212969959
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 2.3686179903325804,
+              "min_edge_arc_rad": 0.9491810600139386,
+              "min_edge_antipodal_margin_rad": 1.2091786361454693
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 5.355015268819197,
+            "length_roundoff_h": 7.609934398287801e-14,
+            "area_roundoff_h2": 2.7241421656704084e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 4.648981671080348e-14,
+            "positive_height_roundoff_h": 1.672660202667544e-14
+          }
+        },
+        "reference_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "reference",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 4,
+            "area_h2": 11.55090990877068,
+            "signed_area_h2": 11.55090990877068,
+            "perimeter_h": 14.128840575818991,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": true,
+              "azimuth_single_valued_geometric_condition": true
+            },
+            "tolerances": {
+              "coordinate_scale_h": 4.494518336906757,
+              "length_roundoff_h": 6.387094710059325e-14,
+              "area_roundoff_h2": 1.6415994794947922e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": true,
+            "azimuth_single_valued_geometric_condition": true,
+            "vertex_count": 4,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.8661453000746535,
+            "max_wall_height_h": 1.8662293531726617,
+            "min_top_y_h": 0.8661453000746535,
+            "max_top_y_h": 0.8662293531726617,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 2.4224673154926317,
+              "min_edge_arc_rad": 0.9002537522760857,
+              "min_edge_antipodal_margin_rad": 1.1053053154097374
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 2.4734874598001637,
+              "min_edge_arc_rad": 0.8867093539127441,
+              "min_edge_antipodal_margin_rad": 1.1613257264522798
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 4.494518336906757,
+            "length_roundoff_h": 6.387094710059325e-14,
+            "area_roundoff_h2": 1.6415994794947922e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 3.551283628644753e-14,
+            "positive_height_roundoff_h": 1.4210854715202004e-14
+          }
+        },
+        "metrics": {
+          "iou": 0.8303236795163098,
+          "C": 0.09429316605648372,
+          "omission": 0.01142415017902851,
+          "extension": 0.1905909396644557,
+          "area_h2": 13.620449352760534,
+          "reference_area_h2": 11.550909908770683,
+          "intersection_area_h2": 11.418950579268458,
+          "centroid_dx_h": -0.2607706607866595,
+          "centroid_dz_h": 0.18627969859876886,
+          "iou_2d": 0.8303236795163098,
+          "traditional_metric_version": "traditional_geometry_iou_v1.1.0",
+          "traditional_status": "available",
+          "iou2d_bev": 0.8303236795163098,
+          "hohonet_iou3d_vertex_mean": 0.79930949682471,
+          "conditional_iou3d_perimeter_mean": 0.794852928165271,
+          "height_vertex_mean_h": 1.9392902398356977,
+          "reference_height_vertex_mean_h": 1.866178700098948,
+          "height_perimeter_mean_h": 1.950264792289268,
+          "reference_height_perimeter_mean_h": 1.8661786996704768,
+          "hohonet_height_pred_at_camera1p6": 3.1028643837371166,
+          "hohonet_height_ref_at_camera1p6": 2.985885920158317,
+          "area_pred_h2": 13.620449352760534,
+          "area_ref_h2": 11.55090990877068,
+          "traditional_reason_codes": [],
+          "hohonet_complete_pipeline_run": false,
+          "iou_3d_corner_mean": 0.79930949682471,
+          "iou_3d_perimeter_mean": 0.794852928165271,
+          "height_mean_h": 1.950264792289268,
+          "height_internal_rms_h": 0.11473289076076715,
+          "height_internal_relative_rms": 0.05882939138028068,
+          "flat": 2.278593922378366,
+          "flat_top_fitted_height_h": 1.9184342364057008,
+          "dir": 8.131942014038296,
+          "axis_deg": 0.8001163040001885,
+          "max_depth_sensitivity_h_per_Cpx": 0.0975926206235868,
+          "bottom_horizon_margin_deg": 14.521573935091377,
+          "S_top_deg": 0.5953758562054766,
+          "S_bottom_deg": 1.4748191565144202,
+          "Hmean": 0.04505789967147241,
+          "Hlocal": 0.06960698611793992,
+          "Hstar": 0.06960698611793992,
+          "height_mean_relative_error": 0.04505789967147241,
+          "height_local_relative_rms": 0.06960698611793992,
+          "height_guard_relative_error": 0.06960698611793992,
+          "quality_score": 68.27554755643895,
+          "range_ceiling_points": 83.03236795163099,
+          "boundary_rms_deg": 1.1246252608256473,
+          "height_error_used": 0.06960698611793992,
+          "boundary_factor": 0.9267420822949836,
+          "reference_factor": 0.9103907785794774,
+          "direction_bounded_loss": 0.7256620570463093,
+          "flatness_bounded_loss": 0.5648385294686808,
+          "intrinsic_factor": 0.9032124560113758,
+          "range_deduction_points": 16.967632048369012,
+          "boundary_deduction_points": 6.082778378253224,
+          "height_deduction_points": 1.3576874665947827,
+          "intrinsic_deduction_points": 7.31635455034403,
+          "mean_height_only_score_same_parameters": 68.98266835106149,
+          "score_v1_recomputed": 68.98266835106149,
+          "U": 0.6048674991202704,
+          "B": 1.4990404670371793,
+          "T": 0.19689640260699853,
+          "F": 0.16450163638657056
+        },
+        "metric_availability": {
+          "iou_2d": "available",
+          "iou_3d_corner_mean": "available",
+          "iou_3d_perimeter_mean": "available",
+          "complete_quality": "available"
+        },
+        "parameters": {
+          "boundary_half_deg": 4.0,
+          "direction_half_deg": 5.0,
+          "flatness_half_deg": 2.0,
+          "intrinsic_max_discount": 0.15,
+          "height_relative_half": 0.5
+        },
+        "numerical_settings": {
+          "spherical_samples": 2048,
+          "height_samples": 4096
+        },
+        "geometry_digest_status": {
+          "annotation": "available",
+          "reference": "available"
+        },
+        "traditional_issues": [],
+        "height_diagnostics": {
+          "annotation_height_mean_h": 1.950264792289268,
+          "reference_height_mean_h": 1.8661786996704768,
+          "annotation_height_std_h": 0.11473289076076715,
+          "reference_height_std_h": 2.4560409686801328e-05,
+          "annotation_height_min_h": 1.792897236059185,
+          "annotation_height_max_h": 2.1770299789767202,
+          "direct_rms_about_gt_mean_check": 0.07622348392703437,
+          "height_nearest_samples_per_direction": 4096,
+          "nearest_AG_tied_height_fraction": 0.0,
+          "nearest_GA_tied_height_fraction": 0.0,
+          "nearest_AG_tied_height_range_h": 0.0,
+          "nearest_GA_tied_height_range_h": 0.0,
+          "nearest_footprint_tie_rule": "max"
+        },
+        "auxiliary_issues": [],
+        "issues": []
+      },
+      "independent_shapely_area": {
+        "symmetric_difference": 0.20201508984348407,
+        "excess": 0.19059093966445564,
+        "missing": 0.011424150179028427,
+        "iou_2d_independent": 0.8303236795163099,
+        "annotation_area_h2": 13.620449352760534,
+        "GT_area_h2": 11.55090990877068
+      }
+    }
+  },
+  "55fb2716ceb7834eac5c": {
+    "old": {
+      "geometry": {
+        "id": "55fb2716ceb7834eac5c",
+        "points": [
+          [
+            163.10426949381858,
+            203.97750943302665
+          ],
+          [
+            163.10426949381858,
+            323.6124152500155
+          ],
+          [
+            328.5676375241871,
+            202.75077726746596
+          ],
+          [
+            328.5676375241871,
+            317.59397549515364
+          ],
+          [
+            686.6666713674028,
+            193.5285448188258
+          ],
+          [
+            686.6666713674028,
+            324.795588031012
+          ],
+          [
+            878.2980119501492,
+            199.38460415205563
+          ],
+          [
+            878.2980119501492,
+            312.727059279129
+          ]
+        ],
+        "sourcePointIndices": [
+          2,
+          3,
+          0,
+          1,
+          5,
+          4,
+          7,
+          6
+        ],
+        "sourcePairIndices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "bottom3d": [
+          [
+            -1.9115547987010422,
+            -1.0,
+            1.2252493789735905
+          ],
+          [
+            -2.2731642869622117,
+            -1.0,
+            -1.0848311346297226
+          ],
+          [
+            1.9549990546903444,
+            -1.0,
+            -1.0656233794763337
+          ],
+          [
+            2.1485507793005887,
+            -1.0,
+            1.726037686549143
+          ]
+        ],
+        "top3d": [
+          [
+            -1.9115547987010422,
+            0.750427252147238,
+            1.2252493789735905
+          ],
+          [
+            -2.2731642869622117,
+            0.8535531761043242,
+            -1.0848311346297226
+          ],
+          [
+            1.9549990546903444,
+            0.8978998419639755,
+            -1.0656233794763337
+          ],
+          [
+            2.1485507793005887,
+            0.9978636350742112,
+            1.726037686549143
+          ]
+        ]
+      },
+      "result": {
+        "algorithm_version": "geom_quality_research_v1.1.0",
+        "status": "available",
+        "quality_score": 73.30484542283953,
+        "reason_codes": [],
+        "failure_classes": [],
+        "annotation_geometry_sha256": "c1b872b1061189d45d2b51ead337b619f2b95084b4636b0ad7aa6bc330e71d09",
+        "reference_geometry_sha256": "1f225933a3f181aa040793a092457301656adf764a043e249037d056f52f9437",
+        "target_applicability": "conditional_geometry",
+        "annotation_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "annotation",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 4,
+            "area_h2": 10.498981131417949,
+            "signed_area_h2": 10.498981131417949,
+            "perimeter_h": 13.455654777132983,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": true,
+              "azimuth_single_valued_geometric_condition": true
+            },
+            "tolerances": {
+              "coordinate_scale_h": 4.4217150662628,
+              "length_roundoff_h": 6.283635039868046e-14,
+              "area_roundoff_h2": 1.4919949551622763e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": true,
+            "azimuth_single_valued_geometric_condition": true,
+            "vertex_count": 4,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.750427252147238,
+            "max_wall_height_h": 1.9978636350742112,
+            "min_top_y_h": 0.750427252147238,
+            "max_top_y_h": 0.9978636350742112,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 2.391321569734486,
+              "min_edge_arc_rad": 0.9582218727138658,
+              "min_edge_antipodal_margin_rad": 1.164794076679152
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 2.4408143089400927,
+              "min_edge_arc_rad": 0.9306372884237508,
+              "min_edge_antipodal_margin_rad": 1.2175961222301603
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 4.4217150662628,
+            "length_roundoff_h": 6.283635039868046e-14,
+            "area_roundoff_h2": 1.4919949551622763e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 3.230360742580575e-14,
+            "positive_height_roundoff_h": 1.4210854715202004e-14
+          }
+        },
+        "reference_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "reference",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 4,
+            "area_h2": 11.55090990877068,
+            "signed_area_h2": 11.55090990877068,
+            "perimeter_h": 14.128840575818991,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": true,
+              "azimuth_single_valued_geometric_condition": true
+            },
+            "tolerances": {
+              "coordinate_scale_h": 4.494518336906757,
+              "length_roundoff_h": 6.387094710059325e-14,
+              "area_roundoff_h2": 1.6415994794947922e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": true,
+            "azimuth_single_valued_geometric_condition": true,
+            "vertex_count": 4,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.8661453000746535,
+            "max_wall_height_h": 1.8662293531726617,
+            "min_top_y_h": 0.8661453000746535,
+            "max_top_y_h": 0.8662293531726617,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 2.4224673154926317,
+              "min_edge_arc_rad": 0.9002537522760857,
+              "min_edge_antipodal_margin_rad": 1.1053053154097374
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 2.4734874598001637,
+              "min_edge_arc_rad": 0.8867093539127441,
+              "min_edge_antipodal_margin_rad": 1.1613257264522798
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 4.494518336906757,
+            "length_roundoff_h": 6.387094710059325e-14,
+            "area_roundoff_h2": 1.6415994794947922e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 3.551283628644753e-14,
+            "positive_height_roundoff_h": 1.4210854715202004e-14
+          }
+        },
+        "metrics": {
+          "iou": 0.8490087779086023,
+          "C": 0.08781364268473361,
+          "omission": 0.12347671302809524,
+          "extension": 0.03240780281574937,
+          "area_h2": 10.498981131417949,
+          "reference_area_h2": 11.550909908770683,
+          "intersection_area_h2": 10.124641520752023,
+          "centroid_dx_h": 0.29729709873583665,
+          "centroid_dz_h": -0.026195907589184747,
+          "iou_2d": 0.8490087779086023,
+          "traditional_metric_version": "traditional_geometry_iou_v1.1.0",
+          "traditional_status": "available",
+          "iou2d_bev": 0.8490087779086025,
+          "hohonet_iou3d_vertex_mean": 0.8455156286718909,
+          "conditional_iou3d_perimeter_mean": 0.8445226374463097,
+          "height_vertex_mean_h": 1.8749359763224374,
+          "reference_height_vertex_mean_h": 1.866178700098948,
+          "height_perimeter_mean_h": 1.8774386148692617,
+          "reference_height_perimeter_mean_h": 1.8661786996704768,
+          "hohonet_height_pred_at_camera1p6": 2.9998975621159,
+          "hohonet_height_ref_at_camera1p6": 2.985885920158317,
+          "area_pred_h2": 10.498981131417949,
+          "area_ref_h2": 11.55090990877068,
+          "traditional_reason_codes": [],
+          "hohonet_complete_pipeline_run": false,
+          "iou_3d_corner_mean": 0.8455156286718909,
+          "iou_3d_perimeter_mean": 0.8445226374463097,
+          "height_mean_h": 1.8774386148692617,
+          "height_internal_rms_h": 0.06289074315698136,
+          "height_internal_relative_rms": 0.03349816215501717,
+          "flat": 1.4289815125082566,
+          "flat_top_fitted_height_h": 1.8738935327822708,
+          "dir": 5.661772386651288,
+          "axis_deg": 89.84876163209536,
+          "max_depth_sensitivity_h_per_Cpx": 0.052741183540953446,
+          "bottom_horizon_margin_deg": 19.94310677781878,
+          "S_top_deg": 0.833867374616178,
+          "S_bottom_deg": 1.3092660818052495,
+          "Hmean": 0.006033674696197702,
+          "Hlocal": 0.03439369895625792,
+          "Hstar": 0.03439369895625792,
+          "height_mean_relative_error": 0.006033674696197702,
+          "height_local_relative_rms": 0.03439369895625792,
+          "height_guard_relative_error": 0.03439369895625792,
+          "quality_score": 73.30484542283953,
+          "range_ceiling_points": 84.90087779086024,
+          "boundary_rms_deg": 1.0976138827964383,
+          "height_error_used": 0.03439369895625792,
+          "boundary_factor": 0.9299753963844563,
+          "reference_factor": 0.9259010887635681,
+          "direction_bounded_loss": 0.5618314269542714,
+          "flatness_bounded_loss": 0.3379662634171628,
+          "intrinsic_factor": 0.9325151732221424,
+          "range_deduction_points": 15.099122209139765,
+          "boundary_deduction_points": 5.945150313916713,
+          "height_deduction_points": 0.34591229340338714,
+          "intrinsic_deduction_points": 5.304969760700601,
+          "mean_height_only_score_same_parameters": 73.61744432553314,
+          "score_v1_recomputed": 73.61744432553314,
+          "U": 0.8418825441217956,
+          "B": 1.3180333539307905,
+          "T": 0.1492614486422819,
+          "F": 0.13236435410058628
+        },
+        "metric_availability": {
+          "iou_2d": "available",
+          "iou_3d_corner_mean": "available",
+          "iou_3d_perimeter_mean": "available",
+          "complete_quality": "available"
+        },
+        "parameters": {
+          "boundary_half_deg": 4.0,
+          "direction_half_deg": 5.0,
+          "flatness_half_deg": 2.0,
+          "intrinsic_max_discount": 0.15,
+          "height_relative_half": 0.5
+        },
+        "numerical_settings": {
+          "spherical_samples": 2048,
+          "height_samples": 4096
+        },
+        "geometry_digest_status": {
+          "annotation": "available",
+          "reference": "available"
+        },
+        "traditional_issues": [],
+        "height_diagnostics": {
+          "annotation_height_mean_h": 1.8774386148692617,
+          "reference_height_mean_h": 1.8661786996704768,
+          "annotation_height_std_h": 0.06289074315698136,
+          "reference_height_std_h": 2.4560409686801328e-05,
+          "annotation_height_min_h": 1.750427252147238,
+          "annotation_height_max_h": 1.9978636350742112,
+          "direct_rms_about_gt_mean_check": 0.034236151161693845,
+          "height_nearest_samples_per_direction": 4096,
+          "nearest_AG_tied_height_fraction": 0.0,
+          "nearest_GA_tied_height_fraction": 0.0,
+          "nearest_AG_tied_height_range_h": 0.0,
+          "nearest_GA_tied_height_range_h": 0.0,
+          "nearest_footprint_tie_rule": "max"
+        },
+        "auxiliary_issues": [],
+        "issues": []
+      },
+      "independent_shapely_area": {
+        "symmetric_difference": 0.15588451584384447,
+        "excess": 0.03240780281574933,
+        "missing": 0.12347671302809514,
+        "iou_2d_independent": 0.8490087779086025,
+        "annotation_area_h2": 10.498981131417949,
+        "GT_area_h2": 11.55090990877068
+      }
+    },
+    "new": {
+      "geometry": {
+        "id": "55fb2716ceb7834eac5c",
+        "points": [
+          [
+            163.10426949381858,
+            203.97750943302665
+          ],
+          [
+            163.10426949381858,
+            323.6124152500155
+          ],
+          [
+            328.5676375241871,
+            202.75077726746596
+          ],
+          [
+            328.5676375241871,
+            317.59397549515364
+          ],
+          [
+            686.6666713674028,
+            193.5285448188258
+          ],
+          [
+            686.6666713674028,
+            324.795588031012
+          ],
+          [
+            878.2980119501492,
+            199.38460415205563
+          ],
+          [
+            878.2980119501492,
+            312.727059279129
+          ]
+        ],
+        "sourcePointIndices": [
+          2,
+          3,
+          0,
+          1,
+          5,
+          4,
+          7,
+          6
+        ],
+        "sourcePairIndices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "bottom3d": [
+          [
+            -1.9115547987010422,
+            -1.0,
+            1.2252493789735905
+          ],
+          [
+            -2.2731642869622117,
+            -1.0,
+            -1.0848311346297226
+          ],
+          [
+            1.9549990546903444,
+            -1.0,
+            -1.0656233794763337
+          ],
+          [
+            2.1485507793005887,
+            -1.0,
+            1.726037686549143
+          ]
+        ],
+        "top3d": [
+          [
+            -1.9115547987010422,
+            0.750427252147238,
+            1.2252493789735905
+          ],
+          [
+            -2.2731642869622117,
+            0.8535531761043242,
+            -1.0848311346297226
+          ],
+          [
+            1.9549990546903444,
+            0.8978998419639755,
+            -1.0656233794763337
+          ],
+          [
+            2.1485507793005887,
+            0.9978636350742112,
+            1.726037686549143
+          ]
+        ]
+      },
+      "result": {
+        "algorithm_version": "geom_quality_research_v1.1.0",
+        "status": "available",
+        "quality_score": 73.30484542283953,
+        "reason_codes": [],
+        "failure_classes": [],
+        "annotation_geometry_sha256": "c1b872b1061189d45d2b51ead337b619f2b95084b4636b0ad7aa6bc330e71d09",
+        "reference_geometry_sha256": "1f225933a3f181aa040793a092457301656adf764a043e249037d056f52f9437",
+        "target_applicability": "conditional_geometry",
+        "annotation_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "annotation",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 4,
+            "area_h2": 10.498981131417949,
+            "signed_area_h2": 10.498981131417949,
+            "perimeter_h": 13.455654777132983,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": true,
+              "azimuth_single_valued_geometric_condition": true
+            },
+            "tolerances": {
+              "coordinate_scale_h": 4.4217150662628,
+              "length_roundoff_h": 6.283635039868046e-14,
+              "area_roundoff_h2": 1.4919949551622763e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": true,
+            "azimuth_single_valued_geometric_condition": true,
+            "vertex_count": 4,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.750427252147238,
+            "max_wall_height_h": 1.9978636350742112,
+            "min_top_y_h": 0.750427252147238,
+            "max_top_y_h": 0.9978636350742112,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 2.391321569734486,
+              "min_edge_arc_rad": 0.9582218727138658,
+              "min_edge_antipodal_margin_rad": 1.164794076679152
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 2.4408143089400927,
+              "min_edge_arc_rad": 0.9306372884237508,
+              "min_edge_antipodal_margin_rad": 1.2175961222301603
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 4.4217150662628,
+            "length_roundoff_h": 6.283635039868046e-14,
+            "area_roundoff_h2": 1.4919949551622763e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 3.230360742580575e-14,
+            "positive_height_roundoff_h": 1.4210854715202004e-14
+          }
+        },
+        "reference_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "reference",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 4,
+            "area_h2": 11.55090990877068,
+            "signed_area_h2": 11.55090990877068,
+            "perimeter_h": 14.128840575818991,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": true,
+              "azimuth_single_valued_geometric_condition": true
+            },
+            "tolerances": {
+              "coordinate_scale_h": 4.494518336906757,
+              "length_roundoff_h": 6.387094710059325e-14,
+              "area_roundoff_h2": 1.6415994794947922e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": true,
+            "azimuth_single_valued_geometric_condition": true,
+            "vertex_count": 4,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.8661453000746535,
+            "max_wall_height_h": 1.8662293531726617,
+            "min_top_y_h": 0.8661453000746535,
+            "max_top_y_h": 0.8662293531726617,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 2.4224673154926317,
+              "min_edge_arc_rad": 0.9002537522760857,
+              "min_edge_antipodal_margin_rad": 1.1053053154097374
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 2.4734874598001637,
+              "min_edge_arc_rad": 0.8867093539127441,
+              "min_edge_antipodal_margin_rad": 1.1613257264522798
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 4.494518336906757,
+            "length_roundoff_h": 6.387094710059325e-14,
+            "area_roundoff_h2": 1.6415994794947922e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 3.551283628644753e-14,
+            "positive_height_roundoff_h": 1.4210854715202004e-14
+          }
+        },
+        "metrics": {
+          "iou": 0.8490087779086023,
+          "C": 0.08781364268473361,
+          "omission": 0.12347671302809524,
+          "extension": 0.03240780281574937,
+          "area_h2": 10.498981131417949,
+          "reference_area_h2": 11.550909908770683,
+          "intersection_area_h2": 10.124641520752023,
+          "centroid_dx_h": 0.29729709873583665,
+          "centroid_dz_h": -0.026195907589184747,
+          "iou_2d": 0.8490087779086023,
+          "traditional_metric_version": "traditional_geometry_iou_v1.1.0",
+          "traditional_status": "available",
+          "iou2d_bev": 0.8490087779086025,
+          "hohonet_iou3d_vertex_mean": 0.8455156286718909,
+          "conditional_iou3d_perimeter_mean": 0.8445226374463097,
+          "height_vertex_mean_h": 1.8749359763224374,
+          "reference_height_vertex_mean_h": 1.866178700098948,
+          "height_perimeter_mean_h": 1.8774386148692617,
+          "reference_height_perimeter_mean_h": 1.8661786996704768,
+          "hohonet_height_pred_at_camera1p6": 2.9998975621159,
+          "hohonet_height_ref_at_camera1p6": 2.985885920158317,
+          "area_pred_h2": 10.498981131417949,
+          "area_ref_h2": 11.55090990877068,
+          "traditional_reason_codes": [],
+          "hohonet_complete_pipeline_run": false,
+          "iou_3d_corner_mean": 0.8455156286718909,
+          "iou_3d_perimeter_mean": 0.8445226374463097,
+          "height_mean_h": 1.8774386148692617,
+          "height_internal_rms_h": 0.06289074315698136,
+          "height_internal_relative_rms": 0.03349816215501717,
+          "flat": 1.4289815125082566,
+          "flat_top_fitted_height_h": 1.8738935327822708,
+          "dir": 5.661772386651288,
+          "axis_deg": 89.84876163209536,
+          "max_depth_sensitivity_h_per_Cpx": 0.052741183540953446,
+          "bottom_horizon_margin_deg": 19.94310677781878,
+          "S_top_deg": 0.833867374616178,
+          "S_bottom_deg": 1.3092660818052495,
+          "Hmean": 0.006033674696197702,
+          "Hlocal": 0.03439369895625792,
+          "Hstar": 0.03439369895625792,
+          "height_mean_relative_error": 0.006033674696197702,
+          "height_local_relative_rms": 0.03439369895625792,
+          "height_guard_relative_error": 0.03439369895625792,
+          "quality_score": 73.30484542283953,
+          "range_ceiling_points": 84.90087779086024,
+          "boundary_rms_deg": 1.0976138827964383,
+          "height_error_used": 0.03439369895625792,
+          "boundary_factor": 0.9299753963844563,
+          "reference_factor": 0.9259010887635681,
+          "direction_bounded_loss": 0.5618314269542714,
+          "flatness_bounded_loss": 0.3379662634171628,
+          "intrinsic_factor": 0.9325151732221424,
+          "range_deduction_points": 15.099122209139765,
+          "boundary_deduction_points": 5.945150313916713,
+          "height_deduction_points": 0.34591229340338714,
+          "intrinsic_deduction_points": 5.304969760700601,
+          "mean_height_only_score_same_parameters": 73.61744432553314,
+          "score_v1_recomputed": 73.61744432553314,
+          "U": 0.8418825441217956,
+          "B": 1.3180333539307905,
+          "T": 0.1492614486422819,
+          "F": 0.13236435410058628
+        },
+        "metric_availability": {
+          "iou_2d": "available",
+          "iou_3d_corner_mean": "available",
+          "iou_3d_perimeter_mean": "available",
+          "complete_quality": "available"
+        },
+        "parameters": {
+          "boundary_half_deg": 4.0,
+          "direction_half_deg": 5.0,
+          "flatness_half_deg": 2.0,
+          "intrinsic_max_discount": 0.15,
+          "height_relative_half": 0.5
+        },
+        "numerical_settings": {
+          "spherical_samples": 2048,
+          "height_samples": 4096
+        },
+        "geometry_digest_status": {
+          "annotation": "available",
+          "reference": "available"
+        },
+        "traditional_issues": [],
+        "height_diagnostics": {
+          "annotation_height_mean_h": 1.8774386148692617,
+          "reference_height_mean_h": 1.8661786996704768,
+          "annotation_height_std_h": 0.06289074315698136,
+          "reference_height_std_h": 2.4560409686801328e-05,
+          "annotation_height_min_h": 1.750427252147238,
+          "annotation_height_max_h": 1.9978636350742112,
+          "direct_rms_about_gt_mean_check": 0.034236151161693845,
+          "height_nearest_samples_per_direction": 4096,
+          "nearest_AG_tied_height_fraction": 0.0,
+          "nearest_GA_tied_height_fraction": 0.0,
+          "nearest_AG_tied_height_range_h": 0.0,
+          "nearest_GA_tied_height_range_h": 0.0,
+          "nearest_footprint_tie_rule": "max"
+        },
+        "auxiliary_issues": [],
+        "issues": []
+      },
+      "independent_shapely_area": {
+        "symmetric_difference": 0.15588451584384447,
+        "excess": 0.03240780281574933,
+        "missing": 0.12347671302809514,
+        "iou_2d_independent": 0.8490087779086025,
+        "annotation_area_h2": 10.498981131417949,
+        "GT_area_h2": 11.55090990877068
+      }
+    }
+  },
+  "a7ba8b4e746e9e775405": {
+    "old": {
+      "geometry": {
+        "id": "a7ba8b4e746e9e775405",
+        "points": [
+          [
+            166.97657657657658,
+            206.64504504504504
+          ],
+          [
+            166.97657657657658,
+            304.43243243243245
+          ],
+          [
+            328.87927927927933,
+            205.72252252252252
+          ],
+          [
+            328.87927927927933,
+            316.42522522522523
+          ],
+          [
+            359.3225225225225,
+            157.75135135135136
+          ],
+          [
+            359.3225225225225,
+            356.0936936936937
+          ],
+          [
+            375.92792792792795,
+            175.27927927927928
+          ],
+          [
+            375.92792792792795,
+            338.5657657657658
+          ],
+          [
+            617.6288288288288,
+            159.5963963963964
+          ],
+          [
+            617.6288288288288,
+            358.86126126126123
+          ],
+          [
+            627.3153153153153,
+            142.99099099099098
+          ],
+          [
+            627.3153153153153,
+            365.31891891891894
+          ],
+          [
+            685.4342342342343,
+            195.57477477477477
+          ],
+          [
+            685.4342342342343,
+            321.96036036036037
+          ],
+          [
+            870.8612612612612,
+            203.87747747747747
+          ],
+          [
+            870.8612612612612,
+            316.42522522522523
+          ]
+        ],
+        "sourcePointIndices": [
+          0,
+          1,
+          2,
+          3,
+          6,
+          7,
+          4,
+          5,
+          11,
+          10,
+          8,
+          9,
+          12,
+          13,
+          14,
+          15
+        ],
+        "sourcePairIndices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "bottom3d": [
+          [
+            -2.7901810271938383,
+            -1.0,
+            1.6962763897243687
+          ],
+          [
+            -2.31944873831534,
+            -1.0,
+            -1.1123700419328202
+          ],
+          [
+            -1.1425774104772006,
+            -1.0,
+            -0.8400535928696053
+          ],
+          [
+            -1.3357604831684033,
+            -1.0,
+            -1.2095872027766348
+          ],
+          [
+            0.8259912939166754,
+            -1.0,
+            -1.0907653225787108
+          ],
+          [
+            0.8191252083775172,
+            -1.0,
+            -0.9576994003423628
+          ],
+          [
+            2.041170441899234,
+            -1.0,
+            -1.1326982638817125
+          ],
+          [
+            2.07682252194343,
+            -1.0,
+            1.5178991311054817
+          ]
+        ],
+        "top3d": [
+          [
+            -2.7901810271938383,
+            1.0202524034034108,
+            1.6962763897243687
+          ],
+          [
+            -2.31944873831534,
+            0.8197524139331747,
+            -1.1123700419328202
+          ],
+          [
+            -1.1425774104772006,
+            0.9761513875728052,
+            -0.8400535928696053
+          ],
+          [
+            -1.3357604831684033,
+            0.9734820939259619,
+            -1.2095872027766348
+          ],
+          [
+            0.8259912939166754,
+            0.9191257995735891,
+            -1.0907653225787108
+          ],
+          [
+            0.8191252083775172,
+            1.0473598267774904,
+            -0.9576994003423628
+          ],
+          [
+            2.041170441899234,
+            0.9074781716306275,
+            -1.1326982638817125
+          ],
+          [
+            2.07682252194343,
+            0.8519495902638748,
+            1.5178991311054817
+          ]
+        ]
+      },
+      "result": {
+        "algorithm_version": "geom_quality_research_v1.1.0",
+        "status": "available",
+        "quality_score": 77.46264328565172,
+        "reason_codes": [],
+        "failure_classes": [],
+        "annotation_geometry_sha256": "7de1e3c471b39999d5814ee2093c1ece80883bb9a6e60a508ec6c2cb1e76ea3e",
+        "reference_geometry_sha256": "1f225933a3f181aa040793a092457301656adf764a043e249037d056f52f9437",
+        "target_applicability": "conditional_geometry",
+        "annotation_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "annotation",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 8,
+            "area_h2": 12.384944549897435,
+            "signed_area_h2": 12.384944549897435,
+            "perimeter_h": 15.52664795684326,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": true,
+              "azimuth_single_valued_geometric_condition": true
+            },
+            "tolerances": {
+              "coordinate_scale_h": 4.8670035491372685,
+              "length_roundoff_h": 6.916428033516224e-14,
+              "area_roundoff_h2": 6.123427729253587e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": true,
+            "azimuth_single_valued_geometric_condition": true,
+            "vertex_count": 8,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.8197524139331747,
+            "max_wall_height_h": 2.04735982677749,
+            "min_top_y_h": 0.8197524139331747,
+            "max_top_y_h": 1.0473598267774904,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 1.638632617508576,
+              "min_edge_arc_rad": 0.11242919855259219,
+              "min_edge_antipodal_margin_rad": 1.3144201033313343
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 1.6087741446255384,
+              "min_edge_arc_rad": 0.061680590155213155,
+              "min_edge_antipodal_margin_rad": 1.3330320108363303
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 4.8670035491372685,
+            "length_roundoff_h": 6.916428033516224e-14,
+            "area_roundoff_h2": 6.123427729253587e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 3.965085720656473e-14,
+            "positive_height_roundoff_h": 1.4883878332874053e-14
+          }
+        },
+        "reference_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "reference",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 4,
+            "area_h2": 11.55090990877068,
+            "signed_area_h2": 11.55090990877068,
+            "perimeter_h": 14.128840575818991,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": true,
+              "azimuth_single_valued_geometric_condition": true
+            },
+            "tolerances": {
+              "coordinate_scale_h": 4.494518336906757,
+              "length_roundoff_h": 6.387094710059325e-14,
+              "area_roundoff_h2": 1.6415994794947922e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": true,
+            "azimuth_single_valued_geometric_condition": true,
+            "vertex_count": 4,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.8661453000746535,
+            "max_wall_height_h": 1.8662293531726617,
+            "min_top_y_h": 0.8661453000746535,
+            "max_top_y_h": 0.8662293531726617,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 2.4224673154926317,
+              "min_edge_arc_rad": 0.9002537522760857,
+              "min_edge_antipodal_margin_rad": 1.1053053154097374
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 2.4734874598001637,
+              "min_edge_arc_rad": 0.8867093539127441,
+              "min_edge_antipodal_margin_rad": 1.1613257264522798
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 4.494518336906757,
+            "length_roundoff_h": 6.387094710059325e-14,
+            "area_roundoff_h2": 1.6415994794947922e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 3.551283628644753e-14,
+            "positive_height_roundoff_h": 1.4210854715202004e-14
+          }
+        },
+        "metrics": {
+          "iou": 0.8981326872955927,
+          "C": 0.020616805136169147,
+          "omission": 0.019502087313439442,
+          "extension": 0.09170719043639483,
+          "area_h2": 12.384944549897437,
+          "reference_area_h2": 11.550909908770683,
+          "intersection_area_h2": 11.325643055180164,
+          "centroid_dx_h": -0.01990637937590034,
+          "centroid_dz_h": 0.0671824454247062,
+          "iou_2d": 0.8981326872955927,
+          "traditional_metric_version": "traditional_geometry_iou_v1.1.0",
+          "traditional_status": "available",
+          "iou2d_bev": 0.8981326872955927,
+          "hohonet_iou3d_vertex_mean": 0.8647880313200692,
+          "conditional_iou3d_perimeter_mean": 0.8704065849208997,
+          "height_vertex_mean_h": 1.9394439608851168,
+          "reference_height_vertex_mean_h": 1.866178700098948,
+          "height_perimeter_mean_h": 1.9267055651421057,
+          "reference_height_perimeter_mean_h": 1.8661786996704768,
+          "hohonet_height_pred_at_camera1p6": 3.103110337416187,
+          "hohonet_height_ref_at_camera1p6": 2.985885920158317,
+          "area_pred_h2": 12.384944549897435,
+          "area_ref_h2": 11.55090990877068,
+          "traditional_reason_codes": [],
+          "hohonet_complete_pipeline_run": false,
+          "iou_3d_corner_mean": 0.8647880313200692,
+          "iou_3d_perimeter_mean": 0.8704065849208997,
+          "height_mean_h": 1.9267055651421057,
+          "height_internal_rms_h": 0.050576335786555425,
+          "height_internal_relative_rms": 0.02625016333662021,
+          "flat": 1.1111608005988198,
+          "flat_top_fitted_height_h": 1.9289184814834721,
+          "dir": 7.576001414597318,
+          "axis_deg": 1.0436093817777963,
+          "max_depth_sensitivity_h_per_Cpx": 0.07155998135740278,
+          "bottom_horizon_margin_deg": 17.027027027027035,
+          "S_top_deg": 0.8232705318644686,
+          "S_bottom_deg": 1.2723514971892675,
+          "Hmean": 0.03243358499500423,
+          "Hlocal": 0.04057478332955089,
+          "Hstar": 0.04057478332955089,
+          "height_mean_relative_error": 0.03243358499500423,
+          "height_local_relative_rms": 0.04057478332955089,
+          "height_guard_relative_error": 0.04057478332955089,
+          "quality_score": 77.46264328565172,
+          "range_ceiling_points": 89.81326872955927,
+          "boundary_rms_deg": 1.0715999022574085,
+          "height_error_used": 0.04057478332955089,
+          "boundary_factor": 0.9330356603294178,
+          "reference_factor": 0.9273378415150368,
+          "direction_bounded_loss": 0.6965864670460749,
+          "flatness_bounded_loss": 0.23586517607794985,
+          "intrinsic_factor": 0.9300661267656981,
+          "range_deduction_points": 10.186731270440731,
+          "boundary_deduction_points": 6.0142862341314896,
+          "height_deduction_points": 0.5117397323483317,
+          "intrinsic_deduction_points": 5.824599477427725,
+          "mean_height_only_score_same_parameters": 77.63380626228286,
+          "score_v1_recomputed": 77.63380626228286,
+          "U": 0.8662789008191022,
+          "B": 1.377551249884014,
+          "T": 0.11195023439210615,
+          "F": 0.08792839168094357
+        },
+        "metric_availability": {
+          "iou_2d": "available",
+          "iou_3d_corner_mean": "available",
+          "iou_3d_perimeter_mean": "available",
+          "complete_quality": "available"
+        },
+        "parameters": {
+          "boundary_half_deg": 4.0,
+          "direction_half_deg": 5.0,
+          "flatness_half_deg": 2.0,
+          "intrinsic_max_discount": 0.15,
+          "height_relative_half": 0.5
+        },
+        "numerical_settings": {
+          "spherical_samples": 2048,
+          "height_samples": 4096
+        },
+        "geometry_digest_status": {
+          "annotation": "available",
+          "reference": "available"
+        },
+        "traditional_issues": [],
+        "height_diagnostics": {
+          "annotation_height_mean_h": 1.9267055651421057,
+          "reference_height_mean_h": 1.8661786996704768,
+          "annotation_height_std_h": 0.050576335786555425,
+          "reference_height_std_h": 2.4560409686801328e-05,
+          "annotation_height_min_h": 1.8197524139331747,
+          "annotation_height_max_h": 2.04735982677749,
+          "direct_rms_about_gt_mean_check": 0.04226619761768685,
+          "height_nearest_samples_per_direction": 4096,
+          "nearest_AG_tied_height_fraction": 0.0,
+          "nearest_GA_tied_height_fraction": 0.0,
+          "nearest_AG_tied_height_range_h": 0.0,
+          "nearest_GA_tied_height_range_h": 0.0,
+          "nearest_footprint_tie_rule": "max"
+        },
+        "auxiliary_issues": [],
+        "issues": []
+      },
+      "independent_shapely_area": {
+        "symmetric_difference": 0.1112092777498338,
+        "excess": 0.09170719043639453,
+        "missing": 0.019502087313439248,
+        "iou_2d_independent": 0.8981326872955928,
+        "annotation_area_h2": 12.384944549897437,
+        "GT_area_h2": 11.55090990877068
+      }
+    },
+    "new": {
+      "geometry": {
+        "id": "a7ba8b4e746e9e775405",
+        "points": [
+          [
+            166.97657657657658,
+            206.64504504504504
+          ],
+          [
+            166.97657657657658,
+            304.43243243243245
+          ],
+          [
+            328.87927927927933,
+            205.72252252252252
+          ],
+          [
+            328.87927927927933,
+            316.42522522522523
+          ],
+          [
+            375.92792792792795,
+            175.27927927927928
+          ],
+          [
+            375.92792792792795,
+            338.5657657657658
+          ],
+          [
+            359.3225225225225,
+            157.75135135135136
+          ],
+          [
+            359.3225225225225,
+            356.0936936936937
+          ],
+          [
+            627.3153153153153,
+            142.99099099099098
+          ],
+          [
+            627.3153153153153,
+            365.31891891891894
+          ],
+          [
+            617.6288288288288,
+            159.5963963963964
+          ],
+          [
+            617.6288288288288,
+            358.86126126126123
+          ],
+          [
+            685.4342342342343,
+            195.57477477477477
+          ],
+          [
+            685.4342342342343,
+            321.96036036036037
+          ],
+          [
+            870.8612612612612,
+            203.87747747747747
+          ],
+          [
+            870.8612612612612,
+            316.42522522522523
+          ]
+        ],
+        "sourcePointIndices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          11,
+          10,
+          12,
+          13,
+          14,
+          15
+        ],
+        "sourcePairIndices": [
+          0,
+          1,
+          3,
+          2,
+          5,
+          4,
+          6,
+          7
+        ],
+        "bottom3d": [
+          [
+            -2.7901810271938383,
+            -1.0,
+            1.6962763897243687
+          ],
+          [
+            -2.31944873831534,
+            -1.0,
+            -1.1123700419328202
+          ],
+          [
+            -1.3357604831684033,
+            -1.0,
+            -1.2095872027766348
+          ],
+          [
+            -1.1425774104772006,
+            -1.0,
+            -0.8400535928696053
+          ],
+          [
+            0.8191252083775172,
+            -1.0,
+            -0.9576994003423628
+          ],
+          [
+            0.8259912939166754,
+            -1.0,
+            -1.0907653225787108
+          ],
+          [
+            2.041170441899234,
+            -1.0,
+            -1.1326982638817125
+          ],
+          [
+            2.07682252194343,
+            -1.0,
+            1.5178991311054817
+          ]
+        ],
+        "top3d": [
+          [
+            -2.7901810271938383,
+            1.0202524034034108,
+            1.6962763897243687
+          ],
+          [
+            -2.31944873831534,
+            0.8197524139331747,
+            -1.1123700419328202
+          ],
+          [
+            -1.3357604831684033,
+            0.9734820939259619,
+            -1.2095872027766348
+          ],
+          [
+            -1.1425774104772006,
+            0.9761513875728052,
+            -0.8400535928696053
+          ],
+          [
+            0.8191252083775172,
+            1.0473598267774904,
+            -0.9576994003423628
+          ],
+          [
+            0.8259912939166754,
+            0.9191257995735891,
+            -1.0907653225787108
+          ],
+          [
+            2.041170441899234,
+            0.9074781716306275,
+            -1.1326982638817125
+          ],
+          [
+            2.07682252194343,
+            0.8519495902638748,
+            1.5178991311054817
+          ]
+        ]
+      },
+      "result": {
+        "algorithm_version": "geom_quality_research_v1.1.0",
+        "status": "available",
+        "quality_score": 65.96852586502902,
+        "reason_codes": [],
+        "failure_classes": [],
+        "annotation_geometry_sha256": "59ebbcaa755e16444f94267b71db48f5f02e0a952a7dd1b8225250af8345a2b1",
+        "reference_geometry_sha256": "1f225933a3f181aa040793a092457301656adf764a043e249037d056f52f9437",
+        "target_applicability": "conditional_geometry",
+        "annotation_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "annotation",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [
+            {
+              "code": "non_star_shaped_about_camera",
+              "message": "地面环关于相机不是星形；完整球面边界仍可计算，逐方位单值 U/B 不适用。"
+            }
+          ],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 8,
+            "area_h2": 12.13873656824792,
+            "signed_area_h2": 12.13873656824792,
+            "perimeter_h": 15.088765271413621,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": false,
+              "azimuth_single_valued_geometric_condition": false
+            },
+            "tolerances": {
+              "coordinate_scale_h": 4.8670035491372685,
+              "length_roundoff_h": 6.916428033516224e-14,
+              "area_roundoff_h2": 6.070786331634813e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": false,
+            "azimuth_single_valued_geometric_condition": false,
+            "vertex_count": 8,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.8197524139331747,
+            "max_wall_height_h": 2.04735982677749,
+            "min_top_y_h": 0.8197524139331747,
+            "max_top_y_h": 1.0473598267774904,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 1.638632617508576,
+              "min_edge_arc_rad": 0.11242919855259219,
+              "min_edge_antipodal_margin_rad": 1.3144201033313343
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 1.6087741446255384,
+              "min_edge_arc_rad": 0.061680590155213155,
+              "min_edge_antipodal_margin_rad": 1.3330320108363303
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 4.8670035491372685,
+            "length_roundoff_h": 6.916428033516224e-14,
+            "area_roundoff_h2": 6.070786331634813e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 3.965085720656473e-14,
+            "positive_height_roundoff_h": 1.4883878332874053e-14
+          }
+        },
+        "reference_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "reference",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 4,
+            "area_h2": 11.55090990877068,
+            "signed_area_h2": 11.55090990877068,
+            "perimeter_h": 14.128840575818991,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": true,
+              "azimuth_single_valued_geometric_condition": true
+            },
+            "tolerances": {
+              "coordinate_scale_h": 4.494518336906757,
+              "length_roundoff_h": 6.387094710059325e-14,
+              "area_roundoff_h2": 1.6415994794947922e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": true,
+            "azimuth_single_valued_geometric_condition": true,
+            "vertex_count": 4,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.8661453000746535,
+            "max_wall_height_h": 1.8662293531726617,
+            "min_top_y_h": 0.8661453000746535,
+            "max_top_y_h": 0.8662293531726617,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 2.4224673154926317,
+              "min_edge_arc_rad": 0.9002537522760857,
+              "min_edge_antipodal_margin_rad": 1.1053053154097374
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 2.4734874598001637,
+              "min_edge_arc_rad": 0.8867093539127441,
+              "min_edge_antipodal_margin_rad": 1.1613257264522798
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 4.494518336906757,
+            "length_roundoff_h": 6.387094710059325e-14,
+            "area_roundoff_h2": 1.6415994794947922e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 3.551283628644753e-14,
+            "positive_height_roundoff_h": 1.4210854715202004e-14
+          }
+        },
+        "metrics": {
+          "iou": 0.8849491502371492,
+          "C": 0.028496777469669436,
+          "omission": 0.03714462114491372,
+          "extension": 0.08803469509752038,
+          "area_h2": 12.13873656824792,
+          "reference_area_h2": 11.550909908770683,
+          "intersection_area_h2": 11.121855736330366,
+          "centroid_dx_h": -0.026622642807770824,
+          "centroid_dz_h": 0.09312002933473856,
+          "iou_2d": 0.8849491502371492,
+          "traditional_metric_version": "traditional_geometry_iou_v1.1.0",
+          "traditional_status": "available",
+          "iou2d_bev": 0.8849491502371494,
+          "hohonet_iou3d_vertex_mean": 0.8526185193902279,
+          "conditional_iou3d_perimeter_mean": 0.8566216843258964,
+          "height_vertex_mean_h": 1.9394439608851168,
+          "reference_height_vertex_mean_h": 1.866178700098948,
+          "height_perimeter_mean_h": 1.9300722975604092,
+          "reference_height_perimeter_mean_h": 1.8661786996704768,
+          "hohonet_height_pred_at_camera1p6": 3.103110337416187,
+          "hohonet_height_ref_at_camera1p6": 2.985885920158317,
+          "area_pred_h2": 12.13873656824792,
+          "area_ref_h2": 11.55090990877068,
+          "traditional_reason_codes": [],
+          "hohonet_complete_pipeline_run": false,
+          "iou_3d_corner_mean": 0.8526185193902279,
+          "iou_3d_perimeter_mean": 0.8566216843258964,
+          "height_mean_h": 1.9300722975604092,
+          "height_internal_rms_h": 0.05619689379364493,
+          "height_internal_relative_rms": 0.029116470851727784,
+          "flat": 1.3178987539775378,
+          "flat_top_fitted_height_h": 1.9361585077342034,
+          "dir": 6.568300778195406,
+          "axis_deg": 89.27020005135586,
+          "max_depth_sensitivity_h_per_Cpx": 0.07155998135740278,
+          "bottom_horizon_margin_deg": 17.027027027027035,
+          "S_top_deg": 2.131357944905957,
+          "S_bottom_deg": 1.7665116913691186,
+          "Hmean": 0.034237663253371464,
+          "Hlocal": 0.04426151314650004,
+          "Hstar": 0.04426151314650004,
+          "height_mean_relative_error": 0.034237663253371464,
+          "height_local_relative_rms": 0.04426151314650004,
+          "height_guard_relative_error": 0.04426151314650004,
+          "quality_score": 65.96852586502902,
+          "range_ceiling_points": 88.49491502371491,
+          "boundary_rms_deg": 1.9574537344542178,
+          "height_error_used": 0.04426151314650004,
+          "boundary_factor": 0.8067921766947868,
+          "reference_factor": 0.8017234512146946,
+          "direction_bounded_loss": 0.6331221712915804,
+          "flatness_bounded_loss": 0.3027541191402526,
+          "intrinsic_factor": 0.9298092782176125,
+          "range_deduction_points": 11.50508497628509,
+          "boundary_deduction_points": 17.097909905311766,
+          "height_deduction_points": 0.4485564306393002,
+          "intrinsic_deduction_points": 4.979922822734821,
+          "mean_height_only_score_same_parameters": 66.1354112449685,
+          "score_v1_recomputed": 66.1354112449685,
+          "U": null,
+          "B": null,
+          "T": 0.12261328503112005,
+          "F": 0.09983200451861007
+        },
+        "metric_availability": {
+          "iou_2d": "available",
+          "iou_3d_corner_mean": "available",
+          "iou_3d_perimeter_mean": "available",
+          "complete_quality": "available"
+        },
+        "parameters": {
+          "boundary_half_deg": 4.0,
+          "direction_half_deg": 5.0,
+          "flatness_half_deg": 2.0,
+          "intrinsic_max_discount": 0.15,
+          "height_relative_half": 0.5
+        },
+        "numerical_settings": {
+          "spherical_samples": 2048,
+          "height_samples": 4096
+        },
+        "geometry_digest_status": {
+          "annotation": "available",
+          "reference": "available"
+        },
+        "traditional_issues": [],
+        "height_diagnostics": {
+          "annotation_height_mean_h": 1.9300722975604092,
+          "reference_height_mean_h": 1.8661786996704768,
+          "annotation_height_std_h": 0.05619689379364493,
+          "reference_height_std_h": 2.4560409686801328e-05,
+          "annotation_height_min_h": 1.8197524139331747,
+          "annotation_height_max_h": 2.04735982677749,
+          "direct_rms_about_gt_mean_check": 0.04559639766475194,
+          "height_nearest_samples_per_direction": 4096,
+          "nearest_AG_tied_height_fraction": 0.0,
+          "nearest_GA_tied_height_fraction": 0.0,
+          "nearest_AG_tied_height_range_h": 0.0,
+          "nearest_GA_tied_height_range_h": 0.0,
+          "nearest_footprint_tie_rule": "max"
+        },
+        "auxiliary_issues": [],
+        "issues": []
+      },
+      "independent_shapely_area": {
+        "symmetric_difference": 0.12517931624243375,
+        "excess": 0.08803469509752009,
+        "missing": 0.03714462114491367,
+        "iou_2d_independent": 0.8849491502371494,
+        "annotation_area_h2": 12.138736568247918,
+        "GT_area_h2": 11.55090990877068
+      }
+    }
+  },
+  "bc93975b4d8c2bd917fb": {
+    "old": {
+      "geometry": {
+        "id": "bc93975b4d8c2bd917fb",
+        "points": [
+          [
+            166.97657657657658,
+            206.64504504504504
+          ],
+          [
+            166.97657657657658,
+            304.43243243243245
+          ],
+          [
+            328.87927927927933,
+            205.72252252252252
+          ],
+          [
+            328.87927927927933,
+            316.42522522522523
+          ],
+          [
+            359.3225225225225,
+            157.75135135135136
+          ],
+          [
+            359.3225225225225,
+            356.0936936936937
+          ],
+          [
+            375.92792792792795,
+            175.27927927927928
+          ],
+          [
+            375.92792792792795,
+            338.5657657657658
+          ],
+          [
+            617.6288288288288,
+            159.5963963963964
+          ],
+          [
+            617.6288288288288,
+            358.86126126126123
+          ],
+          [
+            627.3153153153153,
+            142.99099099099098
+          ],
+          [
+            627.3153153153153,
+            365.31891891891894
+          ],
+          [
+            685.4342342342343,
+            195.57477477477477
+          ],
+          [
+            685.4342342342343,
+            321.96036036036037
+          ],
+          [
+            870.8612612612612,
+            203.87747747747747
+          ],
+          [
+            870.8612612612612,
+            316.42522522522523
+          ]
+        ],
+        "sourcePointIndices": [
+          0,
+          1,
+          2,
+          3,
+          6,
+          7,
+          4,
+          5,
+          11,
+          10,
+          8,
+          9,
+          12,
+          13,
+          14,
+          15
+        ],
+        "sourcePairIndices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "bottom3d": [
+          [
+            -2.7901810271938383,
+            -1.0,
+            1.6962763897243687
+          ],
+          [
+            -2.31944873831534,
+            -1.0,
+            -1.1123700419328202
+          ],
+          [
+            -1.1425774104772006,
+            -1.0,
+            -0.8400535928696053
+          ],
+          [
+            -1.3357604831684033,
+            -1.0,
+            -1.2095872027766348
+          ],
+          [
+            0.8259912939166754,
+            -1.0,
+            -1.0907653225787108
+          ],
+          [
+            0.8191252083775172,
+            -1.0,
+            -0.9576994003423628
+          ],
+          [
+            2.041170441899234,
+            -1.0,
+            -1.1326982638817125
+          ],
+          [
+            2.07682252194343,
+            -1.0,
+            1.5178991311054817
+          ]
+        ],
+        "top3d": [
+          [
+            -2.7901810271938383,
+            1.0202524034034108,
+            1.6962763897243687
+          ],
+          [
+            -2.31944873831534,
+            0.8197524139331747,
+            -1.1123700419328202
+          ],
+          [
+            -1.1425774104772006,
+            0.9761513875728052,
+            -0.8400535928696053
+          ],
+          [
+            -1.3357604831684033,
+            0.9734820939259619,
+            -1.2095872027766348
+          ],
+          [
+            0.8259912939166754,
+            0.9191257995735891,
+            -1.0907653225787108
+          ],
+          [
+            0.8191252083775172,
+            1.0473598267774904,
+            -0.9576994003423628
+          ],
+          [
+            2.041170441899234,
+            0.9074781716306275,
+            -1.1326982638817125
+          ],
+          [
+            2.07682252194343,
+            0.8519495902638748,
+            1.5178991311054817
+          ]
+        ]
+      },
+      "result": {
+        "algorithm_version": "geom_quality_research_v1.1.0",
+        "status": "available",
+        "quality_score": 77.46264328565172,
+        "reason_codes": [],
+        "failure_classes": [],
+        "annotation_geometry_sha256": "7de1e3c471b39999d5814ee2093c1ece80883bb9a6e60a508ec6c2cb1e76ea3e",
+        "reference_geometry_sha256": "1f225933a3f181aa040793a092457301656adf764a043e249037d056f52f9437",
+        "target_applicability": "conditional_geometry",
+        "annotation_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "annotation",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 8,
+            "area_h2": 12.384944549897435,
+            "signed_area_h2": 12.384944549897435,
+            "perimeter_h": 15.52664795684326,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": true,
+              "azimuth_single_valued_geometric_condition": true
+            },
+            "tolerances": {
+              "coordinate_scale_h": 4.8670035491372685,
+              "length_roundoff_h": 6.916428033516224e-14,
+              "area_roundoff_h2": 6.123427729253587e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": true,
+            "azimuth_single_valued_geometric_condition": true,
+            "vertex_count": 8,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.8197524139331747,
+            "max_wall_height_h": 2.04735982677749,
+            "min_top_y_h": 0.8197524139331747,
+            "max_top_y_h": 1.0473598267774904,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 1.638632617508576,
+              "min_edge_arc_rad": 0.11242919855259219,
+              "min_edge_antipodal_margin_rad": 1.3144201033313343
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 1.6087741446255384,
+              "min_edge_arc_rad": 0.061680590155213155,
+              "min_edge_antipodal_margin_rad": 1.3330320108363303
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 4.8670035491372685,
+            "length_roundoff_h": 6.916428033516224e-14,
+            "area_roundoff_h2": 6.123427729253587e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 3.965085720656473e-14,
+            "positive_height_roundoff_h": 1.4883878332874053e-14
+          }
+        },
+        "reference_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "reference",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 4,
+            "area_h2": 11.55090990877068,
+            "signed_area_h2": 11.55090990877068,
+            "perimeter_h": 14.128840575818991,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": true,
+              "azimuth_single_valued_geometric_condition": true
+            },
+            "tolerances": {
+              "coordinate_scale_h": 4.494518336906757,
+              "length_roundoff_h": 6.387094710059325e-14,
+              "area_roundoff_h2": 1.6415994794947922e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": true,
+            "azimuth_single_valued_geometric_condition": true,
+            "vertex_count": 4,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.8661453000746535,
+            "max_wall_height_h": 1.8662293531726617,
+            "min_top_y_h": 0.8661453000746535,
+            "max_top_y_h": 0.8662293531726617,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 2.4224673154926317,
+              "min_edge_arc_rad": 0.9002537522760857,
+              "min_edge_antipodal_margin_rad": 1.1053053154097374
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 2.4734874598001637,
+              "min_edge_arc_rad": 0.8867093539127441,
+              "min_edge_antipodal_margin_rad": 1.1613257264522798
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 4.494518336906757,
+            "length_roundoff_h": 6.387094710059325e-14,
+            "area_roundoff_h2": 1.6415994794947922e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 3.551283628644753e-14,
+            "positive_height_roundoff_h": 1.4210854715202004e-14
+          }
+        },
+        "metrics": {
+          "iou": 0.8981326872955927,
+          "C": 0.020616805136169147,
+          "omission": 0.019502087313439442,
+          "extension": 0.09170719043639483,
+          "area_h2": 12.384944549897437,
+          "reference_area_h2": 11.550909908770683,
+          "intersection_area_h2": 11.325643055180164,
+          "centroid_dx_h": -0.01990637937590034,
+          "centroid_dz_h": 0.0671824454247062,
+          "iou_2d": 0.8981326872955927,
+          "traditional_metric_version": "traditional_geometry_iou_v1.1.0",
+          "traditional_status": "available",
+          "iou2d_bev": 0.8981326872955927,
+          "hohonet_iou3d_vertex_mean": 0.8647880313200692,
+          "conditional_iou3d_perimeter_mean": 0.8704065849208997,
+          "height_vertex_mean_h": 1.9394439608851168,
+          "reference_height_vertex_mean_h": 1.866178700098948,
+          "height_perimeter_mean_h": 1.9267055651421057,
+          "reference_height_perimeter_mean_h": 1.8661786996704768,
+          "hohonet_height_pred_at_camera1p6": 3.103110337416187,
+          "hohonet_height_ref_at_camera1p6": 2.985885920158317,
+          "area_pred_h2": 12.384944549897435,
+          "area_ref_h2": 11.55090990877068,
+          "traditional_reason_codes": [],
+          "hohonet_complete_pipeline_run": false,
+          "iou_3d_corner_mean": 0.8647880313200692,
+          "iou_3d_perimeter_mean": 0.8704065849208997,
+          "height_mean_h": 1.9267055651421057,
+          "height_internal_rms_h": 0.050576335786555425,
+          "height_internal_relative_rms": 0.02625016333662021,
+          "flat": 1.1111608005988198,
+          "flat_top_fitted_height_h": 1.9289184814834721,
+          "dir": 7.576001414597318,
+          "axis_deg": 1.0436093817777963,
+          "max_depth_sensitivity_h_per_Cpx": 0.07155998135740278,
+          "bottom_horizon_margin_deg": 17.027027027027035,
+          "S_top_deg": 0.8232705318644686,
+          "S_bottom_deg": 1.2723514971892675,
+          "Hmean": 0.03243358499500423,
+          "Hlocal": 0.04057478332955089,
+          "Hstar": 0.04057478332955089,
+          "height_mean_relative_error": 0.03243358499500423,
+          "height_local_relative_rms": 0.04057478332955089,
+          "height_guard_relative_error": 0.04057478332955089,
+          "quality_score": 77.46264328565172,
+          "range_ceiling_points": 89.81326872955927,
+          "boundary_rms_deg": 1.0715999022574085,
+          "height_error_used": 0.04057478332955089,
+          "boundary_factor": 0.9330356603294178,
+          "reference_factor": 0.9273378415150368,
+          "direction_bounded_loss": 0.6965864670460749,
+          "flatness_bounded_loss": 0.23586517607794985,
+          "intrinsic_factor": 0.9300661267656981,
+          "range_deduction_points": 10.186731270440731,
+          "boundary_deduction_points": 6.0142862341314896,
+          "height_deduction_points": 0.5117397323483317,
+          "intrinsic_deduction_points": 5.824599477427725,
+          "mean_height_only_score_same_parameters": 77.63380626228286,
+          "score_v1_recomputed": 77.63380626228286,
+          "U": 0.8662789008191022,
+          "B": 1.377551249884014,
+          "T": 0.11195023439210615,
+          "F": 0.08792839168094357
+        },
+        "metric_availability": {
+          "iou_2d": "available",
+          "iou_3d_corner_mean": "available",
+          "iou_3d_perimeter_mean": "available",
+          "complete_quality": "available"
+        },
+        "parameters": {
+          "boundary_half_deg": 4.0,
+          "direction_half_deg": 5.0,
+          "flatness_half_deg": 2.0,
+          "intrinsic_max_discount": 0.15,
+          "height_relative_half": 0.5
+        },
+        "numerical_settings": {
+          "spherical_samples": 2048,
+          "height_samples": 4096
+        },
+        "geometry_digest_status": {
+          "annotation": "available",
+          "reference": "available"
+        },
+        "traditional_issues": [],
+        "height_diagnostics": {
+          "annotation_height_mean_h": 1.9267055651421057,
+          "reference_height_mean_h": 1.8661786996704768,
+          "annotation_height_std_h": 0.050576335786555425,
+          "reference_height_std_h": 2.4560409686801328e-05,
+          "annotation_height_min_h": 1.8197524139331747,
+          "annotation_height_max_h": 2.04735982677749,
+          "direct_rms_about_gt_mean_check": 0.04226619761768685,
+          "height_nearest_samples_per_direction": 4096,
+          "nearest_AG_tied_height_fraction": 0.0,
+          "nearest_GA_tied_height_fraction": 0.0,
+          "nearest_AG_tied_height_range_h": 0.0,
+          "nearest_GA_tied_height_range_h": 0.0,
+          "nearest_footprint_tie_rule": "max"
+        },
+        "auxiliary_issues": [],
+        "issues": []
+      },
+      "independent_shapely_area": {
+        "symmetric_difference": 0.1112092777498338,
+        "excess": 0.09170719043639453,
+        "missing": 0.019502087313439248,
+        "iou_2d_independent": 0.8981326872955928,
+        "annotation_area_h2": 12.384944549897437,
+        "GT_area_h2": 11.55090990877068
+      }
+    },
+    "new": {
+      "geometry": {
+        "id": "bc93975b4d8c2bd917fb",
+        "points": [
+          [
+            166.97657657657658,
+            206.64504504504504
+          ],
+          [
+            166.97657657657658,
+            304.43243243243245
+          ],
+          [
+            328.87927927927933,
+            205.72252252252252
+          ],
+          [
+            328.87927927927933,
+            316.42522522522523
+          ],
+          [
+            375.92792792792795,
+            175.27927927927928
+          ],
+          [
+            375.92792792792795,
+            338.5657657657658
+          ],
+          [
+            359.3225225225225,
+            157.75135135135136
+          ],
+          [
+            359.3225225225225,
+            356.0936936936937
+          ],
+          [
+            627.3153153153153,
+            142.99099099099098
+          ],
+          [
+            627.3153153153153,
+            365.31891891891894
+          ],
+          [
+            617.6288288288288,
+            159.5963963963964
+          ],
+          [
+            617.6288288288288,
+            358.86126126126123
+          ],
+          [
+            685.4342342342343,
+            195.57477477477477
+          ],
+          [
+            685.4342342342343,
+            321.96036036036037
+          ],
+          [
+            870.8612612612612,
+            203.87747747747747
+          ],
+          [
+            870.8612612612612,
+            316.42522522522523
+          ]
+        ],
+        "sourcePointIndices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          11,
+          10,
+          12,
+          13,
+          14,
+          15
+        ],
+        "sourcePairIndices": [
+          0,
+          1,
+          3,
+          2,
+          5,
+          4,
+          6,
+          7
+        ],
+        "bottom3d": [
+          [
+            -2.7901810271938383,
+            -1.0,
+            1.6962763897243687
+          ],
+          [
+            -2.31944873831534,
+            -1.0,
+            -1.1123700419328202
+          ],
+          [
+            -1.3357604831684033,
+            -1.0,
+            -1.2095872027766348
+          ],
+          [
+            -1.1425774104772006,
+            -1.0,
+            -0.8400535928696053
+          ],
+          [
+            0.8191252083775172,
+            -1.0,
+            -0.9576994003423628
+          ],
+          [
+            0.8259912939166754,
+            -1.0,
+            -1.0907653225787108
+          ],
+          [
+            2.041170441899234,
+            -1.0,
+            -1.1326982638817125
+          ],
+          [
+            2.07682252194343,
+            -1.0,
+            1.5178991311054817
+          ]
+        ],
+        "top3d": [
+          [
+            -2.7901810271938383,
+            1.0202524034034108,
+            1.6962763897243687
+          ],
+          [
+            -2.31944873831534,
+            0.8197524139331747,
+            -1.1123700419328202
+          ],
+          [
+            -1.3357604831684033,
+            0.9734820939259619,
+            -1.2095872027766348
+          ],
+          [
+            -1.1425774104772006,
+            0.9761513875728052,
+            -0.8400535928696053
+          ],
+          [
+            0.8191252083775172,
+            1.0473598267774904,
+            -0.9576994003423628
+          ],
+          [
+            0.8259912939166754,
+            0.9191257995735891,
+            -1.0907653225787108
+          ],
+          [
+            2.041170441899234,
+            0.9074781716306275,
+            -1.1326982638817125
+          ],
+          [
+            2.07682252194343,
+            0.8519495902638748,
+            1.5178991311054817
+          ]
+        ]
+      },
+      "result": {
+        "algorithm_version": "geom_quality_research_v1.1.0",
+        "status": "available",
+        "quality_score": 65.96852586502902,
+        "reason_codes": [],
+        "failure_classes": [],
+        "annotation_geometry_sha256": "59ebbcaa755e16444f94267b71db48f5f02e0a952a7dd1b8225250af8345a2b1",
+        "reference_geometry_sha256": "1f225933a3f181aa040793a092457301656adf764a043e249037d056f52f9437",
+        "target_applicability": "conditional_geometry",
+        "annotation_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "annotation",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [
+            {
+              "code": "non_star_shaped_about_camera",
+              "message": "地面环关于相机不是星形；完整球面边界仍可计算，逐方位单值 U/B 不适用。"
+            }
+          ],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 8,
+            "area_h2": 12.13873656824792,
+            "signed_area_h2": 12.13873656824792,
+            "perimeter_h": 15.088765271413621,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": false,
+              "azimuth_single_valued_geometric_condition": false
+            },
+            "tolerances": {
+              "coordinate_scale_h": 4.8670035491372685,
+              "length_roundoff_h": 6.916428033516224e-14,
+              "area_roundoff_h2": 6.070786331634813e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": false,
+            "azimuth_single_valued_geometric_condition": false,
+            "vertex_count": 8,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.8197524139331747,
+            "max_wall_height_h": 2.04735982677749,
+            "min_top_y_h": 0.8197524139331747,
+            "max_top_y_h": 1.0473598267774904,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 1.638632617508576,
+              "min_edge_arc_rad": 0.11242919855259219,
+              "min_edge_antipodal_margin_rad": 1.3144201033313343
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 1.6087741446255384,
+              "min_edge_arc_rad": 0.061680590155213155,
+              "min_edge_antipodal_margin_rad": 1.3330320108363303
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 4.8670035491372685,
+            "length_roundoff_h": 6.916428033516224e-14,
+            "area_roundoff_h2": 6.070786331634813e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 3.965085720656473e-14,
+            "positive_height_roundoff_h": 1.4883878332874053e-14
+          }
+        },
+        "reference_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "reference",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 4,
+            "area_h2": 11.55090990877068,
+            "signed_area_h2": 11.55090990877068,
+            "perimeter_h": 14.128840575818991,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": true,
+              "azimuth_single_valued_geometric_condition": true
+            },
+            "tolerances": {
+              "coordinate_scale_h": 4.494518336906757,
+              "length_roundoff_h": 6.387094710059325e-14,
+              "area_roundoff_h2": 1.6415994794947922e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": true,
+            "azimuth_single_valued_geometric_condition": true,
+            "vertex_count": 4,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.8661453000746535,
+            "max_wall_height_h": 1.8662293531726617,
+            "min_top_y_h": 0.8661453000746535,
+            "max_top_y_h": 0.8662293531726617,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 2.4224673154926317,
+              "min_edge_arc_rad": 0.9002537522760857,
+              "min_edge_antipodal_margin_rad": 1.1053053154097374
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 2.4734874598001637,
+              "min_edge_arc_rad": 0.8867093539127441,
+              "min_edge_antipodal_margin_rad": 1.1613257264522798
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 4.494518336906757,
+            "length_roundoff_h": 6.387094710059325e-14,
+            "area_roundoff_h2": 1.6415994794947922e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 3.551283628644753e-14,
+            "positive_height_roundoff_h": 1.4210854715202004e-14
+          }
+        },
+        "metrics": {
+          "iou": 0.8849491502371492,
+          "C": 0.028496777469669436,
+          "omission": 0.03714462114491372,
+          "extension": 0.08803469509752038,
+          "area_h2": 12.13873656824792,
+          "reference_area_h2": 11.550909908770683,
+          "intersection_area_h2": 11.121855736330366,
+          "centroid_dx_h": -0.026622642807770824,
+          "centroid_dz_h": 0.09312002933473856,
+          "iou_2d": 0.8849491502371492,
+          "traditional_metric_version": "traditional_geometry_iou_v1.1.0",
+          "traditional_status": "available",
+          "iou2d_bev": 0.8849491502371494,
+          "hohonet_iou3d_vertex_mean": 0.8526185193902279,
+          "conditional_iou3d_perimeter_mean": 0.8566216843258964,
+          "height_vertex_mean_h": 1.9394439608851168,
+          "reference_height_vertex_mean_h": 1.866178700098948,
+          "height_perimeter_mean_h": 1.9300722975604092,
+          "reference_height_perimeter_mean_h": 1.8661786996704768,
+          "hohonet_height_pred_at_camera1p6": 3.103110337416187,
+          "hohonet_height_ref_at_camera1p6": 2.985885920158317,
+          "area_pred_h2": 12.13873656824792,
+          "area_ref_h2": 11.55090990877068,
+          "traditional_reason_codes": [],
+          "hohonet_complete_pipeline_run": false,
+          "iou_3d_corner_mean": 0.8526185193902279,
+          "iou_3d_perimeter_mean": 0.8566216843258964,
+          "height_mean_h": 1.9300722975604092,
+          "height_internal_rms_h": 0.05619689379364493,
+          "height_internal_relative_rms": 0.029116470851727784,
+          "flat": 1.3178987539775378,
+          "flat_top_fitted_height_h": 1.9361585077342034,
+          "dir": 6.568300778195406,
+          "axis_deg": 89.27020005135586,
+          "max_depth_sensitivity_h_per_Cpx": 0.07155998135740278,
+          "bottom_horizon_margin_deg": 17.027027027027035,
+          "S_top_deg": 2.131357944905957,
+          "S_bottom_deg": 1.7665116913691186,
+          "Hmean": 0.034237663253371464,
+          "Hlocal": 0.04426151314650004,
+          "Hstar": 0.04426151314650004,
+          "height_mean_relative_error": 0.034237663253371464,
+          "height_local_relative_rms": 0.04426151314650004,
+          "height_guard_relative_error": 0.04426151314650004,
+          "quality_score": 65.96852586502902,
+          "range_ceiling_points": 88.49491502371491,
+          "boundary_rms_deg": 1.9574537344542178,
+          "height_error_used": 0.04426151314650004,
+          "boundary_factor": 0.8067921766947868,
+          "reference_factor": 0.8017234512146946,
+          "direction_bounded_loss": 0.6331221712915804,
+          "flatness_bounded_loss": 0.3027541191402526,
+          "intrinsic_factor": 0.9298092782176125,
+          "range_deduction_points": 11.50508497628509,
+          "boundary_deduction_points": 17.097909905311766,
+          "height_deduction_points": 0.4485564306393002,
+          "intrinsic_deduction_points": 4.979922822734821,
+          "mean_height_only_score_same_parameters": 66.1354112449685,
+          "score_v1_recomputed": 66.1354112449685,
+          "U": null,
+          "B": null,
+          "T": 0.12261328503112005,
+          "F": 0.09983200451861007
+        },
+        "metric_availability": {
+          "iou_2d": "available",
+          "iou_3d_corner_mean": "available",
+          "iou_3d_perimeter_mean": "available",
+          "complete_quality": "available"
+        },
+        "parameters": {
+          "boundary_half_deg": 4.0,
+          "direction_half_deg": 5.0,
+          "flatness_half_deg": 2.0,
+          "intrinsic_max_discount": 0.15,
+          "height_relative_half": 0.5
+        },
+        "numerical_settings": {
+          "spherical_samples": 2048,
+          "height_samples": 4096
+        },
+        "geometry_digest_status": {
+          "annotation": "available",
+          "reference": "available"
+        },
+        "traditional_issues": [],
+        "height_diagnostics": {
+          "annotation_height_mean_h": 1.9300722975604092,
+          "reference_height_mean_h": 1.8661786996704768,
+          "annotation_height_std_h": 0.05619689379364493,
+          "reference_height_std_h": 2.4560409686801328e-05,
+          "annotation_height_min_h": 1.8197524139331747,
+          "annotation_height_max_h": 2.04735982677749,
+          "direct_rms_about_gt_mean_check": 0.04559639766475194,
+          "height_nearest_samples_per_direction": 4096,
+          "nearest_AG_tied_height_fraction": 0.0,
+          "nearest_GA_tied_height_fraction": 0.0,
+          "nearest_AG_tied_height_range_h": 0.0,
+          "nearest_GA_tied_height_range_h": 0.0,
+          "nearest_footprint_tie_rule": "max"
+        },
+        "auxiliary_issues": [],
+        "issues": []
+      },
+      "independent_shapely_area": {
+        "symmetric_difference": 0.12517931624243375,
+        "excess": 0.08803469509752009,
+        "missing": 0.03714462114491367,
+        "iou_2d_independent": 0.8849491502371494,
+        "annotation_area_h2": 12.138736568247918,
+        "GT_area_h2": 11.55090990877068
+      }
+    }
+  },
+  "e679e2f416b6d65b3705": {
+    "old": {
+      "geometry": {
+        "id": "e679e2f416b6d65b3705",
+        "points": [
+          [
+            163.10426949381858,
+            203.97750943302665
+          ],
+          [
+            163.10426949381858,
+            323.6124152500155
+          ],
+          [
+            328.5676375241871,
+            202.75077726746596
+          ],
+          [
+            328.5676375241871,
+            317.59397549515364
+          ],
+          [
+            686.6666713674028,
+            193.5285448188258
+          ],
+          [
+            686.6666713674028,
+            324.795588031012
+          ],
+          [
+            870.6275999651305,
+            199.38460415205563
+          ],
+          [
+            870.6275999651305,
+            316.56226527163835
+          ]
+        ],
+        "sourcePointIndices": [
+          2,
+          3,
+          0,
+          1,
+          5,
+          4,
+          7,
+          6
+        ],
+        "sourcePairIndices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "bottom3d": [
+          [
+            -1.9115547987010422,
+            -1.0,
+            1.2252493789735905
+          ],
+          [
+            -2.2731642869622117,
+            -1.0,
+            -1.0848311346297226
+          ],
+          [
+            1.9549990546903444,
+            -1.0,
+            -1.0656233794763337
+          ],
+          [
+            2.0738312714987086,
+            -1.0,
+            1.5111560808583666
+          ]
+        ],
+        "top3d": [
+          [
+            -1.9115547987010422,
+            0.750427252147238,
+            1.2252493789735905
+          ],
+          [
+            -2.2731642869622117,
+            0.8535531761043242,
+            -1.0848311346297226
+          ],
+          [
+            1.9549990546903444,
+            0.8978998419639755,
+            -1.0656233794763337
+          ],
+          [
+            2.0738312714987086,
+            0.9290749659063986,
+            1.5111560808583666
+          ]
+        ]
+      },
+      "result": {
+        "algorithm_version": "geom_quality_research_v1.1.0",
+        "status": "available",
+        "quality_score": 72.98191244893108,
+        "reason_codes": [],
+        "failure_classes": [],
+        "annotation_geometry_sha256": "920f9f0cc1986c16ab845550f6174753ca841786c4989796a2cd443ea6ccce64",
+        "reference_geometry_sha256": "1f225933a3f181aa040793a092457301656adf764a043e249037d056f52f9437",
+        "target_applicability": "conditional_geometry",
+        "annotation_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "annotation",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 4,
+            "area_h2": 9.997969038690592,
+            "signed_area_h2": 9.997969038690592,
+            "perimeter_h": 13.141564830971223,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": true,
+              "azimuth_single_valued_geometric_condition": true
+            },
+            "tolerances": {
+              "coordinate_scale_h": 4.34699555846092,
+              "length_roundoff_h": 6.177452232891653e-14,
+              "area_roundoff_h2": 1.4207968545591984e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": true,
+            "azimuth_single_valued_geometric_condition": true,
+            "vertex_count": 4,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.750427252147238,
+            "max_wall_height_h": 1.9290749659063986,
+            "min_top_y_h": 0.750427252147238,
+            "max_top_y_h": 0.9290749659063986,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 2.391321569734486,
+              "min_edge_arc_rad": 0.9582218727138658,
+              "min_edge_antipodal_margin_rad": 1.164794076679152
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 2.4408143089400927,
+              "min_edge_arc_rad": 0.9306372884237508,
+              "min_edge_antipodal_margin_rad": 1.2175961222301603
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 4.34699555846092,
+            "length_roundoff_h": 6.177452232891653e-14,
+            "area_roundoff_h2": 1.4207968545591984e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 3.230360742580575e-14,
+            "positive_height_roundoff_h": 1.4210854715202004e-14
+          }
+        },
+        "reference_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "reference",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 4,
+            "area_h2": 11.55090990877068,
+            "signed_area_h2": 11.55090990877068,
+            "perimeter_h": 14.128840575818991,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": true,
+              "azimuth_single_valued_geometric_condition": true
+            },
+            "tolerances": {
+              "coordinate_scale_h": 4.494518336906757,
+              "length_roundoff_h": 6.387094710059325e-14,
+              "area_roundoff_h2": 1.6415994794947922e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": true,
+            "azimuth_single_valued_geometric_condition": true,
+            "vertex_count": 4,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.8661453000746535,
+            "max_wall_height_h": 1.8662293531726617,
+            "min_top_y_h": 0.8661453000746535,
+            "max_top_y_h": 0.8662293531726617,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 2.4224673154926317,
+              "min_edge_arc_rad": 0.9002537522760857,
+              "min_edge_antipodal_margin_rad": 1.1053053154097374
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 2.4734874598001637,
+              "min_edge_arc_rad": 0.8867093539127441,
+              "min_edge_antipodal_margin_rad": 1.1613257264522798
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 4.494518336906757,
+            "length_roundoff_h": 6.387094710059325e-14,
+            "area_roundoff_h2": 1.6415994794947922e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 3.551283628644753e-14,
+            "positive_height_roundoff_h": 1.4210854715202004e-14
+          }
+        },
+        "metrics": {
+          "iou": 0.8485462417178408,
+          "C": 0.07772418791358371,
+          "omission": 0.1436453108119732,
+          "extension": 0.009202147256439554,
+          "area_h2": 9.997969038690592,
+          "reference_area_h2": 11.550909908770683,
+          "intersection_area_h2": 9.891675864764217,
+          "centroid_dx_h": 0.25021603336013515,
+          "centroid_dz_h": -0.08468502743213857,
+          "iou_2d": 0.8485462417178408,
+          "traditional_metric_version": "traditional_geometry_iou_v1.1.0",
+          "traditional_status": "available",
+          "iou2d_bev": 0.848546241717841,
+          "hohonet_iou3d_vertex_mean": 0.844743482119679,
+          "conditional_iou3d_perimeter_mean": 0.845348170449307,
+          "height_vertex_mean_h": 1.857738809030484,
+          "reference_height_vertex_mean_h": 1.866178700098948,
+          "height_perimeter_mean_h": 1.8590808147200106,
+          "reference_height_perimeter_mean_h": 1.8661786996704768,
+          "hohonet_height_pred_at_camera1p6": 2.9723820944487747,
+          "hohonet_height_ref_at_camera1p6": 2.985885920158317,
+          "area_pred_h2": 9.997969038690592,
+          "area_ref_h2": 11.55090990877068,
+          "traditional_reason_codes": [],
+          "hohonet_complete_pipeline_run": false,
+          "iou_3d_corner_mean": 0.844743482119679,
+          "iou_3d_perimeter_mean": 0.845348170449307,
+          "height_mean_h": 1.8590808147200106,
+          "height_internal_rms_h": 0.048975889798320446,
+          "height_internal_relative_rms": 0.026344142444230712,
+          "flat": 1.1835571921603163,
+          "flat_top_fitted_height_h": 1.85855537666083,
+          "dir": 4.472082634198706,
+          "axis_deg": 89.23012229391469,
+          "max_depth_sensitivity_h_per_Cpx": 0.0465371043758179,
+          "bottom_horizon_margin_deg": 21.29142138456036,
+          "S_top_deg": 0.9890086344808353,
+          "S_bottom_deg": 1.4709639141564332,
+          "Hmean": 0.0038034326250318195,
+          "Hlocal": 0.02794567651092758,
+          "Hstar": 0.02794567651092758,
+          "height_mean_relative_error": 0.0038034326250318195,
+          "height_local_relative_rms": 0.02794567651092758,
+          "height_guard_relative_error": 0.02794567651092758,
+          "quality_score": 72.98191244893108,
+          "range_ceiling_points": 84.85462417178408,
+          "boundary_rms_deg": 1.253370040296971,
+          "height_error_used": 0.02794567651092758,
+          "boundary_factor": 0.9105946082226898,
+          "reference_factor": 0.9080117190337723,
+          "direction_bounded_loss": 0.4444385565684844,
+          "flatness_bounded_loss": 0.25937002830497907,
+          "intrinsic_factor": 0.9472143561344902,
+          "range_deduction_points": 15.145375828215919,
+          "boundary_deduction_points": 7.586460918194774,
+          "height_deduction_points": 0.21917009140295818,
+          "intrinsic_deduction_points": 4.067080713255265,
+          "mean_height_only_score_same_parameters": 73.18565727976737,
+          "score_v1_recomputed": 73.18565727976737,
+          "U": 1.0061787730138245,
+          "B": 1.503800002176975,
+          "T": 0.14349682056073348,
+          "F": 0.1306207240485605
+        },
+        "metric_availability": {
+          "iou_2d": "available",
+          "iou_3d_corner_mean": "available",
+          "iou_3d_perimeter_mean": "available",
+          "complete_quality": "available"
+        },
+        "parameters": {
+          "boundary_half_deg": 4.0,
+          "direction_half_deg": 5.0,
+          "flatness_half_deg": 2.0,
+          "intrinsic_max_discount": 0.15,
+          "height_relative_half": 0.5
+        },
+        "numerical_settings": {
+          "spherical_samples": 2048,
+          "height_samples": 4096
+        },
+        "geometry_digest_status": {
+          "annotation": "available",
+          "reference": "available"
+        },
+        "traditional_issues": [],
+        "height_diagnostics": {
+          "annotation_height_mean_h": 1.8590808147200106,
+          "reference_height_mean_h": 1.8661786996704768,
+          "annotation_height_std_h": 0.048975889798320446,
+          "reference_height_std_h": 2.4560409686801328e-05,
+          "annotation_height_min_h": 1.750427252147238,
+          "annotation_height_max_h": 1.9290749659063986,
+          "direct_rms_about_gt_mean_check": 0.026518120422786794,
+          "height_nearest_samples_per_direction": 4096,
+          "nearest_AG_tied_height_fraction": 0.0,
+          "nearest_GA_tied_height_fraction": 0.0,
+          "nearest_AG_tied_height_range_h": 0.0,
+          "nearest_GA_tied_height_range_h": 0.0,
+          "nearest_footprint_tie_rule": "max"
+        },
+        "auxiliary_issues": [],
+        "issues": []
+      },
+      "independent_shapely_area": {
+        "symmetric_difference": 0.15284745806841257,
+        "excess": 0.009202147256439532,
+        "missing": 0.14364531081197307,
+        "iou_2d_independent": 0.848546241717841,
+        "annotation_area_h2": 9.997969038690592,
+        "GT_area_h2": 11.55090990877068
+      }
+    },
+    "new": {
+      "geometry": {
+        "id": "e679e2f416b6d65b3705",
+        "points": [
+          [
+            163.10426949381858,
+            203.97750943302665
+          ],
+          [
+            163.10426949381858,
+            323.6124152500155
+          ],
+          [
+            328.5676375241871,
+            202.75077726746596
+          ],
+          [
+            328.5676375241871,
+            317.59397549515364
+          ],
+          [
+            686.6666713674028,
+            193.5285448188258
+          ],
+          [
+            686.6666713674028,
+            324.795588031012
+          ],
+          [
+            870.6275999651305,
+            199.38460415205563
+          ],
+          [
+            870.6275999651305,
+            316.56226527163835
+          ]
+        ],
+        "sourcePointIndices": [
+          2,
+          3,
+          0,
+          1,
+          5,
+          4,
+          7,
+          6
+        ],
+        "sourcePairIndices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "bottom3d": [
+          [
+            -1.9115547987010422,
+            -1.0,
+            1.2252493789735905
+          ],
+          [
+            -2.2731642869622117,
+            -1.0,
+            -1.0848311346297226
+          ],
+          [
+            1.9549990546903444,
+            -1.0,
+            -1.0656233794763337
+          ],
+          [
+            2.0738312714987086,
+            -1.0,
+            1.5111560808583666
+          ]
+        ],
+        "top3d": [
+          [
+            -1.9115547987010422,
+            0.750427252147238,
+            1.2252493789735905
+          ],
+          [
+            -2.2731642869622117,
+            0.8535531761043242,
+            -1.0848311346297226
+          ],
+          [
+            1.9549990546903444,
+            0.8978998419639755,
+            -1.0656233794763337
+          ],
+          [
+            2.0738312714987086,
+            0.9290749659063986,
+            1.5111560808583666
+          ]
+        ]
+      },
+      "result": {
+        "algorithm_version": "geom_quality_research_v1.1.0",
+        "status": "available",
+        "quality_score": 72.98191244893108,
+        "reason_codes": [],
+        "failure_classes": [],
+        "annotation_geometry_sha256": "920f9f0cc1986c16ab845550f6174753ca841786c4989796a2cd443ea6ccce64",
+        "reference_geometry_sha256": "1f225933a3f181aa040793a092457301656adf764a043e249037d056f52f9437",
+        "target_applicability": "conditional_geometry",
+        "annotation_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "annotation",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 4,
+            "area_h2": 9.997969038690592,
+            "signed_area_h2": 9.997969038690592,
+            "perimeter_h": 13.141564830971223,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": true,
+              "azimuth_single_valued_geometric_condition": true
+            },
+            "tolerances": {
+              "coordinate_scale_h": 4.34699555846092,
+              "length_roundoff_h": 6.177452232891653e-14,
+              "area_roundoff_h2": 1.4207968545591984e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": true,
+            "azimuth_single_valued_geometric_condition": true,
+            "vertex_count": 4,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.750427252147238,
+            "max_wall_height_h": 1.9290749659063986,
+            "min_top_y_h": 0.750427252147238,
+            "max_top_y_h": 0.9290749659063986,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 2.391321569734486,
+              "min_edge_arc_rad": 0.9582218727138658,
+              "min_edge_antipodal_margin_rad": 1.164794076679152
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 2.4408143089400927,
+              "min_edge_arc_rad": 0.9306372884237508,
+              "min_edge_antipodal_margin_rad": 1.2175961222301603
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 4.34699555846092,
+            "length_roundoff_h": 6.177452232891653e-14,
+            "area_roundoff_h2": 1.4207968545591984e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 3.230360742580575e-14,
+            "positive_height_roundoff_h": 1.4210854715202004e-14
+          }
+        },
+        "reference_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "reference",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 4,
+            "area_h2": 11.55090990877068,
+            "signed_area_h2": 11.55090990877068,
+            "perimeter_h": 14.128840575818991,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": true,
+              "azimuth_single_valued_geometric_condition": true
+            },
+            "tolerances": {
+              "coordinate_scale_h": 4.494518336906757,
+              "length_roundoff_h": 6.387094710059325e-14,
+              "area_roundoff_h2": 1.6415994794947922e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": true,
+            "azimuth_single_valued_geometric_condition": true,
+            "vertex_count": 4,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.8661453000746535,
+            "max_wall_height_h": 1.8662293531726617,
+            "min_top_y_h": 0.8661453000746535,
+            "max_top_y_h": 0.8662293531726617,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 2.4224673154926317,
+              "min_edge_arc_rad": 0.9002537522760857,
+              "min_edge_antipodal_margin_rad": 1.1053053154097374
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 2.4734874598001637,
+              "min_edge_arc_rad": 0.8867093539127441,
+              "min_edge_antipodal_margin_rad": 1.1613257264522798
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 4.494518336906757,
+            "length_roundoff_h": 6.387094710059325e-14,
+            "area_roundoff_h2": 1.6415994794947922e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 3.551283628644753e-14,
+            "positive_height_roundoff_h": 1.4210854715202004e-14
+          }
+        },
+        "metrics": {
+          "iou": 0.8485462417178408,
+          "C": 0.07772418791358371,
+          "omission": 0.1436453108119732,
+          "extension": 0.009202147256439554,
+          "area_h2": 9.997969038690592,
+          "reference_area_h2": 11.550909908770683,
+          "intersection_area_h2": 9.891675864764217,
+          "centroid_dx_h": 0.25021603336013515,
+          "centroid_dz_h": -0.08468502743213857,
+          "iou_2d": 0.8485462417178408,
+          "traditional_metric_version": "traditional_geometry_iou_v1.1.0",
+          "traditional_status": "available",
+          "iou2d_bev": 0.848546241717841,
+          "hohonet_iou3d_vertex_mean": 0.844743482119679,
+          "conditional_iou3d_perimeter_mean": 0.845348170449307,
+          "height_vertex_mean_h": 1.857738809030484,
+          "reference_height_vertex_mean_h": 1.866178700098948,
+          "height_perimeter_mean_h": 1.8590808147200106,
+          "reference_height_perimeter_mean_h": 1.8661786996704768,
+          "hohonet_height_pred_at_camera1p6": 2.9723820944487747,
+          "hohonet_height_ref_at_camera1p6": 2.985885920158317,
+          "area_pred_h2": 9.997969038690592,
+          "area_ref_h2": 11.55090990877068,
+          "traditional_reason_codes": [],
+          "hohonet_complete_pipeline_run": false,
+          "iou_3d_corner_mean": 0.844743482119679,
+          "iou_3d_perimeter_mean": 0.845348170449307,
+          "height_mean_h": 1.8590808147200106,
+          "height_internal_rms_h": 0.048975889798320446,
+          "height_internal_relative_rms": 0.026344142444230712,
+          "flat": 1.1835571921603163,
+          "flat_top_fitted_height_h": 1.85855537666083,
+          "dir": 4.472082634198706,
+          "axis_deg": 89.23012229391469,
+          "max_depth_sensitivity_h_per_Cpx": 0.0465371043758179,
+          "bottom_horizon_margin_deg": 21.29142138456036,
+          "S_top_deg": 0.9890086344808353,
+          "S_bottom_deg": 1.4709639141564332,
+          "Hmean": 0.0038034326250318195,
+          "Hlocal": 0.02794567651092758,
+          "Hstar": 0.02794567651092758,
+          "height_mean_relative_error": 0.0038034326250318195,
+          "height_local_relative_rms": 0.02794567651092758,
+          "height_guard_relative_error": 0.02794567651092758,
+          "quality_score": 72.98191244893108,
+          "range_ceiling_points": 84.85462417178408,
+          "boundary_rms_deg": 1.253370040296971,
+          "height_error_used": 0.02794567651092758,
+          "boundary_factor": 0.9105946082226898,
+          "reference_factor": 0.9080117190337723,
+          "direction_bounded_loss": 0.4444385565684844,
+          "flatness_bounded_loss": 0.25937002830497907,
+          "intrinsic_factor": 0.9472143561344902,
+          "range_deduction_points": 15.145375828215919,
+          "boundary_deduction_points": 7.586460918194774,
+          "height_deduction_points": 0.21917009140295818,
+          "intrinsic_deduction_points": 4.067080713255265,
+          "mean_height_only_score_same_parameters": 73.18565727976737,
+          "score_v1_recomputed": 73.18565727976737,
+          "U": 1.0061787730138245,
+          "B": 1.503800002176975,
+          "T": 0.14349682056073348,
+          "F": 0.1306207240485605
+        },
+        "metric_availability": {
+          "iou_2d": "available",
+          "iou_3d_corner_mean": "available",
+          "iou_3d_perimeter_mean": "available",
+          "complete_quality": "available"
+        },
+        "parameters": {
+          "boundary_half_deg": 4.0,
+          "direction_half_deg": 5.0,
+          "flatness_half_deg": 2.0,
+          "intrinsic_max_discount": 0.15,
+          "height_relative_half": 0.5
+        },
+        "numerical_settings": {
+          "spherical_samples": 2048,
+          "height_samples": 4096
+        },
+        "geometry_digest_status": {
+          "annotation": "available",
+          "reference": "available"
+        },
+        "traditional_issues": [],
+        "height_diagnostics": {
+          "annotation_height_mean_h": 1.8590808147200106,
+          "reference_height_mean_h": 1.8661786996704768,
+          "annotation_height_std_h": 0.048975889798320446,
+          "reference_height_std_h": 2.4560409686801328e-05,
+          "annotation_height_min_h": 1.750427252147238,
+          "annotation_height_max_h": 1.9290749659063986,
+          "direct_rms_about_gt_mean_check": 0.026518120422786794,
+          "height_nearest_samples_per_direction": 4096,
+          "nearest_AG_tied_height_fraction": 0.0,
+          "nearest_GA_tied_height_fraction": 0.0,
+          "nearest_AG_tied_height_range_h": 0.0,
+          "nearest_GA_tied_height_range_h": 0.0,
+          "nearest_footprint_tie_rule": "max"
+        },
+        "auxiliary_issues": [],
+        "issues": []
+      },
+      "independent_shapely_area": {
+        "symmetric_difference": 0.15284745806841257,
+        "excess": 0.009202147256439532,
+        "missing": 0.14364531081197307,
+        "iou_2d_independent": 0.848546241717841,
+        "annotation_area_h2": 9.997969038690592,
+        "GT_area_h2": 11.55090990877068
+      }
+    }
+  },
+  "e6aa42eeae4da18d3ef5": {
+    "old": {
+      "geometry": {
+        "id": "e6aa42eeae4da18d3ef5",
+        "points": [
+          [
+            166.97657657657658,
+            206.64504504504504
+          ],
+          [
+            166.97657657657658,
+            304.43243243243245
+          ],
+          [
+            327.53599033249213,
+            203.93147059347302
+          ],
+          [
+            327.53599033249213,
+            316.42522522522523
+          ],
+          [
+            359.3225225225225,
+            157.75135135135136
+          ],
+          [
+            359.3225225225225,
+            356.0936936936937
+          ],
+          [
+            376.06396516123453,
+            175.27927927927928
+          ],
+          [
+            376.06396516123453,
+            341.00810930537875
+          ],
+          [
+            612.4996965069781,
+            159.5963963963964
+          ],
+          [
+            612.4996965069781,
+            359.6753757744655
+          ],
+          [
+            627.3153153153153,
+            142.99099099099098
+          ],
+          [
+            627.3153153153153,
+            365.31891891891894
+          ],
+          [
+            684.8924410256968,
+            198.82553402599967
+          ],
+          [
+            684.8924410256968,
+            321.96036036036037
+          ],
+          [
+            870.8612612612612,
+            203.87747747747747
+          ],
+          [
+            870.8612612612612,
+            316.42522522522523
+          ]
+        ],
+        "sourcePointIndices": [
+          0,
+          1,
+          2,
+          3,
+          6,
+          7,
+          4,
+          5,
+          11,
+          10,
+          8,
+          9,
+          12,
+          13,
+          14,
+          15
+        ],
+        "sourcePairIndices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "bottom3d": [
+          [
+            -2.7901810271938383,
+            -1.0,
+            1.6962763897243687
+          ],
+          [
+            -2.328538355483875,
+            -1.0,
+            -1.0932148402316426
+          ],
+          [
+            -1.1425774104772006,
+            -1.0,
+            -0.8400535928696053
+          ],
+          [
+            -1.2888411961002924,
+            -1.0,
+            -1.1690592877565822
+          ],
+          [
+            0.7830187387072032,
+            -1.0,
+            -1.1045914801152235
+          ],
+          [
+            0.8191252083775172,
+            -1.0,
+            -0.9576994003423628
+          ],
+          [
+            2.037393625901693,
+            -1.0,
+            -1.1394776623606588
+          ],
+          [
+            2.07682252194343,
+            -1.0,
+            1.5178991311054817
+          ]
+        ],
+        "top3d": [
+          [
+            -2.7901810271938383,
+            1.0202524034034108,
+            1.6962763897243687
+          ],
+          [
+            -2.328538355483875,
+            0.8510039882459468,
+            -1.0932148402316426
+          ],
+          [
+            -1.1425774104772006,
+            0.9761513875728052,
+            -0.8400535928696053
+          ],
+          [
+            -1.2888411961002924,
+            0.9399988681577035,
+            -1.1690592877565822
+          ],
+          [
+            0.7830187387072032,
+            0.9095534543402174,
+            -1.1045914801152235
+          ],
+          [
+            0.8191252083775172,
+            1.0473598267774904,
+            -0.9576994003423628
+          ],
+          [
+            2.037393625901693,
+            0.8542842533312403,
+            -1.1394776623606588
+          ],
+          [
+            2.07682252194343,
+            0.8519495902638748,
+            1.5178991311054817
+          ]
+        ]
+      },
+      "result": {
+        "algorithm_version": "geom_quality_research_v1.1.0",
+        "status": "available",
+        "quality_score": 77.83725740502489,
+        "reason_codes": [],
+        "failure_classes": [],
+        "annotation_geometry_sha256": "cb5b2a07eaf52d3f4fe693ce867ac123fe42e079d0b281cc887be3a94b5fb051",
+        "reference_geometry_sha256": "1f225933a3f181aa040793a092457301656adf764a043e249037d056f52f9437",
+        "target_applicability": "conditional_geometry",
+        "annotation_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "annotation",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 8,
+            "area_h2": 12.344538470122037,
+            "signed_area_h2": 12.344538470122037,
+            "perimeter_h": 15.38398879378759,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": true,
+              "azimuth_single_valued_geometric_condition": true
+            },
+            "tolerances": {
+              "coordinate_scale_h": 4.8670035491372685,
+              "length_roundoff_h": 6.916428033516224e-14,
+              "area_roundoff_h2": 6.113627439173947e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": true,
+            "azimuth_single_valued_geometric_condition": true,
+            "vertex_count": 8,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.8510039882459468,
+            "max_wall_height_h": 2.04735982677749,
+            "min_top_y_h": 0.8510039882459468,
+            "max_top_y_h": 1.0473598267774904,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 1.6311125557152644,
+              "min_edge_arc_rad": 0.12516036508346218,
+              "min_edge_antipodal_margin_rad": 1.3144201033313343
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 1.6087741446255384,
+              "min_edge_arc_rad": 0.08003880046259035,
+              "min_edge_antipodal_margin_rad": 1.3330320108363303
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 4.8670035491372685,
+            "length_roundoff_h": 6.916428033516224e-14,
+            "area_roundoff_h2": 6.113627439173947e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 3.965085720656473e-14,
+            "positive_height_roundoff_h": 1.4883878332874053e-14
+          }
+        },
+        "reference_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "reference",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 4,
+            "area_h2": 11.55090990877068,
+            "signed_area_h2": 11.55090990877068,
+            "perimeter_h": 14.128840575818991,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": true,
+              "azimuth_single_valued_geometric_condition": true
+            },
+            "tolerances": {
+              "coordinate_scale_h": 4.494518336906757,
+              "length_roundoff_h": 6.387094710059325e-14,
+              "area_roundoff_h2": 1.6415994794947922e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": true,
+            "azimuth_single_valued_geometric_condition": true,
+            "vertex_count": 4,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.8661453000746535,
+            "max_wall_height_h": 1.8662293531726617,
+            "min_top_y_h": 0.8661453000746535,
+            "max_top_y_h": 0.8662293531726617,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 2.4224673154926317,
+              "min_edge_arc_rad": 0.9002537522760857,
+              "min_edge_antipodal_margin_rad": 1.1053053154097374
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 2.4734874598001637,
+              "min_edge_arc_rad": 0.8867093539127441,
+              "min_edge_antipodal_margin_rad": 1.1613257264522798
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 4.494518336906757,
+            "length_roundoff_h": 6.387094710059325e-14,
+            "area_roundoff_h2": 1.6415994794947922e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 3.551283628644753e-14,
+            "positive_height_roundoff_h": 1.4210854715202004e-14
+          }
+        },
+        "metrics": {
+          "iou": 0.9000345442521639,
+          "C": 0.021880588474313244,
+          "omission": 0.020066354738408235,
+          "extension": 0.08877337155521724,
+          "area_h2": 12.344538470122036,
+          "reference_area_h2": 11.550909908770683,
+          "intersection_area_h2": 11.319125252989895,
+          "centroid_dx_h": -0.01832116124947336,
+          "centroid_dz_h": 0.0720725359199128,
+          "iou_2d": 0.9000345442521639,
+          "traditional_metric_version": "traditional_geometry_iou_v1.1.0",
+          "traditional_status": "available",
+          "iou2d_bev": 0.9000345442521639,
+          "hohonet_iou3d_vertex_mean": 0.8702186686108321,
+          "conditional_iou3d_perimeter_mean": 0.8750394192187263,
+          "height_vertex_mean_h": 1.9313192215115862,
+          "reference_height_vertex_mean_h": 1.866178700098948,
+          "height_perimeter_mean_h": 1.9204861925259162,
+          "reference_height_perimeter_mean_h": 1.8661786996704768,
+          "hohonet_height_pred_at_camera1p6": 3.090110754418538,
+          "hohonet_height_ref_at_camera1p6": 2.985885920158317,
+          "area_pred_h2": 12.344538470122037,
+          "area_ref_h2": 11.55090990877068,
+          "traditional_reason_codes": [],
+          "hohonet_complete_pipeline_run": false,
+          "iou_3d_corner_mean": 0.8702186686108321,
+          "iou_3d_perimeter_mean": 0.8750394192187263,
+          "height_mean_h": 1.9204861925259162,
+          "height_internal_rms_h": 0.05114346369442277,
+          "height_internal_relative_rms": 0.026630477164304115,
+          "flat": 1.1190536079332654,
+          "flat_top_fitted_height_h": 1.920662525329491,
+          "dir": 7.083565306074771,
+          "axis_deg": 0.7294755421864612,
+          "max_depth_sensitivity_h_per_Cpx": 0.07155998135740278,
+          "bottom_horizon_margin_deg": 17.027027027027035,
+          "S_top_deg": 0.8954645250732356,
+          "S_bottom_deg": 1.2239816611038652,
+          "Hmean": 0.029100907038017786,
+          "Hlocal": 0.038302244919960905,
+          "Hstar": 0.038302244919960905,
+          "height_mean_relative_error": 0.029100907038017786,
+          "height_local_relative_rms": 0.038302244919960905,
+          "height_guard_relative_error": 0.038302244919960905,
+          "quality_score": 77.83725740502489,
+          "range_ceiling_points": 90.00345442521639,
+          "boundary_rms_deg": 1.0723776905510511,
+          "height_error_used": 0.038302244919960905,
+          "boundary_factor": 0.9329449376398232,
+          "reference_factor": 0.9278651061668091,
+          "direction_bounded_loss": 0.6674510275161533,
+          "flatness_bounded_loss": 0.23842612053888657,
+          "intrinsic_factor": 0.932059213895872,
+          "range_deduction_points": 9.99654557478361,
+          "boundary_deduction_points": 6.035187249114216,
+          "height_deduction_points": 0.45720238046921224,
+          "intrinsic_deduction_points": 5.673807390608076,
+          "mean_height_only_score_same_parameters": 78.01684005443893,
+          "score_v1_recomputed": 78.01684005443893,
+          "U": 0.9339992975975411,
+          "B": 1.3199129509443328,
+          "T": 0.10724154509216433,
+          "F": 0.08638527630093354
+        },
+        "metric_availability": {
+          "iou_2d": "available",
+          "iou_3d_corner_mean": "available",
+          "iou_3d_perimeter_mean": "available",
+          "complete_quality": "available"
+        },
+        "parameters": {
+          "boundary_half_deg": 4.0,
+          "direction_half_deg": 5.0,
+          "flatness_half_deg": 2.0,
+          "intrinsic_max_discount": 0.15,
+          "height_relative_half": 0.5
+        },
+        "numerical_settings": {
+          "spherical_samples": 2048,
+          "height_samples": 4096
+        },
+        "geometry_digest_status": {
+          "annotation": "available",
+          "reference": "available"
+        },
+        "traditional_issues": [],
+        "height_diagnostics": {
+          "annotation_height_mean_h": 1.9204861925259162,
+          "reference_height_mean_h": 1.8661786996704768,
+          "annotation_height_std_h": 0.05114346369442277,
+          "reference_height_std_h": 2.4560409686801328e-05,
+          "annotation_height_min_h": 1.8510039882459468,
+          "annotation_height_max_h": 2.04735982677749,
+          "direct_rms_about_gt_mean_check": 0.03997400882739424,
+          "height_nearest_samples_per_direction": 4096,
+          "nearest_AG_tied_height_fraction": 0.0,
+          "nearest_GA_tied_height_fraction": 0.0,
+          "nearest_AG_tied_height_range_h": 0.0,
+          "nearest_GA_tied_height_range_h": 0.0,
+          "nearest_footprint_tie_rule": "max"
+        },
+        "auxiliary_issues": [],
+        "issues": []
+      },
+      "independent_shapely_area": {
+        "symmetric_difference": 0.10883972629362557,
+        "excess": 0.08877337155521733,
+        "missing": 0.02006635473840821,
+        "iou_2d_independent": 0.9000345442521634,
+        "annotation_area_h2": 12.344538470122037,
+        "GT_area_h2": 11.55090990877068
+      }
+    },
+    "new": {
+      "geometry": {
+        "id": "e6aa42eeae4da18d3ef5",
+        "points": [
+          [
+            166.97657657657658,
+            206.64504504504504
+          ],
+          [
+            166.97657657657658,
+            304.43243243243245
+          ],
+          [
+            327.53599033249213,
+            203.93147059347302
+          ],
+          [
+            327.53599033249213,
+            316.42522522522523
+          ],
+          [
+            376.06396516123453,
+            175.27927927927928
+          ],
+          [
+            376.06396516123453,
+            341.00810930537875
+          ],
+          [
+            359.3225225225225,
+            157.75135135135136
+          ],
+          [
+            359.3225225225225,
+            356.0936936936937
+          ],
+          [
+            627.3153153153153,
+            142.99099099099098
+          ],
+          [
+            627.3153153153153,
+            365.31891891891894
+          ],
+          [
+            612.4996965069781,
+            159.5963963963964
+          ],
+          [
+            612.4996965069781,
+            359.6753757744655
+          ],
+          [
+            684.8924410256968,
+            198.82553402599967
+          ],
+          [
+            684.8924410256968,
+            321.96036036036037
+          ],
+          [
+            870.8612612612612,
+            203.87747747747747
+          ],
+          [
+            870.8612612612612,
+            316.42522522522523
+          ]
+        ],
+        "sourcePointIndices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          11,
+          10,
+          12,
+          13,
+          14,
+          15
+        ],
+        "sourcePairIndices": [
+          0,
+          1,
+          3,
+          2,
+          5,
+          4,
+          6,
+          7
+        ],
+        "bottom3d": [
+          [
+            -2.7901810271938383,
+            -1.0,
+            1.6962763897243687
+          ],
+          [
+            -2.328538355483875,
+            -1.0,
+            -1.0932148402316426
+          ],
+          [
+            -1.2888411961002924,
+            -1.0,
+            -1.1690592877565822
+          ],
+          [
+            -1.1425774104772006,
+            -1.0,
+            -0.8400535928696053
+          ],
+          [
+            0.8191252083775172,
+            -1.0,
+            -0.9576994003423628
+          ],
+          [
+            0.7830187387072032,
+            -1.0,
+            -1.1045914801152235
+          ],
+          [
+            2.037393625901693,
+            -1.0,
+            -1.1394776623606588
+          ],
+          [
+            2.07682252194343,
+            -1.0,
+            1.5178991311054817
+          ]
+        ],
+        "top3d": [
+          [
+            -2.7901810271938383,
+            1.0202524034034108,
+            1.6962763897243687
+          ],
+          [
+            -2.328538355483875,
+            0.8510039882459468,
+            -1.0932148402316426
+          ],
+          [
+            -1.2888411961002924,
+            0.9399988681577035,
+            -1.1690592877565822
+          ],
+          [
+            -1.1425774104772006,
+            0.9761513875728052,
+            -0.8400535928696053
+          ],
+          [
+            0.8191252083775172,
+            1.0473598267774904,
+            -0.9576994003423628
+          ],
+          [
+            0.7830187387072032,
+            0.9095534543402174,
+            -1.1045914801152235
+          ],
+          [
+            2.037393625901693,
+            0.8542842533312403,
+            -1.1394776623606588
+          ],
+          [
+            2.07682252194343,
+            0.8519495902638748,
+            1.5178991311054817
+          ]
+        ]
+      },
+      "result": {
+        "algorithm_version": "geom_quality_research_v1.1.0",
+        "status": "available",
+        "quality_score": 65.6078189833252,
+        "reason_codes": [],
+        "failure_classes": [],
+        "annotation_geometry_sha256": "696bdf0cd1429cde5dea708828e420e5bac3ad6ee9aaa3a5d561946cc05eef09",
+        "reference_geometry_sha256": "1f225933a3f181aa040793a092457301656adf764a043e249037d056f52f9437",
+        "target_applicability": "conditional_geometry",
+        "annotation_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "annotation",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [
+            {
+              "code": "non_star_shaped_about_camera",
+              "message": "地面环关于相机不是星形；完整球面边界仍可计算，逐方位单值 U/B 不适用。"
+            }
+          ],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 8,
+            "area_h2": 12.131561555603204,
+            "signed_area_h2": 12.131561555603204,
+            "perimeter_h": 15.129237170574681,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": false,
+              "azimuth_single_valued_geometric_condition": false
+            },
+            "tolerances": {
+              "coordinate_scale_h": 4.8670035491372685,
+              "length_roundoff_h": 6.916428033516224e-14,
+              "area_roundoff_h2": 6.073428157015246e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": false,
+            "azimuth_single_valued_geometric_condition": false,
+            "vertex_count": 8,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.8510039882459468,
+            "max_wall_height_h": 2.04735982677749,
+            "min_top_y_h": 0.8510039882459468,
+            "max_top_y_h": 1.0473598267774904,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 1.6311125557152644,
+              "min_edge_arc_rad": 0.12516036508346218,
+              "min_edge_antipodal_margin_rad": 1.3144201033313343
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 1.6087741446255384,
+              "min_edge_arc_rad": 0.08003880046259035,
+              "min_edge_antipodal_margin_rad": 1.3330320108363303
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 4.8670035491372685,
+            "length_roundoff_h": 6.916428033516224e-14,
+            "area_roundoff_h2": 6.073428157015246e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 3.965085720656473e-14,
+            "positive_height_roundoff_h": 1.4883878332874053e-14
+          }
+        },
+        "reference_validity": {
+          "validator_version": "strict_geometry_v1.1.0",
+          "status": "available",
+          "available": true,
+          "valid_2d": true,
+          "valid_3d": true,
+          "spherical_boundary_available": true,
+          "role": "reference",
+          "source": null,
+          "role_impact": null,
+          "input_policy": "original coordinates, pairing, closure, order and source retained; no repair",
+          "availability": {
+            "footprint_2d": true,
+            "paired_wall_ring_3d": true,
+            "spherical_full_boundary": true,
+            "complete_quality_input": true
+          },
+          "reason_codes": [],
+          "failure_classes": [],
+          "errors": [],
+          "warnings": [],
+          "footprint_2d": {
+            "status": "available",
+            "available": true,
+            "simple_ring": true,
+            "vertex_count": 4,
+            "area_h2": 11.55090990877068,
+            "signed_area_h2": 11.55090990877068,
+            "perimeter_h": 14.128840575818991,
+            "errors": [],
+            "diagnostics": {
+              "orientation": "counterclockwise",
+              "camera_xz_location": "inside",
+              "camera_in_visibility_kernel": true,
+              "azimuth_single_valued_geometric_condition": true
+            },
+            "tolerances": {
+              "coordinate_scale_h": 4.494518336906757,
+              "length_roundoff_h": 6.387094710059325e-14,
+              "area_roundoff_h2": 1.6415994794947922e-13,
+              "topology_predicate": "filtered_exact_binary64_orientation_no_snapping"
+            }
+          },
+          "diagnostics": {
+            "orientation": "counterclockwise",
+            "camera_xz_location": "inside",
+            "camera_in_visibility_kernel": true,
+            "azimuth_single_valued_geometric_condition": true,
+            "vertex_count": 4,
+            "max_pair_xz_difference_h": 0.0,
+            "min_wall_height_h": 1.8661453000746535,
+            "max_wall_height_h": 1.8662293531726617,
+            "min_top_y_h": 0.8661453000746535,
+            "max_top_y_h": 0.8662293531726617,
+            "top_vertices_below_camera": 0,
+            "top_is_constant_height_within_roundoff": false
+          },
+          "spherical_diagnostics": {
+            "top3d": {
+              "min_vertex_camera_distance_h": 2.4224673154926317,
+              "min_edge_arc_rad": 0.9002537522760857,
+              "min_edge_antipodal_margin_rad": 1.1053053154097374
+            },
+            "bottom3d": {
+              "min_vertex_camera_distance_h": 2.4734874598001637,
+              "min_edge_arc_rad": 0.8867093539127441,
+              "min_edge_antipodal_margin_rad": 1.1613257264522798
+            }
+          },
+          "tolerances": {
+            "float64_epsilon": 2.220446049250313e-16,
+            "roundoff_multiplier": 64.0,
+            "floor_y_expected_h": -1.0,
+            "spherical_min_arc_rad": 1e-12,
+            "spherical_antipodal_margin_rad": 1e-10,
+            "coordinate_scale_h": 4.494518336906757,
+            "length_roundoff_h": 6.387094710059325e-14,
+            "area_roundoff_h2": 1.6415994794947922e-13,
+            "topology_predicate": "filtered_exact_binary64_orientation_no_snapping",
+            "floor_roundoff_h": 1.4210854715202004e-14,
+            "vertical_pair_roundoff_h": 3.551283628644753e-14,
+            "positive_height_roundoff_h": 1.4210854715202004e-14
+          }
+        },
+        "metrics": {
+          "iou": 0.8867386187136503,
+          "C": 0.028620489061228847,
+          "omission": 0.036404617512125856,
+          "extension": 0.08667352718404936,
+          "area_h2": 12.131561555603202,
+          "reference_area_h2": 11.550909908770683,
+          "intersection_area_h2": 11.130403451624861,
+          "centroid_dx_h": -0.023503511144065348,
+          "centroid_dz_h": 0.09438913841936908,
+          "iou_2d": 0.8867386187136503,
+          "traditional_metric_version": "traditional_geometry_iou_v1.1.0",
+          "traditional_status": "available",
+          "iou2d_bev": 0.8867386187136503,
+          "hohonet_iou3d_vertex_mean": 0.8577995056685445,
+          "conditional_iou3d_perimeter_mean": 0.8605595625358125,
+          "height_vertex_mean_h": 1.9313192215115862,
+          "reference_height_vertex_mean_h": 1.866178700098948,
+          "height_perimeter_mean_h": 1.92491747073858,
+          "reference_height_perimeter_mean_h": 1.8661786996704768,
+          "hohonet_height_pred_at_camera1p6": 3.090110754418538,
+          "hohonet_height_ref_at_camera1p6": 2.985885920158317,
+          "area_pred_h2": 12.131561555603204,
+          "area_ref_h2": 11.55090990877068,
+          "traditional_reason_codes": [],
+          "hohonet_complete_pipeline_run": false,
+          "iou_3d_corner_mean": 0.8577995056685445,
+          "iou_3d_perimeter_mean": 0.8605595625358125,
+          "height_mean_h": 1.92491747073858,
+          "height_internal_rms_h": 0.059670631723538634,
+          "height_internal_relative_rms": 0.030999059767816094,
+          "flat": 1.4178075387790046,
+          "flat_top_fitted_height_h": 1.930146404753211,
+          "dir": 6.012703127848577,
+          "axis_deg": 89.35724002463905,
+          "max_depth_sensitivity_h_per_Cpx": 0.07155998135740278,
+          "bottom_horizon_margin_deg": 17.027027027027035,
+          "S_top_deg": 2.227287746361551,
+          "S_bottom_deg": 1.7453276736744028,
+          "Hmean": 0.03147542680584405,
+          "Hlocal": 0.04337402590423086,
+          "Hstar": 0.04337402590423086,
+          "height_mean_relative_error": 0.03147542680584405,
+          "height_local_relative_rms": 0.04337402590423086,
+          "height_guard_relative_error": 0.04337402590423086,
+          "quality_score": 65.6078189833252,
+          "range_ceiling_points": 88.67386187136503,
+          "boundary_rms_deg": 2.0008722340002145,
+          "height_error_used": 0.04337402590423086,
+          "boundary_factor": 0.799860436479998,
+          "reference_factor": 0.7950747785472005,
+          "direction_bounded_loss": 0.5911866306877123,
+          "flatness_bounded_loss": 0.3344623311379529,
+          "intrinsic_factor": 0.9305763278630751,
+          "range_deduction_points": 11.326138128634966,
+          "boundary_deduction_points": 17.74714801056794,
+          "height_deduction_points": 0.4243627704964865,
+          "intrinsic_deduction_points": 4.894532106975404,
+          "mean_height_only_score_same_parameters": 65.79417347503022,
+          "score_v1_recomputed": 65.79417347503022,
+          "U": null,
+          "B": null,
+          "T": 0.11910842300886079,
+          "F": 0.0979961379658078
+        },
+        "metric_availability": {
+          "iou_2d": "available",
+          "iou_3d_corner_mean": "available",
+          "iou_3d_perimeter_mean": "available",
+          "complete_quality": "available"
+        },
+        "parameters": {
+          "boundary_half_deg": 4.0,
+          "direction_half_deg": 5.0,
+          "flatness_half_deg": 2.0,
+          "intrinsic_max_discount": 0.15,
+          "height_relative_half": 0.5
+        },
+        "numerical_settings": {
+          "spherical_samples": 2048,
+          "height_samples": 4096
+        },
+        "geometry_digest_status": {
+          "annotation": "available",
+          "reference": "available"
+        },
+        "traditional_issues": [],
+        "height_diagnostics": {
+          "annotation_height_mean_h": 1.92491747073858,
+          "reference_height_mean_h": 1.8661786996704768,
+          "annotation_height_std_h": 0.059670631723538634,
+          "reference_height_std_h": 2.4560409686801328e-05,
+          "annotation_height_min_h": 1.8510039882459468,
+          "annotation_height_max_h": 2.04735982677749,
+          "direct_rms_about_gt_mean_check": 0.044867452648184536,
+          "height_nearest_samples_per_direction": 4096,
+          "nearest_AG_tied_height_fraction": 0.0,
+          "nearest_GA_tied_height_fraction": 0.0,
+          "nearest_AG_tied_height_range_h": 0.0,
+          "nearest_GA_tied_height_range_h": 0.0,
+          "nearest_footprint_tie_rule": "max"
+        },
+        "auxiliary_issues": [],
+        "issues": []
+      },
+      "independent_shapely_area": {
+        "symmetric_difference": 0.12307814469617527,
+        "excess": 0.08667352718404943,
+        "missing": 0.03640461751212585,
+        "iou_2d_independent": 0.8867386187136499,
+        "annotation_area_h2": 12.131561555603204,
+        "GT_area_h2": 11.55090990877068
+      }
+    }
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "schema": "quality_scope_review_interpretation_20261013_v1",
+  "source_file": "C:\\Users\\ASUS\\Downloads\\quality_scope_review_20261013_v2.json",
+  "archived_receipt": "USER_REVIEW_v2.json",
+  "summary": {
+    "records": 6,
+    "images": 5,
+    "complete_questionnaires": 5,
+    "comment_only": 1,
+    "unanswered_fields": 4,
+    "bindings_and_question_text_checked": true
+  },
+  "records": [
+    {
+      "record_id": "R01977",
+      "image_id": "B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993",
+      "image_code": "B6ByNegPMKs-33",
+      "object_id": "c811ff3e51132e75",
+      "reference_id": "gt:B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993:data/mp3d_layout/test/label_cor/B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993.txt",
+      "answers": {
+        "space_extent": "orange_more",
+        "top_in_photo": "reference_better",
+        "height_in_3d": "local_uneven"
+      },
+      "comment": "橙色是一侧低,另一侧更低",
+      "reviewed_at": "2026-10-13T07:42:15.982Z",
+      "complete": true,
+      "interpretation_code": "mixed_global_lower_and_visible_local_unevenness",
+      "interpretation": "原选项local_uneven及“一侧低，另一侧更低”保留：均高偏低伴两侧高差，不能当纯平移或孤立单点异常；总体澄清支持优先研究倾斜/成片高差。",
+      "existing_Hmean": 0.3140788957602948,
+      "existing_Hcenter": 0.028642653768355793,
+      "own_height_range_over_reference_mean": 0.1021440490752853,
+      "new_grade_or_penalty_target": null,
+      "formal_eligibility_changed": false,
+      "reference_geometry_changed": false
+    },
+    {
+      "record_id": "R02135",
+      "image_id": "B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993",
+      "image_code": "B6ByNegPMKs-33",
+      "object_id": "d97a4c0b5bbe5fb7",
+      "reference_id": "gt:B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993:data/mp3d_layout/test/label_cor/B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993.txt",
+      "answers": {
+        "space_extent": "same",
+        "top_in_photo": "both_similar",
+        "height_in_3d": "local_uneven"
+      },
+      "comment": "橙色右边的角点标的低了,导致一侧高度偏低",
+      "reviewed_at": "2026-10-13T07:43:00.985Z",
+      "complete": true,
+      "interpretation_code": "same_extent_local_height_case",
+      "interpretation": "同范围、照片两条都合理与右角偏低并列保存；二维差异小不等于三维无局部高差，未获得严重程度或扣分标签。",
+      "existing_Hmean": 0.10224549599095911,
+      "existing_Hcenter": 0.07136086248782364,
+      "own_height_range_over_reference_mean": 0.24253443444112774,
+      "new_grade_or_penalty_target": null,
+      "formal_eligibility_changed": false,
+      "reference_geometry_changed": false
+    },
+    {
+      "record_id": "R00961",
+      "image_id": "B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624",
+      "image_code": "B6ByNegPMKs-40",
+      "object_id": "645a19e0d1eff33f",
+      "reference_id": "gt:B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624:data/mp3d_layout/test/label_cor/B6ByNegPMKs_cee80ced97274e248d4ccaa582e12624.txt",
+      "answers": {
+        "space_extent": "orange_less",
+        "top_in_photo": "reference_better",
+        "height_in_3d": "uniform_lower"
+      },
+      "comment": "",
+      "reviewed_at": "2026-10-13T07:44:31.456Z",
+      "complete": true,
+      "interpretation_code": "global_lower_with_extent_difference",
+      "interpretation": "用户确认更近范围且绿线更合理、整体更低；保留整体高度项的质性证据，仍不是同范围控制实验。",
+      "existing_Hmean": 0.2865265293064967,
+      "existing_Hcenter": 0.019340558049067633,
+      "own_height_range_over_reference_mean": 0.06451748211345723,
+      "new_grade_or_penalty_target": null,
+      "formal_eligibility_changed": false,
+      "reference_geometry_changed": false
+    },
+    {
+      "record_id": "R00848",
+      "image_id": "B6ByNegPMKs_e52609aae11f42a79f6cf50360180fd5",
+      "image_code": "B6ByNegPMKs-48",
+      "object_id": "56c9aa0348514ab3cc5b",
+      "reference_id": "gt:B6ByNegPMKs_e52609aae11f42a79f6cf50360180fd5:data/mp3d_layout/test/label_cor/B6ByNegPMKs_e52609aae11f42a79f6cf50360180fd5.txt",
+      "answers": {
+        "space_extent": "orange_more",
+        "top_in_photo": "reference_better",
+        "height_in_3d": "uniform_lower"
+      },
+      "comment": "",
+      "reviewed_at": "2026-10-13T07:45:08.455Z",
+      "complete": true,
+      "interpretation_code": "global_lower_with_extent_difference",
+      "interpretation": "用户确认更远范围且绿线更合理、整体更低；不能用范围不同直接免除高度评价，不据此拟合强度。",
+      "existing_Hmean": 0.2658601419397937,
+      "existing_Hcenter": 0.008153762454511335,
+      "own_height_range_over_reference_mean": 0.024906980223751332,
+      "new_grade_or_penalty_target": null,
+      "formal_eligibility_changed": false,
+      "reference_geometry_changed": false
+    },
+    {
+      "record_id": "R00687",
+      "image_id": "jtcxE69GiFV_3fb4bb890d7f4964b496a46db647e72a",
+      "image_code": "jtcxE69GiFV-09",
+      "object_id": "44c73224857604910e05",
+      "reference_id": "gt:jtcxE69GiFV_3fb4bb890d7f4964b496a46db647e72a:data/mp3d_layout/valid/label_cor/jtcxE69GiFV_3fb4bb890d7f4964b496a46db647e72a.txt",
+      "answers": {
+        "space_extent": "same",
+        "top_in_photo": "both_wrong",
+        "height_in_3d": "local_uneven"
+      },
+      "comment": "gt好像标的略高了. 橙色一边标的可能低了点",
+      "reviewed_at": "2026-10-13T07:50:42.645Z",
+      "complete": true,
+      "interpretation_code": "approximate_reference_retained_local_height_case",
+      "interpretation": "用户指出GT略高，但最新工作口径仍按正确参考使用，不新增排除或参考不确定性模型；原轻微偏差备注保留。",
+      "existing_Hmean": 0.09784359752286823,
+      "existing_Hcenter": 0.07631652804601706,
+      "own_height_range_over_reference_mean": 0.21013282624385982,
+      "new_grade_or_penalty_target": null,
+      "formal_eligibility_changed": false,
+      "reference_geometry_changed": false
+    },
+    {
+      "record_id": "R00977",
+      "image_id": "uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d",
+      "image_code": "uNb9QFRL6hY-36",
+      "object_id": "6608319ee6b1e7808937",
+      "reference_id": "gt:uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_6c4fa6dfddc1499db228854454bfc61d.txt",
+      "answers": {
+        "space_extent": null,
+        "top_in_photo": null,
+        "height_in_3d": null,
+        "floor_steps": null
+      },
+      "comment": "这图好像是有争议的,这gt标的都是在台阶外的",
+      "reviewed_at": "2026-10-13T07:51:35.310Z",
+      "complete": false,
+      "interpretation_code": "step_scope_pending_comment_only",
+      "interpretation": "四题全为null，仅有GT在台阶外的争议备注；不补成不同高程、GT错误或无法判断选项，暂缓作为高度校准依据。",
+      "existing_Hmean": 0.12922922165205364,
+      "existing_Hcenter": 0.08810338009347202,
+      "own_height_range_over_reference_mean": 0.2796800211016876,
+      "new_grade_or_penalty_target": null,
+      "formal_eligibility_changed": false,
+      "reference_geometry_changed": false
+    }
+  ],
+  "policy": {
+    "minor_reference_errors_do_not_exclude": true,
+    "step_case_separate": true,
+    "raw_nulls_preserved": true,
+    "no_score_or_parameter_change": true,
+    "no_new_quality_grade": true,
+    "independent_validation": false,
+    "prior_confirmed_wrong_reference_exclusions_preserved": true,
+    "reference_working_convention": "按正确参考使用，轻微GT问题不新增排除；明显离谱错误另行处理",
+    "height_shape_categories": [
+      "uniform_height_shift",
+      "side_to_side_tilt_or_regional_height_difference",
+      "isolated_corner_outlier"
+    ],
+    "most_cases_general_clarification_not_per_record_relabel": true
+  },
+  "user_clarifications": [
+    {
+      "source": "本对话：提交回执后的用户澄清",
+      "text": "除了台阶那里,如果其他gt有小问题,其实也无关紧要,我们主要要的是一个参考.",
+      "scope": "本轮审核的轻微GT问题；不撤销此前其他图片明确错误GT的排除"
+    },
+    {
+      "source": "本对话：回执后第二次澄清",
+      "text": "其实很多时候gt都会有点小问题.  但是我们还是把它当成正确的,除非太离谱的错误.\n你给我的这几份,其实大多都是一侧标的偏高,一侧标的偏低. 不是说3个点差不多高度,有一个莫名其妙的低/高",
+      "scope": "研究使用GT的工作口径，以及这批高度案例的总体形态；不替代逐份选项或撤销既有明显错误GT排除"
+    }
+  ]
+}

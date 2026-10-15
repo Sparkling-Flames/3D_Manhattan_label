@@ -58,7 +58,7 @@ def audit(source):
     assert sum(row["stage2_regression_eligible"] for row in rows) == 117
 
     unchanged_inputs = []
-    with ZipFile(ROOT / "research/quality_pro_handoff_20261014/quality_pro_handoff_20261014_READY.zip") as archive:
+    with ZipFile(ROOT / "research/quality/quality_pro_handoff_20261014/quality_pro_handoff_20261014_READY.zip") as archive:
         for path in sorted((source / "frozen_input").rglob("*")):
             if not path.is_file() or "__pycache__" in path.parts:
                 continue

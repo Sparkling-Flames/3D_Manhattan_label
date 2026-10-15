@@ -1,0 +1,1228 @@
+{
+  "source_record": "R03274",
+  "diagnostic_alignment": {
+    "reference_reversal": false,
+    "reference_shift": 2,
+    "longitude_cost": 88.7705976296347,
+    "runnerup_cost": 207456.1239507454
+  },
+  "point_delta_vs_aligned_reference": [
+    [
+      -7.352729970326436,
+      -5.8925519287833765
+    ],
+    [
+      -7.352729970326436,
+      21.133293768546025
+    ],
+    [
+      -0.3188724035608175,
+      -4.733293768545991
+    ],
+    [
+      -0.3188724035608175,
+      -2.3867062314540135
+    ],
+    [
+      5.8616023738871945,
+      1.5694658753709234
+    ],
+    [
+      5.8616023738871945,
+      -0.6551632047477938
+    ],
+    [
+      -0.4978931750741822,
+      -1.3218397626112903
+    ],
+    [
+      -0.4978931750741822,
+      -2.4788724035608425
+    ]
+  ],
+  "original_points": [
+    [
+      91.1572700296736,
+      218.7774480712166
+    ],
+    [
+      91.1572700296736,
+      312.973293768546
+    ],
+    [
+      296.26112759643917,
+      199.026706231454
+    ],
+    [
+      296.26112759643917,
+      312.973293768546
+    ],
+    [
+      636.5816023738872,
+      129.13946587537092
+    ],
+    [
+      636.5816023738872,
+      395.0148367952522
+    ],
+    [
+      998.1721068249258,
+      217.25816023738872
+    ],
+    [
+      998.1721068249258,
+      296.26112759643917
+    ]
+  ],
+  "reference_points": [
+    [
+      630.72,
+      127.57
+    ],
+    [
+      630.72,
+      395.67
+    ],
+    [
+      998.67,
+      218.58
+    ],
+    [
+      998.67,
+      298.74
+    ],
+    [
+      98.51,
+      224.67
+    ],
+    [
+      98.51,
+      291.84
+    ],
+    [
+      296.58,
+      203.76
+    ],
+    [
+      296.58,
+      315.36
+    ]
+  ],
+  "aligned_reference": [
+    [
+      98.51,
+      224.67
+    ],
+    [
+      98.51,
+      291.84
+    ],
+    [
+      296.58,
+      203.76
+    ],
+    [
+      296.58,
+      315.36
+    ],
+    [
+      630.72,
+      127.57
+    ],
+    [
+      630.72,
+      395.67
+    ],
+    [
+      998.67,
+      218.58
+    ],
+    [
+      998.67,
+      298.74
+    ]
+  ],
+  "records": [
+    {
+      "case_id": "J04_restore_bottom_y_1",
+      "kind": "diagnostic_single_bottom_y_restoration",
+      "original_record": "R03274",
+      "edited_processed_row_zero_based": 1,
+      "delta_y": -21.133293768546025,
+      "changed_points": 1,
+      "not_used_as_annotation_or_fit_row": true,
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.928368558160979,
+        "S_bottom_deg": 0.6372140068370971,
+        "dir": 2.2057978823141196,
+        "Hmean": 0.0501514425502354,
+        "Hcenter": 0.029374888167904817,
+        "height_mean_ratio": 1.0501514425502354,
+        "iou_3d_corner_mean": 0.8842800049486326
+      },
+      "candidate_components": {
+        "current": {
+          "score": 77.19068948027626,
+          "floor_score": 78.34605553916906,
+          "boundary_loss": 0.012688802828418373,
+          "direction_loss": 0.17227009749151115,
+          "global_height_loss": 0.003929948734171191,
+          "local_height_loss": 0.01380614487803063,
+          "height_loss": 0.017736093612201822,
+          "denominator": 1.2026949939321314,
+          "height_score_drop": 1.1553660588927954,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.029374888167904817,
+        "height_center_shift_h": -0.09382133902026601,
+        "height_center_signed_global_relative": 0.05015144255023536,
+        "height_centered_min_wall_height_h": 1.7672570662035985,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": [],
+      "diagnostics": {
+        "profile": {
+          "axis_deg": 89.4624549912134,
+          "D": 2.2057978823141333,
+          "D_equal_edge": 2.2252731591754507,
+          "edge_angle_deg": [
+            -93.6657365821768,
+            0.7110048280360577,
+            89.73007273206494,
+            -177.64077369200842
+          ],
+          "weights": [
+            0.2925802385073888,
+            0.21357726283299766,
+            0.2974202847269879,
+            0.19642221393262557
+          ],
+          "residual_deg": [
+            -3.128191573390211,
+            1.2485498368226473,
+            0.26761774085153434,
+            2.8967713167781994
+          ],
+          "axis_family": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "signed_turn_deg": [
+            94.37674141021284,
+            89.01906790402887,
+            92.62915357592664,
+            83.97503710983165
+          ],
+          "edge_length": [
+            4.4719035221480254,
+            3.264393107292846,
+            4.54588056122354,
+            3.0021890569046024
+          ],
+          "near_parallel_adjacent_fraction": 0.0,
+          "absolute_turn_total": 360.0
+        },
+        "reference_profile": {
+          "axis_deg": 89.99891627010793,
+          "D": 0.0056929218040414975,
+          "D_equal_edge": 0.005982719771578806,
+          "edge_angle_deg": [
+            89.99910534249187,
+            179.98857075028852,
+            -89.99562313888148,
+            0.0014238906087233167
+          ],
+          "weights": [
+            0.2905403204726548,
+            0.2094495560628535,
+            0.29058730635917934,
+            0.20942281710531238
+          ],
+          "residual_deg": [
+            0.00018907238394660908,
+            -0.010345519819395577,
+            0.005460591010603366,
+            0.0025076205007934504
+          ],
+          "axis_family": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "signed_turn_deg": [
+            89.98946540779662,
+            90.01580611083,
+            89.9970470294902,
+            89.99768145188318
+          ],
+          "edge_length": [
+            4.3267587756862635,
+            3.119146090581383,
+            4.327458494735663,
+            3.1187478910509165
+          ],
+          "near_parallel_adjacent_fraction": 0.0,
+          "absolute_turn_total": 360.0
+        },
+        "N_nearest_deg": 18.499528125590817,
+        "normal_tie_fraction": 0.013671875,
+        "azimuth_bottom_mean_px": 2.1860568304854437,
+        "azimuth_bottom_rms_px": 2.6489437914399065,
+        "azimuth_bottom_max_px": 4.821815232815368,
+        "azimuth_bottom_top10_rms_px": 4.640444341945112,
+        "ray_ambiguity_fraction": 0.0,
+        "N_ray_deg": 10.41649631179805,
+        "spherical_bottom_max_deg": 1.3232404723808502,
+        "spherical_bottom_top10_mean_deg": 1.3078927218549015,
+        "spherical_bottom_mean_deg": 0.637214006837097
+      },
+      "scores": {
+        "current_hill08": {
+          "score": 77.19068948027626,
+          "floor_score": 78.34605553916906,
+          "boundary_loss": 0.012688802828418373,
+          "direction_loss": 0.17227009749151115,
+          "global_height_loss": 0.003929948734171191,
+          "local_height_loss": 0.01380614487803063,
+          "height_loss": 0.017736093612201822,
+          "denominator": 1.2026949939321314,
+          "height_score_drop": 1.1553660588927954,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        },
+        "historical_tail12_g1": {
+          "score": 77.20822260992476,
+          "floor_score": 78.27064474724624,
+          "boundary_loss": 0.012688802828418373,
+          "direction_loss": 0.17341176036343037,
+          "global_height_loss": 0.002515167189869562,
+          "local_height_loss": 0.01380614487803063,
+          "height_loss": 0.016321312067900193,
+          "denominator": 1.202421875259749,
+          "height_score_drop": 1.0624221373214766,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        },
+        "historical_simple8_g1": {
+          "score": 84.0126505348119,
+          "floor_score": 85.27211631878876,
+          "boundary_loss": 0.012688802828418373,
+          "direction_loss": 0.07602412965033523,
+          "global_height_loss": 0.002515167189869562,
+          "local_height_loss": 0.01380614487803063,
+          "height_loss": 0.016321312067900193,
+          "denominator": 1.1050342445466539,
+          "height_score_drop": 1.2594657839768644,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        },
+        "loss_sum": {
+          "score": 78.1339485389436,
+          "floor_score": 79.23193761987105,
+          "boundary_loss": 0.012688802828418373,
+          "direction_loss": 0.17227009749151115,
+          "global_height_loss": 0.003929948734171191,
+          "local_height_loss": 0.01380614487803063,
+          "height_loss": 0.017736093612201822,
+          "denominator": 1.188175659263221,
+          "height_score_drop": 1.097989080927448,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null,
+          "denominator_semantics": "stable_I_numerator",
+          "overlap_neutral_loss": 0.0771584099971212
+        },
+        "max_floor": {
+          "score": 78.9163459215371,
+          "floor_score": 80.03659225048523,
+          "boundary_loss": 0.012688802828418373,
+          "direction_loss": 0.17227009749151115,
+          "global_height_loss": 0.003929948734171191,
+          "local_height_loss": 0.01380614487803063,
+          "height_loss": 0.017736093612201822,
+          "denominator": 1.2671646011008342,
+          "height_score_drop": 1.1202463289481273,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        },
+        "nearest_normal_hill": {
+          "score": 38.96951565515194,
+          "floor_score": 39.261818449744226,
+          "boundary_loss": 0.012688802828418373,
+          "direction_loss": 1.3518694240130258,
+          "global_height_loss": 0.003929948734171191,
+          "local_height_loss": 0.01380614487803063,
+          "height_loss": 0.017736093612201822,
+          "denominator": 2.3822943204536458,
+          "height_score_drop": 0.29230279459228825,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null,
+          "denominator_semantics": "unit_numerator_loss",
+          "overlap_neutral_loss": 0.0771584099971212
+        },
+        "ray_normal_hill": {
+          "score": 43.27735966126722,
+          "floor_score": 43.63815815653258,
+          "boundary_loss": 0.012688802828418373,
+          "direction_loss": 1.1147349872198864,
+          "global_height_loss": 0.003929948734171191,
+          "local_height_loss": 0.01380614487803063,
+          "height_loss": 0.017736093612201822,
+          "denominator": 2.1451598836605066,
+          "height_score_drop": 0.3607984952653638,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null,
+          "denominator_semantics": "unit_numerator_loss",
+          "overlap_neutral_loss": 0.0771584099971212
+        }
+      }
+    },
+    {
+      "case_id": "J04_restore_bottom_y_2",
+      "kind": "diagnostic_single_bottom_y_restoration",
+      "original_record": "R03274",
+      "edited_processed_row_zero_based": 3,
+      "delta_y": 2.3867062314540135,
+      "changed_points": 1,
+      "not_used_as_annotation_or_fit_row": true,
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.6700881086935069,
+        "S_bottom_deg": 1.955921467638643,
+        "dir": 18.99101685771049,
+        "Hmean": 0.0047141610474652484,
+        "Hcenter": 0.050204813933241076,
+        "height_mean_ratio": 0.9952858389525348,
+        "iou_3d_corner_mean": 0.6641468447468014
+      },
+      "candidate_components": {
+        "current": {
+          "score": 26.605170257274832,
+          "floor_score": 27.038482471014856,
+          "boundary_loss": 0.11955089961155321,
+          "direction_loss": 1.358724681911332,
+          "global_height_loss": 3.4723928720997885e-05,
+          "local_height_loss": 0.040328373473141714,
+          "height_loss": 0.04036309740186271,
+          "denominator": 2.518638678924748,
+          "height_score_drop": 0.4333122137400238,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.050204813933241076,
+        "height_center_shift_h": 0.008819066398485731,
+        "height_center_signed_global_relative": -0.0047141610474652354,
+        "height_centered_min_wall_height_h": 1.646444460680296,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": [],
+      "diagnostics": {
+        "profile": {
+          "axis_deg": 2.5023400928254906,
+          "D": 18.991016857710502,
+          "D_equal_edge": 20.87194336620666,
+          "edge_angle_deg": [
+            -110.13923574054849,
+            0.20310224532087195,
+            89.73007273206494,
+            -142.61300479477313
+          ],
+          "weights": [
+            0.23452068189078507,
+            0.2336402265609233,
+            0.33741235858764884,
+            0.19442673296064272
+          ],
+          "residual_deg": [
+            -22.641575833373977,
+            -2.299237847504621,
+            -2.7722673607605657,
+            34.88465511240139
+          ],
+          "axis_family": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "signed_turn_deg": [
+            110.34233798586934,
+            89.52697048674406,
+            127.6569224731619,
+            32.47376905422465
+          ],
+          "edge_length": [
+            3.1596442213164226,
+            3.14778204535524,
+            4.54588056122354,
+            2.6194674956412203
+          ],
+          "near_parallel_adjacent_fraction": 0.25,
+          "absolute_turn_total": 359.99999999999994
+        },
+        "reference_profile": {
+          "axis_deg": 89.99891627010793,
+          "D": 0.0056929218040414975,
+          "D_equal_edge": 0.005982719771578806,
+          "edge_angle_deg": [
+            89.99910534249187,
+            179.98857075028852,
+            -89.99562313888148,
+            0.0014238906087233167
+          ],
+          "weights": [
+            0.2905403204726548,
+            0.2094495560628535,
+            0.29058730635917934,
+            0.20942281710531238
+          ],
+          "residual_deg": [
+            0.00018907238394660908,
+            -0.010345519819395577,
+            0.005460591010603366,
+            0.0025076205007934504
+          ],
+          "axis_family": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "signed_turn_deg": [
+            89.98946540779662,
+            90.01580611083,
+            89.9970470294902,
+            89.99768145188318
+          ],
+          "edge_length": [
+            4.3267587756862635,
+            3.119146090581383,
+            4.327458494735663,
+            3.1187478910509165
+          ],
+          "near_parallel_adjacent_fraction": 0.0,
+          "absolute_turn_total": 360.0
+        },
+        "N_nearest_deg": 24.461815822405793,
+        "normal_tie_fraction": 0.044921875,
+        "azimuth_bottom_mean_px": 5.584817173665938,
+        "azimuth_bottom_rms_px": 7.961076542164619,
+        "azimuth_bottom_max_px": 22.89025570076234,
+        "azimuth_bottom_top10_rms_px": 19.56229699804964,
+        "ray_ambiguity_fraction": 0.0,
+        "N_ray_deg": 17.94367630908385,
+        "spherical_bottom_max_deg": 7.805927704323572,
+        "spherical_bottom_top10_mean_deg": 6.86617957369251,
+        "spherical_bottom_mean_deg": 1.955921467638643
+      },
+      "scores": {
+        "current_hill08": {
+          "score": 26.605170257274832,
+          "floor_score": 27.038482471014856,
+          "boundary_loss": 0.11955089961155321,
+          "direction_loss": 1.358724681911332,
+          "global_height_loss": 3.4723928720997885e-05,
+          "local_height_loss": 0.040328373473141714,
+          "height_loss": 0.04036309740186271,
+          "denominator": 2.518638678924748,
+          "height_score_drop": 0.4333122137400238,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        },
+        "historical_tail12_g1": {
+          "score": 7.621982963584672,
+          "floor_score": 7.65712701910709,
+          "boundary_loss": 0.11955089961155321,
+          "direction_loss": 7.631617874543729,
+          "global_height_loss": 2.2223314381438648e-05,
+          "local_height_loss": 0.040328373473141714,
+          "height_loss": 0.04035059678752315,
+          "denominator": 8.791519370942805,
+          "height_score_drop": 0.035144055522418505,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        },
+        "historical_simple8_g1": {
+          "score": 9.861206421202871,
+          "floor_score": 9.920113125535376,
+          "boundary_loss": 0.11955089961155321,
+          "direction_loss": 5.635292520153813,
+          "global_height_loss": 2.2223314381438648e-05,
+          "local_height_loss": 0.040328373473141714,
+          "height_loss": 0.04035059678752315,
+          "denominator": 6.79519401655289,
+          "height_score_drop": 0.058906704332505555,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        },
+        "loss_sum": {
+          "score": 33.21178107875734,
+          "floor_score": 33.663044407310124,
+          "boundary_loss": 0.11955089961155321,
+          "direction_loss": 1.358724681911332,
+          "global_height_loss": 3.4723928720997885e-05,
+          "local_height_loss": 0.040328373473141714,
+          "height_loss": 0.04036309740186271,
+          "denominator": 2.0176217201494904,
+          "height_score_drop": 0.45126332855278406,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null,
+          "denominator_semantics": "stable_I_numerator",
+          "overlap_neutral_loss": 0.49234106235631203
+        },
+        "max_floor": {
+          "score": 34.58497700474626,
+          "floor_score": 35.07460331318564,
+          "boundary_loss": 0.11955089961155321,
+          "direction_loss": 1.358724681911332,
+          "global_height_loss": 3.4723928720997885e-05,
+          "local_height_loss": 0.040328373473141714,
+          "height_loss": 0.04036309740186271,
+          "denominator": 2.891428841669507,
+          "height_score_drop": 0.4896263084393837,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        },
+        "nearest_normal_hill": {
+          "score": 26.058724611999406,
+          "floor_score": 26.474280944198746,
+          "boundary_loss": 0.11955089961155321,
+          "direction_loss": 1.4115399734734884,
+          "global_height_loss": 3.4723928720997885e-05,
+          "local_height_loss": 0.040328373473141714,
+          "height_loss": 0.04036309740186271,
+          "denominator": 2.571453970486904,
+          "height_score_drop": 0.4155563321993405,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null,
+          "denominator_semantics": "unit_numerator_loss",
+          "overlap_neutral_loss": 0.49234106235631203
+        },
+        "ray_normal_hill": {
+          "score": 26.766735870027738,
+          "floor_score": 27.205370209517955,
+          "boundary_loss": 0.11955089961155321,
+          "direction_loss": 1.3435220287585692,
+          "global_height_loss": 3.4723928720997885e-05,
+          "local_height_loss": 0.040328373473141714,
+          "height_loss": 0.04036309740186271,
+          "denominator": 2.503436025771985,
+          "height_score_drop": 0.4386343394902177,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null,
+          "denominator_semantics": "unit_numerator_loss",
+          "overlap_neutral_loss": 0.49234106235631203
+        }
+      }
+    },
+    {
+      "case_id": "J04_restore_bottom_y_3",
+      "kind": "diagnostic_single_bottom_y_restoration",
+      "original_record": "R03274",
+      "edited_processed_row_zero_based": 5,
+      "delta_y": 0.6551632047477938,
+      "changed_points": 1,
+      "not_used_as_annotation_or_fit_row": true,
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.6804388598844123,
+        "S_bottom_deg": 1.8027567460768956,
+        "dir": 19.43183374639453,
+        "Hmean": 0.000199481511485744,
+        "Hcenter": 0.05206870710877968,
+        "height_mean_ratio": 0.9998005184885143,
+        "iou_3d_corner_mean": 0.6777081948900033
+      },
+      "candidate_components": {
+        "current": {
+          "score": 27.11529643786149,
+          "floor_score": 27.59226169124081,
+          "boundary_loss": 0.10156037142267987,
+          "direction_loss": 1.3644892315369002,
+          "global_height_loss": 6.217636472599534e-08,
+          "local_height_loss": 0.043378404159678134,
+          "height_loss": 0.04337846633604286,
+          "denominator": 2.509428069295623,
+          "height_score_drop": 0.4769652533793227,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.05206870710877968,
+        "height_center_shift_h": 0.0003731821372561228,
+        "height_center_signed_global_relative": -0.0001994815114856951,
+        "height_centered_min_wall_height_h": 1.6379985764190663,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": [],
+      "diagnostics": {
+        "profile": {
+          "axis_deg": 2.0758329396175683,
+          "D": 19.431833746394535,
+          "D_equal_edge": 21.383970346478954,
+          "edge_angle_deg": [
+            -111.89910979228488,
+            0.8016422338064112,
+            89.6681100287749,
+            -142.61300479477313
+          ],
+          "weights": [
+            0.23656505960597723,
+            0.23882036028693976,
+            0.33269313412904045,
+            0.19192144597804248
+          ],
+          "residual_deg": [
+            -23.974942731902445,
+            -1.274190705811158,
+            -2.407722910842665,
+            35.31116226560931
+          ],
+          "axis_family": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "signed_turn_deg": [
+            112.70075202609127,
+            88.86646779496851,
+            127.71888517645198,
+            30.713895002488243
+          ],
+          "edge_length": [
+            3.2287922857416436,
+            3.2595740818904426,
+            4.540810155076318,
+            2.6194674956412203
+          ],
+          "near_parallel_adjacent_fraction": 0.25,
+          "absolute_turn_total": 360.0
+        },
+        "reference_profile": {
+          "axis_deg": 89.99891627010793,
+          "D": 0.0056929218040414975,
+          "D_equal_edge": 0.005982719771578806,
+          "edge_angle_deg": [
+            89.99910534249187,
+            179.98857075028852,
+            -89.99562313888148,
+            0.0014238906087233167
+          ],
+          "weights": [
+            0.2905403204726548,
+            0.2094495560628535,
+            0.29058730635917934,
+            0.20942281710531238
+          ],
+          "residual_deg": [
+            0.00018907238394660908,
+            -0.010345519819395577,
+            0.005460591010603366,
+            0.0025076205007934504
+          ],
+          "axis_family": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "signed_turn_deg": [
+            89.98946540779662,
+            90.01580611083,
+            89.9970470294902,
+            89.99768145188318
+          ],
+          "edge_length": [
+            4.3267587756862635,
+            3.119146090581383,
+            4.327458494735663,
+            3.1187478910509165
+          ],
+          "near_parallel_adjacent_fraction": 0.0,
+          "absolute_turn_total": 360.0
+        },
+        "N_nearest_deg": 25.53226808163555,
+        "normal_tie_fraction": 0.04833984375,
+        "azimuth_bottom_mean_px": 5.109004227659436,
+        "azimuth_bottom_rms_px": 7.582909531383763,
+        "azimuth_bottom_max_px": 22.773761416523087,
+        "azimuth_bottom_top10_rms_px": 19.154619700447213,
+        "ray_ambiguity_fraction": 0.0,
+        "N_ray_deg": 18.278020940615292,
+        "spherical_bottom_max_deg": 7.7960798643578,
+        "spherical_bottom_top10_mean_deg": 6.738895710147945,
+        "spherical_bottom_mean_deg": 1.8027567460768958
+      },
+      "scores": {
+        "current_hill08": {
+          "score": 27.11529643786149,
+          "floor_score": 27.59226169124081,
+          "boundary_loss": 0.10156037142267987,
+          "direction_loss": 1.3644892315369002,
+          "global_height_loss": 6.217636472599534e-08,
+          "local_height_loss": 0.043378404159678134,
+          "height_loss": 0.04337846633604286,
+          "denominator": 2.509428069295623,
+          "height_score_drop": 0.4769652533793227,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        },
+        "historical_tail12_g1": {
+          "score": 7.250020011954583,
+          "floor_score": 7.283684747460892,
+          "boundary_loss": 0.10156037142267987,
+          "direction_loss": 8.240398863175093,
+          "global_height_loss": 3.979287342463701e-08,
+          "local_height_loss": 0.043378404159678134,
+          "height_loss": 0.04337844395255156,
+          "denominator": 9.385337678550325,
+          "height_score_drop": 0.03366473550630911,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        },
+        "historical_simple8_g1": {
+          "score": 9.658631093169824,
+          "floor_score": 9.718472036216054,
+          "boundary_loss": 0.10156037142267987,
+          "direction_loss": 5.899940042929958,
+          "global_height_loss": 3.979287342463701e-08,
+          "local_height_loss": 0.043378404159678134,
+          "height_loss": 0.04337844395255156,
+          "denominator": 7.044878858305189,
+          "height_score_drop": 0.05984094304623078,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        },
+        "loss_sum": {
+          "score": 33.567547254732276,
+          "floor_score": 34.063549569874624,
+          "boundary_loss": 0.10156037142267987,
+          "direction_loss": 1.3644892315369002,
+          "global_height_loss": 6.217636472599534e-08,
+          "local_height_loss": 0.043378404159678134,
+          "height_loss": 0.04337846633604286,
+          "denominator": 2.027073514549043,
+          "height_score_drop": 0.4960023151423485,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null,
+          "denominator_semantics": "stable_I_numerator",
+          "overlap_neutral_loss": 0.46963975598023944
+        },
+        "max_floor": {
+          "score": 34.75229920467905,
+          "floor_score": 35.284209166360405,
+          "boundary_loss": 0.10156037142267987,
+          "direction_loss": 1.3644892315369002,
+          "global_height_loss": 6.217636472599534e-08,
+          "local_height_loss": 0.043378404159678134,
+          "height_loss": 0.04337846633604286,
+          "denominator": 2.8775074538531826,
+          "height_score_drop": 0.5319099616813574,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        },
+        "nearest_normal_hill": {
+          "score": 26.544950378527496,
+          "floor_score": 27.001892514054045,
+          "boundary_loss": 0.10156037142267987,
+          "direction_loss": 1.4184069217226245,
+          "global_height_loss": 6.217636472599534e-08,
+          "local_height_loss": 0.043378404159678134,
+          "height_loss": 0.04337846633604286,
+          "denominator": 2.563345759481347,
+          "height_score_drop": 0.4569421355265497,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null,
+          "denominator_semantics": "unit_numerator_loss",
+          "overlap_neutral_loss": 0.46963975598023944
+        },
+        "ray_normal_hill": {
+          "score": 27.287840107782543,
+          "floor_score": 27.77094892792915,
+          "boundary_loss": 0.10156037142267987,
+          "direction_loss": 1.348621873520694,
+          "global_height_loss": 6.217636472599534e-08,
+          "local_height_loss": 0.043378404159678134,
+          "height_loss": 0.04337846633604286,
+          "denominator": 2.4935607112794167,
+          "height_score_drop": 0.48310882014660805,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null,
+          "denominator_semantics": "unit_numerator_loss",
+          "overlap_neutral_loss": 0.46963975598023944
+        }
+      }
+    },
+    {
+      "case_id": "J04_restore_bottom_y_4",
+      "kind": "diagnostic_single_bottom_y_restoration",
+      "original_record": "R03274",
+      "edited_processed_row_zero_based": 7,
+      "delta_y": 2.4788724035608425,
+      "changed_points": 1,
+      "not_used_as_annotation_or_fit_row": true,
+      "status": "complete",
+      "reason_codes": [],
+      "metrics": {
+        "iou_2d": 0.6723538388779006,
+        "S_bottom_deg": 1.759663467921567,
+        "dir": 17.9877631882154,
+        "Hmean": 0.006912990457803581,
+        "Hcenter": 0.05091754210886735,
+        "height_mean_ratio": 0.9930870095421964,
+        "iou_3d_corner_mean": 0.6650788428132641
+      },
+      "candidate_components": {
+        "current": {
+          "score": 27.08343698489623,
+          "floor_score": 27.544517720637707,
+          "boundary_loss": 0.09676298501055484,
+          "direction_loss": 1.344208556757047,
+          "global_height_loss": 7.467099542138025e-05,
+          "local_height_loss": 0.041481537510532476,
+          "height_loss": 0.04155620850595386,
+          "denominator": 2.4825277502735554,
+          "height_score_drop": 0.4610807357414757,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        }
+      },
+      "height_diagnostics": {
+        "Hcenter": 0.05091754210886735,
+        "height_center_shift_h": 0.012932549661672788,
+        "height_center_signed_global_relative": -0.006912990457803526,
+        "height_centered_min_wall_height_h": 1.650557943943483,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.0,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "traditional_reason_codes": [],
+      "diagnostics": {
+        "profile": {
+          "axis_deg": 1.1106940449658442,
+          "D": 17.987763188215403,
+          "D_equal_edge": 19.880016333971994,
+          "edge_angle_deg": [
+            -111.89910979228488,
+            0.7110048280360577,
+            90.21867878495823,
+            -146.47860274709683
+          ],
+          "weights": [
+            0.2436226237503318,
+            0.24630881870696372,
+            0.32512435532720296,
+            0.18494420221550145
+          ],
+          "residual_deg": [
+            -23.009803837250715,
+            -0.39968921692978654,
+            -0.8920152600076108,
+            32.41070320793733
+          ],
+          "axis_family": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "signed_turn_deg": [
+            112.61011462032093,
+            89.50767395692219,
+            123.30271846794494,
+            34.57949295481194
+          ],
+          "edge_length": [
+            3.2287922857416436,
+            3.264393107292846,
+            4.30895535983968,
+            2.4511123154884764
+          ],
+          "near_parallel_adjacent_fraction": 0.25,
+          "absolute_turn_total": 360.0
+        },
+        "reference_profile": {
+          "axis_deg": 89.99891627010793,
+          "D": 0.0056929218040414975,
+          "D_equal_edge": 0.005982719771578806,
+          "edge_angle_deg": [
+            89.99910534249187,
+            179.98857075028852,
+            -89.99562313888148,
+            0.0014238906087233167
+          ],
+          "weights": [
+            0.2905403204726548,
+            0.2094495560628535,
+            0.29058730635917934,
+            0.20942281710531238
+          ],
+          "residual_deg": [
+            0.00018907238394660908,
+            -0.010345519819395577,
+            0.005460591010603366,
+            0.0025076205007934504
+          ],
+          "axis_family": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "signed_turn_deg": [
+            89.98946540779662,
+            90.01580611083,
+            89.9970470294902,
+            89.99768145188318
+          ],
+          "edge_length": [
+            4.3267587756862635,
+            3.119146090581383,
+            4.327458494735663,
+            3.1187478910509165
+          ],
+          "near_parallel_adjacent_fraction": 0.0,
+          "absolute_turn_total": 360.0
+        },
+        "N_nearest_deg": 23.693325114242434,
+        "normal_tie_fraction": 0.04296875,
+        "azimuth_bottom_mean_px": 4.914938024528368,
+        "azimuth_bottom_rms_px": 7.59829710599198,
+        "azimuth_bottom_max_px": 22.773761416523087,
+        "azimuth_bottom_top10_rms_px": 19.22840894327768,
+        "ray_ambiguity_fraction": 0.0,
+        "N_ray_deg": 17.41050814634222,
+        "spherical_bottom_max_deg": 7.7960798643578,
+        "spherical_bottom_top10_mean_deg": 6.7627197839094775,
+        "spherical_bottom_mean_deg": 1.759663467921567
+      },
+      "scores": {
+        "current_hill08": {
+          "score": 27.08343698489623,
+          "floor_score": 27.544517720637707,
+          "boundary_loss": 0.09676298501055484,
+          "direction_loss": 1.344208556757047,
+          "global_height_loss": 7.467099542138025e-05,
+          "local_height_loss": 0.041481537510532476,
+          "height_loss": 0.04155620850595386,
+          "denominator": 2.4825277502735554,
+          "height_score_drop": 0.4610807357414757,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        },
+        "historical_tail12_g1": {
+          "score": 8.92752164561266,
+          "floor_score": 8.977023363543687,
+          "boundary_loss": 0.09676298501055484,
+          "direction_loss": 6.392956175222179,
+          "global_height_loss": 4.7789437069683356e-05,
+          "local_height_loss": 0.041481537510532476,
+          "height_loss": 0.04152932694760216,
+          "denominator": 7.531248487180336,
+          "height_score_drop": 0.04950171793102598,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        },
+        "historical_simple8_g1": {
+          "score": 10.855076712786559,
+          "floor_score": 10.928349799730091,
+          "boundary_loss": 0.09676298501055484,
+          "direction_loss": 5.055619133051829,
+          "global_height_loss": 4.7789437069683356e-05,
+          "local_height_loss": 0.041481537510532476,
+          "height_loss": 0.04152932694760216,
+          "denominator": 6.193911445009986,
+          "height_score_drop": 0.07327308694353185,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        },
+        "loss_sum": {
+          "score": 33.671849339963586,
+          "floor_score": 34.149697309342535,
+          "boundary_loss": 0.09676298501055484,
+          "direction_loss": 1.344208556757047,
+          "global_height_loss": 7.467099542138025e-05,
+          "local_height_loss": 0.041481537510532476,
+          "height_loss": 0.04155620850595386,
+          "denominator": 1.9967832241394428,
+          "height_score_drop": 0.47784796937894924,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null,
+          "denominator_semantics": "stable_I_numerator",
+          "overlap_neutral_loss": 0.4873120999337375
+        },
+        "max_floor": {
+          "score": 34.80589092876648,
+          "floor_score": 35.31671215737151,
+          "boundary_loss": 0.09676298501055484,
+          "direction_loss": 1.344208556757047,
+          "global_height_loss": 7.467099542138025e-05,
+          "local_height_loss": 0.041481537510532476,
+          "height_loss": 0.04155620850595386,
+          "denominator": 2.8730768651967384,
+          "height_score_drop": 0.5108212286050318,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null
+        },
+        "nearest_normal_hill": {
+          "score": 26.42492228748192,
+          "floor_score": 26.863672285331003,
+          "boundary_loss": 0.09676298501055484,
+          "direction_loss": 1.4060736775891507,
+          "global_height_loss": 7.467099542138025e-05,
+          "local_height_loss": 0.041481537510532476,
+          "height_loss": 0.04155620850595386,
+          "denominator": 2.5443928711056594,
+          "height_score_drop": 0.438749997849083,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null,
+          "denominator_semantics": "unit_numerator_loss",
+          "overlap_neutral_loss": 0.4873120999337375
+        },
+        "ray_normal_hill": {
+          "score": 27.18578126225948,
+          "floor_score": 27.650383182231565,
+          "boundary_loss": 0.09676298501055484,
+          "direction_loss": 1.3348627702157319,
+          "global_height_loss": 7.467099542138025e-05,
+          "local_height_loss": 0.041481537510532476,
+          "height_loss": 0.04155620850595386,
+          "denominator": 2.4731819637322405,
+          "height_score_drop": 0.4646019199720861,
+          "status": "complete",
+          "reference_selected_by_this_function": false,
+          "iou_roundoff_clamped": false,
+          "raw_input_quality_certified": false,
+          "human_grade": null,
+          "denominator_semantics": "unit_numerator_loss",
+          "overlap_neutral_loss": 0.4873120999337375
+        }
+      }
+    }
+  ],
+  "source_unchanged": true
+}

@@ -1,0 +1,38 @@
+{
+  "selection_kind": "documented_multiobjective_working_choice_not_unique_optimizer",
+  "no_per_case_numeric_targets": true,
+  "human_data": "30 exposed ordinary development cards; 28-card scope-comment sensitivity",
+  "ordinary_complete_before_doorway": true,
+  "A": {
+    "version": "WQ-A10-20261015",
+    "direction_scale_deg": 10.0,
+    "direction_cap": 1.5,
+    "bottom_scale_squared_deg2": 32.0,
+    "global_height_scale": 0.8,
+    "local_height_scale": 0.25,
+    "pooling_order": 1.0
+  },
+  "B": {
+    "version": "WQ-B8L2-20261015",
+    "direction_scale_deg": 8.0,
+    "direction_cap": 1.5,
+    "bottom_scale_squared_deg2": 32.0,
+    "global_height_scale": 0.8,
+    "local_height_scale": 0.25,
+    "pooling_order": 2.0
+  },
+  "A_reason": "Broaden D Hill scale to 10 degrees; 5.71-degree true-angle shear rises from 75.45 to 85.42. Keep Sb unchanged: weakening it can reward omitted details. Retain large-error guard and height response. Zero nonadjacent reversals on the 30-card exposed diagnostic is supporting, not validation.",
+  "B_reason": "Use Euclidean pooling between the entire floor-fidelity block O+Sb^2/32 and direction, not among every term. Scale 8 with p=2 combines a milder small-error response and a 29.3% balanced-block loss discount without a hard max plateau. p=3 suppresses secondary errors more; p=1.5 discounts less. No claim that p=2 was statistically estimated or uniquely optimal.",
+  "unchanged_fields": [
+    "bottom_scale_squared_deg2",
+    "direction_cap",
+    "global_height_scale",
+    "local_height_scale"
+  ],
+  "unresolved": [
+    "D is intrinsic rather than reference-angle error",
+    "no causal same-error detector",
+    "legitimate nonorthogonal reference self-score remains below 100",
+    "missing structure can be underweighted"
+  ]
+}

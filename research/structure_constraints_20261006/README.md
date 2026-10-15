@@ -62,7 +62,7 @@ python -m tools.thesis_main.analysis.structure_paths_local_review_20261006 --sta
 - [human_review.json](human_review.json)：已有人工关系副本；真源仍为`research/point_route_review_20261006/human_review.json`，本README补充e9z反馈及最新政策。
 - [images/](images/)：9张原图，文件名为图片code；不含覆盖GT的合成图。
 - [evaluation/references.json](evaluation/references.json)：单独保存参考，不用于生成策略。
-- [全库计数](../../analysis_results/point_threshold_expanded_20261006/PAIR_COUNT_REPORT.md)、[邻点失败](../../analysis_results/point_context_probe_20261006/REPORT.md)、[e9z诊断](../../analysis_results/point_threshold_expanded_20261006/REPORT.md)、[方法原意](../../docs/thesis_main/点投票与区域投票_方法溯源_20261003.md)。
+- [全库计数](../../analysis_results/point_threshold_expanded_20261006/PAIR_COUNT_REPORT.md)、[邻点失败](../../analysis_results/point_context_probe_20261006/REPORT.md)、[e9z诊断](../../analysis_results/point_threshold_expanded_20261006/REPORT.md)、[方法原意](../../docs/thesis_main/topics/fusion/点投票与区域投票_方法溯源_20261003.md)。
 - 算法源码：仓库根目录的`tools/`、`lib/`，不另复制依赖快照。
 - `manifest.json`、`VERIFICATION.json`保留首次ZIP交接时的历史环境和验证记录；当前main复算记录见[main_handoff_check.json](../../analysis_results/structure_paths_review_20261006/main_handoff_check.json)。旧ZIP不是本轮交接入口，不要求再次上传。
 

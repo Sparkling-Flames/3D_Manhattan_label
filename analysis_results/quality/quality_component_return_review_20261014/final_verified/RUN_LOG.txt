@@ -1,0 +1,66 @@
+{
+  "pinned_commit": "134e7c775b9ea25a076851c0605571ba0ea0ac31",
+  "input_files": [
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Packages\\sandbox.{78340d8c-d3c2-4bcc-840d-d249a99776c2}\\AC\\Temp\\quality_component_tables_9a90qcxv\\FINAL_ordinary.csv",
+      "bytes": 654666,
+      "sha256": "938f97a3453822d4e5818fc4e33d22527fba48569e76b93e9234c4e6740d8b3a",
+      "rows": 574
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Packages\\sandbox.{78340d8c-d3c2-4bcc-840d-d249a99776c2}\\AC\\Temp\\quality_component_tables_9a90qcxv\\FINAL_doorway.csv",
+      "bytes": 195659,
+      "sha256": "97e18cfb6fc97af9e854ae1a58dcdda3837af4d28c7a33b850ca8dac80daa82b",
+      "rows": 217
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Packages\\sandbox.{78340d8c-d3c2-4bcc-840d-d249a99776c2}\\AC\\Temp\\quality_component_tables_9a90qcxv\\FINAL_severe.csv",
+      "bytes": 11967,
+      "sha256": "5fe452d92302f443f5886cc44ec49208e8875f822380dca77b2f7e4a4ca92b25",
+      "rows": 9
+    },
+    {
+      "path": "C:\\Users\\ASUS\\AppData\\Local\\Packages\\sandbox.{78340d8c-d3c2-4bcc-840d-d249a99776c2}\\AC\\Temp\\quality_component_tables_9a90qcxv\\FINAL_history.csv",
+      "bytes": 11842,
+      "sha256": "4f4d225cbe88738aae59ba2bb4eb1df6f16bfa66504757094f4609694032b8e9",
+      "rows": 10
+    }
+  ],
+  "native_rows": 810,
+  "execution_status_counts": {
+    "scored": 718,
+    "held_unchanged": 92
+  },
+  "scored_by_source_layer": {
+    "ordinary": 574,
+    "doorway": 125,
+    "historical_only": 10,
+    "severe": 9
+  },
+  "condition_counts": {
+    "manual": 709,
+    "unknown_not_recovered": 92,
+    "semi": 9
+  },
+  "scored_condition_counts": {
+    "manual": 709,
+    "semi": 9
+  },
+  "known_source_metadata_objects": 810,
+  "multi_reference_answers": [],
+  "unique_scored_objects": 718,
+  "unique_scored_bindings": 718,
+  "baseline_max_abs_error": 4.263256414560601e-14,
+  "harmonic_max_abs_error": 2.842170943040401e-14,
+  "A_below_WQ_count": 0,
+  "G_below_WQ_count": 0,
+  "pairs_n": 5049,
+  "A_reversals_numeric_only": 329,
+  "RA_reversals_numeric_only": 196,
+  "condition_validated_pairs_n": 5049,
+  "workers_reaching_minimum_known_condition_support": 24,
+  "followup_bindings": 37,
+  "full_718_comparison_completed": false,
+  "geometry_rebuilt_for_native_rows": false,
+  "limitation": "Only extracted-table inputs; ordinary ends with a partial record. Unknown manual/semi not inferred. No population accuracy, independent blind validation, or formal worker ranking claim."
+}

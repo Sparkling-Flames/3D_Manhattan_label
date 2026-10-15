@@ -13,8 +13,8 @@ from .descriptive_reference_audit_20261015 import audit_references
 from .descriptive_same_room_20261015 import build_same_room_tables
 from .descriptive_statistics_20261015 import ROOT, describe
 
-OUT = ROOT/'research/descriptive_statistics_current_20261015'
-OLD = ROOT/'research/descriptive_statistics_20261015'
+OUT = ROOT/'research/statistics/descriptive_statistics_current_20261015'
+OLD = ROOT/'research/statistics/descriptive_statistics_20261015'
 POINTER = ROOT/'analysis_results/image_difficulty_full_review_20261010/CURRENT.json'
 QUALITY_METRICS = ['WQ','A10','B8L2','IoU3D100','iou_2d','S_bottom_deg','dir','Hmean','Hcenter']
 METRICS = QUALITY_METRICS + ['active_time_seconds', 'target_matched_time_seconds']

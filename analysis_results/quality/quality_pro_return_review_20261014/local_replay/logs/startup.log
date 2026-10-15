@@ -1,0 +1,193 @@
+{
+  "status": "startup_verified_not_calibration_certified",
+  "counts": {
+    "ordinary": 574,
+    "severe": 9,
+    "doorway": 217
+  },
+  "summary": {
+    "ordinary": 574,
+    "ordinary_strata": {
+      "existing_conditional": 367,
+      "explicit_ordinary": 207
+    },
+    "severe": 9,
+    "doorway": 217,
+    "complete": 125,
+    "held": 92,
+    "shifts_ge5": 32,
+    "shifts_ge10": 12,
+    "denominator_dominant": {
+      "boundary_loss": 58,
+      "direction_loss": 67
+    },
+    "median_height_drop": 0.14905169460309065
+  },
+  "stored_score_max_abs_difference": 0.0,
+  "real_record": {
+    "record_id": "R03274",
+    "status": "complete",
+    "reason_codes": [],
+    "metrics": {
+      "iou_2d": 0.6801503773715049,
+      "S_bottom_deg": 1.8186110112769696,
+      "dir": 19.423815852293423,
+      "Hmean": 0.0008826451930425971,
+      "Hcenter": 0.052469126003181404,
+      "height_mean_ratio": 1.0008826451930426,
+      "iou_3d_corner_mean": 0.6780456040168834
+    },
+    "candidate_components": {
+      "working": {
+        "score": 27.078298913458838,
+        "floor_score": 27.561648406545356,
+        "boundary_loss": 0.10335456282305754,
+        "direction_loss": 1.364387450785905,
+        "global_height_loss": 1.2172852137518807e-06,
+        "local_height_loss": 0.04404814693660363,
+        "height_loss": 0.044049364221817384,
+        "denominator": 2.5117913778307797,
+        "height_score_drop": 0.48334949308651787,
+        "status": "complete",
+        "reference_selected_by_this_function": false,
+        "iou_roundoff_clamped": false,
+        "raw_input_quality_certified": false,
+        "human_grade": null
+      }
+    },
+    "height_diagnostics": {
+      "Hcenter": 0.052469126003181404,
+      "height_center_shift_h": -0.001651217785173742,
+      "height_center_signed_global_relative": 0.0008826451930427052,
+      "height_centered_min_wall_height_h": 1.6359741764966365,
+      "height_centered_profile_positive": true,
+      "height_center_AG_distinct_tied_height_fraction": 0.0,
+      "height_center_GA_distinct_tied_height_fraction": 0.0,
+      "height_center_samples_per_direction": 4096,
+      "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+      "height_center_is_statistical_profile_only": true
+    },
+    "traditional_reason_codes": []
+  },
+  "bottom_controls_rebuilt": [
+    {
+      "case_id": "1x4:distributed_bottom:-1:8",
+      "metrics": {
+        "iou_2d": 0.8030611559813671,
+        "S_bottom_deg": 1.2126489392102,
+        "dir": 18.819647226936624,
+        "Hmean": 0.027877339194058548,
+        "Hcenter": 0.07727536237319231,
+        "height_mean_ratio": 1.0278773391940585,
+        "iou_3d_corner_mean": 0.7829725395022953
+      },
+      "components": {
+        "score": 32.134024607750455,
+        "floor_score": 33.42827199795506,
+        "boundary_loss": 0.045953670305238226,
+        "direction_loss": 1.3563875456286683,
+        "global_height_loss": 0.0012142906883446764,
+        "local_height_loss": 0.09554370607853098,
+        "height_loss": 0.09675799676687566,
+        "denominator": 2.499099212700782,
+        "height_score_drop": 1.2942473902046032,
+        "status": "complete",
+        "reference_selected_by_this_function": false,
+        "iou_roundoff_clamped": false,
+        "raw_input_quality_certified": false,
+        "human_grade": null
+      }
+    },
+    {
+      "case_id": "1x4:distributed_bottom:-1:16",
+      "metrics": {
+        "iou_2d": 0.6232340704635673,
+        "S_bottom_deg": 2.417282376556823,
+        "dir": 11.438443044899705,
+        "Hmean": 0.12867145960715876,
+        "Hcenter": 0.17783658525105164,
+        "height_mean_ratio": 1.1286714596071588,
+        "iou_3d_corner_mean": 0.5595630137015009
+      },
+      "components": {
+        "score": 21.637552002737014,
+        "floor_score": 26.538074383079422,
+        "boundary_loss": 0.1826016902503813,
+        "direction_loss": 1.165850806592943,
+        "global_height_loss": 0.025869288308494824,
+        "local_height_loss": 0.506013616860073,
+        "height_loss": 0.5318829051685677,
+        "denominator": 2.880335402011892,
+        "height_score_drop": 4.900522380342409,
+        "status": "complete",
+        "reference_selected_by_this_function": false,
+        "iou_roundoff_clamped": false,
+        "raw_input_quality_certified": false,
+        "human_grade": null
+      }
+    }
+  ],
+  "rhombus_rebuilt": [
+    {
+      "angle": 90,
+      "D": 0.0,
+      "Q": 100.0
+    },
+    {
+      "angle": 75,
+      "D": 7.499999999999995,
+      "Q": 42.62251541932103
+    },
+    {
+      "angle": 60,
+      "D": 15.000000000000002,
+      "Q": 24.377746620593957
+    },
+    {
+      "angle": 45,
+      "D": 22.499999999999996,
+      "Q": 13.437006468745725
+    },
+    {
+      "angle": 30,
+      "D": 14.99999999999999,
+      "Q": 6.699945747545689
+    },
+    {
+      "angle": 15,
+      "D": 7.4999999999999964,
+      "Q": 2.660846930895235
+    },
+    {
+      "angle": 5,
+      "D": 2.4999999999999987,
+      "Q": 0.8256332910231803
+    }
+  ],
+  "review_status": "received_with_amendments",
+  "historical_review_status": "awaiting_receipt",
+  "review_details": {
+    "schema": "quality_pro_effective_review_status_v1",
+    "status": "received_with_amendments",
+    "received_cases": [
+      "Q01",
+      "Q02",
+      "Q03"
+    ],
+    "amended_cases": [
+      "Q02",
+      "Q03"
+    ],
+    "overall_order_not_established": [
+      "Q02",
+      "Q03"
+    ],
+    "needs_repeated_review": false,
+    "receipt": "human_review/quality_pro_review_20261014_v1.json",
+    "amendment": "human_review/quality_pro_review_20261014_amendment_01.json",
+    "interpretation": "human_review/REVIEW_FINDINGS.md"
+  },
+  "open_review": "REVIEW.html",
+  "read_report": "CURRENT_STATUS.md",
+  "review_findings": "human_review/REVIEW_FINDINGS.md"
+}

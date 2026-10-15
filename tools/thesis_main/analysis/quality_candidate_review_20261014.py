@@ -5,8 +5,8 @@ import shutil
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[3]
-OUT = ROOT/'research/quality_candidate_review_20261014'
-PACK = ROOT/'research/quality_pro_handoff_20261014/package'
+OUT = ROOT/'research/quality/quality_candidate_review_20261014'
+PACK = ROOT/'research/quality/quality_pro_handoff_20261014/package'
 CASES = [('P01',['R02015','R00637']),('J01',['R03346','R03347']),
          ('J04',['R03274']),('C02',['R03351','R03350']),
          ('T20_P04',['R00397','R00418']),('L01',['R01609','R02297']),
@@ -108,7 +108,7 @@ def render(card, geos, out):
 
 def main():
     for folder in (OUT,OUT/'assets',OUT/'photos'):folder.mkdir(exist_ok=True)
-    ledger=read(ROOT/'research/quality_pro_return_review_20261014/evidence/effective_use_ledger.json')
+    ledger=read(ROOT/'research/quality/quality_pro_return_review_20261014/evidence/effective_use_ledger.json')
     rows={r['record_id']:r for r in ledger['records']};objects=read(PACK/'data/objects.json')
     cards=[];private=[]
     for case,ids in CASES:

@@ -1,0 +1,16 @@
+{
+  "schema": "quality_pro_source_manifest_v1",
+  "status": "awaiting_targeted_human_receipt",
+  "engine_sources": {
+    "audit_geometry.py": "research/quality_scope_comparison_20261010/frozen_engine/legacy_geometry/audit_geometry.py",
+    "geometric_components.py": "research/quality_scope_comparison_20261010/frozen_engine/legacy_geometry/geometric_components.py",
+    "strict_geometry.py": "research/quality_parallel_local_20261012/source_package/quality_parameter_calibration_20261012/source_snapshot/research/quality_scope_comparison_20261010/frozen_engine/validity/strict_geometry.py",
+    "height_revision.py": "research/quality_scope_comparison_20261010/frozen_engine/height_revision/height_revision.py",
+    "centered_height.py": "research/quality_parallel_local_20261012/source_package/quality_parameter_calibration_20261012/scripts/centered_height.py",
+    "traditional_metrics.py": "research/quality_parallel_local_20261012/source_package/quality_parameter_calibration_20261012/source_snapshot/research/quality_scope_comparison_20261010/frozen_engine/traditional/traditional_metrics.py",
+    "score.py": "research/quality_pro_joint_archive_20261013/source/calibration/score.py"
+  },
+  "source_loader": "analysis_results/research_input_20260929/manifest.json",
+  "no_new_tuning": true,
+  "purpose": "离线调参输入，非正式算法发布；新增人审回执尚未收到"
+}

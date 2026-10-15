@@ -9,7 +9,7 @@ from pathlib import Path
 from ..data_prep.consolidate_research_input import load_current_bundle
 
 ROOT = Path(__file__).resolve().parents[3]
-OUT = ROOT / 'research/difficulty_special_coverage_20261015'
+OUT = ROOT / 'research/difficulty/difficulty_special_coverage_20261015'
 
 
 def read(path):
@@ -44,12 +44,12 @@ def main():
     bundle = load_current_bundle()
     difficulty = read('analysis_results/difficulty_scope_preferred_20261011/current_259.json')
     live = {r['image_id']: r for r in bundle['research']['images']}
-    joint = rows('research/difficulty_target_integration_20261015/quality_bindings_1145.csv')
+    joint = rows('research/difficulty/difficulty_target_integration_20261015/quality_bindings_1145.csv')
     history = rows('analysis_results/worker_four_block_exploration_20260910_v1/scope_responses.csv')
-    bound = rows('research/worker_classification_progress_20261014/source_inventory.csv')
-    fusion = read('research/wall_consensus_population_20261014/input_snapshot.json')
+    bound = rows('research/workers/worker_classification_progress_20261014/source_inventory.csv')
+    fusion = read('research/fusion/wall_consensus_population_20261014/input_snapshot.json')
     fusion_ids = {r['image_id'] for r in fusion['images']}
-    with zipfile.ZipFile(ROOT / 'research/quality_joint_closeout_review_20261015/pro_closeout_delta.zip') as z:
+    with zipfile.ZipFile(ROOT / 'research/quality/quality_joint_closeout_review_20261015/pro_closeout_delta.zip') as z:
         assert bundle['data'] == json.loads(z.read('source/historical_current_formal_loader_data.json')), '质量快照已改变，须重新核验后绑定'
         ledger = list(csv.DictReader(io.StringIO(z.read('results/ALL_3152_LEDGER.csv').decode('utf-8-sig'))))
     grouped = []

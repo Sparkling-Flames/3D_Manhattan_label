@@ -1,6 +1,6 @@
 // Exercise the actual viewer with a canvas mock; no browser access.
 const fs=require('fs'),vm=require('vm'),assert=require('assert');
-const base='research/quality_candidate_review_20261014/',elements={},strokes=[];
+const base='research/quality/quality_candidate_review_20261014/',elements={},strokes=[];
 const ctx=new Proxy({},{get:(_,k)=>k==='stroke'?()=>strokes.push(1):()=>{},set:()=>true});
 class Element{
  constructor(){this.children=[];this.handlers={};}

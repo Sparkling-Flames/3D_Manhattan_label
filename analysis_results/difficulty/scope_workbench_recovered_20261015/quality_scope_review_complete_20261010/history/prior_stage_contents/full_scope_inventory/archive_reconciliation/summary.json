@@ -1,0 +1,58 @@
+{
+  "schema": "restored_scope_comment_audit_v1",
+  "audit_date": "2026-10-10",
+  "baseline_cloud_unique_comments": 1648,
+  "baseline_local_verified": 69,
+  "baseline_local_outside259": 19,
+  "bundle_json_not_executed": true,
+  "no_originals_changed": true,
+  "no_new_scope_adjudication": true,
+  "counts": {
+    "original_paths": 123,
+    "original_unique_payloads": 51,
+    "old_c1_paths": 119,
+    "old_c1_unique_payloads": 48,
+    "new_early_image_comments_current259": 21,
+    "additional_early_outside259_comments": 12,
+    "group_note_records": 55,
+    "group_unique_verbatim_strings": 50,
+    "group_records_touching_current259": 45,
+    "group_current259_associations": 103,
+    "pending_group_texts_source_resolved": 9,
+    "new_batch_text_records": 3,
+    "new_batch_current_bindings": 4,
+    "frozen_total_grouped_comments": 3121,
+    "frozen_total_occurrences": 32462,
+    "frozen_new_image_text_records": 20,
+    "frozen_additional_object_contexts_existing_image_text": 135,
+    "frozen_previously_index_only_source_resolved": 4,
+    "known_historical_image_notes_reconfirmed": 39,
+    "old_c1_candidate_note_records": 46,
+    "old_c1_candidate_notes_current259": 36,
+    "latest_main_point109_original_source_resolved": 4
+  },
+  "pending_point109_comments": {
+    "count": 4,
+    "archive_only_result": "none_of_four_exact_texts_found_in_restored_archive",
+    "latest_main_result": "all_four_original_review_result_rows_and_raw_time_strings_recovered",
+    "still_unknown": [
+      "reviewer_identity",
+      "timestamp_timezone",
+      "reviewed_coordinate_version",
+      "UI_point_label_index_convention"
+    ],
+    "scope_adjudication_status": "not_final_scope_decisions; no automatic_patch_or_eligibility_change"
+  },
+  "semantic_duplicate_checks": {
+    "confirmed_decisions_002_equals_003_bytes": true,
+    "registry004_groups_candidates_images_equals_final_review_arrays": true
+  },
+  "boundaries": [
+    "关联数不是独立评论、人员票数或已确认范围差异图数。",
+    "组级文本不逐图摊为范围错误。",
+    "早期候选、OOS归类、模型问题与最终参考/quality gate分层保留。",
+    "所有新找回文本是历史资料，未产生新的polygon、GT、资格或分数决定。",
+    "source_saved_at为文件级导出时间，未冒充逐条审核时间。"
+  ],
+  "latest_main_supplement_commit": "fae48e69aa4ae879b8268c34afb8f8221ee53022"
+}

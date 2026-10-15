@@ -1,0 +1,12 @@
+{
+  "schema": "quality_staged_calibration_design_v1",
+  "authorization": "统筹线程用户明确交给质量线程继续调参，并指定先普通粗调、再门洞细调；2026-10-14已核对直接用户消息",
+  "stages": ["ordinary_coarse", "freeze_coarse_working_version", "doorway_fine", "ordinary_regression"],
+  "coarse_candidates": ["current_tail", "hill_same_height", "hill_global08", "simple_power8", "no_direction_diagnostic"],
+  "comparison_policy": "先同高度比较方向；再比较去尾项下整体高度1.0与既有0.8；不搜索新结构指标或大网格",
+  "selection_policy": "先排除已知完整控制反转及明确偏好失守，综合严重端、J04/J01、高度T20/P04/L01和普通图片/建筑分布；不把控制顺序当普遍人评，不要求唯一最优或指定分数阈值。关闭D只诊断，不作为本轮可选择配置。",
+  "rhombus_angles": [90, 75, 60, 45, 30, 15, 5],
+  "doorway_admission": "普通粗调冻结后，按217份门洞清单逐图/逐份核对；仅场景导致out_of_primary_scene可在用户本次第二阶段授权下条件比较；人员排除、原留出、额外范围/参考暂缓不解除。多个GT版本无明确绑定不挑高分，仅唯一无受限参考可接入。",
+  "fine_design": "普通工作版冻结后，只比较保持方向的整体尺度±0.05、局部尺度±0.025，中心不变；若无有依据的收益则保留中心，不能以门洞预期较差选参数。",
+  "boundaries": ["OOS不调参", "不修点/重配对", "不改参考或正式人员资格", "不改融合", "沿用RMS方向定义，不接入Pro的L1", "不设J04最低分或严重最高分", "不使用原留出拟合", "不宣称独立盲测"]
+}

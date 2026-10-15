@@ -1,0 +1,22 @@
+{
+  "checks_passed": 13726,
+  "default_priority": 19,
+  "source_backed_clues": 122,
+  "room_groups": 26,
+  "preserved_confirmations": 16,
+  "assigned_available_room_views": 23,
+  "unavailable_or_readonly_related_views": 30,
+  "source_queue_sha256": "09095f6eac030cba5d76168089984f2b209b7e37e9c0c59a98da42ae0c1e3bf7",
+  "coverage": [
+    "source-backed metadata-only integration and idempotence",
+    "exact preservation of every old image field except additive categories",
+    "priority ordering and source labels",
+    "all room-source downloads and mixed confirmed/pending member navigation",
+    "preview-safe room navigation and export",
+    "bounded export-only no-operation policy and explicit uncertainty",
+    "all 16 received snapshots, full GT reset and previous snapshot retention",
+    "selected revised GT rather than historical GT",
+    "independent alternative space approval and import/reload provenance"
+  ],
+  "browser_QA": "Mock DOM/state and data assertions. No real browser visual/interaction pass claimed."
+}

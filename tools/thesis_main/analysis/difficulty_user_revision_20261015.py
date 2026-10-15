@@ -14,7 +14,7 @@ from .scope_difficulty_review_20261011 import floor_features
 
 ROOT = Path(__file__).resolve().parents[3]
 BASE = ROOT / 'analysis_results/difficulty_scope_preferred_20261011'
-OUT = ROOT / 'research/difficulty_user_revision_20261015'
+OUT = ROOT / 'research/difficulty/difficulty_user_revision_20261015'
 SOURCE = ROOT / 'data/research_gt_revisions/user_feedback_20261015.json'
 VERSION = 'scope_preferred_difficulty_user_revision_20261015_v1'
 

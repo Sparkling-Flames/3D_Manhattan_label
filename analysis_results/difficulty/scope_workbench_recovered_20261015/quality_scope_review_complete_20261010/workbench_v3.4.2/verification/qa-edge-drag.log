@@ -1,0 +1,34 @@
+{
+  editor_version: '3.4.2',
+  checks_passed: 1731,
+  priority_cases_tested: [
+    'uNb9QFRL6hY-88', 'q9vSo1VnCiC-16',
+    'rPc6DW4iMge-05', 'rPc6DW4iMge-06',
+    'rPc6DW4iMge-22', 'uNb9QFRL6hY-18',
+    'uNb9QFRL6hY-26', 'uNb9QFRL6hY-41',
+    'uNb9QFRL6hY-50', 'uNb9QFRL6hY-59',
+    'uNb9QFRL6hY-60', 'uNb9QFRL6hY-66',
+    'uNb9QFRL6hY-67', 'wc2JMjhGNzB-03',
+    'wc2JMjhGNzB-54', 'wc2JMjhGNzB-61',
+    'q9vSo1VnCiC-15', 'q9vSo1VnCiC-21',
+    'q9vSo1VnCiC-25'
+  ],
+  received_primary_confirmations_preserved: 16,
+  acquire_css_pixels: 10,
+  release_css_pixels: 14,
+  micro_drag_threshold_css_pixels: 0.5,
+  geometry: 'Parallel movement preserved. Finite edge candidates allow <=5 degree near-parallel GT with bounded distance. Nearby finite GT corners are separately labeled; remote extension rejection; explicit bounded extension coverage is in QA-outside-gt.json.',
+  coverage: [
+    'release-only two-pixel drag',
+    'preview-following handles',
+    'same-edge continuation and different-edge ordered composition',
+    '10/14 pixel hysteresis and free mode',
+    'near-parallel and local corner guides',
+    'CSS resizing and zoom',
+    'rectangle/cut/five-vertex continuation',
+    'all 19 priority cases and 16 saved confirmed polygons',
+    'undo/redo, confirm, export/import/reload, independent candidates'
+  ],
+  browser_QA: 'Geometry and mock DOM/pointer checks only. Real browser testing remains unavailable; no visual/browser pass claimed.',
+  tested_on: '2026-10-10'
+}

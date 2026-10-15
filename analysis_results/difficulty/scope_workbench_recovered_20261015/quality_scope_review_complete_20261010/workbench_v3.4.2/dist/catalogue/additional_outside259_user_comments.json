@@ -1,0 +1,4391 @@
+[
+  {
+    "image_code": null,
+    "image_id": "yqstnuAEVhm_e3a33da5e5334b3fbc96997fc9c269dd",
+    "object_id": null,
+    "record_id": null,
+    "text": "这个gt可能有歧义,边界范围不是很确定,不是很确定是否inscope",
+    "reference_version": null,
+    "reference_id": null,
+    "rubric_version": null,
+    "schema": null,
+    "in_20260929_index": false,
+    "sources": [
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\batch1_researcher_review_v2(1).json",
+        "json_pointer": "/items/8/review/notes",
+        "raw_record": {
+          "scope": "reject",
+          "decision": "REJECT",
+          "notes": "这个gt可能有歧义,边界范围不是很确定,不是很确定是否inscope"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\batch1_researcher_review_v2.json",
+        "json_pointer": "/items/8/review/notes",
+        "raw_record": {
+          "scope": "reject",
+          "decision": "REJECT",
+          "notes": "这个gt可能有歧义,边界范围不是很确定,不是很确定是否inscope"
+        },
+        "updated_at": null
+      }
+    ],
+    "related_object_ids": [],
+    "in_current_259": false,
+    "cloud_status": "absent_image_text",
+    "content_role": "original_user_comment",
+    "raw_text_verified": true,
+    "reference_scope_verified": false,
+    "no_gt_score_or_eligibility_change": true,
+    "pair_bindings": [],
+    "times_are_missing_not_inferred_from_mtime": true
+  },
+  {
+    "image_code": null,
+    "image_id": "wc2JMjhGNzB_872459df29ef4f158108fbfcb3225090",
+    "object_id": null,
+    "record_id": null,
+    "text": "应该是out of scope",
+    "reference_version": null,
+    "reference_id": null,
+    "rubric_version": null,
+    "schema": null,
+    "in_20260929_index": false,
+    "sources": [
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\batch1_researcher_review_v2(1).json",
+        "json_pointer": "/items/10/review/notes",
+        "raw_record": {
+          "scope": "reject",
+          "decision": "REJECT",
+          "notes": "应该是out of scope"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\batch1_researcher_review_v2.json",
+        "json_pointer": "/items/10/review/notes",
+        "raw_record": {
+          "scope": "reject",
+          "decision": "REJECT",
+          "notes": "应该是out of scope"
+        },
+        "updated_at": null
+      }
+    ],
+    "related_object_ids": [],
+    "in_current_259": false,
+    "cloud_status": "absent_image_text",
+    "content_role": "original_user_comment",
+    "raw_text_verified": true,
+    "reference_scope_verified": false,
+    "no_gt_score_or_eligibility_change": true,
+    "pair_bindings": [],
+    "times_are_missing_not_inferred_from_mtime": true
+  },
+  {
+    "image_code": null,
+    "image_id": "x8F5xyUWy9e_b7e0b8b0d65b439382afa4c79db018a7",
+    "object_id": null,
+    "record_id": null,
+    "text": "都遗漏标注柱子",
+    "reference_version": null,
+    "reference_id": null,
+    "rubric_version": null,
+    "schema": null,
+    "in_20260929_index": false,
+    "sources": [
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\batch1_researcher_review_v2(1).json",
+        "json_pointer": "/items/16/review/notes",
+        "raw_record": {
+          "scope": "in_scope",
+          "correct": "REVISE",
+          "wrong_material": "yes",
+          "observed_defects": [
+            "current_space_undercoverage"
+          ],
+          "primary_defect": "current_space_undercoverage",
+          "repair_actions": [
+            "add_missing_boundary_or_corner"
+          ],
+          "repair_extent": "local",
+          "structural_validity": "structurally_valid",
+          "stimulus_purity": "single",
+          "severity": "moderate",
+          "decision": "REVISE",
+          "notes": "都遗漏标注柱子"
+        },
+        "updated_at": null
+      }
+    ],
+    "related_object_ids": [],
+    "in_current_259": false,
+    "cloud_status": "absent_image_text",
+    "content_role": "original_user_comment",
+    "raw_text_verified": true,
+    "reference_scope_verified": false,
+    "no_gt_score_or_eligibility_change": true,
+    "pair_bindings": [],
+    "times_are_missing_not_inferred_from_mtime": true
+  },
+  {
+    "image_code": null,
+    "image_id": "uNb9QFRL6hY_1434b965c3c147419c4ff40310633b58",
+    "object_id": null,
+    "record_id": null,
+    "text": "这图因为全景图的扭曲,,而且他是站在门口和房间的交界处的,如果我标注房间内的,是不会标这个门口区域的.主要是怕全都标注到错误的结果(gt也不知道正不正确)",
+    "reference_version": null,
+    "reference_id": null,
+    "rubric_version": null,
+    "schema": "candidate_review_user_decisions_v5",
+    "in_20260929_index": false,
+    "sources": [
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\candidate_review_decisions_20260912(1).json",
+        "json_pointer": "/decisions/1/note",
+        "raw_record": {
+          "group": "G179",
+          "image_id": "uNb9QFRL6hY_1434b965c3c147419c4ff40310633b58",
+          "number": 10,
+          "selection": "备选",
+          "collection": "需要新增标注",
+          "role": "待定",
+          "target_band": "9–15人",
+          "difficulty": "中等",
+          "note": "这图因为全景图的扭曲,,而且他是站在门口和房间的交界处的,如果我标注房间内的,是不会标这个门口区域的.主要是怕全都标注到错误的结果(gt也不知道正不正确)",
+          "legacy_review": null
+        },
+        "updated_at": null
+      }
+    ],
+    "related_object_ids": [],
+    "in_current_259": false,
+    "cloud_status": "absent_image_text",
+    "content_role": "original_user_comment",
+    "raw_text_verified": true,
+    "reference_scope_verified": false,
+    "no_gt_score_or_eligibility_change": true,
+    "pair_bindings": [],
+    "times_are_missing_not_inferred_from_mtime": true
+  },
+  {
+    "image_code": null,
+    "image_id": "b8cTxDM8gDG_d38c4ae95f5b4640a2696b923b80d1f4",
+    "object_id": null,
+    "record_id": null,
+    "text": "门框分割出来的房间有点多,这张图确实不好判断标注的区域是什么",
+    "reference_version": null,
+    "reference_id": null,
+    "rubric_version": null,
+    "schema": "scene_user_review_v2",
+    "in_20260929_index": false,
+    "sources": [
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/source_user/rows/204/user_note",
+        "raw_record": {
+          "image_id": "b8cTxDM8gDG_d38c4ae95f5b4640a2696b923b80d1f4",
+          "building": "b8cTxDM8gDG",
+          "split": "test",
+          "user_room": "r13",
+          "user_type": "复合／待定",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "门框分割出来的房间有点多,这张图确实不好判断标注的区域是什么",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/rows/204/source_user/user_note",
+        "raw_record": {
+          "image_id": "b8cTxDM8gDG_d38c4ae95f5b4640a2696b923b80d1f4",
+          "building": "b8cTxDM8gDG",
+          "split": "test",
+          "user_room": "r13",
+          "user_type": "复合／待定",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "门框分割出来的房间有点多,这张图确实不好判断标注的区域是什么",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/source_user/rows/204/user_note",
+        "raw_record": {
+          "image_id": "b8cTxDM8gDG_d38c4ae95f5b4640a2696b923b80d1f4",
+          "building": "b8cTxDM8gDG",
+          "split": "test",
+          "user_room": "r13",
+          "user_type": "复合／待定",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "门框分割出来的房间有点多,这张图确实不好判断标注的区域是什么",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/rows/204/source_user/user_note",
+        "raw_record": {
+          "image_id": "b8cTxDM8gDG_d38c4ae95f5b4640a2696b923b80d1f4",
+          "building": "b8cTxDM8gDG",
+          "split": "test",
+          "user_room": "r13",
+          "user_type": "复合／待定",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "门框分割出来的房间有点多,这张图确实不好判断标注的区域是什么",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内图片_争议复核后完整分类.json",
+        "json_pointer": "/rows/204/user_note",
+        "raw_record": {
+          "image_id": "b8cTxDM8gDG_d38c4ae95f5b4640a2696b923b80d1f4",
+          "building": "b8cTxDM8gDG",
+          "split": "test",
+          "user_room": "r13",
+          "user_type": "复合／待定",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "门框分割出来的房间有点多,这张图确实不好判断标注的区域是什么",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/source_user/rows/204/user_note",
+        "raw_record": {
+          "image_id": "b8cTxDM8gDG_d38c4ae95f5b4640a2696b923b80d1f4",
+          "building": "b8cTxDM8gDG",
+          "split": "test",
+          "user_room": "r13",
+          "user_type": "复合／待定",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "门框分割出来的房间有点多,这张图确实不好判断标注的区域是什么",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/rows/204/source_user/user_note",
+        "raw_record": {
+          "image_id": "b8cTxDM8gDG_d38c4ae95f5b4640a2696b923b80d1f4",
+          "building": "b8cTxDM8gDG",
+          "split": "test",
+          "user_room": "r13",
+          "user_type": "复合／待定",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "门框分割出来的房间有点多,这张图确实不好判断标注的区域是什么",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/source_user/rows/204/user_note",
+        "raw_record": {
+          "image_id": "b8cTxDM8gDG_d38c4ae95f5b4640a2696b923b80d1f4",
+          "building": "b8cTxDM8gDG",
+          "split": "test",
+          "user_room": "r13",
+          "user_type": "复合／待定",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "门框分割出来的房间有点多,这张图确实不好判断标注的区域是什么",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/rows/204/source_user/user_note",
+        "raw_record": {
+          "image_id": "b8cTxDM8gDG_d38c4ae95f5b4640a2696b923b80d1f4",
+          "building": "b8cTxDM8gDG",
+          "split": "test",
+          "user_room": "r13",
+          "user_type": "复合／待定",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "门框分割出来的房间有点多,这张图确实不好判断标注的区域是什么",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      }
+    ],
+    "related_object_ids": [],
+    "in_current_259": false,
+    "cloud_status": "absent_image_text",
+    "content_role": "original_user_comment",
+    "raw_text_verified": true,
+    "reference_scope_verified": false,
+    "no_gt_score_or_eligibility_change": true,
+    "pair_bindings": [],
+    "times_are_missing_not_inferred_from_mtime": true
+  },
+  {
+    "image_code": null,
+    "image_id": "b8cTxDM8gDG_dcbdda428eb846a586886b87d9552d0e",
+    "object_id": null,
+    "record_id": null,
+    "text": "玻璃隔断",
+    "reference_version": null,
+    "reference_id": null,
+    "rubric_version": null,
+    "schema": "scene_user_review_v2",
+    "in_20260929_index": false,
+    "sources": [
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/source_user/rows/206/user_note",
+        "raw_record": {
+          "image_id": "b8cTxDM8gDG_dcbdda428eb846a586886b87d9552d0e",
+          "building": "b8cTxDM8gDG",
+          "split": "test",
+          "user_room": "r6",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "否",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "玻璃隔断",
+          "user_audit_status": "已确认"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/rows/206/source_user/user_note",
+        "raw_record": {
+          "image_id": "b8cTxDM8gDG_dcbdda428eb846a586886b87d9552d0e",
+          "building": "b8cTxDM8gDG",
+          "split": "test",
+          "user_room": "r6",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "否",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "玻璃隔断",
+          "user_audit_status": "已确认"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/source_user/rows/206/user_note",
+        "raw_record": {
+          "image_id": "b8cTxDM8gDG_dcbdda428eb846a586886b87d9552d0e",
+          "building": "b8cTxDM8gDG",
+          "split": "test",
+          "user_room": "r6",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "否",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "玻璃隔断",
+          "user_audit_status": "已确认"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/rows/206/source_user/user_note",
+        "raw_record": {
+          "image_id": "b8cTxDM8gDG_dcbdda428eb846a586886b87d9552d0e",
+          "building": "b8cTxDM8gDG",
+          "split": "test",
+          "user_room": "r6",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "否",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "玻璃隔断",
+          "user_audit_status": "已确认"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内图片_争议复核后完整分类.json",
+        "json_pointer": "/rows/206/user_note",
+        "raw_record": {
+          "image_id": "b8cTxDM8gDG_dcbdda428eb846a586886b87d9552d0e",
+          "building": "b8cTxDM8gDG",
+          "split": "test",
+          "user_room": "r6",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "否",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "玻璃隔断",
+          "user_audit_status": "已确认"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/source_user/rows/206/user_note",
+        "raw_record": {
+          "image_id": "b8cTxDM8gDG_dcbdda428eb846a586886b87d9552d0e",
+          "building": "b8cTxDM8gDG",
+          "split": "test",
+          "user_room": "r6",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "否",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "玻璃隔断",
+          "user_audit_status": "已确认"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/rows/206/source_user/user_note",
+        "raw_record": {
+          "image_id": "b8cTxDM8gDG_dcbdda428eb846a586886b87d9552d0e",
+          "building": "b8cTxDM8gDG",
+          "split": "test",
+          "user_room": "r6",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "否",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "玻璃隔断",
+          "user_audit_status": "已确认"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/source_user/rows/206/user_note",
+        "raw_record": {
+          "image_id": "b8cTxDM8gDG_dcbdda428eb846a586886b87d9552d0e",
+          "building": "b8cTxDM8gDG",
+          "split": "test",
+          "user_room": "r6",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "否",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "玻璃隔断",
+          "user_audit_status": "已确认"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/rows/206/source_user/user_note",
+        "raw_record": {
+          "image_id": "b8cTxDM8gDG_dcbdda428eb846a586886b87d9552d0e",
+          "building": "b8cTxDM8gDG",
+          "split": "test",
+          "user_room": "r6",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "否",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "玻璃隔断",
+          "user_audit_status": "已确认"
+        },
+        "updated_at": null
+      }
+    ],
+    "related_object_ids": [],
+    "in_current_259": false,
+    "cloud_status": "absent_image_text",
+    "content_role": "original_user_comment",
+    "raw_text_verified": true,
+    "reference_scope_verified": false,
+    "no_gt_score_or_eligibility_change": true,
+    "pair_bindings": [],
+    "times_are_missing_not_inferred_from_mtime": true
+  },
+  {
+    "image_code": null,
+    "image_id": "e9zR4mvMWw7_2224be23a70a475ea6daa55d4c90a91b",
+    "object_id": null,
+    "record_id": null,
+    "text": "这个确实是站在了两个区域,一个厨房,一个餐厅的分割正中间,不算传统的门框",
+    "reference_version": null,
+    "reference_id": null,
+    "rubric_version": null,
+    "schema": "scene_user_review_v2",
+    "in_20260929_index": false,
+    "sources": [
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/source_user/rows/223/user_note",
+        "raw_record": {
+          "image_id": "e9zR4mvMWw7_2224be23a70a475ea6daa55d4c90a91b",
+          "building": "e9zR4mvMWw7",
+          "split": "test",
+          "user_room": "r12",
+          "user_type": "厨房与用餐",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "这个确实是站在了两个区域,一个厨房,一个餐厅的分割正中间,不算传统的门框",
+          "user_audit_status": "待我复核"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/rows/223/source_user/user_note",
+        "raw_record": {
+          "image_id": "e9zR4mvMWw7_2224be23a70a475ea6daa55d4c90a91b",
+          "building": "e9zR4mvMWw7",
+          "split": "test",
+          "user_room": "r12",
+          "user_type": "厨房与用餐",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "这个确实是站在了两个区域,一个厨房,一个餐厅的分割正中间,不算传统的门框",
+          "user_audit_status": "待我复核"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/source_user/rows/223/user_note",
+        "raw_record": {
+          "image_id": "e9zR4mvMWw7_2224be23a70a475ea6daa55d4c90a91b",
+          "building": "e9zR4mvMWw7",
+          "split": "test",
+          "user_room": "r12",
+          "user_type": "厨房与用餐",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "这个确实是站在了两个区域,一个厨房,一个餐厅的分割正中间,不算传统的门框",
+          "user_audit_status": "待我复核"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/rows/223/source_user/user_note",
+        "raw_record": {
+          "image_id": "e9zR4mvMWw7_2224be23a70a475ea6daa55d4c90a91b",
+          "building": "e9zR4mvMWw7",
+          "split": "test",
+          "user_room": "r12",
+          "user_type": "厨房与用餐",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "这个确实是站在了两个区域,一个厨房,一个餐厅的分割正中间,不算传统的门框",
+          "user_audit_status": "待我复核"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内图片_争议复核后完整分类.json",
+        "json_pointer": "/rows/223/user_note",
+        "raw_record": {
+          "image_id": "e9zR4mvMWw7_2224be23a70a475ea6daa55d4c90a91b",
+          "building": "e9zR4mvMWw7",
+          "split": "test",
+          "user_room": "r12",
+          "user_type": "厨房与用餐",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "这个确实是站在了两个区域,一个厨房,一个餐厅的分割正中间,不算传统的门框",
+          "user_audit_status": "待我复核"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/source_user/rows/223/user_note",
+        "raw_record": {
+          "image_id": "e9zR4mvMWw7_2224be23a70a475ea6daa55d4c90a91b",
+          "building": "e9zR4mvMWw7",
+          "split": "test",
+          "user_room": "r12",
+          "user_type": "厨房与用餐",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "这个确实是站在了两个区域,一个厨房,一个餐厅的分割正中间,不算传统的门框",
+          "user_audit_status": "待我复核"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/rows/223/source_user/user_note",
+        "raw_record": {
+          "image_id": "e9zR4mvMWw7_2224be23a70a475ea6daa55d4c90a91b",
+          "building": "e9zR4mvMWw7",
+          "split": "test",
+          "user_room": "r12",
+          "user_type": "厨房与用餐",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "这个确实是站在了两个区域,一个厨房,一个餐厅的分割正中间,不算传统的门框",
+          "user_audit_status": "待我复核"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/source_user/rows/223/user_note",
+        "raw_record": {
+          "image_id": "e9zR4mvMWw7_2224be23a70a475ea6daa55d4c90a91b",
+          "building": "e9zR4mvMWw7",
+          "split": "test",
+          "user_room": "r12",
+          "user_type": "厨房与用餐",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "这个确实是站在了两个区域,一个厨房,一个餐厅的分割正中间,不算传统的门框",
+          "user_audit_status": "待我复核"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/rows/223/source_user/user_note",
+        "raw_record": {
+          "image_id": "e9zR4mvMWw7_2224be23a70a475ea6daa55d4c90a91b",
+          "building": "e9zR4mvMWw7",
+          "split": "test",
+          "user_room": "r12",
+          "user_type": "厨房与用餐",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "这个确实是站在了两个区域,一个厨房,一个餐厅的分割正中间,不算传统的门框",
+          "user_audit_status": "待我复核"
+        },
+        "updated_at": null
+      }
+    ],
+    "related_object_ids": [],
+    "in_current_259": false,
+    "cloud_status": "absent_image_text",
+    "content_role": "original_user_comment",
+    "raw_text_verified": true,
+    "reference_scope_verified": false,
+    "no_gt_score_or_eligibility_change": true,
+    "pair_bindings": [],
+    "times_are_missing_not_inferred_from_mtime": true
+  },
+  {
+    "image_code": null,
+    "image_id": "e9zR4mvMWw7_f6c327acf9884d988714467217d67dcd",
+    "object_id": null,
+    "record_id": null,
+    "text": "这个也是类似,但是r13和r12 其实就跟我前面说的那样,030在区域分割的正中间拍的",
+    "reference_version": null,
+    "reference_id": null,
+    "rubric_version": null,
+    "schema": "scene_user_review_v2",
+    "in_20260929_index": false,
+    "sources": [
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/source_user/rows/248/user_note",
+        "raw_record": {
+          "image_id": "e9zR4mvMWw7_f6c327acf9884d988714467217d67dcd",
+          "building": "e9zR4mvMWw7",
+          "split": "test",
+          "user_room": "r13",
+          "user_type": "厨房与用餐",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个也是类似,但是r13和r12 其实就跟我前面说的那样,030在区域分割的正中间拍的",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/rows/248/source_user/user_note",
+        "raw_record": {
+          "image_id": "e9zR4mvMWw7_f6c327acf9884d988714467217d67dcd",
+          "building": "e9zR4mvMWw7",
+          "split": "test",
+          "user_room": "r13",
+          "user_type": "厨房与用餐",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个也是类似,但是r13和r12 其实就跟我前面说的那样,030在区域分割的正中间拍的",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/source_user/rows/248/user_note",
+        "raw_record": {
+          "image_id": "e9zR4mvMWw7_f6c327acf9884d988714467217d67dcd",
+          "building": "e9zR4mvMWw7",
+          "split": "test",
+          "user_room": "r13",
+          "user_type": "厨房与用餐",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个也是类似,但是r13和r12 其实就跟我前面说的那样,030在区域分割的正中间拍的",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/rows/248/source_user/user_note",
+        "raw_record": {
+          "image_id": "e9zR4mvMWw7_f6c327acf9884d988714467217d67dcd",
+          "building": "e9zR4mvMWw7",
+          "split": "test",
+          "user_room": "r13",
+          "user_type": "厨房与用餐",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个也是类似,但是r13和r12 其实就跟我前面说的那样,030在区域分割的正中间拍的",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内图片_争议复核后完整分类.json",
+        "json_pointer": "/rows/248/user_note",
+        "raw_record": {
+          "image_id": "e9zR4mvMWw7_f6c327acf9884d988714467217d67dcd",
+          "building": "e9zR4mvMWw7",
+          "split": "test",
+          "user_room": "r13",
+          "user_type": "厨房与用餐",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个也是类似,但是r13和r12 其实就跟我前面说的那样,030在区域分割的正中间拍的",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/source_user/rows/248/user_note",
+        "raw_record": {
+          "image_id": "e9zR4mvMWw7_f6c327acf9884d988714467217d67dcd",
+          "building": "e9zR4mvMWw7",
+          "split": "test",
+          "user_room": "r13",
+          "user_type": "厨房与用餐",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个也是类似,但是r13和r12 其实就跟我前面说的那样,030在区域分割的正中间拍的",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/rows/248/source_user/user_note",
+        "raw_record": {
+          "image_id": "e9zR4mvMWw7_f6c327acf9884d988714467217d67dcd",
+          "building": "e9zR4mvMWw7",
+          "split": "test",
+          "user_room": "r13",
+          "user_type": "厨房与用餐",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个也是类似,但是r13和r12 其实就跟我前面说的那样,030在区域分割的正中间拍的",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/source_user/rows/248/user_note",
+        "raw_record": {
+          "image_id": "e9zR4mvMWw7_f6c327acf9884d988714467217d67dcd",
+          "building": "e9zR4mvMWw7",
+          "split": "test",
+          "user_room": "r13",
+          "user_type": "厨房与用餐",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个也是类似,但是r13和r12 其实就跟我前面说的那样,030在区域分割的正中间拍的",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/rows/248/source_user/user_note",
+        "raw_record": {
+          "image_id": "e9zR4mvMWw7_f6c327acf9884d988714467217d67dcd",
+          "building": "e9zR4mvMWw7",
+          "split": "test",
+          "user_room": "r13",
+          "user_type": "厨房与用餐",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个也是类似,但是r13和r12 其实就跟我前面说的那样,030在区域分割的正中间拍的",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      }
+    ],
+    "related_object_ids": [],
+    "in_current_259": false,
+    "cloud_status": "absent_image_text",
+    "content_role": "original_user_comment",
+    "raw_text_verified": true,
+    "reference_scope_verified": false,
+    "no_gt_score_or_eligibility_change": true,
+    "pair_bindings": [],
+    "times_are_missing_not_inferred_from_mtime": true
+  },
+  {
+    "image_code": null,
+    "image_id": "jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b",
+    "object_id": null,
+    "record_id": null,
+    "text": "如果 细分的话,确实把马桶的区域和换衣的区域分开来了,不是那种特别典型的,我个人可能偏 不是门洞",
+    "reference_version": null,
+    "reference_id": null,
+    "rubric_version": null,
+    "schema": "scene_user_review_v2",
+    "in_20260929_index": false,
+    "sources": [
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/source_user/rows/252/user_note",
+        "raw_record": {
+          "image_id": "jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b",
+          "building": "jh4fc5c5qoQ",
+          "split": "valid",
+          "user_room": "r4",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "如果 细分的话,确实把马桶的区域和换衣的区域分开来了,不是那种特别典型的,我个人可能偏 不是门洞",
+          "user_audit_status": "待我复核"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/rows/252/source_user/user_note",
+        "raw_record": {
+          "image_id": "jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b",
+          "building": "jh4fc5c5qoQ",
+          "split": "valid",
+          "user_room": "r4",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "如果 细分的话,确实把马桶的区域和换衣的区域分开来了,不是那种特别典型的,我个人可能偏 不是门洞",
+          "user_audit_status": "待我复核"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/rows/252/prior_reviews/0/source_user_values/user_note",
+        "raw_record": {
+          "image_id": "jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b",
+          "building": "jh4fc5c5qoQ",
+          "split": "valid",
+          "user_room": "r4",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "如果 细分的话,确实把马桶的区域和换衣的区域分开来了,不是那种特别典型的,我个人可能偏 不是门洞",
+          "user_audit_status": "待我复核"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/source_user/rows/252/user_note",
+        "raw_record": {
+          "image_id": "jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b",
+          "building": "jh4fc5c5qoQ",
+          "split": "valid",
+          "user_room": "r4",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "如果 细分的话,确实把马桶的区域和换衣的区域分开来了,不是那种特别典型的,我个人可能偏 不是门洞",
+          "user_audit_status": "待我复核"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/rows/252/source_user/user_note",
+        "raw_record": {
+          "image_id": "jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b",
+          "building": "jh4fc5c5qoQ",
+          "split": "valid",
+          "user_room": "r4",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "如果 细分的话,确实把马桶的区域和换衣的区域分开来了,不是那种特别典型的,我个人可能偏 不是门洞",
+          "user_audit_status": "待我复核"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/rows/252/prior_reviews/0/source_user_values/user_note",
+        "raw_record": {
+          "image_id": "jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b",
+          "building": "jh4fc5c5qoQ",
+          "split": "valid",
+          "user_room": "r4",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "如果 细分的话,确实把马桶的区域和换衣的区域分开来了,不是那种特别典型的,我个人可能偏 不是门洞",
+          "user_audit_status": "待我复核"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内图片_争议复核后完整分类.json",
+        "json_pointer": "/rows/252/user_note",
+        "raw_record": {
+          "image_id": "jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b",
+          "building": "jh4fc5c5qoQ",
+          "split": "valid",
+          "user_room": "r4",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "如果 细分的话,确实把马桶的区域和换衣的区域分开来了,不是那种特别典型的,我个人可能偏 不是门洞",
+          "user_audit_status": "待我复核"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/source_user/rows/252/user_note",
+        "raw_record": {
+          "image_id": "jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b",
+          "building": "jh4fc5c5qoQ",
+          "split": "valid",
+          "user_room": "r4",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "如果 细分的话,确实把马桶的区域和换衣的区域分开来了,不是那种特别典型的,我个人可能偏 不是门洞",
+          "user_audit_status": "待我复核"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/rows/252/source_user/user_note",
+        "raw_record": {
+          "image_id": "jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b",
+          "building": "jh4fc5c5qoQ",
+          "split": "valid",
+          "user_room": "r4",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "如果 细分的话,确实把马桶的区域和换衣的区域分开来了,不是那种特别典型的,我个人可能偏 不是门洞",
+          "user_audit_status": "待我复核"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/rows/252/prior_reviews/0/source_user_values/user_note",
+        "raw_record": {
+          "image_id": "jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b",
+          "building": "jh4fc5c5qoQ",
+          "split": "valid",
+          "user_room": "r4",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "如果 细分的话,确实把马桶的区域和换衣的区域分开来了,不是那种特别典型的,我个人可能偏 不是门洞",
+          "user_audit_status": "待我复核"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/source_user/rows/252/user_note",
+        "raw_record": {
+          "image_id": "jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b",
+          "building": "jh4fc5c5qoQ",
+          "split": "valid",
+          "user_room": "r4",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "如果 细分的话,确实把马桶的区域和换衣的区域分开来了,不是那种特别典型的,我个人可能偏 不是门洞",
+          "user_audit_status": "待我复核"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/rows/252/source_user/user_note",
+        "raw_record": {
+          "image_id": "jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b",
+          "building": "jh4fc5c5qoQ",
+          "split": "valid",
+          "user_room": "r4",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "如果 细分的话,确实把马桶的区域和换衣的区域分开来了,不是那种特别典型的,我个人可能偏 不是门洞",
+          "user_audit_status": "待我复核"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/rows/252/prior_reviews/0/source_user_values/user_note",
+        "raw_record": {
+          "image_id": "jh4fc5c5qoQ_1eac2c379ebf4e059f4a35e584f82f9b",
+          "building": "jh4fc5c5qoQ",
+          "split": "valid",
+          "user_room": "r4",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "已复核",
+          "user_note": "如果 细分的话,确实把马桶的区域和换衣的区域分开来了,不是那种特别典型的,我个人可能偏 不是门洞",
+          "user_audit_status": "待我复核"
+        },
+        "updated_at": null
+      }
+    ],
+    "related_object_ids": [],
+    "in_current_259": false,
+    "cloud_status": "absent_image_text",
+    "content_role": "original_user_comment",
+    "raw_text_verified": true,
+    "reference_scope_verified": false,
+    "no_gt_score_or_eligibility_change": true,
+    "pair_bindings": [],
+    "times_are_missing_not_inferred_from_mtime": true
+  },
+  {
+    "image_code": null,
+    "image_id": "jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea",
+    "object_id": null,
+    "record_id": null,
+    "text": "这个确实离门框很近,有可能会让标注者产生标注范围的歧义",
+    "reference_version": null,
+    "reference_id": null,
+    "rubric_version": null,
+    "schema": "scene_user_review_v2",
+    "in_20260929_index": false,
+    "sources": [
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/source_user/rows/281/user_note",
+        "raw_record": {
+          "image_id": "jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea",
+          "building": "jtcxE69GiFV",
+          "split": "valid",
+          "user_room": "r9",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个确实离门框很近,有可能会让标注者产生标注范围的歧义",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/rows/281/source_user/user_note",
+        "raw_record": {
+          "image_id": "jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea",
+          "building": "jtcxE69GiFV",
+          "split": "valid",
+          "user_room": "r9",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个确实离门框很近,有可能会让标注者产生标注范围的歧义",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/rows/281/prior_reviews/0/source_user_values/user_note",
+        "raw_record": {
+          "image_id": "jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea",
+          "building": "jtcxE69GiFV",
+          "split": "valid",
+          "user_room": "r9",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个确实离门框很近,有可能会让标注者产生标注范围的歧义",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/source_user/rows/281/user_note",
+        "raw_record": {
+          "image_id": "jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea",
+          "building": "jtcxE69GiFV",
+          "split": "valid",
+          "user_room": "r9",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个确实离门框很近,有可能会让标注者产生标注范围的歧义",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/rows/281/source_user/user_note",
+        "raw_record": {
+          "image_id": "jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea",
+          "building": "jtcxE69GiFV",
+          "split": "valid",
+          "user_room": "r9",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个确实离门框很近,有可能会让标注者产生标注范围的歧义",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/rows/281/prior_reviews/0/source_user_values/user_note",
+        "raw_record": {
+          "image_id": "jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea",
+          "building": "jtcxE69GiFV",
+          "split": "valid",
+          "user_room": "r9",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个确实离门框很近,有可能会让标注者产生标注范围的歧义",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内图片_争议复核后完整分类.json",
+        "json_pointer": "/rows/281/user_note",
+        "raw_record": {
+          "image_id": "jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea",
+          "building": "jtcxE69GiFV",
+          "split": "valid",
+          "user_room": "r9",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个确实离门框很近,有可能会让标注者产生标注范围的歧义",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/source_user/rows/281/user_note",
+        "raw_record": {
+          "image_id": "jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea",
+          "building": "jtcxE69GiFV",
+          "split": "valid",
+          "user_room": "r9",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个确实离门框很近,有可能会让标注者产生标注范围的歧义",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/rows/281/source_user/user_note",
+        "raw_record": {
+          "image_id": "jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea",
+          "building": "jtcxE69GiFV",
+          "split": "valid",
+          "user_room": "r9",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个确实离门框很近,有可能会让标注者产生标注范围的歧义",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/rows/281/prior_reviews/0/source_user_values/user_note",
+        "raw_record": {
+          "image_id": "jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea",
+          "building": "jtcxE69GiFV",
+          "split": "valid",
+          "user_room": "r9",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个确实离门框很近,有可能会让标注者产生标注范围的歧义",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/source_user/rows/281/user_note",
+        "raw_record": {
+          "image_id": "jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea",
+          "building": "jtcxE69GiFV",
+          "split": "valid",
+          "user_room": "r9",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个确实离门框很近,有可能会让标注者产生标注范围的歧义",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/rows/281/source_user/user_note",
+        "raw_record": {
+          "image_id": "jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea",
+          "building": "jtcxE69GiFV",
+          "split": "valid",
+          "user_room": "r9",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个确实离门框很近,有可能会让标注者产生标注范围的歧义",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/rows/281/prior_reviews/0/source_user_values/user_note",
+        "raw_record": {
+          "image_id": "jtcxE69GiFV_650dbde3bd124db1bf8393250eda52ea",
+          "building": "jtcxE69GiFV",
+          "split": "valid",
+          "user_room": "r9",
+          "user_type": "卫浴",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个确实离门框很近,有可能会让标注者产生标注范围的歧义",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      }
+    ],
+    "related_object_ids": [],
+    "in_current_259": false,
+    "cloud_status": "absent_image_text",
+    "content_role": "original_user_comment",
+    "raw_text_verified": true,
+    "reference_scope_verified": false,
+    "no_gt_score_or_eligibility_change": true,
+    "pair_bindings": [],
+    "times_are_missing_not_inferred_from_mtime": true
+  },
+  {
+    "image_code": null,
+    "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+    "object_id": null,
+    "record_id": null,
+    "text": "确实离另一个空间的门洞很近,但是 我个人更倾向不是",
+    "reference_version": null,
+    "reference_id": null,
+    "rubric_version": null,
+    "schema": "scene_user_review_v2",
+    "in_20260929_index": false,
+    "sources": [
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/source_user/rows/393/user_note",
+        "raw_record": {
+          "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+          "building": "q9vSo1VnCiC",
+          "split": "test",
+          "user_room": "r1",
+          "user_type": "卧室",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "确实离另一个空间的门洞很近,但是 我个人更倾向不是",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/rows/393/source_user/user_note",
+        "raw_record": {
+          "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+          "building": "q9vSo1VnCiC",
+          "split": "test",
+          "user_room": "r1",
+          "user_type": "卧室",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "确实离另一个空间的门洞很近,但是 我个人更倾向不是",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/source_user/rows/393/user_note",
+        "raw_record": {
+          "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+          "building": "q9vSo1VnCiC",
+          "split": "test",
+          "user_room": "r1",
+          "user_type": "卧室",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "确实离另一个空间的门洞很近,但是 我个人更倾向不是",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/rows/393/source_user/user_note",
+        "raw_record": {
+          "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+          "building": "q9vSo1VnCiC",
+          "split": "test",
+          "user_room": "r1",
+          "user_type": "卧室",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "确实离另一个空间的门洞很近,但是 我个人更倾向不是",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内图片_争议复核后完整分类.json",
+        "json_pointer": "/rows/393/user_note",
+        "raw_record": {
+          "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+          "building": "q9vSo1VnCiC",
+          "split": "test",
+          "user_room": "r1",
+          "user_type": "卧室",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "确实离另一个空间的门洞很近,但是 我个人更倾向不是",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/source_user/rows/393/user_note",
+        "raw_record": {
+          "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+          "building": "q9vSo1VnCiC",
+          "split": "test",
+          "user_room": "r1",
+          "user_type": "卧室",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "确实离另一个空间的门洞很近,但是 我个人更倾向不是",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/rows/393/source_user/user_note",
+        "raw_record": {
+          "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+          "building": "q9vSo1VnCiC",
+          "split": "test",
+          "user_room": "r1",
+          "user_type": "卧室",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "确实离另一个空间的门洞很近,但是 我个人更倾向不是",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/source_user/rows/393/user_note",
+        "raw_record": {
+          "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+          "building": "q9vSo1VnCiC",
+          "split": "test",
+          "user_room": "r1",
+          "user_type": "卧室",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "确实离另一个空间的门洞很近,但是 我个人更倾向不是",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/rows/393/source_user/user_note",
+        "raw_record": {
+          "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+          "building": "q9vSo1VnCiC",
+          "split": "test",
+          "user_room": "r1",
+          "user_type": "卧室",
+          "user_boundary": "",
+          "user_doorway": "疑似",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "确实离另一个空间的门洞很近,但是 我个人更倾向不是",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      }
+    ],
+    "related_object_ids": [],
+    "in_current_259": false,
+    "cloud_status": "absent_image_text",
+    "content_role": "original_user_comment",
+    "raw_text_verified": true,
+    "reference_scope_verified": false,
+    "no_gt_score_or_eligibility_change": true,
+    "pair_bindings": [],
+    "times_are_missing_not_inferred_from_mtime": true
+  },
+  {
+    "image_code": null,
+    "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+    "object_id": null,
+    "record_id": null,
+    "text": "这个房间比较奇怪,他是一个\"凸\" 字型的房间,左右两侧通向走廊,这个不知道算不算",
+    "reference_version": null,
+    "reference_id": null,
+    "rubric_version": null,
+    "schema": "scene_user_review_v2",
+    "in_20260929_index": false,
+    "sources": [
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/source_user/rows/430/user_note",
+        "raw_record": {
+          "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+          "building": "uNb9QFRL6hY",
+          "split": "test",
+          "user_room": "",
+          "user_type": "卧室",
+          "user_boundary": "",
+          "user_doorway": "无法判断",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个房间比较奇怪,他是一个\"凸\" 字型的房间,左右两侧通向走廊,这个不知道算不算",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/rows/430/source_user/user_note",
+        "raw_record": {
+          "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+          "building": "uNb9QFRL6hY",
+          "split": "test",
+          "user_room": "",
+          "user_type": "卧室",
+          "user_boundary": "",
+          "user_doorway": "无法判断",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个房间比较奇怪,他是一个\"凸\" 字型的房间,左右两侧通向走廊,这个不知道算不算",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/images/430/note",
+        "raw_record": {
+          "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+          "building": "uNb9QFRL6hY",
+          "number": 2,
+          "view_basis": "individual_original",
+          "main_visual_space": "低位客卧入口短阶侧",
+          "expected_annotation_extent": "床、双壁龛与阳台门围合",
+          "ambiguity_and_information": "入口高差与凸墙，历史B15明确暂作同房",
+          "candidate_numbers": [
+            8,
+            28
+          ],
+          "note": "这个房间比较奇怪,他是一个\"凸\" 字型的房间,左右两侧通向走廊,这个不知道算不算",
+          "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png",
+          "split": "test",
+          "reviewer": "same_room_c"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/source_user/rows/430/user_note",
+        "raw_record": {
+          "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+          "building": "uNb9QFRL6hY",
+          "split": "test",
+          "user_room": "",
+          "user_type": "卧室",
+          "user_boundary": "",
+          "user_doorway": "无法判断",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个房间比较奇怪,他是一个\"凸\" 字型的房间,左右两侧通向走廊,这个不知道算不算",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/rows/430/source_user/user_note",
+        "raw_record": {
+          "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+          "building": "uNb9QFRL6hY",
+          "split": "test",
+          "user_room": "",
+          "user_type": "卧室",
+          "user_boundary": "",
+          "user_doorway": "无法判断",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个房间比较奇怪,他是一个\"凸\" 字型的房间,左右两侧通向走廊,这个不知道算不算",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/images/430/note",
+        "raw_record": {
+          "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+          "building": "uNb9QFRL6hY",
+          "number": 2,
+          "view_basis": "individual_original",
+          "main_visual_space": "低位客卧入口短阶侧",
+          "expected_annotation_extent": "床、双壁龛与阳台门围合",
+          "ambiguity_and_information": "入口高差与凸墙，历史B15明确暂作同房",
+          "candidate_numbers": [
+            8,
+            28
+          ],
+          "note": "这个房间比较奇怪,他是一个\"凸\" 字型的房间,左右两侧通向走廊,这个不知道算不算",
+          "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png",
+          "split": "test",
+          "reviewer": "same_room_c"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内图片_争议复核后完整分类.json",
+        "json_pointer": "/rows/430/user_note",
+        "raw_record": {
+          "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+          "building": "uNb9QFRL6hY",
+          "split": "test",
+          "user_room": "",
+          "user_type": "卧室",
+          "user_boundary": "",
+          "user_doorway": "无法判断",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个房间比较奇怪,他是一个\"凸\" 字型的房间,左右两侧通向走廊,这个不知道算不算",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/source_user/rows/430/user_note",
+        "raw_record": {
+          "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+          "building": "uNb9QFRL6hY",
+          "split": "test",
+          "user_room": "",
+          "user_type": "卧室",
+          "user_boundary": "",
+          "user_doorway": "无法判断",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个房间比较奇怪,他是一个\"凸\" 字型的房间,左右两侧通向走廊,这个不知道算不算",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/rows/430/source_user/user_note",
+        "raw_record": {
+          "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+          "building": "uNb9QFRL6hY",
+          "split": "test",
+          "user_room": "",
+          "user_type": "卧室",
+          "user_boundary": "",
+          "user_doorway": "无法判断",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个房间比较奇怪,他是一个\"凸\" 字型的房间,左右两侧通向走廊,这个不知道算不算",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/source_user/rows/430/user_note",
+        "raw_record": {
+          "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+          "building": "uNb9QFRL6hY",
+          "split": "test",
+          "user_room": "",
+          "user_type": "卧室",
+          "user_boundary": "",
+          "user_doorway": "无法判断",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个房间比较奇怪,他是一个\"凸\" 字型的房间,左右两侧通向走廊,这个不知道算不算",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/rows/430/source_user/user_note",
+        "raw_record": {
+          "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+          "building": "uNb9QFRL6hY",
+          "split": "test",
+          "user_room": "",
+          "user_type": "卧室",
+          "user_boundary": "",
+          "user_doorway": "无法判断",
+          "user_artifact": "未见明显异常",
+          "user_status": "需讨论",
+          "user_note": "这个房间比较奇怪,他是一个\"凸\" 字型的房间,左右两侧通向走廊,这个不知道算不算",
+          "user_audit_status": "仍需讨论"
+        },
+        "updated_at": null
+      }
+    ],
+    "related_object_ids": [],
+    "in_current_259": false,
+    "cloud_status": "absent_image_text",
+    "content_role": "original_user_comment",
+    "raw_text_verified": true,
+    "reference_scope_verified": false,
+    "no_gt_score_or_eligibility_change": true,
+    "pair_bindings": [],
+    "times_are_missing_not_inferred_from_mtime": true
+  },
+  {
+    "image_code": null,
+    "image_id": "7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44",
+    "object_id": null,
+    "record_id": null,
+    "text": "两区域交界处: B01, b07 的14,b13的13,b15 的02 暂且加入交界处的候选(不过优先级低)",
+    "reference_version": null,
+    "reference_id": null,
+    "rubric_version": null,
+    "schema": "scene_open_layout_user_review_v3",
+    "in_20260929_index": false,
+    "sources": [
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/rows/18/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B01",
+          "source_comment": "两区域交界处: B01, b07 的14,b13的13,b15 的02 暂且加入交界处的候选(不过优先级低)",
+          "images": [
+            {
+              "image_id": "7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44",
+              "building": "7y3sRwLe3Va",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44.png"
+            }
+          ],
+          "user_room_decision": "未新增同房关系",
+          "boundary_decisions": [
+            {
+              "image_id": "7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44",
+              "building": "7y3sRwLe3Va",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44.png",
+              "state": "低优先级候选",
+              "priority": "低"
+            }
+          ],
+          "same_room_collection": "未另定",
+          "similar_scene_collection": "未排除",
+          "audit_note": "洗衣凹室开口进入交界候选；这是候选状态，未升级为已确认。",
+          "room_relations": []
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/rows/18/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B01",
+          "source_comment": "两区域交界处: B01, b07 的14,b13的13,b15 的02 暂且加入交界处的候选(不过优先级低)",
+          "images": [
+            {
+              "image_id": "7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44",
+              "building": "7y3sRwLe3Va",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44.png"
+            }
+          ],
+          "user_room_decision": "未新增同房关系",
+          "boundary_decisions": [
+            {
+              "image_id": "7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44",
+              "building": "7y3sRwLe3Va",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44.png",
+              "state": "低优先级候选",
+              "priority": "低"
+            }
+          ],
+          "same_room_collection": "未另定",
+          "similar_scene_collection": "未排除",
+          "audit_note": "洗衣凹室开口进入交界候选；这是候选状态，未升级为已确认。",
+          "room_relations": []
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/rows/18/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B01",
+          "source_comment": "两区域交界处: B01, b07 的14,b13的13,b15 的02 暂且加入交界处的候选(不过优先级低)",
+          "images": [
+            {
+              "image_id": "7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44",
+              "building": "7y3sRwLe3Va",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44.png"
+            }
+          ],
+          "user_room_decision": "未新增同房关系",
+          "boundary_decisions": [
+            {
+              "image_id": "7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44",
+              "building": "7y3sRwLe3Va",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44.png",
+              "state": "低优先级候选",
+              "priority": "低"
+            }
+          ],
+          "same_room_collection": "未另定",
+          "similar_scene_collection": "未排除",
+          "audit_note": "洗衣凹室开口进入交界候选；这是候选状态，未升级为已确认。",
+          "room_relations": []
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/rows/18/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B01",
+          "source_comment": "两区域交界处: B01, b07 的14,b13的13,b15 的02 暂且加入交界处的候选(不过优先级低)",
+          "images": [
+            {
+              "image_id": "7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44",
+              "building": "7y3sRwLe3Va",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44.png"
+            }
+          ],
+          "user_room_decision": "未新增同房关系",
+          "boundary_decisions": [
+            {
+              "image_id": "7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44",
+              "building": "7y3sRwLe3Va",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/7y3sRwLe3Va_0eb1323894e041efa23d2f3e60efbe44.png",
+              "state": "低优先级候选",
+              "priority": "低"
+            }
+          ],
+          "same_room_collection": "未另定",
+          "similar_scene_collection": "未排除",
+          "audit_note": "洗衣凹室开口进入交界候选；这是候选状态，未升级为已确认。",
+          "room_relations": []
+        },
+        "updated_at": null
+      }
+    ],
+    "related_object_ids": [],
+    "in_current_259": false,
+    "cloud_status": "absent_image_text",
+    "content_role": "original_user_cross_image_relationship_context",
+    "raw_text_verified": true,
+    "reference_scope_verified": false,
+    "no_gt_score_or_eligibility_change": true,
+    "pair_bindings": [],
+    "times_are_missing_not_inferred_from_mtime": true
+  },
+  {
+    "image_code": null,
+    "image_id": "B6ByNegPMKs_bb2332e3d7ad40a59ee5ad0eae108dec",
+    "object_id": null,
+    "record_id": null,
+    "text": "b02的两张图,其实这个空间是\"回\"字型,两张图分别照了 各一半(斜着分割 回\"字),不属于同房,但是b02的第一张,站在回字的 右下角拍的,这种到底算不算两个空间交界处?",
+    "reference_version": null,
+    "reference_id": null,
+    "rubric_version": null,
+    "schema": "scene_open_layout_user_review_v3",
+    "in_20260929_index": false,
+    "sources": [
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/rows/76/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B02",
+          "source_comment": "b02的两张图,其实这个空间是\"回\"字型,两张图分别照了 各一半(斜着分割 回\"字),不属于同房,但是b02的第一张,站在回字的 右下角拍的,这种到底算不算两个空间交界处?",
+          "images": [
+            {
+              "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+              "building": "B6ByNegPMKs",
+              "number": 47,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b.png"
+            },
+            {
+              "image_id": "B6ByNegPMKs_bb2332e3d7ad40a59ee5ad0eae108dec",
+              "building": "B6ByNegPMKs",
+              "number": 34,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/B6ByNegPMKs_bb2332e3d7ad40a59ee5ad0eae108dec.png"
+            }
+          ],
+          "user_room_decision": "47与34按用户判断不归同房",
+          "boundary_decisions": [
+            {
+              "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+              "building": "B6ByNegPMKs",
+              "number": 47,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b.png",
+              "state": "待定：用户提问",
+              "priority": null
+            }
+          ],
+          "same_room_collection": "未另定",
+          "similar_scene_collection": "未排除",
+          "audit_note": "用户将其解释为同一回字通行空间的不同部分。AI建议另记通行空间转折／范围歧义，暂不纳入两区域交界候选；转弯本身不足以认定交界。这项建议尚未获用户明确确认。",
+          "room_relations": [
+            {
+              "relation": "user_not_same_room",
+              "images": [
+                {
+                  "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+                  "building": "B6ByNegPMKs",
+                  "number": 47,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b.png"
+                },
+                {
+                  "image_id": "B6ByNegPMKs_bb2332e3d7ad40a59ee5ad0eae108dec",
+                  "building": "B6ByNegPMKs",
+                  "number": 34,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/B6ByNegPMKs_bb2332e3d7ad40a59ee5ad0eae108dec.png"
+                }
+              ],
+              "status": "用户决定"
+            }
+          ]
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/rows/76/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B02",
+          "source_comment": "b02的两张图,其实这个空间是\"回\"字型,两张图分别照了 各一半(斜着分割 回\"字),不属于同房,但是b02的第一张,站在回字的 右下角拍的,这种到底算不算两个空间交界处?",
+          "images": [
+            {
+              "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+              "building": "B6ByNegPMKs",
+              "number": 47,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b.png"
+            },
+            {
+              "image_id": "B6ByNegPMKs_bb2332e3d7ad40a59ee5ad0eae108dec",
+              "building": "B6ByNegPMKs",
+              "number": 34,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/B6ByNegPMKs_bb2332e3d7ad40a59ee5ad0eae108dec.png"
+            }
+          ],
+          "user_room_decision": "47与34按用户判断不归同房",
+          "boundary_decisions": [
+            {
+              "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+              "building": "B6ByNegPMKs",
+              "number": 47,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b.png",
+              "state": "待定：用户提问",
+              "priority": null
+            }
+          ],
+          "same_room_collection": "未另定",
+          "similar_scene_collection": "未排除",
+          "audit_note": "用户将其解释为同一回字通行空间的不同部分。AI建议另记通行空间转折／范围歧义，暂不纳入两区域交界候选；转弯本身不足以认定交界。这项建议尚未获用户明确确认。",
+          "room_relations": [
+            {
+              "relation": "user_not_same_room",
+              "images": [
+                {
+                  "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+                  "building": "B6ByNegPMKs",
+                  "number": 47,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b.png"
+                },
+                {
+                  "image_id": "B6ByNegPMKs_bb2332e3d7ad40a59ee5ad0eae108dec",
+                  "building": "B6ByNegPMKs",
+                  "number": 34,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/B6ByNegPMKs_bb2332e3d7ad40a59ee5ad0eae108dec.png"
+                }
+              ],
+              "status": "用户决定"
+            }
+          ]
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/rows/76/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B02",
+          "source_comment": "b02的两张图,其实这个空间是\"回\"字型,两张图分别照了 各一半(斜着分割 回\"字),不属于同房,但是b02的第一张,站在回字的 右下角拍的,这种到底算不算两个空间交界处?",
+          "images": [
+            {
+              "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+              "building": "B6ByNegPMKs",
+              "number": 47,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b.png"
+            },
+            {
+              "image_id": "B6ByNegPMKs_bb2332e3d7ad40a59ee5ad0eae108dec",
+              "building": "B6ByNegPMKs",
+              "number": 34,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/B6ByNegPMKs_bb2332e3d7ad40a59ee5ad0eae108dec.png"
+            }
+          ],
+          "user_room_decision": "47与34按用户判断不归同房",
+          "boundary_decisions": [
+            {
+              "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+              "building": "B6ByNegPMKs",
+              "number": 47,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b.png",
+              "state": "待定：用户提问",
+              "priority": null
+            }
+          ],
+          "same_room_collection": "未另定",
+          "similar_scene_collection": "未排除",
+          "audit_note": "用户将其解释为同一回字通行空间的不同部分。AI建议另记通行空间转折／范围歧义，暂不纳入两区域交界候选；转弯本身不足以认定交界。这项建议尚未获用户明确确认。",
+          "room_relations": [
+            {
+              "relation": "user_not_same_room",
+              "images": [
+                {
+                  "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+                  "building": "B6ByNegPMKs",
+                  "number": 47,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b.png"
+                },
+                {
+                  "image_id": "B6ByNegPMKs_bb2332e3d7ad40a59ee5ad0eae108dec",
+                  "building": "B6ByNegPMKs",
+                  "number": 34,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/B6ByNegPMKs_bb2332e3d7ad40a59ee5ad0eae108dec.png"
+                }
+              ],
+              "status": "用户决定"
+            }
+          ]
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/rows/76/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B02",
+          "source_comment": "b02的两张图,其实这个空间是\"回\"字型,两张图分别照了 各一半(斜着分割 回\"字),不属于同房,但是b02的第一张,站在回字的 右下角拍的,这种到底算不算两个空间交界处?",
+          "images": [
+            {
+              "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+              "building": "B6ByNegPMKs",
+              "number": 47,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b.png"
+            },
+            {
+              "image_id": "B6ByNegPMKs_bb2332e3d7ad40a59ee5ad0eae108dec",
+              "building": "B6ByNegPMKs",
+              "number": 34,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/B6ByNegPMKs_bb2332e3d7ad40a59ee5ad0eae108dec.png"
+            }
+          ],
+          "user_room_decision": "47与34按用户判断不归同房",
+          "boundary_decisions": [
+            {
+              "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+              "building": "B6ByNegPMKs",
+              "number": 47,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b.png",
+              "state": "待定：用户提问",
+              "priority": null
+            }
+          ],
+          "same_room_collection": "未另定",
+          "similar_scene_collection": "未排除",
+          "audit_note": "用户将其解释为同一回字通行空间的不同部分。AI建议另记通行空间转折／范围歧义，暂不纳入两区域交界候选；转弯本身不足以认定交界。这项建议尚未获用户明确确认。",
+          "room_relations": [
+            {
+              "relation": "user_not_same_room",
+              "images": [
+                {
+                  "image_id": "B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b",
+                  "building": "B6ByNegPMKs",
+                  "number": 47,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/B6ByNegPMKs_e26e2cb761894264a4a34b1046701f6b.png"
+                },
+                {
+                  "image_id": "B6ByNegPMKs_bb2332e3d7ad40a59ee5ad0eae108dec",
+                  "building": "B6ByNegPMKs",
+                  "number": 34,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/B6ByNegPMKs_bb2332e3d7ad40a59ee5ad0eae108dec.png"
+                }
+              ],
+              "status": "用户决定"
+            }
+          ]
+        },
+        "updated_at": null
+      }
+    ],
+    "related_object_ids": [],
+    "in_current_259": false,
+    "cloud_status": "absent_image_text",
+    "content_role": "original_user_cross_image_relationship_context",
+    "raw_text_verified": true,
+    "reference_scope_verified": false,
+    "no_gt_score_or_eligibility_change": true,
+    "pair_bindings": [],
+    "times_are_missing_not_inferred_from_mtime": true
+  },
+  {
+    "image_code": null,
+    "image_id": "pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807",
+    "object_id": null,
+    "record_id": null,
+    "text": "b12的 14和05不算同房,我觉得14的标注重点应该是外面的区域,而不是房间里的05区域,但是05和47算同房,这个归为离交界区域很近,但还是暂且不算",
+    "reference_version": null,
+    "reference_id": null,
+    "rubric_version": null,
+    "schema": "scene_open_layout_user_review_v3",
+    "in_20260929_index": false,
+    "sources": [
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/rows/369/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B12",
+          "source_comment": "b12的 14和05不算同房,我觉得14的标注重点应该是外面的区域,而不是房间里的05区域,但是05和47算同房,这个归为离交界区域很近,但还是暂且不算",
+          "images": [
+            {
+              "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+              "building": "pa4otMbVnkk",
+              "number": 14,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.png"
+            },
+            {
+              "image_id": "pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b",
+              "building": "pa4otMbVnkk",
+              "number": 5,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b.png"
+            },
+            {
+              "image_id": "pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807",
+              "building": "pa4otMbVnkk",
+              "number": 47,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807.png"
+            }
+          ],
+          "user_room_decision": "14不与05同房；05与47同房",
+          "boundary_decisions": [
+            {
+              "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+              "building": "pa4otMbVnkk",
+              "number": 14,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.png",
+              "state": "近交界但暂不归入",
+              "priority": null
+            }
+          ],
+          "same_room_collection": "未另定",
+          "similar_scene_collection": "未排除",
+          "audit_note": "用户认为14标注重点在门外，保留这个范围判断及物理门口关系；不将原来的入口对应证据写成14／05同房。",
+          "room_relations": [
+            {
+              "relation": "user_not_same_room",
+              "images": [
+                {
+                  "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+                  "building": "pa4otMbVnkk",
+                  "number": 14,
+                  "split": "valid",
+                  "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.png"
+                },
+                {
+                  "image_id": "pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b",
+                  "building": "pa4otMbVnkk",
+                  "number": 5,
+                  "split": "valid",
+                  "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b.png"
+                }
+              ],
+              "status": "用户决定；理由含标注重点"
+            },
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b",
+                  "building": "pa4otMbVnkk",
+                  "number": 5,
+                  "split": "valid",
+                  "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b.png"
+                },
+                {
+                  "image_id": "pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807",
+                  "building": "pa4otMbVnkk",
+                  "number": 47,
+                  "split": "valid",
+                  "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807.png"
+                }
+              ],
+              "status": "用户确认"
+            }
+          ]
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/rows/369/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B12",
+          "source_comment": "b12的 14和05不算同房,我觉得14的标注重点应该是外面的区域,而不是房间里的05区域,但是05和47算同房,这个归为离交界区域很近,但还是暂且不算",
+          "images": [
+            {
+              "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+              "building": "pa4otMbVnkk",
+              "number": 14,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.png"
+            },
+            {
+              "image_id": "pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b",
+              "building": "pa4otMbVnkk",
+              "number": 5,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b.png"
+            },
+            {
+              "image_id": "pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807",
+              "building": "pa4otMbVnkk",
+              "number": 47,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807.png"
+            }
+          ],
+          "user_room_decision": "14不与05同房；05与47同房",
+          "boundary_decisions": [
+            {
+              "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+              "building": "pa4otMbVnkk",
+              "number": 14,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.png",
+              "state": "近交界但暂不归入",
+              "priority": null
+            }
+          ],
+          "same_room_collection": "未另定",
+          "similar_scene_collection": "未排除",
+          "audit_note": "用户认为14标注重点在门外，保留这个范围判断及物理门口关系；不将原来的入口对应证据写成14／05同房。",
+          "room_relations": [
+            {
+              "relation": "user_not_same_room",
+              "images": [
+                {
+                  "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+                  "building": "pa4otMbVnkk",
+                  "number": 14,
+                  "split": "valid",
+                  "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.png"
+                },
+                {
+                  "image_id": "pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b",
+                  "building": "pa4otMbVnkk",
+                  "number": 5,
+                  "split": "valid",
+                  "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b.png"
+                }
+              ],
+              "status": "用户决定；理由含标注重点"
+            },
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b",
+                  "building": "pa4otMbVnkk",
+                  "number": 5,
+                  "split": "valid",
+                  "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b.png"
+                },
+                {
+                  "image_id": "pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807",
+                  "building": "pa4otMbVnkk",
+                  "number": 47,
+                  "split": "valid",
+                  "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807.png"
+                }
+              ],
+              "status": "用户确认"
+            }
+          ]
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/rows/369/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B12",
+          "source_comment": "b12的 14和05不算同房,我觉得14的标注重点应该是外面的区域,而不是房间里的05区域,但是05和47算同房,这个归为离交界区域很近,但还是暂且不算",
+          "images": [
+            {
+              "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+              "building": "pa4otMbVnkk",
+              "number": 14,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.png"
+            },
+            {
+              "image_id": "pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b",
+              "building": "pa4otMbVnkk",
+              "number": 5,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b.png"
+            },
+            {
+              "image_id": "pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807",
+              "building": "pa4otMbVnkk",
+              "number": 47,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807.png"
+            }
+          ],
+          "user_room_decision": "14不与05同房；05与47同房",
+          "boundary_decisions": [
+            {
+              "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+              "building": "pa4otMbVnkk",
+              "number": 14,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.png",
+              "state": "近交界但暂不归入",
+              "priority": null
+            }
+          ],
+          "same_room_collection": "未另定",
+          "similar_scene_collection": "未排除",
+          "audit_note": "用户认为14标注重点在门外，保留这个范围判断及物理门口关系；不将原来的入口对应证据写成14／05同房。",
+          "room_relations": [
+            {
+              "relation": "user_not_same_room",
+              "images": [
+                {
+                  "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+                  "building": "pa4otMbVnkk",
+                  "number": 14,
+                  "split": "valid",
+                  "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.png"
+                },
+                {
+                  "image_id": "pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b",
+                  "building": "pa4otMbVnkk",
+                  "number": 5,
+                  "split": "valid",
+                  "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b.png"
+                }
+              ],
+              "status": "用户决定；理由含标注重点"
+            },
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b",
+                  "building": "pa4otMbVnkk",
+                  "number": 5,
+                  "split": "valid",
+                  "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b.png"
+                },
+                {
+                  "image_id": "pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807",
+                  "building": "pa4otMbVnkk",
+                  "number": 47,
+                  "split": "valid",
+                  "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807.png"
+                }
+              ],
+              "status": "用户确认"
+            }
+          ]
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/rows/369/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B12",
+          "source_comment": "b12的 14和05不算同房,我觉得14的标注重点应该是外面的区域,而不是房间里的05区域,但是05和47算同房,这个归为离交界区域很近,但还是暂且不算",
+          "images": [
+            {
+              "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+              "building": "pa4otMbVnkk",
+              "number": 14,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.png"
+            },
+            {
+              "image_id": "pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b",
+              "building": "pa4otMbVnkk",
+              "number": 5,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b.png"
+            },
+            {
+              "image_id": "pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807",
+              "building": "pa4otMbVnkk",
+              "number": 47,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807.png"
+            }
+          ],
+          "user_room_decision": "14不与05同房；05与47同房",
+          "boundary_decisions": [
+            {
+              "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+              "building": "pa4otMbVnkk",
+              "number": 14,
+              "split": "valid",
+              "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.png",
+              "state": "近交界但暂不归入",
+              "priority": null
+            }
+          ],
+          "same_room_collection": "未另定",
+          "similar_scene_collection": "未排除",
+          "audit_note": "用户认为14标注重点在门外，保留这个范围判断及物理门口关系；不将原来的入口对应证据写成14／05同房。",
+          "room_relations": [
+            {
+              "relation": "user_not_same_room",
+              "images": [
+                {
+                  "image_id": "pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3",
+                  "building": "pa4otMbVnkk",
+                  "number": 14,
+                  "split": "valid",
+                  "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_5d1adb544bb14217ba5ded2eb82cd8e3.png"
+                },
+                {
+                  "image_id": "pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b",
+                  "building": "pa4otMbVnkk",
+                  "number": 5,
+                  "split": "valid",
+                  "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b.png"
+                }
+              ],
+              "status": "用户决定；理由含标注重点"
+            },
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b",
+                  "building": "pa4otMbVnkk",
+                  "number": 5,
+                  "split": "valid",
+                  "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_270f6920ec0f48c391bca974b356bc3b.png"
+                },
+                {
+                  "image_id": "pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807",
+                  "building": "pa4otMbVnkk",
+                  "number": 47,
+                  "split": "valid",
+                  "path": "data/mp3d_layout/valid/img/pa4otMbVnkk_faa9b3c493a541d5bcaae52f760b6807.png"
+                }
+              ],
+              "status": "用户确认"
+            }
+          ]
+        },
+        "updated_at": null
+      }
+    ],
+    "related_object_ids": [],
+    "in_current_259": false,
+    "cloud_status": "absent_image_text",
+    "content_role": "original_user_cross_image_relationship_context",
+    "raw_text_verified": true,
+    "reference_scope_verified": false,
+    "no_gt_score_or_eligibility_change": true,
+    "pair_bindings": [],
+    "times_are_missing_not_inferred_from_mtime": true
+  },
+  {
+    "image_code": null,
+    "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+    "object_id": null,
+    "record_id": null,
+    "text": "b14 的22和b13是同一房间, b14的22 离交界处很近,但是暂且先不归于交界处. 29 是22的交界处(图片左边的小空间),不应该归为同一个房间,但是29和27是同一房间",
+    "reference_version": null,
+    "reference_id": null,
+    "rubric_version": null,
+    "schema": "scene_open_layout_user_review_v3",
+    "in_20260929_index": false,
+    "sources": [
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/rows/393/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B14",
+          "source_comment": "b14 的22和b13是同一房间, b14的22 离交界处很近,但是暂且先不归于交界处. 29 是22的交界处(图片左边的小空间),不应该归为同一个房间,但是29和27是同一房间",
+          "images": [
+            {
+              "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+              "building": "q9vSo1VnCiC",
+              "number": 22,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+              "building": "q9vSo1VnCiC",
+              "number": 1,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+              "building": "q9vSo1VnCiC",
+              "number": 29,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b",
+              "building": "q9vSo1VnCiC",
+              "number": 27,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b.png"
+            }
+          ],
+          "user_room_decision": "22与B13所述13／02／01同房；29与22分开；29与27同房",
+          "boundary_decisions": [
+            {
+              "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+              "building": "q9vSo1VnCiC",
+              "number": 22,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png",
+              "state": "近交界但暂不归入",
+              "priority": null
+            }
+          ],
+          "same_room_collection": "未另定",
+          "similar_scene_collection": "未排除",
+          "audit_note": "按用户将床区与左侧小空间分组；“29是22的交界处”描述两空间关系，不足以单独确定29相机位于交界。撤回此前将27直接判为不同房的结论：两图的左右结构关系仍有镜像疑点，尚未查明成因，不能作为已确认不同房证据；用户同房判断及原图疑点并存。",
+          "room_relations": [
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+                  "building": "q9vSo1VnCiC",
+                  "number": 22,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+                  "building": "q9vSo1VnCiC",
+                  "number": 13,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e",
+                  "building": "q9vSo1VnCiC",
+                  "number": 2,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+                  "building": "q9vSo1VnCiC",
+                  "number": 1,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d.png"
+                }
+              ],
+              "status": "用户确认"
+            },
+            {
+              "relation": "user_not_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+                  "building": "q9vSo1VnCiC",
+                  "number": 22,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+                  "building": "q9vSo1VnCiC",
+                  "number": 29,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+                }
+              ],
+              "status": "用户决定"
+            },
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+                  "building": "q9vSo1VnCiC",
+                  "number": 29,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b",
+                  "building": "q9vSo1VnCiC",
+                  "number": 27,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b.png"
+                }
+              ],
+              "status": "用户确认；AI左右结构疑点仍保留"
+            }
+          ]
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/rows/393/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B14",
+          "source_comment": "b14 的22和b13是同一房间, b14的22 离交界处很近,但是暂且先不归于交界处. 29 是22的交界处(图片左边的小空间),不应该归为同一个房间,但是29和27是同一房间",
+          "images": [
+            {
+              "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+              "building": "q9vSo1VnCiC",
+              "number": 22,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+              "building": "q9vSo1VnCiC",
+              "number": 1,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+              "building": "q9vSo1VnCiC",
+              "number": 29,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b",
+              "building": "q9vSo1VnCiC",
+              "number": 27,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b.png"
+            }
+          ],
+          "user_room_decision": "22与B13所述13／02／01同房；29与22分开；29与27同房",
+          "boundary_decisions": [
+            {
+              "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+              "building": "q9vSo1VnCiC",
+              "number": 22,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png",
+              "state": "近交界但暂不归入",
+              "priority": null
+            }
+          ],
+          "same_room_collection": "未另定",
+          "similar_scene_collection": "未排除",
+          "audit_note": "按用户将床区与左侧小空间分组；“29是22的交界处”描述两空间关系，不足以单独确定29相机位于交界。撤回此前将27直接判为不同房的结论：两图的左右结构关系仍有镜像疑点，尚未查明成因，不能作为已确认不同房证据；用户同房判断及原图疑点并存。",
+          "room_relations": [
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+                  "building": "q9vSo1VnCiC",
+                  "number": 22,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+                  "building": "q9vSo1VnCiC",
+                  "number": 13,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e",
+                  "building": "q9vSo1VnCiC",
+                  "number": 2,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+                  "building": "q9vSo1VnCiC",
+                  "number": 1,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d.png"
+                }
+              ],
+              "status": "用户确认"
+            },
+            {
+              "relation": "user_not_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+                  "building": "q9vSo1VnCiC",
+                  "number": 22,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+                  "building": "q9vSo1VnCiC",
+                  "number": 29,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+                }
+              ],
+              "status": "用户决定"
+            },
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+                  "building": "q9vSo1VnCiC",
+                  "number": 29,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b",
+                  "building": "q9vSo1VnCiC",
+                  "number": 27,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b.png"
+                }
+              ],
+              "status": "用户确认；AI左右结构疑点仍保留"
+            }
+          ]
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/rows/393/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B14",
+          "source_comment": "b14 的22和b13是同一房间, b14的22 离交界处很近,但是暂且先不归于交界处. 29 是22的交界处(图片左边的小空间),不应该归为同一个房间,但是29和27是同一房间",
+          "images": [
+            {
+              "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+              "building": "q9vSo1VnCiC",
+              "number": 22,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+              "building": "q9vSo1VnCiC",
+              "number": 1,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+              "building": "q9vSo1VnCiC",
+              "number": 29,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b",
+              "building": "q9vSo1VnCiC",
+              "number": 27,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b.png"
+            }
+          ],
+          "user_room_decision": "22与B13所述13／02／01同房；29与22分开；29与27同房",
+          "boundary_decisions": [
+            {
+              "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+              "building": "q9vSo1VnCiC",
+              "number": 22,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png",
+              "state": "近交界但暂不归入",
+              "priority": null
+            }
+          ],
+          "same_room_collection": "未另定",
+          "similar_scene_collection": "未排除",
+          "audit_note": "按用户将床区与左侧小空间分组；“29是22的交界处”描述两空间关系，不足以单独确定29相机位于交界。撤回此前将27直接判为不同房的结论：两图的左右结构关系仍有镜像疑点，尚未查明成因，不能作为已确认不同房证据；用户同房判断及原图疑点并存。",
+          "room_relations": [
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+                  "building": "q9vSo1VnCiC",
+                  "number": 22,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+                  "building": "q9vSo1VnCiC",
+                  "number": 13,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e",
+                  "building": "q9vSo1VnCiC",
+                  "number": 2,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+                  "building": "q9vSo1VnCiC",
+                  "number": 1,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d.png"
+                }
+              ],
+              "status": "用户确认"
+            },
+            {
+              "relation": "user_not_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+                  "building": "q9vSo1VnCiC",
+                  "number": 22,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+                  "building": "q9vSo1VnCiC",
+                  "number": 29,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+                }
+              ],
+              "status": "用户决定"
+            },
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+                  "building": "q9vSo1VnCiC",
+                  "number": 29,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b",
+                  "building": "q9vSo1VnCiC",
+                  "number": 27,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b.png"
+                }
+              ],
+              "status": "用户确认；AI左右结构疑点仍保留"
+            }
+          ]
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/rows/393/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B14",
+          "source_comment": "b14 的22和b13是同一房间, b14的22 离交界处很近,但是暂且先不归于交界处. 29 是22的交界处(图片左边的小空间),不应该归为同一个房间,但是29和27是同一房间",
+          "images": [
+            {
+              "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+              "building": "q9vSo1VnCiC",
+              "number": 22,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+              "building": "q9vSo1VnCiC",
+              "number": 1,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+              "building": "q9vSo1VnCiC",
+              "number": 29,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b",
+              "building": "q9vSo1VnCiC",
+              "number": 27,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b.png"
+            }
+          ],
+          "user_room_decision": "22与B13所述13／02／01同房；29与22分开；29与27同房",
+          "boundary_decisions": [
+            {
+              "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+              "building": "q9vSo1VnCiC",
+              "number": 22,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png",
+              "state": "近交界但暂不归入",
+              "priority": null
+            }
+          ],
+          "same_room_collection": "未另定",
+          "similar_scene_collection": "未排除",
+          "audit_note": "按用户将床区与左侧小空间分组；“29是22的交界处”描述两空间关系，不足以单独确定29相机位于交界。撤回此前将27直接判为不同房的结论：两图的左右结构关系仍有镜像疑点，尚未查明成因，不能作为已确认不同房证据；用户同房判断及原图疑点并存。",
+          "room_relations": [
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+                  "building": "q9vSo1VnCiC",
+                  "number": 22,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+                  "building": "q9vSo1VnCiC",
+                  "number": 13,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e",
+                  "building": "q9vSo1VnCiC",
+                  "number": 2,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+                  "building": "q9vSo1VnCiC",
+                  "number": 1,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d.png"
+                }
+              ],
+              "status": "用户确认"
+            },
+            {
+              "relation": "user_not_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+                  "building": "q9vSo1VnCiC",
+                  "number": 22,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+                  "building": "q9vSo1VnCiC",
+                  "number": 29,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+                }
+              ],
+              "status": "用户决定"
+            },
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+                  "building": "q9vSo1VnCiC",
+                  "number": 29,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b",
+                  "building": "q9vSo1VnCiC",
+                  "number": 27,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b.png"
+                }
+              ],
+              "status": "用户确认；AI左右结构疑点仍保留"
+            }
+          ]
+        },
+        "updated_at": null
+      }
+    ],
+    "related_object_ids": [],
+    "in_current_259": false,
+    "cloud_status": "absent_image_text",
+    "content_role": "original_user_cross_image_relationship_context",
+    "raw_text_verified": true,
+    "reference_scope_verified": false,
+    "no_gt_score_or_eligibility_change": true,
+    "pair_bindings": [],
+    "times_are_missing_not_inferred_from_mtime": true
+  },
+  {
+    "image_code": null,
+    "image_id": "q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b",
+    "object_id": null,
+    "record_id": null,
+    "text": "b14 的22和b13是同一房间, b14的22 离交界处很近,但是暂且先不归于交界处. 29 是22的交界处(图片左边的小空间),不应该归为同一个房间,但是29和27是同一房间",
+    "reference_version": null,
+    "reference_id": null,
+    "rubric_version": null,
+    "schema": "scene_open_layout_user_review_v3",
+    "in_20260929_index": false,
+    "sources": [
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/rows/398/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B14",
+          "source_comment": "b14 的22和b13是同一房间, b14的22 离交界处很近,但是暂且先不归于交界处. 29 是22的交界处(图片左边的小空间),不应该归为同一个房间,但是29和27是同一房间",
+          "images": [
+            {
+              "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+              "building": "q9vSo1VnCiC",
+              "number": 22,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+              "building": "q9vSo1VnCiC",
+              "number": 1,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+              "building": "q9vSo1VnCiC",
+              "number": 29,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b",
+              "building": "q9vSo1VnCiC",
+              "number": 27,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b.png"
+            }
+          ],
+          "user_room_decision": "22与B13所述13／02／01同房；29与22分开；29与27同房",
+          "boundary_decisions": [
+            {
+              "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+              "building": "q9vSo1VnCiC",
+              "number": 22,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png",
+              "state": "近交界但暂不归入",
+              "priority": null
+            }
+          ],
+          "same_room_collection": "未另定",
+          "similar_scene_collection": "未排除",
+          "audit_note": "按用户将床区与左侧小空间分组；“29是22的交界处”描述两空间关系，不足以单独确定29相机位于交界。撤回此前将27直接判为不同房的结论：两图的左右结构关系仍有镜像疑点，尚未查明成因，不能作为已确认不同房证据；用户同房判断及原图疑点并存。",
+          "room_relations": [
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+                  "building": "q9vSo1VnCiC",
+                  "number": 22,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+                  "building": "q9vSo1VnCiC",
+                  "number": 13,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e",
+                  "building": "q9vSo1VnCiC",
+                  "number": 2,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+                  "building": "q9vSo1VnCiC",
+                  "number": 1,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d.png"
+                }
+              ],
+              "status": "用户确认"
+            },
+            {
+              "relation": "user_not_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+                  "building": "q9vSo1VnCiC",
+                  "number": 22,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+                  "building": "q9vSo1VnCiC",
+                  "number": 29,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+                }
+              ],
+              "status": "用户决定"
+            },
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+                  "building": "q9vSo1VnCiC",
+                  "number": 29,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b",
+                  "building": "q9vSo1VnCiC",
+                  "number": 27,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b.png"
+                }
+              ],
+              "status": "用户确认；AI左右结构疑点仍保留"
+            }
+          ]
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/rows/398/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B14",
+          "source_comment": "b14 的22和b13是同一房间, b14的22 离交界处很近,但是暂且先不归于交界处. 29 是22的交界处(图片左边的小空间),不应该归为同一个房间,但是29和27是同一房间",
+          "images": [
+            {
+              "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+              "building": "q9vSo1VnCiC",
+              "number": 22,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+              "building": "q9vSo1VnCiC",
+              "number": 1,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+              "building": "q9vSo1VnCiC",
+              "number": 29,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b",
+              "building": "q9vSo1VnCiC",
+              "number": 27,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b.png"
+            }
+          ],
+          "user_room_decision": "22与B13所述13／02／01同房；29与22分开；29与27同房",
+          "boundary_decisions": [
+            {
+              "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+              "building": "q9vSo1VnCiC",
+              "number": 22,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png",
+              "state": "近交界但暂不归入",
+              "priority": null
+            }
+          ],
+          "same_room_collection": "未另定",
+          "similar_scene_collection": "未排除",
+          "audit_note": "按用户将床区与左侧小空间分组；“29是22的交界处”描述两空间关系，不足以单独确定29相机位于交界。撤回此前将27直接判为不同房的结论：两图的左右结构关系仍有镜像疑点，尚未查明成因，不能作为已确认不同房证据；用户同房判断及原图疑点并存。",
+          "room_relations": [
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+                  "building": "q9vSo1VnCiC",
+                  "number": 22,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+                  "building": "q9vSo1VnCiC",
+                  "number": 13,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e",
+                  "building": "q9vSo1VnCiC",
+                  "number": 2,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+                  "building": "q9vSo1VnCiC",
+                  "number": 1,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d.png"
+                }
+              ],
+              "status": "用户确认"
+            },
+            {
+              "relation": "user_not_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+                  "building": "q9vSo1VnCiC",
+                  "number": 22,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+                  "building": "q9vSo1VnCiC",
+                  "number": 29,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+                }
+              ],
+              "status": "用户决定"
+            },
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+                  "building": "q9vSo1VnCiC",
+                  "number": 29,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b",
+                  "building": "q9vSo1VnCiC",
+                  "number": 27,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b.png"
+                }
+              ],
+              "status": "用户确认；AI左右结构疑点仍保留"
+            }
+          ]
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/rows/398/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B14",
+          "source_comment": "b14 的22和b13是同一房间, b14的22 离交界处很近,但是暂且先不归于交界处. 29 是22的交界处(图片左边的小空间),不应该归为同一个房间,但是29和27是同一房间",
+          "images": [
+            {
+              "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+              "building": "q9vSo1VnCiC",
+              "number": 22,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+              "building": "q9vSo1VnCiC",
+              "number": 1,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+              "building": "q9vSo1VnCiC",
+              "number": 29,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b",
+              "building": "q9vSo1VnCiC",
+              "number": 27,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b.png"
+            }
+          ],
+          "user_room_decision": "22与B13所述13／02／01同房；29与22分开；29与27同房",
+          "boundary_decisions": [
+            {
+              "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+              "building": "q9vSo1VnCiC",
+              "number": 22,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png",
+              "state": "近交界但暂不归入",
+              "priority": null
+            }
+          ],
+          "same_room_collection": "未另定",
+          "similar_scene_collection": "未排除",
+          "audit_note": "按用户将床区与左侧小空间分组；“29是22的交界处”描述两空间关系，不足以单独确定29相机位于交界。撤回此前将27直接判为不同房的结论：两图的左右结构关系仍有镜像疑点，尚未查明成因，不能作为已确认不同房证据；用户同房判断及原图疑点并存。",
+          "room_relations": [
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+                  "building": "q9vSo1VnCiC",
+                  "number": 22,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+                  "building": "q9vSo1VnCiC",
+                  "number": 13,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e",
+                  "building": "q9vSo1VnCiC",
+                  "number": 2,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+                  "building": "q9vSo1VnCiC",
+                  "number": 1,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d.png"
+                }
+              ],
+              "status": "用户确认"
+            },
+            {
+              "relation": "user_not_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+                  "building": "q9vSo1VnCiC",
+                  "number": 22,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+                  "building": "q9vSo1VnCiC",
+                  "number": 29,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+                }
+              ],
+              "status": "用户决定"
+            },
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+                  "building": "q9vSo1VnCiC",
+                  "number": 29,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b",
+                  "building": "q9vSo1VnCiC",
+                  "number": 27,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b.png"
+                }
+              ],
+              "status": "用户确认；AI左右结构疑点仍保留"
+            }
+          ]
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/rows/398/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B14",
+          "source_comment": "b14 的22和b13是同一房间, b14的22 离交界处很近,但是暂且先不归于交界处. 29 是22的交界处(图片左边的小空间),不应该归为同一个房间,但是29和27是同一房间",
+          "images": [
+            {
+              "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+              "building": "q9vSo1VnCiC",
+              "number": 22,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+              "building": "q9vSo1VnCiC",
+              "number": 1,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+              "building": "q9vSo1VnCiC",
+              "number": 29,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+            },
+            {
+              "image_id": "q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b",
+              "building": "q9vSo1VnCiC",
+              "number": 27,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b.png"
+            }
+          ],
+          "user_room_decision": "22与B13所述13／02／01同房；29与22分开；29与27同房",
+          "boundary_decisions": [
+            {
+              "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+              "building": "q9vSo1VnCiC",
+              "number": 22,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png",
+              "state": "近交界但暂不归入",
+              "priority": null
+            }
+          ],
+          "same_room_collection": "未另定",
+          "similar_scene_collection": "未排除",
+          "audit_note": "按用户将床区与左侧小空间分组；“29是22的交界处”描述两空间关系，不足以单独确定29相机位于交界。撤回此前将27直接判为不同房的结论：两图的左右结构关系仍有镜像疑点，尚未查明成因，不能作为已确认不同房证据；用户同房判断及原图疑点并存。",
+          "room_relations": [
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+                  "building": "q9vSo1VnCiC",
+                  "number": 22,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+                  "building": "q9vSo1VnCiC",
+                  "number": 13,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e",
+                  "building": "q9vSo1VnCiC",
+                  "number": 2,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+                  "building": "q9vSo1VnCiC",
+                  "number": 1,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d.png"
+                }
+              ],
+              "status": "用户确认"
+            },
+            {
+              "relation": "user_not_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf",
+                  "building": "q9vSo1VnCiC",
+                  "number": 22,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_bac003e7f0294457905fb183c34ef2bf.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+                  "building": "q9vSo1VnCiC",
+                  "number": 29,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+                }
+              ],
+              "status": "用户决定"
+            },
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2",
+                  "building": "q9vSo1VnCiC",
+                  "number": 29,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_dc320b1236f741a98303db9f89bc68a2.png"
+                },
+                {
+                  "image_id": "q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b",
+                  "building": "q9vSo1VnCiC",
+                  "number": 27,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/q9vSo1VnCiC_cf3f1eaf611b4f5f8d13c273359d231b.png"
+                }
+              ],
+              "status": "用户确认；AI左右结构疑点仍保留"
+            }
+          ]
+        },
+        "updated_at": null
+      }
+    ],
+    "related_object_ids": [],
+    "in_current_259": false,
+    "cloud_status": "absent_image_text",
+    "content_role": "original_user_cross_image_relationship_context",
+    "raw_text_verified": true,
+    "reference_scope_verified": false,
+    "no_gt_score_or_eligibility_change": true,
+    "pair_bindings": [],
+    "times_are_missing_not_inferred_from_mtime": true
+  },
+  {
+    "image_code": null,
+    "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+    "object_id": null,
+    "record_id": null,
+    "text": "b15我终于明白了,不是凸字型的空间,只是说02 在28的楼梯处拍摄,实际上28和44都不会标注这个楼梯处的.(因为有台阶,这就不算同一平面)但是02 的标注如果不标这个楼梯处,左边的的墙角就会有很大的误导性,我想大部分人都会标那里,但是如果对照28 来看,其实应该标这个地方的延长线,也就是02墙的右侧. 把他们暂且算是同房吧, 不过02 在同房预测的时候可以考虑排除.",
+    "reference_version": null,
+    "reference_id": null,
+    "rubric_version": null,
+    "schema": "scene_open_layout_user_review_v3",
+    "in_20260929_index": false,
+    "sources": [
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/rows/430/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B15",
+          "source_comment": "b15我终于明白了,不是凸字型的空间,只是说02 在28的楼梯处拍摄,实际上28和44都不会标注这个楼梯处的.(因为有台阶,这就不算同一平面)但是02 的标注如果不标这个楼梯处,左边的的墙角就会有很大的误导性,我想大部分人都会标那里,但是如果对照28 来看,其实应该标这个地方的延长线,也就是02墙的右侧. 把他们暂且算是同房吧, 不过02 在同房预测的时候可以考虑排除.",
+          "images": [
+            {
+              "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+              "building": "uNb9QFRL6hY",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png"
+            },
+            {
+              "image_id": "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b",
+              "building": "uNb9QFRL6hY",
+              "number": 28,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b.png"
+            },
+            {
+              "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+              "building": "uNb9QFRL6hY",
+              "number": 44,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.png"
+            }
+          ],
+          "user_room_decision": "02／28／44暂按同房",
+          "boundary_decisions": [
+            {
+              "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+              "building": "uNb9QFRL6hY",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png",
+              "state": "低优先级候选",
+              "priority": "低"
+            }
+          ],
+          "same_room_collection": "02在同房预测中可考虑排除，尚未执行；28／44未被要求排除",
+          "similar_scene_collection": "未要求从相似场景候选排除",
+          "audit_note": "原图支持短台阶、高差及入口收窄；不标楼梯、墙的延长线位置及多数人会标哪里均保存为用户对规则与行为的解释，尚未核对标注分布或裁定GT。若以后评价排除02，需明确范围条件并并列包含02的对照。",
+          "room_relations": [
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+                  "building": "uNb9QFRL6hY",
+                  "number": 2,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png"
+                },
+                {
+                  "image_id": "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b",
+                  "building": "uNb9QFRL6hY",
+                  "number": 28,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b.png"
+                },
+                {
+                  "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+                  "building": "uNb9QFRL6hY",
+                  "number": 44,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.png"
+                }
+              ],
+              "status": "用户暂定"
+            }
+          ]
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/rows/430/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B15",
+          "source_comment": "b15我终于明白了,不是凸字型的空间,只是说02 在28的楼梯处拍摄,实际上28和44都不会标注这个楼梯处的.(因为有台阶,这就不算同一平面)但是02 的标注如果不标这个楼梯处,左边的的墙角就会有很大的误导性,我想大部分人都会标那里,但是如果对照28 来看,其实应该标这个地方的延长线,也就是02墙的右侧. 把他们暂且算是同房吧, 不过02 在同房预测的时候可以考虑排除.",
+          "images": [
+            {
+              "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+              "building": "uNb9QFRL6hY",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png"
+            },
+            {
+              "image_id": "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b",
+              "building": "uNb9QFRL6hY",
+              "number": 28,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b.png"
+            },
+            {
+              "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+              "building": "uNb9QFRL6hY",
+              "number": 44,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.png"
+            }
+          ],
+          "user_room_decision": "02／28／44暂按同房",
+          "boundary_decisions": [
+            {
+              "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+              "building": "uNb9QFRL6hY",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png",
+              "state": "低优先级候选",
+              "priority": "低"
+            }
+          ],
+          "same_room_collection": "02在同房预测中可考虑排除，尚未执行；28／44未被要求排除",
+          "similar_scene_collection": "未要求从相似场景候选排除",
+          "audit_note": "原图支持短台阶、高差及入口收窄；不标楼梯、墙的延长线位置及多数人会标哪里均保存为用户对规则与行为的解释，尚未核对标注分布或裁定GT。若以后评价排除02，需明确范围条件并并列包含02的对照。",
+          "room_relations": [
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+                  "building": "uNb9QFRL6hY",
+                  "number": 2,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png"
+                },
+                {
+                  "image_id": "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b",
+                  "building": "uNb9QFRL6hY",
+                  "number": 28,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b.png"
+                },
+                {
+                  "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+                  "building": "uNb9QFRL6hY",
+                  "number": 44,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.png"
+                }
+              ],
+              "status": "用户暂定"
+            }
+          ]
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/rows/430/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B15",
+          "source_comment": "b15我终于明白了,不是凸字型的空间,只是说02 在28的楼梯处拍摄,实际上28和44都不会标注这个楼梯处的.(因为有台阶,这就不算同一平面)但是02 的标注如果不标这个楼梯处,左边的的墙角就会有很大的误导性,我想大部分人都会标那里,但是如果对照28 来看,其实应该标这个地方的延长线,也就是02墙的右侧. 把他们暂且算是同房吧, 不过02 在同房预测的时候可以考虑排除.",
+          "images": [
+            {
+              "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+              "building": "uNb9QFRL6hY",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png"
+            },
+            {
+              "image_id": "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b",
+              "building": "uNb9QFRL6hY",
+              "number": 28,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b.png"
+            },
+            {
+              "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+              "building": "uNb9QFRL6hY",
+              "number": 44,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.png"
+            }
+          ],
+          "user_room_decision": "02／28／44暂按同房",
+          "boundary_decisions": [
+            {
+              "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+              "building": "uNb9QFRL6hY",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png",
+              "state": "低优先级候选",
+              "priority": "低"
+            }
+          ],
+          "same_room_collection": "02在同房预测中可考虑排除，尚未执行；28／44未被要求排除",
+          "similar_scene_collection": "未要求从相似场景候选排除",
+          "audit_note": "原图支持短台阶、高差及入口收窄；不标楼梯、墙的延长线位置及多数人会标哪里均保存为用户对规则与行为的解释，尚未核对标注分布或裁定GT。若以后评价排除02，需明确范围条件并并列包含02的对照。",
+          "room_relations": [
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+                  "building": "uNb9QFRL6hY",
+                  "number": 2,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png"
+                },
+                {
+                  "image_id": "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b",
+                  "building": "uNb9QFRL6hY",
+                  "number": 28,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b.png"
+                },
+                {
+                  "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+                  "building": "uNb9QFRL6hY",
+                  "number": 44,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.png"
+                }
+              ],
+              "status": "用户暂定"
+            }
+          ]
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/rows/430/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B15",
+          "source_comment": "b15我终于明白了,不是凸字型的空间,只是说02 在28的楼梯处拍摄,实际上28和44都不会标注这个楼梯处的.(因为有台阶,这就不算同一平面)但是02 的标注如果不标这个楼梯处,左边的的墙角就会有很大的误导性,我想大部分人都会标那里,但是如果对照28 来看,其实应该标这个地方的延长线,也就是02墙的右侧. 把他们暂且算是同房吧, 不过02 在同房预测的时候可以考虑排除.",
+          "images": [
+            {
+              "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+              "building": "uNb9QFRL6hY",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png"
+            },
+            {
+              "image_id": "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b",
+              "building": "uNb9QFRL6hY",
+              "number": 28,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b.png"
+            },
+            {
+              "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+              "building": "uNb9QFRL6hY",
+              "number": 44,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.png"
+            }
+          ],
+          "user_room_decision": "02／28／44暂按同房",
+          "boundary_decisions": [
+            {
+              "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+              "building": "uNb9QFRL6hY",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png",
+              "state": "低优先级候选",
+              "priority": "低"
+            }
+          ],
+          "same_room_collection": "02在同房预测中可考虑排除，尚未执行；28／44未被要求排除",
+          "similar_scene_collection": "未要求从相似场景候选排除",
+          "audit_note": "原图支持短台阶、高差及入口收窄；不标楼梯、墙的延长线位置及多数人会标哪里均保存为用户对规则与行为的解释，尚未核对标注分布或裁定GT。若以后评价排除02，需明确范围条件并并列包含02的对照。",
+          "room_relations": [
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+                  "building": "uNb9QFRL6hY",
+                  "number": 2,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png"
+                },
+                {
+                  "image_id": "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b",
+                  "building": "uNb9QFRL6hY",
+                  "number": 28,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b.png"
+                },
+                {
+                  "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+                  "building": "uNb9QFRL6hY",
+                  "number": 44,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.png"
+                }
+              ],
+              "status": "用户暂定"
+            }
+          ]
+        },
+        "updated_at": null
+      }
+    ],
+    "related_object_ids": [],
+    "in_current_259": false,
+    "cloud_status": "absent_image_text",
+    "content_role": "original_user_cross_image_relationship_context",
+    "raw_text_verified": true,
+    "reference_scope_verified": false,
+    "no_gt_score_or_eligibility_change": true,
+    "pair_bindings": [],
+    "times_are_missing_not_inferred_from_mtime": true
+  },
+  {
+    "image_code": null,
+    "image_id": "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b",
+    "object_id": null,
+    "record_id": null,
+    "text": "b15我终于明白了,不是凸字型的空间,只是说02 在28的楼梯处拍摄,实际上28和44都不会标注这个楼梯处的.(因为有台阶,这就不算同一平面)但是02 的标注如果不标这个楼梯处,左边的的墙角就会有很大的误导性,我想大部分人都会标那里,但是如果对照28 来看,其实应该标这个地方的延长线,也就是02墙的右侧. 把他们暂且算是同房吧, 不过02 在同房预测的时候可以考虑排除.",
+    "reference_version": null,
+    "reference_id": null,
+    "rubric_version": null,
+    "schema": "scene_open_layout_user_review_v3",
+    "in_20260929_index": false,
+    "sources": [
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的整组复核.json",
+        "json_pointer": "/source_user/rows/456/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B15",
+          "source_comment": "b15我终于明白了,不是凸字型的空间,只是说02 在28的楼梯处拍摄,实际上28和44都不会标注这个楼梯处的.(因为有台阶,这就不算同一平面)但是02 的标注如果不标这个楼梯处,左边的的墙角就会有很大的误导性,我想大部分人都会标那里,但是如果对照28 来看,其实应该标这个地方的延长线,也就是02墙的右侧. 把他们暂且算是同房吧, 不过02 在同房预测的时候可以考虑排除.",
+          "images": [
+            {
+              "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+              "building": "uNb9QFRL6hY",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png"
+            },
+            {
+              "image_id": "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b",
+              "building": "uNb9QFRL6hY",
+              "number": 28,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b.png"
+            },
+            {
+              "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+              "building": "uNb9QFRL6hY",
+              "number": 44,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.png"
+            }
+          ],
+          "user_room_decision": "02／28／44暂按同房",
+          "boundary_decisions": [
+            {
+              "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+              "building": "uNb9QFRL6hY",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png",
+              "state": "低优先级候选",
+              "priority": "低"
+            }
+          ],
+          "same_room_collection": "02在同房预测中可考虑排除，尚未执行；28／44未被要求排除",
+          "similar_scene_collection": "未要求从相似场景候选排除",
+          "audit_note": "原图支持短台阶、高差及入口收窄；不标楼梯、墙的延长线位置及多数人会标哪里均保存为用户对规则与行为的解释，尚未核对标注分布或裁定GT。若以后评价排除02，需明确范围条件并并列包含02的对照。",
+          "room_relations": [
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+                  "building": "uNb9QFRL6hY",
+                  "number": 2,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png"
+                },
+                {
+                  "image_id": "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b",
+                  "building": "uNb9QFRL6hY",
+                  "number": 28,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b.png"
+                },
+                {
+                  "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+                  "building": "uNb9QFRL6hY",
+                  "number": 44,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.png"
+                }
+              ],
+              "status": "用户暂定"
+            }
+          ]
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\同房研究_我的配对复核.json",
+        "json_pointer": "/source_user/rows/456/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B15",
+          "source_comment": "b15我终于明白了,不是凸字型的空间,只是说02 在28的楼梯处拍摄,实际上28和44都不会标注这个楼梯处的.(因为有台阶,这就不算同一平面)但是02 的标注如果不标这个楼梯处,左边的的墙角就会有很大的误导性,我想大部分人都会标那里,但是如果对照28 来看,其实应该标这个地方的延长线,也就是02墙的右侧. 把他们暂且算是同房吧, 不过02 在同房预测的时候可以考虑排除.",
+          "images": [
+            {
+              "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+              "building": "uNb9QFRL6hY",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png"
+            },
+            {
+              "image_id": "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b",
+              "building": "uNb9QFRL6hY",
+              "number": 28,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b.png"
+            },
+            {
+              "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+              "building": "uNb9QFRL6hY",
+              "number": 44,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.png"
+            }
+          ],
+          "user_room_decision": "02／28／44暂按同房",
+          "boundary_decisions": [
+            {
+              "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+              "building": "uNb9QFRL6hY",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png",
+              "state": "低优先级候选",
+              "priority": "低"
+            }
+          ],
+          "same_room_collection": "02在同房预测中可考虑排除，尚未执行；28／44未被要求排除",
+          "similar_scene_collection": "未要求从相似场景候选排除",
+          "audit_note": "原图支持短台阶、高差及入口收窄；不标楼梯、墙的延长线位置及多数人会标哪里均保存为用户对规则与行为的解释，尚未核对标注分布或裁定GT。若以后评价排除02，需明确范围条件并并列包含02的对照。",
+          "room_relations": [
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+                  "building": "uNb9QFRL6hY",
+                  "number": 2,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png"
+                },
+                {
+                  "image_id": "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b",
+                  "building": "uNb9QFRL6hY",
+                  "number": 28,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b.png"
+                },
+                {
+                  "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+                  "building": "uNb9QFRL6hY",
+                  "number": 44,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.png"
+                }
+              ],
+              "status": "用户暂定"
+            }
+          ]
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3(1).json",
+        "json_pointer": "/rows/456/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B15",
+          "source_comment": "b15我终于明白了,不是凸字型的空间,只是说02 在28的楼梯处拍摄,实际上28和44都不会标注这个楼梯处的.(因为有台阶,这就不算同一平面)但是02 的标注如果不标这个楼梯处,左边的的墙角就会有很大的误导性,我想大部分人都会标那里,但是如果对照28 来看,其实应该标这个地方的延长线,也就是02墙的右侧. 把他们暂且算是同房吧, 不过02 在同房预测的时候可以考虑排除.",
+          "images": [
+            {
+              "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+              "building": "uNb9QFRL6hY",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png"
+            },
+            {
+              "image_id": "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b",
+              "building": "uNb9QFRL6hY",
+              "number": 28,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b.png"
+            },
+            {
+              "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+              "building": "uNb9QFRL6hY",
+              "number": 44,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.png"
+            }
+          ],
+          "user_room_decision": "02／28／44暂按同房",
+          "boundary_decisions": [
+            {
+              "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+              "building": "uNb9QFRL6hY",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png",
+              "state": "低优先级候选",
+              "priority": "低"
+            }
+          ],
+          "same_room_collection": "02在同房预测中可考虑排除，尚未执行；28／44未被要求排除",
+          "similar_scene_collection": "未要求从相似场景候选排除",
+          "audit_note": "原图支持短台阶、高差及入口收窄；不标楼梯、墙的延长线位置及多数人会标哪里均保存为用户对规则与行为的解释，尚未核对标注分布或裁定GT。若以后评价排除02，需明确范围条件并并列包含02的对照。",
+          "room_relations": [
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+                  "building": "uNb9QFRL6hY",
+                  "number": 2,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png"
+                },
+                {
+                  "image_id": "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b",
+                  "building": "uNb9QFRL6hY",
+                  "number": 28,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b.png"
+                },
+                {
+                  "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+                  "building": "uNb9QFRL6hY",
+                  "number": 44,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.png"
+                }
+              ],
+              "status": "用户暂定"
+            }
+          ]
+        },
+        "updated_at": null
+      },
+      {
+        "source_file": "C:\\Users\\ASUS\\Downloads\\室内空间_本轮完整复核_v3.json",
+        "json_pointer": "/rows/456/discussion/batch_records/0/source_comment",
+        "raw_record": {
+          "case_id": "B15",
+          "source_comment": "b15我终于明白了,不是凸字型的空间,只是说02 在28的楼梯处拍摄,实际上28和44都不会标注这个楼梯处的.(因为有台阶,这就不算同一平面)但是02 的标注如果不标这个楼梯处,左边的的墙角就会有很大的误导性,我想大部分人都会标那里,但是如果对照28 来看,其实应该标这个地方的延长线,也就是02墙的右侧. 把他们暂且算是同房吧, 不过02 在同房预测的时候可以考虑排除.",
+          "images": [
+            {
+              "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+              "building": "uNb9QFRL6hY",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png"
+            },
+            {
+              "image_id": "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b",
+              "building": "uNb9QFRL6hY",
+              "number": 28,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b.png"
+            },
+            {
+              "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+              "building": "uNb9QFRL6hY",
+              "number": 44,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.png"
+            }
+          ],
+          "user_room_decision": "02／28／44暂按同房",
+          "boundary_decisions": [
+            {
+              "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+              "building": "uNb9QFRL6hY",
+              "number": 2,
+              "split": "test",
+              "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png",
+              "state": "低优先级候选",
+              "priority": "低"
+            }
+          ],
+          "same_room_collection": "02在同房预测中可考虑排除，尚未执行；28／44未被要求排除",
+          "similar_scene_collection": "未要求从相似场景候选排除",
+          "audit_note": "原图支持短台阶、高差及入口收窄；不标楼梯、墙的延长线位置及多数人会标哪里均保存为用户对规则与行为的解释，尚未核对标注分布或裁定GT。若以后评价排除02，需明确范围条件并并列包含02的对照。",
+          "room_relations": [
+            {
+              "relation": "user_same_room",
+              "images": [
+                {
+                  "image_id": "uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086",
+                  "building": "uNb9QFRL6hY",
+                  "number": 2,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_01ea3de3141a4adaa917cebb3db3c086.png"
+                },
+                {
+                  "image_id": "uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b",
+                  "building": "uNb9QFRL6hY",
+                  "number": 28,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_5fc8f0e230eb49eca81fdfb0398d824b.png"
+                },
+                {
+                  "image_id": "uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13",
+                  "building": "uNb9QFRL6hY",
+                  "number": 44,
+                  "split": "test",
+                  "path": "data/mp3d_layout/test/img/uNb9QFRL6hY_85e7a14905bd44648061e3eb7f79cf13.png"
+                }
+              ],
+              "status": "用户暂定"
+            }
+          ]
+        },
+        "updated_at": null
+      }
+    ],
+    "related_object_ids": [],
+    "in_current_259": false,
+    "cloud_status": "absent_image_text",
+    "content_role": "original_user_cross_image_relationship_context",
+    "raw_text_verified": true,
+    "reference_scope_verified": false,
+    "no_gt_score_or_eligibility_change": true,
+    "pair_bindings": [],
+    "times_are_missing_not_inferred_from_mtime": true
+  }
+]

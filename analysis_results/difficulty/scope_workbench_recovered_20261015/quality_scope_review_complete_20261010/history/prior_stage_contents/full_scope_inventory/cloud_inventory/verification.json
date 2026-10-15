@@ -1,0 +1,136 @@
+{
+  "status": "passed",
+  "source_commit": "d905d7dbb31dccabb3b190cb317d38b034b7cd65",
+  "checks_count": 3812,
+  "high_level_checks": [
+    {
+      "check": "all_259_unique_image_ids",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "all_3152_unique_record_ids",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "all_3152_unique_object_ids",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "image_denominators_sum_3152",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "condition_gate_denominators_sum_3152",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "current_manual_pool_1866",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "excluded_records_218_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "five_floor_confirmations_separate",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "one_memory_identity_confirmation_separate",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "203_broad_and_56_unhit_partition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "28_current_vs_original_reference_differences",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "four_historical_snapshot_holds_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "two_current_user_quality_holds_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "three_observed_formal_quality_holds_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "nine_known_hold_contexts_not_full_policy",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "q9_floor_confirmation_does_not_release_quality_hold",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unique_comment_ids",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "all_6340_source_pointers_match_exact_text",
+      "passed": true,
+      "detail": {
+        "occurrences": 6340,
+        "bad": []
+      }
+    },
+    {
+      "check": "all_1157_historical_index_comments_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "1153_index_comments_also_have_json_provenance",
+      "passed": true,
+      "detail": {
+        "index_only": 4,
+        "index_only_ids": [
+          "C6796199d39622cbc",
+          "C0c77f1dd31e3aee1",
+          "Cc042ee53f7612181",
+          "C3ec6c52758fbbf7d"
+        ]
+      }
+    },
+    {
+      "check": "all_annotation_comments_exact_record_mapped",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no_unresolved_identities",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "all_pointer_checks": 6340,
+  "all_metric_checks": 3152,
+  "limitations": [
+    "108396834-byte LFS comments.json payload not available; complete 1157-row historical index and 35 parsed JSON sources were read instead.",
+    "Keyword/semantic triage and existing area differences are retrieval evidence, not new human scope truth.",
+    "21 historical source images are outside the current259-image annotated corpus and retained separately.",
+    "Comments may refer to earlier reference versions; 28 current/original differences explicitly flagged."
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "priority_room_view_recovery_v1",
+  "source_commit": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+  "source_main_verified_by_ls_remote": "24360ad8544d76d8aba18a8e641f784a76ca0d42",
+  "scope": "q9vSo1VnCiC-21 and -25 only, the two priority 1/2 external views",
+  "entries": [
+    {
+      "image_code": "q9vSo1VnCiC-21",
+      "image_id": "q9vSo1VnCiC_b691f1462d2b4d2cbc501f676af8ca1f",
+      "source_snapshot_row": 196,
+      "source_keypoint_count": 8,
+      "photo_dimensions": [
+        2048,
+        1024
+      ],
+      "original_reference_raw_txt_recovered": false,
+      "original_equivalent_snapshot_geometry_recovered": true,
+      "crosscheck_all_coordinates_equal": true,
+      "original_order_crosschecked": true,
+      "research_annotations": 0,
+      "floor_region_confirmed": false
+    },
+    {
+      "image_code": "q9vSo1VnCiC-25",
+      "image_id": "q9vSo1VnCiC_ca6944f5dd334193bb86058ba5ab5dc3",
+      "source_snapshot_row": 187,
+      "source_keypoint_count": 24,
+      "photo_dimensions": [
+        2048,
+        1024
+      ],
+      "original_reference_raw_txt_recovered": false,
+      "original_equivalent_snapshot_geometry_recovered": true,
+      "crosscheck_all_coordinates_equal": true,
+      "original_order_crosschecked": true,
+      "research_annotations": 0,
+      "floor_region_confirmed": false
+    }
+  ],
+  "missing_raw_paths": [
+    "data/mp3d_layout/test/label_cor/q9vSo1VnCiC_b691f1462d2b4d2cbc501f676af8ca1f.txt",
+    "data/mp3d_layout/test/label_cor/q9vSo1VnCiC_ca6944f5dd334193bb86058ba5ab5dc3.txt"
+  ],
+  "formal_research_corpus_unchanged": true,
+  "source_references": {
+    "snapshot": "export_label/人工精标/project-20-at-2026-03-27-14-57-e66c6481.json",
+    "import_crosscheck": "import_json/groudTruth_458_tasks_import_from_updated_gt_20260701.json",
+    "audit": "analysis_results/research_input_20260929/final_review/原始与人工GT审计.csv"
+  },
+  "no_site_edits_or_upload": true
+}

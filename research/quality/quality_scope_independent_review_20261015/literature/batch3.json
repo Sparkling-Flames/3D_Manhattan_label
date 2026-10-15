@@ -1,0 +1,134 @@
+[
+  {
+    "id": "arxiv-2211.13287",
+    "title": "HouseDiffusion: Vector Floorplan Generation via a Diffusion Model with Discrete and Continuous Denoising",
+    "abstract": "The paper presents a novel approach for vector-floorplan generation via a diffusion model, which denoises 2D coordinates of room/door corners with two inference objectives: 1) a single-step noise as the continuous quantity to precisely invert the continuous forward process; and 2) the final 2D coordinate as the discrete quantity to establish geometric incident relationships such as parallelism, orthogonality, and corner-sharing. Our task is graph-conditioned floorplan generation, a common workflow in floorplan design. We represent a floorplan as 1D polygonal loops, each of which corresponds to a room or a door. Our diffusion model employs a Transformer architecture at the core, which controls the attention masks based on the input graph-constraint and directly generates vector-graphics floorplans via a discrete and continuous denoising process. We have evaluated our approach on RPLAN dataset. The proposed approach makes significant improvements in all the metrics against the state-of-the-art with significant margins, while being capable of generating non-Manhattan structures and controlling the exact number of corners per room. A project website with supplementary video and document is here this https URL†aminshabani.github.io .",
+    "abstract_status": "complete_primary_source",
+    "authors": [
+      "Mohammad Amin Shabani",
+      "Sepidehsadat Hosseini",
+      "Yasutaka Furukawa"
+    ],
+    "year": 2022,
+    "venue": "arXiv；正式版待核验",
+    "doi": "10.48550/arXiv.2211.13287",
+    "source_url": "https://arxiv.org/abs/2211.13287",
+    "verification_status": "primary_abstract_verified",
+    "discovery_sources": [
+      {
+        "round": "R5/root-R2"
+      }
+    ],
+    "frozen_batch": "B3",
+    "screening_status": "awaiting_independent_reviews",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction"
+  },
+  {
+    "id": "arxiv-2108.00201",
+    "title": "Subjective Image Quality Assessment with Boosted Triplet Comparisons",
+    "abstract": "In subjective full-reference image quality assessment, differences between perceptual image qualities of the reference image and its distorted versions are evaluated, often using degradation category ratings (DCR). However, the DCR has been criticized since differences between rating categories on this ordinal scale might not be perceptually equidistant, and observers may have different understandings of the categories. Pair comparisons (PC) of distorted images, followed by Thurstonian reconstruction of scale values, overcome these problems. In addition, PC is more sensitive than DCR, and it can provide scale values in fractional, just noticeable difference (JND) units that express a precise perceptional interpretation. Still, the comparison of images of nearly the same quality can be difficult. We introduce boosting techniques embedded in more general triplet comparisons (TC) that increase the sensitivity even more. Boosting amplifies the artefacts of distorted images, enlarges their visual representation by zooming, increases the visibility of the distortions by a flickering effect, or combines some of the above. Experimental results show the effectiveness of boosted TC for seven types of distortion. We crowdsourced over 1.7 million responses to triplet questions. A detailed analysis shows that boosting increases the discriminatory power and allows to reduce the number of subjective ratings without sacrificing the accuracy of the resulting relative image quality values. Our technique paves the way to fine-grained image quality datasets, allowing for more distortion levels, yet with high-quality subjective annotations. We also provide the details for Thurstonian scale reconstruction from TC and our annotated dataset, KonFiG-IQA, containing 10 source images, processed using 7 distortion types at 12 or even 30 levels, uniformly spaced over a span of 3 JND units.",
+    "abstract_status": "complete_primary_source",
+    "authors": [
+      "Hui Men",
+      "Hanhe Lin",
+      "Mohsen Jenadeleh",
+      "Dietmar Saupe"
+    ],
+    "year": 2021,
+    "venue": "arXiv；正式版待核验",
+    "doi": "10.48550/arXiv.2108.00201",
+    "source_url": "https://arxiv.org/abs/2108.00201",
+    "verification_status": "primary_abstract_verified",
+    "discovery_sources": [
+      {
+        "round": "R5/root-R2"
+      }
+    ],
+    "frozen_batch": "B3",
+    "screening_status": "awaiting_independent_reviews",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction"
+  },
+  {
+    "id": "arxiv-2410.09501",
+    "title": "Fine-grained subjective visual quality assessment for high-fidelity compressed images",
+    "abstract": "Advances in image compression, storage, and display technologies have made high-quality images and videos widely accessible. At this level of quality, distinguishing between compressed and original content becomes difficult, highlighting the need for assessment methodologies that are sensitive to even the smallest visual quality differences. Conventional subjective visual quality assessments often use absolute category rating scales, ranging from ``excellent'' to ``bad''. While suitable for evaluating more pronounced distortions, these scales are inadequate for detecting subtle visual differences. The JPEG standardization project AIC is currently developing a subjective image quality assessment methodology for high-fidelity images. This paper presents the proposed assessment methods, a dataset of high-quality compressed images, and their corresponding crowdsourced visual quality ratings. It also outlines a data analysis approach that reconstructs quality scale values in just noticeable difference (JND) units. The assessment method uses boosting techniques on visual stimuli to help observers detect compression artifacts more clearly. This is followed by a rescaling process that adjusts the boosted quality values back to the original perceptual scale. This reconstruction yields a fine-grained, high-precision quality scale in JND units, providing more informative results for practical applications. The dataset and code to reproduce the results will be available at this https URL†github.com .",
+    "abstract_status": "complete_primary_source",
+    "authors": [
+      "Michela Testolina",
+      "Mohsen Jenadeleh",
+      "Shima Mohammadi",
+      "Shaolin Su",
+      "Joao Ascenso",
+      "Touradj Ebrahimi",
+      "Jon Sneyers",
+      "Dietmar Saupe"
+    ],
+    "year": 2024,
+    "venue": "arXiv；正式版待核验",
+    "doi": "10.48550/arXiv.2410.09501",
+    "source_url": "https://arxiv.org/abs/2410.09501",
+    "verification_status": "primary_abstract_verified",
+    "discovery_sources": [
+      {
+        "round": "R5/root-R2"
+      }
+    ],
+    "frozen_batch": "B3",
+    "screening_status": "awaiting_independent_reviews",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction"
+  },
+  {
+    "id": "yeghiazaryan-2018",
+    "title": "A family of boundary overlap metrics for the evaluation of medical image segmentation",
+    "abstract": "All medical image segmentation algorithms need to be validated and compared, yet no evaluation framework is widely accepted within the imaging community. None of the evaluation metrics which are popular in the literature are consistent in the way they rank segmentation results: they tend to be sensitive to one or another type of segmentation error (size, location, shape) but no single metric covers all error types. We introduce a new family of metrics, with hybrid characteristics. These metrics quantify the similarity or difference of segmented regions by considering their average overlap in fixed-size neighbourhoods of points on the boundaries of those regions. Our metrics are more sensitive to combinations of segmentation error types than other metrics in the existing literature. We compare the metric performance on collections of segmentation results sourced from carefully compiled 2D synthetic data and 3D medical images. We show that our metrics: (1) penalize errors successfully, especially those around region boundaries; (2) give a low similarity score when existing metrics disagree, thus avoiding overly inflated scores; and (3) score segmentation results over a wider range of values. We analyze a representative metric from this family and the effect of its free parameter on error sensitivity and running time.",
+    "abstract_status": "complete_primary_source_search_index",
+    "authors": [
+      "V. Yeghiazaryan",
+      "I. Voiculescu"
+    ],
+    "year": 2018,
+    "venue": "Journal of Medical Imaging 5(1):015006",
+    "doi": "10.1117/1.JMI.5.1.015006",
+    "source_url": "https://ora.ox.ac.uk/objects/uuid%3A7e78a014-24cd-4195-8383-aa305870c397",
+    "verification_status": "indexed_primary_abstract;direct403;PMCrecaptcha",
+    "discovery_sources": [
+      {
+        "round": "R1/R3"
+      }
+    ],
+    "frozen_batch": "B3",
+    "screening_status": "awaiting_independent_reviews",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction"
+  },
+  {
+    "id": "hanhart-2016",
+    "title": "How to Benchmark Objective Quality Metrics from Paired Comparison Data?",
+    "abstract": "The procedures commonly used to evaluate the performance of objective quality metrics rely on ground truth mean opinion scores and associated conﬁdence intervals, which are usually obtained via direct scaling methods. However, indirect scaling methods, such as the paired comparison method, can also be used to collect ground truth preference scores. Indirect scaling methods have a higher discriminatory power and are gaining popularity, for example in crowdsourcing evaluations. In this paper, we present how the classiﬁcation errors, an existing analysis tool, can also be used with subjective preference scores. Additionally, we propose a new analysis tool based on the receiver operating characteristic analysis. This tool can be used to further assess the performance of objective metrics based on ground truth preference scores. We provide a MATLAB script with an implementation of the proposed tools and we show one example of application of the proposed tools.",
+    "abstract_status": "complete_primary_source_search_index",
+    "authors": [
+      "Philippe Hanhart",
+      "Lukáš Krasula",
+      "Patrick Le Callet",
+      "Touradj Ebrahimi"
+    ],
+    "year": 2016,
+    "venue": "QoMEX 2016",
+    "doi": null,
+    "related_data_doi": "10.5281/zenodo.50493",
+    "source_url": "https://infoscience.epfl.ch/bitstreams/3b22051b-b37b-4a5e-b001-928d8ba3d66a/download",
+    "verification_status": "indexed_primary_abstract;direct429;ZenodoTimeout",
+    "discovery_sources": [
+      {
+        "round": "R5/R6"
+      }
+    ],
+    "frozen_batch": "B3",
+    "screening_status": "awaiting_independent_reviews",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction"
+  }
+]

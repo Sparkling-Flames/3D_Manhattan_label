@@ -1,0 +1,20 @@
+{
+  space_region_checks_passed: 243,
+  received_original_confirmations_preserved: 16,
+  region_schema: 'manual_scope_space_regions_v1',
+  legacy_export_schema: 'manual_scope_crop_review_v2',
+  editor_version: '3.4.2',
+  coverage: [
+    'rectangle plus ordered cuts via pointer/mode/explicit continuation',
+    'valid preview composition and invalid/incomplete preview blocking',
+    'independent name, note, draft, confirmation, and undo/redo per region',
+    'copy current and start from GT without inheriting approval',
+    'overlay comparison and chosen active legacy polygon',
+    'all-region source identity and replay checks; atomic import rejection',
+    'export/import/reload, same-file idempotence, legacy v2 and storage migration',
+    'corrupt candidates recovered, conflicting candidates retained, no deletion',
+    'all 16 original confirmation snapshots retained'
+  ],
+  browser_QA: 'Portable geometry and mock DOM/pointer checks only. No real browser visual/interaction pass claimed.',
+  tested_on: '2026-10-10'
+}

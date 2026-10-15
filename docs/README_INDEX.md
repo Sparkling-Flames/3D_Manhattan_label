@@ -1,55 +1,61 @@
 # HOHONET 文档入口
 
-- **2026-10-16质量结构续研与本地归档：** [当前统计、算法讨论和Pro任务](../research/quality_structure_handoff_20261016/README.md)、[多版本定义与未决项](../research/quality_structure_handoff_20261016/ALGORITHMS_AND_DECISIONS.md)、[组合机制Pro精简原件](../research/quality_combination_review_20261016/README.md)。重点区分自身正交与参考结构完整性；B8L2为可调整工作版，未改评分或推送远端。
+## 当前统一入口
 
-- **2026-10-16参考重算统计：** [当前891份完整质量、工作簿与图](../research/descriptive_statistics_rescored_20261016/README.md)，[41图506份作答审计及后续接入](../research/scope_quality_rescore_20261016/README.md)。90份完成冻结重算，84份纳入当前统计；39新空间中12份完整参考可确定、27份仍待补。下方807份版本保留为上一阶段快照。
+按主题查资料、辨认质量算法版本、定位结果分母和查看迁移前路径，请先用[研究资料目录](../research/catalog/INDEX.md)。各专题入口会分别列出当前依据、历史对照、原始证据、未决问题和复现入口；机器登记为`research/catalog/CATALOG.json`。
 
-- **2026-10-15当前统计：** [新版报告、清单与工作簿](../research/descriptive_statistics_current_20261015/README.md)、[六组新图](../research/descriptive_statistics_current_20261015/figures/FIGURES.md)。v3、同条件至少3真人、GT／既有暂停及参考匹配已落实；manual完整Q768条／67图，semi39条／3图。206为门前候选，旧统计保留历史身份。口径见[统一第3.1节](thesis_main/四线程成果与论文主线核对_20261015.md)。
+当前跨模块研究状态仍以[四线程成果与论文主线核对](thesis_main/四线程成果与论文主线核对_20261015.md)为准。以下日期条目保留当时的交接和实验记录，不能单凭“最新”字样推断算法或结果已经全局采用。
 
+- **2026-10-16质量结构续研与本地归档：** [当前统计、算法讨论和Pro任务](../research/quality/quality_structure_handoff_20261016/README.md)、[多版本定义与未决项](../research/quality/quality_structure_handoff_20261016/ALGORITHMS_AND_DECISIONS.md)、[组合机制Pro精简原件](../research/quality/quality_combination_review_20261016/README.md)。重点区分自身正交与参考结构完整性；B8L2为可调整工作版，未改评分或推送远端。
 
-2026-10-15最新图片难度：[竖向空间范围、GT纠错及局部人工复核](../research/difficulty_review_update_20261015/README.md)。39图采用新增空间，待修复GT单独排除；人工意见与规则等级并列保存。
+- **2026-10-16参考重算统计：** [当前891份完整质量、工作簿与图](../research/statistics/descriptive_statistics_rescored_20261016/README.md)，[41图506份作答审计及后续接入](../research/data/scope_quality_rescore_20261016/README.md)。90份完成冻结重算，84份纳入当前统计；39新空间中12份完整参考可确定、27份仍待补。下方807份版本保留为上一阶段快照。
 
-2026-10-15图片难度更新：[新增空间接入与当前259图](../research/difficulty_scope_received_20261015/README.md)。全部37张已确认新增空间用于难度判断，旧范围仅对照；当前148简单／31中等／33困难／5待复核／42特殊单列。
-
-现有数据描述统计已获后续新授权并实际执行，见[统计报告与筛选明细](../research/descriptive_statistics_20261015/README.md)。上一轮仅整理文档的历史保留；不固定论文大纲。最新状态统一见[四线程资料核对](thesis_main/四线程成果与论文主线核对_20261015.md)。
-
-2026-10-15后续：[独立核验](../research/descriptive_statistics_20261015/INDEPENDENT_AUDIT.md)、[八组关键科研图](../research/descriptive_statistics_20261015/figures/FIGURES.md)、[新批次与评分版本接入](../research/descriptive_statistics_20261015/EXTENSION_GUIDE.md)。旧快照保留，新入口不改源审核或评分资格。
+- **2026-10-15当前统计：** [新版报告、清单与工作簿](../research/statistics/descriptive_statistics_current_20261015/README.md)、[六组新图](../research/statistics/descriptive_statistics_current_20261015/figures/FIGURES.md)。v3、同条件至少3真人、GT／既有暂停及参考匹配已落实；manual完整Q768条／67图，semi39条／3图。206为门前候选，旧统计保留历史身份。口径见[统一第3.1节](thesis_main/四线程成果与论文主线核对_20261015.md)。
 
 
-- **2026-10-15模块接续报告：** [图片目标绑定](../research/difficulty_target_integration_20261015/README.md)、[特殊条件覆盖](../research/difficulty_special_coverage_20261015/README.md)、[人员四轴更新](../research/worker_four_axis_update_20261015/README.md)、[融合质量与特殊层](../research/wall_consensus_quality_20261015/README.md)、[同房Q/T模式](../research/same_room_personnel_patterns_20261015/README.md)。前阶段[人员接入](../research/worker_wq_integration_20261015/README.md)及[同房曲线](../research/same_room_quality_curves_20261015/README.md)保留接续说明。
+2026-10-15最新图片难度：[竖向空间范围、GT纠错及局部人工复核](../research/difficulty/difficulty_review_update_20261015/README.md)。39图采用新增空间，待修复GT单独排除；人工意见与规则等级并列保存。
 
-- **2026-10-15四线程当前状态：** [当前资料、证据边界与未决项](thesis_main/四线程成果与论文主线核对_20261015.md)，统一931/836人员与图片面板、12+6图融合及同房Q/T进度；不要求所有共识接近GT，不将原WQ结果误写成A/B。
+2026-10-15图片难度更新：[新增空间接入与当前259图](../research/difficulty/difficulty_scope_received_20261015/README.md)。全部37张已确认新增空间用于难度判断，旧范围仅对照；当前148简单／31中等／33困难／5待复核／42特殊单列。
 
-- **2026-10-15 A/B核验反馈与组合机制研究：** [30份回执及Pro交接](../research/quality_ab_feedback_handoff_20261015/README.md)。用户倾向B8L2，要求独立论证聚合形式；随意举例不作为指定候选，尚未替换工作参数。
+现有数据描述统计已获后续新授权并实际执行，见[统计报告与筛选明细](../research/statistics/descriptive_statistics_20261015/README.md)。上一轮仅整理文档的历史保留；不固定论文大纲。最新状态统一见[四线程资料核对](thesis_main/四线程成果与论文主线核对_20261015.md)。
+
+2026-10-15后续：[独立核验](../research/statistics/descriptive_statistics_20261015/INDEPENDENT_AUDIT.md)、[八组关键科研图](../research/statistics/descriptive_statistics_20261015/figures/FIGURES.md)、[新批次与评分版本接入](../research/statistics/descriptive_statistics_20261015/EXTENSION_GUIDE.md)。旧快照保留，新入口不改源审核或评分资格。
+
+
+- **2026-10-15模块接续报告：** [图片目标绑定](../research/difficulty/difficulty_target_integration_20261015/README.md)、[特殊条件覆盖](../research/difficulty/difficulty_special_coverage_20261015/README.md)、[人员四轴更新](../research/workers/worker_four_axis_update_20261015/README.md)、[融合质量与特殊层](../research/fusion/wall_consensus_quality_20261015/README.md)、[同房Q/T模式](../research/same_room/same_room_personnel_patterns_20261015/README.md)。前阶段[人员接入](../research/workers/worker_wq_integration_20261015/README.md)及[同房曲线](../research/same_room/same_room_quality_curves_20261015/README.md)保留接续说明。
+
+- **2026-10-16全研究进度：** [各条线完成情况、版本关系与缺口](thesis_main/四线程成果与论文主线核对_20261015.md)，先读第0节；区分当前891份统计与931人员模型、12+6图融合、同房Q/T的旧WQ实验。覆盖质量、难度、人员、融合、同房及数据统计，不固定论文大纲。
+
+- **2026-10-15 A/B核验反馈与组合机制研究：** [30份回执及Pro交接](../research/quality/quality_ab_feedback_handoff_20261015/README.md)。用户倾向B8L2，要求独立论证聚合形式；随意举例不作为指定候选，尚未替换工作参数。
 
 - **2026-10-15现有数据收尾与接入交接：** [四模块进度、WQ消费条件与后续顺序](thesis_main/现有数据收尾与模块接入交接_20261015.md)。接入前阶段记录，接入后的结果以上方统一入口为准。
-- **2026-10-14三模块阶段成果：** [图片粗分类与目标绑定](../research/difficulty_coarse_closeout_20261014/README.md)、[人员画像与分类研究准备](../research/worker_classification_progress_20261014/README.md)、[12图真实融合人数过程](../research/wall_consensus_population_20261014/README.md)。保留实际状态、覆盖与未完成项，不等同全库验证。
+- **2026-10-14三模块阶段成果：** [图片粗分类与目标绑定](../research/difficulty/difficulty_coarse_closeout_20261014/README.md)、[人员画像与分类研究准备](../research/workers/worker_classification_progress_20261014/README.md)、[12图真实融合人数过程](../research/fusion/wall_consensus_population_20261014/README.md)。保留实际状态、覆盖与未完成项，不等同全库验证。
 
-- **2026-10-15 Q-Profile独立审查：** [五档解释与几何模型的区别](../research/quality_profile_independent_review_20261015/README.md)。补算普通30份参考候选，32项测试通过；生成20份固定绑定核验页，五档未冻结，正式算法不变。
+- **2026-10-15 Q-Profile独立审查：** [五档解释与几何模型的区别](../research/quality/quality_profile_independent_review_20261015/README.md)。补算普通30份参考候选，32项测试通过；生成20份固定绑定核验页，五档未冻结，正式算法不变。
 
-- **2026-10-15质量模型独立复审与文献依据：** [尺度、容忍度与后续建模](../research/quality_scope_independent_review_20261015/README.md)。39项测试和真实表复现；补齐两图当前身份与缺8份诊断，保留新顶部待核；已发布263张原图，未更改工作公式或正式资格。
+- **2026-10-15质量模型独立复审与文献依据：** [尺度、容忍度与后续建模](../research/quality/quality_scope_independent_review_20261015/README.md)。39项测试和真实表复现；补齐两图当前身份与缺8份诊断，保留新顶部待核；已发布263张原图，未更改工作公式或正式资格。
 
-- **2026-10-15新增两图空间与模型复审：** [回执增量、当前36份作答与Pro任务](../research/quality_scope_model_handoff_20261015/README.md)。只接收N05/N28新确认底面；保留原GT与历史确认，顶部待核；检验方向与IoU是否过度处罚，不预设结论。
+- **2026-10-15新增两图空间与模型复审：** [回执增量、当前36份作答与Pro任务](../research/quality/quality_scope_model_handoff_20261015/README.md)。只接收N05/N28新确认底面；保留原GT与历史确认，顶部待核；检验方向与IoU是否过度处罚，不预设结论。
 
-- **2026-10-15 WQ粗质量核验：** [普通32份→门洞12份核验页](../research/quality_coarse_review_20261015/REVIEW.html)、[来源与回执说明](../research/quality_coarse_review_20261015/README.md)及[44份人工反馈分析](../research/quality_coarse_review_20261015/FEEDBACK_REVIEW.md)。原图、标注、固定参考和可旋转三维；分数默认隐藏，五档含两个过渡档，另保留参考／范围不适合与暂不能判断。
+- **2026-10-15 WQ粗质量核验：** [普通32份→门洞12份核验页](../research/quality/quality_coarse_review_20261015/REVIEW.html)、[来源与回执说明](../research/quality/quality_coarse_review_20261015/README.md)及[44份人工反馈分析](../research/quality/quality_coarse_review_20261015/FEEDBACK_REVIEW.md)。原图、标注、固定参考和可旋转三维；分数默认隐藏，五档含两个过渡档，另保留参考／范围不适合与暂不能判断。
 
-- **2026-10-15两份Pro联合审查：** [组合方式、1145份联合比较与粗分档安排](../research/quality_joint_closeout_review_20261015/README.md)。当前原生输入一致；9步复现、44项测试通过；保留WQ工作候选和IoU对照，不将数值覆盖、人员相对分组或条件融合终点冒称正式质量认证。
+- **2026-10-15两份Pro联合审查：** [组合方式、1145份联合比较与粗分档安排](../research/quality/quality_joint_closeout_review_20261015/README.md)。当前原生输入一致；9步复现、44项测试通过；保留WQ工作候选和IoU对照，不将数值覆盖、人员相对分组或条件融合终点冒称正式质量认证。
 
-- **2026-10-14 3D IoU适用边界示例：** [6组合成控制与P01真人旁证](../research/quality_iou_examples_20261014/README.md)，可旋转展示；区分均高棱柱、真实体积与参考范围，不调参。
+- **2026-10-14 3D IoU适用边界示例：** [6组合成控制与P01真人旁证](../research/quality/quality_iou_examples_20261014/README.md)，可旋转展示；区分均高棱柱、真实体积与参考范围，不调参。
 
-- **2026-10-14分项得分研究独立复核：** [机制结论与718条补齐比较](../research/quality_component_return_review_20261014/README.md)。原包331条复现、28项测试通过；完整来源已恢复，算术A/范围锚定RA不替换现模型；接续采用建议见上方两份Pro联合审查。
+- **2026-10-14分项得分研究独立复核：** [机制结论与718条补齐比较](../research/quality/quality_component_return_review_20261014/README.md)。原包331条复现、28项测试通过；完整来源已恢复，算术A/范围锚定RA不替换现模型；接续采用建议见上方两份Pro联合审查。
 
-- **2026-10-14质量模型收尾交接：** [资料入口与Pro提示词](../research/quality_model_closeout_20261014/README.md)。模型解释、全量适用数据与原始3D IoU对照、相近外部案例；人工反馈不作逐例硬拟合，待Pro返回后再批量粗核验。
+- **2026-10-14质量模型收尾交接：** [资料入口与Pro提示词](../research/quality/quality_model_closeout_20261014/README.md)。模型解释、全量适用数据与原始3D IoU对照、相近外部案例；人工反馈不作逐例硬拟合，待Pro返回后再批量粗核验。
 
-- **2026-10-14九组质量案例复核：** [可旋转三维与可展开分数的审核页](../research/quality_candidate_review_20261014/README.md)。8卡覆盖9组、15份作答；回执独立，T20/P04仅比较高度，不调参或修改资格。
+- **2026-10-14九组质量案例复核：** [可旋转三维与可展开分数的审核页](../research/quality/quality_candidate_review_20261014/README.md)。8卡覆盖9组、15份作答；回执独立，T20/P04仅比较高度，不调参或修改资格。
 
-- **2026-10-14质量Pro返回独立审查：** [WQ-LS08审查与选择性归档](../research/quality_pro_return_review_20261014/README.md)。本地完整复现及50项测试通过；接收为并行研究候选，不自动替换默认评分。普通粗调后门洞条件比较未追加参数，方向结构盲区和组合优越性仍未解决。
+- **2026-10-14质量Pro返回独立审查：** [WQ-LS08审查与选择性归档](../research/quality/quality_pro_return_review_20261014/README.md)。本地完整复现及50项测试通过；接收为并行研究候选，不自动替换默认评分。普通粗调后门洞条件比较未追加参数，方向结构盲区和组合优越性仍未解决。
 
-- **2026-10-14质量补充与Pro离线包：** [三维审核及交接入口](../research/quality_pro_handoff_20261014/README.md)。沿用旧三维查看器并标注相机；3例回执已接收、16组备查，217门洞账本和151控制可追溯；新回执与修订见入口，唯一推荐READY包；目标导向任务书保留粗调后门洞细调，具体方法由Pro决定，尚未自动发送Pro。
+- **2026-10-14质量补充与Pro离线包：** [三维审核及交接入口](../research/quality/quality_pro_handoff_20261014/README.md)。沿用旧三维查看器并标注相机；3例回执已接收、16组备查，217门洞账本和151控制可追溯；新回执与修订见入口，唯一推荐READY包；目标导向任务书保留粗调后门洞细调，具体方法由Pro决定，尚未自动发送Pro。
 
-- **2026-10-14质量分阶段比较结果：** [研究工作版、门洞逐图账本与回归](../research/quality_staged_calibration_20261014/README.md)。普通574份与9份严重分层；门洞125份可条件评分、92份暂缓；邻近比较后保留中心，不宣称唯一最优或门洞人评校准完成。
+- **2026-10-14质量分阶段比较结果：** [研究工作版、门洞逐图账本与回归](../research/quality/quality_staged_calibration_20261014/README.md)。普通574份与9份严重分层；门洞125份可条件评分、92份暂缓；邻近比较后保留中心，不宣称唯一最优或门洞人评校准完成。
 
-- **2026-10-14研究审查与质量接手：** [四模块现状及论文收束](thesis_main/四模块审查与不确定性论文收束记录_20261014.md)、[两轮Pro诊断复核与调参交接](thesis_main/质量两轮Pro诊断复核与调参交接_20261014.md)。保留普通粗调→门洞细调→普通回归；含L1/RMS差异、完整Q反例及本地复算，不冒称已完成校准。
+- **2026-10-14研究审查与质量接手：** [四模块现状及论文收束](thesis_main/四模块审查与不确定性论文收束记录_20261014.md)、[两轮Pro诊断复核与调参交接](thesis_main/topics/quality/质量两轮Pro诊断复核与调参交接_20261014.md)。保留普通粗调→门洞细调→普通回归；含L1/RMS差异、完整Q反例及本地复算，不冒称已完成校准。
 
 - **整体质量调参前准备（2026-10-13最新）：** [高度适度加重原话、方向/总分控制与严重端分层](../research/quality_calibration_preparation_20261013/README.md)。574普通、9严重、13问题组；固定配置补34底点控制，本轮不调参。
 
@@ -67,7 +73,7 @@
 
 - **2026-10-13质量并行接入更新：** [处理后评分与原始诊断口径](../research/quality_processed_input_20261013/README.md)、[503/758份参考覆盖核对](../research/quality_reference_coverage_20261013/README.md)、[922份候选与429份既有路由结果](../research/quality_current_candidate_view_20261013/README.md)、[749份manual条件补算](../research/quality_manual_expansion_20261013/README.md)、[多参考人工筛选依据](../research/quality_reference_selection_20261013/README.md)。503份旧显式适用false不取消既有条件开发许可；主Q沿用平均x后几何，原始诊断不加权；GT版本敏感性不替代合理空间筛选。
 
-- **2026-10-13质量当前推进方案与Pro归档：** [独立判断及分阶段方案](thesis_main/质量研究推进方案_20261013.md)；[Pro有效证据与采用边界](../research/quality_pro_joint_archive_20261013/README.md)。先扩展manual参考/来源覆盖，再比较少数冻结候选及必要人评，不重做大网格。
+- **2026-10-13质量当前推进方案与Pro归档：** [独立判断及分阶段方案](thesis_main/topics/quality/质量研究推进方案_20261013.md)；[Pro有效证据与采用边界](../research/quality_pro_joint_archive_20261013/README.md)。先扩展manual参考/来源覆盖，再比较少数冻结候选及必要人评，不重做大网格。
 
 - **2026-10-13质量全量数据与用途复核：** [3152份作答、2344份manual及严重例外账本](../research/quality_data_admission_audit_20261013/README.md)。589份仅为旧922包内manual；逐份分开来源、正式gate、参考、配对和原留出，包外不等于排除，不重新调参。
 
@@ -85,9 +91,9 @@
 
 - [质量范围：3张最小人工试审与24张对照](../analysis_results/quality_scope_human_review_20261010/README.md)
 
-- 质量研究最新：[正式输入与边界](thesis_main/质量研究正式输入与待研究问题_20261010.md)、[Pro独立研究资料](../research/quality_scope_handoff_20261010/README.md)。14份点位审核已接入正式loader；共同小范围和非正交质量方案仍待研究。
+- 质量研究最新：[正式输入与边界](thesis_main/topics/quality/质量研究正式输入与待研究问题_20261010.md)、[Pro独立研究资料](../research/quality_scope_handoff_20261010/README.md)。14份点位审核已接入正式loader；共同小范围和非正交质量方案仍待研究。
 
-- 259图全量难度/范围复核：[分层标准与字段合同](thesis_main/图片难度全量复核与分层标准_20261010.md)、[全量报告](../analysis_results/image_difficulty_full_review_20261010/REPORT.md)、[人工粗审页](../analysis_results/image_difficulty_full_review_20261010/review.html)。259图3152份台账；25张分歧已重审（10改简单、8保留、7待核），当前115/18/24/60/42视觉建议；13张范围优先候选，旧工作表保留，待用户裁定。
+- 259图全量难度/范围复核：[分层标准与字段合同](thesis_main/topics/difficulty/图片难度全量复核与分层标准_20261010.md)、[全量报告](../analysis_results/image_difficulty_full_review_20261010/REPORT.md)、[人工粗审页](../analysis_results/image_difficulty_full_review_20261010/review.html)。259图3152份台账；25张分歧已重审（10改简单、8保留、7待核），当前115/18/24/60/42视觉建议；13张范围优先候选，旧工作表保留，待用户裁定。
 
 更新：2026-10-09。本页只列当前入口。逐阶段历史结果见[旧版研究与实验导航](thesis_main/history/研究与实验导航_旧版_20261009.md)；不从旧报告中的“下一步”推导当前任务。
 
@@ -97,11 +103,11 @@
 - [术语](thesis_main/CONTEXT.md)：统一概念和解释边界。
 - [研究数据说明](thesis_main/研究数据说明_来源预处理与用途_20261006.md)：输入真源、预处理、人员与参考、补充证据及结果入口。
 - 最新图片工作分类：[6点对低遮挡看图更新](../analysis_results/objective_difficulty_20261009/review_examples/SIX_PAIR_UPDATE_20261010.md)、[259图工作表](../analysis_results/objective_difficulty_20261009/review_examples/working_classification_20261010.csv)。6图改简单；特殊组继续单列；保留旧自动结构类与看图来源。
-- 图片难度：[当前GT结构粗分类与辅助证据](thesis_main/图片客观难度评分_20261009.md)、[259图交付](../analysis_results/objective_difficulty_20261009/structure_classification/REPORT.md)、[旧d_model冻结补缺](../analysis_results/objective_difficulty_20261009/d_model_expansion/REPORT.md)。旧自动结构基线只用GT点对数／结构自遮挡，127简单／39中等／91困难／2暂停待定；OOS／门洞／可标性独立。此前[场景分层](../analysis_results/objective_difficulty_20261009/stratified/REPORT.md)、[同源模型](../analysis_results/objective_difficulty_20261009/model_comparison/REPORT.md)、[DINO](../analysis_results/objective_difficulty_20261009/dino_probe/REPORT.md)及[首轮实算](../analysis_results/objective_difficulty_20261009/REPORT.md)保留历史，12图核查为可选补充。
+- 图片难度：[当前GT结构粗分类与辅助证据](thesis_main/topics/difficulty/图片客观难度评分_20261009.md)、[259图交付](../analysis_results/objective_difficulty_20261009/structure_classification/REPORT.md)、[旧d_model冻结补缺](../analysis_results/objective_difficulty_20261009/d_model_expansion/REPORT.md)。旧自动结构基线只用GT点对数／结构自遮挡，127简单／39中等／91困难／2暂停待定；OOS／门洞／可标性独立。此前[场景分层](../analysis_results/objective_difficulty_20261009/stratified/REPORT.md)、[同源模型](../analysis_results/objective_difficulty_20261009/model_comparison/REPORT.md)、[DINO](../analysis_results/objective_difficulty_20261009/dino_probe/REPORT.md)及[首轮实算](../analysis_results/objective_difficulty_20261009/REPORT.md)保留历史，12图核查为可选补充。
 - 图片难度审图：[21图原图与GT点位图集](../analysis_results/objective_difficulty_20261009/review_examples/index.html)、[样例名单、旧评分口径及场景交叉表](../analysis_results/objective_difficulty_20261009/review_examples/README.md)。特殊场景单列；一致／不一致／未评分目的性示例，不作为盲法验证，不改主分类。 最新[评分复核与使用解释](../analysis_results/objective_difficulty_20261009/review_examples/SCORE_RECHECK.md)：门洞／OOS独立评分待定，x8-01参考待核。
-- 图片难度外部审查：[讨论汇总与Pro深度研究任务](thesis_main/图片难度研究汇总与Pro深度研究任务_20261009.md)，包含旧d_model／风险分数澄清、既有证据、未定方案与可复制提示词；不替代规范或冻结分类。
+- 图片难度外部审查：[讨论汇总与Pro深度研究任务](thesis_main/topics/difficulty/图片难度研究汇总与Pro深度研究任务_20261009.md)，包含旧d_model／风险分数澄清、既有证据、未定方案与可复制提示词；不替代规范或冻结分类。
 - 图片结构条件：[GT循环环序与自遮挡核验](../analysis_results/gt_order_visibility_20261009/REPORT.md)，不使用人员主观难度或作答结果定义；既定GT、射线遮挡及原／修订版本分开。
-- 墙线融合：[当前方法](thesis_main/共识投票机制与三路线推进_20261007.md)、[操作 SOP](thesis_main/融合共识操作SOP_20261008.md)和[唯一当前结果报告](../analysis_results/consensus_delivery_20261008/REPORT.md)。数量、例外和待办以结果报告为准。
+- 墙线融合：[当前方法](thesis_main/topics/fusion/共识投票机制与三路线推进_20261007.md)、[操作 SOP](thesis_main/topics/fusion/融合共识操作SOP_20261008.md)和[唯一当前结果报告](../analysis_results/consensus_delivery_20261008/REPORT.md)。数量、例外和待办以结果报告为准。
 - [完整研究交接](thesis_main/线程交接_连线质量与完整共识_20261004.md)：保留研究原意、历史证据和状态，不替代当前安排。
 
 ## 规范、分析与运营
@@ -134,4 +140,4 @@
 
 当前规范版本：`consensus_research_20260923_v1`，机器合同为`PAPER_A_METHOD_CONTRACT_CURRENT.json`。
 
-- 2026-10-15整理：[入口阶段更新归档](thesis_main/history/入口阶段更新归档_20261015.md)、[旧共识推进方案](thesis_main/history/研究推进方案_共识可靠性与Pro深研_20261004.md)仅供追溯；现行执行见[融合SOP](thesis_main/融合共识操作SOP_20261008.md)。
+- 2026-10-15整理：[入口阶段更新归档](thesis_main/history/入口阶段更新归档_20261015.md)、[旧共识推进方案](thesis_main/history/研究推进方案_共识可靠性与Pro深研_20261004.md)仅供追溯；现行执行见[融合SOP](thesis_main/topics/fusion/融合共识操作SOP_20261008.md)。

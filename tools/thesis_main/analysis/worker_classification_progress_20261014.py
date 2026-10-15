@@ -12,7 +12,7 @@ from tools.thesis_main.data_prep.consolidate_research_input import load_current_
 from .fit_worker_evidence_strata_20260908 import informative, sufficient, solve
 
 ROOT = Path(__file__).resolve().parents[3]
-OUT = ROOT / 'research/worker_classification_progress_20261014'
+OUT = ROOT / 'research/workers/worker_classification_progress_20261014'
 HISTORY = ROOT / 'analysis_results/worker_four_block_exploration_20260910_v1'
 METRICS = ('iou_2d', 'S_bottom_deg', 'dir', 'Hmean', 'Hcenter', 'height_mean_ratio')
 
