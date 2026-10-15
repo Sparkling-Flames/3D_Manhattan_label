@@ -1,6 +1,28 @@
 # HOHONET 文档入口
 
-- **2026-10-15现有数据收尾与接入交接：** [四模块进度、WQ消费条件与后续顺序](thesis_main/现有数据收尾与模块接入交接_20261015.md)。本次仅整理推送，由各模块原线程实施接入；先完成现有数据，再加入新批次。
+- **2026-10-16质量结构续研与本地归档：** [当前统计、算法讨论和Pro任务](../research/quality_structure_handoff_20261016/README.md)、[多版本定义与未决项](../research/quality_structure_handoff_20261016/ALGORITHMS_AND_DECISIONS.md)、[组合机制Pro精简原件](../research/quality_combination_review_20261016/README.md)。重点区分自身正交与参考结构完整性；B8L2为可调整工作版，未改评分或推送远端。
+
+- **2026-10-16参考重算统计：** [当前891份完整质量、工作簿与图](../research/descriptive_statistics_rescored_20261016/README.md)，[41图506份作答审计及后续接入](../research/scope_quality_rescore_20261016/README.md)。90份完成冻结重算，84份纳入当前统计；39新空间中12份完整参考可确定、27份仍待补。下方807份版本保留为上一阶段快照。
+
+- **2026-10-15当前统计：** [新版报告、清单与工作簿](../research/descriptive_statistics_current_20261015/README.md)、[六组新图](../research/descriptive_statistics_current_20261015/figures/FIGURES.md)。v3、同条件至少3真人、GT／既有暂停及参考匹配已落实；manual完整Q768条／67图，semi39条／3图。206为门前候选，旧统计保留历史身份。口径见[统一第3.1节](thesis_main/四线程成果与论文主线核对_20261015.md)。
+
+
+2026-10-15最新图片难度：[竖向空间范围、GT纠错及局部人工复核](../research/difficulty_review_update_20261015/README.md)。39图采用新增空间，待修复GT单独排除；人工意见与规则等级并列保存。
+
+2026-10-15图片难度更新：[新增空间接入与当前259图](../research/difficulty_scope_received_20261015/README.md)。全部37张已确认新增空间用于难度判断，旧范围仅对照；当前148简单／31中等／33困难／5待复核／42特殊单列。
+
+现有数据描述统计已获后续新授权并实际执行，见[统计报告与筛选明细](../research/descriptive_statistics_20261015/README.md)。上一轮仅整理文档的历史保留；不固定论文大纲。最新状态统一见[四线程资料核对](thesis_main/四线程成果与论文主线核对_20261015.md)。
+
+2026-10-15后续：[独立核验](../research/descriptive_statistics_20261015/INDEPENDENT_AUDIT.md)、[八组关键科研图](../research/descriptive_statistics_20261015/figures/FIGURES.md)、[新批次与评分版本接入](../research/descriptive_statistics_20261015/EXTENSION_GUIDE.md)。旧快照保留，新入口不改源审核或评分资格。
+
+
+- **2026-10-15模块接续报告：** [图片目标绑定](../research/difficulty_target_integration_20261015/README.md)、[特殊条件覆盖](../research/difficulty_special_coverage_20261015/README.md)、[人员四轴更新](../research/worker_four_axis_update_20261015/README.md)、[融合质量与特殊层](../research/wall_consensus_quality_20261015/README.md)、[同房Q/T模式](../research/same_room_personnel_patterns_20261015/README.md)。前阶段[人员接入](../research/worker_wq_integration_20261015/README.md)及[同房曲线](../research/same_room_quality_curves_20261015/README.md)保留接续说明。
+
+- **2026-10-15四线程当前状态：** [当前资料、证据边界与未决项](thesis_main/四线程成果与论文主线核对_20261015.md)，统一931/836人员与图片面板、12+6图融合及同房Q/T进度；不要求所有共识接近GT，不将原WQ结果误写成A/B。
+
+- **2026-10-15 A/B核验反馈与组合机制研究：** [30份回执及Pro交接](../research/quality_ab_feedback_handoff_20261015/README.md)。用户倾向B8L2，要求独立论证聚合形式；随意举例不作为指定候选，尚未替换工作参数。
+
+- **2026-10-15现有数据收尾与接入交接：** [四模块进度、WQ消费条件与后续顺序](thesis_main/现有数据收尾与模块接入交接_20261015.md)。接入前阶段记录，接入后的结果以上方统一入口为准。
 - **2026-10-14三模块阶段成果：** [图片粗分类与目标绑定](../research/difficulty_coarse_closeout_20261014/README.md)、[人员画像与分类研究准备](../research/worker_classification_progress_20261014/README.md)、[12图真实融合人数过程](../research/wall_consensus_population_20261014/README.md)。保留实际状态、覆盖与未完成项，不等同全库验证。
 
 - **2026-10-15 Q-Profile独立审查：** [五档解释与几何模型的区别](../research/quality_profile_independent_review_20261015/README.md)。补算普通30份参考候选，32项测试通过；生成20份固定绑定核验页，五档未冻结，正式算法不变。
@@ -111,3 +133,5 @@
 - 2026-10-10重筛复核：109份中已排除人员W019／W026（清单代号P013／P016）共84份不计待审；源清单选25份，已有单条`invalid`5份、OOS保留但无法计算5份及OOS无有效点1份移出重复审核；默认待核验队列为14份／8图，原109份均可查旧草稿。新收到的18条审核返回与旧排序核对见上述工作台入口中的逐条机器审计。
 
 当前规范版本：`consensus_research_20260923_v1`，机器合同为`PAPER_A_METHOD_CONTRACT_CURRENT.json`。
+
+- 2026-10-15整理：[入口阶段更新归档](thesis_main/history/入口阶段更新归档_20261015.md)、[旧共识推进方案](thesis_main/history/研究推进方案_共识可靠性与Pro深研_20261004.md)仅供追溯；现行执行见[融合SOP](thesis_main/融合共识操作SOP_20261008.md)。

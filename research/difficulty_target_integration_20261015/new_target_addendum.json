@@ -1,0 +1,87 @@
+{
+  "version": "difficulty_target_addendum_20261015",
+  "records": [
+    {
+      "image": "B6ByNegPMKs-37",
+      "image_id": "B6ByNegPMKs_c946db5792df4f90bea20f06a0030c37",
+      "old_target": "gt:B6ByNegPMKs_c946db5792df4f90bea20f06a0030c37:data/mp3d_layout/test/label_cor/B6ByNegPMKs_c946db5792df4f90bea20f06a0030c37.txt",
+      "old_class": "困难",
+      "new_target": "user_floor_20261015:B6ByNegPMKs-37",
+      "new_floor": [
+        [
+          -5.242060396547523,
+          0.4706322786223875
+        ],
+        [
+          1.986704419419605,
+          0.4706322786223875
+        ],
+        [
+          1.986704419419605,
+          -0.4531688083318911
+        ],
+        [
+          -5.242060396547523,
+          -0.4531688083318911
+        ]
+      ],
+      "features": {
+        "N_floor": 4,
+        "N_turn": 4,
+        "straight_vertices_1based": [],
+        "H": 0,
+        "hidden_vertices_1based": [],
+        "geometry_status": "valid_camera_inside",
+        "ring_class": "cyclic_decreasing"
+      },
+      "conditional_difficulty": "简单",
+      "classification_basis": "two_image_target_specific_photo_review",
+      "evidence": "确认范围只保留直走道，墙面延续与端部停止边可定位，不再要求恢复近墙背后分支。",
+      "top_boundary_pending": true,
+      "answer_to_candidate_assignments": [],
+      "source": "research/quality_scope_model_handoff_20261015/TWO_IMAGE_SCOPE_DELTA.json",
+      "use": "new_target_floor_only_not_applied_to_old_scores"
+    },
+    {
+      "image": "UwV83HsGsw3-10",
+      "image_id": "UwV83HsGsw3_8e9c912f525744eeaea21083a20a1596",
+      "old_target": "gt:UwV83HsGsw3_8e9c912f525744eeaea21083a20a1596:data/mp3d_layout/test/label_cor/UwV83HsGsw3_8e9c912f525744eeaea21083a20a1596.txt",
+      "old_class": "简单",
+      "new_target": "user_floor_20261015:UwV83HsGsw3-10",
+      "new_floor": [
+        [
+          -0.5319459751493163,
+          1.1865616975021185
+        ],
+        [
+          0.38075300585090277,
+          1.1865616975021185
+        ],
+        [
+          0.38075300585090277,
+          -0.36463202200867406
+        ],
+        [
+          -0.5319459751493163,
+          -0.36463202200867406
+        ]
+      ],
+      "features": {
+        "N_floor": 4,
+        "N_turn": 4,
+        "straight_vertices_1based": [],
+        "H": 0,
+        "hidden_vertices_1based": [],
+        "geometry_status": "valid_camera_inside",
+        "ring_class": "cyclic_decreasing"
+      },
+      "conditional_difficulty": "简单",
+      "classification_basis": "two_image_target_specific_photo_review",
+      "evidence": "确认四转折底面以可见门边和墙线确定停止位置，柜体局部遮脚不造成未知分支。",
+      "top_boundary_pending": true,
+      "answer_to_candidate_assignments": [],
+      "source": "research/quality_scope_model_handoff_20261015/TWO_IMAGE_SCOPE_DELTA.json",
+      "use": "new_target_floor_only_not_applied_to_old_scores"
+    }
+  ]
+}

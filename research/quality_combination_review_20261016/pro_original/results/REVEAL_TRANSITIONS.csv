@@ -1,0 +1,31 @@
+case_id,record_id,selection,phase,first_reveal_grade,final_grade,pre_grade_available,changed_after_first_reveal,score_revealed_at,comment
+N01,R00031,unused_current_calibration,ordinary,average,average,True,False,2026-10-15T05:57:16.745Z,
+N02,R03058,unused_current_calibration,ordinary,good,good,True,False,2026-10-15T06:02:54.507Z,"刚好达到较好的标准(结合2d和3d,3d表现略差,但是2d和gt差不了太多)"
+N03,R00895,unused_current_calibration,ordinary,good,good,True,False,2026-10-15T06:07:24.658Z,
+N04,R01547,unused_current_calibration,ordinary,good_average,average,True,True,2026-10-15T06:12:47.554Z,
+N05,R03214,unused_current_calibration,ordinary,,good,False,False,2026-10-15T06:13:16.807Z,
+N06,R03278,unused_current_calibration,ordinary,good,good,True,False,2026-10-15T06:13:33.362Z,
+N07,R03229,unused_current_calibration,ordinary,good_average,good_average,True,False,2026-10-15T06:13:46.573Z,偏向一般
+N08,R00045,unused_current_calibration,ordinary,good,good,True,False,2026-10-15T06:19:39.690Z,
+N09,R02104,unused_current_calibration,ordinary,average,average_poor,True,True,2026-10-15T06:20:18.503Z,"把厕所的空间标上了,而且整体标注情况也不太理想"
+N10,R00166,unused_current_calibration,ordinary,poor,poor,True,False,2026-10-15T06:21:06.655Z,"遗漏了很多墙角,但是大体范围还是差不多的.3d高度也较统一"
+N11,R00530,unused_current_calibration,ordinary,average_poor,poor,True,True,2026-10-15T06:31:07.510Z,"标了门后的范围,虽然3d高度较平整,但是有很多其他问题"
+N12,R01299,unused_current_calibration,ordinary,average,average_poor,True,True,2026-10-15T06:32:13.642Z,"细节没标好,但是3d高度较统一"
+N13,R01734,unused_current_calibration,ordinary,,good_average,False,False,2026-10-15T06:42:05.792Z,"如果不是多标了两个点,应该会更好"
+N14,R00478,unused_current_calibration,ordinary,good,good,True,False,2026-10-15T06:48:31.572Z,
+N15,R01428,unused_current_calibration,ordinary,average,average,True,False,2026-10-15T06:48:45.516Z,
+N16,R00726,unused_current_calibration,ordinary,good_average,average,True,True,2026-10-15T06:49:09.959Z,"估计是bottom y 的问题导致标注 的底面范围变大很多,但是单从2d上来看,并没有差很多,我的选项是结合了 离gt的差距"
+N17,R00002,unused_current_calibration,ordinary,good_average,good_average,True,False,2026-10-15T06:51:07.826Z,"没有标gt那里墙面的细节,不过高度很不错,其他的点和gt基本差不多,但是不够正交"
+N18,R01236,unused_current_calibration,ordinary,,good_average,False,False,2026-10-15T06:53:15.942Z,
+N19,R02824,unused_current_calibration,ordinary,,good_average,False,False,2026-10-15T06:53:30.193Z,
+N20,R02366,unused_current_calibration,ordinary,,average_poor,False,False,2026-10-15T07:33:08.349Z,
+N21,R01288,known_concern,ordinary,,good_average,False,False,2026-10-15T07:35:01.412Z,"这图我在2d上看起来还好,3d上也没分数这么差吧?"
+N22,R03034,known_concern,ordinary,good_average,good_average,True,False,2026-10-15T07:40:51.943Z,"其他点都标的蛮接近的,墙面细节也表出来了"
+N23,R00502,known_concern,ordinary,average,average,True,False,2026-10-15T07:42:25.609Z,
+N24,R00215,known_concern,ordinary,average,average,True,False,2026-10-15T07:42:34.328Z,缺失很多细节
+D01,R02113,known_concern,doorway,good,good,True,False,2026-10-15T07:42:46.318Z,
+D02,R03412,score_coverage,doorway,average_poor,average_poor,True,False,2026-10-15T07:43:01.127Z,"主要是空间范围的问题,分数这么低也正常,因为门洞这个时候,有人只会选择标一边"
+D03,R03318,score_coverage,doorway,average_poor,average_poor,True,False,2026-10-15T07:43:45.750Z,
+D04,R01688,score_coverage,doorway,average,average,True,False,2026-10-15T07:43:59.682Z,
+D05,R03321,score_coverage,doorway,average,average_poor,True,True,2026-10-15T07:44:12.507Z,门洞下 忽略了一部分的空间
+D06,R03302,score_coverage,doorway,,average_poor,False,False,2026-10-15T07:45:13.554Z,

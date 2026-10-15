@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "tests": {
+    "passed": 11,
+    "command": "D:/anaconda/python.exe -B -m pytest -p no:cacheprovider tests/test_worker_wq_integration_20261015.py tests/test_worker_classification_progress_20261014.py tests/test_wall_consensus_population_20261014.py -q"
+  },
+  "full_pipeline": "completed; later plot-only readability edit regenerated figure",
+  "independent_WQ_formula_max_error": 4.263256414560601e-14,
+  "independent_dummy_matrix_effect_max_error": 9.237055564881302e-14,
+  "frozen_fusion_exact_replay_images": [
+    "7y3sRwLe3Va-04",
+    "rPc6DW4iMge-06",
+    "UwV83HsGsw3-09"
+  ],
+  "checks": [
+    "native and routing snapshots exact",
+    "959 main full manual rows; no original holdout",
+    "no duplicate worker/reference cells",
+    "target buildings excluded in all fitted folds",
+    "all4076 pairs are unique one-person replacements with recorded common base",
+    "642 unique teams; missing-reference and failed-quality rows not zero-filled",
+    "350 new eight-person states; original cached states preserved",
+    "local report references resolve",
+    "Own new code/test/Markdown whitespace checked directly; no issues"
+  ],
+  "not_run": [
+    "new batch import",
+    "same-room prediction",
+    "quality tuning",
+    "full-repository tests",
+    "full-library fusion"
+  ],
+  "public_sync": "suggestions only in README; no shared index/model/contract changes",
+  "shared_workspace_note": "Global git diff --check reports whitespace in concurrently edited public documents; those files were not modified by this module."
+}

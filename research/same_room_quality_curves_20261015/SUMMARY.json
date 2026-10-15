@@ -1,0 +1,35 @@
+{
+  "schema": "same_room_quality_curves_v1",
+  "native_quality_snapshot_exact": true,
+  "loader_revisions": {
+    "order_update_revision": "difficulty_orders_20261010_v1",
+    "quality_update_revision": "quality_review_20261010_v1"
+  },
+  "source_quality_rows": 1145,
+  "primary_quality_rows": 836,
+  "primary_images": 95,
+  "primary_workers": 24,
+  "relation_candidates": 259,
+  "direct_relations": 756,
+  "primary_same_room_pairs": 23,
+  "primary_same_room_buildings": 2,
+  "primary_same_room_groups": [
+    "G057",
+    "G178"
+  ],
+  "current_point_curve_images": 12,
+  "direct_same_room_pairs_in_point_curves": 0,
+  "exact_lee_contexts": 154,
+  "exact_lee_images": 20,
+  "exact_lee_unique_context_subsets": 24166,
+  "directed_tasks": 46,
+  "tasks_with_matched_building_controls": 36,
+  "matched_control_buildings": [
+    "uNb9QFRL6hY"
+  ],
+  "all_curve_subsets_evaluable": true,
+  "exact_lee_nonempty_fraction_min": 1.0,
+  "exact_single_person_quality_iou_max_error": 7.771561172376096e-16,
+  "inference": "Descriptive finite data; no independent-room population CI, significance, causal effect or stopping count.",
+  "same_room_WQ_fusion_curves": "not available; exact supplements are Lee bottom IoU only"
+}

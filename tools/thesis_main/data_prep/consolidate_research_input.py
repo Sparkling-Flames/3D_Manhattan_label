@@ -126,6 +126,8 @@ def build():
         manifest['effective_input_revision']=read(update_path)['revision']
         manifest['consumer_rule']='Use load_current_bundle/load_current_input; apply the authorized quality_update to the frozen baseline.'
     manifest['order_update_revision'] = data['order_update_revision']
+    if (OUT/'floor_scope_update_20261015.json').exists():
+        manifest['entrypoints']['floor_scope_update']='floor_scope_update_20261015.json'
     dump(OUT/'manifest.json',manifest)
     return manifest
 
@@ -153,6 +155,9 @@ def load_current_bundle():
         loaded['validation']=validate_bundle(loaded['data'],loaded['research'],loaded['comments'],loaded['final_summary'])
         if {o['object_id']:o['order_record'] for o in loaded['data']['objects'] if o['ring_confirmed']}!=loaded['final_orders']['records']:
             raise ValueError('effective_final_order_snapshot_mismatch')
+    if 'floor_scope_update' in loaded:
+        from .floor_scope_update_20261015 import validate_update
+        validate_update(loaded['floor_scope_update'],loaded['data'])
     return dict(manifest=manifest,**loaded)
 
 

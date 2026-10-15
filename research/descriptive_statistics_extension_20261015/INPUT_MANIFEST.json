@@ -1,0 +1,58 @@
+{
+  "description": "已审核3152库存归一化快照；版本字符串是此次源工件标识，不宣称算法已正式冻结。",
+  "batches": [
+    {
+      "batch_id": "current_20261015",
+      "input_version": "current_bundle_quality_snapshot_20261015",
+      "reference_version": "bound_reference_snapshot_20261015",
+      "records_csv": "records.csv",
+      "images_csv": "images.csv"
+    }
+  ],
+  "algorithms": [
+    {
+      "algorithm_id": "WQ",
+      "version": "WQ-LS08-20261014",
+      "source_csv": "records.csv",
+      "value_column": "WQ",
+      "input_version": "current_bundle_quality_snapshot_20261015",
+      "reference_version": "bound_reference_snapshot_20261015",
+      "direction": "higher_is_better",
+      "minimum": 0,
+      "maximum": 100
+    },
+    {
+      "algorithm_id": "A10",
+      "version": "WQ-A10-20261015",
+      "source_csv": "records.csv",
+      "value_column": "A10",
+      "input_version": "current_bundle_quality_snapshot_20261015",
+      "reference_version": "bound_reference_snapshot_20261015",
+      "direction": "higher_is_better",
+      "minimum": 0,
+      "maximum": 100
+    },
+    {
+      "algorithm_id": "B8L2",
+      "version": "WQ-B8L2-20261015",
+      "source_csv": "records.csv",
+      "value_column": "B8L2",
+      "input_version": "current_bundle_quality_snapshot_20261015",
+      "reference_version": "bound_reference_snapshot_20261015",
+      "direction": "higher_is_better",
+      "minimum": 0,
+      "maximum": 100
+    },
+    {
+      "algorithm_id": "IoU3D100",
+      "version": "mean_height_prism_artifact_snapshot_20261015",
+      "source_csv": "records.csv",
+      "value_column": "IoU3D100",
+      "input_version": "current_bundle_quality_snapshot_20261015",
+      "reference_version": "bound_reference_snapshot_20261015",
+      "direction": "higher_is_better",
+      "minimum": 0,
+      "maximum": 100
+    }
+  ]
+}

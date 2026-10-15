@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "tests": 14,
+  "command": "python -m pytest tests/test_same_room_personnel_patterns_20261015.py tests/test_same_room_quality_curves_20261015.py tests/test_worker_wq_integration_20261015.py -q",
+  "current_native_quality_snapshot_exact": true,
+  "quality_training_rows": 931,
+  "primary_target_rows": 836,
+  "type_axes": [
+    "Q",
+    "T"
+  ],
+  "all_training_folds_exclude_target_building": true,
+  "all_csv_columns_match_contract": true,
+  "balanced_type_tasks_have_identical_k_window": true,
+  "balanced_type_tasks_have_both_labels": true,
+  "all_type_curve_subsets_evaluable": true,
+  "maximum_type_pool_n": 7,
+  "curve_contexts": 426,
+  "local_links_valid": true,
+  "figures_visually_checked": [
+    "person_pattern_diagnostic.png",
+    "type_quality_gap.png",
+    "type_curve_examples.png"
+  ],
+  "temporary_screenshots_created": 0,
+  "public_files_modified": false,
+  "protocol_and_eligibility_changed": false,
+  "unrun": "whole-corpus fusion/tests, new semantic review, future quality versions; S/B excluded by user request"
+}

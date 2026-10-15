@@ -1,0 +1,83 @@
+{
+  "score_version": "WQ-LS08-20261014",
+  "binding": {
+    "native_snapshot_exact": true,
+    "joint_rows": 1145,
+    "old_rows": 1179,
+    "overlap": 962,
+    "joined_reference_geometry_matches": 962,
+    "status_counts": {
+      "included": 959,
+      "floor_only_no_full_Q": 217,
+      "separate_use_layer": 183,
+      "target_hold": 3
+    }
+  },
+  "profile_rows": 959,
+  "workers": 24,
+  "images": 114,
+  "reference_cells": 115,
+  "buildings": 21,
+  "profile_class_counts": {
+    "below_pool": 14,
+    "above_pool": 10
+  },
+  "prediction_performance": [
+    {
+      "axis": "IoU3D100",
+      "method": "continuous",
+      "evaluated_rows": 940,
+      "buildings": 21,
+      "pooled_reduction": 0.04659114292501476,
+      "building_equal_reduction": 0.11448073793895086,
+      "improved_buildings": 14
+    },
+    {
+      "axis": "IoU3D100",
+      "method": "class",
+      "evaluated_rows": 940,
+      "buildings": 21,
+      "pooled_reduction": 0.007601392656483852,
+      "building_equal_reduction": 0.09030220616606488,
+      "improved_buildings": 12
+    },
+    {
+      "axis": "WQ",
+      "method": "continuous",
+      "evaluated_rows": 940,
+      "buildings": 21,
+      "pooled_reduction": 0.18595796678384002,
+      "building_equal_reduction": 0.2653233558476036,
+      "improved_buildings": 15
+    },
+    {
+      "axis": "WQ",
+      "method": "class",
+      "evaluated_rows": 940,
+      "buildings": 21,
+      "pooled_reduction": 0.13400994691287327,
+      "building_equal_reduction": 0.19071627228922428,
+      "improved_buildings": 14
+    }
+  ],
+  "replacements": 4076,
+  "scored_unique_teams": 642,
+  "team_score_status": {
+    "complete": 348,
+    "no_bound_full_reference": 285,
+    "incomplete_fusion": 9
+  },
+  "replacement_diagnostics": {
+    "matched_base_comparisons": 173,
+    "matched_by_axis": {
+      "height_vs_floor": 51,
+      "WQ": 50,
+      "IoU3D100": 49,
+      "time": 23
+    }
+  },
+  "holdout_pairs": 1055,
+  "restricted_pairs": 1055,
+  "fusion_recomputed": "only missing fixed-base eight-person subsets; frozen core unchanged",
+  "formal_eligibility_changed": false
+}

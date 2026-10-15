@@ -1,0 +1,40 @@
+{
+  "schema": "same_room_personnel_patterns_v1",
+  "contract_version": "consensus_research_20260923_v1",
+  "training_quality_rows": 931,
+  "target_quality_rows": 836,
+  "type_axes": [
+    "Q",
+    "T"
+  ],
+  "sb_included": false,
+  "main_pairs": 23,
+  "main_relation_groups": [
+    "G057",
+    "G178"
+  ],
+  "directed_tasks": 46,
+  "matched_control_buildings": [
+    "uNb9QFRL6hY"
+  ],
+  "type_coverage": {
+    "Q": {
+      "directions": 46,
+      "contrast_usable": 40,
+      "positive_curve_usable": 42,
+      "negative_curve_usable": 44
+    },
+    "T": {
+      "directions": 46,
+      "contrast_usable": 32,
+      "positive_curve_usable": 46,
+      "negative_curve_usable": 32
+    }
+  },
+  "type_curve_contexts": 426,
+  "type_curve_max_people": 7,
+  "type_curve_two_person_directions": 40,
+  "residual_correlation": "diagnostic only: shared baseline subtraction can create high correlation",
+  "target_centering": "relative person-pattern comparison, not a deployment predictor of unknown absolute target quality",
+  "outcome": "See actual tables; no significance, final types, independent-building generalization or causal structure claim."
+}

@@ -1,6 +1,31 @@
 # HOHONET 项目地图
 
-- **2026-10-15跨模块收尾交接：** [现有数据收尾与模块接入](thesis_main/现有数据收尾与模块接入交接_20261015.md)，记录WQ工作版接口、两版研究、参考匹配缺口及新数据后置；本次不实施接入。
+- **2026-10-16质量结构续研与本地归档：** [当前统计、算法讨论和Pro任务](../research/quality_structure_handoff_20261016/README.md)、[多版本定义与未决项](../research/quality_structure_handoff_20261016/ALGORITHMS_AND_DECISIONS.md)、[组合机制Pro精简原件](../research/quality_combination_review_20261016/README.md)。重点区分自身正交与参考结构完整性；B8L2为可调整工作版，未改评分或推送远端。
+
+- **2026-10-16当前重算统计：** [891份完整质量与关键图](../research/descriptive_statistics_rescored_20261016/README.md)、[41图506份审计与接入](../research/scope_quality_rescore_20261016/README.md)。新增工具 `tools/thesis_main/analysis/scope_reference_reconstruction_20261016.py`、`scope_quality_binding_20261016.py`、`scope_quality_scoring_20261016.py`、`scope_quality_rescore_20261016.py`分别负责参考、绑定、冻结评分和独立快照；对应 `tests/test_scope_reference_reconstruction_20261016.py`、`test_scope_quality_binding_20261016.py`、`test_scope_quality_scoring_20261016.py`、`test_scope_quality_rescore_20261016.py`。上一阶段807份统计保留，派生结果不成为源标注。
+
+- **2026-10-15当前统计：** [新版报告、清单与工作簿](../research/descriptive_statistics_current_20261015/README.md)、[六组新图](../research/descriptive_statistics_current_20261015/figures/FIGURES.md)。v3、同条件至少3真人、GT／既有暂停及参考匹配已落实；manual完整Q768条／67图，semi39条／3图。206为门前候选，旧统计保留历史身份。口径见[统一第3.1节](thesis_main/四线程成果与论文主线核对_20261015.md)。
+
+当前统计生成器为 `tools/thesis_main/analysis/descriptive_statistics_current_20261015.py`；同目录 `descriptive_pool_gate_20261015.py`、`descriptive_reference_audit_20261015.py`、`descriptive_statistics_current_report_20261015.py`、`descriptive_statistics_current_figures_20261015.py`、`descriptive_statistics_current_workbook_20261015.mjs`分别负责人数门、参考审计、报告、图与工作簿；对应 `tests/test_descriptive_pool_gate_20261015.py`、`test_descriptive_reference_audit_20261015.py`、`test_descriptive_statistics_current_20261015.py`、`test_descriptive_statistics_current_figures_20261015.py`。清单由新报告及字段合同索引，不把派生输出升格为源标注。
+
+2026-10-15当前难度：[局部复核与GT排除](../research/difficulty_review_update_20261015/README.md)；构建入口 `tools/thesis_main/analysis/difficulty_review_update_20261015.py`，测试 `tests/test_difficulty_review_update_20261015.py`。范围语义为整空间竖向边界，普通难度分析须使用排除错误GT后的表。
+
+2026-10-15图片难度入口：[新增空间接入与259图](../research/difficulty_scope_received_20261015/README.md)；导入工具 `tools/thesis_main/data_prep/floor_scope_update_20261015.py`，难度构建工具 `tools/thesis_main/analysis/difficulty_scope_received_20261015.py`，主manifest新增 `floor_scope_update` 底面增量组件。
+
+现有数据描述统计已获后续新授权并实际执行，见[统计报告与筛选明细](../research/descriptive_statistics_20261015/README.md)。上一轮仅整理文档的历史保留；不固定论文大纲。最新状态统一见[四线程资料核对](thesis_main/四线程成果与论文主线核对_20261015.md)。
+
+- **2026-10-15详细描述统计：** [报告、工作簿与字段合同](../research/descriptive_statistics_20261015/README.md)；生成入口 `tools/thesis_main/analysis/descriptive_statistics_20261015.py`，库存/时间、直接同房、中文报告及工作簿采用同目录 `descriptive_inventory_20261015.py`、`descriptive_same_room_20261015.py`、`descriptive_statistics_report_20261015.py`、`descriptive_statistics_workbook_20261015.mjs`；关键连接/分母测试为 `tests/test_descriptive_*_20261015.py`。复用3152库存、1145评分、931人员及836同目标集合，分层保留时间缺失与参考限制。
+
+- **统计核验与后续接入：** [核验报告](../research/descriptive_statistics_20261015/INDEPENDENT_AUDIT.md)、[关键图及图表数据](../research/descriptive_statistics_20261015/figures/FIGURES.md)、[接入指南与manifest](../research/descriptive_statistics_20261015/EXTENSION_GUIDE.md)。对应工具 `verify_descriptive_statistics_20261015.py`、`descriptive_statistics_figures_20261015.py`、`descriptive_snapshot_inputs_20261015.py`，对应测试位于 `tests/`；新接入口实际演示输出为 `research/descriptive_statistics_extension_20261015/`，不覆盖历史统计，不把派生快照升格为原始数据真源。
+
+
+- **2026-10-15模块接续报告：** [图片目标绑定](../research/difficulty_target_integration_20261015/README.md)、[特殊条件覆盖](../research/difficulty_special_coverage_20261015/README.md)、[人员四轴更新](../research/worker_four_axis_update_20261015/README.md)、[融合质量与特殊层](../research/wall_consensus_quality_20261015/README.md)、[同房Q/T模式](../research/same_room_personnel_patterns_20261015/README.md)。前阶段[人员接入](../research/worker_wq_integration_20261015/README.md)及[同房曲线](../research/same_room_quality_curves_20261015/README.md)保留接续说明。
+
+- **2026-10-15四线程统筹核对：** [研究资料与实际进度](thesis_main/四线程成果与论文主线核对_20261015.md)，连接图片目标、931人员画像、融合质量及同房人员模式交付；各模块历史记录保留，正式合同与参数不变。
+
+- **2026-10-15 A/B质量反馈：** `research/quality_ab_feedback_handoff_20261015/`保存30份原始回执、绑定合并表、前轮必要证据与Pro研究提示词；核验反馈与组合机制研究，不升级为评分合同。
+
+- **2026-10-15跨模块收尾交接：** [现有数据收尾与模块接入](thesis_main/现有数据收尾与模块接入交接_20261015.md)，记录WQ工作版接口、两版研究、参考匹配缺口及新数据后置；此为接入前记录，最新结果以上方统一入口为准。
 - **2026-10-14三模块成果：** `research/difficulty_coarse_closeout_20261014/`、`research/worker_classification_progress_20261014/`、`research/wall_consensus_population_20261014/`，对应工具位于`tools/thesis_main/analysis/`同名Python入口，后两者有同名测试。包含259图粗类消费表、24人条件画像、12图冻结人数轨迹，非正式人员分类或全库融合验证。
 
 - **2026-10-15 Q-Profile路线复审：** [quality_profile_independent_review_20261015](../research/quality_profile_independent_review_20261015/README.md)，含独立判断、普通30份候选补算与复现差异；展示映射不升级为评分合同，复现与生成页面留在analysis_results。
@@ -130,3 +155,9 @@
 - `tests/point_edit_review_ux_20261009.cjs` 验证绿色工作台鼠标操作、旧草稿保留与最近记录恢复；不操作用户日常浏览器缓存。
 - `point_edit_review_20261009_sort.js` 适配旧完整点对拖动代码；`tests/test_point_sort_review_20261009.cjs`、`point_sort_review_browser_20261009.cjs` 与 `point_sort_visible_20261010.cjs` 验证周期x候选点对、排序留痕、卡片可见与实际拖动。
 - `research/point_review_109_received_20261009/109份复核重筛清单_20261010.csv` 是重筛来源，`queue_resolution_20261010.json` 记录既有单条排除与OOS无法计算不重复召回；[范围与返回说明](thesis_main/109份点编辑审核范围与返回核对_20261010.md)及 `analysis_results/point_edit_review_20261009/109份审核范围与返回核对_20261010.csv`逐条说明109→14份／8图。该输出目录的`received_return_audit_20261010.json`保存18条返回与旧排序的核对，原件存`evidence/`；`tests/point_review_rescreen_browser_20261010.cjs`验证默认队列、全量查看和旧草稿保留。
+
+- 2026-10-15整理：[入口阶段更新归档](thesis_main/history/入口阶段更新归档_20261015.md)、[旧共识推进方案](thesis_main/history/研究推进方案_共识可靠性与Pro深研_20261004.md)仅供追溯；现行执行见[融合SOP](thesis_main/融合共识操作SOP_20261008.md)。
+
+### 2026-10-15模块接续代码定位
+
+上述接续报告对应 `tools/thesis_main/analysis/` 下同名日期脚本及 `tests/test_同名日期.py`：difficulty_target_integration、difficulty_special_coverage、worker_wq_integration、worker_four_axis_update、same_room_quality_curves、same_room_personnel_patterns、wall_consensus_quality。融合特殊层另有 `wall_consensus_special_20261015.py`，由融合质量相关测试覆盖。此处仅补齐已有文件导航，本次没有修改或运行这些程序。

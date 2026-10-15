@@ -1,0 +1,20 @@
+{
+  "version": "WQ-LS08-20261014",
+  "direction_scale_deg": 6.123724356957945,
+  "direction_cap": 1.5,
+  "bottom_scale_squared_deg2": 32.0,
+  "global_height_scale": 0.8,
+  "local_height_scale": 0.25,
+  "pooling_order": 1.0,
+  "role": "historical_control",
+  "formal_default_replaced": false,
+  "required_components": [
+    "I",
+    "Sb",
+    "D",
+    "Hm",
+    "Hc"
+  ],
+  "reference_policy": "Use the pre-bound reference; never choose max quality; missing components yield no full score.",
+  "qualifier_policy": "Retain condition, worker, scene, target, reference, holdout and source restrictions from the input ledger."
+}

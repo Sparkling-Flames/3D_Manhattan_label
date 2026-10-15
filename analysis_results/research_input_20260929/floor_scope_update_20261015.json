@@ -1,0 +1,682 @@
+{
+  "schema": "confirmed_floor_scope_update_v1",
+  "revision": "four_confirmed_space_scopes_20261015_v2",
+  "coordinate_frame": "camera_height_normalized_xz; original ERP 1024x512",
+  "records": [
+    {
+      "image_id": "q9vSo1VnCiC_f7452776f0604b508bb2b0263238deb0",
+      "image_code": "q9vSo1VnCiC-34",
+      "reference_id": "user_floor_20261015:q9vSo1VnCiC-34",
+      "original_reference_id": "gt:q9vSo1VnCiC_f7452776f0604b508bb2b0263238deb0:data/mp3d_layout/test/label_cor/q9vSo1VnCiC_f7452776f0604b508bb2b0263238deb0.txt",
+      "original_points_1024x512": [
+        [
+          660.2,
+          198.07
+        ],
+        [
+          660.2,
+          306.48
+        ],
+        [
+          848.7,
+          192.04
+        ],
+        [
+          848.7,
+          311.86
+        ],
+        [
+          873.94,
+          176.93
+        ],
+        [
+          873.94,
+          325.53
+        ],
+        [
+          846.93,
+          169.6
+        ],
+        [
+          846.93,
+          332.25
+        ],
+        [
+          173.91,
+          167.02
+        ],
+        [
+          173.91,
+          334.64
+        ],
+        [
+          395.21,
+          186.32
+        ],
+        [
+          395.21,
+          317
+        ]
+      ],
+      "floor_xz_h": [
+        [
+          -1.672038999764281,
+          0.9214400253467318
+        ],
+        [
+          2.465694692117572,
+          0.9214400253467318
+        ],
+        [
+          2.465694692117572,
+          -1.9194577147415963
+        ],
+        [
+          -1.672038999764281,
+          -1.9194577147415963
+        ]
+      ],
+      "floor_region_confirmed": true,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "confirmed_at": "2026-10-15T10:38:38.766Z",
+      "source_receipt": "scope_receipt_20261015.json",
+      "source_pointer": "/records/62/space_regions/regions/0",
+      "confirmed_snapshot": {
+        "polygon": [
+          [
+            -1.672038999764281,
+            0.9214400253467318
+          ],
+          [
+            2.465694692117572,
+            0.9214400253467318
+          ],
+          [
+            2.465694692117572,
+            -1.9194577147415963
+          ],
+          [
+            -1.672038999764281,
+            -1.9194577147415963
+          ]
+        ],
+        "operations": [
+          {
+            "type": "rectangle",
+            "a": [
+              -1.672038999764281,
+              0.9214400253467318
+            ],
+            "b": [
+              2.465694692117572,
+              -1.9194577147415963
+            ],
+            "angle": 0,
+            "gt_snap": {
+              "version": 1,
+              "mode": "rectangle",
+              "matches": [
+                {
+                  "edge": 0,
+                  "gt_edge": 3,
+                  "exact": false,
+                  "distance_px": 0.182493924657697
+                },
+                {
+                  "edge": 1,
+                  "gt_edge": 0,
+                  "exact": false,
+                  "distance_px": 0.8480481729360484
+                },
+                {
+                  "edge": 2,
+                  "gt_edge": 5,
+                  "exact": false,
+                  "distance_px": 0.07927228761053332
+                },
+                {
+                  "edge": 3,
+                  "gt_edge": 4,
+                  "exact": false,
+                  "distance_px": 2.0173333220938314
+                }
+              ]
+            }
+          }
+        ],
+        "cuts": [],
+        "decision": "allow",
+        "note": "",
+        "top_boundary_pending": true,
+        "axis_angle": 0,
+        "completed": true,
+        "updated_at": "2026-10-15T10:38:38.766Z",
+        "confirmed_at": "2026-10-15T10:38:38.766Z",
+        "source": "workbench_button",
+        "confirmation_message_id": null,
+        "source_sha256": null,
+        "floor_region_confirmed": true,
+        "top_boundary_validation": "not established by this floor-region confirmation"
+      },
+      "answer_to_candidate_assignments": [],
+      "scope_semantics": "whole_space_vertical_boundary",
+      "space_scope_confirmed": true
+    },
+    {
+      "image_id": "uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269",
+      "image_code": "uNb9QFRL6hY-86",
+      "reference_id": "user_floor_20261015:uNb9QFRL6hY-86",
+      "original_reference_id": "gt:uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_fd10460fd2bc4c52af84e36e89357269.txt",
+      "original_points_1024x512": [
+        [
+          559.01,
+          193.46
+        ],
+        [
+          559.01,
+          354.64
+        ],
+        [
+          940.07,
+          156.56
+        ],
+        [
+          940.07,
+          398.64
+        ],
+        [
+          877.54,
+          180.41
+        ],
+        [
+          877.54,
+          371.49
+        ],
+        [
+          918.85,
+          196.19
+        ],
+        [
+          918.85,
+          350.93
+        ],
+        [
+          173.35,
+          218.59
+        ],
+        [
+          173.35,
+          318.07
+        ],
+        [
+          348.17,
+          219.82
+        ],
+        [
+          348.17,
+          316.14
+        ]
+      ],
+      "floor_xz_h": [
+        [
+          -2.1831483762139787,
+          1.2129423779922923
+        ],
+        [
+          0.41114332552919597,
+          1.2129423779922923
+        ],
+        [
+          0.41114332552919597,
+          -1.3856577800465502
+        ],
+        [
+          -2.1831483762139787,
+          -1.3856577800465502
+        ]
+      ],
+      "floor_region_confirmed": true,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "confirmed_at": "2026-10-15T10:38:08.679Z",
+      "source_receipt": "scope_receipt_20261015.json",
+      "source_pointer": "/records/101/space_regions/regions/0",
+      "confirmed_snapshot": {
+        "polygon": [
+          [
+            -2.1831483762139787,
+            1.2129423779922923
+          ],
+          [
+            0.41114332552919597,
+            1.2129423779922923
+          ],
+          [
+            0.41114332552919597,
+            -1.3856577800465502
+          ],
+          [
+            -2.1831483762139787,
+            -1.3856577800465502
+          ]
+        ],
+        "operations": [
+          {
+            "type": "rectangle",
+            "a": [
+              -2.1831483762139787,
+              1.2129423779922923
+            ],
+            "b": [
+              0.41114332552919597,
+              -1.3856577800465502
+            ],
+            "angle": 0,
+            "gt_snap": {
+              "version": 1,
+              "mode": "rectangle",
+              "matches": [
+                {
+                  "edge": 0,
+                  "gt_edge": 3,
+                  "exact": false,
+                  "distance_px": 1.4900971439960573
+                },
+                {
+                  "edge": 1,
+                  "gt_edge": 0,
+                  "exact": false,
+                  "distance_px": 5.086058940752858
+                },
+                {
+                  "edge": 2,
+                  "gt_edge": 5,
+                  "exact": false,
+                  "distance_px": 3.6900945017361693
+                },
+                {
+                  "edge": 3,
+                  "gt_edge": 4,
+                  "exact": false,
+                  "distance_px": 2.0172913551012943
+                }
+              ]
+            }
+          }
+        ],
+        "cuts": [],
+        "decision": "allow",
+        "note": "",
+        "top_boundary_pending": true,
+        "axis_angle": 0,
+        "completed": true,
+        "updated_at": "2026-10-15T10:38:08.679Z",
+        "confirmed_at": "2026-10-15T10:38:08.679Z",
+        "source": "workbench_button",
+        "confirmation_message_id": null,
+        "source_sha256": null,
+        "floor_region_confirmed": true,
+        "top_boundary_validation": "not established by this floor-region confirmation"
+      },
+      "answer_to_candidate_assignments": [],
+      "scope_semantics": "whole_space_vertical_boundary",
+      "space_scope_confirmed": true
+    },
+    {
+      "image_id": "pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e",
+      "image_code": "pa4otMbVnkk-11",
+      "reference_id": "user_floor_20261015:pa4otMbVnkk-11",
+      "original_reference_id": "gt:pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e:data/mp3d_layout/valid/label_cor/pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e.txt",
+      "original_points_1024x512": [
+        [
+          525.18,
+          180.34
+        ],
+        [
+          525.18,
+          332.52
+        ],
+        [
+          559.86,
+          82.85
+        ],
+        [
+          559.86,
+          430.05
+        ],
+        [
+          710.87,
+          162.78
+        ],
+        [
+          710.87,
+          350.19
+        ],
+        [
+          831.81,
+          163.96
+        ],
+        [
+          831.81,
+          349
+        ],
+        [
+          956.76,
+          94.79
+        ],
+        [
+          956.76,
+          418.18
+        ],
+        [
+          1000.74,
+          175.36
+        ],
+        [
+          1000.74,
+          337.53
+        ],
+        [
+          158.55,
+          207.47
+        ],
+        [
+          158.55,
+          305.13
+        ],
+        [
+          359.73,
+          208.71
+        ],
+        [
+          359.73,
+          303.88
+        ]
+      ],
+      "floor_xz_h": [
+        [
+          -2.658105559643344,
+          1.8106166950890448
+        ],
+        [
+          0.15921182418019283,
+          1.8106166950890448
+        ],
+        [
+          0.15921182418019283,
+          -1.964553889197127
+        ],
+        [
+          -2.658105559643344,
+          -1.964553889197127
+        ]
+      ],
+      "floor_region_confirmed": true,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "confirmed_at": "2026-10-15T11:08:23.065Z",
+      "source_receipt": "scope_receipt_20261015_1.json",
+      "source_pointer": "/records/50/space_regions/regions/0",
+      "confirmed_snapshot": {
+        "polygon": [
+          [
+            -2.658105559643344,
+            1.8106166950890448
+          ],
+          [
+            0.15921182418019283,
+            1.8106166950890448
+          ],
+          [
+            0.15921182418019283,
+            -1.964553889197127
+          ],
+          [
+            -2.658105559643344,
+            -1.964553889197127
+          ]
+        ],
+        "operations": [
+          {
+            "type": "rectangle",
+            "a": [
+              -2.658105559643344,
+              1.8106166950890448
+            ],
+            "b": [
+              0.15921182418019283,
+              -1.964553889197127
+            ],
+            "angle": 0,
+            "gt_snap": {
+              "version": 1,
+              "mode": "rectangle",
+              "matches": [
+                {
+                  "edge": 0,
+                  "gt_edge": 5,
+                  "exact": false,
+                  "distance_px": 1.0694309317642083
+                },
+                {
+                  "edge": 1,
+                  "gt_edge": 0,
+                  "exact": false,
+                  "distance_px": 4.252881972035671
+                },
+                {
+                  "edge": 2,
+                  "gt_edge": 7,
+                  "exact": false,
+                  "distance_px": 5.94996421190793
+                },
+                {
+                  "edge": 3,
+                  "gt_edge": 6,
+                  "exact": false,
+                  "distance_px": 0.32976623437600056
+                }
+              ]
+            }
+          }
+        ],
+        "cuts": [],
+        "decision": "allow",
+        "note": "",
+        "top_boundary_pending": true,
+        "axis_angle": 0,
+        "completed": true,
+        "updated_at": "2026-10-15T11:08:23.065Z",
+        "confirmed_at": "2026-10-15T11:08:23.065Z",
+        "source": "workbench_button",
+        "confirmation_message_id": null,
+        "source_sha256": null,
+        "floor_region_confirmed": true,
+        "top_boundary_validation": "not established by this floor-region confirmation"
+      },
+      "answer_to_candidate_assignments": [],
+      "scope_semantics": "whole_space_vertical_boundary",
+      "space_scope_confirmed": true
+    },
+    {
+      "image_id": "uNb9QFRL6hY_a7ab19b1a9f044f0905592de1414e8b3",
+      "image_code": "uNb9QFRL6hY-54",
+      "reference_id": "user_floor_20261015:uNb9QFRL6hY-54",
+      "original_reference_id": "gt:uNb9QFRL6hY_a7ab19b1a9f044f0905592de1414e8b3:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_a7ab19b1a9f044f0905592de1414e8b3.txt",
+      "original_points_1024x512": [
+        [
+          692.49,
+          176.39
+        ],
+        [
+          692.49,
+          338.1
+        ],
+        [
+          853.24,
+          178.54
+        ],
+        [
+          853.24,
+          335.91
+        ],
+        [
+          28.55,
+          126.82
+        ],
+        [
+          28.55,
+          388.15
+        ],
+        [
+          76.82,
+          58.94
+        ],
+        [
+          76.82,
+          455
+        ],
+        [
+          212.75,
+          148.22
+        ],
+        [
+          212.75,
+          366.67
+        ],
+        [
+          292.13,
+          147.36
+        ],
+        [
+          292.13,
+          367.54
+        ],
+        [
+          435.81,
+          49.45
+        ],
+        [
+          435.81,
+          464.22
+        ],
+        [
+          484.91,
+          115.07
+        ],
+        [
+          484.91,
+          399.86
+        ]
+      ],
+      "floor_xz_h": [
+        [
+          -0.1656290085709368,
+          0.9357653857164548
+        ],
+        [
+          1.6229410407479175,
+          0.9357653857164548
+        ],
+        [
+          1.6229410407479175,
+          -0.8108068887055735
+        ],
+        [
+          -0.1656290085709368,
+          -0.8108068887055735
+        ]
+      ],
+      "floor_region_confirmed": true,
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "confirmed_at": "2026-10-15T11:04:11.445Z",
+      "source_receipt": "scope_receipt_20261015_1.json",
+      "source_pointer": "/records/86/space_regions/regions/0",
+      "confirmed_snapshot": {
+        "polygon": [
+          [
+            -0.1656290085709368,
+            0.9357653857164548
+          ],
+          [
+            1.6229410407479175,
+            0.9357653857164548
+          ],
+          [
+            1.6229410407479175,
+            -0.8108068887055735
+          ],
+          [
+            -0.1656290085709368,
+            -0.8108068887055735
+          ]
+        ],
+        "operations": [
+          {
+            "type": "rectangle",
+            "a": [
+              -0.1656290085709368,
+              0.9357653857164548
+            ],
+            "b": [
+              1.6229410407479175,
+              -0.8108068887055735
+            ],
+            "angle": 0,
+            "gt_snap": {
+              "version": 1,
+              "mode": "rectangle",
+              "matches": [
+                {
+                  "edge": 0,
+                  "gt_edge": 1,
+                  "exact": false,
+                  "distance_px": 1.148237346413069
+                },
+                {
+                  "edge": 1,
+                  "gt_edge": 0,
+                  "exact": false,
+                  "distance_px": 4.767333263480415
+                },
+                {
+                  "edge": 2,
+                  "gt_edge": 7,
+                  "exact": false,
+                  "distance_px": 9.949597548105544
+                },
+                {
+                  "edge": 3,
+                  "gt_edge": 2,
+                  "exact": false,
+                  "distance_px": 0.46273241641082297
+                }
+              ]
+            }
+          }
+        ],
+        "cuts": [],
+        "decision": "allow",
+        "note": "",
+        "top_boundary_pending": true,
+        "axis_angle": 0,
+        "completed": true,
+        "updated_at": "2026-10-15T11:04:11.445Z",
+        "confirmed_at": "2026-10-15T11:04:11.445Z",
+        "source": "workbench_button",
+        "confirmation_message_id": null,
+        "source_sha256": null,
+        "floor_region_confirmed": true,
+        "top_boundary_validation": "not established by this floor-region confirmation"
+      },
+      "answer_to_candidate_assignments": [],
+      "scope_semantics": "whole_space_vertical_boundary",
+      "space_scope_confirmed": true
+    }
+  ],
+  "scope_semantics": "whole_space_vertical_boundary",
+  "semantics_source": "user clarification 2026-10-15: entire space cut vertically, not floor only",
+  "import_policy": "merge explicit new scope increments; do not replace historical whole-table states"
+}

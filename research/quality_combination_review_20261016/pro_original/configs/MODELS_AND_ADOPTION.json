@@ -1,0 +1,43 @@
+{
+  "schema": "quality_combination_mechanism_20261015_v1",
+  "adoption": "B8L2 retained as primary research index; A10 historical sensitivity; C8 equal-anchor shape sensitivity",
+  "production_default_changed": false,
+  "reference_selection": "frozen binding only, never highest final score",
+  "complete_score_requires": [
+    "I",
+    "Sb",
+    "D",
+    "Hm",
+    "Hc"
+  ],
+  "D_semantics": "own optimally fitted common orthogonal-axis residual, not reference wall-angle error",
+  "F": "1/I-1+Sb^2/32",
+  "H": "(Hm/0.8)^2+(Hc/0.25)^2",
+  "direction_loss": "1.5*D^2/(D^2+c^2)",
+  "outer_map": "100/(1+joint_geometric_loss+H)",
+  "B8L2": {
+    "c": 8,
+    "joint": "sqrt(F^2+d^2)"
+  },
+  "C8": {
+    "c": 8,
+    "joint": "max(F,d)+(sqrt(2)-1)*min(F,d)",
+    "diagonal_anchor_matched_to_B": true,
+    "new_human_fit": false
+  },
+  "S8": {
+    "c": 8,
+    "joint": "F+d",
+    "role": "scale-matched additive control"
+  },
+  "exploratory_p_values": [
+    1.5,
+    3
+  ],
+  "height_scales_unchanged": true,
+  "new_parameters_fitted_to_30_feedback": false,
+  "new_feedback_independent_blind": false,
+  "scope_comment_flags": "separate derived sidecar; raw review and eligibility unchanged",
+  "five_grade_targets_or_fitting": "none this round",
+  "error_origin_identified": "no"
+}

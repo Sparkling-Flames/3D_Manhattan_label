@@ -1,0 +1,62 @@
+{
+  "version": "scope_preferred_difficulty_user_revision_20261015_v1",
+  "decisions": {
+    "schema": "user_difficulty_and_gt_revision_v1",
+    "source": "本线程用户2026-10-15消息及随后关于补范围的答复",
+    "thread_id": "01a11f11-23c1-7f51-b9d3-c4300015b352",
+    "records": [
+      {
+        "image_code": "uNb9QFRL6hY-86",
+        "action": "await_new_scope",
+        "conditional_class": "简单",
+        "user_text": "这图有俩空间,你check一下我有没有标注,应该来说算是简单图",
+        "followup": "那目前没有,我去补一下"
+      },
+      {
+        "image_code": "q9vSo1VnCiC-34",
+        "action": "await_new_scope",
+        "conditional_class": "简单",
+        "user_text": "这图有俩空间,你check一下我有没有标注,应该来说算是简单图",
+        "followup": "那目前没有,我去补一下"
+      },
+      {
+        "image_code": "7y3sRwLe3Va-03",
+        "action": "difficulty_override",
+        "class": "中等",
+        "user_text": "算是中等难度"
+      },
+      {
+        "image_code": "7y3sRwLe3Va-26",
+        "action": "remove_gt_pairs",
+        "removed_pairs_1based": [
+          5,
+          6
+        ],
+        "numbering_basis": "原GT图卡中显示的1起始点对编号，8对，保留1/2/3/4/7/8及其环序",
+        "user_text": "这个7y3sRwLe3Va-26 gt有误,去掉第5第6对点就行. 当做我的修改gt"
+      }
+    ]
+  },
+  "summary": {
+    "version": "scope_preferred_difficulty_user_revision_20261015_v1",
+    "reviewed": 259,
+    "counts": {
+      "简单": 145,
+      "单列": 42,
+      "中等": 31,
+      "困难": 34,
+      "待复核": 7
+    },
+    "accepted_alternatives": 33,
+    "changed_from_previous_scope": 46,
+    "changed_from_visual_v2": 63,
+    "oos": 26,
+    "doorway": 19,
+    "scope_pending": 2,
+    "gt_revisions": 1,
+    "new_visual_review_count": 1,
+    "note": "259为继承覆盖，本轮不是259张重新看图；两张等待新范围的简单判断不绑定旧GT"
+  },
+  "historical_quality_scores_not_recomputed": true,
+  "formal_loader_not_modified": true
+}

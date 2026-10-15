@@ -1,0 +1,110 @@
+{
+  "old_rows": 959,
+  "current_rows": 931,
+  "held_by_image": {
+    "UwV83HsGsw3-10": 23,
+    "B6ByNegPMKs-37": 5
+  },
+  "quality_sensitivity": {
+    "performance": [
+      {
+        "axis": "IoU3D100",
+        "method": "continuous",
+        "evaluated_rows": 912,
+        "buildings": 21,
+        "pooled_reduction": 0.025515810144560058,
+        "building_equal_reduction": 0.09299719417004726,
+        "improved_buildings": 14
+      },
+      {
+        "axis": "IoU3D100",
+        "method": "class",
+        "evaluated_rows": 912,
+        "buildings": 21,
+        "pooled_reduction": -0.0036740815838967045,
+        "building_equal_reduction": 0.08118992689802373,
+        "improved_buildings": 11
+      },
+      {
+        "axis": "WQ",
+        "method": "continuous",
+        "evaluated_rows": 912,
+        "buildings": 21,
+        "pooled_reduction": 0.1730339876813788,
+        "building_equal_reduction": 0.24763598731520453,
+        "improved_buildings": 15
+      },
+      {
+        "axis": "WQ",
+        "method": "class",
+        "evaluated_rows": 912,
+        "buildings": 21,
+        "pooled_reduction": 0.1337064348744178,
+        "building_equal_reduction": 0.17670969266510395,
+        "improved_buildings": 14
+      }
+    ],
+    "full_label_changes": {
+      "S_bottom_deg": [
+        "W036"
+      ],
+      "WQ": [
+        "W030"
+      ],
+      "height_mean_ratio": [
+        "W013",
+        "W017"
+      ]
+    },
+    "replacement_class_changes": {
+      "WQ": 383,
+      "IoU3D100": 0,
+      "height_vs_floor": 103
+    }
+  },
+  "scope_records": 1013,
+  "scope_raw_responses_verified": 1013,
+  "scope_geometry_present": 984,
+  "scope_current_unknown": 727,
+  "semi_records": 574,
+  "auxiliary_performance": [
+    {
+      "axis": "B_edit",
+      "evaluated_rows": 264,
+      "buildings": 9,
+      "building_equal_reduction": 0.43617760426694885,
+      "pooled_reduction": 0.4323972813395365,
+      "improved_buildings": 8
+    },
+    {
+      "axis": "B_legacy_gain",
+      "evaluated_rows": 240,
+      "buildings": 9,
+      "building_equal_reduction": 0.16276259038659757,
+      "pooled_reduction": 0.19057338314261063,
+      "improved_buildings": 6
+    },
+    {
+      "axis": "S_clear_rejection",
+      "evaluated_rows": 260,
+      "buildings": 7,
+      "building_equal_reduction": 0.17001556568400567,
+      "pooled_reduction": 0.22291127449857606,
+      "improved_buildings": 6
+    },
+    {
+      "axis": "S_rejection",
+      "evaluated_rows": 961,
+      "buildings": 11,
+      "building_equal_reduction": 0.09238360216394115,
+      "pooled_reduction": 0.10457510850303786,
+      "improved_buildings": 10
+    }
+  ],
+  "conditional_quality_rows": 822,
+  "current_scope_target": "clear ordinary acceptance only; other latest categories do not define binary correctness",
+  "B_interpretation": "current-confirmed trap diagnostic on frozen historical OSPA30; not current WQ benefit",
+  "fusion_recomputed": false,
+  "old_results_preserved": true,
+  "formal_eligibility_changed": false
+}

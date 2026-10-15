@@ -1,0 +1,55 @@
+{
+  "version": "descriptive_statistics_figures_20261015_v1",
+  "source_contract": "D:/Work/HOHONET/research/descriptive_statistics_20261015/FIELD_CONTRACT.json",
+  "source_schema_version": "descriptive_statistics_20261015_v1",
+  "protocol": "consensus_research_20260923_v1",
+  "upstream_sources": [
+    "research/difficulty_target_integration_20261015/quality_bindings_1145.csv",
+    "research/quality_ab_feedback_handoff_20261015/prior_AB/results/SCORES_1145.csv",
+    "research/difficulty_special_coverage_20261015/image_coverage_259.csv",
+    "research/worker_four_axis_update_20261015/quality_panel_931.csv",
+    "analysis_results/research_input_20260929/manifest.json",
+    "research/quality_joint_closeout_review_20261015/pro_closeout_delta.zip",
+    "analysis_results/uncertainty_cloud_inputs_20260906_v1/facts/active_time_context.csv.gz",
+    "analysis_results/uncertainty_cloud_inputs_20260906_v1/facts/annotation_spine.csv.gz"
+  ],
+  "metrics": {
+    "WQ": {
+      "version": "WQ-LS08-20261014",
+      "source": "D:/Work/HOHONET/research/descriptive_statistics_20261015/records.csv:WQ",
+      "unit": "0-100",
+      "reference_column": "reference_id"
+    },
+    "A10": {
+      "version": "WQ-A10-20261015",
+      "source": "D:/Work/HOHONET/research/descriptive_statistics_20261015/records.csv:A10",
+      "unit": "0-100",
+      "reference_column": "reference_id"
+    },
+    "B8L2": {
+      "version": "WQ-B8L2-20261015",
+      "source": "D:/Work/HOHONET/research/descriptive_statistics_20261015/records.csv:B8L2",
+      "unit": "0-100",
+      "reference_column": "reference_id"
+    },
+    "IoU3D100": {
+      "version": null,
+      "version_note": "原字段合同未单独声明IoU算法版本，不借用WQ版本",
+      "source": "D:/Work/HOHONET/research/descriptive_statistics_20261015/records.csv:IoU3D100",
+      "unit": "0-100; mean-height prism",
+      "reference_column": "reference_id"
+    },
+    "active_time_seconds": {
+      "version_column": "time_rule_version",
+      "source": "D:/Work/HOHONET/research/descriptive_statistics_20261015/records.csv:active_time_seconds",
+      "unit": "seconds; valid active time only; lead_time fallback excluded",
+      "valid_status": "usable"
+    }
+  },
+  "score_version_column_semantics": "records.csv及图表CSV的score_version仅为原WQ版本；不是A10/B8L2版本。",
+  "same_room_score_version_semantics": "同房CSV的score_version_a/b及score_versions_a/b沿用原WQ绑定上下文；指标版本按本manifest.metrics读取。",
+  "same_room_iou_3d_unit": "0-1; same score divided by 100",
+  "reuse_scope": "八图支持当前描述统计schema的快照目录替换，样本数从数据读取；质量面板当前固定WQ/A10/B8L2/IoU3D100四指标。",
+  "long_score_interface_consumed": false,
+  "future_algorithm_path": "新算法可由新的long-score接入口表接入绘图；当前八图不自动消费该入口，也不自动扩展算法面板。"
+}

@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "pytest_command": "python -m pytest tests/test_same_room_quality_curves_20261015.py tests/test_same_room_similarity_20261003.py tests/test_lee_tile_precision_20261003.py -q",
+  "pytest_passed": 10,
+  "full_actual_run": true,
+  "frozen_replay_contexts": 2,
+  "frozen_replay_max_iou_error": 1.1102230246251565e-16,
+  "all_csv_contract_columns_match": true,
+  "old_quality_panel_same_actual_scores_and_references": true,
+  "figures_visually_checked": [
+    "mean_quality_pairs.png",
+    "curve_comparison.png",
+    "all_same_room_lee_curves.png"
+  ],
+  "temporary_screenshots_created": 0,
+  "public_documents_modified": false,
+  "protocol_or_eligibility_changed": false,
+  "unrun": "No whole-repository tests, whole-corpus fusion replay, new human semantic review or future quality-version sensitivity."
+}

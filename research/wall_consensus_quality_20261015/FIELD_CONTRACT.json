@@ -1,0 +1,30 @@
+{
+  "schema": "wall_consensus_quality_20261015_v1",
+  "score_version": "WQ-LS08-20261014",
+  "unique_unit": [
+    "image",
+    "subset",
+    "reference_axis"
+  ],
+  "path_unit": [
+    "image",
+    "path",
+    "k",
+    "reference_axis"
+  ],
+  "source": "saved actual member subsets; original12 automatic only",
+  "units": {
+    "WQ": "0..100 research work metric",
+    "IoU3D100": "0..100 vertex-mean-height prism proxy; not true room volume",
+    "iou_2d": "0..1",
+    "S_bottom_deg": "degrees",
+    "dir": "own best orthogonal-axis residual degrees",
+    "Hmean": "absolute perimeter-mean height ratio residual",
+    "Hcenter": "centered local height residual",
+    "floor_WQ_upper_bound": "height-free upper bound, not complete quality"
+  },
+  "missing": "NA never zero; k=2 deferred; below4 excluded from full quality but valid floor diagnostics retained",
+  "validity": "conditional research values, no new formal eligibility or semantic certification",
+  "denominator": "by_image_k total_paths/full_quality_paths; matched_changes same paths at both k",
+  "same_room": "image_registry room_groups preserve missing-room building fallbacks; do not treat fallback as confirmed same room"
+}

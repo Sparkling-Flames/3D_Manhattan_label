@@ -2,6 +2,10 @@
 
 # 最终审核研究输入
 
+2026-10-15后续澄清：`floor_scope_update`现累计4图，新增pa4-11与uNb-54；范围表示**整个空间体的竖向边界**，并非只修改地面。历史floor命名保留；`space_scope_confirmed`与`scope_semantics`记录当前含义，顶角坐标完备性另记。最新难度及错误GT排除见[更新说明](../../research/difficulty_review_update_20261015/README.md)。
+
+2026-10-15：主manifest新增 `floor_scope_update`，由 `load_current_bundle()['floor_scope_update']['records']`读取本次确认的uNb-86、q9-34底面。它是新增底面参照，不覆盖原GT或人员作答，也不代表顶界已确认。接入与图片难度采用规则见[当前说明](../../research/difficulty_scope_received_20261015/README.md)。
+
 唯一完整分析入口：[manifest.json](manifest.json)，由当前机器合同`data.analysis_bundle`指定。预处理、研究解释、评论和最终统计均在本目录内；原目录作为历史来源保留。
 
 公开范围更新（2026-10-01）：用户授权“这些映射和原评语允许公开”。当前公开仓库含[内部编号与别名映射](../research_round_20260929/private_alias_map.json)及[历史评语来源索引](final_review/历史评语_去重来源索引.csv)；映射连接27个人员编号及3441个对象编号，不是姓名表。独立研究包的 `inputs/panel.json` 继续使用别名投影。9/29生成manifest内的“仅本地分析”文字为当日状态，当前授权范围以本段为准；不据此扩大其他材料的公开范围。

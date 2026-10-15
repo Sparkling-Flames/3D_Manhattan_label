@@ -1,0 +1,38 @@
+{
+  "version": "descriptive_statistics_current_figures_20261015_v1",
+  "source_contract": "D:\\Work\\HOHONET\\research\\descriptive_statistics_current_20261015\\FIELD_CONTRACT.json",
+  "difficulty_version": "scope_preferred_difficulty_review_20261015_v3",
+  "source_pool_rule": "retained_independent_humans_by_image_condition_min3_20261015_v1",
+  "quality_metrics": [
+    "WQ",
+    "A10",
+    "B8L2",
+    "IoU3D100"
+  ],
+  "score_versions": {
+    "WQ": "WQ-LS08-20261014",
+    "A10": "WQ-A10-20261015",
+    "B8L2": "WQ-B8L2-20261015"
+  },
+  "score_version_column": "仅原WQ绑定上下文，不是A10/B8L2版本",
+  "units": {
+    "WQ": "0-100",
+    "A10": "0-100",
+    "B8L2": "0-100",
+    "IoU3D100": "0-100; mean-height prism",
+    "active_time_seconds": "seconds; qualified-source collection time, not automatically new-target time",
+    "target_matched_time_seconds": "seconds; unchanged or verified current target context"
+  },
+  "inputs": [
+    "inventory_all.csv",
+    "record_audit.csv",
+    "source_pools.csv",
+    "current_images.csv",
+    "analysis_records.csv",
+    "quality_records.csv",
+    "same_room_pairs.csv"
+  ],
+  "historical_metrics_plotted": false,
+  "long_score_interface_consumed": false,
+  "reuse_scope": "当前统计schema快照可复用；分母动态读取；当前质量面板固定四指标。"
+}
