@@ -4,22 +4,26 @@
 
 登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。
 
+GitHub 云端链接单列于 [云端导航](CLOUD_NAVIGATION.md)；本地磁盘路径、预览方式及应用内入口仍保留在其原说明中。
+
 机器可读真源为 [CATALOG.json](CATALOG.json)。本目录只定位资料，不改变其方法、数据资格或采用状态。原路径保留在迁移映射中；原始标注、审核回执、规范合同与统一输入未迁移。
 
 ## 按主题查找
 
 |主题|入口|资料数|说明|
 |---|---|---:|---|
-|研究统筹|[打开主题入口](../../docs/thesis_main/topics/coordination/README.md)|74|原意、跨模块关系、进度、版本采用与交接。|
-|数据与参考|[打开主题入口](../../docs/thesis_main/topics/data/README.md)|5|输入版本、人数门槛、GT/空间绑定和排除状态。|
-|质量评分|[打开主题入口](../../docs/thesis_main/topics/quality/README.md)|84|公式、参数、实现、校准、人评、反例与模型比较；算法身份和模块采用状态分开。|
-|图片难度|[打开主题入口](../../docs/thesis_main/topics/difficulty/README.md)|20|固定目标空间下的粗分难度、结构/操作负担、人工复核和标签版本。|
-|人员研究|[打开主题入口](../../docs/thesis_main/topics/workers/README.md)|32|Q/T/S/B画像、分类、组合与换人实验；记录质量版本及训练/评价集合。|
-|融合研究|[打开主题入口](../../docs/thesis_main/topics/fusion/README.md)|24|Lee区域投票与墙线对应、全池投票、定位、连接和人数过程。|
-|同房研究|[打开主题入口](../../docs/thesis_main/topics/same_room/README.md)|4|同房直接关系证据、共同人员、质量/融合曲线和迁移比较。|
-|描述统计|[打开主题入口](../../docs/thesis_main/topics/statistics/README.md)|5|各批次覆盖、分母、分层结果、表格、图表与扩展复算。|
-|文献与跨模块资料|[打开主题入口](../../docs/thesis_main/topics/literature/README.md)|3|文献阅读和跨模块共同基础；跨模块整包保持原结构并通过引用关联。|
-|历史归档与未分类快照|[打开主题入口](../../docs/thesis_main/topics/archive/README.md)|256|保留原位且不属于当前主题入口的旧结果和历史快照；按原路径及日期回溯，不代表当前方法或待办。|
+|研究统筹|[打开主题入口](github_topics/coordination.md)|74|原意、跨模块关系、进度、版本采用与交接。|
+|数据与参考|[打开主题入口](github_topics/data.md)|5|输入版本、人数门槛、GT/空间绑定和排除状态。|
+|质量评分|[打开主题入口](github_topics/quality.md)|84|公式、参数、实现、校准、人评、反例与模型比较；算法身份和模块采用状态分开。|
+|图片难度|[打开主题入口](github_topics/difficulty.md)|20|固定目标空间下的粗分难度、结构/操作负担、人工复核和标签版本。|
+|人员研究|[打开主题入口](github_topics/workers.md)|32|Q/T/S/B画像、分类、组合与换人实验；记录质量版本及训练/评价集合。|
+|融合研究|[打开主题入口](github_topics/fusion.md)|24|Lee区域投票与墙线对应、全池投票、定位、连接和人数过程。|
+|同房研究|[打开主题入口](github_topics/same_room.md)|4|同房直接关系证据、共同人员、质量/融合曲线和迁移比较。|
+|描述统计|[打开主题入口](github_topics/statistics.md)|5|各批次覆盖、分母、分层结果、表格、图表与扩展复算。|
+|文献与跨模块资料|[打开主题入口](github_topics/literature.md)|3|文献阅读和跨模块共同基础；跨模块整包保持原结构并通过引用关联。|
+|历史归档与未分类快照|[打开主题入口](github_topics/archive.md)|256|保留原位且不属于当前主题入口的旧结果和历史快照；按原路径及日期回溯，不代表当前方法或待办。|
+
+主题表中的入口为独立云端导航。原本地入口仍按 `CATALOG.json` 的 `topics[].page_path` 登记；电脑中已有的 10 份主题 README 正文和哈希未取回，本次不在那些路径生成替代文件。
 
 ## 质量分项与单位
 

@@ -71,7 +71,7 @@
 ## 五、主要入口
 
 - [全量数据收尾与最终账本](README.md)
-- [当前研究方案](../../docs/thesis_main/质量研究推进方案_20261013.md)
+- [当前研究方案](../../docs/thesis_main/topics/quality/质量研究推进方案_20261013.md)
 - [Pro选择性归档与清单](../quality_pro_joint_archive_20261013/README.md)
 - [人工审核回执和解释](../quality_scope_resolution_20261013/REVIEW_FINDINGS.md)
 - [高度三项准备与五候选比较](../quality_height_calibration_ready_20261013/README.md)
