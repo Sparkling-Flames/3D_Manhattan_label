@@ -1,0 +1,314 @@
+{
+  "schema": "worker_classification_progress_20261014_v1",
+  "sources": [
+    "analysis_results/research_input_20260929/manifest.json",
+    "research/quality_data_admission_audit_20261013/FULL_ADMISSION.json",
+    "research/quality_candidate_disagreement_20261013/RESULTS.json",
+    "analysis_results/worker_four_block_exploration_20260910_v1/manual_with_time.csv.gz",
+    "analysis_results/worker_four_block_exploration_20260910_v1/semi.csv.gz",
+    "analysis_results/worker_four_block_exploration_20260910_v1/scope_responses.csv",
+    "analysis_results/worker_profiles_20261003/input.json",
+    "analysis_results/worker_profiles_20261003/answer_metrics.csv",
+    "analysis_results/consensus_response_20261006/pairwise_distances.csv",
+    "analysis_results/consensus_response_20261006/composition/contrasts.csv"
+  ],
+  "encoding": "CSV UTF-8-SIG; JSON UTF-8",
+  "missing": "Missing values stay null/empty; never zero-fill missing geometry, time, or labels.",
+  "identity": "record_id/object_id are current bindings; historical P aliases resolved through record_id; historical numeric time worker IDs checked against current W IDs and image/building.",
+  "time": {
+    "value": "log(1 + active_time_seconds)",
+    "effect": "Task-intercept-adjusted relative log time, centered over fitted workers",
+    "support_min_contexts": 6,
+    "support_min_buildings": 3,
+    "class_rule": "supported effect <0 faster; >0 slower; otherwise unclassified",
+    "fold": "full_descriptive or excluded target building ID",
+    "training_buildings": "JSON array; target building excluded before fitting",
+    "prediction": "Within-test-task centered predictions and outcomes on identical supported peer set",
+    "sqerr": "Squared centered log-time residual; baseline prediction zero",
+    "halves": "50 seeded partitions of buildings into disjoint halves; repeated samples not independent"
+  },
+  "geometry": {
+    "context_key": "JSON [image_id, reference_object_id]",
+    "axes": [
+      "iou_2d",
+      "S_bottom_deg",
+      "dir",
+      "Hmean",
+      "Hcenter",
+      "height_mean_ratio"
+    ],
+    "units": "Original metric definitions and units preserved from RESULTS.json and its producing method; no rescaling or aggregation into Q.",
+    "effect": "Additive worker effect after image/reference-cell intercept removal; descriptive only",
+    "raw_mean": "Observed allocation mean, not ability ranking",
+    "peer_centered_mean": "Mean task-centered value only among cells with peer_n >=2",
+    "missing_height": "Absent for floor_only; never zero"
+  },
+  "pair_probe": {
+    "distance_union": "Historical pair symmetric-difference area divided by same-image frozen full-24-worker union area",
+    "pair_n": "Dependent pairs sharing workers, not independent sample count",
+    "labels": "Target-building-excluded time labels",
+    "holdout": "Original 48 answers in 2 images retained only as separately identified historical diagnostics"
+  },
+  "scope_semi": "Historical adjudication, edit and gain retained as provenance; not recertified as current quality or personnel labels.",
+  "Q_interface": {
+    "required": [
+      "record_id",
+      "object_id",
+      "worker_id",
+      "condition",
+      "reference_object_id",
+      "selected_candidate_id",
+      "score_kind",
+      "Q_version",
+      "current_role",
+      "original_holdout",
+      "Q_value"
+    ],
+    "rules": [
+      "Version and reference/selected range must be explicit.",
+      "Use current admission and independent-vote gates; do not promote held rows.",
+      "Keep full and floor_only separate.",
+      "Estimate labels without target building before composition evaluation.",
+      "Do not optimize Q, cutpoints or image selection on desired composition effects."
+    ]
+  },
+  "tables": {
+    "common10_current_binding.csv": {
+      "rows": 240,
+      "columns": [
+        "record_id",
+        "object_id",
+        "worker_alias",
+        "worker_id",
+        "image",
+        "building_id",
+        "coordinates_match",
+        "ring_index_match",
+        "current_role",
+        "original_holdout"
+      ]
+    },
+    "expanded_metric_inventory.csv": {
+      "rows": 1179,
+      "columns": [
+        "record_id",
+        "object_id",
+        "worker_id",
+        "image_id",
+        "building_id",
+        "image_code",
+        "reference_object_id",
+        "reference_basis",
+        "score_kind",
+        "selected_candidate_id",
+        "current_role",
+        "allowed_current_conditional",
+        "reference_scope_note"
+      ]
+    },
+    "expanded_pair_coverage.csv": {
+      "rows": 552,
+      "columns": [
+        "panel",
+        "worker_a",
+        "worker_b",
+        "shared_reference_cells"
+      ]
+    },
+    "metric_cells.csv": {
+      "rows": 6423,
+      "columns": [
+        "record_id",
+        "worker_id",
+        "image_id",
+        "building_id",
+        "reference_object_id",
+        "context_key",
+        "axis",
+        "value",
+        "peer_n",
+        "centered_value"
+      ]
+    },
+    "metric_profiles.csv": {
+      "rows": 144,
+      "columns": [
+        "worker_id",
+        "effect",
+        "supported",
+        "fit_status",
+        "contexts",
+        "buildings",
+        "training_buildings",
+        "axis",
+        "raw_mean",
+        "records",
+        "peer_centered_mean"
+      ]
+    },
+    "source_inventory.csv": {
+      "rows": 3152,
+      "columns": [
+        "record_id",
+        "object_id",
+        "image_id",
+        "image_code",
+        "building_id",
+        "worker_id",
+        "condition",
+        "source_cohort",
+        "current_role",
+        "original_holdout",
+        "independent_vote_eligible",
+        "personnel_barriers",
+        "context_barriers",
+        "project_id",
+        "runtime_task_id",
+        "raw_annotation_id",
+        "source_path",
+        "time_binding",
+        "time_usable",
+        "time_value",
+        "historical_canonical_id",
+        "time_seconds",
+        "time_source",
+        "time_source_file",
+        "timing_status",
+        "time_context",
+        "time_stage",
+        "time_training_eligible",
+        "scope_historical_bound",
+        "scope_binding",
+        "scope_historical_final",
+        "scope_historical_answer",
+        "scope_historical_later_hold",
+        "semi_historical_edit",
+        "semi_historical_gain",
+        "semi_initialization_evidence",
+        "current_scene"
+      ]
+    },
+    "time_assignments.csv": {
+      "rows": 528,
+      "columns": [
+        "worker_id",
+        "effect",
+        "supported",
+        "fit_status",
+        "contexts",
+        "buildings",
+        "training_buildings",
+        "label",
+        "fold"
+      ]
+    },
+    "time_building_results.csv": {
+      "rows": 20,
+      "columns": [
+        "building_id",
+        "baseline_sqerr",
+        "continuous_sqerr",
+        "class_sqerr",
+        "continuous_improvement",
+        "class_improvement"
+      ]
+    },
+    "time_common10_contrasts.csv": {
+      "rows": 10,
+      "columns": [
+        "image",
+        "fast_minus_slow",
+        "cross_minus_fast",
+        "cross_minus_slow",
+        "original_holdout"
+      ]
+    },
+    "time_common10_pair_probe.csv": {
+      "rows": 60,
+      "columns": [
+        "image",
+        "building_id",
+        "pair_class",
+        "pair_n",
+        "distance_union_mean",
+        "source_pool_n",
+        "label_source",
+        "all_pairs_baseline",
+        "classified_workers"
+      ]
+    },
+    "time_disjoint_halves.csv": {
+      "rows": 1200,
+      "columns": [
+        "repeat",
+        "worker_id",
+        "half_a",
+        "half_b",
+        "label_a",
+        "label_b",
+        "comparable",
+        "same_direction"
+      ]
+    },
+    "time_evaluation_coverage.csv": {
+      "rows": 21,
+      "columns": [
+        "building_id",
+        "target_rows",
+        "evaluated_rows",
+        "evaluated_workers",
+        "evaluated_contexts"
+      ]
+    },
+    "time_predictions.csv": {
+      "rows": 675,
+      "columns": [
+        "record_id",
+        "worker_id",
+        "building_id",
+        "context_key",
+        "value",
+        "effect",
+        "label",
+        "class_effect",
+        "target",
+        "continuous_prediction",
+        "class_prediction",
+        "baseline_sqerr",
+        "continuous_sqerr",
+        "class_sqerr"
+      ]
+    },
+    "time_profiles.csv": {
+      "rows": 24,
+      "columns": [
+        "worker_id",
+        "effect",
+        "supported",
+        "fit_status",
+        "contexts",
+        "buildings",
+        "training_buildings",
+        "label",
+        "fold",
+        "comparable_halves",
+        "same_direction_fraction",
+        "leave_building_labels"
+      ]
+    },
+    "worker_coverage.csv": {
+      "rows": 79,
+      "columns": [
+        "worker_id",
+        "condition",
+        "records",
+        "images",
+        "buildings",
+        "time_bound",
+        "time_usable",
+        "time_training_rows",
+        "scope_historical_bound"
+      ]
+    }
+  }
+}

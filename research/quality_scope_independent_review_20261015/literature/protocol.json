@@ -1,0 +1,53 @@
+{
+  "criteria_version": "3T-v1-20261015",
+  "date": "2026-10-15",
+  "task": "全景房间布局质量指标及可迁移的几何测量和人类顺序质量校准",
+  "T1": "研究全景/房间/平面布局几何质量评价 OR 可明确迁移的空间几何误差测量 OR 连续客观质量指标与人类顺序质量判断的校准",
+  "T2": "提供可用指标定义 OR 归一尺度 OR 容忍距离 OR 结构匹配 OR 顺序校准方法，AND 非仅背景提及",
+  "T3": "原始理论 OR 建模 OR 仿真 OR 实证研究；综述单列背景",
+  "overall": "T1 AND T2 AND T3",
+  "years": "不限年份",
+  "languages": [
+    "中文",
+    "英文"
+  ],
+  "candidate_limit": null,
+  "execution_mode": "3T-only；主线程安排两名相互隔离子任务独立筛选；无向量RAG",
+  "hash_policy": "按用户明确指示不做SHA，来源与冻结批次保留",
+  "coverage_matrix": [
+    {
+      "axis": "布局",
+      "queries": "全景/房间/平面/结构/角点/角度",
+      "status": "已执行宽检索及种子精确检索，引用仍扩展"
+    },
+    {
+      "axis": "几何评价",
+      "queries": "IoU/Boundary IoU/surface Dice/归一化/容忍距离/边界重合",
+      "status": "已执行方法分支，引用仍扩展"
+    },
+    {
+      "axis": "人的尺度",
+      "queries": "ordinal/isotonic/Bradley-Terry/paired comparison/JND",
+      "status": "已执行经典与近期分支，元数据核验中"
+    },
+    {
+      "axis": "语言",
+      "queries": "中文与英文",
+      "status": "均已检索；没有CNKI/WoS/Scopus权限核验，不能声称全库覆盖"
+    }
+  ],
+  "sources": [
+    "web search discovery",
+    "arXiv",
+    "CVF Open Access",
+    "作者/机构仓储",
+    "PMC原始研究",
+    "出版社页面"
+  ],
+  "limitations": [
+    "公开搜索有限排序返回，不提供可穷尽分页",
+    "不报告无真值准确率",
+    "公开检索尚未满足两轮无新增停止条件"
+  ],
+  "review_input": "题名、完整摘要及固定3T；补充正文证据单列，摘要不足则待核验"
+}

@@ -1,6 +1,19 @@
 # HOHONET 文档入口
 
+- **2026-10-15现有数据收尾与接入交接：** [四模块进度、WQ消费条件与后续顺序](thesis_main/现有数据收尾与模块接入交接_20261015.md)。本次仅整理推送，由各模块原线程实施接入；先完成现有数据，再加入新批次。
+- **2026-10-14三模块阶段成果：** [图片粗分类与目标绑定](../research/difficulty_coarse_closeout_20261014/README.md)、[人员画像与分类研究准备](../research/worker_classification_progress_20261014/README.md)、[12图真实融合人数过程](../research/wall_consensus_population_20261014/README.md)。保留实际状态、覆盖与未完成项，不等同全库验证。
+
+- **2026-10-15 Q-Profile独立审查：** [五档解释与几何模型的区别](../research/quality_profile_independent_review_20261015/README.md)。补算普通30份参考候选，32项测试通过；生成20份固定绑定核验页，五档未冻结，正式算法不变。
+
+- **2026-10-15质量模型独立复审与文献依据：** [尺度、容忍度与后续建模](../research/quality_scope_independent_review_20261015/README.md)。39项测试和真实表复现；补齐两图当前身份与缺8份诊断，保留新顶部待核；已发布263张原图，未更改工作公式或正式资格。
+
+- **2026-10-15新增两图空间与模型复审：** [回执增量、当前36份作答与Pro任务](../research/quality_scope_model_handoff_20261015/README.md)。只接收N05/N28新确认底面；保留原GT与历史确认，顶部待核；检验方向与IoU是否过度处罚，不预设结论。
+
+- **2026-10-15 WQ粗质量核验：** [普通32份→门洞12份核验页](../research/quality_coarse_review_20261015/REVIEW.html)、[来源与回执说明](../research/quality_coarse_review_20261015/README.md)及[44份人工反馈分析](../research/quality_coarse_review_20261015/FEEDBACK_REVIEW.md)。原图、标注、固定参考和可旋转三维；分数默认隐藏，五档含两个过渡档，另保留参考／范围不适合与暂不能判断。
+
 - **2026-10-15两份Pro联合审查：** [组合方式、1145份联合比较与粗分档安排](../research/quality_joint_closeout_review_20261015/README.md)。当前原生输入一致；9步复现、44项测试通过；保留WQ工作候选和IoU对照，不将数值覆盖、人员相对分组或条件融合终点冒称正式质量认证。
+
+- **2026-10-14 3D IoU适用边界示例：** [6组合成控制与P01真人旁证](../research/quality_iou_examples_20261014/README.md)，可旋转展示；区分均高棱柱、真实体积与参考范围，不调参。
 
 - **2026-10-14分项得分研究独立复核：** [机制结论与718条补齐比较](../research/quality_component_return_review_20261014/README.md)。原包331条复现、28项测试通过；完整来源已恢复，算术A/范围锚定RA不替换现模型；接续采用建议见上方两份Pro联合审查。
 

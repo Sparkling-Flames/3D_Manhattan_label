@@ -1,0 +1,162 @@
+[
+  {
+    "record_id": "arxiv-2211.13287",
+    "criteria_version": "3T-v1-20261015",
+    "status": "needs_verification",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B3-reviewer2-20261015-001",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要研究房间/门角点坐标的矢量平面图及平行、正交、共享角等几何关系。",
+        "reason": "属于房间布局几何和结构问题。"
+      },
+      "T2": {
+        "judgement": null,
+        "evidence": "摘要说明离散与连续去噪、图约束注意力和建立几何关联，但未说明评价指标、误差尺度、容忍距离或与参考的结构匹配定义。",
+        "reason": "生成模型保证关联不自动等于可用质量评价或匹配方法；需正文验证测量部分。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "提出扩散生成模型并在RPLAN数据集进行比较。",
+        "reason": "原始建模和实证研究。"
+      }
+    },
+    "overall": null,
+    "knowledge_mode": "3T-only",
+    "source_url": "https://arxiv.org/abs/2211.13287",
+    "input_scope": "冻结题名与完整摘要；未读取审稿1",
+    "missing_evidence": [
+      "正文中的几何测量或参考结构匹配方法；摘要不足以确定T2"
+    ]
+  },
+  {
+    "record_id": "arxiv-2108.00201",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B3-reviewer2-20261015-002",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要直接讨论主观图像质量的有序类别不等距及观察者对类别理解不同。",
+        "reason": "对应人类顺序质量判断与连续标尺的校准问题。"
+      },
+      "T2": {
+        "judgement": "Yes",
+        "evidence": "采用成对/三元比较及Thurstonian尺度重建，生成JND单位的相对质量值。",
+        "reason": "提供明确顺序比较与感知尺度构建方法；刺激增强不是本项目必须采用的操作。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "提出boosted triplet比较，收集超过170万回答并分析7种失真。",
+        "reason": "原始方法与实证研究。"
+      }
+    },
+    "overall": "Yes",
+    "knowledge_mode": "3T-only",
+    "source_url": "https://arxiv.org/abs/2108.00201",
+    "input_scope": "冻结题名与完整摘要；未读取审稿1"
+  },
+  {
+    "record_id": "arxiv-2410.09501",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B3-reviewer2-20261015-003",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要针对高保真图像中细微质量差别以及excellent到bad类别量表的局限。",
+        "reason": "属于主观质量判断与可解释连续标尺的研究。"
+      },
+      "T2": {
+        "judgement": "Yes",
+        "evidence": "提出增强刺激后的JND尺度重建，再将增强分数重标定回原感知尺度。",
+        "reason": "提供实际感知质量校准与重标定方法。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "提交评估方法、压缩图像数据集、众包质量评分和分析方法。",
+        "reason": "原始建模和实证研究，非综述。"
+      }
+    },
+    "overall": "Yes",
+    "knowledge_mode": "3T-only",
+    "source_url": "https://arxiv.org/abs/2410.09501",
+    "input_scope": "冻结题名与完整摘要；未读取审稿1"
+  },
+  {
+    "record_id": "yeghiazaryan-2018",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B3-reviewer2-20261015-004",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要研究分割的大小、位置、形状错误及不同指标排序不一致。",
+        "reason": "可明确迁移至空间几何质量评价。"
+      },
+      "T2": {
+        "judgement": "Yes",
+        "evidence": "引入在边界点固定大小邻域内计算平均重合的指标族，并研究参数对错误敏感性的影响。",
+        "reason": "提供实际边界/区域混合度量及邻域尺度。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "提出新指标族，在二维合成与三维医学分割集合实验，并分析代表指标。",
+        "reason": "原始方法、仿真和实证研究。"
+      }
+    },
+    "overall": "Yes",
+    "knowledge_mode": "3T-only",
+    "source_url": "https://ora.ox.ac.uk/objects/uuid%3A7e78a014-24cd-4195-8383-aa305870c397",
+    "input_scope": "冻结题名与完整摘要；未读取审稿1",
+    "source_limitation": "按冻结批次的完整主源索引摘要筛选；原站直连失败不等于内容已全文核验，保留原候选中的来源限制。"
+  },
+  {
+    "record_id": "hanhart-2016",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B3-reviewer2-20261015-005",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要研究如何用人的成对偏好分数评价客观质量指标，而不只依赖均值意见分。",
+        "reason": "直接对应客观质量度量与人类顺序偏好之间的核验。"
+      },
+      "T2": {
+        "judgement": "Yes",
+        "evidence": "把classification errors用于偏好数据，并提出基于ROC的客观指标性能分析工具。",
+        "reason": "提供可用的客观指标—主观偏好校准/验证评价方法；并非提出新的房间几何总分。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "提出分析工具，提供MATLAB实现及应用例。",
+        "reason": "原始方法研究。"
+      }
+    },
+    "overall": "Yes",
+    "knowledge_mode": "3T-only",
+    "source_url": "https://infoscience.epfl.ch/bitstreams/3b22051b-b37b-4a5e-b001-928d8ba3d66a/download",
+    "input_scope": "冻结题名与完整摘要；未读取审稿1",
+    "source_limitation": "按冻结批次的完整主源索引摘要筛选；原站直连失败不等于内容已全文核验，保留原候选中的来源限制。"
+  }
+]

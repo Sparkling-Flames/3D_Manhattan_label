@@ -1,0 +1,154 @@
+[
+  {
+    "record_id": "arxiv-2407.10439",
+    "criteria_version": "3T-v1-20261015",
+    "status": "needs_verification",
+    "criteria": {
+      "T1": {"judgement": "Yes", "evidence": "摘要明确讨论平面图中的缺角缺边、角点位置和角度误差、相交多边形及不合理拓扑。", "reason": "直接研究本次关心的布局几何及结构质量问题。"},
+      "T2": {"judgement": null, "evidence": "摘要介绍均匀采样表示、角度信息监督及房间感知注意力，但未说明几何评价指标、尺度、容忍、结构匹配或顺序校准的具体方法。", "reason": "表示和角度监督具有潜在相关性，但不能仅据摘要认定已提供冻结T2要求的方法；需核验损失或评价部分。"},
+      "T3": {"judgement": "Yes", "evidence": "提出PolyRoom模型并在两个数据集进行定量与定性实验。", "reason": "属于原始建模和实证研究。"}
+    },
+    "overall": null,
+    "missing_fields": ["T2可用指标、尺度、容忍或结构匹配方法的正文证据"],
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "scope_math_B2_R1_20261015_2407_10439",
+    "hash_policy": "not_computed_user_instruction"
+  },
+  {
+    "record_id": "arxiv-2407.10687",
+    "criteria_version": "3T-v1-20261015",
+    "status": "needs_verification",
+    "criteria": {
+      "T1": {"judgement": "Yes", "evidence": "摘要研究房间平面图的整体形状、几何先验及输出多边形的规整性。", "reason": "布局形状和规整性与本研究测量对象直接相关。"},
+      "T2": {"judgement": null, "evidence": "摘要说明房间隐式表示与结构正则化，但没有明确评价量、归一尺度、容忍或结构匹配方法。", "reason": "正则化研究本身不自动满足T2；需要核验其具体损失或评价定义是否可迁移。"},
+      "T3": {"judgement": "Yes", "evidence": "提出FRI-Net并在Structured3D和SceneCAD进行对比实验。", "reason": "属于原始建模和实证研究。"}
+    },
+    "overall": null,
+    "missing_fields": ["T2所要求的具体几何测量或匹配方法证据"],
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "scope_math_B2_R1_20261015_2407_10687",
+    "hash_policy": "not_computed_user_instruction"
+  },
+  {
+    "record_id": "arxiv-2107.09858",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "criteria": {
+      "T1": {"judgement": "Yes", "evidence": "摘要研究区域和边界预测误差的联合评价。", "reason": "虽然对象为语义分割，其区域与轮廓几何测量可明确迁移到布局评价。"},
+      "T2": {"judgement": "Yes", "evidence": "提出由边界距离图构造像素权重的wIoU，并用边界重要性因子调整区域与轮廓的评价。", "reason": "给出实际几何评价方法，满足指标定义分支。"},
+      "T3": {"judgement": "Yes", "evidence": "提出新指标并在33个场景数据上验证。", "reason": "属于原始指标建模与实证研究。"}
+    },
+    "overall": "Yes",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "scope_math_B2_R1_20261015_2107_09858",
+    "hash_policy": "not_computed_user_instruction"
+  },
+  {
+    "record_id": "arxiv-2403.09746",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "criteria": {
+      "T1": {"judgement": "Yes", "evidence": "摘要研究图像质量的相对人类偏好，强调图像内容及观察者差异，预测成对质量偏好的概率。", "reason": "直接符合客观质量模型与人类顺序质量判断关系的分支。"},
+      "T2": {"judgement": "Yes", "evidence": "摘要明确以心理测量缩放把成对比较转为JOD质量分，并设计针对稀疏成对比较的训练。", "reason": "提供顺序判断到连续质量尺度的校准方法；不等于已经适用于布局质量。"},
+      "T3": {"judgement": "Yes", "evidence": "提出PICNIQ框架、网络与损失并使用PIQ23比较矩阵开展实验。", "reason": "属于原始建模与实证研究。"}
+    },
+    "overall": "Yes",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "scope_math_B2_R1_20261015_2403_09746",
+    "hash_policy": "not_computed_user_instruction"
+  },
+  {
+    "record_id": "arxiv-1902.09630",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "criteria": {
+      "T1": {"judgement": "Yes", "evidence": "摘要研究二维包围盒的区域重合及不相交时IoU平台问题。", "reason": "属于空间几何误差测量，可明确作为迁移候选；包围盒结果不能直接推广为任意布局。"},
+      "T2": {"judgement": "Yes", "evidence": "提出GIoU作为新度量和回归损失，并以标准IoU和GIoU评价实验。", "reason": "方法主体提供几何指标定义，满足T2。"},
+      "T3": {"judgement": "Yes", "evidence": "包含IoU损失分析、新指标和检测数据集实验。", "reason": "属于原始理论、建模与实证研究。"}
+    },
+    "overall": "Yes",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "scope_math_B2_R1_20261015_1902_09630",
+    "hash_policy": "not_computed_user_instruction"
+  },
+  {
+    "record_id": "arxiv-1812.07032",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "criteria": {
+      "T1": {"judgement": "Yes", "evidence": "摘要区分区域积分和轮廓距离，并针对高度不平衡分割定义边界误差。", "reason": "轮廓空间误差是可明确迁移的几何测量，虽然原用途为训练损失。"},
+      "T2": {"judgement": "Yes", "evidence": "明确将轮廓空间的非对称L2距离表达为区域积分，并与区域损失结合。", "reason": "提供实际几何距离定义，符合T2；训练有效性不自动证明人类质量效度。"},
+      "T3": {"judgement": "Yes", "evidence": "提出新损失表达并在多个不平衡任务进行比较。", "reason": "属于原始理论建模与实证研究。"}
+    },
+    "overall": "Yes",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "scope_math_B2_R1_20261015_1812_07032",
+    "hash_policy": "not_computed_user_instruction"
+  },
+  {
+    "record_id": "arxiv-1911.08287",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "criteria": {
+      "T1": {"judgement": "Yes", "evidence": "摘要研究包围盒的重合、中心距离与纵横比等几何差异。", "reason": "属于明确可迁移的空间误差测量分支。"},
+      "T2": {"judgement": "Yes", "evidence": "DIoU加入预测和目标盒的归一距离，CIoU联合重合、中心距离和纵横比。", "reason": "明确提供归一尺度及几何组合方法；其检测训练用途不直接证明适合本项目评分。"},
+      "T3": {"judgement": "Yes", "evidence": "提出DIoU/CIoU并在多个目标检测框架和NMS中检验。", "reason": "属于原始建模与实证研究。"}
+    },
+    "overall": "Yes",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "scope_math_B2_R1_20261015_1911_08287",
+    "hash_policy": "not_computed_user_instruction"
+  },
+  {
+    "record_id": "mccullagh-1980",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "criteria": {
+      "T1": {"judgement": "Yes", "evidence": "摘要研究有序数据回归，保留随机排序而避免为各档任意赋分或假定等距。", "reason": "该一般理论可明确迁移到连续质量指标与人类五档判断的关系；这里的纳入是方法迁移而非声称原文研究全景质量。"},
+      "T2": {"judgement": "Yes", "evidence": "摘要给出比例优势、比例风险模型以及极大似然估计方法。", "reason": "提供有序响应建模方法，满足顺序校准分支。"},
+      "T3": {"judgement": "Yes", "evidence": "摘要发展一般回归模型、讨论非线性扩展并给出应用例子。", "reason": "属于原始理论与建模研究。"}
+    },
+    "overall": "Yes",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "scope_math_B2_R1_20261015_mccullagh_1980",
+    "hash_policy": "not_computed_user_instruction"
+  },
+  {
+    "record_id": "perezortiz-2020",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "criteria": {
+      "T1": {"judgement": "Yes", "evidence": "摘要研究主观体验量化及刺激、内部表示和响应关系，并以图像质量数据为主要实例。", "reason": "直接涉及人类质量判断的尺度和比较方式，符合人的尺度分支。"},
+      "T2": {"judgement": "Yes", "evidence": "提出概率框架，把评分与成对比较实验的结果融合到统一心理测量尺度。", "reason": "提供质量顺序判断与评分的校准整合方法。"},
+      "T3": {"judgement": "Yes", "evidence": "摘要提出新框架并进行仿真及基准、真实图像质量实验。", "reason": "属于原始建模、仿真与实证研究。"}
+    },
+    "overall": "Yes",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "scope_math_B2_R1_20261015_perezortiz_2020",
+    "hash_policy": "not_computed_user_instruction"
+  },
+  {
+    "record_id": "zadrozny-elkan-2002",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "criteria": {
+      "T1": {"judgement": "No", "evidence": "摘要研究分类器输出的二类和多类概率校准，实例为直销、文本分类及数字识别。", "reason": "没有空间几何测量或人类有序质量判断；通用类别概率校准不能仅因存在排名输出就视为本次质量尺度问题。"},
+      "T2": {"judgement": "No", "evidence": "摘要的方法是将校准二类概率组合为多类概率，并从分类排序输出得到概率。", "reason": "未提供冻结T2所要求的几何指标、归一距离、结构匹配或有序质量响应校准。作为一般概率校准背景可另列，但本范围不以该技术类比纳入。"},
+      "T3": {"judgement": "Yes", "evidence": "摘要提出新概率估计方法并用朴素贝叶斯及支持向量机进行多领域实验。", "reason": "属于原始方法与实证研究；研究类型合格不能弥补T1/T2不符。"}
+    },
+    "overall": "No",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "scope_math_B2_R1_20261015_zadrozny_elkan_2002",
+    "hash_policy": "not_computed_user_instruction"
+  }
+]

@@ -1,0 +1,133 @@
+{
+  "schema": "worker_classification_progress_20261014_v1",
+  "source_binding": {
+    "historical_timing_records": 2459,
+    "bound_timing_records": 2459,
+    "historical_scope_records": 1013,
+    "scope_bound_current": 1013,
+    "scope_binding_counts": {
+      "unbound": 2139,
+      "canonical_via_timing": 976,
+      "source_project_and_annotation": 37
+    },
+    "scope_binding_limit": "Historical adjudications are not recertified current labels; any unmatched records remain in source."
+  },
+  "current_conditions": {
+    "manual": 2344,
+    "semi": 574,
+    "oos": 234
+  },
+  "current_roles": {
+    "held_or_diagnostic": 1793,
+    "manual_development_candidate": 1304,
+    "semi_secondary_candidate": 39,
+    "severe_exception_candidate": 16
+  },
+  "expanded_panels": [
+    {
+      "panel": "all_floor_available",
+      "records": 1179,
+      "workers": 24,
+      "images": 123,
+      "reference_cells": 137,
+      "common_all_workers": 4,
+      "pair_shared_min": 9,
+      "pair_shared_median": 32.0
+    },
+    {
+      "panel": "full",
+      "records": 962,
+      "workers": 24,
+      "images": 115,
+      "reference_cells": 116,
+      "common_all_workers": 4,
+      "pair_shared_min": 8,
+      "pair_shared_median": 26.0
+    }
+  ],
+  "time_training": {
+    "records": 716,
+    "workers": 23,
+    "images": 103,
+    "contexts": 121,
+    "buildings": 21,
+    "informative_records": 688,
+    "current_development_roster": 24,
+    "full_labels": {
+      "slower": 12,
+      "faster": 9,
+      "unclassified": 3
+    }
+  },
+  "time_evaluation": {
+    "rows": 675,
+    "workers": 21,
+    "buildings": 20,
+    "performance": {
+      "continuous": {
+        "pooled_sse_reduction": 0.623194174430878,
+        "building_equal_mse_reduction": 0.5049037749875444,
+        "improved_buildings": 16
+      },
+      "class": {
+        "pooled_sse_reduction": 0.40729824730388275,
+        "building_equal_mse_reduction": 0.31386477784987477,
+        "improved_buildings": 15
+      }
+    }
+  },
+  "time_disjoint_halves": {
+    "repeats": 50,
+    "comparable_worker_halves": 993,
+    "median_direction_agreement": 0.95,
+    "min_direction_agreement": 0.85,
+    "max_direction_agreement": 1.0,
+    "not_independent_samples": true
+  },
+  "common10_binding": {
+    "records": 240,
+    "coordinate_match": 240,
+    "ring_index_match": 240,
+    "roles": {
+      "manual_development_candidate": 192,
+      "held_or_diagnostic": 48
+    },
+    "original_holdout": 48
+  },
+  "historical_composition": {
+    "images": 10,
+    "k": 8,
+    "method": "mv50",
+    "calibration": "historical_original_GT_IoU_upper_lower_half",
+    "reference": "original",
+    "raw_disagreement_lower": 7,
+    "reference_difference_lower": 9,
+    "fusion_member_difference_lower": 5
+  },
+  "time_pair_probe": [
+    {
+      "panel": "historical10",
+      "images": 10,
+      "fast_pair_less_disagreement": 4,
+      "fast_pair_more_disagreement": 6,
+      "mean_fast_minus_slow": 0.00496514251913092,
+      "cross_exceeds_both": 2
+    },
+    {
+      "panel": "current_development8",
+      "images": 8,
+      "fast_pair_less_disagreement": 3,
+      "fast_pair_more_disagreement": 5,
+      "mean_fast_minus_slow": 0.008844539712839824,
+      "cross_exceeds_both": 2
+    }
+  ],
+  "main_Q_used": false,
+  "official_labels_changed": false,
+  "semi_sources": {
+    "semi_trap_separate": 288,
+    "semi_unverified_separate": 181,
+    "semi_unchanged_separate": 64,
+    "semi_nontrap_changed_candidate": 41
+  }
+}

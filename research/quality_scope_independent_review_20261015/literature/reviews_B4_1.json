@@ -1,0 +1,59 @@
+[
+  {
+    "record_id": "good-1994",
+    "criteria_version": "3T-v1-20261015",
+    "status": "needs_verification",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要比较客观分辨率不同的胸部图像，以及放射科医师的总体可比判断和强制成对清晰度偏好。",
+        "reason": "直接研究图像质量差异与人类顺序判断的关系，可用于核查粗档与细微偏好是否等价。"
+      },
+      "T2": {
+        "judgement": null,
+        "evidence": "摘要报告强制成对比较及83%的高分辨率选择比例，但未说明从偏好到连续质量尺度的校准、阈值估计或其他符合T2的具体方法。",
+        "reason": "顺序偏好的采集和检测不自动等于顺序质量校准；需要正文确认是否提供可用的尺度或校准方法。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "摘要报告4K与2K胸部图像的放射科医师配对判断实验结果。",
+        "reason": "属于原始实证比较研究，非综述。"
+      }
+    },
+    "overall": null,
+    "missing_fields": ["T2顺序判断到质量尺度的校准或阈值方法证据"],
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "scope_math_B4_R1_20261015_good_1994",
+    "hash_policy": "not_computed_user_instruction",
+    "source_scope": "仅依据冻结的完整原始摘要索引文本，未取得正文。"
+  },
+  {
+    "record_id": "cui-2000",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要比较颜色图像质量的排序法和成对比较法，检验两类人类质量判断所得尺度之间的关系。",
+        "reason": "直接符合人类顺序质量判断及连续尺度校准的分支。"
+      },
+      "T2": {
+        "judgement": "Yes",
+        "evidence": "摘要明确研究从排序数据推导尺度值的方法，并比较两类心理测量方法的结果。",
+        "reason": "提供顺序数据到质量尺度的方法研究，满足T2；其色彩质量结果不直接等于布局质量校准有效性。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "摘要描述针对三组彩色图像设计的比较实验及尺度值推导研究。",
+        "reason": "属于原始方法与实证研究。"
+      }
+    },
+    "overall": "Yes",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "scope_math_B4_R1_20261015_cui_2000",
+    "hash_policy": "not_computed_user_instruction",
+    "source_scope": "仅依据冻结的完整原始摘要索引文本，未取得正文。"
+  }
+]

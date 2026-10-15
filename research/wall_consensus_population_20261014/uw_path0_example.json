@@ -1,0 +1,223 @@
+{
+  "image": "UwV83HsGsw3-09",
+  "path": 0,
+  "worker_order": [
+    "P024",
+    "P018",
+    "P012",
+    "P023",
+    "P005",
+    "P020",
+    "P008",
+    "P017",
+    "P002",
+    "P025",
+    "P011",
+    "P004",
+    "P010",
+    "P022",
+    "P026",
+    "P027",
+    "P007",
+    "P019",
+    "P003",
+    "P001",
+    "P006",
+    "P021",
+    "P014",
+    "P009"
+  ],
+  "states": {
+    "8": {
+      "k": 8,
+      "parity": 0,
+      "nodes": 6,
+      "below_four": false,
+      "half_vote_nodes": 3,
+      "connection_available": false,
+      "order_status": "needs_manual_order",
+      "order_tied": false,
+      "geometry_status": "not_evaluable",
+      "geometry_reason": "no_source_ring_covering_all_selected_nodes",
+      "floor_evaluable": false,
+      "complete_floor_evaluable": false,
+      "complete_evaluable": false,
+      "location_unresolved": false
+    },
+    "9": {
+      "k": 9,
+      "parity": 1,
+      "nodes": 5,
+      "below_four": false,
+      "half_vote_nodes": 0,
+      "connection_available": true,
+      "order_status": "source_suggestion",
+      "order_tied": false,
+      "geometry_status": "ok",
+      "geometry_reason": "source_order_and_identity_unconfirmed",
+      "floor_evaluable": true,
+      "complete_floor_evaluable": true,
+      "complete_evaluable": true,
+      "location_unresolved": false
+    },
+    "12": {
+      "k": 12,
+      "parity": 0,
+      "nodes": 5,
+      "below_four": false,
+      "half_vote_nodes": 2,
+      "connection_available": true,
+      "order_status": "source_suggestion",
+      "order_tied": false,
+      "geometry_status": "ok",
+      "geometry_reason": "source_order_and_identity_unconfirmed",
+      "floor_evaluable": true,
+      "complete_floor_evaluable": true,
+      "complete_evaluable": true,
+      "location_unresolved": false
+    },
+    "13": {
+      "k": 13,
+      "parity": 1,
+      "nodes": 3,
+      "below_four": true,
+      "half_vote_nodes": 0,
+      "connection_available": true,
+      "order_status": "source_suggestion",
+      "order_tied": false,
+      "geometry_status": "ok",
+      "geometry_reason": "source_order_and_identity_unconfirmed",
+      "floor_evaluable": true,
+      "complete_floor_evaluable": false,
+      "complete_evaluable": false,
+      "location_unresolved": false
+    },
+    "24": {
+      "k": 24,
+      "parity": 0,
+      "nodes": 3,
+      "below_four": true,
+      "half_vote_nodes": 0,
+      "connection_available": true,
+      "order_status": "source_suggestion",
+      "order_tied": false,
+      "geometry_status": "ok",
+      "geometry_reason": "source_order_and_identity_unconfirmed",
+      "floor_evaluable": true,
+      "complete_floor_evaluable": false,
+      "complete_evaluable": false,
+      "location_unresolved": false
+    }
+  },
+  "transition_12_to_13": {
+    "shared_observations": 64,
+    "changed_coidentity_pairs": 0,
+    "common_pair_comparisons": 2016,
+    "unchanged_identity_vote_losses": 2,
+    "unchanged_identity_vote_gains": 0,
+    "threshold_increased": true
+  },
+  "unchanged_identity_lost_nodes": [
+    {
+      "source_members": [
+        [
+          "R00224",
+          1
+        ],
+        [
+          "R00402",
+          1
+        ],
+        [
+          "R00408",
+          1
+        ],
+        [
+          "R01411",
+          1
+        ],
+        [
+          "R01780",
+          3
+        ],
+        [
+          "R02140",
+          1
+        ]
+      ],
+      "support_before": 6,
+      "support_after": 6,
+      "center_before": [
+        [
+          461.01112389719987,
+          191.66207834728274
+        ],
+        [
+          461.01112389719987,
+          343.9928397903081
+        ]
+      ],
+      "center_after": [
+        [
+          461.01112389719987,
+          191.66207834728274
+        ],
+        [
+          461.01112389719987,
+          343.9928397903081
+        ]
+      ]
+    },
+    {
+      "source_members": [
+        [
+          "R00224",
+          2
+        ],
+        [
+          "R00402",
+          3
+        ],
+        [
+          "R00408",
+          5
+        ],
+        [
+          "R01411",
+          5
+        ],
+        [
+          "R01780",
+          5
+        ],
+        [
+          "R02140",
+          3
+        ]
+      ],
+      "support_before": 6,
+      "support_after": 6,
+      "center_before": [
+        [
+          658.10101010101,
+          97.1559887756609
+        ],
+        [
+          658.10101010101,
+          439.5959595959596
+        ]
+      ],
+      "center_after": [
+        [
+          658.10101010101,
+          97.1559887756609
+        ],
+        [
+          658.10101010101,
+          439.5959595959596
+        ]
+      ]
+    }
+  ],
+  "interpretation": "A saved illustrative path, selected after inspecting results; not a frequency estimate or semantic identity certification"
+}

@@ -1,0 +1,225 @@
+[
+  {
+    "record_id": "arxiv-2011.11498",
+    "criteria_version": "3T-v1-20261015",
+    "status": "needs_verification",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B1-reviewer2-20261015-001",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要研究室内360度全景布局估计，并报告该任务与现有方法的精度比较。",
+        "reason": "处于全景房间布局几何评估场景。"
+      },
+      "T2": {
+        "judgement": null,
+        "evidence": "摘要主要介绍LHFeat、horizon-to-dense模块与速度/精度，没有给出评价指标定义、容忍尺度、结构匹配或顺序校准方法。",
+        "reason": "不能从方法名或声誉推定其提供本次需要的可用测量；需查正文评价或官方实现。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "提出新的网络模块并在布局、语义和深度任务做实验。",
+        "reason": "属于原始建模和实证研究。"
+      }
+    },
+    "overall": null,
+    "knowledge_mode": "3T-only",
+    "source_url": "https://arxiv.org/abs/2011.11498",
+    "input_scope": "冻结题名与完整摘要；未读取审稿1",
+    "missing_evidence": [
+      "正文中的评价指标定义或实际结构匹配方法；摘要不足以确定T2"
+    ]
+  },
+  {
+    "record_id": "arxiv-2404.09993",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B1-reviewer2-20261015-002",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要将布局标注的歧义作为研究问题，区分止于歧义区域及涵盖全部可见区域的两类布局。",
+        "reason": "直接对应多空间参考导致的布局评价问题。"
+      },
+      "T2": {
+        "judgement": "Yes",
+        "evidence": "除双布局预测外，摘要明确引入用于消歧ground truth layouts的新指标。",
+        "reason": "提供实质性评价方法，非仅背景提及；具体适用规则仍须全文核对。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "提出Bi-Layout模型并报告MatterportLayout测试集及歧义子集的3DIoU实验。",
+        "reason": "属于原始建模和实证研究。"
+      }
+    },
+    "overall": "Yes",
+    "knowledge_mode": "3T-only",
+    "source_url": "https://arxiv.org/abs/2404.09993",
+    "input_scope": "冻结题名与完整摘要；未读取审稿1"
+  },
+  {
+    "record_id": "arxiv-2211.15658",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B1-reviewer2-20261015-003",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要将3D扫描重建可变个数房间多边形及有序顶点作为任务。",
+        "reason": "属于可迁移的空间几何及结构表示/匹配问题。"
+      },
+      "T2": {
+        "judgement": "Yes",
+        "evidence": "摘要明确two-level queries for polygons and corners，并包含polygon matching以实现端到端训练。",
+        "reason": "提供实际结构匹配方法，满足T2的OR分支；不据此宣称该文建立了人的质量标尺。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "提出Transformer架构并在Structured3D和SceneCAD进行评测。",
+        "reason": "原始建模和实证研究。"
+      }
+    },
+    "overall": "Yes",
+    "knowledge_mode": "3T-only",
+    "source_url": "https://arxiv.org/abs/2211.15658",
+    "input_scope": "冻结题名与完整摘要；未读取审稿1"
+  },
+  {
+    "record_id": "arxiv-2104.09403",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B1-reviewer2-20261015-004",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "研究单张球面全景中的房间角点、地板及天花板边界重建。",
+        "reason": "直接对应全景布局几何质量。"
+      },
+      "T2": {
+        "judgement": "Yes",
+        "evidence": "摘要明确使用新的评价指标衡量严重畸变区域附近的误差，并报告减少约25%。",
+        "reason": "明确包含针对全景畸变的实际误差度量；本筛选不代替全文公式核验。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "提出球面卷积布局网络，并在PanoContext和Stanford 2D-3D进行实验。",
+        "reason": "原始建模和实证研究。"
+      }
+    },
+    "overall": "Yes",
+    "knowledge_mode": "3T-only",
+    "source_url": "https://arxiv.org/abs/2104.09403",
+    "input_scope": "冻结题名与完整摘要；未读取审稿1"
+  },
+  {
+    "record_id": "arxiv-2103.16562",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B1-reviewer2-20261015-005",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要研究分割边界质量，分析不同错误类型和物体大小下的测量响应。",
+        "reason": "边界几何误差可明确迁移至布局底面边界评价。"
+      },
+      "T2": {
+        "judgement": "Yes",
+        "evidence": "提出Boundary IoU，并说明预测/GT对称性与跨尺度响应。",
+        "reason": "提供可用边界质量指标与尺度行为研究。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "提出新指标、更新评测协议，并通过实验比较指标响应。",
+        "reason": "属于原始方法和实证研究。"
+      }
+    },
+    "overall": "Yes",
+    "knowledge_mode": "3T-only",
+    "source_url": "https://arxiv.org/abs/2103.16562",
+    "input_scope": "冻结题名与完整摘要；未读取审稿1"
+  },
+  {
+    "record_id": "arxiv-1908.06702",
+    "criteria_version": "3T-v1-20261015",
+    "status": "needs_verification",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B1-reviewer2-20261015-006",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要研究RGBD扫描的floorplan graph structure重建，并评测包括非Manhattan结构的527套住宅。",
+        "reason": "属于房间和平面布局几何质量及结构问题。"
+      },
+      "T2": {
+        "judgement": null,
+        "evidence": "摘要说明数据项、相邻房间共角/共墙一致性项及复杂度项，但没有交代评价指标、误差尺度或参考结构匹配定义。",
+        "reason": "重建优化中的一致性正则不自动等于本协议中的可用结构匹配/评价方法；须查正文对应方法或评测。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "提出room-wise coordinate descent和dynamic programming优化，并以真实RGBD扫描实验。",
+        "reason": "原始优化建模与实证研究。"
+      }
+    },
+    "overall": null,
+    "knowledge_mode": "3T-only",
+    "source_url": "https://arxiv.org/abs/1908.06702",
+    "input_scope": "冻结题名与完整摘要；未读取审稿1",
+    "missing_evidence": [
+      "正文中的评价指标定义或实际结构匹配方法；摘要不足以确定T2"
+    ]
+  },
+  {
+    "record_id": "arxiv-1809.04430",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B1-reviewer2-20261015-007",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要讨论人工轮廓差异及专家分割质量的定义与量化，比较轮廓表面而非仅体积。",
+        "reason": "属于可明确迁移的空间边界误差测量。"
+      },
+      "T2": {
+        "judgement": "Yes",
+        "evidence": "明确提出surface Dice similarity coefficient用于量化器官表面轮廓偏差，并贴近人工纠错任务。",
+        "reason": "提供新的表面质量指标；医学容差数值不能直接移植为本项目阈值。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "训练3D U-Net并以独立专家标注的测试集及外部数据进行验证。",
+        "reason": "原始建模和实证研究。"
+      }
+    },
+    "overall": "Yes",
+    "knowledge_mode": "3T-only",
+    "source_url": "https://arxiv.org/abs/1809.04430",
+    "input_scope": "冻结题名与完整摘要；未读取审稿1"
+  }
+]

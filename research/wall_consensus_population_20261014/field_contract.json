@@ -1,0 +1,11 @@
+{
+  "schema": "wall_population_v1",
+  "observations": "one image/path/k; subset is actual sorted worker list; k=2 lacks layout by policy",
+  "reference_fields": "version__metric: IoU, (omission+extension)/reference area, omission/reference, extension/reference; null if unavailable/held",
+  "by_image_k": "n suffixed fields count evaluable paths, not independent people. Reference means only for >=4-node valid floors. No-order and below-four remain in denominators of completeness",
+  "transitions": "coidentity changes compare pairs of old observations; vote loss/gain counts only unchanged restricted identities. This is algorithm bookkeeping, not semantic correctness or causal attribution",
+  "same_k": "paired independent random teams; floor distance = 1-IoU with pairwise union denominator, NOT old full-pool-union V. Raw symdiff also saved. Complete pairs only in summary",
+  "states": "gz saves each unique current-member subset, all groups, selected nodes/coordinates, assignments and ring evidence; no global-identity projection",
+  "endpoints": "old human-assisted terminal result separate; changed inputs make historical endpoint noncomparable",
+  "difficulty": "existing scope_preferred_v2 labels copied without reclassification; target-specific and not blindly assigned"
+}

@@ -1,0 +1,66 @@
+[
+  {
+    "record_id": "good-1994",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B4-reviewer2-20261015-001",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要比较观察者认为质量相近的2K/4K胸片与强迫选择下的清晰度偏好，探讨细小质量差别的可辨别性。",
+        "reason": "属于客观刺激变化与人类顺序质量判断关系，可明确迁移至小误差容忍和质量锚点研究。"
+      },
+      "T2": {
+        "judgement": "Yes",
+        "evidence": "实际采用forced-choice JND及paired comparisons，报告较高分辨率在83%的成对观察中被选中。",
+        "reason": "提供可迁移的成对辨别/顺序测量实验方法；不据此宣称已建立本项目0–100标尺或通用JND阈值。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "摘要报告放射科观察者对真实打印胸片的配对实验结果。",
+        "reason": "原始实证研究，非综述。"
+      }
+    },
+    "overall": "Yes",
+    "knowledge_mode": "3T-only",
+    "source_url": "https://pubmed.ncbi.nlm.nih.gov/8075187/",
+    "input_scope": "冻结题名与完整摘要；未读取其他审稿",
+    "source_limitation": "依据冻结批次的完整主源索引摘要，未额外宣称全文公式或实验细节已核验。"
+  },
+  {
+    "record_id": "cui-2000",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B4-reviewer2-20261015-002",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要研究图像颜色质量感知，以及rank order与paired comparison所得质量结果的关系。",
+        "reason": "直接涉及人类顺序质量判断及心理计量标尺。"
+      },
+      "T2": {
+        "judgement": "Yes",
+        "evidence": "对比两类心理计量方法，并明确研究根据排序数据导出scaled values的方法。",
+        "reason": "提供实际顺序质量尺度构建/校准方法。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "设计三个彩色图像组实验，比较两种方法的结果并研究缩放。",
+        "reason": "原始实证和方法研究。"
+      }
+    },
+    "overall": "Yes",
+    "knowledge_mode": "3T-only",
+    "source_url": "https://library.imaging.org/cic/articles/8/1/art00041",
+    "input_scope": "冻结题名与完整摘要；未读取其他审稿",
+    "source_limitation": "依据冻结批次的完整主源索引摘要，未额外宣称全文公式或实验细节已核验。"
+  }
+]

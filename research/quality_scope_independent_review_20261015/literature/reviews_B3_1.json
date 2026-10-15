@@ -1,0 +1,80 @@
+[
+  {
+    "record_id": "arxiv-2211.13287",
+    "criteria_version": "3T-v1-20261015",
+    "status": "needs_verification",
+    "criteria": {
+      "T1": {"judgement": "Yes", "evidence": "摘要研究向量平面图、房间门角点、平行正交共享角点关系及非Manhattan结构。", "reason": "直接研究布局几何与拓扑关系，符合布局对象分支。"},
+      "T2": {"judgement": null, "evidence": "摘要说明连续离散去噪、图约束和几何关联生成，但没有说明具体评价指标、尺度、容忍、结构匹配或顺序校准定义。", "reason": "生成满足约束的布局不自动等于提供本次需要的测量或匹配方法；需查看损失或评价章节。"},
+      "T3": {"judgement": "Yes", "evidence": "提出新扩散生成模型并在RPLAN进行比较实验。", "reason": "属于原始建模和实证研究。"}
+    },
+    "overall": null,
+    "missing_fields": ["T2具体几何测量、尺度或结构匹配方法的正文证据"],
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "scope_math_B3_R1_20261015_2211_13287",
+    "hash_policy": "not_computed_user_instruction"
+  },
+  {
+    "record_id": "arxiv-2108.00201",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "criteria": {
+      "T1": {"judgement": "Yes", "evidence": "摘要直接讨论有序质量等级可能不等距、观察者理解差异以及成对和三元比较的人类质量判断。", "reason": "符合人类顺序判断与连续质量尺度关系的分支。"},
+      "T2": {"judgement": "Yes", "evidence": "提出增强三元比较并说明从比较结果进行Thurstone尺度重建，以JND单位表达质量差异。", "reason": "提供顺序质量判断的尺度重建方法；其细微差异增强方式是否适合粗档布局需另行判断。"},
+      "T3": {"judgement": "Yes", "evidence": "提出方法，收集超过170万条比较响应并分析七类失真实验。", "reason": "属于原始建模和实证研究。"}
+    },
+    "overall": "Yes",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "scope_math_B3_R1_20261015_2108_00201",
+    "hash_policy": "not_computed_user_instruction"
+  },
+  {
+    "record_id": "arxiv-2410.09501",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "criteria": {
+      "T1": {"judgement": "Yes", "evidence": "摘要研究高质量压缩图的主观质量尺度，讨论绝对等级与细微感知差异之间的关系。", "reason": "属于人类质量判断与连续质量尺度的直接研究。"},
+      "T2": {"judgement": "Yes", "evidence": "提出质量评估、增强刺激、重建JND尺度和把增强尺度重新映射到原始感知尺度的方法。", "reason": "提供明确的质量尺度重建和校准方法，不是仅背景提及。"},
+      "T3": {"judgement": "Yes", "evidence": "摘要包含所提实验方法、高质量压缩数据集及众包视觉质量评分。", "reason": "属于原始建模和实证研究，标准化项目背景不使其变成综述。"}
+    },
+    "overall": "Yes",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "scope_math_B3_R1_20261015_2410_09501",
+    "hash_policy": "not_computed_user_instruction"
+  },
+  {
+    "record_id": "yeghiazaryan-2018",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "criteria": {
+      "T1": {"judgement": "Yes", "evidence": "摘要研究分割区域大小、位置、形状及边界误差造成的评价差异。", "reason": "虽采用医学图像，研究的区域和边界几何误差可明确迁移。"},
+      "T2": {"judgement": "Yes", "evidence": "提出在区域边界点固定大小邻域内计算平均重合的新指标族，并分析自由参数对误差敏感性和计算时间的影响。", "reason": "提供具体空间重合指标及局部尺度参数，符合T2。"},
+      "T3": {"judgement": "Yes", "evidence": "在二维合成和三维医学分割集合上比较所提指标族。", "reason": "属于原始指标建模、仿真及实证研究。"}
+    },
+    "overall": "Yes",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "scope_math_B3_R1_20261015_yeghiazaryan_2018",
+    "hash_policy": "not_computed_user_instruction",
+    "source_scope": "依据冻结的完整原始摘要索引文本筛选；未自行取得全文，原记录的403/验证码限制保留。"
+  },
+  {
+    "record_id": "hanhart-2016",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "criteria": {
+      "T1": {"judgement": "Yes", "evidence": "摘要直接研究如何以主观成对偏好评价客观质量指标，而非只依赖平均意见分。", "reason": "直接涉及连续客观质量指标与人类顺序判断之间的验证关系。"},
+      "T2": {"judgement": "Yes", "evidence": "将分类错误分析用于主观偏好分，并提出基于ROC的客观质量指标评价工具。", "reason": "提供可用的顺序偏好一致性评价指标；不是把分类概率校准泛化为质量标尺。"},
+      "T3": {"judgement": "Yes", "evidence": "提出分析工具、实现脚本和应用例子。", "reason": "属于原始方法建模与应用研究。"}
+    },
+    "overall": "Yes",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "scope_math_B3_R1_20261015_hanhart_2016",
+    "hash_policy": "not_computed_user_instruction",
+    "source_scope": "依据冻结的完整原始摘要索引文本筛选；未自行取得全文，原记录的429/下载限制及论文DOI缺失保留。"
+  }
+]

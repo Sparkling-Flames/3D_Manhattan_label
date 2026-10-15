@@ -1,0 +1,83 @@
+{
+  "edges": [
+    {
+      "seed_id": "arxiv-2211.15658",
+      "direction": "backward",
+      "discovered_record_id": "arxiv-1908.06702",
+      "source": "https://arxiv.org/html/2211.15658v2",
+      "location": "references[8];正文4.3",
+      "status": "候选B1已完成双审；Floor-SP冻结摘要T2证据不足，保留全文待核验"
+    },
+    {
+      "seed_id": "arxiv-1908.06702",
+      "direction": "forward",
+      "discovered_record_id": "arxiv-2211.15658",
+      "source": "https://arxiv.org/html/2211.15658v2",
+      "status": "通过后续论文正文引用已核实，非穷尽前向引用库"
+    },
+    {
+      "seed_id": "arxiv-2211.15658",
+      "direction": "backward",
+      "discovered_record_id": "MonteFloor",
+      "source": "https://arxiv.org/html/2211.15658v2",
+      "status": "未扩展引用队列；重建算法不自动等于独立指标研究"
+    },
+    {
+      "seed_id": "arxiv-2211.15658",
+      "direction": "backward",
+      "discovered_record_id": "HEAT",
+      "source": "https://arxiv.org/html/2211.15658v2",
+      "status": "未扩展引用队列"
+    },
+    {
+      "seed_id": "arxiv-2211.15658",
+      "direction": "backward",
+      "discovered_record_id": "FloorNet",
+      "source": "https://arxiv.org/html/2211.15658v2",
+      "status": "未扩展引用队列"
+    },
+    {
+      "seed_id": "arxiv-1908.06702",
+      "direction": "backward",
+      "discovered_record_id": "Cabral-Furukawa-2014",
+      "source": "https://github.com/woodfrog/floor-sp",
+      "status": "官方仓储references[1]提供题名Piecewise planar and compact floorplan reconstruction from images，未核摘要"
+    },
+    {
+      "seed_id": "mccullagh-1980",
+      "direction": "backward",
+      "discovered_record_id": "Bradley-Katti-Coons-1962",
+      "source": "https://rss.onlinelibrary.wiley.com/doi/10.1111/j.2517-6161.1980.tb01109.x",
+      "status": "题名Optimal scaling for ordered categories已发现，完整摘要及后续引用未扩展"
+    },
+    {
+      "seed_id": "zadrozny-elkan-2002",
+      "direction": "backward",
+      "discovered_record_id": "Platt-1999",
+      "source": "https://www.cs.columbia.edu/~djhsu/ML/handouts/zadrozny2002kdd.pdf",
+      "status": "正文§3 sigmoid标定与references[18]，未扩展原文"
+    },
+    {
+      "seed_id": "arxiv-2103.16562",
+      "direction": "forward",
+      "discovered_record_id": "s2fb-iou",
+      "source": "https://github.com/Raphael-Team-IVP/s2fb-iou",
+      "status": "方法扩展检索发现，引用关系尚未核实；不当已确认citation"
+    },
+    {
+      "seed_id": "bradley-terry-1952",
+      "direction": "forward",
+      "discovered_record_id": "bt-response-surface",
+      "source": "https://academic.oup.com/jrsssc/article/22/1/59/6882706",
+      "status": "出版社引用列表核到1952论文，候选待摘要核验"
+    }
+  ],
+  "visited": [
+    "https://arxiv.org/html/2211.15658v2",
+    "https://arxiv.org/html/2103.16562v1",
+    "https://github.com/woodfrog/floor-sp",
+    "https://rss.onlinelibrary.wiley.com/doi/10.1111/j.2517-6161.1980.tb01109.x",
+    "https://www.cs.columbia.edu/~djhsu/ML/handouts/zadrozny2002kdd.pdf"
+  ],
+  "limitations": "未执行WoS/Scopus/SemanticScholar API全库引用分页；前向引用仅核到可访问论文的具体关系。"
+}

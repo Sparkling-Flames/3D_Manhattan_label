@@ -1,0 +1,318 @@
+[
+  {
+    "record_id": "arxiv-2407.10439",
+    "criteria_version": "3T-v1-20261015",
+    "status": "needs_verification",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B2-reviewer2-20261015-001",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要研究点云到矢量平面图，明确列出漏角/漏边、位置和角度误差、自交和拓扑不合理。",
+        "reason": "直接关联布局几何质量与结构错误。"
+      },
+      "T2": {
+        "judgement": null,
+        "evidence": "摘要提出均匀采样表示、房间感知初始化和自注意力，称其可利用角度信息，但未给出误差评价、归一尺度或结构匹配定义。",
+        "reason": "表示和训练改进不自动构成评价方法；需正文核验其角度度量/匹配/评价实现。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "提出PolyRoom模型并在两个数据集做定量和定性实验。",
+        "reason": "原始模型与实证研究。"
+      }
+    },
+    "overall": null,
+    "knowledge_mode": "3T-only",
+    "source_url": "https://arxiv.org/abs/2407.10439",
+    "input_scope": "冻结题名与完整摘要；未读取审稿1",
+    "missing_evidence": [
+      "正文中的指标定义、角度测量/误差尺度或实际结构匹配方法，摘要不足以确定T2"
+    ]
+  },
+  {
+    "record_id": "arxiv-2407.10687",
+    "criteria_version": "3T-v1-20261015",
+    "status": "needs_verification",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B2-reviewer2-20261015-002",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要针对房间整体形状及布局多边形几何规整性。",
+        "reason": "属于房间布局几何问题。"
+      },
+      "T2": {
+        "judgement": null,
+        "evidence": "摘要描述room-wise implicit representation与structural regularization，但未明确给出指标、尺度、容忍距离或参考结构匹配。",
+        "reason": "几何先验正则不必然等于可迁移的评价指标；须检查正文评测或匹配定义。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "提出新方法并在Structured3D与SceneCAD测试。",
+        "reason": "原始建模和实证研究。"
+      }
+    },
+    "overall": null,
+    "knowledge_mode": "3T-only",
+    "source_url": "https://arxiv.org/abs/2407.10687",
+    "input_scope": "冻结题名与完整摘要；未读取审稿1",
+    "missing_evidence": [
+      "正文中的指标定义、角度测量/误差尺度或实际结构匹配方法，摘要不足以确定T2"
+    ]
+  },
+  {
+    "record_id": "arxiv-2107.09858",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B2-reviewer2-20261015-003",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要同时研究区域预测误差与边界预测误差的评价。",
+        "reason": "可明确迁移至布局底面的区域和边界质量。"
+      },
+      "T2": {
+        "judgement": "Yes",
+        "evidence": "提出由边界距离图构建权重图的weighted IoU，并用boundary importance factor协调轮廓与区域。",
+        "reason": "给出实际组合几何评价方法，非仅背景提及。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "提出新指标并用33场景数据集验证。",
+        "reason": "原始方法和实证研究。"
+      }
+    },
+    "overall": "Yes",
+    "knowledge_mode": "3T-only",
+    "source_url": "https://arxiv.org/abs/2107.09858",
+    "input_scope": "冻结题名与完整摘要；未读取审稿1"
+  },
+  {
+    "record_id": "arxiv-2403.09746",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B2-reviewer2-20261015-004",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要针对图像质量的相对人类偏好及单一质量标准在不同内容上的失配。",
+        "reason": "直接属于质量指标与人类判断标尺的关系。"
+      },
+      "T2": {
+        "judgement": "Yes",
+        "evidence": "PICNIQ估计图像对的质量偏好概率，再通过心理计量缩放转换为JOD质量分。",
+        "reason": "提供实质性的成对顺序校准和感知质量尺度方法。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "提出框架、损失和稀疏成对训练策略，并在PIQ23比较矩阵实验。",
+        "reason": "原始模型及实证研究。"
+      }
+    },
+    "overall": "Yes",
+    "knowledge_mode": "3T-only",
+    "source_url": "https://arxiv.org/abs/2403.09746",
+    "input_scope": "冻结题名与完整摘要；未读取审稿1"
+  },
+  {
+    "record_id": "arxiv-1902.09630",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B2-reviewer2-20261015-005",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要研究边界框IoU评价及无交集情况下的测量局限。",
+        "reason": "可迁移为空间重叠与分离几何误差的问题。"
+      },
+      "T2": {
+        "judgement": "Yes",
+        "evidence": "明确提出generalized IoU作为新的损失及评价指标。",
+        "reason": "提供可用几何度量；纳入不表示边界框方法可未经验证用于任意房间多边形。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "提出新度量并在检测框架及VOC/COCO实证。",
+        "reason": "原始理论/方法与实证研究。"
+      }
+    },
+    "overall": "Yes",
+    "knowledge_mode": "3T-only",
+    "source_url": "https://arxiv.org/abs/1902.09630",
+    "input_scope": "冻结题名与完整摘要；未读取审稿1"
+  },
+  {
+    "record_id": "arxiv-1812.07032",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B2-reviewer2-20261015-006",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要定义轮廓空间的距离，并讨论区域尺度不均衡造成的问题。",
+        "reason": "属于可迁移的空间边界误差与尺度处理。"
+      },
+      "T2": {
+        "judgement": "Yes",
+        "evidence": "将非对称L2轮廓距离改写为区域积分，构建可与区域损失组合的boundary loss。",
+        "reason": "给出具体空间几何距离；训练损失不自动是人工质量标尺。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "提出新损失推导并对不均衡分割任务作综合实验。",
+        "reason": "原始建模及实证研究。"
+      }
+    },
+    "overall": "Yes",
+    "knowledge_mode": "3T-only",
+    "source_url": "https://arxiv.org/abs/1812.07032",
+    "input_scope": "冻结题名与完整摘要；未读取审稿1"
+  },
+  {
+    "record_id": "arxiv-1911.08287",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B2-reviewer2-20261015-007",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要研究框的重叠、中心距离和长宽比误差。",
+        "reason": "是可明确迁移的空间几何误差分解。"
+      },
+      "T2": {
+        "judgement": "Yes",
+        "evidence": "DIoU加入预测与目标框的归一化距离，CIoU进一步组合三个几何因素。",
+        "reason": "直接满足归一尺度/几何度量分支；其训练收敛性能不证明本项目人类质量有效性。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "提出DIoU/CIoU并在多种检测器中实验。",
+        "reason": "原始方法和实证研究。"
+      }
+    },
+    "overall": "Yes",
+    "knowledge_mode": "3T-only",
+    "source_url": "https://arxiv.org/abs/1911.08287",
+    "input_scope": "冻结题名与完整摘要；未读取审稿1"
+  },
+  {
+    "record_id": "mccullagh-1980",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B2-reviewer2-20261015-008",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要构建有序数据回归，以随机顺序描述数据而不强行赋分或假定基数尺度。",
+        "reason": "这是可明确迁移至几何连续输入与五档有序判断的建模形式；该迁移不声称原文验证房间质量。"
+      },
+      "T2": {
+        "judgement": "Yes",
+        "evidence": "提出proportional odds及proportional hazards有序模型，并讨论非线性扩展和最大似然估计。",
+        "reason": "提供实际顺序响应建模/校准方法。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "发展一般模型类、展示模型性质并用实例讨论应用。",
+        "reason": "原始理论和建模研究。"
+      }
+    },
+    "overall": "Yes",
+    "knowledge_mode": "3T-only",
+    "source_url": "https://rss.onlinelibrary.wiley.com/doi/10.1111/j.2517-6161.1980.tb01109.x",
+    "input_scope": "冻结题名与完整摘要；未读取审稿1"
+  },
+  {
+    "record_id": "perezortiz-2020",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B2-reviewer2-20261015-009",
+    "criteria": {
+      "T1": {
+        "judgement": "Yes",
+        "evidence": "摘要讨论感知经验量化及外界刺激、内部表示与响应之间的关系，并使用图像质量实验。",
+        "reason": "直接对应人类质量判断与连续质量尺度。"
+      },
+      "T2": {
+        "judgement": "Yes",
+        "evidence": "提出融合rating及pairwise comparison的概率框架，比较不同实验协议并构建统一标尺。",
+        "reason": "提供实质性的主观有序判断校准方法。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "新框架通过仿真和真实/基准图像质量实验评估。",
+        "reason": "原始建模、仿真及实证研究。"
+      }
+    },
+    "overall": "Yes",
+    "knowledge_mode": "3T-only",
+    "source_url": "https://discovery.ucl.ac.uk/id/eprint/10081517/",
+    "input_scope": "冻结题名与完整摘要；未读取审稿1"
+  },
+  {
+    "record_id": "zadrozny-elkan-2002",
+    "criteria_version": "3T-v1-20261015",
+    "status": "complete",
+    "article_hash": "not_computed_user_instruction",
+    "knowledge_hash": "not_computed_user_instruction",
+    "execution_mode": "same_model_isolated",
+    "model": "environment-controlled",
+    "call_id": "B2-reviewer2-20261015-010",
+    "criteria": {
+      "T1": {
+        "judgement": "No",
+        "evidence": "摘要目标是把分类器输出转换为类别成员概率，实例为营销、文本分类和数字识别。",
+        "reason": "没有空间几何误差或人类顺序质量尺度；类别概率校准不能自动等同五档质量校准。"
+      },
+      "T2": {
+        "judgement": "Yes",
+        "evidence": "提出可应用于排序分类器的二类概率校准，再组合为多类概率。",
+        "reason": "包含实际单调/排名输出的校准方法，但其对象不满足T1，不能仅凭方法形式纳入本范围。"
+      },
+      "T3": {
+        "judgement": "Yes",
+        "evidence": "提出新校准方法并以朴素贝叶斯/SVM、多类及二类领域实验。",
+        "reason": "原始方法和实证研究。"
+      }
+    },
+    "overall": "No",
+    "knowledge_mode": "3T-only",
+    "source_url": "https://www.cs.columbia.edu/~djhsu/ML/handouts/zadrozny2002kdd.pdf",
+    "input_scope": "冻结题名与完整摘要；未读取审稿1"
+  }
+]

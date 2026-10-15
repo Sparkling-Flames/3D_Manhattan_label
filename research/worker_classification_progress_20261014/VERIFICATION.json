@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "tests": {
+    "command": "D:/anaconda/python.exe -B -m pytest tests/test_worker_classification_progress_20261014.py tests/test_worker_profiles_20261003.py -q",
+    "passed": 8
+  },
+  "full_pipeline": "reexecuted successfully after final code edit",
+  "independent_least_squares_max_abs_effect_difference": 7.105427357601002e-15,
+  "checks": [
+    "3152 current records retained; time training excludes original holdout and nondevelopment roles",
+    "No duplicate task/worker time training cells",
+    "Every prediction-fold training-building list excludes target",
+    "240 common-panel coordinates and ring orders match current source; 48 original-holdout rows preserved",
+    "276 historical worker pairs per image preserved across categories",
+    "Metric/reference/worker/axis cells unique; within-cell centered mean zero",
+    "All declared source paths exist"
+  ],
+  "not_run": [
+    "raw active-time re-audit",
+    "quality tuning",
+    "new fusion recomputation",
+    "full repository test suite"
+  ],
+  "public_docs": "No public index/model/contract edits; synchronization suggestions in README."
+}

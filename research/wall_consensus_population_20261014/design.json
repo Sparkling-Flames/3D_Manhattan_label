@@ -1,0 +1,16 @@
+{
+  "schema": "wall_population_v1",
+  "gap": 7.5,
+  "rule": "MV50",
+  "repeats": 24,
+  "seed": 20261014,
+  "panel": "existing common24x10 + two separate sentinels; no outcome selection",
+  "input": "current formal loader; exact snapshot saved; old endpoints compared only if inputs unchanged",
+  "sampling": "24 independently shuffled without-replacement orders; all prefixes k=1..N; same orders across common-worker images",
+  "swaps": "12 independent pairs of paths at each k; member overlap allowed; all-N difference mechanically zero",
+  "reference": "original and revision separate; difficulty-selected floor is target-conditioned diagnostic, not Q; no top grafting",
+  "incomplete": "below-four, no-order, invalid-geometry and two-person-deferred separate; not zero-filled",
+  "inference": "finite-panel descriptive pilot; no general convergence or automatic accuracy claim",
+  "no_human_assistance_in_prefixes": true,
+  "no_quality_tuning": true
+}

@@ -1,6 +1,19 @@
 # HOHONET 项目地图
 
+- **2026-10-15跨模块收尾交接：** [现有数据收尾与模块接入](thesis_main/现有数据收尾与模块接入交接_20261015.md)，记录WQ工作版接口、两版研究、参考匹配缺口及新数据后置；本次不实施接入。
+- **2026-10-14三模块成果：** `research/difficulty_coarse_closeout_20261014/`、`research/worker_classification_progress_20261014/`、`research/wall_consensus_population_20261014/`，对应工具位于`tools/thesis_main/analysis/`同名Python入口，后两者有同名测试。包含259图粗类消费表、24人条件画像、12图冻结人数轨迹，非正式人员分类或全库融合验证。
+
+- **2026-10-15 Q-Profile路线复审：** [quality_profile_independent_review_20261015](../research/quality_profile_independent_review_20261015/README.md)，含独立判断、普通30份候选补算与复现差异；展示映射不升级为评分合同，复现与生成页面留在analysis_results。
+
+- **2026-10-15质量建模独立复审：** [quality_scope_independent_review_20261015](../research/quality_scope_independent_review_20261015/README.md)，含数学与执行审查、两图最小当前快照、补充诊断、文献检索及后续Pro任务。研究证据入口，不升级为正式评分合同；重复原图与可再生复现不入该目录。
+
+- **2026-10-15新增范围及质量模型交接：** [quality_scope_model_handoff_20261015](../research/quality_scope_model_handoff_20261015/README.md)，含原始回执、两图范围增量、核验记录、当前对象与旧账本、Pro提示词。派生参考仅用于交接比较，未替换正式loader；可再生的恢复工作台与上传ZIP不重复归档。
+
+- **2026-10-15 WQ粗质量核验：** [44份分阶段核验材料](../research/quality_coarse_review_20261015/README.md)及[人工反馈与方向项诊断](../research/quality_coarse_review_20261015/FEEDBACK_REVIEW.md)；构建工具`tools/thesis_main/analysis/quality_coarse_review_20261015.py`及配套HTML/JS，测试`tests/test_quality_coarse_review_20261015.py`。已接收44份回执，诊断不更改工作参数或授予资格；所需原图副本可重建、不重复入Git。
+
 - **2026-10-15两份Pro联合审查：** [来源核验、组合比较、下游敏感性和粗分档](../research/quality_joint_closeout_review_20261015/README.md)；工具`tools/thesis_main/analysis/quality_joint_closeout_review_20261015.py`。复用已有READY归档，保留原Pro增量与1145份联合表；不调参、不改变正式资格。
+
+- **2026-10-14 3D IoU适用边界示例：** [6组合成控制与P01真人旁证](../research/quality_iou_examples_20261014/README.md)，可旋转展示；区分均高棱柱、真实体积与参考范围，不调参。
 
 - **2026-10-14分项得分研究审查：** [原交付归档、独立公式核验与完整比较](../research/quality_component_return_review_20261014/README.md)；工具`tools/thesis_main/analysis/quality_component_return_review_20261014.py`。补齐冻结718条，不等于3152全量；正式评分、资格、原始几何不变。
 
