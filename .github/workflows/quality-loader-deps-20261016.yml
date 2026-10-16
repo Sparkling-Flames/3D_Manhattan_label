@@ -1,0 +1,39 @@
+name: Quality loader dependencies 20261016
+on:
+  push:
+    branches: [research/quality-readonly-acquisition-20261016]
+    paths: [.github/workflows/quality-loader-deps-20261016.yml]
+permissions:
+  contents: read
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 6b69d3f23be4c2cf48ad6a73ca03d2bd885bd955
+          fetch-depth: 1
+          lfs: false
+          sparse-checkout: |
+            tools
+            docs/thesis_main
+            analysis_results/quality/quality_joint_closeout_review_20261015
+      - name: Preserve original dependency files
+        run: |
+          mkdir -p /tmp/quality_loader_deps
+          python - <<'PY'
+          import pathlib,zipfile,json,hashlib
+          manifest=[]
+          with zipfile.ZipFile('/tmp/quality_loader_deps/dependencies.zip','w',zipfile.ZIP_DEFLATED,6) as z:
+              for folder in ['tools','docs/thesis_main','analysis_results/quality/quality_joint_closeout_review_20261015']:
+                  for p in pathlib.Path(folder).rglob('*'):
+                      if p.is_file() and p.suffix.lower() in ['.py','.json','.md','.txt','.csv','.yaml','.yml']:
+                          z.write(p,str(p));manifest.append({'path':str(p),'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'bytes':p.stat().st_size})
+          pathlib.Path('/tmp/quality_loader_deps/file_hashes.json').write_text(json.dumps(manifest,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: quality-loader-deps-20261016
+          path: /tmp/quality_loader_deps
+          retention-days: 7
