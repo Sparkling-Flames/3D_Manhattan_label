@@ -1,0 +1,218 @@
+{
+  "version": "independent_b8l2_usage_audit_20261016_v2",
+  "checks": {
+    "3152_unique_frozen_identity": true,
+    "identity_image_id": true,
+    "identity_worker_id": true,
+    "identity_condition": true,
+    "preserved_pool_analysis_eligible": true,
+    "preserved_pool_source_workers": true,
+    "preserved_ordinary_difficulty_eligible": true,
+    "preserved_active_time_seconds": true,
+    "preserved_source_active_time_seconds": true,
+    "preserved_target_matched_time_seconds": true,
+    "scene_flags_independent": true,
+    "all_3152_quality_gate_independent": true,
+    "all_3152_fullscore_state_independent": true,
+    "specific_scope_holds_10": true,
+    "door_unconfirmed_6": true,
+    "doorway_blanket_115": true,
+    "all_normal_metrics_masked_unqualified": true,
+    "OOS_412_all_normal_metrics_masked": true,
+    "188_door_actual_complete": true,
+    "old_retained1599_scores_unchanged": true,
+    "added188_doorway_removed23_OOS": true,
+    "quality_1787": true,
+    "time1750_440_1107": true,
+    "source_time_not_quality_gated": true,
+    "unmarkable_choice_unknown": true,
+    "all_sources_27workers": true,
+    "primary_first_true": true,
+    "primary405_reasonhits733_worker27_denominators": true,
+    "worker_scene_usage_independent_slices": true,
+    "scene_usage_independent_slices": true,
+    "new_details_worker_condition_stats": true,
+    "new_details_time_quality_focus": true,
+    "details_lookup3152_no_drift": true,
+    "main_overview_all_cells": true,
+    "main_by_difficulty_all_cells": true,
+    "all_peer_n_mean": true,
+    "new_details_room_group_summary_all_cells": true,
+    "new_details_room_worker_groups_all_cells": true,
+    "new_details_room_group_views_all_cells": true,
+    "same_room_all_counts_means_newmask": true,
+    "all3152_geometry_reexecuted_no_repair": true,
+    "six_fixed_reference_engine_spotchecks": true
+  },
+  "counts": {
+    "inventory": 3152,
+    "quality": 1787,
+    "complete": 2594,
+    "scene_buckets": {
+      "neither_flagged": 2517,
+      "oos_only": 389,
+      "doorway_only": 223,
+      "both": 23
+    },
+    "calculation_status": {
+      "full_computed": 2594,
+      "pending_target": 390,
+      "input_uncomputable": 122,
+      "floor_only_computed": 46
+    },
+    "full_score_state": {
+      "computed": 2594,
+      "pending_target": 390,
+      "input_uncomputable": 122,
+      "pending_reference": 46
+    },
+    "quality_use": {
+      "ordinary_primary": 1575,
+      "not_qualified": 953,
+      "oos_diagnostic_only": 412,
+      "doorway_quality": 188,
+      "special_conditional_only": 24
+    },
+    "retained": 1599,
+    "added": 188,
+    "removed": 23,
+    "source_time": 1750,
+    "target_time": 440,
+    "quality_source_time": 1107,
+    "OOS_full_diagnostic": 381
+  },
+  "old_retained_max_abs_delta": 4.999378688808065e-11,
+  "specific_scope_hold_ids": [
+    "new_95_3655_7438_W028",
+    "new_95_3655_7464_W030",
+    "new_95_3655_7028_W031",
+    "new_95_3655_7455_W032",
+    "new_95_3655_7260_W034",
+    "new_95_3655_6982_W035",
+    "new_95_3655_7234_W036",
+    "new_95_3655_7090_W037",
+    "e1491be3f4b0b29f0ac5",
+    "6730e7fbd93c5c0d1875"
+  ],
+  "door_unconfirmed_ids": [
+    "825bdbff9bff6dbfbe83",
+    "e59fee15d62a5f50a85e",
+    "7678a683012ba646c81e",
+    "90d428978149e1e537ed",
+    "9378f37adf8af804e6b4",
+    "d97070648108845c9bde"
+  ],
+  "score_spotchecks": [
+    {
+      "object_id": "new_95_3649_7428_W028",
+      "is_oos": false,
+      "same_target_unconfirmed": true,
+      "max_abs_delta": 3.552713678800501e-15
+    },
+    {
+      "object_id": "new_95_3649_7457_W030",
+      "is_oos": false,
+      "same_target_unconfirmed": true,
+      "max_abs_delta": 6.938893903907228e-17
+    },
+    {
+      "object_id": "new_95_3656_7439_W028",
+      "is_oos": false,
+      "same_target_unconfirmed": null,
+      "max_abs_delta": 7.105427357601002e-15
+    },
+    {
+      "object_id": "new_95_3656_7466_W030",
+      "is_oos": false,
+      "same_target_unconfirmed": null,
+      "max_abs_delta": 3.552713678800501e-15
+    },
+    {
+      "object_id": "1870bb9b73b8e731",
+      "is_oos": true,
+      "same_target_unconfirmed": null,
+      "max_abs_delta": 1.7763568394002505e-15
+    },
+    {
+      "object_id": "dc2410f47b0ae7f6",
+      "is_oos": true,
+      "same_target_unconfirmed": null,
+      "max_abs_delta": 1.7763568394002505e-15
+    }
+  ],
+  "details_cells_recomputed": 3940,
+  "verification_tables": {
+    "overview": 55,
+    "by_difficulty": 66,
+    "peer_comparisons": 5361,
+    "same_room_pairs": 3780,
+    "details/worker_condition_stats": 164,
+    "details/time_quality_focus": 395,
+    "details/room_group_summary": 301,
+    "details/room_worker_groups": 2651,
+    "details/room_group_views": 429
+  },
+  "low_common_workers_retained_rows": 34,
+  "tests": {
+    "passed": 18,
+    "command": "python -m pytest tests/test_b8l2_usage_snapshot_20261016.py tests/test_b8l2_calculation_status_20261016.py tests/test_b8l2_usage_coverage_20261016.py tests/test_b8l2_detailed_views_20261016.py tests/test_b8l2_room_descriptions_20261016.py -q"
+  },
+  "weighting_example": {
+    "group_id": "candidate:G057",
+    "condition": "manual",
+    "analysis_layer": "ordinary_current",
+    "B8L2_n": 29,
+    "B8L2_mean": 65.84978669768967,
+    "B8L2_image_equal_mean": 62.94681041060039
+  },
+  "overlapping_current_images": 40,
+  "primary_counts": {
+    "quality_usable": 1787,
+    "target_unresolved": 373,
+    "oos_diagnostic_only": 369,
+    "other_quality_restriction": 270,
+    "old_cleaning_excluded": 218,
+    "source_pool_below3": 59,
+    "reference_unavailable": 44,
+    "gt_error": 14,
+    "cleaning_pending": 11,
+    "full_input_unavailable": 5,
+    "independent_response_ineligible": 2
+  },
+  "source_time_change_identity": {
+    "previous_quality_source": 1042,
+    "new_doorway_source": 82,
+    "removed_OOS_source": 17,
+    "current_quality_source": 1107
+  },
+  "floor_only_coordinate_check": {
+    "coordinate_frame": "camera_height_normalized_xz; original ERP 1024x512",
+    "annotation_derivation": "ERP bottom ray intersect y=-1, x=sin(u)/tan(v), z=-cos(u)/tan(v)",
+    "reference_1_evidence": "frozen floor_scope_update coordinate_frame camera_height_normalized_xz; catalog identical selected floor",
+    "reference_2_evidence": "reference_registry_snapshot records/4 names area_h2/perimeter_h/camera_distance_to_floor_boundary_h and floor_xz_h, no metre scaling",
+    "samples": [
+      {
+        "object_id": "196ba4170a023b169872",
+        "image_code": "S9hNv5qa7GM-09",
+        "annotation_area_h2": 1.6075146123533803,
+        "reference_area_h2": 1.3862511353807307,
+        "intersection_area_h2": 1.3845114643376168,
+        "union_area_h2": 1.609254283396494,
+        "manual_iou": 0.8603435011000656,
+        "stored_iou": 0.8603435011000655,
+        "full_score_state": "pending_reference"
+      },
+      {
+        "object_id": "d229ebc66bef1a22b980",
+        "image_code": "pRbA3pwrgk9-02",
+        "annotation_area_h2": 0.6127942008292167,
+        "reference_area_h2": 0.6273425368074952,
+        "intersection_area_h2": 0.5987744830212952,
+        "union_area_h2": 0.6413622546154166,
+        "manual_iou": 0.9335979451742782,
+        "stored_iou": 0.9335979451742784,
+        "full_score_state": "pending_reference"
+      }
+    ]
+  }
+}

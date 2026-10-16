@@ -13,7 +13,7 @@ CURRENT_METHOD_CONTRACT = PROJECT_ROOT / "docs/thesis_main/PAPER_A_METHOD_CONTRA
 RESEARCH_REFERENCES = tuple(PROJECT_ROOT / name for name in (
     "docs/thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md",
     "docs/thesis_main/ROUND_BASED_ASSIGNMENT_SOP_v1.md",
-    "docs/thesis_main/相似场景标注稳定性分析SOP.md",
+    "docs/thesis_main/topics/same_room/相似场景标注稳定性分析SOP.md",
     "docs/thesis_main/图片分类与同房间收敛预测研究SOP.md",
     "AGENTS.md", "docs/README_INDEX.md", "docs/PROJECT_MAP_CLEAN_20260308.md",
 ))

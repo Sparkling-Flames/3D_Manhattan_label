@@ -1,0 +1,53 @@
+{
+  "version": "independent_relation_adoption_audit_20261016_v1",
+  "original_groups_exact_source": true,
+  "original_groups": 260,
+  "candidate_adoption": 259,
+  "relations": 777,
+  "tier_counts": {
+    "user_classified_comparable": 306,
+    "user_classified_other_scope": 366,
+    "not_supported": 67,
+    "physical_pending": 36,
+    "content_disputed": 2
+  },
+  "original_within_group_pairs": 766,
+  "candidate_declared_pairs": 756,
+  "extra_from_explicit_merge": 11,
+  "cross_group_transitive_extension": false,
+  "negative_classification_retained": true,
+  "G095_each_subgroup_comparable_cross_other_scope": true,
+  "explicit_merge_G155_six_physical_cross_scope_unassigned": true,
+  "scope_repairs": [
+    "G095-S1",
+    "G095-S2",
+    "G196",
+    "G236"
+  ],
+  "adopted_candidates_without_explicit_confirmed": 28,
+  "released_status_counts": {
+    "viewed_per_user_statement": 18,
+    "explicit_discussion": 10
+  },
+  "disputed_relations": [
+    {
+      "image_a": "uNb9QFRL6hY_7c9caadd3cb34400893356727278e975",
+      "image_b": "uNb9QFRL6hY_baf711edf5524d868702f86e69e566a0",
+      "tier": "content_disputed",
+      "user_group_ids": [
+        "G196"
+      ]
+    },
+    {
+      "image_a": "uNb9QFRL6hY_7c9caadd3cb34400893356727278e975",
+      "image_b": "uNb9QFRL6hY_f4eb9862530a4f909b46f51d1887d05f",
+      "tier": "content_disputed",
+      "user_group_ids": [
+        "G196"
+      ]
+    }
+  ],
+  "historical_development_version": true,
+  "superseded_by": "same_room_user_working_classification_20261016_v2",
+  "current_statistics_audit": "../details_room_adopted_v3/ADOPTION_STATISTICS_AUDIT.json"
+}

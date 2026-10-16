@@ -1,0 +1,128 @@
+{
+  "schema": "quality_human_feedback_overlay_v1",
+  "as_of_utc": "2026-10-11T11:11:34Z",
+  "precedence": "Additive interpretation layer after raw receipts; never rewrite raw user choices, geometry, gates or scores.",
+  "original_receipt_sha256": "8e26b9cd8fa4fc1f978fb0b71453e2142878eca667cd5c525dd913d8077ad35c",
+  "four_space_receipt_sha256": "754507bd4774baacdb2a8f4336b6a7af84387e4c39f2db39515180b4e9b4276e",
+  "global_label_uncertainty": {
+    "applies_to": "all 30 review choices, including uncommented cases",
+    "confidence_if_blank": "unknown",
+    "labels_are_absolute_truth": false,
+    "per_case_confidence_invented": false,
+    "source_message_id": "Sentinel_4e9080003dd4819191657ab447a8ecc8"
+  },
+  "decisions": [
+    {
+      "case_id": "T05",
+      "record_id": "R03106",
+      "source_message_id": "Sentinel_92296cec35cc819195aa10b37ddb884c",
+      "interpretation": "Small reference difference referred to already marked point locations; missing turn remains an error and degrades whole 3D space.",
+      "raw_grade_unchanged": true
+    },
+    {
+      "case_id": "T03",
+      "record_id": "R01055",
+      "source_message_id": "Sentinel_92296cec35cc819195aa10b37ddb884c",
+      "interpretation": "User confirms small 2D discrepancy and larger 3D discrepancy, requests inspection; does not change original mild grade.",
+      "projection_audit_file": "T03_projection_check.json",
+      "automatic_penalty_change": false
+    },
+    {
+      "case_id": "T21",
+      "record_id": "R01357",
+      "source_message_id": "Sentinel_92296cec35cc819195aa10b37ddb884c",
+      "alternate_reference_approved": false,
+      "evaluation_target": "existing_GT",
+      "interpretation": "Different stopping extent is not an approved second reasonable space.",
+      "worker_motive_inferred": false
+    },
+    {
+      "case_id": "T22",
+      "record_id": "R02015",
+      "source_message_id": "Sentinel_92296cec35cc819195aa10b37ddb884c",
+      "alternate_reference_approved": false,
+      "evaluation_target": "existing_GT",
+      "interpretation": "Smaller marked extent is not an approved second reasonable space.",
+      "worker_motive_inferred": false
+    },
+    {
+      "case_id": "T29",
+      "record_id": "R03192",
+      "reference_label": "A",
+      "source": "original_receipt.answers[T29].reason",
+      "routing_source": "explicit_user_directive"
+    },
+    {
+      "case_id": "T30",
+      "record_id": "R02962",
+      "reference_label": "D",
+      "source": "four_space_receipt.independent_T30_rereview",
+      "routing_source": "explicit_user_directive"
+    },
+    {
+      "record_id": "R03258",
+      "worker_id": "W031",
+      "source_message_id": "Sentinel_ebf361f4ec708191bfcfcf95b1e21e75",
+      "protruding_region_included_user_confirmed": true,
+      "exact_reference_label": null,
+      "quality_good_confirmed": false
+    },
+    {
+      "record_id": "R01412",
+      "worker_id": "W034",
+      "source_message_id": "Sentinel_ebf361f4ec708191bfcfcf95b1e21e75",
+      "protruding_region_included_user_confirmed": true,
+      "exact_reference_label": null,
+      "quality_good_confirmed": false,
+      "structural_defect_still_evaluated": "missing entrance turn / diagonal connection"
+    },
+    {
+      "case_id": "T25",
+      "record_id": "R00169",
+      "source_message_id": "Sentinel_e0439021b2188191a485c328aef83556",
+      "original_receipt_choice": "仅 B 可匹配",
+      "effective_choice": "仅 A 可匹配",
+      "reference_label": "A",
+      "routing_source": "explicit_user_correction",
+      "supersedes": "original receipt T25 only B choice and Pro request to resolve that conflict",
+      "raw_receipt_preserved": true
+    },
+    {
+      "case_id": "T20",
+      "record_id": "R00397",
+      "source_message_id": "Sentinel_e0439021b2188191a485c328aef83556",
+      "interpretation": "User judges the ceiling boundary clearly too low and requiring some penalty, but the existing severe penalty is excessive; reconstructed shape remains reasonably regular.",
+      "penalty_required": true,
+      "existing_penalty_excessive_user_judgment": true,
+      "new_numeric_score": null,
+      "new_quality_grade": null,
+      "automatic_formula_change": false
+    }
+  ],
+  "unchanged": [
+    "raw_feedback",
+    "original_GT",
+    "formal_eligibility",
+    "hold_and_excluded",
+    "frozen_scores",
+    "unconfirmed_top_boundaries"
+  ],
+  "excluded_example_selection_guidance": {
+    "source_message_id": "Sentinel_e0439021b2188191a485c328aef83556",
+    "worker_label_as_supplied": "W019",
+    "canonical_worker_identity": "W019 explicitly clarified by user",
+    "selection_unit": "individual annotation, not blanket worker label",
+    "candidate_types": [
+      "severe misplaced points and poor 3D geometry",
+      "task-semantic mismatch such as inexplicable door annotation, possibly geometrically regular",
+      "marginally usable annotations from excluded worker as contrasts"
+    ],
+    "excluded_is_automatic_worst_grade": false,
+    "original_eligibility_unchanged": true,
+    "review_before_using_as_severe_quality_anchor": true,
+    "prior_worker_label_as_supplied": "P19",
+    "identity_clarification_source_message_id": "Sentinel_4e57204dc76081919e7eb587eb6f8cbc",
+    "authorized_use": "selected W019 annotations for quality algorithm parameter calibration, excluded from formal personnel analysis",
+    "calibration_examples_are_independent_validation": false
+  }
+}

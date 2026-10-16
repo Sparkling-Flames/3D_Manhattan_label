@@ -132,9 +132,9 @@ def build():
     return manifest
 
 
-def load_current_bundle():
+def load_current_bundle(manifest_path=None):
     """统一入口；跨表不一致即报错，不静默读取旧批次。"""
-    path=ROOT/read(CONTRACT)['data']['analysis_bundle']
+    path=Path(manifest_path) if manifest_path is not None else ROOT/read(CONTRACT)['data']['analysis_bundle']
     manifest=read(path)
     if manifest['schema']!='research_analysis_bundle_v1':raise ValueError('bundle_schema_mismatch')
     loaded={}
@@ -147,7 +147,7 @@ def load_current_bundle():
     loaded['validation']=validate_bundle(loaded['data'],loaded['research'],loaded['comments'],loaded['final_summary'])
     if {o['object_id']:o['order_record'] for o in loaded['data']['objects'] if o['ring_confirmed']}!=loaded['final_orders']['records']:
         raise ValueError('final_order_snapshot_mismatch')
-    if (ROOT/read(CONTRACT)['data']['preprocessed_source']).resolve()!=(path.parent/manifest['entrypoints']['data']).resolve():
+    if manifest_path is None and (ROOT/read(CONTRACT)['data']['preprocessed_source']).resolve()!=(path.parent/manifest['entrypoints']['data']).resolve():
         raise ValueError('contract_coordinate_entry_mismatch')
     if 'quality_update' in loaded:
         from .apply_quality_review_20261010 import apply_bundle

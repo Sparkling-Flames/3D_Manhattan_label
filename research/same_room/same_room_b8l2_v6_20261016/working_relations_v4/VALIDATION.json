@@ -1,0 +1,26 @@
+{
+  "version": "same_room_working_relations_20261016_v4",
+  "relation_version": "same_room_user_working_classification_20261016_v2",
+  "relation_frozen": true,
+  "tests": {
+    "command": "python -m pytest tests/test_same_room_relation_adoption_20261016.py tests/test_same_room_usage_adoption_20261016.py tests/test_same_room_usage_20261016.py tests/test_same_room_b8l2_20261016.py tests/test_descriptive_same_room_20261015.py -q",
+    "passed": 19,
+    "new_tests_failed_before_implementation": true
+  },
+  "complete_generation": "passed",
+  "all_260_original_groups_checked_against_csv": true,
+  "review_status_not_an_admission_gate": true,
+  "no_transitive_room_extension": true,
+  "old_40_observed_quality_pairs_members_and_values_preserved": true,
+  "shared_quality_rows": 1787,
+  "OOS_quality_rows": 0,
+  "profile_training_references_scores_and_building_exclusion_checked": true,
+  "time_values_and_provenance_preserved": true,
+  "actual_curve_pairs_worker_record_membership_reference_and_geometry_sources_checked": true,
+  "new_fusion": false,
+  "global_files_modified": false,
+  "catalog_check": "global generated same_room topic page stale; coordinator sync required, no global write under current instruction",
+  "local_json_links_and_final_v2_version_agreement": "passed",
+  "full_repository_tests": "not run; isolated offline relationship and consumer change",
+  "temporary_screenshots": "none"
+}

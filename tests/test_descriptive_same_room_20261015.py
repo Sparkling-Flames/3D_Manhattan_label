@@ -23,6 +23,15 @@ def record(image, worker, score, time=None):
                 score_version='fixed', use_panel='ordinary')
 
 
+def test_frozen_room_metadata_never_reads_the_live_loader(monkeypatch):
+    def forbidden():
+        raise AssertionError('live loader must not run')
+    monkeypatch.setattr(module,'load_current_bundle',forbidden)
+    frozen=dict(data=dict(images=[dict(image_id='a')],room_registry=dict(candidates=[])))
+    tables=module.build_same_room_tables([record('a','p',80)],bundle=frozen)
+    assert tables['same_room_relations']==[]
+
+
 def test_direct_relations_keep_unscored_views_without_transitive_confirmation(registry):
     tables = module.build_same_room_tables([record('a', 'p', 90)])
     rows = tables['same_room_relations']

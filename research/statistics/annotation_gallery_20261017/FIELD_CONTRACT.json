@@ -1,0 +1,23 @@
+{
+  "version": "annotation_gallery_20261017_v2",
+  "identity": "image_id唯一；object_id对应manifest-backed既有作答",
+  "summary": "images=display_images=当前261库存图；new_batch为已纳入子集来源提示，不能再加到总数",
+  "counts": {
+    "retained_people": "pool_vote_eligible作答的跨条件不同worker_id数，不套>=3人或GT评分门",
+    "raw_people": "当前manifest所有原作答的不同worker_id数",
+    "removed_people": "任一移出记录涉及worker_id数，可与retained_people重合",
+    "fully_removed_people": "raw worker set减retained worker set",
+    "removed_records": "user_excluded_records+pending_records+nonindependent_records",
+    "manual_people/semi_people/oos_people": "各来源条件内保留人数；跨条件人员可能重复，不直接相加"
+  },
+  "quality_groups": "仅quality_usable，condition×唯一target_id分层；B8L2主与D10同分母各行n；OOS/缺失不填0；WQ/A10仅历史详情对照",
+  "spaces": "登记参考版本及其独立绑定作答数；多个版本不自动等于空间范围不同；user_candidate区分人工范围候选与其它GT版本",
+  "annotations": "当前3222份只读作答；新70份采用显式源点对映射与审核序；质量目标未绑定时target_id为空",
+  "references": "既有登记points/floor；新增user_candidate/candidate_id/scope_label/note只描述用户已确认候选；43候选/41图包含2备选。候选查看独立于作答绑定；floor-only仅底界和BEV，不补顶界",
+  "new_batch": "已纳库存来源子集，不重复计数；新增70区分63质量/6底面/1完整受限；route_reason/uncertainty只几何证据不等于人工认证",
+  "plans": "独立supplement_plan.json；additional_people非负整数或null（未填）；0明确不补；note字符串；局部更新原子保存",
+  "refresh": "显式再生成；不从运行时文件静默改难度、质量或人员门；不覆盖计划",
+  "scene": "独立情况轴：raw场景、doorway_status原始分类、doorway_label中文标签、conditional_difficulty固定目标条件难度、oos_subtype；门洞与OOS可重叠，not_recorded不等于none，不改既有难度或评分门",
+  "image_review": "当前人工裁定覆盖图片状态；pending暂停当前分析但保留库存人数与既有作答排除。历史难度及质量快照不追改。",
+  "difficulty_decision": "新两图中等，偏简单仅备注；难度不替代质量资格"
+}

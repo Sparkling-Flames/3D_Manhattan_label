@@ -63,13 +63,13 @@ def truth(value):
     return value is True or value == 'True'
 
 
-def audit_references(bundle, difficulty_records, old_records):
-    historical = load_scoring_snapshot()
+def audit_references(bundle, difficulty_records, old_records, *, sources=None, historical=None):
+    historical = load_scoring_snapshot() if historical is None else historical
     old_objects = {row['object_id']: row for row in historical['objects']}
     objects = {row['object_id']: row for row in bundle['data']['objects']}
     if len(objects) != len(bundle['data']['objects']):
         raise ValueError('duplicate current object_id')
-    sources = scope_sources(bundle)
+    sources = scope_sources(bundle) if sources is None else sources
     whole_data_equal = bundle['data'] == historical
     targets, target_by_id, points_by_target = [], {}, {}
     for index, difficulty in enumerate(difficulty_records):

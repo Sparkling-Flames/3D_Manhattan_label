@@ -47,3 +47,16 @@ def test_identity_mismatch_and_duplicate_keys_fail():
         inventory_rows([obj], [timing], [wrong], set())
     with pytest.raises(ValueError, match='duplicate'):
         inventory_rows([obj], [timing, timing], [spine], set())
+
+
+def test_admitted_collection_time_is_bound_to_source_task_account():
+    obj,_,_=inputs()
+    obj['source']['project']=98
+    obj['source']['source_account_id']='6'
+    obj['collection_active_time']=dict(seconds=103,identity_key='98|5|6',adopted=True,
+        rule='session_max_then_sum_v10_task_worker',source_audit='research/audit.json')
+    row=inventory_rows([obj],[],[],set())[0]
+    assert row['active_time_seconds']==103 and row['time_stage']=='project98_admitted'
+    obj['collection_active_time']['identity_key']='98|9|6'
+    with pytest.raises(ValueError,match='admitted time identity'):
+        inventory_rows([obj],[],[],set())

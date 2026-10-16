@@ -17,16 +17,16 @@ METRICS = ('iou_2d', 'S_bottom_deg', 'dir', 'Hmean', 'Hcenter',
 
 
 @contextmanager
-def scoring_engine():
+def scoring_engine(archive_path=ARCHIVE, model_source=MODEL_SOURCE):
     """一次打开冻结引擎，适合对整批queue复用；临时文件自动清理。"""
-    spec = importlib.util.spec_from_file_location('scope_frozen_working_models', MODEL_SOURCE)
+    spec = importlib.util.spec_from_file_location('scope_frozen_working_models', model_source)
     models = importlib.util.module_from_spec(spec)
     # dataclass解析类型时需要可查到其定义模块。
     import sys
     sys.modules[spec.name] = models
     try:
         spec.loader.exec_module(models)
-        with zipfile.ZipFile(ARCHIVE) as archive, frozen_engine(archive) as engine:
+        with zipfile.ZipFile(archive_path) as archive, frozen_engine(archive) as engine:
             yield engine, models
     finally:
         del sys.modules[spec.name]

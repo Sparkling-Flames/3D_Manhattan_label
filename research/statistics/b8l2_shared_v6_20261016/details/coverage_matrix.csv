@@ -1,0 +1,15 @@
+﻿requirement,status,file,worksheet,limitation
+每名库存人员，包括未分析人员,已做,worker_inventory.csv,01_27人库存,总览仅计数；质量/时间按condition另表，不跨条件混均分
+每名人员的质量与时间分布,已做,worker_condition_stats.csv,03_人员分条件,B8L2和两类秒分别n/mean/median/sd；任务组成不是纯能力
+每张图片，包括排除和未评分,已做,image_inventory.csv;image_condition_stats.csv,02_259图库存;04_图片分条件,保留全部259图与实际有记录条件
+简单/中等/困难/专项的人员差异,已做,worker_difficulty.csv,05_人员难度专项,只展开用户要求的四层及库存排除；无观察格n=0、均值留空
+人员×门洞可标性/OOS,已做,worker_special_axes.csv,06_人员特殊轴,未记录不当正常；轴可重叠，不跨轴相加
+时间均值/中位数/离散与实际质量时间共有n,已做,time_quality_focus.csv,07_质量时间共有,边际和共同有效集合分开，秒；不以lead_time补值
+每个物理房间的稳定唯一身份与总体,缺数据,ROOM_SEMANTICS.md;room_group_registry.csv,证据组登记,G来自候选编号，不是物理房间ID；不借传递闭包认证房间
+有证据的关系组/直接图对总体,已做,room_group_summary.csv;room_direct_pair_summary.csv,08_关系组总体;直接图对,组证据分层、可重叠；作答等权与视角等权分开
+人员×物理房间,缺数据,ROOM_SEMANTICS.md,证据组登记,缺完整可靠房间身份；下行交付可核查替代而非冒称已认证房间
+人员×关系组及逐视角贡献,已做,room_worker_groups.csv;room_group_views.csv,09_人员关系组;组视角贡献,不把多视角当独立人员，重叠组不能相加
+未有关系证据图片与组成员缺失定位,已做,room_unlinked_images.csv;room_group_registry.csv,未关联图片;证据组登记,缺关系不等于已确认不同房间
+原始库存对象排除/无评分定位,已做,record_lookup.csv,10_作答定位,3152唯一object_id，保留条件、源人数、排除原因、时间与版本
+e9-16简单但普通资格未开来源核对,已做,E9Z16_ELIGIBILITY_AUDIT.md,导读/说明,旧表示适用性问题被单向保留；本轮不径改冻结资格
+原图表与WQ/A10/IoU同集合对照,已做,../figures/FIGURES.md;../algorithm_comparisons.csv,原35页工作簿,本次补查阅表，不重评分、不重训人员或做新预测

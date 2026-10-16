@@ -1,0 +1,101 @@
+{
+  "shared": {
+    "version": "quality_b8l2_d10_20261017_v2",
+    "input_manifest": "analysis_results/research_input_20261017/manifest.json",
+    "primary_metric": "B8L2",
+    "parallel_metric": "D10",
+    "parameters": {
+      "B8L2": {
+        "version": "WQ-B8L2-20261015",
+        "direction_scale_deg": 8.0,
+        "direction_cap": 1.5,
+        "bottom_scale_squared_deg2": 32.0,
+        "global_height_scale": 0.8,
+        "local_height_scale": 0.25,
+        "pooling_order": 2.0
+      },
+      "D10": {
+        "version": "B8L2-D10-20261016",
+        "direction_scale_deg": 10.0,
+        "direction_cap": 1.5,
+        "bottom_scale_squared_deg2": 32.0,
+        "global_height_scale": 0.8,
+        "local_height_scale": 0.25,
+        "pooling_order": 2.0
+      }
+    },
+    "recommended_qualified_scores": "research/quality/quality_b8l2_d10_20261017/quality_records.csv",
+    "full_inventory_with_metric_eligibility": "research/quality/quality_b8l2_d10_20261017/shared_records.csv",
+    "all_pre_score_bindings": "research/quality/quality_b8l2_d10_20261017/shared_bindings.csv",
+    "reference_catalog": "research/quality/quality_b8l2_d10_20261017/reference_catalog.json",
+    "difficulty_records": "research/quality/quality_b8l2_d10_20261017/difficulty_records.json",
+    "source_pools": "research/quality/quality_b8l2_d10_20261017/source_pools.csv",
+    "current_relation_adoption_manifest": "research/same_room/relation_adoption_20261016/CROSS_MODULE_RELATIONS.json",
+    "rules": {
+      "OOS": "diagnostic_only",
+      "new_worker_training": "module_admission_review_required",
+      "time": "source task-worker seconds; no target-time fabrication",
+      "pending_targets": "no score-selected reference"
+    },
+    "counts": {
+      "version": "quality_b8l2_d10_20261017_v2",
+      "input_manifest": "analysis_results/research_input_20261017/manifest.json",
+      "inventory": 3222,
+      "quality_rows": 1911,
+      "new_batch": 70,
+      "new_complete": 64,
+      "old_binding_gap_measured": 116,
+      "old_binding_changes": 362,
+      "new_quality_rows": 63,
+      "new_binding_status": {
+        "sole_admitted_space": 51,
+        "local_evidence_insufficient_floor_iou_fallback": 6,
+        "local_differentiating_structure": 13
+      },
+      "quality_use": {
+        "ordinary_primary": 1699,
+        "doorway_quality": 188,
+        "special_conditional_only": 24
+      },
+      "calculation_status": {
+        "full_computed": 2774,
+        "floor_only_computed": 298,
+        "input_uncomputable": 122,
+        "pending_target": 28
+      },
+      "membership_changes": {
+        "retained": 1787,
+        "outside_both": 1311,
+        "added": 124
+      },
+      "old_inputs_and_references_verified": true,
+      "old_B8L2_recomposition_verified": true,
+      "new_task_worker_seconds": 5205,
+      "main_formula_changed": false,
+      "old_snapshots_modified": false,
+      "routing_version": "current_reference_local_router_20261017_v1",
+      "pre_routing_snapshot": "research/quality/quality_b8l2_d10_initial_20261017"
+    }
+  },
+  "relation": {
+    "version": "same_room_user_working_classification_20261016_v2",
+    "status": "frozen_for_same_room_and_statistics_consumers",
+    "frozen": true,
+    "supersedes": "v1 development delivery; v2 freezes restored original scope fields and comment exceptions",
+    "original_source": "analysis_results/final_review_summary_20260929/同房分类_原始完整记录.json",
+    "original_csv": "analysis_results/final_review_summary_20260929/同房原分组_完整分类.csv",
+    "relations": "research/same_room/relation_adoption_20261016/relations.json",
+    "original_groups": "research/same_room/relation_adoption_20261016/original_groups.json",
+    "candidate_adoption": "research/same_room/relation_adoption_20261016/candidate_adoption.json",
+    "rules": {
+      "review_status": "provenance only, never admission",
+      "physical": "positive existing group classification; explicit contrary comment/conflict retained",
+      "scopes": "original physical group and user-declared comparison subsets separate; comment repairs audited",
+      "difficulty": "retain original similarity/difference; not a comparison admission gate",
+      "quality": "actual shared quality_usable, own reference, same condition and common people required separately",
+      "time": "source/time-binding gates independent of quality and scope",
+      "closure": "only directly listed group members and explicitly merged group, no cross-group transitive closure"
+    }
+  },
+  "old_comparison": "research/same_room/same_room_b8l2_v6_20261016/working_relations_v4"
+}

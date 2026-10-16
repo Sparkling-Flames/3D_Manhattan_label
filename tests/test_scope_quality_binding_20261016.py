@@ -87,3 +87,29 @@ def test_individual_quality_hold_does_not_erase_pool_people_but_blocks_quality()
     row = result['affected_records'][0]
     assert row['pool_source_workers'] == 3 and row['pool_analysis_eligible']
     assert row['score_input_eligible'] and not row['person_quality_restriction_clear']
+
+
+def test_include_all_images_binds_selected_gt_without_admitting_historical_versions():
+    bundle, difficulty, routing = fixture('selected_gt')
+    routing['candidate_images'] = []
+    routing['records'][0]['old_score'] = 100
+    routing['records'][0]['reference_id'] = 'unadmitted_revision'
+    catalog = [dict(image_id='i', target_id='new', floor_xz_h=difficulty[0]['selected']['floor'],
+                    is_admitted_space_candidate=True, full_reference_available=True),
+               dict(image_id='i', target_id='unadmitted_revision', floor_xz_h=[[-2,-2],[2,-2],[2,2],[-2,2]],
+                    is_admitted_space_candidate=False, full_reference_available=True)]
+    assert not build_affected_records(bundle,difficulty,catalog,routing_input=routing)['affected_records']
+    result = build_affected_records(bundle,difficulty,catalog,routing_input=routing,include_all_images=True)
+    assert len(result['affected_records'])==3
+    assert all(r['chosen_target_id']=='new' and r['allowed_target_ids']==['new'] for r in result['affected_records'])
+
+
+def test_include_all_images_merges_same_floor_alias_and_keeps_real_multispace_pending():
+    bundle, difficulty, routing = fixture('selected_gt')
+    routing['candidate_images'][0]['candidates'][0]['floor_xz_h'] = difficulty[0]['selected']['floor']
+    result = build_affected_records(bundle,difficulty,routing_input=routing,include_all_images=True)
+    assert len(result['record_targets'])==3
+    assert all(r['chosen_target_id']=='new' for r in result['affected_records'])
+    routing['candidate_images'][0]['candidates'][0]['floor_xz_h'] = [[-2,-2],[2,-2],[2,2],[-2,2]]
+    pending = build_affected_records(bundle,difficulty,routing_input=routing,include_all_images=True)
+    assert all(not r['chosen_target_id'] and r['binding_status']=='pending_multiple_admitted_spaces' for r in pending['affected_records'])

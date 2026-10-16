@@ -1,0 +1,31 @@
+{
+  "version": "annotation_gallery_20261017_v2",
+  "generated_at": "2026-10-16T17:09:43.521351+00:00",
+  "inventory": "research/statistics/annotation_counts_20261017/tables.json",
+  "quality": "research/quality/quality_b8l2_d10_20261017/shared_records.csv",
+  "bindings": "research/quality/quality_b8l2_d10_20261017/shared_bindings.csv",
+  "references": "research/quality/quality_b8l2_d10_20261017/reference_catalog.json",
+  "annotation_loader": "tools/thesis_main/data_prep/consolidate_research_input.py::load_current_bundle",
+  "difficulty_pointer": "analysis_results/image_difficulty_full_review_20261010/CURRENT.json",
+  "difficulty_version": "scope_preferred_difficulty_scope_resolved_20261016_v6_plus_new2",
+  "quality_usage_version": "quality_b8l2_d10_20261017_v2",
+  "B8L2_version": "WQ-B8L2-20261015",
+  "new_batch": "new_batch.json",
+  "new_batch_sources": [
+    "export_label\\新增中文标注\\project-98-at-2026-10-16-13-59-e351a09f.json"
+  ],
+  "new_batch_analysis_included": true,
+  "image_assets": "data/mp3d_layout/img_v/*.jpg and original split img/*.png; served by image whitelist",
+  "plan_file": "supplement_plan.json; independent from frozen data",
+  "user_scope_views": "research/data/scope_redundant_vertices_20261016/scope_views.json",
+  "user_scope_confirmation": "research/data/scope_redundant_vertices_20261016/USER_CONFIRMATION.json",
+  "scene_source": "annotation_counts_20261017 scene/doorway_status + difficulty v6 conditional_difficulty; independent overlapping axes",
+  "current_image_review_decisions": "research/data/image_review_decisions_20261017/decisions.json",
+  "analysis_bundle": "analysis_results/research_input_20261017/manifest.json",
+  "current_context": "tools/thesis_main/analysis/current_annotation_context_20261017.py",
+  "new_batch_quality_analysis_included": true,
+  "batch_admission": "analysis_results/research_input_20261017/batch_admission.json",
+  "quality_context": "tools/thesis_main/analysis/current_annotation_context_20261017.py::load_scored_context",
+  "primary_metric": "B8L2",
+  "parallel_metric": "D10"
+}

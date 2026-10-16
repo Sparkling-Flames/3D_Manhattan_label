@@ -58,10 +58,13 @@ def build(source, out):
     pools, images, analysis, quality = [read(name) for name in ['source_pools','current_images','analysis_records','quality_records']]
     inventory, audit, pairs = [read(name) for name in ['inventory_all','record_audit','same_room_pairs']]
     contract = json.loads((source/'FIELD_CONTRACT.json').read_text(encoding='utf-8'))
+    primary=contract.get('primary_metric','WQ')
+    assert primary in METRICS
+    metrics=[primary]+[metric for metric in METRICS if metric!=primary]
     manual = ordinary_manual(analysis)
     manual_quality = ordinary_manual(quality)
     assert quality.current_quality_eligible.eq(True).all()
-    assert quality[METRICS].notna().all().all()
+    assert quality[metrics].notna().all().all()
     if 'rescore_status' in quality:
         assert quality.loc[quality.new_space_target,'rescore_status'].eq('complete').all()
     else:
@@ -71,8 +74,8 @@ def build(source, out):
     assert images.image_id.is_unique
     manifest = dict(version='descriptive_statistics_current_figures_20261015_v1',
         source_contract=str(source/'FIELD_CONTRACT.json'),difficulty_version=contract['difficulty_version'],
-        source_pool_rule=contract['pool_rule_version'],quality_metrics=METRICS,
-        score_versions=contract['score_versions'],score_version_column='仅原WQ绑定上下文，不是A10/B8L2版本',
+        source_pool_rule=contract['pool_rule_version'],quality_metrics=metrics,primary_metric=primary,
+        score_versions=contract['score_versions'],score_version_column='源评分上下文；各算法身份按score_versions分别读取',
         units=dict(WQ='0-100',A10='0-100',B8L2='0-100',IoU3D100='0-100; mean-height prism',
             active_time_seconds='seconds; qualified-source collection time, not automatically new-target time',
             target_matched_time_seconds='seconds; unchanged or verified current target context'),
@@ -102,11 +105,11 @@ def build(source, out):
     cover=[]
     for (condition,layer),cell in analysis.groupby(['condition','analysis_layer']):
         cover.append(dict(condition=condition,analysis_layer=layer,n_records=len(cell),
-            n_quality=cell.WQ.notna().sum(),n_missing_quality=cell.WQ.isna().sum()))
+            n_quality=cell[primary].notna().sum(),n_missing_quality=cell[primary].isna().sum()))
     cover=pd.DataFrame(cover)
     labels=[f'{r.condition}\n'+('普通' if r.analysis_layer=='ordinary_current' else '特殊/待定单列') for r in cover.itertuples()]
-    axes[1].bar(range(len(cover)),cover.n_quality,label='当前完整WQ',color='#3a8c94')
-    axes[1].bar(range(len(cover)),cover.n_missing_quality,bottom=cover.n_quality,label='无当前完整WQ',color='#d2d5d9')
+    axes[1].bar(range(len(cover)),cover.n_quality,label=f'当前完整{primary}',color='#3a8c94')
+    axes[1].bar(range(len(cover)),cover.n_missing_quality,bottom=cover.n_quality,label=f'无当前完整{primary}',color='#d2d5d9')
     for i,r in enumerate(cover.itertuples()): axes[1].text(i,r.n_records+20,f'{r.n_quality}/{r.n_records}',ha='center',fontsize=9)
     axes[1].set_xticks(range(len(cover)),labels,fontsize=9)
     axes[1].set(title=f'可分析作答与当前质量覆盖（库存{len(inventory)}行）',ylabel='作答行数',ylim=(0,cover.n_records.max()*1.18))
@@ -115,7 +118,7 @@ def build(source, out):
         'GT/既有排除优先；来源池≥3不代表每个指标有≥3个有效值。各条件分别统计；当前质量缺失不回填历史分。')
 
     fig,axes=plt.subplots(1,4,figsize=(16,5.6),sharey=True)
-    for ax,metric in zip(axes,METRICS):
+    for ax,metric in zip(axes,metrics):
         groups=[manual[manual.difficulty_class.eq(d)] for d in DIFFICULTIES]
         values=[g[metric].dropna() for g in groups]
         ax.boxplot(values,positions=range(3),widths=.5,showfliers=False,medianprops={'color':'black'})
@@ -126,8 +129,8 @@ def build(source, out):
         ax.set(title=metric if metric!='IoU3D100' else '均高棱柱IoU ×100',ylim=(0,103))
         ax.grid(axis='y',alpha=.2)
     axes[0].set_ylabel('分数（0—100）')
-    fig.suptitle('当前v3普通manual：质量分布及缺失分母（未用历史分填补）',fontsize=14)
-    export(fig,out,'02_当前难度质量分布',manual[['object_id','image_id','worker_id','difficulty_class','current_target_id','reference_id','score_version']+METRICS],
+    fig.suptitle('当前普通manual：质量分布及缺失分母（未用历史分填补）',fontsize=14)
+    export(fig,out,'02_当前难度质量分布',manual[['object_id','image_id','worker_id','difficulty_class','current_target_id','reference_id','score_version']+metrics],
         '点为有效作答；箱体P25—P75、线为中位数。标签分别给有效/全部作答与图片数；重复人员/图片不独立。')
 
     fig,axes=plt.subplots(1,2,figsize=(14,6))
@@ -147,17 +150,17 @@ def build(source, out):
     axes[0].set(title='来源采集时间 ≠ 新目标耗时',xlabel='有值作答行数',xlim=(0,timegroups.n_source.max()*1.25))
     axes[0].legend(frameon=False,fontsize=9,loc='upper right')
     for difficulty,color in zip(DIFFICULTIES,COLORS):
-        cell=manual[manual.difficulty_class.eq(difficulty)].dropna(subset=['WQ','target_matched_time_seconds'])
-        axes[1].scatter(cell.target_matched_time_seconds,cell.WQ,s=12,alpha=.4,color=color,label=f'{difficulty} n={len(cell)}',rasterized=True)
+        cell=manual[manual.difficulty_class.eq(difficulty)].dropna(subset=[primary,'target_matched_time_seconds'])
+        axes[1].scatter(cell.target_matched_time_seconds,cell[primary],s=12,alpha=.4,color=color,label=f'{difficulty} n={len(cell)}',rasterized=True)
     axes[1].set_xscale('log')
-    axes[1].set(title='普通manual：当前目标时间与WQ',xlabel='target_matched_time_seconds（秒，对数）',ylabel='原WQ（0—100）',ylim=(0,103))
+    axes[1].set(title=f'普通manual：当前目标时间与{primary}',xlabel='target_matched_time_seconds（秒，对数）',ylabel=f'{primary}（0—100）',ylim=(0,103))
     axes[1].legend(frameon=False,fontsize=9)
     axes[1].grid(alpha=.2)
-    export(fig,out,'03_来源时间与当前目标时间',analysis[['object_id','image_id','worker_id','condition','analysis_layer','difficulty_class','new_space_target','target_role','active_time_seconds','target_matched_time_seconds','target_time_interpretation','time_status','WQ']],
+    export(fig,out,'03_来源时间与当前目标时间',analysis[['object_id','image_id','worker_id','condition','analysis_layer','difficulty_class','new_space_target','target_role','active_time_seconds','target_matched_time_seconds','target_time_interpretation','time_status',primary]],
         '新空间/修订目标作答匹配未确认时，当前目标时间留空；来源采集时间不能改称新目标耗时。右图只用双侧有值，不作因果解释。')
     timegroups.to_csv(out/'03_来源与目标时间覆盖汇总.csv',index=False,encoding='utf-8-sig')
 
-    matrix=manual.pivot_table(index='worker_id',columns='image_code',values='WQ',aggfunc='mean')
+    matrix=manual.pivot_table(index='worker_id',columns='image_code',values=primary,aggfunc='mean')
     matrix=matrix.reindex(index=sorted(manual.worker_id.unique()),columns=sorted(manual.image_code.unique()))
     fig,ax=plt.subplots(figsize=(17,7.5))
     cmap=plt.colormaps['viridis'].copy();cmap.set_bad('#e4e4e4')
@@ -165,31 +168,31 @@ def build(source, out):
     ax.set_yticks(range(len(matrix)),matrix.index)
     ticks=list(range(0,len(matrix.columns),6))
     ax.set_xticks(ticks,matrix.columns[ticks],rotation=65,ha='right',fontsize=7)
-    ax.set(title=f'当前普通manual：{matrix.shape[0]}人 × {matrix.shape[1]}图的WQ覆盖（ID排序）',xlabel='全部普通manual来源池图片，含无当前质量者',ylabel='人员ID（非能力排名）')
-    fig.colorbar(artist,ax=ax,label='当前原WQ',pad=.01,shrink=.8)
+    ax.set(title=f'当前普通manual：{matrix.shape[0]}人 × {matrix.shape[1]}图的{primary}覆盖（ID排序）',xlabel='全部普通manual来源池图片，含无当前质量者',ylabel='人员ID（非能力排名）')
+    fig.colorbar(artist,ax=ax,label=f'当前{primary}',pad=.01,shrink=.8)
     export(fig,out,'04_当前人员图片质量覆盖',matrix.rename_axis('worker_id').reset_index(),
         '灰色含未作答/当前质量缺失，不是0分；图纳入全部合格普通manual来源池图片，禁止用historical_*填色。任务组成差异不等于人员能力差异。')
 
     fig,axes=plt.subplots(2,3,figsize=(14,8),sharey='row')
-    for i,metric in enumerate(METRICS[1:]):
-        cell=manual_quality.dropna(subset=['WQ',metric]);delta=cell[metric]-cell.WQ
-        axes[0,i].scatter(cell.WQ,cell[metric],s=7,alpha=.25,color='#447b9d',rasterized=True)
+    for i,metric in enumerate(metrics[1:]):
+        cell=manual_quality.dropna(subset=[primary,metric]);delta=cell[metric]-cell[primary]
+        axes[0,i].scatter(cell[primary],cell[metric],s=7,alpha=.25,color='#447b9d',rasterized=True)
         axes[0,i].plot([0,100],[0,100],color='#888888',lw=1)
-        axes[0,i].set(title=f'{metric}（n={len(cell)}）',xlabel='原WQ',ylabel=metric,xlim=(0,100),ylim=(0,100))
+        axes[0,i].set(title=f'{metric}（n={len(cell)}）',xlabel=primary,ylabel=metric,xlim=(0,100),ylim=(0,100))
         axes[1,i].hist(delta,bins=30,color='#3a8c94',alpha=.85)
         axes[1,i].axvline(0,color='#888888',lw=1)
-        axes[1,i].set(title=f'差值中位数{delta.median():.2f}',xlabel=f'{metric} − WQ',ylabel='作答行数')
+        axes[1,i].set(title=f'差值中位数{delta.median():.2f}',xlabel=f'{metric} − {primary}',ylabel='作答行数')
     fig.suptitle('当前普通manual：同输入、同参考、同资格的算法数值比较',fontsize=14)
-    export(fig,out,'05_当前同集合算法差异',manual_quality[['object_id','image_id','worker_id','reference_id','score_version']+METRICS],
-        '不将公式数值更高称为更正确；A10/B8L2版本分别见manifest，score_version仅原WQ。均高棱柱IoU与复合分数度量对象不同。')
+    export(fig,out,'05_当前同集合算法差异',manual_quality[['object_id','image_id','worker_id','reference_id','score_version']+metrics],
+        '不将公式数值更高称为更正确；算法版本分别见manifest，score_version保留源评分上下文。均高棱柱IoU与复合分数度量对象不同。')
 
-    selected=pairs[(pairs.relation=='confirmed_comparable')&(pairs.metric=='WQ')&(pairs.n_pairs>0)].sort_values(['candidate_ids','image_code_a','image_code_b'])
+    selected=pairs[(pairs.relation=='confirmed_comparable')&(pairs.metric==primary)&(pairs.n_pairs>0)].sort_values(['candidate_ids','image_code_a','image_code_b'])
     keys=selected[['image_a','image_b']]
     fig,axes=plt.subplots(1,3,figsize=(16,max(8,len(selected)*.29)),sharey=True)
     y=np.arange(len(selected))
     labels=[f'{r.candidate_ids} · {r.image_code_a.split("-")[-1]}—{r.image_code_b.split("-")[-1]} (Q n={r.n_pairs})' for r in selected.itertuples()]
     data=[]
-    for ax,metric in zip(axes[:2],['WQ','B8L2']):
+    for ax,metric in zip(axes[:2],[primary,'WQ' if primary=='B8L2' else 'B8L2']):
         cell=keys.merge(pairs[pairs.metric.eq(metric)],on=['image_a','image_b'],validate='one_to_one')
         ax.hlines(y,cell.paired_a_mean,cell.paired_b_mean,color='#aaaaaa')
         ax.scatter(cell.paired_a_mean,y,s=27,label='视角A',color='#447b9d')
@@ -232,7 +235,7 @@ def build(source, out):
 |05 当前同集合算法差异|仅普通manual当前质量同输入/同参考集合；保留WQ/A10/B8L2/均高棱柱IoU的不同版本和度量对象。|
 |06 当前同房共同人员质量与时间|{len(selected)}个确认可比直接图对有当前质量；图对共同人数按指标报告，1/2人结果保留并显式标样本量，不当独立房间。|
 
-`FIGURE_MANIFEST.json`声明输入、版本与单位。原CSV的`score_version`仅原WQ绑定上下文；A10/B8L2各有版本。算法面板当前四指标，不自动消费新long-score接口。PNG/SVG为正式交付；未生成QA临时截图。无人员能力排名、算法优劣验证或时间因果结论。
+`FIGURE_MANIFEST.json`声明输入、版本与单位。CSV的`score_version`保留源评分上下文；各算法版本分别读取。本图组主指标为{primary}，其余版本保留对照；不自动消费新long-score接口。PNG/SVG为正式交付；未生成QA临时截图。无人员能力排名、算法优劣验证或时间因果结论。
 '''
     if (source/'space_reference_catalog.csv').exists():
         notes+='\n新增[07 新空间三层覆盖](07_scope_quality_coverage.png)：受影响当前目标参考ready、原作答唯一绑定和人员/图片资格分别统计；目标展开不作为人数分母。\n'

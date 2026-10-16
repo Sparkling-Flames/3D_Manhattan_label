@@ -1,0 +1,55 @@
+{
+  "frozen_input": "../FROZEN_INPUTS.json",
+  "difficulty_version": "scope_preferred_difficulty_scope_resolved_20261016_v6",
+  "references": 332,
+  "current_targets": 259,
+  "confirmed_space_targets": 41,
+  "full_confirmed_space_targets": 12,
+  "pending_confirmed_space_targets": 29,
+  "new_targets": [
+    {
+      "image_code": "S9hNv5qa7GM-09",
+      "target_id": "user_space_20261016:S9hNv5qa7GM-09",
+      "full_reference_available": false,
+      "minimal_gap": "confirmed_polygon_extends_beyond_complete_source_domain"
+    },
+    {
+      "image_code": "zsNo4HB9uLZ-13",
+      "target_id": "user_space_20261016:zsNo4HB9uLZ-13",
+      "full_reference_available": false,
+      "minimal_gap": "confirmed_polygon_extends_beyond_complete_source_domain"
+    }
+  ],
+  "all_original_annotations": 3152,
+  "all_binding_counts": {
+    "sole_admitted_space": 2766,
+    "fixed_current_gt_revision": 10,
+    "pending_multiple_admitted_spaces": 369,
+    "explicit_manual_target": 5,
+    "pending_manual_family_not_unique": 2
+  },
+  "current_image_holds": 10,
+  "reference_tolerance": 1e-08,
+  "reference_tolerance_changed": false,
+  "annotations_modified": false,
+  "quality_used_for_binding": false,
+  "source_planes_verified": 259,
+  "subsequent_run_requires_live_CURRENT": false,
+  "ready_input_files": [
+    "reference_catalog.json",
+    "binding_all.json",
+    "binding.json"
+  ],
+  "precision_evidence": "reference_precision_audit.csv",
+  "source_document_manifest": "SOURCE_DOCUMENTS.json",
+  "source_code_snapshots": [
+    "scope_reference_reconstruction_20261016.py",
+    "scope_quality_binding_20261016.py",
+    "descriptive_reference_audit_20261015.py",
+    "descriptive_pool_gate_20261015.py",
+    "difficulty_user_revision_20261015.py"
+  ],
+  "validation": "7 binding tests passed; frozen all-annotation identity coverage and no-modification checks passed",
+  "frozen_replay_equal_saved_outputs": true,
+  "live_json_reads_forbidden_during_replay": true
+}

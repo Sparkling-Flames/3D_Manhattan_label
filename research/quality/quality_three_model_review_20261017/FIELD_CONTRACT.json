@@ -1,0 +1,15 @@
+{
+  "schema": "quality_three_model_review_20261017_v1",
+  "models": [
+    "B8L2",
+    "B8L2-D10",
+    "EBC2-L2"
+  ],
+  "bindings": "object_id,image_id,reference_object_id fixed for each case; variants preserve original identity",
+  "score_scope": "all scores full measured under current approved reference; reference-self controls not annotation performance",
+  "missing_full_reference": "NA, no inferred ceiling or full score",
+  "grades": "five optional coarse bands plus scope/uncertain; comment-only allowed",
+  "exposure": "ordinary and doorway scores initially hidden; redundancy table visible at first view; localStorage schema isolated",
+  "variants": "raw,reference_only,both; full 3D-equivalent compaction only; original labels preserved",
+  "sampling": "20 ordinary B8L2 quantile + 6 known model disagreement + 6 doorway B8L2 tertile; 32 distinct images; not population-representative"
+}

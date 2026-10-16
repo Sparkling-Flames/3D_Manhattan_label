@@ -1,5 +1,7 @@
 """当前图片来源池人数门：有效作答人数、图级暂停和普通难度资格分别保留。"""
 from collections import Counter, defaultdict
+import json
+from pathlib import Path
 
 CONDITIONS = ('manual', 'semi', 'oos')
 RULE_VERSION = 'retained_independent_humans_by_image_condition_min3_20261015_v1'
@@ -11,7 +13,18 @@ IMAGE_CONSENSUS_HOLDS = {'hold_all_analysis', 'hold_main_analysis', 'inner_space
 IMAGE_QUALITY_HOLDS = {'hold_all_analysis', 'hold_main_analysis', 'hold_reference_quality'}
 
 
-def build_pool_gate(bundle, difficulty_records):
+def load_image_review_decisions():
+    path=Path(__file__).resolve().parents[3]/'research/data/image_review_decisions_20261017/decisions.json'
+    document=json.loads(path.read_text(encoding='utf-8'))
+    if document['version']!='current_image_review_decisions_20261017_v1':
+        raise ValueError('image_review_decision_version_mismatch')
+    decisions={r['image_id']:r for r in document['decisions']}
+    if len(decisions)!=len(document['decisions']) or any(r['status']!='pending' for r in decisions.values()):
+        raise ValueError('invalid_or_duplicate_image_review_decision')
+    return decisions
+
+
+def build_pool_gate(bundle, difficulty_records, image_reviews=None):
     """返回(source_pool, record_gate)两个list[dict]；图级门不是正式资格授予。
 
     source_pool覆盖难度入口每图×manual/semi/oos，包括零人池；纯GT图不建池。
@@ -19,6 +32,7 @@ def build_pool_gate(bundle, difficulty_records):
     图级暂停从当前全部作答门及research.images继承，不限于新版难度排除表。
     """
     difficulty = {row['image_id']: row for row in difficulty_records}
+    image_reviews=load_image_review_decisions() if image_reviews is None else image_reviews
     if len(difficulty) != len(difficulty_records):
         raise ValueError('duplicate difficulty image_id')
     images = {row['image_id']: row for row in bundle['data']['images']}
@@ -73,6 +87,10 @@ def build_pool_gate(bundle, difficulty_records):
         current_exclusion = current['difficulty_analysis_exclusion']
         if current_exclusion == 'target_scope_unresolved':
             image_reasons.add('current_target_scope_unresolved')
+        current_review=image_reviews.get(image,{})
+        if current_review.get('status')=='pending':
+            image_reasons.add('current_user_review_pending')
+            evidence.append(dict(source_field='current_image_review_decisions',status='pending',decision=current_review))
         # 特殊/待核类别本身不全局排除专项；显式GT、范围和旧暂停仍先于专项。
         ordinary = current['difficulty_analysis_eligible']
         for condition in CONDITIONS:
@@ -93,6 +111,7 @@ def build_pool_gate(bundle, difficulty_records):
                         record_exclusion_reason_counts=dict(sorted(person_reasons.items())),
                         pool_min3_pass=min3, image_exclusion_reasons=sorted(image_reasons),
                         image_hold_evidence=evidence,
+                        current_image_review=current_review,
                         current_class=current['current_class'],
                         difficulty_analysis_exclusion=current_exclusion,
                         ordinary_difficulty_candidate=ordinary,

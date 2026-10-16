@@ -1,20 +1,19 @@
 # HOHONET 文档入口
 
-图片难度最新v6：[两图新空间、三图中等与分歧原因](../research/difficulty/difficulty_scope_resolution_20261016/README.md)。目标变化、GT错误、同目标负担判断分开；205普通候选，41图采用新空间。
+**当前状态（2026-10-17）：** 当前输入为 [Project98 manifest](../analysis_results/research_input_20261017/manifest.json)，库存3222份作答、261张图；排除既定作答/人员后保留2991份、25人。新增批次70份已接入，7个账号映射到既有人员，任务人员时间5205秒已核验。
 
-2026-10-16难度最新v5：[补充18图裁定与39裁切图上下点对](../research/difficulty/difficulty_pair_display_20261016/README.md)。普通候选133简单／32中等／39困难；27图黄色顶点仅外推预览。
+- **质量：** [B8L2/D10共同评分v2](../research/quality/quality_b8l2_d10_20261017/README.md)共1911份可用（1699普通、188门洞、24其它单列）；B8L2为主指标，D10为并列敏感性。原B8L2用途v2的1787份是冻结基线；1838份是已被v2接续的路由前中间快照。
+- **难度与分层统计：** [难度v6当前261图](../research/difficulty/difficulty_current_20261017/README.md)保留人工粗分类；新增两图列中等，“偏简单”仅备注。质量与难度关联按条件及用途分层，不以均值改标签。完整逐人、逐图、场景及房间关系表见[当前描述统计](../research/statistics/b8l2_d10_statistics_20261017/README.md)。
+- **人员：** [B8L2/D10当前画像](../research/workers/worker_b8l2_d10_20261017/README.md)接入更新后的质量覆盖，普通面板1048份；门洞专项并列，不强制固定人员类别。此前949份是旧面板。
+- **融合：** [18图人数轨迹的双指标复核](../research/fusion/wall_consensus_d10_20261017/README.md)复用既有融合过程，没有重跑几何或将新增19图冒充新融合样本。
+- **同房：** [现有分类下的当前结果](../research/same_room/same_room_update_20261017/README.md)为83对可比质量，其中78对共同人员不少于4人；其它范围15对单列。旧77对为先前阶段。
+- **接入边界：** OOS分数只作诊断；`b8c-04`暂停分析但保留在24人库存。原始标注真源保留在`export_label/`，不得由目录或统计结果替代。
 
-2026-10-16图片难度当前入口：[v4用户复核采用与分类逻辑](../research/difficulty/difficulty_user_adoption_20261016/README.md)。普通候选151简单／16中等／39困难；旧v3统计仍为历史标签结果。
+质量粗核验与冗余点研究见[三模型核验记录](../research/quality/quality_three_model_review_20261017/RECORD.md)和[多空间冗余点记录](../research/data/scope_redundant_vertices_20261016/README.md)。各版本、分母、来源及历史路径以[研究资料总目录](../research/catalog/INDEX.md)和主题入口为准。
 
-## 当前统一入口
+## 按主题查找与历史记录
 
-**2026-10-16 B8L2主线数据：** [新查阅表、六线程状态与推进计划](../research/statistics/b8l2_mainline_status_20261016/README.md)。重核后891份评分/参考不变；主线先用B8L2，Pro整体新模型并行，人员/融合/同房建模尚待接入。
-
-**2026-10-16质量评论与推进更新：** [24例原文、逐例解释及独立审查](../research/quality/quality_three_routes_feedback_20261016/README.md)。主线先用B8L2开展分析，Pro并行探索完整的新质量方案，不限于修补B8L2；本次仅整理资料，未重算主线。
-
-按主题查资料、辨认质量算法版本、定位结果分母和查看迁移前路径，请先用[研究资料目录](../research/catalog/INDEX.md)。各专题入口会分别列出当前依据、历史对照、原始证据、未决问题和复现入口；机器登记为`research/catalog/CATALOG.json`。
-
-当前跨模块研究状态仍以[四线程成果与论文主线核对](thesis_main/四线程成果与论文主线核对_20261015.md)为准。以下日期条目保留当时的交接和实验记录，不能单凭“最新”字样推断算法或结果已经全局采用。
+按主题查资料、辨认质量算法版本、定位结果分母和查看迁移前路径，请先用[研究资料目录](../research/catalog/INDEX.md)。各专题入口会分别列出当前依据、历史对照、原始证据、未决问题和复现入口；机器登记为`research/catalog/CATALOG.json`。当前跨模块状态见[统一进度入口](thesis_main/四线程成果与论文主线核对_20261015.md)。以下日期条目保留当时的交接和实验记录；其中过时的“最新”措辞不覆盖上方2026-10-17状态。
 
 - **2026-10-16质量结构续研与本地归档：** [当前统计、算法讨论和Pro任务](../research/quality/quality_structure_handoff_20261016/README.md)、[多版本定义与未决项](../research/quality/quality_structure_handoff_20261016/ALGORITHMS_AND_DECISIONS.md)、[组合机制Pro精简原件](../research/quality/quality_combination_review_20261016/README.md)。重点区分自身正交与参考结构完整性；B8L2为可调整工作版，未改评分或推送远端。
 
@@ -151,3 +150,7 @@
 当前规范版本：`consensus_research_20260923_v1`，机器合同为`PAPER_A_METHOD_CONTRACT_CURRENT.json`。
 
 - 2026-10-15整理：[入口阶段更新归档](thesis_main/history/入口阶段更新归档_20261015.md)、[旧共识推进方案](thesis_main/history/研究推进方案_共识可靠性与Pro深研_20261004.md)仅供追溯；现行执行见[融合SOP](thesis_main/topics/fusion/融合共识操作SOP_20261008.md)。
+
+- 2026-10-16融合文档整理：[旧回执操作与模型阶段统计](thesis_main/history/融合SOP与模型过时说明_20261016.md)归档；SOP保留现行操作，模型不重复维护版本分母。
+
+- 2026-10-17融合：[18图B8L2／D10对照与新增批次桥接](../research/fusion/wall_consensus_d10_20261017/README.md)。复用真实人数过程，不重跑融合；工具与字段见包内说明。

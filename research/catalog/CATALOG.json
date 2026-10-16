@@ -1,6 +1,6 @@
 {
-  "catalog_version": "research_catalog_20261016_v1",
-  "inventory_date": "2026-10-16",
+  "catalog_version": "research_catalog_20261017_v1",
+  "inventory_date": "2026-10-17",
   "coverage_note": "登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。",
   "topics": [
     {
@@ -9,6 +9,10 @@
       "description": "原意、跨模块关系、进度、版本采用与交接。",
       "page_path": "docs/thesis_main/topics/coordination/README.md",
       "current_basis": [
+        {
+          "text": "原B8L2逐线接入、人工确认和细致统计覆盖核对",
+          "path": "docs/thesis_main/跨线程接入与统计覆盖核对_20261016.md"
+        },
         {
           "text": "跨模块当前状态和工作边界",
           "path": "docs/thesis_main/四线程成果与论文主线核对_20261015.md"
@@ -32,7 +36,7 @@
       ],
       "open_questions": [
         {
-          "text": "新增数据接入前的统计扩展暂不执行"
+          "text": "现有数据细致统计继续补齐；新增人员和图片待现有数据收束后独立版本接入"
         }
       ],
       "reproduction": []
@@ -44,12 +48,24 @@
       "page_path": "docs/thesis_main/topics/data/README.md",
       "current_basis": [
         {
+          "text": "当前Project98输入manifest为analysis_results/research_input_20261017/manifest.json；评分结果另按共同质量包的版本与用途核对。",
+          "path": "analysis_results/research_input_20261017/README.md"
+        },
+        {
+          "text": "固定v6共同评分与跨模块输入清单：1622条件数值",
+          "path": "research/statistics/b8l2_shared_v6_20261016/README.md"
+        },
+        {
           "text": "研究数据来源、预处理及用途",
           "path": "docs/thesis_main/研究数据说明_来源预处理与用途_20261006.md"
         },
         {
           "text": "空间重算与参考绑定审计",
           "path": "research/data/scope_quality_rescore_20261016/README.md"
+        },
+        {
+          "text": "多空间旧点、严格共线及精度内近共线派生视图",
+          "path": "research/data/scope_redundant_vertices_20261016/README.md"
         }
       ],
       "history": [
@@ -96,6 +112,14 @@
       "description": "公式、参数、实现、校准、人评、反例与模型比较；算法身份和模块采用状态分开。",
       "page_path": "docs/thesis_main/topics/quality/README.md",
       "current_basis": [
+        {
+          "text": "当前共同评分v2：B8L2主线、D10并列敏感性，共1911份可用；原B8L2用途v2的1787份保留为冻结基线。",
+          "path": "research/quality/quality_b8l2_d10_20261017/README.md"
+        },
+        {
+          "text": "用户意见澄清与三模型冗余点、分层图片核验（待人工）",
+          "path": "research/quality/quality_three_model_review_20261017/RECORD.md"
+        },
         {
           "text": "24例评论与独立审查：主线先用B8L2，Pro并行研究整体新方案",
           "path": "research/quality/quality_three_routes_feedback_20261016/README.md"
@@ -158,6 +182,14 @@
       "page_path": "docs/thesis_main/topics/difficulty/README.md",
       "current_basis": [
         {
+          "text": "当前难度v6覆盖261图；新增两图列为中等，按采集条件与质量用途分层描述，不以均值重分标签。",
+          "path": "research/difficulty/difficulty_current_20261017/README.md"
+        },
+        {
+          "text": "难度v6与参考的稳定交接；详见模块自身限制",
+          "path": "research/difficulty/difficulty_b8l2_handoff_20261016/README.md"
+        },
+        {
           "text": "难度v6：两图新空间、三图中等与粗分类边界",
           "path": "research/difficulty/difficulty_scope_resolution_20261016/README.md"
         },
@@ -216,6 +248,18 @@
       "page_path": "docs/thesis_main/topics/workers/README.md",
       "current_basis": [
         {
+          "text": "当前B8L2/D10人员分析含949份普通画像及门洞专项；保持连续画像和场景证据，不强制固定类别。",
+          "path": "research/workers/worker_b8l2_d10_20261017/README.md"
+        },
+        {
+          "text": "人员门洞专项与用途v2接续",
+          "path": "research/workers/worker_b8l2_20261016/usage_v2/README.md"
+        },
+        {
+          "text": "人员原B8L2画像与组合验证",
+          "path": "research/workers/worker_b8l2_20261016/README.md"
+        },
+        {
           "text": "人员四轴更新",
           "path": "research/workers/worker_four_axis_update_20261015/README.md"
         }
@@ -248,6 +292,18 @@
       "description": "Lee区域投票与墙线对应、全池投票、定位、连接和人数过程。",
       "page_path": "docs/thesis_main/topics/fusion/README.md",
       "current_basis": [
+        {
+          "text": "18图实际融合轨迹复用同资格B8L2/D10评分进行对照；没有重跑融合几何，外推仍受样本限制。",
+          "path": "research/fusion/wall_consensus_d10_20261017/README.md"
+        },
+        {
+          "text": "融合门洞与OOS用途分离",
+          "path": "research/fusion/wall_consensus_b8l2_20261016/usage_v2/README.md"
+        },
+        {
+          "text": "墙线融合原B8L2与v6接入；详见模块自身限制",
+          "path": "research/fusion/wall_consensus_b8l2_20261016/README.md"
+        },
         {
           "text": "融合质量与特殊层对照",
           "path": "research/fusion/wall_consensus_quality_20261015/README.md"
@@ -286,6 +342,22 @@
       "page_path": "docs/thesis_main/topics/same_room/README.md",
       "current_basis": [
         {
+          "text": "按已有分类完成当前接续：83对质量可比、78对共同人员至少4人，15对其它范围单列。",
+          "path": "research/same_room/same_room_update_20261017/README.md"
+        },
+        {
+          "text": "采用已有分类后的77对可比质量与不同范围专项",
+          "path": "research/same_room/same_room_b8l2_v6_20261016/working_relations_v4/README.md"
+        },
+        {
+          "text": "已有人工分类的统一采用入口",
+          "path": "research/same_room/relation_adoption_20261016/CROSS_MODULE_RELATIONS.json"
+        },
+        {
+          "text": "同房原B8L2与时间：固定v6；详见模块自身限制",
+          "path": "research/same_room/same_room_b8l2_v6_20261016/SUMMARY.json"
+        },
+        {
           "text": "同房人员模式",
           "path": "research/same_room/same_room_personnel_patterns_20261015/README.md"
         },
@@ -295,6 +367,14 @@
         }
       ],
       "history": [
+        {
+          "text": "同房用途v3与Q/T接入（旧严格关系层）",
+          "path": "research/same_room/same_room_b8l2_v6_20261016/usage_v3/README.md"
+        },
+        {
+          "text": "同房旧面板用途影响核对",
+          "path": "research/same_room/same_room_b8l2_v6_20261016/usage_v2/README.md"
+        },
         {
           "text": "当前为小样本、单建筑的Q/T证据；不外推为稳定普遍效应"
         }
@@ -318,6 +398,26 @@
       "description": "各批次覆盖、分母、分层结果、表格、图表与扩展复算。",
       "page_path": "docs/thesis_main/topics/statistics/README.md",
       "current_basis": [
+        {
+          "text": "当前统计以3222份库存、261图和1911份共同质量为锚，逐人、逐图、难度/场景及既有房间关系分开呈现。",
+          "path": "research/statistics/b8l2_d10_statistics_20261017/README.md"
+        },
+        {
+          "text": "3222当前库存的原B8L2与D10共同评分：1838质量可用",
+          "path": "research/quality/quality_b8l2_d10_20261017/README.md"
+        },
+        {
+          "text": "已有人工分类的逐组、逐人、逐视角详细统计",
+          "path": "research/statistics/b8l2_usage_v6_20261016/details_room_adopted_v3/README.md"
+        },
+        {
+          "text": "原B8L2新用途v2与细致统计",
+          "path": "research/statistics/b8l2_usage_v6_20261016/README.md"
+        },
+        {
+          "text": "固定v6共同评分与跨模块输入清单：1622条件数值",
+          "path": "research/statistics/b8l2_shared_v6_20261016/README.md"
+        },
         {
           "text": "B8L2主线数据重核、14页查阅表与各模块接入计划",
           "path": "research/statistics/b8l2_mainline_status_20261016/README.md"
@@ -347,7 +447,12 @@
           "text": "后续每次扩展保留旧集、新增集和扩展集；不把参考修订或算法变化归因于新数据"
         }
       ],
-      "reproduction": []
+      "reproduction": [
+        {
+          "text": "冻结输入实算B8L2与描述统计",
+          "path": "tools/thesis_main/analysis/b8l2_shared_snapshot_20261016.py"
+        }
+      ]
     },
     {
       "id": "literature",
@@ -517,13 +622,16 @@
       "formula": "F=(1/I-1)+Sb^2/32; d8=1.5*D^2/(D^2+8^2); H=(Hm/0.8)^2+(Hc/0.25)^2; Q=100/(1+sqrt(F^2+d8^2)+H), I=0 -> 0",
       "parameters": "c=8 degrees; L2 pooling; H scales=.8/.25 input units",
       "purpose": "当前质量线几何工作指数，合并底面/边界负担与自身方向残差",
-      "adoption_status": "当前主线工作评分；891份描述数据已重核，人员/融合/同房建模待迁移",
-      "verification_status": "固定样本/机制研究及用户粗评；效度仍需累积",
+      "adoption_status": "当前主线采用原WQ-B8L2-20261015；固定v6共同评分已完成，Pro新方案并行，各模块按自身资格另作建模/过程研究",
+      "verification_status": "固定原参数实算1624，1622条件数值；旧891同参考分值在1e-8内保持；专项数值不认证表示适用性",
       "evidence_paths": [
         "research/quality/quality_ab_feedback_handoff_20261015/README.md",
         "research/quality/quality_combination_review_20261016/README.md",
         "research/quality/quality_three_routes_feedback_20261016/README.md",
-        "research/statistics/b8l2_mainline_status_20261016/README.md"
+        "research/statistics/b8l2_mainline_status_20261016/README.md",
+        "research/statistics/b8l2_shared_v6_20261016/README.md",
+        "research/statistics/b8l2_shared_v6_20261016/MODEL_PARAMETERS.json",
+        "research/statistics/b8l2_shared_v6_20261016/audit/SCORING_AUDIT.md"
       ],
       "implementation_paths": [
         "tools/thesis_main/analysis/scope_quality_scoring_20261016.py",
@@ -851,6 +959,250 @@
         "tools/thesis_main/analysis/b8l2_mainline_workbook_20261016.mjs"
       ],
       "reproduction_status": "本轮重新运行既有参考/统计链和新查阅整理；与前版891份B8L2/参考一致，不含人员建模或融合重跑"
+    },
+    {
+      "id": "b8l2_shared_v6_20261016_v1",
+      "title": "原B8L2固定v6共同评分",
+      "population": "1622条件评分：1575普通主分析+47专项；manual1160、semi462；旧891保留+731首次覆盖",
+      "batch": "existing_inventory_20261016；没有新采集",
+      "input_version": "b8l2_shared_v6_20261016_v1；FROZEN_INPUTS及inputs固定，运行不读实时CURRENT",
+      "reference_version": "332参考身份/259当前目标；41确认空间中12完整29pending；原点序不变",
+      "eligibility_rule": "同条件真人池至少3+既有GT/人员/图片门+预先唯一绑定+完整参考；当前issue_pending阻止Q，旧评分覆盖不是资格",
+      "auxiliary_tags": "v6人工辅助粗类，部分参考作答；普通/专项/条件分别解释；source秒与同目标秒分列",
+      "method_version": "WQ-B8L2-20261015原参数主视角；同参考WQ/A10/均高棱柱IoU实算对照",
+      "result_path": "research/statistics/b8l2_shared_v6_20261016/README.md",
+      "member_list_path": "research/statistics/b8l2_shared_v6_20261016/quality_records.csv",
+      "source_paths": [
+        "research/statistics/b8l2_shared_v6_20261016/FROZEN_INPUTS.json",
+        "research/statistics/b8l2_shared_v6_20261016/CROSS_MODULE_INPUTS.json",
+        "research/statistics/b8l2_shared_v6_20261016/inputs/reference_catalog.json",
+        "research/statistics/b8l2_shared_v6_20261016/audit/SCORING_AUDIT.md",
+        "research/statistics/b8l2_shared_v6_20261016/HANDOFF.md",
+        "research/statistics/b8l2_shared_v6_20261016/FIELD_CONTRACT.json"
+      ],
+      "reproduction_paths": [
+        "tools/thesis_main/analysis/b8l2_shared_snapshot_20261016.py",
+        "tools/thesis_main/analysis/b8l2_shared_descriptive_20261016.py"
+      ],
+      "reproduction_status": "固定来源上1624实算/1622条件数值、成员和统计已独立核验；不是人员重训或新融合实验"
+    },
+    {
+      "id": "difficulty_b8l2_handoff_20261016_v1",
+      "title": "难度v6稳定交接",
+      "population": "259库存图/205普通候选；41确认新空间，12完整/29预览或待补",
+      "batch": "已有库存，无新采集",
+      "input_version": "scope_preferred_difficulty_scope_resolved_20261016_v6",
+      "reference_version": "逐图稳定target及完整参考状态",
+      "eligibility_rule": "只交接，不赋予评分/人数资格",
+      "auxiliary_tags": "人工辅助粗类及作答暴露状态，17仅改类/2目标/3资格变化可重叠",
+      "method_version": "没有新评分，原B8L2由共同数据线实算",
+      "result_path": "research/difficulty/difficulty_b8l2_handoff_20261016/README.md",
+      "member_list_path": "research/difficulty/difficulty_b8l2_handoff_20261016/image_inventory.csv",
+      "source_paths": [
+        "research/difficulty/difficulty_b8l2_handoff_20261016/INPUT_MANIFEST.json"
+      ],
+      "reproduction_paths": [
+        "tools/thesis_main/analysis/difficulty_b8l2_handoff_20261016.py"
+      ],
+      "reproduction_status": "模块已生成稳定来源及预览/完整几何分离；统计线登记实际文件，不重复人工审核"
+    },
+    {
+      "id": "wall_consensus_b8l2_20261016_v1",
+      "title": "墙线融合原B8L2固定v6",
+      "population": "7320路径状态/6693唯一子集；6247条件B8L2、3578限制清楚普通比较状态",
+      "batch": "原12图+6特殊图冻结融合几何",
+      "input_version": "模块input_snapshot固定难度v6和成员/几何，与共同inputs核对",
+      "reference_version": "当前完整参考及目标绑定/适用性逐状态区分",
+      "eligibility_rule": "来源池至少3人；GT/留出/绑定/适用性暂停单列；k1保留，k2节点保留但质量暂缓",
+      "auxiliary_tags": "普通、门洞、非正交、OOS、待复核、绑定未决、来源暂停分别报告",
+      "method_version": "WQ-B8L2-20261015原参数，同参考WQ/均高棱柱IoU；未重新融合",
+      "result_path": "research/fusion/wall_consensus_b8l2_20261016/README.md",
+      "member_list_path": "research/fusion/wall_consensus_b8l2_20261016/trajectory_scores.csv",
+      "source_paths": [
+        "research/fusion/wall_consensus_b8l2_20261016/input_snapshot.json",
+        "research/fusion/wall_consensus_b8l2_20261016/SUMMARY.json",
+        "research/fusion/wall_consensus_b8l2_20261016/shared_input_comparison.json"
+      ],
+      "reproduction_paths": [
+        "tools/thesis_main/analysis/wall_consensus_b8l2_20261016.py"
+      ],
+      "reproduction_status": "模块实际冻结几何重评分已交付，统计线核对文件和分母登记，未复跑融合或将条件数值当统一主面板"
+    },
+    {
+      "id": "same_room_b8l2_v6_20261016_v1",
+      "title": "同房固定v6质量与时间接入",
+      "population": "共同1622条件数值作输入；manual40直接图对有共同质量、33图对共同评分者至少4",
+      "batch": "已有直接同房关系/原作答，无新增采集",
+      "input_version": "b8l2_shared_v6_20261016_v1",
+      "reference_version": "共同完整参考及逐作答binding，普通双方与专项/缺侧分开",
+      "eligibility_rule": "来源池至少3人、直接confirmed关系、同条件/共同人员；不补传递关系",
+      "auxiliary_tags": "来源时间1750及目标时间440分开，人员迁移及实际墙线曲线依模块后续证据",
+      "method_version": "WQ-B8L2-20261015原参数；同输入换指标与v4-v6成员变化分开",
+      "result_path": "research/same_room/same_room_b8l2_v6_20261016/SUMMARY.json",
+      "member_list_path": "research/same_room/same_room_b8l2_v6_20261016/current_pairs.csv",
+      "source_paths": [
+        "research/same_room/same_room_b8l2_v6_20261016/FIELD_CONTRACT.json",
+        "research/same_room/same_room_b8l2_v6_20261016/direct_relations.json",
+        "research/same_room/same_room_b8l2_v6_20261016/v4_v6_quality_membership_bridge.csv"
+      ],
+      "reproduction_paths": [
+        "tools/thesis_main/analysis/same_room_b8l2_20261016.py"
+      ],
+      "reproduction_status": "质量/来源时间分析已落盘；SUMMARY阶段登记，不宣称人员画像和实际墙线比较已完成"
+    },
+    {
+      "id": "project98_input_20261017_v1",
+      "title": "Project98正式输入批次",
+      "population": "3222份作答/261图；既定排除后2991份/25人；新增批次70份/7名既有人员",
+      "batch": "Project98/20261017；新增70份",
+      "input_version": "annotation_batch_98_20261017_v1",
+      "reference_version": "沿用冻结GT与用户已确认的审核、配对和顺序；空间评分绑定另记",
+      "eligibility_rule": "库存接入与分析资格分开；不因导入自动获得完整质量资格",
+      "auxiliary_tags": "任务人员时间5205秒；缺失不填0；未用lead_time替代",
+      "method_version": "research_analysis_bundle_v1",
+      "result_path": "analysis_results/research_input_20261017/README.md",
+      "member_list_path": "analysis_results/research_input_20261017/batch_admission.json",
+      "source_paths": [
+        "analysis_results/research_input_20261017/manifest.json",
+        "research/statistics/new_annotation_intake_20261017/README.md"
+      ],
+      "reproduction_paths": [
+        "tools/thesis_main/data_prep/consolidate_research_input.py",
+        "tools/thesis_main/data_prep/admit_annotation_batch_20261017.py"
+      ],
+      "reproduction_status": "manifest及批次核验通过；原始export_label保持真源"
+    },
+    {
+      "id": "quality_b8l2_d10_20261017_v2",
+      "title": "共同质量B8L2主线与D10敏感性v2",
+      "population": "1911份质量可用：1699普通、188门洞、24其它；新增63份可用、6份仅底面、1份完整但范围受限",
+      "batch": "3222份当前库存/261图",
+      "input_version": "quality_b8l2_d10_20261017_v2；Project98 manifest",
+      "reference_version": "当前空间路由绑定版本；底面与完整参考资格分开",
+      "eligibility_rule": "B8L2与D10同输入、同参考、同一资格掩码；OOS仅诊断",
+      "auxiliary_tags": "门洞单列；其它用途单列；`b8c-04`分析暂停且仍在库存",
+      "method_version": "WQ-B8L2-20261015；D10仅方向尺度8°改10°，不是A10",
+      "result_path": "research/quality/quality_b8l2_d10_20261017/README.md",
+      "member_list_path": "research/quality/quality_b8l2_d10_20261017/quality_records.csv",
+      "source_paths": [
+        "research/quality/quality_b8l2_d10_20261017/CROSS_MODULE_INPUTS.json",
+        "research/quality/quality_b8l2_d10_20261017/CHECKS.json"
+      ],
+      "reproduction_paths": [
+        "tools/thesis_main/analysis/quality_b8l2_d10_20261017.py",
+        "tests/test_quality_b8l2_d10_20261017.py"
+      ],
+      "reproduction_status": "目录、输入绑定、同分母和原1787基线一致性核验完成；不据分数升高宣称更准确"
+    },
+    {
+      "id": "difficulty_current_20261017_v6",
+      "title": "当前261图难度v6及质量分层描述",
+      "population": "261图；人工粗分类沿用v6，新增2图为中等；条件/用途范围以报告分层为准",
+      "batch": "Project98当前库存；新增70份影响质量覆盖但不自动改变标签",
+      "input_version": "difficulty_current_20261017_v1",
+      "reference_version": "逐图已声明目标版本；目标未定与场景未记录保留",
+      "eligibility_rule": "按当前质量共同包与用途拆分展示；计算可能不等于主分析合格",
+      "auxiliary_tags": "门洞/OOS及ordinary_primary、doorway_quality、special_conditional_only分别报告",
+      "method_version": "difficulty_scope_resolved_20261016_v6 + new image decisions",
+      "result_path": "research/difficulty/difficulty_current_20261017/README.md",
+      "member_list_path": "research/difficulty/difficulty_current_20261017/current_261.json",
+      "source_paths": [
+        "research/difficulty/difficulty_current_20261017/SOURCE_HANDOFF.json",
+        "research/quality/quality_b8l2_d10_20261017/CROSS_MODULE_INPUTS.json"
+      ],
+      "reproduction_paths": [
+        "tools/thesis_main/analysis/difficulty_current_20261017.py",
+        "tests/test_difficulty_current_20261017.py"
+      ],
+      "reproduction_status": "分母与用途分层对账、定向测试通过；不证明人工粗类独立有效"
+    },
+    {
+      "id": "worker_b8l2_d10_20261017_v1",
+      "title": "人员B8L2/D10连续画像与门洞专项",
+      "population": "当前普通面板1048份/24人/87图/19栋；门洞专项另行报告",
+      "batch": "3222份当前库存；新批身份已接入",
+      "input_version": "quality_b8l2_d10_20261017_v2",
+      "reference_version": "同一空间路由与目标参考；楼外划分固定",
+      "eligibility_rule": "共同质量同用途；普通与门洞证据分开，不把连续画像强制变固定类别",
+      "auxiliary_tags": "新批次和旧覆盖增量分开；OOS不进Q画像",
+      "method_version": "worker_b8l2_d10_20261017_v1；B8L2主线/D10敏感性",
+      "result_path": "research/workers/worker_b8l2_d10_20261017/README.md",
+      "member_list_path": "research/workers/worker_b8l2_d10_20261017/quality_panel.csv",
+      "source_paths": [
+        "research/workers/worker_b8l2_d10_20261017/INPUTS.json",
+        "research/workers/worker_b8l2_d10_20261017/CHECKS.json"
+      ],
+      "reproduction_paths": [
+        "tools/thesis_main/analysis/worker_b8l2_d10_20261017.py",
+        "tests/test_worker_b8l2_d10_20261017.py"
+      ],
+      "reproduction_status": "人员、场景及新旧成员桥接核验见包内检查；不宣称分类迁移或普遍预测已验证"
+    },
+    {
+      "id": "wall_consensus_d10_20261017_v1",
+      "title": "18图既有融合轨迹的B8L2/D10同资格比较",
+      "population": "18图既有融合池；7320状态/6693唯一子集；6247同非OOS评分掩码；非全部主比较资格",
+      "batch": "原12图人数过程及另6图特殊层；新增70份与这些18图无重叠",
+      "input_version": "quality_b8l2_d10_20261017_v2；几何过程复用已冻结输入",
+      "reference_version": "沿用原融合声明参考；rPc局部范围变化单列说明",
+      "eligibility_rule": "不重跑融合；失败、待定、门洞和OOS用途分别保留",
+      "auxiliary_tags": "自动终点与人工辅助终点分开；不插值、不按GT择优成员",
+      "method_version": "原墙线流程；B8L2主线/D10同资格敏感性",
+      "result_path": "research/fusion/wall_consensus_d10_20261017/README.md",
+      "member_list_path": "research/fusion/wall_consensus_d10_20261017/trajectory_scores.csv",
+      "source_paths": [
+        "research/fusion/wall_consensus_d10_20261017/INPUT_BRIDGE.json",
+        "research/fusion/wall_consensus_d10_20261017/CHECKS.json"
+      ],
+      "reproduction_paths": [
+        "tools/thesis_main/analysis/wall_consensus_d10_20261017.py",
+        "tests/test_wall_consensus_d10_20261017.py"
+      ],
+      "reproduction_status": "输入桥接和6项定向测试完成；未新增融合几何或声称全库验证"
+    },
+    {
+      "id": "same_room_update_20261017_v1",
+      "title": "已有同房分类下当前质量与时间比较",
+      "population": "83对范围可比质量；78对共同人员不少于4；其它范围15对单列",
+      "batch": "3222份当前库存；沿用用户既有关系分类",
+      "input_version": "quality_b8l2_d10_20261017_v2",
+      "reference_version": "使用每份作答当前绑定目标；不同范围不混入主配对",
+      "eligibility_rule": "直接关系采用与人员交集分别记录；不以逐组确认状态重新设门",
+      "auxiliary_tags": "B8L2主线/D10敏感性；时间来源和同目标时间分开",
+      "method_version": "same_room_update_20261017_v1",
+      "result_path": "research/same_room/same_room_update_20261017/README.md",
+      "member_list_path": "research/same_room/same_room_update_20261017/current_pairs.csv",
+      "source_paths": [
+        "research/same_room/same_room_update_20261017/INPUTS.json",
+        "research/same_room/same_room_update_20261017/VALIDATION.json"
+      ],
+      "reproduction_paths": [
+        "tools/thesis_main/analysis/same_room_update_20261017.py",
+        "tests/test_same_room_update_20261017.py"
+      ],
+      "reproduction_status": "配对、成员和当前质量范围核对完成；跨组及普遍预测仍不成立"
+    },
+    {
+      "id": "b8l2_d10_statistics_20261017_v1",
+      "title": "当前共同质量与跨模块描述统计",
+      "population": "3222份库存/261图；1911份质量可用；统计保留逐人、逐图、条件、难度、场景、关系组和缺失原因",
+      "batch": "Project98当前输入",
+      "input_version": "quality_b8l2_d10_20261017_v2",
+      "reference_version": "当前逐记录目标与空间绑定；分母按用途和条件声明",
+      "eligibility_rule": "作答等权、图片等权、人员门槛、OOS诊断及排除分开报告",
+      "auxiliary_tags": "active_time按已核来源与单位使用；不填0，不以lead_time替代",
+      "method_version": "b8l2_d10_statistics_20261017_v1",
+      "result_path": "research/statistics/b8l2_d10_statistics_20261017/README.md",
+      "member_list_path": "research/statistics/b8l2_d10_statistics_20261017/record_lookup.csv",
+      "source_paths": [
+        "research/statistics/b8l2_d10_statistics_20261017/INPUTS.json",
+        "research/statistics/b8l2_d10_statistics_20261017/VERIFICATION.json"
+      ],
+      "reproduction_paths": [
+        "tools/thesis_main/analysis/b8l2_d10_statistics_20261017.py",
+        "tests/test_b8l2_d10_statistics_20261017.py"
+      ],
+      "reproduction_status": "总体分母、配对面板及关键分组核对完成；各表仍按各自资格解释"
     }
   ],
   "count_definitions": [
@@ -876,8 +1228,13 @@
     },
     {
       "count": "891",
-      "meaning": "当前完整质量统计集合：828 manual+63 semi；不是由1145简单增减得到。",
+      "meaning": "历史v3/v4完整评分覆盖：828manual+63semi；本轮全部保留于固定v6共同评分，但不是当前覆盖总数。",
       "evidence": "research/statistics/descriptive_statistics_rescored_20261016/README.md"
+    },
+    {
+      "count": "1622",
+      "meaning": "固定v6共同条件评分：1575普通主分析+47专项，旧891保留+731原库存首次计算；不代表1622个独立人/图或OOS适用性已验证。",
+      "evidence": "research/statistics/b8l2_shared_v6_20261016/README.md"
     }
   ],
   "comparison_rules": [
@@ -965,11 +1322,14 @@
       "title": "接手统计数据任务",
       "link": "codex://threads/01a13eaa-5b3e-7191-8ed5-ce722daf436e",
       "observed_at": "2026-10-16",
-      "observed_status": "本轮只读复核最新完成返回，尚未派发新接入任务",
-      "latest_return_summary": "输出包含不同集合/版本；891当前统计不是所有模块重建。",
+      "observed_status": "本轮固定v6共同B8L2评分与描述统计已完成",
+      "latest_return_summary": "1624实测/1622条件数值，1575普通+47专项；旧891保留+731新覆盖，42旧分改难度组；唯一共同清单CROSS_MODULE_INPUTS，各模块另作模型/融合研究。",
       "saved_evidence_paths": [
         "research/statistics/descriptive_statistics_rescored_20261016/README.md",
-        "research/statistics/b8l2_mainline_status_20261016/THREAD_STATUS.json"
+        "research/statistics/b8l2_mainline_status_20261016/THREAD_STATUS.json",
+        "research/statistics/b8l2_shared_v6_20261016/README.md",
+        "research/statistics/b8l2_shared_v6_20261016/CROSS_MODULE_INPUTS.json",
+        "research/statistics/b8l2_shared_v6_20261016/audit/SCORING_AUDIT.md"
       ],
       "archive_status": "摘要登记；完整对话仍在Codex"
     },
@@ -8754,6 +9114,531 @@
       "availability": "本地落盘",
       "relationships": [
         "MAT-research--difficulty--difficulty_pair_display_20261016"
+      ]
+    },
+    {
+      "id": "MAT-docs--thesis_main--history--fusion-sop-model-20261016",
+      "title": "融合SOP与模型过时说明（历史归档）",
+      "theme": "fusion",
+      "type": "主题文档",
+      "date": "20261016",
+      "source_path": "docs/thesis_main/history/融合SOP与模型过时说明_20261016.md",
+      "current_path": "docs/thesis_main/history/融合SOP与模型过时说明_20261016.md",
+      "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
+      "adoption_status": "历史归档，不作为当前执行",
+      "verification_status": "原文归档；相对引用同步",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
+      "relationships": []
+    },
+    {
+      "id": "MAT-research--statistics--b8l2_shared_v6_20261016",
+      "title": "B8L2固定v6共同评分与描述统计",
+      "theme": "statistics",
+      "type": "本轮版本化研究交付",
+      "date": "20261016",
+      "source_path": "research/statistics/b8l2_shared_v6_20261016",
+      "current_path": "research/statistics/b8l2_shared_v6_20261016",
+      "source": "固定输入与各模块实际交付文件；共同数据由统计线唯一生成",
+      "adoption_status": "1624完整测量，1622条件评分；1575普通主分析，47专项；旧891保留+731首次覆盖",
+      "verification_status": "3152身份/资格重建、固定引擎抽核、31项定向测试、35页工作簿与七组图核验",
+      "availability": "本地可审阅，未推送",
+      "relationships": [
+        "research/statistics/b8l2_shared_v6_20261016/CROSS_MODULE_INPUTS.json",
+        "历史快照保留，新增人员/图片未采集"
+      ]
+    },
+    {
+      "id": "MAT-research--difficulty--difficulty_b8l2_handoff_20261016",
+      "title": "难度v6与参考的稳定交接",
+      "theme": "difficulty",
+      "type": "本轮版本化研究交付",
+      "date": "20261016",
+      "source_path": "research/difficulty/difficulty_b8l2_handoff_20261016",
+      "current_path": "research/difficulty/difficulty_b8l2_handoff_20261016",
+      "source": "固定输入与各模块实际交付文件；共同数据由统计线唯一生成",
+      "adoption_status": "当前难度及参考交接，不评分",
+      "verification_status": "输入、预览与完整参考分开；保留22处分歧采用来源",
+      "availability": "本地可审阅，未推送",
+      "relationships": [
+        "research/statistics/b8l2_shared_v6_20261016/CROSS_MODULE_INPUTS.json",
+        "历史快照保留，新增人员/图片未采集"
+      ]
+    },
+    {
+      "id": "MAT-research--fusion--wall_consensus_b8l2_20261016",
+      "title": "墙线融合原B8L2与v6接入",
+      "theme": "fusion",
+      "type": "本轮版本化研究交付",
+      "date": "20261016",
+      "source_path": "research/fusion/wall_consensus_b8l2_20261016",
+      "current_path": "research/fusion/wall_consensus_b8l2_20261016",
+      "source": "固定输入与各模块实际交付文件；共同数据由统计线唯一生成",
+      "adoption_status": "原18图冻结融合结果实际重评分；未重跑融合",
+      "verification_status": "7320路径状态/6693唯一子集；6247条件B8L2，3578限制清楚普通比较状态",
+      "availability": "本地可审阅，未推送",
+      "relationships": [
+        "research/statistics/b8l2_shared_v6_20261016/CROSS_MODULE_INPUTS.json",
+        "历史快照保留，新增人员/图片未采集"
+      ]
+    },
+    {
+      "id": "MAT-research--same_room--same_room_b8l2_v6_20261016",
+      "title": "同房原B8L2与时间：固定v6",
+      "theme": "same_room",
+      "type": "本轮版本化研究交付",
+      "date": "20261016",
+      "source_path": "research/same_room/same_room_b8l2_v6_20261016",
+      "current_path": "research/same_room/same_room_b8l2_v6_20261016",
+      "source": "固定输入与各模块实际交付文件；共同数据由统计线唯一生成",
+      "adoption_status": "质量与来源时间已实际接入，人员画像与墙线比较按本模块状态继续",
+      "verification_status": "40共同质量图对、33对共同人员至少4人；18图实际墙线中无直接确认同房对；最新Q/T待接入",
+      "availability": "本地可审阅，未推送",
+      "relationships": [
+        "research/statistics/b8l2_shared_v6_20261016/CROSS_MODULE_INPUTS.json",
+        "历史快照保留，新增人员/图片未采集"
+      ]
+    },
+    {
+      "id": "MAT-research--data--scope_redundant_vertices_20261016",
+      "title": "多空间旧点职责与冗余处理",
+      "theme": "data",
+      "type": "研究核验与派生几何",
+      "date": "20261016",
+      "source_path": "research/data/scope_redundant_vertices_20261016",
+      "current_path": "research/data/scope_redundant_vertices_20261016",
+      "source": "当前正式loader、难度v6及已准入参考目录",
+      "adoption_status": "41图43空间展示处理已获用户确认；派生视图未替换冻结GT/评分",
+      "verification_status": "296目标扫描；41图43空间；2参考自比及1绑定作答原B8L2差值0；10项定向测试",
+      "availability": "本地可审阅，未推送",
+      "relationships": [
+        "tools/thesis_main/analysis/scope_redundant_vertices_20261016.py",
+        "tools/thesis_main/analysis/scope_redundant_viewer_20261016.py",
+        "research/data/scope_redundant_vertices_20261016/REVIEW.html",
+        "tests/test_scope_redundant_vertices_20261016.py",
+        "research/difficulty/difficulty_scope_resolution_20261016/README.md",
+        "research/data/scope_redundant_vertices_20261016/USER_CONFIRMATION.json"
+      ]
+    },
+    {
+      "id": "MAT-docs--thesis_main--cross-module-statistics-audit-20261016",
+      "title": "原B8L2接入与详细统计覆盖核对",
+      "theme": "coordination",
+      "type": "主题文档",
+      "date": "20261016",
+      "source_path": "docs/thesis_main/跨线程接入与统计覆盖核对_20261016.md",
+      "current_path": "docs/thesis_main/跨线程接入与统计覆盖核对_20261016.md",
+      "source": "五原模块最新回复、实际交付及565行宽表独立汇总核查",
+      "adoption_status": "当前覆盖核对；补做任务不冒称完成",
+      "verification_status": "三张宽表的来源行数、质量及两类时间有效数与均值一致；目录和引用检查",
+      "availability": "本地可审阅，未推送",
+      "relationships": [
+        "research/statistics/b8l2_shared_v6_20261016/README.md",
+        "research/data/scope_redundant_vertices_20261016/USER_CONFIRMATION.json"
+      ]
+    },
+    {
+      "id": "MAT-research--statistics--b8l2_usage_v6_20261016",
+      "title": "原B8L2新用途v2与细致统计",
+      "theme": "statistics",
+      "type": "版本化研究交付",
+      "date": "20261016",
+      "source_path": "research/statistics/b8l2_usage_v6_20261016",
+      "current_path": "research/statistics/b8l2_usage_v6_20261016",
+      "source": "原模块实际交付及统筹本轮验收",
+      "adoption_status": "1787质量可用；OOS仅诊断；全3152计算状态及27人排除通过验收",
+      "verification_status": "统筹重跑跨模块29项测试；共同用途台账及OOS屏蔽另行复核",
+      "availability": "本地可审阅，未推送",
+      "relationships": [
+        "docs/thesis_main/跨线程接入与统计覆盖核对_20261016.md"
+      ]
+    },
+    {
+      "id": "MAT-research--workers--worker_b8l2_20261016",
+      "title": "人员原B8L2画像与组合验证",
+      "theme": "workers",
+      "type": "版本化研究交付",
+      "date": "20261016",
+      "source_path": "research/workers/worker_b8l2_20261016",
+      "current_path": "research/workers/worker_b8l2_20261016",
+      "source": "原模块实际交付及统筹本轮验收",
+      "adoption_status": "949普通Q画像及642团队实算；门洞用途v2增量待接续",
+      "verification_status": "统筹重跑跨模块29项测试；共同用途台账及OOS屏蔽另行复核",
+      "availability": "本地可审阅，未推送",
+      "relationships": [
+        "docs/thesis_main/跨线程接入与统计覆盖核对_20261016.md"
+      ]
+    },
+    {
+      "id": "MAT-research--fusion--wall_consensus_b8l2_20261016--usage_v2",
+      "title": "融合门洞与OOS用途分离",
+      "theme": "fusion",
+      "type": "版本化研究交付",
+      "date": "20261016",
+      "source_path": "research/fusion/wall_consensus_b8l2_20261016/usage_v2",
+      "current_path": "research/fusion/wall_consensus_b8l2_20261016/usage_v2",
+      "source": "原模块实际交付及统筹本轮验收",
+      "adoption_status": "18图计算与用途分离完成，377来源共同用途桥接已完成",
+      "verification_status": "统筹重跑跨模块29项测试；共同用途台账及OOS屏蔽另行复核",
+      "availability": "本地可审阅，未推送",
+      "relationships": [
+        "docs/thesis_main/跨线程接入与统计覆盖核对_20261016.md"
+      ]
+    },
+    {
+      "id": "MAT-research--same_room--same_room_b8l2_v6_20261016--usage_v2",
+      "title": "同房旧面板用途影响核对",
+      "theme": "same_room",
+      "type": "版本化研究交付",
+      "date": "20261016",
+      "source_path": "research/same_room/same_room_b8l2_v6_20261016/usage_v2",
+      "current_path": "research/same_room/same_room_b8l2_v6_20261016/usage_v2",
+      "source": "原模块实际交付及统筹本轮验收",
+      "adoption_status": "旧40图对用途桥接通过；新1787和门洞增量待接续",
+      "verification_status": "统筹重跑跨模块29项测试；共同用途台账及OOS屏蔽另行复核",
+      "availability": "本地可审阅，未推送",
+      "relationships": [
+        "docs/thesis_main/跨线程接入与统计覆盖核对_20261016.md"
+      ]
+    },
+    {
+      "id": "MAT-research--workers--worker_b8l2_20261016--usage_v2",
+      "title": "人员门洞专项与用途v2接续",
+      "theme": "workers",
+      "type": "版本化研究交付",
+      "date": "20261016",
+      "source_path": "research/workers/worker_b8l2_20261016/usage_v2",
+      "current_path": "research/workers/worker_b8l2_20261016/usage_v2",
+      "source": "原线程交付与统筹明细桥接复核",
+      "adoption_status": "949普通面板不变；188门洞证据/180非留出专项；27人全台账已接入",
+      "verification_status": "本次跨模块14项测试；949普通评分、1540图对桥接及3152用途记录核对",
+      "availability": "本地可审阅，未推送",
+      "relationships": [
+        "docs/thesis_main/跨线程接入与统计覆盖核对_20261016.md"
+      ]
+    },
+    {
+      "id": "MAT-research--same_room--same_room_b8l2_v6_20261016--usage_v3",
+      "title": "同房用途v3与Q/T接入（旧严格关系层）",
+      "theme": "same_room",
+      "type": "版本化研究交付",
+      "date": "20261016",
+      "source_path": "research/same_room/same_room_b8l2_v6_20261016/usage_v3",
+      "current_path": "research/same_room/same_room_b8l2_v6_20261016/usage_v3",
+      "source": "原线程交付与统筹明细桥接复核",
+      "adoption_status": "共同用途接续完成；旧严格确认状态筛选，已按用户要求启动现有分类采用纠正",
+      "verification_status": "本次跨模块14项测试；949普通评分、1540图对桥接及3152用途记录核对",
+      "availability": "本地可审阅，未推送",
+      "relationships": [
+        "docs/thesis_main/跨线程接入与统计覆盖核对_20261016.md"
+      ]
+    },
+    {
+      "id": "MAT-research--same_room--relation_adoption_20261016",
+      "title": "已有人工同房分类采用版",
+      "theme": "same_room",
+      "type": "版本化研究交付",
+      "date": "20261016",
+      "source_path": "research/same_room/relation_adoption_20261016",
+      "current_path": "research/same_room/relation_adoption_20261016",
+      "source": "原人工分类与用户直接采用指示",
+      "adoption_status": "直接采用已有分类，保留范围分层；不以状态字符串作为新门槛",
+      "verification_status": "关系冻结v2；模块19项测试通过，统筹追加10项关系/统计消费测试通过",
+      "availability": "本地可审阅，未推送",
+      "relationships": [
+        "docs/thesis_main/跨线程接入与统计覆盖核对_20261016.md"
+      ]
+    },
+    {
+      "id": "MAT-research--same_room--same_room_b8l2_v6_20261016--working_relations_v4",
+      "title": "按已有同房分类重算的工作结果",
+      "theme": "same_room",
+      "type": "版本化研究交付",
+      "date": "20261016",
+      "source_path": "research/same_room/same_room_b8l2_v6_20261016/working_relations_v4",
+      "current_path": "research/same_room/same_room_b8l2_v6_20261016/working_relations_v4",
+      "source": "原人工分类与用户直接采用指示",
+      "adoption_status": "直接采用已有分类，保留范围分层；不以状态字符串作为新门槛",
+      "verification_status": "关系冻结v2；模块19项测试通过，统筹追加10项关系/统计消费测试通过",
+      "availability": "本地可审阅，未推送",
+      "relationships": [
+        "docs/thesis_main/跨线程接入与统计覆盖核对_20261016.md"
+      ]
+    },
+    {
+      "id": "MAT-research--statistics--b8l2_usage_v6_20261016--details_room_adopted_v3",
+      "title": "按已有人工同房分类的细致统计",
+      "theme": "statistics",
+      "type": "版本化研究交付",
+      "date": "20261016",
+      "source_path": "research/statistics/b8l2_usage_v6_20261016/details_room_adopted_v3",
+      "current_path": "research/statistics/b8l2_usage_v6_20261016/details_room_adopted_v3",
+      "source": "共同用途v2与已有人工分类",
+      "adoption_status": "260原组与259工作单元逐组、逐人、逐视角统计",
+      "verification_status": "关系和统计消费定向10项测试通过",
+      "availability": "本地可审阅，未推送",
+      "relationships": [
+        "docs/thesis_main/跨线程接入与统计覆盖核对_20261016.md"
+      ]
+    },
+    {
+      "id": "MAT-analysis_results--quality_resumed_independent_audit_20261017",
+      "title": "EBC2与D10恢复研究的独立审查",
+      "theme": "quality",
+      "type": "独立审查证据",
+      "date": "20261017",
+      "source_path": "analysis_results/quality_resumed_independent_audit_20261017",
+      "current_path": "analysis_results/quality_resumed_independent_audit_20261017",
+      "source": "Pro和Dot交付复核、当前用途逐条核对及用户追加评论",
+      "adoption_status": "未替换原B8L2；新模型继续竞争研究",
+      "verification_status": "45项包测试；数学反例/实际边信用复算；891身份及当前1787覆盖核对",
+      "availability": "本地可审阅，未推送",
+      "relationships": [
+        "research/statistics/b8l2_usage_v6_20261016/CROSS_MODULE_INPUTS.json"
+      ]
+    },
+    {
+      "id": "MAT-research--quality--quality_three_model_review_20261017",
+      "title": "三模型冗余点与分层图片核验",
+      "theme": "quality",
+      "type": "人工核验工作台",
+      "date": "20261017",
+      "source_path": "research/quality/quality_three_model_review_20261017",
+      "current_path": "research/quality/quality_three_model_review_20261017",
+      "source": "用户最新澄清、固定v6用途与三模型逐例复算",
+      "adoption_status": "待人工审核；原B8L2主线不变，D10与EBC2并行比较",
+      "verification_status": "35卡：1真人冗余对照、2参考自比、26普通、6门洞；43空间全展示",
+      "availability": "本地可审阅，未推送",
+      "relationships": [
+        "analysis_results/quality_resumed_independent_audit_20261017",
+        "research/data/scope_redundant_vertices_20261016"
+      ]
+    },
+    {
+      "id": "MAT-research--statistics--annotation_counts_20261017",
+      "title": "当前逐图独立标注人数与图片和GT状态",
+      "theme": "statistics",
+      "type": "版本化研究交付",
+      "date": "20261017",
+      "source_path": "research/statistics/annotation_counts_20261017",
+      "current_path": "research/statistics/annotation_counts_20261017",
+      "source": "当前manifest-backed loader、既有作答人员门、难度v6及后续参考回执",
+      "adoption_status": "261图/3222原作答/2991保留/25人；231移出保留；1911共同质量只状态不作人数门",
+      "verification_status": "当前输入验证、定向测试和独立增量核对；截图清理与具体结果见交付记录",
+      "availability": "本地可审阅，未推送",
+      "relationships": [
+        "tools/thesis_main/analysis/annotation_counts_20261017.py",
+        "tools/thesis_main/analysis/annotation_counts_workbook_20261017.mjs",
+        "tests/test_annotation_counts_20261017.py"
+      ]
+    },
+    {
+      "id": "MAT-research--statistics--annotation_gallery_20261017",
+      "title": "已标注图片总览与补人自动保存工作台",
+      "theme": "statistics",
+      "type": "版本化研究交付",
+      "date": "20261017",
+      "source_path": "research/statistics/annotation_gallery_20261017",
+      "current_path": "research/statistics/annotation_gallery_20261017",
+      "source": "当前3222作答完整manifest、旧用途v2冻结质量与显式新增待绑定上下文",
+      "adoption_status": "261图/1911共同质量，B8L2主D10并列；新增来源特别标明63质量/6底面/1完整受限；43候选/41图；独立补人计划不改",
+      "verification_status": "当前输入验证、定向测试和独立增量核对；截图清理与具体结果见交付记录",
+      "availability": "本地可运行，未推送",
+      "relationships": [
+        "tools/thesis_main/analysis/annotation_gallery_data_20261017.py",
+        "tools/thesis_main/analysis/annotation_gallery_new_batch_20261017.py",
+        "tools/thesis_main/analysis/annotation_gallery_server_20261017.py",
+        "tools/thesis_main/analysis/annotation_gallery_20261017/index.html",
+        "tests/test_annotation_gallery_data_20261017.py",
+        "tests/test_annotation_gallery_new_batch_20261017.py",
+        "tests/test_annotation_gallery_server_20261017.py",
+        "tools/thesis_main/analysis/annotation_gallery_20261017/启动图片总览.cmd",
+        "research/data/scope_redundant_vertices_20261016/scope_views.json",
+        "research/data/scope_redundant_vertices_20261016/USER_CONFIRMATION.json"
+      ]
+    },
+    {
+      "id": "MAT-research--data--image_review_decisions_20261017",
+      "title": "b8c04待定与新增两图难度人工裁定",
+      "theme": "data",
+      "type": "人工裁定增量",
+      "date": "20261017",
+      "source_path": "research/data/image_review_decisions_20261017",
+      "current_path": "research/data/image_review_decisions_20261017",
+      "source": "用户2026-10-17在统计线程直接确认",
+      "adoption_status": "b8c04待定暂停但保留24人库存；新两图中等偏简单，后续已正式纳库存但质量待绑定",
+      "verification_status": "当前分析门与图库字段定向测试；实图24人库存保持",
+      "availability": "本地可审阅，未推送",
+      "relationships": [
+        "tools/thesis_main/analysis/descriptive_pool_gate_20261015.py",
+        "tools/thesis_main/analysis/annotation_gallery_data_20261017.py",
+        "tests/test_descriptive_pool_gate_20261015.py"
+      ]
+    },
+    {
+      "id": "MAT-research--statistics--new_annotation_intake_20261017",
+      "title": "新增中文70份正式接入与身份时间排序审计",
+      "theme": "statistics",
+      "type": "独立批次接入核对",
+      "date": "20261017",
+      "source_path": "research/statistics/new_annotation_intake_20261017",
+      "current_path": "research/statistics/new_annotation_intake_20261017",
+      "source": "project98原始导出、任务8审核回执、new_server活动日志、正式脚本及最近项目计时消费者",
+      "adoption_status": "70份正式接入当前manifest；既有7W身份/完整导出同版/任务人员时间5205秒已核；质量待目标绑定",
+      "verification_status": "当前输入验证、定向测试和独立增量核对；截图清理与具体结果见交付记录",
+      "availability": "本地可审阅，未推送",
+      "relationships": [
+        "tools/thesis_main/analysis/new_annotation_intake_audit_20261017.py",
+        "tests/test_new_annotation_intake_audit_20261017.py",
+        "research/statistics/annotation_gallery_20261017/new_batch.json",
+        "research/data/image_review_decisions_20261017/decisions.json",
+        "tools/label_studio/official/ls_userscript_annotator.js",
+        "docs/label_studio/ACTIVE_TIME_README.md",
+        "research/statistics/new_annotation_intake_20261017/IDENTITY_MAPPING.json",
+        "research/statistics/new_annotation_intake_20261017/IDENTITY_EVIDENCE.md",
+        "research/statistics/new_annotation_intake_20261017/GEOMETRY_REVIEW_EVIDENCE.md",
+        "research/statistics/new_annotation_intake_20261017/HISTORICAL_TIME_METHOD.md"
+      ]
+    },
+    {
+      "id": "MAT-analysis_results--research_input_20261017",
+      "title": "Project98正式接入完整研究输入",
+      "theme": "data",
+      "type": "完整有效输入快照",
+      "date": "20261017",
+      "source_path": "analysis_results/research_input_20261017",
+      "current_path": "analysis_results/research_input_20261017",
+      "source": "旧有效manifest加已审Project98增量；原始导出及日志只读",
+      "adoption_status": "当前输入已采用；后续共同质量v2中新增63份可用、6份仅底面、1份其它空间受限；批次自身不宣称已全数评分",
+      "verification_status": "validate_bundle通过；3513对象/1382确认环；旧对象完全一致；70surface_valid；时间5205秒",
+      "availability": "本地正式输入，未推送",
+      "relationships": [
+        "research/statistics/new_annotation_intake_20261017",
+        "research/quality/quality_b8l2_d10_20261017",
+        "research/statistics/b8l2_d10_statistics_20261017"
+      ]
+    },
+    {
+      "id": "MAT-research--quality--quality_b8l2_d10_20261017",
+      "title": "当前输入B8L2与D10共同评分和跨线程更新交接",
+      "theme": "quality",
+      "type": "共同评分与接入资料",
+      "date": "20261017",
+      "source_path": "research/quality/quality_b8l2_d10_20261017",
+      "current_path": "research/quality/quality_b8l2_d10_20261017",
+      "source": "当前3222输入，旧固定分项，新增批及旧局部归属缺口实测",
+      "adoption_status": "v2：B8L2主/D10并列，1911质量；新增19多空间已路由，6新增仅底面、1其它空间受限；原1787同分",
+      "verification_status": "局部路由/人工门/双指标掩码/旧分值及用途边界核验通过",
+      "availability": "本地可审阅，未推送",
+      "relationships": [
+        "tools/thesis_main/analysis/quality_b8l2_d10_20261017.py",
+        "tests/test_quality_b8l2_d10_20261017.py",
+        "research/quality/quality_b8l2_d10_20261017/CROSS_MODULE_INPUTS.json",
+        "research/quality/quality_b8l2_d10_20261017/FIELD_CONTRACT.json",
+        "tools/thesis_main/analysis/scope_local_routing_20261017.py",
+        "tests/test_scope_local_routing_20261017.py",
+        "research/quality/quality_b8l2_d10_20261017/binding_changes.csv",
+        "research/quality/quality_b8l2_d10_20261017/ROUTING_AUDIT.json",
+        "research/statistics/b8l2_d10_statistics_20261017"
+      ]
+    },
+    {
+      "id": "MAT-research--fusion--wall_consensus_d10_20261017",
+      "title": "融合18图新增批次桥接与B8L2-D10同资格对照",
+      "theme": "fusion",
+      "type": "研究包",
+      "date": "20261017",
+      "source_path": "research/fusion/wall_consensus_d10_20261017",
+      "current_path": "research/fusion/wall_consensus_d10_20261017",
+      "source": "已存真实融合状态及当前共同输入；详见包内INPUT_BRIDGE",
+      "adoption_status": "B8L2主指标；D10敏感性对照",
+      "verification_status": "来源桥接及6项定向测试；rPc最新范围变更单列；非全库验证",
+      "availability": "本地落盘",
+      "relationships": []
+    },
+    {
+      "id": "MAT-research--quality--quality_b8l2_d10_initial_20261017",
+      "title": "B8L2/D10补局部归属前1838历史快照",
+      "theme": "quality",
+      "type": "版本化研究交付",
+      "date": "20261017",
+      "source_path": "research/quality/quality_b8l2_d10_initial_20261017",
+      "current_path": "research/quality/quality_b8l2_d10_initial_20261017",
+      "source": "当前共同输入及既有人工分类关系；详见包内来源",
+      "adoption_status": "仅历史路由前中间快照（1838份）；已由v2的1911份共同评分接续，保持原文件追溯",
+      "verification_status": "定向测试、全量分母和正式研究图核验；详见包内VERIFICATION/交付",
+      "availability": "本地可审阅，未推送",
+      "relationships": []
+    },
+    {
+      "id": "MAT-research--statistics--b8l2_d10_statistics_20261017",
+      "title": "当前双指标逐人逐图与已有房间关系统计",
+      "theme": "statistics",
+      "type": "版本化研究交付",
+      "date": "20261017",
+      "source_path": "research/statistics/b8l2_d10_statistics_20261017",
+      "current_path": "research/statistics/b8l2_d10_statistics_20261017",
+      "source": "当前共同输入及既有人工分类关系；详见包内来源",
+      "adoption_status": "3222库存/261图/1911共同质量；逐人难度场景、260原组259工作组777关系；2019来源库存时间，新增不造目标耗时",
+      "verification_status": "定向测试、全量分母和正式研究图核验；详见包内VERIFICATION/交付",
+      "availability": "本地可审阅，未推送",
+      "relationships": [
+        "tools/thesis_main/analysis/b8l2_d10_statistics_20261017.py",
+        "tests/test_b8l2_d10_statistics_20261017.py",
+        "research/quality/quality_b8l2_d10_20261017/CROSS_MODULE_INPUTS.json"
+      ]
+    },
+    {
+      "id": "MAT-research--difficulty--difficulty_current_20261017",
+      "title": "当前261图难度与B8L2/D10分层描述",
+      "theme": "difficulty",
+      "type": "版本结果与分析工具",
+      "date": "20261017",
+      "source_path": "research/difficulty/difficulty_current_20261017",
+      "current_path": "research/difficulty/difficulty_current_20261017",
+      "source": "从当前共同评分v2和难度v6消费重建；具体来源见SOURCE_HANDOFF.json",
+      "adoption_status": "保留v6标签；新增2图为中等（偏简单仅备注），按条件/用途报告质量关联",
+      "verification_status": "3项定向测试通过；分母与质量用途交叉对账；未将质量均值用于改标签",
+      "availability": "本地可读，未推送",
+      "relationships": [
+        "research/quality/quality_b8l2_d10_20261017",
+        "research/statistics/b8l2_d10_statistics_20261017",
+        "research/data/image_review_decisions_20261017"
+      ]
+    },
+    {
+      "id": "MAT-research--same_room--same_room_update_20261017",
+      "title": "现有同房分类下的当前质量与时间关联更新",
+      "theme": "same_room",
+      "type": "版本结果与分析工具",
+      "date": "20261017",
+      "source_path": "research/same_room/same_room_update_20261017",
+      "current_path": "research/same_room/same_room_update_20261017",
+      "source": "按用户既有人工分类及当前B8L2/D10共同质量输入更新；详见INPUTS.json",
+      "adoption_status": "沿用已有分类；83对可比质量，78对共同人员至少4人；15个其它范围关系单列",
+      "verification_status": "定向测试及分母/成员桥接核验见VALIDATION.json；不是墙线迁移或普遍预测验证",
+      "availability": "本地可读，未推送",
+      "relationships": [
+        "research/same_room/relation_adoption_20261016",
+        "research/quality/quality_b8l2_d10_20261017",
+        "research/statistics/b8l2_d10_statistics_20261017"
+      ]
+    },
+    {
+      "id": "MAT-research--workers--worker_b8l2_d10_20261017",
+      "title": "当前B8L2/D10人员画像与门洞专项",
+      "theme": "workers",
+      "type": "版本结果与分析工具",
+      "date": "20261017",
+      "source_path": "research/workers/worker_b8l2_d10_20261017",
+      "current_path": "research/workers/worker_b8l2_d10_20261017",
+      "source": "当前双评分同用途资格及跨模块输入；原B8L2人员包保留为历史对照",
+      "adoption_status": "949份普通质量画像与门洞专项并列分析；不强制建立固定人员类别",
+      "verification_status": "分母、成员、用途及门洞证据核验见包内CHECKS.json；不宣称类型迁移能力已验证",
+      "availability": "本地可读，未推送",
+      "relationships": [
+        "research/workers/worker_b8l2_20261016",
+        "research/quality/quality_b8l2_d10_20261017",
+        "research/statistics/b8l2_d10_statistics_20261017"
       ]
     }
   ]

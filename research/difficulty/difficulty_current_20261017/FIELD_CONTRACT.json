@@ -1,0 +1,13 @@
+{
+  "version": "difficulty_current_20261017_v1",
+  "ordinary_rule": "difficulty tables require quality_usable and exact rescore_target_id=difficulty_target_id; scene tables use all quality_usable",
+  "missing": "empty metric is missing, never zero; quality_missing_or_excluded includes other-target quality in difficulty tables",
+  "weight": "mean is answer-equal; image_equal_mean is mean of image means within each condition",
+  "diagnostic": "calculation status counts cover full inventory; computed_not_quality is distinct from input_uncomputable",
+  "scene": "is_oos/is_doorway are shared operational flags, false is not proof of reviewed absence; original unknown statuses preserved in image_metadata",
+  "registration_pending": [
+    "research/difficulty/difficulty_current_20261017",
+    "tools/thesis_main/analysis/difficulty_current_20261017.py",
+    "tests/test_difficulty_current_20261017.py"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "version": "descriptive_statistics_current_figures_20261015_v1",
+  "source_contract": "research\\statistics\\b8l2_shared_v6_20261016\\FIELD_CONTRACT.json",
+  "difficulty_version": "scope_preferred_difficulty_scope_resolved_20261016_v6",
+  "source_pool_rule": "retained_independent_humans_by_image_condition_min3_20261015_v1",
+  "quality_metrics": [
+    "B8L2",
+    "WQ",
+    "A10",
+    "IoU3D100"
+  ],
+  "primary_metric": "B8L2",
+  "score_versions": {
+    "WQ": "WQ-LS08-20261014",
+    "A10": "WQ-A10-20261015",
+    "B8L2": "WQ-B8L2-20261015"
+  },
+  "score_version_column": "源评分上下文；各算法身份按score_versions分别读取",
+  "units": {
+    "WQ": "0-100",
+    "A10": "0-100",
+    "B8L2": "0-100",
+    "IoU3D100": "0-100; mean-height prism",
+    "active_time_seconds": "seconds; qualified-source collection time, not automatically new-target time",
+    "target_matched_time_seconds": "seconds; unchanged or verified current target context"
+  },
+  "inputs": [
+    "inventory_all.csv",
+    "record_audit.csv",
+    "source_pools.csv",
+    "current_images.csv",
+    "analysis_records.csv",
+    "quality_records.csv",
+    "same_room_pairs.csv",
+    "space_reference_catalog.csv",
+    "affected_records.csv"
+  ],
+  "historical_metrics_plotted": false,
+  "long_score_interface_consumed": false,
+  "reuse_scope": "当前统计schema快照可复用；分母动态读取；当前质量面板固定四指标。",
+  "scope_quality_coverage": {
+    "reference_unit": "affected current-target images only",
+    "response_unit": "unique original object_id; never expanded target rows",
+    "layers": [
+      "full reference readiness",
+      "unique pre-score target binding",
+      "current quality eligibility"
+    ]
+  }
+}

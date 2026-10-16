@@ -1,0 +1,195 @@
+{
+  "summary": {
+    "images": 261,
+    "raw_records": 3222,
+    "retained_records": 2991,
+    "retained_people": 25,
+    "removed_records": 231,
+    "quality_records": 1911,
+    "user_scope_images": 41,
+    "user_scope_candidates": 43,
+    "display_images": 261,
+    "new_batch_images": 19,
+    "new_batch_records": 70,
+    "new_batch_only_images": 0,
+    "new_batch_admitted_records": 70,
+    "new_batch_scored_records": 64,
+    "new_batch_quality_records": 63,
+    "new_batch_limited_records": 7,
+    "new_batch_floor_only_records": 6,
+    "new_batch_full_restricted_records": 1
+  },
+  "all_thumbnail_and_original_files_present": true,
+  "unique_image_ids": true,
+  "old_annotation_ids_exact_match_inventory_and_quality": true,
+  "normal_quality_records": 1787,
+  "oos_in_normal_quality_groups": 0,
+  "new_batch_checks": {
+    "source_files": [
+      "export_label\\新增中文标注\\project-98-at-2026-10-16-13-59-e351a09f.json"
+    ],
+    "task_occurrences": 19,
+    "unique_project_tasks": 19,
+    "raw_annotation_records": 70,
+    "unique_annotation_records": 70,
+    "submitted_records": 70,
+    "raw_cancelled_records": 0,
+    "raw_empty_records": 0,
+    "raw_ground_truth_records": 0,
+    "image_count": 19,
+    "n_source_local_people": 7,
+    "matched_image_count": 17,
+    "unmatched_image_ids": [
+      "2t7WUuJeko7_1a0d730696cc4057b0037a75c8ef6b59",
+      "2t7WUuJeko7_218fdf5321f9482e85e828c56f2c0c94"
+    ],
+    "duplicate_annotation_occurrences": [],
+    "duplicate_task_occurrences": [],
+    "unmatched_review_source_ids": [],
+    "unreviewed_annotation_source_ids": [],
+    "annotation_updated_after_review": [],
+    "current_inventory_overlap_source_ids": []
+  },
+  "test_files": [
+    "tests/test_annotation_gallery_data_20261017.py",
+    "tests/test_annotation_gallery_new_batch_20261017.py",
+    "tests/test_annotation_gallery_server_20261017.py"
+  ],
+  "test_result": "14 passed",
+  "independent_audit": {
+    "all_259_image_counts_equal_source": true,
+    "all_3152_old_annotation_ids_once": true,
+    "all_1787_quality_metrics_and_groups_equal_source": true,
+    "all_522_images_decodable": true,
+    "all_plan_values_blank_after_QA": true
+  },
+  "browser_QA": [
+    "真实Edge桌面及390px手机布局",
+    "261总览与259原库存/19图70新增独立显示",
+    "新增筛选19、多参考70、GT问题8",
+    "真实原图/标注/对应参考叠加",
+    "无配对点只显示散点，不闭环",
+    "0与备注自动保存、主详同步、刷新持久化、再清空并刷新验证",
+    "计划导出入口、无JS错误日志",
+    "检查截图仅内联查看未落盘"
+  ],
+  "not_run": "未人为断网注入保存失败；已审查错误提示和重试分支。未运行全仓测试，本次只读研究页面与独立计划写入采用定向边界测试。",
+  "lazy_loading_QA": {
+    "mechanism": "IntersectionObserver, rootMargin=200px 0px, no src before intersection",
+    "cards": 261,
+    "initial_requested": 4,
+    "initial_deferred": 257,
+    "after_browsing_bottom_requested": 9,
+    "single_image_filter_requested": 1,
+    "cleared_filter_requested": 4,
+    "initial_original_images": 0,
+    "js_syntax_check": "passed",
+    "screenshots": "inline only, no files retained"
+  },
+  "local_startup_fix": {
+    "confirmed_cause": "file://cannot load module/API; previous port8877 service not listening",
+    "launcher": "tools/thesis_main/analysis/annotation_gallery_20261017/启动图片总览.cmd",
+    "launcher_actual_execution": "passed",
+    "gallery_response_images": 261,
+    "thumbnail_http_status": 200,
+    "browser_loaded_first_images": 4,
+    "browser_error": "",
+    "server_tests": "8 passed",
+    "file_protocol_browser_QA": "not run: browser policy permits only http/https",
+    "request_timeout_ms": 15000
+  },
+  "user_scope_coverage": {
+    "candidates": 43,
+    "images": 41,
+    "full_points": 12,
+    "floor_only": 31,
+    "all_floor_present": true,
+    "scope_views_coordinate_match": "43/43 independently checked",
+    "candidate_view_does_not_modify_binding_or_score": true
+  },
+  "scene_scope_browser_QA": {
+    "doorway_all": 20,
+    "doorway_difficult": 17,
+    "doorway_annotatable": 2,
+    "doorway_suspected": 1,
+    "doorway_and_oos": 2,
+    "user_candidate_filter": 41,
+    "uNb88_reference_buttons": [
+      "A historical GT",
+      "B current user range",
+      "C alternative",
+      "D alternative"
+    ],
+    "floor_only_candidate_C_projected_lines": 881,
+    "floor_only_no_top": true,
+    "full_reference_A_has_top": true,
+    "shared_camera_before_after_equal": true,
+    "annotation_selection_unchanged_after_candidates": true,
+    "plans_unchanged_after_service_reload": true,
+    "js_error_logs": [],
+    "data_boundary_tests": "5 passed",
+    "projection_checks": "passed: direction,80 segments per edge,lower-half only,seam split,source floor unchanged",
+    "screenshot_files_created": false
+  },
+  "user_decisions_20261017": {
+    "b8c04": "pending, retained_people=24, pool_analysis_eligible=false, GT_error_not_inferred",
+    "new_only_images": [
+      "2t7WUuJeko7-02",
+      "2t7WUuJeko7-03"
+    ],
+    "new_only_difficulty": "中等 · 偏简单",
+    "new_batch_analysis_included": false,
+    "boundary_tests": "15 passed",
+    "browser_labels_and_pending_filter": "passed",
+    "supplement_plan_unchanged": true
+  },
+  "historical_pre_admission_summary": {
+    "images": 259,
+    "raw_records": 3152,
+    "retained_records": 2921,
+    "retained_people": 25,
+    "removed_records": 231,
+    "quality_records": 1787,
+    "user_scope_images": 41,
+    "user_scope_candidates": 43,
+    "display_images": 261,
+    "new_batch_images": 19,
+    "new_batch_records": 70,
+    "new_batch_only_images": 2
+  },
+  "version": "annotation_gallery_20261017_v2",
+  "formal_admission": {
+    "old_objects_unchanged": true,
+    "new_records": 70,
+    "new_scores_null": true,
+    "old_normal_quality_records": 1787,
+    "new_image_people": [
+      7,
+      6
+    ],
+    "old_exclusions_unchanged": 231,
+    "b8c04_retained_people": 24,
+    "b8c04_pending": true,
+    "supplement_plan_unchanged": true,
+    "browser_verified": true,
+    "screenshot_files_created": false,
+    "evidence": "analysis_results/research_input_20261017/CHECKS.json"
+  },
+  "historical_checks_note": "independent_audit、原test_result及旧new_batch_checks保留接入前历史语义",
+  "common_v2_QA": {
+    "quality_rows": 1911,
+    "old_B8L2_retained_unchanged": 1787,
+    "new_quality_rows": 63,
+    "new_floor_only": 6,
+    "new_full_restricted": 1,
+    "same_mask": true,
+    "b8c04_pending_24": true,
+    "visible_B8L2_D10_separate": true,
+    "source_route_uncertainty_visible": true,
+    "initial_thumb_requests": 4,
+    "deferred_thumbs": 257,
+    "supplement_plan_unchanged": true,
+    "http_tests_passed": 8,
+    "screenshot_files_created": false
+  }
+}

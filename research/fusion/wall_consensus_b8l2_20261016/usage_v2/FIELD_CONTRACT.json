@@ -1,0 +1,19 @@
+{
+  "version": "fusion_compute_use_separated_20261016_v2",
+  "source": "research\\fusion\\wall_consensus_b8l2_20261016",
+  "units": [
+    "path_state",
+    "unique_subset",
+    "source_record"
+  ],
+  "numeric_columns": "B8L2_numeric/WQ_numeric/IoU3D100_numeric include OOS diagnostic calculations, never quality comparison",
+  "quality_use": "OOS always excluded; doorway conditional; original binding/holdout/worker gates still apply",
+  "reference_quality_scene_allowed": "numerically complete and scene/source pool permitted; NOT sufficient for primary comparison",
+  "member_scope": "Initial module member restrictions are historical; shared_usage_member_bridge.csv provides current purpose mapping; global worker exclusions use statistics b8l2_usage_v6_20261016.",
+  "failure_scope": "prepared paired inputs only; no raw unpaired-input prevalence estimate",
+  "not_run": "k2 ordering deferred or explicit policy hold, never counted as mathematical impossibility",
+  "stability": "floor_evaluable is geometric availability, not correctness or endorsement",
+  "fusion_rerun": false,
+  "old_files_rewritten": false,
+  "shared_usage_bridge": "SHARED_USAGE_BRIDGE.json"
+}

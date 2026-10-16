@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-17",
+  "scope": "Pro恢复质量研究、Dot审查与用户本次评论的独立复核；不改主线模型",
+  "pro_package": "panorama_quality_resumed_final_20261016/panorama_quality_resumed_20261016",
+  "dot_package": "独立审查证据_EBC2_D10_20261016/independent_resumed_audit_20261016",
+  "user_feedback": "quality_resumed_optional_feedback_20261016_v1.json",
+  "evidence": [
+    "current_cohort_check.json",
+    "D10_current_usage_response.json",
+    "math_boundary_checks.json",
+    "math_real_edge_credit.json",
+    "math_entry_and_notch.json"
+  ],
+  "findings": [
+    "Pro891结果与当前共同用途身份、参考、难度及资格一致，基线分数最大差1.42e-13。当前1787中尚有896未纳入该Pro实验：684普通、188门洞、24其它。",
+    "EBC2使用相对固定参考的定向边界覆盖，测量对象有实质改善；L2不证明面积和边界去重。",
+    "K12坏斜边信用0.3735，联合周长占比约4.12%；深凹槽三边信用约0.063但占联合周长11.4%。已检测到严重错误，总分仍被全局覆盖平均压小。",
+    "2026-10-17用户澄清：K02只是觉得70—80左右更好，不是精确目标，也不是认可EBC2约79分已被验证；目前更倾向原B8L2与D10，不要求逐个分数符合主观判断。",
+    "Dot狭缝及805点锯齿反例复现；额外11/17点温和锯齿未复现总分反升。极端例不证明现有891普遍失效。",
+    "入口字符串false、缺人员、错图片身份仍complete已复现；需要修批量接入合同，不能否定已经逐条核验的891。"
+  ],
+  "next": "主线继续原B8L2；D10为强度敏感性，EBC2作为完整竞争模型继续。修入口及数值边界后消费当前用途，先普通后188门洞；以相同GT、相近IoU的平移/削斜/缺槽控制检验严重度汇总，无需新增大规模人工打档。",
+  "verification": {
+    "package_tests": "45通过，Windows需PYTHONUTF8=1",
+    "images": "协作审查查看24例联图及关键大图",
+    "full_891_recomputed_this_review": false,
+    "mainline_changed": false,
+    "new_screenshots": false
+  },
+  "user_followup_record": "research/quality/quality_three_model_review_20261017/RECORD.md"
+}

@@ -80,6 +80,21 @@ def test_special_is_separate_from_ordinary_and_zero_pools_remain():
     assert len(pools) == 3
 
 
+def test_new_user_pending_holds_analysis_but_keeps_inventory_and_prior_exclusions():
+    bundle,difficulty=fixture([annotation('a','w1'),annotation('b','w2'),annotation('c','w3'),
+        annotation('excluded','w4',main_quality_gate=dict(status='excluded',reasons=['user_excluded']))])
+    before=deepcopy(bundle)
+    reviews={'i':dict(image_id='i',status='pending',reason='用户确认待定',source='user_chat')}
+    pools,records=build_pool_gate(bundle,difficulty,image_reviews=reviews)
+    pool=next(r for r in pools if r['condition']=='manual')
+    assert pool['n_effective_workers']==3 and pool['pool_min3_pass']
+    assert not pool['pool_analysis_eligible']
+    assert 'current_user_review_pending' in pool['image_exclusion_reasons']
+    assert [r['pool_vote_eligible'] for r in records]==[True,True,True,False]
+    assert all(not r['pool_analysis_eligible'] for r in records)
+    assert bundle==before
+
+
 def test_pending_and_borrowed_are_not_effective_and_scope_hold_has_priority():
     bundle, difficulty = fixture([
         annotation('a', 'w1'), annotation('b', 'w2'),

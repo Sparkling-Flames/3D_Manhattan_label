@@ -1,0 +1,17 @@
+{
+  "version": "fusion_d10_20261017_v1",
+  "source": "quality_b8l2_d10_20261017_v2",
+  "primary": "B8L2",
+  "sensitivity": "D10",
+  "units": "path state, unique member subset, image endpoint; never independent people",
+  "mask": "D10 uses exactly the saved B8L2 nonmissing mask; original holds and primary_comparison_eligible still apply",
+  "numeric": "B8L2_numeric and D10_numeric include diagnostics; OOS never quality eligible",
+  "missing": "missing components, deferred k2, insufficient nodes or connection remain missing; no zero fill or interpolation",
+  "endpoints": "automatic and assisted separate; same_input_as_current_automatic required for paired endpoints",
+  "geometry": "saved states unchanged; no fusion rerun or additional measurement",
+  "stability": "same_k_geometry_and_legacy_scores.csv is preserved geometry/old score evidence, not recalculated D10 stability",
+  "bridge": "INPUT_BRIDGE.json; pool_bridge.csv; member_bridge.csv",
+  "reference": "exact frozen target points/floors checked against current reference catalog; never highest-score selection",
+  "current_team_target_relation": "current shared routing of members relative to fixed fusion reference; all_declared_target / contains_other_target / pending; never automatically promotes quality eligibility",
+  "comparison_eligibility_version": "prior usage_v2 frozen common mask; current target changes attached separately"
+}

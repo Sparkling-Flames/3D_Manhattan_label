@@ -1,0 +1,29 @@
+{
+  "version": "same_room_update_20261017_v1",
+  "common_score_version": "quality_b8l2_d10_20261017_v2",
+  "relation_version": "same_room_user_working_classification_20261016_v2",
+  "worker_version": "worker_b8l2_d10_20261017_v1",
+  "tests": {
+    "command": "python -m pytest tests/test_same_room_update_20261017.py tests/test_same_room_usage_adoption_20261016.py tests/test_same_room_relation_adoption_20261016.py tests/test_same_room_b8l2_20261016.py tests/test_descriptive_same_room_20261015.py -q",
+    "passed": 20,
+    "new_tests_failed_before_implementation": true
+  },
+  "full_generation": "passed",
+  "same_metric_eligibility_workers_and_control_budget": true,
+  "quality_formula_reconstruction_records": 1911,
+  "old_quality_reference_and_B8L2_records_retained": 1787,
+  "reviewed_training_records_matched_to_common_scores": 1048,
+  "Q_B8L2_D10_supported_workers_equal": true,
+  "worker_group_B8L2_D10_valid_counts_equal": true,
+  "source_time_identity_provenance_and_seconds_checked": true,
+  "new_target_time_records": 0,
+  "shared_manifest_unchanged_at_run_end": true,
+  "catalog_check": "passed: 549 materials, 11 algorithms, 12 result snapshots; final module registration reserved for coordinator",
+  "local_links_json_and_versions": "passed",
+  "map_and_readme_index_checked": true,
+  "new_fusion_experiment": false,
+  "old_snapshots_overwritten": false,
+  "preparation_snapshot": "superseded and retained; recursive cleanup rejected by automatic approval because outputs lacked explicit deletion authorization",
+  "full_repository_tests": "not run; isolated offline consumer and compatible helper extension",
+  "temporary_screenshots": "none"
+}

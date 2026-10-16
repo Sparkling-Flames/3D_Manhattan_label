@@ -1,0 +1,25 @@
+{
+  "version": "same_room_usage_adopted_20261016_v3",
+  "tests": {
+    "command": "python -m pytest tests/test_same_room_usage_adoption_20261016.py tests/test_same_room_usage_20261016.py tests/test_same_room_b8l2_20261016.py tests/test_descriptive_same_room_20261015.py -q",
+    "passed": 14,
+    "new_boundary_tests_failed_before_implementation": true
+  },
+  "full_generation": "passed",
+  "new_shared_usage_consumed": "b8l2_scene_usage_v6_20261016_v2",
+  "quality_binding_reference_and_formula_records": 1787,
+  "doorway_quality_records": 188,
+  "doorway_quality_images": 15,
+  "new_legal_doorway_same_room_pairs": 0,
+  "old_pair_members_and_values_unchanged": true,
+  "all_202_control_memberships_and_errors_checked_unchanged": true,
+  "time_values_and_provenance_unchanged": true,
+  "ordinary_Q_training_records_reference_and_score_checked": 949,
+  "target_building_absent_from_all_consumed_profile_training": true,
+  "catalog_check": "passed",
+  "local_links_and_json": "passed",
+  "map_and_index": "checked; no global edits as instructed",
+  "new_fusion_experiment": false,
+  "full_repository_tests": "not run; isolated offline consumer changes only",
+  "temporary_screenshots": "none"
+}

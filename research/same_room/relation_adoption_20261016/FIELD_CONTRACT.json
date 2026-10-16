@@ -1,0 +1,27 @@
+{
+  "version": "same_room_user_working_classification_20261016_v2",
+  "relation_fields": [
+    "candidates",
+    "evidence",
+    "adoption_version",
+    "physical_adopted",
+    "scope_comparable",
+    "substantive_conflict",
+    "oos_pending",
+    "user_group_ids",
+    "tier",
+    "analysis_layer"
+  ],
+  "tiers": [
+    "user_classified_comparable",
+    "user_classified_other_scope",
+    "content_disputed",
+    "not_supported",
+    "physical_pending"
+  ],
+  "evidence": "original fields and notes + candidate subset provenance; original_groups retains all 260 classifications",
+  "physical": "working user classification, not new geometry certification",
+  "scope": "working expected annotation-scope comparability, not precise geometric identity",
+  "OOS": "relation oos_pending preserved separately; never overrides shared OOS diagnostic-only rule",
+  "status": "explicit_confirmed/viewed/discussion retained without standalone gating"
+}

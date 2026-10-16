@@ -1,0 +1,169 @@
+{
+  "version": "shared_v6_scoring_independent_audit_20261016_v1",
+  "snapshot": "b8l2_shared_v6_20261016_v1",
+  "inputs": "FROZEN_INPUTS.json + inputs/*",
+  "source_identity": {
+    "records_checked": 3152,
+    "all_object_ids_and_image_worker_condition_equal_frozen": true,
+    "qualified_set_independently_rebuilt": true,
+    "measurement_queue_independently_rebuilt": true
+  },
+  "counts": {
+    "inventory_records": 3152,
+    "source_records": 2834,
+    "complete_measurements": 1624,
+    "current_quality_records": 1622,
+    "previous_retained_records": 891,
+    "new_score_coverage_records": 731,
+    "retained_label_changes": 42,
+    "raw_inventory_time": 1949,
+    "qualified_source_time": 1750,
+    "target_matched_time": 440
+  },
+  "quality_strata": [
+    {
+      "condition": "manual",
+      "analysis_layer": "ordinary_current",
+      "n_records": 1137,
+      "n_images": 95
+    },
+    {
+      "condition": "manual",
+      "analysis_layer": "special_or_pending_separate",
+      "n_records": 23,
+      "n_images": 1
+    },
+    {
+      "condition": "semi",
+      "analysis_layer": "ordinary_current",
+      "n_records": 438,
+      "n_images": 28
+    },
+    {
+      "condition": "semi",
+      "analysis_layer": "special_or_pending_separate",
+      "n_records": 24,
+      "n_images": 1
+    }
+  ],
+  "added_strata": [
+    {
+      "condition": "manual",
+      "analysis_layer": "ordinary_current",
+      "n_records": 309
+    },
+    {
+      "condition": "manual",
+      "analysis_layer": "special_or_pending_separate",
+      "n_records": 23
+    },
+    {
+      "condition": "semi",
+      "analysis_layer": "ordinary_current",
+      "n_records": 375
+    },
+    {
+      "condition": "semi",
+      "analysis_layer": "special_or_pending_separate",
+      "n_records": 24
+    }
+  ],
+  "special_strata": [
+    {
+      "image_code": "e9zR4mvMWw7-16",
+      "condition": "semi",
+      "difficulty_class": "简单",
+      "n_records": 24,
+      "note": "difficulty_analysis_eligible false; preserved separate from ordinary"
+    },
+    {
+      "image_code": "uNb9QFRL6hY-63",
+      "condition": "manual",
+      "difficulty_class": "单列",
+      "n_records": 23,
+      "note": "difficulty_analysis_eligible false; preserved separate from ordinary"
+    }
+  ],
+  "measured_but_noncurrent": [
+    {
+      "object_id": "1120d74f964c5f97",
+      "reference_id": "gt:rPc6DW4iMge_fbc169773c954580baea6d2798c0d486:data/mp3d_layout/test/label_cor/rPc6DW4iMge_fbc169773c954580baea6d2798c0d486.txt",
+      "note": "explicit manual other admitted space; not current-target quality"
+    },
+    {
+      "object_id": "new_94_3637_6963_W035",
+      "reference_id": "gt:uNb9QFRL6hY_ca08ebfb2da647f68db41630637e400b:data/mp3d_layout/test/label_cor/uNb9QFRL6hY_ca08ebfb2da647f68db41630637e400b.txt",
+      "note": "explicit manual other admitted space; not current-target quality"
+    }
+  ],
+  "safeguards": {
+    "all_quality_metrics_blank_outside_current_quality": true,
+    "uNb36_all_10_current_quality_blank": true,
+    "unresolved_gt_errors_quality_and_time_blank": true,
+    "legacy_holds_not_cleared": true,
+    "manual_semioos_conditions_separate": true,
+    "target_time_only_retained_from_prior_audited_same_target": true
+  },
+  "table_verification": {
+    "table_rows_checked": {
+      "overview": 55,
+      "by_difficulty": 66,
+      "by_worker": 1331,
+      "by_building": 594,
+      "b8l2_worker_overview": 121,
+      "b8l2_image_overview": 236,
+      "b8l2_worker_difficulty": 208,
+      "peer_comparisons": 4866,
+      "same_room_pairs": 3780
+    },
+    "retained_B8L2_max_absolute_difference": 4.993694346921984e-11
+  },
+  "engine_spotchecks": [
+    {
+      "stratum": "new_manual_ordinary",
+      "object_id": "0054e620b22551b8",
+      "image_code": "q9vSo1VnCiC-32",
+      "condition": "manual",
+      "reference_id": "gt:q9vSo1VnCiC_e74e843601574864a14517f990c748a0:export_label/groudTruth.json",
+      "B8L2": 56.89491695,
+      "max_absolute_error": 4.727824381989265e-11
+    },
+    {
+      "stratum": "new_semi_ordinary",
+      "object_id": "00c9c0032b86bbcb",
+      "image_code": "uNb9QFRL6hY-56",
+      "condition": "semi",
+      "reference_id": "gt:uNb9QFRL6hY_aed830f085ee4ad88ef6bed7f66f1359:export_label/groudTruth.json",
+      "B8L2": 32.5287974302,
+      "max_absolute_error": 4.661782071480047e-11
+    },
+    {
+      "stratum": "e9_special_semi",
+      "object_id": "080e6e5be0c803cd",
+      "image_code": "e9zR4mvMWw7-16",
+      "condition": "semi",
+      "reference_id": "gt:e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45:export_label/groudTruth.json",
+      "B8L2": 94.4423267976,
+      "max_absolute_error": 4.820815968642478e-11
+    },
+    {
+      "stratum": "uNb63_special_manual",
+      "object_id": "069c8d013f9ff384",
+      "image_code": "uNb9QFRL6hY-63",
+      "condition": "manual",
+      "reference_id": "gt:uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a:export_label/groudTruth.json",
+      "B8L2": 88.0767788034,
+      "max_absolute_error": 4.8331116886402015e-11
+    }
+  ],
+  "tests": {
+    "command": "python -m pytest tests/test_b8l2_shared_snapshot_20261016.py tests/test_b8l2_shared_descriptive_20261016.py -q",
+    "passed": 3
+  },
+  "limits": [
+    "did not independently reimplement the entire frozen metric engine",
+    "did not adjudicate missing human space assignments or reference geometry",
+    "did not rerun personnel/fusion/same-room prediction models",
+    "no source or CURRENT/catalog/pipeline mutation"
+  ]
+}

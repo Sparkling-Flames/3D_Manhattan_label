@@ -1,0 +1,44 @@
+{
+  "version": "b8l2_scene_usage_v6_20261016_v2",
+  "status": "registered_by_coordinator",
+  "reason": "2026-10-16统筹完成本轮验收及入口登记",
+  "package": "research/statistics/b8l2_usage_v6_20261016",
+  "entry": "research/statistics/b8l2_usage_v6_20261016/README.md",
+  "exact_inputs": "research/statistics/b8l2_usage_v6_20261016/CROSS_MODULE_INPUTS.json",
+  "previous_history": "research/statistics/b8l2_shared_v6_20261016",
+  "tools": [
+    "b8l2_usage_snapshot_20261016.py",
+    "b8l2_calculation_status_20261016.py",
+    "b8l2_usage_coverage_20261016.py",
+    "b8l2_detailed_views_20261016.py",
+    "b8l2_detail_summary_20261016.py",
+    "b8l2_room_descriptions_20261016.py",
+    "b8l2_usage_figures_20261016.py",
+    "b8l2_detailed_workbook_20261016.mjs",
+    "b8l2_room_adopted_figures_20261016.py"
+  ],
+  "tools_base": "tools/thesis_main/analysis",
+  "tests": [
+    "tests/test_b8l2_usage_snapshot_20261016.py",
+    "tests/test_b8l2_calculation_status_20261016.py",
+    "tests/test_b8l2_usage_coverage_20261016.py",
+    "tests/test_b8l2_detailed_views_20261016.py",
+    "tests/test_b8l2_room_descriptions_20261016.py",
+    "tests/test_b8l2_usage_figures_20261016.py",
+    "tests/test_b8l2_room_adopted_views_20261016.py"
+  ],
+  "checked_global_files": [
+    "docs/README_INDEX.md",
+    "docs/PROJECT_MAP_CLEAN_20260308.md"
+  ],
+  "pending_global_files": [],
+  "catalog_validation_run": true,
+  "protocol_or_raw_annotation_changed": false,
+  "future_input_and_algorithm_guide": "research/statistics/b8l2_usage_v6_20261016/EXTENSION_GUIDE.md",
+  "current_room_descriptions": "research/statistics/b8l2_usage_v6_20261016/details_room_adopted_v3",
+  "relation_adoption_version": "same_room_user_working_classification_20261016_v2",
+  "relation_manifest": "research/same_room/relation_adoption_20261016/CROSS_MODULE_RELATIONS.json",
+  "old_strict_room_descriptions": "research/statistics/b8l2_usage_v6_20261016/details",
+  "registration_status": "registered_by_coordinator_20261017",
+  "registered_in": "research/catalog/CATALOG.json; generated topic entry in docs/thesis_main/topics"
+}

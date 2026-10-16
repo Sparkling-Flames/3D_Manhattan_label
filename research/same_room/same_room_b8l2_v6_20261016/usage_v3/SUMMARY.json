@@ -1,0 +1,118 @@
+{
+  "version": "same_room_usage_adopted_20261016_v3",
+  "stage": "shared_usage_adopted",
+  "usage_version": "b8l2_scene_usage_v6_20261016_v2",
+  "input_version": "b8l2_shared_v6_20261016_v1",
+  "difficulty_version": "scope_preferred_difficulty_scope_resolved_20261016_v6",
+  "source_records": 2834,
+  "quality_records": 1787,
+  "doorway_quality_records": 188,
+  "doorway_quality_images": 15,
+  "oos_quality_records": 0,
+  "membership_changes": {
+    "both": 1599,
+    "right_only": 188,
+    "left_only": 23
+  },
+  "retained_reference_ids_equal": true,
+  "retained_max_score_difference": 4.993694346921984e-11,
+  "doorway_candidate_edges": 23,
+  "scored_doorway_candidate_edges": 19,
+  "doorway_direct_confirmed_edges": 1,
+  "doorway_legal_quality_pairs": 0,
+  "old_pair_members_and_values_unchanged": true,
+  "positive_pairs": [
+    {
+      "metric": "B8L2",
+      "condition": "manual",
+      "confirmation": "confirmed_comparable",
+      "pairs": 40
+    },
+    {
+      "metric": "Hcenter",
+      "condition": "manual",
+      "confirmation": "confirmed_comparable",
+      "pairs": 40
+    },
+    {
+      "metric": "Hmean",
+      "condition": "manual",
+      "confirmation": "confirmed_comparable",
+      "pairs": 40
+    },
+    {
+      "metric": "IoU3D100",
+      "condition": "manual",
+      "confirmation": "confirmed_comparable",
+      "pairs": 40
+    },
+    {
+      "metric": "S_bottom_deg",
+      "condition": "manual",
+      "confirmation": "confirmed_comparable",
+      "pairs": 40
+    },
+    {
+      "metric": "WQ",
+      "condition": "manual",
+      "confirmation": "confirmed_comparable",
+      "pairs": 40
+    },
+    {
+      "metric": "dir",
+      "condition": "manual",
+      "confirmation": "confirmed_comparable",
+      "pairs": 40
+    },
+    {
+      "metric": "iou_2d",
+      "condition": "manual",
+      "confirmation": "confirmed_comparable",
+      "pairs": 40
+    },
+    {
+      "metric": "source_time_seconds",
+      "condition": "manual",
+      "confirmation": "confirmed_comparable",
+      "pairs": 5
+    },
+    {
+      "metric": "source_time_seconds",
+      "condition": "manual",
+      "confirmation": "confirmed_other_scope",
+      "pairs": 1
+    },
+    {
+      "metric": "target_matched_time_seconds",
+      "condition": "manual",
+      "confirmation": "confirmed_comparable",
+      "pairs": 3
+    }
+  ],
+  "source_time_records": 1750,
+  "target_matched_time_records": 440,
+  "time_records_unchanged": true,
+  "controls": 202,
+  "worker_profile_rows": 949,
+  "worker_input_version": "b8l2_shared_v6_20261016_v1",
+  "worker_adoption": "existing ordinary Q/T folds only; all training scores/references retained by new usage; no doorway profile invented",
+  "qt_pairs_ge4": [
+    {
+      "metric": "B8L2",
+      "confirmation": "confirmed_comparable",
+      "pairs": 33
+    },
+    {
+      "metric": "source_time_seconds",
+      "confirmation": "confirmed_comparable",
+      "pairs": 2
+    },
+    {
+      "metric": "target_matched_time_seconds",
+      "confirmation": "confirmed_comparable",
+      "pairs": 2
+    }
+  ],
+  "new_fusion_experiments": false,
+  "global_files_modified": false
+}

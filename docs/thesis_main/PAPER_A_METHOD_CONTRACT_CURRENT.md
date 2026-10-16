@@ -27,12 +27,12 @@
 - `data.borrowed_points`：保留来源和描述用途，独立组合/预测不计为独立票
 - `data.unbound`：保留，列为待审/不可评价，不猜配对或补点
 - `data.raw_mutation`：False
-- `data.preprocessed_source`：analysis_results/research_input_20260929/preprocessed_source.json
-- `data.preprocessed_source_scope`：冻结20260929基线保留；20261010正式读取额外接入14份点/配对/环复核及图片质量说明，不恢复人员/重复作答资格。完整当前计数由loader验证返回。
+- `data.preprocessed_source`：analysis_results/research_input_20261017/data.json
+- `data.preprocessed_source_scope`：当前为旧有效基线加已核Project98的70份增量；原始导出与旧快照保持。
 - `data.analysis_input_schema`：final_review_research_input_v1
-- `data.analysis_bundle`：analysis_results/research_input_20260929/manifest.json
+- `data.analysis_bundle`：analysis_results/research_input_20261017/manifest.json
 - `data.analysis_bundle_loader`：tools.thesis_main.data_prep.consolidate_research_input.load_current_bundle
-- `data.analysis_bundle_rule`：正式输入为冻结基线加quality_update授权增量，必须用load_current_bundle/load_current_input；manifest登记增量。历史直接读取冻结JSON只复现旧版本，不代表当前输入。
+- `data.analysis_bundle_rule`：正式当前输入从load_current_bundle/load_current_input读取；Project98完整快照与编号映射见manifest。
 - `data.current_input_loader`：tools.thesis_main.data_prep.materialize_current_research_input.load_current_input
 - `data.accepted_snapshot_role`：3019及2481为清洗前历史输入计数，不是当前分析分母。当前数量读取接入summary并按方法报告资格/失败。
 - `data.final_input_eligibility`：main_quality_gate、main_consensus_gate承接现有裁决；candidate不是最终可评价。独立票候选另检查清洗、借用点和真人去重；每方法可计算性另核验。近180度中间点不自动删除，可能表达停止区域。

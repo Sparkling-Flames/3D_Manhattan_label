@@ -1,0 +1,22 @@
+{
+  "version": "quality_b8l2_d10_20261017_v2",
+  "record_key": "object_id",
+  "join_context": [
+    "image_id",
+    "worker_id",
+    "rescore_target_id",
+    "condition"
+  ],
+  "shared_records.csv": "3222条库存；B8L2与D10仅quality_usable=true时有值；diagnostic_*仅为数值诊断，不代表准入",
+  "quality_records.csv": "shared_records按quality_usable筛选的当前1911条共同集合；两评分共用掩码",
+  "shared_bindings.csv": "评分前归属：人工优先→区分空间局部角点及邻接线→剩余族底面IoU→精确并列边界距离；保留不确定。人工暂缓和缺顶界不自动解除",
+  "record_reason_audit.csv": "逐条计算状态、资格与排除原因审计；多重原因可能重叠，不可直接相加作人数",
+  "pending_new_targets.csv": "当前新增批未绑定清单（本次0行），不是新增质量限制清单；6仅底面/1其它空间见new_batch_records及ROUTING_AUDIT",
+  "new_measurements.csv": "本次新增批64份及旧归属缺口116份实际完整测量；measurement_population区分来源",
+  "missing": "CSV空值表示缺失，不等于0；读取布尔值应解析true/false，不能用非空字符串判断",
+  "time": "新增task_worker_active_seconds是任务人员活动时间，target_matched_time_seconds缺失；不可用lead_time替代或补0",
+  "new_worker_admission": "training_admission_status=requires_module_review；可计分不等于已进入人员训练或留出集",
+  "legacy_columns": "WQ/A10及historical_*沿用历史诊断，不表示本轮采用；当前评分身份以MODEL_PARAMETERS.json为准",
+  "binding_changes.csv": "全库存旧/新目标、状态、局部完整证据、计算结果及质量资格分开；不按分数选目标",
+  "route_uncertainty": "局部/兜底阈值沿历史实现，非置信概率或人评校准；缺顶界仅底面，精确双并列待定"
+}

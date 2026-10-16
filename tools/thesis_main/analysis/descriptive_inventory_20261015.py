@@ -67,13 +67,24 @@ def inventory_rows(objects, timing_rows, spine_rows, adjusted_keys):
                 time_source_file=old['active_time_source_file'], time_rule_version=old['timing_rule_version'],
                 time_stage=old['stage'], time_binding='project_task_worker_and_image_matched',
                 historical_canonical_annotation_id=old['canonical_annotation_id'])
+        collection=obj.get('collection_active_time')
+        if collection and collection['adopted']:
+            expected=f"{source['project']}|{source['task']}|{source['source_account_id']}"
+            if old is not None or str(source['project'])!='98' or collection['identity_key']!=expected:
+                raise ValueError('admitted time identity mismatch: '+oid)
+            seconds=collection['seconds']
+            if not math.isfinite(seconds) or seconds<=0:raise ValueError('invalid admitted active time: '+oid)
+            time.update(active_time_seconds=seconds,raw_active_time_seconds=seconds,time_status='usable',
+                time_source='active_log_v10_admitted',timing_status='project+task+annotator',
+                time_source_file=collection['source_audit'],time_rule_version=collection['rule'],
+                time_stage='project98_admitted',time_binding='project_task_worker_and_image_matched')
         result.append(dict(record_id=oid, object_id=oid, **{k: obj[k] for k in (
             'image_id', 'image_code', 'worker_id', 'building_id', 'room_id', 'condition',
             'canonical_unit', 'person_image_unit', 'independent_vote_eligible', 'independent_vote_reasons',
             'cleaning_disposition', 'worker_quality_gate', 'main_quality_gate', 'main_consensus_gate',
             'preprocessing_status', 'ring_confirmed')}, geometry_status=obj['geometry']['status'],
             project_id=key[0], runtime_task_id=key[1], raw_annotation_id=str(source['annotation']),
-            source_path=source['path'], time_context_source=str(TIME_FACTS.relative_to(ROOT) / 'active_time_context.csv.gz'),
+            source_path=source['path'], time_context_source=collection['source_audit'] if collection and collection['adopted'] else str(TIME_FACTS.relative_to(ROOT) / 'active_time_context.csv.gz'),
             **time))
     return result
 

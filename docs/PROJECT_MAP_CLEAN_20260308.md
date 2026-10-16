@@ -1,10 +1,15 @@
 # HOHONET 项目地图
 
-图片难度v6：[空间及分歧整理](../research/difficulty/difficulty_scope_resolution_20261016/README.md)，构建 `tools/thesis_main/analysis/difficulty_scope_resolution_20261016.py`；主范围增量6条，保留历史目标与评分快照。
+**当前状态（2026-10-17）：** 当前输入为 [Project98 manifest](../analysis_results/research_input_20261017/manifest.json)，库存3222份作答、261张图；排除既定作答/人员后保留2991份、25人。新增批次70份已接入，7个账号映射到既有人员，任务人员时间5205秒已核验。
 
-2026-10-16难度v5：[裁定与点对显示](../research/difficulty/difficulty_pair_display_20261016/README.md)，构建 `tools/thesis_main/analysis/difficulty_pair_display_20261016.py`，测试 `tests/test_difficulty_pair_display_20261016.py`；展示外推与完整参考分开。
+- **质量：** [B8L2/D10共同评分v2](../research/quality/quality_b8l2_d10_20261017/README.md)共1911份可用（1699普通、188门洞、24其它单列）；B8L2为主指标，D10为并列敏感性。原B8L2用途v2的1787份是冻结基线；1838份是已被v2接续的路由前中间快照。
+- **难度与分层统计：** [难度v6当前261图](../research/difficulty/difficulty_current_20261017/README.md)保留人工粗分类；新增两图列中等，“偏简单”仅备注。质量与难度关联按条件及用途分层，不以均值改标签。完整逐人、逐图、场景及房间关系表见[当前描述统计](../research/statistics/b8l2_d10_statistics_20261017/README.md)。
+- **人员：** [B8L2/D10当前画像](../research/workers/worker_b8l2_d10_20261017/README.md)接入更新后的质量覆盖，普通面板1048份；门洞专项并列，不强制固定人员类别。此前949份是旧面板。
+- **融合：** [18图人数轨迹的双指标复核](../research/fusion/wall_consensus_d10_20261017/README.md)复用既有融合过程，没有重跑几何或将新增19图冒充新融合样本。
+- **同房：** [现有分类下的当前结果](../research/same_room/same_room_update_20261017/README.md)为83对可比质量，其中78对共同人员不少于4人；其它范围15对单列。旧77对为先前阶段。
+- **接入边界：** OOS分数只作诊断；`b8c-04`暂停分析但保留在24人库存。原始标注真源保留在`export_label/`，不得由目录或统计结果替代。
 
-2026-10-16难度v4：[用户裁定采用及逻辑整理](../research/difficulty/difficulty_user_adoption_20261016/README.md)，构建 `tools/thesis_main/analysis/difficulty_user_adoption_20261016.py`；原GT、范围、既有排除及历史统计保留。
+质量粗核验与冗余点研究见[三模型核验记录](../research/quality/quality_three_model_review_20261017/RECORD.md)和[多空间冗余点记录](../research/data/scope_redundant_vertices_20261016/README.md)。各版本、分母、来源及历史路径以[研究资料总目录](../research/catalog/INDEX.md)和主题入口为准。
 
 ## 研究资料统一查找
 
@@ -177,3 +182,7 @@
 ### 2026-10-15模块接续代码定位
 
 上述接续报告对应 `tools/thesis_main/analysis/` 下同名日期脚本及 `tests/test_同名日期.py`：difficulty_target_integration、difficulty_special_coverage、worker_wq_integration、worker_four_axis_update、same_room_quality_curves、same_room_personnel_patterns、wall_consensus_quality。融合特殊层另有 `wall_consensus_special_20261015.py`，由融合质量相关测试覆盖。此处仅补齐已有文件导航，本次没有修改或运行这些程序。
+
+- 2026-10-16融合文档整理：[旧回执操作与模型阶段统计](thesis_main/history/融合SOP与模型过时说明_20261016.md)归档；SOP保留现行操作，模型不重复维护版本分母。
+
+- 2026-10-17融合：[18图B8L2／D10对照与新增批次桥接](../research/fusion/wall_consensus_d10_20261017/README.md)。复用真实人数过程，不重跑融合；工具与字段见包内说明。

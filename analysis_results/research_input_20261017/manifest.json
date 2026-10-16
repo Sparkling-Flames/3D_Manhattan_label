@@ -1,0 +1,155 @@
+{
+  "schema": "research_analysis_bundle_v1",
+  "contract_version": "consensus_research_20260923_v1",
+  "entrypoints": {
+    "data": "data.json",
+    "research": "research.json",
+    "comments": "comments.json",
+    "final_summary": "final_summary.json",
+    "final_orders": "final_orders.json",
+    "validation": "validation.json",
+    "batch_admission": "batch_admission.json",
+    "field_contract": "field_contract.json",
+    "research_field_contract": "research_field_contract.json",
+    "quality_review_metadata": "quality_review_metadata.json"
+  },
+  "additional_tables": [
+    {
+      "path": "final_review/field_contract.json",
+      "source": "analysis_results/final_review_summary_20260929/field_contract.json"
+    },
+    {
+      "path": "final_review/OOS_图片清单.csv",
+      "source": "analysis_results/final_review_summary_20260929/OOS_图片清单.csv"
+    },
+    {
+      "path": "final_review/received_orders.json",
+      "source": "analysis_results/final_review_summary_20260929/received_orders.json"
+    },
+    {
+      "path": "final_review/summary.json",
+      "source": "analysis_results/final_review_summary_20260929/summary.json"
+    },
+    {
+      "path": "final_review/不可计算及表示限制.csv",
+      "source": "analysis_results/final_review_summary_20260929/不可计算及表示限制.csv"
+    },
+    {
+      "path": "final_review/全量3152份最终台账.csv",
+      "source": "analysis_results/final_review_summary_20260929/全量3152份最终台账.csv"
+    },
+    {
+      "path": "final_review/历史本人改序补充.csv",
+      "source": "analysis_results/final_review_summary_20260929/历史本人改序补充.csv"
+    },
+    {
+      "path": "final_review/历史评语_去重来源索引.csv",
+      "source": "analysis_results/final_review_summary_20260929/历史评语_去重来源索引.csv"
+    },
+    {
+      "path": "final_review/原始与人工GT审计.csv",
+      "source": "analysis_results/final_review_summary_20260929/原始与人工GT审计.csv"
+    },
+    {
+      "path": "final_review/同图历史改序_补查统计.json",
+      "source": "analysis_results/final_review_summary_20260929/同图历史改序_补查统计.json"
+    },
+    {
+      "path": "final_review/同房分类_全部候选组.csv",
+      "source": "analysis_results/final_review_summary_20260929/同房分类_全部候选组.csv"
+    },
+    {
+      "path": "final_review/同房分类_原始完整记录.json",
+      "source": "analysis_results/final_review_summary_20260929/同房分类_原始完整记录.json"
+    },
+    {
+      "path": "final_review/同房原分组_完整分类.csv",
+      "source": "analysis_results/final_review_summary_20260929/同房原分组_完整分类.csv"
+    },
+    {
+      "path": "final_review/同房汇集_Matterport.json",
+      "source": "analysis_results/final_review_summary_20260929/同房汇集_Matterport.json"
+    },
+    {
+      "path": "final_review/改前特征与最终改序.csv",
+      "source": "analysis_results/final_review_summary_20260929/改前特征与最终改序.csv"
+    },
+    {
+      "path": "final_review/改序共性_按批次描述.csv",
+      "source": "analysis_results/final_review_summary_20260929/改序共性_按批次描述.csv"
+    },
+    {
+      "path": "final_review/用户comment明确记录_模型误导影响.csv",
+      "source": "analysis_results/final_review_summary_20260929/用户comment明确记录_模型误导影响.csv"
+    },
+    {
+      "path": "final_review/空间不同_图片收集.csv",
+      "source": "analysis_results/final_review_summary_20260929/空间不同_图片收集.csv"
+    },
+    {
+      "path": "final_review/空间与细节_评语候选明细.csv",
+      "source": "analysis_results/final_review_summary_20260929/空间与细节_评语候选明细.csv"
+    },
+    {
+      "path": "final_review/细节不同_图片收集.csv",
+      "source": "analysis_results/final_review_summary_20260929/细节不同_图片收集.csv"
+    },
+    {
+      "path": "final_review/逐人统计.csv",
+      "source": "analysis_results/final_review_summary_20260929/逐人统计.csv"
+    },
+    {
+      "path": "final_review/逐图分类及覆盖.csv",
+      "source": "analysis_results/final_review_summary_20260929/逐图分类及覆盖.csv"
+    },
+    {
+      "path": "final_review/逐对象改序及审核来源.csv",
+      "source": "analysis_results/final_review_summary_20260929/逐对象改序及审核来源.csv"
+    },
+    {
+      "path": "final_review/门洞交界_图片清单.csv",
+      "source": "analysis_results/final_review_summary_20260929/门洞交界_图片清单.csv"
+    },
+    {
+      "path": "final_review/预标注未改动与影响评语汇总.csv",
+      "source": "analysis_results/final_review_summary_20260929/预标注未改动与影响评语汇总.csv"
+    },
+    {
+      "path": "final_review/首轮改序共性_规则评估.csv",
+      "source": "analysis_results/final_review_summary_20260929/首轮改序共性_规则评估.csv"
+    },
+    {
+      "path": "final_review/首轮本人及一正_统计.json",
+      "source": "analysis_results/final_review_summary_20260929/首轮本人及一正_统计.json"
+    }
+  ],
+  "validation": {
+    "status": "passed",
+    "objects": 3513,
+    "annotations": 3222,
+    "ready_coordinate_objects": 3384,
+    "confirmed_orders": 1382,
+    "research_images": 261,
+    "reference_only_images": 2,
+    "comment_occurrences": 32462,
+    "unresolved_comment_occurrences": 1,
+    "checks": [
+      "完整配对",
+      "周期平均x及y不变",
+      "Matterport数组源点身份",
+      "确认环绑定",
+      "人员/GT/图片引用",
+      "清洗及研究表字段一致",
+      "交叉表ID及计数",
+      "评论来源覆盖"
+    ],
+    "limitation": "机器一致性验证，不宣称所有标注人工确认或方法可计算；人工未决和未知来源继续保留。"
+  },
+  "consumer_rule": "load_current_bundle默认当前合同入口；旧manifest可显式载入复现。",
+  "privacy": "含原始评论和内部身份，仅本地分析；不是可直接公开的数据包。",
+  "effective_input_revision": "annotation_batch_98_20261017_v1",
+  "validation_scope": "完整有效快照含Project98；旧quality_update已应用，不重复回放。",
+  "effective_validation_report": "quality_update_validation_20261010.json",
+  "order_update_revision": "difficulty_orders_20261010_v1",
+  "source_baseline": "analysis_results/research_input_20260929/manifest.json"
+}

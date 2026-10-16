@@ -12,8 +12,10 @@ const arg = name => process.argv.includes(name) ? process.argv[process.argv.inde
 const out = path.resolve(arg('--source-dir') ?? path.join(root, 'research/statistics/descriptive_statistics_current_20261015'));
 const tables = JSON.parse(await fs.readFile(path.join(out, 'tables.json'), 'utf8'));
 const contract = JSON.parse(await fs.readFile(path.join(out, 'FIELD_CONTRACT.json'), 'utf8'));
+const primaryMetric = contract.primary_metric ?? 'WQ';
 const workbook = Workbook.create();
-const checks = { source: path.join(out, 'tables.json'), sheets: [] };
+const checks = { source: path.join(out, 'tables.json'), primary_metric: primaryMetric,
+  node_exec_args: process.execArgv, sheets: [] };
 const previews = path.join(process.cwd(), 'current_statistics_workbook_preview_'+path.basename(out));
 await fs.mkdir(previews, { recursive: true });
 const clean = value => value === undefined || value === null ? null :
@@ -28,7 +30,7 @@ const selectedColumns = {
   record_audit: ['image_code','worker_id','condition','difficulty_class','analysis_layer','pool_vote_eligible',
     'pool_source_workers','pool_analysis_eligible','ordinary_difficulty_eligible','gt_error_excluded',
     'current_quality_eligible','rescore_status','quality_audit_status','reference_audit_reasons','pool_vote_exclusion_reasons',
-    'WQ','historical_WQ','active_time_seconds','target_matched_time_seconds','target_time_interpretation',
+    'B8L2','historical_B8L2','WQ','historical_WQ','active_time_seconds','target_matched_time_seconds','target_time_interpretation',
     'new_space_target','current_target_id','reference_id','score_version','object_id'],
   analysis_records: recordFields,
   quality_records: [...recordFields,'iou_2d','S_bottom_deg','dir','Hmean','Hcenter'],
@@ -65,6 +67,19 @@ const selectedColumns = {
     'pool_exclusion_reasons','space_bound_worker_ids','candidate_ids','target_id','same_floor_alias_target_ids','source'],
   remaining_gaps: ['image_code','worker_id','condition','reference_gap','remaining_reasons','minimal_human_question',
     'chosen_target_id','allowed_target_ids','object_id','image_id'],
+  b8l2_worker_overview: ['condition','analysis_layer','worker_id','n_source_records','B8L2_n','n_quality_missing',
+    'B8L2_mean','B8L2_median','B8L2_sd','n_scored_images','B8L2_image_equal_mean',
+    'active_time_seconds_n','active_time_seconds_mean','active_time_seconds_median',
+    'target_matched_time_seconds_n','n_quality_target_time_common'],
+  b8l2_image_overview: ['condition','analysis_layer','image_code','difficulty_class','n_source_records','B8L2_n',
+    'n_quality_missing','B8L2_mean','B8L2_median','B8L2_sd','n_scored_workers',
+    'active_time_seconds_n','active_time_seconds_mean','target_matched_time_seconds_n','n_quality_target_time_common'],
+  b8l2_worker_difficulty: ['condition','analysis_layer','worker_id','difficulty_class','n_source_records','B8L2_n',
+    'n_quality_missing','B8L2_mean','B8L2_median','B8L2_sd','n_scored_images',
+    'active_time_seconds_n','active_time_seconds_mean','target_matched_time_seconds_n','n_quality_target_time_common'],
+  member_changes: ['image_code','worker_id','condition','membership_change','previous_B8L2','current_B8L2',
+    'delta_B8L2','target_changed','reference_changed','score_changed','label_changed',
+    'previous_difficulty','current_difficulty','exclusion_reasons','object_id'],
 };
 
 function addTable(name, key, rows = tables[key]) {
@@ -77,7 +92,8 @@ function addTable(name, key, rows = tables[key]) {
     'scene','doorway_status','oos_subtype','comparison','target_panel_change',
     'analysis_layer','metric','n_peers','value','peer_mean','difference',
     'n_effective_workers','pool_min3_pass','pool_analysis_eligible',
-    'ordinary_difficulty_eligible','current_quality_eligible','WQ','A10','B8L2','IoU3D100',
+    'ordinary_difficulty_eligible','current_quality_eligible',primaryMetric,
+    ...['WQ','A10','B8L2','IoU3D100'].filter(metric=>metric!==primaryMetric),
     'active_time_seconds','target_matched_time_seconds','target_time_interpretation',
     'n_records','n_valid','n_missing','mean','median','sd','q25','q75','n_images','n_workers',
     'image_code_a','image_code_b','relation','n_common_workers','n_pairs',
@@ -128,7 +144,7 @@ function addTable(name, key, rows = tables[key]) {
 const guide = workbook.worksheets.add('00_当前口径导读');
 guide.showGridLines = false;
 guide.getRange('A1:H2').merge();
-guide.getRange('A1').values = [['当前研究数据 · 口径核验与描述统计']];
+guide.getRange('A1').values = [[primaryMetric==='B8L2' ? 'B8L2共同评分 · 口径核验与描述统计' : '当前研究数据 · 口径核验与描述统计']];
 guide.getRange('A1:H2').format = {fill:'#16334C',font:{name:'Microsoft YaHei',size:20,bold:true,color:'#FFFFFF'},rowHeight:26};
 const notes = [
   ['版本', '本簿读取当前口径新快照，旧版描述统计及图表另存保留；不将新难度标签套入旧面板。'],
@@ -136,6 +152,7 @@ const notes = [
   ['分母', '库存、源数据池、可分析作答、已有质量和待处理集合分别列出，集合有交集，不能相加。'],
   ['质量', tables.rescore_comparisons ? '新参考按冻结WQ/A10/B8L2实算，与沿用分数分别留证；不改标注或择高分。未解决的绑定/参考缺口仍为空。' :
     '复用已有分数及明确绑定的参考，需重评分条目保留待办；不为补覆盖挑选参考或高分。'],
+  ['主指标', `本簿主指标为${primaryMetric}；其余版本及均高棱柱IoU保留对照。外推顶部预览不能转为完整质量。`],
   ['难度', '当前难度依据新快照版本；门洞、OOS、范围、可标性保持独立轴。'],
   ['来源采集时长', 'active_time_seconds仅为合格来源池的有效采集秒数；不自动代表新空间或修订目标的耗时。'],
   ['当前目标时长', 'target_matched_time_seconds另表当前稳定目标语境。新目标作答绑定未确认时保持缺失；lead_time不替代。'],
@@ -144,7 +161,7 @@ const notes = [
   ['缺失', '空格表示缺失或未确认，不是0分。样本量、分散和缺失随各指标分母读取。'],
   ['查阅方式', '各页有筛选及冻结首行；筛选不会重算预先生成的分组统计。数据更新后重跑统计入口及本构建器。'],
   ['版本', `难度 ${contract.difficulty_version}；WQ ${contract.score_versions.WQ}；A10 ${contract.score_versions.A10}；B8L2 ${contract.score_versions.B8L2}。`],
-  ['来源与单位', '原score_version仅WQ绑定上下文；IoU为底面＋均高棱柱(0—100)，同房iou_3d为0—1。historical_*仅审计。'],
+  ['来源与单位', 'score_version保留源评分上下文，各算法身份按字段合同分别读取；IoU为底面＋均高棱柱(0—100)，同房iou_3d为0—1。historical_*仅审计。'],
   ['明细边界', '同房逐人配对完整长表保留在CSV；本簿提供图对、关系及共同人数。源标注、GT和人工审核未改变。'],
   ...(tables.record_targets ? [
     ['空间展开', '作答×目标表可有多行，但没有新增人员或票数。空间×条件页保留0人来源池，人员数按稳定ID去重。'],
@@ -177,6 +194,10 @@ for (const [name,key] of [['23_空间参考目录','space_reference_catalog'],['
   ['27_空间条件来源池','image_spaces'],['28_剩余缺口','remaining_gaps']]) {
   if (tables[key]) addTable(name,key);
 }
+for (const [label,key] of [['B8L2逐人概览','b8l2_worker_overview'],['B8L2逐图概览','b8l2_image_overview'],
+  ['B8L2人员与难度','b8l2_worker_difficulty'],['有效时间覆盖','time_coverage'],['共同评分成员变化','member_changes']]) {
+  if (tables[key]) addTable((checks.sheets.length+1)+'_'+label,key);
+}
 addTable((checks.sheets.length+1)+'_工作表索引','sheet_index', checks.sheets.map(item=>({sheet:item.name,source_csv:item.source_table+'.csv',rows:item.rows,columns:item.columns.length,
   omitted_columns:item.omitted_columns.length,note:item.omitted_columns.length?'核心查阅字段；完整列见CSV':'全部字段'})));
 
@@ -201,7 +222,8 @@ for (let i=0;i<names.length;i++) {
 }
 const chartPreview = await workbook.render({sheetName:'00_当前口径导读',range:`A${chartTop+1}:J${chartTop+16}`,scale:1,format:'png'});
 await fs.writeFile(path.join(previews,'chart.png'),new Uint8Array(await chartPreview.arrayBuffer()));
-const filename = path.join(out,tables.rescore_comparisons ? '现有研究数据描述统计_重评分口径.xlsx' : '现有研究数据描述统计_当前口径.xlsx');
+const filename = path.join(out,primaryMetric==='B8L2' ? 'B8L2共同评分_描述统计.xlsx' :
+  tables.rescore_comparisons ? '现有研究数据描述统计_重评分口径.xlsx' : '现有研究数据描述统计_当前口径.xlsx');
 await (await SpreadsheetFile.exportXlsx(workbook)).save(filename);
 await fs.rm(filename+'.inspect.ndjson',{force:true});
 checks.workbook = filename;

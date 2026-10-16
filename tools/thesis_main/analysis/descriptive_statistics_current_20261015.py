@@ -58,7 +58,7 @@ def summarize(panels, dimensions):
     return pd.DataFrame(output)
 
 
-def rebuild_metric_tables(tables):
+def rebuild_metric_tables(tables, bundle=None):
     """按已更新record_audit重建描述统计；不改门槛、不重新评分、不写文件。"""
     audit=tables['record_audit']
     pools=tables['source_pools']
@@ -115,7 +115,8 @@ def rebuild_metric_tables(tables):
     manual=ordinary[ordinary.condition.eq('manual')].copy()
     assert not manual.duplicated(['image_id','worker_id']).any()
     manual=manual.assign(object_uid=manual.object_id,iou_3d=manual.IoU3D100/100)
-    room=build_same_room_tables(manual.replace({np.nan:None}).to_dict('records'))
+    room_records=manual.replace({np.nan:None}).to_dict('records')
+    room=build_same_room_tables(room_records, bundle=bundle) if bundle is not None else build_same_room_tables(room_records)
     tables['same_room_relations']=pd.DataFrame(room['same_room_relations'])
     tables['same_room_pairs']=pd.DataFrame(room['same_room_pair_metrics'])
     tables['same_room_worker_pairs']=pd.DataFrame(room['same_room_worker_pairs'])
@@ -127,17 +128,24 @@ def rebuild_metric_tables(tables):
     tables['algorithm_comparisons']=pd.DataFrame(scores)
 
 
-def build_tables():
-    pointer=json.loads(POINTER.read_text(encoding='utf-8-sig'))
-    details_path=(POINTER.parent/pointer['details']).resolve()
-    difficulty=json.loads(details_path.read_text(encoding='utf-8-sig'))
-    assert difficulty['version']==pointer['version']
-    bundle=load_current_bundle()
-    inventory=pd.DataFrame(load_inventory(bundle)).rename(columns={'record_id':'inventory_record_id'})
-    old=pd.read_csv(OLD/'records.csv',dtype=str,keep_default_na=False)
+def build_tables(frozen=None):
+    if frozen is None:
+        pointer=json.loads(POINTER.read_text(encoding='utf-8-sig'))
+        details_path=(POINTER.parent/pointer['details']).resolve()
+        difficulty=json.loads(details_path.read_text(encoding='utf-8-sig'))
+        assert difficulty['version']==pointer['version']
+        bundle=load_current_bundle()
+        inventory_rows=load_inventory(bundle)
+        old=pd.read_csv(OLD/'records.csv',dtype=str,keep_default_na=False)
+    else:
+        difficulty,bundle=frozen['difficulty'],frozen['bundle']
+        inventory_rows=frozen['inventory']
+        old=pd.DataFrame(frozen['historical_records'])
+    inventory=pd.DataFrame(inventory_rows).rename(columns={'record_id':'inventory_record_id'})
     assert set(inventory.object_id)==set(old.object_id), 'new inventory needs explicit batch/source audit'
     pools,gates=build_pool_gate(bundle,difficulty['records'])
-    images,bindings=audit_references(bundle,difficulty['records'],old.to_dict('records'))
+    audit_inputs={} if frozen is None else dict(sources=frozen['reference_sources'],historical=frozen['historical_geometry'])
+    images,bindings=audit_references(bundle,difficulty['records'],old.to_dict('records'),**audit_inputs)
     pools=pd.DataFrame(pools);images=pd.DataFrame(images);bindings=pd.DataFrame(bindings)
     extra=['record_id','reference_id','role','stage','score_version','use_panel','same_target_quality_hold',
            'latest_step_reference_pending','original_holdout','same_target_unconfirmed','personnel_barriers',
@@ -170,7 +178,7 @@ def build_tables():
     historical['historical_target_836']=historical.object_id.map(truth(old_members.in_target_836))
     historical['historical_worker_931']=historical.object_id.map(truth(old_members.in_worker_931))
     tables['historical_panel_changes']=historical
-    rebuild_metric_tables(tables)
+    rebuild_metric_tables(tables,bundle=bundle if frozen is not None else None)
     analysis=tables['analysis_records']
     checks=dict(difficulty_version=difficulty['version'],source_pool_rule=RULE_VERSION,
         inventory_rows=len(inventory),inventory_images=inventory.image_id.nunique(),

@@ -1,0 +1,15 @@
+{
+  "version": "quality_b8l2_d10_20261017_v1",
+  "record_key": "object_id",
+  "join_context": ["image_id", "worker_id", "rescore_target_id", "condition"],
+  "shared_records.csv": "3222条库存；B8L2与D10仅quality_usable=true时有值；diagnostic_*仅为数值诊断，不代表准入",
+  "quality_records.csv": "shared_records按quality_usable筛选的1838条共同集合；比较指标时不可各自另选样本",
+  "shared_bindings.csv": "评分前目标绑定；旧用途暂缓不因唯一候选而自动解除；新多空间目标保持待定",
+  "record_reason_audit.csv": "逐条计算状态、资格与排除原因审计；多重原因可能重叠，不可直接相加作人数",
+  "pending_new_targets.csv": "新增19条多空间待绑定作答，两个完整评分和诊断完整评分均缺失",
+  "new_measurements.csv": "新增51条实际几何测量；保留分项以复算两个评分",
+  "missing": "CSV空值表示缺失，不等于0；读取布尔值应解析true/false，不能用非空字符串判断",
+  "time": "新增task_worker_active_seconds是任务人员活动时间，target_matched_time_seconds缺失；不可用lead_time替代或补0",
+  "new_worker_admission": "training_admission_status=requires_module_review；可计分不等于已进入人员训练或留出集",
+  "legacy_columns": "WQ/A10及historical_*沿用历史诊断，不表示本轮采用；当前评分身份以MODEL_PARAMETERS.json为准"
+}

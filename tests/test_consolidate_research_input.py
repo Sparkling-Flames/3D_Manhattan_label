@@ -4,7 +4,7 @@ from tools.thesis_main.data_prep.consolidate_research_input import load_current_
 
 
 def test_bundle_consistency_and_corruption_rejected():
-    b=load_current_bundle()
+    b=load_current_bundle('analysis_results/research_input_20260929/manifest.json')
     v=b['validation']
     assert v['status']=='passed'
     assert (v['objects'],v['annotations'],v['research_images'],v['reference_only_images'],v['confirmed_orders'])==(3441,3152,259,2,1312)

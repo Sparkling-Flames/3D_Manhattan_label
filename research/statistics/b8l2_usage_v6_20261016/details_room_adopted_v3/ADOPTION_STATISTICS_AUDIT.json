@@ -1,0 +1,120 @@
+{
+  "version": "adoption_statistics_independent_audit_20261016_v2",
+  "checks": {
+    "relation_freeze_official_exact": true,
+    "259_working_260_raw_777_pairs": true,
+    "raw_full_classification_allviewed_preserved": true,
+    "registry_tiers_members_exact_official": true,
+    "lookup3152_unchanged": true,
+    "worker_inventory_unchanged": true,
+    "image_inventory_unchanged": true,
+    "worker_condition_stats_unchanged": true,
+    "time_quality_focus_unchanged": true,
+    "worker_usage_summary_unchanged": true,
+    "room_group_summary_all_stats": true,
+    "user_original_group_summary_all_stats": true,
+    "room_worker_groups_all_stats": true,
+    "user_original_worker_groups_all_stats": true,
+    "room_group_views_all_stats": true,
+    "user_original_group_views_all_stats": true,
+    "room_direct_pair_summary_all_stats": true,
+    "room_worker_direct_pairs_all_stats": true,
+    "96_zero_inventory_working_groups": true,
+    "all260_original_groups_represented": true,
+    "noobs_n0_estimates_null": true,
+    "pairsummary_only_both_current_ends": true,
+    "23_working_outside_exact": true,
+    "outside1_still_original_classified": true,
+    "OOS_normal_mask_from_parent": true,
+    "original260_exact_source": true,
+    "all777_members_no_transitive_edges": true
+  },
+  "rows_recomputed": {
+    "room_group_summary": 397,
+    "user_original_group_summary": 400,
+    "room_worker_groups": 2651,
+    "user_original_worker_groups": 2668,
+    "room_group_views": 429,
+    "user_original_group_views": 430,
+    "room_direct_pair_summary": 541,
+    "room_worker_direct_pairs": 5534
+  },
+  "total_rows_recomputed": 13050,
+  "relation_tier_counts": {
+    "user_classified_comparable": 381,
+    "user_classified_other_scope": 291,
+    "not_supported": 67,
+    "physical_pending": 36,
+    "content_disputed": 2
+  },
+  "zero_inventory_working": 96,
+  "zero_inventory_original": 94,
+  "unlinked_original_classified": [
+    {
+      "image_id": "2t7WUuJeko7_53937db036374126830e0f1203b04ead",
+      "image_code": "2t7WUuJeko7-07",
+      "n_inventory_records": 8,
+      "recorded_room_ids": "[]",
+      "room_evidence_status": "outside_retained_working_subgroups; original_group_available",
+      "original_user_group_ids": "[\"G004\"]",
+      "relation_adoption_version": "same_room_user_working_classification_20261016_v2"
+    }
+  ],
+  "case_summaries": [
+    {
+      "group_id": "candidate:G095-S1",
+      "condition": "manual",
+      "analysis_layer": "held_inventory_only",
+      "n_inventory_records": 2,
+      "B8L2_n": 0,
+      "B8L2_mean": null,
+      "quality_source_time_n": 0
+    },
+    {
+      "group_id": "candidate:G095-S1",
+      "condition": "manual",
+      "analysis_layer": "ordinary_current",
+      "n_inventory_records": 24,
+      "B8L2_n": 24,
+      "B8L2_mean": 58.3929500014,
+      "quality_source_time_n": 17
+    },
+    {
+      "group_id": "candidate:G095-S2",
+      "condition": "no_current_inventory",
+      "analysis_layer": "no_current_inventory",
+      "n_inventory_records": 0,
+      "B8L2_n": 0,
+      "B8L2_mean": null,
+      "quality_source_time_n": 0
+    },
+    {
+      "group_id": "candidate:G155",
+      "condition": "manual",
+      "analysis_layer": "ordinary_current",
+      "n_inventory_records": 16,
+      "B8L2_n": 0,
+      "B8L2_mean": null,
+      "quality_source_time_n": 0
+    },
+    {
+      "group_id": "candidate:G155",
+      "condition": "semi",
+      "analysis_layer": "held_inventory_only",
+      "n_inventory_records": 4,
+      "B8L2_n": 0,
+      "B8L2_mean": null,
+      "quality_source_time_n": 0
+    },
+    {
+      "group_id": "candidate:G155",
+      "condition": "semi",
+      "analysis_layer": "ordinary_current",
+      "n_inventory_records": 31,
+      "B8L2_n": 24,
+      "B8L2_mean": 67.0502086641,
+      "quality_source_time_n": 19
+    }
+  ],
+  "relation_adoption_version": "same_room_user_working_classification_20261016_v2"
+}

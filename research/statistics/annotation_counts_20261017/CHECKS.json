@@ -1,0 +1,54 @@
+{
+  "version": "annotation_counts_20261017_v1",
+  "raw_records": 3222,
+  "raw_workers": 27,
+  "inventory_images": 261,
+  "retained_records": 2991,
+  "retained_workers": 25,
+  "images_with_retained_annotations": 259,
+  "images_with_zero_retained_annotations": 2,
+  "image_worker_pairs": 2989,
+  "removed_records": 231,
+  "removal_groups": {
+    "user_excluded": 218,
+    "pending": 11,
+    "nonindependent_or_other_hold": 2
+  },
+  "retained_records_by_condition": {
+    "manual": 2263,
+    "semi": 518,
+    "oos": 210
+  },
+  "entirely_excluded_workers": [
+    "W019",
+    "W026"
+  ],
+  "workers_per_image": {
+    "min": 0,
+    "max": 24,
+    "median": 9.0
+  },
+  "min3_filter_applied": false,
+  "image_quality_or_reference_filter_applied": false,
+  "gt_error_marker_images": 7,
+  "explicit_gt_reference_problem_images": 8,
+  "current_gt_error_images": 4,
+  "historical_gt_error_images": 6,
+  "gt_uncertainty_images": 1,
+  "gt_detail_omission_images": 20,
+  "gt_any_issue_images": 27,
+  "image_analysis_hold_images": 11,
+  "current_issue_pending_images": 2,
+  "applicability_pending_images": 2,
+  "incomplete_current_reference_images": 29,
+  "retained_target_pending_images": 5,
+  "pending_excluded_or_limited_images": 55,
+  "contract_version": "consensus_research_20260923_v1",
+  "difficulty_context": "scope_preferred_difficulty_scope_resolved_20261016_v6_plus_new2",
+  "batch_admission_version": "annotation_batch_98_20261017_v1",
+  "source": "current contract -> manifest-backed load_current_bundle; no frozen-score population substitution",
+  "quality_status_context": "quality_b8l2_d10_20261017_v2",
+  "quality_records": 1911,
+  "primary_metric": "B8L2",
+  "parallel_metric": "D10"
+}

@@ -1,0 +1,120 @@
+{
+  "version": "annotation_counts_status_independent_audit_20261017_v2",
+  "checks": {
+    "3152_partition_exact_gate": true,
+    "259_inventory_unique": true,
+    "259_perimage_distinct_counts_conditions_all_status_flags": true,
+    "pending_excluded_images_exact_union": true,
+    "gt_problem_images_exact_union": true,
+    "reference_pending_images_exact_union": true,
+    "GTunion7_hold10": true,
+    "pool_vote2921_people25_images257": true,
+    "crosscondition_dedup2919": true,
+    "removal231_groups218_11_2": true,
+    "people_count_distribution_exact": true,
+    "quality_update_explicit_status_2_exact": true,
+    "GTproblem27_complete_source_union": true
+  },
+  "counts": {
+    "images": 259,
+    "raw_records": 3152,
+    "retained_records": 2921,
+    "retained_workers": 25,
+    "image_worker_pairs": 2919,
+    "removed_records": 231,
+    "current_gt_error": 4,
+    "historical_gt_error": 6,
+    "gt_error_union": 7,
+    "gt_problem_any": 27,
+    "image_hold": 10,
+    "pending_excluded_union": 60,
+    "reference_pending_union": 40,
+    "incomplete_fullreference": 29,
+    "no_condition_min3": 42,
+    "OOS_diagnostic_only": 27,
+    "explicit_reference_problem": 8
+  },
+  "crosscondition_duplicate_person_image_records": [
+    {
+      "image_code": "wc2JMjhGNzB-30",
+      "worker_id": "W034",
+      "condition": "manual",
+      "object_id": "745e6f7ed41f5f3abf93"
+    },
+    {
+      "image_code": "wc2JMjhGNzB-30",
+      "worker_id": "W034",
+      "condition": "semi",
+      "object_id": "2ec85790145647163c24"
+    },
+    {
+      "image_code": "wc2JMjhGNzB-46",
+      "worker_id": "W031",
+      "condition": "manual",
+      "object_id": "7827115ee28a13736728"
+    },
+    {
+      "image_code": "wc2JMjhGNzB-46",
+      "worker_id": "W031",
+      "condition": "semi",
+      "object_id": "99107f36d276c5bca39b"
+    }
+  ],
+  "gt_error_images": [
+    "jtcxE69GiFV-05",
+    "jtcxE69GiFV-17",
+    "pRbA3pwrgk9-12",
+    "uNb9QFRL6hY-32",
+    "uNb9QFRL6hY-51",
+    "wc2JMjhGNzB-14",
+    "zsNo4HB9uLZ-05"
+  ],
+  "image_hold_images": [
+    "jtcxE69GiFV-05",
+    "jtcxE69GiFV-11",
+    "jtcxE69GiFV-17",
+    "pRbA3pwrgk9-12",
+    "pRbA3pwrgk9-16",
+    "uNb9QFRL6hY-32",
+    "uNb9QFRL6hY-51",
+    "wc2JMjhGNzB-14",
+    "x8F5xyUWy9e-01",
+    "zsNo4HB9uLZ-05"
+  ],
+  "pending_union_interpretation": "declared image hold/current issue/applicability/zero retained/pending answers/target or reference pending, not all low-population or OOS-limited images",
+  "quality_context": "previous usage v2 snapshot fields only; current live loader determines people",
+  "explicit_reference_problem_images": [
+    "jtcxE69GiFV-05",
+    "jtcxE69GiFV-17",
+    "pRbA3pwrgk9-12",
+    "uNb9QFRL6hY-32",
+    "uNb9QFRL6hY-51",
+    "wc2JMjhGNzB-14",
+    "x8F5xyUWy9e-01",
+    "zsNo4HB9uLZ-05"
+  ],
+  "quality_update_records": [
+    {
+      "image_code": "x8F5xyUWy9e-01",
+      "oos_subtype": "nonorthogonal_annotatable",
+      "reference_status": "user_confirmed_inaccurate_pending_revision",
+      "quality_reference_hold": true,
+      "source_message": "Sentinel_3f3b889f31308191bf25abeb17721246"
+    },
+    {
+      "image_code": "x8F5xyUWy9e-09",
+      "oos_subtype": "nonorthogonal_annotatable",
+      "reference_status": "no_user_gt_error_claim",
+      "quality_reference_hold": false,
+      "regularity_requirement": "Do not treat true nonorthogonal walls as annotation error; use task/GT-consistent criterion. Exact implementation pending.",
+      "angle_135_is_example_only": true,
+      "source_message": "Sentinel_29efe4c023548191b78a86e50973772a"
+    },
+    {
+      "image_code": "wc2JMjhGNzB-14",
+      "reference_status": "original_and_revised_gt_user_disputed",
+      "quality_reference_hold": true,
+      "source_message": "Sentinel_f31f77a0aef88191984f34bfd5aa2713"
+    }
+  ]
+}

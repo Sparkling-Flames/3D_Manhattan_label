@@ -1,0 +1,64 @@
+{
+  "difficulty_version": "scope_preferred_difficulty_scope_resolved_20261016_v6",
+  "score_version": "WQ-B8L2-20261015",
+  "path_states": 7320,
+  "unique_subsets": 6693,
+  "current_B8L2_states": 6247,
+  "primary_states": 3578,
+  "current_IoU3D_states": 6606,
+  "by_use": [
+    {
+      "use": "doorway_conditional_diagnostic",
+      "states": 448,
+      "B8L2": 411,
+      "IoU3D": 411
+    },
+    {
+      "use": "nonorthogonal_diagnostic",
+      "states": 192,
+      "B8L2": 0,
+      "IoU3D": 183
+    },
+    {
+      "use": "oos_applicability_diagnostic",
+      "states": 184,
+      "B8L2": 0,
+      "IoU3D": 176
+    },
+    {
+      "use": "ordinary_conditional",
+      "states": 5736,
+      "B8L2": 5206,
+      "IoU3D": 5206
+    },
+    {
+      "use": "pending_image_diagnostic",
+      "states": 144,
+      "B8L2": 82,
+      "IoU3D": 82
+    },
+    {
+      "use": "source_pool_held",
+      "states": 40,
+      "B8L2": 0,
+      "IoU3D": 0
+    },
+    {
+      "use": "target_binding_pending_diagnostic",
+      "states": 576,
+      "B8L2": 548,
+      "IoU3D": 548
+    }
+  ],
+  "score_status": {
+    "complete_conditional": 6247,
+    "two_person_deferred": 328,
+    "below_four": 250,
+    "nonorthogonal_diagnostic": 183,
+    "applicability_unresolved_diagnostic": 176,
+    "no_connection": 58,
+    "current_source_pool_held": 40,
+    "invalid_full_geometry": 38
+  },
+  "fusion_rerun": false
+}

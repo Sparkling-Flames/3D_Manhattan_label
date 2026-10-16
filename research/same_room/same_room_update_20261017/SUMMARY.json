@@ -1,0 +1,179 @@
+{
+  "version": "same_room_update_20261017_v1",
+  "stage": "analysis_completed",
+  "common_score_version": "quality_b8l2_d10_20261017_v2",
+  "input_manifest": "analysis_results/research_input_20261017/manifest.json",
+  "relation_version": "same_room_user_working_classification_20261016_v2",
+  "input_revision": "annotation_batch_98_20261017_v1",
+  "inventory": 3222,
+  "inventory_images": 261,
+  "source_records": 2880,
+  "quality_records": 1911,
+  "new_inventory": 70,
+  "new_quality": 63,
+  "quality_images": 136,
+  "new_quality_images": 17,
+  "old_quality_retained": 1787,
+  "old_inventory_new_quality": 61,
+  "old_source_records_removed": 24,
+  "new_images": 19,
+  "affected_relation_edges": 58,
+  "source_time_records": 1803,
+  "source_time_seconds": 403982.0,
+  "new_source_seconds": 5205.0,
+  "target_time_records": 440,
+  "new_target_time_records": 0,
+  "pair_counts": [
+    {
+      "metric": "B8L2",
+      "condition": "manual",
+      "confirmation": "user_classified_comparable",
+      "pairs": 83,
+      "common_ge4": 78
+    },
+    {
+      "metric": "B8L2",
+      "condition": "manual",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 14,
+      "common_ge4": 11
+    },
+    {
+      "metric": "B8L2",
+      "condition": "semi",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 1,
+      "common_ge4": 1
+    },
+    {
+      "metric": "D10",
+      "condition": "manual",
+      "confirmation": "user_classified_comparable",
+      "pairs": 83,
+      "common_ge4": 78
+    },
+    {
+      "metric": "D10",
+      "condition": "manual",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 14,
+      "common_ge4": 11
+    },
+    {
+      "metric": "D10",
+      "condition": "semi",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 1,
+      "common_ge4": 1
+    },
+    {
+      "metric": "IoU3D100",
+      "condition": "manual",
+      "confirmation": "user_classified_comparable",
+      "pairs": 83,
+      "common_ge4": 78
+    },
+    {
+      "metric": "IoU3D100",
+      "condition": "manual",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 14,
+      "common_ge4": 11
+    },
+    {
+      "metric": "IoU3D100",
+      "condition": "semi",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 1,
+      "common_ge4": 1
+    },
+    {
+      "metric": "source_time_seconds",
+      "condition": "manual",
+      "confirmation": "user_classified_comparable",
+      "pairs": 36,
+      "common_ge4": 6
+    },
+    {
+      "metric": "source_time_seconds",
+      "condition": "manual",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 36,
+      "common_ge4": 18
+    },
+    {
+      "metric": "source_time_seconds",
+      "condition": "oos",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 4,
+      "common_ge4": 4
+    },
+    {
+      "metric": "source_time_seconds",
+      "condition": "semi",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 3,
+      "common_ge4": 1
+    },
+    {
+      "metric": "target_matched_time_seconds",
+      "condition": "manual",
+      "confirmation": "user_classified_comparable",
+      "pairs": 4,
+      "common_ge4": 3
+    },
+    {
+      "metric": "target_matched_time_seconds",
+      "condition": "manual",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 1,
+      "common_ge4": 0
+    }
+  ],
+  "same_metric_eligibility": true,
+  "old_quality_references_and_B8L2_preserved": true,
+  "Q_T": "current personnel-module reviewed ordinary B8L2/D10 Q and source/target T outside-building profiles",
+  "worker_profile_records": 1048,
+  "worker_version": "worker_b8l2_d10_20261017_v1",
+  "qt_ge4": [
+    {
+      "metric": "B8L2",
+      "confirmation": "user_classified_comparable",
+      "pairs": 78
+    },
+    {
+      "metric": "B8L2",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 12
+    },
+    {
+      "metric": "D10",
+      "confirmation": "user_classified_comparable",
+      "pairs": 78
+    },
+    {
+      "metric": "D10",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 12
+    },
+    {
+      "metric": "source_time_seconds",
+      "confirmation": "user_classified_comparable",
+      "pairs": 6
+    },
+    {
+      "metric": "source_time_seconds",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 23
+    },
+    {
+      "metric": "target_matched_time_seconds",
+      "confirmation": "user_classified_comparable",
+      "pairs": 3
+    }
+  ],
+  "fusion_new_image_overlap": 0,
+  "curve_physical_pairs": 3,
+  "curve_comparable_quality": 0,
+  "new_fusion_experiment": false
+}

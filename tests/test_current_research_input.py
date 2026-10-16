@@ -1,4 +1,4 @@
-"""最终数据接入不改变裁决、坐标和点身份。"""
+"""冻结20260929基线的裁决、坐标和点身份；当前增量另测。"""
 from collections import Counter
 
 import pytest
@@ -7,7 +7,7 @@ from tools.thesis_main.data_prep import materialize_current_research_input as m
 
 
 def test_current_input_roundtrip_and_boundaries():
-    d = m.load_current_input()
+    d = m.read(m.OUT/'preprocessed_source.json')
     source = m.indexed(m.read(m.SOURCE)['objects'], 'object_id')
     objects = m.indexed(d['objects'], 'object_id')
     assert set(source) == set(objects)
@@ -16,7 +16,8 @@ def test_current_input_roundtrip_and_boundaries():
     assert d['summary']['borrowed_annotations'] == 2
     assert d['summary']['duplicate_groups'] == 12
     assert Counter(i['population'] for i in d['images']) == dict(research_annotation_image=259, manual_gt_reference_only=2)
-    assert sum(o['ring_confirmed'] for o in objects.values()) == 1295
+    assert d['order_update_revision']=='difficulty_orders_20261010_v1'
+    assert sum(o['ring_confirmed'] for o in objects.values()) == 1298
     assert objects['dd72228423710274']['point_labels'] == source['dd72228423710274']['point_labels']
     assert objects['8f2f8f8bfdaec3360646']['cleaning_disposition'] == 'retained'
     assert objects['new_93_3587_7182_W010']['geometry']['status'] == 'representation_limited'

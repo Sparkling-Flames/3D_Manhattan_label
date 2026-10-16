@@ -34,7 +34,7 @@ def _summary(values):
                 q25=q25, q75=q75, iqr=q75-q25)
 
 
-def build_same_room_tables(records):
+def build_same_room_tables(records, bundle=None):
     """输入固定评分面板的作答列表；同人同图重复必须由调用方按条件/版本拆分。
 
     必需字段：object_uid、image_id、worker_id。METRICS中的None/NaN为空缺。
@@ -42,7 +42,7 @@ def build_same_room_tables(records):
     reference_id/score_version/use_panel逐侧保留；用途不同不授予可比资格。
     返回关系台账、图对逐指标统计和共同人员逐指标明细三个list[dict]。
     """
-    bundle = load_current_bundle()
+    bundle = load_current_bundle() if bundle is None else bundle
     data = bundle['data']
     relations = relation_index(data['room_registry']['candidates'])
     images = {r['image_id']: r for r in data['images']}

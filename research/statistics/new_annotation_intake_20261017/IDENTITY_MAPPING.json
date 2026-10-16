@@ -1,0 +1,201 @@
+{
+  "schema": "annotation_source_identity_mapping_v1",
+  "version": "project98_existing_W_identity_20261017_v1",
+  "source_project": 98,
+  "target_namespace": "existing_W",
+  "identity_confirmed": true,
+  "analysis_adopted": true,
+  "source_export": "export_label/新增中文标注/project-98-at-2026-10-16-13-59-e351a09f.json",
+  "evidence_document": "IDENTITY_EVIDENCE.md",
+  "project_instance_bridge": {
+    "session_id": "1789983329125-ab5009b5c6a748",
+    "account_id": "6",
+    "source_projects": [
+      93,
+      98
+    ],
+    "source_anchors": [
+      {
+        "source_pointer": "active_logs/new_server/active_times_2026-09-21.jsonl#line=41",
+        "project_id": 93,
+        "task_id": 3599,
+        "annotator_id": "6",
+        "client_timestamp_ms": 1789983381183
+      },
+      {
+        "source_pointer": "active_logs/new_server/active_times_2026-09-23.jsonl#line=2",
+        "project_id": 98,
+        "task_id": 3674,
+        "annotator_id": "6",
+        "client_timestamp_ms": 1790144129110
+      }
+    ],
+    "script_source": "tools/label_studio/official/ls_userscript_annotator.js:3243-3253",
+    "basis": "Same randomly initialized page-runtime session across project routes; shared project namespace applies to all accounts in the one Project98 export"
+  },
+  "mappings": [
+    {
+      "source_account_id": "1",
+      "worker_id": "W001",
+      "identity_confirmed": true,
+      "analysis_adopted": true,
+      "old_source_anchor": {
+        "object_id": "new_93_3577_6868_W001",
+        "project_id": 93,
+        "task_id": 3577,
+        "annotation_id": 6868,
+        "export_path": "export_label/新增中文20图/project-93-at-2026-09-21-09-42-4609125d.json",
+        "completed_by": 1
+      },
+      "new_source_anchor": {
+        "project_id": 98,
+        "task_id": 3674,
+        "annotation_id": 7571,
+        "export_path": "export_label/新增中文标注/project-98-at-2026-10-16-13-59-e351a09f.json",
+        "completed_by": 1
+      },
+      "confirmation_basis": "Shared Project98 instance bridge to Project93, then exact original annotation completed_by to canonical worker_id"
+    },
+    {
+      "source_account_id": "6",
+      "worker_id": "W006",
+      "identity_confirmed": true,
+      "analysis_adopted": true,
+      "old_source_anchor": {
+        "object_id": "new_93_3599_7500_W006",
+        "project_id": 93,
+        "task_id": 3599,
+        "annotation_id": 7500,
+        "export_path": "export_label/新增中文20图/project-93-at-2026-09-21-09-42-4609125d.json",
+        "completed_by": 6
+      },
+      "new_source_anchor": {
+        "project_id": 98,
+        "task_id": 3674,
+        "annotation_id": 7503,
+        "export_path": "export_label/新增中文标注/project-98-at-2026-10-16-13-59-e351a09f.json",
+        "completed_by": 6
+      },
+      "confirmation_basis": "Shared Project98 instance bridge to Project93, then exact original annotation completed_by to canonical worker_id"
+    },
+    {
+      "source_account_id": "8",
+      "worker_id": "W008",
+      "identity_confirmed": true,
+      "analysis_adopted": true,
+      "old_source_anchor": {
+        "object_id": "new_93_3579_7393_W008",
+        "project_id": 93,
+        "task_id": 3579,
+        "annotation_id": 7393,
+        "export_path": "export_label/新增中文20图/project-93-at-2026-09-21-09-42-4609125d.json",
+        "completed_by": 8
+      },
+      "new_source_anchor": {
+        "project_id": 98,
+        "task_id": 3674,
+        "annotation_id": 7521,
+        "export_path": "export_label/新增中文标注/project-98-at-2026-10-16-13-59-e351a09f.json",
+        "completed_by": 8
+      },
+      "confirmation_basis": "Shared Project98 instance bridge to Project93, then exact original annotation completed_by to canonical worker_id"
+    },
+    {
+      "source_account_id": "10",
+      "worker_id": "W010",
+      "identity_confirmed": true,
+      "analysis_adopted": true,
+      "old_source_anchor": {
+        "object_id": "new_93_3578_7255_W010",
+        "project_id": 93,
+        "task_id": 3578,
+        "annotation_id": 7255,
+        "export_path": "export_label/新增中文20图/project-93-at-2026-09-21-09-42-4609125d.json",
+        "completed_by": 10
+      },
+      "new_source_anchor": {
+        "project_id": 98,
+        "task_id": 3674,
+        "annotation_id": 7560,
+        "export_path": "export_label/新增中文标注/project-98-at-2026-10-16-13-59-e351a09f.json",
+        "completed_by": 10
+      },
+      "confirmation_basis": "Shared Project98 instance bridge to Project93, then exact original annotation completed_by to canonical worker_id"
+    },
+    {
+      "source_account_id": "12",
+      "worker_id": "W012",
+      "identity_confirmed": true,
+      "analysis_adopted": true,
+      "old_source_anchor": {
+        "object_id": "new_93_3576_7134_W012",
+        "project_id": 93,
+        "task_id": 3576,
+        "annotation_id": 7134,
+        "export_path": "export_label/新增中文20图/project-93-at-2026-09-21-09-42-4609125d.json",
+        "completed_by": 12
+      },
+      "new_source_anchor": {
+        "project_id": 98,
+        "task_id": 3674,
+        "annotation_id": 7540,
+        "export_path": "export_label/新增中文标注/project-98-at-2026-10-16-13-59-e351a09f.json",
+        "completed_by": 12
+      },
+      "confirmation_basis": "Shared Project98 instance bridge to Project93, then exact original annotation completed_by to canonical worker_id"
+    },
+    {
+      "source_account_id": "15",
+      "worker_id": "W015",
+      "identity_confirmed": true,
+      "analysis_adopted": true,
+      "old_source_anchor": {
+        "object_id": "new_93_3576_7196_W015",
+        "project_id": 93,
+        "task_id": 3576,
+        "annotation_id": 7196,
+        "export_path": "export_label/新增中文20图/project-93-at-2026-09-21-09-42-4609125d.json",
+        "completed_by": 15
+      },
+      "new_source_anchor": {
+        "project_id": 98,
+        "task_id": 3674,
+        "annotation_id": 7531,
+        "export_path": "export_label/新增中文标注/project-98-at-2026-10-16-13-59-e351a09f.json",
+        "completed_by": 15
+      },
+      "confirmation_basis": "Shared Project98 instance bridge to Project93, then exact original annotation completed_by to canonical worker_id"
+    },
+    {
+      "source_account_id": "17",
+      "worker_id": "W017",
+      "identity_confirmed": true,
+      "analysis_adopted": true,
+      "old_source_anchor": {
+        "object_id": "new_93_3578_6920_W017",
+        "project_id": 93,
+        "task_id": 3578,
+        "annotation_id": 6920,
+        "export_path": "export_label/新增中文20图/project-93-at-2026-09-21-09-42-4609125d.json",
+        "completed_by": 17
+      },
+      "new_source_anchor": {
+        "project_id": 98,
+        "task_id": 3674,
+        "annotation_id": 7552,
+        "export_path": "export_label/新增中文标注/project-98-at-2026-10-16-13-59-e351a09f.json",
+        "completed_by": 17
+      },
+      "confirmation_basis": "Shared Project98 instance bridge to Project93, then exact original annotation completed_by to canonical worker_id"
+    }
+  ],
+  "checks": {
+    "accounts": 7,
+    "unique_worker_ids": 7,
+    "prior_raw_accounts_verified": true,
+    "new_raw_accounts_verified": true,
+    "old_bundle_workers_verified": true,
+    "excluded_W019_W026_in_mapping": false
+  },
+  "effect": "Identity only; no source files, main input, order/geometry, quality, timing adoption or frozen snapshots changed"
+}

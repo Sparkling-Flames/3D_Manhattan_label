@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>标注图片总览 · 补充计划</title>
+  <link rel="stylesheet" href="app.css">
+  <script>
+    if(location.protocol==='file:')document.addEventListener('DOMContentLoaded',()=>{
+      document.querySelector('#result-count').textContent='请通过本机服务打开图片总览';
+      document.querySelector('#planned-images').textContent='请先启动本机页面';
+      const notice=document.querySelector('#global-error');
+      notice.hidden=false;
+      notice.innerHTML='不能直接双击 index.html 使用此页面。请双击同文件夹的 <b>启动图片总览.cmd</b>，它会启动本机服务并打开页面。服务已启动时，<a href="http://127.0.0.1:8877/">点击这里进入图片总览</a>。';
+    });
+  </script>
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <header class="page-header">
+    <div><p class="eyebrow">HOHONET / 标注与采集</p><h1>图片总览<span>补充计划</span></h1>
+      <p class="subtitle">查看现有标注，直接填写需要补充的人数与备注。</p></div>
+    <div class="header-actions"><div class="plan-total"><span>已计划补充</span><strong id="planned-total">—</strong><span id="planned-images">正在加载</span></div><a class="export-link" href="/api/export" download>导出补充计划 ↓</a></div>
+  </header>
+  <main>
+    <section class="overview-stats" id="overview-stats" aria-label="库存与当前筛选统计"></section>
+    <section class="toolbar" aria-label="筛选图片">
+      <label class="search"><span class="sr-only">搜索图片、楼栋或备注</span><input id="search" type="search" placeholder="搜索图片、楼栋或备注…" autocomplete="off"></label>
+      <label><span>楼栋</span><select id="building-filter"><option value="">全部楼栋</option></select></label>
+      <label><span>难度</span><select id="difficulty-filter"><option value="">全部难度</option></select></label>
+      <label><span>情况</span><select id="scene-filter"><option value="">全部情况</option></select></label>
+      <label><span>状态</span><select id="status-filter"><option value="">全部状态</option></select></label>
+      <label><span>空间</span><select id="space-filter"><option value="">全部空间</option></select></label>
+      <label class="filled-filter"><input id="filled-only" type="checkbox">只看有填写</label>
+    </section>
+    <div class="results-line"><span id="result-count" aria-live="polite">正在加载图片…</span><span class="autosave-hint">输入后自动保存 · 留空表示尚未计划</span></div>
+    <div id="global-error" class="error-banner" role="alert" hidden></div>
+    <section id="gallery" class="gallery" aria-label="图片卡片"></section>
+    <div id="empty" class="empty" hidden><h2>没有符合条件的图片</h2><p>试试其它关键词或调整筛选条件。</p></div>
+  </main>
+  <div id="drawer-backdrop" class="drawer-backdrop" hidden></div>
+  <aside id="detail-drawer" class="detail-drawer" role="dialog" aria-modal="true" aria-labelledby="detail-title" hidden>
+    <header class="drawer-header"><div><p class="eyebrow">图片与已有标注</p><h2 id="detail-title"></h2></div><button id="close-detail" class="icon-button" aria-label="关闭详情">×</button></header>
+    <div id="detail-content" class="drawer-content"></div>
+  </aside>
+  <template id="card-template">
+    <article class="image-card">
+      <button class="card-image" type="button"><img decoding="async" width="1024" height="512" alt=""><span class="image-action">查看原图与标注 ↗</span></button>
+      <div class="card-main"><div class="card-heading"><button class="image-name" type="button"></button><span class="difficulty-badge"></span></div>
+        <p class="card-location"></p><div class="card-metrics"></div><div class="quality-lines"></div><div class="card-flags"></div>
+      </div>
+      <div class="plan-editor"><div class="plan-input-line"><label>补充人数<input class="add-count" type="number" min="0" step="1" placeholder="未计划" inputmode="numeric"></label><span class="save-state" aria-live="polite"></span></div>
+        <label class="note-label"><span class="sr-only">补充备注</span><textarea class="plan-note" rows="2" placeholder="补充备注，例如需要核查的空间或标注条件…"></textarea></label>
+      </div>
+    </article>
+  </template>
+</body>
+</html>

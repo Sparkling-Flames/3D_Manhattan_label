@@ -26,16 +26,19 @@ def load_routing_evidence():
     return routing
 
 
-def build_affected_records(bundle, difficulty_records, reference_catalog=None, routing_input=None):
+def build_affected_records(bundle, difficulty_records, reference_catalog=None, routing_input=None, include_all_images=False,
+                           resolve_multiple_spaces=False):
     """返回affected_records/record_targets/source_pools/image_spaces，均list[dict]。
 
     catalog每target含image_id/target_id/floor_xz_h/is_admitted_space_candidate等字段。
     已登记的人工A/B/C/D空间继承原审核准入；普通GT历史版本不自动新增空间。
     score_input_eligible仅指原作答几何可供评分，包含仅诊断对象，绝非统计准入。
+    include_all_images=True展开全部图片；默认保留历史受影响范围，不依赖旧分数覆盖。
+    resolve_multiple_spaces只由新版消费者启用历史局部/底面路由，冻结旧版回放保持原行为。
     """
     routing = routing_input if routing_input is not None else load_routing_evidence()
     affected = {r['image_id']: r for r in difficulty_records
-                if r['selected']['role'] in ('confirmed_scope', 'user_revised_gt')}
+                if include_all_images or r['selected']['role'] in ('confirmed_scope', 'user_revised_gt')}
     pools, gates = build_pool_gate(bundle, difficulty_records)
     pools = [r for r in pools if r['image_id'] in affected]
     gate_by_id = {r['object_id']: r for r in gates}
@@ -85,7 +88,7 @@ def build_affected_records(bundle, difficulty_records, reference_catalog=None, r
                 lookup[image, candidate_id] = space['target_id']
         spaces_by_image[image] = merged
 
-    answers, pairs = [], []
+    answers, pairs, prepared_cache = [], [], {}
     for obj in bundle['data']['objects']:
         if obj['object_kind'] != 'annotation' or obj['image_id'] not in affected:
             continue
@@ -99,6 +102,7 @@ def build_affected_records(bundle, difficulty_records, reference_catalog=None, r
         geometry_equal = bool(old and all(obj.get(k) == old['source_object'].get(k) for k in
             ['image_id', 'worker_id', 'condition', 'points_1024x512', 'ordered_source_pair_indices']))
         chosen, status = '', 'pending_multiple_admitted_spaces'
+        local_route = None
         if current['selected']['role'] == 'user_revised_gt':
             chosen, status = current['target_version'], 'fixed_current_gt_revision'
         elif (manual or family) and not geometry_equal:
@@ -115,6 +119,11 @@ def build_affected_records(bundle, difficulty_records, reference_catalog=None, r
                 status = 'pending_manual_family_not_unique'
             if len(allowed) == 1:
                 chosen, status = next(iter(allowed)), 'sole_admitted_space'
+            elif resolve_multiple_spaces and len(allowed) > 1 and obj.get('points_1024x512'):
+                from .scope_local_routing_20261017 import route_missing_space
+                chosen, local_route = route_missing_space(obj['points_1024x512'], spaces, allowed, prepared_cache)
+                status = ('manual_family_then_' if family else '') + (
+                    local_route['route_reason'] if chosen else 'pending_local_route_' + local_route['status'])
         geometry = obj.get('geometry', {}).get('status', '')
         row = dict(object_id=oid, image_id=image, image_code=obj['image_code'], worker_id=obj['worker_id'],
             condition=obj['condition'], record_id=rid, current_target_id=current['target_version'],
@@ -122,6 +131,7 @@ def build_affected_records(bundle, difficulty_records, reference_catalog=None, r
             binding_status=status, allowed_target_ids=sorted(allowed),
             manual_source=copy.deepcopy(manual), manual_family_source=copy.deepcopy(family),
             manual_evidence_geometry_unchanged=geometry_equal,
+            local_routing_evidence=local_route,
             annotation_geometry_status=geometry, ring_confirmed=obj.get('ring_confirmed'),
             score_input_eligible=bool(obj.get('points_1024x512')) and geometry == 'surface_valid',
             annotation_modified=False, annotation_cropped=False, quality_used_for_binding=False,
