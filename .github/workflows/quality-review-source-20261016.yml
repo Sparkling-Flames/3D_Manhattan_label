@@ -1,0 +1,23 @@
+name: Quality authorized review source
+on:
+  push:
+    branches: [research/quality-readonly-acquisition-20261016]
+    paths: [.github/workflows/quality-review-source-20261016.yml]
+permissions:
+  contents: read
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 6b69d3f23be4c2cf48ad6a73ca03d2bd885bd955
+          lfs: true
+          sparse-checkout: |
+            analysis_results/point_edit_review_20261009/evidence
+      - uses: actions/upload-artifact@v4
+        with:
+          name: quality-authorized-review-source
+          path: analysis_results/point_edit_review_20261009/evidence
+          retention-days: 7
