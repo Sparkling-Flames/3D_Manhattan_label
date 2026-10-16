@@ -8,7 +8,7 @@
 - 原GT不改，人员轮廓只作参照。不同GT分数未计算。裁剪仅定义底面；新封口上界尚需另行核实，导出永远 reference_ready=false。
 - 半平面裁剪拒绝空、断开/自交及不含相机内部的结果，不自动修形。
 
-运行：python -m http.server 8765 --directory dist
+可直接双击 `dist/index.html` 离线打开；清单与逐图详情会从同目录脚本载入，原图、编辑和浏览器自动保存均可用。也可在仓库根目录 `D:\Work\HOHONET` 运行 `python -m http.server 8765 --directory "analysis_results/difficulty/scope_workbench_recovered_20261015/quality_scope_review_complete_20261010/workbench_v3.4.2/dist"` 并打开 `http://localhost:8765/`；HTTP 模式仍从 JSON 载入数据。
 检查：node --check dist/app.js && node qa-state.cjs
 QA.json记录已通过的状态逻辑检查及浏览器验证限制。qa.cjs为真实浏览器回归脚本，当前主机不能创建Chromium所需socket，未冒称浏览器检查通过。
 

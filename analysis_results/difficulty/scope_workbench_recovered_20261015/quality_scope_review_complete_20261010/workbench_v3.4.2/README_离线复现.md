@@ -1,6 +1,10 @@
 # v3.4.2 工作台：完整离线数据与回归输入
 
-本目录保留已发布源码提交 `e44b52969f0d18a352773a83c4b9575f720bc5a7` 的选定源码、全部12个fixtures、`dist/data.json`、282份逐图records、全部catalogue/evidence和266个assets文件。没有只交付代码片段，也没有省略测试需要的照片。站点发布回执在 `deployment_receipt.json`。
+本目录保留已发布源码提交 `e44b52969f0d18a352773a83c4b9575f720bc5a7` 的选定源码、全部12个fixtures、`dist/data.json`、282份逐图records、全部catalogue/evidence和266个assets文件。为支持双击 `dist/index.html`，另有 `dist/data.js` 和282份按需详情脚本；HTTP模式仍读取JSON。没有省略测试需要的照片。站点发布回执在 `deployment_receipt.json`。
+
+直接双击 `dist/index.html` 即可本地复核，不需要启动服务器。浏览器草稿保存在当前浏览器本地存储中；若浏览器策略禁用本地文件脚本，可改用下方 Python HTTP 方式。
+
+本仓库副本在原发布快照上增加了 `file://` 加载兼容，仅供本地使用；未更改部署回执，也未重新发布在线工作台。
 
 ## 状态分层
 
@@ -35,11 +39,13 @@ node qa-outside-gt.cjs
 
 ## 本地查看
 
-```sh
-python -m http.server 8765 --directory dist
+在仓库根目录 `D:\Work\HOHONET` 启动本地服务：
+
+```powershell
+python -m http.server 8765 --directory "analysis_results/difficulty/scope_workbench_recovered_20261015/quality_scope_review_complete_20261010/workbench_v3.4.2/dist"
 ```
 
-然后在自己的浏览器打开 `http://127.0.0.1:8765`。照片与数据均在包内，浏览不依赖原云目录。浏览器保存、缩放、移动端视觉等仍需独立验收；本说明不声称它们已经通过。
+然后在自己的浏览器打开 `http://127.0.0.1:8765/`。这是本机服务，照片与数据都从仓库内的 `dist/` 读取，不依赖远端工作台或原始下载目录。浏览器保存、缩放、移动端视觉等仍需独立验收；本说明不声称它们已经通过。
 
 ## 重建范围
 

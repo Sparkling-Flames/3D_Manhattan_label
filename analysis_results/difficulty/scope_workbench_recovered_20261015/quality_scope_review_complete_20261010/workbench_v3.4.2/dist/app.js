@@ -4,6 +4,8 @@ const C=Catalogue;
 const questions=['主体能否不包含侧方楼梯/通道分支？请直接切出你认可的范围。','能否只标相机附近主体？请确定餐厨连通处的停止边。','大小范围是否可以并存？请切出允许的小目标，原大 GT 会保留。'];
 let data,idx=0,drafts={},confirmations={},spaceRegions={},unrecoveredDrafts={},hist={},redos={},line=null,first=null,drag=null,preview=null,view=null,zoom=1,photoMode=false,photoImages={},storageOK=true,mode="cut",edit=null,filters={query:'',category:'missing_room_scope_review',status:'all',paused:'all',room_group:''},navPage=0,loadToken=0,detailPromises={},rawEdit=null,snapMatches=[];
 const cameraInside=S.cameraInside,clone=S.clone,samePoly=S.samePoly,verifyOps=S.verifyOps;
+const FILE_MODE=typeof location!=='undefined'&&location.protocol==='file:';
+function loadLocalScript(src){return new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=src;script.onload=resolve;script.onerror=()=>reject(Error(src));document.head.append(script)})}
 function cur(){return data.images[idx]}function gt(){return G.floor(cur().reference_points_1024x512||[])}
 function anns(){return cur().annotations||[]}
 function canEdit(){return cur()?.editable!==false&&!cur()?.photo_error&&G.valid(gt())}
@@ -115,7 +117,7 @@ function renderEvidence(){
 }
 async function loadDetails(c){
  if(c.details_loaded)return;delete c.detail_error;renderEvidence();
- try{if(!detailPromises[c.image_code])detailPromises[c.image_code]=fetch(c.detail_file).then(r=>{if(!r.ok)throw Error('evidence');return r.json()});const d=await detailPromises[c.image_code];if(d.image_code!==c.image_code||!Array.isArray(d.annotations))throw Error('identity');Object.assign(c,{annotations:d.annotations,historical_comments:d.historical_comments,original_reference_points_1024x512:d.original_reference_points_1024x512,historical_reference_note:d.historical_reference_note,details_loaded:true});if(cur()===c){populatePeople();renderEvidence();render()}}
+ try{if(!detailPromises[c.image_code])detailPromises[c.image_code]=FILE_MODE?loadLocalScript(c.detail_file.replace(/\.json$/i,'.js')).then(()=>window.__SCOPE_REVIEW_DETAILS__?.[c.image_code]):fetch(c.detail_file).then(r=>{if(!r.ok)throw Error('evidence');return r.json()});const d=await detailPromises[c.image_code];if(d.image_code!==c.image_code||!Array.isArray(d.annotations))throw Error('identity');Object.assign(c,{annotations:d.annotations,historical_comments:d.historical_comments,original_reference_points_1024x512:d.original_reference_points_1024x512,historical_reference_note:d.historical_reference_note,details_loaded:true});if(cur()===c){populatePeople();renderEvidence();render()}}
  catch(e){delete detailPromises[c.image_code];c.detail_error=true;if(cur()===c)renderEvidence()}
 }
 function populatePeople(){const selected=$('#person').value;$('#person').innerHTML='<option value="">不高亮单份</option>'+anns().map(a=>`<option value="${esc(a.record_id)}">${esc(a.record_id)} · ${esc(a.worker_id)}${a.subsequent_point_review?'（历史图证）':''}</option>`).join('');$('#person').value=anns().some(a=>a.record_id===selected)?selected:''}
@@ -239,7 +241,8 @@ $('#search').oninput=applyFilters;['categoryFilter','statusFilter','pausedFilter
 $('#roomGroupFilter').onchange=()=>{const id=$('#roomGroupFilter').value;if(id)showRoomGroup(id);else applyFilters()};
 $('#clearFilters').onclick=()=>{$('#search').value='';$('#categoryFilter').value='all';$('#statusFilter').value='all';$('#pausedFilter').value='all';$('#roomGroupFilter').value='';applyFilters()};
 $('#pagePrev').onclick=()=>{navPage=Math.max(0,navPage-1);renderNav()};$('#pageNext').onclick=()=>{navPage++;renderNav()};
-fetch('data.json').then(r=>{if(!r.ok)throw Error('data');return r.json()}).then(x=>{
+const dataPromise=FILE_MODE?loadLocalScript('data.js').then(()=>window.__SCOPE_REVIEW_DATA__):fetch('data.json').then(r=>{if(!r.ok)throw Error('data');return r.json()});
+dataPromise.then(x=>{
  data=x;let saved=null,raw=null;try{raw=localStorage.getItem(KEY);saved=JSON.parse(raw||'null')}catch(e){storageOK=false;if(raw)saved={source_commit:'unreadable_previous_storage',raw_storage:raw}}
  const state=S.initialize(data,saved);drafts=state.drafts;confirmations=state.confirmations;spaceRegions=S.initializeRegions(data,saved,state);unrecoveredDrafts=state.unrecovered_drafts;
  if(state.warnings.length){$('#recoveryWarning').hidden=false;$('#recoveryWarning').textContent=state.warnings.join('；')+'。导出结果含原始恢复副本。'}
