@@ -101,6 +101,10 @@
           "path": "research/quality/quality_three_routes_feedback_20261016/README.md"
         },
         {
+          "text": "B8L2当前主线查阅快照，891份与前版数值/参考一致",
+          "path": "research/statistics/b8l2_mainline_status_20261016/README.md"
+        },
+        {
           "text": "B8L2为质量线当前工作指数，未自动接入所有下游",
           "path": "research/quality/quality_structure_handoff_20261016/README.md"
         },
@@ -154,7 +158,19 @@
       "page_path": "docs/thesis_main/topics/difficulty/README.md",
       "current_basis": [
         {
-          "text": "难度v3及空间/GT复核",
+          "text": "难度v6：两图新空间、三图中等与粗分类边界",
+          "path": "research/difficulty/difficulty_scope_resolution_20261016/README.md"
+        },
+        {
+          "text": "难度v5：补充裁定与裁切空间上下点对",
+          "path": "research/difficulty/difficulty_pair_display_20261016/README.md"
+        },
+        {
+          "text": "难度v4：采用用户复核、分类逻辑与论文表述",
+          "path": "research/difficulty/difficulty_user_adoption_20261016/README.md"
+        },
+        {
+          "text": "v3历史分类、空间与GT复核依据",
           "path": "research/difficulty/difficulty_review_update_20261015/README.md"
         },
         {
@@ -175,10 +191,23 @@
       ],
       "open_questions": [
         {
-          "text": "中等/困难争议按固定空间、结构和操作证据复核，不由低质量倒推类别"
+          "text": "当前按人工辅助粗分使用，允许中等/困难边界差异；不要求逐图一致。GT错误与目标匹配仍需分别处理"
         }
       ],
-      "reproduction": []
+      "reproduction": [
+        {
+          "text": "v6空间接入与分歧整理",
+          "path": "tools/thesis_main/analysis/difficulty_scope_resolution_20261016.py"
+        },
+        {
+          "text": "v5构建入口",
+          "path": "tools/thesis_main/analysis/difficulty_pair_display_20261016.py"
+        },
+        {
+          "text": "v4构建入口",
+          "path": "tools/thesis_main/analysis/difficulty_user_adoption_20261016.py"
+        }
+      ]
     },
     {
       "id": "workers",
@@ -289,6 +318,10 @@
       "description": "各批次覆盖、分母、分层结果、表格、图表与扩展复算。",
       "page_path": "docs/thesis_main/topics/statistics/README.md",
       "current_basis": [
+        {
+          "text": "B8L2主线数据重核、14页查阅表与各模块接入计划",
+          "path": "research/statistics/b8l2_mainline_status_20261016/README.md"
+        },
         {
           "text": "参考重算后891份统计",
           "path": "research/statistics/descriptive_statistics_rescored_20261016/README.md"
@@ -484,12 +517,13 @@
       "formula": "F=(1/I-1)+Sb^2/32; d8=1.5*D^2/(D^2+8^2); H=(Hm/0.8)^2+(Hc/0.25)^2; Q=100/(1+sqrt(F^2+d8^2)+H), I=0 -> 0",
       "parameters": "c=8 degrees; L2 pooling; H scales=.8/.25 input units",
       "purpose": "当前质量线几何工作指数，合并底面/边界负担与自身方向残差",
-      "adoption_status": "当前工作版，用户同意先用于主线分析；本次未重跑下游",
+      "adoption_status": "当前主线工作评分；891份描述数据已重核，人员/融合/同房建模待迁移",
       "verification_status": "固定样本/机制研究及用户粗评；效度仍需累积",
       "evidence_paths": [
         "research/quality/quality_ab_feedback_handoff_20261015/README.md",
         "research/quality/quality_combination_review_20261016/README.md",
-        "research/quality/quality_three_routes_feedback_20261016/README.md"
+        "research/quality/quality_three_routes_feedback_20261016/README.md",
+        "research/statistics/b8l2_mainline_status_20261016/README.md"
       ],
       "implementation_paths": [
         "tools/thesis_main/analysis/scope_quality_scoring_20261016.py",
@@ -793,6 +827,30 @@
         "tools/thesis_main/analysis/scope_quality_scoring_20261016.py"
       ],
       "reproduction_status": "空间修订输入、逐作答绑定和评分脚本可定位；本轮未重跑。"
+    },
+    {
+      "id": "b8l2_mainline_status_20261016_v1",
+      "title": "B8L2主线查阅与状态快照",
+      "population": "2834合格来源；891完整质量（manual828、semi63）；当前特殊层完整B8L2为0；440质量/同目标时间共有",
+      "batch": "existing_inventory_20261016，无新增采集",
+      "input_version": "当前manifest及confirmed_scope_fixed_quality_rescore_20261016_v1重新核对",
+      "reference_version": "当前固定GT/确认空间及既有绑定；与前891份参考一致",
+      "eligibility_rule": "既有排除、同条件至少3名有效真人、明确完整参考；缺失不补0",
+      "auxiliary_tags": "难度v4人工复核采用版；同房仅直接确认且同条件共同人员；非随机人评验证",
+      "method_version": "WQ-B8L2-20261015主视角，同参考IoU及WQ/A10保留",
+      "result_path": "research/statistics/b8l2_mainline_status_20261016/README.md",
+      "member_list_path": "research/statistics/b8l2_mainline_status_20261016/quality_records.csv",
+      "source_paths": [
+        "analysis_results/research_input_20260929/manifest.json",
+        "research/data/scope_quality_rescore_20261016/INPUT_MANIFEST.json",
+        "research/statistics/b8l2_mainline_status_20261016/THREAD_STATUS.json"
+      ],
+      "reproduction_paths": [
+        "tools/thesis_main/analysis/scope_quality_rescore_20261016.py",
+        "tools/thesis_main/analysis/b8l2_mainline_status_20261016.py",
+        "tools/thesis_main/analysis/b8l2_mainline_workbook_20261016.mjs"
+      ],
+      "reproduction_status": "本轮重新运行既有参考/统计链和新查阅整理；与前版891份B8L2/参考一致，不含人员建模或融合重跑"
     }
   ],
   "count_definitions": [
@@ -837,10 +895,11 @@
       "title": "研究方法细节7(质量分析)",
       "link": "codex://threads/01a12f0e-9091-78b1-bff1-b59207079df5",
       "observed_at": "2026-10-16",
-      "observed_status": "该轮完成；含工作空间v3.4.2和两图绑定核查",
+      "observed_status": "本轮只读复核最新完成返回，尚未派发新接入任务",
       "latest_return_summary": "补足uNb9QFRL6hY-86和q9vSo1VnCiC-34的双空间复核；不是新公式定稿。",
       "saved_evidence_paths": [
-        "research/quality/quality_structure_handoff_20261016/README.md"
+        "research/quality/quality_structure_handoff_20261016/README.md",
+        "research/statistics/b8l2_mainline_status_20261016/THREAD_STATUS.json"
       ],
       "archive_status": "完整对话仍在Codex；研究包不冒充全文"
     },
@@ -850,10 +909,11 @@
       "title": "研究方法细节5(图片难度)",
       "link": "codex://threads/01a11f11-23c1-7f51-b9d3-c4300015b352",
       "observed_at": "2026-10-16",
-      "observed_status": "最近读取时有结果",
+      "observed_status": "本轮只读复核最新完成返回，尚未派发新接入任务",
       "latest_return_summary": "难度条件于固定目标空间；结构/操作负担与定位推断负担分开；中等/困难仍有争议样本。",
       "saved_evidence_paths": [
-        "research/difficulty/difficulty_review_update_20261015/README.md"
+        "research/difficulty/difficulty_review_update_20261015/README.md",
+        "research/statistics/b8l2_mainline_status_20261016/THREAD_STATUS.json"
       ],
       "archive_status": "摘要登记；完整对话仍在Codex"
     },
@@ -863,10 +923,11 @@
       "title": "研究方法细节6(人员分类)",
       "link": "codex://threads/01a1209b-683a-7462-8996-6730c95adfaf",
       "observed_at": "2026-10-16",
-      "observed_status": "最近读取时有结果",
+      "observed_status": "本轮只读复核最新完成返回，尚未派发新接入任务",
       "latest_return_summary": "931质量面板；OOS/门洞证据有限；891统计没有重建人员画像，仍引用旧WQ。",
       "saved_evidence_paths": [
-        "research/workers/worker_four_axis_update_20261015/README.md"
+        "research/workers/worker_four_axis_update_20261015/README.md",
+        "research/statistics/b8l2_mainline_status_20261016/THREAD_STATUS.json"
       ],
       "archive_status": "摘要登记；完整对话仍在Codex"
     },
@@ -876,10 +937,11 @@
       "title": "研究方法细节3(融合共识)",
       "link": "codex://threads/01a10f7b-43d3-7b02-98e2-41440e4d4f71",
       "observed_at": "2026-10-16",
-      "observed_status": "最近读取时有结果",
+      "observed_status": "本轮只读复核最新完成返回，尚未派发新接入任务",
       "latest_return_summary": "有限普通/特殊图片比较；稳定性与接近参考分开；未全库验证。",
       "saved_evidence_paths": [
-        "research/fusion/wall_consensus_quality_20261015/README.md"
+        "research/fusion/wall_consensus_quality_20261015/README.md",
+        "research/statistics/b8l2_mainline_status_20261016/THREAD_STATUS.json"
       ],
       "archive_status": "摘要登记；完整对话仍在Codex"
     },
@@ -889,10 +951,11 @@
       "title": "研究方法细节9(同房间情况预测)",
       "link": "codex://threads/01a13df6-e883-78c3-aa74-89c72fc10f37",
       "observed_at": "2026-10-16",
-      "observed_status": "最近读取时有结果",
+      "observed_status": "本轮只读复核最新完成返回，尚未派发新接入任务",
       "latest_return_summary": "Q/T证据小样本、单建筑；WQ分组不稳定，墙线过程证据不足。",
       "saved_evidence_paths": [
-        "research/same_room/same_room_personnel_patterns_20261015/README.md"
+        "research/same_room/same_room_personnel_patterns_20261015/README.md",
+        "research/statistics/b8l2_mainline_status_20261016/THREAD_STATUS.json"
       ],
       "archive_status": "摘要登记；完整对话仍在Codex"
     },
@@ -902,10 +965,11 @@
       "title": "接手统计数据任务",
       "link": "codex://threads/01a13eaa-5b3e-7191-8ed5-ce722daf436e",
       "observed_at": "2026-10-16",
-      "observed_status": "最近读取时有结果",
+      "observed_status": "本轮只读复核最新完成返回，尚未派发新接入任务",
       "latest_return_summary": "输出包含不同集合/版本；891当前统计不是所有模块重建。",
       "saved_evidence_paths": [
-        "research/statistics/descriptive_statistics_rescored_20261016/README.md"
+        "research/statistics/descriptive_statistics_rescored_20261016/README.md",
+        "research/statistics/b8l2_mainline_status_20261016/THREAD_STATUS.json"
       ],
       "archive_status": "摘要登记；完整对话仍在Codex"
     },
@@ -969,52 +1033,52 @@
       "distinction": "文档记载三个公开ZIP及IMAGE_INDEX.csv；不重复上传原图。"
     },
     {
-      "title": "Pro本地来源：quality_calibration_diagnostics_20261014",
-      "source_path": "C:/Users/ASUS/Downloads/quality_calibration_diagnostics_20261014",
-      "availability": "本地可能仍存；本轮未访问",
-      "distinction": "相关结果已选择性归档；原目录与仓库复核包是不同证据对象。"
+      "title": "Pro来源（选择性归档）：quality_calibration_diagnostics_20261014",
+      "source_path": "research/quality/quality_pro_return_review_20261014",
+      "availability": "相关审查材料已归档到仓库；未保存原Pro目录全文",
+      "distinction": "链接指向仓库中的审查包，不代表原Pro目录的完整副本。"
     },
     {
-      "title": "Pro本地来源：quality_working_calibration_20261014",
-      "source_path": "C:/Users/ASUS/Downloads/quality_working_calibration_20261014",
-      "availability": "本地可能仍存；本轮未访问",
-      "distinction": "相关结果已选择性归档；原目录与仓库复核包是不同证据对象。"
+      "title": "Pro来源（选择性归档）：quality_working_calibration_20261014",
+      "source_path": "research/quality/quality_staged_calibration_20261014",
+      "availability": "相关审查材料已归档到仓库；未保存原Pro目录全文",
+      "distinction": "链接指向仓库中的审查包，不代表原Pro目录的完整副本。"
     },
     {
-      "title": "Pro本地来源：quality_model_closeout_verified_20261014",
-      "source_path": "C:/Users/ASUS/Downloads/quality_model_closeout_verified_20261014",
-      "availability": "本地可能仍存；本轮未访问",
-      "distinction": "相关结果已选择性归档；原目录与仓库复核包是不同证据对象。"
+      "title": "Pro来源（选择性归档）：quality_model_closeout_verified_20261014",
+      "source_path": "research/quality/quality_model_closeout_20261014",
+      "availability": "相关审查材料已归档到仓库；未保存原Pro目录全文",
+      "distinction": "链接指向仓库中的审查包，不代表原Pro目录的完整副本。"
     },
     {
-      "title": "Pro本地来源：hohonet_component_study_20261014",
-      "source_path": "C:/Users/ASUS/Downloads/hohonet_component_study_20261014",
-      "availability": "本地可能仍存；本轮未访问",
-      "distinction": "相关结果已选择性归档；原目录与仓库复核包是不同证据对象。"
+      "title": "Pro来源（选择性归档）：hohonet_component_study_20261014",
+      "source_path": "research/quality/quality_component_return_review_20261014",
+      "availability": "相关审查材料已归档到仓库；未保存原Pro目录全文",
+      "distinction": "链接指向仓库中的审查包，不代表原Pro目录的完整副本。"
     },
     {
-      "title": "Pro本地来源：hohonet_AB_working_20261015",
-      "source_path": "C:/Users/ASUS/Downloads/hohonet_AB_working_20261015",
-      "availability": "本地可能仍存；本轮未访问",
-      "distinction": "相关结果已选择性归档；原目录与仓库复核包是不同证据对象。"
+      "title": "Pro来源（选择性归档）：hohonet_AB_working_20261015",
+      "source_path": "research/quality/quality_ab_feedback_handoff_20261015",
+      "availability": "相关审查材料已归档到仓库；未保存原Pro目录全文",
+      "distinction": "链接指向仓库中的审查包，不代表原Pro目录的完整副本。"
     },
     {
-      "title": "Pro本地来源：quality_profile_research_20261015",
-      "source_path": "C:/Users/ASUS/Downloads/quality_profile_research_20261015",
-      "availability": "本地可能仍存；本轮未访问",
-      "distinction": "相关结果已选择性归档；原目录与仓库复核包是不同证据对象。"
+      "title": "Pro来源（选择性归档）：quality_profile_research_20261015",
+      "source_path": "research/quality/quality_profile_independent_review_20261015",
+      "availability": "相关审查材料已归档到仓库；未保存原Pro目录全文",
+      "distinction": "链接指向仓库中的审查包，不代表原Pro目录的完整副本。"
     },
     {
-      "title": "Pro本地来源：quality_scope_model_research_20261015",
-      "source_path": "C:/Users/ASUS/Downloads/quality_scope_model_research_20261015",
-      "availability": "本地可能仍存；本轮未访问",
-      "distinction": "相关结果已选择性归档；原目录与仓库复核包是不同证据对象。"
+      "title": "Pro来源（选择性归档）：quality_scope_model_research_20261015",
+      "source_path": "research/quality/quality_scope_model_handoff_20261015",
+      "availability": "相关审查材料已归档到仓库；未保存原Pro目录全文",
+      "distinction": "链接指向仓库中的审查包，不代表原Pro目录的完整副本。"
     },
     {
-      "title": "Pro本地来源：quality_combination_mechanism_20261015",
-      "source_path": "C:/Users/ASUS/Downloads/quality_combination_mechanism_20261015",
-      "availability": "本地可能仍存；本轮未访问",
-      "distinction": "相关结果已选择性归档；原目录与仓库复核包是不同证据对象。"
+      "title": "Pro来源（选择性归档）：quality_combination_mechanism_20261015",
+      "source_path": "research/quality/quality_combination_review_20261016",
+      "availability": "相关审查材料已归档到仓库；未保存原Pro目录全文",
+      "distinction": "链接指向仓库中的审查包，不代表原Pro目录的完整副本。"
     }
   ],
   "migrations": [
@@ -8385,6 +8449,22 @@
       "relationships": []
     },
     {
+      "id": "MAT-analysis_results--research_input_20260929--scope_receipt_20261016.json",
+      "title": "scope_receipt_20261016.json",
+      "theme": "data",
+      "type": "人工复核回执",
+      "date": "20261016",
+      "source_path": "analysis_results/research_input_20260929/scope_receipt_20261016.json",
+      "current_path": "analysis_results/research_input_20260929/scope_receipt_20261016.json",
+      "source": "用户提供的双空间确认原始回执；原件已归档于研究输入目录",
+      "adoption_status": "当前工作依据",
+      "verification_status": "已复现",
+      "availability": "仓库已跟踪",
+      "relationships": [
+        "MAT-research--difficulty--difficulty_scope_resolution_20261016"
+      ]
+    },
+    {
       "id": "MAT-export_label",
       "title": "export_label",
       "theme": "coordination",
@@ -8609,6 +8689,71 @@
       "relationships": [
         "评论优先、档位辅助；固定认可GT，不逐例迎合。",
         "保存三路线算法身份与已知缺陷；不限制Pro重设计整体模型。"
+      ]
+    },
+    {
+      "id": "MAT-research--difficulty--difficulty_user_adoption_20261016",
+      "title": "图片难度v4：用户复核采用与分类逻辑",
+      "theme": "difficulty",
+      "type": "研究包",
+      "date": "20261016",
+      "source_path": "research/difficulty/difficulty_user_adoption_20261016",
+      "current_path": "research/difficulty/difficulty_user_adoption_20261016",
+      "source": "用户2026-10-16采用指令及v3保存的人工回执",
+      "adoption_status": "当前工作版本",
+      "verification_status": "接入测试通过；难度效度未独立验证",
+      "availability": "已落盘；未提交推送",
+      "relationships": [
+        "MAT-research--difficulty--difficulty_review_update_20261015"
+      ]
+    },
+    {
+      "id": "MAT-research--statistics--b8l2_mainline_status_20261016",
+      "title": "B8L2主线数据与各模块推进计划",
+      "theme": "statistics",
+      "type": "当前查阅快照与统筹交接",
+      "date": "20261016",
+      "source_path": "research/statistics/b8l2_mainline_status_20261016",
+      "current_path": "research/statistics/b8l2_mainline_status_20261016",
+      "source": "当前manifest及既有参考重算链重新运行；六原线程最近完成返回；见CHECKS和THREAD_STATUS",
+      "adoption_status": "当前B8L2描述数据与接入计划；非下游模型已迁移",
+      "verification_status": "90份重算、891份身份参考与B8L2一致；3项定向测试及工作簿检查",
+      "availability": "本地工作树已生成；未提交推送",
+      "relationships": [
+        "3152库存、2834来源、891完整质量、440质量与同目标时间共有。",
+        "B8L2先用于主线，Pro整体新模型并行；普通/特殊覆盖单列。"
+      ]
+    },
+    {
+      "id": "MAT-research--difficulty--difficulty_pair_display_20261016",
+      "title": "图片难度v5：补充裁定与上下点对",
+      "theme": "difficulty",
+      "type": "研究包",
+      "date": "20261016",
+      "source_path": "research/difficulty/difficulty_pair_display_20261016",
+      "current_path": "research/difficulty/difficulty_pair_display_20261016",
+      "source": "用户补充18图裁定及现有空间参考目录",
+      "adoption_status": "当前工作版本",
+      "verification_status": "3项测试及图卡抽查；27图顶界仅外推预览",
+      "availability": "本地落盘",
+      "relationships": [
+        "MAT-research--difficulty--difficulty_user_adoption_20261016"
+      ]
+    },
+    {
+      "id": "MAT-research--difficulty--difficulty_scope_resolution_20261016",
+      "title": "图片难度v6：空间接入与粗分类分歧整理",
+      "theme": "difficulty",
+      "type": "研究包",
+      "date": "20261016",
+      "source_path": "research/difficulty/difficulty_scope_resolution_20261016",
+      "current_path": "research/difficulty/difficulty_scope_resolution_20261016",
+      "source": "用户2026-10-16空间回执及粗分类边界澄清",
+      "adoption_status": "当前工作粗分类",
+      "verification_status": "接入测试及三图原图检查；非盲法效度验证",
+      "availability": "本地落盘",
+      "relationships": [
+        "MAT-research--difficulty--difficulty_pair_display_20261016"
       ]
     }
   ]

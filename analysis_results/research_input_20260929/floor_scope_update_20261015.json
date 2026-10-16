@@ -1,6 +1,6 @@
 {
   "schema": "confirmed_floor_scope_update_v1",
-  "revision": "four_confirmed_space_scopes_20261015_v2",
+  "revision": "six_confirmed_space_scopes_20261016_v3",
   "coordinate_frame": "camera_height_normalized_xz; original ERP 1024x512",
   "records": [
     {
@@ -674,6 +674,358 @@
       "answer_to_candidate_assignments": [],
       "scope_semantics": "whole_space_vertical_boundary",
       "space_scope_confirmed": true
+    },
+    {
+      "image_id": "S9hNv5qa7GM_625eb179629b45f280c01d3f6ec74b4f",
+      "image_code": "S9hNv5qa7GM-09",
+      "reference_id": "user_space_20261016:S9hNv5qa7GM-09",
+      "original_reference_id": "gt:S9hNv5qa7GM_625eb179629b45f280c01d3f6ec74b4f:data/mp3d_layout/valid/label_cor/S9hNv5qa7GM_625eb179629b45f280c01d3f6ec74b4f.txt",
+      "original_points_1024x512": [
+        [
+          739.35,
+          217.07
+        ],
+        [
+          739.35,
+          341.58
+        ],
+        [
+          853.37,
+          221.61
+        ],
+        [
+          853.37,
+          332.8
+        ],
+        [
+          911.09,
+          204.12
+        ],
+        [
+          911.09,
+          364.35
+        ],
+        [
+          827.55,
+          182.82
+        ],
+        [
+          827.55,
+          395.09
+        ],
+        [
+          173.19,
+          161.37
+        ],
+        [
+          173.19,
+          419.13
+        ],
+        [
+          336.6,
+          160.82
+        ],
+        [
+          336.6,
+          419.68
+        ]
+      ],
+      "floor_xz_h": [
+        [
+          -0.5597945399690438,
+          0.31173227344541227
+        ],
+        [
+          1.699420655308524,
+          0.31173227344541227
+        ],
+        [
+          1.699420655308524,
+          -0.3018662621338492
+        ],
+        [
+          -0.5597945399690438,
+          -0.3018662621338492
+        ]
+      ],
+      "floor_region_confirmed": true,
+      "space_scope_confirmed": true,
+      "scope_semantics": "whole_space_vertical_boundary",
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "confirmed_at": "2026-10-16T06:23:50.533Z",
+      "source_receipt": "scope_receipt_20261016.json",
+      "source_pointer": "/records/22/space_regions/regions/0",
+      "confirmed_snapshot": {
+        "polygon": [
+          [
+            -0.5597945399690438,
+            0.31173227344541227
+          ],
+          [
+            1.699420655308524,
+            0.31173227344541227
+          ],
+          [
+            1.699420655308524,
+            -0.3018662621338492
+          ],
+          [
+            -0.5597945399690438,
+            -0.3018662621338492
+          ]
+        ],
+        "operations": [
+          {
+            "type": "rectangle",
+            "a": [
+              -0.5597945399690438,
+              0.31173227344541227
+            ],
+            "b": [
+              1.699420655308524,
+              -0.3018662621338492
+            ],
+            "angle": 0,
+            "gt_snap": {
+              "version": 1,
+              "mode": "rectangle",
+              "matches": [
+                {
+                  "edge": 0,
+                  "gt_edge": 3,
+                  "exact": false,
+                  "distance_px": 2.986807853733611
+                },
+                {
+                  "edge": 1,
+                  "gt_edge": 0,
+                  "exact": false,
+                  "distance_px": 4.0385895002378955
+                },
+                {
+                  "edge": 2,
+                  "gt_edge": 5,
+                  "exact": false,
+                  "distance_px": 2.099901182158588
+                },
+                {
+                  "edge": 3,
+                  "gt_edge": 4,
+                  "exact": false,
+                  "distance_px": 2.817265195285463
+                }
+              ]
+            }
+          }
+        ],
+        "cuts": [],
+        "decision": "allow",
+        "note": "",
+        "top_boundary_pending": true,
+        "axis_angle": 0,
+        "completed": true,
+        "updated_at": "2026-10-16T06:23:50.533Z",
+        "confirmed_at": "2026-10-16T06:23:50.533Z",
+        "source": "workbench_button",
+        "confirmation_message_id": null,
+        "source_sha256": null,
+        "floor_region_confirmed": true,
+        "top_boundary_validation": "not established by this floor-region confirmation"
+      },
+      "answer_to_candidate_assignments": []
+    },
+    {
+      "image_id": "zsNo4HB9uLZ_aabf649f606a48a1b16d5bdcd5970602",
+      "image_code": "zsNo4HB9uLZ-13",
+      "reference_id": "user_space_20261016:zsNo4HB9uLZ-13",
+      "original_reference_id": "gt:zsNo4HB9uLZ_aabf649f606a48a1b16d5bdcd5970602:data/mp3d_layout/valid/label_cor/zsNo4HB9uLZ_aabf649f606a48a1b16d5bdcd5970602.txt",
+      "original_points_1024x512": [
+        [
+          630.97,
+          214.92
+        ],
+        [
+          630.97,
+          308.57
+        ],
+        [
+          777.62,
+          196.03
+        ],
+        [
+          777.62,
+          331.6
+        ],
+        [
+          826.13,
+          67.34
+        ],
+        [
+          826.13,
+          458.9
+        ],
+        [
+          1004.22,
+          209.3
+        ],
+        [
+          1004.22,
+          315.52
+        ],
+        [
+          51.01,
+          211.14
+        ],
+        [
+          51.01,
+          313.25
+        ],
+        [
+          210.75,
+          138.19
+        ],
+        [
+          210.75,
+          394.98
+        ],
+        [
+          148.62,
+          76.54
+        ],
+        [
+          148.62,
+          451.24
+        ],
+        [
+          185.74,
+          67.79
+        ],
+        [
+          185.74,
+          458.53
+        ],
+        [
+          230.54,
+          141.86
+        ],
+        [
+          230.54,
+          391.29
+        ],
+        [
+          449.28,
+          205.47
+        ],
+        [
+          449.28,
+          320.21
+        ]
+      ],
+      "floor_xz_h": [
+        [
+          -0.9031096443184639,
+          0.11794512490768999
+        ],
+        [
+          1.9952731739026108,
+          0.11794512490768999
+        ],
+        [
+          1.9952731739026108,
+          -2.2294920446859634
+        ],
+        [
+          -0.9031096443184639,
+          -2.2294920446859634
+        ]
+      ],
+      "floor_region_confirmed": true,
+      "space_scope_confirmed": true,
+      "scope_semantics": "whole_space_vertical_boundary",
+      "top_boundary_pending": true,
+      "reference_ready": false,
+      "confirmed_at": "2026-10-16T06:26:22.641Z",
+      "source_receipt": "scope_receipt_20261016.json",
+      "source_pointer": "/records/124/space_regions/regions/0",
+      "confirmed_snapshot": {
+        "polygon": [
+          [
+            -0.9031096443184639,
+            0.11794512490768999
+          ],
+          [
+            1.9952731739026108,
+            0.11794512490768999
+          ],
+          [
+            1.9952731739026108,
+            -2.2294920446859634
+          ],
+          [
+            -0.9031096443184639,
+            -2.2294920446859634
+          ]
+        ],
+        "operations": [
+          {
+            "type": "rectangle",
+            "a": [
+              -0.9031096443184639,
+              0.11794512490768999
+            ],
+            "b": [
+              1.9952731739026108,
+              -2.2294920446859634
+            ],
+            "angle": 0,
+            "gt_snap": {
+              "version": 1,
+              "mode": "rectangle",
+              "matches": [
+                {
+                  "edge": 0,
+                  "gt_edge": 1,
+                  "exact": false,
+                  "distance_px": 0.5567926533603075
+                },
+                {
+                  "edge": 1,
+                  "gt_edge": 0,
+                  "exact": false,
+                  "distance_px": 4.4618424563483705
+                },
+                {
+                  "edge": 2,
+                  "gt_edge": 9,
+                  "exact": false,
+                  "distance_px": 1.1499938341136278
+                },
+                {
+                  "edge": 3,
+                  "gt_edge": 8,
+                  "exact": false,
+                  "distance_px": 0.11166680829009129
+                }
+              ]
+            }
+          }
+        ],
+        "cuts": [],
+        "decision": "allow",
+        "note": "",
+        "top_boundary_pending": true,
+        "axis_angle": 0,
+        "completed": true,
+        "updated_at": "2026-10-16T06:26:22.641Z",
+        "confirmed_at": "2026-10-16T06:26:22.641Z",
+        "source": "workbench_button",
+        "confirmation_message_id": null,
+        "source_sha256": null,
+        "floor_region_confirmed": true,
+        "top_boundary_validation": "not established by this floor-region confirmation"
+      },
+      "answer_to_candidate_assignments": []
     }
   ],
   "scope_semantics": "whole_space_vertical_boundary",

@@ -30,7 +30,7 @@ def test_current_bundle_exposes_the_received_space_scopes():
     from tools.thesis_main.data_prep.consolidate_research_input import load_current_bundle
     bundle=load_current_bundle()
     records=bundle['floor_scope_update']['records']
-    assert {r['image_code'] for r in records}=={'uNb9QFRL6hY-86','q9vSo1VnCiC-34','pa4otMbVnkk-11','uNb9QFRL6hY-54'}
-    assert len(records)==4
+    assert {r['image_code'] for r in records}=={'uNb9QFRL6hY-86','q9vSo1VnCiC-34','pa4otMbVnkk-11','uNb9QFRL6hY-54','S9hNv5qa7GM-09','zsNo4HB9uLZ-13'}
+    assert len(records)==6
     assert all(r['scope_semantics']=='whole_space_vertical_boundary' and r['space_scope_confirmed'] for r in records)
     validate_update(bundle['floor_scope_update'],bundle['data'])

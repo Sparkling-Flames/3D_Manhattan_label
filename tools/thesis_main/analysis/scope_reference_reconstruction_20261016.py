@@ -37,6 +37,7 @@ def source_planes(bundle):
     """原JSON显式单一layoutHeight；先证明其既定转换逐值等于原GT TXT。"""
     sources = {}
     archive_path = source_zip(ORIGINAL_LAYOUTS)
+    archive_reference = source_archive_reference(archive_path)
     with zipfile.ZipFile(archive_path) as archive:
         for obj in bundle['data']['objects']:
             if obj['object_kind'] != 'gt_original':
@@ -48,12 +49,20 @@ def source_planes(bundle):
             height = float(raw['layoutHeight']) / float(raw['cameraHeight']) - 1
             if not np.isfinite(height) or height <= 0:
                 raise ValueError('invalid explicit source ceiling height')
-            sources[obj['object_id']] = dict(plane=[0.,0.,height], archive=str(archive_path),
+            sources[obj['object_id']] = dict(plane=[0.,0.,height], archive=archive_reference,
                 member=member, cameraHeight=raw['cameraHeight'], layoutHeight=raw['layoutHeight'],
                 original_json_conversion_equals_current_GT=True,
                 source_json_geometry={key:raw[key] for key in ['cameraHeight','layoutHeight','layoutPoints']},
                 source_model='source JSON explicitly declares one layoutHeight; not fitted from ERP or averaged heights')
     return sources
+
+
+def source_archive_reference(path):
+    resolved = Path(path).resolve()
+    try:
+        return resolved.relative_to(ROOT.resolve()).as_posix()
+    except ValueError:
+        return 'external_override:' + resolved.name
 
 
 def reconstruct_scope(target_floor, source_points, ceiling_plane=None):

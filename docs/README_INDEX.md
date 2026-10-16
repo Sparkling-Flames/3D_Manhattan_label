@@ -1,6 +1,14 @@
 # HOHONET 文档入口
 
+图片难度最新v6：[两图新空间、三图中等与分歧原因](../research/difficulty/difficulty_scope_resolution_20261016/README.md)。目标变化、GT错误、同目标负担判断分开；205普通候选，41图采用新空间。
+
+2026-10-16难度最新v5：[补充18图裁定与39裁切图上下点对](../research/difficulty/difficulty_pair_display_20261016/README.md)。普通候选133简单／32中等／39困难；27图黄色顶点仅外推预览。
+
+2026-10-16图片难度当前入口：[v4用户复核采用与分类逻辑](../research/difficulty/difficulty_user_adoption_20261016/README.md)。普通候选151简单／16中等／39困难；旧v3统计仍为历史标签结果。
+
 ## 当前统一入口
+
+**2026-10-16 B8L2主线数据：** [新查阅表、六线程状态与推进计划](../research/statistics/b8l2_mainline_status_20261016/README.md)。重核后891份评分/参考不变；主线先用B8L2，Pro整体新模型并行，人员/融合/同房建模尚待接入。
 
 **2026-10-16质量评论与推进更新：** [24例原文、逐例解释及独立审查](../research/quality/quality_three_routes_feedback_20261016/README.md)。主线先用B8L2开展分析，Pro并行探索完整的新质量方案，不限于修补B8L2；本次仅整理资料，未重算主线。
 

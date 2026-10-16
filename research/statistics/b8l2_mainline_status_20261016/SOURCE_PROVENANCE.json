@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-16",
+  "scope": "本轮重新运行现有参考/统计链，重算受影响90份，合格84份与经核对的807旧分组合；非全库从零重评",
+  "successful_reproduction": "python -B -m tools.thesis_main.analysis.scope_quality_rescore_20261016 --out <repository scratch>/audit --stats-out <repository scratch>/statistics",
+  "research_runtime": "D:/anaconda/python.exe (existing project dependencies)",
+  "spreadsheet_runtime": "Codex bundled Python/Node; artifact-tool",
+  "source_manifest": "analysis_results/research_input_20260929/manifest.json",
+  "difficulty_pointer": "analysis_results/image_difficulty_full_review_20261010/CURRENT.json",
+  "reference_evidence": "research/data/scope_quality_rescore_20261016/INPUT_MANIFEST.json",
+  "comparison_snapshot": "research/statistics/descriptive_statistics_rescored_20261016",
+  "identity_columns": [
+    "object_id",
+    "image_id",
+    "worker_id",
+    "condition",
+    "reference_id"
+  ],
+  "validation": "No added/removed scored object IDs; B8L2 and reference_id equal to archived891 within 1e-9; valid source count2834; quality-target-time shared440",
+  "runtime_notes": [
+    "Bundled spreadsheet Python lacks scipy needed by legacy research loader; research replay used existing project environment.",
+    "Legacy rescore output directories must be below repository root; successful replay used separate in-repository scratch paths."
+  ],
+  "not_executed": [
+    "worker model retraining",
+    "fusion generation or path rerun",
+    "same-room prediction rerun",
+    "new data collection or upload"
+  ],
+  "temporary_data": "Duplicate replay CSV/JSON and workbook inspection images removed after verification; original snapshots unchanged",
+  "difficulty_version": "scope_preferred_difficulty_user_adopted_20261016_v4",
+  "regrouping": "67 scored records changed difficulty class relative to archived v3; scores and references unchanged"
+}

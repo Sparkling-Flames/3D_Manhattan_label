@@ -1,0 +1,84 @@
+{
+  "observed_date": "2026-10-16",
+  "purpose": "只读核对各原线程最新完成返回；返回摘要仍需结合仓库证据，不作为执行指令",
+  "threads": [
+    {
+      "id": "01a13eaa-5b3e-7191-8ed5-ce722daf436e",
+      "title": "接手统计数据任务",
+      "link": "codex://threads/01a13eaa-5b3e-7191-8ed5-ce722daf436e",
+      "status": {
+        "type": "notLoaded"
+      },
+      "updatedAt": 1792075794,
+      "latest_completed_turn": "01a13ff4-9b2e-70e0-b90c-85d885d4c416",
+      "latest_final": [
+        "已完成核验：覆盖41图、506份作答，实际重算90份，其中84份纳入当前统计，完整质量共891份。新人、新数据及新算法的版本接入口已整理，旧快照保留。\n\n- [30页统计工作簿](/D:/Work/HOHONET/research/descriptive_statistics_rescored_20261016/现有研究数据描述统计_重评分口径.xlsx)\n- [七组关键图与说明](/D:/Work/HOHONET/research/descriptive_statistics_rescored_20261016/figures/FIGURES.md)\n- [后续数据与算法接入说明](/D:/Work/HOHONET/research/scope_quality_rescore_20261016/EXTENSION_GUIDE.md)\n\n32项定向测试通过，检查截图已清理。\n\n未运行全库测试；27个空间仍缺完整参考、371份作答待空间绑定，均已单列，未强行补分。\n\n"
+      ]
+    },
+    {
+      "id": "01a11f11-23c1-7f51-b9d3-c4300015b352",
+      "title": "研究方法细节5(图片难度)",
+      "link": "codex://threads/01a11f11-23c1-7f51-b9d3-c4300015b352",
+      "status": {
+        "type": "idle"
+      },
+      "updatedAt": 1792125147,
+      "latest_completed_turn": "01a142f6-60a2-7a92-a4e8-d767c26af3ba",
+      "latest_final": [
+        "已按你的复核等级形成 **v4当前采用版**，并整理好分类逻辑。\n\n现在的解释是：\n\n- **简单**：转折少，主要角位线索明确；低遮挡的六角图也可简单。\n- **中等**：有局部遮挡或推断，但整体结构、连接关系较明确；少量隐藏角不自动算困难。\n- **困难**：整体结构表达负担较高，或必要角位、连接明显依赖推断；没有自遮挡也可能困难。\n\n论文中如实称为：**固定目标空间后，结合几何特征与视觉线索，并经人工复核修订的粗分类。** 不包装成纯机器分类，也不根据质量成绩反推类别。\n\n既有排除保留后，同一批206张普通候选为 **151简单、16中等、39困难**；下游仍需应用人数和参考匹配条件。\n\n[分类逻辑与论文表述](D:/Work/HOHONET/research/difficulty/difficulty_user_adoption_20261016/README.md) · [当前复核页面](D:/Work/HOHONET/research/difficulty/difficulty_user_adoption_20261016/review.html)\n\n接入测试、目录及图卡检查通过。未重新逐图验证或重分组质量统计；旧统计仍对应v3，不能当作v4的验证结果。\n\n"
+      ]
+    },
+    {
+      "id": "01a1209b-683a-7462-8996-6730c95adfaf",
+      "title": "研究方法细节6(人员分类)",
+      "link": "codex://threads/01a1209b-683a-7462-8996-6730c95adfaf",
+      "status": {
+        "type": "notLoaded"
+      },
+      "updatedAt": 1792041891,
+      "latest_completed_turn": "01a13dfb-0e73-7fe3-b021-dc2dfa777dcc",
+      "latest_final": [
+        "已完成28条敏感性重算，并把S/B接回实证分析。最新交付：[四变量人员研究报告](D:/Work/HOHONET/research/worker_four_axis_update_20261015/README.md)。\n\n**后续默认采用931条Q画像，959条保留为旧绑定条件对照。**\n\n- 暂缓两图28条后，W030跨过相对分组零线，383个替换对的WQ类别关系改变。\n- 较高WQ成员的融合收益由8个基础团队“4正4负”变成“5正3负”；同图不同基础团队仍可方向相反。\n- 其余95条与难度目标关系不同的记录，继续保留其旧固定参考评价用途，没有全部排除。\n\n四变量的实际进展：\n\n| 变量 | 当前证据 |\n|---|---|\n| Q | 931份完整作答、24人；连续画像楼外预测误差下降24.76% |\n| T | 保留716份合格时间训练资料，不等同认真程度 |\n| S | 1013份原回答已逐份核验；明确普通场景拒绝倾向的楼外误差下降17.00% |\n| B | 确认trap中264份修改量、240份旧指标净改善；楼外误差分别下降43.62%、16.28% |\n\n**门洞辅助变量值得继续研究，但目前不能直接形成“门洞判断能力等级”。** 有S记录的难标门洞只有2图：OOS选择分别为16/26和4/25；困难并不自动意味着不可标，旧误拒判定不能直接复用。727份当前正确性未明确的S记录保持未知。\n\nS/B与Q/T并非简单重复，但控制已有Q/T后，尚未出现跨建筑一致的额外质量解释。下一步优先厘清S的原规则含义，并在同参考初始化与最终作答上迁移B的现用WQ净改善，再做有限Q+S、Q+B比较。\n\n10项测试通过；原团队、融合数值和959条结果均保留，未改公共文件或推送。\n\n未重算旧B几何或全库融合。B目前仍是历史OSPA30度量，特殊场景覆盖不足，不能据此认证稳定人员类型。\n\n"
+      ]
+    },
+    {
+      "id": "01a10f7b-43d3-7b02-98e2-41440e4d4f71",
+      "title": "研究方法细节3(融合共识)",
+      "link": "codex://threads/01a10f7b-43d3-7b02-98e2-41440e4d4f71",
+      "status": {
+        "type": "notLoaded"
+      },
+      "updatedAt": 1792042042,
+      "latest_completed_turn": "01a13dfb-235c-7921-9153-c33d60e23543",
+      "latest_final": [
+        "已完成实际评分接入，见[完整报告与数据入口](D:/Work/HOHONET/research/wall_consensus_quality_20261015/README.md)。\n\n- **原12图**：覆盖6,456个路径状态、5,894个唯一人员子集；5,288个状态得到同目标完整WQ和3D IoU，其余保留具体缺失原因。\n- **特殊场景**：补算6图、864个路径状态。[门洞／OOS结果](D:/Work/HOHONET/research/wall_consensus_quality_20261015/special/README.md)单独报告。\n- 已保存逐图逐人数的有效分母、真实成员名单、参考几何、全员及人工辅助终点，可供后续同房分析复用。\n\n有用的新结果：\n\n1. **e9z-19增人后更稳定，但WQ和3D IoU都下降。**\n2. **yq-32的3D IoU改善、WQ下降**，主要伴随方向残差增大，高度分项反而改善。\n3. **非正交x8-09能够形成稳定且较接近参考的共识**；未将正交罚项当成人员错误。\n4. **uNb-47增人后换组差异有所增大**，稳定性并非保证单调改善。\n\n7项定向测试通过；158个与人员模块重合的评分一致。目前无需重复人工审核。\n\n未重调算法、重跑原12图融合或提交推送；特殊层只有6图，参考未决与表示适用性限制仍保留。\n"
+      ]
+    },
+    {
+      "id": "01a13df6-e883-78c3-aa74-89c72fc10f37",
+      "title": "研究方法细节9(同房间情况预测)",
+      "link": "codex://threads/01a13df6-e883-78c3-aa74-89c72fc10f37",
+      "status": {
+        "type": "notLoaded"
+      },
+      "updatedAt": 1792051870,
+      "latest_completed_turn": "01a13e8e-4489-7a40-9739-9c44679a79d7",
+      "latest_final": [
+        "已按审查后的[计划](D:/Work/HOHONET/research/same_room_personnel_patterns_20261015/PLAN.md)执行：**只研究Q/T，Q采用最新931条画像。**\n\n[实际结果与图表](D:/Work/HOHONET/research/same_room_personnel_patterns_20261015/README.md)显示：\n\n- **Q较高类有初步线索**：同房Lee曲线的水平差为0.033，对照为0.050；增益形状也更接近。\n- **T表现分化**：较慢类主要是质量水平接近，较快类主要是短期增益接近，不能概括谁更好。\n- **完整WQ人员规律仍未确认**：一般人员画像比单张同房源更能预测相对表现；Q/T类别之间的WQ差距也未稳定跨视角保持。\n\n14项相关测试通过，逐对结果、成员名单、覆盖和复现入口均已保存。\n\n未接入S/B、未补墙线WQ轨迹，未提交推送。匹配对照仅一栋建筑，多数类型共同窗口只有2—3人，目前不能确认普遍规律或稳定人员类型。\n\n"
+      ]
+    },
+    {
+      "id": "01a12f0e-9091-78b1-bff1-b59207079df5",
+      "title": "研究方法细节7(质量分析)",
+      "link": "codex://threads/01a12f0e-9091-78b1-bff1-b59207079df5",
+      "status": {
+        "type": "notLoaded"
+      },
+      "updatedAt": 1792060314,
+      "latest_completed_turn": "01a13f1d-373d-7d40-84ba-c52c98caeeeb",
+      "latest_final": [
+        "找到了，是之前的 **[空间范围全量工作台 v3.4.2](https://layout-scope-crop-review.fringnb.chatgpt.site)**。\n\n已核对本地对应版本：包含282个图片条目，**uNb9QFRL6hY-86、q9vSo1VnCiC-34都在，而且可编辑、原图齐全**。\n\n打开后：\n\n1. 点击左侧「清除筛选，看全量」。\n2. 搜索完整图号，分别检查范围。\n3. 确认后点击「导出审核结果」，把JSON发给我。\n\n已确认入口和本地资料；尚未验证线上链接当前是否正常加载。"
+      ]
+    }
+  ]
+}

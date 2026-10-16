@@ -1,6 +1,14 @@
 # HOHONET 项目地图
 
+图片难度v6：[空间及分歧整理](../research/difficulty/difficulty_scope_resolution_20261016/README.md)，构建 `tools/thesis_main/analysis/difficulty_scope_resolution_20261016.py`；主范围增量6条，保留历史目标与评分快照。
+
+2026-10-16难度v5：[裁定与点对显示](../research/difficulty/difficulty_pair_display_20261016/README.md)，构建 `tools/thesis_main/analysis/difficulty_pair_display_20261016.py`，测试 `tests/test_difficulty_pair_display_20261016.py`；展示外推与完整参考分开。
+
+2026-10-16难度v4：[用户裁定采用及逻辑整理](../research/difficulty/difficulty_user_adoption_20261016/README.md)，构建 `tools/thesis_main/analysis/difficulty_user_adoption_20261016.py`；原GT、范围、既有排除及历史统计保留。
+
 ## 研究资料统一查找
+
+**2026-10-16 B8L2主线查阅：** [research/statistics/b8l2_mainline_status_20261016](../research/statistics/b8l2_mainline_status_20261016/README.md)包含14页工作簿和各路推进计划。整理工具为`tools/thesis_main/analysis/b8l2_mainline_status_20261016.py`，工作簿工具为同目录`b8l2_mainline_workbook_20261016.mjs`，定向测试为`tests/test_b8l2_mainline_status_20261016.py`；不修改评分实现或资格。
 
 **2026-10-16质量新回执：** [research/quality/quality_three_routes_feedback_20261016](../research/quality/quality_three_routes_feedback_20261016/README.md)保存24例原始评论、固定几何、源分数和审查。当前安排为B8L2先用于主线、Pro并行研究整体新模型；收录实现是研究原件，未替换正式评分。
 

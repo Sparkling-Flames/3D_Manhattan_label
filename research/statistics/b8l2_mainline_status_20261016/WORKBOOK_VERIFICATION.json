@@ -1,0 +1,256 @@
+{
+  "sheets": [
+    {
+      "name": "01_总体分层",
+      "key": "overview",
+      "rows": 20,
+      "fields": [
+        "panel",
+        "metric",
+        "n_records",
+        "n_valid",
+        "n_missing",
+        "n_valid_images",
+        "n_valid_workers",
+        "mean",
+        "median",
+        "sd",
+        "image_equal_mean"
+      ]
+    },
+    {
+      "name": "02_逐人概览",
+      "key": "by_worker",
+      "rows": 73,
+      "fields": [
+        "condition",
+        "worker_id",
+        "n_source_records",
+        "B8L2_n",
+        "B8L2_mean",
+        "B8L2_median",
+        "B8L2_sd",
+        "n_scored_images",
+        "B8L2_image_equal_mean",
+        "active_time_seconds_n",
+        "active_time_seconds_mean",
+        "active_time_seconds_median",
+        "target_matched_time_seconds_n",
+        "target_matched_time_seconds_mean",
+        "n_quality_target_time_common"
+      ]
+    },
+    {
+      "name": "03_逐图概览",
+      "key": "by_image",
+      "rows": 236,
+      "fields": [
+        "condition",
+        "image_code",
+        "difficulty_class",
+        "n_source_records",
+        "B8L2_n",
+        "B8L2_mean",
+        "B8L2_median",
+        "B8L2_sd",
+        "n_scored_images",
+        "B8L2_image_equal_mean",
+        "active_time_seconds_n",
+        "active_time_seconds_mean",
+        "active_time_seconds_median",
+        "target_matched_time_seconds_n",
+        "target_matched_time_seconds_mean",
+        "n_quality_target_time_common"
+      ]
+    },
+    {
+      "name": "04_人员与难度",
+      "key": "by_worker_difficulty",
+      "rows": 169,
+      "fields": [
+        "condition",
+        "worker_id",
+        "difficulty_class",
+        "n_source_records",
+        "B8L2_n",
+        "B8L2_mean",
+        "B8L2_median",
+        "B8L2_sd",
+        "n_scored_images",
+        "B8L2_image_equal_mean",
+        "active_time_seconds_n",
+        "active_time_seconds_mean",
+        "active_time_seconds_median",
+        "target_matched_time_seconds_n",
+        "target_matched_time_seconds_mean",
+        "n_quality_target_time_common"
+      ]
+    },
+    {
+      "name": "05_难度分层",
+      "key": "by_difficulty",
+      "rows": 24,
+      "fields": [
+        "panel",
+        "difficulty_class",
+        "metric",
+        "n_records",
+        "n_valid",
+        "n_missing",
+        "n_valid_images",
+        "n_valid_workers",
+        "mean",
+        "median",
+        "sd",
+        "image_equal_mean"
+      ]
+    },
+    {
+      "name": "06_特殊场景",
+      "key": "by_scene",
+      "rows": 64,
+      "fields": [
+        "panel",
+        "scene",
+        "doorway_status",
+        "oos_subtype",
+        "metric",
+        "n_records",
+        "n_valid",
+        "n_missing",
+        "n_valid_images",
+        "n_valid_workers",
+        "mean",
+        "median",
+        "sd",
+        "image_equal_mean"
+      ]
+    },
+    {
+      "name": "07_同房直接对照",
+      "key": "same_room",
+      "rows": 65,
+      "fields": [
+        "image_code_a",
+        "image_code_b",
+        "condition",
+        "n_scored_a",
+        "n_scored_b",
+        "n_common_scored_workers",
+        "common_a_mean",
+        "common_b_mean",
+        "common_worker_delta_mean",
+        "common_worker_absolute_delta_mean",
+        "common_worker_ids"
+      ]
+    },
+    {
+      "name": "08_完整质量明细",
+      "key": "quality_records",
+      "rows": 891,
+      "fields": [
+        "image_code",
+        "worker_id",
+        "condition",
+        "difficulty_class",
+        "B8L2",
+        "IoU3D100",
+        "WQ",
+        "A10",
+        "active_time_seconds",
+        "target_matched_time_seconds",
+        "time_status",
+        "iou_2d",
+        "S_bottom_deg",
+        "dir",
+        "Hmean",
+        "Hcenter",
+        "object_id",
+        "reference_id",
+        "B8L2_version"
+      ]
+    },
+    {
+      "name": "09_当前图片",
+      "key": "current_images",
+      "rows": 259,
+      "fields": [
+        "image",
+        "current_class",
+        "target_role",
+        "gt_error_excluded",
+        "difficulty_analysis_exclusion",
+        "full_current_target_geometry_available",
+        "doorway_status",
+        "oos_subtype"
+      ]
+    },
+    {
+      "name": "10_待补人来源池",
+      "key": "pending_people",
+      "rows": 42,
+      "fields": [
+        "image_code",
+        "condition",
+        "n_effective_workers",
+        "pool_exclusion_reasons"
+      ]
+    },
+    {
+      "name": "11_参考绑定待办",
+      "key": "remaining_gaps",
+      "rows": 420,
+      "fields": [
+        "image_code",
+        "worker_id",
+        "condition",
+        "remaining_reasons",
+        "minimal_human_question",
+        "object_id"
+      ]
+    },
+    {
+      "name": "12_建筑分层",
+      "key": "by_building",
+      "rows": 216,
+      "fields": [
+        "panel",
+        "building_id",
+        "metric",
+        "n_records",
+        "n_valid",
+        "n_missing",
+        "n_valid_images",
+        "n_valid_workers",
+        "mean",
+        "median",
+        "sd",
+        "image_equal_mean"
+      ]
+    },
+    {
+      "name": "13_来源与评分覆盖",
+      "key": "analysis_records",
+      "rows": 2834,
+      "fields": [
+        "image_code",
+        "worker_id",
+        "condition",
+        "difficulty_class",
+        "B8L2",
+        "IoU3D100",
+        "active_time_seconds",
+        "target_matched_time_seconds",
+        "time_status",
+        "target_time_interpretation",
+        "object_id"
+      ]
+    }
+  ],
+  "score_version": "WQ-B8L2-20261015",
+  "formula_errors": "{\"kind\":\"notice\",\"message\":\"Cell search matched 0 entries.\"}",
+  "xlsx_xml_error_cells": 0,
+  "difficulty_version": "scope_preferred_difficulty_user_adopted_20261016_v4",
+  "visual_check": "14 sheets rendered; original full layout review plus v4 guide and difficulty sheet inspection passed.",
+  "temporary_previews": "Removed after verification"
+}

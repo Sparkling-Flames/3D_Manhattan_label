@@ -38,6 +38,11 @@ def test_explicit_source_plane_computes_only_contained_cut_without_mean_height()
     assert outside['outside_source_area_h2'] > 0
 
 
+def test_source_archive_reference_avoids_machine_specific_paths(tmp_path):
+    assert module.source_archive_reference(module.ROOT / 'data/external/label_data.zip') == 'data/external/label_data.zip'
+    assert module.source_archive_reference(tmp_path / 'label_data.zip') == 'external_override:label_data.zip'
+
+
 def test_two_explicit_user_revisions_keep_full_points_and_exclusions(monkeypatch):
     points = synthetic_record([[-2,-2],[2,-2],[2,2],[-2,2]],3)['points']
     monkeypatch.setattr(module, 'read_prepared', lambda: {'candidate_images': []})
