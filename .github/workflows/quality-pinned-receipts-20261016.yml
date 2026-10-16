@@ -1,0 +1,36 @@
+name: Quality hash-pinned receipts
+on:
+  push:
+    branches: [research/quality-readonly-acquisition-20261016]
+    paths: [.github/workflows/quality-pinned-receipts-20261016.yml]
+permissions:
+  contents: read
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 6b69d3f23be4c2cf48ad6a73ca03d2bd885bd955
+          lfs: false
+          sparse-checkout: tools/thesis_main
+      - name: Verify original receipt bytes
+        run: |
+          mkdir -p /tmp/pinned_receipts
+          python - <<'PY'
+          import json,pathlib,hashlib,subprocess,zipfile
+          cfg=json.loads(pathlib.Path('tools/thesis_main/local_input_archives.json').read_text())
+          result=[]
+          with zipfile.ZipFile('/tmp/pinned_receipts/receipts.zip','w',zipfile.ZIP_DEFLATED) as z:
+              for name,rec in cfg.items():
+                  raw=subprocess.check_output(['git','show','HEAD:'+rec['path']]);digest=hashlib.sha256(raw).hexdigest()
+                  assert digest==rec['sha256'],rec['path']
+                  z.writestr(rec['path'],raw);result.append({'path':rec['path'],'bytes':len(raw),'sha256':digest})
+          pathlib.Path('/tmp/pinned_receipts/manifest.json').write_text(json.dumps(result,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: quality-pinned-receipts
+          path: /tmp/pinned_receipts
+          retention-days: 7
