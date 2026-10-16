@@ -217,6 +217,8 @@ docs/AGENT_CONTEXT_INDEX.md
 # Do not upload ZIP or TXT files (repo-wide)
 # Do not upload ZIP or TXT files (repo-wide)
 *.zip
+!research/quality/quality_research_20261009/source/01_完整研究数值核心_20261009.zip
+!research/quality/quality_pro_handoff_20261014/source/质量研究完整交接包_20261013.zip
 *.txt
 !/requirements-mainspace.txt
 !config/paper_a_analysis_requirements.lock.txt
@@ -812,6 +814,9 @@ docs/thesis_main/history/*
 /docs/thesis_main/topics/**
 !/research/data/
 /research/data/*
+# Private local-only Label Studio exports and the companion local index must never be committed.
+/research/data/local_private_labelstudio_exports/
+/research/catalog/LOCAL_INDEX.local.md
 !/research/data/scope_quality_rescore_20261016/
 /research/data/scope_quality_rescore_20261016/**
 !/docs/thesis_main/topics/archive/

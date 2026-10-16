@@ -97,6 +97,10 @@
       "page_path": "docs/thesis_main/topics/quality/README.md",
       "current_basis": [
         {
+          "text": "24例评论与独立审查：主线先用B8L2，Pro并行研究整体新方案",
+          "path": "research/quality/quality_three_routes_feedback_20261016/README.md"
+        },
+        {
           "text": "B8L2为质量线当前工作指数，未自动接入所有下游",
           "path": "research/quality/quality_structure_handoff_20261016/README.md"
         },
@@ -113,6 +117,10 @@
       ],
       "source_evidence": [
         {
+          "text": "三路线24例原始评论、固定几何与逐例解释",
+          "path": "research/quality/quality_three_routes_feedback_20261016/CASE_REVIEW.md"
+        },
+        {
           "text": "30份粗核验回执与绑定",
           "path": "research/quality/quality_ab_feedback_handoff_20261015/README.md"
         },
@@ -128,6 +136,9 @@
       "open_questions": [
         {
           "text": "B8L2尚未重建人员、融合和同房模块；未来新数据按固定共同集合比较"
+        },
+        {
+          "text": "B8L2接入主线与整体新质量模型并行；新模型可重设计分项和组合，不限于修补B8L2"
         }
       ],
       "reproduction": [
@@ -473,18 +484,20 @@
       "formula": "F=(1/I-1)+Sb^2/32; d8=1.5*D^2/(D^2+8^2); H=(Hm/0.8)^2+(Hc/0.25)^2; Q=100/(1+sqrt(F^2+d8^2)+H), I=0 -> 0",
       "parameters": "c=8 degrees; L2 pooling; H scales=.8/.25 input units",
       "purpose": "当前质量线几何工作指数，合并底面/边界负担与自身方向残差",
-      "adoption_status": "当前质量线工作版；未全局重评下游",
+      "adoption_status": "当前工作版，用户同意先用于主线分析；本次未重跑下游",
       "verification_status": "固定样本/机制研究及用户粗评；效度仍需累积",
       "evidence_paths": [
         "research/quality/quality_ab_feedback_handoff_20261015/README.md",
-        "research/quality/quality_combination_review_20261016/README.md"
+        "research/quality/quality_combination_review_20261016/README.md",
+        "research/quality/quality_three_routes_feedback_20261016/README.md"
       ],
       "implementation_paths": [
         "tools/thesis_main/analysis/scope_quality_scoring_20261016.py",
         "research/quality/quality_combination_review_20261016/pro_original/src/mechanisms.py"
       ],
       "relationships": [
-        "Pro机制研究推荐；用户30份粗核验整体更偏好；人员/融合/同房未全量改分。"
+        "Pro机制研究推荐；用户30份粗核验整体更偏好；人员/融合/同房未全量改分。",
+        "2026-10-16用户澄清：先用B8L2推进主线，同时Pro研究整体新方案；B8L2不限定新方案框架。"
       ]
     },
     {
@@ -539,6 +552,63 @@
       ],
       "relationships": [
         "不改变原始连续分排序或方向/结构误差。"
+      ]
+    },
+    {
+      "id": "GQS-20261016-v2-A",
+      "name": "GQS路线A",
+      "formula": "QA=100*I*exp(-E_angle-L_H)*(1-0.15*E_struct)",
+      "parameters": "3/20 deg angle tolerance/scale; 0.15 edit budget; three simplification scales .01/.03/.06h; L_H见存档数学说明",
+      "purpose": "固定参考的有序对应转角与结构辅助；存在匹配平局旋转依赖",
+      "adoption_status": "研究候选，未取代B8L2或接入主线",
+      "verification_status": "前轮重放与独立审查；本轮归档24例反馈，未重跑评分",
+      "implementation_paths": [
+        "research/quality/quality_three_routes_feedback_20261016/received/pro/src/geomscore.py"
+      ],
+      "evidence_paths": [
+        "research/quality/quality_three_routes_feedback_20261016/received/pro/MATHEMATICS.md",
+        "research/quality/quality_three_routes_feedback_20261016/README.md"
+      ],
+      "relationships": [
+        "与旧A10/B8L2/C8分别登记；收到的实现作为研究证据，保留已知缺陷，不作为正式评分入口。"
+      ]
+    },
+    {
+      "id": "GQS-20261016-v2-B",
+      "name": "GQS路线B",
+      "formula": "QB=100*I^0.7*exp(-((dT-2)_+/60)^2-L_H)",
+      "parameters": "turning tolerance/scale=2/60 deg; range power=.7; L_H见存档数学说明",
+      "purpose": "整体转角形状比较；与旧B8L2不同",
+      "adoption_status": "研究候选，未取代B8L2或接入主线",
+      "verification_status": "前轮重放与独立审查；本轮归档24例反馈，未重跑评分",
+      "implementation_paths": [
+        "research/quality/quality_three_routes_feedback_20261016/received/pro/src/geomscore.py"
+      ],
+      "evidence_paths": [
+        "research/quality/quality_three_routes_feedback_20261016/received/pro/MATHEMATICS.md",
+        "research/quality/quality_three_routes_feedback_20261016/README.md"
+      ],
+      "relationships": [
+        "与旧A10/B8L2/C8分别登记；收到的实现作为研究证据，保留已知缺陷，不作为正式评分入口。"
+      ]
+    },
+    {
+      "id": "GQS-20261016-v2-C",
+      "name": "GQS路线C",
+      "formula": "QC=100*I^0.7*exp(-1.5*E_wall-L_H)",
+      "parameters": "wall weight=1.5; distance tolerance/scale=.03/.3h; normal tolerance/scale=5/25 deg; L_H见存档数学说明",
+      "purpose": "连续墙边位置与法向比较",
+      "adoption_status": "研究候选，未取代B8L2或接入主线",
+      "verification_status": "前轮重放与独立审查；本轮归档24例反馈，未重跑评分",
+      "implementation_paths": [
+        "research/quality/quality_three_routes_feedback_20261016/received/pro/src/geomscore.py"
+      ],
+      "evidence_paths": [
+        "research/quality/quality_three_routes_feedback_20261016/received/pro/MATHEMATICS.md",
+        "research/quality/quality_three_routes_feedback_20261016/README.md"
+      ],
+      "relationships": [
+        "与旧A10/B8L2/C8分别登记；收到的实现作为研究证据，保留已知缺陷，不作为正式评分入口。"
       ]
     }
   ],
@@ -1305,7 +1375,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "当前交接/结果快照",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": [
         "41图/506份作答审计，90份重算，84份纳入当前统计。",
         "记录当前参考缺口及逐作答绑定。"
@@ -1322,7 +1392,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -1336,7 +1406,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -1350,7 +1420,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -1364,7 +1434,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -1378,7 +1448,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -1392,7 +1462,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -1406,7 +1476,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -1490,7 +1560,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -1504,7 +1574,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": [
         "有限普通/特殊图比较，不是全库验证。"
       ]
@@ -1758,7 +1828,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": [
         "记录用户整体偏好B8L2的粗核验；不是盲评。"
       ]
@@ -1774,7 +1844,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -1788,7 +1858,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -1802,7 +1872,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": [
         "Pro组合机制建议；独立复核见analysis_results/quality/quality_combination_independent_review_20261015。",
         "B8L2是质量线工作指数；C8仅为敏感性对照。"
@@ -1819,7 +1889,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -1833,7 +1903,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -1847,7 +1917,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -1861,7 +1931,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -1875,7 +1945,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -1889,7 +1959,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -1903,7 +1973,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -1917,7 +1987,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -1931,7 +2001,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -1945,7 +2015,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -1959,7 +2029,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "当前交接/结果快照",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": [
         "当前用户要求与跨模块交接；不是评分合同。",
         "连接B8L2/A10/WQ/C8比较和参考重算快照。"
@@ -2536,7 +2606,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": [
         "小样本、单建筑Q/T证据，尚非通用预测结论。"
       ]
@@ -2552,7 +2622,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -2566,7 +2636,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -2580,7 +2650,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -2594,7 +2664,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -2608,7 +2678,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "当前交接/结果快照",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": [
         "将旧807统计扩展至参考重算后891；只在当前快照条件下成立。",
         "没有重建人员、融合和同房模型。"
@@ -2681,7 +2751,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -2695,7 +2765,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": [
         "959旧人员面板按28份新范围待定暂缓后得到931；仍用WQ-LS08。"
       ]
@@ -2711,7 +2781,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -4125,7 +4195,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -5749,7 +5819,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -5763,7 +5833,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -5777,7 +5847,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -5791,7 +5861,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -5805,7 +5875,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -5819,7 +5889,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -5833,7 +5903,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -5847,7 +5917,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -5861,7 +5931,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -7275,7 +7345,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -7289,7 +7359,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -7303,7 +7373,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -7331,7 +7401,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -7345,7 +7415,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -7359,7 +7429,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -7401,7 +7471,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -7415,7 +7485,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -7429,7 +7499,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -7457,7 +7527,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -7499,7 +7569,7 @@
       "source": "仓库工作树或迁移映射；具体原始来源见包内README/manifest",
       "adoption_status": "历史/待判断",
       "verification_status": "未独立复验",
-      "availability": "工作区迁移中（现路径待提交）",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
       "relationships": []
     },
     {
@@ -8397,6 +8467,149 @@
       "verification_status": "未独立复验",
       "availability": "仓库已跟踪",
       "relationships": []
+    },
+    {
+      "id": "MAT-local-downloads-reconciliation-20261016",
+      "title": "本机Downloads引用核对与资料回收",
+      "theme": "archive",
+      "type": "审计与迁移记录",
+      "date": "20261016",
+      "source_path": "research/catalog/local_path_audit_20261016/DOWNLOADS_RECONCILIATION.md",
+      "current_path": "research/catalog/local_path_audit_20261016/DOWNLOADS_RECONCILIATION.md",
+      "source": "从本机Downloads恢复；原始来源与核验记录见 local_path_audit_20261016。",
+      "adoption_status": "历史/待判断",
+      "verification_status": "未独立复验",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
+      "relationships": []
+    },
+    {
+      "id": "MAT-quality-review36-received-20261008",
+      "title": "36份质量人工评分完成回执",
+      "theme": "quality",
+      "type": "原始人工回执",
+      "date": "20261008",
+      "source_path": "research/quality_review36_20261008/received/36份质量审查_2026-10-08.json",
+      "current_path": "research/quality_review36_20261008/received/36份质量审查_2026-10-08.json",
+      "source": "从本机Downloads恢复；原始来源与核验记录见 local_path_audit_20261016。",
+      "adoption_status": "历史/待判断",
+      "verification_status": "未独立复验",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
+      "relationships": []
+    },
+    {
+      "id": "MAT-difficulty-review-lineage-20261016",
+      "title": "图片难度与空间范围历史复核回执",
+      "theme": "difficulty",
+      "type": "历史复核来源",
+      "date": "20261016",
+      "source_path": "research/difficulty/difficulty_review_lineage_20261016",
+      "current_path": "research/difficulty/difficulty_review_lineage_20261016",
+      "source": "从本机Downloads恢复；原始来源与核验记录见 local_path_audit_20261016。",
+      "adoption_status": "历史/待判断",
+      "verification_status": "未独立复验",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
+      "relationships": []
+    },
+    {
+      "id": "MAT-same-room-review-receipts-20261016",
+      "title": "同房关系人工核对回执",
+      "theme": "same_room",
+      "type": "历史人工回执",
+      "date": "20261016",
+      "source_path": "research/same_room/same_room_review_receipts_20261016",
+      "current_path": "research/same_room/same_room_review_receipts_20261016",
+      "source": "从本机Downloads恢复；原始来源与核验记录见 local_path_audit_20261016。",
+      "adoption_status": "历史/待判断",
+      "verification_status": "未独立复验",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
+      "relationships": []
+    },
+    {
+      "id": "MAT-uncertainty-literature-legacy",
+      "title": "不确定性文献调研原件（待逐条核验）",
+      "theme": "literature",
+      "type": "历史文献综述",
+      "date": "20261015",
+      "source_path": "research/literature",
+      "current_path": "research/literature",
+      "source": "从本机Downloads恢复；原始来源与核验记录见 local_path_audit_20261016。",
+      "adoption_status": "历史/待判断",
+      "verification_status": "未独立复验",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
+      "relationships": []
+    },
+    {
+      "id": "MAT-quality-research-core-20261009",
+      "title": "质量研究完整数值核心原包",
+      "theme": "quality",
+      "type": "历史研究原包",
+      "date": "20261009",
+      "source_path": "research/quality/quality_research_20261009",
+      "current_path": "research/quality/quality_research_20261009",
+      "source": "从本机Downloads恢复；原始来源与核验记录见 local_path_audit_20261016。",
+      "adoption_status": "历史/待判断",
+      "verification_status": "未独立复验",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
+      "relationships": []
+    },
+    {
+      "id": "MAT-quality-pro-handoff-source-20261014",
+      "title": "质量研究Pro交接原包",
+      "theme": "quality",
+      "type": "历史研究原包",
+      "date": "20261013",
+      "source_path": "research/quality/quality_pro_handoff_20261014/source",
+      "current_path": "research/quality/quality_pro_handoff_20261014/source",
+      "source": "从本机Downloads恢复；原始来源与核验记录见 local_path_audit_20261016。",
+      "adoption_status": "历史/待判断",
+      "verification_status": "未独立复验",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
+      "relationships": []
+    },
+    {
+      "id": "MAT-quality-component-study-pro-return-20261014",
+      "title": "质量组件研究Pro返回原包",
+      "theme": "quality",
+      "type": "历史研究原包",
+      "date": "20261014",
+      "source_path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014",
+      "current_path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014",
+      "source": "从本机Downloads恢复；原始来源与核验记录见 local_path_audit_20261016。",
+      "adoption_status": "历史/待判断",
+      "verification_status": "未独立复验",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
+      "relationships": []
+    },
+    {
+      "id": "MAT-quality-candidate-scores39-20261012",
+      "title": "高度研究39例候选分数来源表",
+      "theme": "quality",
+      "type": "历史研究数据",
+      "date": "20261012",
+      "source_path": "research/quality_top_height_response_20261012/source_evidence/candidate_scores_39_original_20261012.csv",
+      "current_path": "research/quality_top_height_response_20261012/source_evidence/candidate_scores_39_original_20261012.csv",
+      "source": "从本机Downloads恢复；原始来源与核验记录见 local_path_audit_20261016。",
+      "adoption_status": "历史/待判断",
+      "verification_status": "未独立复验",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
+      "relationships": []
+    },
+    {
+      "id": "MAT-research--quality--quality_three_routes_feedback_20261016",
+      "title": "三路线24例评论审查与双线推进",
+      "theme": "quality",
+      "type": "人工回执与独立审查研究包",
+      "date": "20261016",
+      "source_path": "research/quality/quality_three_routes_feedback_20261016",
+      "current_path": "research/quality/quality_three_routes_feedback_20261016",
+      "source": "用户原始24例回执、Pro244评分快照、外部审查原件及本线程核图；详细清单见SOURCE_INDEX.json",
+      "adoption_status": "当前研究交接；B8L2先供主线，新方案整体探索",
+      "verification_status": "24例绑定/原文/分项/原图路径核对；前轮独立审查结论分层保留；本轮未重评分",
+      "availability": "已归档于仓库；云端状态见CLOUD_NAVIGATION",
+      "relationships": [
+        "评论优先、档位辅助；固定认可GT，不逐例迎合。",
+        "保存三路线算法身份与已知缺陷；不限制Pro重设计整体模型。"
+      ]
     }
   ]
 }

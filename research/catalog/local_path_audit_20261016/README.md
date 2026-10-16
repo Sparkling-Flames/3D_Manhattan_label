@@ -6,6 +6,7 @@
 - [逐行清单](occurrences.csv)
 - [唯一目标与全部引用位置](unique_windows_targets.csv)
 - [16个tools脚本的18行引用](executable_dependencies.csv)
+- [本机Downloads引用核对与资料回收结果](DOWNLOADS_RECONCILIATION.md)：区分运行输入、已归档重复件、已回收历史证据及仍留在本机的完整包。
 - [可执行归档映射及SHA256](../../../tools/thesis_main/local_input_archives.json)
 
 ## 14个输入目标及默认位置

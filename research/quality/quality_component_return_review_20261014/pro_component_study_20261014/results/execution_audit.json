@@ -1,0 +1,59 @@
+{
+  "pinned_commit": "134e7c775b9ea25a076851c0605571ba0ea0ac31",
+  "input_files": [
+    {
+      "path": "inputs/FINAL_ordinary.txt",
+      "bytes": 222764,
+      "sha256": "2397ce9912c82e572cc6f14f51332b369a94fc7d0862931b22a672af6770544f",
+      "rows": 198
+    },
+    {
+      "path": "inputs/FINAL_doorway.txt",
+      "bytes": 194855,
+      "sha256": "20e9637f6944724bc644b3b4c9db907217c2da22439321377ad0636a05acfaea",
+      "rows": 217
+    },
+    {
+      "path": "inputs/FINAL_severe.txt",
+      "bytes": 11928,
+      "sha256": "53c3634c8f063d47c96fa014684133a981d7fd215f79a340ca5732d38e8295f6",
+      "rows": 9
+    }
+  ],
+  "native_rows": 424,
+  "execution_status_counts": {
+    "scored": 331,
+    "held_unchanged": 92,
+    "incomplete_quarantined": 1
+  },
+  "scored_by_source_layer": {
+    "ordinary": 197,
+    "doorway": 125,
+    "severe": 9
+  },
+  "condition_counts": {
+    "unknown_not_recovered": 413,
+    "manual": 11
+  },
+  "scored_condition_counts": {
+    "unknown_not_recovered": 320,
+    "manual": 11
+  },
+  "known_source_metadata_objects": 11,
+  "multi_reference_answers": [],
+  "unique_scored_objects": 331,
+  "unique_scored_bindings": 331,
+  "baseline_max_abs_error": 4.263256414560601e-14,
+  "harmonic_max_abs_error": 2.842170943040401e-14,
+  "A_below_WQ_count": 0,
+  "G_below_WQ_count": 0,
+  "pairs_n": 1455,
+  "A_reversals_numeric_only": 138,
+  "RA_reversals_numeric_only": 71,
+  "condition_validated_pairs_n": 1,
+  "workers_reaching_minimum_known_condition_support": 0,
+  "followup_bindings": 31,
+  "full_718_comparison_completed": false,
+  "geometry_rebuilt_for_native_rows": false,
+  "limitation": "Only extracted-table inputs; ordinary ends with a partial record. Unknown manual/semi not inferred. No population accuracy, independent blind validation, or formal worker ranking claim."
+}

@@ -1,0 +1,649 @@
+{
+  "schema": "downloads_reconciliation_v1",
+  "audit_commit": "f081b267907173cddf2580e34684ba81681cc585",
+  "checked_on": "2026-10-16",
+  "audit_summary": {
+    "unique_download_targets": 631,
+    "references": 11173,
+    "existing_targets": {
+      "directories": 19,
+      "files": 52
+    },
+    "byte_identical_files_already_in_repository": 31,
+    "unique_file_targets": 21
+  },
+  "recovered_files": [
+    {
+      "source": "<LOCAL_DOWNLOADS>/36份质量审查_2026-10-08.json",
+      "path": "research/quality_review36_20261008/received/36份质量审查_2026-10-08.json",
+      "bytes": 28668,
+      "sha256": "d3e244d4a982af16998ad0411e2b17ab09b6976558a8cd018f0bd9be9b8b3467",
+      "kind": "completed_human_return"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/batch1_researcher_review_v2.json",
+      "path": "research/difficulty/difficulty_review_lineage_20261016/sources/batch1_researcher_review_v2.json",
+      "bytes": 49613,
+      "sha256": "5bb8a9173669f404d871ea7a174b7e921a9f2c31e46fa17d0ea95b9fb1a03f9a",
+      "kind": "historical_review_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/batch1_researcher_review_v2(1).json",
+      "path": "research/difficulty/difficulty_review_lineage_20261016/sources/batch1_researcher_review_v2(1).json",
+      "bytes": 50149,
+      "sha256": "03a9719d1c00983a86990cc4653c4e4dde61093d0d2153ec14e72928f5b74455",
+      "kind": "historical_review_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/室内图片_争议复核后完整分类.json",
+      "path": "research/difficulty/difficulty_review_lineage_20261016/sources/室内图片_争议复核后完整分类.json",
+      "bytes": 234207,
+      "sha256": "8e927167c26846f04be2f6ae6cb775aeff56880366c547c69c191eb19b7e7996",
+      "kind": "historical_scope_review"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/室内空间_本轮完整复核_v3.json",
+      "path": "research/difficulty/difficulty_review_lineage_20261016/sources/室内空间_本轮完整复核_v3.json",
+      "bytes": 2742403,
+      "sha256": "1e6ad111bbb2a04b35c37b35f52008dc13301dded7576f31d3a56eeb9a6ca60e",
+      "kind": "historical_scope_review"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/uNb_我的核对记录.json",
+      "path": "research/same_room/same_room_review_receipts_20261016/sources/uNb_我的核对记录.json",
+      "bytes": 2337,
+      "sha256": "3dfb4111275e932af68f5691ee27b58568300823401208b9ee4530289fc2d83d",
+      "kind": "historical_room_review"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/不确定性文献调研.md",
+      "path": "research/literature/uncertainty_literature_synthesis_legacy.md",
+      "bytes": 57611,
+      "sha256": "c2955fa07dfedfd9df03a19c0438675744baa2a0ff66befbdb16bc6e799b364a",
+      "kind": "historical_literature"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/quality_structure_height_extension_20261012_v1/quality_top_structure_research_20261012/structure_height_preference_20261012/height/results/candidate_scores_39.csv",
+      "path": "research/quality_top_height_response_20261012/source_evidence/candidate_scores_39_original_20261012.csv",
+      "bytes": 60242,
+      "sha256": "e1b032d3acc2a43962f022fcac50632613ef11f75ca5723dabd131cb3ebda36e",
+      "kind": "historical_quality_source_table"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/01_完整研究数值核心_20261009.zip",
+      "path": "research/quality/quality_research_20261009/source/01_完整研究数值核心_20261009.zip",
+      "bytes": 18790196,
+      "sha256": "769c802d7755149bfbeeca8b5ae411a6e013289fb43923e6498d8e7a27515062",
+      "kind": "historical_quality_research_archive"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/质量研究完整交接包_20261013.zip",
+      "path": "research/quality/quality_pro_handoff_20261014/source/质量研究完整交接包_20261013.zip",
+      "bytes": 750861,
+      "sha256": "94a20907ca6888fcb6d403d74188dbe0bef8c2f638c5e3c2708a1f2909349e1c",
+      "kind": "historical_quality_handoff_archive"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/clean_replay.log",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/clean_replay.log",
+      "bytes": 1810,
+      "sha256": "b5ffa6b75eae9b437105ae1cdd271002dc69b5047ff4eb1e613c69c95a3c10df",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/config.json",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/config.json",
+      "bytes": 1886,
+      "sha256": "d223275af97c9c5606f7e98b0e1f26e49ae69ea0c899ff874fd151d2052034e9",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/DEVELOPMENT_HISTORY.md",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/DEVELOPMENT_HISTORY.md",
+      "bytes": 620,
+      "sha256": "b0a2cac13e3ea8888bbed5eac9342a9680c36534e28a27e7ab090b27fa17a39a",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/figures/global_height_response.png",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/figures/global_height_response.png",
+      "bytes": 120536,
+      "sha256": "280e39a303073c2369a1a726367e88450e7377ca848c952662696bd05d00d1ef",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/figures/ordinary_score_comparison.png",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/figures/ordinary_score_comparison.png",
+      "bytes": 166205,
+      "sha256": "f05d111ab321c19394ab2442dbd5c734190715219ca21a79b6127d5ae22831fb",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/figures/rhombus_response.png",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/figures/rhombus_response.png",
+      "bytes": 152596,
+      "sha256": "7e94449f7234bac6a2f7794302d63e2fb42c225fe4d9d3453569ef31263123fd",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/figures/severe_records.png",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/figures/severe_records.png",
+      "bytes": 130354,
+      "sha256": "3fd726be8f56210e01eefcf4c78ac2fc478756824475e3052633f7b61daa636f",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/inputs/baseline_config.json",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/inputs/baseline_config.json",
+      "bytes": 1341,
+      "sha256": "3c105898b80fcd4ef475eb407ed54e69ec44cd4dbafdab41e08e40820bf0045b",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/inputs/FINAL_doorway.txt",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/inputs/FINAL_doorway.txt",
+      "bytes": 194855,
+      "sha256": "20e9637f6944724bc644b3b4c9db907217c2da22439321377ad0636a05acfaea",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/inputs/FINAL_ordinary.txt",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/inputs/FINAL_ordinary.txt",
+      "bytes": 222764,
+      "sha256": "2397ce9912c82e572cc6f14f51332b369a94fc7d0862931b22a672af6770544f",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/inputs/FINAL_severe.txt",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/inputs/FINAL_severe.txt",
+      "bytes": 11928,
+      "sha256": "53c3634c8f063d47c96fa014684133a981d7fd215f79a340ca5732d38e8295f6",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/inputs/source_audit_excerpt.txt",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/inputs/source_audit_excerpt.txt",
+      "bytes": 30289,
+      "sha256": "e0608b381bc41f3a9ec5ccc77bf9e3b0e98bd61c297b34a59352c600ec280662",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/plot_results.py",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/plot_results.py",
+      "bytes": 3175,
+      "sha256": "cfbdfd35e7a1149c050e73502833e2a3e9ea6fcb084d900953660a603000c5cb",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/README.md",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/README.md",
+      "bytes": 3468,
+      "sha256": "5b4b4684781507f1cf9f8084734747c9e6ae14fc86d19d5571460e7cac4a1cf4",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/REFERENCES.md",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/REFERENCES.md",
+      "bytes": 4597,
+      "sha256": "a47f838bf5b550da8966d81cc75cdc544ad966f12729b10232b96f89dcdf6da5",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/REPORT_ZH.md",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/REPORT_ZH.md",
+      "bytes": 24273,
+      "sha256": "624e1bfdd0ea316c96bbc30549a4c0e69d1de14552d44e187fd39a32382c7be2",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/reproduce.py",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/reproduce.py",
+      "bytes": 18465,
+      "sha256": "468fd203ae1de6f606cb9ca4a633e7906c020e0cb285b95b05082e02dc06f4d2",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/requirements.txt",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/requirements.txt",
+      "bytes": 89,
+      "sha256": "6509cbb680a4de98a5729f21f0544961065e629975ed8721c8ded92b94bee13c",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/results/CLEAN_REPLAY.json",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/results/CLEAN_REPLAY.json",
+      "bytes": 1321,
+      "sha256": "27f32489355cb71e5be0b287b8db111837057733e37b8bfb773841821a34738b",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/results/component_marginal_effects.csv",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/results/component_marginal_effects.csv",
+      "bytes": 8019,
+      "sha256": "7e6a2c0579a1cc0f73c00f26ec28f925b44658df438ba86278eeb66807976ead",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/results/cut_migration.csv",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/results/cut_migration.csv",
+      "bytes": 8409,
+      "sha256": "c1f8af9e754b9bccb3435fdf94a4206406ff57563aa616bd91b2eec474cdeacd",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/results/execution_audit.json",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/results/execution_audit.json",
+      "bytes": 1809,
+      "sha256": "6103fcbeff65c07b613e6558c6d22b843b88f55869dadcd88627fbc23f6cdbea",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/results/followup_review_bindings_without_scores.csv",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/results/followup_review_bindings_without_scores.csv",
+      "bytes": 16695,
+      "sha256": "0595973761bd08430ee12668fdcfacfaf1fd5346b1b2ab771f749c267cfe516e",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/results/followup_review_manifest.csv",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/results/followup_review_manifest.csv",
+      "bytes": 19962,
+      "sha256": "928400e33b030f5227b6afd9efac4f14e10d826ff0cf0b4914b7721950d7933a",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/results/geometry_probe_inputs.json",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/results/geometry_probe_inputs.json",
+      "bytes": 20427,
+      "sha256": "539b40cfb9af2c0b5ddba9b7d84a5a30ff40a3834e4ca84aeb423a82fa199fb4",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/results/geometry_probes.csv",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/results/geometry_probes.csv",
+      "bytes": 3847,
+      "sha256": "efc4dee169e058e400e46ab9693d76c8a4c46ba7cdb5f44f3d91d2a7b494b60b",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/results/height_probes.csv",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/results/height_probes.csv",
+      "bytes": 2140,
+      "sha256": "ba6d13599647ca423fab0c11aa2c9b743cab87820faac474826e80bf069d8d70",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/results/held_and_incomplete.csv",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/results/held_and_incomplete.csv",
+      "bytes": 60171,
+      "sha256": "de6553fc54c86155fc1ad5621f7e7747e4119d3dbaeae9623270909deb5eb86c",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/results/image_equal_weight_inputs.csv",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/results/image_equal_weight_inputs.csv",
+      "bytes": 23115,
+      "sha256": "5b7245525945053c16425b5bce87d501a2292b1c9c94b29448aa2498e3de145a",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/results/per_case.csv",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/results/per_case.csv",
+      "bytes": 783644,
+      "sha256": "d457283427c99186eaec90393a0314e584c6d765e20a3ba2a1f1099bc2c0af78",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/results/PLOT_REPLAY.json",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/results/PLOT_REPLAY.json",
+      "bytes": 384,
+      "sha256": "1443a89eb30d696a3520d2050bae7e945d85f81e6c4fdfb85c42c4687c6622a1",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/results/same_binding_pairs.csv",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/results/same_binding_pairs.csv",
+      "bytes": 587060,
+      "sha256": "8ee15d841db0cfd2a342672d0d83bf051b9a7afc0f93f4278865ce0f71c5cb13",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/results/single_component_response.csv",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/results/single_component_response.csv",
+      "bytes": 8932,
+      "sha256": "f4b4d7604a0e0cdc4652113e4883d90433eec695629e4f383b61b7e3068eb758",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/results/stratum_summary.csv",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/results/stratum_summary.csv",
+      "bytes": 7828,
+      "sha256": "18242a40f2ce6fa31a0f15271b09d662e7609d2536de13a1e8b60cd5c446fbd3",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/results/TEST_RESULTS.txt",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/results/TEST_RESULTS.txt",
+      "bytes": 99,
+      "sha256": "f39019502988d3d7b0d18f67254ec9512e8a969512bda63eb347fd0da312e7df",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/results/worker_support_and_available_means.csv",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/results/worker_support_and_available_means.csv",
+      "bytes": 1388,
+      "sha256": "75cb4aabf9d80c168e89e761891be5002379a8d1983b1ed28cdd7e3526e09a96",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/results_run.log",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/results_run.log",
+      "bytes": 1810,
+      "sha256": "b5ffa6b75eae9b437105ae1cdd271002dc69b5047ff4eb1e613c69c95a3c10df",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/SHA256SUMS.txt",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/SHA256SUMS.txt",
+      "bytes": 3783,
+      "sha256": "557e64ddf5fce821ad3e5641f6562b195fbe158dbcf64f43569b9e2ab1480290",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/SOURCES_AND_LIMITATIONS.json",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/SOURCES_AND_LIMITATIONS.json",
+      "bytes": 2280,
+      "sha256": "3547f7eb4daedace19a27501a993358e9b2453024abc1c59059287a3db5ccc2d",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/src/geometry.py",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/src/geometry.py",
+      "bytes": 4451,
+      "sha256": "8a80baa3f2696c48c0be7c3761c9e58c6f22fb92fc6cd9973b01387c97c28566",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/src/models.py",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/src/models.py",
+      "bytes": 1868,
+      "sha256": "183863ff43a1f7b45292fbcacf43620e5ffcb9ba3d2e90cb00599cc00e77f945",
+      "kind": "component_study_source"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study/tests/test_study.py",
+      "path": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014/tests/test_study.py",
+      "bytes": 4750,
+      "sha256": "2dbac2d458f28e3a59f496b095cb9525ce4d0258591017e74367df40bc6b119f",
+      "kind": "component_study_source"
+    }
+  ],
+  "recovered_file_count": 52,
+  "recovered_bytes": 25429730,
+  "fixed_archive_validation": {
+    "manifest_count": 13,
+    "mismatches": 0
+  },
+  "label_data_zip": {
+    "source": "<LOCAL_DOWNLOADS>/label_data.zip",
+    "path": "data/external/label_data.zip",
+    "bytes": 1936027,
+    "sha256": "b1706bdc3fe1c19c45c56e67cd402b255f149fc079ee23f2cc2ef895cf4b76d2",
+    "source_matches_copy": true
+  },
+  "quality_parameter_split_zips_crc": [
+    {
+      "source": "<LOCAL_DOWNLOADS>/quality_parameter_calibration_20261012_part01_of_05.zip",
+      "bytes": 17294742,
+      "sha256": "7d8baeb7745a2c440a053f0232b87a4e968dcda81e3859e07d2a99538d19f560",
+      "zip_crc": "pass"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/quality_parameter_calibration_20261012_part02_of_05.zip",
+      "bytes": 17387178,
+      "sha256": "811a760d1d5d1574182d5ba59dd76f9e7fbaa4c2d20d8199d0a364ddc78c2099",
+      "zip_crc": "pass"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/quality_parameter_calibration_20261012_part03_of_05.zip",
+      "bytes": 16269412,
+      "sha256": "3a8104641083ee8d5e4feb4538c1ae011f2a91d9317801042b4c1a9273dc6ebf",
+      "zip_crc": "pass"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/quality_parameter_calibration_20261012_part04_of_05.zip",
+      "bytes": 17510048,
+      "sha256": "54c4f4afc87cedd0edbd30ce6987f9a5c07d5ef8f947efe65eed62ed02c1a8d1",
+      "zip_crc": "pass"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/quality_parameter_calibration_20261012_part05_of_05.zip",
+      "bytes": 8861202,
+      "sha256": "8153cef1a1d9968c9f978349f4e13f71aa0b49a1257cba005fd4c5f2ce353f1b",
+      "zip_crc": "pass"
+    }
+  ],
+  "download_directory_packages_pre_recovery_comparison": [
+    {
+      "path": "<LOCAL_DOWNLOADS>/hohonet_AB_working_20261015",
+      "files": 96,
+      "exact_repo_matches": 16,
+      "other_files": 80,
+      "bytes": 7607506
+    },
+    {
+      "path": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014",
+      "files": 42,
+      "exact_repo_matches": 5,
+      "other_files": 37,
+      "bytes": 2663443
+    },
+    {
+      "path": "<LOCAL_DOWNLOADS>/quality_calibration_diagnostics_20261014",
+      "files": 36,
+      "exact_repo_matches": 2,
+      "other_files": 34,
+      "bytes": 1026966
+    },
+    {
+      "path": "<LOCAL_DOWNLOADS>/quality_combination_mechanism_20261015",
+      "files": 98,
+      "exact_repo_matches": 61,
+      "other_files": 37,
+      "bytes": 9646321
+    },
+    {
+      "path": "<LOCAL_DOWNLOADS>/quality_model_closeout_verified_20261014",
+      "files": 323,
+      "exact_repo_matches": 230,
+      "other_files": 93,
+      "bytes": 210963614
+    },
+    {
+      "path": "<LOCAL_DOWNLOADS>/quality_multispace_joint_calibration_20261013/quality_multispace_joint_calibration_20261013",
+      "files": 381,
+      "exact_repo_matches": 217,
+      "other_files": 164,
+      "bytes": 155600128
+    },
+    {
+      "path": "<LOCAL_DOWNLOADS>/quality_profile_research_20261015",
+      "files": 89,
+      "exact_repo_matches": 11,
+      "other_files": 78,
+      "bytes": 4310198
+    },
+    {
+      "path": "<LOCAL_DOWNLOADS>/quality_scope_model_research_20261015",
+      "files": 98,
+      "exact_repo_matches": 9,
+      "other_files": 89,
+      "bytes": 10377509
+    },
+    {
+      "path": "<LOCAL_DOWNLOADS>/quality_structure_height_extension_20261012_v1/quality_top_structure_research_20261012/structure_height_preference_20261012",
+      "files": 312,
+      "exact_repo_matches": 20,
+      "other_files": 292,
+      "bytes": 75756629
+    },
+    {
+      "path": "<LOCAL_DOWNLOADS>/quality_working_calibration_20261014",
+      "files": 227,
+      "exact_repo_matches": 152,
+      "other_files": 75,
+      "bytes": 171974619
+    },
+    {
+      "path": "<LOCAL_DOWNLOADS>/两阶段规则审查与复算包_20260913",
+      "files": 42,
+      "exact_repo_matches": 21,
+      "other_files": 21,
+      "bytes": 12168967
+    },
+    {
+      "path": "<LOCAL_DOWNLOADS>/候选图片审查与复核包_v2_20260912/candidate_review_20260912",
+      "files": 56,
+      "exact_repo_matches": 35,
+      "other_files": 21,
+      "bytes": 37159184
+    },
+    {
+      "path": "<LOCAL_DOWNLOADS>/全景布局质量研究交接总结_20261012/quality_handoff_20261012",
+      "files": 57,
+      "exact_repo_matches": 19,
+      "other_files": 38,
+      "bytes": 9698884
+    }
+  ],
+  "not_copied_full_archives": [
+    {
+      "path": "<LOCAL_DOWNLOADS>/quality_top_structure_research_20261012_repaired_v1.zip",
+      "reason": "contains original-photo/image assets; only referenced candidate_scores_39.csv was recovered"
+    },
+    {
+      "path": "<LOCAL_DOWNLOADS>/quality_parameter_calibration_20261012_part01_of_05.zip..part05_of_05.zip",
+      "reason": "five split ZIPs were not copied as archives; all 460 payloads were verified in the local extracted package, then the duplicate Downloads ZIPs were cleaned"
+    },
+    {
+      "path": "<LOCAL_DOWNLOADS>/quality_working_calibration_20261014 and older full research packages",
+      "reason": "historical bulk contains overlaps and large data/visual assets; currently used evidence is already summarized in theme packages; original sources retained in Downloads"
+    }
+  ],
+  "excluded_from_cloud": [
+    {
+      "source": "<LOCAL_DOWNLOADS>/project-28-at-2026-09-17-15-40-dcda31cc.json",
+      "bytes": 1547269,
+      "sha256": "1fc5d8ee5d6ad9a4b903b9f3fd2892da2f6282e113b285e253838a2790b7e9bb",
+      "reason": "raw Label Studio export contains annotator email/account fields; exact local destination is documented only in the ignored local index"
+    },
+    {
+      "source": "<LOCAL_DOWNLOADS>/project-93-at-2026-09-20-03-57-3889538f.json",
+      "bytes": 665657,
+      "sha256": "011c68a8e623591964a5727ed715f5b44484c9956ac7e8fdf08cdea5bf255f73",
+      "reason": "raw Label Studio export contains annotator email/account fields; exact local destination is documented only in the ignored local index"
+    }
+  ],
+  "cleanup_applied": [
+    {
+      "kind": "zip_copy",
+      "source": "<LOCAL_DOWNLOADS>/01_完整研究数值核心_20261009.zip",
+      "removed_on": "2026-10-16",
+      "bytes": 18790196,
+      "sha256": "769c802d7755149bfbeeca8b5ae411a6e013289fb43923e6498d8e7a27515062",
+      "verified_destination": "research/quality/quality_research_20261009/source/01_完整研究数值核心_20261009.zip",
+      "verification": "source and destination were byte-identical before cleanup"
+    },
+    {
+      "kind": "zip_copy",
+      "source": "<LOCAL_DOWNLOADS>/质量研究完整交接包_20261013.zip",
+      "removed_on": "2026-10-16",
+      "bytes": 750861,
+      "sha256": "94a20907ca6888fcb6d403d74188dbe0bef8c2f638c5e3c2708a1f2909349e1c",
+      "verified_destination": "research/quality/quality_pro_handoff_20261014/source/质量研究完整交接包_20261013.zip",
+      "verification": "source and destination were byte-identical before cleanup"
+    },
+    {
+      "kind": "zip_copy",
+      "source": "<LOCAL_DOWNLOADS>/label_data.zip",
+      "removed_on": "2026-10-16",
+      "bytes": 1936027,
+      "sha256": "b1706bdc3fe1c19c45c56e67cd402b255f149fc079ee23f2cc2ef895cf4b76d2",
+      "verified_destination": "data/external/label_data.zip",
+      "verification": "source and destination were byte-identical before cleanup"
+    },
+    {
+      "kind": "zip_with_extracted_tree",
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014.zip",
+      "removed_on": "2026-10-16",
+      "bytes": 1071737,
+      "verified_destination": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014",
+      "member_count": 42,
+      "verification": "ZIP members, Downloads extraction and repository files matched by relative path and SHA-256"
+    },
+    {
+      "kind": "extracted_directory",
+      "source": "<LOCAL_DOWNLOADS>/hohonet_component_study_20261014/hohonet_component_study",
+      "removed_on": "2026-10-16",
+      "file_count": 42,
+      "bytes": 2663443,
+      "verified_destination": "research/quality/quality_component_return_review_20261014/pro_component_study_20261014",
+      "verification": "all files matched by relative path and SHA-256"
+    },
+    {
+      "kind": "split_zip",
+      "source": "<LOCAL_DOWNLOADS>/quality_parameter_calibration_20261012_part01_of_05.zip",
+      "removed_on": "2026-10-16",
+      "bytes": 17294742,
+      "sha256": "7d8baeb7745a2c440a053f0232b87a4e968dcda81e3859e07d2a99538d19f560",
+      "verified_destination": "research/quality_parallel_local_20261012/source_package/quality_parameter_calibration_20261012",
+      "verification": "460 extracted payloads matched FILE_MANIFEST_SHA256.json; ZIP CRC and source hash matched package_intake.json"
+    },
+    {
+      "kind": "split_zip",
+      "source": "<LOCAL_DOWNLOADS>/quality_parameter_calibration_20261012_part02_of_05.zip",
+      "removed_on": "2026-10-16",
+      "bytes": 17387178,
+      "sha256": "811a760d1d5d1574182d5ba59dd76f9e7fbaa4c2d20d8199d0a364ddc78c2099",
+      "verified_destination": "research/quality_parallel_local_20261012/source_package/quality_parameter_calibration_20261012",
+      "verification": "460 extracted payloads matched FILE_MANIFEST_SHA256.json; ZIP CRC and source hash matched package_intake.json"
+    },
+    {
+      "kind": "split_zip",
+      "source": "<LOCAL_DOWNLOADS>/quality_parameter_calibration_20261012_part03_of_05.zip",
+      "removed_on": "2026-10-16",
+      "bytes": 16269412,
+      "sha256": "3a8104641083ee8d5e4feb4538c1ae011f2a91d9317801042b4c1a9273dc6ebf",
+      "verified_destination": "research/quality_parallel_local_20261012/source_package/quality_parameter_calibration_20261012",
+      "verification": "460 extracted payloads matched FILE_MANIFEST_SHA256.json; ZIP CRC and source hash matched package_intake.json"
+    },
+    {
+      "kind": "split_zip",
+      "source": "<LOCAL_DOWNLOADS>/quality_parameter_calibration_20261012_part04_of_05.zip",
+      "removed_on": "2026-10-16",
+      "bytes": 17510048,
+      "sha256": "54c4f4afc87cedd0edbd30ce6987f9a5c07d5ef8f947efe65eed62ed02c1a8d1",
+      "verified_destination": "research/quality_parallel_local_20261012/source_package/quality_parameter_calibration_20261012",
+      "verification": "460 extracted payloads matched FILE_MANIFEST_SHA256.json; ZIP CRC and source hash matched package_intake.json"
+    },
+    {
+      "kind": "split_zip",
+      "source": "<LOCAL_DOWNLOADS>/quality_parameter_calibration_20261012_part05_of_05.zip",
+      "removed_on": "2026-10-16",
+      "bytes": 8861202,
+      "sha256": "8153cef1a1d9968c9f978349f4e13f71aa0b49a1257cba005fd4c5f2ce353f1b",
+      "verified_destination": "research/quality_parallel_local_20261012/source_package/quality_parameter_calibration_20261012",
+      "verification": "460 extracted payloads matched FILE_MANIFEST_SHA256.json; ZIP CRC and source hash matched package_intake.json"
+    },
+    {
+      "kind": "zip_duplicate_embedded_in_archive",
+      "source": "<LOCAL_DOWNLOADS>/quality_execution_support_20261013.zip",
+      "removed_on": "2026-10-16",
+      "bytes": 661845,
+      "sha256": "39fec3697df5d82c941b733bc6efdab5b7ea2ca1b0926c420ef0b21cbdf00dba",
+      "verified_destination": "research/quality/quality_pro_handoff_20261014/source/质量研究完整交接包_20261013.zip",
+      "embedded_member": "质量研究交接/quality_execution_support_20261013.zip",
+      "verification": "standalone ZIP and embedded member were byte-identical before cleanup"
+    }
+  ]
+}

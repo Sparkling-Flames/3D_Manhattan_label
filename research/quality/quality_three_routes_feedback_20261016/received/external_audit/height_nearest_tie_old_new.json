@@ -1,0 +1,136 @@
+{
+  "answer_xz": [
+    [
+      -2.0,
+      -2.0
+    ],
+    [
+      2.0,
+      -2.0
+    ],
+    [
+      2.0,
+      2.0
+    ],
+    [
+      0.1,
+      0.1
+    ],
+    [
+      -0.1,
+      0.1
+    ],
+    [
+      -0.1,
+      -0.1
+    ]
+  ],
+  "reference_xz": [
+    [
+      -2,
+      -2
+    ],
+    [
+      2,
+      -2
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      -2,
+      2
+    ]
+  ],
+  "answer_height": 2.5,
+  "reference_height": [
+    2.0,
+    2.0,
+    2.0,
+    4.0
+  ],
+  "old_samples": 4096,
+  "new_step_h": 0.01,
+  "rows": [
+    {
+      "yaw": 0,
+      "old": {
+        "Hcenter": 0.2309441858150844,
+        "height_center_shift_h": -4.440892098500626e-16,
+        "height_center_signed_global_relative": 1.7763568394002506e-16,
+        "height_centered_min_wall_height_h": 2.4999999999999996,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.39013671875,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "new_local_error": 0.23094421592795775,
+      "new_QA": 1.4729493475252156,
+      "new_QB": 14.141679857035905,
+      "new_QC": 10.1725369658413
+    },
+    {
+      "yaw": 90,
+      "old": {
+        "Hcenter": 0.2309441858150844,
+        "height_center_shift_h": -4.440892098500626e-16,
+        "height_center_signed_global_relative": 1.7763568394002506e-16,
+        "height_centered_min_wall_height_h": 2.4999999999999996,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.39013671875,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "new_local_error": 0.22498245722561624,
+      "new_QA": 1.567149103708287,
+      "new_QB": 15.046084884126646,
+      "new_QC": 10.823104515054082
+    },
+    {
+      "yaw": 180,
+      "old": {
+        "Hcenter": 0.2309441858150844,
+        "height_center_shift_h": -4.440892098500626e-16,
+        "height_center_signed_global_relative": 1.7763568394002506e-16,
+        "height_centered_min_wall_height_h": 2.4999999999999996,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.39013671875,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "new_local_error": 0.21885839383916683,
+      "new_QA": 1.6671019929506898,
+      "new_QB": 16.005725324462716,
+      "new_QC": 11.513487754980526
+    },
+    {
+      "yaw": 270,
+      "old": {
+        "Hcenter": 0.2309441858150844,
+        "height_center_shift_h": -4.440892098500626e-16,
+        "height_center_signed_global_relative": 1.7763568394002506e-16,
+        "height_centered_min_wall_height_h": 2.4999999999999996,
+        "height_centered_profile_positive": true,
+        "height_center_AG_distinct_tied_height_fraction": 0.39013671875,
+        "height_center_GA_distinct_tied_height_fraction": 0.0,
+        "height_center_samples_per_direction": 4096,
+        "height_center_tie_rule": "max_squared_residual_within_unchanged_nearest_floor_set",
+        "height_center_is_statistical_profile_only": true
+      },
+      "new_local_error": 0.2249835531960906,
+      "new_QA": 1.5671315003878714,
+      "new_QB": 15.045915875924052,
+      "new_QC": 10.823062665904756
+    }
+  ],
+  "old_Hcenter_range": 0.0,
+  "new_local_range": 0.012085822088790915,
+  "caveat": "Synthetic geometry has a boundary segment on the reference medial-axis bisector. This isolates a real tie-set convention change, not evidence of frequent real failures."
+}

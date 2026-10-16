@@ -2,9 +2,13 @@
 
 ## 研究资料统一查找
 
+**2026-10-16质量新回执：** [research/quality/quality_three_routes_feedback_20261016](../research/quality/quality_three_routes_feedback_20261016/README.md)保存24例原始评论、固定几何、源分数和审查。当前安排为B8L2先用于主线、Pro并行研究整体新模型；收录实现是研究原件，未替换正式评分。
+
 资料按主题、历史迁移、质量算法身份和结果快照查找，请从[研究资料总目录](../research/catalog/INDEX.md)进入；跨模块当前状态仍以[统一研究状态](thesis_main/四线程成果与论文主线核对_20261015.md)为准。下方日期条目保留其生成时的研究上下文，可能包含历史状态或旧路径；迁移映射可从总目录读取。
 
 - **2026-10-16质量结构续研与本地归档：** [当前统计、算法讨论和Pro任务](../research/quality/quality_structure_handoff_20261016/README.md)、[多版本定义与未决项](../research/quality/quality_structure_handoff_20261016/ALGORITHMS_AND_DECISIONS.md)、[组合机制Pro精简原件](../research/quality/quality_combination_review_20261016/README.md)。重点区分自身正交与参考结构完整性；B8L2为可调整工作版，未改评分或推送远端。
+
+- **2026-10-16 Downloads来源核对与回收：** [核对结果和去向](../research/catalog/local_path_audit_20261016/DOWNLOADS_RECONCILIATION.md)、[逐项恢复清单](../research/catalog/local_path_audit_20261016/DOWNLOADS_RECOVERY_MANIFEST.json)。只回收当前有用且缺少仓库副本的回执、历史证据与研究原包；原图包和重复/大型历史包留在Downloads，来源文件未删除。
 
 - **2026-10-16当前重算统计：** [891份完整质量与关键图](../research/statistics/descriptive_statistics_rescored_20261016/README.md)、[41图506份审计与接入](../research/data/scope_quality_rescore_20261016/README.md)。新增工具 `tools/thesis_main/analysis/scope_reference_reconstruction_20261016.py`、`scope_quality_binding_20261016.py`、`scope_quality_scoring_20261016.py`、`scope_quality_rescore_20261016.py`分别负责参考、绑定、冻结评分和独立快照；对应 `tests/test_scope_reference_reconstruction_20261016.py`、`test_scope_quality_binding_20261016.py`、`test_scope_quality_scoring_20261016.py`、`test_scope_quality_rescore_20261016.py`。上一阶段807份统计保留，派生结果不成为源标注。
 
