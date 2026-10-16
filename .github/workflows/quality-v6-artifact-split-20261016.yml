@@ -1,0 +1,57 @@
+name: Split v6 quality evidence
+on:
+  push:
+    branches: [research/quality-readonly-acquisition-20261016]
+    paths: [.github/workflows/quality-v6-artifact-split-20261016.yml]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  split:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: quality-v6-fixed-evidence-20261016
+          run-id: 38865940225
+          github-token: ${{ github.token }}
+          path: /tmp/recovered
+      - run: |
+          mkdir -p /tmp/source /tmp/images
+          mv /tmp/recovered/latest_source.zip /tmp/source/
+          cp /tmp/recovered/*.json /tmp/source/ || true
+          cp /tmp/recovered/*.txt /tmp/source/ || true
+          cp /tmp/recovered/*.log /tmp/source/ || true
+          cp /tmp/recovered/*.csv /tmp/source/ || true
+          python - <<'PY'
+          import zipfile,pathlib
+          z=zipfile.ZipFile('/tmp/recovered/originals.zip');names=z.namelist()
+          for i in range(3):
+              with zipfile.ZipFile('/tmp/images/part'+str(i+1)+'.zip','w',zipfile.ZIP_STORED) as dst:
+                  for name in names[i*90:(i+1)*90]:dst.writestr(name,z.read(name))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: quality-v6-source-only
+          path: /tmp/source
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@v4
+        with:
+          name: quality-v6-images-1
+          path: /tmp/images/part1.zip
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@v4
+        with:
+          name: quality-v6-images-2
+          path: /tmp/images/part2.zip
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@v4
+        with:
+          name: quality-v6-images-3
+          path: /tmp/images/part3.zip
+          compression-level: 0
+          retention-days: 7
