@@ -155,9 +155,10 @@
 
 **把日志搬到本地（若需要）**
 
-- 单文件下载（Windows PowerShell）：
+- 单文件下载（在本机仓库根目录运行 Windows PowerShell，先确认目标文件不存在）：
   ```powershell
-  scp ubuntu@<host>:/home/ubuntu/workspace/HoHoNet/active_logs/active_times_2025-12-03.jsonl C:\Users\you\Downloads\
+  New-Item -ItemType Directory -Force .\active_logs | Out-Null
+  scp ubuntu@<host>:/home/ubuntu/workspace/HoHoNet/active_logs/active_times_2025-12-03.jsonl .\active_logs\
   ```
 - 多文件：先在服务器打包再下载：
   ```bash

@@ -1,4 +1,5 @@
 """校验显式接收的底面范围增量；不将其伪装为完整GT或修改作答。"""
+from tools.thesis_main.local_inputs import review_input
 import numpy as np
 from shapely.geometry import Point, Polygon
 import json
@@ -30,7 +31,7 @@ def validate_update(update, data):
 
 def receive():
     from .consolidate_research_input import load_current_bundle, ROOT, OUT
-    receipt_path=Path('C:/Users/ASUS/Downloads/空间范围人工审核_2026-10-15(1).json')
+    receipt_path=review_input('空间范围人工审核_2026-10-15(1).json')
     raw=receipt_path.read_bytes(); receipt=json.loads(raw.decode('utf-8-sig'))
     bundle=load_current_bundle()
     wanted={'pa4otMbVnkk-11','uNb9QFRL6hY-54'}

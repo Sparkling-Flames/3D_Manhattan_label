@@ -1,4 +1,5 @@
 """全量配对追溯与x配对候选审计；不覆写冻结源、不自动迁移已确认环序。"""
+from tools.thesis_main.local_inputs import review_input
 import csv
 import json
 from collections import Counter
@@ -48,7 +49,7 @@ def build():
     allobjects=read(ROOT/'analysis_results/shared_x_baseline_20260928/preprocessed_source.json')['objects']
     objects={o['object_id']:o for o in allobjects if o['object_kind']=='annotation'}
     base={r['canonical_annotation_id']:r for r in read(ROOT/'analysis_results/consensus_research_20260923/inputs/annotations.jsonl.gz')}
-    pairing=read(Path('C:/Users/ASUS/Downloads/上下点配对审核.json'))
+    pairing=read(review_input('上下点配对审核.json'))
     expected={o['object_id']:o for o in read(ROOT/'analysis_results/pairing_review_20260929/source_objects.json')['objects']}
     if pairing.get('schema')!='pairing_only_review_20260929_v1' or pairing.get('scope')!='pairing_only' or pairing.get('order_confirmed') is not False or set(pairing['records'])!=set(expected):raise ValueError('pairing_return_scope')
     for oid,r in pairing['records'].items():
@@ -56,7 +57,7 @@ def build():
         if json.loads(r['binding'])!=dict(object_id=oid,points=o['before_preprocessing_points'],labels=o['point_labels'],coordinate_source='before_preprocessing_points'):raise ValueError('pairing_binding:'+oid)
         if r['status'] not in {'checked','paired','draft','deferred'} or r['order_confirmed'] is not False:raise ValueError('pairing_status:'+oid)
         x_adjacent(o['before_preprocessing_points'],r['pairs'])
-    freeze_file(Path('C:/Users/ASUS/Downloads/上下点配对审核.json'),OUT/'evidence/pairing_return.json')
+    freeze_file(review_input('上下点配对审核.json'),OUT/'evidence/pairing_return.json')
     orders=read(ROOT/'analysis_results/order_completion_audit_20260929/received_orders.json')['records']
     cache={};rows=[];received=[]
     for oid,o in objects.items():

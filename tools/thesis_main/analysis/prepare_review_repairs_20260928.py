@@ -1,4 +1,5 @@
 """制作修复方案；仅--apply-approved写入用户批准的独立有效层，原始标注不变。"""
+from tools.thesis_main.local_inputs import review_input
 import copy
 import json
 import shutil
@@ -10,7 +11,7 @@ from .review_reconciliation_audit_20260925 import verify_raw
 ROOT = Path(__file__).resolve().parents[3]
 OLD = ROOT / 'analysis_results/review_return_20260927'
 OUT = ROOT / 'analysis_results/review_closeout_20260928'
-INPUT = Path('C:/Users/ASUS/Downloads/全历史标注_定向补审_20260927.json')
+INPUT = review_input('全历史标注_定向补审_20260927.json')
 
 
 def preview_operation(points, labels, delete=(), set_x_from=None):
@@ -35,7 +36,8 @@ def build(apply_approved=False):
     target = OUT / 'evidence/returned_review.json'
     if target.exists() and target.read_bytes() != INPUT.read_bytes():
         raise ValueError('已有不同审核原件，请另建目录')
-    shutil.copyfile(INPUT, target)
+    if INPUT.resolve() != target.resolve():
+        shutil.copyfile(INPUT, target)
     returned = read(INPUT)
     if returned['schema'] != 'review_return_decisions_v2' or returned['binding'] != {'id':'review_return_20260927_v1'}:
         raise ValueError('review_binding_mismatch')

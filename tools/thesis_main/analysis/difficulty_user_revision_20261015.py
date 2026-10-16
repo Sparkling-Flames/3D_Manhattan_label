@@ -1,4 +1,5 @@
 """保存用户GT增量与难度新版；原始标签、旧版评分和loader均保留。"""
+from tools.thesis_main.local_inputs import source_zip
 import copy
 import csv
 import json
@@ -48,7 +49,8 @@ def main():
     decisions = {r['image_code']: r for r in read(SOURCE)['records']}
     OUT.mkdir(exist_ok=True)
     provenance = []
-    with zipfile.ZipFile('C:/Users/ASUS/Downloads/label_data.zip') as z:
+    archive_path = source_zip()
+    with zipfile.ZipFile(archive_path) as z:
         for r in rows:
             name = 'label_data/'+r['image_id']+'_label.json'
             original = convert_original(json.loads(z.read(name)))
@@ -132,7 +134,7 @@ def main():
     template=template.replace("c.role==='confirmed_scope'?'已确认替代范围':'原选定GT'", "c.role==='user_revised_gt'?'用户修订GT':c.role==='confirmed_scope'?'已确认替代范围':'原选定GT'")
     template=template.replace("c.target_id===r.target_version?' · 本轮采用':''", "c.target_id===r.target_version?(r.scope_coordinates_pending?' · 旧范围仅展示':' · 本轮采用'):''")
     (OUT/'review.html').write_text(template.replace('__DATA__',payload),encoding='utf-8')
-    write(OUT/'provenance_259.json',dict(source_archive='C:/Users/ASUS/Downloads/label_data.zip',
+    write(OUT/'provenance_259.json',dict(source_archive=str(archive_path),
         official_conversion_document='https://github.com/sunset1995/HoHoNet/blob/master/README_prepare_data_mp3d_layout.md',
         live_official_archive_bytes_checked=False, records=provenance))
     write(OUT/'CHANGES.json',dict(version=VERSION, decisions=read(SOURCE), summary=summary,

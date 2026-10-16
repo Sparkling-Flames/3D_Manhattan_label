@@ -1,4 +1,5 @@
 """9月新导出探索复算：保留全部实收审计，分配外可纳入，未决独立性做敏感性。"""
+from tools.thesis_main.local_inputs import review_input
 import collections
 import copy
 import itertools
@@ -110,11 +111,12 @@ def main():
     new,receipts=intake(history,registry);rows,rec,elig=prepare(history,new,registry)
     dump('intake.json',receipts);pipeline.write_rows(OUT/'responses.jsonl.gz',rows)
     elig.to_json(OUT/'eligibility.json',orient='records',force_ascii=False,indent=2)
-    review_path=Path('C:/Users/ASUS/Downloads/八组采集采用_我的审核.json')
+    review_path=review_input('八组采集采用_我的审核.json')
     review=pipeline.read(review_path)
     expected=read('analysis_results/collection_review_20260921/审核输入.json')
     assert review['binding']==expected['binding'] and set(review['decisions'])==set(g['id'] for g in expected['groups'])
-    shutil.copyfile(review_path,OUT/'用户_八组采集采用_原始.json')
+    if review_path.resolve() != (OUT/'用户_八组采集采用_原始.json').resolve():
+        shutil.copyfile(review_path, OUT/'用户_八组采集采用_原始.json')
     grouped=collections.defaultdict(list)
     for cid,r in rec.items():
         if r['links'] is not None:grouped[r['row']['image_id'],r['row']['raw_condition']].append(cid)

@@ -1,4 +1,5 @@
 """核对全批次接收及3152份排序筛选闭合性；不把未召回当作人工确认。"""
+from tools.thesis_main.local_inputs import review_input
 import csv
 import json
 from collections import Counter
@@ -33,7 +34,7 @@ def build():
         for event in events:validate_return(dict(schema='order_review_20260928_v3',examples_only=False,records={oid:event['record']}),objects)
     batches=[]
     for label,queue,path in [('followup77','order_followup_20260929',ROOT/'analysis_results/order_model_same_image_20260929/evidence/user_followup.json'),
-                             ('same_image35','order_same_image_followup_20260929',Path('C:/Users/ASUS/Downloads/角点顺序审核(3).json'))]:
+                             ('same_image35','order_same_image_followup_20260929',review_input('角点顺序审核(3).json'))]:
         sources={o['object_id']:o for o in read(ROOT/'analysis_results'/queue/'source_objects.json')['objects']}
         doc=read(path);validate_followup(doc,sources)
         if set(doc['records']) & set(records):raise ValueError('unexpected_cross_batch_overlap:'+label)

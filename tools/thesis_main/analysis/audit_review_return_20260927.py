@@ -1,4 +1,5 @@
 """二审回收只读核验；冻结评论所指成员，不自动改判。"""
+from tools.thesis_main.local_inputs import review_input
 import argparse
 from collections import Counter, defaultdict
 import json
@@ -10,7 +11,7 @@ from .review_reconciliation_audit_20260925 import verify_raw, same
 
 ROOT = Path(__file__).resolve().parents[3]
 OLD = ROOT / 'analysis_results/review_reconciliation_20260925'
-SOURCE = Path('C:/Users/ASUS/Downloads/全历史标注_二次复核_20260925(2).json')
+SOURCE = review_input('全历史标注_二次复核_20260925(2).json')
 OUT = ROOT / 'analysis_results/review_return_20260927'
 SEMI_IMPORTS = {
     29:'import_json/stage1_prescreen_final_20260325/stage1_prescreen_semi_import_v5.json',

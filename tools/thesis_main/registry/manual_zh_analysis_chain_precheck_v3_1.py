@@ -16,11 +16,12 @@ if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
 from tools.thesis_main.analysis.prescreen_canonicalize_export import build_canonical_tables
+from tools.thesis_main.local_inputs import review_input
 
 
 OUT_DIR = Path("analysis_results/calibration_rebuild_20260702/manual_zh_analysis_chain_precheck_v3_1")
 REBUILD_DIR = Path("analysis_results/calibration_rebuild_20260702")
-DEFAULT_EXPORT = Path(r"C:\Users\ASUS\Downloads\project-65-at-2026-07-02-16-49-f641e0f6.json")
+DEFAULT_EXPORT = None  # Resolve pinned receipt only after parsing an explicit override.
 DEFAULT_ACTIVE_LOG = Path("active_logs/new_server/active_times_2026-07-03.jsonl")
 COMPLETION_BASIS = "manual_zh_smoke_fixture_only"
 ENTRY_BY_GROUP = {
@@ -149,7 +150,8 @@ def _snapshot(path: Path, out: Path, kind: str) -> dict[str, str]:
     digest = ""
     if exists and path.is_file():
         snap.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(path, snap)
+        if path.resolve() != snap.resolve():
+            shutil.copy2(path, snap)
         size = str(path.stat().st_size)
         digest = _sha256(snap)
     return {
@@ -505,7 +507,7 @@ def main() -> None:
     parser.add_argument("--active-log", type=Path, default=DEFAULT_ACTIVE_LOG)
     parser.add_argument("--root", type=Path, default=Path("."))
     args = parser.parse_args()
-    build(args.root.resolve(), args.manual_zh_export, args.active_log)
+    build(args.root.resolve(), review_input('project-65-at-2026-07-02-16-49-f641e0f6.json', explicit=args.manual_zh_export), args.active_log)
 
 
 if __name__ == "__main__":

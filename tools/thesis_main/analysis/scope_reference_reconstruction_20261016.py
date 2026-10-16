@@ -1,4 +1,5 @@
 """按已确认空间和可追溯完整几何构造参考；不选择作答参考、不改原GT。"""
+from tools.thesis_main.local_inputs import source_zip
 import argparse
 import csv
 import json
@@ -15,7 +16,7 @@ from .difficulty_user_revision_20261015 import convert_original
 from .descriptive_pool_gate_20261015 import IMAGE_CONSENSUS_HOLDS, IMAGE_QUALITY_HOLDS
 
 PREPARED = 'research/quality_pro_joint_archive_20261013/source/routing/inputs/prepared_input.json'
-ORIGINAL_LAYOUTS = Path('C:/Users/ASUS/Downloads/label_data.zip')
+ORIGINAL_LAYOUTS = None  # Optional explicit Python override; otherwise use source_zip().
 EPS = 1e-8  # 仅数值相等，不吸收像素舍入误差或人工矩形拟合差异。
 
 
@@ -35,7 +36,8 @@ def geometry(points):
 def source_planes(bundle):
     """原JSON显式单一layoutHeight；先证明其既定转换逐值等于原GT TXT。"""
     sources = {}
-    with zipfile.ZipFile(ORIGINAL_LAYOUTS) as archive:
+    archive_path = source_zip(ORIGINAL_LAYOUTS)
+    with zipfile.ZipFile(archive_path) as archive:
         for obj in bundle['data']['objects']:
             if obj['object_kind'] != 'gt_original':
                 continue
@@ -46,7 +48,7 @@ def source_planes(bundle):
             height = float(raw['layoutHeight']) / float(raw['cameraHeight']) - 1
             if not np.isfinite(height) or height <= 0:
                 raise ValueError('invalid explicit source ceiling height')
-            sources[obj['object_id']] = dict(plane=[0.,0.,height], archive=str(ORIGINAL_LAYOUTS),
+            sources[obj['object_id']] = dict(plane=[0.,0.,height], archive=str(archive_path),
                 member=member, cameraHeight=raw['cameraHeight'], layoutHeight=raw['layoutHeight'],
                 original_json_conversion_equals_current_GT=True,
                 source_json_geometry={key:raw[key] for key in ['cameraHeight','layoutHeight','layoutPoints']},

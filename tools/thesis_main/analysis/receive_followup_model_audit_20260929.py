@@ -1,4 +1,5 @@
 """接收77份补查，汇总预标注证据，按历史同图改序继续筛查。"""
+from tools.thesis_main.local_inputs import review_input
 import csv
 import json
 from collections import Counter
@@ -12,7 +13,7 @@ from .finalize_review_20260928 import read, dump, write_csv
 from .build_order_studio_20260926 import encode
 
 OUT=ROOT/'analysis_results/order_model_same_image_20260929'
-INPUT=Path('C:/Users/ASUS/Downloads/角点顺序审核(2).json')
+INPUT=review_input('角点顺序审核(2).json')
 # 已逐条阅读原comment；不把检索命中自动升级为“被误导”。
 REVIEWED_INFLUENCE_COMMENTS={
     '726df974bcd4c84b':'模型错误的预标注的影响',

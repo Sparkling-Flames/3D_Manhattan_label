@@ -1,5 +1,6 @@
 """复用二审Studio与冻结分簇，生成独立定向补审入口。"""
 from __future__ import annotations
+from tools.thesis_main.local_inputs import review_input
 import json
 import shutil
 from pathlib import Path
@@ -7,7 +8,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[3]
 OLD=ROOT/'analysis_results/review_reconciliation_20260925'
 OUT=ROOT/'analysis_results/review_return_20260927'
-INPUT=Path('C:/Users/ASUS/Downloads/全历史标注_二次复核_20260925(2).json')
+INPUT=review_input('全历史标注_二次复核_20260925(2).json')
 HERE=Path(__file__).parent
 
 def read(path):

@@ -1,5 +1,6 @@
 """接收双人排序证据，按已确认物理同房关系建立独立复审工作台。"""
 from __future__ import annotations
+from tools.thesis_main.local_inputs import review_input
 
 import copy
 import csv
@@ -96,7 +97,7 @@ def build():
     csv.field_size_limit(32 * 1024 * 1024)
     OUT.mkdir(exist_ok=True); (OUT / 'evidence').mkdir(exist_ok=True)
     files = {
-        'user': Path('C:/Users/ASUS/Downloads/角点顺序审核.json'),
+        'user': review_input('角点顺序审核.json'),
         'yizheng': Path('C:/Users/ASUS/Documents/xwechat_files/wxid_lvoh11i1addo22_a66c/msg/file/2026-09/角点顺序审核.json'),
     }
     returns = {}
@@ -104,7 +105,9 @@ def build():
         dst = OUT / 'evidence' / f'{reviewer}.json'
         if dst.exists() and dst.read_bytes() != src.read_bytes():
             raise ValueError('evidence_changed:' + reviewer)
-        shutil.copyfile(src, dst); returns[reviewer] = read(dst)
+        if src.resolve() != dst.resolve():
+            shutil.copyfile(src, dst)
+        returns[reviewer] = read(dst)
     old = json.loads((OLD / 'data.js').read_text(encoding='utf-8').split('window.STUDIO_DATA=', 1)[1].rstrip(';\n'))
     slots = {c['image_id']: i+1 for i, c in enumerate(old['cases'])}
     original = {o['object_id']: o for o in read(OLD / 'preprocessed_source.json')['objects']}

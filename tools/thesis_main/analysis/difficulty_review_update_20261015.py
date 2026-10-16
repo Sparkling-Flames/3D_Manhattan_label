@@ -1,4 +1,5 @@
 """接入局部人工复核、GT纠错和竖向空间范围；保留规则类与人工类的区别。"""
+from tools.thesis_main.local_inputs import review_input
 import copy
 import csv
 import json
@@ -46,7 +47,7 @@ def main():
     OUT.mkdir(exist_ok=True)
     receipt=OUT/'user_review_receipt.json'
     if not receipt.exists():
-        receipt.write_bytes(Path('C:/Users/ASUS/Downloads/image_difficulty_scope_preferred_my_review.json').read_bytes())
+        receipt.write_bytes(review_input('image_difficulty_scope_preferred_my_review.json').read_bytes())
     review=json.loads(receipt.read_text(encoding='utf-8-sig'))
     base=json.loads((BASE/'current_259.json').read_text(encoding='utf-8-sig'))
     assert review['review_version']==base['version']

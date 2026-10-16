@@ -52,4 +52,4 @@
 
 验证与归档清单见`ARCHIVE_MANIFEST.json`；本次检查不等于全库视觉审查或新模型效度验证。
 
-复现限制：原参考来源核验/构造工具仍引用本机`Downloads/label_data.zip`，本次没有改造这条历史路径；当前`reference_catalog.json`保留已确定的完整参考及来源证据，研究新分数可直接用它的固定几何。不能声称任意新环境只克隆Git就能重跑全部原GT来源审查。
+复现限制：原参考来源核验/构造工具默认读取仓库根目录`data/external/label_data.zip`，允许`HOHONET_SOURCE_ZIP`显式配置；本机原ZIP尚未迁移；当前`reference_catalog.json`保留已确定的完整参考及来源证据，研究新分数可直接用它的固定几何。不能声称任意新环境只克隆Git就能重跑全部原GT来源审查。

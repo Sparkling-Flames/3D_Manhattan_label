@@ -1,4 +1,5 @@
 """最终审核描述统计、历史评语索引及同房Matterport数据包。"""
+from tools.thesis_main.local_inputs import review_input
 import csv
 import html
 import json
@@ -13,7 +14,7 @@ from .build_order_studio_20260926 import encode
 from tools.label_studio.panorama_studio.geometry import analyze
 
 OUT=ROOT/'analysis_results/final_review_summary_20260929'
-INPUT=Path('C:/Users/ASUS/Downloads/角点顺序审核(4).json')
+INPUT=review_input('角点顺序审核(4).json')
 
 
 def rows(path):

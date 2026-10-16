@@ -1,4 +1,5 @@
 """接收完整配对，原始坐标直接共享x，独立生成新基线及排序续审。"""
+from tools.thesis_main.local_inputs import review_input
 import copy
 import csv
 import json
@@ -16,7 +17,7 @@ from tools.label_studio.panorama_studio.build import data_image
 
 OUT=ROOT/'analysis_results/pairing_applied_20260929'
 QUEUE=ROOT/'analysis_results/order_after_pairing_20260929'
-INPUT=Path('C:/Users/ASUS/Downloads/补齐配对复核.json')
+INPUT=review_input('补齐配对复核.json')
 
 
 def jsdata(path):

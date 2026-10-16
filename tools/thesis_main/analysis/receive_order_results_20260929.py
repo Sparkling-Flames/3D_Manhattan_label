@@ -1,5 +1,6 @@
 """接收本轮双人排序，保存独立确认层和补查研究输入；原始来源不变。"""
 from __future__ import annotations
+from tools.thesis_main.local_inputs import review_input
 
 import copy
 import csv
@@ -17,7 +18,7 @@ from tools.label_studio.panorama_studio.build import data_image
 OUT=ROOT/'analysis_results/order_pattern_recall_20260929'
 PREVIOUS=ROOT/'analysis_results/order_gt_screened_20260928'
 FILES={
-    'user':Path('C:/Users/ASUS/Downloads/角点顺序审核(1).json'),
+    'user':review_input('角点顺序审核(1).json'),
     'yizheng':Path('C:/Users/ASUS/Documents/xwechat_files/wxid_lvoh11i1addo22_a66c/msg/file/2026-09/角点顺序审核 (2)(1).json'),
 }
 GLASS_ID='8f2f8f8bfdaec3360646'
