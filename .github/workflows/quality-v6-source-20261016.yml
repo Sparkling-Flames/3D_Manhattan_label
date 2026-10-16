@@ -1,0 +1,76 @@
+name: Quality v6 fixed evidence
+on:
+  push:
+    branches: [research/quality-readonly-acquisition-20261016]
+    paths: [.github/workflows/quality-v6-source-20261016.yml]
+permissions:
+  contents: read
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 6fb0f7a88078bbf57a17d955e044fac2ec8943c7
+          fetch-depth: 1
+          lfs: false
+          sparse-checkout: |
+            tools
+            lib
+            docs/thesis_main
+            research/catalog
+            research/quality
+            research/difficulty
+            research/data
+            research/scope_quality_rescore_20261016
+            research/statistics/b8l2_mainline_status_20261016
+            research/statistics/descriptive_statistics_rescored_20261016
+            analysis_results/research_input_20260929
+            analysis_results/image_difficulty_full_review_20261010
+            analysis_results/point_edit_review_20261009/evidence
+            analysis_results/quality/quality_joint_closeout_review_20261015
+            data/research_gt_revisions
+      - name: Recover LFS and freeze byte manifests
+        run: |
+          mkdir -p /tmp/quality_v6_evidence
+          git lfs install --local
+          git lfs pull --include='analysis_results/research_input_20260929/**,data/research_gt_revisions/**' > /tmp/quality_v6_evidence/lfs.log 2>&1 || true
+          python - <<'PY'
+          import pathlib,zipfile,json,hashlib,subprocess,urllib.request,io
+          out=pathlib.Path('/tmp/quality_v6_evidence');manifest=[]
+          cfg=json.loads(pathlib.Path('tools/thesis_main/local_input_archives.json').read_text())
+          for rec in cfg.values():
+              p=pathlib.Path(rec['path']); p.parent.mkdir(parents=True,exist_ok=True)
+              raw=subprocess.check_output(['git','show','HEAD:'+str(p)]); assert hashlib.sha256(raw).hexdigest()==rec['sha256'];p.write_bytes(raw)
+          with zipfile.ZipFile(out/'latest_source.zip','w',zipfile.ZIP_DEFLATED,6) as z:
+              for root in ['research','analysis_results','data/research_gt_revisions','tools','lib','docs/thesis_main']:
+                  for p in pathlib.Path(root).rglob('*'):
+                      if p.is_file() and p.suffix.lower() in ['.py','.json','.jsonl','.md','.txt','.csv','.yaml','.yml','.zip','.js']:
+                          raw=p.read_bytes();z.write(p,str(p));manifest.append({'path':str(p),'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'lfs_pointer':raw.startswith(b'version https://git-lfs')})
+          (out/'file_hashes.json').write_text(json.dumps(manifest,indent=2));(out/'commit.txt').write_text(subprocess.check_output(['git','rev-parse','HEAD']).decode())
+          release=json.load(urllib.request.urlopen('https://api.github.com/repos/Sparkling-Flames/3D_Manhattan_label/releases/tags/quality-original-images-20261015'))
+          audit=[]
+          with zipfile.ZipFile(out/'originals.zip','w',zipfile.ZIP_STORED) as dst:
+              for a in release['assets']:
+                  try:
+                      raw=urllib.request.urlopen(a['browser_download_url'],timeout=180).read();sha=hashlib.sha256(raw).hexdigest();assert not a.get('digest') or a['digest']=='sha256:'+sha
+                      row={'name':a['name'],'bytes':len(raw),'sha256':sha}
+                      if a['name'].endswith('.zip'):
+                          z=zipfile.ZipFile(io.BytesIO(raw));assert z.testzip() is None
+                          for info in z.infolist():
+                              p=pathlib.PurePosixPath(info.filename)
+                              if p.suffix.lower() in ['.png','.jpg','.jpeg']:dst.writestr('images/'+p.name,z.read(info))
+                          row['crc_verified']=True
+                      else: (out/a['name']).write_bytes(raw)
+                      row['status']='verified';audit.append(row)
+                  except Exception as e: audit.append({'name':a['name'],'status':'failed','error':repr(e)})
+          (out/'release_audit.json').write_text(json.dumps(audit,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quality-v6-fixed-evidence-20261016
+          path: /tmp/quality_v6_evidence
+          retention-days: 7
+          compression-level: 0
