@@ -1,0 +1,76 @@
+name: Quality read-only acquisition 20261016
+on:
+  push:
+    branches: [research/quality-readonly-acquisition-20261016]
+    paths: [.github/workflows/quality-readonly-acquisition-20261016.yml]
+permissions:
+  contents: read
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 6b69d3f23be4c2cf48ad6a73ca03d2bd885bd955
+          fetch-depth: 1
+          lfs: false
+          sparse-checkout: |
+            research/quality/quality_three_routes_feedback_20261016
+            research/quality/quality_structure_handoff_20261016
+            research/catalog
+            research/statistics/descriptive_statistics_rescored_20261016
+            research/data/scope_quality_rescore_20261016
+            analysis_results/research_input_20260929
+            data/research_gt_revisions
+            tools/thesis_main
+            lib
+      - name: Recover exact LFS source bytes without changing repository history
+        run: |
+          mkdir -p /tmp/quality_acquisition
+          git lfs install --local
+          git lfs pull --include='analysis_results/research_input_20260929/**,data/research_gt_revisions/**' > /tmp/quality_acquisition/lfs.log 2>&1 || true
+          git rev-parse HEAD > /tmp/quality_acquisition/base_commit.txt
+      - name: Copy fixed evidence and selected original images
+        run: |
+          python - <<'PY'
+          import pathlib, json, urllib.request, hashlib, zipfile, io, shutil
+          out=pathlib.Path('/tmp/quality_acquisition'); (out/'images').mkdir(exist_ok=True)
+          repo='Sparkling-Flames/3D_Manhattan_label'
+          snap=json.loads(pathlib.Path('research/quality/quality_three_routes_feedback_20261016/reviewed_snapshot.json').read_text())
+          wanted={x['source_pair']['image_id'] for x in snap['cases']}
+          (out/'wanted_image_ids.json').write_text(json.dumps(sorted(wanted)))
+          release=json.load(urllib.request.urlopen('https://api.github.com/repos/'+repo+'/releases/tags/quality-original-images-20261015'))
+          (out/'release_metadata.json').write_text(json.dumps(release,indent=2))
+          audit=[]
+          for asset in release['assets']:
+              try:
+                  raw=urllib.request.urlopen(asset['browser_download_url'],timeout=180).read()
+                  digest=hashlib.sha256(raw).hexdigest()
+                  if asset.get('digest'): assert 'sha256:'+digest==asset['digest']
+                  row={'name':asset['name'],'bytes':len(raw),'sha256':digest,'status':'verified'}
+                  if asset['name'].endswith('.zip'):
+                      z=zipfile.ZipFile(io.BytesIO(raw)); row['zip_crc_failure']=z.testzip(); assert row['zip_crc_failure'] is None
+                      row['images_in_zip']=sum(pathlib.PurePosixPath(x.filename).suffix.lower() in ['.png','.jpg','.jpeg'] for x in z.infolist())
+                      for info in z.infolist():
+                          path=pathlib.PurePosixPath(info.filename)
+                          if path.stem in wanted and path.suffix.lower() in ['.png','.jpg','.jpeg']:
+                              content=z.read(info); (out/'images'/path.name).write_bytes(content)
+                  else: (out/pathlib.Path(asset['name']).name).write_bytes(raw)
+                  audit.append(row)
+              except Exception as e: audit.append({'name':asset['name'],'status':'failed','error':repr(e)})
+          (out/'release_acquisition.json').write_text(json.dumps(audit,indent=2))
+          (out/'image_hashes.json').write_text(json.dumps({p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (out/'images').iterdir()},indent=2))
+          with zipfile.ZipFile(out/'source_snapshot.zip','w',zipfile.ZIP_DEFLATED,6) as z:
+              for folder in ['research','analysis_results','data','tools','lib']:
+                  if pathlib.Path(folder).exists():
+                      for p in pathlib.Path(folder).rglob('*'):
+                          if p.is_file(): z.write(p,str(p))
+          print('Selected originals',len(list((out/'images').iterdir())),'wanted',len(wanted))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quality-readonly-evidence-20261016
+          path: /tmp/quality_acquisition
+          retention-days: 7
