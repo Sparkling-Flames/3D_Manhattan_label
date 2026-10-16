@@ -1,0 +1,70 @@
+name: Quality resume v6 evidence
+on:
+  push:
+    branches: [research/quality-readonly-acquisition-20261016]
+    paths: [.github/workflows/quality-resume-v6-evidence-20261016.yml]
+permissions:
+  contents: read
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 6fb0f7a88078bbf57a17d955e044fac2ec8943c7
+          lfs: false
+          fetch-depth: 1
+          sparse-checkout: |
+            tools
+            lib
+            docs/thesis_main
+            research/quality
+            research/difficulty
+            research/data
+            research/statistics
+            research/catalog
+            analysis_results/research_input_20260929
+            analysis_results/image_difficulty_full_review_20261010
+            analysis_results/quality
+            analysis_results/point_edit_review_20261009/evidence
+            data/research_gt_revisions
+      - name: Recover LFS and hash-pinned receipts
+        run: |
+          mkdir -p /tmp/quality_resume_v6
+          git lfs install --local
+          git lfs pull --include='analysis_results/research_input_20260929/**,data/research_gt_revisions/**' > /tmp/quality_resume_v6/lfs.log 2>&1 || true
+          python - <<'PY'
+          import pathlib,hashlib,json,zipfile,subprocess,urllib.request,io
+          out=pathlib.Path('/tmp/quality_resume_v6')
+          cfg=json.loads(pathlib.Path('tools/thesis_main/local_input_archives.json').read_text())
+          for name,rec in cfg.items():
+              raw=subprocess.check_output(['git','show','HEAD:'+rec['path']]); assert hashlib.sha256(raw).hexdigest()==rec['sha256'];p=pathlib.Path(rec['path']);p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(raw)
+          files=[]
+          with zipfile.ZipFile(out/'source.zip','w',zipfile.ZIP_DEFLATED,6) as z:
+              for folder in ['research','analysis_results','data','tools','lib','docs/thesis_main']:
+                  for p in pathlib.Path(folder).rglob('*'):
+                      if p.is_file() and p.suffix.lower() in ['.py','.csv','.json','.md','.txt','.yaml','.yml']:
+                          z.write(p,str(p));files.append({'path':str(p),'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
+          (out/'file_hashes.json').write_text(json.dumps(files));(out/'base_commit.txt').write_text(subprocess.check_output(['git','rev-parse','HEAD']).decode())
+          wanted_prefix=['S9hNv5qa7GM_','zsNo4HB9uLZ_','q9vSo1VnCiC_','wc2JMjhGNzB_f741','7y3sRwLe3Va_']
+          release=json.load(urllib.request.urlopen('https://api.github.com/repos/Sparkling-Flames/3D_Manhattan_label/releases/tags/quality-original-images-20261015'))
+          (out/'images').mkdir(exist_ok=True);audit=[]
+          for asset in release['assets']:
+              if not asset['name'].endswith('.zip'):continue
+              try:
+                  raw=urllib.request.urlopen(asset['browser_download_url'],timeout=180).read(); assert 'sha256:'+hashlib.sha256(raw).hexdigest()==asset['digest']
+                  z=zipfile.ZipFile(io.BytesIO(raw));assert z.testzip() is None
+                  for n in z.namelist():
+                      p=pathlib.PurePosixPath(n)
+                      if p.suffix.lower() in ['.png','.jpg'] and any(p.stem.startswith(x) for x in wanted_prefix): (out/'images'/p.name).write_bytes(z.read(n))
+                  audit.append({'asset':asset['name'],'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'status':'verified'})
+              except Exception as e:audit.append({'asset':asset['name'],'status':'failed','error':repr(e)})
+          (out/'image_acquisition.json').write_text(json.dumps(audit,indent=2));(out/'image_hashes.json').write_text(json.dumps({p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (out/'images').iterdir()}))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quality-resume-v6-evidence
+          path: /tmp/quality_resume_v6
+          retention-days: 14
