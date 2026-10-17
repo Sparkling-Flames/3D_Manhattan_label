@@ -1,0 +1,133 @@
+{
+  "date": "2026-10-17",
+  "shared_version": "quality_b8l2_d10_20261017_v2",
+  "checks": {
+    "inventory_and_quality": {
+      "inventory": 3222,
+      "qualified": 1911,
+      "qualified_images": 136,
+      "qualified_buildings": 21,
+      "qualified_workers": 25
+    },
+    "independent_formula_B8L2": {
+      "rows": 1911,
+      "max_abs_error": 5.684341886080802e-14
+    },
+    "independent_formula_D10": {
+      "rows": 1911,
+      "max_abs_error": 5.684341886080802e-14
+    },
+    "old_values_and_targets_preserved": 1787,
+    "difficulty_shared_identity_score_match": {
+      "rows": 3222,
+      "fields": [
+        "image_id",
+        "condition",
+        "rescore_target_id",
+        "quality_usable",
+        "calculation_status",
+        "is_oos",
+        "B8L2",
+        "D10",
+        "B8L2_version",
+        "D10_version"
+      ]
+    },
+    "workers_shared_identity_score_match": {
+      "rows": 3222,
+      "fields": [
+        "image_id",
+        "worker_id",
+        "condition",
+        "quality_usable",
+        "calculation_status",
+        "is_oos",
+        "B8L2",
+        "D10",
+        "B8L2_version",
+        "D10_version"
+      ]
+    },
+    "same_room_shared_identity_score_match": {
+      "rows": 2880,
+      "fields": [
+        "image_id",
+        "worker_id",
+        "condition",
+        "rescore_target_id",
+        "quality_usable",
+        "calculation_status",
+        "is_oos",
+        "B8L2",
+        "D10",
+        "B8L2_version",
+        "D10_version"
+      ]
+    },
+    "statistics_shared_identity_score_match": {
+      "rows": 3222,
+      "fields": [
+        "image_id",
+        "worker_id",
+        "condition",
+        "rescore_target_id",
+        "quality_usable",
+        "calculation_status",
+        "is_oos",
+        "B8L2",
+        "D10",
+        "B8L2_version",
+        "D10_version"
+      ]
+    },
+    "independent_person_image_aggregates": {
+      "table_rows": 451,
+      "metrics": 2,
+      "statistics": "n mean median q25 q75 image_equal_mean"
+    },
+    "workers_training": {
+      "rows": 1048,
+      "images": 87,
+      "buildings": 19,
+      "workers": 24
+    },
+    "worker_prediction_performance_rows_recomputed": 48,
+    "fusion": {
+      "images": 18,
+      "states": 7320,
+      "primary_images": 7,
+      "primary_states": 3578,
+      "unique_image_subsets": 6693
+    },
+    "same_room": {
+      "comparable_pairs": 83,
+      "common_ge4": 78,
+      "comparable_quality_curves": 0,
+      "paired_quality_rows_verified": 1856
+    }
+  },
+  "targeted_tests": {
+    "passed": 29,
+    "scope": "8 current scoring routing statistics difficulty worker fusion same-room test files; not whole repository"
+  },
+  "not_checked": [
+    "Library browser contents and interactions",
+    "fresh end-to-end geometry rebuild for every historical record",
+    "human semantic correctness of every automatic scope route",
+    "full repository test suite"
+  ],
+  "documentation_checks": {
+    "local_file_links": 385,
+    "missing_local_files": 0,
+    "catalog_materials": 552,
+    "catalog_valid": true,
+    "fixes": [
+      "statistics current-basis 1838 changed to 1911",
+      "historical context labels clarified",
+      "obsolete model status anchor removed",
+      "current acceptance linked from main entries",
+      "existing acceptance document explicitly unignored for future Git inclusion"
+    ],
+    "library_browser_verified": false
+  }
+}

@@ -1,12 +1,5 @@
 # HOHONET 研究资料总目录
 
-## 2026-10-17 新增查阅与审阅交付
-
-- [全维度研究浏览台](../statistics/research_explorer_20261017/README.md)：124张当前表、71张历史表，逐字段查阅、条件图表、CSV与笔记导出；派生表通过来源哈希重建。
-- [独立进度判断与后续研究建议](../../docs/thesis_main/研究进度与独立建议_20261017.md)：核心实证面板、同房配对、结构测量与Semi桥接；属于建议，不自动升级为已执行任务。
-- 数据冻结于`090883fab97298fb18033638487b0f4a84bf0d54`；261图全量原图/3D未接入、29个补充文件未载入等限制见工作台说明。旧核验页面保留。
-
-
 目录版本：research_catalog_20261017_v2_explorer；盘点日期：2026-10-17。
 
 登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。
@@ -78,6 +71,7 @@
 |18图既有融合轨迹的B8L2/D10同资格比较 (`wall_consensus_d10_20261017_v1`)|18图既有融合池；7320状态/6693唯一子集；6247同非OOS评分掩码；非全部主比较资格|原12图人数过程及另6图特殊层；新增70份与这些18图无重叠；quality_b8l2_d10_20261017_v2；几何过程复用已冻结输入|沿用原融合声明参考；rPc局部范围变化单列说明|不重跑融合；失败、待定、门洞和OOS用途分别保留；自动终点与人工辅助终点分开；不插值、不按GT择优成员|原墙线流程；B8L2主线/D10同资格敏感性|[结果](../fusion/wall_consensus_d10_20261017/README.md) / [成员名单](../fusion/wall_consensus_d10_20261017/trajectory_scores.csv)|[research/fusion/wall_consensus_d10_20261017/INPUT_BRIDGE.json](../fusion/wall_consensus_d10_20261017/INPUT_BRIDGE.json), [research/fusion/wall_consensus_d10_20261017/CHECKS.json](../fusion/wall_consensus_d10_20261017/CHECKS.json)|[tools/thesis_main/analysis/wall_consensus_d10_20261017.py](../../tools/thesis_main/analysis/wall_consensus_d10_20261017.py), [tests/test_wall_consensus_d10_20261017.py](../../tests/test_wall_consensus_d10_20261017.py)；输入桥接和6项定向测试完成；未新增融合几何或声称全库验证|
 |已有同房分类下当前质量与时间比较 (`same_room_update_20261017_v1`)|83对范围可比质量；78对共同人员不少于4；其它范围15对单列|3222份当前库存；沿用用户既有关系分类；quality_b8l2_d10_20261017_v2|使用每份作答当前绑定目标；不同范围不混入主配对|直接关系采用与人员交集分别记录；不以逐组确认状态重新设门；B8L2主线/D10敏感性；时间来源和同目标时间分开|same_room_update_20261017_v1|[结果](../same_room/same_room_update_20261017/README.md) / [成员名单](../same_room/same_room_update_20261017/current_pairs.csv)|[research/same_room/same_room_update_20261017/INPUTS.json](../same_room/same_room_update_20261017/INPUTS.json), [research/same_room/same_room_update_20261017/VALIDATION.json](../same_room/same_room_update_20261017/VALIDATION.json)|[tools/thesis_main/analysis/same_room_update_20261017.py](../../tools/thesis_main/analysis/same_room_update_20261017.py), [tests/test_same_room_update_20261017.py](../../tests/test_same_room_update_20261017.py)；配对、成员和当前质量范围核对完成；跨组及普遍预测仍不成立|
 |当前共同质量与跨模块描述统计 (`b8l2_d10_statistics_20261017_v1`)|3222份库存/261图；1911份质量可用；统计保留逐人、逐图、条件、难度、场景、关系组和缺失原因|Project98当前输入；quality_b8l2_d10_20261017_v2|当前逐记录目标与空间绑定；分母按用途和条件声明|作答等权、图片等权、人员门槛、OOS诊断及排除分开报告；active_time按已核来源与单位使用；不填0，不以lead_time替代|b8l2_d10_statistics_20261017_v1|[结果](../statistics/b8l2_d10_statistics_20261017/README.md) / [成员名单](../statistics/b8l2_d10_statistics_20261017/record_lookup.csv)|[research/statistics/b8l2_d10_statistics_20261017/INPUTS.json](../statistics/b8l2_d10_statistics_20261017/INPUTS.json), [research/statistics/b8l2_d10_statistics_20261017/VERIFICATION.json](../statistics/b8l2_d10_statistics_20261017/VERIFICATION.json)|[tools/thesis_main/analysis/b8l2_d10_statistics_20261017.py](../../tools/thesis_main/analysis/b8l2_d10_statistics_20261017.py), [tests/test_b8l2_d10_statistics_20261017.py](../../tests/test_b8l2_d10_statistics_20261017.py)；总体分母、配对面板及关键分组核对完成；各表仍按各自资格解释|
+|全维度研究浏览台冻结快照 (`research_explorer_20261017`)|3222库存/261图；1911质量/136图/25人；1048人员训练；18图融合；各表分母分开。195表共234232存储行，不是独立样本数。|Project98当前共同v2与显式历史补充；090883fab97298fb18033638487b0f4a84bf0d54|各源表原参考版本；不重新路由|保留每表既有用途、独立票、人员/图片门、OOS诊断及缺失；可计算不等于可用；当前/历史、条件、场景、目标与时间口径单列|B8L2主线与D10敏感性；历史方法不改名|[结果](../statistics/research_explorer_20261017/explorer.html) / [成员名单](../statistics/research_explorer_20261017/README.md)|[research/statistics/research_explorer_20261017/README.md](../statistics/research_explorer_20261017/README.md), [docs/thesis_main/研究进度与独立建议_20261017.md](../../docs/thesis_main/研究进度与独立建议_20261017.md)|[tools/thesis_main/analysis/build_research_explorer_20261017.py](../../tools/thesis_main/analysis/build_research_explorer_20261017.py)；哈希锁定195表，可从既有CSV重建；不重复提交约159MB派生表，不重跑训练/融合。|
 
 ## 结果分母的身份
 
