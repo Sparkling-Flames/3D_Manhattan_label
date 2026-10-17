@@ -1,0 +1,68 @@
+{
+  "status": "passed",
+  "modules": [
+    {
+      "module": "inventory",
+      "table": "statistics__record_lookup",
+      "rows": "3,222 / 3,222"
+    },
+    {
+      "module": "quality",
+      "table": "quality__shared_records",
+      "rows": "3,222 / 3,222"
+    },
+    {
+      "module": "difficulty",
+      "table": "difficulty__difficulty_by_condition",
+      "rows": "12 / 12"
+    },
+    {
+      "module": "workers",
+      "table": "workers__profiles",
+      "rows": "430 / 430"
+    },
+    {
+      "module": "fusion",
+      "table": "fusion__by_image_k",
+      "rows": "377 / 377"
+    },
+    {
+      "module": "same_room",
+      "table": "same_room__current_pairs",
+      "rows": "2,650 / 2,650"
+    },
+    {
+      "module": "time",
+      "table": "statistics__record_lookup",
+      "rows": "3,222 / 3,222"
+    },
+    {
+      "module": "history",
+      "table": "historical_rdv__pairwise_distances",
+      "rows": "13,766 / 13,766"
+    },
+    {
+      "module": "all",
+      "table": "quality__binding_changes",
+      "rows": "3,222 / 3,222"
+    }
+  ],
+  "coverage": [
+    "filters",
+    "invalid range",
+    "pagination",
+    "sorting",
+    "detail close/reopen",
+    "local notes",
+    "CSV/JSON exports",
+    "scatter",
+    "cross-table IDs",
+    "empty search recovery",
+    "repeated navigation",
+    "hash navigation",
+    "old review URLs",
+    "wrong commit rejection",
+    "missing table error"
+  ],
+  "scope": "File-backed DOM tests, not authenticated real-browser visual QA"
+}

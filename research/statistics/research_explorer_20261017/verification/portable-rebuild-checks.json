@@ -1,0 +1,42 @@
+{
+  "schema_version": "research_explorer_portable_verification_v1",
+  "source_commit": "090883fab97298fb18033638487b0f4a84bf0d54",
+  "status": "passed",
+  "source_files_verified": 260,
+  "source_bytes_verified": 158515204,
+  "generated_files_byte_identical": 195,
+  "generated_total_bytes": 162433239,
+  "generated_table_parts": 193,
+  "table_count": 195,
+  "current_table_count": 124,
+  "historical_table_count": 71,
+  "storage_rows": 234232,
+  "source_selection_fixed": true,
+  "additional_checkout_files_ignored": true,
+  "python_unit_tests": {
+    "passed": 9,
+    "covered": [
+      "exact exported source",
+      "changed source hash rejection",
+      "wrong manifest commit rejection",
+      "path traversal rejection",
+      "symlink escape rejection",
+      "Git LFS pointer rejection",
+      "pinned Git blob instead of later HEAD/worktree",
+      "extra or tampered generated file rejection",
+      "missing/numeric/id/redaction conversions"
+    ]
+  },
+  "independent_quality_check": {
+    "rows": 1911,
+    "saved_expected_result_matches": true,
+    "max_recomposition_error": 4.263256414560601e-14
+  },
+  "dom_result": "portable-dom-checks.json",
+  "limits": [
+    "Complete rebuild used a SHA-256-verified exported source tree. A new online production repository clone was not performed.",
+    "Pinned Git object retrieval was tested in a local fixture repository with newer HEAD and altered working tree.",
+    "DOM checks are file-backed behavior tests, not authenticated real-browser visual acceptance.",
+    "All geometry, loader, training, and fusion jobs were not rerun."
+  ]
+}

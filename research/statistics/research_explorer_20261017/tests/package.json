@@ -1,0 +1,11 @@
+{
+  "name": "research-explorer-qa-20261017",
+  "private": true,
+  "description": "Optional offline DOM behavior tests; the explorer and Python build require no npm packages.",
+  "scripts": {
+    "test": "node explorer_ui.cjs"
+  },
+  "dependencies": {
+    "jsdom": "^30.1.3"
+  }
+}

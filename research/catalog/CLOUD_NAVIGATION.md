@@ -1,5 +1,14 @@
 # GitHub 云端研究导航
 
+## 全维度研究浏览台（2026-10-17）
+
+- [仓库源码、来源清单与本地构建](https://github.com/Sparkling-Flames/3D_Manhattan_label/blob/main/research/statistics/research_explorer_20261017/README.md)
+- [研究进度与独立建议](https://github.com/Sparkling-Flames/3D_Manhattan_label/blob/main/docs/thesis_main/研究进度与独立建议_20261017.md)
+- [在线私有浏览台](https://panorama-quality-review-20261016.fringnb.chatgpt.site/explorer.html)：需要所有者ChatGPT账号登录，沿用已有私有访问范围。
+
+GitHub页面用于查看源码，不直接执行HTML。在线站与本机预览各有入口；派生表不重复存入Git，按仓库中的哈希清单生成。
+
+
 本页只定位 GitHub 仓库中的资料。它与电脑上的文件路径、本地网页预览及应用内任务入口分开；原文中的 C:/ 路径、file: 或 codex: 入口不在本页改写。
 
 云端导航只收录可公开进入仓库的资料。本机含个人信息的原始导出由单独的本地索引管理，不加入此页、`CATALOG.json`或其他可提交索引。

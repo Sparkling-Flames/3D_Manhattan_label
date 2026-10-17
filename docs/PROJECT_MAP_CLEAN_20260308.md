@@ -1,5 +1,13 @@
 # HOHONET 项目地图
 
+## 2026-10-17 可视化交付位置
+
+- 工作台源码、来源清单与核验材料：`research/statistics/research_explorer_20261017/`，见[说明](../research/statistics/research_explorer_20261017/README.md)。
+- 构建工具：`tools/thesis_main/analysis/build_research_explorer_20261017.py`。
+- 跨模块判断：[研究进度与独立建议](thesis_main/研究进度与独立建议_20261017.md)。
+- 派生显示数据按固定哈希重建，不修改原始标注、参考、评分与资格；不将云端站点路径当作本地路径。
+
+
 **当前状态（2026-10-17）：** 当前输入为 [Project98 manifest](../analysis_results/research_input_20261017/manifest.json)，库存3222份作答、261张图；排除既定作答/人员后保留2991份、25人。新增批次70份已接入，7个账号映射到既有人员，任务人员时间5205秒已核验。
 
 - **质量：** [B8L2/D10共同评分v2](../research/quality/quality_b8l2_d10_20261017/README.md)共1911份可用（1699普通、188门洞、24其它单列）；B8L2为主指标，D10为并列敏感性。原B8L2用途v2的1787份是冻结基线；1838份是已被v2接续的路由前中间快照。

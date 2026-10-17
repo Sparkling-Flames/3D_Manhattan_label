@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>全景标注研究 · 数据探索台</title>
+  <link rel="stylesheet" href="explorer.css">
+  <script src="explorer.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到内容</a>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="explorer.html" aria-label="研究探索台首页"><span class="brand-mark">◫</span><span>全景标注研究<small>RESEARCH EXPLORER</small></span></a>
+    <div class="sidebar-kicker">工作空间</div>
+    <nav id="navigation" aria-label="研究模块"></nav>
+    <div class="sidebar-bottom">
+      <div class="snapshot-dot">固定研究快照</div>
+      <a id="commitLink" target="_blank" rel="noopener">090883f ↗</a>
+      <p>页面仅在浏览器中分析。<br>筛选与笔记不会修改源数据。</p>
+      <a href="https://panorama-quality-review-20261016.fringnb.chatgpt.site/resumed.html" class="old-review">此前 24 例原图核验 ↗</a>
+      <a href="research-advice.html" class="old-review">研究建议与优先级 ↗</a>
+      <a href="https://panorama-quality-review-20261016.fringnb.chatgpt.site/index.html" class="old-review">查看历史核验页面 ↗</a>
+    </div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><button id="menuToggle" class="icon-button mobile-menu" aria-label="展开导航" aria-expanded="false">☰</button><div id="breadcrumb">研究工作空间 <span>/</span> 总览</div><div class="topbar-right"><span class="local-badge">只读数据</span><button id="notesOpen" class="text-button">研究笔记 <span id="noteCount">0</span></button></div></header>
+    <main id="main" tabindex="-1">
+      <div id="loading" class="loading-state"><span class="spinner"></span><h1>正在打开研究快照</h1><p>先加载目录和概要，明细表按需读取。</p></div>
+      <div id="error" class="error-state" hidden></div>
+      <section id="overview" hidden></section>
+      <section id="coverage" hidden></section>
+      <section id="explore" hidden>
+        <div class="page-heading"><div><div class="eyebrow" id="moduleEyebrow">研究模块</div><h1 id="moduleTitle"></h1><p id="moduleDescription"></p></div><button class="secondary-button" id="goOverview">返回总览</button></div>
+        <div id="moduleWarning"></div>
+        <div id="questionCards" class="question-cards"></div>
+        <section class="global-scope panel" aria-label="跨表对象筛选"><div class="scope-heading"><strong>跨表追踪</strong><span>只对存在对应字段的表生效</span></div><div class="scope-fields"><label>图片 ID<input id="globalImage" placeholder="完整 image_id 或 image_code" autocomplete="off"></label><label>标注者 ID<input id="globalWorker" placeholder="完整 worker_id" autocomplete="off"></label><label>作答 / 对象 ID<input id="globalObject" placeholder="完整 object_id" autocomplete="off"></label><button id="applyGlobal" class="primary-button">应用</button><button id="clearGlobal" class="text-button">清空</button></div><div id="globalScopeStatus" class="scope-status"></div></section>
+        <section class="panel dataset-panel">
+          <div class="dataset-picker"><label>查找数据表<input type="search" id="tableSearch" placeholder="搜索名称、路径、字段…" autocomplete="off"></label><label class="table-select-label">当前数据表<select id="tableSelect"></select></label><label class="checkbox-label"><input type="checkbox" id="historyToggle">显示历史表</label></div>
+          <div id="tableInfo"></div>
+          <div id="tableLoading" class="inline-loading" hidden><span class="spinner"></span><span>读取表格…</span></div>
+          <div id="emptyModule" hidden></div>
+        </section>
+        <div id="tableWorkspace" hidden>
+          <section class="panel chart-panel">
+            <div class="section-heading"><div><div class="eyebrow">交互分析</div><h2>先看分布，再回到作答</h2></div><button id="toggleChart" class="text-button" aria-expanded="true">收起图表</button></div>
+            <div id="chartBody">
+              <div class="chart-controls"><label>图表类型<select id="chartType"><option value="histogram">数值分布</option><option value="scatter">双变量散点</option><option value="bar">分类对比</option></select></label><label><span id="xLabel">数值字段</span><select id="chartX"></select></label><label id="yControl" hidden>Y / 比较指标<select id="chartY"></select></label><label>分组着色<select id="chartGroup"></select></label><label id="aggregateControl" hidden>聚合方式<select id="chartAggregate"><option value="count">记录数</option><option value="sum">字段行值求和</option><option value="median">中位数</option><option value="mean">均值</option></select></label></div>
+              <div id="cohortControls" class="cohort-controls"></div>
+              <div class="chart-rule"><label><input type="checkbox" id="validOnly" checked>启用绘图资格保护（质量合格 / 参考一致 / 支持量；按字段适用）</label><span id="chartScope"></span></div>
+              <div id="chartSummary" class="chart-summary"></div>
+              <div id="chart" class="chart-container" aria-live="polite"></div>
+              <div id="chartLegend" class="chart-legend"></div>
+              <p id="chartFootnote" class="footnote"></p>
+            </div>
+          </section>
+          <section class="panel table-panel">
+            <div class="section-heading"><div><div class="eyebrow">完整字段 · 原始粒度</div><h2>明细数据 <span id="rowCount" class="count-pill"></span></h2></div><button id="exportCsv" class="secondary-button">导出筛选 CSV ↓</button></div>
+            <div class="filter-toolbar"><label class="row-search-label"><span class="sr-only">搜索所有字段</span><input type="search" id="rowSearch" placeholder="搜索当前表的所有字段…" autocomplete="off"></label><select id="filterField" aria-label="筛选字段"></select><select id="filterOperator" aria-label="筛选方式"><option value="eq">等于</option><option value="contains">包含</option><option value="range">数值区间</option><option value="missing">缺失</option><option value="present">非缺失</option></select><input id="filterValue" placeholder="精确值" aria-label="筛选值" list="filterSuggestions"><datalist id="filterSuggestions"></datalist><input id="filterMax" placeholder="最大值" aria-label="最大值" hidden><button id="addFilter" class="secondary-button">添加筛选</button><button id="clearFilters" class="text-button">重置表内筛选</button></div>
+            <div id="filterChips" class="filter-chips"></div><div id="filterMessage" role="status" class="filter-message"></div>
+            <div class="table-hint"><span>点击字段名排序；点击任意一行查看全部字段与关联对象。</span><span>← 横向滚动查看所有列 →</span></div>
+            <div class="table-scroll" id="tableScroll" tabindex="0" aria-label="可横向滚动的数据表"><table id="dataTable"></table></div>
+            <div class="pagination"><div id="pageStatus"></div><div><label>每页 <select id="pageSize"><option>25</option><option selected>50</option><option>100</option><option>200</option></select></label><button id="firstPage" class="icon-button" aria-label="第一页">«</button><button id="prevPage" class="icon-button" aria-label="上一页">‹</button><span id="pageNumber"></span><button id="nextPage" class="icon-button" aria-label="下一页">›</button><button id="lastPage" class="icon-button" aria-label="最后一页">»</button></div></div>
+          </section>
+        </div>
+      </section>
+      <footer class="footer">静态快照 · 不上传浏览器筛选或笔记 · 所有结论须保留条件、样本量与参考版本</footer>
+    </main>
+  </div>
+</div>
+<dialog id="detailDialog" class="detail-dialog"><header><div><div class="eyebrow">记录详情</div><h2 id="detailTitle"></h2></div><button data-close="detailDialog" class="icon-button" aria-label="关闭记录详情">×</button></header><div class="dialog-body"><div id="detailLinks" class="detail-links"></div><div id="detailFields"></div><label class="note-label">本条研究笔记<textarea id="recordNote" rows="3" placeholder="仅保存在这个浏览器。记录疑问、排除原因或下一步。"></textarea></label><div class="note-actions"><span id="noteSaved" role="status"></span><button id="saveRecordNote" class="primary-button">保存笔记</button></div></div></dialog>
+<dialog id="notesDialog" class="notes-dialog"><header><div><div class="eyebrow">仅当前浏览器 · 按快照隔离</div><h2>研究笔记</h2></div><button data-close="notesDialog" class="icon-button" aria-label="关闭笔记">×</button></header><div class="dialog-body"><p class="muted">这里的笔记不会写回仓库，也不会同步到其他设备。浏览器清理数据后可能丢失，请导出备份。</p><div id="notesList"></div><button id="exportNotes" class="primary-button">导出笔记 JSON ↓</button></div></dialog>
+<div id="toast" role="status" class="toast" hidden></div>
+</body>
+</html>
