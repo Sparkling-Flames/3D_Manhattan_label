@@ -1,5 +1,9 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
 
+本轮后续澄清：依`quality.worker_quality_reliability_20261017`研究绝对／相对质量、Semi纠错及个人严重失误；全部现有分析仍属数据v1，v2尚待新增数据，不作为本轮执行前置。原冻结负载不覆盖，当前版本解释见[版本政策](../../research/data/releases/VERSION_POLICY.md)。
+
+**2026-10-17当前执行补充：** 依`PAPER_A_METHOD_CONTRACT_CURRENT.json`的`data.research_release_policy_20261017`、`quality.worker_objective_20261017`、`replay.composition_process_20261017`和`delivery.closeout_20261017`，按[收尾细则](研究收尾方针与数据版本细则_20261017.md)推进。人员分类及组合过程优先，数据v1冻结与v2补标分开；旧子类收敛目标和阶段顺序不覆盖该要求。每个候选同时看质量、效率、分歧、完整率和人数过程；不以缺少永久类型为由延迟研究。线上采集尚未派发。
+
 2026-10-06按最新合同`consensus.corner_count_policy_20261006`：不强制最低8角点。原始MV结果、少于4对诊断和结构约束候选分别报告；所有尝试保留分母，可计算率、满足点数条件率与正确率不能混用。人数与缺点的横断面关系不解释为人数的因果效果。
 # 人员、图片与区域共识统计分析计划
 

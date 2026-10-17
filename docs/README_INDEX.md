@@ -1,5 +1,9 @@
 # HOHONET 文档入口
 
+- [人员质量与可靠性Pro研究提示词](../research/workers/worker_quality_profile_pro_handoff_20261017/PRO_PROMPT.md)：绝对／相对Q、Semi纠错与严重失误；当前全部分析仍属[数据v1](../research/data/releases/VERSION_POLICY.md)。
+
+- 当前执行：[研究收尾方针与数据版本细则](thesis_main/研究收尾方针与数据版本细则_20261017.md)，人员分类与真实组合过程优先；[数据v1冻结](../research/data/releases/v1/README.md)。
+
 ## 2026-10-17 云端工作台与独立建议
 
 - [全维度研究浏览台与本地重建](../research/statistics/research_explorer_20261017/README.md)：124张当前表、71张历史表，保留字段、资格、缺失和来源版本；不把跨表行数当独立样本数。

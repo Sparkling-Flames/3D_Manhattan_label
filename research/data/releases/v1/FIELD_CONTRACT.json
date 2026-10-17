@@ -1,0 +1,38 @@
+{
+  "schema": "research_data_release_v1",
+  "primary_key": "object_id",
+  "membership_fields": [
+    "data_release",
+    "object_id",
+    "image_id",
+    "image_code",
+    "worker_id",
+    "condition",
+    "source_path",
+    "project_id",
+    "runtime_task_id",
+    "raw_annotation_id",
+    "cleaning_disposition",
+    "independent_vote_eligible",
+    "preprocessing_status",
+    "current_target_id",
+    "calculation_status",
+    "quality_usable",
+    "quality_use",
+    "difficulty_class",
+    "is_doorway",
+    "is_oos",
+    "input_version",
+    "snapshot_version",
+    "B8L2_version",
+    "D10_version"
+  ],
+  "semantics": "Apart from data_release, copy shared_records.csv without reinterpretation. Keep all inventory rows. Reference objects are in snapshot input, not membership rows.",
+  "version_axes": [
+    "data_release",
+    "input_revision",
+    "reference/eligibility_revision",
+    "metric_version"
+  ],
+  "source_contract": "research/quality/quality_b8l2_d10_20261017/FIELD_CONTRACT.json"
+}
