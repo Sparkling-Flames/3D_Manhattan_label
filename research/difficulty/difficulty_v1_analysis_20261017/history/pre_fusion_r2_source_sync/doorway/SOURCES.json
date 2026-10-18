@@ -1,0 +1,169 @@
+{
+  "analysis_revision": "doorway_v1_analysis_20261017_r1",
+  "data_release": "v1",
+  "quality_manifest": {
+    "version": "quality_b8l2_d10_20261017_v2",
+    "input_manifest": "analysis_results/research_input_20261017/manifest.json",
+    "primary_metric": "B8L2",
+    "parallel_metric": "D10",
+    "parameters": {
+      "B8L2": {
+        "version": "WQ-B8L2-20261015",
+        "direction_scale_deg": 8.0,
+        "direction_cap": 1.5,
+        "bottom_scale_squared_deg2": 32.0,
+        "global_height_scale": 0.8,
+        "local_height_scale": 0.25,
+        "pooling_order": 2.0
+      },
+      "D10": {
+        "version": "B8L2-D10-20261016",
+        "direction_scale_deg": 10.0,
+        "direction_cap": 1.5,
+        "bottom_scale_squared_deg2": 32.0,
+        "global_height_scale": 0.8,
+        "local_height_scale": 0.25,
+        "pooling_order": 2.0
+      }
+    },
+    "recommended_qualified_scores": "research/quality/quality_b8l2_d10_20261017/quality_records.csv",
+    "full_inventory_with_metric_eligibility": "research/quality/quality_b8l2_d10_20261017/shared_records.csv",
+    "all_pre_score_bindings": "research/quality/quality_b8l2_d10_20261017/shared_bindings.csv",
+    "reference_catalog": "research/quality/quality_b8l2_d10_20261017/reference_catalog.json",
+    "difficulty_records": "research/quality/quality_b8l2_d10_20261017/difficulty_records.json",
+    "source_pools": "research/quality/quality_b8l2_d10_20261017/source_pools.csv",
+    "current_relation_adoption_manifest": "research/same_room/relation_adoption_20261016/CROSS_MODULE_RELATIONS.json",
+    "rules": {
+      "OOS": "diagnostic_only",
+      "new_worker_training": "module_admission_review_required",
+      "time": "source task-worker seconds; no target-time fabrication",
+      "pending_targets": "no score-selected reference"
+    },
+    "counts": {
+      "version": "quality_b8l2_d10_20261017_v2",
+      "input_manifest": "analysis_results/research_input_20261017/manifest.json",
+      "inventory": 3222,
+      "quality_rows": 1911,
+      "new_batch": 70,
+      "new_complete": 64,
+      "old_binding_gap_measured": 116,
+      "old_binding_changes": 362,
+      "new_quality_rows": 63,
+      "new_binding_status": {
+        "sole_admitted_space": 51,
+        "local_evidence_insufficient_floor_iou_fallback": 6,
+        "local_differentiating_structure": 13
+      },
+      "quality_use": {
+        "ordinary_primary": 1699,
+        "doorway_quality": 188,
+        "special_conditional_only": 24
+      },
+      "calculation_status": {
+        "full_computed": 2774,
+        "floor_only_computed": 298,
+        "input_uncomputable": 122,
+        "pending_target": 28
+      },
+      "membership_changes": {
+        "retained": 1787,
+        "outside_both": 1311,
+        "added": 124
+      },
+      "old_inputs_and_references_verified": true,
+      "old_B8L2_recomposition_verified": true,
+      "new_task_worker_seconds": 5205,
+      "main_formula_changed": false,
+      "old_snapshots_modified": false,
+      "routing_version": "current_reference_local_router_20261017_v1",
+      "pre_routing_snapshot": "research/quality/quality_b8l2_d10_initial_20261017"
+    },
+    "pre_score_routing": {
+      "version": "current_reference_local_router_20261017_v1",
+      "implementation": "research/quality_pro_joint_archive_20261013/source/routing/router.py",
+      "parameters": "research/quality_pro_joint_archive_20261013/source/routing/config.json",
+      "evidence": "research/quality/quality_b8l2_d10_20261017/binding_changes.csv",
+      "uncertainty_is_probability": false
+    }
+  },
+  "fusion_manifest": {
+    "version": "wall_consensus_v1_process_20261017_v1",
+    "data_release": "v1",
+    "input_manifest": "analysis_results/research_input_20261017/manifest.json",
+    "files": {
+      "eligibility": "pool_eligibility.csv",
+      "inputs": "input_snapshot.json",
+      "trajectory": "trajectory_scores.csv",
+      "states": "pools/<pool_id>/states.json.gz",
+      "subsets": "unique_subsets.csv",
+      "adjacent_transitions": "transitions.csv",
+      "same_k_stability": "same_k_stability.csv",
+      "summary": "by_pool_k.csv",
+      "endpoints": "path_endpoints.csv",
+      "status": "STATUS.json",
+      "worker_results": "TEAM_RESULTS.csv",
+      "worker_status": "TEAM_RESULT_STATUS.json",
+      "worker_policy": "worker_policy_vs_random.csv",
+      "worker_direct": "worker_direct_contrasts.csv",
+      "worker_coverage": "worker_policy_coverage.csv",
+      "composition": "subset_composition.csv",
+      "same_room_results": "SAME_ROOM_PROCESS_RESULTS.json",
+      "same_room_states": "same_room_trajectory.csv",
+      "same_room_stability": "same_room_within_view_stability.csv",
+      "random_changes": "random_matched_changes.csv",
+      "checks": "CHECKS.json",
+      "handoff": "HANDOFF.md",
+      "main_random_changes": "random_matched_changes_main.csv",
+      "descriptive_8to16": "random_8to16_descriptive_panel.csv",
+      "main_8to16": "random_8to16_main_panel.csv",
+      "main_strict_V": "random_8to16_main_strict_V.csv",
+      "random_panel_summary": "random_8to16_panel_summary.csv",
+      "field_recovery": "measurement_field_recovery.csv",
+      "revision_checks": "REVISION_CHECKS.json",
+      "measurement_schema": "MEASUREMENT_CACHE_SCHEMA.json"
+    },
+    "partial_publication": false,
+    "consumer_join": [
+      "pool_id",
+      "subset",
+      "path_id",
+      "k"
+    ],
+    "no_assisted_structure_leakage": true,
+    "analysis_revision": "v1_complete_measurement_cache_main_panel_r2_20261017",
+    "classification_metrics": [
+      "B8L2",
+      "D10"
+    ],
+    "score_metrics": [
+      "B8L2",
+      "D10"
+    ],
+    "data_version_note": "all current data and this analysis are data v1; v2/v6 in legacy package names are not a new data release",
+    "analysis_tools": [
+      "tools/thesis_main/analysis/wall_consensus_v1_process_20261017.py",
+      "tools/thesis_main/analysis/wall_consensus_v1_summary_20261017.py"
+    ],
+    "tests": [
+      "tests/test_wall_consensus_v1_process_20261017.py",
+      "tests/test_wall_consensus_d10_20261017.py"
+    ],
+    "downstream_requests": {
+      "workers": "request_inputs/TEAM_REQUESTS.json",
+      "same_room": "request_inputs/PAIR_PROCESS_REQUESTS.json"
+    },
+    "previous_tables_archive": "history/v1_complete_measurement_cache_main_panel_r2_20261017/pre_revision_tables.zip"
+  },
+  "fusion_status": {
+    "completed_pools": 233,
+    "completed_images": 208,
+    "path_states": 41859
+  },
+  "auxiliary_fields": "copied source values in random_nodes, not used in summaries; upstream preservation repair tracked separately",
+  "auxiliary_nonmissing": {
+    "floor_WQ_upper_bound": 711,
+    "boundary_loss": 703,
+    "height_loss": 703
+  },
+  "low_people": "current pool gate preserved; no collection started"
+}

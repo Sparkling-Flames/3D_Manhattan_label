@@ -41,9 +41,12 @@ def validate_received(doc, cases):
 
 
 def raw_initial_points(o):
-    """原P点回到原始导出坐标；补点保留单独已确认坐标。"""
+    """原P点初始化保留明确数值修复；旧单边x移动由周期共享x政策替代。"""
     points=o['before_preprocessing_points'];labels=o['point_labels'];raw=o['original_export_points']
-    if points==raw:return copy.deepcopy(raw),list(range(len(raw or []))),[]
+    evidence=o.get('repair_evidence',[])
+    evidence=evidence if isinstance(evidence,list) else [evidence]
+    repairs={p['label']:p for e in evidence if e.get('status')=='applied' for p in e.get('changed_points',[])}
+    if points==raw and not repairs:return copy.deepcopy(raw),list(range(len(raw or []))),[]
     if not points:return None,[],[]
     if len(labels)!=len(points):return None,[],['missing_point_identity']
     result=[];indices=[];changes=[]
@@ -52,8 +55,12 @@ def raw_initial_points(o):
         if m:
             index=int(m[1])-1
             if not 0<=index<len(raw):raise ValueError('raw_identity:'+o['object_id'])
-            result.append(raw[index]);indices.append(index)
-            if raw[index]!=p:changes.append(label+':使用原始导出坐标替代历史坐标移动')
+            repair=repairs.get(label)
+            if repair and (repair['before']!=raw[index] or p not in [repair['before'],repair['after']]):
+                raise ValueError('coordinate_repair_binding:'+o['object_id']+':'+label)
+            result.append(copy.deepcopy(repair['after'] if repair else raw[index]));indices.append(index)
+            if repair:changes.append(label+':保留已确认数值修复')
+            elif raw[index]!=p:changes.append(label+':使用原始导出坐标替代历史坐标移动')
         elif '补点' in label and o['repair_evidence']:
             result.append(p);indices.append(None);changes.append(label+':保留已确认补点')
         else:raise ValueError('unmapped_point:'+o['object_id']+':'+label)
@@ -139,7 +146,7 @@ def build():
         formal_analysis_connected=False)
     dump(OUT/'summary.json',summary)
     dump(OUT/'field_contract.json',dict(schema='research_preprocessed_source_v2',coordinate_frame='1024x512',
-        initialization='原P点读原始导出坐标；保留已确认删点/补点；上下配对共享周期最短弧x中点，y不变；结果持久写入preprocessed_points，非仅显示变换。',
+        initialization='原P点读原始导出坐标并应用明确绑定before/after的已确认数值修复；保留已确认删点/补点；旧单边x移动由周期共享x政策替代；上下配对共享周期最短弧x中点，修复后y不变。',
         original_export_indices='有效点到原导出的零基映射；补点为null，保留repair_evidence',
         order='点对身份按上下点label映射；相同身份沿用历史确认环，四对默认不召回；新完整配对>4对且无可沿用环进入续审。',
         separation='门洞/OOS独立保留；明确无法计算的5份不自动复活；资格及原始文件不改；历史计算不自动冒充使用本版本。'))

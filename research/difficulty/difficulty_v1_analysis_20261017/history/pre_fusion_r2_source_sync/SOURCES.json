@@ -1,0 +1,37 @@
+{
+  "data_release": "v1",
+  "input_revision": "annotation_batch_98_20261017_v1",
+  "quality_revision": "quality_b8l2_d10_20261017_v2",
+  "difficulty_source": "research\\quality\\quality_b8l2_d10_20261017\\difficulty_records.json",
+  "score_source": "research\\quality\\quality_b8l2_d10_20261017\\shared_records.csv",
+  "input_manifest": "analysis_results/research_input_20261017/manifest.json",
+  "release_manifest": "research/data/releases/v1/RELEASE.json",
+  "score_versions": {
+    "B8L2": "WQ-B8L2-20261015",
+    "D10": "B8L2-D10-20261016"
+  },
+  "analysis_revision": "data_v1_difficulty_analysis_20261017_r1",
+  "quality_eligibility": "shared quality_usable and exact current target",
+  "fusion_source": "research/fusion/wall_consensus_v1_process_20261017",
+  "fusion_partial_analysis": {
+    "source_version": "wall_consensus_v1_process_20261017_v1",
+    "source_partial": false,
+    "completed_pools_at_build": 233,
+    "planned_pools": 234,
+    "fixed_pools": 104,
+    "fixed_images": 104,
+    "by_difficulty": {
+      "简单": 69,
+      "困难": 19,
+      "中等": 16
+    },
+    "panel": "fusion_panel.json",
+    "source_status": "research/fusion/wall_consensus_v1_process_20261017/STATUS.json",
+    "consumed_analysis_revision": "v1_holdout_flag_parse_corrected_20261017",
+    "total_attempted_pools": 237,
+    "total_input_problem_pools": 4,
+    "ordinary_312_public_fields_rechecked": true
+  },
+  "fusion_consumption_note": "field name retained for compatibility; source_partial is false for current completed random/strategy/same-room publication",
+  "doorway_interface": "CROSS_MODULE_INPUTS.json"
+}

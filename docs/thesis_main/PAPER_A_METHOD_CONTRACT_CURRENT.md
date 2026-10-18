@@ -27,10 +27,10 @@
 - `data.borrowed_points`：保留来源和描述用途，独立组合/预测不计为独立票
 - `data.unbound`：保留，列为待审/不可评价，不猜配对或补点
 - `data.raw_mutation`：False
-- `data.preprocessed_source`：analysis_results/research_input_20261017/data.json
+- `data.preprocessed_source`：research/data/processed_input_review_20261018/data.json.gz
 - `data.preprocessed_source_scope`：当前为旧有效基线加已核Project98的70份增量；原始导出与旧快照保持。
 - `data.analysis_input_schema`：final_review_research_input_v1
-- `data.analysis_bundle`：analysis_results/research_input_20261017/manifest.json
+- `data.analysis_bundle`：research/data/processed_input_review_20261018/manifest.json
 - `data.analysis_bundle_loader`：tools.thesis_main.data_prep.consolidate_research_input.load_current_bundle
 - `data.analysis_bundle_rule`：正式当前输入从load_current_bundle/load_current_input读取；Project98完整快照与编号映射见manifest。
 - `data.current_input_loader`：tools.thesis_main.data_prep.materialize_current_research_input.load_current_input
@@ -39,6 +39,7 @@
 - `data.quality_update`：analysis_results/research_input_20260929/quality_update_20261010.json
 - `data.research_release_20261017`：research/data/releases/v1/RELEASE.json
 - `data.research_release_policy_20261017`：当前全部已有材料与后续分析归数据v1阶段；3222份规范作答/261图首个冻结负载不覆盖。未来补标仍需等待，只有真实新增标注到达并由用户确认接入后才建数据v2；不以v2为当前工作前置。现有数据的纠正、参考/资格更新和重算在v1下另记修订与差异，历史包版本号不更名、不混同数据release。当前解释见research/data/releases/VERSION_POLICY.md，覆盖冻结快照内当时版本推进措辞。
+- `data.processed_input_revision_20261018`：confirmed_coordinate_repair_v1_20261018：保留已确认数值修复并重评可计算性；历史冻结包不覆写，删补点/环序/资格/参考决定另按原证据保留。
 - `cleaning.review_continuation_20260928`：明确后续说明与续审issue优先于旧表单pending；仅覆盖涉及对象。原件保留，机器全量台账3152份含133份历史未纳入，不自动恢复资格。改善建议不授权修复。
 - `cleaning.review_sop`：docs/thesis_main/两人审核归并与二次复核SOP_20260925.md
 - `cleaning.review_scope_20260925`：两份用户JSON为主；一正独审图和任一作者全部排除作答必须复核；补点请求、同图图片背景和相似标法处理差异保留来源。作者选项含义分开，不直接合并。

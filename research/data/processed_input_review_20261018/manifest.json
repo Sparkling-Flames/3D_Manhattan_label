@@ -1,0 +1,47 @@
+{
+  "schema": "research_analysis_bundle_v1",
+  "contract_version": "consensus_research_20260923_v1",
+  "entrypoints": {
+    "data": "data.json.gz",
+    "research": "research.json.gz",
+    "comments": "comments.json.gz",
+    "final_summary": "final_summary.json",
+    "final_orders": "final_orders.json.gz",
+    "validation": "validation.json",
+    "batch_admission": "batch_admission.json",
+    "field_contract": "field_contract.json",
+    "research_field_contract": "research_field_contract.json",
+    "quality_review_metadata": "quality_review_metadata.json"
+  },
+  "additional_tables": [],
+  "validation": {
+    "status": "passed",
+    "objects": 3513,
+    "annotations": 3222,
+    "ready_coordinate_objects": 3384,
+    "confirmed_orders": 1382,
+    "research_images": 261,
+    "reference_only_images": 2,
+    "comment_occurrences": 32462,
+    "unresolved_comment_occurrences": 1,
+    "checks": [
+      "完整配对",
+      "周期平均x及y不变",
+      "Matterport数组源点身份",
+      "确认环绑定",
+      "人员/GT/图片引用",
+      "清洗及研究表字段一致",
+      "交叉表ID及计数",
+      "评论来源覆盖"
+    ],
+    "limitation": "机器一致性验证，不宣称所有标注人工确认或方法可计算；人工未决和未知来源继续保留。"
+  },
+  "consumer_rule": "load_current_bundle默认当前合同入口；旧manifest可显式载入复现。",
+  "privacy": "含原始评论和内部身份，仅本地分析；不是可直接公开的数据包。",
+  "effective_input_revision": "confirmed_coordinate_repair_v1_20261018",
+  "validation_scope": "完整当前快照；保留已确认数值修复，重评可计算性，既有资格和参考候选不改。",
+  "effective_validation_report": "quality_update_validation_20261010.json",
+  "order_update_revision": "difficulty_orders_20261010_v1",
+  "source_baseline": "analysis_results/research_input_20261017/manifest.json",
+  "data_release": "v1"
+}

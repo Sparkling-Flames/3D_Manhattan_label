@@ -8,6 +8,22 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 
 
+def apply_difficulty_overrides(records, overrides=None):
+    """仅叠加已确认难度；冻结评分、参考、资格和历史快照不回写。"""
+    if overrides is None:
+        path = ROOT/'research/difficulty/difficulty_user_revision_20261018/RECEIPT.json'
+        overrides = json.loads(path.read_text(encoding='utf-8'))['records']
+    result = copy.deepcopy(records)
+    for row in result:
+        for review in overrides:
+            if row['image_id'] == review['image_id']:
+                if row['current_class'] not in (review['old_class'], review['new_class']):
+                    raise ValueError('difficulty_review_source_drift:' + row['image_id'])
+                row['current_class'] = review['new_class']
+                row['conditional_difficulty'] = review['new_class']
+    return result
+
+
 def _index(rows, key):
     result = {r[key]: r for r in rows}
     if len(result) != len(rows): raise ValueError('duplicate_context_' + key)
@@ -155,6 +171,30 @@ def load_scored_context(bundle, source=None):
     def rows(key):
         with (ROOT/metadata[key]).open(encoding='utf-8-sig',newline='') as stream:return list(csv.DictReader(stream))
     metadata=read(source)
-    return build_scored_context(bundle,read(ROOT/metadata['difficulty_records']),read(ROOT/metadata['reference_catalog']),
-        rows('full_inventory_with_metric_eligibility'),rows('all_pre_score_bindings'),
-        rows('recommended_qualified_scores'),metadata)
+    quality, bindings = rows('full_inventory_with_metric_eligibility'), rows('all_pre_score_bindings')
+    revision = bundle['manifest'].get('effective_input_revision')
+    if revision == 'confirmed_coordinate_repair_v1_20261018':
+        delta_root = ROOT/'research/data/processed_input_review_20261018'
+        with (delta_root/'quality_delta.csv').open(encoding='utf-8-sig',newline='') as stream:
+            delta = _index(list(csv.DictReader(stream)), 'object_id')
+        reassessment = _index(read(delta_root/'quality_reassessment.json'), 'object_id')
+        objects = _index(bundle['data']['objects'], 'object_id')
+        corrected = _index(read(delta_root/'affected_objects.json')['objects'], 'object_id')
+        if set(delta) != set(reassessment) or set(delta) != set(corrected):
+            raise ValueError('processed_input_quality_delta_population_mismatch')
+        for oid in delta:
+            if objects[oid]['points_1024x512'] != corrected[oid]['points_1024x512']:
+                raise ValueError('processed_input_quality_delta_geometry_mismatch:'+oid)
+        quality = [delta.get(row['object_id'],row) for row in quality]
+        bindings = [dict(reassessment[row['object_id']]['binding'],
+                         target_binding_unique=reassessment[row['object_id']]['policy']['target_binding_unique'])
+                    if row['object_id'] in reassessment else row for row in bindings]
+    result = build_scored_context(bundle,read(ROOT/metadata['difficulty_records']),read(ROOT/metadata['reference_catalog']),
+        quality, bindings, rows('recommended_qualified_scores'),metadata)
+    result['input_revision'] = revision
+    result['difficulty_records'] = apply_difficulty_overrides(result['difficulty_records'])
+    result['difficulty_pointer'] = dict(version='difficulty_user_revision_20261018',
+        details='research/difficulty/difficulty_user_revision_20261018/current_261.json')
+    if revision == 'confirmed_coordinate_repair_v1_20261018':
+        result['score_context_delta'] = 'research/data/processed_input_review_20261018/quality_delta.csv'
+    return result

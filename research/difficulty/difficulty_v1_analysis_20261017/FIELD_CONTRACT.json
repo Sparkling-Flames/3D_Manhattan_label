@@ -1,0 +1,13 @@
+{
+  "record_ledger": "one row per canonical object_id; 3222 full inventory, no score imputation",
+  "strata_summary": "axis x condition x stratum; quality_use_filter defines scored subset; inventory always full group",
+  "worker_pairs": "same worker in both strata; different images and task mix; no causal difficulty effect",
+  "source_time": "source_active_time_seconds only where time_status usable; task-worker seconds, not target-specific for new batch",
+  "target_time": "target_matched_time_seconds separate, missing preserved",
+  "score": "B8L2 and D10 same quality_usable + reference target + quality_use; D10 changes direction scale only",
+  "low_tail": "p10 only for >=5 scores, p25 otherwise still descriptive; null means insufficient or missing",
+  "computation": "full_computed/floor_only_computed/input_uncomputable/pending_target partition inventory; quality exclusion separate",
+  "scene": "doorway and OOS crossed; doorway_status and oos_subtype retained as separate axes; unknown not forced negative",
+  "group_weight": "answer mean, image-equal mean, worker-equal mean separately; per-person pairs worker-equal",
+  "fusion": "Frozen104 ordinary Manual pools at k3/4/6, unchanged312 rows; current final publication status tracked by FUSION_STATUS; doorway independently fixed17/15 and high-k panels see doorway/FIELD_CONTRACT.json"
+}

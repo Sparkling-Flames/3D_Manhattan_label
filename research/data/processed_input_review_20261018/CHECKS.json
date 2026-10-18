@@ -1,0 +1,55 @@
+{
+  "old_annotations_compared": 3152,
+  "current_annotations": 3222,
+  "historical_edit_or_proposal_records": 24,
+  "initialization_coordinate_records": 2,
+  "pairing_deleted_records": 3,
+  "point_review_receipts_replayed": 14,
+  "order_receipts_replayed": 3,
+  "revision": "confirmed_coordinate_repair_v1_20261018",
+  "affected_objects": 1,
+  "changed_object_ids": [
+    "8ffe08f072e2b12e"
+  ],
+  "bundle_validation": {
+    "status": "passed",
+    "objects": 3513,
+    "annotations": 3222,
+    "ready_coordinate_objects": 3384,
+    "confirmed_orders": 1382,
+    "research_images": 261,
+    "reference_only_images": 2,
+    "comment_occurrences": 32462,
+    "unresolved_comment_occurrences": 1,
+    "checks": [
+      "完整配对",
+      "周期平均x及y不变",
+      "Matterport数组源点身份",
+      "确认环绑定",
+      "人员/GT/图片引用",
+      "清洗及研究表字段一致",
+      "交叉表ID及计数",
+      "评论来源覆盖"
+    ],
+    "limitation": "机器一致性验证，不宣称所有标注人工确认或方法可计算；人工未决和未知来源继续保留。"
+  },
+  "historical_files_written": false,
+  "original_exports_opened": false,
+  "effective_source_references_changed": false,
+  "quality_usable_added": 0,
+  "quality_usable_removed": 0,
+  "quality_usable_total": 1911,
+  "full_computed_total": 2775,
+  "coordinate_policy": "explicit applied changed_points preserved; old one-sided x override remains superseded by shared-x policy",
+  "effective_edit_audit_records": 43,
+  "effective_edit_status_counts": {
+    "current_effective_edit_preserved": 24,
+    "recorded_no_current_edit": 11,
+    "historical_not_accepted_missing_effective_mapping": 4,
+    "superseded_single_x_move_by_shared_x_policy": 1,
+    "proposal_not_applied": 2,
+    "revoked_deletion_original_points_restored": 1
+  },
+  "historical_crosscheck_records": 24,
+  "history_crosscheck_applied_deletions_preserved": true
+}
