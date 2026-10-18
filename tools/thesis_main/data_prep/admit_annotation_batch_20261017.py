@@ -185,7 +185,7 @@ def apply_bundle(bundle, batch, pair_maps, identity_mapping):
     return result
 
 
-def _summaries(bundle, new_objects, new_image_ids):
+def _summaries(bundle, new_objects, new_image_ids, revision=REVISION, order_change='user_confirmed_new_batch_order'):
     data, research, final = bundle['data'], bundle['research'], bundle['final_summary']
     anns = [o for o in data['objects'] if o['object_kind'] == 'annotation']
     rows = research['annotations']; touched = {o['image_id'] for o in new_objects}
@@ -224,8 +224,8 @@ def _summaries(bundle, new_objects, new_image_ids):
         doorway=dict(Counter(im['doorway_status'] for im in research['images'])),
         both=sum(im['oos_status']=='confirmed' and im['doorway_status'] in {'difficult', 'annotatable'}
                  for im in research['images']))
-    final.setdefault('batches', []).append(dict(batch=REVISION, objects=len(new_objects),
-        images=len(touched), changes={'user_confirmed_new_batch_order': len(new_objects)}))
+    final.setdefault('batches', []).append(dict(batch=revision, objects=len(new_objects),
+        images=len(touched), changes={order_change: len(new_objects)}))
     new_ids = {o['object_id'] for o in new_objects}
     for name, table in research['cross_tables'].items():
         if not table: continue
@@ -245,4 +245,4 @@ def _summaries(bundle, new_objects, new_image_ids):
             existing = next((r for r in table if r['dimensions'] == dims), None)
             if existing is None: table.append(dict(dimensions=dims, n=len(ids), ids=ids))
             else: existing['ids'].extend(ids); existing['n'] = len(existing['ids'])
-    bundle['annotation_batch_revision'] = REVISION
+    bundle['annotation_batch_revision'] = revision

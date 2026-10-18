@@ -1,0 +1,2644 @@
+{
+  "data_release": "v2",
+  "analysis_revision": "v2_integrated_statistics_20261019_r1",
+  "requirements": [
+    {
+      "section": "一、总体库存与数据覆盖",
+      "requirement": "图片总数、作答总数、独立标注人员数、建筑数。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "一、总体库存与数据覆盖",
+      "requirement": "已有房间分类、关系组、同房图对的数量。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "一、总体库存与数据覆盖",
+      "requirement": "每张图片的空间候选数、当前采用空间及参考。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "列出声明参考/候选ID、当前目标与每目标作答；ID可能含版本别名，未把版本ID数冒称独立物理空间数。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "image_reference_registry.csv",
+        "image_context_registry.csv",
+        "image_target.csv"
+      ]
+    },
+    {
+      "section": "一、总体库存与数据覆盖",
+      "requirement": "Manual、Semi，以及不同来源批次各有多少记录。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "一、总体库存与数据覆盖",
+      "requirement": "简单、中等、困难、待定各有多少图片和作答。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "一、总体库存与数据覆盖",
+      "requirement": "普通、门洞交界、OOS、其它特殊情况的图片与作答数量，以及标签交集。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "一、总体库存与数据覆盖",
+      "requirement": "可标、勉强可标、不可标、尚未裁定的覆盖情况，沿用实际已有标签。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "一、总体库存与数据覆盖",
+      "requirement": "清洗前、清洗后、独立作答可用、质量分析可用的数量。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "一、总体库存与数据覆盖",
+      "requirement": "完整可计算、仅底面可计算、无法计算、目标待绑定的数量。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "一、总体库存与数据覆盖",
+      "requirement": "有来源活动时间、同目标时间、初始化、参考、融合过程的覆盖数量。",
+      "status": "computed",
+      "remaining_type": "v2_fusion_not_run",
+      "detail": "活动/目标时间、初始化及参考覆盖已计；v2融合真实过程覆盖为0，已有v1过程仅历史入口。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [
+        "v2_fusion_not_run"
+      ],
+      "files": [
+        "time_provenance_coverage.csv",
+        "worker_scope_semi_evidence.csv",
+        "historical_source_index.csv"
+      ]
+    },
+    {
+      "section": "一、总体库存与数据覆盖",
+      "requirement": "每张图有多少有效独立人员；哪些只有1—2人、暂不纳入分析。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "一、总体库存与数据覆盖",
+      "requirement": "当前数据版本、参考／资格版本、评分版本及分析修订。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "二、逐份作答的完整明细",
+      "requirement": "作答ID、人员ID、图片ID、建筑及已有房间关系。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "二、逐份作答的完整明细",
+      "requirement": "Manual／Semi、来源批次。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "二、逐份作答的完整明细",
+      "requirement": "图片难度、门洞／OOS、可标性。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "二、逐份作答的完整明细",
+      "requirement": "选择或归属哪个空间，使用哪个参考，归属依据及不确定性。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "二、逐份作答的完整明细",
+      "requirement": "原图、原标注、预处理后标注、参考叠线、BEV及可用的3D。",
+      "status": "source_missing",
+      "remaining_type": "two_photos_missing_and_ui_owned_by_coordinator",
+      "detail": "逐份点、处理/参考证据已连接，由统筹接原图/叠线/BEV/可用3D展示；原图Release仍有2图缺口，不能宣称本模块完成所有视觉核验。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "two_photos_missing_and_ui_owned_by_coordinator"
+      ],
+      "files": [
+        "shared_records.csv"
+      ]
+    },
+    {
+      "section": "二、逐份作答的完整明细",
+      "requirement": "点对数量、配对／环序状态、裁切或冗余点处理记录。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "二、逐份作答的完整明细",
+      "requirement": "B8L2、D10、同参考3D IoU及实际质量分项。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "二、逐份作答的完整明细",
+      "requirement": "来源活动时间、同目标时间及缺失原因。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "二、逐份作答的完整明细",
+      "requirement": "是否保留、是否可计算、是否用于主质量分析、是否仅诊断。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "二、逐份作答的完整明细",
+      "requirement": "排除／暂缓原因、人工comment和审核记录。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "二、逐份作答的完整明细",
+      "requirement": "Semi实际初始化、是否修改、错误是否纠正及其证据。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "二、逐份作答的完整明细",
+      "requirement": "所属融合成员集合、路径或作答簇——有结果时能够反向追踪。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "历史真实结果有明确入口；本轮只算v2可行人员池，不将旧成员/轨迹/簇冒充v2。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv"
+      ]
+    },
+    {
+      "section": "三、逐图片统计",
+      "requirement": "每图原始作答数、有效独立人员数、质量可用数、被排除数。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "三、逐图片统计",
+      "requirement": "Manual／Semi分别有多少人和作答。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "三、逐图片统计",
+      "requirement": "平均质量、中位质量、分布、波动和低分尾部。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "三、逐图片统计",
+      "requirement": "B8L2与D10的差异，以及各质量分项的分布。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "当前质量合格同参考集合的分项及3D IoU关系已算，诊断值另列；典型案例尚需统筹可视复核。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "quality_component_associations.csv",
+        "shared_records.csv"
+      ]
+    },
+    {
+      "section": "三、逐图片统计",
+      "requirement": "平均／中位标注时间、时间分布及时间缺失数。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "三、逐图片统计",
+      "requirement": "人员之间原始作答的差异程度。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "三、逐图片统计",
+      "requirement": "不同点对数量、不同结构表达和不同空间选择的分布。",
+      "status": "not_run",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "点对数分布和原答底面差异已算；变点数结构对应距离/分簇未运行，不设0。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "point_structure_distribution.csv",
+        "raw_disagreement_summary.csv"
+      ]
+    },
+    {
+      "section": "三、逐图片统计",
+      "requirement": "每个空间分别有多少作答、多少人员、质量与时间如何。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "三、逐图片统计",
+      "requirement": "有多少不配对、点数不足、缺顶界、参考缺失或其它不可计算情况。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "三、逐图片统计",
+      "requirement": "当前是否具备融合、人数曲线和同房比较条件。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "三、逐图片统计",
+      "requirement": "对应哪些人员、各自表现如何。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "三、逐图片统计",
+      "requirement": "当前补标人数缺口及已有补人计划。",
+      "status": "source_missing",
+      "remaining_type": "gold_or_target_definition_missing",
+      "detail": "已有可判机会单列；不能把未知当正确/严重错误，v2补标目标数未固定。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "gold_or_target_definition_missing"
+      ],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "四、逐人员统计",
+      "requirement": "总提交量、保留量、可评分量、排除量。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "四、逐人员统计",
+      "requirement": "标了多少独立图片、建筑、房间／关系组。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "四、逐人员统计",
+      "requirement": "不同难度、场景、空间及Manual／Semi的任务构成。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "四、逐人员统计",
+      "requirement": "**绝对质量**：平均数、中位数、分布、低尾、波动。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "四、逐人员统计",
+      "requirement": "**相对质量**：调整任务组成后的表现；与绝对均分的排序差异。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "四、逐人员统计",
+      "requirement": "各质量分项：主要问题来自范围、方向、底边还是高度。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "当前质量合格同参考集合的分项及3D IoU关系已算，诊断值另列；典型案例尚需统筹可视复核。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "quality_component_associations.csv",
+        "shared_records.csv"
+      ]
+    },
+    {
+      "section": "四、逐人员统计",
+      "requirement": "平均／中位活动时间、时间波动、缺失量。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "四、逐人员统计",
+      "requirement": "质量与速度的关系：高质量且快、高质量但慢等。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "四、逐人员统计",
+      "requirement": "在简单图、困难图、门洞等条件下是否表现不同。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "四、逐人员统计",
+      "requirement": "同一人在同房不同视角上的质量与时间差异。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "四、逐人员统计",
+      "requirement": "Semi修改行为、确认错误的纠正／残留情况、净改善。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "四、逐人员统计",
+      "requirement": "scope／适用性判断的行为和可判断机会。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "四、逐人员统计",
+      "requirement": "被剔除的数量、比例、具体原因及证据。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "四、逐人员统计",
+      "requirement": "清洗后质量较好，是否仍伴随偶发严重失误。",
+      "status": "source_missing",
+      "remaining_type": "independent_severity_gold_missing",
+      "detail": "已有清洗计数、历史明确个人错误及候选原因可与当前质量联查；没有新增独立严重度gold，不能由文本候选推总体严重失误率。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "independent_severity_gold_missing"
+      ],
+      "files": [
+        "worker_inventory.csv",
+        "worker_scope_semi_evidence.csv",
+        "cleaning_diagnostics.csv"
+      ]
+    },
+    {
+      "section": "四、逐人员统计",
+      "requirement": "每项画像的支持图片数、建筑数、审核机会数和未知数。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "四、逐人员统计",
+      "requirement": "B8L2／D10下画像、分组和排序是否变化。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "五、必须有的交叉统计",
+      "requirement": "| 人员 × 难度 | 每人各难度的数量、质量、时间、波动、低尾、失败率 |",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "五、必须有的交叉统计",
+      "requirement": "| 人员 × 场景 | 普通、门洞、OOS等表现与可计算／排除情况 |",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "五、必须有的交叉统计",
+      "requirement": "| 人员 × Manual／Semi | 最终质量、时间、覆盖与错误证据 |",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "五、必须有的交叉统计",
+      "requirement": "| 人员 × 房间／同房视角 | 同一人在相关视角上的表现差异 |",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "已有直接分组/图对中的逐人质量和两类时间差已算，未知房间关系不推断。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "direct_pair_people.csv",
+        "room_view_worker_matrix.csv"
+      ]
+    },
+    {
+      "section": "五、必须有的交叉统计",
+      "requirement": "| 人员 × 空间目标 | 选择倾向、参考归属及质量 |",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "五、必须有的交叉统计",
+      "requirement": "| 图片 × 人员 | 原始作答、分数、时间与资格的完整矩阵 |",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "五、必须有的交叉统计",
+      "requirement": "| 难度 × 场景 | 困难普通图与门洞图分别怎样，标签有哪些交集 |",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "五、必须有的交叉统计",
+      "requirement": "| 难度 × Manual／Semi | 各层质量与时间，不用不同图片池直接解释辅助收益 |",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "五、必须有的交叉统计",
+      "requirement": "| 房间 × 视角 × 人员 | 同房均值之外，具体哪些人一致、哪些人差异大 |",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "已有直接分组/图对中的逐人质量和两类时间差已算，未知房间关系不推断。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "direct_pair_people.csv",
+        "room_view_worker_matrix.csv"
+      ]
+    },
+    {
+      "section": "六、逐房间、关系组和同房图对",
+      "requirement": "沿用你已经整理的全部既有分类。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "六、逐房间、关系组和同房图对",
+      "requirement": "每组有哪些图片、视角、空间目标和人员。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "六、逐房间、关系组和同房图对",
+      "requirement": "哪些是同房、范围可比、范围不同、关系未知。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "六、逐房间、关系组和同房图对",
+      "requirement": "每个视角的质量均值、分布、时间与有效人数。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "六、逐房间、关系组和同房图对",
+      "requirement": "同房两视角的平均质量差异。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "六、逐房间、关系组和同房图对",
+      "requirement": "共同人员数量，以及双侧质量／时间都可用的人数。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "六、逐房间、关系组和同房图对",
+      "requirement": "**同一个人**在两视角的质量差、时间差和相对表现。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "已有直接分组/图对中的逐人质量和两类时间差已算，未知房间关系不推断。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "direct_pair_people.csv",
+        "room_view_worker_matrix.csv"
+      ]
+    },
+    {
+      "section": "六、逐房间、关系组和同房图对",
+      "requirement": "均值接近是否掩盖不同人员正负差异的抵消。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "六、逐房间、关系组和同房图对",
+      "requirement": "同房表现与已有可用对照之间的区别。",
+      "status": "not_run",
+      "remaining_type": "matched_control_analysis_not_run_v2",
+      "detail": "同房双侧质量/时间及权重已算；v2同建筑可用对照匹配尚未重做，旧对照不得移植。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "matched_control_analysis_not_run_v2"
+      ],
+      "files": [
+        "direct_pair_summary.csv",
+        "room_weighting_sensitivity.csv"
+      ]
+    },
+    {
+      "section": "六、逐房间、关系组和同房图对",
+      "requirement": "同房两侧使用相同成员、相同进入顺序的融合过程。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "历史真实结果有明确入口；本轮只算v2可行人员池，不将旧成员/轨迹/簇冒充v2。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv"
+      ]
+    },
+    {
+      "section": "六、逐房间、关系组和同房图对",
+      "requirement": "两侧过程的质量差距、稳定性、完整率是否相似。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "历史真实结果有明确入口；本轮只算v2可行人员池，不将旧成员/轨迹/簇冒充v2。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv"
+      ]
+    },
+    {
+      "section": "六、逐房间、关系组和同房图对",
+      "requirement": "图对等权、关系组等权、建筑等权时结论是否变化。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "七、图片难度与特殊场景",
+      "requirement": "简单／中等／困难各有多少图、多少人、多少作答。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "七、图片难度与特殊场景",
+      "requirement": "各类平均质量、分布、低尾与离散度。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "七、图片难度与特殊场景",
+      "requirement": "各类标注时间、人员间差异和不可计算比例。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "七、图片难度与特殊场景",
+      "requirement": "同一人员在不同难度上的变化。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "七、图片难度与特殊场景",
+      "requirement": "是否有人总体一般，但在难图上相对表现更好。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "七、图片难度与特殊场景",
+      "requirement": "各类图片的原作答分歧与不同标法分布。",
+      "status": "not_run",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "点对数分布和原答底面差异已算；变点数结构对应距离/分簇未运行，不设0。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "point_structure_distribution.csv",
+        "raw_disagreement_summary.csv"
+      ]
+    },
+    {
+      "section": "七、图片难度与特殊场景",
+      "requirement": "各类图片的融合人数过程、稳定性、完整率与参考差异。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "历史真实结果有明确入口；本轮只算v2可行人员池，不将旧成员/轨迹/簇冒充v2。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv"
+      ]
+    },
+    {
+      "section": "七、图片难度与特殊场景",
+      "requirement": "门洞按资格评价质量，并统计难标、无法计算和排除。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "七、图片难度与特殊场景",
+      "requirement": "OOS保留可算诊断值和失败原因，不能混进可信GT的主质量排名。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "七、图片难度与特殊场景",
+      "requirement": "记录难度标签是否参考过实际作答。",
+      "status": "source_missing",
+      "remaining_type": "label_outcome_exposure_history_not_fully_reconstructed",
+      "detail": "沿用既有难度，不依据本次分数改标签；未重建全部标签的作答暴露历史。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "label_outcome_exposure_history_not_fully_reconstructed"
+      ],
+      "files": [
+        "image_context_registry.csv"
+      ]
+    },
+    {
+      "section": "八、时间与效率",
+      "requirement": "逐作答、逐人、逐图、逐难度、逐场景、逐房间的活动时间。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "八、时间与效率",
+      "requirement": "时间均值、中位数、离散程度及较长耗时情况。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "八、时间与效率",
+      "requirement": "原尺度时间与可比任务中的相对快慢。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "八、时间与效率",
+      "requirement": "同等质量下谁更快；相似时间下质量如何。",
+      "status": "not_run",
+      "remaining_type": "conditional_efficiency_comparison_not_run",
+      "detail": "逐份Q/时间和按来源分层的同图同参考相对时间已备；固定Q效用下的效率匹配或模型比较尚未做。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "conditional_efficiency_comparison_not_run"
+      ],
+      "files": [
+        "shared_records.csv",
+        "worker_relative_quality.csv"
+      ]
+    },
+    {
+      "section": "八、时间与效率",
+      "requirement": "高质量组内部快／慢人员的差异。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "八、时间与效率",
+      "requirement": "Manual与Semi各自的时间表现。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "八、时间与效率",
+      "requirement": "同房两视角的共同人员时间差。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "八、时间与效率",
+      "requirement": "人员组合与人数增长的累计时间成本，有完整来源时才统计。",
+      "status": "not_run",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "相关成员/时间底表已备；尚无本轮v2实际组合产物，不能由个人均值模拟共识。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "八、时间与效率",
+      "requirement": "来源任务时间与同目标时间分开。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "八、时间与效率",
+      "requirement": "缺失数量、来源不兼容及不能归属具体目标的情况。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "九、Semi初始化、修改与纠错",
+      "requirement": "Semi总量、初始化能够可靠绑定的数量。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "九、Semi初始化、修改与纠错",
+      "requirement": "初始化可评分、最终可评分、两者同条件可比较的数量。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "九、Semi初始化、修改与纠错",
+      "requirement": "初始化质量、最终质量及净变化。",
+      "status": "source_missing",
+      "remaining_type": "new_semi_initialization_geometry_missing",
+      "detail": "已接入与当前最终几何/参考匹配的历史兼容净改善；新Semi只有报告标记，没有逐份实际初始化几何，不能计算其净改善。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "new_semi_initialization_geometry_missing"
+      ],
+      "files": [
+        "shared_records.csv",
+        "worker_scope_semi_evidence.csv"
+      ]
+    },
+    {
+      "section": "九、Semi初始化、修改与纠错",
+      "requirement": "修改／未修改的数量、比例及修改幅度。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "九、Semi初始化、修改与纠错",
+      "requirement": "初始预标注是否存在已确认错误。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "九、Semi初始化、修改与纠错",
+      "requirement": "已确认错误是否被纠正、仍残留，或结果未知。",
+      "status": "source_missing",
+      "remaining_type": "gold_or_target_definition_missing",
+      "detail": "已有可判机会单列；不能把未知当正确/严重错误，v2补标目标数未固定。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "gold_or_target_definition_missing"
+      ],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "九、Semi初始化、修改与纠错",
+      "requirement": "修改了其它部分但没有纠正已标错误的情况。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "九、Semi初始化、修改与纠错",
+      "requirement": "原本正确的预标注保持不动，与错误预标注未改分开。",
+      "status": "source_missing",
+      "remaining_type": "gold_or_target_definition_missing",
+      "detail": "已有可判机会单列；不能把未知当正确/严重错误，v2补标目标数未固定。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "gold_or_target_definition_missing"
+      ],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "九、Semi初始化、修改与纠错",
+      "requirement": "按人员、图片、难度、错误类型和初始严重程度分层。",
+      "status": "source_missing",
+      "remaining_type": "gold_or_target_definition_missing",
+      "detail": "已有可判机会单列；不能把未知当正确/严重错误，v2补标目标数未固定。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "gold_or_target_definition_missing"
+      ],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "九、Semi初始化、修改与纠错",
+      "requirement": "trap与自然初始化分别统计。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "九、Semi初始化、修改与纠错",
+      "requirement": "修改行为、净改善和耗时的关系。",
+      "status": "source_missing",
+      "remaining_type": "new_semi_initialization_geometry_missing",
+      "detail": "已接入与当前最终几何/参考匹配的历史兼容净改善；新Semi只有报告标记，没有逐份实际初始化几何，不能计算其净改善。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "new_semi_initialization_geometry_missing"
+      ],
+      "files": [
+        "shared_records.csv",
+        "worker_scope_semi_evidence.csv"
+      ]
+    },
+    {
+      "section": "九、Semi初始化、修改与纠错",
+      "requirement": "未完成或不兼容的净改善保留缺失。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十、scope、适用性与空间选择",
+      "requirement": "是否使用scope、使用频率及人员差异。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十、scope、适用性与空间选择",
+      "requirement": "在已有明确人工裁定的机会中，判断是否合适。",
+      "status": "source_missing",
+      "remaining_type": "gold_or_target_definition_missing",
+      "detail": "已有可判机会单列；不能把未知当正确/严重错误，v2补标目标数未固定。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "gold_or_target_definition_missing"
+      ],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十、scope、适用性与空间选择",
+      "requirement": "明确可标任务的误拒、明确不可标任务的误收。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十、scope、适用性与空间选择",
+      "requirement": "多个合理空间中选择哪一个，各空间人数占比。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十、scope、适用性与空间选择",
+      "requirement": "不同人员、难度和场景下的空间选择倾向。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十、scope、适用性与空间选择",
+      "requirement": "空间归属明确、算法兜底、待定的数量。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十、scope、适用性与空间选择",
+      "requirement": "不同空间对应的质量、时间及融合差异。",
+      "status": "not_run",
+      "remaining_type": "fusion_experiment_not_run_v2",
+      "detail": "空间绑定的质量、来源时间和目标时间分布已算；各空间融合差异未运行。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "fusion_experiment_not_run_v2"
+      ],
+      "files": [
+        "image_target.csv",
+        "independent_pool_inventory.csv"
+      ]
+    },
+    {
+      "section": "十、scope、适用性与空间选择",
+      "requirement": "裁切点、冗余点和未知顶界对可评价范围的影响。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十一、剔除、严重失误与缺失",
+      "requirement": "每人、每图、每类场景的排除数量与比例。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十一、剔除、严重失误与缺失",
+      "requirement": "明确个人严重错误。",
+      "status": "source_missing",
+      "remaining_type": "independent_severity_gold_missing",
+      "detail": "已有清洗计数、历史明确个人错误及候选原因可与当前质量联查；没有新增独立严重度gold，不能由文本候选推总体严重失误率。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "independent_severity_gold_missing"
+      ],
+      "files": [
+        "worker_inventory.csv",
+        "worker_scope_semi_evidence.csv",
+        "cleaning_diagnostics.csv"
+      ]
+    },
+    {
+      "section": "十一、剔除、严重失误与缺失",
+      "requirement": "历史整人排除与逐份审核排除。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十一、剔除、严重失误与缺失",
+      "requirement": "GT错误、参考不完整、未绑定、暂缓。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十一、剔除、严重失误与缺失",
+      "requirement": "点数不足、上下不配对、环序／几何问题。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十一、剔除、严重失误与缺失",
+      "requirement": "重复、非独立借点等来源问题。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十一、剔除、严重失误与缺失",
+      "requirement": "OOS仅诊断、人数不足等分析用途限制。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十一、剔除、严重失误与缺失",
+      "requirement": "每项原因的交集，避免重复计数。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十一、剔除、严重失误与缺失",
+      "requirement": "已审核数、可判断机会数、原因未知数。",
+      "status": "source_missing",
+      "remaining_type": "unified_review_opportunity_and_severity_gold_missing",
+      "detail": "scope/Semi的明确机会与逐份源裁决/归因已有；全库存统一审核机会和独立严重度分母未建立，不能把保留或未排除视为确认无错。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "unified_review_opportunity_and_severity_gold_missing"
+      ],
+      "files": [
+        "worker_scope_semi_evidence.csv",
+        "shared_records.csv"
+      ]
+    },
+    {
+      "section": "十一、剔除、严重失误与缺失",
+      "requirement": "清洗前后覆盖和质量描述的差异；不能把被排除记录全部填零。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十一、剔除、严重失误与缺失",
+      "requirement": "Semi错误残留与剔除是否指向同一事件，避免重复惩罚。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十二、融合共识与真实人数过程",
+      "requirement": "每图、每条件的有效人员池。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "已有人员画像与可行池支持可查；v2新融合、组合/替换/顺序实验未运行。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十二、融合共识与真实人数过程",
+      "requirement": "全员自动融合终点；人工辅助结果另列。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "已有人员画像与可行池支持可查；v2新融合、组合/替换/顺序实验未运行。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十二、融合共识与真实人数过程",
+      "requirement": "实际成员名单、进入顺序、每个k的子集。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "已有人员画像与可行池支持可查；v2新融合、组合/替换/顺序实验未运行。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十二、融合共识与真实人数过程",
+      "requirement": "当前成员原答分歧 **R**。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "已有人员画像与可行池支持可查；v2新融合、组合/替换/顺序实验未运行。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十二、融合共识与真实人数过程",
+      "requirement": "同图同k改变成员后，融合结果的波动 **V**。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "已有人员画像与可行池支持可查；v2新融合、组合/替换/顺序实验未运行。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十二、融合共识与真实人数过程",
+      "requirement": "相邻人数节点的几何、结构、连接和投票变化。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "已有人员画像与可行池支持可查；v2新融合、组合/替换/顺序实验未运行。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十二、融合共识与真实人数过程",
+      "requirement": "融合的B8L2、D10、适用参考差异及分项。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "已有人员画像与可行池支持可查；v2新融合、组合/替换/顺序实验未运行。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十二、融合共识与真实人数过程",
+      "requirement": "完整率、可评分率、失败率与失败原因。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "已有人员画像与可行池支持可查；v2新融合、组合/替换/顺序实验未运行。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十二、融合共识与真实人数过程",
+      "requirement": "必要细节、墙线、角点和连接保留情况。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "已有人员画像与可行池支持可查；v2新融合、组合/替换/顺序实验未运行。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十二、融合共识与真实人数过程",
+      "requirement": "每条路径、唯一成员集合、独立图片和建筑的覆盖数。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "已有人员画像与可行池支持可查；v2新融合、组合/替换/顺序实验未运行。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十二、融合共识与真实人数过程",
+      "requirement": "有真实来源支持的累计时间成本。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "已有人员画像与可行池支持可查；v2新融合、组合/替换/顺序实验未运行。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十二、融合共识与真实人数过程",
+      "requirement": "按难度、门洞／OOS、同房关系分别看。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "已有人员画像与可行池支持可查；v2新融合、组合/替换/顺序实验未运行。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十二、融合共识与真实人数过程",
+      "requirement": "原图、成员作答、融合和参考的联动展示。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "已有人员画像与可行池支持可查；v2新融合、组合/替换/顺序实验未运行。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十三、人员分类、组合与替换",
+      "requirement": "连续Q／T画像及已有分组的人员名单、支持量。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "复用当前v2人员描述画像/候选分组及支持；不是经楼外验证的稳定人员类型，阈值未冻结。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "personnel_profiles.csv",
+        "personnel_groups.csv"
+      ]
+    },
+    {
+      "section": "十三、人员分类、组合与替换",
+      "requirement": "相同图片、相同人数下，不同质量构成的比较。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "已有人员画像与可行池支持可查；v2新融合、组合/替换/顺序实验未运行。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十三、人员分类、组合与替换",
+      "requirement": "高质量人中，快／慢人员构成的比较。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "已有人员画像与可行池支持可查；v2新融合、组合/替换/顺序实验未运行。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十三、人员分类、组合与替换",
+      "requirement": "相同类别构成下，更换具体成员的比较。",
+      "status": "not_run",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "相关成员/时间底表已备；尚无本轮v2实际组合产物，不能由个人均值模拟共识。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十三、人员分类、组合与替换",
+      "requirement": "加入一个人、替换一个人，对共识产生多大变化。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "已有人员画像与可行池支持可查；v2新融合、组合/替换/顺序实验未运行。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十三、人员分类、组合与替换",
+      "requirement": "随机组合与画像驱动组合的对照。",
+      "status": "not_run",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "相关成员/时间底表已备；尚无本轮v2实际组合产物，不能由个人均值模拟共识。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十三、人员分类、组合与替换",
+      "requirement": "不同进入顺序的过程差异。",
+      "status": "not_run",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "相关成员/时间底表已备；尚无本轮v2实际组合产物，不能由个人均值模拟共识。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十三、人员分类、组合与替换",
+      "requirement": "组合的质量、稳定性、完整率、失败和时间成本。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "已有人员画像与可行池支持可查；v2新融合、组合/替换/顺序实验未运行。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十三、人员分类、组合与替换",
+      "requirement": "每张图是否有足够成员支持该种组合。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "已有人员画像与可行池支持可查；v2新融合、组合/替换/顺序实验未运行。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十三、人员分类、组合与替换",
+      "requirement": "目标建筑外形成的画像与名单，避免用目标成绩给自己选人。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "已有人员画像与可行池支持可查；v2新融合、组合/替换/顺序实验未运行。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十三、人员分类、组合与替换",
+      "requirement": "“某类优先进入”与“全部由某类构成”的团队分开。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "已有人员画像与可行池支持可查；v2新融合、组合/替换/顺序实验未运行。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十三、人员分类、组合与替换",
+      "requirement": "B8L2／D10下分组变化及重选人员后的变化。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "已有人员画像与可行池支持可查；v2新融合、组合/替换/顺序实验未运行。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv",
+        "personnel_profiles.csv"
+      ]
+    },
+    {
+      "section": "十四、指标敏感性与版本比较",
+      "requirement": "同一作答在B8L2／D10下的分数差、排序变化。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十四、指标敏感性与版本比较",
+      "requirement": "各分项与同参考3D IoU的关系、典型差异案例。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "当前质量合格同参考集合的分项及3D IoU关系已算，诊断值另列；典型案例尚需统筹可视复核。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "quality_component_associations.csv",
+        "shared_records.csv"
+      ]
+    },
+    {
+      "section": "十四、指标敏感性与版本比较",
+      "requirement": "人员均分、相对画像、分类是否变化。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十四、指标敏感性与版本比较",
+      "requirement": "图片／难度／房间结论是否变化。",
+      "status": "not_run",
+      "remaining_type": "matched_version_comparison_not_run",
+      "detail": "v2各层分布及B8L2/D10固定记录敏感性已算；未完成全量新旧相同输入/参考/资格的结论对照。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "matched_version_comparison_not_run"
+      ],
+      "files": [
+        "fixed_record_metric_sensitivity.csv",
+        "v1_v2_common_membership.csv"
+      ]
+    },
+    {
+      "section": "十四、指标敏感性与版本比较",
+      "requirement": "**固定成员和几何，只换评分**的变化。",
+      "status": "not_run",
+      "remaining_type": "matched_geometry_experiment_not_run_v2",
+      "detail": "B8L2-D10固定作答敏感性已算；历史算法/团队几何严格版本对照不在本轮新增。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "matched_geometry_experiment_not_run_v2"
+      ],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十四、指标敏感性与版本比较",
+      "requirement": "**换分类后重新选人，固定评价指标**的变化。",
+      "status": "not_run",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "相关成员/时间底表已备；尚无本轮v2实际组合产物，不能由个人均值模拟共识。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十四、指标敏感性与版本比较",
+      "requirement": "历史WQ、A10、C8或新方案需要比较时，使用同输入／参考／资格。",
+      "status": "not_run",
+      "remaining_type": "matched_geometry_experiment_not_run_v2",
+      "detail": "B8L2-D10固定作答敏感性已算；历史算法/团队几何严格版本对照不在本轮新增。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "matched_geometry_experiment_not_run_v2"
+      ],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十四、指标敏感性与版本比较",
+      "requirement": "当前v1中的分析修订与未来数据v2分开。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十四、指标敏感性与版本比较",
+      "requirement": "未来v2：共同旧作答、原图加人、新人新图、画像迁移与重新拟合分别比较。",
+      "status": "not_run",
+      "remaining_type": "migration_and_refit_experiments_not_run",
+      "detail": "已列共同旧3222和新增7217及资格变化；共同几何/参考桥未重新认证，画像迁移与重新拟合比较未完成。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "migration_and_refit_experiments_not_run"
+      ],
+      "files": [
+        "v1_v2_common_membership.csv",
+        "cohort_condition_summary.csv"
+      ]
+    },
+    {
+      "section": "十五、后来追加的探索项——保留，但不能当已定稿方法",
+      "requirement": "用同图、同条件、同目标内的**排名百分位**辅助相对质量描述。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十五、后来追加的探索项——保留，但不能当已定稿方法",
+      "requirement": "快／中／慢时间阈值及每人的快慢比例；具体阈值未冻结。",
+      "status": "not_run",
+      "remaining_type": "method_not_frozen",
+      "detail": "既有v2探索候选阈值可查，不当正式冻结方案。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "method_not_frozen"
+      ],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十五、后来追加的探索项——保留，但不能当已定稿方法",
+      "requirement": "全量人员×难度画像，寻找“更适合难图”的人员线索。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    },
+    {
+      "section": "十五、后来追加的探索项——保留，但不能当已定稿方法",
+      "requirement": "作答分簇：每图簇数、各簇人数、成员、点对数及结构差异。",
+      "status": "not_run",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "点对数分布和原答底面差异已算；变点数结构对应距离/分簇未运行，不设0。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "point_structure_distribution.csv",
+        "raw_disagreement_summary.csv"
+      ]
+    },
+    {
+      "section": "十五、后来追加的探索项——保留，但不能当已定稿方法",
+      "requirement": "不同簇构成对融合的影响，以及同簇换人的影响。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "历史真实结果有明确入口；本轮只算v2可行人员池，不将旧成员/轨迹/簇冒充v2。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv"
+      ]
+    },
+    {
+      "section": "十五、后来追加的探索项——保留，但不能当已定稿方法",
+      "requirement": "从作答簇反向研究人员规律。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "历史真实结果有明确入口；本轮只算v2可行人员池，不将旧成员/轨迹/簇冒充v2。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv"
+      ]
+    },
+    {
+      "section": "十五、后来追加的探索项——保留，但不能当已定稿方法",
+      "requirement": "整簇原图叠线、不同方法并排及成员开关，逐对审查只是可选。",
+      "status": "historical_only",
+      "remaining_type": "experiment_not_run_v2",
+      "detail": "历史真实结果有明确入口；本轮只算v2可行人员池，不将旧成员/轨迹/簇冒充v2。",
+      "completed_parts": [
+        "可用基础记录/分布已留在所列分表"
+      ],
+      "remaining_parts": [
+        "experiment_not_run_v2"
+      ],
+      "files": [
+        "historical_source_index.csv",
+        "independent_pool_inventory.csv"
+      ]
+    },
+    {
+      "section": "十五、后来追加的探索项——保留，但不能当已定稿方法",
+      "requirement": "将Semi、scope、质量波动、结构简化倾向等作为人员细分候选。",
+      "status": "computed",
+      "remaining_type": null,
+      "detail": "本轮按现有资格、直接关系和条件计算；均值/中位数/分位/离散/缺失及独立图人楼支持见分表。",
+      "completed_parts": [
+        "实际计算子项见所列分表"
+      ],
+      "remaining_parts": [],
+      "files": [
+        "tables.json",
+        "FIELD_CONTRACT.json"
+      ]
+    }
+  ],
+  "status_definitions": {
+    "computed": "this run actual data/summary, bounded by listed missing evidence",
+    "historical_only": "existing v1/older sources, not v2 trajectories/clusters",
+    "source_missing": "missing gold/source/declared quota, not filled",
+    "not_run": "data may exist; experiment/method comparison not executed"
+  },
+  "evidence_join": "joined_by_object_id",
+  "all_15_sections": true
+}

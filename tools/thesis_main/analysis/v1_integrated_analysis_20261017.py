@@ -773,7 +773,7 @@ R来自融合线程保存的当前成员原答平均两两底面对称差，归�
 
 def run():
     OUT.mkdir(parents=True,exist_ok=True)
-    release=read(ROOT/'research/data/releases/CURRENT.json');assert release['data_release']=='v1'
+    release=dict(data_release='v1',manifest='research/data/releases/v1/RELEASE.json')
     release_manifest=read(ROOT/release['manifest']);cross=read(COMMON/'CROSS_MODULE_INPUTS.json')
     r=pd.read_csv(STATS/'record_lookup.csv');q=pd.read_csv(ROOT/cross['full_inventory_with_metric_eligibility'])
     assert r.object_id.is_unique and set(r.object_id)==set(q.object_id)

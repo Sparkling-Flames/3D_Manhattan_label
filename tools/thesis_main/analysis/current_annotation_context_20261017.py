@@ -1,4 +1,4 @@
-"""将冻结旧评分与已登记新增库存连接；新增作答仅建空分数、待绑定上下文。"""
+"""按数据版本连接评分上下文；v1历史与v2全量评分严格分开。"""
 import copy
 import csv
 import json
@@ -100,8 +100,8 @@ def load_current_context(bundle):
 def build_scored_context(bundle, difficulty_records, reference_catalog, quality_records, binding_records,
                          qualified_records, metadata):
     """读取完整共同评分；严格核对身份、用途掩码和两个指标的共同分母。"""
-    if (metadata['version'], metadata['primary_metric'], metadata['parallel_metric']) != (
-            'quality_b8l2_d10_20261017_v2', 'B8L2', 'D10'):
+    if metadata['version'] not in ('quality_b8l2_d10_20261017_v2','quality_workers_v2_20261019') or (
+            metadata['primary_metric'],metadata['parallel_metric']) != ('B8L2','D10'):
         raise ValueError('unsupported_shared_quality_context')
     quality_records=copy.deepcopy(quality_records); binding_records=copy.deepcopy(binding_records)
     objects=_index([o for o in bundle['data']['objects'] if o['object_kind']=='annotation'],'object_id')
@@ -166,11 +166,17 @@ def build_scored_context(bundle, difficulty_records, reference_catalog, quality_
 
 def load_scored_context(bundle, source=None):
     """显式新版消费者入口；共同评分生成器继续使用load_current_context，避免自读循环。"""
+    if bundle['manifest'].get('data_release')=='v2' and source is None:
+        source=ROOT/'research/quality/quality_workers_v2_20261019/CROSS_MODULE_INPUTS.json'
+        if not source.exists():
+            raise ValueError('v2_scores_not_run: explicit v2 score context required; use a v1 manifest to reproduce v1 scores')
     source=Path(source) if source else ROOT/'research/quality/quality_b8l2_d10_20261017/CROSS_MODULE_INPUTS.json'
     def read(path):return json.loads(path.read_text(encoding='utf-8-sig'))
     def rows(key):
         with (ROOT/metadata[key]).open(encoding='utf-8-sig',newline='') as stream:return list(csv.DictReader(stream))
     metadata=read(source)
+    if (bundle['manifest'].get('data_release')=='v2') != (metadata['version']=='quality_workers_v2_20261019'):
+        raise ValueError('quality_data_release_mismatch')
     quality, bindings = rows('full_inventory_with_metric_eligibility'), rows('all_pre_score_bindings')
     revision = bundle['manifest'].get('effective_input_revision')
     if revision == 'confirmed_coordinate_repair_v1_20261018':

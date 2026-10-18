@@ -1,16 +1,19 @@
 /* Read-only ERP / BEV / 3D. Projection conventions follow the existing gallery. */
 window.WorkbenchGeometry=(()=>{
 const C=window.WorkbenchCore,esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const colors={reference:'#7c3aed',answer:'#087f8c',fusion:'#b45309'};
+const colors={reference:'#7c3aed',answer:'#087f8c',fusion:'#b45309',raw:'#dc2626',received:'#e87914',initial:'#4f46e5'};
 function mount(host,image,answer,reference,extra=null){
  if(!host)return;
  let mode='erp',yaw=-35,pitch=25,zoom=1;
  const layers=[{id:'reference',label:'查看参考',points:reference?.points,floor:reference?.floor,confirmed:true},
   {id:'answer',label:'个人作答',points:answer?.points,raw:answer?.raw_points,confirmed:!!answer?.points},
-  {id:'fusion',label:'已保存融合',points:extra?.points,floor:extra?.footprint,confirmed:extra?.connected===true}]
- .filter(l=>l.points||l.floor||l.raw).map(l=>({...l,visible:true}));
+  {id:'fusion',label:'已保存融合',points:extra?.points,floor:extra?.footprint,confirmed:extra?.connected===true},
+  {id:'raw',label:'原始导出散点',raw:answer?.raw_points,visible:false},
+  {id:'received',label:'本轮预处理前散点',raw:answer?.before_preprocessing_points,visible:false},
+  {id:'initial',label:'有绑定证据的Semi初始化',points:answer?.evidence?.semi_evidence?.initialization_points,confirmed:true,visible:false}]
+ .filter(l=>l.points||l.floor||l.raw).map(l=>({...l,visible:l.visible??true}));
  host.className='geometry';
- host.innerHTML=`<div class="geom-controls"><label>视图 <select data-view aria-label="几何视图"><option value="erp">原图叠线</option><option value="bev">BEV俯视</option><option value="3d">3D线框</option></select></label><button data-full>放大／全屏</button><button data-reset>重置视角</button><label><input type="checkbox" data-labels>点号（0基）</label><label><input type="checkbox" data-top checked>顶界</label><label>叠线 <input data-opacity type="range" min=".2" max="1" step=".1" value="1" aria-label="叠线不透明度"></label></div><div class="legend">${layers.map(l=>`<label><input type="checkbox" data-layer="${l.id}" checked><i style="border-color:${colors[l.id]};border-top-style:${l.id==='reference'?'dashed':l.id==='fusion'?'dotted':'solid'}"></i>${l.label}</label>`).join('')}</div><div class="geom-photo">${image?.photo?`<img src="${esc(image.photo)}" alt="${esc(image.image_code)} 原始全景" loading="lazy">`:'<div class="placeholder">原图资产未接入或缺失</div>'}<svg viewBox="0 0 1024 512" role="img" aria-label="原图标注与空间参考叠线"></svg></div><canvas class="geom-canvas" hidden tabindex="0" aria-label="几何线框；方向键旋转，加减键缩放"></canvas><div class="geostatus">相机高度单位h，非实测米。${!reference?.points&&reference?.floor?'参考仅底面；不生成未知顶界。 ':''}${answer&&!answer.points?'作答仅原始散点或坐标不可用；不连接为确认环。 ':''}${extra&&!extra.connected?'融合环序未获确认，仅显示保存点及已有底面。 ':''}${answer?.geometry_binding_reasons?.length?'坐标隔离原因：'+esc(answer.geometry_binding_reasons.join('、'))+'。 ':''}点号来自各自数组，不等于跨作答墙角身份。切换参考仅供查看，不改变评分绑定。</div>`;
+ host.innerHTML=`<div class="geom-controls"><label>视图 <select data-view aria-label="几何视图"><option value="erp">原图叠线</option><option value="bev">BEV俯视</option><option value="3d">3D线框</option></select></label><button data-full>放大／全屏</button><button data-reset>重置视角</button><label><input type="checkbox" data-labels>点号（0基）</label><label><input type="checkbox" data-top checked>顶界</label><label>叠线 <input data-opacity type="range" min=".2" max="1" step=".1" value="1" aria-label="叠线不透明度"></label></div><div class="legend">${layers.map(l=>`<label><input type="checkbox" data-layer="${l.id}" ${l.visible?'checked':''}><i style="border-color:${colors[l.id]};border-top-style:${l.id==='reference'?'dashed':l.id==='fusion'?'dotted':'solid'}"></i>${l.label}</label>`).join('')}</div><div class="geom-photo">${image?.photo?`<img src="${esc(image.photo)}" alt="${esc(image.image_code)} 原始全景" loading="lazy">`:'<div class="placeholder">原图资产未接入或缺失</div>'}<svg viewBox="0 0 1024 512" role="img" aria-label="原图标注与空间参考叠线"></svg></div><canvas class="geom-canvas" hidden tabindex="0" aria-label="几何线框；方向键旋转，加减键缩放"></canvas><div class="geostatus">相机高度单位h，非实测米。${answer?.order_status?'作答环序状态：'+esc(answer.order_status)+'；连线沿用冻结输入，不表示本轮人工重审。 ' :''}${!reference?.points&&reference?.floor?'参考仅底面；不生成未知顶界。 ':''}${answer&&!answer.points?'作答仅原始散点或坐标不可用；不连接为确认环。 ':''}${extra&&!extra.connected?'融合环序未获确认，仅显示保存点及已有底面。 ':''}${answer?.geometry_binding_reasons?.length?'坐标隔离原因：'+esc(answer.geometry_binding_reasons.join('、'))+'。 ':''}点号来自各自数组，不等于跨作答墙角身份。切换参考仅供查看，不改变评分绑定。</div>`;
  const photo=host.querySelector('.geom-photo'),svg=host.querySelector('svg'),canvas=host.querySelector('canvas');
  const projectERP=([x,y,z])=>[((Math.atan2(x,-z)/(2*Math.PI)+.5)*1024+1024)%1024,(.5-Math.atan2(y,Math.hypot(x,z))/Math.PI)*512];
  function segments(l){

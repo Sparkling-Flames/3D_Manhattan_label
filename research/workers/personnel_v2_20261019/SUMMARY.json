@@ -1,0 +1,26 @@
+{
+  "quality_rows": 7302,
+  "quality_images": 196,
+  "quality_workers": 60,
+  "main_rows": 5719,
+  "main_workers": 60,
+  "main_images": 177,
+  "difficulty_candidates": {
+    "no_clear_preference": 35,
+    "broadly_high": 7,
+    "hard_relative_drop": 6,
+    "hard_advantage": 5,
+    "hard_relative_improvement": 5,
+    "insufficient": 1,
+    "nonhard_advantage": 1
+  },
+  "classification": "exploratory_descriptive_not_validated_worker_types",
+  "relative_q": "Same image, condition and reference: (average ascending rank - 1)/(peer workers - 1); then worker mean.",
+  "thresholds": "Exploratory Q thirds; support >=6 tasks, >=3 buildings. T median <60 / 60-180 / >=180 seconds; sensitivity 90/240.",
+  "semi": "Known erroneous initialization unchanged / known erroneous initialization opportunities; edited is not proven corrected.",
+  "scope": "Retained records with independently bound, semantically compatible historical task gold only. Image OOS tags are not person gold; response tendency separate.",
+  "caveats": [
+    "Time provenance differs between cohorts; source time is not necessarily target-matched time.",
+    "No v2 fusion or exchangeability claim; difficulty preferences are descriptive with leave-building stability ranges."
+  ]
+}

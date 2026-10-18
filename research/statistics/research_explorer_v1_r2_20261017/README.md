@@ -1,3 +1,21 @@
+# 全景标注研究台 · 当前v2，v1 r2历史保留
+
+2026-10-19：默认v2，已接10439作答、7302正式质量及完整综合统计/证据接口。当前方法与限制见[总说明](../../../docs/thesis_main/v2数据研究台与Pro推进_20261019.md)。切换版本不会混合分母；v1已有融合及簇实验仍为历史。
+
+## v2离线构建
+
+main中的匿名审计 `records.json.gz`、综合 `tables.json.gz` 和 `pro_personnel_v2_20261019/analysis_context.json.gz` 已足够生成v2研究台。仓库根运行：
+
+```powershell
+python -m tools.thesis_main.analysis.build_research_workbench_v2_20261019
+```
+
+双击 `index.html` 即可，JSON/JS分片支持file协议。生成的 `v2-data/`、`v2-resources/` 留本地，不重复提交大体积展开载荷。需要原图时，按[图片清单](../../workers/pro_personnel_v2_20261019/IMAGE_INDEX.csv)将Release图片恢复至source_path；2张未列入旧Release的图片有仓库预览。浏览器验收临时HTTP不属于运行依赖。
+
+当前作答页支持原始点/本轮处理前散点、冻结终稿、实际参考、ERP/BEV/3D及有绑定证据的旧Semi初始图层。未确认环序不冒称已人工确认；新Semi缺初始坐标不画假初始化。scope只计语义相容裁定机会，图级OOS不作个人gold。
+
+以下为v1及早期阶段记录，历史分母和待办不代表当前v2状态。
+
 # 全景标注研究工作台 · 数据v1 / 消费r2
 
 2026-10-18最新：图片标签采用uNb9QFRL6hY-01中等修订；r2聚合统计仍保留旧快照。Semi、scope等新分类想法仅记录于[讨论文档](../../../docs/thesis_main/人员分类与作答分簇讨论记录_20261018.md)，尚未执行新分类。
@@ -22,7 +40,7 @@ python -m tools.thesis_main.analysis.build_research_workbench_20261017
 
 该命令打包现有261图及现有人数过程为 `workbench-data/` 本地JSON/JS分片，不重跑统计或融合；原图仍引用仓库资产，不复制全库。目录局部忽略。仅有消费JSON而缺少本地私有原图／保存几何时，保留记录并说明缺失。主数据仍按原r2构建／重放说明准备；此命令不代替原始研究构建。
 
-版本入口由 `dataset-config.js` 配置；v2目前不可选。换数据源将重载并重置筛选，笔记以快照分开。离线页面只展示构建时核对的上游状态，不声称实时最新。补人计划只读。
+版本入口由 `dataset-config.js` 配置；该历史阶段v2尚不可选（现已接入，见本文开头）。换数据源将重载并重置筛选，笔记以快照分开。离线页面只展示构建时核对的上游状态，不声称实时最新。补人计划只读。
 
 旧 `explorer.html?revision=v1r2` 链接自动进入统一工作台；`legacy` 参数仅保留排查旧r2前端的入口。旧195表另有自身来源；缺少其派生数据时仍明确报缺失。
 
