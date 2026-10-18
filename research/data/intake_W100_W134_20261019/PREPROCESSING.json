@@ -1,0 +1,30 @@
+{
+  "schema": "v2_new_batch_preprocessing_v1",
+  "method": "shared_x_periodic_shortest_arc_v1",
+  "implementation": "tools/thesis_main/analysis/shared_x_reanalysis_20260922.py:shared_x",
+  "base_effective_manifest": "research/data/processed_input_review_20261018/manifest.json",
+  "coordinates": "research/data/intake_W100_W134_20261019/preprocessed_annotations.json.gz",
+  "source_files": [
+    "research/data/intake_W100_W134_20261019/received/annotations_label_studio_W100-W134.min.json",
+    "research/data/intake_W100_W134_20261019/received/excluded_label_studio_W100-W134.min.json"
+  ],
+  "records": 7217,
+  "ready": 7213,
+  "retained_ready": 7199,
+  "excluded_ready": 14,
+  "retained_coordinates_changed": 6138,
+  "blocked_annotation_ids": [
+    104807,
+    104810,
+    104814,
+    104825
+  ],
+  "invariants": [
+    "y unchanged",
+    "point count unchanged",
+    "provided pairing and boundary preserved",
+    "shared x equal",
+    "idempotent"
+  ],
+  "qualification": "Preprocessing ready is not scoring or voting eligibility; exclusions and geometry review flags remain."
+}

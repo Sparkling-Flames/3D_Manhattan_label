@@ -1,7 +1,9 @@
 {
-  "data_release": "v1",
-  "manifest": "research/data/releases/v1/RELEASE.json",
-  "rule": "Advance only after a separately verified new release; never rewrite old release payload.",
+  "data_release": "v2",
+  "manifest": "research/data/releases/v2/RELEASE.json",
   "policy": "research/data/releases/VERSION_POLICY.md",
-  "next_release_status": "awaiting_future_new_annotations_and_user_admission"
+  "analysis_status": "quality_scored_personnel_exploratory_fusion_not_rerun",
+  "rule": "The public release manifest locates anonymized source and derived data. Full comment-rich analysis inputs remain local; historical v1 outputs remain frozen.",
+  "score_context": "research/quality/quality_workers_v2_20261019/CROSS_MODULE_INPUTS.json",
+  "personnel_summary": "research/workers/personnel_v2_20261019/SUMMARY.json"
 }

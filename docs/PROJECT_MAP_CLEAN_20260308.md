@@ -1,5 +1,9 @@
 # HOHONET 项目地图
 
+v2公开数据：`research/data/intake_W100_W134_20261019/`与`research/data/releases/v2/`；接入工具`tools/thesis_main/data_prep/admit_workers_v2_20261019.py`。公开层包含匿名最小记录、预处理坐标与核验台账；含自由文本和来源身份字段的完整分析输入仅留本机。
+
+新增v2收件：`research/data/intake_W100_W134_20261019/`（匿名最小JSON、预处理坐标与台账进入仓库）；版本库存`research/data/releases/v2/`；工具`tools/thesis_main/data_prep/intake_workers_v2_20261019.py`。
+
 
 
 
@@ -251,3 +255,7 @@
 
 
 Pro本地独立交接：[人员分类QT难度与反向分簇包](../research/workers/pro_personnel_handoff_20261018/README.md)；打包工具`tools/thesis_main/analysis/build_pro_personnel_handoff_20261018.py`，本次不更新GitHub。
+
+- [v2质量、34份绑定复核与人员细类](thesis_main/v2质量与人员细类接续_20261019.md)：新工具在 tools/thesis_main/analysis/，本轮结果在 research/quality/quality_workers_v2_20261019 与 research/workers/personnel_v2_20261019。
+
+- [v2完整研究台、数据与Pro推进](thesis_main/v2数据研究台与Pro推进_20261019.md)：统计/逐份证据在 research/statistics/v2_*_20261019；[Pro提示词](thesis_main/Pro_v2人员细类与反向分簇研究提示词_20261019.md)保留难度细类与反向分簇两线。

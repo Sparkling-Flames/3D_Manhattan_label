@@ -1,0 +1,68 @@
+{
+  "schema": "new_worker_intake_20261019_v1",
+  "source_confirmation": "user confirms new human annotations, not simulated; fields user processed",
+  "retained": 7203,
+  "excluded": 14,
+  "new_workers": 35,
+  "new_images": 259,
+  "annotation_ids_unique": true,
+  "retained_person_image_condition_unique": true,
+  "all_image_id_codes_match": true,
+  "excluded_with_retained_same_task": 14,
+  "retained_geometry_status": {
+    "valid": 7128,
+    "below_four_pairs": 71,
+    "pairing_unverified": 2,
+    "odd_unpaired_points": 2
+  },
+  "retained_geometry_flags": {
+    "fewer_than_four_pairs_review": 71,
+    "top_bottom_order_conflict": 2,
+    "incomplete_or_repeated_pairing": 2
+  },
+  "unequal_pair_x_records": 6140,
+  "preprocessing": {
+    "schema": "v2_new_batch_preprocessing_v1",
+    "method": "shared_x_periodic_shortest_arc_v1",
+    "implementation": "tools/thesis_main/analysis/shared_x_reanalysis_20260922.py:shared_x",
+    "base_effective_manifest": "research/data/processed_input_review_20261018/manifest.json",
+    "coordinates": "research/data/intake_W100_W134_20261019/preprocessed_annotations.json.gz",
+    "source_files": [
+      "research/data/intake_W100_W134_20261019/received/annotations_label_studio_W100-W134.min.json",
+      "research/data/intake_W100_W134_20261019/received/excluded_label_studio_W100-W134.min.json"
+    ],
+    "records": 7217,
+    "ready": 7213,
+    "retained_ready": 7199,
+    "excluded_ready": 14,
+    "retained_coordinates_changed": 6138,
+    "blocked_annotation_ids": [
+      104807,
+      104810,
+      104814,
+      104825
+    ],
+    "invariants": [
+      "y unchanged",
+      "point count unchanged",
+      "provided pairing and boundary preserved",
+      "shared x equal",
+      "idempotent"
+    ],
+    "qualification": "Preprocessing ready is not scoring or voting eligibility; exclusions and geometry review flags remain."
+  },
+  "new_batch_missing_existing_images": [
+    "2t7WUuJeko7-02",
+    "2t7WUuJeko7-03"
+  ],
+  "merged_inventory_records": 10439,
+  "merged_workers": 62,
+  "merged_images": 261,
+  "missing_provenance": [
+    "source project/task/submission timestamps and worker identity mapping",
+    "active-time collection rule and raw log linkage",
+    "semi initial geometry/reference and reviewed error evidence linkage",
+    "explicit final reference/scope binding for scoring"
+  ],
+  "note": "Missing provenance does not discard user-processed data. Inventory admitted; scoring and time-source equivalence not certified."
+}

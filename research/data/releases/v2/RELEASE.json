@@ -1,0 +1,38 @@
+{
+  "schema": "research_data_release_inventory_v2",
+  "data_release": "v2",
+  "created_on": "2026-10-19",
+  "status": "quality_scored_personnel_exploratory",
+  "membership": "inventory.csv",
+  "base_release": "research/data/releases/v1/RELEASE.json",
+  "base_effective_manifest": "research/data/processed_input_review_20261018/manifest.json",
+  "new_batch": "research/data/intake_W100_W134_20261019",
+  "source_files": [
+    "research/data/intake_W100_W134_20261019/received/annotations_label_studio_W100-W134.min.json",
+    "research/data/intake_W100_W134_20261019/received/excluded_label_studio_W100-W134.min.json"
+  ],
+  "new_batch_preprocessing_manifest": "research/data/intake_W100_W134_20261019/PREPROCESSING.json",
+  "counts": {
+    "inventory": 10439,
+    "v1": 3222,
+    "new_retained": 7203,
+    "new_excluded": 14,
+    "workers": 62,
+    "images": 261
+  },
+  "qualification": "User exclusions preserved. New retained rows are not automatically quality usable or independent votes. Existing v1 exclusions remain.",
+  "analysis_status": "quality_scored_personnel_exploratory_fusion_not_rerun",
+  "public_inputs": [
+    "research/data/intake_W100_W134_20261019/received/annotations_label_studio_W100-W134.min.json",
+    "research/data/intake_W100_W134_20261019/received/excluded_label_studio_W100-W134.min.json",
+    "research/data/intake_W100_W134_20261019/preprocessed_annotations.json.gz",
+    "research/data/intake_W100_W134_20261019/record_audit.csv",
+    "research/data/intake_W100_W134_20261019/pool_inventory.csv",
+    "research/data/intake_W100_W134_20261019/AUDIT.json",
+    "research/data/intake_W100_W134_20261019/PREPROCESSING.json",
+    "research/data/releases/v2/inventory.csv"
+  ],
+  "privacy_boundary": "Full Label Studio exports, identity mappings, and comment-rich analysis bundle remain local; public source files contain anonymized worker IDs only.",
+  "score_context": "research/quality/quality_workers_v2_20261019/CROSS_MODULE_INPUTS.json",
+  "personnel_summary": "research/workers/personnel_v2_20261019/SUMMARY.json"
+}
