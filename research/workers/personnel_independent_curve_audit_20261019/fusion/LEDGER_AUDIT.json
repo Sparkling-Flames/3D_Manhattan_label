@@ -1,0 +1,162 @@
+{
+  "coverage": {
+    "requests": 167581,
+    "result_rows": 167581,
+    "unique_request_ids": 167581,
+    "unique_teams": 144253,
+    "quality_available": 162825,
+    "N2_deferred": 1624,
+    "other_quality_missing": 3132,
+    "families": {
+      "fixed_background": 33970,
+      "uniform_prefix": 29208,
+      "profile_policy": 26063,
+      "profile_composition": 24228,
+      "cluster_oracle_prefix": 22876,
+      "cluster_oracle": 15056,
+      "independent_random_team": 14764,
+      "behavior_policy": 1416
+    },
+    "checks": {
+      "bad_members": 0,
+      "result_members": 0,
+      "fold_target_mismatch": 0,
+      "bad_background": 0
+    },
+    "unique_team_complete": 139730,
+    "score_status": {
+      "complete_conditional": 162825,
+      "no_connection": 2042,
+      "two_person_deferred": 1624,
+      "below_four": 1044,
+      "invalid_floor": 46
+    },
+    "background_nested_check": {
+      "pairs": 2484,
+      "nested": 34,
+      "description": "same pool/draw across increasing k; backgrounds are independently sampled, not designed as paths"
+    }
+  },
+  "comparison_integrity": {
+    "replacements": {
+      "rows": 370490,
+      "quality_comparable": 356187,
+      "both_complete": 356187,
+      "mismatch_pool_id": 0,
+      "score_missing_mismatch": 0,
+      "team_pointer_mismatch": 0,
+      "shared_workers_mismatch": 0,
+      "not_exact_one_replacement": 0,
+      "background_mismatch": 0,
+      "joint_stability_mismatch": 0,
+      "max_abs_delta_error": 2.930988785010413e-14
+    },
+    "prefix_transitions": {
+      "rows": 50460,
+      "quality_comparable": 45924,
+      "both_complete": 45924,
+      "mismatch_pool_id": 0,
+      "score_missing_mismatch": 0,
+      "team_pointer_mismatch": 0,
+      "shared_workers_mismatch": 0,
+      "not_nested": 0,
+      "joint_stability_mismatch": 0,
+      "max_abs_delta_error": 2.930988785010413e-14
+    },
+    "random_same_k": {
+      "rows": 181089,
+      "quality_comparable": 170295,
+      "both_complete": 170295,
+      "mismatch_pool_id": 0,
+      "score_missing_mismatch": 0,
+      "team_pointer_mismatch": 0,
+      "shared_workers_mismatch": 0,
+      "joint_stability_mismatch": 0,
+      "max_abs_delta_error": 2.930988785010413e-14
+    },
+    "composition_comparisons": {
+      "rows": 176285,
+      "quality_comparable": 172397,
+      "both_complete": 172397,
+      "mismatch_pool_id": 0,
+      "score_missing_mismatch": 0,
+      "team_pointer_mismatch": 0,
+      "shared_workers_mismatch": 0,
+      "joint_stability_mismatch": 0,
+      "max_abs_delta_error": 2.930988785010413e-14
+    },
+    "policy_comparisons": {
+      "rows": 383307,
+      "quality_comparable": 376438,
+      "both_complete": 376438,
+      "mismatch_pool_id": 0,
+      "score_missing_mismatch": 0,
+      "team_pointer_mismatch": 0,
+      "shared_workers_mismatch": 0,
+      "joint_stability_mismatch": 0,
+      "max_abs_delta_error": 2.930988785010413e-14
+    }
+  },
+  "k16_same_composition": [
+    {
+      "family": "cluster_oracle_comparison",
+      "scheme": null,
+      "threshold": 9.0,
+      "attempts": 4861,
+      "quality_comparable": 4833,
+      "images": 170,
+      "buildings": 22,
+      "abs_B8L2_change_building_equal": 2.6055771199697264,
+      "joint_geometric_stable_building_equal": 0.6465536567397084,
+      "overlap_building_equal": 0.6204764263612164
+    },
+    {
+      "family": "cluster_oracle_comparison",
+      "scheme": null,
+      "threshold": 12.0,
+      "attempts": 6403,
+      "quality_comparable": 6356,
+      "images": 170,
+      "buildings": 22,
+      "abs_B8L2_change_building_equal": 3.110668893682592,
+      "joint_geometric_stable_building_equal": 0.5866266312539707,
+      "overlap_building_equal": 0.5886106809047846
+    },
+    {
+      "family": "profile_composition_comparison",
+      "scheme": "Q2",
+      "threshold": null,
+      "attempts": 2922,
+      "quality_comparable": 2856,
+      "images": 168,
+      "buildings": 22,
+      "abs_B8L2_change_building_equal": 3.3486462677656847,
+      "joint_geometric_stable_building_equal": 0.6496236494489183,
+      "overlap_building_equal": 0.7212894997254472
+    },
+    {
+      "family": "profile_composition_comparison",
+      "scheme": "QT",
+      "threshold": null,
+      "attempts": 2571,
+      "quality_comparable": 2533,
+      "images": 168,
+      "buildings": 22,
+      "abs_B8L2_change_building_equal": 3.0484947870779964,
+      "joint_geometric_stable_building_equal": 0.6475863295654961,
+      "overlap_building_equal": 0.7557652784339194
+    },
+    {
+      "family": "profile_composition_comparison",
+      "scheme": "QTD_dtype",
+      "threshold": null,
+      "attempts": 2233,
+      "quality_comparable": 2201,
+      "images": 168,
+      "buildings": 22,
+      "abs_B8L2_change_building_equal": 2.503231264312854,
+      "joint_geometric_stable_building_equal": 0.6962444114527447,
+      "overlap_building_equal": 0.7987530527439382
+    }
+  ]
+}

@@ -1,0 +1,235 @@
+{
+  "semi": {
+    "v1": {
+      "semi_records": 574,
+      "exact_bound": 574,
+      "opportunities": 156,
+      "opportunity_edit_states": {
+        "True": 131,
+        "False": 25
+      },
+      "opportunity_correction_states": {
+        "None": 131,
+        "False": 25
+      },
+      "known_unchanged": 25,
+      "all_edit_states": {
+        "True": 427,
+        "False": 147
+      },
+      "initial_coordinates_available": 574
+    },
+    "new": {
+      "semi_records": 525,
+      "exact_bound": 0,
+      "opportunities": 284,
+      "opportunity_edit_states": {
+        "True": 239,
+        "False": 45
+      },
+      "opportunity_correction_states": {
+        "None": 284
+      },
+      "known_unchanged": 45,
+      "all_edit_states": {
+        "True": 331,
+        "False": 194
+      },
+      "initial_coordinates_available": 0
+    }
+  },
+  "scope": {
+    "responses": 9845,
+    "opportunities": 93,
+    "retained_opportunities": 89,
+    "gold": {
+      "in_scope": 93
+    },
+    "correct": {
+      "True": 93
+    },
+    "unknown_correctness": 10346
+  },
+  "exclusion": {
+    "candidate_count": 25,
+    "legacy_count": 10,
+    "legacy_subset_of_candidates": true,
+    "review_ids_equal_candidates": true,
+    "text_review_states": {
+      "specific_defect_explicit_in_retained_review_text": 22,
+      "explicit_reviewer_gross_deviation_not_calibrated_severity": 2,
+      "scope_context_attribution_pending": 1
+    },
+    "candidate_reason_codes": {
+      "specific_personal_invalid_geometry": 16,
+      "specific_personal_gross_deformation": 2,
+      "specific_personal_wrong_feature": 7
+    },
+    "severity_gold": false
+  },
+  "dedup": {
+    "inventory_unique_object_ids": 10439,
+    "adverse_unique_objects": 95,
+    "adverse_label_occurrences": 105
+  },
+  "boolean_field_types": {
+    "semi_evidence.exact_initialization_bound": {
+      "bool:False": 9865,
+      "bool:True": 574
+    },
+    "semi_evidence.confirmed_error_opportunity": {
+      "bool:False": 10283,
+      "bool:True": 156
+    },
+    "semi_evidence.reported_error_opportunity": {
+      "bool:False": 10155,
+      "bool:True": 284
+    },
+    "semi_evidence.known_error_unchanged": {
+      "NoneType:None": 9865,
+      "bool:False": 549,
+      "bool:True": 25
+    },
+    "semi_evidence.reported_known_error_unchanged": {
+      "NoneType:None": 9914,
+      "bool:False": 480,
+      "bool:True": 45
+    },
+    "semi_evidence.edited": {
+      "NoneType:None": 9340,
+      "bool:True": 758,
+      "bool:False": 341
+    },
+    "semi_evidence.corrected_confirmed": {
+      "NoneType:None": 10414,
+      "bool:False": 25
+    },
+    "scope_evidence.judgement_opportunity": {
+      "bool:False": 10346,
+      "bool:True": 93
+    },
+    "scope_evidence.correct": {
+      "NoneType:None": 10346,
+      "bool:True": 93
+    },
+    "exclusion_attribution.specific_person_error_candidate": {
+      "bool:False": 10414,
+      "bool:True": 25
+    },
+    "exclusion_attribution.legacy_explicit_person_error": {
+      "bool:False": 10429,
+      "bool:True": 10
+    }
+  },
+  "fold_recount": {
+    "rows": 1363,
+    "mismatches": [],
+    "mixed_origin_opportunity_folds": []
+  },
+  "issues_and_limits": [
+    "The 22+2+1 split is a text-category coding with one hard-coded ambiguous object and two reason-code cases; it is not independent visual severity gold.",
+    "Old exact-initialization and new self-reported opportunity levels are separate and not comparable correction-success rates.",
+    "Building-held-out behavior features use historical records excluding the target building, with >=3 opportunities and >=2 buildings; this is retrospective building transfer, not a temporal prospective validation.",
+    "Scope has no observed incorrect/OOS compatible-gold opportunities, so it cannot identify OOS false acceptance or differentiate general scope ability.",
+    "Targeted exclusion flags have no random audit denominator; cannot form general personnel penalties or rates.",
+    "No truthy string False found in these frozen JSON indicator fields; behavior selection uses explicit istrue and finite checks. Unknown remains blank/unsupported."
+  ],
+  "actual_csv_boolean_checks": {
+    "audit/semi_records.csv": {
+      "old_confirmed_opportunity": {
+        "dtype": "bool",
+        "python_types": {
+          "bool": 1099
+        },
+        "string_false_count": 0
+      },
+      "new_reported_opportunity": {
+        "dtype": "bool",
+        "python_types": {
+          "bool": 1099
+        },
+        "string_false_count": 0
+      },
+      "initialization_edited": {
+        "dtype": "bool",
+        "python_types": {
+          "bool": 1099
+        },
+        "string_false_count": 0
+      },
+      "old_confirmed_unchanged": {
+        "dtype": "object",
+        "python_types": {
+          "bool": 574,
+          "float": 525
+        },
+        "string_false_count": 0
+      },
+      "new_reported_unchanged": {
+        "dtype": "object",
+        "python_types": {
+          "float": 574,
+          "bool": 525
+        },
+        "string_false_count": 0
+      },
+      "error_specific_corrected_confirmed": {
+        "dtype": "object",
+        "python_types": {
+          "float": 1074,
+          "bool": 25
+        },
+        "string_false_count": 0
+      }
+    },
+    "audit/fold_behavior_profiles.csv": {
+      "supported": {
+        "dtype": "bool",
+        "python_types": {
+          "bool": 1363
+        },
+        "string_false_count": 0
+      }
+    },
+    "profiles/fold_profiles.csv": {
+      "Q_supported": {
+        "dtype": "bool",
+        "python_types": {
+          "bool": 1320
+        },
+        "string_false_count": 0
+      },
+      "T_source_supported": {
+        "dtype": "bool",
+        "python_types": {
+          "bool": 1320
+        },
+        "string_false_count": 0
+      },
+      "difficulty_supported_hard": {
+        "dtype": "bool",
+        "python_types": {
+          "bool": 1320
+        },
+        "string_false_count": 0
+      }
+    }
+  },
+  "prospective_feature_guidance": {
+    "conditionally_usable": [
+      "Prior old exact-initialization error-retention fraction, with observed opportunity denominator/support and source tier retained.",
+      "Prior new reported-error retention fraction as a separate report-based exploratory descriptor, never pooled with old confirmed opportunities."
+    ],
+    "requirements": [
+      "Use only evidence available before a future target assignment; current evidence validates held-out buildings, not timestamps.",
+      "Keep >=3 opportunities and >=2 buildings support rule; unknown remains unsupported, not zero.",
+      "Do not infer editing success from changed coordinates, reported edits, or quality-score improvement."
+    ],
+    "not_supported": [
+      "General correction-success rate: no confirmed successful corrections in the frozen evidence.",
+      "Scope ability or OOS false-acceptance class: compatible adjudications have no negative or OOS examples.",
+      "General severe-error frequency or composite penalty from targeted exclusion evidence."
+    ]
+  },
+  "text_review_independent_read": "All 25 latest comments and retained historical comment lists read. Concrete point-count/pairing/feature wording supports the 22 text-coded category; two deviation comments lack calibrated severity; the one mixed OOS/point-count case appropriately remains attribution-pending."
+}

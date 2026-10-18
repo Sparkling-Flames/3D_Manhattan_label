@@ -1,0 +1,49 @@
+{
+  "checks": {
+    "immutable_hashes": {
+      "fusion/INPUT_SNAPSHOT.json.gz": true,
+      "profiles/fold_profiles.csv": true,
+      "clusters/pair_distances.csv.gz": true
+    },
+    "registration_hash_matches": true,
+    "design_hash_matches": true,
+    "selected_pool_ids_exact": true,
+    "experiments_checked": 261,
+    "requests_checked": 3132,
+    "all_registered_chain_members_match": true,
+    "all_selected_triples_deterministically_reproduced": true,
+    "max_bc_training_Q_difference": 2.99609553274605,
+    "history_min_probability_gap": 0.20274347070416898,
+    "all_three_point_counts_equal_experiments": 182,
+    "bc_equal_point_counts_all": true,
+    "history_pair_task_duplicates": 0
+  },
+  "reviewed_code_sha": "2d5505dc26aaea0eba2eaac398f2b2d57671891e99d9425dd6fe2b1c920cf808",
+  "selection_uses_target_quality_or_affinity": false,
+  "target_information_used": [
+    "known target difficulty",
+    "worker availability",
+    "b/c submitted point counts"
+  ],
+  "training_isolation": "All fold Q/QT/QTD labels exclude entire target building; history pair statistics and difficulty prior also exclude target building. Historical pair labels only are used. Target difficulty is known stratification, not fitted from heldout outcomes.",
+  "aggregation_review": "Within triple near/far contrasts share outgoing a and exact same nested backgrounds; mean contexts within image, mean images within building, bootstrap paired building differences. Methods may have different identities/opportunities and are not directly paired method-v-method.",
+  "failure_review": "ComparisonPool makes joint stability false for incomplete/noncomparable outputs. Both-arm score-complete chains gate continuous metrics. Updated summarize code now asserts exactly four k levels and two arms and reports actual filtered denominators and exclusion counts. Author will rerun updated summary after fusion completion.",
+  "registration_review": "Registration/DESIGN hashes match receipts and deterministic independent selection recreates triples without reading any fusion output. Self-written pre-run receipt alone cannot independently establish timing; parent live execution provenance is required.",
+  "interpretation_limits": [
+    "history same-difficulty is a pair relation, not a validated global class",
+    "selected b/c matches are conditional on submitted point count, not precollection assignment",
+    "neither a versus b/c Q nor all-three point counts are constrained; the two contrasted replacements share a, so b/c matching balances changes",
+    "bootstrap conditions on selected design and trained profiles; no causal intervention or independent new-data validation"
+  ],
+  "issues_reported_to_author": [
+    "Assert exactly four k levels and both contrast arms before reducing chains",
+    "Continuous summary images/experiments should reflect filtered gm and separately report exclusions"
+  ],
+  "status": "design_checks_pass_reporting_code_corrected_execution_pending",
+  "reporting_safeguards_review": {
+    "four_k_chain_and_two_arm_assertions_present": true,
+    "continuous_filtered_denominators_present": true,
+    "supplement_common_context_and_difficulty_strata_reviewed": true,
+    "corrected_summary_execution_pending_at_review": true
+  }
+}

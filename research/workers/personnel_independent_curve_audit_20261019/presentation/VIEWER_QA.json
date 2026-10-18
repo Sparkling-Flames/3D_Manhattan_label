@@ -1,0 +1,1044 @@
+{
+  "qa_kind": "Node jsdom + native @napi-rs/canvas interaction/render verification; not a real browser layout screenshot",
+  "file": "viewer.html",
+  "sha256": "cb28c3762205fc72d61bb54453b5a7a665c6c3f3195e3939667e952216ae2d4a",
+  "counts": {
+    "pools": 229,
+    "images": 196,
+    "people": 60,
+    "annotations": 7302,
+    "teams": 57062
+  },
+  "data_integrity": {
+    "requests": 57062,
+    "states": 49010,
+    "partitions": 916,
+    "paths": 583
+  },
+  "case_interactions": [
+    {
+      "id": "geometry_angle_near_floor_far",
+      "pool": "B6ByNegPMKs-18__manual__ba2dd293b0",
+      "actual_pool": "B6ByNegPMKs-18__manual__ba2dd293b0",
+      "has_teams": false,
+      "focus": [
+        "W108",
+        "W126"
+      ],
+      "selected": [
+        "W102",
+        "W104",
+        "W108",
+        "W109",
+        "W110",
+        "W112",
+        "W114",
+        "W115",
+        "W118",
+        "W126",
+        "W130",
+        "W131",
+        "W134"
+      ],
+      "image_status": "original_release_bytes_verified"
+    },
+    {
+      "id": "geometry_floor_near_height_far",
+      "pool": "uNb9QFRL6hY-65__manual__9acb3cd5d4",
+      "actual_pool": "uNb9QFRL6hY-65__manual__9acb3cd5d4",
+      "has_teams": false,
+      "focus": [
+        "W037",
+        "W128"
+      ],
+      "selected": [
+        "W001",
+        "W012",
+        "W030",
+        "W037",
+        "W127",
+        "W128"
+      ],
+      "image_status": "original_release_bytes_verified"
+    },
+    {
+      "id": "declared_direction_equivalence",
+      "pool": "yqstnuAEVhm-05__manual__b5861fa0fb",
+      "actual_pool": "yqstnuAEVhm-05__manual__b5861fa0fb",
+      "has_teams": false,
+      "focus": [],
+      "selected": [
+        "W001",
+        "W006",
+        "W010",
+        "W012",
+        "W013",
+        "W015",
+        "W017",
+        "W032",
+        "W033",
+        "W035",
+        "W036",
+        "W101",
+        "W102",
+        "W103",
+        "W105",
+        "W106",
+        "W109",
+        "W110",
+        "W111",
+        "W112",
+        "W113",
+        "W114",
+        "W115",
+        "W116",
+        "W117",
+        "W118",
+        "W119",
+        "W120",
+        "W121",
+        "W122",
+        "W123",
+        "W125",
+        "W127",
+        "W131",
+        "W132"
+      ],
+      "image_status": "original_release_bytes_verified"
+    },
+    {
+      "id": "high_Q_shared_node_count_gap",
+      "pool": "UwV83HsGsw3-22__manual__f3e5ed92db",
+      "actual_pool": "UwV83HsGsw3-22__manual__f3e5ed92db",
+      "has_teams": false,
+      "focus": [
+        "W108",
+        "W118",
+        "W126",
+        "W134"
+      ],
+      "selected": [
+        "W108",
+        "W118",
+        "W126",
+        "W134"
+      ],
+      "image_status": "original_release_bytes_verified"
+    },
+    {
+      "id": "fusion_within_cluster_large_geometry",
+      "pool": "yqstnuAEVhm-31__manual__7b26e5d3cd",
+      "actual_pool": "yqstnuAEVhm-31__manual__7b26e5d3cd",
+      "has_teams": true,
+      "a": "yqstnuAEVhm-31__manual__7b26e5d3cd__background_k12_0__in_W034",
+      "b": "yqstnuAEVhm-31__manual__7b26e5d3cd__background_k12_0__in_W127",
+      "focus": [],
+      "selected": [
+        "W002",
+        "W006",
+        "W008",
+        "W010",
+        "W011",
+        "W012",
+        "W013",
+        "W015",
+        "W017",
+        "W018",
+        "W021",
+        "W027",
+        "W028",
+        "W029",
+        "W030",
+        "W031",
+        "W032",
+        "W033",
+        "W034",
+        "W035",
+        "W037",
+        "W106",
+        "W108",
+        "W113",
+        "W118",
+        "W121",
+        "W122",
+        "W127",
+        "W130",
+        "W132"
+      ],
+      "image_status": "original_release_bytes_verified"
+    },
+    {
+      "id": "fusion_within_cluster_stable",
+      "pool": "7y3sRwLe3Va-03__manual__21c720698a",
+      "actual_pool": "7y3sRwLe3Va-03__manual__21c720698a",
+      "has_teams": true,
+      "a": "7y3sRwLe3Va-03__manual__21c720698a__background_k12_1__in_W006",
+      "b": "7y3sRwLe3Va-03__manual__21c720698a__background_k12_1__in_W010",
+      "focus": [],
+      "selected": [
+        "W006",
+        "W010",
+        "W027",
+        "W028",
+        "W100",
+        "W101",
+        "W102",
+        "W103",
+        "W105",
+        "W106",
+        "W107",
+        "W108",
+        "W109",
+        "W110",
+        "W114",
+        "W115",
+        "W116",
+        "W117",
+        "W118",
+        "W119",
+        "W120",
+        "W121",
+        "W122",
+        "W123",
+        "W124",
+        "W125",
+        "W126",
+        "W127",
+        "W128",
+        "W129",
+        "W130",
+        "W131",
+        "W132",
+        "W133"
+      ],
+      "image_status": "original_release_bytes_verified"
+    },
+    {
+      "id": "fusion_cross_cluster_large_geometry",
+      "pool": "UwV83HsGsw3-09__manual__1a2b0afff3",
+      "actual_pool": "UwV83HsGsw3-09__manual__1a2b0afff3",
+      "has_teams": true,
+      "a": "UwV83HsGsw3-09__manual__1a2b0afff3__background_k8_0__in_W002",
+      "b": "UwV83HsGsw3-09__manual__1a2b0afff3__background_k8_0__in_W033",
+      "focus": [],
+      "selected": [
+        "W001",
+        "W002",
+        "W006",
+        "W008",
+        "W010",
+        "W011",
+        "W012",
+        "W013",
+        "W014",
+        "W015",
+        "W017",
+        "W018",
+        "W021",
+        "W027",
+        "W028",
+        "W029",
+        "W030",
+        "W031",
+        "W032",
+        "W033",
+        "W034",
+        "W035",
+        "W036",
+        "W037",
+        "W101",
+        "W104",
+        "W105",
+        "W112",
+        "W115",
+        "W118",
+        "W120",
+        "W121",
+        "W127"
+      ],
+      "image_status": "original_release_bytes_verified"
+    },
+    {
+      "id": "fusion_cross_cluster_small_geometry",
+      "pool": "x8F5xyUWy9e-03__manual__ec015dc331",
+      "actual_pool": "x8F5xyUWy9e-03__manual__ec015dc331",
+      "has_teams": true,
+      "a": "x8F5xyUWy9e-03__manual__ec015dc331__background_k8_0__in_W037",
+      "b": "x8F5xyUWy9e-03__manual__ec015dc331__background_k8_0__in_W107",
+      "focus": [],
+      "selected": [
+        "W011",
+        "W015",
+        "W032",
+        "W033",
+        "W037",
+        "W101",
+        "W102",
+        "W103",
+        "W104",
+        "W105",
+        "W106",
+        "W107",
+        "W108",
+        "W110",
+        "W112",
+        "W113",
+        "W114",
+        "W115",
+        "W116",
+        "W117",
+        "W118",
+        "W119",
+        "W121",
+        "W122",
+        "W123",
+        "W124",
+        "W125",
+        "W126",
+        "W127",
+        "W128",
+        "W129",
+        "W130",
+        "W131",
+        "W133",
+        "W134"
+      ],
+      "image_status": "original_release_bytes_verified"
+    },
+    {
+      "id": "fusion_stable_low_quality",
+      "pool": "yqstnuAEVhm-31__manual__7b26e5d3cd",
+      "actual_pool": "yqstnuAEVhm-31__manual__7b26e5d3cd",
+      "has_teams": true,
+      "a": "yqstnuAEVhm-31__manual__7b26e5d3cd__background_k12_0__in_W029",
+      "b": "yqstnuAEVhm-31__manual__7b26e5d3cd__background_k12_0__in_W127",
+      "focus": [],
+      "selected": [
+        "W002",
+        "W006",
+        "W008",
+        "W010",
+        "W011",
+        "W012",
+        "W013",
+        "W015",
+        "W017",
+        "W018",
+        "W021",
+        "W027",
+        "W028",
+        "W029",
+        "W030",
+        "W031",
+        "W032",
+        "W033",
+        "W034",
+        "W035",
+        "W037",
+        "W106",
+        "W108",
+        "W113",
+        "W118",
+        "W121",
+        "W122",
+        "W127",
+        "W130",
+        "W132"
+      ],
+      "image_status": "original_release_bytes_verified"
+    },
+    {
+      "id": "fusion_within_cluster_failure",
+      "pool": "7y3sRwLe3Va-03__manual__21c720698a",
+      "actual_pool": "7y3sRwLe3Va-03__manual__21c720698a",
+      "has_teams": true,
+      "a": "7y3sRwLe3Va-03__manual__21c720698a__background_k8_0__in_W006",
+      "b": "7y3sRwLe3Va-03__manual__21c720698a__background_k8_0__in_W027",
+      "focus": [],
+      "selected": [
+        "W006",
+        "W010",
+        "W027",
+        "W028",
+        "W100",
+        "W101",
+        "W102",
+        "W103",
+        "W105",
+        "W106",
+        "W107",
+        "W108",
+        "W109",
+        "W110",
+        "W114",
+        "W115",
+        "W116",
+        "W117",
+        "W118",
+        "W119",
+        "W120",
+        "W121",
+        "W122",
+        "W123",
+        "W124",
+        "W125",
+        "W126",
+        "W127",
+        "W128",
+        "W129",
+        "W130",
+        "W131",
+        "W132",
+        "W133"
+      ],
+      "image_status": "original_release_bytes_verified"
+    },
+    {
+      "id": "QD_hard_k16_most_negative",
+      "pool": "yqstnuAEVhm-29__manual__4e672d5f71",
+      "actual_pool": "yqstnuAEVhm-29__manual__4e672d5f71",
+      "has_teams": true,
+      "a": "FWD_b51de7b938e5e8ed79107cf8",
+      "b": "FWD_ba5d64fc9a26b2f82c7e0d67",
+      "focus": [],
+      "selected": [
+        "W100",
+        "W101",
+        "W103",
+        "W104",
+        "W105",
+        "W106",
+        "W108",
+        "W109",
+        "W110",
+        "W111",
+        "W112",
+        "W114",
+        "W115",
+        "W116",
+        "W118",
+        "W119",
+        "W120",
+        "W121",
+        "W122",
+        "W123",
+        "W124",
+        "W126",
+        "W127",
+        "W128",
+        "W129",
+        "W130",
+        "W131",
+        "W132",
+        "W133",
+        "W134"
+      ],
+      "image_status": "original_release_bytes_verified"
+    },
+    {
+      "id": "QD_hard_k16_most_positive",
+      "pool": "yqstnuAEVhm-25__manual__72b3cd9b76",
+      "actual_pool": "yqstnuAEVhm-25__manual__72b3cd9b76",
+      "has_teams": true,
+      "a": "FWD_29ca3d096226ec002202a8aa",
+      "b": "FWD_ff30efdb6ce91716738ac95c",
+      "focus": [],
+      "selected": [
+        "W001",
+        "W002",
+        "W006",
+        "W008",
+        "W010",
+        "W011",
+        "W012",
+        "W013",
+        "W014",
+        "W015",
+        "W017",
+        "W018",
+        "W027",
+        "W028",
+        "W029",
+        "W030",
+        "W031",
+        "W032",
+        "W033",
+        "W034",
+        "W035",
+        "W036",
+        "W037",
+        "W102",
+        "W109",
+        "W110",
+        "W111",
+        "W116",
+        "W117",
+        "W123",
+        "W124",
+        "W125",
+        "W131",
+        "W132",
+        "W133"
+      ],
+      "image_status": "original_release_bytes_verified"
+    }
+  ],
+  "checks": [
+    {
+      "name": "loaded without application error",
+      "passed": true
+    },
+    {
+      "name": "local notes panel available",
+      "passed": true
+    },
+    {
+      "name": "local note persisted",
+      "passed": true
+    },
+    {
+      "name": "local note has pool context",
+      "passed": true
+    },
+    {
+      "name": "60 supported-or-explicitly-thin personnel profiles shown",
+      "passed": true
+    },
+    {
+      "name": "default heldout-building training displayed",
+      "passed": true
+    },
+    {
+      "name": "difficulty support and uncertainty visible",
+      "passed": true
+    },
+    {
+      "name": "fine-class selector filters real members",
+      "passed": true
+    },
+    {
+      "name": "whole cluster is selected",
+      "passed": true
+    },
+    {
+      "name": "canvas clusterERP",
+      "passed": true
+    },
+    {
+      "name": "canvas clusterBEV",
+      "passed": true
+    },
+    {
+      "name": "canvas cluster3D",
+      "passed": true
+    },
+    {
+      "name": "explicit empty member selection persists",
+      "passed": true
+    },
+    {
+      "name": "all members restored",
+      "passed": true
+    },
+    {
+      "name": "3D keyboard rotation changes real view",
+      "passed": true
+    },
+    {
+      "name": "two actual teams selected",
+      "passed": true
+    },
+    {
+      "name": "canvas teamERPA",
+      "passed": true
+    },
+    {
+      "name": "canvas teamBEVA",
+      "passed": true
+    },
+    {
+      "name": "canvas team3DA",
+      "passed": true
+    },
+    {
+      "name": "reverse A/B works without inventing missing time",
+      "passed": true
+    },
+    {
+      "name": "actual k2 policy gap retained",
+      "passed": true
+    },
+    {
+      "name": "canvas pathERP",
+      "passed": true
+    },
+    {
+      "name": "k3 recovery not called improvement",
+      "passed": true
+    },
+    {
+      "name": "canvas path3D",
+      "passed": true
+    },
+    {
+      "name": "canvas pathPlot",
+      "passed": true
+    },
+    {
+      "name": "scope and source boundary visible",
+      "passed": true
+    },
+    {
+      "name": "case pool geometry_angle_near_floor_far",
+      "passed": true
+    },
+    {
+      "name": "case whole-cluster focus retained geometry_angle_near_floor_far",
+      "passed": true
+    },
+    {
+      "name": "canvas clusterERP",
+      "passed": true
+    },
+    {
+      "name": "canvas clusterBEV",
+      "passed": true
+    },
+    {
+      "name": "canvas cluster3D",
+      "passed": true
+    },
+    {
+      "name": "case pool geometry_floor_near_height_far",
+      "passed": true
+    },
+    {
+      "name": "case whole-cluster focus retained geometry_floor_near_height_far",
+      "passed": true
+    },
+    {
+      "name": "canvas clusterERP",
+      "passed": true
+    },
+    {
+      "name": "canvas clusterBEV",
+      "passed": true
+    },
+    {
+      "name": "canvas cluster3D",
+      "passed": true
+    },
+    {
+      "name": "case pool declared_direction_equivalence",
+      "passed": true
+    },
+    {
+      "name": "case whole-cluster focus retained declared_direction_equivalence",
+      "passed": true
+    },
+    {
+      "name": "canvas clusterERP",
+      "passed": true
+    },
+    {
+      "name": "canvas clusterBEV",
+      "passed": true
+    },
+    {
+      "name": "canvas cluster3D",
+      "passed": true
+    },
+    {
+      "name": "case pool high_Q_shared_node_count_gap",
+      "passed": true
+    },
+    {
+      "name": "case whole-cluster focus retained high_Q_shared_node_count_gap",
+      "passed": true
+    },
+    {
+      "name": "canvas clusterERP",
+      "passed": true
+    },
+    {
+      "name": "canvas clusterBEV",
+      "passed": true
+    },
+    {
+      "name": "canvas cluster3D",
+      "passed": true
+    },
+    {
+      "name": "case pool fusion_within_cluster_large_geometry",
+      "passed": true
+    },
+    {
+      "name": "case real teams fusion_within_cluster_large_geometry",
+      "passed": true
+    },
+    {
+      "name": "case saved V comparison fusion_within_cluster_large_geometry",
+      "passed": true
+    },
+    {
+      "name": "canvas teamERPA",
+      "passed": true
+    },
+    {
+      "name": "canvas teamERPB",
+      "passed": true
+    },
+    {
+      "name": "canvas teamBEVA",
+      "passed": true
+    },
+    {
+      "name": "canvas teamBEVB",
+      "passed": true
+    },
+    {
+      "name": "canvas team3DA",
+      "passed": true
+    },
+    {
+      "name": "canvas team3DB",
+      "passed": true
+    },
+    {
+      "name": "case pool fusion_within_cluster_stable",
+      "passed": true
+    },
+    {
+      "name": "case real teams fusion_within_cluster_stable",
+      "passed": true
+    },
+    {
+      "name": "case saved V comparison fusion_within_cluster_stable",
+      "passed": true
+    },
+    {
+      "name": "canvas teamERPA",
+      "passed": true
+    },
+    {
+      "name": "canvas teamERPB",
+      "passed": true
+    },
+    {
+      "name": "canvas teamBEVA",
+      "passed": true
+    },
+    {
+      "name": "canvas teamBEVB",
+      "passed": true
+    },
+    {
+      "name": "canvas team3DA",
+      "passed": true
+    },
+    {
+      "name": "canvas team3DB",
+      "passed": true
+    },
+    {
+      "name": "case pool fusion_cross_cluster_large_geometry",
+      "passed": true
+    },
+    {
+      "name": "case real teams fusion_cross_cluster_large_geometry",
+      "passed": true
+    },
+    {
+      "name": "case saved V comparison fusion_cross_cluster_large_geometry",
+      "passed": true
+    },
+    {
+      "name": "canvas teamERPA",
+      "passed": true
+    },
+    {
+      "name": "canvas teamERPB",
+      "passed": true
+    },
+    {
+      "name": "canvas teamBEVA",
+      "passed": true
+    },
+    {
+      "name": "canvas teamBEVB",
+      "passed": true
+    },
+    {
+      "name": "canvas team3DA",
+      "passed": true
+    },
+    {
+      "name": "canvas team3DB",
+      "passed": true
+    },
+    {
+      "name": "case pool fusion_cross_cluster_small_geometry",
+      "passed": true
+    },
+    {
+      "name": "case real teams fusion_cross_cluster_small_geometry",
+      "passed": true
+    },
+    {
+      "name": "case saved V comparison fusion_cross_cluster_small_geometry",
+      "passed": true
+    },
+    {
+      "name": "canvas teamERPA",
+      "passed": true
+    },
+    {
+      "name": "canvas teamERPB",
+      "passed": true
+    },
+    {
+      "name": "canvas teamBEVA",
+      "passed": true
+    },
+    {
+      "name": "canvas teamBEVB",
+      "passed": true
+    },
+    {
+      "name": "canvas team3DA",
+      "passed": true
+    },
+    {
+      "name": "canvas team3DB",
+      "passed": true
+    },
+    {
+      "name": "case pool fusion_stable_low_quality",
+      "passed": true
+    },
+    {
+      "name": "case real teams fusion_stable_low_quality",
+      "passed": true
+    },
+    {
+      "name": "case saved V comparison fusion_stable_low_quality",
+      "passed": true
+    },
+    {
+      "name": "canvas teamERPA",
+      "passed": true
+    },
+    {
+      "name": "canvas teamERPB",
+      "passed": true
+    },
+    {
+      "name": "canvas teamBEVA",
+      "passed": true
+    },
+    {
+      "name": "canvas teamBEVB",
+      "passed": true
+    },
+    {
+      "name": "canvas team3DA",
+      "passed": true
+    },
+    {
+      "name": "canvas team3DB",
+      "passed": true
+    },
+    {
+      "name": "case pool fusion_within_cluster_failure",
+      "passed": true
+    },
+    {
+      "name": "case real teams fusion_within_cluster_failure",
+      "passed": true
+    },
+    {
+      "name": "case saved V comparison fusion_within_cluster_failure",
+      "passed": true
+    },
+    {
+      "name": "canvas teamERPA",
+      "passed": true
+    },
+    {
+      "name": "canvas teamERPB",
+      "passed": true
+    },
+    {
+      "name": "canvas teamBEVA",
+      "passed": true
+    },
+    {
+      "name": "canvas teamBEVB",
+      "passed": true
+    },
+    {
+      "name": "canvas team3DA",
+      "passed": true
+    },
+    {
+      "name": "canvas team3DB",
+      "passed": true
+    },
+    {
+      "name": "case pool QD_hard_k16_most_negative",
+      "passed": true
+    },
+    {
+      "name": "case real teams QD_hard_k16_most_negative",
+      "passed": true
+    },
+    {
+      "name": "case saved V comparison QD_hard_k16_most_negative",
+      "passed": true
+    },
+    {
+      "name": "canvas teamERPA",
+      "passed": true
+    },
+    {
+      "name": "canvas teamERPB",
+      "passed": true
+    },
+    {
+      "name": "canvas teamBEVA",
+      "passed": true
+    },
+    {
+      "name": "canvas teamBEVB",
+      "passed": true
+    },
+    {
+      "name": "canvas team3DA",
+      "passed": true
+    },
+    {
+      "name": "canvas team3DB",
+      "passed": true
+    },
+    {
+      "name": "case pool QD_hard_k16_most_positive",
+      "passed": true
+    },
+    {
+      "name": "case real teams QD_hard_k16_most_positive",
+      "passed": true
+    },
+    {
+      "name": "case saved V comparison QD_hard_k16_most_positive",
+      "passed": true
+    },
+    {
+      "name": "canvas teamERPA",
+      "passed": true
+    },
+    {
+      "name": "canvas teamERPB",
+      "passed": true
+    },
+    {
+      "name": "canvas teamBEVA",
+      "passed": true
+    },
+    {
+      "name": "canvas teamBEVB",
+      "passed": true
+    },
+    {
+      "name": "canvas team3DA",
+      "passed": true
+    },
+    {
+      "name": "canvas team3DB",
+      "passed": true
+    },
+    {
+      "name": "all genuine memberships/partitions/prefixes verified",
+      "passed": true
+    },
+    {
+      "name": "no external assets",
+      "passed": true
+    },
+    {
+      "name": "no console errors",
+      "passed": true
+    }
+  ],
+  "console_errors": [],
+  "canvas_pngs": [
+    "QD_hard_k16_most_negative_3d_a.png",
+    "QD_hard_k16_most_negative_3d_b.png",
+    "QD_hard_k16_most_negative_bev_a.png",
+    "QD_hard_k16_most_negative_bev_b.png",
+    "QD_hard_k16_most_negative_erp_a.png",
+    "QD_hard_k16_most_negative_erp_b.png",
+    "QD_hard_k16_most_positive_3d_a.png",
+    "QD_hard_k16_most_positive_3d_b.png",
+    "QD_hard_k16_most_positive_bev_a.png",
+    "QD_hard_k16_most_positive_bev_b.png",
+    "QD_hard_k16_most_positive_erp_a.png",
+    "QD_hard_k16_most_positive_erp_b.png",
+    "cluster_3d.png",
+    "cluster_bev.png",
+    "cluster_erp.png",
+    "declared_direction_equivalence_3d.png",
+    "declared_direction_equivalence_bev.png",
+    "declared_direction_equivalence_erp.png",
+    "fusion_cross_cluster_large_geometry_3d_a.png",
+    "fusion_cross_cluster_large_geometry_3d_b.png",
+    "fusion_cross_cluster_large_geometry_bev_a.png",
+    "fusion_cross_cluster_large_geometry_bev_b.png",
+    "fusion_cross_cluster_large_geometry_erp_a.png",
+    "fusion_cross_cluster_large_geometry_erp_b.png",
+    "fusion_cross_cluster_small_geometry_3d_a.png",
+    "fusion_cross_cluster_small_geometry_3d_b.png",
+    "fusion_cross_cluster_small_geometry_bev_a.png",
+    "fusion_cross_cluster_small_geometry_bev_b.png",
+    "fusion_cross_cluster_small_geometry_erp_a.png",
+    "fusion_cross_cluster_small_geometry_erp_b.png",
+    "fusion_stable_low_quality_3d_a.png",
+    "fusion_stable_low_quality_3d_b.png",
+    "fusion_stable_low_quality_bev_a.png",
+    "fusion_stable_low_quality_bev_b.png",
+    "fusion_stable_low_quality_erp_a.png",
+    "fusion_stable_low_quality_erp_b.png",
+    "fusion_within_cluster_failure_3d_a.png",
+    "fusion_within_cluster_failure_3d_b.png",
+    "fusion_within_cluster_failure_bev_a.png",
+    "fusion_within_cluster_failure_bev_b.png",
+    "fusion_within_cluster_failure_erp_a.png",
+    "fusion_within_cluster_failure_erp_b.png",
+    "fusion_within_cluster_large_geometry_3d_a.png",
+    "fusion_within_cluster_large_geometry_3d_b.png",
+    "fusion_within_cluster_large_geometry_bev_a.png",
+    "fusion_within_cluster_large_geometry_bev_b.png",
+    "fusion_within_cluster_large_geometry_erp_a.png",
+    "fusion_within_cluster_large_geometry_erp_b.png",
+    "fusion_within_cluster_stable_3d_a.png",
+    "fusion_within_cluster_stable_3d_b.png",
+    "fusion_within_cluster_stable_bev_a.png",
+    "fusion_within_cluster_stable_bev_b.png",
+    "fusion_within_cluster_stable_erp_a.png",
+    "fusion_within_cluster_stable_erp_b.png",
+    "geometry_angle_near_floor_far_3d.png",
+    "geometry_angle_near_floor_far_bev.png",
+    "geometry_angle_near_floor_far_erp.png",
+    "geometry_floor_near_height_far_3d.png",
+    "geometry_floor_near_height_far_bev.png",
+    "geometry_floor_near_height_far_erp.png",
+    "high_Q_shared_node_count_gap_3d.png",
+    "high_Q_shared_node_count_gap_bev.png",
+    "high_Q_shared_node_count_gap_erp.png",
+    "path_k2.png",
+    "path_k3_3d.png",
+    "path_quality_curve.png",
+    "team_a_3d.png",
+    "team_a_bev.png",
+    "team_a_erp.png"
+  ]
+}
