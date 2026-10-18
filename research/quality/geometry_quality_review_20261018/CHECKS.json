@@ -1,0 +1,170 @@
+{
+  "data_release": "v1",
+  "review_date": "2026-10-18",
+  "received_byte_parity": [
+    {
+      "package": "pro",
+      "files": 150,
+      "all_bytes_equal": true
+    },
+    {
+      "package": "dot",
+      "files": 36,
+      "all_bytes_equal": true
+    }
+  ],
+  "full_reproduction": {
+    "real": {
+      "rows": 1848,
+      "all_finite_complete": true,
+      "max_abs_deltas": {
+        "B8L2": 8.526512829121202e-14,
+        "D10": 7.105427357601002e-14,
+        "EBC21_L2": 4.263256414560601e-14,
+        "RBC_F8_L2": 4.263256414560601e-14,
+        "IoU3D100": 8.526512829121202e-14
+      },
+      "n1_B8_max_delta": 0.0,
+      "n1_D10_max_delta": 0.0
+    },
+    "diagnostic": {
+      "rows": 862,
+      "all_finite_complete": true,
+      "max_abs_deltas": {
+        "B8L2": 8.526512829121202e-14,
+        "D10": 8.526512829121202e-14,
+        "EBC21_L2": 4.263256414560601e-14,
+        "RBC_F8_L2": 5.684341886080802e-14,
+        "IoU3D100": 5.684341886080802e-14
+      },
+      "n1_B8_max_delta": 3.410605131648481e-13,
+      "n1_D10_max_delta": 3.446132268436486e-13
+    },
+    "qualified1911": {
+      "rows": 1911,
+      "images": 136,
+      "buildings": 21,
+      "workers": 25,
+      "all_finite": true,
+      "means": {
+        "B8L2": 67.48092976991789,
+        "D10": 68.92546871120847,
+        "EBC21_L2": 74.85891790559278,
+        "RBC_F8_L2": 69.97530135979169,
+        "IoU3D100": 77.67271324527631
+      }
+    }
+  },
+  "canonical_and_recovery": {
+    "environment": {
+      "python": "3.11.7 | packaged by Anaconda, Inc. | (main, Dec 15 2023, 18:05:47) [MSC v.1916 64 bit (AMD64)]",
+      "numpy": "1.26.4",
+      "pandas": "2.3.1"
+    },
+    "checks": {
+      "pro_qualified": {
+        "rows": 1911,
+        "identity_reference_eligibility": "matched",
+        "scores": {
+          "B8L2": {
+            "finite_rows": 1848,
+            "max_abs_delta": 1.4210854715202004e-13
+          },
+          "D10": {
+            "finite_rows": 1848,
+            "max_abs_delta": 1.1368683772161603e-13
+          },
+          "IoU3D100": {
+            "finite_rows": 1848,
+            "max_abs_delta": 1.9895196601282805e-13
+          }
+        }
+      },
+      "combined_qualified": {
+        "rows": 1911,
+        "identity_reference_eligibility": "matched",
+        "scores": {
+          "B8L2": {
+            "finite_rows": 1911,
+            "max_abs_delta": 1.4210854715202004e-13
+          },
+          "D10": {
+            "finite_rows": 1911,
+            "max_abs_delta": 1.1368683772161603e-13
+          },
+          "IoU3D100": {
+            "finite_rows": 1911,
+            "max_abs_delta": 1.9895196601282805e-13
+          }
+        }
+      },
+      "inventory": {
+        "rows": 3222,
+        "identity_reference_eligibility": "matched",
+        "scores": {
+          "B8L2": {
+            "finite_rows": 1848,
+            "max_abs_delta": 1.4210854715202004e-13
+          },
+          "D10": {
+            "finite_rows": 1848,
+            "max_abs_delta": 1.1368683772161603e-13
+          },
+          "IoU3D100": {
+            "finite_rows": 1848,
+            "max_abs_delta": 1.9895196601282805e-13
+          }
+        }
+      }
+    },
+    "recovered63_replay": {
+      "B8L2": 5.684341886080802e-14,
+      "D10": 4.263256414560601e-14,
+      "EBC21_L2": 4.263256414560601e-14,
+      "RBC_F8_L2": 4.263256414560601e-14,
+      "IoU3D100": 4.263256414560601e-14
+    },
+    "combined_means": {
+      "B8L2": 67.48092976991789,
+      "D10": 68.92546871120847,
+      "EBC21_L2": 74.85891790559278,
+      "RBC_F8_L2": 69.97530135979169,
+      "IoU3D100": 77.67271324527631
+    },
+    "combined_uses": {
+      "ordinary_primary": 1699,
+      "doorway_quality": 188,
+      "special_conditional_only": 24
+    },
+    "independent_formula_max_delta": {
+      "B8L2": 4.263256414560601e-14,
+      "D10": 4.263256414560601e-14
+    },
+    "D10_inversions": {
+      "1848": {
+        "comparable_pairs": 15045,
+        "inversions": 397,
+        "rate": 0.026387504154204055
+      },
+      "1911": {
+        "comparable_pairs": 15483,
+        "inversions": 406,
+        "rate": 0.026222308338177357
+      }
+    }
+  },
+  "source_geometry": {
+    "original1848": {
+      "pairs": 1848,
+      "coordinate_arrays_exactly_equal": 3696,
+      "regenerated_3d_max_abs_delta": 1.3322676295501878e-15
+    },
+    "recovered64": {
+      "pairs": 64,
+      "coordinate_arrays_exactly_equal": 128,
+      "regenerated_3d_max_abs_delta": 8.881784197001252e-16
+    }
+  },
+  "default_scoring_changed": false,
+  "human_blind_review_performed": false
+}

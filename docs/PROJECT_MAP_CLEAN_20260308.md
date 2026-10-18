@@ -1,5 +1,41 @@
 # HOHONET 项目地图
 
+
+
+
+
+
+新增人员研究包：`research/workers/worker_difficulty_profiles_20261018/`；工具`tools/thesis_main/analysis/worker_difficulty_profiles_20261018.py`；离线页`research/statistics/research_explorer_v1_r2_20261017/personnel_difficulty.html`。覆盖全部现有合格质量图片，难度专长候选与楼外验证分开。
+
+
+
+
+新增探索包：`research/statistics/cluster_review_20261018/`；离线页`research/statistics/research_explorer_v1_r2_20261017/cluster_review.html`；构建入口`tools/thesis_main/analysis/build_cluster_review_20261018.py`。用途为分簇人工审查，不替代现行研究合同。
+
+
+
+- **2026-10-18讨论更新：** [人员分类与作答分簇待讨论记录](thesis_main/人员分类与作答分簇讨论记录_20261018.md)；[单图中等难度回执](../research/difficulty/difficulty_user_revision_20261018/README.md)。复用当前上下文与工作台打包器，定向测试为`tests/test_difficulty_user_revision_20261018.py`。
+
+
+
+
+
+
+- **2026-10-18扩大人数：** [人员可替换性核验](thesis_main/人员可替换性与多人组合核验_20261018.md)，新增 `research/workers/worker_exchangeability_20261018/`、`research/fusion/worker_exchangeability_fusion_20261018/`；[离线多人页](../research/statistics/research_explorer_v1_r2_20261017/personnel_exchangeability.html)。新增分析工具 `worker_exchangeability_20261018.py`、`worker_annotation_similarity_20261018.py`、`build_worker_exchangeability_view_20261018.py`均在`tools/thesis_main/analysis/`，对应pytest在`tests/`、浏览器检查在展示目录；复用既有融合驱动。
+
+- **2026-10-18真实v1收尾：** [统筹记录](thesis_main/处理修订核验与人员细分类收尾_20261018.md)。新增研究包 `research/data/processed_input_review_20261018/`、`research/workers/worker_fine_composition_20261018/`、`research/fusion/worker_composition_fusion_20261018/`；离线入口为 [personnel_composition.html](../research/statistics/research_explorer_v1_r2_20261017/personnel_composition.html)。构建／分析工具位于 `tools/thesis_main/data_prep/review_processed_input_20261018.py` 及 `tools/thesis_main/analysis/{worker_fine_composition,worker_composition_fusion,build_worker_composition_view}_20261018.py`，对应tests及页面交互测试已登记。仅接续本次有效输入修订，不改原始导出与历史包。
+
+- **2026-10-18独立核查：** [人员质量口径与几何Pro/dot复核](thesis_main/人员质量口径与几何Pro复核_20261018.md)：人员与几何审查包已按主题归档；scope倾向/裁定覆盖明确，未更换现用评分或人员名单。
+
+
+- **研究工作台重构（2026-10-17）**：[双击HTML入口与说明](../research/statistics/research_explorer_v1_r2_20261017/README.md)、[研究问题覆盖与占位清单](../research/statistics/research_explorer_v1_r2_20261017/COVERAGE.md)。统一十模块，接真实图片／几何、人员组合与路径，数据及研究合同不变。
+
+- **v1修订已接齐（2026-10-17）**：[整体趋势浏览台](../research/statistics/research_explorer_v1_r2_20261017/README.md)、[消费接口与来源](../research/statistics/v1_integrated_analysis_20261017_r2/CONSUMER_INTERFACE.json)、[统筹验收第9节](thesis_main/人员Pro与各模块独立审查及v1推进_20261017.md#9-同日后续执行原线程修正统筹验收与展示)。展示器支持双击HTML离线浏览（保留相邻前端目录与数据分片），无需本地HTTP服务。辅助缓存、人员评论漏项和536同房状态已修正接入，门洞17/15图固定面板纳入；旧195表快照保留。
+
+- **本轮独立审查（2026-10-17）**：[人员Pro、各模块进度与v1推进](thesis_main/人员Pro与各模块独立审查及v1推进_20261017.md)。已核Q复算、208图融合和9对同房；门洞188份/15图质量、17图过程纳入v1。发现审核措辞漏项、辅助字段丢失及消费者同步欠缺；27项定向测试通过，非全库认证。
+
+- **此前统筹交接快照（2026-10-17）**：[研究意图、各线程链接、v1进度与后续分析/画图](thesis_main/统筹完整交接_研究意图进度与后续分析_20261017.md)。新融合已报告208图，同房9对过程已交付；下方旧7图/零同房过程属于上一轮。该交接当时未独立验收；本轮核查与仍存缺口见上方审查。
+
 - [人员质量与可靠性Pro研究提示词](../research/workers/worker_quality_profile_pro_handoff_20261017/PRO_PROMPT.md)：绝对／相对Q、Semi纠错与严重失误；当前全部分析仍属[数据v1](../research/data/releases/VERSION_POLICY.md)。
 
 - 当前执行：[研究收尾方针与数据版本细则](thesis_main/研究收尾方针与数据版本细则_20261017.md)，人员分类与真实组合过程优先；[数据v1冻结](../research/data/releases/v1/README.md)。
@@ -11,7 +47,7 @@
 - 跨模块判断：[研究进度与独立建议](thesis_main/研究进度与独立建议_20261017.md)。
 - 派生显示数据按固定哈希重建，不修改原始标注、参考、评分与资格；不将云端站点路径当作本地路径。
 
-**本轮独立验收：** [跨线程核验与覆盖边界](thesis_main/跨线程接入与统计覆盖核对_20261016.md)：1911份质量覆盖136图；融合普通主比较7图，同范围可比同房完整曲线0。
+**此前一轮独立验收（本次扩展前）：** [跨线程核验与覆盖边界](thesis_main/跨线程接入与统计覆盖核对_20261016.md)：1911份质量覆盖136图；融合普通主比较7图，同范围可比同房完整曲线0。
 
 **当前状态（2026-10-17）：** 当前输入为 [Project98 manifest](../analysis_results/research_input_20261017/manifest.json)，库存3222份作答、261张图；排除既定作答/人员后保留2991份、25人。新增批次70份已接入，7个账号映射到既有人员，任务人员时间5205秒已核验。
 
@@ -199,3 +235,19 @@
 - 2026-10-16融合文档整理：[旧回执操作与模型阶段统计](thesis_main/history/融合SOP与模型过时说明_20261016.md)归档；SOP保留现行操作，模型不重复维护版本分母。
 
 - 2026-10-17融合：[18图B8L2／D10对照与新增批次桥接](../research/fusion/wall_consensus_d10_20261017/README.md)。复用真实人数过程，不重跑融合；工具与字段见包内说明。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Pro本地独立交接：[人员分类QT难度与反向分簇包](../research/workers/pro_personnel_handoff_20261018/README.md)；打包工具`tools/thesis_main/analysis/build_pro_personnel_handoff_20261018.py`，本次不更新GitHub。

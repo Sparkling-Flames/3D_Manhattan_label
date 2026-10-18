@@ -1,6 +1,6 @@
 {
-  "catalog_version": "research_catalog_20261017_v4_worker_reliability",
-  "inventory_date": "2026-10-17",
+  "catalog_version": "research_catalog_20261018_v11_worker_difficulty",
+  "inventory_date": "2026-10-18",
   "coverage_note": "登记主题包、结果快照、关键文档、规范输入和已知本地外部来源。原始标注、GT审核原件、统一输入和合同留在真源位置；历史包未迁移的仍按原路径检索。按包或关键文件登记，不表示逐文件内容均已独立复核。",
   "topics": [
     {
@@ -9,6 +9,22 @@
       "description": "原意、跨模块关系、进度、版本采用与交接。",
       "page_path": "docs/thesis_main/topics/coordination/README.md",
       "current_basis": [
+        {
+          "text": "人员可替换性与多人组合核验统筹结论",
+          "path": "docs/thesis_main/人员可替换性与多人组合核验_20261018.md"
+        },
+        {
+          "text": "处理修订核验与人员细分类阶段收尾",
+          "path": "docs/thesis_main/处理修订核验与人员细分类收尾_20261018.md"
+        },
+        {
+          "text": "人员Pro与模块独立审查、门洞纳入v1及后续推进",
+          "path": "docs/thesis_main/人员Pro与各模块独立审查及v1推进_20261017.md"
+        },
+        {
+          "text": "长对话统筹交接：研究意图、线程、最新交付及后续图表",
+          "path": "docs/thesis_main/统筹完整交接_研究意图进度与后续分析_20261017.md"
+        },
         {
           "text": "人员分类与组合过程优先的收尾细则",
           "path": "docs/thesis_main/研究收尾方针与数据版本细则_20261017.md"
@@ -44,7 +60,8 @@
       ],
       "open_questions": [
         {
-          "text": "当前新增70份已独立版本接入；后续补同面板融合和同房真实曲线，新增人员/图片与评分版本继续分批管理"
+          "text": "修正、模块接入与本地展示的实际验收状态见统筹审查第9节；原数据v1与既有资格不变。",
+          "path": "docs/thesis_main/人员Pro与各模块独立审查及v1推进_20261017.md"
         }
       ],
       "reproduction": []
@@ -55,6 +72,10 @@
       "description": "输入版本、人数门槛、GT/空间绑定和排除状态。",
       "page_path": "docs/thesis_main/topics/data/README.md",
       "current_basis": [
+        {
+          "text": "已处理删补点继承核查与有效输入修订",
+          "path": "research/data/processed_input_review_20261018/README.md"
+        },
         {
           "text": "当前全部分析属数据v1，v2等待未来补标",
           "path": "research/data/releases/VERSION_POLICY.md"
@@ -129,6 +150,10 @@
       "page_path": "docs/thesis_main/topics/quality/README.md",
       "current_basis": [
         {
+          "text": "Pro/dot独立复核：1911全覆盖，N1建议单独实现修订，竞争模型不替换主分",
+          "path": "research/quality/geometry_quality_review_20261018/README.md"
+        },
+        {
           "text": "当前共同评分v2：B8L2主线、D10并列敏感性，共1911份可用；原B8L2用途v2的1787份保留为冻结基线。",
           "path": "research/quality/quality_b8l2_d10_20261017/README.md"
         },
@@ -179,15 +204,16 @@
       ],
       "open_questions": [
         {
-          "text": "B8L2尚未重建人员、融合和同房模块；未来新数据按固定共同集合比较"
+          "text": "当前B8L2/D10已接人员、融合及同房；N1尚未切换默认实现，结构遗漏与局部歪连取舍继续研究"
         },
         {
-          "text": "B8L2接入主线与整体新质量模型并行；新模型可重设计分项和组合，不限于修补B8L2"
+          "text": "新模型按共同输入、参考、用途检验实际得失，不以升分或必须逐例占优作为采用门槛"
         }
       ],
       "reproduction": [
         {
-          "text": "按包内README和SNAPSHOT_INPUTS复现；本轮不重跑"
+          "text": "最新包本轮已完成7阶段、20测试与63份补算；历史包按各自README复现",
+          "path": "research/quality/geometry_quality_review_20261018/REVIEW.md"
         }
       ]
     },
@@ -197,6 +223,10 @@
       "description": "固定目标空间下的粗分难度、结构/操作负担、人工复核和标签版本。",
       "page_path": "docs/thesis_main/topics/difficulty/README.md",
       "current_basis": [
+        {
+          "text": "uNb9QFRL6hY-01人工确认中等难度",
+          "path": "research/difficulty/difficulty_user_revision_20261018/README.md"
+        },
         {
           "text": "当前难度v6覆盖261图；新增两图列为中等，按采集条件与质量用途分层描述，不以均值重分标签。",
           "path": "research/difficulty/difficulty_current_20261017/README.md"
@@ -260,15 +290,35 @@
     {
       "id": "workers",
       "title": "人员研究",
-      "description": "Q/T/S/B画像、分类、组合与换人实验；记录质量版本及训练/评价集合。",
+      "description": "人员质量、效率、Semi与scope的分类讨论及组合研究；具体新方法待定，既有Q/T实验保持原口径。",
       "page_path": "docs/thesis_main/topics/workers/README.md",
       "current_basis": [
+        {
+          "text": "人员分类、Semi盲信与作答分簇待讨论想法",
+          "path": "docs/thesis_main/人员分类与作答分簇讨论记录_20261018.md"
+        },
+        {
+          "text": "扩大人数后的人员可替换性与原答分簇",
+          "path": "research/workers/worker_exchangeability_20261018/README.md"
+        },
+        {
+          "text": "人员粗细分类、构成与换人真实实验",
+          "path": "research/workers/worker_fine_composition_20261018/README.md"
+        },
+        {
+          "text": "scope倾向/裁定与相对Q独立复核；27图702机会待桥接",
+          "path": "research/workers/worker_quality_scope_review_20261018/README.md"
+        },
+        {
+          "text": "人员Pro独立审查：可采用增量、证据桥接与未解决归因",
+          "path": "research/workers/personnel_quality_pro_review_20261017/README.md"
+        },
         {
           "text": "人员绝对/相对质量、Semi纠错与严重失误的Pro任务",
           "path": "research/workers/worker_quality_profile_pro_handoff_20261017/README.md"
         },
         {
-          "text": "当前B8L2/D10人员分析含949份普通画像及门洞专项；保持连续画像和场景证据，不强制固定类别。",
+          "text": "当前B8L2/D10普通Manual画像1048份、24人、87任务、19建筑；门洞专项与Semi分列，949为旧快照。",
           "path": "research/workers/worker_b8l2_d10_20261017/README.md"
         },
         {
@@ -312,6 +362,14 @@
       "description": "Lee区域投票与墙线对应、全池投票、定位、连接和人数过程。",
       "page_path": "docs/thesis_main/topics/fusion/README.md",
       "current_basis": [
+        {
+          "text": "6至16人固定背景单人替换真实融合",
+          "path": "research/fusion/worker_exchangeability_fusion_20261018/README.md"
+        },
+        {
+          "text": "已修订输入的人员组合融合及失败池恢复",
+          "path": "research/fusion/worker_composition_fusion_20261018/README.md"
+        },
         {
           "text": "18图实际融合轨迹复用同资格B8L2/D10评分进行对照；没有重跑融合几何，外推仍受样本限制。",
           "path": "research/fusion/wall_consensus_d10_20261017/README.md"
@@ -418,6 +476,22 @@
       "description": "各批次覆盖、分母、分层结果、表格、图表与扩展复算。",
       "page_path": "docs/thesis_main/topics/statistics/README.md",
       "current_basis": [
+        {
+          "text": "6至16人单人替换与原答分簇离线展示",
+          "path": "research/statistics/research_explorer_v1_r2_20261017/personnel_exchangeability.html"
+        },
+        {
+          "text": "真实v1人员细分类与组合离线展示",
+          "path": "research/statistics/research_explorer_v1_r2_20261017/personnel_composition.html"
+        },
+        {
+          "text": "数据v1修订r2整体趋势与明细浏览",
+          "path": "research/statistics/research_explorer_v1_r2_20261017/README.md"
+        },
+        {
+          "text": "数据v1修订r2消费接口与来源核验",
+          "path": "research/statistics/v1_integrated_analysis_20261017_r2/CONSUMER_INTERFACE.json"
+        },
         {
           "text": "全维度研究浏览台：124张当前表、71张历史表，固定快照、分母/缺失边界及本地重建",
           "path": "research/statistics/research_explorer_20261017/README.md"
@@ -9788,6 +9862,435 @@
       "relationships": [
         "docs/thesis_main/研究收尾方针与数据版本细则_20261017.md"
       ]
+    },
+    {
+      "id": "MAT-docs--thesis_main--统筹完整交接_研究意图进度与后续分析_20261017.md",
+      "title": "统筹完整交接：研究意图进度与后续分析",
+      "theme": "coordination",
+      "type": "统筹交接",
+      "date": "20261017",
+      "source_path": "docs/thesis_main/统筹完整交接_研究意图进度与后续分析_20261017.md",
+      "current_path": "docs/thesis_main/统筹完整交接_研究意图进度与后续分析_20261017.md",
+      "source": "长对话用户原意及各原线程本地交付",
+      "adoption_status": "数据v1；B8L2主线、D10敏感性；新结果不替换历史快照",
+      "verification_status": "本轮核对文档和线程返回；未独立复算新实验，缺口见统筹交接",
+      "availability": "本地资料；登记不代表已推送远端",
+      "relationships": []
+    },
+    {
+      "id": "MAT-research--workers--worker_v1_composition_20261017",
+      "title": "v1人员组合与可靠性证据",
+      "theme": "workers",
+      "type": "版本化研究交付",
+      "date": "20261017",
+      "source_path": "research/workers/worker_v1_composition_20261017",
+      "current_path": "research/workers/worker_v1_composition_20261017",
+      "source": "长对话用户原意及各原线程本地交付",
+      "adoption_status": "数据v1；B8L2主线、D10敏感性；新结果不替换历史快照",
+      "verification_status": "统筹定向测试、底表/接口核对及修订消费验收见独立审查第9节；非全库几何认证",
+      "availability": "本地资料；登记不代表已推送远端",
+      "relationships": []
+    },
+    {
+      "id": "MAT-research--fusion--wall_consensus_v1_process_20261017",
+      "title": "v1扩展墙线融合真实过程",
+      "theme": "fusion",
+      "type": "版本化研究交付",
+      "date": "20261017",
+      "source_path": "research/fusion/wall_consensus_v1_process_20261017",
+      "current_path": "research/fusion/wall_consensus_v1_process_20261017",
+      "source": "长对话用户原意及各原线程本地交付",
+      "adoption_status": "数据v1；B8L2主线、D10敏感性；新结果不替换历史快照",
+      "verification_status": "统筹定向测试、底表/接口核对及修订消费验收见独立审查第9节；非全库几何认证",
+      "availability": "本地资料；登记不代表已推送远端",
+      "relationships": []
+    },
+    {
+      "id": "MAT-research--same_room--same_room_v1_process_20261017",
+      "title": "v1同房配对真实过程",
+      "theme": "same_room",
+      "type": "版本化研究交付",
+      "date": "20261017",
+      "source_path": "research/same_room/same_room_v1_process_20261017",
+      "current_path": "research/same_room/same_room_v1_process_20261017",
+      "source": "长对话用户原意及各原线程本地交付",
+      "adoption_status": "数据v1；B8L2主线、D10敏感性；新结果不替换历史快照",
+      "verification_status": "统筹定向测试、底表/接口核对及修订消费验收见独立审查第9节；非全库几何认证",
+      "availability": "本地资料；登记不代表已推送远端",
+      "relationships": []
+    },
+    {
+      "id": "MAT-research--difficulty--difficulty_v1_analysis_20261017",
+      "title": "v1难度分层与固定面板分析",
+      "theme": "difficulty",
+      "type": "版本化研究交付",
+      "date": "20261017",
+      "source_path": "research/difficulty/difficulty_v1_analysis_20261017",
+      "current_path": "research/difficulty/difficulty_v1_analysis_20261017",
+      "source": "长对话用户原意及各原线程本地交付",
+      "adoption_status": "数据v1；B8L2主线、D10敏感性；新结果不替换历史快照",
+      "verification_status": "统筹定向测试、底表/接口核对及修订消费验收见独立审查第9节；非全库几何认证",
+      "availability": "本地资料；登记不代表已推送远端",
+      "relationships": []
+    },
+    {
+      "id": "MAT-research--statistics--v1_integrated_analysis_20261017",
+      "title": "v1统计整合与消费快照",
+      "theme": "statistics",
+      "type": "版本化研究交付",
+      "date": "20261017",
+      "source_path": "research/statistics/v1_integrated_analysis_20261017",
+      "current_path": "research/statistics/v1_integrated_analysis_20261017",
+      "source": "长对话用户原意及各原线程本地交付",
+      "adoption_status": "数据v1；B8L2主线、D10敏感性；新结果不替换历史快照",
+      "verification_status": "本轮核对文档和线程返回；未独立复算新实验，缺口见统筹交接",
+      "availability": "本地资料；登记不代表已推送远端",
+      "relationships": []
+    },
+    {
+      "id": "MAT-docs--thesis_main--人员Pro与各模块独立审查及v1推进_20261017.md",
+      "title": "人员Pro与各模块独立审查及v1推进",
+      "theme": "coordination",
+      "type": "统筹独立审查",
+      "date": "20261017",
+      "source_path": "docs/thesis_main/人员Pro与各模块独立审查及v1推进_20261017.md",
+      "current_path": "docs/thesis_main/人员Pro与各模块独立审查及v1推进_20261017.md",
+      "source": "用户提供的人员Pro交付与当前仓库实际底表、关键代码、原线程上下文",
+      "adoption_status": "审查建议：连续Q及描述类别保留；可靠性字段需桥接和修漏项；数据v1、门洞纳入研究",
+      "verification_status": "960效应及2096预测独立复算；跨模块逐ID核对和关键底表重汇总；27项定向测试；未全量重跑几何",
+      "availability": "审查文档本地可读；原始Pro证据存受Git忽略的inputs/local_reviews目录，不自动公开",
+      "relationships": [
+        "数据v1",
+        "B8L2主线与D10敏感性",
+        "研究统筹",
+        "人员分类",
+        "门洞场景"
+      ]
+    },
+    {
+      "id": "MAT-research--workers--personnel_quality_pro_review_20261017",
+      "title": "人员Pro复现包本地审查及核查记录",
+      "theme": "workers",
+      "type": "外部交付审查",
+      "date": "20261017",
+      "source_path": "research/workers/personnel_quality_pro_review_20261017",
+      "current_path": "research/workers/personnel_quality_pro_review_20261017",
+      "source": "用户提供的人员Pro交付与当前仓库实际底表、关键代码、原线程上下文",
+      "adoption_status": "审查建议：连续Q及描述类别保留；可靠性字段需桥接和修漏项；数据v1、门洞纳入研究",
+      "verification_status": "960效应及2096预测独立复算；跨模块逐ID核对和关键底表重汇总；27项定向测试；未全量重跑几何",
+      "availability": "审查文档本地可读；原始Pro证据存受Git忽略的inputs/local_reviews目录，不自动公开",
+      "relationships": [
+        "数据v1",
+        "B8L2主线与D10敏感性",
+        "研究统筹",
+        "人员分类",
+        "门洞场景"
+      ]
+    },
+    {
+      "id": "MAT-research--workers--worker_v1_pro_integration_20261017",
+      "title": "人员Pro证据修正与真实组合结果接入",
+      "theme": "workers",
+      "type": "版本化研究交付",
+      "date": "20261017",
+      "source_path": "research/workers/worker_v1_pro_integration_20261017",
+      "current_path": "research/workers/worker_v1_pro_integration_20261017",
+      "source": "原模块线程修正与统筹验收",
+      "adoption_status": "数据v1分析修订；旧快照保留，具体状态见包内接口",
+      "verification_status": "来源、定向测试及消费者核查见统筹审查第9节",
+      "availability": "本地研究用途；未推送或公网部署",
+      "relationships": []
+    },
+    {
+      "id": "MAT-research--statistics--v1_integrated_analysis_20261017_r2",
+      "title": "v1统计消费修订r2",
+      "theme": "statistics",
+      "type": "版本化研究交付",
+      "date": "20261017",
+      "source_path": "research/statistics/v1_integrated_analysis_20261017_r2",
+      "current_path": "research/statistics/v1_integrated_analysis_20261017_r2",
+      "source": "原模块线程修正与统筹验收",
+      "adoption_status": "数据v1分析修订；旧快照保留，具体状态见包内接口",
+      "verification_status": "来源、定向测试及消费者核查见统筹审查第9节",
+      "availability": "本地研究用途；未推送或公网部署",
+      "relationships": []
+    },
+    {
+      "id": "MAT-research--statistics--research_explorer_v1_r2_20261017",
+      "title": "v1修订r2本地趋势浏览台",
+      "theme": "statistics",
+      "type": "版本化研究交付",
+      "date": "20261017",
+      "source_path": "research/statistics/research_explorer_v1_r2_20261017",
+      "current_path": "research/statistics/research_explorer_v1_r2_20261017",
+      "source": "原模块线程修正与统筹验收",
+      "adoption_status": "数据v1分析修订；旧快照保留，具体状态见包内接口",
+      "verification_status": "来源及原统计核查见统筹第9节；十模块离线前端、几何与占位覆盖见包内COVERAGE和HANDOFF",
+      "availability": "本地双击HTML离线浏览；保留相邻前端目录与派生脚本分片；未推送或公网部署",
+      "relationships": []
+    },
+    {
+      "id": "MAT-research--quality--geometry_quality_review_20261018",
+      "title": "几何质量Pro与dot全1911份独立复核",
+      "theme": "quality",
+      "type": "独立审查与复现",
+      "date": "20261018",
+      "source_path": "research/quality/geometry_quality_review_20261018",
+      "current_path": "research/quality/geometry_quality_review_20261018",
+      "source": "本地接收的Pro及dot原件；当前v1规范输入和参考",
+      "adoption_status": "保留B8L2/D10；N1建议单独实现修订，未切换默认；EBC2.1/RBC-F8仅研究诊断",
+      "verification_status": "本轮7阶段20测试通过；2710原份及63补算复现，1911身份参考资格一致；N1同环境1911不变；验证器误报已独立复现",
+      "availability": "报告与紧凑检查登记；原件和详细执行负载仅本地忽略",
+      "relationships": [
+        "docs/thesis_main/人员质量口径与几何Pro复核_20261018.md",
+        "research/quality/quality_b8l2_d10_20261017"
+      ]
+    },
+    {
+      "id": "MAT-research--workers--worker_quality_scope_review_20261018",
+      "title": "人员scope与原尺度相对质量独立复核",
+      "theme": "workers",
+      "type": "独立审查与复算",
+      "date": "20261018",
+      "source_path": "research/workers/worker_quality_scope_review_20261018",
+      "current_path": "research/workers/worker_quality_scope_review_20261018",
+      "source": "3222真实作答scope、1048普通Manual画像及原始导出",
+      "adoption_status": "scope倾向与相容gold误拒分列；相对Q支持研究比较，未新增总分或重判资格",
+      "verification_status": "22源文件3222回应核对；960效应2096预测独立重解；27图702机会列待语义桥接",
+      "availability": "本地报告与审查表",
+      "relationships": [
+        "research/workers/worker_v1_pro_integration_20261017",
+        "research/statistics/research_explorer_v1_r2_20261017"
+      ]
+    },
+    {
+      "id": "MAT-docs--thesis_main--人员质量口径与几何Pro复核_20261018",
+      "title": "人员质量口径与几何Pro复核统筹意见",
+      "theme": "workers",
+      "type": "统筹审查",
+      "date": "20261018",
+      "source_path": "docs/thesis_main/人员质量口径与几何Pro复核_20261018.md",
+      "current_path": "docs/thesis_main/人员质量口径与几何Pro复核_20261018.md",
+      "source": "用户问题、两路子智能体独立复算与统筹交叉审查",
+      "adoption_status": "研究解释与接续建议，不改变默认评分、人员分类或数据v1",
+      "verification_status": "关联两包实际检查、分母及采用边界；工作台scope命名修正",
+      "availability": "本地文档",
+      "relationships": [
+        "research/quality/geometry_quality_review_20261018",
+        "research/workers/worker_quality_scope_review_20261018"
+      ]
+    },
+    {
+      "id": "MAT-research--data--processed_input_review_20261018",
+      "title": "已处理删补点继承核查与有效输入修订",
+      "theme": "data",
+      "type": "研究分析与核验",
+      "date": "20261018",
+      "source_path": "research/data/processed_input_review_20261018",
+      "current_path": "research/data/processed_input_review_20261018",
+      "source": "真实v1已处理输入、冻结楼外画像与本轮实际计算",
+      "adoption_status": "当前有效输入；保留旧manifest和原始导出",
+      "verification_status": "43条处理记录、24份有效编辑与回执重放；唯一R01424恢复，主质量1911不变",
+      "availability": "本地文件；输入载荷保留本地，离线HTML需相邻数据与原图",
+      "relationships": []
+    },
+    {
+      "id": "MAT-research--workers--worker_fine_composition_20261018",
+      "title": "人员粗细分类、构成与换人真实实验",
+      "theme": "workers",
+      "type": "研究分析与核验",
+      "date": "20261018",
+      "source_path": "research/workers/worker_fine_composition_20261018",
+      "current_path": "research/workers/worker_fine_composition_20261018",
+      "source": "真实v1已处理输入、冻结楼外画像与本轮实际计算",
+      "adoption_status": "v1定向阶段研究；不冻结永久类型",
+      "verification_status": "8图8建筑528请求502成员集合；无目标楼泄漏，失败与分母保留",
+      "availability": "本地文件；输入载荷保留本地，离线HTML需相邻数据与原图",
+      "relationships": []
+    },
+    {
+      "id": "MAT-research--fusion--worker_composition_fusion_20261018",
+      "title": "已修订输入的人员组合融合及失败池恢复",
+      "theme": "fusion",
+      "type": "研究分析与核验",
+      "date": "20261018",
+      "source_path": "research/fusion/worker_composition_fusion_20261018",
+      "current_path": "research/fusion/worker_composition_fusion_20261018",
+      "source": "真实v1已处理输入、冻结楼外画像与本轮实际计算",
+      "adoption_status": "本轮真实几何；B8L2/D10原参数，N1未接入",
+      "verification_status": "867请求836集合绑定核验；811本轮融合、25旧几何复用",
+      "availability": "本地文件；输入载荷保留本地，离线HTML需相邻数据与原图",
+      "relationships": []
+    },
+    {
+      "id": "MAT-docs--thesis_main--处理修订核验与人员细分类收尾_20261018.md",
+      "title": "处理修订核验与人员细分类阶段收尾",
+      "theme": "coordination",
+      "type": "研究分析与核验",
+      "date": "20261018",
+      "source_path": "docs/thesis_main/处理修订核验与人员细分类收尾_20261018.md",
+      "current_path": "docs/thesis_main/处理修订核验与人员细分类收尾_20261018.md",
+      "source": "真实v1已处理输入、冻结楼外画像与本轮实际计算",
+      "adoption_status": "当前统筹状态与后续人工查看入口",
+      "verification_status": "汇总实际输入、分类、融合及独立交叉审查；不是最终分类认证",
+      "availability": "本地文件；输入载荷保留本地，离线HTML需相邻数据与原图",
+      "relationships": []
+    },
+    {
+      "id": "MAT-research--statistics--research_explorer_v1_r2_20261017--personnel_composition.html",
+      "title": "真实v1人员细分类与组合离线展示",
+      "theme": "statistics",
+      "type": "研究分析与核验",
+      "date": "20261018",
+      "source_path": "research/statistics/research_explorer_v1_r2_20261017/personnel_composition.html",
+      "current_path": "research/statistics/research_explorer_v1_r2_20261017/personnel_composition.html",
+      "source": "真实v1已处理输入、冻结楼外画像与本轮实际计算",
+      "adoption_status": "当前定向实验展示；旧109表保持r2快照",
+      "verification_status": "3分类8图6实例、几何切换与导出离线浏览器验证；无网络请求",
+      "availability": "本地文件；输入载荷保留本地，离线HTML需相邻数据与原图",
+      "relationships": []
+    },
+    {
+      "id": "MAT-research--workers--worker_exchangeability_20261018",
+      "title": "扩大人数后的人员可替换性与原答分簇",
+      "theme": "workers",
+      "type": "研究分析与核验",
+      "date": "20261018",
+      "source_path": "research/workers/worker_exchangeability_20261018",
+      "current_path": "research/workers/worker_exchangeability_20261018",
+      "source": "真实v1已处理输入、楼外人员画像、冻结替换设计和用户六例原话",
+      "adoption_status": "楼外Q／T分类的阶段研究，Semi与scope不参与；不是永久人员类型",
+      "verification_status": "3840请求、2560单人替换；共同背景链、另一背景复核、191份原答与6条人工反馈核对",
+      "availability": "本地文件；离线页面需相邻派生数据和本地原图",
+      "relationships": [
+        "research/fusion/worker_exchangeability_fusion_20261018",
+        "docs/thesis_main/人员可替换性与多人组合核验_20261018.md",
+        "research/statistics/research_explorer_v1_r2_20261017/personnel_exchangeability.html"
+      ]
+    },
+    {
+      "id": "MAT-research--fusion--worker_exchangeability_fusion_20261018",
+      "title": "6至16人固定背景单人替换真实融合",
+      "theme": "fusion",
+      "type": "研究分析与核验",
+      "date": "20261018",
+      "source_path": "research/fusion/worker_exchangeability_fusion_20261018",
+      "current_path": "research/fusion/worker_exchangeability_fusion_20261018",
+      "source": "真实v1已处理输入、楼外人员画像、冻结替换设计和用户六例原话",
+      "adoption_status": "本轮真实几何；既定B8L2／D10、参考和用途不变",
+      "verification_status": "3840请求3839集合；3838新算、1精确复用；全部绑定及两例16人逆序重算通过",
+      "availability": "本地文件；离线页面需相邻派生数据和本地原图",
+      "relationships": [
+        "research/workers/worker_exchangeability_20261018",
+        "docs/thesis_main/人员可替换性与多人组合核验_20261018.md",
+        "research/statistics/research_explorer_v1_r2_20261017/personnel_exchangeability.html"
+      ]
+    },
+    {
+      "id": "MAT-docs--thesis_main--人员可替换性与多人组合核验_20261018.md",
+      "title": "人员可替换性与多人组合核验统筹结论",
+      "theme": "coordination",
+      "type": "研究分析与核验",
+      "date": "20261018",
+      "source_path": "docs/thesis_main/人员可替换性与多人组合核验_20261018.md",
+      "current_path": "docs/thesis_main/人员可替换性与多人组合核验_20261018.md",
+      "source": "真实v1已处理输入、楼外人员画像、冻结替换设计和用户六例原话",
+      "adoption_status": "当前阶段实算结论与下一步验证边界",
+      "verification_status": "31项相关测试、定向独立交叉复算和本地浏览器核对；不称新人员外部验证",
+      "availability": "本地文件；离线页面需相邻派生数据和本地原图",
+      "relationships": [
+        "research/workers/worker_exchangeability_20261018",
+        "research/fusion/worker_exchangeability_fusion_20261018",
+        "research/statistics/research_explorer_v1_r2_20261017/personnel_exchangeability.html"
+      ]
+    },
+    {
+      "id": "MAT-research--statistics--research_explorer_v1_r2_20261017--personnel_exchangeability.html",
+      "title": "6至16人单人替换与原答分簇离线展示",
+      "theme": "statistics",
+      "type": "研究分析与核验",
+      "date": "20261018",
+      "source_path": "research/statistics/research_explorer_v1_r2_20261017/personnel_exchangeability.html",
+      "current_path": "research/statistics/research_explorer_v1_r2_20261017/personnel_exchangeability.html",
+      "source": "真实v1已处理输入、楼外人员画像、冻结替换设计和用户六例原话",
+      "adoption_status": "定向实验展示；旧r2及4人结果保持原身份",
+      "verification_status": "3分类4人数8原图、固定链分母与均值、6条旧反馈和导出本地验证，无HTTP请求",
+      "availability": "本地文件；离线页面需相邻派生数据和本地原图",
+      "relationships": [
+        "research/workers/worker_exchangeability_20261018",
+        "research/fusion/worker_exchangeability_fusion_20261018",
+        "docs/thesis_main/人员可替换性与多人组合核验_20261018.md"
+      ]
+    },
+    {
+      "id": "MAT-docs--thesis_main--人员分类与作答分簇讨论记录_20261018.md",
+      "title": "人员分类、Semi盲信与作答分簇待讨论想法",
+      "theme": "workers",
+      "type": "研究讨论与人工修订",
+      "date": "20261018",
+      "source_path": "docs/thesis_main/人员分类与作答分簇讨论记录_20261018.md",
+      "current_path": "docs/thesis_main/人员分类与作答分簇讨论记录_20261018.md",
+      "source": "用户2026-10-18最新要求",
+      "adoption_status": "讨论记录；不是已采用分类或实验结论",
+      "verification_status": "定向测试及单图非难度字段不变核查",
+      "availability": "本地文件",
+      "relationships": []
+    },
+    {
+      "id": "MAT-research--difficulty--difficulty_user_revision_20261018",
+      "title": "uNb9QFRL6hY-01人工确认中等难度",
+      "theme": "difficulty",
+      "type": "研究讨论与人工修订",
+      "date": "20261018",
+      "source_path": "research/difficulty/difficulty_user_revision_20261018",
+      "current_path": "research/difficulty/difficulty_user_revision_20261018",
+      "source": "用户2026-10-18最新要求",
+      "adoption_status": "已采用的单图难度修正；历史聚合统计不追改",
+      "verification_status": "定向测试及单图非难度字段不变核查",
+      "availability": "本地文件",
+      "relationships": []
+    },
+    {
+      "id": "MAT-cluster-review-20261018",
+      "title": "同距离完整链接与全局亲近度分簇人工审查台",
+      "theme": "statistics",
+      "type": "探索展示与人工审查",
+      "date": "20261018",
+      "source_path": "research/statistics/cluster_review_20261018",
+      "current_path": "research/statistics/cluster_review_20261018",
+      "source": "已处理真实v1八图191份作答",
+      "adoption_status": "待人工审查；人员分类暂停",
+      "verification_status": "小规模全分区穷举与输入覆盖、离线交互检查通过；视觉待审",
+      "availability": "本地文件",
+      "relationships": []
+    },
+    {
+      "id": "MAT-worker-difficulty-profiles-20261018",
+      "title": "全量人员×难度画像与专长候选",
+      "theme": "workers",
+      "type": "人员分析与离线展示",
+      "date": "20261018",
+      "source_path": "research/workers/worker_difficulty_profiles_20261018",
+      "current_path": "research/workers/worker_difficulty_profiles_20261018",
+      "source": "真实v1现有1911质量可用作答及当前难度",
+      "adoption_status": "探索性细类，恢复人员分类推进；分簇仅辅助",
+      "verification_status": "4项测试及四条件离线控制器检查通过，视觉待核查",
+      "availability": "本地文件",
+      "relationships": []
+    },
+    {
+      "id": "MAT-pro-personnel-handoff-20261018",
+      "title": "Pro独立人员分类QT难度与反向分簇交接ZIP",
+      "theme": "workers",
+      "type": "本地交接包",
+      "date": "20261018",
+      "source_path": "research/workers/pro_personnel_handoff_20261018",
+      "current_path": "research/workers/pro_personnel_handoff_20261018",
+      "source": "当前本地真实v1及研究结果",
+      "adoption_status": "交付Pro研究，不更新GitHub",
+      "verification_status": "已完成打包CRC与输入对应；用户要求停止后续测试，独立解压运行未验证",
+      "availability": "本地文件",
+      "relationships": []
     }
   ]
 }
