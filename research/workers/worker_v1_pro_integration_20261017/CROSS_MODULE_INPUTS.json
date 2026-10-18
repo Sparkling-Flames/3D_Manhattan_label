@@ -1,0 +1,31 @@
+{
+  "data_release": "v1",
+  "analysis_revision": "worker_v1_pro_integration_20261017",
+  "files": {
+    "records": "research\\workers\\worker_v1_pro_integration_20261017\\record_evidence.csv",
+    "persons": "research\\workers\\worker_v1_pro_integration_20261017\\person_profiles_and_evidence.csv",
+    "semi_measurements": "research\\workers\\worker_v1_pro_integration_20261017\\semi_initialization_scores.csv",
+    "correction": "research\\workers\\worker_v1_pro_integration_20261017\\semi_correction_evidence.csv",
+    "correction_bridge": "research\\workers\\worker_v1_pro_integration_20261017\\correction_definition_bridge.csv",
+    "scope": "research\\workers\\worker_v1_pro_integration_20261017\\scope_evidence.csv",
+    "exclusion_candidates": "research\\workers\\worker_v1_pro_integration_20261017\\exclusion_candidate_evidence.csv",
+    "team_results": "research\\workers\\worker_v1_pro_integration_20261017\\team_results.csv",
+    "strategy_pairs": "research\\workers\\worker_v1_pro_integration_20261017\\strategy_vs_random.csv",
+    "pure_class_comparisons": "research\\workers\\worker_v1_pro_integration_20261017\\pure_group_direct_comparisons.csv",
+    "metric_reselection": "research\\workers\\worker_v1_pro_integration_20261017\\metric_reselection_contrasts.csv",
+    "human_cases": "research\\workers\\worker_v1_pro_integration_20261017\\HUMAN_REVIEW_CASES.json",
+    "fields": "research\\workers\\worker_v1_pro_integration_20261017\\FIELD_CONTRACT.json"
+  },
+  "joins": {
+    "record": "object_id",
+    "person": [
+      "worker_id",
+      "metric"
+    ],
+    "team": "request_id"
+  },
+  "adoption": "evidence and compatible measurement increment; Q1048 and existing eligibility preserved",
+  "quality_layers": "ordinary Manual Q; ordinary Semi separate; doorway specialist separate; current doorway strategies are ordinary-Q transfer",
+  "limits": "25/68 are candidate text codes; historical scope compatibility is not new gold; no new composite penalty",
+  "status": "ready"
+}

@@ -1,0 +1,62 @@
+{
+  "selection": "posthoc_examples_only_not_design_selection",
+  "cases": [
+    {
+      "case_kind": "same_composition_largest_observed_geometry_difference",
+      "scheme": "Q2",
+      "image_code": "UwV83HsGsw3-09",
+      "composition": "higher:3|lower:1",
+      "request_a": "FINE00277",
+      "request_b": "FINE00278",
+      "floor_jaccard_difference": 0.8373003364311534
+    },
+    {
+      "case_kind": "same_composition_largest_observed_geometry_difference",
+      "scheme": "Q3",
+      "image_code": "UwV83HsGsw3-09",
+      "composition": "high:1|low:1|middle:2",
+      "request_a": "FINE00301",
+      "request_b": "FINE00302",
+      "floor_jaccard_difference": 0.6276551703012021
+    },
+    {
+      "case_kind": "same_composition_largest_observed_geometry_difference",
+      "scheme": "QT4",
+      "image_code": "UwV83HsGsw3-09",
+      "composition": "higher_faster:1|higher_slower:1|lower_faster:1|lower_slower:1",
+      "request_a": "FINE00286",
+      "request_b": "FINE00288",
+      "floor_jaccard_difference": 0.6195569926734915
+    },
+    {
+      "case_kind": "pure_class_positive_mean_contrast",
+      "scheme": "Q3",
+      "image_code": "q9vSo1VnCiC-13",
+      "composition": "high:4_minus_middle:4",
+      "request_a": "FINE00442",
+      "request_b": "FINE00040",
+      "B8L2_cell_mean_difference": 32.03651448082064,
+      "display_note": "展示预设draw0；数值为各组三队均值差，非所展示两队差"
+    },
+    {
+      "case_kind": "pure_class_negative_mean_contrast",
+      "scheme": "QT4",
+      "image_code": "B6ByNegPMKs-11",
+      "composition": "lower_faster:4_minus_lower_slower:4",
+      "request_a": "FINE00472",
+      "request_b": "FINE00469",
+      "B8L2_cell_mean_difference": -26.91048842136486,
+      "display_note": "展示预设draw0；数值为各组三队均值差，非所展示两队差"
+    },
+    {
+      "case_kind": "different_composition_doorway_node_change",
+      "scheme": "Q3",
+      "image_code": "q9vSo1VnCiC-13",
+      "composition": "high:4 vs low:4",
+      "request_a": "FINE00042",
+      "request_b": "FINE00439",
+      "node_count_difference": 7,
+      "floor_jaccard_difference": 0.3257002904441355
+    }
+  ]
+}

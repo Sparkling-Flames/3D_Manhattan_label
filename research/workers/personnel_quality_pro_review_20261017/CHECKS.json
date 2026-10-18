@@ -1,0 +1,223 @@
+{
+  "schema": "personnel_pro_and_v1_review_checks_20261017_v1",
+  "date": "2026-10-17",
+  "data_release": "v1",
+  "scope": {
+    "kind": "targeted_independent_review",
+    "analysis_code_changed": false,
+    "full_fusion_rerun": false,
+    "all_geometry_visually_adjudicated": false,
+    "pro_originals_modified": false,
+    "formal_scores_or_eligibility_replaced": false
+  },
+  "source": {
+    "local_original_package": "inputs/local_reviews/personnel_quality_pro_20261017",
+    "files": 329,
+    "uncompressed_bytes": 116037384,
+    "git_ignored": true,
+    "privacy": "Original identity and comment evidence stays local. Catalog inclusion does not authorize publication."
+  },
+  "q": {
+    "effect_check": {
+      "check": "independent_full_design_least_squares",
+      "input_rows": 1048,
+      "tasks": 87,
+      "workers": 24,
+      "buildings": 19,
+      "effects_checked": 960,
+      "maximum_absolute_effect_difference": 5.595524044110789e-13,
+      "method": "Explicit task dummy variables and sum-zero worker contrast, numpy.linalg.lstsq; no Pro or repo fitting function imported."
+    },
+    "prediction_check": {
+      "check": "independent_lobo_relative_predictions",
+      "predictions_checked": 2096,
+      "max_prediction_difference": 5.755396159656812e-13,
+      "building_equal_MSE_reduction": {
+        "B8L2": 0.2497924934563246,
+        "D10": 0.2368967241889136
+      },
+      "target": "Within exact task and evaluated peer set, relative score; not absolute score for a new image."
+    }
+  },
+  "q_inputs": [
+    "research/workers/worker_b8l2_d10_20261017/quality_panel.csv",
+    "inputs/local_reviews/personnel_quality_pro_20261017/study/q/fold_profiles_recomputed.csv",
+    "inputs/local_reviews/personnel_quality_pro_20261017/study/q/predictions_recomputed.csv"
+  ],
+  "semi": {
+    "initializations": 574,
+    "unconfirmed_native_ring": 413,
+    "researcher_point_repairs": 5,
+    "ordinary_attributable_pairs": 437,
+    "B8L2_initial_mean": 82.1062838,
+    "B8L2_final_mean": 79.4876604,
+    "B8L2_gain_mean": -2.6186234,
+    "unchanged_pairs_zero_gain": 128,
+    "strong_defect_opportunities": 156,
+    "known_unchanged": 25,
+    "edited_outcome_unknown": 131
+  },
+  "evidence_definition_bridge": {
+    "old_opportunities": 288,
+    "new_opportunities": 156,
+    "intersection": 144,
+    "old_only_natural_trap_label": 144,
+    "new_only_historically_excluded_workers": 12,
+    "old_unchanged": 36,
+    "new_unchanged": 25,
+    "unchanged_intersection": 20,
+    "old_only_unchanged": 16,
+    "new_only_unchanged_W026": 5,
+    "old_specific_exclusions": 10,
+    "new_specific_exclusions": 25,
+    "specific_intersection": 10,
+    "interpretation": "Definitions and worker coverage differ. These are not same-denominator corrections."
+  },
+  "pro_comment_parser_issue": {
+    "script": "study/reliability/build_correction_ledger.py",
+    "line": 27,
+    "expected_review_statement_records": 3,
+    "marked": 1,
+    "missed_object_ids": [
+      "b62a4df9e1645fe7",
+      "717840fe8221eba6"
+    ],
+    "marked_object_id": "28935ccbb578589d",
+    "all_source_verdicts": "usable",
+    "in_strong_156_opportunity_set": false,
+    "fix_scope": "Preserve all three reviewer statements separately; do not change cleaning or the strong-defect denominator."
+  },
+  "fusion_join": {
+    "old_nodes": 41323,
+    "final_nodes": 41859,
+    "new_nodes": 536,
+    "new_path_kind_counts": {
+      "same_room": 536
+    },
+    "common_core_fields_equal": [
+      "B8L2",
+      "D10",
+      "main_comparison_allowed",
+      "subset",
+      "reference_id",
+      "reference_version"
+    ],
+    "auxiliary_nonempty_to_missing": {
+      "floor_WQ_upper_bound": 2435,
+      "iou_3d_corner_mean": 2402,
+      "height_mean_ratio": 2402,
+      "floor_WQ": 2402,
+      "boundary_loss": 2402,
+      "direction_loss": 2402,
+      "global_height_loss": 2402,
+      "local_height_loss": 2402,
+      "height_loss": 2402,
+      "height_drop_WQ": 2402,
+      "height_drop_current": 2402,
+      "WQ_no_D": 2402,
+      "WQ_no_B": 2402,
+      "WQ_no_H": 2402,
+      "iou2d100": 2402
+    },
+    "root_cause": "wall_consensus_v1_process_20261017.py:149 score-cache key selection omits returned auxiliary fields"
+  },
+  "fusion_inputs": [
+    "research/statistics/v1_integrated_analysis_20261017/inputs/fusion_states.csv",
+    "research/fusion/wall_consensus_v1_process_20261017/trajectory_scores.csv"
+  ],
+  "difficulty_fixed_panel": {
+    "images": 104,
+    "k": [
+      3,
+      4,
+      6
+    ],
+    "rows": 312,
+    "matched_rows": 312,
+    "all_shared_fields_equal": true,
+    "sources": [
+      "research/difficulty/difficulty_v1_analysis_20261017/fusion_fixed_pool_k.csv",
+      "research/fusion/wall_consensus_v1_process_20261017/by_pool_k.csv"
+    ]
+  },
+  "fusion_8_to_16_main_sensitivity": {
+    "reported_images": 30,
+    "main_images": 27,
+    "excluded_historical_holdout_images": [
+      "e9zR4mvMWw7-19",
+      "yqstnuAEVhm-25",
+      "yqstnuAEVhm-34"
+    ],
+    "quality_improved": 18,
+    "quality_decreased": 9,
+    "B8L2_mean_change": 0.272973,
+    "D10_mean_change": 0.199946,
+    "V_decreased": 25,
+    "V_increased": 2,
+    "V_mean_from": 0.0774993,
+    "V_mean_to": 0.055229,
+    "limit": "V endpoint pair availability differs in some images; this is not a fully matched-pair V estimand."
+  },
+  "doorway": {
+    "inventory_records": 246,
+    "inventory_images": 20,
+    "non_oos_records": 223,
+    "oos_overlap_records": 23,
+    "quality_records": 188,
+    "quality_images": 15,
+    "quality_workers": 24,
+    "random_process_images": 17,
+    "random_process_nodes": 808,
+    "random_complete_geometry": 703,
+    "random_main_quality_nodes": 655,
+    "complete_source_time_nodes": 59,
+    "fixed_k": [
+      3,
+      4,
+      6
+    ],
+    "attempts_each_k_17_images": 68,
+    "complete_geometry_by_k": [
+      65,
+      54,
+      61
+    ],
+    "main_quality_by_k": [
+      57,
+      46,
+      53
+    ],
+    "fixed_main_eligible_images": 15,
+    "attempts_each_k_main": 60,
+    "k8_images": 14,
+    "k12_images": 4,
+    "same_room_process_pairs": 0
+  },
+  "same_room": {
+    "real_process_pairs": 9,
+    "buildings": 7,
+    "single_side_nodes": 536,
+    "paired_prefixes": 268,
+    "complete_paired_prefixes": 228,
+    "main_quality_paired_prefixes": 196,
+    "main_pairs": 7,
+    "quality_gap_shrank": 4,
+    "quality_gap_grew": 3,
+    "both_sides_same_members_and_order": true,
+    "planned_producer_consumer_keys_match": true
+  },
+  "tests": {
+    "command": "python -m pytest tests/test_worker_v1_composition_20261017.py tests/test_wall_consensus_v1_process_20261017.py tests/test_same_room_v1_process_20261017.py tests/test_same_room_v1_process_compare_20261017.py tests/test_difficulty_v1_analysis_20261017.py tests/test_v1_integrated_analysis_20261017.py -q",
+    "result": "27 passed in 4.35s",
+    "full_suite": false,
+    "limitation": "Existing tests did not catch the omitted cache fields or the 30-image comparison-use ambiguity."
+  },
+  "pending": [
+    "Pro reviewer-statement parser correction and evidence import",
+    "Scope compatibility and severity attribution limits",
+    "Auxiliary score-cache field preservation fix and regression test",
+    "Consumer 536-node import and missing statistics HANDOFF",
+    "Explicit 30/27-image use labels",
+    "Doorway fixed-panel interpretation and figures"
+  ]
+}

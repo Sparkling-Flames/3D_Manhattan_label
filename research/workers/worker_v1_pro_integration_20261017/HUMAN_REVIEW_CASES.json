@@ -1,0 +1,35 @@
+{
+  "data_release": "v1",
+  "needed_for_current_main_Q_or_team_consumption": false,
+  "no_request_to_review_all_131": true,
+  "cases": [
+    {
+      "object_id": "f21c670566821ce7",
+      "worker_id": "W001",
+      "image_code": "UwV83HsGsw3-08",
+      "source_verdict": "invalid_preserved",
+      "issue": "historical_OOS_geometry_submission_requirement_vs_personal_error_attribution",
+      "question": "该P1任务当时是否要求OOS也提供完整成对布局，还是只需足以支持OOS判断？原invalid是否针对独立个人错误？",
+      "evidence_quote": "oos,但是他只标了3个点",
+      "historical_scope_outcome": "correct_rejection",
+      "original_source": {
+        "path": "export_label/stage1_chinese/project-30-at-2026-06-30-09-00-69d8051b.json",
+        "selected_snapshot_path": "analysis_results/prescreen_closeout_final_gold_v2_20260701/raw_inputs/project-30-at-2026-06-30-09-00-69d8051b.json",
+        "project": 30,
+        "task": 3105,
+        "annotation": 4790,
+        "worker": "W001",
+        "image_id": "UwV83HsGsw3_71ada030981d4468b76dcebc1b6fb940",
+        "condition": "oos",
+        "mirror_path": "export_label/stage1_chinese/project-30-at-2026-06-30-09-00-69d8051b.json",
+        "mirror_verified": true
+      },
+      "record_table": "record_evidence.csv",
+      "scope_table": "scope_evidence.csv",
+      "exclusion_table": "exclusion_candidate_evidence.csv",
+      "current_rule": "docs/label_studio/README_ANNOTATOR.md sections 2.3 and 3.4",
+      "interim_action": "retain_original_exclusion_attribution_pending_no_severe_error_penalty",
+      "required_only_if": "research_will_attribute_this_OOS_exclusion_to_personal_geometry_failure"
+    }
+  ]
+}

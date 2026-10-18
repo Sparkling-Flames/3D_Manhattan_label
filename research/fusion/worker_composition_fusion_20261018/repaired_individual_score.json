@@ -1,0 +1,270 @@
+{
+  "source": "research\\data\\processed_input_review_20261018\\quality_reassessment.json",
+  "records": [
+    {
+      "object_id": "8ffe08f072e2b12e",
+      "previous_calculation_status": "pending_target",
+      "previous_quality_usable": false,
+      "geometry": {
+        "object_id": "8ffe08f072e2b12e",
+        "input_geometry_status": "full_geometry_available",
+        "full_input_available": true,
+        "floor_input_available": true,
+        "floor_xz_h": [
+          [
+            -0.8560566093636343,
+            1.917560293334693
+          ],
+          [
+            -0.8597735594713946,
+            0.35990592996757487
+          ],
+          [
+            -0.3602114110801734,
+            0.4038760789772775
+          ],
+          [
+            -0.3431921819212123,
+            -0.47080264326990146
+          ],
+          [
+            -0.811744636295566,
+            -0.4469741318190743
+          ],
+          [
+            -0.8199626183070182,
+            -1.6566173071320796
+          ],
+          [
+            0.43976050759355934,
+            -1.708286200859984
+          ],
+          [
+            0.4604400260252189,
+            -1.4324234463414978
+          ],
+          [
+            0.7868707271819317,
+            -1.375376330185605
+          ],
+          [
+            0.822760926830694,
+            -0.5752992459578262
+          ],
+          [
+            1.6658270115335938,
+            -0.5384560957774546
+          ],
+          [
+            1.6771549162573407,
+            1.0863431262401466
+          ],
+          [
+            0.7840309870223461,
+            1.1119303517384933
+          ],
+          [
+            0.7416405868401555,
+            1.9834523966519448
+          ]
+        ],
+        "reasons": [],
+        "warnings": [
+          "non_star_shaped_about_camera"
+        ],
+        "source_geometry_status": "surface_valid",
+        "ring_confirmed": true,
+        "geometry_inspected": true,
+        "annotation_modified": false,
+        "measurement_attempted": false,
+        "floor_reason_codes": [],
+        "validator_version": "strict_geometry_v1.1.0"
+      },
+      "binding": {
+        "object_id": "8ffe08f072e2b12e",
+        "image_id": "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+        "image_code": "rPc6DW4iMge-22",
+        "worker_id": "W002",
+        "condition": "manual",
+        "record_id": "R01424",
+        "current_target_id": "rPc6DW4iMge-22:primary:floor:99a6faf3159e8eb0",
+        "chosen_target_id": "gt:rPc6DW4iMge_fbc169773c954580baea6d2798c0d486:data/mp3d_layout/test/label_cor/rPc6DW4iMge_fbc169773c954580baea6d2798c0d486.txt",
+        "chosen_target_is_current": false,
+        "binding_status": "local_differentiating_structure",
+        "allowed_target_ids": [
+          "gt:rPc6DW4iMge_fbc169773c954580baea6d2798c0d486:data/mp3d_layout/test/label_cor/rPc6DW4iMge_fbc169773c954580baea6d2798c0d486.txt",
+          "rPc6DW4iMge-22:primary:floor:99a6faf3159e8eb0"
+        ],
+        "manual_source": null,
+        "manual_family_source": null,
+        "manual_evidence_geometry_unchanged": false,
+        "local_routing_evidence": {
+          "version": "current_reference_local_router_20261017_v1",
+          "source": "research/quality_pro_joint_archive_20261013/source/routing",
+          "quality_or_height_used_for_route": false,
+          "route_is_quality_acceptance": false,
+          "true_intent_established": false,
+          "candidate_id": "gt:rPc6DW4iMge_fbc169773c954580baea6d2798c0d486:data/mp3d_layout/test/label_cor/rPc6DW4iMge_fbc169773c954580baea6d2798c0d486.txt",
+          "route_reason": "local_differentiating_structure",
+          "uncertainty": "structural_evidence_not_verified_historical_intent",
+          "surviving_candidates": [
+            "gt:rPc6DW4iMge_fbc169773c954580baea6d2798c0d486:data/mp3d_layout/test/label_cor/rPc6DW4iMge_fbc169773c954580baea6d2798c0d486.txt"
+          ],
+          "pairwise_local_evidence": [
+            {
+              "candidate_a": "gt:rPc6DW4iMge_fbc169773c954580baea6d2798c0d486:data/mp3d_layout/test/label_cor/rPc6DW4iMge_fbc169773c954580baea6d2798c0d486.txt",
+              "candidate_b": "rPc6DW4iMge-22:primary:floor:99a6faf3159e8eb0",
+              "winner": "gt:rPc6DW4iMge_fbc169773c954580baea6d2798c0d486:data/mp3d_layout/test/label_cor/rPc6DW4iMge_fbc169773c954580baea6d2798c0d486.txt",
+              "reason": "distinctive_boundary_and_turn_support_with_region_consistency",
+              "evidence": {
+                "gt:rPc6DW4iMge_fbc169773c954580baea6d2798c0d486:data/mp3d_layout/test/label_cor/rPc6DW4iMge_fbc169773c954580baea6d2798c0d486.txt": {
+                  "local_support": 0.9135582665048634,
+                  "boundary_support": 0.9198361095005193,
+                  "corner_support": 0.901899415227217,
+                  "distinctive_boundary_length_h": 3.5619130498591733,
+                  "distinctive_corner_count": 4,
+                  "matched_contiguous_boundary_length_h": 3.3175941042009627,
+                  "boundary_evidence_available": true,
+                  "corner_evidence_available": true,
+                  "material_exclusive_area_h2": 1.9477120081254402,
+                  "exclusive_coverage": 0.9930176018269355,
+                  "exclusive_components": [
+                    {
+                      "area_h2": 1.9477120081254402,
+                      "coverage": 0.9930176018269355
+                    }
+                  ],
+                  "corner_similarities": [
+                    0.9491931084542672,
+                    0.980642942834915,
+                    0.95907112099915,
+                    0.7186904886205354
+                  ]
+                },
+                "rPc6DW4iMge-22:primary:floor:99a6faf3159e8eb0": {
+                  "local_support": 7.571500511043446e-07,
+                  "boundary_support": 1.1645606385739662e-06,
+                  "corner_support": 5.303886607614902e-10,
+                  "distinctive_boundary_length_h": 2.200976713064373,
+                  "distinctive_corner_count": 4,
+                  "matched_contiguous_boundary_length_h": 0.0,
+                  "boundary_evidence_available": true,
+                  "corner_evidence_available": true,
+                  "material_exclusive_area_h2": 0.0,
+                  "exclusive_coverage": null,
+                  "exclusive_components": [],
+                  "corner_similarities": [
+                    1.1688247675029136e-09,
+                    2.715547414062425e-11,
+                    3.815637410119143e-11,
+                    8.057997004376747e-10
+                  ]
+                }
+              }
+            }
+          ],
+          "survivor_iou_gap": null,
+          "global_iou_gap": 0.2789768783815938,
+          "global_iou_best": "gt:rPc6DW4iMge_fbc169773c954580baea6d2798c0d486:data/mp3d_layout/test/label_cor/rPc6DW4iMge_fbc169773c954580baea6d2798c0d486.txt",
+          "area_only_best": "gt:rPc6DW4iMge_fbc169773c954580baea6d2798c0d486:data/mp3d_layout/test/label_cor/rPc6DW4iMge_fbc169773c954580baea6d2798c0d486.txt",
+          "area_only_gap": 0.34385506534859844,
+          "boundary_only_best": "gt:rPc6DW4iMge_fbc169773c954580baea6d2798c0d486:data/mp3d_layout/test/label_cor/rPc6DW4iMge_fbc169773c954580baea6d2798c0d486.txt",
+          "candidate_floor_metrics": {
+            "gt:rPc6DW4iMge_fbc169773c954580baea6d2798c0d486:data/mp3d_layout/test/label_cor/rPc6DW4iMge_fbc169773c954580baea6d2798c0d486.txt": {
+              "I": 0.965297974964437,
+              "annotation_area_h2": 6.865518151245318,
+              "reference_area_h2": 6.693897239337933,
+              "intersection_area_h2": 6.659995779249955,
+              "union_area_h2": 6.899419611333297,
+              "missing_over_reference": 0.005064532495173413,
+              "extra_over_reference": 0.030702946974980903,
+              "extra_over_annotation": 0.029935449512734073,
+              "abs_log_area_ratio": 0.02531526209886134,
+              "boundary_mean_h": 0.018279140035352776,
+              "boundary_mean_over_sqrt_ref_area": 0.007065066263010269
+            },
+            "rPc6DW4iMge-22:primary:floor:99a6faf3159e8eb0": {
+              "I": 0.6863210965828432,
+              "annotation_area_h2": 6.865518151245318,
+              "reference_area_h2": 4.746185231212492,
+              "intersection_area_h2": 4.725883471891705,
+              "union_area_h2": 6.885819910566105,
+              "missing_over_reference": 0.004277489885408678,
+              "extra_over_reference": 0.4508114570166087,
+              "extra_over_annotation": 0.3116494097339923,
+              "abs_log_area_ratio": 0.3691703274474598,
+              "boundary_mean_h": 0.1587117506279183,
+              "boundary_mean_over_sqrt_ref_area": 0.07285120510141224
+            }
+          },
+          "status": "selected_provisional"
+        },
+        "annotation_geometry_status": "surface_valid",
+        "ring_confirmed": true,
+        "score_input_eligible": true,
+        "annotation_modified": false,
+        "annotation_cropped": false,
+        "quality_used_for_binding": false,
+        "cleaning_disposition": "retained",
+        "independent_vote_eligible": true,
+        "existing_main_quality_gate": {
+          "status": "candidate_pending_geometry",
+          "reasons": []
+        },
+        "existing_worker_quality_gate": "candidate_pending_geometry",
+        "person_quality_restriction_clear": true,
+        "pool_rule_version": "retained_independent_humans_by_image_condition_min3_20261015_v1",
+        "pool_vote_eligible": true,
+        "pool_vote_exclusion_reasons": [],
+        "pool_source_workers": 24,
+        "pool_min3_pass": true,
+        "duplicate_effective_worker": false,
+        "pool_image_exclusion_reasons": [],
+        "pool_analysis_eligible": true,
+        "pool_analysis_exclusion_reasons": [],
+        "ordinary_difficulty_eligible": true,
+        "analysis_binding_eligible": true
+      },
+      "policy": {
+        "quality_usable": false,
+        "quality_exclusion_reasons": [
+          "bound_other_admitted_space"
+        ],
+        "purpose_bypass": [],
+        "target_binding_unique": true
+      },
+      "score": {
+        "object_id": "8ffe08f072e2b12e",
+        "image_id": "rPc6DW4iMge_fbc169773c954580baea6d2798c0d486",
+        "worker_id": "W002",
+        "condition": "manual",
+        "current_target_id": "gt:rPc6DW4iMge_fbc169773c954580baea6d2798c0d486:data/mp3d_layout/test/label_cor/rPc6DW4iMge_fbc169773c954580baea6d2798c0d486.txt",
+        "reference_version": "gt_original",
+        "iou_2d": 0.9652979749644364,
+        "S_bottom_deg": 0.4888239005941099,
+        "dir": 2.616245390389171,
+        "Hmean": 0.015595924284029117,
+        "Hcenter": 0.03858991467256858,
+        "height_mean_ratio": 1.0155959242840291,
+        "iou_3d_corner_mean": 0.9538357723280512,
+        "IoU3D100": 95.38357723280512,
+        "WQ": 76.9732263030649,
+        "A10": 85.93151671809272,
+        "B8L2": 85.07056127527257,
+        "score_status": "complete",
+        "reasons": [],
+        "score_versions": {
+          "WQ": "WQ-LS08-20261014",
+          "A10": "WQ-A10-20261015",
+          "B8L2": "WQ-B8L2-20261015"
+        },
+        "metric_engine": "pro_closeout_delta_20261015_frozen_geometry",
+        "iou_3d_definition": "mean_height_prism_corner_mean_0_to_100",
+        "annotation_changed": false,
+        "reference_selection": "caller_supplied_no_optimization",
+        "D10": 88.52270419551803
+      }
+    }
+  ],
+  "usage": "direct individual score against pre-score bound target; diagnostic only"
+}

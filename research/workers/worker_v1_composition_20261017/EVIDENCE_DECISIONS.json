@@ -1,0 +1,28 @@
+{
+  "data_release": "v1",
+  "purpose": "现有明确人工评论的保守证据归类，不重审原作答、不改变资格；未列出的invalid仍为排除且归因未知。",
+  "source": "analysis_results/research_input_20261017/research.json#/annotations; object_id joins data objects and review_history",
+  "confirmed_person_error_exclusions": {
+    "456be942f0947a669713": {"quote": "把门当成了墙角", "basis": "最终invalid且明确错认墙角"},
+    "d709cefe9dcba87b": {"quote": "把凸起的圆柱标注了", "basis": "最终invalid且明确将柱体作布局"},
+    "83822f0c9ce15f483174": {"quote": "把圆柱给标了", "basis": "最终invalid且明确将柱体作布局"},
+    "58a8d69137385a19": {"quote": "偏得离谱", "basis": "最终invalid且明确严重定位偏差"},
+    "291127d705ad112ccb7b": {"quote": "标注了窗台,右边的门处也标错地方了,很奇怪", "basis": "最终invalid且明确错误构件及位置"},
+    "b5c368a4140e7de4": {"quote": "上面的对应点都没了", "basis": "最终invalid且明确必要上点缺失"},
+    "0671823b060edef4c4ef": {"quote": "只有6点", "basis": "最终invalid；历史审查同时明确点数不够、只标一个平面，属于表示不完整"},
+    "4a1158da9bd83ef9": {"quote": "直接排除,这些都是错误的标注,但是竟然有三个人是出现了同一个问题,得额外记录", "basis": "最终invalid且人工最终明确裁为错误；先前补点疑问保留在证据中"},
+    "6aed1eb1185c1318": {"quote": "直接排除,这些都是错误的标注,但是竟然有三个人是出现了同一个问题,得额外记录", "basis": "同图三人共同错误的独立作答，非三次独立图实验"},
+    "6d192755ca096a2c": {"quote": "直接排除,这些都是错误的标注,但是竟然有三个人是出现了同一个问题,得额外记录", "basis": "同图三人共同错误的独立作答，非三次独立图实验"}
+  },
+  "explicit_semi_correction_decisions": {
+    "b62a4df9e1645fe7": {"decision": "not_corrected", "quote": "这个改了一点模型的预标注,但是还是不太对"},
+    "717840fe8221eba6": {"decision": "not_corrected", "quote": "这个改了一点模型的预标注,但是还是不太对"},
+    "28935ccbb578589d": {"decision": "not_corrected", "quote": "这错误预标注他也没改对"}
+  },
+  "limits": [
+    "10条为明确文字支持的已知个人错误剔除下限，非完整严重错误审查；其余invalid不能按未知当正确。",
+    "usable且individual reviewed的记录只表示该次审核未认定严重失误，不证明所有局部正确。",
+    "confirmed_nontrap不等于初始化正确；坐标变化不等于纠错；净增分不作为修复成功标签。",
+    "所有规则只生成可靠性证据候选列，不修改清洗、融合资格或任何Q分数。"
+  ]
+}

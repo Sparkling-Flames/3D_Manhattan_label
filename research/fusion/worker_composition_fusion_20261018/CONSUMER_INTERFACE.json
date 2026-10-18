@@ -1,0 +1,50 @@
+{
+  "schema": "real_v1_worker_composition_fusion_20261018_v1",
+  "data_release": "v1",
+  "source_manifest": "research/data/processed_input_review_20261018/manifest.json",
+  "request_file": "requests.json",
+  "result_file": "team_results.csv",
+  "row_key": "request_id",
+  "unique_geometry_key": ["pool_id", "subset"],
+  "request_families": {
+    "fine_composition": "528预先声明的粗细构成及顺序请求；502不同成员集合",
+    "recovery": "原人员线程rPc-22的242请求ID，保持成员不变",
+    "recovery_random_baseline": "原基础seed=20261017的4条随机路径，96前缀",
+    "repaired_individual": "R01424单成员按池声明参考的诊断；直接个体原GT诊断在独立文件"
+  },
+  "geometry": {
+    "snapshot": "input_snapshot.json",
+    "path_column": "geometry_source",
+    "pointer_column": "geometry_state_pointer",
+    "pointer_semantics": "states数组中subset相等的automatic对象",
+    "full_points": "automatic.candidate.points",
+    "footprint": "automatic.candidate.footprint",
+    "nodes": "automatic.node_consensus.nodes",
+    "identities": "automatic.identity_groups"
+  },
+  "measurements": {
+    "R_union_normalized": "所选原答的平均两两底面对称差/固定池全员有效原答并集面积；k1缺失，附R_valid_pairs/R_possible_pairs",
+    "B8L2_D10": "旧引擎同输入同参考；B8L2方向8度，D10方向10度；N1未应用",
+    "diagnostic_scores": "diagnostic_B8L2和diagnostic_D10仅表示数值，不自动获得质量用途",
+    "quality_allowed": "非OOS、成员目标全同池声明参考、全部成员具有既有质量资格",
+    "main_comparison_allowed": "quality_allowed且无原留出，场景属ordinary或doorway_conditional",
+    "source_time_known_sum": "真实来源active_seconds已知成员之和；全未知留空，不能冒充完整团队用时",
+    "source_time_missing_n": "k减有真实来源时间人数；0才source_time_available",
+    "target_time_known_sum": "已有审计同目标时间已知成员之和；不由任务总时间代替",
+    "target_time_missing_n": "k减有已有审计同目标时间人数"
+  },
+  "comparison_tables": {
+    "same_composition_pairs.csv": "同pool/scheme/k4/composition、不同实际成员集合；request_a/b连接逐请求表",
+    "between_composition_pairs.csv": "同pool/scheme/k4、不同composition；仅fixed_k_composition_and_members实验",
+    "transitions.csv": "同顺序路径相邻前缀；path_id、request_a/b、k_from/to",
+    "floor_jaccard_difference": "V或Δ底面1-IoU；任一有效底面缺失即留空",
+    "floor_symdiff_h2": "底面对称差面积，单位相机高度平方",
+    "node_count_difference": "两个共识节点数量差的绝对值；不代表逐节点内容一一匹配",
+    "changed_coidentity_pairs": "共享原始观察的同墙线对应关系改变数量",
+    "shared_workers": "两个实际集合共同人员数；配对并非独立观测",
+    "unchanged_identity_vote_losses_gains": "嵌套加人时保留身份的表决消失/出现，不能用于任意换组因果解释"
+  },
+  "null_policy": "数值缺失留空；k2暂缓、无连接、无效底面、目标/用途不合格分别保留；不补零或删除请求",
+  "old_outputs_overwritten": false,
+  "new_human_geometry_approval": false
+}

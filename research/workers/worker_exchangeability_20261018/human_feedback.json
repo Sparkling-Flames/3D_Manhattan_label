@@ -1,0 +1,634 @@
+{
+  "schema": "human_feedback_bound_review_cases_v1",
+  "source_user_verbatim": "第一个例子: 第一组明显好于第二组 ,第二个例子:两个半斤八两,都不是很好. 第三个例子:第一组明显好于第二组. 第四个例子:第二个好于第一个  ,当然这图是门洞交界.     第五个:第一个好于第二个  .第六个:第一个好于第二个",
+  "source_case_file": "research/workers/worker_fine_composition_20261018/review_cases.json",
+  "source_team_file": "research/workers/worker_fine_composition_20261018/team_analysis.csv",
+  "source_fusion_file": "research/fusion/worker_composition_fusion_20261018/team_results.csv",
+  "source_input_snapshot": "research/fusion/worker_composition_fusion_20261018/input_snapshot.json",
+  "analysis_revision": "processed_input_fine_composition_20261018",
+  "left_right_binding": "personnel-composition.js: review case request_a maps teamA/geometryA (left), request_b maps teamB/geometryB (right)",
+  "interpretation": "事后选例人工反馈，不是盲评验证集。5例明确偏好方向与两指标均一致；第2例不定义等价容差，不纳入方向一致率。第4/5展示draw0的两队差与各组三队均值差分别保存。",
+  "records": [
+    {
+      "case_number": 1,
+      "request_a": "FINE00277",
+      "request_b": "FINE00278",
+      "user_verbatim": "第一个例子: 第一组明显好于第二组 ,",
+      "preference": "left",
+      "image_code": "UwV83HsGsw3-09",
+      "building_id": "UwV83HsGsw3",
+      "condition": "manual",
+      "scene_bucket": "neither_flagged",
+      "scheme": "Q2",
+      "source_case": {
+        "case_kind": "same_composition_largest_observed_geometry_difference",
+        "scheme": "Q2",
+        "image_code": "UwV83HsGsw3-09",
+        "composition": "higher:3|lower:1",
+        "request_a": "FINE00277",
+        "request_b": "FINE00278",
+        "floor_jaccard_difference": 0.8373003364311534
+      },
+      "left": {
+        "side": "left",
+        "request_id": "FINE00277",
+        "draw_id": 0,
+        "composition": "higher:3|lower:1",
+        "members": [
+          {
+            "worker_id": "W002",
+            "record_id": "R00408",
+            "object_id": "27f4ffac099bc05b"
+          },
+          {
+            "worker_id": "W006",
+            "record_id": "R00480",
+            "object_id": "305e3cb3e8b1c4f1"
+          },
+          {
+            "worker_id": "W027",
+            "record_id": "R01411",
+            "object_id": "8f36de747d064c9d"
+          },
+          {
+            "worker_id": "W036",
+            "record_id": "R00064",
+            "object_id": "064662f606e21c49"
+          }
+        ],
+        "B8L2": 86.74767894222711,
+        "D10": 88.32111507703237,
+        "reference_id": "gt:UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65:export_label/groudTruth.json",
+        "reference_version": "gt_manual_revision",
+        "geometry_source": "research\\fusion\\worker_composition_fusion_20261018\\pools\\UwV83HsGsw3-09__manual\\states.json.gz",
+        "geometry_state_pointer": "R00064|R00408|R00480|R01411",
+        "geometry_status": "ok",
+        "score_status": "complete_conditional",
+        "complete_evaluable": true,
+        "main_comparison_allowed": true
+      },
+      "right": {
+        "side": "right",
+        "request_id": "FINE00278",
+        "draw_id": 1,
+        "composition": "higher:3|lower:1",
+        "members": [
+          {
+            "worker_id": "W017",
+            "record_id": "R00402",
+            "object_id": "2794795e8c4e927b"
+          },
+          {
+            "worker_id": "W029",
+            "record_id": "R00164",
+            "object_id": "10bc0a8001ac87ac"
+          },
+          {
+            "worker_id": "W035",
+            "record_id": "R00686",
+            "object_id": "44aaf075e056aa2a"
+          },
+          {
+            "worker_id": "W036",
+            "record_id": "R00064",
+            "object_id": "064662f606e21c49"
+          }
+        ],
+        "B8L2": 8.969004541908642,
+        "D10": 8.969011570030197,
+        "reference_id": "gt:UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65:export_label/groudTruth.json",
+        "reference_version": "gt_manual_revision",
+        "geometry_source": "research\\fusion\\worker_composition_fusion_20261018\\pools\\UwV83HsGsw3-09__manual\\states.json.gz",
+        "geometry_state_pointer": "R00064|R00164|R00402|R00686",
+        "geometry_status": "ok",
+        "score_status": "complete_conditional",
+        "complete_evaluable": true,
+        "main_comparison_allowed": true
+      },
+      "displayed_B8L2_right_minus_left": -77.77867440031847,
+      "displayed_D10_right_minus_left": -79.35210350700217,
+      "B8L2_direction_matches": true,
+      "D10_direction_matches": true,
+      "B8L2_cell_mean_difference": null,
+      "assessment": "显示两队的B8L2和D10方向均与该次人工偏好一致；不代表量化差值已获人工校准。"
+    },
+    {
+      "case_number": 2,
+      "request_a": "FINE00301",
+      "request_b": "FINE00302",
+      "user_verbatim": "第二个例子:两个半斤八两,都不是很好.",
+      "preference": "tie",
+      "image_code": "UwV83HsGsw3-09",
+      "building_id": "UwV83HsGsw3",
+      "condition": "manual",
+      "scene_bucket": "neither_flagged",
+      "scheme": "Q3",
+      "source_case": {
+        "case_kind": "same_composition_largest_observed_geometry_difference",
+        "scheme": "Q3",
+        "image_code": "UwV83HsGsw3-09",
+        "composition": "high:1|low:1|middle:2",
+        "request_a": "FINE00301",
+        "request_b": "FINE00302",
+        "floor_jaccard_difference": 0.6276551703012021
+      },
+      "left": {
+        "side": "left",
+        "request_id": "FINE00301",
+        "draw_id": 0,
+        "composition": "high:1|low:1|middle:2",
+        "members": [
+          {
+            "worker_id": "W029",
+            "record_id": "R00164",
+            "object_id": "10bc0a8001ac87ac"
+          },
+          {
+            "worker_id": "W031",
+            "record_id": "R00704",
+            "object_id": "463c2a33c219cce3"
+          },
+          {
+            "worker_id": "W032",
+            "record_id": "R00886",
+            "object_id": "5d1661993b2e0edc"
+          },
+          {
+            "worker_id": "W033",
+            "record_id": "R01780",
+            "object_id": "b2e9ff3491b30070"
+          }
+        ],
+        "B8L2": 9.584308787547693,
+        "D10": 9.587160626779436,
+        "reference_id": "gt:UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65:export_label/groudTruth.json",
+        "reference_version": "gt_manual_revision",
+        "geometry_source": "research\\fusion\\worker_composition_fusion_20261018\\pools\\UwV83HsGsw3-09__manual\\states.json.gz",
+        "geometry_state_pointer": "R00164|R00704|R00886|R01780",
+        "geometry_status": "ok",
+        "score_status": "complete_conditional",
+        "complete_evaluable": true,
+        "main_comparison_allowed": true
+      },
+      "right": {
+        "side": "right",
+        "request_id": "FINE00302",
+        "draw_id": 1,
+        "composition": "high:1|low:1|middle:2",
+        "members": [
+          {
+            "worker_id": "W011",
+            "record_id": "R00257",
+            "object_id": "1a1637b695381c15"
+          },
+          {
+            "worker_id": "W027",
+            "record_id": "R01411",
+            "object_id": "8f36de747d064c9d"
+          },
+          {
+            "worker_id": "W031",
+            "record_id": "R00704",
+            "object_id": "463c2a33c219cce3"
+          },
+          {
+            "worker_id": "W032",
+            "record_id": "R00886",
+            "object_id": "5d1661993b2e0edc"
+          }
+        ],
+        "B8L2": 25.062400723099707,
+        "D10": 25.37232994049609,
+        "reference_id": "gt:UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65:export_label/groudTruth.json",
+        "reference_version": "gt_manual_revision",
+        "geometry_source": "research\\fusion\\worker_composition_fusion_20261018\\pools\\UwV83HsGsw3-09__manual\\states.json.gz",
+        "geometry_state_pointer": "R00257|R00704|R00886|R01411",
+        "geometry_status": "ok",
+        "score_status": "complete_conditional",
+        "complete_evaluable": true,
+        "main_comparison_allowed": true
+      },
+      "displayed_B8L2_right_minus_left": 15.478091935552014,
+      "displayed_D10_right_minus_left": 15.785169313716654,
+      "B8L2_direction_matches": null,
+      "D10_direction_matches": null,
+      "B8L2_cell_mean_difference": null,
+      "assessment": "用户判断约相当且都不好；未给数值等价容差。现有分数偏向右侧，方向准确率不纳入这一例。"
+    },
+    {
+      "case_number": 3,
+      "request_a": "FINE00286",
+      "request_b": "FINE00288",
+      "user_verbatim": "第三个例子:第一组明显好于第二组.",
+      "preference": "left",
+      "image_code": "UwV83HsGsw3-09",
+      "building_id": "UwV83HsGsw3",
+      "condition": "manual",
+      "scene_bucket": "neither_flagged",
+      "scheme": "QT4",
+      "source_case": {
+        "case_kind": "same_composition_largest_observed_geometry_difference",
+        "scheme": "QT4",
+        "image_code": "UwV83HsGsw3-09",
+        "composition": "higher_faster:1|higher_slower:1|lower_faster:1|lower_slower:1",
+        "request_a": "FINE00286",
+        "request_b": "FINE00288",
+        "floor_jaccard_difference": 0.6195569926734915
+      },
+      "left": {
+        "side": "left",
+        "request_id": "FINE00286",
+        "draw_id": 0,
+        "composition": "higher_faster:1|higher_slower:1|lower_faster:1|lower_slower:1",
+        "members": [
+          {
+            "worker_id": "W001",
+            "record_id": "R01572",
+            "object_id": "9e9998c2efb5ea77"
+          },
+          {
+            "worker_id": "W002",
+            "record_id": "R00408",
+            "object_id": "27f4ffac099bc05b"
+          },
+          {
+            "worker_id": "W027",
+            "record_id": "R01411",
+            "object_id": "8f36de747d064c9d"
+          },
+          {
+            "worker_id": "W037",
+            "record_id": "R00593",
+            "object_id": "3b866803d4a350a2"
+          }
+        ],
+        "B8L2": 86.32576286638032,
+        "D10": 87.55258099510394,
+        "reference_id": "gt:UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65:export_label/groudTruth.json",
+        "reference_version": "gt_manual_revision",
+        "geometry_source": "research\\fusion\\worker_composition_fusion_20261018\\pools\\UwV83HsGsw3-09__manual\\states.json.gz",
+        "geometry_state_pointer": "R00408|R00593|R01411|R01572",
+        "geometry_status": "ok",
+        "score_status": "complete_conditional",
+        "complete_evaluable": true,
+        "main_comparison_allowed": true
+      },
+      "right": {
+        "side": "right",
+        "request_id": "FINE00288",
+        "draw_id": 2,
+        "composition": "higher_faster:1|higher_slower:1|lower_faster:1|lower_slower:1",
+        "members": [
+          {
+            "worker_id": "W001",
+            "record_id": "R01572",
+            "object_id": "9e9998c2efb5ea77"
+          },
+          {
+            "worker_id": "W021",
+            "record_id": "R00307",
+            "object_id": "1e50979e05536fe2"
+          },
+          {
+            "worker_id": "W031",
+            "record_id": "R00704",
+            "object_id": "463c2a33c219cce3"
+          },
+          {
+            "worker_id": "W035",
+            "record_id": "R00686",
+            "object_id": "44aaf075e056aa2a"
+          }
+        ],
+        "B8L2": 25.553995788048827,
+        "D10": 25.8649709648012,
+        "reference_id": "gt:UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65:export_label/groudTruth.json",
+        "reference_version": "gt_manual_revision",
+        "geometry_source": "research\\fusion\\worker_composition_fusion_20261018\\pools\\UwV83HsGsw3-09__manual\\states.json.gz",
+        "geometry_state_pointer": "R00307|R00686|R00704|R01572",
+        "geometry_status": "ok",
+        "score_status": "complete_conditional",
+        "complete_evaluable": true,
+        "main_comparison_allowed": true
+      },
+      "displayed_B8L2_right_minus_left": -60.77176707833149,
+      "displayed_D10_right_minus_left": -61.687610030302736,
+      "B8L2_direction_matches": true,
+      "D10_direction_matches": true,
+      "B8L2_cell_mean_difference": null,
+      "assessment": "显示两队的B8L2和D10方向均与该次人工偏好一致；不代表量化差值已获人工校准。"
+    },
+    {
+      "case_number": 4,
+      "request_a": "FINE00442",
+      "request_b": "FINE00040",
+      "user_verbatim": "第四个例子:第二个好于第一个  ,当然这图是门洞交界.",
+      "preference": "right",
+      "image_code": "q9vSo1VnCiC-13",
+      "building_id": "q9vSo1VnCiC",
+      "condition": "manual",
+      "scene_bucket": "doorway_only",
+      "scheme": "Q3",
+      "source_case": {
+        "case_kind": "pure_class_positive_mean_contrast",
+        "scheme": "Q3",
+        "image_code": "q9vSo1VnCiC-13",
+        "composition": "high:4_minus_middle:4",
+        "request_a": "FINE00442",
+        "request_b": "FINE00040",
+        "B8L2_cell_mean_difference": 32.03651448082064,
+        "display_note": "展示预设draw0；数值为各组三队均值差，非所展示两队差"
+      },
+      "left": {
+        "side": "left",
+        "request_id": "FINE00442",
+        "draw_id": 0,
+        "composition": "middle:4",
+        "members": [
+          {
+            "worker_id": "W011",
+            "record_id": "R00993",
+            "object_id": "6751bda596ab6aa3"
+          },
+          {
+            "worker_id": "W014",
+            "record_id": "R02298",
+            "object_id": "ebf6a238abbded76"
+          },
+          {
+            "worker_id": "W029",
+            "record_id": "R01993",
+            "object_id": "caa6d658732cb9af"
+          },
+          {
+            "worker_id": "W030",
+            "record_id": "R00585",
+            "object_id": "3a772c253f77d4b7"
+          }
+        ],
+        "B8L2": 23.00390685843354,
+        "D10": 23.24807586507072,
+        "reference_id": "gt:q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4:export_label/groudTruth.json",
+        "reference_version": "gt_manual_revision",
+        "geometry_source": "research\\fusion\\worker_composition_fusion_20261018\\pools\\q9vSo1VnCiC-13__manual\\states.json.gz",
+        "geometry_state_pointer": "R00585|R00993|R01993|R02298",
+        "geometry_status": "ok",
+        "score_status": "complete_conditional",
+        "complete_evaluable": true,
+        "main_comparison_allowed": true
+      },
+      "right": {
+        "side": "right",
+        "request_id": "FINE00040",
+        "draw_id": 0,
+        "composition": "high:4",
+        "members": [
+          {
+            "worker_id": "W002",
+            "record_id": "R00852",
+            "object_id": "57c9e6d18d1e8441"
+          },
+          {
+            "worker_id": "W015",
+            "record_id": "R00214",
+            "object_id": "164460ea4b39a74c"
+          },
+          {
+            "worker_id": "W021",
+            "record_id": "R01007",
+            "object_id": "68f273f5934bd5d6"
+          },
+          {
+            "worker_id": "W036",
+            "record_id": "R01001",
+            "object_id": "680d9cdf96eaadf7"
+          }
+        ],
+        "B8L2": 55.61096841103937,
+        "D10": 57.33479680472085,
+        "reference_id": "gt:q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4:export_label/groudTruth.json",
+        "reference_version": "gt_manual_revision",
+        "geometry_source": "research\\fusion\\worker_composition_fusion_20261018\\pools\\q9vSo1VnCiC-13__manual\\states.json.gz",
+        "geometry_state_pointer": "R00214|R00852|R01001|R01007",
+        "geometry_status": "ok",
+        "score_status": "complete_conditional",
+        "complete_evaluable": true,
+        "main_comparison_allowed": true
+      },
+      "displayed_B8L2_right_minus_left": 32.60706155260583,
+      "displayed_D10_right_minus_left": 34.086720939650135,
+      "B8L2_direction_matches": true,
+      "D10_direction_matches": true,
+      "B8L2_cell_mean_difference": 32.03651448082064,
+      "assessment": "显示两队的B8L2和D10方向均与该次人工偏好一致；不代表量化差值已获人工校准。"
+    },
+    {
+      "case_number": 5,
+      "request_a": "FINE00472",
+      "request_b": "FINE00469",
+      "user_verbatim": "第五个:第一个好于第二个  .",
+      "preference": "left",
+      "image_code": "B6ByNegPMKs-11",
+      "building_id": "B6ByNegPMKs",
+      "condition": "manual",
+      "scene_bucket": "neither_flagged",
+      "scheme": "QT4",
+      "source_case": {
+        "case_kind": "pure_class_negative_mean_contrast",
+        "scheme": "QT4",
+        "image_code": "B6ByNegPMKs-11",
+        "composition": "lower_faster:4_minus_lower_slower:4",
+        "request_a": "FINE00472",
+        "request_b": "FINE00469",
+        "B8L2_cell_mean_difference": -26.91048842136486,
+        "display_note": "展示预设draw0；数值为各组三队均值差，非所展示两队差"
+      },
+      "left": {
+        "side": "left",
+        "request_id": "FINE00472",
+        "draw_id": 0,
+        "composition": "lower_slower:4",
+        "members": [
+          {
+            "worker_id": "W028",
+            "record_id": "R02421",
+            "object_id": "f8548145ddefef82"
+          },
+          {
+            "worker_id": "W031",
+            "record_id": "R00008",
+            "object_id": "01111484ace4b94e"
+          },
+          {
+            "worker_id": "W032",
+            "record_id": "R00410",
+            "object_id": "283873b63fff0570"
+          },
+          {
+            "worker_id": "W037",
+            "record_id": "R01536",
+            "object_id": "9a14ee08aba6a9c3"
+          }
+        ],
+        "B8L2": 73.68543422214215,
+        "D10": 75.41341377623459,
+        "reference_id": "gt:B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086:data/mp3d_layout/test/label_cor/B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086.txt",
+        "reference_version": "gt_original",
+        "geometry_source": "research\\fusion\\worker_composition_fusion_20261018\\pools\\B6ByNegPMKs-11__manual\\states.json.gz",
+        "geometry_state_pointer": "R00008|R00410|R01536|R02421",
+        "geometry_status": "ok",
+        "score_status": "complete_conditional",
+        "complete_evaluable": true,
+        "main_comparison_allowed": true
+      },
+      "right": {
+        "side": "right",
+        "request_id": "FINE00469",
+        "draw_id": 0,
+        "composition": "lower_faster:4",
+        "members": [
+          {
+            "worker_id": "W006",
+            "record_id": "R02211",
+            "object_id": "e2c06769623e335c"
+          },
+          {
+            "worker_id": "W011",
+            "record_id": "R01496",
+            "object_id": "9664309abeb6b078"
+          },
+          {
+            "worker_id": "W012",
+            "record_id": "R01205",
+            "object_id": "7b70014ef90dfa00"
+          },
+          {
+            "worker_id": "W013",
+            "record_id": "R01167",
+            "object_id": "77ab07a0a6d85137"
+          }
+        ],
+        "B8L2": 44.35741937830248,
+        "D10": 44.6520188583408,
+        "reference_id": "gt:B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086:data/mp3d_layout/test/label_cor/B6ByNegPMKs_4b983544c13946e3a3a518c565ad1086.txt",
+        "reference_version": "gt_original",
+        "geometry_source": "research\\fusion\\worker_composition_fusion_20261018\\pools\\B6ByNegPMKs-11__manual\\states.json.gz",
+        "geometry_state_pointer": "R01167|R01205|R01496|R02211",
+        "geometry_status": "ok",
+        "score_status": "complete_conditional",
+        "complete_evaluable": true,
+        "main_comparison_allowed": true
+      },
+      "displayed_B8L2_right_minus_left": -29.328014843839668,
+      "displayed_D10_right_minus_left": -30.76139491789379,
+      "B8L2_direction_matches": true,
+      "D10_direction_matches": true,
+      "B8L2_cell_mean_difference": -26.91048842136486,
+      "assessment": "显示两队的B8L2和D10方向均与该次人工偏好一致；不代表量化差值已获人工校准。"
+    },
+    {
+      "case_number": 6,
+      "request_a": "FINE00042",
+      "request_b": "FINE00439",
+      "user_verbatim": "第六个:第一个好于第二个",
+      "preference": "left",
+      "image_code": "q9vSo1VnCiC-13",
+      "building_id": "q9vSo1VnCiC",
+      "condition": "manual",
+      "scene_bucket": "doorway_only",
+      "scheme": "Q3",
+      "source_case": {
+        "case_kind": "different_composition_doorway_node_change",
+        "scheme": "Q3",
+        "image_code": "q9vSo1VnCiC-13",
+        "composition": "high:4 vs low:4",
+        "request_a": "FINE00042",
+        "request_b": "FINE00439",
+        "node_count_difference": 7,
+        "floor_jaccard_difference": 0.3257002904441355
+      },
+      "left": {
+        "side": "left",
+        "request_id": "FINE00042",
+        "draw_id": 2,
+        "composition": "high:4",
+        "members": [
+          {
+            "worker_id": "W002",
+            "record_id": "R00852",
+            "object_id": "57c9e6d18d1e8441"
+          },
+          {
+            "worker_id": "W008",
+            "record_id": "R02379",
+            "object_id": "f3dddcec6bd52333"
+          },
+          {
+            "worker_id": "W021",
+            "record_id": "R01007",
+            "object_id": "68f273f5934bd5d6"
+          },
+          {
+            "worker_id": "W033",
+            "record_id": "R00694",
+            "object_id": "4556c580e92894d6"
+          }
+        ],
+        "B8L2": 57.50826362563398,
+        "D10": 58.495478271076,
+        "reference_id": "gt:q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4:export_label/groudTruth.json",
+        "reference_version": "gt_manual_revision",
+        "geometry_source": "research\\fusion\\worker_composition_fusion_20261018\\pools\\q9vSo1VnCiC-13__manual\\states.json.gz",
+        "geometry_state_pointer": "R00694|R00852|R01007|R02379",
+        "geometry_status": "ok",
+        "score_status": "complete_conditional",
+        "complete_evaluable": true,
+        "main_comparison_allowed": true
+      },
+      "right": {
+        "side": "right",
+        "request_id": "FINE00439",
+        "draw_id": 0,
+        "composition": "low:4",
+        "members": [
+          {
+            "worker_id": "W012",
+            "record_id": "R01325",
+            "object_id": "870b797b2c22b194"
+          },
+          {
+            "worker_id": "W028",
+            "record_id": "R00837",
+            "object_id": "55515d4fbe62f3d7"
+          },
+          {
+            "worker_id": "W034",
+            "record_id": "R00360",
+            "object_id": "2385c7af67eeea4e"
+          },
+          {
+            "worker_id": "W037",
+            "record_id": "R01437",
+            "object_id": "90b4dd7e59f67c16"
+          }
+        ],
+        "B8L2": 27.585715623940523,
+        "D10": 28.02617425012006,
+        "reference_id": "gt:q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4:export_label/groudTruth.json",
+        "reference_version": "gt_manual_revision",
+        "geometry_source": "research\\fusion\\worker_composition_fusion_20261018\\pools\\q9vSo1VnCiC-13__manual\\states.json.gz",
+        "geometry_state_pointer": "R00360|R00837|R01325|R01437",
+        "geometry_status": "ok",
+        "score_status": "complete_conditional",
+        "complete_evaluable": true,
+        "main_comparison_allowed": true
+      },
+      "displayed_B8L2_right_minus_left": -29.922548001693457,
+      "displayed_D10_right_minus_left": -30.469304020955942,
+      "B8L2_direction_matches": true,
+      "D10_direction_matches": true,
+      "B8L2_cell_mean_difference": null,
+      "assessment": "显示两队的B8L2和D10方向均与该次人工偏好一致；不代表量化差值已获人工校准。"
+    }
+  ]
+}
