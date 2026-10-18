@@ -1,0 +1,17 @@
+const a=require('node:assert/strict'),c=require('./workbench-core.js');
+const image={image_id:'i',image_code:'I',difficulty:{label:'medium'},scene:{doorway_status:'difficult',oos_subtype:'not_recorded'},flags:{oos:true}};
+a.equal(c.matchesImage(image,{doorway:'true',oos:'true'}),true);
+a.equal(c.matchesImage(image,{image:'other|i'}),true);
+a.equal(c.matchesImage({...image,flags:{}},{oos:'false'}),false);
+const images=new Map([['i',image]]),rows=[{image_id:'i',condition:'manual',B8L2:0,quality_usable:true},{image_id:'i',condition:'semi',B8L2:99,quality_usable:'False'}];
+a.equal(c.filterRows(rows,{condition:'manual',doorway:'true',oos:'true'},images).rows.length,1);
+a.equal(c.filterRows([{worker_id:'w'}],{image:'i'},images).unsupported.length,1);
+a.deepEqual(c.metricRows(rows,'B8L2').map(r=>r.B8L2),[0]);
+a.equal(c.metricRows([{B8L2_strategy:90,both_main_quality:false}],'B8L2_strategy').length,0);
+a.equal(c.metricRows([{worker_attributable_gain_B8L2:2,current_qualified_gain_available:false}],'worker_attributable_gain_B8L2').length,0);
+a.equal(c.stats([null,0,4]).mean,2);
+a.equal(c.wrapSegment([1000,200],[20,240]).length,2);
+a.equal(c.geometry([[0,10],[0,300]]),null);
+a.ok(c.projectFloor([[1,1],[2,1],[2,2]]).every(s=>s.every(p=>p[1]>=256)));
+a.match(c.csv([{id:'0001',q:null}],['id','q']),/"0001",""/);
+console.log('PASS: cross-axis filters, unsupported scope, quality mask, missing values, ERP seam, floor-only geometry and full CSV');

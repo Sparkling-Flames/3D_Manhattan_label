@@ -1,0 +1,75 @@
+{
+  "schema": "same_room_process_consumer_20261017_a1",
+  "data_release": "v1",
+  "analysis_revision": "same_room_v1_process_20261017_a1",
+  "producer_version": "wall_consensus_v1_process_20261017_v1",
+  "producer_analysis_revision": "v1_complete_measurement_cache_main_panel_r2_20261017",
+  "producer_current": "research/fusion/wall_consensus_v1_process_20261017/CURRENT.json",
+  "status": "ready_for_statistics",
+  "source_manifest": "research/fusion/wall_consensus_v1_process_20261017/MANIFEST.json",
+  "source_validation": "PROCESS_RESULTS.json",
+  "files": {
+    "prefixes": "consumer_prefixes.csv",
+    "pairs": "consumer_pair_summary.csv",
+    "curves": "process_paired_curves.csv",
+    "within_view_stability": "process_same_k_summary.csv",
+    "original_times": "consumer_original_time_pairs.csv",
+    "overview": "figures/quality_gap_overview.png",
+    "time_example": "figures/time_cancellation.png"
+  },
+  "keys": {
+    "prefixes": [
+      "request_id",
+      "replay_id",
+      "side",
+      "k"
+    ],
+    "pairs": [
+      "request_id"
+    ],
+    "curves": [
+      "request_id",
+      "k"
+    ]
+  },
+  "coverage": {
+    "pairs": 9,
+    "buildings": 7,
+    "planned_side_prefixes": 536,
+    "validated_side_prefixes": 536,
+    "paired_prefixes": 268,
+    "both_complete": 228,
+    "both_primary_quality": 196
+  },
+  "scene_layers": {
+    "ordinary": 9
+  },
+  "mask_counts": {
+    "primary_quality_available": 392,
+    "two_person_sorting_deferred": 56,
+    "diagnostic_mixed_bound_targets": 48,
+    "diagnostic_missing_full_reference": 40
+  },
+  "validation": {
+    "prefix_key_unique": true,
+    "paired_mask_reconciled": true,
+    "counts_reconciled": true,
+    "figures": 11,
+    "new_tests": 2,
+    "independent_prediction_validation": false
+  },
+  "rules": {
+    "primary_quality": "use comparison_B8L2/comparison_D10 only when primary_quality_available; eligible is a gate, not numeric availability",
+    "paired_curves": "both views and both metrics use the same successful replay intersection; planned/received/complete denominators retained",
+    "diagnostic": "whole-pair exclusion overrides favorable producer prefixes; no diagnostic-to-primary promotion",
+    "time": "source and target cumulative times separate; any missing member means full sum missing; never sum replay costs as new labor",
+    "scene": "all nine process pairs are ordinary; doorway original other-scope relations are not doorway process observations",
+    "replication": "9 pairs/7 buildings, 4 dependent replays; repeated full sets are not independent endpoints",
+    "scores": "B8L2 primary, D10 direction-scale sensitivity; no training or selection changes"
+  },
+  "human_decisions_required": [],
+  "remaining_issues": [
+    "72 two-person ordering-deferred and 4 manual-order-pending side prefixes retained, not an approval prerequisite",
+    "no new prediction validation; target time sparse; two diagnostic pairs not promoted"
+  ]
+}

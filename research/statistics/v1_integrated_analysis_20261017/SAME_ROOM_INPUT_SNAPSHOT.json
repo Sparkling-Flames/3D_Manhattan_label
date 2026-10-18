@@ -1,0 +1,115 @@
+{
+  "analysis_revision": "same_room_v1_process_20261017_a1",
+  "data_release": "v1",
+  "input_revision": "annotation_batch_98_20261017_v1",
+  "common_score_version": "quality_b8l2_d10_20261017_v2",
+  "relation_version": "same_room_user_working_classification_20261016_v2",
+  "source_records": 2880,
+  "quality_records": 1911,
+  "endpoint_pairs": [
+    {
+      "metric": "B8L2",
+      "condition": "manual",
+      "confirmation": "user_classified_comparable",
+      "pairs": 83
+    },
+    {
+      "metric": "B8L2",
+      "condition": "manual",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 14
+    },
+    {
+      "metric": "B8L2",
+      "condition": "semi",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 1
+    },
+    {
+      "metric": "D10",
+      "condition": "manual",
+      "confirmation": "user_classified_comparable",
+      "pairs": 83
+    },
+    {
+      "metric": "D10",
+      "condition": "manual",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 14
+    },
+    {
+      "metric": "D10",
+      "condition": "semi",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 1
+    },
+    {
+      "metric": "IoU3D100",
+      "condition": "manual",
+      "confirmation": "user_classified_comparable",
+      "pairs": 83
+    },
+    {
+      "metric": "IoU3D100",
+      "condition": "manual",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 14
+    },
+    {
+      "metric": "IoU3D100",
+      "condition": "semi",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 1
+    },
+    {
+      "metric": "source_time_seconds",
+      "condition": "manual",
+      "confirmation": "user_classified_comparable",
+      "pairs": 36
+    },
+    {
+      "metric": "source_time_seconds",
+      "condition": "manual",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 36
+    },
+    {
+      "metric": "source_time_seconds",
+      "condition": "oos",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 4
+    },
+    {
+      "metric": "source_time_seconds",
+      "condition": "semi",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 3
+    },
+    {
+      "metric": "target_matched_time_seconds",
+      "condition": "manual",
+      "confirmation": "user_classified_comparable",
+      "pairs": 4
+    },
+    {
+      "metric": "target_matched_time_seconds",
+      "condition": "manual",
+      "confirmation": "user_classified_other_scope",
+      "pairs": 1
+    }
+  ],
+  "selected_pairs": 9,
+  "selected_buildings": 7,
+  "selected_user_groups": 9,
+  "initial_wave_pairs": 7,
+  "replays_per_pair": 4,
+  "planned_side_prefixes": 536,
+  "primary_reference_pairs": 7,
+  "requests_written": true,
+  "new_fusion_run_by_same_room_thread": false,
+  "process_comparison_status": "completed_real_paired_process",
+  "release_payload_modified": false,
+  "validated_side_prefixes": 536,
+  "all_planned_prefixes_received": true,
+  "every_prefix_has_both_primary_quality": false
+}

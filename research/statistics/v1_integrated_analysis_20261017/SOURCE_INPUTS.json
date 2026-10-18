@@ -1,0 +1,49 @@
+{
+  "data_release": "v1",
+  "analysis_revision": "v1_integrated_analysis_20261017_r1",
+  "release_policy": "research/data/releases/VERSION_POLICY.md",
+  "release_manifest": "research/data/releases/v1/RELEASE.json",
+  "current_score_manifest": "research/quality/quality_b8l2_d10_20261017/CROSS_MODULE_INPUTS.json",
+  "score_version": "quality_b8l2_d10_20261017_v2",
+  "statistics_source": "research/statistics/b8l2_d10_statistics_20261017",
+  "worker_source": "research/workers/worker_b8l2_d10_20261017",
+  "parameters": {
+    "B8L2": {
+      "version": "WQ-B8L2-20261015",
+      "direction_scale_deg": 8.0,
+      "direction_cap": 1.5,
+      "bottom_scale_squared_deg2": 32.0,
+      "global_height_scale": 0.8,
+      "local_height_scale": 0.25,
+      "pooling_order": 2.0
+    },
+    "D10": {
+      "version": "B8L2-D10-20261016",
+      "direction_scale_deg": 10.0,
+      "direction_cap": 1.5,
+      "bottom_scale_squared_deg2": 32.0,
+      "global_height_scale": 0.8,
+      "local_height_scale": 0.25,
+      "pooling_order": 2.0
+    }
+  },
+  "frozen_release_modified": false,
+  "common_scores_modified": false,
+  "source_tables_reused_without_copy": [
+    "worker_inventory.csv",
+    "image_inventory.csv",
+    "worker_condition_stats.csv",
+    "image_condition_stats.csv",
+    "worker_difficulty.csv",
+    "worker_special_axes.csv",
+    "user_original_group_summary.csv",
+    "room_direct_pair_summary.csv",
+    "exclusion_reason_hits.csv",
+    "time_missing_records.csv"
+  ],
+  "process_capture": "FUSION_INPUT_SNAPSHOT.json; inputs/fusion_*.csv, replayed on subsequent runs",
+  "worker_reliability": "research/workers/worker_v1_composition_20261017/record_evidence.csv",
+  "difficulty": "research/difficulty/difficulty_v1_analysis_20261017",
+  "same_room": "research/same_room/same_room_v1_process_20261017",
+  "requested_selection": "inputs/planned_metric_contrasts.csv; inputs/planned_worker_paths.json"
+}

@@ -1,0 +1,28 @@
+{
+  "data_release": "v1",
+  "planned_pools": 234,
+  "completed_pools": 233,
+  "completed_images": 208,
+  "completed_by_condition": {
+    "manual": 181,
+    "oos": 9,
+    "semi": 43
+  },
+  "failed_pools": 1,
+  "failures": [
+    {
+      "pool_id": "rPc6DW4iMge-22__manual",
+      "reason": "R01424:coordinates_outside_continuous_canvas",
+      "whole_pool_preserved": true,
+      "failed_subset": "R00490|R00642|R01021|R01424|R01661|R02489"
+    }
+  ],
+  "path_states": 11248,
+  "unique_subsets": 10079,
+  "new_subsets": 9968,
+  "reused_subsets": 111,
+  "quality_states": 6775,
+  "numeric_states": 8938,
+  "source_manifest": "analysis_results/research_input_20261017/manifest.json",
+  "classification_selection": "pending requests handled separately"
+}

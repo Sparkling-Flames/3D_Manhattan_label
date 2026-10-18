@@ -1,0 +1,116 @@
+{
+  "data_release": "v1",
+  "planned_pools": 234,
+  "completed_pools": 233,
+  "completed_images": 208,
+  "completed_by_condition": {
+    "manual": 181,
+    "oos": 9,
+    "semi": 43
+  },
+  "failed_pools": 1,
+  "failures": [
+    {
+      "pool_id": "rPc6DW4iMge-22__manual",
+      "reason": "R01424:coordinates_outside_continuous_canvas",
+      "whole_pool_preserved": true,
+      "failed_subset": "R00490|R00642|R01021|R01424|R01661|R02489"
+    }
+  ],
+  "path_states": 41859,
+  "unique_subsets": 23951,
+  "new_subsets": 23739,
+  "reused_subsets": 212,
+  "quality_states": 26057,
+  "numeric_states": 32305,
+  "source_manifest": "analysis_results/research_input_20261017/manifest.json",
+  "classification_selection": "target-building-excluded Q/T requests; fixed-team metrics and metric-driven re-selection remain separate",
+  "worker_results": {
+    "requested_teams": 14845,
+    "completed_teams": 14603,
+    "completed_images": 172,
+    "failed_teams": 242,
+    "pending_teams": 0,
+    "request_schema": "worker_v1_team_requests_20261017_v1",
+    "data_release": "v1",
+    "classification_and_metric_changes_separate": true
+  },
+  "same_room_results": {
+    "schema": "same_room_pair_process_results_v1",
+    "data_release": "v1",
+    "request_schema": "same_room_pair_process_requests_v1",
+    "results_csv": "research/fusion/wall_consensus_v1_process_20261017/same_room_trajectory.csv",
+    "within_view_stability_csv": "research/fusion/wall_consensus_v1_process_20261017/same_room_within_view_stability.csv",
+    "requests": [
+      {
+        "request_id": "SRP_uNb9QFRL6hY-01__uNb9QFRL6hY-45",
+        "condition": "manual",
+        "declared_pool": "common_source_development_workers; includes all retained members, not only individual quality successes",
+        "common_N": 15,
+        "endpoint": "all_common_people_not_original_full_pool"
+      },
+      {
+        "request_id": "SRP_wc2JMjhGNzB-03__wc2JMjhGNzB-54",
+        "condition": "manual",
+        "declared_pool": "common_source_development_workers; includes all retained members, not only individual quality successes",
+        "common_N": 8,
+        "endpoint": "all_common_people_not_original_full_pool"
+      },
+      {
+        "request_id": "SRP_yqstnuAEVhm-02__yqstnuAEVhm-05",
+        "condition": "manual",
+        "declared_pool": "common_source_development_workers; includes all retained members, not only individual quality successes",
+        "common_N": 8,
+        "endpoint": "all_common_people_not_original_full_pool"
+      },
+      {
+        "request_id": "SRP_2t7WUuJeko7-02__2t7WUuJeko7-03",
+        "condition": "manual",
+        "declared_pool": "common_source_development_workers; includes all retained members, not only individual quality successes",
+        "common_N": 6,
+        "endpoint": "all_common_people_not_original_full_pool"
+      },
+      {
+        "request_id": "SRP_VFuaQ6m2Qom-04__VFuaQ6m2Qom-07",
+        "condition": "manual",
+        "declared_pool": "common_source_development_workers; includes all retained members, not only individual quality successes",
+        "common_N": 6,
+        "endpoint": "all_common_people_not_original_full_pool"
+      },
+      {
+        "request_id": "SRP_Z6MFQCViBuw-02__Z6MFQCViBuw-08",
+        "condition": "manual",
+        "declared_pool": "common_source_development_workers; includes all retained members, not only individual quality successes",
+        "common_N": 4,
+        "endpoint": "all_common_people_not_original_full_pool"
+      },
+      {
+        "request_id": "SRP_B6ByNegPMKs-33__B6ByNegPMKs-37",
+        "condition": "manual",
+        "declared_pool": "common_source_development_workers; includes all retained members, not only individual quality successes",
+        "common_N": 5,
+        "endpoint": "all_common_people_not_original_full_pool"
+      },
+      {
+        "request_id": "SRP_uNb9QFRL6hY-48__uNb9QFRL6hY-72",
+        "condition": "manual",
+        "declared_pool": "common_source_development_workers; includes all retained members, not only individual quality successes",
+        "common_N": 9,
+        "endpoint": "all_common_people_not_original_full_pool"
+      },
+      {
+        "request_id": "SRP_wc2JMjhGNzB-26__wc2JMjhGNzB-53",
+        "condition": "manual",
+        "declared_pool": "common_source_development_workers; includes all retained members, not only individual quality successes",
+        "common_N": 6,
+        "endpoint": "all_common_people_not_original_full_pool"
+      }
+    ],
+    "requested_pairs": 9,
+    "requested_prefix_states": 536,
+    "actual_states": 536,
+    "not_run": 0,
+    "cross_view_geometry_intersection": false
+  },
+  "analysis_revision": "v1_complete_measurement_cache_main_panel_r2_20261017"
+}

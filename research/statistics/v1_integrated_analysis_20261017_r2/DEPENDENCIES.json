@@ -1,0 +1,182 @@
+[
+  {
+    "module": "fusion",
+    "upstream_complete": true,
+    "consumer_complete": true,
+    "snapshot_id": "v1_integrated_analysis_20261017_r2",
+    "source_interface": "research/fusion/wall_consensus_v1_process_20261017/CURRENT.json",
+    "source_interface_sha256": "685896370360c99ceec45e39f04ff308ef3c8e15af8054a136a500ea251bfeb4",
+    "source_metadata": {
+      "data_release": "v1",
+      "analysis_revision": "v1_complete_measurement_cache_main_panel_r2_20261017",
+      "manifest": "MANIFEST.json",
+      "active_tables_root": ".",
+      "previous_tables_archive": "history/v1_complete_measurement_cache_main_panel_r2_20261017/pre_revision_tables.zip",
+      "geometry_unchanged": true
+    }
+  },
+  {
+    "module": "same_room",
+    "upstream_complete": true,
+    "consumer_complete": true,
+    "snapshot_id": "v1_integrated_analysis_20261017_r2",
+    "source_interface": "research/same_room/same_room_v1_process_20261017/CONSUMER_INTERFACE.json",
+    "source_interface_sha256": "b26421e8b60df27a7aadb437d8542e44563132a13d9bcca1e39d538ff52198ca",
+    "source_metadata": {
+      "schema": "same_room_process_consumer_20261017_a1",
+      "data_release": "v1",
+      "analysis_revision": "same_room_v1_process_20261017_a1",
+      "producer_version": "wall_consensus_v1_process_20261017_v1",
+      "producer_analysis_revision": "v1_complete_measurement_cache_main_panel_r2_20261017",
+      "producer_current": "research/fusion/wall_consensus_v1_process_20261017/CURRENT.json",
+      "status": "ready_for_statistics",
+      "source_manifest": "research/fusion/wall_consensus_v1_process_20261017/MANIFEST.json",
+      "source_validation": "PROCESS_RESULTS.json",
+      "files": {
+        "prefixes": "consumer_prefixes.csv",
+        "pairs": "consumer_pair_summary.csv",
+        "curves": "process_paired_curves.csv",
+        "within_view_stability": "process_same_k_summary.csv",
+        "original_times": "consumer_original_time_pairs.csv",
+        "overview": "figures/quality_gap_overview.png",
+        "time_example": "figures/time_cancellation.png"
+      },
+      "keys": {
+        "prefixes": [
+          "request_id",
+          "replay_id",
+          "side",
+          "k"
+        ],
+        "pairs": [
+          "request_id"
+        ],
+        "curves": [
+          "request_id",
+          "k"
+        ]
+      },
+      "coverage": {
+        "pairs": 9,
+        "buildings": 7,
+        "planned_side_prefixes": 536,
+        "validated_side_prefixes": 536,
+        "paired_prefixes": 268,
+        "both_complete": 228,
+        "both_primary_quality": 196
+      },
+      "scene_layers": {
+        "ordinary": 9
+      },
+      "mask_counts": {
+        "primary_quality_available": 392,
+        "two_person_sorting_deferred": 56,
+        "diagnostic_mixed_bound_targets": 48,
+        "diagnostic_missing_full_reference": 40
+      },
+      "validation": {
+        "prefix_key_unique": true,
+        "paired_mask_reconciled": true,
+        "counts_reconciled": true,
+        "figures": 11,
+        "new_tests": 2,
+        "independent_prediction_validation": false
+      },
+      "rules": {
+        "primary_quality": "use comparison_B8L2/comparison_D10 only when primary_quality_available; eligible is a gate, not numeric availability",
+        "paired_curves": "both views and both metrics use the same successful replay intersection; planned/received/complete denominators retained",
+        "diagnostic": "whole-pair exclusion overrides favorable producer prefixes; no diagnostic-to-primary promotion",
+        "time": "source and target cumulative times separate; any missing member means full sum missing; never sum replay costs as new labor",
+        "scene": "all nine process pairs are ordinary; doorway original other-scope relations are not doorway process observations",
+        "replication": "9 pairs/7 buildings, 4 dependent replays; repeated full sets are not independent endpoints",
+        "scores": "B8L2 primary, D10 direction-scale sensitivity; no training or selection changes"
+      },
+      "human_decisions_required": [],
+      "remaining_issues": [
+        "72 two-person ordering-deferred and 4 manual-order-pending side prefixes retained, not an approval prerequisite",
+        "no new prediction validation; target time sparse; two diagnostic pairs not promoted"
+      ]
+    }
+  },
+  {
+    "module": "difficulty",
+    "upstream_complete": true,
+    "consumer_complete": true,
+    "snapshot_id": "v1_integrated_analysis_20261017_r2",
+    "source_interface": "research/difficulty/difficulty_v1_analysis_20261017/CROSS_MODULE_INPUTS.json",
+    "source_interface_sha256": "a519715c9b72e3b39fe32f01f1c6db1aa6d0979c8e7360c290d6e290a97cf588",
+    "source_metadata": {
+      "data_release": "v1",
+      "analysis_revision": "difficulty_doorway_v1_20261017_r1",
+      "quality_version": "quality_b8l2_d10_20261017_v2",
+      "fusion_version": "wall_consensus_v1_process_20261017_v1",
+      "fusion_analysis_revision": "v1_complete_measurement_cache_main_panel_r2_20261017",
+      "fusion_partial_publication": false,
+      "ordinary_fixed_panel": "research/difficulty/difficulty_v1_analysis_20261017/fusion_fixed_pool_k.csv",
+      "ordinary_panel_rows": 312,
+      "doorway": {
+        "root": "research/difficulty/difficulty_v1_analysis_20261017/doorway",
+        "summary": "panel_summary.csv",
+        "panel_members": "panels.csv",
+        "pool_k": "pool_k.csv",
+        "nodes": "random_nodes.csv",
+        "pairwise_stability": "same_k_pairs.csv",
+        "worker_pairs": "person_scene_pairs.csv",
+        "worker_strata": "person_scene.csv",
+        "worker_summary": "person_summary.json",
+        "coverage": "image_coverage.csv",
+        "inventory": "inventory_records.csv",
+        "cases": "cases.csv",
+        "figures": [
+          "doorway_process.png",
+          "doorway_coverage.png",
+          "person_scene_differences.png"
+        ],
+        "field_contract": "FIELD_CONTRACT.json",
+        "source": "SOURCES.json",
+        "checks": "CHECKS.json",
+        "version_verification": "VERSION_SYNC.json"
+      },
+      "source_sync_revision": "doorway_r2_source_sync_20261017"
+    }
+  },
+  {
+    "module": "workers",
+    "upstream_complete": true,
+    "consumer_complete": true,
+    "snapshot_id": "v1_integrated_analysis_20261017_r2",
+    "source_interface": "research/workers/worker_v1_pro_integration_20261017/CROSS_MODULE_INPUTS.json",
+    "source_interface_sha256": "32ed9013708fe6c0b519ae77379354ecd24fafb8727729af08fe636aae79f0d9",
+    "source_metadata": {
+      "data_release": "v1",
+      "analysis_revision": "worker_v1_pro_integration_20261017",
+      "files": {
+        "records": "research\\workers\\worker_v1_pro_integration_20261017\\record_evidence.csv",
+        "persons": "research\\workers\\worker_v1_pro_integration_20261017\\person_profiles_and_evidence.csv",
+        "semi_measurements": "research\\workers\\worker_v1_pro_integration_20261017\\semi_initialization_scores.csv",
+        "correction": "research\\workers\\worker_v1_pro_integration_20261017\\semi_correction_evidence.csv",
+        "correction_bridge": "research\\workers\\worker_v1_pro_integration_20261017\\correction_definition_bridge.csv",
+        "scope": "research\\workers\\worker_v1_pro_integration_20261017\\scope_evidence.csv",
+        "exclusion_candidates": "research\\workers\\worker_v1_pro_integration_20261017\\exclusion_candidate_evidence.csv",
+        "team_results": "research\\workers\\worker_v1_pro_integration_20261017\\team_results.csv",
+        "strategy_pairs": "research\\workers\\worker_v1_pro_integration_20261017\\strategy_vs_random.csv",
+        "pure_class_comparisons": "research\\workers\\worker_v1_pro_integration_20261017\\pure_group_direct_comparisons.csv",
+        "metric_reselection": "research\\workers\\worker_v1_pro_integration_20261017\\metric_reselection_contrasts.csv",
+        "human_cases": "research\\workers\\worker_v1_pro_integration_20261017\\HUMAN_REVIEW_CASES.json",
+        "fields": "research\\workers\\worker_v1_pro_integration_20261017\\FIELD_CONTRACT.json"
+      },
+      "joins": {
+        "record": "object_id",
+        "person": [
+          "worker_id",
+          "metric"
+        ],
+        "team": "request_id"
+      },
+      "adoption": "evidence and compatible measurement increment; Q1048 and existing eligibility preserved",
+      "quality_layers": "ordinary Manual Q; ordinary Semi separate; doorway specialist separate; current doorway strategies are ordinary-Q transfer",
+      "limits": "25/68 are candidate text codes; historical scope compatibility is not new gold; no new composite penalty",
+      "status": "ready"
+    }
+  }
+]

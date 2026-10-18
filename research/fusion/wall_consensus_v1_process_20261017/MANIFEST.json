@@ -1,0 +1,117 @@
+{
+  "version": "wall_consensus_v1_process_20261017_v1",
+  "data_release": "v1",
+  "input_manifest": "analysis_results/research_input_20261017/manifest.json",
+  "files": {
+    "eligibility": "pool_eligibility.csv",
+    "inputs": "input_snapshot.json",
+    "trajectory": "trajectory_scores.csv",
+    "states": "pools/<pool_id>/states.json.gz",
+    "subsets": "unique_subsets.csv",
+    "adjacent_transitions": "transitions.csv",
+    "same_k_stability": "same_k_stability.csv",
+    "summary": "by_pool_k.csv",
+    "endpoints": "path_endpoints.csv",
+    "status": "STATUS.json",
+    "worker_results": "TEAM_RESULTS.csv",
+    "worker_status": "TEAM_RESULT_STATUS.json",
+    "worker_policy": "worker_policy_vs_random.csv",
+    "worker_direct": "worker_direct_contrasts.csv",
+    "worker_coverage": "worker_policy_coverage.csv",
+    "composition": "subset_composition.csv",
+    "same_room_results": "SAME_ROOM_PROCESS_RESULTS.json",
+    "same_room_states": "same_room_trajectory.csv",
+    "same_room_stability": "same_room_within_view_stability.csv",
+    "random_changes": "random_matched_changes.csv",
+    "checks": "CHECKS.json",
+    "handoff": "HANDOFF.md",
+    "main_random_changes": "random_matched_changes_main.csv",
+    "descriptive_8to16": "random_8to16_descriptive_panel.csv",
+    "main_8to16": "random_8to16_main_panel.csv",
+    "main_strict_V": "random_8to16_main_strict_V.csv",
+    "random_panel_summary": "random_8to16_panel_summary.csv",
+    "field_recovery": "measurement_field_recovery.csv",
+    "revision_checks": "REVISION_CHECKS.json",
+    "measurement_schema": "MEASUREMENT_CACHE_SCHEMA.json"
+  },
+  "partial_publication": false,
+  "consumer_join": [
+    "pool_id",
+    "subset",
+    "path_id",
+    "k"
+  ],
+  "no_assisted_structure_leakage": true,
+  "analysis_revision": "v1_complete_measurement_cache_main_panel_r2_20261017",
+  "classification_metrics": [
+    "B8L2",
+    "D10"
+  ],
+  "score_metrics": [
+    "B8L2",
+    "D10"
+  ],
+  "data_version_note": "all current data and this analysis are data v1; v2/v6 in legacy package names are not a new data release",
+  "analysis_tools": [
+    "tools/thesis_main/analysis/wall_consensus_v1_process_20261017.py",
+    "tools/thesis_main/analysis/wall_consensus_v1_summary_20261017.py",
+    "tools/thesis_main/analysis/wall_consensus_v1_revision_20261017.py"
+  ],
+  "tests": [
+    "tests/test_wall_consensus_v1_process_20261017.py",
+    "tests/test_wall_consensus_d10_20261017.py"
+  ],
+  "downstream_requests": {
+    "workers": "request_inputs/TEAM_REQUESTS.json",
+    "same_room": "request_inputs/PAIR_PROCESS_REQUESTS.json"
+  },
+  "previous_tables_archive": "history/v1_complete_measurement_cache_main_panel_r2_20261017/pre_revision_tables.zip",
+  "current_pointer": "CURRENT.json",
+  "table_primary_keys": {
+    "trajectory_scores.csv": [
+      "pool_id",
+      "path_id",
+      "k"
+    ],
+    "unique_subsets.csv": [
+      "pool_id",
+      "subset"
+    ],
+    "measurement_field_recovery.csv": [
+      "pool_id",
+      "subset",
+      "field"
+    ],
+    "random_8to16_main_panel.csv": [
+      "pool_id",
+      "k_from",
+      "k_to"
+    ],
+    "random_8to16_descriptive_panel.csv": [
+      "pool_id",
+      "k_from",
+      "k_to"
+    ],
+    "random_8to16_main_strict_V.csv": [
+      "pool_id",
+      "k_from",
+      "k_to"
+    ],
+    "TEAM_RESULTS.csv": [
+      "request_id"
+    ],
+    "same_room_trajectory.csv": [
+      "request_id",
+      "replay_id",
+      "side",
+      "k"
+    ]
+  },
+  "consumer_guidance": {
+    "reference_quality": "Existing quality flags unchanged; use main table for main-qualified count response",
+    "descriptive": "random_8to16_descriptive_panel.csv includes three original holdouts",
+    "V": "endpoint-available and common-pair results are distinct estimands; read pair counts/IDs",
+    "source_geometry": "original pools/*/states.json.gz, unchanged",
+    "cache": "complete raw measurement dictionaries with verified context; no partial CSV field allowlist"
+  }
+}

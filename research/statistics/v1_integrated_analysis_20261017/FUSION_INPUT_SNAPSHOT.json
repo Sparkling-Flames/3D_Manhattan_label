@@ -1,0 +1,75 @@
+{
+  "status_before": {
+    "data_release": "v1",
+    "planned_pools": 234,
+    "completed_pools": 233,
+    "completed_images": 208,
+    "completed_by_condition": {
+      "manual": 181,
+      "oos": 9,
+      "semi": 43
+    },
+    "failed_pools": 1,
+    "failures": [
+      {
+        "pool_id": "rPc6DW4iMge-22__manual",
+        "reason": "R01424:coordinates_outside_continuous_canvas",
+        "whole_pool_preserved": true,
+        "failed_subset": "R00490|R00642|R01021|R01424|R01661|R02489"
+      }
+    ],
+    "path_states": 41323,
+    "unique_subsets": 23665,
+    "new_subsets": 23453,
+    "reused_subsets": 212,
+    "quality_states": 25623,
+    "numeric_states": 31858,
+    "source_manifest": "analysis_results/research_input_20261017/manifest.json",
+    "classification_selection": "pending requests handled separately"
+  },
+  "status_after": {
+    "data_release": "v1",
+    "planned_pools": 234,
+    "completed_pools": 233,
+    "completed_images": 208,
+    "completed_by_condition": {
+      "manual": 181,
+      "oos": 9,
+      "semi": 43
+    },
+    "failed_pools": 1,
+    "failures": [
+      {
+        "pool_id": "rPc6DW4iMge-22__manual",
+        "reason": "R01424:coordinates_outside_continuous_canvas",
+        "whole_pool_preserved": true,
+        "failed_subset": "R00490|R00642|R01021|R01424|R01661|R02489"
+      }
+    ],
+    "path_states": 41323,
+    "unique_subsets": 23665,
+    "new_subsets": 23453,
+    "reused_subsets": 212,
+    "quality_states": 25623,
+    "numeric_states": 31858,
+    "source_manifest": "analysis_results/research_input_20261017/manifest.json",
+    "classification_selection": "pending requests handled separately"
+  },
+  "published_status_count_matches": true,
+  "source": "research/fusion/wall_consensus_v1_process_20261017",
+  "state_rows": 41323,
+  "same_k_pairs": 16872,
+  "transitions": 37811,
+  "path_kinds": {
+    "random": 11248,
+    "worker_random": 6015,
+    "worker_Q_higher_first": 4010,
+    "worker_Q_lower_first": 4010,
+    "worker_QT_higher_faster_first": 4010,
+    "worker_QT_higher_slower_first": 4010,
+    "worker_QT_lower_faster_first": 4010,
+    "worker_QT_lower_slower_first": 4010
+  },
+  "complete_paths": 3512,
+  "selection_status": "only actual complete published paths; missing requested outcomes remain missing"
+}

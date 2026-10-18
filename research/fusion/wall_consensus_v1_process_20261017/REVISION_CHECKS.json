@@ -1,0 +1,63 @@
+{
+  "analysis_revision": "v1_complete_measurement_cache_main_panel_r2_20261017",
+  "data_release": "v1",
+  "archive": "history/v1_complete_measurement_cache_main_panel_r2_20261017/pre_revision_tables.zip",
+  "source_checks": [
+    {
+      "source": "random_baseline/trajectory_scores.csv",
+      "matching_unique_subsets": 10079,
+      "core_and_reference_equal": true,
+      "archived_entry": "random_baseline/trajectory_scores.csv"
+    },
+    {
+      "source": "research/statistics/v1_integrated_analysis_20261017/inputs/fusion_states.csv",
+      "matching_unique_subsets": 23665,
+      "core_and_reference_equal": true,
+      "archived_entry": "source_statistics/fusion_states.csv"
+    }
+  ],
+  "recovered_unique_subsets": 7641,
+  "recovered_field_cells": 101007,
+  "known_review_window_restored_rows": {
+    "floor_WQ_upper_bound": 2435,
+    "iou_3d_corner_mean": 2402,
+    "height_mean_ratio": 2402,
+    "floor_WQ": 2402,
+    "boundary_loss": 2402,
+    "direction_loss": 2402,
+    "global_height_loss": 2402,
+    "local_height_loss": 2402,
+    "height_loss": 2402,
+    "height_drop_WQ": 2402,
+    "height_drop_current": 2402,
+    "WQ_no_D": 2402,
+    "WQ_no_B": 2402,
+    "WQ_no_H": 2402,
+    "iou2d100": 2402,
+    "reasons": 0
+  },
+  "unique_subsets_remeasured": 0,
+  "schema_probe_measurements": 7,
+  "fusion_rerun": false,
+  "members_references_eligibility_unchanged": true,
+  "main_score_maximum_absolute_difference": {
+    "B8L2": 0.0,
+    "D10": 0.0,
+    "WQ": 0.0,
+    "IoU3D100": 0.0,
+    "iou_2d": 0.0,
+    "S_bottom_deg": 0.0,
+    "dir": 0.0,
+    "Hmean": 0.0,
+    "Hcenter": 0.0,
+    "omission": 0.0,
+    "extension": 0.0,
+    "diagnostic_B8L2": 0.0,
+    "diagnostic_D10": 0.0
+  },
+  "states": 41859,
+  "unique_subsets": 23951,
+  "pools": 233,
+  "images": 208,
+  "additional_failure_reason_subsets": 4
+}

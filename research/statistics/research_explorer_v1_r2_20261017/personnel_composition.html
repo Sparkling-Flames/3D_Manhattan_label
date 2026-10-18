@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>人员细分类与组合 · v1研究工作台</title><link rel="stylesheet" href="workbench.css">
+<style>body{background:#f4f6f8}main{margin:0 auto;padding:28px;max-width:1600px}.lead{display:flex;justify-content:space-between;gap:20px;margin-bottom:22px}.lead p{max-width:950px}.comparison{display:grid;grid-template-columns:1fr 1fr;gap:16px}.comparison>section{min-width:0}.compare-select{width:100%;margin-bottom:10px}.members{min-height:54px;font-size:12px;padding:8px 0;overflow-wrap:anywhere}.chart svg{max-height:310px}.tablewrap{max-height:360px}.status-line{font-size:12px;color:#526171;margin-bottom:12px}.small-note{font-size:12px;color:#526171}#scopeNote{margin:12px 0}.geom-photo{min-height:0}.fold-panel{margin-top:16px}@media(max-width:950px){main{padding:14px}.comparison{grid-template-columns:1fr}.lead{display:block}.toolbar select{max-width:100%}}</style>
+<script src="workbench-core.js" defer></script><script src="geometry-view.js" defer></script>
+<script src="personnel-composition-data.js" defer></script><script src="personnel-composition.js" defer></script></head>
+<body><main id="main"><header class="lead"><div><div class="eyebrow">真实数据v1 · 人员分类与组合 · 2026-10-18分析</div><h1>细分类之后，共识怎样变化？</h1><p>固定人数改变类别构成；固定构成替换具体人员；固定最终成员改变加入顺序。先看共识实际保留的结构，再看参考质量、原答分歧与换人波动。</p></div><a href="index.html#module=workers">返回研究工作台 ↗</a></header>
+<div class="info">画像使用2026-10-17冻结的目标建筑外拟合；几何使用已核处理修订。B8L2与D10评价同一份融合。Q三档是分位切分的研究候选，类别不等于永久能力或独立人群。</div>
+<div id="coverage" class="metrics"></div>
+<div class="info">新增：<a href="personnel_exchangeability.html">6／8／12／16人的固定背景单人替换实验</a>。本页保留首轮4人结果，下面的人工判断精确绑定当时两侧团队。</div>
+<section class="panel"><h2>差异实例与已返回的人工判断</h2><p class="small-note">这些例子在计算后按差异挑选，用于理解结构变化，不能代表发生率。先看实际保留、遗漏及连接，再判断分数是否符合你的研究意图。</p><div id="reviewCases" class="toolbar"></div><div id="humanFeedback" class="tablewrap"></div></section>
+<section class="panel"><h2>选择比较条件</h2><div class="toolbar">
+<label>分类方案<select id="scheme"><option value="Q2">粗分：Q高／低</option><option value="QT4">细分：Q × 速度四格</option><option value="Q3">细分：Q低／中／高三档</option></select></label>
+<label>图片<select id="image"></select></label><label>实验<select id="experiment"><option value="fixed_k_composition_and_members">同人数构成与换人</option><option value="same_endpoint_order">同成员的加入顺序</option></select></label>
+<label>人数k<select id="k"></select></label><label>构成<select id="composition"></select></label><label>终点评价<select id="metric"><option>B8L2</option><option>D10</option></select></label><button id="export">导出当前团队</button></div>
+<p id="scopeNote" class="small-note"></p><div id="counts" class="metrics"></div><div id="chart" class="chart"></div></section>
+<section class="panel" id="orderPanel" hidden><h2>相同最终成员：三种加入顺序</h2><p class="small-note">每条路径的最终成员相同；终点重复不增加样本。k=2沿用当前算法的延后状态，缺失处不连接，不填0。</p><div id="orderChart" class="chart"></div><div id="orderTable" class="tablewrap"></div></section>
+<section class="panel"><h2>同构成换人：已有支持与实际波动</h2><p class="small-note">成员集合相互重叠，集合数不等于独立样本数。主质量只统计用途允许且有完整分数的集合；失败保留在尝试数内。全144构成中19格只有1组主质量，6格没有，不能仅按成功均值比较。V描述融合范围变化，不证明正确性。</p><div id="cells" class="tablewrap"></div></section>
+<section class="panel"><h2>并排查看两组真实人员的共识</h2><p class="small-note">选择一个构成可固定类别人数再换人；选择全部构成可比较不同配比。自动连接不是新增人工确认；参考只供评价，未参与投票。点数变化不自动等于结构正确或遗漏。两侧自动适配各自范围，请相对紫色参考比较形状，不直接比较屏幕面积。</p><div class="comparison">
+<section><select id="teamA" class="compare-select" aria-label="左侧人员集合"></select><div id="membersA" class="members"></div><div id="geometryA"></div></section>
+<section><select id="teamB" class="compare-select" aria-label="右侧人员集合"></select><div id="membersB" class="members"></div><div id="geometryB"></div></section></div><div id="comparison" class="status-line"></div><div id="selectedFeedback" class="info" hidden></div></section>
+<section class="panel"><h2>当前团队明细</h2><div id="teams" class="tablewrap"></div></section>
+<details class="panel fold-panel"><summary>当前建筑外的人员连续画像与细类</summary><p class="small-note">同一人员在不同留出建筑的类别可以变化；训练支持不足保留未知。Q与T的连续效应供解释，不合并为新总分。</p><div id="profiles" class="tablewrap"></div></details>
+<details class="panel fold-panel"><summary>历史删补点核查：当前仍有效的处理记录</summary><p>W018的R01547删去原始p7（21→20点）仍有效。R01424是另一份W002作答：历史坐标修正曾被初始化覆盖，本轮已恢复；它仍只作诊断，不增加主质量分母。</p><div id="pointEdits" class="tablewrap"></div></details>
+<footer><a href="../../workers/worker_fine_composition_20261018/README.md">分类与研究结论</a> · <a href="../../workers/worker_fine_composition_20261018/composition_support.csv">全池可行构成与未抽样覆盖</a> · <a href="../../fusion/worker_composition_fusion_20261018/README.md">融合、失败与来源</a> · <a href="../../data/processed_input_review_20261018/README.md">已处理数据核验</a><p>本页可直接双击离线打开；需保留仓库中的相邻文件与原图。新增人员到达后另建数据版本，当前结果不冒充未来人员验证。</p></footer>
+</main></body></html>

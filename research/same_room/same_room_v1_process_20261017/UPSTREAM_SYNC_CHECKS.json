@@ -1,0 +1,28 @@
+{
+  "data_release": "v1",
+  "consumer_schema": "same_room_process_consumer_20261017_a1",
+  "producer_analysis_revision": "v1_complete_measurement_cache_main_panel_r2_20261017",
+  "previous_producer_analysis_revision": "v1_holdout_flag_parse_corrected_20261017",
+  "producer_current": "research/fusion/wall_consensus_v1_process_20261017/CURRENT.json",
+  "status": "ready_for_statistics",
+  "checks": {
+    "current_manifest_validation_and_interface_revision_equal": true,
+    "prefix_rows_unique": 536,
+    "primary_numeric_side_rows": 392,
+    "paired_prefixes": 268,
+    "both_complete": 228,
+    "both_primary_quality": 196,
+    "all_consumer_prefix_fields_exactly_equal_before_after": true,
+    "G036_diagnostic_rows": 40,
+    "G202_diagnostic_rows": 48,
+    "diagnostic_primary_values_all_missing": true,
+    "schema_columns_unchanged": true,
+    "new_fusion_executed": false,
+    "new_analysis_added": false
+  },
+  "tests": {
+    "command": "python -m pytest tests/test_same_room_v1_process_compare_20261017.py tests/test_same_room_v1_process_export_20261017.py -q",
+    "passed": 4
+  },
+  "human_decisions_required": []
+}

@@ -1,0 +1,65 @@
+{
+  "schema": "statistics_v1_r2_consumer_v1",
+  "data_release": "v1",
+  "analysis_revision": "v1_integrated_analysis_20261017_r2",
+  "status": "consumed_and_validated",
+  "machine_checks": "CHECKS.json",
+  "source_manifest": "SOURCE_MANIFEST.json",
+  "source_archive": "SNAPSHOT.zip",
+  "explorer": "../research_explorer_v1_r2_20261017/index.html",
+  "tables": {
+    "same_room_process_integration": "same_room_process_integration.csv",
+    "same_room_curve_integration": "same_room_curve_integration.csv",
+    "same_room_common_endpoints": "same_room_common_endpoints.csv",
+    "same_room_endpoint_integration": "same_room_endpoint_integration.csv",
+    "auxiliary_restoration_ledger": "auxiliary_restoration_ledger.csv",
+    "process_field_reconciliation": "process_field_reconciliation.csv"
+  },
+  "inherited_r1_tables": [
+    "research/statistics/v1_integrated_analysis_20261017/worker_mix_adjustment.csv",
+    "research/statistics/v1_integrated_analysis_20261017/peer_task_evidence.csv",
+    "research/statistics/v1_integrated_analysis_20261017/worker_context_relative_effects.csv",
+    "research/statistics/v1_integrated_analysis_20261017/within_worker_contrasts.csv",
+    "research/statistics/v1_integrated_analysis_20261017/team_composition_summary.csv",
+    "research/statistics/v1_integrated_analysis_20261017/replacement_group_summary.csv",
+    "research/statistics/v1_integrated_analysis_20261017/metric_reselection_contrasts.csv",
+    "research/statistics/v1_integrated_analysis_20261017/strategy_common_pool_summary.csv",
+    "research/statistics/v1_integrated_analysis_20261017/strategy_vs_matched_random.csv",
+    "research/statistics/v1_integrated_analysis_20261017/room_low_tail.csv",
+    "research/statistics/v1_integrated_analysis_20261017/same_room_weighting_sensitivity.csv"
+  ],
+  "human_decisions_required": [],
+  "handoff": "HANDOFF.md",
+  "dependencies": "DEPENDENCIES.json",
+  "visual_verification": "../research_explorer_v1_r2_20261017/VERIFICATION.json",
+  "conditional_attribution_cases": [
+    {
+      "object_id": "f21c670566821ce7",
+      "worker_id": "W001",
+      "image_code": "UwV83HsGsw3-08",
+      "source_verdict": "invalid_preserved",
+      "issue": "historical_OOS_geometry_submission_requirement_vs_personal_error_attribution",
+      "question": "该P1任务当时是否要求OOS也提供完整成对布局，还是只需足以支持OOS判断？原invalid是否针对独立个人错误？",
+      "evidence_quote": "oos,但是他只标了3个点",
+      "historical_scope_outcome": "correct_rejection",
+      "original_source": {
+        "path": "export_label/stage1_chinese/project-30-at-2026-06-30-09-00-69d8051b.json",
+        "selected_snapshot_path": "analysis_results/prescreen_closeout_final_gold_v2_20260701/raw_inputs/project-30-at-2026-06-30-09-00-69d8051b.json",
+        "project": 30,
+        "task": 3105,
+        "annotation": 4790,
+        "worker": "W001",
+        "image_id": "UwV83HsGsw3_71ada030981d4468b76dcebc1b6fb940",
+        "condition": "oos",
+        "mirror_path": "export_label/stage1_chinese/project-30-at-2026-06-30-09-00-69d8051b.json",
+        "mirror_verified": true
+      },
+      "record_table": "record_evidence.csv",
+      "scope_table": "scope_evidence.csv",
+      "exclusion_table": "exclusion_candidate_evidence.csv",
+      "current_rule": "docs/label_studio/README_ANNOTATOR.md sections 2.3 and 3.4",
+      "interim_action": "retain_original_exclusion_attribution_pending_no_severe_error_penalty",
+      "required_only_if": "research_will_attribute_this_OOS_exclusion_to_personal_geometry_failure"
+    }
+  ]
+}

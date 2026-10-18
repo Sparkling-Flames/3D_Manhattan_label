@@ -1,0 +1,155 @@
+{
+  "analysis_revision": "v1_complete_measurement_cache_main_panel_r2_20261017",
+  "fields": [
+    "Hcenter",
+    "Hmean",
+    "IoU3D100",
+    "S_bottom_deg",
+    "WQ",
+    "WQ_no_B",
+    "WQ_no_D",
+    "WQ_no_H",
+    "boundary_loss",
+    "dir",
+    "direction_loss",
+    "extension",
+    "floor_WQ",
+    "floor_WQ_upper_bound",
+    "global_height_loss",
+    "height_drop_WQ",
+    "height_drop_current",
+    "height_loss",
+    "height_mean_ratio",
+    "iou2d100",
+    "iou_2d",
+    "iou_3d_corner_mean",
+    "local_height_loss",
+    "omission",
+    "reasons",
+    "score_status"
+  ],
+  "runtime": "score_cache.json persists the complete measured dictionary; no field allowlist at reuse",
+  "restored_from_flat_table_schema": "frozen measured schema verified on representative saved states",
+  "probes": [
+    {
+      "pool_id": "2t7WUuJeko7-02__manual",
+      "subset": "R03444",
+      "status": "complete_conditional",
+      "fields": [
+        "Hcenter",
+        "Hmean",
+        "IoU3D100",
+        "S_bottom_deg",
+        "WQ",
+        "WQ_no_B",
+        "WQ_no_D",
+        "WQ_no_H",
+        "boundary_loss",
+        "dir",
+        "direction_loss",
+        "extension",
+        "floor_WQ",
+        "floor_WQ_upper_bound",
+        "global_height_loss",
+        "height_drop_WQ",
+        "height_drop_current",
+        "height_loss",
+        "height_mean_ratio",
+        "iou2d100",
+        "iou_2d",
+        "iou_3d_corner_mean",
+        "local_height_loss",
+        "omission",
+        "score_status"
+      ]
+    },
+    {
+      "pool_id": "2t7WUuJeko7-02__manual",
+      "subset": "R03444|R03449",
+      "status": "two_person_deferred",
+      "fields": [
+        "IoU3D100",
+        "WQ",
+        "floor_WQ_upper_bound",
+        "score_status"
+      ]
+    },
+    {
+      "pool_id": "2t7WUuJeko7-07__manual",
+      "subset": "R03283|R03287|R03289|R03290",
+      "status": "no_connection",
+      "fields": [
+        "IoU3D100",
+        "WQ",
+        "floor_WQ_upper_bound",
+        "score_status"
+      ]
+    },
+    {
+      "pool_id": "2t7WUuJeko7-07__manual",
+      "subset": "R03283|R03287|R03290",
+      "status": "below_four",
+      "fields": [
+        "Hcenter",
+        "Hmean",
+        "IoU3D100",
+        "S_bottom_deg",
+        "WQ",
+        "dir",
+        "extension",
+        "floor_WQ_upper_bound",
+        "iou_2d",
+        "omission",
+        "score_status"
+      ]
+    },
+    {
+      "pool_id": "B6ByNegPMKs-37__manual",
+      "subset": "R01303",
+      "status": "floor_only_reference",
+      "fields": [
+        "Hcenter",
+        "Hmean",
+        "IoU3D100",
+        "S_bottom_deg",
+        "WQ",
+        "dir",
+        "extension",
+        "floor_WQ_upper_bound",
+        "iou_2d",
+        "omission",
+        "score_status"
+      ]
+    },
+    {
+      "pool_id": "B6ByNegPMKs-43__manual",
+      "subset": "R03332|R03333|R03334|R03335|R03337",
+      "status": "invalid_floor",
+      "fields": [
+        "IoU3D100",
+        "WQ",
+        "floor_WQ_upper_bound",
+        "reasons",
+        "score_status"
+      ]
+    },
+    {
+      "pool_id": "uNb9QFRL6hY-19__manual",
+      "subset": "R02856",
+      "status": "invalid_full_geometry",
+      "fields": [
+        "Hcenter",
+        "Hmean",
+        "IoU3D100",
+        "S_bottom_deg",
+        "WQ",
+        "dir",
+        "extension",
+        "floor_WQ_upper_bound",
+        "iou_2d",
+        "omission",
+        "score_status"
+      ]
+    }
+  ]
+}

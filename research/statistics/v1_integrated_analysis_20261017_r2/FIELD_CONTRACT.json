@@ -1,0 +1,161 @@
+{
+  "data_release": "v1",
+  "analysis_revision": "v1_integrated_analysis_20261017_r2",
+  "tables": {
+    "same_room_process_integration": {
+      "rows": 268,
+      "columns": [
+        "request_id",
+        "replay_id",
+        "k",
+        "worker_ids_a",
+        "both_complete",
+        "both_quality",
+        "image_a",
+        "pool_id_a",
+        "path_id_a",
+        "reference_id_a",
+        "reference_version_a",
+        "complete_a",
+        "comparison_quality_allowed_a",
+        "comparison_B8L2_a",
+        "comparison_D10_a",
+        "R_union_normalized_a",
+        "R_valid_pairs_a",
+        "R_possible_pairs_a",
+        "source_time_complete_a",
+        "cumulative_source_seconds_a",
+        "target_time_complete_a",
+        "cumulative_target_seconds_a",
+        "image_b",
+        "pool_id_b",
+        "path_id_b",
+        "reference_id_b",
+        "reference_version_b",
+        "complete_b",
+        "comparison_quality_allowed_b",
+        "comparison_B8L2_b",
+        "comparison_D10_b",
+        "R_union_normalized_b",
+        "R_valid_pairs_b",
+        "R_possible_pairs_b",
+        "source_time_complete_b",
+        "cumulative_source_seconds_b",
+        "target_time_complete_b",
+        "cumulative_target_seconds_b"
+      ]
+    },
+    "same_room_curve_integration": {
+      "rows": 67,
+      "columns": [
+        "request_id",
+        "k",
+        "planned_replays",
+        "both_received",
+        "both_complete",
+        "both_primary_quality",
+        "B8L2_a",
+        "B8L2_b",
+        "D10_a",
+        "D10_b",
+        "primary_mean_absolute_B8L2_gap",
+        "primary_mean_absolute_D10_gap",
+        "comparisons_a",
+        "same_subset_comparisons_a",
+        "valid_floor_comparisons_a",
+        "mean_floor_difference_a",
+        "max_floor_difference_a",
+        "comparisons_b",
+        "same_subset_comparisons_b",
+        "valid_floor_comparisons_b",
+        "mean_floor_difference_b",
+        "max_floor_difference_b"
+      ]
+    },
+    "same_room_common_endpoints": {
+      "rows": 9,
+      "columns": [
+        "request_id",
+        "building",
+        "user_group_ids",
+        "N",
+        "reference_primary_design",
+        "planned_replays",
+        "both_received",
+        "both_complete",
+        "both_primary_quality",
+        "unique_full_sets_a",
+        "full_B8L2_a",
+        "full_D10_a",
+        "unique_full_sets_b",
+        "full_B8L2_b",
+        "full_D10_b"
+      ]
+    },
+    "same_room_endpoint_integration": {
+      "rows": 217,
+      "columns": [
+        "image_a",
+        "image_b",
+        "condition",
+        "paired_workers_B8L2",
+        "n_paired_B8L2",
+        "absolute_mean_gap_B8L2",
+        "mean_absolute_person_delta_B8L2",
+        "worker_spearman_B8L2",
+        "user_group_ids_B8L2",
+        "building_B8L2",
+        "paired_workers_D10",
+        "n_paired_D10",
+        "absolute_mean_gap_D10",
+        "mean_absolute_person_delta_D10",
+        "worker_spearman_D10",
+        "user_group_ids_D10",
+        "building_D10",
+        "original_R_a",
+        "original_R_b",
+        "worker_pair_pattern_spearman",
+        "has_common_quality",
+        "request_id",
+        "module_upstream_process_complete",
+        "pair_process_received",
+        "pair_process_status"
+      ]
+    },
+    "auxiliary_restoration_ledger": {
+      "rows": 36063,
+      "columns": [
+        "pool_id",
+        "path_id",
+        "k",
+        "r1_value",
+        "field",
+        "current_value",
+        "restored_from_complete_measurement_cache"
+      ]
+    },
+    "process_field_reconciliation": {
+      "rows": 72,
+      "columns": [
+        "field",
+        "old_nonmissing",
+        "current_nonmissing_on_old_keys",
+        "lost",
+        "changed",
+        "supplemented_old_missing",
+        "auxiliary"
+      ]
+    }
+  },
+  "rules": {
+    "state_key": [
+      "pool_id",
+      "path_id",
+      "k"
+    ],
+    "room_primary": "comparison_B8L2/comparison_D10; both sides use strict pair masks",
+    "endpoint_process": "module completion does not imply pair coverage; join by actual request ID",
+    "missing": "null is not zero; source and target times separate",
+    "inheritance": "unchanged r1 tables are referenced and source-hashed; old 195-table bundle is separate"
+  }
+}
