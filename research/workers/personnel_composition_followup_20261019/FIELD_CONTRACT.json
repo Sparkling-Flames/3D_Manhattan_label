@@ -16,7 +16,55 @@
   "geometry": "preserve original frozen ring and points, mean-height prism IoU is a proxy rather than ideal 3D solid IoU",
   "subset_support": "high_Q_threshold uses original history-only threshold label; supported flags retain prior domain opportunities and missingness; no new types fitted",
   "evaluation_boundary": "original discovery/validation phase labels describe previous split, all images already explored; additional cores are registered before computation but not external validation",
-  "human_review": "4 descriptive examples pending user review; not rate denominators and no post-hoc threshold adoption",
+  "human_review": "2026-10-20 case-level feedback is summarized in README.md and CORNER_REVIEW.md; no numeric threshold change or population-rate interpretation",
   "scoring": "B8L2 main, D10 sensitivity, N1 unchanged",
-  "criterion_components": "geometry_main removes Q limit from main; quality_main retains completeness and Q difference only; descriptive decomposition, not new adopted threshold"
+  "criterion_components": "geometry_main removes Q limit from main; quality_main retains completeness and Q difference only; descriptive decomposition, not new adopted threshold",
+  "corner_review": {
+    "files": [
+      "CORNER_MATCHING.json",
+      "CORNER_DISTANCES.csv",
+      "CORNER_SUMMARY.csv"
+    ],
+    "case_key": "case 1..4 in REVIEW_CASES.json; image and pair AB/AC/BC; corner_A_index zero-based after binding B,C to A",
+    "units": "wrapped pixels on 1024x512; BEV and top Euclidean distances in camera-height h; signed deltas are second team minus first",
+    "normalization": "bev_percent_radius uses first-team corner radial distance; bev_percent_diagonal uses first-team floor bounding-box diagonal",
+    "interpretation": "same-structure case diagnostics only; not a new adopted classification threshold or global success rate"
+  },
+  "panel_corner_extension": {
+    "version": "20261020",
+    "total_events": 451,
+    "common_candidates": 393,
+    "pair_status_priority": [
+      "missing_connected_geometry",
+      "incomplete_geometry",
+      "different_corner_count",
+      "ambiguous_cyclic_match",
+      "unique_cyclic_candidate"
+    ],
+    "matching": "floor signed-area winding normalization for diagnostic indexing only, then frozen cyclic angular match; record legacy angle and reversal; equal count and unique match do not alone prove semantic equality",
+    "metrics": "BEV and top 3D mean/max h; max/A floor bounding diagonal percent; no coordinate fitting",
+    "aggregation": "identical events for within/cross; equal events within pool, pools within building, buildings overall; event median and p90 explicitly separate",
+    "cross_larger": "cross distance exceeds within distance by 1e-9 h or percent numerical tolerance; direction fraction only, not similarity success rate",
+    "sensitivity": "joint angle <=9 or <=12 only neighborhood sensitivity, no new human acceptance thresholds",
+    "preservation": "retain all451 events including58 non-common events; old Q, old geometry distances and original success flags unchanged"
+  },
+  "structure_extension": {
+    "total_events": 451,
+    "noncommon_events": 58,
+    "pairing": "A/B within composition, A/C cross composition; same background, n, m, source counts and reference",
+    "count_changed": "node counts differ; not necessarily loss or deterioration",
+    "reference_sets": "stored Hungarian angular endpoint matching at 5/9 degrees; symmetric difference divided by reference node count; lost/gained are counts",
+    "missingness": "unknown diagnostics remain null; quality unavailability and completeness separate; paired availability per metric, no zero imputation",
+    "aggregation": "equal events within pool, equal pools within building, equal buildings; raw event sums separately labeled",
+    "vote_margin": "min selected A support minus minimum_support; vulnerable when margin < m; ignores new nodes and regrouping, exploratory not a certificate",
+    "cases": "S1-S3 post-hoc illustrations; S1/S2 same image, no extra independent support"
+  },
+  "vote_trace": {
+    "scope": "58 noncommon events / 174 teams; outcome-selected mechanism sample, not population rate",
+    "identity": "public worker_id + source_pair_index; retained observation universe identical; feature_id only local to team",
+    "relation": "bipartite connected components through exact shared observations; one-to-one, split, merge, many-to-many or unlinked; no geometric forced match",
+    "votes": "support per group; support_delta = incoming_votes - outgoing_votes + retained_delta; summed support of complex components is not a single-node vote",
+    "selected": "all selected and unselected groups retained; compare selected counts per component separately from score",
+    "replay": "frozen fuse, all final candidate geometries identical, scoring not rerun"
+  }
 }
