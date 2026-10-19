@@ -1,0 +1,4443 @@
+{
+  "schema": "saved_case_portable_replay_v1",
+  "cases": [
+    {
+      "case_id": "C01_member_sensitive_mixture",
+      "pool_id": "yqstnuAEVhm-27__manual__36afe2b79d",
+      "image": "yqstnuAEVhm-27",
+      "building": "yqstnuAEVhm",
+      "original_pool_member_n": 34,
+      "embedded_case_member_n": 27,
+      "original_pool_digest_provenance_only": "20f68a9281839227c1078710da924f8c8393c35193f796bfa7a541ec83c2fb79",
+      "embedded_records_sha256": "86f15d2b8d7aec563db629fb4249ed983b4d547fe18ed9147e0a89a49e096004",
+      "reference_sha256": "4f8d4ec1f7a3eedd320d30b58c5b9dd1a6e4b92e5c36b260c74723b1bc05337e",
+      "full_snapshot_read": false,
+      "previous_fusion_cache_read": false,
+      "frozen_point_order_preserved": true,
+      "B8L2_parameters": {
+        "version": "WQ-B8L2-20261015",
+        "direction_scale_deg": 8.0,
+        "direction_cap": 1.5,
+        "bottom_scale_squared_deg2": 32.0,
+        "global_height_scale": 0.8,
+        "local_height_scale": 0.25,
+        "pooling_order": 2.0
+      },
+      "fusion_parameters": {
+        "N1_applied": false,
+        "assisted_partitions": [],
+        "entry": "consensus_delivery_20261008.fuse",
+        "gap": 7.5,
+        "manual_order": null
+      },
+      "teams": [
+        {
+          "team_key": "yqstnuAEVhm-27__manual__36afe2b79d__865773ba902a16fed12c",
+          "label": "初筛混类中位：3 R1 + 6 R2",
+          "k": 9,
+          "members_exact": true,
+          "native_state_sha256": "1751d858ddb30709026aa14f68e75edfd08b63ec522e985b12dae1f854803af8",
+          "geometry_exact": true,
+          "expected_geometry_sha256": "537f08b9dcd6aa4fd9f7e7fb7a771c182922dc819c75479d4083eabefa8c2bb7",
+          "replayed_geometry_sha256": "537f08b9dcd6aa4fd9f7e7fb7a771c182922dc819c75479d4083eabefa8c2bb7",
+          "mechanism_groups_exact": true,
+          "score_checks": {
+            "B8L2": {
+              "expected": 95.81516456943777,
+              "replayed": 95.81516456943777,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 95.91767790094212,
+              "replayed": 95.91767790094212,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "IoU3D100": {
+              "expected": 96.23140237269176,
+              "replayed": 96.23140237269176,
+              "delta": 0.0,
+              "passed": true
+            },
+            "iou_2d": {
+              "expected": 0.9650582418403482,
+              "replayed": 0.9650582418403482,
+              "delta": 0.0,
+              "passed": true
+            },
+            "S_bottom_deg": {
+              "expected": 0.363670155609883,
+              "replayed": 0.363670155609883,
+              "delta": 0.0,
+              "passed": true
+            },
+            "dir": {
+              "expected": 0.7356851226360921,
+              "replayed": 0.7356851226360921,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hmean": {
+              "expected": 0.004901202424818507,
+              "replayed": 0.004901202424818507,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hcenter": {
+              "expected": 0.009297305771000932,
+              "replayed": 0.009297305771000932,
+              "delta": 0.0,
+              "passed": true
+            },
+            "omission": {
+              "expected": 0.017906897906618542,
+              "replayed": 0.017906897906618542,
+              "delta": 0.0,
+              "passed": true
+            },
+            "extension": {
+              "expected": 0.017651639574153995,
+              "replayed": 0.017651639574153995,
+              "delta": 0.0,
+              "passed": true
+            },
+            "height_mean_ratio": {
+              "expected": 1.0049012024248185,
+              "replayed": 1.0049012024248185,
+              "delta": 0.0,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 8,
+              "replayed": 8,
+              "delta": 0.0,
+              "passed": true
+            },
+            "below_four": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "half_vote_nodes": {
+              "expected": 0,
+              "replayed": 0,
+              "delta": 0.0,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "order_status": {
+              "expected": "source_suggestion",
+              "replayed": "source_suggestion",
+              "delta": null,
+              "passed": true
+            },
+            "order_tied": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "geometry_reason": {
+              "expected": "source_order_and_identity_unconfirmed",
+              "replayed": "source_order_and_identity_unconfirmed",
+              "delta": null,
+              "passed": true
+            },
+            "floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "location_unresolved": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "support_checks": {
+            "minimum_support": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "node_supports": {
+              "passed": true,
+              "delta": null
+            },
+            "identity_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "unselected_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "minority_observations_n": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "diagnostics_exact": true,
+          "replay_error": null
+        },
+        {
+          "team_key": "yqstnuAEVhm-27__manual__36afe2b79d__4b5dbd5c1451c15415d1",
+          "label": "复查混类低尾：3 R1 + 6 R2",
+          "k": 9,
+          "members_exact": true,
+          "native_state_sha256": "077fc6627d949ffd15c61de5b0417431d1629e65669eb2e20b47fff31369e62b",
+          "geometry_exact": true,
+          "expected_geometry_sha256": "bb6c813a7010db078cb4acee5ad9e323ae25265b447d7e89a6c336b9fb7b33b7",
+          "replayed_geometry_sha256": "bb6c813a7010db078cb4acee5ad9e323ae25265b447d7e89a6c336b9fb7b33b7",
+          "mechanism_groups_exact": true,
+          "score_checks": {
+            "B8L2": {
+              "expected": 63.98890492656634,
+              "replayed": 63.98890492656634,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 69.88613759159534,
+              "replayed": 69.88613759159534,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "IoU3D100": {
+              "expected": 86.916326123988,
+              "replayed": 86.916326123988,
+              "delta": 0.0,
+              "passed": true
+            },
+            "iou_2d": {
+              "expected": 0.8743044203032044,
+              "replayed": 0.8743044203032044,
+              "delta": 0.0,
+              "passed": true
+            },
+            "S_bottom_deg": {
+              "expected": 1.029731858938192,
+              "replayed": 1.029731858938192,
+              "delta": 0.0,
+              "passed": true
+            },
+            "dir": {
+              "expected": 5.919605835587107,
+              "replayed": 5.919605835587107,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hmean": {
+              "expected": 0.0032428639087140887,
+              "replayed": 0.0032428639087140887,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hcenter": {
+              "expected": 0.014439158499975832,
+              "replayed": 0.014439158499975832,
+              "delta": 0.0,
+              "passed": true
+            },
+            "omission": {
+              "expected": 0.0038448726336301974,
+              "replayed": 0.0038448726336301974,
+              "delta": 0.0,
+              "passed": true
+            },
+            "extension": {
+              "expected": 0.13936874186328382,
+              "replayed": 0.13936874186328382,
+              "delta": 0.0,
+              "passed": true
+            },
+            "height_mean_ratio": {
+              "expected": 1.003242863908714,
+              "replayed": 1.003242863908714,
+              "delta": 0.0,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 8,
+              "replayed": 8,
+              "delta": 0.0,
+              "passed": true
+            },
+            "below_four": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "half_vote_nodes": {
+              "expected": 0,
+              "replayed": 0,
+              "delta": 0.0,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "order_status": {
+              "expected": "source_suggestion",
+              "replayed": "source_suggestion",
+              "delta": null,
+              "passed": true
+            },
+            "order_tied": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "geometry_reason": {
+              "expected": "source_order_and_identity_unconfirmed",
+              "replayed": "source_order_and_identity_unconfirmed",
+              "delta": null,
+              "passed": true
+            },
+            "floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "location_unresolved": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "support_checks": {
+            "minimum_support": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "node_supports": {
+              "passed": true,
+              "delta": null
+            },
+            "identity_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "unselected_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "minority_observations_n": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "diagnostics_exact": true,
+          "replay_error": null
+        },
+        {
+          "team_key": "yqstnuAEVhm-27__manual__36afe2b79d__422e7c9f5e9e4a70dfe9",
+          "label": "复查纯类中位：9 R2",
+          "k": 9,
+          "members_exact": true,
+          "native_state_sha256": "37542537e7523e4e2c92f50f247456dc91703a2a92ab0b4bad2281a08b87c2ad",
+          "geometry_exact": true,
+          "expected_geometry_sha256": "9ebe2958f70b753a0d28cbb5c5bd79aa2c1f6dc6a30ccdb1da73690cf13f5252",
+          "replayed_geometry_sha256": "9ebe2958f70b753a0d28cbb5c5bd79aa2c1f6dc6a30ccdb1da73690cf13f5252",
+          "mechanism_groups_exact": true,
+          "score_checks": {
+            "B8L2": {
+              "expected": 88.26260894798162,
+              "replayed": 88.26260894798162,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 90.93706001501631,
+              "replayed": 90.93706001501631,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "IoU3D100": {
+              "expected": 94.60065739786705,
+              "replayed": 94.60065739786705,
+              "delta": 0.0,
+              "passed": true
+            },
+            "iou_2d": {
+              "expected": 0.9467498643734554,
+              "replayed": 0.9467498643734554,
+              "delta": 0.0,
+              "passed": true
+            },
+            "S_bottom_deg": {
+              "expected": 0.3842536120131163,
+              "replayed": 0.3842536120131163,
+              "delta": 0.0,
+              "passed": true
+            },
+            "dir": {
+              "expected": 2.3153308475001624,
+              "replayed": 2.3153308475001624,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hmean": {
+              "expected": 0.0021349652037436773,
+              "replayed": 0.0021349652037436773,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hcenter": {
+              "expected": 0.01129162612876971,
+              "replayed": 0.01129162612876971,
+              "delta": 0.0,
+              "passed": true
+            },
+            "omission": {
+              "expected": 0.010659691092109114,
+              "replayed": 0.010659691092109114,
+              "delta": 0.0,
+              "passed": true
+            },
+            "extension": {
+              "expected": 0.044985952612330876,
+              "replayed": 0.044985952612330876,
+              "delta": 0.0,
+              "passed": true
+            },
+            "height_mean_ratio": {
+              "expected": 1.0021349652037437,
+              "replayed": 1.0021349652037437,
+              "delta": 0.0,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 8,
+              "replayed": 8,
+              "delta": 0.0,
+              "passed": true
+            },
+            "below_four": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "half_vote_nodes": {
+              "expected": 0,
+              "replayed": 0,
+              "delta": 0.0,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "order_status": {
+              "expected": "source_suggestion",
+              "replayed": "source_suggestion",
+              "delta": null,
+              "passed": true
+            },
+            "order_tied": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "geometry_reason": {
+              "expected": "source_order_and_identity_unconfirmed",
+              "replayed": "source_order_and_identity_unconfirmed",
+              "delta": null,
+              "passed": true
+            },
+            "floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "location_unresolved": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "support_checks": {
+            "minimum_support": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "node_supports": {
+              "passed": true,
+              "delta": null
+            },
+            "identity_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "unselected_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "minority_observations_n": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "diagnostics_exact": true,
+          "replay_error": null
+        }
+      ],
+      "mismatches": [],
+      "same_size_pair_diagnostics_exact": true,
+      "same_size_pair_n": 3,
+      "native_transition_and_lost_group_bookkeeping_exact": true,
+      "replayed_nested_vote_bookkeeping": [],
+      "mechanism_boundary": "Native identity/threshold bookkeeping only; an unchanged group losing a vote does not establish that node's semantic necessity or correctness.",
+      "all_passed": true,
+      "case_json": "/workspace/shared/composition_audit_20261019/extracted/personnel_composition_study_20261019/analysis/representative_cases/cases/C01_member_sensitive_mixture.json",
+      "case_sha256": "0260467ec6b42deb06d090aab92dab5240bbc9449ce6f87bd4a36cfdb7bd60e9",
+      "render_status": "not_requested"
+    },
+    {
+      "case_id": "C02_stable_wrong_same_score_shape",
+      "pool_id": "yqstnuAEVhm-27__manual__36afe2b79d",
+      "image": "yqstnuAEVhm-27",
+      "building": "yqstnuAEVhm",
+      "original_pool_member_n": 34,
+      "embedded_case_member_n": 12,
+      "original_pool_digest_provenance_only": "20f68a9281839227c1078710da924f8c8393c35193f796bfa7a541ec83c2fb79",
+      "embedded_records_sha256": "28d70b714d33561081b834da9803a1f7cb9b0f0f55acd2c99b556d4cedd7cdbf",
+      "reference_sha256": "4f8d4ec1f7a3eedd320d30b58c5b9dd1a6e4b92e5c36b260c74723b1bc05337e",
+      "full_snapshot_read": false,
+      "previous_fusion_cache_read": false,
+      "frozen_point_order_preserved": true,
+      "B8L2_parameters": {
+        "version": "WQ-B8L2-20261015",
+        "direction_scale_deg": 8.0,
+        "direction_cap": 1.5,
+        "bottom_scale_squared_deg2": 32.0,
+        "global_height_scale": 0.8,
+        "local_height_scale": 0.25,
+        "pooling_order": 2.0
+      },
+      "fusion_parameters": {
+        "N1_applied": false,
+        "assisted_partitions": [],
+        "entry": "consensus_delivery_20261008.fuse",
+        "gap": 7.5,
+        "manual_order": null
+      },
+      "teams": [
+        {
+          "team_key": "yqstnuAEVhm-27__manual__36afe2b79d__a4fb4cce7f6cc15c7c2a",
+          "label": "纯R1：第一组成员",
+          "k": 9,
+          "members_exact": true,
+          "native_state_sha256": "4f2c33ab34a14b79bf86aa2df8a2328809c6565c7032849282709e82f290f229",
+          "geometry_exact": true,
+          "expected_geometry_sha256": "c0a881568e22b56cd354b9c1b294f846457385f93221c642dd4a719eeb9f213a",
+          "replayed_geometry_sha256": "c0a881568e22b56cd354b9c1b294f846457385f93221c642dd4a719eeb9f213a",
+          "mechanism_groups_exact": true,
+          "score_checks": {
+            "B8L2": {
+              "expected": 48.51708734174072,
+              "replayed": 48.51708734174072,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 51.72039606701629,
+              "replayed": 51.72039606701629,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "IoU3D100": {
+              "expected": 75.60133733217972,
+              "replayed": 75.60133733217972,
+              "delta": 0.0,
+              "passed": true
+            },
+            "iou_2d": {
+              "expected": 0.7590461958871066,
+              "replayed": 0.7590461958871066,
+              "delta": 0.0,
+              "passed": true
+            },
+            "S_bottom_deg": {
+              "expected": 3.2021193351751567,
+              "replayed": 3.2021193351751567,
+              "delta": 0.0,
+              "passed": true
+            },
+            "dir": {
+              "expected": 9.104767338107603,
+              "replayed": 9.104767338107603,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hmean": {
+              "expected": 0.004012543826628079,
+              "replayed": 0.004012543826628079,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hcenter": {
+              "expected": 0.00865139354561615,
+              "replayed": 0.00865139354561615,
+              "delta": 0.0,
+              "passed": true
+            },
+            "omission": {
+              "expected": 0.0029524771068653198,
+              "replayed": 0.0029524771068653198,
+              "delta": 0.0,
+              "passed": true
+            },
+            "extension": {
+              "expected": 0.3135531516996448,
+              "replayed": 0.3135531516996448,
+              "delta": 0.0,
+              "passed": true
+            },
+            "height_mean_ratio": {
+              "expected": 0.9959874561733719,
+              "replayed": 0.9959874561733719,
+              "delta": 0.0,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 7,
+              "replayed": 7,
+              "delta": 0.0,
+              "passed": true
+            },
+            "below_four": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "half_vote_nodes": {
+              "expected": 0,
+              "replayed": 0,
+              "delta": 0.0,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "order_status": {
+              "expected": "source_suggestion",
+              "replayed": "source_suggestion",
+              "delta": null,
+              "passed": true
+            },
+            "order_tied": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "geometry_reason": {
+              "expected": "source_order_and_identity_unconfirmed",
+              "replayed": "source_order_and_identity_unconfirmed",
+              "delta": null,
+              "passed": true
+            },
+            "floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "location_unresolved": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "support_checks": {
+            "minimum_support": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "node_supports": {
+              "passed": true,
+              "delta": null
+            },
+            "identity_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "unselected_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "minority_observations_n": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "diagnostics_exact": true,
+          "replay_error": null
+        },
+        {
+          "team_key": "yqstnuAEVhm-27__manual__36afe2b79d__149942a57b71ffd4f595",
+          "label": "同类换2人：几何仍相近",
+          "k": 9,
+          "members_exact": true,
+          "native_state_sha256": "9c6d5017eebe511c3c935ba3f119efa4df9e03983d1052f69fe89858217ca552",
+          "geometry_exact": true,
+          "expected_geometry_sha256": "86ae2dfe62d8cd418f1763b6eeb66734e2e82988f3d29dd640666fb4b7427ab1",
+          "replayed_geometry_sha256": "86ae2dfe62d8cd418f1763b6eeb66734e2e82988f3d29dd640666fb4b7427ab1",
+          "mechanism_groups_exact": true,
+          "score_checks": {
+            "B8L2": {
+              "expected": 48.47056532760581,
+              "replayed": 48.47056532760581,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 51.651538410689206,
+              "replayed": 51.651538410689206,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "IoU3D100": {
+              "expected": 75.21937983285508,
+              "replayed": 75.21937983285508,
+              "delta": 0.0,
+              "passed": true
+            },
+            "iou_2d": {
+              "expected": 0.7589917432856833,
+              "replayed": 0.7589917432856833,
+              "delta": 0.0,
+              "passed": true
+            },
+            "S_bottom_deg": {
+              "expected": 3.228995165248981,
+              "replayed": 3.228995165248981,
+              "delta": 0.0,
+              "passed": true
+            },
+            "dir": {
+              "expected": 9.076818213838324,
+              "replayed": 9.076818213838324,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hmean": {
+              "expected": 0.011531379679696752,
+              "replayed": 0.011531379679696752,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hcenter": {
+              "expected": 0.009623878771076545,
+              "replayed": 0.009623878771076545,
+              "delta": 0.0,
+              "passed": true
+            },
+            "omission": {
+              "expected": 0.0034528700924142536,
+              "replayed": 0.0034528700924142536,
+              "delta": 0.0,
+              "passed": true
+            },
+            "extension": {
+              "expected": 0.31298810391997517,
+              "replayed": 0.31298810391997517,
+              "delta": 0.0,
+              "passed": true
+            },
+            "height_mean_ratio": {
+              "expected": 0.9884686203203032,
+              "replayed": 0.9884686203203032,
+              "delta": 0.0,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 7,
+              "replayed": 7,
+              "delta": 0.0,
+              "passed": true
+            },
+            "below_four": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "half_vote_nodes": {
+              "expected": 0,
+              "replayed": 0,
+              "delta": 0.0,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "order_status": {
+              "expected": "source_suggestion",
+              "replayed": "source_suggestion",
+              "delta": null,
+              "passed": true
+            },
+            "order_tied": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "geometry_reason": {
+              "expected": "source_order_and_identity_unconfirmed",
+              "replayed": "source_order_and_identity_unconfirmed",
+              "delta": null,
+              "passed": true
+            },
+            "floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "location_unresolved": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "support_checks": {
+            "minimum_support": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "node_supports": {
+              "passed": true,
+              "delta": null
+            },
+            "identity_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "unselected_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "minority_observations_n": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "diagnostics_exact": true,
+          "replay_error": null
+        },
+        {
+          "team_key": "yqstnuAEVhm-27__manual__36afe2b79d__6eccc6506f5fcae6e041",
+          "label": "同类换3人：近分却异形",
+          "k": 9,
+          "members_exact": true,
+          "native_state_sha256": "37cde1256b3c8a4c18fd6d2b6919336d68b47659c8fad53597b43fca7dd6631e",
+          "geometry_exact": true,
+          "expected_geometry_sha256": "740a85b9af77b447cdda1299416fac5ba6a25514893fc594191bd8ea69e07cd7",
+          "replayed_geometry_sha256": "740a85b9af77b447cdda1299416fac5ba6a25514893fc594191bd8ea69e07cd7",
+          "mechanism_groups_exact": true,
+          "score_checks": {
+            "B8L2": {
+              "expected": 48.05891848857744,
+              "replayed": 48.05891848857744,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 51.59663066520608,
+              "replayed": 51.59663066520608,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "IoU3D100": {
+              "expected": 80.65967752364683,
+              "replayed": 80.65967752364683,
+              "delta": 0.0,
+              "passed": true
+            },
+            "iou_2d": {
+              "expected": 0.8107201134743636,
+              "replayed": 0.8107201134743636,
+              "delta": 0.0,
+              "passed": true
+            },
+            "S_bottom_deg": {
+              "expected": 2.676318102586521,
+              "replayed": 2.676318102586521,
+              "delta": 0.0,
+              "passed": true
+            },
+            "dir": {
+              "expected": 10.918343925777792,
+              "replayed": 10.918343925777792,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hmean": {
+              "expected": 0.010416876849048573,
+              "replayed": 0.010416876849048573,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hcenter": {
+              "expected": 0.013170345650653678,
+              "replayed": 0.013170345650653678,
+              "delta": 0.0,
+              "passed": true
+            },
+            "omission": {
+              "expected": 0.004247279875076918,
+              "replayed": 0.004247279875076918,
+              "delta": 0.0,
+              "passed": true
+            },
+            "extension": {
+              "expected": 0.22823241162427502,
+              "replayed": 0.22823241162427502,
+              "delta": 0.0,
+              "passed": true
+            },
+            "height_mean_ratio": {
+              "expected": 0.9895831231509514,
+              "replayed": 0.9895831231509514,
+              "delta": 0.0,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 7,
+              "replayed": 7,
+              "delta": 0.0,
+              "passed": true
+            },
+            "below_four": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "half_vote_nodes": {
+              "expected": 0,
+              "replayed": 0,
+              "delta": 0.0,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "order_status": {
+              "expected": "source_suggestion",
+              "replayed": "source_suggestion",
+              "delta": null,
+              "passed": true
+            },
+            "order_tied": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "geometry_reason": {
+              "expected": "source_order_and_identity_unconfirmed",
+              "replayed": "source_order_and_identity_unconfirmed",
+              "delta": null,
+              "passed": true
+            },
+            "floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "location_unresolved": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "support_checks": {
+            "minimum_support": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "node_supports": {
+              "passed": true,
+              "delta": null
+            },
+            "identity_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "unselected_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "minority_observations_n": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "diagnostics_exact": true,
+          "replay_error": null
+        }
+      ],
+      "mismatches": [],
+      "same_size_pair_diagnostics_exact": true,
+      "same_size_pair_n": 3,
+      "native_transition_and_lost_group_bookkeeping_exact": true,
+      "replayed_nested_vote_bookkeeping": [],
+      "mechanism_boundary": "Native identity/threshold bookkeeping only; an unchanged group losing a vote does not establish that node's semantic necessity or correctness.",
+      "all_passed": true,
+      "case_json": "/workspace/shared/composition_audit_20261019/extracted/personnel_composition_study_20261019/analysis/representative_cases/cases/C02_stable_wrong_same_score_shape.json",
+      "case_sha256": "4f82a0b5112bb887fbd8ada1c6a03f860227857787eca449f381484242c716e8",
+      "render_status": "not_requested"
+    },
+    {
+      "case_id": "C03_hard_vote_threshold",
+      "pool_id": "UwV83HsGsw3-22__manual__f3e5ed92db",
+      "image": "UwV83HsGsw3-22",
+      "building": "UwV83HsGsw3",
+      "original_pool_member_n": 30,
+      "embedded_case_member_n": 30,
+      "original_pool_digest_provenance_only": "36f63d5094ccbcb24f46daba58febfd7bcdf25bf46b3634211df26b120a912e2",
+      "embedded_records_sha256": "3cdec44e753ca82f11fedd8a6da96e41cccf2ce25ebc2432107a52c08a9d65ac",
+      "reference_sha256": "691b8930acb2ecbb69cb0ea1a4006ee0d1927e772549f515c08caff8feb677d0",
+      "full_snapshot_read": false,
+      "previous_fusion_cache_read": false,
+      "frozen_point_order_preserved": true,
+      "B8L2_parameters": {
+        "version": "WQ-B8L2-20261015",
+        "direction_scale_deg": 8.0,
+        "direction_cap": 1.5,
+        "bottom_scale_squared_deg2": 32.0,
+        "global_height_scale": 0.8,
+        "local_height_scale": 0.25,
+        "pooling_order": 2.0
+      },
+      "fusion_parameters": {
+        "N1_applied": false,
+        "assisted_partitions": [],
+        "entry": "consensus_delivery_20261008.fuse",
+        "gap": 7.5,
+        "manual_order": null
+      },
+      "teams": [
+        {
+          "team_key": "UwV83HsGsw3-22__manual__f3e5ed92db__6cf87586f94f5568bf77",
+          "label": "4 H1 + 4 H2：门槛4票",
+          "k": 8,
+          "members_exact": true,
+          "native_state_sha256": "31dd57828286e1d471a0f3df27a0aab4c232700789aa460f3870bd0d1c7bc0b7",
+          "geometry_exact": true,
+          "expected_geometry_sha256": "64135e50fd1cd679b97d0f9fe28b774335a9c653dc5e2b4e48ad7a1e6732542d",
+          "replayed_geometry_sha256": "64135e50fd1cd679b97d0f9fe28b774335a9c653dc5e2b4e48ad7a1e6732542d",
+          "mechanism_groups_exact": true,
+          "score_checks": {
+            "B8L2": {
+              "expected": 94.68898456150534,
+              "replayed": 94.68898456150534,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 94.90059846800982,
+              "replayed": 94.90059846800982,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "IoU3D100": {
+              "expected": 94.54089077463345,
+              "replayed": 94.54089077463345,
+              "delta": 0.0,
+              "passed": true
+            },
+            "iou_2d": {
+              "expected": 0.9628906977729973,
+              "replayed": 0.9628906977729973,
+              "delta": 0.0,
+              "passed": true
+            },
+            "S_bottom_deg": {
+              "expected": 0.35573781601919857,
+              "replayed": 0.35573781601919857,
+              "delta": 0.0,
+              "passed": true
+            },
+            "dir": {
+              "expected": 0.9083952800800552,
+              "replayed": 0.9083952800800552,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hmean": {
+              "expected": 0.021545013864158746,
+              "replayed": 0.021545013864158746,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hcenter": {
+              "expected": 0.023421303773165536,
+              "replayed": 0.023421303773165536,
+              "delta": 0.0,
+              "passed": true
+            },
+            "omission": {
+              "expected": 0.030556361198053352,
+              "replayed": 0.030556361198053352,
+              "delta": 0.0,
+              "passed": true
+            },
+            "extension": {
+              "expected": 0.006805487937629468,
+              "replayed": 0.006805487937629468,
+              "delta": 0.0,
+              "passed": true
+            },
+            "height_mean_ratio": {
+              "expected": 0.9784549861358413,
+              "replayed": 0.9784549861358413,
+              "delta": 0.0,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 6,
+              "replayed": 6,
+              "delta": 0.0,
+              "passed": true
+            },
+            "below_four": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "half_vote_nodes": {
+              "expected": 1,
+              "replayed": 1,
+              "delta": 0.0,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "order_status": {
+              "expected": "source_suggestion",
+              "replayed": "source_suggestion",
+              "delta": null,
+              "passed": true
+            },
+            "order_tied": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "geometry_reason": {
+              "expected": "source_order_and_identity_unconfirmed",
+              "replayed": "source_order_and_identity_unconfirmed",
+              "delta": null,
+              "passed": true
+            },
+            "floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "location_unresolved": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "support_checks": {
+            "minimum_support": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "node_supports": {
+              "passed": true,
+              "delta": null
+            },
+            "identity_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "unselected_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "minority_observations_n": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "diagnostics_exact": true,
+          "replay_error": null
+        },
+        {
+          "team_key": "UwV83HsGsw3-22__manual__f3e5ed92db__54df2e708699d8ccbb43",
+          "label": "5 H1 + 4 H2：门槛5票",
+          "k": 9,
+          "members_exact": true,
+          "native_state_sha256": "85c6fd90121814aef99c43bd963137fd8f8389b5f6858e4d37ccf10bab413c46",
+          "geometry_exact": true,
+          "expected_geometry_sha256": "7a8ffe9fda7dd014872c63bdce1a8bb94f724ee95367e5fe196e931ce34bd32b",
+          "replayed_geometry_sha256": "7a8ffe9fda7dd014872c63bdce1a8bb94f724ee95367e5fe196e931ce34bd32b",
+          "mechanism_groups_exact": true,
+          "score_checks": {
+            "B8L2": {
+              "expected": 51.40371301050641,
+              "replayed": 51.40371301050641,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 55.216571000083064,
+              "replayed": 55.216571000083064,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "IoU3D100": {
+              "expected": 84.88733019248744,
+              "replayed": 84.88733019248744,
+              "delta": 0.0,
+              "passed": true
+            },
+            "iou_2d": {
+              "expected": 0.8699323486962373,
+              "replayed": 0.8699323486962373,
+              "delta": 0.0,
+              "passed": true
+            },
+            "S_bottom_deg": {
+              "expected": 3.3854418277951086,
+              "replayed": 3.3854418277951086,
+              "delta": 0.0,
+              "passed": true
+            },
+            "dir": {
+              "expected": 8.389397618950577,
+              "replayed": 8.389397618950577,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hmean": {
+              "expected": 0.02417278846483828,
+              "replayed": 0.02417278846483828,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hcenter": {
+              "expected": 0.023839480255173833,
+              "replayed": 0.023839480255173833,
+              "delta": 0.0,
+              "passed": true
+            },
+            "omission": {
+              "expected": 0.1270484845450144,
+              "replayed": 0.1270484845450144,
+              "delta": 0.0,
+              "passed": true
+            },
+            "extension": {
+              "expected": 0.0034705764916923205,
+              "replayed": 0.0034705764916923205,
+              "delta": 0.0,
+              "passed": true
+            },
+            "height_mean_ratio": {
+              "expected": 0.9758272115351617,
+              "replayed": 0.9758272115351617,
+              "delta": 0.0,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 5,
+              "replayed": 5,
+              "delta": 0.0,
+              "passed": true
+            },
+            "below_four": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "half_vote_nodes": {
+              "expected": 0,
+              "replayed": 0,
+              "delta": 0.0,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "order_status": {
+              "expected": "source_suggestion",
+              "replayed": "source_suggestion",
+              "delta": null,
+              "passed": true
+            },
+            "order_tied": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "geometry_reason": {
+              "expected": "source_order_and_identity_unconfirmed",
+              "replayed": "source_order_and_identity_unconfirmed",
+              "delta": null,
+              "passed": true
+            },
+            "floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "location_unresolved": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "support_checks": {
+            "minimum_support": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "node_supports": {
+              "passed": true,
+              "delta": null
+            },
+            "identity_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "unselected_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "minority_observations_n": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "diagnostics_exact": true,
+          "replay_error": null
+        },
+        {
+          "team_key": "UwV83HsGsw3-22__manual__f3e5ed92db__bd1f4893abdb7fb65a29",
+          "label": "6 H1 + 4 H2：仍为5票",
+          "k": 10,
+          "members_exact": true,
+          "native_state_sha256": "ffe8f48ded39649ab4b7cfbf7459837fb87647db467c6580980124315682d2cc",
+          "geometry_exact": true,
+          "expected_geometry_sha256": "b4e285584b1fe3e7fae4d72825bc53c8a12884fc3edeffbb9ee55c8babf9f35a",
+          "replayed_geometry_sha256": "b4e285584b1fe3e7fae4d72825bc53c8a12884fc3edeffbb9ee55c8babf9f35a",
+          "mechanism_groups_exact": true,
+          "score_checks": {
+            "B8L2": {
+              "expected": 53.78101365228309,
+              "replayed": 53.78101365228309,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 58.242812604400974,
+              "replayed": 58.242812604400974,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "IoU3D100": {
+              "expected": 91.42038046432577,
+              "replayed": 91.42038046432577,
+              "delta": 0.0,
+              "passed": true
+            },
+            "iou_2d": {
+              "expected": 0.9270463713113372,
+              "replayed": 0.9270463713113372,
+              "delta": 0.0,
+              "passed": true
+            },
+            "S_bottom_deg": {
+              "expected": 3.1703206294442894,
+              "replayed": 3.1703206294442894,
+              "delta": 0.0,
+              "passed": true
+            },
+            "dir": {
+              "expected": 8.086283272548453,
+              "replayed": 8.086283272548453,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hmean": {
+              "expected": 0.012700408410477038,
+              "replayed": 0.012700408410477038,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hcenter": {
+              "expected": 0.018329646622335116,
+              "replayed": 0.018329646622335116,
+              "delta": 0.0,
+              "passed": true
+            },
+            "omission": {
+              "expected": 0.06736036237378534,
+              "replayed": 0.06736036237378534,
+              "delta": 0.0,
+              "passed": true
+            },
+            "extension": {
+              "expected": 0.006033426684973282,
+              "replayed": 0.006033426684973282,
+              "delta": 0.0,
+              "passed": true
+            },
+            "height_mean_ratio": {
+              "expected": 0.987299591589523,
+              "replayed": 0.987299591589523,
+              "delta": 0.0,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 5,
+              "replayed": 5,
+              "delta": 0.0,
+              "passed": true
+            },
+            "below_four": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "half_vote_nodes": {
+              "expected": 0,
+              "replayed": 0,
+              "delta": 0.0,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "order_status": {
+              "expected": "source_suggestion",
+              "replayed": "source_suggestion",
+              "delta": null,
+              "passed": true
+            },
+            "order_tied": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "geometry_reason": {
+              "expected": "source_order_and_identity_unconfirmed",
+              "replayed": "source_order_and_identity_unconfirmed",
+              "delta": null,
+              "passed": true
+            },
+            "floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "location_unresolved": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "support_checks": {
+            "minimum_support": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "node_supports": {
+              "passed": true,
+              "delta": null
+            },
+            "identity_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "unselected_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "minority_observations_n": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "diagnostics_exact": true,
+          "replay_error": null
+        }
+      ],
+      "mismatches": [],
+      "same_size_pair_diagnostics_exact": true,
+      "same_size_pair_n": 0,
+      "full_member_chain_identity_checked": true,
+      "full_member_chain_points": 8,
+      "chain_note": "Every saved point's identities/counts are checked; only selected team panels are fused by this quick command. All chain member records are embedded for additional chosen replays.",
+      "native_transition_and_lost_group_bookkeeping_exact": true,
+      "replayed_nested_vote_bookkeeping": [
+        {
+          "before_team": "UwV83HsGsw3-22__manual__f3e5ed92db__6cf87586f94f5568bf77",
+          "after_team": "UwV83HsGsw3-22__manual__f3e5ed92db__54df2e708699d8ccbb43",
+          "added_workers": [
+            "W103"
+          ],
+          "native_transition": {
+            "shared_observations": 40,
+            "changed_coidentity_pairs": 0,
+            "common_pair_comparisons": 780,
+            "unchanged_identity_vote_losses": 1,
+            "unchanged_identity_vote_gains": 0,
+            "threshold_increased": true
+          },
+          "unchanged_identity_lost_groups": [
+            {
+              "before_group": "node_005",
+              "after_group": "node_005",
+              "old_observations": [
+                [
+                  "v2:new:101518",
+                  2
+                ],
+                [
+                  "v2:new:101526",
+                  2
+                ],
+                [
+                  "v2:new:101534",
+                  3
+                ],
+                [
+                  "v2:new:101535",
+                  2
+                ]
+              ],
+              "support_before": 4,
+              "support_after": 4,
+              "center_before": [
+                [
+                  567.9821688095471,
+                  145.30057008926104
+                ],
+                [
+                  567.9821688095471,
+                  389.93818984986905
+                ]
+              ],
+              "center_after": [
+                [
+                  567.9821688095471,
+                  145.30057008926104
+                ],
+                [
+                  567.9821688095471,
+                  389.93818984986905
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "before_team": "UwV83HsGsw3-22__manual__f3e5ed92db__54df2e708699d8ccbb43",
+          "after_team": "UwV83HsGsw3-22__manual__f3e5ed92db__bd1f4893abdb7fb65a29",
+          "added_workers": [
+            "W119"
+          ],
+          "native_transition": {
+            "shared_observations": 44,
+            "changed_coidentity_pairs": 0,
+            "common_pair_comparisons": 946,
+            "unchanged_identity_vote_losses": 0,
+            "unchanged_identity_vote_gains": 0,
+            "threshold_increased": false
+          },
+          "unchanged_identity_lost_groups": []
+        }
+      ],
+      "mechanism_boundary": "Native identity/threshold bookkeeping only; an unchanged group losing a vote does not establish that node's semantic necessity or correctness.",
+      "all_passed": true,
+      "case_json": "/workspace/shared/composition_audit_20261019/extracted/personnel_composition_study_20261019/analysis/representative_cases/cases/C03_hard_vote_threshold.json",
+      "case_sha256": "8cc66863c09ff9b75ee76f37adc21f3a272ae3b529daab6138196452ba105cb7",
+      "render_status": "not_requested"
+    },
+    {
+      "case_id": "C04_score_up_structure_down",
+      "pool_id": "X7HyMhZNoso-07__manual__dd2275185f",
+      "image": "X7HyMhZNoso-07",
+      "building": "X7HyMhZNoso",
+      "original_pool_member_n": 34,
+      "embedded_case_member_n": 19,
+      "original_pool_digest_provenance_only": "31be24a65234c97ac03ec22c67c02fbc9aaaf59efbd0a16fd7fb66ca2ac916bf",
+      "embedded_records_sha256": "8e1cea9ab8d2233b446fc4ba90175349a3dc9d99d682368396bd1bb542de8b73",
+      "reference_sha256": "1c9522d9b85065b1ece15c1a8a1abe6d022c9c1b4aead95783cd2e2f431d8a88",
+      "full_snapshot_read": false,
+      "previous_fusion_cache_read": false,
+      "frozen_point_order_preserved": true,
+      "B8L2_parameters": {
+        "version": "WQ-B8L2-20261015",
+        "direction_scale_deg": 8.0,
+        "direction_cap": 1.5,
+        "bottom_scale_squared_deg2": 32.0,
+        "global_height_scale": 0.8,
+        "local_height_scale": 0.25,
+        "pooling_order": 2.0
+      },
+      "fusion_parameters": {
+        "N1_applied": false,
+        "assisted_partitions": [],
+        "entry": "consensus_delivery_20261008.fuse",
+        "gap": 7.5,
+        "manual_order": null
+      },
+      "teams": [
+        {
+          "team_key": "X7HyMhZNoso-07__manual__dd2275185f__40e8e83f10b733b30ecd",
+          "label": "纯细节角色：6 R5",
+          "k": 6,
+          "members_exact": true,
+          "native_state_sha256": "7733292eae8c318b82fc90522c3150d899f20c16add96bccebadfabec9a71a7e",
+          "geometry_exact": true,
+          "expected_geometry_sha256": "5f5364e28dc7975965da413dccf5e9b6c308b36ccf827b80307da7ba34f6c8ed",
+          "replayed_geometry_sha256": "5f5364e28dc7975965da413dccf5e9b6c308b36ccf827b80307da7ba34f6c8ed",
+          "mechanism_groups_exact": true,
+          "score_checks": {
+            "B8L2": {
+              "expected": 47.369137825083484,
+              "replayed": 47.369137825083484,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 50.82720678353104,
+              "replayed": 50.82720678353104,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "IoU3D100": {
+              "expected": 73.92659745734717,
+              "replayed": 73.92659745734717,
+              "delta": 0.0,
+              "passed": true
+            },
+            "iou_2d": {
+              "expected": 0.7413472650948797,
+              "replayed": 0.7413472650948797,
+              "delta": 0.0,
+              "passed": true
+            },
+            "S_bottom_deg": {
+              "expected": 1.2585091191346511,
+              "replayed": 1.2585091191346511,
+              "delta": 0.0,
+              "passed": true
+            },
+            "dir": {
+              "expected": 11.582776169213702,
+              "replayed": 11.582776169213702,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hmean": {
+              "expected": 0.0036617349732527282,
+              "replayed": 0.0036617349732527282,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hcenter": {
+              "expected": 0.03550160947375088,
+              "replayed": 0.03550160947375088,
+              "delta": 0.0,
+              "passed": true
+            },
+            "omission": {
+              "expected": 0.03837381591121369,
+              "replayed": 0.03837381591121369,
+              "delta": 0.0,
+              "passed": true
+            },
+            "extension": {
+              "expected": 0.29713324559943644,
+              "replayed": 0.29713324559943644,
+              "delta": 0.0,
+              "passed": true
+            },
+            "height_mean_ratio": {
+              "expected": 0.9963382650267473,
+              "replayed": 0.9963382650267473,
+              "delta": 0.0,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 10,
+              "replayed": 10,
+              "delta": 0.0,
+              "passed": true
+            },
+            "below_four": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "half_vote_nodes": {
+              "expected": 0,
+              "replayed": 0,
+              "delta": 0.0,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "order_status": {
+              "expected": "source_suggestion",
+              "replayed": "source_suggestion",
+              "delta": null,
+              "passed": true
+            },
+            "order_tied": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "geometry_reason": {
+              "expected": "source_order_and_identity_unconfirmed",
+              "replayed": "source_order_and_identity_unconfirmed",
+              "delta": null,
+              "passed": true
+            },
+            "floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "location_unresolved": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "support_checks": {
+            "minimum_support": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "node_supports": {
+              "passed": true,
+              "delta": null
+            },
+            "identity_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "unselected_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "minority_observations_n": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "diagnostics_exact": true,
+          "replay_error": null
+        },
+        {
+          "team_key": "X7HyMhZNoso-07__manual__dd2275185f__b124e2d4dcddec411b86",
+          "label": "6 R2 + 6 R5：7个节点",
+          "k": 12,
+          "members_exact": true,
+          "native_state_sha256": "60ab1750063662ef9da0d84d623bf095c9680a74752d0aaeba9563d92a9e1cba",
+          "geometry_exact": true,
+          "expected_geometry_sha256": "c20c3d3e02e899d6ec951e4e5773cd49bcdddf75381acf7ab219fc108f61778a",
+          "replayed_geometry_sha256": "c20c3d3e02e899d6ec951e4e5773cd49bcdddf75381acf7ab219fc108f61778a",
+          "mechanism_groups_exact": true,
+          "score_checks": {
+            "B8L2": {
+              "expected": 44.906963311608344,
+              "replayed": 44.906963311608344,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 47.49778807632314,
+              "replayed": 47.49778807632314,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "IoU3D100": {
+              "expected": 77.77772143482522,
+              "replayed": 77.77772143482522,
+              "delta": 0.0,
+              "passed": true
+            },
+            "iou_2d": {
+              "expected": 0.7824358341626981,
+              "replayed": 0.7824358341626981,
+              "delta": 0.0,
+              "passed": true
+            },
+            "S_bottom_deg": {
+              "expected": 0.9521487346199983,
+              "replayed": 0.9521487346199983,
+              "delta": 0.0,
+              "passed": true
+            },
+            "dir": {
+              "expected": 15.421917800217598,
+              "replayed": 15.421917800217598,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hmean": {
+              "expected": 0.013713020310290869,
+              "replayed": 0.013713020310290869,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hcenter": {
+              "expected": 0.01857370471458377,
+              "replayed": 0.01857370471458377,
+              "delta": 0.0,
+              "passed": true
+            },
+            "omission": {
+              "expected": 0.08406110473598759,
+              "replayed": 0.08406110473598759,
+              "delta": 0.0,
+              "passed": true
+            },
+            "extension": {
+              "expected": 0.17062493213156416,
+              "replayed": 0.17062493213156416,
+              "delta": 0.0,
+              "passed": true
+            },
+            "height_mean_ratio": {
+              "expected": 0.9862869796897091,
+              "replayed": 0.9862869796897091,
+              "delta": 0.0,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 7,
+              "replayed": 7,
+              "delta": 0.0,
+              "passed": true
+            },
+            "below_four": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "half_vote_nodes": {
+              "expected": 3,
+              "replayed": 3,
+              "delta": 0.0,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "order_status": {
+              "expected": "source_suggestion",
+              "replayed": "source_suggestion",
+              "delta": null,
+              "passed": true
+            },
+            "order_tied": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "geometry_reason": {
+              "expected": "source_order_and_identity_unconfirmed",
+              "replayed": "source_order_and_identity_unconfirmed",
+              "delta": null,
+              "passed": true
+            },
+            "floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "location_unresolved": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "support_checks": {
+            "minimum_support": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "node_supports": {
+              "passed": true,
+              "delta": null
+            },
+            "identity_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "unselected_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "minority_observations_n": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "diagnostics_exact": true,
+          "replay_error": null
+        },
+        {
+          "team_key": "X7HyMhZNoso-07__manual__dd2275185f__cc7f13fb7aec30cce480",
+          "label": "7 R2 + 6 R5：4个节点",
+          "k": 13,
+          "members_exact": true,
+          "native_state_sha256": "63ee75a630f35ef091ee6cb951d753573910ef16cd86225d086ffa8f530fcaec",
+          "geometry_exact": true,
+          "expected_geometry_sha256": "a75a444f9df2b79e06943a4a5f0a010f4452781c8ed1c45c04dc74846ede0fa1",
+          "replayed_geometry_sha256": "a75a444f9df2b79e06943a4a5f0a010f4452781c8ed1c45c04dc74846ede0fa1",
+          "mechanism_groups_exact": true,
+          "score_checks": {
+            "B8L2": {
+              "expected": 64.63098088833775,
+              "replayed": 64.63098088833775,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 69.16969450254616,
+              "replayed": 69.16969450254616,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "IoU3D100": {
+              "expected": 76.95752572502194,
+              "replayed": 76.95752572502194,
+              "delta": 0.0,
+              "passed": true
+            },
+            "iou_2d": {
+              "expected": 0.7915380559114633,
+              "replayed": 0.7915380559114633,
+              "delta": 0.0,
+              "passed": true
+            },
+            "S_bottom_deg": {
+              "expected": 1.0364681424995708,
+              "replayed": 1.0364681424995708,
+              "delta": 0.0,
+              "passed": true
+            },
+            "dir": {
+              "expected": 5.272986782393108,
+              "replayed": 5.272986782393108,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hmean": {
+              "expected": 0.03350702885259926,
+              "replayed": 0.03350702885259926,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hcenter": {
+              "expected": 0.013135070458312956,
+              "replayed": 0.013135070458312956,
+              "delta": 0.0,
+              "passed": true
+            },
+            "omission": {
+              "expected": 0.04488796247965256,
+              "replayed": 0.04488796247965256,
+              "delta": 0.0,
+              "passed": true
+            },
+            "extension": {
+              "expected": 0.20665333825361884,
+              "replayed": 0.20665333825361884,
+              "delta": 0.0,
+              "passed": true
+            },
+            "height_mean_ratio": {
+              "expected": 0.9664929711474007,
+              "replayed": 0.9664929711474007,
+              "delta": 0.0,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 4,
+              "replayed": 4,
+              "delta": 0.0,
+              "passed": true
+            },
+            "below_four": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "half_vote_nodes": {
+              "expected": 0,
+              "replayed": 0,
+              "delta": 0.0,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "order_status": {
+              "expected": "source_suggestion",
+              "replayed": "source_suggestion",
+              "delta": null,
+              "passed": true
+            },
+            "order_tied": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "geometry_reason": {
+              "expected": "source_order_and_identity_unconfirmed",
+              "replayed": "source_order_and_identity_unconfirmed",
+              "delta": null,
+              "passed": true
+            },
+            "floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "location_unresolved": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "support_checks": {
+            "minimum_support": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "node_supports": {
+              "passed": true,
+              "delta": null
+            },
+            "identity_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "unselected_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "minority_observations_n": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "diagnostics_exact": true,
+          "replay_error": null
+        }
+      ],
+      "mismatches": [],
+      "same_size_pair_diagnostics_exact": true,
+      "same_size_pair_n": 0,
+      "full_member_chain_identity_checked": true,
+      "full_member_chain_points": 10,
+      "chain_note": "Every saved point's identities/counts are checked; only selected team panels are fused by this quick command. All chain member records are embedded for additional chosen replays.",
+      "native_transition_and_lost_group_bookkeeping_exact": true,
+      "replayed_nested_vote_bookkeeping": [
+        {
+          "before_team": "X7HyMhZNoso-07__manual__dd2275185f__b124e2d4dcddec411b86",
+          "after_team": "X7HyMhZNoso-07__manual__dd2275185f__cc7f13fb7aec30cce480",
+          "added_workers": [
+            "W125"
+          ],
+          "native_transition": {
+            "shared_observations": 81,
+            "changed_coidentity_pairs": 0,
+            "common_pair_comparisons": 3240,
+            "unchanged_identity_vote_losses": 3,
+            "unchanged_identity_vote_gains": 0,
+            "threshold_increased": true
+          },
+          "unchanged_identity_lost_groups": [
+            {
+              "before_group": "node_006",
+              "after_group": "node_006",
+              "old_observations": [
+                [
+                  "v2:new:101793",
+                  3
+                ],
+                [
+                  "v2:new:101795",
+                  3
+                ],
+                [
+                  "v2:new:101798",
+                  3
+                ],
+                [
+                  "v2:new:101805",
+                  3
+                ],
+                [
+                  "v2:new:101813",
+                  3
+                ],
+                [
+                  "v2:new:101817",
+                  2
+                ]
+              ],
+              "support_before": 6,
+              "support_after": 6,
+              "center_before": [
+                [
+                  11.199606589980572,
+                  203.51372946856512
+                ],
+                [
+                  11.199606589980572,
+                  310.11260101722894
+                ]
+              ],
+              "center_after": [
+                [
+                  11.199606589980572,
+                  203.51372946856512
+                ],
+                [
+                  11.199606589980572,
+                  310.11260101722894
+                ]
+              ]
+            },
+            {
+              "before_group": "node_009",
+              "after_group": "node_009",
+              "old_observations": [
+                [
+                  "v2:new:101793",
+                  6
+                ],
+                [
+                  "v2:new:101795",
+                  6
+                ],
+                [
+                  "v2:new:101798",
+                  6
+                ],
+                [
+                  "v2:new:101805",
+                  6
+                ],
+                [
+                  "v2:new:101813",
+                  6
+                ],
+                [
+                  "v2:new:101817",
+                  3
+                ]
+              ],
+              "support_before": 6,
+              "support_after": 6,
+              "center_before": [
+                [
+                  72.84714500805411,
+                  225.8508662192204
+                ],
+                [
+                  72.84714500805411,
+                  289.33618606052374
+                ]
+              ],
+              "center_after": [
+                [
+                  72.84714500805411,
+                  225.8508662192204
+                ],
+                [
+                  72.84714500805411,
+                  289.33618606052374
+                ]
+              ]
+            },
+            {
+              "before_group": "node_010",
+              "after_group": "node_010",
+              "old_observations": [
+                [
+                  "v2:new:101793",
+                  7
+                ],
+                [
+                  "v2:new:101795",
+                  7
+                ],
+                [
+                  "v2:new:101798",
+                  7
+                ],
+                [
+                  "v2:new:101805",
+                  7
+                ],
+                [
+                  "v2:new:101813",
+                  7
+                ],
+                [
+                  "v2:new:101817",
+                  4
+                ]
+              ],
+              "support_before": 6,
+              "support_after": 6,
+              "center_before": [
+                [
+                  92.73951162525204,
+                  221.29594355986904
+                ],
+                [
+                  92.73951162525204,
+                  291.11595963016555
+                ]
+              ],
+              "center_after": [
+                [
+                  92.73951162525204,
+                  221.29594355986904
+                ],
+                [
+                  92.73951162525204,
+                  291.11595963016555
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "mechanism_boundary": "Native identity/threshold bookkeeping only; an unchanged group losing a vote does not establish that node's semantic necessity or correctness.",
+      "all_passed": true,
+      "case_json": "/workspace/shared/composition_audit_20261019/extracted/personnel_composition_study_20261019/analysis/representative_cases/cases/C04_score_up_structure_down.json",
+      "case_sha256": "bb67755eaad4f10ba64975e2338d259fc436c285e26b91580ba5946562880d15",
+      "render_status": "not_requested"
+    },
+    {
+      "case_id": "C05_matched_block_improvement",
+      "pool_id": "UwV83HsGsw3-09__manual__1a2b0afff3",
+      "image": "UwV83HsGsw3-09",
+      "building": "UwV83HsGsw3",
+      "original_pool_member_n": 33,
+      "embedded_case_member_n": 11,
+      "original_pool_digest_provenance_only": "e68c5e72b7e94b47ed15796eae2b0259dd94eabbd86518bf5cd489f17a175349",
+      "embedded_records_sha256": "b7b74394bc2d4f10d6c7170a0aa45035258468c2b92cb386bbc4784bdadd5b04",
+      "reference_sha256": "43015c9020dbf60a65eb308644b315f685aaf5182102ddcbde2c170b195ac78b",
+      "full_snapshot_read": false,
+      "previous_fusion_cache_read": false,
+      "frozen_point_order_preserved": true,
+      "B8L2_parameters": {
+        "version": "WQ-B8L2-20261015",
+        "direction_scale_deg": 8.0,
+        "direction_cap": 1.5,
+        "bottom_scale_squared_deg2": 32.0,
+        "global_height_scale": 0.8,
+        "local_height_scale": 0.25,
+        "pooling_order": 2.0
+      },
+      "fusion_parameters": {
+        "N1_applied": false,
+        "assisted_partitions": [],
+        "entry": "consensus_delivery_20261008.fuse",
+        "gap": 7.5,
+        "manual_order": null
+      },
+      "teams": [
+        {
+          "team_key": "UwV83HsGsw3-09__manual__1a2b0afff3__0fb4ae773cabb66670b7",
+          "label": "原队A",
+          "k": 5,
+          "members_exact": true,
+          "native_state_sha256": "841c36991cdff8cc5a29c116a816d93d227c583010f0a350ebff80d93eb6a3d2",
+          "geometry_exact": true,
+          "expected_geometry_sha256": "319a0ea776d14a2f4b837642e6084e1adf2b9504bc6e5727f0514b1dd576553b",
+          "replayed_geometry_sha256": "319a0ea776d14a2f4b837642e6084e1adf2b9504bc6e5727f0514b1dd576553b",
+          "mechanism_groups_exact": true,
+          "score_checks": {
+            "B8L2": {
+              "expected": 24.228488746542116,
+              "replayed": 24.228488746542116,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 24.492986706900012,
+              "replayed": 24.492986706900012,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "IoU3D100": {
+              "expected": 35.36332415955842,
+              "replayed": 35.36332415955842,
+              "delta": 0.0,
+              "passed": true
+            },
+            "iou_2d": {
+              "expected": 0.3544571193903846,
+              "replayed": 0.3544571193903846,
+              "delta": 0.0,
+              "passed": true
+            },
+            "S_bottom_deg": {
+              "expected": 5.839433700442007,
+              "replayed": 5.839433700442007,
+              "delta": 0.0,
+              "passed": true
+            },
+            "dir": {
+              "expected": 15.982512017925016,
+              "replayed": 15.982512017925016,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hmean": {
+              "expected": 0.004767148306697999,
+              "replayed": 0.004767148306697999,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hcenter": {
+              "expected": 0.00884691680600542,
+              "replayed": 0.00884691680600542,
+              "delta": 0.0,
+              "passed": true
+            },
+            "omission": {
+              "expected": 0.6414549362497267,
+              "replayed": 0.6414549362497267,
+              "delta": 0.0,
+              "passed": true
+            },
+            "extension": {
+              "expected": 0.011532972921856389,
+              "replayed": 0.011532972921856389,
+              "delta": 0.0,
+              "passed": true
+            },
+            "height_mean_ratio": {
+              "expected": 1.004767148306698,
+              "replayed": 1.004767148306698,
+              "delta": 0.0,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 5,
+              "replayed": 5,
+              "delta": 0.0,
+              "passed": true
+            },
+            "below_four": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "half_vote_nodes": {
+              "expected": 0,
+              "replayed": 0,
+              "delta": 0.0,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "order_status": {
+              "expected": "source_suggestion",
+              "replayed": "source_suggestion",
+              "delta": null,
+              "passed": true
+            },
+            "order_tied": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "geometry_reason": {
+              "expected": "source_order_and_identity_unconfirmed",
+              "replayed": "source_order_and_identity_unconfirmed",
+              "delta": null,
+              "passed": true
+            },
+            "floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "location_unresolved": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "support_checks": {
+            "minimum_support": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "node_supports": {
+              "passed": true,
+              "delta": null
+            },
+            "identity_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "unselected_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "minority_observations_n": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "diagnostics_exact": true,
+          "replay_error": null
+        },
+        {
+          "team_key": "UwV83HsGsw3-09__manual__1a2b0afff3__5f98479d31a1c4269253",
+          "label": "同类换2人B",
+          "k": 5,
+          "members_exact": true,
+          "native_state_sha256": "92b1c3a175231484d8c5cd229f0d3a12372ff2ce9caceb85a7ebcaa9395eeffc",
+          "geometry_exact": true,
+          "expected_geometry_sha256": "7fa447f9283bdbebb18ca3d03571fe229de87640ea038d6d1543626a005c58b9",
+          "replayed_geometry_sha256": "7fa447f9283bdbebb18ca3d03571fe229de87640ea038d6d1543626a005c58b9",
+          "mechanism_groups_exact": true,
+          "score_checks": {
+            "B8L2": {
+              "expected": 24.567361029531604,
+              "replayed": 24.567361029531604,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 24.797970987502733,
+              "replayed": 24.797970987502733,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "IoU3D100": {
+              "expected": 36.731174340750286,
+              "replayed": 36.731174340750286,
+              "delta": 0.0,
+              "passed": true
+            },
+            "iou_2d": {
+              "expected": 0.36820056358039377,
+              "replayed": 0.36820056358039377,
+              "delta": 0.0,
+              "passed": true
+            },
+            "S_bottom_deg": {
+              "expected": 5.840128484534248,
+              "replayed": 5.840128484534248,
+              "delta": 0.0,
+              "passed": true
+            },
+            "dir": {
+              "expected": 20.108947164923066,
+              "replayed": 20.108947164923066,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hmean": {
+              "expected": 0.0029324961989116716,
+              "replayed": 0.0029324961989116716,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hcenter": {
+              "expected": 0.011161808662208507,
+              "replayed": 0.011161808662208507,
+              "delta": 0.0,
+              "passed": true
+            },
+            "omission": {
+              "expected": 0.6282342002941919,
+              "replayed": 0.6282342002941919,
+              "delta": 0.0,
+              "passed": true
+            },
+            "extension": {
+              "expected": 0.009682864389847693,
+              "replayed": 0.009682864389847693,
+              "delta": 0.0,
+              "passed": true
+            },
+            "height_mean_ratio": {
+              "expected": 0.9970675038010883,
+              "replayed": 0.9970675038010883,
+              "delta": 0.0,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 4,
+              "replayed": 4,
+              "delta": 0.0,
+              "passed": true
+            },
+            "below_four": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "half_vote_nodes": {
+              "expected": 0,
+              "replayed": 0,
+              "delta": 0.0,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "order_status": {
+              "expected": "source_suggestion",
+              "replayed": "source_suggestion",
+              "delta": null,
+              "passed": true
+            },
+            "order_tied": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "geometry_reason": {
+              "expected": "source_order_and_identity_unconfirmed",
+              "replayed": "source_order_and_identity_unconfirmed",
+              "delta": null,
+              "passed": true
+            },
+            "floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "location_unresolved": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "support_checks": {
+            "minimum_support": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "node_supports": {
+              "passed": true,
+              "delta": null
+            },
+            "identity_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "unselected_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "minority_observations_n": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "diagnostics_exact": true,
+          "replay_error": null
+        },
+        {
+          "team_key": "UwV83HsGsw3-09__manual__1a2b0afff3__8f20ff45f9a932e81657",
+          "label": "改类换2人C",
+          "k": 5,
+          "members_exact": true,
+          "native_state_sha256": "f2875a8a92ed11fc26968c001043bcf8cf61034130f543e8ef78e0b1759b66d1",
+          "geometry_exact": true,
+          "expected_geometry_sha256": "e62e56bd4bec891900fcac4c88d25e39ea0c5080dc397e7587e988795cdfc2d2",
+          "replayed_geometry_sha256": "e62e56bd4bec891900fcac4c88d25e39ea0c5080dc397e7587e988795cdfc2d2",
+          "mechanism_groups_exact": true,
+          "score_checks": {
+            "B8L2": {
+              "expected": 89.60429939541832,
+              "replayed": 89.60429939541832,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 90.86822300988364,
+              "replayed": 90.86822300988364,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "IoU3D100": {
+              "expected": 92.53714829760736,
+              "replayed": 92.53714829760736,
+              "delta": 0.0,
+              "passed": true
+            },
+            "iou_2d": {
+              "expected": 0.931160286701749,
+              "replayed": 0.931160286701749,
+              "delta": 0.0,
+              "passed": true
+            },
+            "S_bottom_deg": {
+              "expected": 0.6229676735881153,
+              "replayed": 0.6229676735881153,
+              "delta": 0.0,
+              "passed": true
+            },
+            "dir": {
+              "expected": 1.8485773534708954,
+              "replayed": 1.8485773534708954,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hmean": {
+              "expected": 0.007691328072306547,
+              "replayed": 0.007691328072306547,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hcenter": {
+              "expected": 0.008263272132775244,
+              "replayed": 0.008263272132775244,
+              "delta": 0.0,
+              "passed": true
+            },
+            "omission": {
+              "expected": 0.02701789911778804,
+              "replayed": 0.02701789911778804,
+              "delta": 0.0,
+              "passed": true
+            },
+            "extension": {
+              "expected": 0.04491365748489993,
+              "replayed": 0.04491365748489993,
+              "delta": 0.0,
+              "passed": true
+            },
+            "height_mean_ratio": {
+              "expected": 0.9923086719276935,
+              "replayed": 0.9923086719276935,
+              "delta": 0.0,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 7,
+              "replayed": 7,
+              "delta": 0.0,
+              "passed": true
+            },
+            "below_four": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "half_vote_nodes": {
+              "expected": 0,
+              "replayed": 0,
+              "delta": 0.0,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "order_status": {
+              "expected": "source_suggestion",
+              "replayed": "source_suggestion",
+              "delta": null,
+              "passed": true
+            },
+            "order_tied": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "geometry_reason": {
+              "expected": "source_order_and_identity_unconfirmed",
+              "replayed": "source_order_and_identity_unconfirmed",
+              "delta": null,
+              "passed": true
+            },
+            "floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "location_unresolved": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "support_checks": {
+            "minimum_support": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "node_supports": {
+              "passed": true,
+              "delta": null
+            },
+            "identity_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "unselected_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "minority_observations_n": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "diagnostics_exact": true,
+          "replay_error": null
+        }
+      ],
+      "mismatches": [],
+      "same_size_pair_diagnostics_exact": true,
+      "same_size_pair_n": 3,
+      "matched_block_checks": {
+        "embedded_block_identity_exact": true,
+        "same_actual_core": true,
+        "same_actual_replacement_m": 2,
+        "source_counts": {
+          "A": {
+            "v1": 2,
+            "new": 3
+          },
+          "B": {
+            "new": 3,
+            "v1": 2
+          },
+          "C": {
+            "new": 3,
+            "v1": 2
+          }
+        },
+        "source_counts_equal": true,
+        "frozen_full_manifest_checked_here": false
+      },
+      "native_transition_and_lost_group_bookkeeping_exact": true,
+      "replayed_nested_vote_bookkeeping": [],
+      "mechanism_boundary": "Native identity/threshold bookkeeping only; an unchanged group losing a vote does not establish that node's semantic necessity or correctness.",
+      "all_passed": true,
+      "case_json": "/workspace/shared/composition_audit_20261019/extracted/personnel_composition_study_20261019/analysis/representative_cases/cases/C05_matched_block_improvement.json",
+      "case_sha256": "a01ae75913a781c8a9101d1b863eaa5abd2494f4416f03ce1a308c9010a84ed9",
+      "render_status": "not_requested"
+    },
+    {
+      "case_id": "C06_highQ_replacement_counterexample",
+      "pool_id": "q9vSo1VnCiC-03__manual__2bff6c4167",
+      "image": "q9vSo1VnCiC-03",
+      "building": "q9vSo1VnCiC",
+      "original_pool_member_n": 30,
+      "embedded_case_member_n": 18,
+      "original_pool_digest_provenance_only": "19656c03802b8a9ec1b34999b4c2f0cc7de378986b494f5e1f814085b220ac72",
+      "embedded_records_sha256": "f7e6833ea7d623413c7aa8ae858c44da453aa6277741435d6dbacc9bb70dc2fb",
+      "reference_sha256": "f80c8aae5d8fd3e744a802e6a76988b3b28760c51e78447b19d9146869128b99",
+      "full_snapshot_read": false,
+      "previous_fusion_cache_read": false,
+      "frozen_point_order_preserved": true,
+      "B8L2_parameters": {
+        "version": "WQ-B8L2-20261015",
+        "direction_scale_deg": 8.0,
+        "direction_cap": 1.5,
+        "bottom_scale_squared_deg2": 32.0,
+        "global_height_scale": 0.8,
+        "local_height_scale": 0.25,
+        "pooling_order": 2.0
+      },
+      "fusion_parameters": {
+        "N1_applied": false,
+        "assisted_partitions": [],
+        "entry": "consensus_delivery_20261008.fuse",
+        "gap": 7.5,
+        "manual_order": null
+      },
+      "teams": [
+        {
+          "team_key": "q9vSo1VnCiC-03__manual__2bff6c4167__9862771d92738f043b66",
+          "label": "原队A",
+          "k": 5,
+          "members_exact": true,
+          "native_state_sha256": "4bbe44fe5d20e5c6a5cbf63fb6f6ee109479ef9ff81935fdf73533b7c8f123ec",
+          "geometry_exact": true,
+          "expected_geometry_sha256": "64026919925aedafb8e4ed96abe568b99ca5d723608541a2b7da37427bbff58a",
+          "replayed_geometry_sha256": "64026919925aedafb8e4ed96abe568b99ca5d723608541a2b7da37427bbff58a",
+          "mechanism_groups_exact": true,
+          "score_checks": {
+            "B8L2": {
+              "expected": 94.52187208636086,
+              "replayed": 94.52187208636086,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 94.94699247478763,
+              "replayed": 94.94699247478763,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "IoU3D100": {
+              "expected": 94.93814367571973,
+              "replayed": 94.93814367571973,
+              "delta": 0.0,
+              "passed": true
+            },
+            "iou_2d": {
+              "expected": 0.95876636196983,
+              "replayed": 0.95876636196983,
+              "delta": 0.0,
+              "passed": true
+            },
+            "S_bottom_deg": {
+              "expected": 0.41177829936085014,
+              "replayed": 0.41177829936085014,
+              "delta": 0.0,
+              "passed": true
+            },
+            "dir": {
+              "expected": 1.1364875737160935,
+              "replayed": 1.1364875737160935,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hmean": {
+              "expected": 0.010059188944452346,
+              "replayed": 0.010059188944452346,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hcenter": {
+              "expected": 0.008315853842801813,
+              "replayed": 0.008315853842801813,
+              "delta": 0.0,
+              "passed": true
+            },
+            "omission": {
+              "expected": 0.008761953948150958,
+              "replayed": 0.008761953948150958,
+              "delta": 0.0,
+              "passed": true
+            },
+            "extension": {
+              "expected": 0.03386819288831224,
+              "replayed": 0.03386819288831224,
+              "delta": 0.0,
+              "passed": true
+            },
+            "height_mean_ratio": {
+              "expected": 0.9899408110555477,
+              "replayed": 0.9899408110555477,
+              "delta": 0.0,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 4,
+              "replayed": 4,
+              "delta": 0.0,
+              "passed": true
+            },
+            "below_four": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "half_vote_nodes": {
+              "expected": 0,
+              "replayed": 0,
+              "delta": 0.0,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "order_status": {
+              "expected": "source_suggestion",
+              "replayed": "source_suggestion",
+              "delta": null,
+              "passed": true
+            },
+            "order_tied": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "geometry_reason": {
+              "expected": "source_order_and_identity_unconfirmed",
+              "replayed": "source_order_and_identity_unconfirmed",
+              "delta": null,
+              "passed": true
+            },
+            "floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "location_unresolved": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "support_checks": {
+            "minimum_support": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "node_supports": {
+              "passed": true,
+              "delta": null
+            },
+            "identity_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "unselected_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "minority_observations_n": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "diagnostics_exact": true,
+          "replay_error": null
+        },
+        {
+          "team_key": "q9vSo1VnCiC-03__manual__2bff6c4167__96c205138324a67a2d9f",
+          "label": "同类换2人B",
+          "k": 5,
+          "members_exact": true,
+          "native_state_sha256": "22abee84dab0981b42648f3349aca5b80091b359afe860f89df65e8930d39e8f",
+          "geometry_exact": true,
+          "expected_geometry_sha256": "97d816de2d18ca48d1f2a08eb6f7b69ed70a553cdce03eeb07efaab7daf696a6",
+          "replayed_geometry_sha256": "97d816de2d18ca48d1f2a08eb6f7b69ed70a553cdce03eeb07efaab7daf696a6",
+          "mechanism_groups_exact": true,
+          "score_checks": {
+            "B8L2": {
+              "expected": 94.30912929887765,
+              "replayed": 94.30912929887765,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 95.15866754004162,
+              "replayed": 95.15866754004162,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "IoU3D100": {
+              "expected": 95.61034368350936,
+              "replayed": 95.61034368350936,
+              "delta": 0.0,
+              "passed": true
+            },
+            "iou_2d": {
+              "expected": 0.9646993873181691,
+              "replayed": 0.9646993873181691,
+              "delta": 0.0,
+              "passed": true
+            },
+            "S_bottom_deg": {
+              "expected": 0.40031529023516627,
+              "replayed": 0.40031529023516627,
+              "delta": 0.0,
+              "passed": true
+            },
+            "dir": {
+              "expected": 1.359179547122,
+              "replayed": 1.359179547122,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hmean": {
+              "expected": 0.009345664352017335,
+              "replayed": 0.009345664352017335,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hcenter": {
+              "expected": 0.008032404830959045,
+              "replayed": 0.008032404830959045,
+              "delta": 0.0,
+              "passed": true
+            },
+            "omission": {
+              "expected": 0.026061687837055245,
+              "replayed": 0.026061687837055245,
+              "delta": 0.0,
+              "passed": true
+            },
+            "extension": {
+              "expected": 0.00957699876897333,
+              "replayed": 0.00957699876897333,
+              "delta": 0.0,
+              "passed": true
+            },
+            "height_mean_ratio": {
+              "expected": 1.0093456643520173,
+              "replayed": 1.0093456643520173,
+              "delta": 0.0,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 4,
+              "replayed": 4,
+              "delta": 0.0,
+              "passed": true
+            },
+            "below_four": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "half_vote_nodes": {
+              "expected": 0,
+              "replayed": 0,
+              "delta": 0.0,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "order_status": {
+              "expected": "source_suggestion",
+              "replayed": "source_suggestion",
+              "delta": null,
+              "passed": true
+            },
+            "order_tied": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "geometry_reason": {
+              "expected": "source_order_and_identity_unconfirmed",
+              "replayed": "source_order_and_identity_unconfirmed",
+              "delta": null,
+              "passed": true
+            },
+            "floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "location_unresolved": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "support_checks": {
+            "minimum_support": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "node_supports": {
+              "passed": true,
+              "delta": null
+            },
+            "identity_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "unselected_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "minority_observations_n": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "diagnostics_exact": true,
+          "replay_error": null
+        },
+        {
+          "team_key": "q9vSo1VnCiC-03__manual__2bff6c4167__57b1709e575ce2d1a151",
+          "label": "改类换2人C",
+          "k": 5,
+          "members_exact": true,
+          "native_state_sha256": "a867010ac90ff0cf4244bbe61ac743a37b77215b1c9327922b190e0fd1ac4176",
+          "geometry_exact": true,
+          "expected_geometry_sha256": "cd3aac8370850b7e7b04160dd865914dd45efa4d83ea9392d129f970ba4ef325",
+          "replayed_geometry_sha256": "cd3aac8370850b7e7b04160dd865914dd45efa4d83ea9392d129f970ba4ef325",
+          "mechanism_groups_exact": true,
+          "score_checks": {
+            "B8L2": {
+              "expected": 70.89025985413898,
+              "replayed": 70.89025985413898,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 76.19394033903033,
+              "replayed": 76.19394033903033,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "IoU3D100": {
+              "expected": 86.89317171877022,
+              "replayed": 86.89317171877022,
+              "delta": 0.0,
+              "passed": true
+            },
+            "iou_2d": {
+              "expected": 0.8908360270268553,
+              "replayed": 0.8908360270268553,
+              "delta": 0.0,
+              "passed": true
+            },
+            "S_bottom_deg": {
+              "expected": 1.0690837683573042,
+              "replayed": 1.0690837683573042,
+              "delta": 0.0,
+              "passed": true
+            },
+            "dir": {
+              "expected": 4.578954701059745,
+              "replayed": 4.578954701059745,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hmean": {
+              "expected": 0.025634247510901043,
+              "replayed": 0.025634247510901043,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hcenter": {
+              "expected": 0.020982520564377022,
+              "replayed": 0.020982520564377022,
+              "delta": 0.0,
+              "passed": true
+            },
+            "omission": {
+              "expected": 0.0005188431627949003,
+              "replayed": 0.0005188431627949003,
+              "delta": 0.0,
+              "passed": true
+            },
+            "extension": {
+              "expected": 0.1219586169779762,
+              "replayed": 0.1219586169779762,
+              "delta": 0.0,
+              "passed": true
+            },
+            "height_mean_ratio": {
+              "expected": 1.025634247510901,
+              "replayed": 1.025634247510901,
+              "delta": 0.0,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 4,
+              "replayed": 4,
+              "delta": 0.0,
+              "passed": true
+            },
+            "below_four": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "half_vote_nodes": {
+              "expected": 0,
+              "replayed": 0,
+              "delta": 0.0,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "order_status": {
+              "expected": "source_suggestion",
+              "replayed": "source_suggestion",
+              "delta": null,
+              "passed": true
+            },
+            "order_tied": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "geometry_reason": {
+              "expected": "source_order_and_identity_unconfirmed",
+              "replayed": "source_order_and_identity_unconfirmed",
+              "delta": null,
+              "passed": true
+            },
+            "floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "location_unresolved": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "support_checks": {
+            "minimum_support": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "node_supports": {
+              "passed": true,
+              "delta": null
+            },
+            "identity_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "unselected_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "minority_observations_n": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "diagnostics_exact": true,
+          "replay_error": null
+        }
+      ],
+      "mismatches": [],
+      "same_size_pair_diagnostics_exact": true,
+      "same_size_pair_n": 3,
+      "matched_block_checks": {
+        "embedded_block_identity_exact": true,
+        "same_actual_core": true,
+        "same_actual_replacement_m": 2,
+        "source_counts": {
+          "A": {
+            "new": 5
+          },
+          "B": {
+            "new": 5
+          },
+          "C": {
+            "new": 5
+          }
+        },
+        "source_counts_equal": true,
+        "frozen_full_manifest_checked_here": false
+      },
+      "native_transition_and_lost_group_bookkeeping_exact": true,
+      "replayed_nested_vote_bookkeeping": [],
+      "mechanism_boundary": "Native identity/threshold bookkeeping only; an unchanged group losing a vote does not establish that node's semantic necessity or correctness.",
+      "all_passed": true,
+      "case_json": "/workspace/shared/composition_audit_20261019/extracted/personnel_composition_study_20261019/analysis/representative_cases/cases/C06_highQ_replacement_counterexample.json",
+      "case_sha256": "ab48f8e30429de94d922e0aac9cee9164b791e0d4e38d5baabb0b197eafb85f6",
+      "render_status": "not_requested"
+    },
+    {
+      "case_id": "C07_local_complement_replicates",
+      "pool_id": "yqstnuAEVhm-25__manual__72b3cd9b76",
+      "image": "yqstnuAEVhm-25",
+      "building": "yqstnuAEVhm",
+      "original_pool_member_n": 35,
+      "embedded_case_member_n": 32,
+      "original_pool_digest_provenance_only": "0d69ff2d38df17b16eb19b6360b544d6165bc30ea9065551ad8b1bf2df8387e0",
+      "embedded_records_sha256": "6bc2ea12f89b5982be5897921e42c0b9d6642799f772c87271b9a42ae4a098a4",
+      "reference_sha256": "077a049084a47a4e0488333347919e8e69e9bf4fb9f385921529943cd09cbcbd",
+      "full_snapshot_read": false,
+      "previous_fusion_cache_read": false,
+      "frozen_point_order_preserved": true,
+      "B8L2_parameters": {
+        "version": "WQ-B8L2-20261015",
+        "direction_scale_deg": 8.0,
+        "direction_cap": 1.5,
+        "bottom_scale_squared_deg2": 32.0,
+        "global_height_scale": 0.8,
+        "local_height_scale": 0.25,
+        "pooling_order": 2.0
+      },
+      "fusion_parameters": {
+        "N1_applied": false,
+        "assisted_partitions": [],
+        "entry": "consensus_delivery_20261008.fuse",
+        "gap": 7.5,
+        "manual_order": null
+      },
+      "teams": [
+        {
+          "team_key": "yqstnuAEVhm-25__manual__72b3cd9b76__f17d9ad1bdc7d9ad48cc",
+          "label": "13 G1：下中位代表",
+          "k": 13,
+          "members_exact": true,
+          "native_state_sha256": "3710726820b768efcaef3d889c4c47fa5c4433586b1dab3a53114a274003c545",
+          "geometry_exact": true,
+          "expected_geometry_sha256": "12c2117fb6e0a5c85edc440fdd0f6efbe4ebf010976117989520530d26ed2047",
+          "replayed_geometry_sha256": "12c2117fb6e0a5c85edc440fdd0f6efbe4ebf010976117989520530d26ed2047",
+          "mechanism_groups_exact": true,
+          "score_checks": {
+            "B8L2": {
+              "expected": 37.295982575022734,
+              "replayed": 37.295982575022734,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 38.400905606403384,
+              "replayed": 38.400905606403384,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "IoU3D100": {
+              "expected": 50.24823771137533,
+              "replayed": 50.24823771137533,
+              "delta": 0.0,
+              "passed": true
+            },
+            "iou_2d": {
+              "expected": 0.5260170849263425,
+              "replayed": 0.5260170849263425,
+              "delta": 0.0,
+              "passed": true
+            },
+            "S_bottom_deg": {
+              "expected": 2.492366192916505,
+              "replayed": 2.492366192916505,
+              "delta": 0.0,
+              "passed": true
+            },
+            "dir": {
+              "expected": 18.30953258085294,
+              "replayed": 18.30953258085294,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hmean": {
+              "expected": 0.04800788099274633,
+              "replayed": 0.04800788099274633,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hcenter": {
+              "expected": 0.023113538471385763,
+              "replayed": 0.023113538471385763,
+              "delta": 0.0,
+              "passed": true
+            },
+            "omission": {
+              "expected": 0.4733702748460215,
+              "replayed": 0.4733702748460215,
+              "delta": 0.0,
+              "passed": true
+            },
+            "extension": {
+              "expected": 0.001164677431955202,
+              "replayed": 0.001164677431955202,
+              "delta": 0.0,
+              "passed": true
+            },
+            "height_mean_ratio": {
+              "expected": 0.9519921190072537,
+              "replayed": 0.9519921190072537,
+              "delta": 0.0,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 5,
+              "replayed": 5,
+              "delta": 0.0,
+              "passed": true
+            },
+            "below_four": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "half_vote_nodes": {
+              "expected": 0,
+              "replayed": 0,
+              "delta": 0.0,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "order_status": {
+              "expected": "source_suggestion",
+              "replayed": "source_suggestion",
+              "delta": null,
+              "passed": true
+            },
+            "order_tied": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "geometry_reason": {
+              "expected": "source_order_and_identity_unconfirmed",
+              "replayed": "source_order_and_identity_unconfirmed",
+              "delta": null,
+              "passed": true
+            },
+            "floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "location_unresolved": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "support_checks": {
+            "minimum_support": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "node_supports": {
+              "passed": true,
+              "delta": null
+            },
+            "identity_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "unselected_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "minority_observations_n": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "diagnostics_exact": true,
+          "replay_error": null
+        },
+        {
+          "team_key": "yqstnuAEVhm-25__manual__72b3cd9b76__af59c9a77572206964e8",
+          "label": "13 G2：下中位代表",
+          "k": 13,
+          "members_exact": true,
+          "native_state_sha256": "07c1684efb5a4c5cd1afca9a0b8cad3f384e30b17889f1203637242b458700b8",
+          "geometry_exact": true,
+          "expected_geometry_sha256": "f40acfa7d967f6276cef8b28ffbc4ba84839b2b6cbd892ccdcf233e9e49513f4",
+          "replayed_geometry_sha256": "f40acfa7d967f6276cef8b28ffbc4ba84839b2b6cbd892ccdcf233e9e49513f4",
+          "mechanism_groups_exact": true,
+          "score_checks": {
+            "B8L2": {
+              "expected": 40.80070890344659,
+              "replayed": 40.80070890344659,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 42.465664404998336,
+              "replayed": 42.465664404998336,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "IoU3D100": {
+              "expected": 58.72787287364193,
+              "replayed": 58.72787287364193,
+              "delta": 0.0,
+              "passed": true
+            },
+            "iou_2d": {
+              "expected": 0.6082497351513175,
+              "replayed": 0.6082497351513175,
+              "delta": 0.0,
+              "passed": true
+            },
+            "S_bottom_deg": {
+              "expected": 1.9572585341183741,
+              "replayed": 1.9572585341183741,
+              "delta": 0.0,
+              "passed": true
+            },
+            "dir": {
+              "expected": 16.834484369130866,
+              "replayed": 16.834484369130866,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hmean": {
+              "expected": 0.039833834454237715,
+              "replayed": 0.039833834454237715,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hcenter": {
+              "expected": 0.01935694618302502,
+              "replayed": 0.01935694618302502,
+              "delta": 0.0,
+              "passed": true
+            },
+            "omission": {
+              "expected": 0.39083762024168406,
+              "replayed": 0.39083762024168406,
+              "delta": 0.0,
+              "passed": true
+            },
+            "extension": {
+              "expected": 0.0015004439036396336,
+              "replayed": 0.0015004439036396336,
+              "delta": 0.0,
+              "passed": true
+            },
+            "height_mean_ratio": {
+              "expected": 0.9601661655457623,
+              "replayed": 0.9601661655457623,
+              "delta": 0.0,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 5,
+              "replayed": 5,
+              "delta": 0.0,
+              "passed": true
+            },
+            "below_four": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "half_vote_nodes": {
+              "expected": 0,
+              "replayed": 0,
+              "delta": 0.0,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "order_status": {
+              "expected": "source_suggestion",
+              "replayed": "source_suggestion",
+              "delta": null,
+              "passed": true
+            },
+            "order_tied": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "geometry_reason": {
+              "expected": "source_order_and_identity_unconfirmed",
+              "replayed": "source_order_and_identity_unconfirmed",
+              "delta": null,
+              "passed": true
+            },
+            "floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "location_unresolved": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "support_checks": {
+            "minimum_support": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "node_supports": {
+              "passed": true,
+              "delta": null
+            },
+            "identity_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "unselected_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "minority_observations_n": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "diagnostics_exact": true,
+          "replay_error": null
+        },
+        {
+          "team_key": "yqstnuAEVhm-25__manual__72b3cd9b76__df40b48a6319c30da002",
+          "label": "3 G1 + 10 G2：下中位代表",
+          "k": 13,
+          "members_exact": true,
+          "native_state_sha256": "6d40b0438f0b8149c342c84e86d1cb2fd2beaee05d30ebbeddf392ec9029542d",
+          "geometry_exact": true,
+          "expected_geometry_sha256": "0f51c031e510f4fd70b72c182cf91b8bd783b4a0166153b56f5d6797d313afa1",
+          "replayed_geometry_sha256": "0f51c031e510f4fd70b72c182cf91b8bd783b4a0166153b56f5d6797d313afa1",
+          "mechanism_groups_exact": true,
+          "score_checks": {
+            "B8L2": {
+              "expected": 59.56720947198279,
+              "replayed": 59.56720947198279,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 64.41239966327358,
+              "replayed": 64.41239966327358,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "IoU3D100": {
+              "expected": 73.72734545526976,
+              "replayed": 73.72734545526976,
+              "delta": 0.0,
+              "passed": true
+            },
+            "iou_2d": {
+              "expected": 0.7713426220127135,
+              "replayed": 0.7713426220127135,
+              "delta": 0.0,
+              "passed": true
+            },
+            "S_bottom_deg": {
+              "expected": 0.8707195465766238,
+              "replayed": 0.8707195465766238,
+              "delta": 0.0,
+              "passed": true
+            },
+            "dir": {
+              "expected": 6.394729129935859,
+              "replayed": 6.394729129935859,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hmean": {
+              "expected": 0.04739718038698082,
+              "replayed": 0.04739718038698082,
+              "delta": 0.0,
+              "passed": true
+            },
+            "Hcenter": {
+              "expected": 0.023177076545614052,
+              "replayed": 0.023177076545614052,
+              "delta": 0.0,
+              "passed": true
+            },
+            "omission": {
+              "expected": 0.21833915671336884,
+              "replayed": 0.21833915671336884,
+              "delta": 0.0,
+              "passed": true
+            },
+            "extension": {
+              "expected": 0.013376962428179826,
+              "replayed": 0.013376962428179826,
+              "delta": 0.0,
+              "passed": true
+            },
+            "height_mean_ratio": {
+              "expected": 0.9526028196130192,
+              "replayed": 0.9526028196130192,
+              "delta": 0.0,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 6,
+              "replayed": 6,
+              "delta": 0.0,
+              "passed": true
+            },
+            "below_four": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "half_vote_nodes": {
+              "expected": 0,
+              "replayed": 0,
+              "delta": 0.0,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "order_status": {
+              "expected": "source_suggestion",
+              "replayed": "source_suggestion",
+              "delta": null,
+              "passed": true
+            },
+            "order_tied": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "geometry_reason": {
+              "expected": "source_order_and_identity_unconfirmed",
+              "replayed": "source_order_and_identity_unconfirmed",
+              "delta": null,
+              "passed": true
+            },
+            "floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_floor_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "location_unresolved": {
+              "expected": false,
+              "replayed": false,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "support_checks": {
+            "minimum_support": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "node_supports": {
+              "passed": true,
+              "delta": null
+            },
+            "identity_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "unselected_groups_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "minority_observations_n": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "diagnostics_exact": true,
+          "replay_error": null
+        }
+      ],
+      "mismatches": [],
+      "same_size_pair_diagnostics_exact": true,
+      "same_size_pair_n": 3,
+      "native_transition_and_lost_group_bookkeeping_exact": true,
+      "replayed_nested_vote_bookkeeping": [],
+      "mechanism_boundary": "Native identity/threshold bookkeeping only; an unchanged group losing a vote does not establish that node's semantic necessity or correctness.",
+      "all_passed": true,
+      "case_json": "/workspace/shared/composition_audit_20261019/extracted/personnel_composition_study_20261019/analysis/representative_cases/cases/C07_local_complement_replicates.json",
+      "case_sha256": "d271af8892bacfe0c755e371344a6ffbe4f15549fd0ada030363838ead262b52",
+      "render_status": "not_requested"
+    }
+  ],
+  "case_n": 7,
+  "unique_team_n": 21,
+  "team_panels": 21,
+  "full_snapshot_required": false,
+  "fusion_cache_required": false,
+  "originals_required_for_numeric_replay": false,
+  "all_passed": true,
+  "all_case_files_unchanged": true,
+  "all_engine_files_unchanged": true,
+  "source_sha256": {
+    "/workspace/shared/composition_audit_20261019/extracted/personnel_composition_study_20261019/analysis/composition/replay_saved_cases.py": "b9e0ac53206abc3321e30394baea3ca3b2767f784e2bf1928dc00ccbc95c604a",
+    "/workspace/shared/composition_audit_20261019/extracted/personnel_composition_study_20261019/analysis/composition/fusion_runner.py": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+    "/workspace/shared/composition_audit_20261019/extracted/personnel_composition_study_20261019/analysis/composition/geometry_diagnostics.py": "57a94b9987cd012d1be8d4c7e25f003ba5982c1c6c23be83ed8133243061a0ce",
+    "/workspace/shared/composition_audit_20261019/extracted/personnel_composition_study_20261019/analysis/composition/summarize_grid.py": "276239aba4121c0992c88806efa2c3d8b1106fc66ad9c159636c8acb4ca3804f",
+    "/workspace/shared/composition_audit_20261019/restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/fusion_engine.py": "56c2b45704ca61d1b88d8f185cdcc55e5fe2d0451892ca27dbb9ffa435a168ee",
+    "/workspace/shared/composition_audit_20261019/restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/pool_io.py": "5e0d865ea04074a8361705b99663b1c3b782a59b7a9f6f82b39f4f9a358e5989",
+    "/workspace/shared/composition_audit_20261019/restored/work_personnel_typing_A_20261019/recovered/repo_main_20261019/tools/thesis_main/analysis/consensus_delivery_20261008.py": "fb2b7c3b5c95a24151101e44b96b30b1bbdc09b2bb8d637293ceacd8a503de75",
+    "/workspace/shared/composition_audit_20261019/restored/work_personnel_typing_A_20261019/recovered/repo_main_20261019/tools/thesis_main/analysis/ring_correspondence_20261007.py": "c4fb3f6b3d50e310d7ef8a1e39a933f3f381eb6c9c00ed5727c5250366d97cfe",
+    "/workspace/shared/composition_audit_20261019/restored/work_personnel_typing_A_20261019/recovered/repo_main_20261019/tools/thesis_main/analysis/wall_consensus_population_20261014.py": "5ba3a69eea550c4c3892a5e987d4bfb25312ff43ad3459e7ff36a8e3ea90bc72",
+    "/workspace/shared/composition_audit_20261019/restored/work_personnel_typing_A_20261019/recovered/repo_main_20261019/tools/thesis_main/analysis/wall_consensus_quality_20261015.py": "80c5df1a5204b775b7c564d8e21e08fe0c2de87cfe778985dfe984a304a8eb25",
+    "/workspace/shared/composition_audit_20261019/restored/work_personnel_typing_A_20261019/recovered/repo_main_20261019/tools/thesis_main/analysis/quality_b8l2_d10_20261017.py": "027f78f4bb6d1ca6914ddabd86d4f5521350ea45e48fe82825e4f319b09ea818",
+    "/workspace/shared/composition_audit_20261019/restored/work_personnel_typing_A_20261019/recovered/repo_main_20261019/research/statistics/b8l2_shared_v6_20261016/inputs/measurement_engine.zip": "509bd2503f78b2fc7efdfad21b7f3ed6ff020b15c7b3cc16c605ba90c65df41a",
+    "/workspace/shared/composition_audit_20261019/restored/work_personnel_typing_A_20261019/recovered/repo_main_20261019/research/statistics/b8l2_shared_v6_20261016/inputs/working_models.py": "f045eca7220747bed03e716d9250f7cc7e09741b223bcbb66ca0e16783948165"
+  },
+  "case_sha256": {
+    "/workspace/shared/composition_audit_20261019/extracted/personnel_composition_study_20261019/analysis/representative_cases/cases/C01_member_sensitive_mixture.json": "0260467ec6b42deb06d090aab92dab5240bbc9449ce6f87bd4a36cfdb7bd60e9",
+    "/workspace/shared/composition_audit_20261019/extracted/personnel_composition_study_20261019/analysis/representative_cases/cases/C02_stable_wrong_same_score_shape.json": "4f82a0b5112bb887fbd8ada1c6a03f860227857787eca449f381484242c716e8",
+    "/workspace/shared/composition_audit_20261019/extracted/personnel_composition_study_20261019/analysis/representative_cases/cases/C03_hard_vote_threshold.json": "8cc66863c09ff9b75ee76f37adc21f3a272ae3b529daab6138196452ba105cb7",
+    "/workspace/shared/composition_audit_20261019/extracted/personnel_composition_study_20261019/analysis/representative_cases/cases/C04_score_up_structure_down.json": "bb67755eaad4f10ba64975e2338d259fc436c285e26b91580ba5946562880d15",
+    "/workspace/shared/composition_audit_20261019/extracted/personnel_composition_study_20261019/analysis/representative_cases/cases/C05_matched_block_improvement.json": "a01ae75913a781c8a9101d1b863eaa5abd2494f4416f03ce1a308c9010a84ed9",
+    "/workspace/shared/composition_audit_20261019/extracted/personnel_composition_study_20261019/analysis/representative_cases/cases/C06_highQ_replacement_counterexample.json": "ab48f8e30429de94d922e0aac9cee9164b791e0d4e38d5baabb0b197eafb85f6",
+    "/workspace/shared/composition_audit_20261019/extracted/personnel_composition_study_20261019/analysis/representative_cases/cases/C07_local_complement_replicates.json": "d271af8892bacfe0c755e371344a6ffbe4f15549fd0ada030363838ead262b52"
+  },
+  "jobs": 1,
+  "blas_threads": 1,
+  "numeric_tolerance": 1e-09,
+  "elapsed_seconds": 2.4696117620001132,
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "packages": {
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scipy": "1.17.0",
+    "scikit-learn": "1.8.0",
+    "shapely": "2.1.2"
+  },
+  "qualification_note": "Embedded classes and full-pool provenance are supplied by the frozen case. This quick path checks internal membership/composition consistency; separate independent audits establish equality to the full snapshot and history labels."
+}

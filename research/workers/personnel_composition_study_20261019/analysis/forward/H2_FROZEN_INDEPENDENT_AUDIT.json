@@ -1,0 +1,108 @@
+{
+  "auditor": "forward_classification agent; read-only independent audit",
+  "utc": "2026-10-19T10:23:44.247450+00:00",
+  "source_code_at_run": "2f89ecad0e1674e812c317c44a14eb0388a8fa1dcf606edf1280bc68e5fe5458",
+  "checks": {
+    "H2_per_image_pair_p90_then_equal_building": {
+      "independently_recomputed_aggregate_rows": 504,
+      "all_equal": true,
+      "scope": "all reported difficulty aggregate rows; exact stage/method/domain/k/composition/actual-m retained"
+    },
+    "single_team_cells": {
+      "rows": 131,
+      "pairs": 0,
+      "finite_pair_p90_rows": 0,
+      "finite_joint_stability_rows": 0
+    },
+    "turnover_strata": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "all"
+    ],
+    "turnover_capacity_formula": "sum over classes min(n_class, available_class-n_class); positive actual m, no same-member replacements",
+    "fixed_validation_contrasts_independent_recomputation": [
+      {
+        "contrast_id": "H1_Q_quantile__b5c572230d224fec",
+        "validation_building_equal_B8L2_change": 9.871632478939814,
+        "finite_images": 43,
+        "buildings": 6,
+        "source_new_n_difference_by_image": [
+          0.0,
+          0.7,
+          -0.39999999999999947,
+          -0.5,
+          0.0,
+          -0.9999999999999999,
+          0.9,
+          -0.09999999999999964,
+          1.0,
+          -0.5999999999999996,
+          0.8,
+          0.0,
+          0.10000000000000009,
+          0.0,
+          0.0,
+          0.5999999999999996,
+          0.09999999999999987,
+          -0.10000000000000053,
+          0.10000000000000053,
+          0.0,
+          0.10000000000000053,
+          0.0,
+          0.30000000000000027,
+          0.0,
+          0.09999999999999964,
+          -0.5,
+          -0.40000000000000036,
+          -0.5,
+          -0.5999999999999996,
+          -0.09999999999999987,
+          0.0,
+          0.0,
+          -0.10000000000000053,
+          0.0,
+          -0.5,
+          -0.10000000000000009,
+          0.6000000000000001,
+          0.20000000000000018,
+          0.3999999999999999,
+          0.0,
+          0.0,
+          -0.7000000000000001,
+          -0.3999999999999999
+        ]
+      },
+      {
+        "contrast_id": "H5_hard_structure__b72ea08c47c45843",
+        "validation_building_equal_B8L2_change": 12.691000129899999,
+        "finite_images": 6,
+        "buildings": 5,
+        "source_new_n_difference_by_image": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "notes": [
+    "H2 cell mean_B8L2/p10_B8L2/scored_teams describe all available cell teams even in m strata; only pair metrics restrict to m.",
+    "H5 each image new_n mean difference is zero; rPc6DW4iMge-05 arms each average4.9 new of5, so not every team is all-new.",
+    "Recommended adding input label SHA/freeze cross-check to H2 receipt; peer accepted."
+  ],
+  "data_hashes": {
+    "analysis/composition/frozen_grid_results/within_fixed_compositions_per_image.csv.gz": "aae5ebd92043d54dd1b33e8c48076aeb8b9aeaba4c8dce202e8e1ad24bf74b12",
+    "analysis/composition/frozen_grid_results/within_fixed_compositions_aggregate.csv.gz": "e171702a33a976ef91200cdba005ed1b16f42568f9cc206a4e93921316857be6",
+    "analysis/composition/frozen_grid_results/frozen_contrasts_per_image.csv.gz": "93403b85cf250d25cbe539d13ae26ec683beb21f0aa641ffab2271f5ef57d6cd"
+  }
+}

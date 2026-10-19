@@ -1,0 +1,47 @@
+{
+  "base_sha256": "0f4305817c65e2c2e679531aed0b49bcfa5127e6727e6ffa723a5e5bb2f52924",
+  "fair_control_sha256": "4a1786bc9f12ac8b66c2a86850680c4b1a71f1c7d6773494eb0c577839cebf54",
+  "rows": 22916,
+  "rows_replaced_by_equal_flexibility_control": 6886,
+  "candidate_method_domain_instances": 245,
+  "distinct_method_ids": 229,
+  "selected_method_domains": [
+    [
+      "F_rule_Q_threshold_K3",
+      "all"
+    ],
+    [
+      "F_rule_Q_quantile_K5",
+      "all"
+    ],
+    [
+      "F_rule_Q2xDetail2",
+      "all"
+    ],
+    [
+      "F_medoids_S_K4",
+      "all"
+    ],
+    [
+      "R_geo9_source_signed_p2_K2",
+      "all"
+    ],
+    [
+      "R_geo9_spectral_p2_K3",
+      "all"
+    ],
+    [
+      "R_role_ward_K5",
+      "all"
+    ],
+    [
+      "R_role_ward_difficulty_K2",
+      "hard"
+    ]
+  ],
+  "model_selection": "uncontrolled actual-fusion utility plus class/member support, interpretability and representation diversity; not maximum among all model×target cells",
+  "control_correction": "quadratic controls include meanQ², meanQ×origin and origin²; condition controls include the same difficulty/scene interactions; linear/image unchanged",
+  "validation_read": false,
+  "independence": "discovery images only; different heldout teams are not new independent images or personnel",
+  "per_image_reconstruction": "same replacement on KEY plus pool_id using screen and screen_fair_control screen_per_image.csv.gz; code can rerun all models directly with current equal-flexibility controls"
+}

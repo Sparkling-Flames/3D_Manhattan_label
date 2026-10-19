@@ -1,0 +1,169 @@
+{
+  "phase": "validation",
+  "seed": 2026101955,
+  "created_utc": "2026-10-19T09:38:32.431047+00:00",
+  "selection": "Same frozen methods, integer proportions, sizes and comparison rules; no validation outcome adaptation.",
+  "methods": [
+    {
+      "method_id": "F_rule_Q_threshold_K3",
+      "domain": "all",
+      "sizes": [
+        3,
+        5,
+        7,
+        9,
+        11,
+        13,
+        15,
+        17,
+        21,
+        25,
+        29,
+        33
+      ],
+      "replicates": 6,
+      "curves": [
+        {
+          "curve_id": "low_to_high",
+          "target_class": "C03",
+          "background_weights": {
+            "C01": 1
+          }
+        },
+        {
+          "curve_id": "middle_to_high",
+          "target_class": "C03",
+          "background_weights": {
+            "C02": 1
+          }
+        },
+        {
+          "curve_id": "balanced_low_middle_to_high",
+          "target_class": "C03",
+          "background_weights": {
+            "C01": 1,
+            "C02": 1
+          }
+        }
+      ]
+    },
+    {
+      "method_id": "R_geo9_source_signed_p2_K2",
+      "domain": "all",
+      "sizes": [
+        3,
+        5,
+        7,
+        9,
+        11,
+        13,
+        15,
+        17,
+        21,
+        25,
+        29,
+        33
+      ],
+      "replicates": 6,
+      "curves": [
+        {
+          "curve_id": "relation_C01_to_C02",
+          "target_class": "C02",
+          "background_weights": {
+            "C01": 1
+          }
+        }
+      ]
+    },
+    {
+      "method_id": "R_role_ward_difficulty_K2",
+      "domain": "hard",
+      "sizes": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        25,
+        29,
+        33
+      ],
+      "replicates": 10,
+      "curves": [
+        {
+          "curve_id": "hard_common_to_detail_role",
+          "target_class": "C02",
+          "background_weights": {
+            "C01": 1
+          }
+        }
+      ]
+    },
+    {
+      "method_id": "R_role_ward_K5",
+      "domain": "all",
+      "sizes": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        11,
+        13,
+        15,
+        17
+      ],
+      "replicates": 6,
+      "curves": [
+        {
+          "curve_id": "common_to_detail_role",
+          "target_class": "C05",
+          "background_weights": {
+            "C02": 1
+          }
+        }
+      ]
+    },
+    {
+      "method_id": "F_rule_Q2xDetail2",
+      "domain": "all",
+      "sizes": [
+        3,
+        5,
+        7,
+        9,
+        11,
+        13,
+        15,
+        17
+      ],
+      "replicates": 6,
+      "curves": [
+        {
+          "curve_id": "higherQ_sparse_to_detail",
+          "target_class": "C04",
+          "background_weights": {
+            "C03": 1
+          }
+        }
+      ]
+    }
+  ],
+  "source_discovery_spec": "CURVES_DISCOVERY_SPEC.json"
+}

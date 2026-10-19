@@ -1,0 +1,34 @@
+{
+  "code_sha256": "5f0900c0d4884b687350f36fa9f62052e8736b19f5f422ee3cf50f3846e99fe1",
+  "font": "NotoSansSC-Regular.ttf",
+  "font_sha256": "e48149d6543b0ca8416deedf8b7f297dd01c8e1ae61fc3b456a1d75452d026a1",
+  "from_compact_sources": true,
+  "dpi": 160,
+  "figures": [
+    {
+      "figure": "01_candidate_utility_coverage.png",
+      "bytes": 526935,
+      "inputs": {
+        "analysis/figures_summary/01_plot_source.csv": "6f345108003cfd77de4fecb3f4bac10dadeaaf57e9dcc3df7f898e6f4a1401b6",
+        "analysis/figures_summary/01_candidate_coverage_source.csv": "5a3386318daf1f144ad318784fec23acabdd90534d5e163bb3c89e015d52739a",
+        "analysis/figures_summary/01_screen_manifest.json": "6ecf3bcf061d1fcba551fad077db47800cbf116e5e6342ba05f4d7c0f3928a7a"
+      },
+      "candidates": 245,
+      "validation_used": false
+    },
+    {
+      "figure": "02_specific_replacements_discovery_validation.png",
+      "bytes": 587028,
+      "validation_used": true,
+      "comparison_count": 13,
+      "selection": "same 13 discovery strata; no validation selection",
+      "inputs": {
+        "analysis/figures_summary/02_plot_source.csv": "4c4e4110598196c29e5f899b309d304682d5d59b6be93b31c19e84a4da438dd5",
+        "analysis/figures_summary/02_building_points.csv": "72d76887d3f3f998e6c7d1b578df4f18edf248adb4e83f104742cd1eee2c56c8",
+        "analysis/figures_summary/02_comparison_manifest.json": "c22859c0caca86249eca21dec3a2a669a29f4fde8bda47157bda7cfce80d13c9"
+      }
+    }
+  ],
+  "inference": "descriptive figures only; no new fit or hypothesis",
+  "reproduction": "python analysis/figures_summary/make_summary_figures.py --root /path/to/project --from-sources"
+}

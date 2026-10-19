@@ -1,0 +1,97 @@
+{
+  "schema": "unaltered_qualified_pool_image_conditions_v1",
+  "rows": 229,
+  "images": 196,
+  "pools": 229,
+  "metadata_only_no_fusion_results_read": true,
+  "all_duplicate_image_evidence_consistent": true,
+  "csv_sha256": "80224237687ce37d883e6b234627029b9d56ef15cb27710210cc6dca90ce3d68",
+  "csv_bytes": 254162,
+  "sources": {
+    "restored/work_personnel_typing_A_20261019/recovered/repo_main_20261019/research/statistics/v2_evidence_audit_20261019/records.json.gz": "46ee9890a1a56264c8955538f47c650cbe893662e7cefc21e360a3e00eca9251",
+    "restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7"
+  },
+  "upstream_image_metadata": null,
+  "room_type_support": [
+    {
+      "room_coarse_type": null,
+      "pools": 15,
+      "images": 11,
+      "buildings": 7,
+      "qualified_record_slots": 486
+    },
+    {
+      "room_coarse_type": "储藏与家务辅助",
+      "pools": 8,
+      "images": 7,
+      "buildings": 5,
+      "qualified_record_slots": 258
+    },
+    {
+      "room_coarse_type": "卧室",
+      "pools": 57,
+      "images": 46,
+      "buildings": 16,
+      "qualified_record_slots": 1900
+    },
+    {
+      "room_coarse_type": "卫浴",
+      "pools": 43,
+      "images": 41,
+      "buildings": 14,
+      "qualified_record_slots": 1304
+    },
+    {
+      "room_coarse_type": "厨房与用餐",
+      "pools": 16,
+      "images": 14,
+      "buildings": 7,
+      "qualified_record_slots": 503
+    },
+    {
+      "room_coarse_type": "工作与学习",
+      "pools": 13,
+      "images": 11,
+      "buildings": 3,
+      "qualified_record_slots": 427
+    },
+    {
+      "room_coarse_type": "开放复合空间",
+      "pools": 6,
+      "images": 5,
+      "buildings": 1,
+      "qualified_record_slots": 188
+    },
+    {
+      "room_coarse_type": "无法判断",
+      "pools": 2,
+      "images": 1,
+      "buildings": 1,
+      "qualified_record_slots": 50
+    },
+    {
+      "room_coarse_type": "特殊用途",
+      "pools": 2,
+      "images": 2,
+      "buildings": 1,
+      "qualified_record_slots": 70
+    },
+    {
+      "room_coarse_type": "起居与休闲",
+      "pools": 31,
+      "images": 28,
+      "buildings": 11,
+      "qualified_record_slots": 970
+    },
+    {
+      "room_coarse_type": "通行与连接",
+      "pools": 36,
+      "images": 30,
+      "buildings": 15,
+      "qualified_record_slots": 1146
+    }
+  ],
+  "missing_policy": "Raw room_coarse_type and text values retained unchanged. Missing values remain null in JSON/empty in CSV; the recorded boolean distinguishes missing from literal unknown labels such as 无法判断. No class merging.",
+  "source_scope": "Frozen evidence directly contains room_spatial_classification/main_visual_space/expected_annotation_extent. Its source builder copies these from v2 analysis_input data.images. Field-level room_classification_sources is recorded only if that optional upstream metadata is supplied; otherwise provenance is not invented.",
+  "interpretation": "scene remains the independent OOS/doorway status. Room type is inherited image metadata, not a newly validated automatic prediction. Difficulty is target-conditioned curated evidence, often nonblind geometry/photo review. Additional room strata of previously frozen effects are post-freeze exploratory interpretation."
+}

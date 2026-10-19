@@ -1,0 +1,4962 @@
+{
+  "schema": "selected_representative_case_parity_v1",
+  "scope": "Only explicit frozen representative cases; direct native fusion and B8L2/D10 replay plus separate geometry diagnostics; no case selection or broad result search",
+  "jobs": 1,
+  "blas_threads": 1,
+  "numeric_tolerance": 1e-09,
+  "source_sha256": {
+    "/workspace/scratch/1d99618bd862/analysis/independent/audit_representative_cases.py": "04973e0956b53d0c4d5844bef3db14c78cfb73fc8857cc33b8a86aa7d4a3bca3",
+    "/workspace/scratch/1d99618bd862/analysis/composition/fusion_runner.py": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+    "/workspace/scratch/1d99618bd862/analysis/composition/geometry_diagnostics.py": "57a94b9987cd012d1be8d4c7e25f003ba5982c1c6c23be83ed8133243061a0ce",
+    "/workspace/scratch/1d99618bd862/analysis/composition/summarize_grid.py": "276239aba4121c0992c88806efa2c3d8b1106fc66ad9c159636c8acb4ca3804f",
+    "/workspace/scratch/1d99618bd862/restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/pool_io.py": "5e0d865ea04074a8361705b99663b1c3b782a59b7a9f6f82b39f4f9a358e5989",
+    "/workspace/scratch/1d99618bd862/restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/fusion_engine.py": "56c2b45704ca61d1b88d8f185cdcc55e5fe2d0451892ca27dbb9ffa435a168ee",
+    "/workspace/scratch/1d99618bd862/restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7",
+    "/workspace/scratch/1d99618bd862/restored/work_personnel_typing_A_20261019/recovered/repo_main_20261019/tools/thesis_main/analysis/consensus_delivery_20261008.py": "fb2b7c3b5c95a24151101e44b96b30b1bbdc09b2bb8d637293ceacd8a503de75",
+    "/workspace/scratch/1d99618bd862/restored/work_personnel_typing_A_20261019/recovered/repo_main_20261019/tools/thesis_main/analysis/ring_correspondence_20261007.py": "c4fb3f6b3d50e310d7ef8a1e39a933f3f381eb6c9c00ed5727c5250366d97cfe",
+    "/workspace/scratch/1d99618bd862/restored/work_personnel_typing_A_20261019/recovered/repo_main_20261019/tools/thesis_main/analysis/wall_consensus_population_20261014.py": "5ba3a69eea550c4c3892a5e987d4bfb25312ff43ad3459e7ff36a8e3ea90bc72",
+    "/workspace/scratch/1d99618bd862/restored/work_personnel_typing_A_20261019/recovered/repo_main_20261019/tools/thesis_main/analysis/wall_consensus_quality_20261015.py": "80c5df1a5204b775b7c564d8e21e08fe0c2de87cfe778985dfe984a304a8eb25",
+    "/workspace/scratch/1d99618bd862/restored/work_personnel_typing_A_20261019/recovered/repo_main_20261019/tools/thesis_main/analysis/quality_b8l2_d10_20261017.py": "027f78f4bb6d1ca6914ddabd86d4f5521350ea45e48fe82825e4f319b09ea818",
+    "/workspace/scratch/1d99618bd862/restored/work_personnel_typing_A_20261019/recovered/repo_main_20261019/research/statistics/b8l2_shared_v6_20261016/inputs/measurement_engine.zip": "509bd2503f78b2fc7efdfad21b7f3ed6ff020b15c7b3cc16c605ba90c65df41a",
+    "/workspace/scratch/1d99618bd862/restored/work_personnel_typing_A_20261019/recovered/repo_main_20261019/research/statistics/b8l2_shared_v6_20261016/inputs/working_models.py": "f045eca7220747bed03e716d9250f7cc7e09741b223bcbb66ca0e16783948165",
+    "/workspace/scratch/1d99618bd862/analysis/forward/results/worker_labels.csv.gz": "b5e52ba1aebe093d9555a8a0782c53a52c6d79778aded4f16de474b6ed804bfc",
+    "/workspace/scratch/1d99618bd862/analysis/reverse/worker_labels.csv.gz": "64aa9e9fff524d597f20ad94f6f0e7fd205bfdcb0af24c83f1f2f540f4172411",
+    "/workspace/scratch/1d99618bd862/analysis/composition/VALIDATION_NESTED_REQUESTS.json.gz": "651b0ad34e433cb6a0b4e8c65613c990547d5fd0666718b636c29ea8f38132c0",
+    "/workspace/scratch/1d99618bd862/analysis/composition/VALIDATION_BLOCK_REQUESTS.json.gz": "202814a68491129ff332205c1392cc98217ff9ce672fb7c0227a9f3e01ef38aa"
+  },
+  "case_input_sha256": {
+    "/workspace/scratch/1d99618bd862/analysis/representative_cases/cases/C01_member_sensitive_mixture.json": "0260467ec6b42deb06d090aab92dab5240bbc9449ce6f87bd4a36cfdb7bd60e9",
+    "/workspace/scratch/1d99618bd862/analysis/representative_cases/cases/C02_stable_wrong_same_score_shape.json": "4f82a0b5112bb887fbd8ada1c6a03f860227857787eca449f381484242c716e8",
+    "/workspace/scratch/1d99618bd862/analysis/representative_cases/cases/C03_hard_vote_threshold.json": "8cc66863c09ff9b75ee76f37adc21f3a272ae3b529daab6138196452ba105cb7",
+    "/workspace/scratch/1d99618bd862/analysis/representative_cases/cases/C04_score_up_structure_down.json": "bb67755eaad4f10ba64975e2338d259fc436c285e26b91580ba5946562880d15",
+    "/workspace/scratch/1d99618bd862/analysis/representative_cases/cases/C05_matched_block_improvement.json": "a01ae75913a781c8a9101d1b863eaa5abd2494f4416f03ce1a308c9010a84ed9",
+    "/workspace/scratch/1d99618bd862/analysis/representative_cases/cases/C06_highQ_replacement_counterexample.json": "ab48f8e30429de94d922e0aac9cee9164b791e0d4e38d5baabb0b197eafb85f6",
+    "/workspace/scratch/1d99618bd862/analysis/representative_cases/cases/C07_local_complement_replicates.json": "d271af8892bacfe0c755e371344a6ffbe4f15549fd0ada030363838ead262b52"
+  },
+  "gap": 7.5,
+  "N1_applied": false,
+  "D10_only_change": "direction_scale_deg=10.0 versus B8L2's 8.0; frozen matching and reference retained",
+  "diagnostic_interpretation": "Reference-relative wall coverage and geometric true-turn recall, separate from B8L2; not validated necessary-structure correctness",
+  "cases": [
+    {
+      "case_id": "C01_member_sensitive_mixture",
+      "path": "/workspace/scratch/1d99618bd862/analysis/representative_cases/cases/C01_member_sensitive_mixture.json",
+      "pool_id": "yqstnuAEVhm-27__manual__36afe2b79d",
+      "image": "yqstnuAEVhm-27",
+      "building": "yqstnuAEVhm",
+      "reference_id": "gt:yqstnuAEVhm_b26ae45c6c12443cbcfc3997f2e63347:data/mp3d_layout/test/label_cor/yqstnuAEVhm_b26ae45c6c12443cbcfc3997f2e63347.txt",
+      "reference_version": "gt_original",
+      "reference_geometry_exact": true,
+      "original_full_pool_digest_exact": true,
+      "reference_floor_sha256": "d6a7f94ab6f477318111fcf176da769a9e0b2402574dc914ff67ba60a95e46a8",
+      "supplied_member_annotations_exact": true,
+      "all_embedded_frozen_records_exact": true,
+      "saved_original_pool_meta_exact": true,
+      "class_labels_checked_against_frozen_history": true,
+      "teams": [
+        {
+          "team_key": "yqstnuAEVhm-27__manual__36afe2b79d__865773ba902a16fed12c",
+          "label": "初筛混类中位：3 R1 + 6 R2",
+          "k": 9,
+          "member_workers": [
+            "W002",
+            "W105",
+            "W106",
+            "W107",
+            "W114",
+            "W123",
+            "W127",
+            "W131",
+            "W133"
+          ],
+          "member_object_ids": [
+            "55cde5ca98b3a274f9ca",
+            "v2:new:106403",
+            "v2:new:106404",
+            "v2:new:106405",
+            "v2:new:106409",
+            "v2:new:106417",
+            "v2:new:106420",
+            "v2:new:106424",
+            "v2:new:106426"
+          ],
+          "counts": {
+            "C01": 3,
+            "C02": 6,
+            "C03": 0,
+            "C04": 0,
+            "C05": 0
+          },
+          "exact_members": true,
+          "geometry_exact": true,
+          "expected_geometry_sha256": "537f08b9dcd6aa4fd9f7e7fb7a771c182922dc819c75479d4083eabefa8c2bb7",
+          "native_geometry_sha256": "537f08b9dcd6aa4fd9f7e7fb7a771c182922dc819c75479d4083eabefa8c2bb7",
+          "native_full_state_sha256": "1751d858ddb30709026aa14f68e75edfd08b63ec522e985b12dae1f854803af8",
+          "score_checks": {
+            "B8L2": {
+              "expected": 95.81516456943777,
+              "replayed": 95.81516456943777,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 95.91767790094212,
+              "replayed": 95.91767790094212,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 8,
+              "replayed": 8,
+              "delta": 0.0,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "diagnostic_checks": {
+            "diag_candidate_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_candidate_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_matches": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_recall_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_turn_min_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_matched_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_area": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_perimeter": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_reference_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_scale": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_schema": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_coverage_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_coverage_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_details_03": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_details_05": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_direction_tolerance_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "mechanism_groups_exact": true,
+          "replayed_core_diagnostics": {
+            "diag_status": "ok",
+            "diag_wall_coverage_03": 0.9928509326991236,
+            "diag_wall_coverage_05": 0.9928509326991236,
+            "diag_corner_recall_05": 1.0
+          }
+        },
+        {
+          "team_key": "yqstnuAEVhm-27__manual__36afe2b79d__4b5dbd5c1451c15415d1",
+          "label": "复查混类低尾：3 R1 + 6 R2",
+          "k": 9,
+          "member_workers": [
+            "W002",
+            "W102",
+            "W105",
+            "W111",
+            "W116",
+            "W120",
+            "W129",
+            "W131",
+            "W132"
+          ],
+          "member_object_ids": [
+            "55cde5ca98b3a274f9ca",
+            "v2:new:106400",
+            "v2:new:106403",
+            "v2:new:106407",
+            "v2:new:106411",
+            "v2:new:106414",
+            "v2:new:106422",
+            "v2:new:106424",
+            "v2:new:106425"
+          ],
+          "counts": {
+            "C01": 3,
+            "C02": 6,
+            "C03": 0,
+            "C04": 0,
+            "C05": 0
+          },
+          "exact_members": true,
+          "geometry_exact": true,
+          "expected_geometry_sha256": "bb6c813a7010db078cb4acee5ad9e323ae25265b447d7e89a6c336b9fb7b33b7",
+          "native_geometry_sha256": "bb6c813a7010db078cb4acee5ad9e323ae25265b447d7e89a6c336b9fb7b33b7",
+          "native_full_state_sha256": "077fc6627d949ffd15c61de5b0417431d1629e65669eb2e20b47fff31369e62b",
+          "score_checks": {
+            "B8L2": {
+              "expected": 63.98890492656634,
+              "replayed": 63.98890492656634,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 69.88613759159534,
+              "replayed": 69.88613759159534,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 8,
+              "replayed": 8,
+              "delta": 0.0,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "diagnostic_checks": {
+            "diag_candidate_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_candidate_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_matches": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_recall_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_turn_min_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_matched_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_area": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_perimeter": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_reference_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_scale": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_schema": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_coverage_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_coverage_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_details_03": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_details_05": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_direction_tolerance_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "mechanism_groups_exact": true,
+          "replayed_core_diagnostics": {
+            "diag_status": "ok",
+            "diag_wall_coverage_03": 0.8242011610029127,
+            "diag_wall_coverage_05": 0.9255912334788462,
+            "diag_corner_recall_05": 0.75
+          }
+        },
+        {
+          "team_key": "yqstnuAEVhm-27__manual__36afe2b79d__422e7c9f5e9e4a70dfe9",
+          "label": "复查纯类中位：9 R2",
+          "k": 9,
+          "member_workers": [
+            "W102",
+            "W104",
+            "W107",
+            "W110",
+            "W114",
+            "W120",
+            "W125",
+            "W127",
+            "W131"
+          ],
+          "member_object_ids": [
+            "v2:new:106400",
+            "v2:new:106402",
+            "v2:new:106405",
+            "v2:new:106406",
+            "v2:new:106409",
+            "v2:new:106414",
+            "v2:new:106418",
+            "v2:new:106420",
+            "v2:new:106424"
+          ],
+          "counts": {
+            "C01": 0,
+            "C02": 9,
+            "C03": 0,
+            "C04": 0,
+            "C05": 0
+          },
+          "exact_members": true,
+          "geometry_exact": true,
+          "expected_geometry_sha256": "9ebe2958f70b753a0d28cbb5c5bd79aa2c1f6dc6a30ccdb1da73690cf13f5252",
+          "native_geometry_sha256": "9ebe2958f70b753a0d28cbb5c5bd79aa2c1f6dc6a30ccdb1da73690cf13f5252",
+          "native_full_state_sha256": "37542537e7523e4e2c92f50f247456dc91703a2a92ab0b4bad2281a08b87c2ad",
+          "score_checks": {
+            "B8L2": {
+              "expected": 88.26260894798162,
+              "replayed": 88.26260894798162,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 90.93706001501631,
+              "replayed": 90.93706001501631,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 8,
+              "replayed": 8,
+              "delta": 0.0,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "diagnostic_checks": {
+            "diag_candidate_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_candidate_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_matches": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_recall_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_turn_min_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_matched_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_area": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_perimeter": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_reference_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_scale": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_schema": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_coverage_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_coverage_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_details_03": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_details_05": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_direction_tolerance_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "mechanism_groups_exact": true,
+          "replayed_core_diagnostics": {
+            "diag_status": "ok",
+            "diag_wall_coverage_03": 0.9255822589026664,
+            "diag_wall_coverage_05": 0.9484116156785737,
+            "diag_corner_recall_05": 0.875
+          }
+        }
+      ],
+      "same_size_pair_diagnostics_exact_from_native": true,
+      "independent_joint_decision_checks": [
+        {
+          "team_a": "yqstnuAEVhm-27__manual__36afe2b79d__865773ba902a16fed12c",
+          "team_b": "yqstnuAEVhm-27__manual__36afe2b79d__4b5dbd5c1451c15415d1",
+          "abs_B8L2": 31.826259642871428,
+          "floor_difference_independent": 0.13117111940101342,
+          "bound_cyclic_deg_independent": 6.9498926369864495,
+          "node_count_difference": 0,
+          "joint_stability": {
+            "strict": false,
+            "main": false,
+            "wide": false
+          },
+          "all_independent_checks_passed": true
+        },
+        {
+          "team_a": "yqstnuAEVhm-27__manual__36afe2b79d__865773ba902a16fed12c",
+          "team_b": "yqstnuAEVhm-27__manual__36afe2b79d__422e7c9f5e9e4a70dfe9",
+          "abs_B8L2": 7.5525556214561504,
+          "floor_difference_independent": 0.0342421122555643,
+          "bound_cyclic_deg_independent": 1.997993118462924,
+          "node_count_difference": 0,
+          "joint_stability": {
+            "strict": false,
+            "main": false,
+            "wide": false
+          },
+          "all_independent_checks_passed": true
+        },
+        {
+          "team_a": "yqstnuAEVhm-27__manual__36afe2b79d__4b5dbd5c1451c15415d1",
+          "team_b": "yqstnuAEVhm-27__manual__36afe2b79d__422e7c9f5e9e4a70dfe9",
+          "abs_B8L2": 24.273704021415277,
+          "floor_difference_independent": 0.1316008379830771,
+          "bound_cyclic_deg_independent": 6.9507640004003,
+          "node_count_difference": 0,
+          "joint_stability": {
+            "strict": false,
+            "main": false,
+            "wide": false
+          },
+          "all_independent_checks_passed": true
+        }
+      ],
+      "nested_vote_bookkeeping_checks": [],
+      "mechanism_boundary": "Unchanged old-observation partitions and changing vote admission are algorithm bookkeeping, not semantic necessary-node labels."
+    },
+    {
+      "case_id": "C02_stable_wrong_same_score_shape",
+      "path": "/workspace/scratch/1d99618bd862/analysis/representative_cases/cases/C02_stable_wrong_same_score_shape.json",
+      "pool_id": "yqstnuAEVhm-27__manual__36afe2b79d",
+      "image": "yqstnuAEVhm-27",
+      "building": "yqstnuAEVhm",
+      "reference_id": "gt:yqstnuAEVhm_b26ae45c6c12443cbcfc3997f2e63347:data/mp3d_layout/test/label_cor/yqstnuAEVhm_b26ae45c6c12443cbcfc3997f2e63347.txt",
+      "reference_version": "gt_original",
+      "reference_geometry_exact": true,
+      "original_full_pool_digest_exact": true,
+      "reference_floor_sha256": "d6a7f94ab6f477318111fcf176da769a9e0b2402574dc914ff67ba60a95e46a8",
+      "supplied_member_annotations_exact": true,
+      "all_embedded_frozen_records_exact": true,
+      "saved_original_pool_meta_exact": true,
+      "class_labels_checked_against_frozen_history": true,
+      "teams": [
+        {
+          "team_key": "yqstnuAEVhm-27__manual__36afe2b79d__a4fb4cce7f6cc15c7c2a",
+          "label": "纯R1：第一组成员",
+          "k": 9,
+          "member_workers": [
+            "W001",
+            "W012",
+            "W101",
+            "W103",
+            "W105",
+            "W106",
+            "W119",
+            "W129",
+            "W133"
+          ],
+          "member_object_ids": [
+            "4dfaf6dedad2424beadf",
+            "2e74f8f5d535803c2fb2",
+            "v2:new:106399",
+            "v2:new:106401",
+            "v2:new:106403",
+            "v2:new:106404",
+            "v2:new:106413",
+            "v2:new:106422",
+            "v2:new:106426"
+          ],
+          "counts": {
+            "C01": 9,
+            "C02": 0,
+            "C03": 0,
+            "C04": 0,
+            "C05": 0
+          },
+          "exact_members": true,
+          "geometry_exact": true,
+          "expected_geometry_sha256": "c0a881568e22b56cd354b9c1b294f846457385f93221c642dd4a719eeb9f213a",
+          "native_geometry_sha256": "c0a881568e22b56cd354b9c1b294f846457385f93221c642dd4a719eeb9f213a",
+          "native_full_state_sha256": "4f2c33ab34a14b79bf86aa2df8a2328809c6565c7032849282709e82f290f229",
+          "score_checks": {
+            "B8L2": {
+              "expected": 48.51708734174072,
+              "replayed": 48.51708734174072,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 51.72039606701629,
+              "replayed": 51.72039606701629,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 7,
+              "replayed": 7,
+              "delta": 0.0,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "diagnostic_checks": {
+            "diag_candidate_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_candidate_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_matches": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_recall_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_turn_min_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_matched_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_area": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_perimeter": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_reference_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_scale": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_schema": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_coverage_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_coverage_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_details_03": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_details_05": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_direction_tolerance_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "mechanism_groups_exact": true,
+          "replayed_core_diagnostics": {
+            "diag_status": "ok",
+            "diag_wall_coverage_03": 0.6703019401556158,
+            "diag_wall_coverage_05": 0.7394813919953238,
+            "diag_corner_recall_05": 0.625
+          }
+        },
+        {
+          "team_key": "yqstnuAEVhm-27__manual__36afe2b79d__149942a57b71ffd4f595",
+          "label": "同类换2人：几何仍相近",
+          "k": 9,
+          "member_workers": [
+            "W001",
+            "W101",
+            "W103",
+            "W105",
+            "W106",
+            "W119",
+            "W121",
+            "W128",
+            "W133"
+          ],
+          "member_object_ids": [
+            "4dfaf6dedad2424beadf",
+            "v2:new:106399",
+            "v2:new:106401",
+            "v2:new:106403",
+            "v2:new:106404",
+            "v2:new:106413",
+            "v2:new:106415",
+            "v2:new:106421",
+            "v2:new:106426"
+          ],
+          "counts": {
+            "C01": 9,
+            "C02": 0,
+            "C03": 0,
+            "C04": 0,
+            "C05": 0
+          },
+          "exact_members": true,
+          "geometry_exact": true,
+          "expected_geometry_sha256": "86ae2dfe62d8cd418f1763b6eeb66734e2e82988f3d29dd640666fb4b7427ab1",
+          "native_geometry_sha256": "86ae2dfe62d8cd418f1763b6eeb66734e2e82988f3d29dd640666fb4b7427ab1",
+          "native_full_state_sha256": "9c6d5017eebe511c3c935ba3f119efa4df9e03983d1052f69fe89858217ca552",
+          "score_checks": {
+            "B8L2": {
+              "expected": 48.47056532760581,
+              "replayed": 48.47056532760581,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 51.651538410689206,
+              "replayed": 51.651538410689206,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 7,
+              "replayed": 7,
+              "delta": 0.0,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "diagnostic_checks": {
+            "diag_candidate_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_candidate_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_matches": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_recall_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_turn_min_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_matched_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_area": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_perimeter": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_reference_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_scale": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_schema": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_coverage_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_coverage_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_details_03": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_details_05": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_direction_tolerance_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "mechanism_groups_exact": true,
+          "replayed_core_diagnostics": {
+            "diag_status": "ok",
+            "diag_wall_coverage_03": 0.4318755495922418,
+            "diag_wall_coverage_05": 0.739644771173569,
+            "diag_corner_recall_05": 0.625
+          }
+        },
+        {
+          "team_key": "yqstnuAEVhm-27__manual__36afe2b79d__6eccc6506f5fcae6e041",
+          "label": "同类换3人：近分却异形",
+          "k": 9,
+          "member_workers": [
+            "W001",
+            "W101",
+            "W103",
+            "W105",
+            "W111",
+            "W119",
+            "W121",
+            "W128",
+            "W129"
+          ],
+          "member_object_ids": [
+            "4dfaf6dedad2424beadf",
+            "v2:new:106399",
+            "v2:new:106401",
+            "v2:new:106403",
+            "v2:new:106407",
+            "v2:new:106413",
+            "v2:new:106415",
+            "v2:new:106421",
+            "v2:new:106422"
+          ],
+          "counts": {
+            "C01": 9,
+            "C02": 0,
+            "C03": 0,
+            "C04": 0,
+            "C05": 0
+          },
+          "exact_members": true,
+          "geometry_exact": true,
+          "expected_geometry_sha256": "740a85b9af77b447cdda1299416fac5ba6a25514893fc594191bd8ea69e07cd7",
+          "native_geometry_sha256": "740a85b9af77b447cdda1299416fac5ba6a25514893fc594191bd8ea69e07cd7",
+          "native_full_state_sha256": "37cde1256b3c8a4c18fd6d2b6919336d68b47659c8fad53597b43fca7dd6631e",
+          "score_checks": {
+            "B8L2": {
+              "expected": 48.05891848857744,
+              "replayed": 48.05891848857744,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 51.59663066520608,
+              "replayed": 51.59663066520608,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 7,
+              "replayed": 7,
+              "delta": 0.0,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "diagnostic_checks": {
+            "diag_candidate_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_candidate_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_matches": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_recall_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_turn_min_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_matched_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_area": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_perimeter": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_reference_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_scale": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_schema": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_coverage_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_coverage_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_details_03": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_details_05": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_direction_tolerance_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "mechanism_groups_exact": true,
+          "replayed_core_diagnostics": {
+            "diag_status": "ok",
+            "diag_wall_coverage_03": 0.7129797566442388,
+            "diag_wall_coverage_05": 0.7596411643236611,
+            "diag_corner_recall_05": 0.625
+          }
+        }
+      ],
+      "same_size_pair_diagnostics_exact_from_native": true,
+      "independent_joint_decision_checks": [
+        {
+          "team_a": "yqstnuAEVhm-27__manual__36afe2b79d__a4fb4cce7f6cc15c7c2a",
+          "team_b": "yqstnuAEVhm-27__manual__36afe2b79d__149942a57b71ffd4f595",
+          "abs_B8L2": 0.04652201413490786,
+          "floor_difference_independent": 0.010871690208596891,
+          "bound_cyclic_deg_independent": 1.1180401224984227,
+          "node_count_difference": 0,
+          "joint_stability": {
+            "strict": true,
+            "main": true,
+            "wide": true
+          },
+          "all_independent_checks_passed": true
+        },
+        {
+          "team_a": "yqstnuAEVhm-27__manual__36afe2b79d__a4fb4cce7f6cc15c7c2a",
+          "team_b": "yqstnuAEVhm-27__manual__36afe2b79d__6eccc6506f5fcae6e041",
+          "abs_B8L2": 0.45816885316327927,
+          "floor_difference_independent": 0.2704265459147064,
+          "bound_cyclic_deg_independent": 41.58095332394976,
+          "node_count_difference": 0,
+          "joint_stability": {
+            "strict": false,
+            "main": false,
+            "wide": false
+          },
+          "all_independent_checks_passed": true
+        },
+        {
+          "team_a": "yqstnuAEVhm-27__manual__36afe2b79d__149942a57b71ffd4f595",
+          "team_b": "yqstnuAEVhm-27__manual__36afe2b79d__6eccc6506f5fcae6e041",
+          "abs_B8L2": 0.4116468390283714,
+          "floor_difference_independent": 0.2703919101744383,
+          "bound_cyclic_deg_independent": 41.79073151440987,
+          "node_count_difference": 0,
+          "joint_stability": {
+            "strict": false,
+            "main": false,
+            "wide": false
+          },
+          "all_independent_checks_passed": true
+        }
+      ],
+      "nested_vote_bookkeeping_checks": [],
+      "mechanism_boundary": "Unchanged old-observation partitions and changing vote admission are algorithm bookkeeping, not semantic necessary-node labels."
+    },
+    {
+      "case_id": "C03_hard_vote_threshold",
+      "path": "/workspace/scratch/1d99618bd862/analysis/representative_cases/cases/C03_hard_vote_threshold.json",
+      "pool_id": "UwV83HsGsw3-22__manual__f3e5ed92db",
+      "image": "UwV83HsGsw3-22",
+      "building": "UwV83HsGsw3",
+      "reference_id": "gt:UwV83HsGsw3_f9641b59487a4b0ca0fe41a82edc0980:data/mp3d_layout/test/label_cor/UwV83HsGsw3_f9641b59487a4b0ca0fe41a82edc0980.txt",
+      "reference_version": "gt_original",
+      "reference_geometry_exact": true,
+      "original_full_pool_digest_exact": true,
+      "reference_floor_sha256": "e8982816aacead4ad21ee017f0b58c736dfad368c13198431f228297675d9d3a",
+      "supplied_member_annotations_exact": true,
+      "all_embedded_frozen_records_exact": true,
+      "saved_original_pool_meta_exact": true,
+      "class_labels_checked_against_frozen_history": true,
+      "teams": [
+        {
+          "team_key": "UwV83HsGsw3-22__manual__f3e5ed92db__6cf87586f94f5568bf77",
+          "label": "4 H1 + 4 H2：门槛4票",
+          "k": 8,
+          "member_workers": [
+            "W101",
+            "W102",
+            "W107",
+            "W112",
+            "W120",
+            "W122",
+            "W126",
+            "W133"
+          ],
+          "member_object_ids": [
+            "v2:new:101517",
+            "v2:new:101518",
+            "v2:new:101522",
+            "v2:new:101526",
+            "v2:new:101534",
+            "v2:new:101535",
+            "v2:new:101538",
+            "v2:new:101544"
+          ],
+          "counts": {
+            "C01": 4,
+            "C02": 4
+          },
+          "exact_members": true,
+          "geometry_exact": true,
+          "expected_geometry_sha256": "64135e50fd1cd679b97d0f9fe28b774335a9c653dc5e2b4e48ad7a1e6732542d",
+          "native_geometry_sha256": "64135e50fd1cd679b97d0f9fe28b774335a9c653dc5e2b4e48ad7a1e6732542d",
+          "native_full_state_sha256": "31dd57828286e1d471a0f3df27a0aab4c232700789aa460f3870bd0d1c7bc0b7",
+          "score_checks": {
+            "B8L2": {
+              "expected": 94.68898456150534,
+              "replayed": 94.68898456150534,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 94.90059846800982,
+              "replayed": 94.90059846800982,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 6,
+              "replayed": 6,
+              "delta": 0.0,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "diagnostic_checks": {
+            "diag_candidate_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_candidate_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_matches": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_recall_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_turn_min_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_matched_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_area": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_perimeter": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_reference_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_scale": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_schema": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_coverage_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_coverage_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_details_03": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_details_05": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_direction_tolerance_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "mechanism_groups_exact": true,
+          "replayed_core_diagnostics": {
+            "diag_status": "ok",
+            "diag_wall_coverage_03": 0.8893602909298619,
+            "diag_wall_coverage_05": 0.9791686854581991,
+            "diag_corner_recall_05": 1.0
+          }
+        },
+        {
+          "team_key": "UwV83HsGsw3-22__manual__f3e5ed92db__54df2e708699d8ccbb43",
+          "label": "5 H1 + 4 H2：门槛5票",
+          "k": 9,
+          "member_workers": [
+            "W101",
+            "W102",
+            "W103",
+            "W107",
+            "W112",
+            "W120",
+            "W122",
+            "W126",
+            "W133"
+          ],
+          "member_object_ids": [
+            "v2:new:101517",
+            "v2:new:101518",
+            "v2:new:101519",
+            "v2:new:101522",
+            "v2:new:101526",
+            "v2:new:101534",
+            "v2:new:101535",
+            "v2:new:101538",
+            "v2:new:101544"
+          ],
+          "counts": {
+            "C01": 5,
+            "C02": 4
+          },
+          "exact_members": true,
+          "geometry_exact": true,
+          "expected_geometry_sha256": "7a8ffe9fda7dd014872c63bdce1a8bb94f724ee95367e5fe196e931ce34bd32b",
+          "native_geometry_sha256": "7a8ffe9fda7dd014872c63bdce1a8bb94f724ee95367e5fe196e931ce34bd32b",
+          "native_full_state_sha256": "85c6fd90121814aef99c43bd963137fd8f8389b5f6858e4d37ccf10bab413c46",
+          "score_checks": {
+            "B8L2": {
+              "expected": 51.40371301050641,
+              "replayed": 51.40371301050641,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 55.216571000083064,
+              "replayed": 55.216571000083064,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 5,
+              "replayed": 5,
+              "delta": 0.0,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "diagnostic_checks": {
+            "diag_candidate_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_candidate_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_matches": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_recall_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_turn_min_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_matched_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_area": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_perimeter": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_reference_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_scale": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_schema": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_coverage_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_coverage_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_details_03": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_details_05": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_direction_tolerance_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "mechanism_groups_exact": true,
+          "replayed_core_diagnostics": {
+            "diag_status": "ok",
+            "diag_wall_coverage_03": 0.5271495514480643,
+            "diag_wall_coverage_05": 0.5938557331847489,
+            "diag_corner_recall_05": 0.5
+          }
+        },
+        {
+          "team_key": "UwV83HsGsw3-22__manual__f3e5ed92db__bd1f4893abdb7fb65a29",
+          "label": "6 H1 + 4 H2：仍为5票",
+          "k": 10,
+          "member_workers": [
+            "W101",
+            "W102",
+            "W103",
+            "W107",
+            "W112",
+            "W119",
+            "W120",
+            "W122",
+            "W126",
+            "W133"
+          ],
+          "member_object_ids": [
+            "v2:new:101517",
+            "v2:new:101518",
+            "v2:new:101519",
+            "v2:new:101522",
+            "v2:new:101526",
+            "v2:new:101533",
+            "v2:new:101534",
+            "v2:new:101535",
+            "v2:new:101538",
+            "v2:new:101544"
+          ],
+          "counts": {
+            "C01": 6,
+            "C02": 4
+          },
+          "exact_members": true,
+          "geometry_exact": true,
+          "expected_geometry_sha256": "b4e285584b1fe3e7fae4d72825bc53c8a12884fc3edeffbb9ee55c8babf9f35a",
+          "native_geometry_sha256": "b4e285584b1fe3e7fae4d72825bc53c8a12884fc3edeffbb9ee55c8babf9f35a",
+          "native_full_state_sha256": "ffe8f48ded39649ab4b7cfbf7459837fb87647db467c6580980124315682d2cc",
+          "score_checks": {
+            "B8L2": {
+              "expected": 53.78101365228309,
+              "replayed": 53.78101365228309,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 58.242812604400974,
+              "replayed": 58.242812604400974,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 5,
+              "replayed": 5,
+              "delta": 0.0,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "diagnostic_checks": {
+            "diag_candidate_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_candidate_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_matches": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_recall_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_turn_min_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_matched_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_area": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_perimeter": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_reference_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_scale": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_schema": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_coverage_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_coverage_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_details_03": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_details_05": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_direction_tolerance_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "mechanism_groups_exact": true,
+          "replayed_core_diagnostics": {
+            "diag_status": "ok",
+            "diag_wall_coverage_03": 0.7544890652457582,
+            "diag_wall_coverage_05": 0.8442974597740954,
+            "diag_corner_recall_05": 0.8333333333333334
+          }
+        }
+      ],
+      "same_size_pair_diagnostics_exact_from_native": true,
+      "independent_joint_decision_checks": [],
+      "full_member_chain_matches_frozen_request_manifest": true,
+      "all_chain_member_records_embedded": true,
+      "nested_vote_bookkeeping_checks": [
+        {
+          "before_team": "UwV83HsGsw3-22__manual__f3e5ed92db__6cf87586f94f5568bf77",
+          "after_team": "UwV83HsGsw3-22__manual__f3e5ed92db__54df2e708699d8ccbb43",
+          "native_transition_exact": true,
+          "lost_group_evidence_exact": true,
+          "replayed_transition": {
+            "shared_observations": 40,
+            "changed_coidentity_pairs": 0,
+            "common_pair_comparisons": 780,
+            "unchanged_identity_vote_losses": 1,
+            "unchanged_identity_vote_gains": 0,
+            "threshold_increased": true
+          },
+          "threshold_before": 4,
+          "threshold_after": 5,
+          "lost_group_supports": [
+            [
+              4,
+              4
+            ]
+          ]
+        },
+        {
+          "before_team": "UwV83HsGsw3-22__manual__f3e5ed92db__54df2e708699d8ccbb43",
+          "after_team": "UwV83HsGsw3-22__manual__f3e5ed92db__bd1f4893abdb7fb65a29",
+          "native_transition_exact": true,
+          "lost_group_evidence_exact": true,
+          "replayed_transition": {
+            "shared_observations": 44,
+            "changed_coidentity_pairs": 0,
+            "common_pair_comparisons": 946,
+            "unchanged_identity_vote_losses": 0,
+            "unchanged_identity_vote_gains": 0,
+            "threshold_increased": false
+          },
+          "threshold_before": 5,
+          "threshold_after": 5,
+          "lost_group_supports": []
+        }
+      ],
+      "mechanism_boundary": "Unchanged old-observation partitions and changing vote admission are algorithm bookkeeping, not semantic necessary-node labels."
+    },
+    {
+      "case_id": "C04_score_up_structure_down",
+      "path": "/workspace/scratch/1d99618bd862/analysis/representative_cases/cases/C04_score_up_structure_down.json",
+      "pool_id": "X7HyMhZNoso-07__manual__dd2275185f",
+      "image": "X7HyMhZNoso-07",
+      "building": "X7HyMhZNoso",
+      "reference_id": "gt:X7HyMhZNoso_2b16acff0dc042a1a75816a1fbd0a302:data/mp3d_layout/test/label_cor/X7HyMhZNoso_2b16acff0dc042a1a75816a1fbd0a302.txt",
+      "reference_version": "gt_original",
+      "reference_geometry_exact": true,
+      "original_full_pool_digest_exact": true,
+      "reference_floor_sha256": "558f094d13972bdb70622e4d36c599f2b9d17508af096ce22f6c8f3e35158de2",
+      "supplied_member_annotations_exact": true,
+      "all_embedded_frozen_records_exact": true,
+      "saved_original_pool_meta_exact": true,
+      "class_labels_checked_against_frozen_history": true,
+      "teams": [
+        {
+          "team_key": "X7HyMhZNoso-07__manual__dd2275185f__40e8e83f10b733b30ecd",
+          "label": "纯细节角色：6 R5",
+          "k": 6,
+          "member_workers": [
+            "W109",
+            "W112",
+            "W115",
+            "W122",
+            "W126",
+            "W130"
+          ],
+          "member_object_ids": [
+            "v2:new:101793",
+            "v2:new:101795",
+            "v2:new:101798",
+            "v2:new:101805",
+            "v2:new:101809",
+            "v2:new:101813"
+          ],
+          "counts": {
+            "C01": 0,
+            "C02": 0,
+            "C03": 0,
+            "C04": 0,
+            "C05": 6
+          },
+          "exact_members": true,
+          "geometry_exact": true,
+          "expected_geometry_sha256": "5f5364e28dc7975965da413dccf5e9b6c308b36ccf827b80307da7ba34f6c8ed",
+          "native_geometry_sha256": "5f5364e28dc7975965da413dccf5e9b6c308b36ccf827b80307da7ba34f6c8ed",
+          "native_full_state_sha256": "7733292eae8c318b82fc90522c3150d899f20c16add96bccebadfabec9a71a7e",
+          "score_checks": {
+            "B8L2": {
+              "expected": 47.369137825083484,
+              "replayed": 47.369137825083484,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 50.82720678353104,
+              "replayed": 50.82720678353104,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 10,
+              "replayed": 10,
+              "delta": 0.0,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "diagnostic_checks": {
+            "diag_candidate_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_candidate_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_matches": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_recall_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_turn_min_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_matched_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_area": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_perimeter": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_reference_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_scale": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_schema": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_coverage_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_coverage_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_details_03": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_details_05": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_direction_tolerance_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "mechanism_groups_exact": true,
+          "replayed_core_diagnostics": {
+            "diag_status": "ok",
+            "diag_wall_coverage_03": 0.5642781491548583,
+            "diag_wall_coverage_05": 0.5882086877850605,
+            "diag_corner_recall_05": 0.3
+          }
+        },
+        {
+          "team_key": "X7HyMhZNoso-07__manual__dd2275185f__b124e2d4dcddec411b86",
+          "label": "6 R2 + 6 R5：7个节点",
+          "k": 12,
+          "member_workers": [
+            "W100",
+            "W104",
+            "W107",
+            "W109",
+            "W112",
+            "W114",
+            "W115",
+            "W122",
+            "W123",
+            "W126",
+            "W130",
+            "W134"
+          ],
+          "member_object_ids": [
+            "v2:new:101788",
+            "v2:new:101790",
+            "v2:new:101792",
+            "v2:new:101793",
+            "v2:new:101795",
+            "v2:new:101797",
+            "v2:new:101798",
+            "v2:new:101805",
+            "v2:new:101806",
+            "v2:new:101809",
+            "v2:new:101813",
+            "v2:new:101817"
+          ],
+          "counts": {
+            "C01": 0,
+            "C02": 6,
+            "C03": 0,
+            "C04": 0,
+            "C05": 6
+          },
+          "exact_members": true,
+          "geometry_exact": true,
+          "expected_geometry_sha256": "c20c3d3e02e899d6ec951e4e5773cd49bcdddf75381acf7ab219fc108f61778a",
+          "native_geometry_sha256": "c20c3d3e02e899d6ec951e4e5773cd49bcdddf75381acf7ab219fc108f61778a",
+          "native_full_state_sha256": "60ab1750063662ef9da0d84d623bf095c9680a74752d0aaeba9563d92a9e1cba",
+          "score_checks": {
+            "B8L2": {
+              "expected": 44.906963311608344,
+              "replayed": 44.906963311608344,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 47.49778807632314,
+              "replayed": 47.49778807632314,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 7,
+              "replayed": 7,
+              "delta": 0.0,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "diagnostic_checks": {
+            "diag_candidate_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_candidate_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_matches": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_recall_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_turn_min_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_matched_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_area": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_perimeter": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_reference_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_scale": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_schema": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_coverage_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_coverage_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_details_03": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_details_05": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_direction_tolerance_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "mechanism_groups_exact": true,
+          "replayed_core_diagnostics": {
+            "diag_status": "ok",
+            "diag_wall_coverage_03": 0.3951581541521674,
+            "diag_wall_coverage_05": 0.3951581541521674,
+            "diag_corner_recall_05": 0.2
+          }
+        },
+        {
+          "team_key": "X7HyMhZNoso-07__manual__dd2275185f__cc7f13fb7aec30cce480",
+          "label": "7 R2 + 6 R5：4个节点",
+          "k": 13,
+          "member_workers": [
+            "W100",
+            "W104",
+            "W107",
+            "W109",
+            "W112",
+            "W114",
+            "W115",
+            "W122",
+            "W123",
+            "W125",
+            "W126",
+            "W130",
+            "W134"
+          ],
+          "member_object_ids": [
+            "v2:new:101788",
+            "v2:new:101790",
+            "v2:new:101792",
+            "v2:new:101793",
+            "v2:new:101795",
+            "v2:new:101797",
+            "v2:new:101798",
+            "v2:new:101805",
+            "v2:new:101806",
+            "v2:new:101808",
+            "v2:new:101809",
+            "v2:new:101813",
+            "v2:new:101817"
+          ],
+          "counts": {
+            "C01": 0,
+            "C02": 7,
+            "C03": 0,
+            "C04": 0,
+            "C05": 6
+          },
+          "exact_members": true,
+          "geometry_exact": true,
+          "expected_geometry_sha256": "a75a444f9df2b79e06943a4a5f0a010f4452781c8ed1c45c04dc74846ede0fa1",
+          "native_geometry_sha256": "a75a444f9df2b79e06943a4a5f0a010f4452781c8ed1c45c04dc74846ede0fa1",
+          "native_full_state_sha256": "63ee75a630f35ef091ee6cb951d753573910ef16cd86225d086ffa8f530fcaec",
+          "score_checks": {
+            "B8L2": {
+              "expected": 64.63098088833775,
+              "replayed": 64.63098088833775,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 69.16969450254616,
+              "replayed": 69.16969450254616,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 4,
+              "replayed": 4,
+              "delta": 0.0,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "diagnostic_checks": {
+            "diag_candidate_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_candidate_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_matches": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_recall_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_turn_min_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_matched_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_area": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_perimeter": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_reference_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_scale": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_schema": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_coverage_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_coverage_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_details_03": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_details_05": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_direction_tolerance_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "mechanism_groups_exact": true,
+          "replayed_core_diagnostics": {
+            "diag_status": "ok",
+            "diag_wall_coverage_03": 0.4713311073642285,
+            "diag_wall_coverage_05": 0.526179267770275,
+            "diag_corner_recall_05": 0.1
+          }
+        }
+      ],
+      "same_size_pair_diagnostics_exact_from_native": true,
+      "independent_joint_decision_checks": [],
+      "full_member_chain_matches_frozen_request_manifest": true,
+      "all_chain_member_records_embedded": true,
+      "nested_vote_bookkeeping_checks": [
+        {
+          "before_team": "X7HyMhZNoso-07__manual__dd2275185f__b124e2d4dcddec411b86",
+          "after_team": "X7HyMhZNoso-07__manual__dd2275185f__cc7f13fb7aec30cce480",
+          "native_transition_exact": true,
+          "lost_group_evidence_exact": true,
+          "replayed_transition": {
+            "shared_observations": 81,
+            "changed_coidentity_pairs": 0,
+            "common_pair_comparisons": 3240,
+            "unchanged_identity_vote_losses": 3,
+            "unchanged_identity_vote_gains": 0,
+            "threshold_increased": true
+          },
+          "threshold_before": 6,
+          "threshold_after": 7,
+          "lost_group_supports": [
+            [
+              6,
+              6
+            ],
+            [
+              6,
+              6
+            ],
+            [
+              6,
+              6
+            ]
+          ]
+        }
+      ],
+      "mechanism_boundary": "Unchanged old-observation partitions and changing vote admission are algorithm bookkeeping, not semantic necessary-node labels."
+    },
+    {
+      "case_id": "C05_matched_block_improvement",
+      "path": "/workspace/scratch/1d99618bd862/analysis/representative_cases/cases/C05_matched_block_improvement.json",
+      "pool_id": "UwV83HsGsw3-09__manual__1a2b0afff3",
+      "image": "UwV83HsGsw3-09",
+      "building": "UwV83HsGsw3",
+      "reference_id": "gt:UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65:export_label/groudTruth.json",
+      "reference_version": "gt_manual_revision",
+      "reference_geometry_exact": true,
+      "original_full_pool_digest_exact": true,
+      "reference_floor_sha256": "fc25bacca48981567052dcb9a0b4e089f34be94f3e7e8a0ff5a68cab705a774a",
+      "supplied_member_annotations_exact": true,
+      "all_embedded_frozen_records_exact": true,
+      "saved_original_pool_meta_exact": true,
+      "class_labels_checked_against_frozen_history": true,
+      "teams": [
+        {
+          "team_key": "UwV83HsGsw3-09__manual__1a2b0afff3__0fb4ae773cabb66670b7",
+          "label": "原队A",
+          "k": 5,
+          "member_workers": [
+            "W030",
+            "W031",
+            "W104",
+            "W118",
+            "W121"
+          ],
+          "member_object_ids": [
+            "da2dc314ea17aad4",
+            "463c2a33c219cce3",
+            "v2:new:101429",
+            "v2:new:101433",
+            "v2:new:101435"
+          ],
+          "counts": {
+            "C01": 5,
+            "C02": 0
+          },
+          "exact_members": true,
+          "geometry_exact": true,
+          "expected_geometry_sha256": "319a0ea776d14a2f4b837642e6084e1adf2b9504bc6e5727f0514b1dd576553b",
+          "native_geometry_sha256": "319a0ea776d14a2f4b837642e6084e1adf2b9504bc6e5727f0514b1dd576553b",
+          "native_full_state_sha256": "841c36991cdff8cc5a29c116a816d93d227c583010f0a350ebff80d93eb6a3d2",
+          "score_checks": {
+            "B8L2": {
+              "expected": 24.228488746542116,
+              "replayed": 24.228488746542116,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 24.492986706900012,
+              "replayed": 24.492986706900012,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 5,
+              "replayed": 5,
+              "delta": 0.0,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "diagnostic_checks": {
+            "diag_candidate_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_candidate_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_matches": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_recall_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_turn_min_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_matched_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_area": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_perimeter": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_reference_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_scale": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_schema": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_coverage_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_coverage_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_details_03": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_details_05": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_direction_tolerance_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "mechanism_groups_exact": true,
+          "replayed_core_diagnostics": {
+            "diag_status": "ok",
+            "diag_wall_coverage_03": 0.40307468121121026,
+            "diag_wall_coverage_05": 0.42020507353663517,
+            "diag_corner_recall_05": 0.5
+          }
+        },
+        {
+          "team_key": "UwV83HsGsw3-09__manual__1a2b0afff3__5f98479d31a1c4269253",
+          "label": "同类换2人B",
+          "k": 5,
+          "member_workers": [
+            "W030",
+            "W031",
+            "W105",
+            "W121",
+            "W127"
+          ],
+          "member_object_ids": [
+            "da2dc314ea17aad4",
+            "463c2a33c219cce3",
+            "v2:new:101430",
+            "v2:new:101435",
+            "v2:new:101436"
+          ],
+          "counts": {
+            "C01": 5,
+            "C02": 0
+          },
+          "exact_members": true,
+          "geometry_exact": true,
+          "expected_geometry_sha256": "7fa447f9283bdbebb18ca3d03571fe229de87640ea038d6d1543626a005c58b9",
+          "native_geometry_sha256": "7fa447f9283bdbebb18ca3d03571fe229de87640ea038d6d1543626a005c58b9",
+          "native_full_state_sha256": "92b1c3a175231484d8c5cd229f0d3a12372ff2ce9caceb85a7ebcaa9395eeffc",
+          "score_checks": {
+            "B8L2": {
+              "expected": 24.567361029531604,
+              "replayed": 24.567361029531604,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 24.797970987502733,
+              "replayed": 24.797970987502733,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 4,
+              "replayed": 4,
+              "delta": 0.0,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "diagnostic_checks": {
+            "diag_candidate_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_candidate_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_matches": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_recall_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_turn_min_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_matched_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_area": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_perimeter": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_reference_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_scale": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_schema": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_coverage_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_coverage_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_details_03": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_details_05": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_direction_tolerance_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "mechanism_groups_exact": true,
+          "replayed_core_diagnostics": {
+            "diag_status": "ok",
+            "diag_wall_coverage_03": 0.3766304896663739,
+            "diag_wall_coverage_05": 0.3766304896663739,
+            "diag_corner_recall_05": 0.5
+          }
+        },
+        {
+          "team_key": "UwV83HsGsw3-09__manual__1a2b0afff3__8f20ff45f9a932e81657",
+          "label": "改类换2人C",
+          "k": 5,
+          "member_workers": [
+            "W030",
+            "W031",
+            "W112",
+            "W115",
+            "W121"
+          ],
+          "member_object_ids": [
+            "da2dc314ea17aad4",
+            "463c2a33c219cce3",
+            "v2:new:101431",
+            "v2:new:101432",
+            "v2:new:101435"
+          ],
+          "counts": {
+            "C01": 3,
+            "C02": 2
+          },
+          "exact_members": true,
+          "geometry_exact": true,
+          "expected_geometry_sha256": "e62e56bd4bec891900fcac4c88d25e39ea0c5080dc397e7587e988795cdfc2d2",
+          "native_geometry_sha256": "e62e56bd4bec891900fcac4c88d25e39ea0c5080dc397e7587e988795cdfc2d2",
+          "native_full_state_sha256": "f2875a8a92ed11fc26968c001043bcf8cf61034130f543e8ef78e0b1759b66d1",
+          "score_checks": {
+            "B8L2": {
+              "expected": 89.60429939541832,
+              "replayed": 89.60429939541832,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 90.86822300988364,
+              "replayed": 90.86822300988364,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 7,
+              "replayed": 7,
+              "delta": 0.0,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "diagnostic_checks": {
+            "diag_candidate_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_candidate_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_matches": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_recall_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_turn_min_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_matched_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_area": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_perimeter": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_reference_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_scale": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_schema": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_coverage_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_coverage_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_details_03": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_details_05": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_direction_tolerance_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "mechanism_groups_exact": true,
+          "replayed_core_diagnostics": {
+            "diag_status": "ok",
+            "diag_wall_coverage_03": 0.8243267692864759,
+            "diag_wall_coverage_05": 0.9333387901714303,
+            "diag_corner_recall_05": 0.75
+          }
+        }
+      ],
+      "same_size_pair_diagnostics_exact_from_native": true,
+      "independent_joint_decision_checks": [
+        {
+          "team_a": "UwV83HsGsw3-09__manual__1a2b0afff3__0fb4ae773cabb66670b7",
+          "team_b": "UwV83HsGsw3-09__manual__1a2b0afff3__5f98479d31a1c4269253",
+          "abs_B8L2": 0.3388722829894881,
+          "floor_difference_independent": 0.09261954541611937,
+          "bound_cyclic_deg_independent": null,
+          "node_count_difference": 1,
+          "joint_stability": {
+            "strict": false,
+            "main": false,
+            "wide": false
+          },
+          "all_independent_checks_passed": true
+        },
+        {
+          "team_a": "UwV83HsGsw3-09__manual__1a2b0afff3__0fb4ae773cabb66670b7",
+          "team_b": "UwV83HsGsw3-09__manual__1a2b0afff3__8f20ff45f9a932e81657",
+          "abs_B8L2": 65.37581064887621,
+          "floor_difference_independent": 0.6455550006907951,
+          "bound_cyclic_deg_independent": null,
+          "node_count_difference": 2,
+          "joint_stability": {
+            "strict": false,
+            "main": false,
+            "wide": false
+          },
+          "all_independent_checks_passed": true
+        },
+        {
+          "team_a": "UwV83HsGsw3-09__manual__1a2b0afff3__5f98479d31a1c4269253",
+          "team_b": "UwV83HsGsw3-09__manual__1a2b0afff3__8f20ff45f9a932e81657",
+          "abs_B8L2": 65.03693836588673,
+          "floor_difference_independent": 0.630548408023386,
+          "bound_cyclic_deg_independent": null,
+          "node_count_difference": 3,
+          "joint_stability": {
+            "strict": false,
+            "main": false,
+            "wide": false
+          },
+          "all_independent_checks_passed": true
+        }
+      ],
+      "matched_block_exact_against_frozen_manifest": true,
+      "matched_block_core_m_source_checks": {
+        "core": [
+          "W030",
+          "W031",
+          "W121"
+        ],
+        "m": 2,
+        "origins": {
+          "A": {
+            "new": 3,
+            "v1": 2
+          },
+          "B": {
+            "new": 3,
+            "v1": 2
+          },
+          "C": {
+            "new": 3,
+            "v1": 2
+          }
+        }
+      },
+      "nested_vote_bookkeeping_checks": [],
+      "mechanism_boundary": "Unchanged old-observation partitions and changing vote admission are algorithm bookkeeping, not semantic necessary-node labels."
+    },
+    {
+      "case_id": "C06_highQ_replacement_counterexample",
+      "path": "/workspace/scratch/1d99618bd862/analysis/representative_cases/cases/C06_highQ_replacement_counterexample.json",
+      "pool_id": "q9vSo1VnCiC-03__manual__2bff6c4167",
+      "image": "q9vSo1VnCiC-03",
+      "building": "q9vSo1VnCiC",
+      "reference_id": "gt:q9vSo1VnCiC_3e5aacbc10904d4b88660a3cb91efcb9:export_label/groudTruth.json",
+      "reference_version": "gt_manual_revision",
+      "reference_geometry_exact": true,
+      "original_full_pool_digest_exact": true,
+      "reference_floor_sha256": "f1c12e1094f7e7c75ccdf8b755f38cf40ec5142d55eec2755510872fa8bb1655",
+      "supplied_member_annotations_exact": true,
+      "all_embedded_frozen_records_exact": true,
+      "saved_original_pool_meta_exact": true,
+      "class_labels_checked_against_frozen_history": true,
+      "teams": [
+        {
+          "team_key": "q9vSo1VnCiC-03__manual__2bff6c4167__9862771d92738f043b66",
+          "label": "原队A",
+          "k": 5,
+          "member_workers": [
+            "W102",
+            "W103",
+            "W105",
+            "W113",
+            "W117"
+          ],
+          "member_object_ids": [
+            "v2:new:103986",
+            "v2:new:103987",
+            "v2:new:103989",
+            "v2:new:103995",
+            "v2:new:103999"
+          ],
+          "counts": {
+            "C01": 4,
+            "C02": 0,
+            "C03": 1
+          },
+          "exact_members": true,
+          "geometry_exact": true,
+          "expected_geometry_sha256": "64026919925aedafb8e4ed96abe568b99ca5d723608541a2b7da37427bbff58a",
+          "native_geometry_sha256": "64026919925aedafb8e4ed96abe568b99ca5d723608541a2b7da37427bbff58a",
+          "native_full_state_sha256": "4bbe44fe5d20e5c6a5cbf63fb6f6ee109479ef9ff81935fdf73533b7c8f123ec",
+          "score_checks": {
+            "B8L2": {
+              "expected": 94.52187208636086,
+              "replayed": 94.52187208636086,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 94.94699247478763,
+              "replayed": 94.94699247478763,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 4,
+              "replayed": 4,
+              "delta": 0.0,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "diagnostic_checks": {
+            "diag_candidate_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_candidate_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_matches": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_recall_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_turn_min_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_matched_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_area": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_perimeter": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_reference_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_scale": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_schema": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_coverage_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_coverage_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_details_03": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_details_05": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_direction_tolerance_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "mechanism_groups_exact": true,
+          "replayed_core_diagnostics": {
+            "diag_status": "ok",
+            "diag_wall_coverage_03": 0.9932132866064807,
+            "diag_wall_coverage_05": 0.9932132866064807,
+            "diag_corner_recall_05": 1.0
+          }
+        },
+        {
+          "team_key": "q9vSo1VnCiC-03__manual__2bff6c4167__96c205138324a67a2d9f",
+          "label": "同类换2人B",
+          "k": 5,
+          "member_workers": [
+            "W102",
+            "W103",
+            "W105",
+            "W111",
+            "W128"
+          ],
+          "member_object_ids": [
+            "v2:new:103986",
+            "v2:new:103987",
+            "v2:new:103989",
+            "v2:new:103993",
+            "v2:new:104007"
+          ],
+          "counts": {
+            "C01": 4,
+            "C02": 0,
+            "C03": 1
+          },
+          "exact_members": true,
+          "geometry_exact": true,
+          "expected_geometry_sha256": "97d816de2d18ca48d1f2a08eb6f7b69ed70a553cdce03eeb07efaab7daf696a6",
+          "native_geometry_sha256": "97d816de2d18ca48d1f2a08eb6f7b69ed70a553cdce03eeb07efaab7daf696a6",
+          "native_full_state_sha256": "22abee84dab0981b42648f3349aca5b80091b359afe860f89df65e8930d39e8f",
+          "score_checks": {
+            "B8L2": {
+              "expected": 94.30912929887765,
+              "replayed": 94.30912929887765,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 95.15866754004162,
+              "replayed": 95.15866754004162,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 4,
+              "replayed": 4,
+              "delta": 0.0,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "diagnostic_checks": {
+            "diag_candidate_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_candidate_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_matches": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_recall_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_turn_min_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_matched_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_area": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_perimeter": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_reference_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_scale": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_schema": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_coverage_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_coverage_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_details_03": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_details_05": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_direction_tolerance_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "mechanism_groups_exact": true,
+          "replayed_core_diagnostics": {
+            "diag_status": "ok",
+            "diag_wall_coverage_03": 0.9831980351012727,
+            "diag_wall_coverage_05": 0.9831980351012727,
+            "diag_corner_recall_05": 1.0
+          }
+        },
+        {
+          "team_key": "q9vSo1VnCiC-03__manual__2bff6c4167__57b1709e575ce2d1a151",
+          "label": "改类换2人C",
+          "k": 5,
+          "member_workers": [
+            "W102",
+            "W103",
+            "W104",
+            "W105",
+            "W112"
+          ],
+          "member_object_ids": [
+            "v2:new:103986",
+            "v2:new:103987",
+            "v2:new:103988",
+            "v2:new:103989",
+            "v2:new:103994"
+          ],
+          "counts": {
+            "C01": 2,
+            "C02": 0,
+            "C03": 3
+          },
+          "exact_members": true,
+          "geometry_exact": true,
+          "expected_geometry_sha256": "cd3aac8370850b7e7b04160dd865914dd45efa4d83ea9392d129f970ba4ef325",
+          "native_geometry_sha256": "cd3aac8370850b7e7b04160dd865914dd45efa4d83ea9392d129f970ba4ef325",
+          "native_full_state_sha256": "a867010ac90ff0cf4244bbe61ac743a37b77215b1c9327922b190e0fd1ac4176",
+          "score_checks": {
+            "B8L2": {
+              "expected": 70.89025985413898,
+              "replayed": 70.89025985413898,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 76.19394033903033,
+              "replayed": 76.19394033903033,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 4,
+              "replayed": 4,
+              "delta": 0.0,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "diagnostic_checks": {
+            "diag_candidate_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_candidate_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_matches": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_recall_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_turn_min_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_matched_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_area": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_perimeter": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_reference_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_scale": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_schema": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_coverage_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_coverage_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_details_03": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_details_05": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_direction_tolerance_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "mechanism_groups_exact": true,
+          "replayed_core_diagnostics": {
+            "diag_status": "ok",
+            "diag_wall_coverage_03": 0.6776851702324047,
+            "diag_wall_coverage_05": 0.8468428448348556,
+            "diag_corner_recall_05": 0.75
+          }
+        }
+      ],
+      "same_size_pair_diagnostics_exact_from_native": true,
+      "independent_joint_decision_checks": [
+        {
+          "team_a": "q9vSo1VnCiC-03__manual__2bff6c4167__9862771d92738f043b66",
+          "team_b": "q9vSo1VnCiC-03__manual__2bff6c4167__96c205138324a67a2d9f",
+          "abs_B8L2": 0.21274278748320796,
+          "floor_difference_independent": 0.07191971944576382,
+          "bound_cyclic_deg_independent": 2.56060573356029,
+          "node_count_difference": 0,
+          "joint_stability": {
+            "strict": false,
+            "main": false,
+            "wide": true
+          },
+          "all_independent_checks_passed": true
+        },
+        {
+          "team_a": "q9vSo1VnCiC-03__manual__2bff6c4167__9862771d92738f043b66",
+          "team_b": "q9vSo1VnCiC-03__manual__2bff6c4167__57b1709e575ce2d1a151",
+          "abs_B8L2": 23.631612232221883,
+          "floor_difference_independent": 0.0994790813066765,
+          "bound_cyclic_deg_independent": 3.496106947927439,
+          "node_count_difference": 0,
+          "joint_stability": {
+            "strict": false,
+            "main": false,
+            "wide": false
+          },
+          "all_independent_checks_passed": true
+        },
+        {
+          "team_a": "q9vSo1VnCiC-03__manual__2bff6c4167__96c205138324a67a2d9f",
+          "team_b": "q9vSo1VnCiC-03__manual__2bff6c4167__57b1709e575ce2d1a151",
+          "abs_B8L2": 23.418869444738675,
+          "floor_difference_independent": 0.12442242187057172,
+          "bound_cyclic_deg_independent": 3.4930776591076063,
+          "node_count_difference": 0,
+          "joint_stability": {
+            "strict": false,
+            "main": false,
+            "wide": false
+          },
+          "all_independent_checks_passed": true
+        }
+      ],
+      "matched_block_exact_against_frozen_manifest": true,
+      "matched_block_core_m_source_checks": {
+        "core": [
+          "W102",
+          "W103",
+          "W105"
+        ],
+        "m": 2,
+        "origins": {
+          "A": {
+            "new": 5
+          },
+          "B": {
+            "new": 5
+          },
+          "C": {
+            "new": 5
+          }
+        }
+      },
+      "nested_vote_bookkeeping_checks": [],
+      "mechanism_boundary": "Unchanged old-observation partitions and changing vote admission are algorithm bookkeeping, not semantic necessary-node labels."
+    },
+    {
+      "case_id": "C07_local_complement_replicates",
+      "path": "/workspace/scratch/1d99618bd862/analysis/representative_cases/cases/C07_local_complement_replicates.json",
+      "pool_id": "yqstnuAEVhm-25__manual__72b3cd9b76",
+      "image": "yqstnuAEVhm-25",
+      "building": "yqstnuAEVhm",
+      "reference_id": "gt:yqstnuAEVhm_9de98503fd994452b627cdcc7a7d47b2:data/mp3d_layout/test/label_cor/yqstnuAEVhm_9de98503fd994452b627cdcc7a7d47b2.txt",
+      "reference_version": "gt_original",
+      "reference_geometry_exact": true,
+      "original_full_pool_digest_exact": true,
+      "reference_floor_sha256": "6b1433270ebcc0d1bbb78afbe71830d06d30c091533bb49ab2ff496b9e36627d",
+      "supplied_member_annotations_exact": true,
+      "all_embedded_frozen_records_exact": true,
+      "saved_original_pool_meta_exact": true,
+      "class_labels_checked_against_frozen_history": true,
+      "teams": [
+        {
+          "team_key": "yqstnuAEVhm-25__manual__72b3cd9b76__f17d9ad1bdc7d9ad48cc",
+          "label": "13 G1：下中位代表",
+          "k": 13,
+          "member_workers": [
+            "W002",
+            "W010",
+            "W011",
+            "W012",
+            "W013",
+            "W017",
+            "W031",
+            "W032",
+            "W034",
+            "W036",
+            "W037",
+            "W124",
+            "W133"
+          ],
+          "member_object_ids": [
+            "3a54a9c43fb6058d2199",
+            "227a43960c0d44ddd10b",
+            "2793306bbbc97861124d",
+            "be57cb53717844759758",
+            "e103e2fc7efc3e275cdd",
+            "378b6a5c80d93f0bd228",
+            "169fc30c432425281989",
+            "e4c35e7a0869954598a0",
+            "a56ee6d45d0f25f3eed8",
+            "f52f3c5633b4d227b132",
+            "7ac0106c722944ffcdb5",
+            "v2:new:106384",
+            "v2:new:106388"
+          ],
+          "counts": {
+            "C01": 13,
+            "C02": 0
+          },
+          "exact_members": true,
+          "geometry_exact": true,
+          "expected_geometry_sha256": "12c2117fb6e0a5c85edc440fdd0f6efbe4ebf010976117989520530d26ed2047",
+          "native_geometry_sha256": "12c2117fb6e0a5c85edc440fdd0f6efbe4ebf010976117989520530d26ed2047",
+          "native_full_state_sha256": "3710726820b768efcaef3d889c4c47fa5c4433586b1dab3a53114a274003c545",
+          "score_checks": {
+            "B8L2": {
+              "expected": 37.295982575022734,
+              "replayed": 37.295982575022734,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 38.400905606403384,
+              "replayed": 38.400905606403384,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 5,
+              "replayed": 5,
+              "delta": 0.0,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "diagnostic_checks": {
+            "diag_candidate_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_candidate_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_matches": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_recall_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_turn_min_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_matched_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_area": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_perimeter": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_reference_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_scale": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_schema": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_coverage_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_coverage_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_details_03": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_details_05": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_direction_tolerance_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "mechanism_groups_exact": true,
+          "replayed_core_diagnostics": {
+            "diag_status": "ok",
+            "diag_wall_coverage_03": 0.332494400596995,
+            "diag_wall_coverage_05": 0.36956710655271535,
+            "diag_corner_recall_05": 0.6666666666666666
+          }
+        },
+        {
+          "team_key": "yqstnuAEVhm-25__manual__72b3cd9b76__af59c9a77572206964e8",
+          "label": "13 G2：下中位代表",
+          "k": 13,
+          "member_workers": [
+            "W006",
+            "W008",
+            "W029",
+            "W030",
+            "W033",
+            "W035",
+            "W102",
+            "W109",
+            "W110",
+            "W123",
+            "W125",
+            "W131",
+            "W132"
+          ],
+          "member_object_ids": [
+            "05041d1de0c38536e6c9",
+            "19571b3b0505b7a26c30",
+            "9fe10525cafa9b114fa8",
+            "4bee42371b5ecdf799ee",
+            "f4fb215d725bea31d572",
+            "a7cd831fc464ecea2892",
+            "v2:new:106377",
+            "v2:new:106378",
+            "v2:new:106379",
+            "v2:new:106383",
+            "v2:new:106385",
+            "v2:new:106386",
+            "v2:new:106387"
+          ],
+          "counts": {
+            "C01": 0,
+            "C02": 13
+          },
+          "exact_members": true,
+          "geometry_exact": true,
+          "expected_geometry_sha256": "f40acfa7d967f6276cef8b28ffbc4ba84839b2b6cbd892ccdcf233e9e49513f4",
+          "native_geometry_sha256": "f40acfa7d967f6276cef8b28ffbc4ba84839b2b6cbd892ccdcf233e9e49513f4",
+          "native_full_state_sha256": "07c1684efb5a4c5cd1afca9a0b8cad3f384e30b17889f1203637242b458700b8",
+          "score_checks": {
+            "B8L2": {
+              "expected": 40.80070890344659,
+              "replayed": 40.80070890344659,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 42.465664404998336,
+              "replayed": 42.465664404998336,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 5,
+              "replayed": 5,
+              "delta": 0.0,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "diagnostic_checks": {
+            "diag_candidate_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_candidate_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_matches": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_recall_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_turn_min_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_matched_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_area": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_perimeter": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_reference_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_scale": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_schema": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_coverage_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_coverage_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_details_03": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_details_05": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_direction_tolerance_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "mechanism_groups_exact": true,
+          "replayed_core_diagnostics": {
+            "diag_status": "ok",
+            "diag_wall_coverage_03": 0.42931604136913526,
+            "diag_wall_coverage_05": 0.5140967858177978,
+            "diag_corner_recall_05": 0.6666666666666666
+          }
+        },
+        {
+          "team_key": "yqstnuAEVhm-25__manual__72b3cd9b76__df40b48a6319c30da002",
+          "label": "3 G1 + 10 G2：下中位代表",
+          "k": 13,
+          "member_workers": [
+            "W006",
+            "W008",
+            "W011",
+            "W030",
+            "W032",
+            "W035",
+            "W037",
+            "W102",
+            "W109",
+            "W110",
+            "W125",
+            "W131",
+            "W132"
+          ],
+          "member_object_ids": [
+            "05041d1de0c38536e6c9",
+            "19571b3b0505b7a26c30",
+            "2793306bbbc97861124d",
+            "4bee42371b5ecdf799ee",
+            "e4c35e7a0869954598a0",
+            "a7cd831fc464ecea2892",
+            "7ac0106c722944ffcdb5",
+            "v2:new:106377",
+            "v2:new:106378",
+            "v2:new:106379",
+            "v2:new:106385",
+            "v2:new:106386",
+            "v2:new:106387"
+          ],
+          "counts": {
+            "C01": 3,
+            "C02": 10
+          },
+          "exact_members": true,
+          "geometry_exact": true,
+          "expected_geometry_sha256": "0f51c031e510f4fd70b72c182cf91b8bd783b4a0166153b56f5d6797d313afa1",
+          "native_geometry_sha256": "0f51c031e510f4fd70b72c182cf91b8bd783b4a0166153b56f5d6797d313afa1",
+          "native_full_state_sha256": "6d40b0438f0b8149c342c84e86d1cb2fd2beaee05d30ebbeddf392ec9029542d",
+          "score_checks": {
+            "B8L2": {
+              "expected": 59.56720947198279,
+              "replayed": 59.56720947198279,
+              "delta": 0.0,
+              "passed": true
+            },
+            "D10": {
+              "expected": 64.41239966327358,
+              "replayed": 64.41239966327358,
+              "delta": 0.0,
+              "passed": true
+            },
+            "score_status": {
+              "expected": "complete_conditional",
+              "replayed": "complete_conditional",
+              "delta": null,
+              "passed": true
+            },
+            "nodes": {
+              "expected": 6,
+              "replayed": 6,
+              "delta": 0.0,
+              "passed": true
+            },
+            "geometry_status": {
+              "expected": "ok",
+              "replayed": "ok",
+              "delta": null,
+              "passed": true
+            },
+            "complete_evaluable": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            },
+            "connection_available": {
+              "expected": true,
+              "replayed": true,
+              "delta": null,
+              "passed": true
+            }
+          },
+          "diagnostic_checks": {
+            "diag_candidate_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_candidate_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_candidate_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_matches": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_recall_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_corner_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_corner_turn_min_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_matched_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_area": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_corner_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_input_vertex_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_perimeter": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_reason": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_reference_removed_exact_duplicate_n": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_scale": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_reference_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_schema": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_status": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_coverage_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_coverage_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_covered_length_05": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_details_03": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_details_05": {
+              "passed": true,
+              "delta": null
+            },
+            "diag_wall_direction_tolerance_deg": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_03": {
+              "passed": true,
+              "delta": 0.0
+            },
+            "diag_wall_tolerance_05": {
+              "passed": true,
+              "delta": 0.0
+            }
+          },
+          "mechanism_groups_exact": true,
+          "replayed_core_diagnostics": {
+            "diag_status": "ok",
+            "diag_wall_coverage_03": 0.5552055681503526,
+            "diag_wall_coverage_05": 0.5936894667431166,
+            "diag_corner_recall_05": 0.6666666666666666
+          }
+        }
+      ],
+      "same_size_pair_diagnostics_exact_from_native": true,
+      "independent_joint_decision_checks": [
+        {
+          "team_a": "yqstnuAEVhm-25__manual__72b3cd9b76__f17d9ad1bdc7d9ad48cc",
+          "team_b": "yqstnuAEVhm-25__manual__72b3cd9b76__af59c9a77572206964e8",
+          "abs_B8L2": 3.504726328423857,
+          "floor_difference_independent": 0.13802414320245848,
+          "bound_cyclic_deg_independent": 3.0800240750029433,
+          "node_count_difference": 0,
+          "joint_stability": {
+            "strict": false,
+            "main": false,
+            "wide": false
+          },
+          "all_independent_checks_passed": true
+        },
+        {
+          "team_a": "yqstnuAEVhm-25__manual__72b3cd9b76__f17d9ad1bdc7d9ad48cc",
+          "team_b": "yqstnuAEVhm-25__manual__72b3cd9b76__df40b48a6319c30da002",
+          "abs_B8L2": 22.27122689696006,
+          "floor_difference_independent": 0.3382054969958787,
+          "bound_cyclic_deg_independent": null,
+          "node_count_difference": 1,
+          "joint_stability": {
+            "strict": false,
+            "main": false,
+            "wide": false
+          },
+          "all_independent_checks_passed": true
+        },
+        {
+          "team_a": "yqstnuAEVhm-25__manual__72b3cd9b76__af59c9a77572206964e8",
+          "team_b": "yqstnuAEVhm-25__manual__72b3cd9b76__df40b48a6319c30da002",
+          "abs_B8L2": 18.766500568536202,
+          "floor_difference_independent": 0.33439209365936756,
+          "bound_cyclic_deg_independent": null,
+          "node_count_difference": 1,
+          "joint_stability": {
+            "strict": false,
+            "main": false,
+            "wide": false
+          },
+          "all_independent_checks_passed": true
+        }
+      ],
+      "nested_vote_bookkeeping_checks": [],
+      "mechanism_boundary": "Unchanged old-observation partitions and changing vote admission are algorithm bookkeeping, not semantic necessary-node labels."
+    }
+  ],
+  "mismatches": [],
+  "B8L2_parameters": {
+    "version": "WQ-B8L2-20261015",
+    "direction_scale_deg": 8.0,
+    "direction_cap": 1.5,
+    "bottom_scale_squared_deg2": 32.0,
+    "global_height_scale": 0.8,
+    "local_height_scale": 0.25,
+    "pooling_order": 2.0
+  },
+  "actual_support": {
+    "cases": 7,
+    "team_panels": 21,
+    "unique_replayed_teams": 21,
+    "pools": 6,
+    "images": 6,
+    "buildings": 4,
+    "workers": 52,
+    "embedded_workers_including_overlays_and_full_chains": 55
+  },
+  "all_inputs_and_sources_unchanged": true,
+  "all_passed": true,
+  "elapsed_seconds": 2.9510729769972386,
+  "packages": {
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scipy": "1.17.0",
+    "scikit-learn": "1.8.0",
+    "shapely": "2.1.2"
+  }
+}

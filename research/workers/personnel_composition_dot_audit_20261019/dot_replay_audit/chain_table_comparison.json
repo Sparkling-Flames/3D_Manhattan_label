@@ -1,0 +1,263 @@
+{
+  "transitions": [
+    {
+      "case": "C03_hard_vote_threshold",
+      "before_k": 7,
+      "after_k": 8,
+      "checks": {
+        "Q_change": {
+          "expected": 10.143801650858409,
+          "actual": 10.143801650858407,
+          "delta": -1.7763568394002505e-15,
+          "passed": true
+        },
+        "D10_change": {
+          "expected": 8.510812910567466,
+          "actual": 8.510812910567466,
+          "delta": 0.0,
+          "passed": true
+        },
+        "node_change": {
+          "expected": 0.0,
+          "actual": 0,
+          "delta": 0.0,
+          "passed": true
+        },
+        "corner_change": {
+          "expected": 0.3333333333333333,
+          "actual": 0.33333333333333337,
+          "delta": 5.551115123125783e-17,
+          "passed": true
+        },
+        "wall_change": {
+          "expected": 0.2450314849101258,
+          "actual": 0.24503148491012583,
+          "delta": 2.7755575615628914e-17,
+          "passed": true
+        },
+        "IoU3D100_change": {
+          "expected": 6.587726290985913,
+          "actual": 6.587726290985913,
+          "delta": 0.0,
+          "passed": true
+        }
+      }
+    },
+    {
+      "case": "C03_hard_vote_threshold",
+      "before_k": 8,
+      "after_k": 9,
+      "checks": {
+        "Q_change": {
+          "expected": -43.28527155099893,
+          "actual": -43.28527155099893,
+          "delta": 0.0,
+          "passed": true
+        },
+        "D10_change": {
+          "expected": -39.684027467926754,
+          "actual": -39.684027467926754,
+          "delta": 0.0,
+          "passed": true
+        },
+        "node_change": {
+          "expected": -1.0,
+          "actual": -1,
+          "delta": 0.0,
+          "passed": true
+        },
+        "corner_change": {
+          "expected": -0.5,
+          "actual": -0.5,
+          "delta": 0.0,
+          "passed": true
+        },
+        "wall_change": {
+          "expected": -0.3853129522734502,
+          "actual": -0.3853129522734502,
+          "delta": 0.0,
+          "passed": true
+        },
+        "IoU3D100_change": {
+          "expected": -9.653560582146014,
+          "actual": -9.653560582146014,
+          "delta": 0.0,
+          "passed": true
+        }
+      }
+    },
+    {
+      "case": "C03_hard_vote_threshold",
+      "before_k": 9,
+      "after_k": 10,
+      "checks": {
+        "Q_change": {
+          "expected": 2.377300641776685,
+          "actual": 2.377300641776685,
+          "delta": 0.0,
+          "passed": true
+        },
+        "D10_change": {
+          "expected": 3.02624160431791,
+          "actual": 3.02624160431791,
+          "delta": 0.0,
+          "passed": true
+        },
+        "node_change": {
+          "expected": 0.0,
+          "actual": 0,
+          "delta": 0.0,
+          "passed": true
+        },
+        "corner_change": {
+          "expected": 0.3333333333333333,
+          "actual": 0.33333333333333337,
+          "delta": 5.551115123125783e-17,
+          "passed": true
+        },
+        "wall_change": {
+          "expected": 0.2504417265893465,
+          "actual": 0.2504417265893465,
+          "delta": 0.0,
+          "passed": true
+        },
+        "IoU3D100_change": {
+          "expected": 6.533050271838334,
+          "actual": 6.533050271838334,
+          "delta": 0.0,
+          "passed": true
+        }
+      }
+    },
+    {
+      "case": "C04_score_up_structure_down",
+      "before_k": 11,
+      "after_k": 12,
+      "checks": {
+        "Q_change": {
+          "expected": -17.16399206710752,
+          "actual": -17.16399206710752,
+          "delta": 0.0,
+          "passed": true
+        },
+        "D10_change": {
+          "expected": -19.4210669651394,
+          "actual": -19.421066965139396,
+          "delta": 3.552713678800501e-15,
+          "passed": true
+        },
+        "node_change": {
+          "expected": 3.0,
+          "actual": 3,
+          "delta": 0.0,
+          "passed": true
+        },
+        "corner_change": {
+          "expected": 0.0,
+          "actual": 0.0,
+          "delta": 0.0,
+          "passed": true
+        },
+        "wall_change": {
+          "expected": -0.1599952144028604,
+          "actual": -0.15999521440286046,
+          "delta": -5.551115123125783e-17,
+          "passed": true
+        },
+        "IoU3D100_change": {
+          "expected": 1.198338108648798,
+          "actual": 1.198338108648798,
+          "delta": 0.0,
+          "passed": true
+        }
+      }
+    },
+    {
+      "case": "C04_score_up_structure_down",
+      "before_k": 12,
+      "after_k": 13,
+      "checks": {
+        "Q_change": {
+          "expected": 19.7240175767294,
+          "actual": 19.724017576729402,
+          "delta": 3.552713678800501e-15,
+          "passed": true
+        },
+        "D10_change": {
+          "expected": 21.671906426223025,
+          "actual": 21.671906426223025,
+          "delta": 0.0,
+          "passed": true
+        },
+        "node_change": {
+          "expected": -3.0,
+          "actual": -3,
+          "delta": 0.0,
+          "passed": true
+        },
+        "corner_change": {
+          "expected": -0.1,
+          "actual": -0.1,
+          "delta": 0.0,
+          "passed": true
+        },
+        "wall_change": {
+          "expected": 0.1310211136181076,
+          "actual": 0.13102111361810764,
+          "delta": 5.551115123125783e-17,
+          "passed": true
+        },
+        "IoU3D100_change": {
+          "expected": -0.8201957098032864,
+          "actual": -0.8201957098032864,
+          "delta": 0.0,
+          "passed": true
+        }
+      }
+    },
+    {
+      "case": "C04_score_up_structure_down",
+      "before_k": 13,
+      "after_k": 14,
+      "checks": {
+        "Q_change": {
+          "expected": -0.0523743995856591,
+          "actual": -0.05237439958565915,
+          "delta": -4.85722573273506e-17,
+          "passed": true
+        },
+        "D10_change": {
+          "expected": 0.1057554875173849,
+          "actual": 0.10575548751738495,
+          "delta": 5.551115123125783e-17,
+          "passed": true
+        },
+        "node_change": {
+          "expected": 0.0,
+          "actual": 0,
+          "delta": 0.0,
+          "passed": true
+        },
+        "corner_change": {
+          "expected": 0.0,
+          "actual": 0.0,
+          "delta": 0.0,
+          "passed": true
+        },
+        "wall_change": {
+          "expected": 0.0173438612957932,
+          "actual": 0.01734386129579324,
+          "delta": 3.8163916471489756e-17,
+          "passed": true
+        },
+        "IoU3D100_change": {
+          "expected": 1.8255125292767644,
+          "actual": 1.8255125292767644,
+          "delta": 0.0,
+          "passed": true
+        }
+      }
+    }
+  ],
+  "all_passed": true
+}

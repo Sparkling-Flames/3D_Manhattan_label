@@ -1,0 +1,181 @@
+{
+  "schema": "composition_case_visuals_v1",
+  "case_id": "C04_score_up_structure_down",
+  "case_sha256": "caa31fe3e5c935a20a6a35b29463490243e124f09ec5691cd90273afb6c0886b",
+  "renderer_sha256": "5bc6da16f8ea35177abc37f38f3a1da02512299f588b8bb2dfc726b4bf303fdb",
+  "reference_id": "gt:X7HyMhZNoso_2b16acff0dc042a1a75816a1fbd0a302:data/mp3d_layout/test/label_cor/X7HyMhZNoso_2b16acff0dc042a1a75816a1fbd0a302.txt",
+  "reference_version": "gt_original",
+  "image": {
+    "status": "available",
+    "path": "/workspace/scratch/1d99618bd862/analysis/selected_originals/X7HyMhZNoso_2b16acff0dc042a1a75816a1fbd0a302.png",
+    "sha256": "ecf78f290dff4e2030d60915fc0f11add92284e9bf91234e3b2cf3a1738cdc0b",
+    "dimensions": [
+      2048,
+      1024
+    ]
+  },
+  "erp_coordinate_convention": "continuous x/W,y/H; W=1024,H=512; seam wrapped",
+  "3d_construction": "Retain final/reference floor; top ray takes paired bottom horizontal range; floor H=0,camera H=1",
+  "bev_bounds": [
+    -5.653444141571098,
+    0.9147410000743292,
+    -1.1884048029917678,
+    6.411597480919753
+  ],
+  "height_bounds": [
+    0,
+    2.161552628305547
+  ],
+  "view": {},
+  "reference_geometry": {
+    "status": "ok",
+    "reason": null,
+    "floor_reconstruction_max_abs_difference": 8.881784197001252e-16,
+    "footprint_valid": true,
+    "vertical_pair_mismatch": false
+  },
+  "team_geometry": {
+    "纯细节角色：6 R5": {
+      "status": "ok",
+      "reason": null,
+      "floor_reconstruction_max_abs_difference": 0.0,
+      "footprint_valid": true,
+      "vertical_pair_mismatch": false,
+      "team_key": "X7HyMhZNoso-07__manual__dd2275185f__40e8e83f10b733b30ecd",
+      "member_workers": [
+        "W109",
+        "W112",
+        "W115",
+        "W122",
+        "W126",
+        "W130"
+      ],
+      "member_object_ids": [
+        "v2:new:101793",
+        "v2:new:101795",
+        "v2:new:101798",
+        "v2:new:101805",
+        "v2:new:101809",
+        "v2:new:101813"
+      ],
+      "counts": {
+        "C01": 0,
+        "C02": 0,
+        "C03": 0,
+        "C04": 0,
+        "C05": 6
+      }
+    },
+    "6 R2 + 6 R5：7个节点": {
+      "status": "ok",
+      "reason": null,
+      "floor_reconstruction_max_abs_difference": 0.0,
+      "footprint_valid": true,
+      "vertical_pair_mismatch": false,
+      "team_key": "X7HyMhZNoso-07__manual__dd2275185f__b124e2d4dcddec411b86",
+      "member_workers": [
+        "W100",
+        "W104",
+        "W107",
+        "W109",
+        "W112",
+        "W114",
+        "W115",
+        "W122",
+        "W123",
+        "W126",
+        "W130",
+        "W134"
+      ],
+      "member_object_ids": [
+        "v2:new:101788",
+        "v2:new:101790",
+        "v2:new:101792",
+        "v2:new:101793",
+        "v2:new:101795",
+        "v2:new:101797",
+        "v2:new:101798",
+        "v2:new:101805",
+        "v2:new:101806",
+        "v2:new:101809",
+        "v2:new:101813",
+        "v2:new:101817"
+      ],
+      "counts": {
+        "C01": 0,
+        "C02": 6,
+        "C03": 0,
+        "C04": 0,
+        "C05": 6
+      }
+    },
+    "7 R2 + 6 R5：4个节点": {
+      "status": "ok",
+      "reason": null,
+      "floor_reconstruction_max_abs_difference": 0.0,
+      "footprint_valid": true,
+      "vertical_pair_mismatch": false,
+      "team_key": "X7HyMhZNoso-07__manual__dd2275185f__cc7f13fb7aec30cce480",
+      "member_workers": [
+        "W100",
+        "W104",
+        "W107",
+        "W109",
+        "W112",
+        "W114",
+        "W115",
+        "W122",
+        "W123",
+        "W125",
+        "W126",
+        "W130",
+        "W134"
+      ],
+      "member_object_ids": [
+        "v2:new:101788",
+        "v2:new:101790",
+        "v2:new:101792",
+        "v2:new:101793",
+        "v2:new:101795",
+        "v2:new:101797",
+        "v2:new:101798",
+        "v2:new:101805",
+        "v2:new:101806",
+        "v2:new:101808",
+        "v2:new:101809",
+        "v2:new:101813",
+        "v2:new:101817"
+      ],
+      "counts": {
+        "C01": 0,
+        "C02": 7,
+        "C03": 0,
+        "C04": 0,
+        "C05": 6
+      }
+    }
+  },
+  "supplied_members": 19,
+  "member_scope": "该冻结池内 R2、R5 的全部已知类别成员",
+  "member_geometry_status_counts": {
+    "ok": 19,
+    "unavailable": 0
+  },
+  "files": [
+    {
+      "path": "comparison.png",
+      "bytes": 890211,
+      "sha256": "627813facc3a8b6a0f71b3ba44cdfde58e381b8e14566bdd58a01053b6edca70"
+    },
+    {
+      "path": "member_overlays.png",
+      "bytes": 550835,
+      "sha256": "0c455cb15573e8efd7fc65f5dcdf7b63da2a9a016903b6f8060ff769f0871529"
+    },
+    {
+      "path": "local_zoom.png",
+      "bytes": 649883,
+      "sha256": "180fccd5336968e0bca69dfbe13ade999ec127d925f282e85c9f15590bdf1982"
+    }
+  ]
+}

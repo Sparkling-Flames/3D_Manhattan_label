@@ -1,0 +1,127 @@
+{
+  "stage": "support_and_representation_screen_before_discovery_fusion_ranking",
+  "selection_uses_fusion_outcomes": false,
+  "selection_uses_target_Q": false,
+  "interpretation": "Coverage-oriented heuristic shortlist, not a claimed optimum; all 62 candidates retained in labels and ledger.",
+  "selection_basis": "Cover K2/3/4/5/6/8, relation and role families, algorithm and prior/source sensitivities, sizeable actual classes and feasible real memberships.",
+  "global_methods": 14,
+  "conditional_methods": 2,
+  "candidates": [
+    {
+      "method_id": "R_geo9_average_p0_K2",
+      "basis": "smallest K and no-shrinkage average relation",
+      "domains": [
+        "global"
+      ]
+    },
+    {
+      "method_id": "R_geo9_complete_p0_K3",
+      "basis": "three sizeable classes; complete-linkage no-prior sensitivity",
+      "domains": [
+        "global"
+      ]
+    },
+    {
+      "method_id": "R_geo9_complete_p2_K4",
+      "basis": "four classes with at least ten supported members each",
+      "domains": [
+        "global"
+      ]
+    },
+    {
+      "method_id": "R_geo9_spectral_p2_K2",
+      "basis": "normalized spectral two-class source-association comparison",
+      "domains": [
+        "global"
+      ]
+    },
+    {
+      "method_id": "R_geo9_spectral_p2_K3",
+      "basis": "normalized spectral three-class representation",
+      "domains": [
+        "global"
+      ]
+    },
+    {
+      "method_id": "R_geo9_spectral_p2_K6",
+      "basis": "normalized spectral higher-resolution representation",
+      "domains": [
+        "global"
+      ]
+    },
+    {
+      "method_id": "R_geo9_source_signed_p2_K2",
+      "basis": "source-pair-residual two-class sensitivity",
+      "domains": [
+        "global"
+      ]
+    },
+    {
+      "method_id": "R_geo9_source_signed_p2_K4",
+      "basis": "source-pair-residual four-class representation",
+      "domains": [
+        "global"
+      ]
+    },
+    {
+      "method_id": "R_geo9_source_signed_p2_K6",
+      "basis": "source-pair-residual six-class representation",
+      "domains": [
+        "global"
+      ]
+    },
+    {
+      "method_id": "R_geo9_source_signed_p2_K8",
+      "basis": "source-pair-residual eight-class representation with no class below six",
+      "domains": [
+        "global"
+      ]
+    },
+    {
+      "method_id": "R_role_ward_K3",
+      "basis": "three-role agglomerative representation",
+      "domains": [
+        "global"
+      ]
+    },
+    {
+      "method_id": "R_role_ward_K5",
+      "basis": "five-role agglomerative representation",
+      "domains": [
+        "global"
+      ]
+    },
+    {
+      "method_id": "R_role_kmeans_K3",
+      "basis": "three-role centroid representation",
+      "domains": [
+        "global"
+      ]
+    },
+    {
+      "method_id": "R_role_kmeans_K5",
+      "basis": "five-role centroid representation",
+      "domains": [
+        "global"
+      ]
+    },
+    {
+      "method_id": "R_role_ward_difficulty_K4",
+      "basis": "difficulty-specific four-role labels; own supports",
+      "domains": [
+        "easy",
+        "medium",
+        "hard"
+      ]
+    },
+    {
+      "method_id": "R_role_ward_difficulty_K6",
+      "basis": "difficulty-specific six-role labels; own supports",
+      "domains": [
+        "easy",
+        "medium",
+        "hard"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+[
+  {
+    "id": "tsai2024bilayout",
+    "authors": [
+      "Yu-Ju Tsai",
+      "Jin-Cheng Jhang",
+      "Jingjing Zheng",
+      "Wei Wang",
+      "Albert Y. C. Chen",
+      "Min Sun",
+      "Cheng-Hao Kuo",
+      "Ming-Hsuan Yang"
+    ],
+    "year": 2024,
+    "title": "No More Ambiguity in 360° Room Layout via Bi-Layout Estimation",
+    "venue": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+    "pages": "28056–28065",
+    "official_pdf": "https://openaccess.thecvf.com/content/CVPR2024/papers/Tsai_No_More_Ambiguity_in_360deg_Room_Layout_via_Bi-Layout_Estimation_CVPR_2024_paper.pdf",
+    "author_pdf": "https://liagm.github.io/Bi_Layout/pdf/3739.pdf",
+    "project_url": "https://liagm.github.io/Bi_Layout/",
+    "arxiv": "https://arxiv.org/abs/2404.09993",
+    "verified_claims": [
+      "Enclosed stops at ambiguous regions and encloses the room; extended reaches visible areas inside the opening.",
+      "The paper describes policy variation within MatterportLayout.",
+      "The authors report reannotating 15% of MatterportLayout labels for the enclosed branch while evaluating on the original test split.",
+      "ZInD raw/visible are described as similar to enclosed/extended, not strictly identical."
+    ],
+    "verified_web_refs": [
+      "turn3view0",
+      "turn4view1",
+      "turn5view0",
+      "turn5view1"
+    ],
+    "access_note": "Official CVF links were returned by search and bibliography; direct web open returned 403. The author-hosted PDF was fully accessible."
+  },
+  {
+    "id": "cruz2021zind",
+    "authors": [
+      "Steve Cruz",
+      "Will Hutchcroft",
+      "Yuguang Li",
+      "Naji Khosravan",
+      "Ivaylo Boyadzhiev",
+      "Sing Bing Kang"
+    ],
+    "year": 2021,
+    "title": "Zillow Indoor Dataset: Annotated Floor Plans With 360° Panoramas and 3D Room Layouts",
+    "venue": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+    "pages": "2133–2143",
+    "official_pdf": "https://openaccess.thecvf.com/content/CVPR2021/papers/Cruz_Zillow_Indoor_Dataset_Annotated_Floor_Plans_With_360deg_Panoramas_and_CVPR_2021_paper.pdf",
+    "official_supplement": "https://openaccess.thecvf.com/content/CVPR2021/supplemental/Cruz_Zillow_Indoor_Dataset_CVPR_2021_supplemental.pdf",
+    "official_repository": "https://github.com/zillow/zind",
+    "official_docs": "https://github.com/zillow/zind/blob/main/README.md",
+    "verified_claims": [
+      "The official README defines an opening as an artificial division of a large room, later removed in postprocessing.",
+      "Partially visible geometry is locally clamped and can cease to be Manhattan even if the underlying room is Manhattan.",
+      "Complete and visible geometry extend through openings, not doors, under the dataset's protocol."
+    ],
+    "verified_web_refs": [
+      "turn1view0",
+      "turn2view1",
+      "turn5search1"
+    ],
+    "access_note": "PDF destination was independently obtained from the official repository's Paper link; direct web PDF fetch returned 403. The official README and CVF proceedings citation were accessible."
+  }
+]

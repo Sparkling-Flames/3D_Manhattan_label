@@ -1,0 +1,30 @@
+{
+  "purpose": "Primary-source method citations; custom residual graph construction must be described as this study's method",
+  "references": [
+    {
+      "authors": ["Andrew Y. Ng", "Michael I. Jordan", "Yair Weiss"],
+      "title": "On Spectral Clustering: Analysis and an Algorithm",
+      "year": 2002,
+      "venue": "Advances in Neural Information Processing Systems 14 (NIPS 2001)",
+      "year_note": "The NeurIPS archive labels the conference year 2001; the proceedings are commonly bibliographically cited as 2002. State NIPS 2001 / volume 14 if avoiding ambiguity.",
+      "official_page": "https://proceedings.neurips.cc/paper_files/paper/2001/hash/801272ee79cfde7fa5960571fee36b9b-Abstract.html",
+      "official_pdf": "https://proceedings.neurips.cc/paper_files/paper/2001/file/801272ee79cfde7fa5960571fee36b9b-Paper.pdf",
+      "supports": "Normalized affinity D^(-1/2) A D^(-1/2), top k eigenvectors, row normalization, k-means",
+      "does_not_support": "Any claim that this paper introduced this study's cross-image personnel graph or same-source residual affinity"
+    },
+    {
+      "authors": ["Jérôme Kunegis", "Stephan Schmidt", "Andreas Lommatzsch", "Jürgen Lerner", "Ernesto W. De Luca", "Sahin Albayrak"],
+      "title": "Spectral Analysis of Signed Graphs for Clustering, Prediction and Visualization",
+      "year": 2010,
+      "venue": "Proceedings of the 2010 SIAM International Conference on Data Mining (SDM)",
+      "pages": "559–570",
+      "doi": "10.1137/1.9781611972801.49",
+      "official_page": "https://epubs.siam.org/doi/10.1137/1.9781611972801.49",
+      "official_pdf": "https://epubs.siam.org/doi/pdf/10.1137/1.9781611972801.49",
+      "pdf_access_note": "Official endpoint may require subscription; bibliographic fields independently confirmed on the authors' lab publication page",
+      "author_lab_page": "https://dai-labor.de/en/publications/spectral-analysis-of-signed-graphs-for-clustering-prediction-and-visualization-2/",
+      "supports": "Spectral analysis of graphs with positive and negative edges, with absolute-degree normalization concepts",
+      "does_not_support": "Equivalence of every signed construction to this paper or prior validation of this study's same-image/same-source coassignment residual method"
+    }
+  ]
+}

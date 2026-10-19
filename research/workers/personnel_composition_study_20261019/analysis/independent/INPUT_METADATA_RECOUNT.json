@@ -1,0 +1,55 @@
+{
+  "scope": "Independent frozen input metadata recount only; no new fusion/category validation results read",
+  "snapshot_sha256": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7",
+  "split_sha256": "075125c748299b7829c179b9ac2b44706b360acaeefbdde0d3ce23076843752e",
+  "pools": 229,
+  "images": 196,
+  "buildings": 22,
+  "workers": 60,
+  "pool_layers": {
+    "ordinary_manual": 177,
+    "doorway_manual": 17,
+    "ordinary_semi": 32,
+    "special_manual": 2,
+    "special_semi": 1
+  },
+  "all_pool_members_distinct": true,
+  "split_disjoint_and_covers_all_pool_buildings": true,
+  "group_buildings": {
+    "history": 10,
+    "discovery": 6,
+    "validation": 6
+  },
+  "balance_matches_declared_exactly": true,
+  "balance": {
+    "history": {
+      "ordinary_pools": 81,
+      "ordinary_members": 2578,
+      "easy": 53,
+      "medium": 16,
+      "hard": 12,
+      "doorway_manual": 9,
+      "ordinary_semi": 13
+    },
+    "discovery": {
+      "ordinary_pools": 51,
+      "ordinary_members": 1698,
+      "easy": 32,
+      "medium": 9,
+      "hard": 10,
+      "doorway_manual": 4,
+      "ordinary_semi": 9
+    },
+    "validation": {
+      "ordinary_pools": 45,
+      "ordinary_members": 1443,
+      "easy": 29,
+      "medium": 7,
+      "hard": 9,
+      "doorway_manual": 4,
+      "ordinary_semi": 10
+    }
+  },
+  "N1_applied": false,
+  "fusion_gap": 7.5
+}

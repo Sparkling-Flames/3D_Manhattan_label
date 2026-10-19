@@ -1,0 +1,1326 @@
+{
+  "schema": "personnel_composition_request_reproduction_audit_v1",
+  "scope": "All 13 primary request manifests plus the derived FINAL concatenation. No fusion outcomes, validation scientific results, or cached geometries read.",
+  "independent_member_checks": [
+    "Unique request IDs",
+    "Exact pool, k, sorted workers, class counts and recomputed team key",
+    "Full request metadata equality",
+    "Pool membership and frozen label count recount",
+    "Building phase eligibility",
+    "Own Semi source eligibility",
+    "Ledger support recount",
+    "Nested exact addition chains"
+  ],
+  "source_sha256": {
+    "analysis/composition/BLOCK_DISCOVERY_SPEC.json": "943cf00f9210ae86919ca158bee593fe1dbe3a5b6038d80409f0714f03aac1a3",
+    "analysis/composition/BLOCK_VALIDATION_SPEC.json": "3c20de618717c81e971fe4006cf093f17bf4f23f784af1a1e6f90b69c220f7f4",
+    "analysis/composition/BREADTH_SPEC.json": "782e586955b1c92421754015e51988df11556b05994cb614a005bb5ff353f4a6",
+    "analysis/composition/CONFIRM_DISCOVERY_SPEC.json": "d6bb281a0464a83c231c968bee14106bb64a92d32f541d433e4341d90edfebab",
+    "analysis/composition/CONFIRM_VALIDATION_SPEC.json": "977c3458c8aab0e6f5af85ca1466c12d1a0a694f3fc6c6d63c896ac38a00198b",
+    "analysis/composition/CURVES_DISCOVERY_SPEC.json": "816f2cfbe37a8436edb7119b588eb1a9348b2dee724367f170cbd2088734ad5c",
+    "analysis/composition/CURVES_VALIDATION_SPEC.json": "72ae04696b566f2f2698b7700b2d1567e571b29b3f1ab9280e5cbacc87e00a1e",
+    "analysis/composition/NESTED_DISCOVERY_SPEC.json": "144512abc0364f074a644ed5e0d6ba0613f3b0162b170d39573629d71784bffb",
+    "analysis/composition/NESTED_VALIDATION_SPEC.json": "fefed537c7ff323d0111334d73468b3a5ad3ecf5fd323ca7e2c4eafadf334968",
+    "analysis/composition/SPLIT.json": "075125c748299b7829c179b9ac2b44706b360acaeefbdde0d3ce23076843752e",
+    "analysis/composition/VALIDATION_FREEZE.json": "dfa0d80a6668e55fee58df9efbcaf43a76c062d1941db26c922c3f46f02893fd",
+    "analysis/composition/design_blocks.py": "24f63028b4f9c2fdba068008b7f22440fd99725a3f85812fdca2ebefa59f2fc2",
+    "analysis/composition/design_compositions.py": "c7cba492bded5b9d201c052228a046b258eef5ea26fd57b5d943dffddc249ebb",
+    "analysis/composition/design_condition_requests.py": "5e54b5ace5956d562872ca5cd87d4fe969ae1301c918de1b17bf9b025894077b",
+    "analysis/composition/design_curves.py": "9e64f8f192b573b4e4b5ca95549f005b2399df912f8fe1cd88dc02fc180a72ae",
+    "analysis/composition/design_nested.py": "b9103d000ac741dcf3983d9459e5482b3457d597b362a476df5776ecb4637cbb",
+    "analysis/composition/design_screen.py": "5efd10233fc3d2d58b56fb5da579fe969b5c677c355e792f8baec10df71027bd",
+    "analysis/composition/design_special.py": "decfbafe1dcb7894bb6bdd68047acdb9ea812e421a5bd6f9145034997d02a9c3",
+    "analysis/composition/fusion_runner.py": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+    "analysis/composition/geometry_diagnostics.py": "57a94b9987cd012d1be8d4c7e25f003ba5982c1c6c23be83ed8133243061a0ce",
+    "analysis/composition/materialize_stages.py": "3dadb9b6ec95ada3bb59e9ed5f1396a35a4b6b03d2773eae8e83720de6a3146a",
+    "analysis/forward/condition_experiment_spec.json": "d1693dd99f9c9089e09d5b4c18b9181da8ac13efbdde4e0601d18516ead8fd02",
+    "analysis/forward/results/method_manifest.json": "ab9f734538c646751ac4dc071ce11506e83de27f361ae1f0870f41dba3890142",
+    "analysis/forward/results/worker_labels.csv.gz": "b5e52ba1aebe093d9555a8a0782c53a52c6d79778aded4f16de474b6ed804bfc",
+    "analysis/independent/audit_reproduce_requests.py": "223aacc4c813d9350424f5d0706269d7de660f21530244d5fc6d6fb76abf9cfe",
+    "analysis/reverse/CANDIDATE_MANIFEST.json": "e534ce40e1c14ffb655d7110ff71ece37a9990d44475da3e1cc328c363be2ec7",
+    "analysis/reverse/worker_labels.csv.gz": "64aa9e9fff524d597f20ad94f6f0e7fd205bfdcb0af24c83f1f2f540f4172411",
+    "restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7"
+  },
+  "validation_freeze_files_match": {
+    "analysis/composition/SPLIT.json": true,
+    "analysis/forward/results/worker_labels.csv.gz": true,
+    "analysis/reverse/worker_labels.csv.gz": true,
+    "analysis/forward/results/method_manifest.json": true,
+    "analysis/reverse/CANDIDATE_MANIFEST.json": true,
+    "analysis/composition/BLOCK_VALIDATION_SPEC.json": true,
+    "analysis/composition/CURVES_VALIDATION_SPEC.json": true,
+    "analysis/composition/CONFIRM_VALIDATION_SPEC.json": true,
+    "analysis/composition/NESTED_VALIDATION_SPEC.json": true,
+    "analysis/forward/condition_experiment_spec.json": true,
+    "analysis/composition/fusion_runner.py": true,
+    "analysis/composition/design_compositions.py": true,
+    "analysis/composition/design_blocks.py": true,
+    "analysis/composition/design_curves.py": true,
+    "analysis/composition/design_nested.py": true,
+    "analysis/composition/design_condition_requests.py": true,
+    "analysis/composition/geometry_diagnostics.py": true
+  },
+  "jobs": 1,
+  "blas_threads": 1,
+  "python_executable": "/workspace/scratch/1d99618bd862/runtime_env/bin/python",
+  "packages": {
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scipy": "1.17.0",
+    "scikit-learn": "1.8.0"
+  },
+  "reuse_previously_generated_scratch_manifests": true,
+  "manifests": [
+    {
+      "name": "SCREEN_REQUESTS.json.gz",
+      "original_sha256": "edfb3b39977bed726d239edaa5889900f415f4eebf70310b3d0f8fcdf25e5ddd",
+      "rebuilt_sha256": "edfb3b39977bed726d239edaa5889900f415f4eebf70310b3d0f8fcdf25e5ddd",
+      "byte_identical": true,
+      "request_id_sets_identical": true,
+      "every_member_signature_identical": true,
+      "every_full_request_identical": true,
+      "member_signature_original_sha256": "1bb6ef5fe1e2970a585f0e8ed83b2d71ce43a6623705e10872af0e6b79652ed4",
+      "member_signature_rebuilt_sha256": "1bb6ef5fe1e2970a585f0e8ed83b2d71ce43a6623705e10872af0e6b79652ed4",
+      "mismatched_member_requests": 0,
+      "mismatched_full_requests": 0,
+      "first_mismatches": [],
+      "exact_generation_command": [
+        "/workspace/scratch/1d99618bd862/runtime_env/bin/python",
+        "analysis/composition/design_screen.py",
+        "--snapshot",
+        "restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz",
+        "--split",
+        "analysis/composition/SPLIT.json",
+        "--out",
+        "/workspace/scratch/1d99618bd862/analysis/independent/rebuilt_requests/SCREEN_REQUESTS.json.gz"
+      ],
+      "generation_seconds": 1.108,
+      "bytes": 479630,
+      "support": {
+        "requests": 14187,
+        "unique_teams": 14187,
+        "repeated_rows_beyond_unique_teams": 0,
+        "pools": 51,
+        "images": 51,
+        "buildings": 6,
+        "workers": 59,
+        "method_domains": [],
+        "composition_cells": 0,
+        "requests_by_phase": {
+          "discovery": 14187
+        },
+        "requests_by_layer": {
+          "ordinary_manual": 14187
+        },
+        "requests_by_difficulty": {
+          "中等": 2505,
+          "简单": 8936,
+          "困难": 2746
+        },
+        "requests_by_size": {
+          "3": 1224,
+          "4": 1224,
+          "5": 1224,
+          "6": 1224,
+          "7": 1224,
+          "9": 1201,
+          "13": 1200,
+          "17": 1200,
+          "21": 1200,
+          "25": 1200,
+          "29": 1154,
+          "30": 4,
+          "31": 2,
+          "33": 870,
+          "34": 9,
+          "35": 27
+        }
+      },
+      "coverage": {
+        "ledger_cells": 640,
+        "exhaustive_actual_member_cells": 51,
+        "sampled_member_teams_across_cells": 14187,
+        "possible_member_teams_across_selected_cells": "286228300535",
+        "sample_scope": "Uniform class-independent team sampling at declared sizes plus complete pool; exhaustive only when the finite team count is no greater than the replicate cap."
+      }
+    },
+    {
+      "name": "DISCOVERY_GRID_REQUESTS.json.gz",
+      "original_sha256": "02da799ae9cd2c7a7444b342f10a925dbc42294421d276c9fc545d1bfd112299",
+      "rebuilt_sha256": "02da799ae9cd2c7a7444b342f10a925dbc42294421d276c9fc545d1bfd112299",
+      "byte_identical": true,
+      "request_id_sets_identical": true,
+      "every_member_signature_identical": true,
+      "every_full_request_identical": true,
+      "member_signature_original_sha256": "a572619ace8bbcb0d8d72ebbbb1920deb155322dd5102d33def5d22e65ff3800",
+      "member_signature_rebuilt_sha256": "a572619ace8bbcb0d8d72ebbbb1920deb155322dd5102d33def5d22e65ff3800",
+      "mismatched_member_requests": 0,
+      "mismatched_full_requests": 0,
+      "first_mismatches": [],
+      "exact_generation_command": [
+        "/workspace/scratch/1d99618bd862/runtime_env/bin/python",
+        "analysis/composition/design_compositions.py",
+        "--snapshot",
+        "restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz",
+        "--split",
+        "analysis/composition/SPLIT.json",
+        "--labels",
+        "analysis/forward/results/worker_labels.csv.gz",
+        "--labels",
+        "analysis/reverse/worker_labels.csv.gz",
+        "--spec",
+        "analysis/composition/BREADTH_SPEC.json",
+        "--out",
+        "/workspace/scratch/1d99618bd862/analysis/independent/rebuilt_requests/DISCOVERY_GRID_REQUESTS.json.gz"
+      ],
+      "generation_seconds": 15.49,
+      "bytes": 6844981,
+      "support": {
+        "requests": 139322,
+        "unique_teams": 138863,
+        "repeated_rows_beyond_unique_teams": 459,
+        "pools": 51,
+        "images": 51,
+        "buildings": 6,
+        "workers": 55,
+        "method_domains": [
+          [
+            "F_medoids_QTDS_K3",
+            "all"
+          ],
+          [
+            "F_rule_Q2xDetail2",
+            "all"
+          ],
+          [
+            "F_rule_Q_quantile_K3",
+            "all"
+          ],
+          [
+            "F_rule_Q_quantile_K6",
+            "all"
+          ],
+          [
+            "R_geo9_source_signed_p2_K2",
+            "all"
+          ],
+          [
+            "R_geo9_source_signed_p2_K8",
+            "all"
+          ],
+          [
+            "R_geo9_spectral_p2_K3",
+            "all"
+          ],
+          [
+            "R_role_ward_K5",
+            "all"
+          ]
+        ],
+        "composition_cells": 36009,
+        "requests_by_phase": {
+          "discovery": 139322
+        },
+        "requests_by_layer": {
+          "ordinary_manual": 139322
+        },
+        "requests_by_difficulty": {
+          "中等": 26151,
+          "简单": 84008,
+          "困难": 29163
+        },
+        "requests_by_size": {
+          "5": 39156,
+          "9": 61411,
+          "13": 38755
+        }
+      },
+      "coverage": {
+        "ledger_cells": 36009,
+        "exhaustive_actual_member_cells": 461,
+        "sampled_member_teams_across_cells": 139322,
+        "possible_member_teams_across_selected_cells": "164559875900",
+        "method_pool_size_cells": 932,
+        "selected_compositions": 36009,
+        "full_feasible_simplex_compositions": 269732,
+        "omitted_feasible_simplex_compositions": 233723,
+        "cells_covering_all_feasible_compositions": 590,
+        "sample_scope": "All feasible count vectors where within cap; otherwise deterministic separated pure/boundary/interior coverage. K6/K8 dense image panel only. Concrete teams sampled unless ledger marks exact enumeration."
+      }
+    },
+    {
+      "name": "DISCOVERY_BLOCK_REQUESTS.json.gz",
+      "original_sha256": "af2a6fa99bc45dba4d4241d669438b67cc2b01d5ba50e96032a24058d0d656b1",
+      "rebuilt_sha256": "af2a6fa99bc45dba4d4241d669438b67cc2b01d5ba50e96032a24058d0d656b1",
+      "byte_identical": true,
+      "request_id_sets_identical": true,
+      "every_member_signature_identical": true,
+      "every_full_request_identical": true,
+      "member_signature_original_sha256": "ba78a251c9d97620d662c17bdeae9e6f832d109419fb81dbf67b1d2fde7387de",
+      "member_signature_rebuilt_sha256": "ba78a251c9d97620d662c17bdeae9e6f832d109419fb81dbf67b1d2fde7387de",
+      "mismatched_member_requests": 0,
+      "mismatched_full_requests": 0,
+      "first_mismatches": [],
+      "exact_generation_command": [
+        "/workspace/scratch/1d99618bd862/runtime_env/bin/python",
+        "analysis/composition/design_blocks.py",
+        "--snapshot",
+        "restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz",
+        "--split",
+        "analysis/composition/SPLIT.json",
+        "--labels",
+        "analysis/forward/results/worker_labels.csv.gz",
+        "--labels",
+        "analysis/reverse/worker_labels.csv.gz",
+        "--spec",
+        "analysis/composition/BLOCK_DISCOVERY_SPEC.json",
+        "--out",
+        "/workspace/scratch/1d99618bd862/analysis/independent/rebuilt_requests/DISCOVERY_BLOCK_REQUESTS.json.gz"
+      ],
+      "generation_seconds": 15.593,
+      "bytes": 7429223,
+      "support": {
+        "requests": 77232,
+        "unique_teams": 76973,
+        "repeated_rows_beyond_unique_teams": 259,
+        "pools": 51,
+        "images": 51,
+        "buildings": 6,
+        "workers": 55,
+        "method_domains": [
+          [
+            "F_rule_Q2xDetail2",
+            "all"
+          ],
+          [
+            "F_rule_Q_threshold_K3",
+            "all"
+          ],
+          [
+            "R_geo9_source_signed_p2_K2",
+            "all"
+          ],
+          [
+            "R_role_ward_K5",
+            "all"
+          ],
+          [
+            "R_role_ward_difficulty_K2",
+            "hard"
+          ]
+        ],
+        "composition_cells": 29082,
+        "requests_by_phase": {
+          "discovery": 77232
+        },
+        "requests_by_layer": {
+          "ordinary_manual": 77232
+        },
+        "requests_by_difficulty": {
+          "中等": 13419,
+          "简单": 46641,
+          "困难": 17172
+        },
+        "requests_by_size": {
+          "5": 17835,
+          "9": 19845,
+          "13": 19776,
+          "17": 19776
+        }
+      },
+      "coverage": {
+        "independent_all_event_audit": "BLOCK_DESIGN_AUDIT.json",
+        "cells": 836,
+        "candidate_patterns_in_capped_frame": 513618,
+        "attempted_patterns": 26854,
+        "accepted_events": 25744,
+        "failure_reasons": {
+          "cross_capacity": 942,
+          "core_capacity_after_one_member_draw": 168
+        },
+        "all_capped_frame_patterns_attempted_cells": 66,
+        "quota_filled_cells": 770,
+        "zero_event_cells": 0,
+        "skipped_cells_with_fewer_than_k_plus_2_eligible_workers": 20,
+        "sample_scope": "Quota-based stratified pattern sampling; <=16 mixed count vectors, <=64 core vectors, one member draw per attempted pattern; not exhaustive teams."
+      }
+    },
+    {
+      "name": "VALIDATION_BLOCK_REQUESTS.json.gz",
+      "original_sha256": "202814a68491129ff332205c1392cc98217ff9ce672fb7c0227a9f3e01ef38aa",
+      "rebuilt_sha256": "202814a68491129ff332205c1392cc98217ff9ce672fb7c0227a9f3e01ef38aa",
+      "byte_identical": true,
+      "request_id_sets_identical": true,
+      "every_member_signature_identical": true,
+      "every_full_request_identical": true,
+      "member_signature_original_sha256": "8217ecb9ff5cc7cd19d9e8ff37b808335370dd4a2210dbad55fcf55d64047460",
+      "member_signature_rebuilt_sha256": "8217ecb9ff5cc7cd19d9e8ff37b808335370dd4a2210dbad55fcf55d64047460",
+      "mismatched_member_requests": 0,
+      "mismatched_full_requests": 0,
+      "first_mismatches": [],
+      "exact_generation_command": [
+        "/workspace/scratch/1d99618bd862/runtime_env/bin/python",
+        "analysis/composition/design_blocks.py",
+        "--snapshot",
+        "restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz",
+        "--split",
+        "analysis/composition/SPLIT.json",
+        "--labels",
+        "analysis/forward/results/worker_labels.csv.gz",
+        "--labels",
+        "analysis/reverse/worker_labels.csv.gz",
+        "--spec",
+        "analysis/composition/BLOCK_VALIDATION_SPEC.json",
+        "--out",
+        "/workspace/scratch/1d99618bd862/analysis/independent/rebuilt_requests/VALIDATION_BLOCK_REQUESTS.json.gz"
+      ],
+      "generation_seconds": 13.471,
+      "bytes": 6371874,
+      "support": {
+        "requests": 67020,
+        "unique_teams": 66607,
+        "repeated_rows_beyond_unique_teams": 413,
+        "pools": 45,
+        "images": 45,
+        "buildings": 6,
+        "workers": 55,
+        "method_domains": [
+          [
+            "F_rule_Q2xDetail2",
+            "all"
+          ],
+          [
+            "F_rule_Q_threshold_K3",
+            "all"
+          ],
+          [
+            "R_geo9_source_signed_p2_K2",
+            "all"
+          ],
+          [
+            "R_role_ward_K5",
+            "all"
+          ],
+          [
+            "R_role_ward_difficulty_K2",
+            "hard"
+          ]
+        ],
+        "composition_cells": 24773,
+        "requests_by_phase": {
+          "validation": 67020
+        },
+        "requests_by_layer": {
+          "ordinary_manual": 67020
+        },
+        "requests_by_difficulty": {
+          "简单": 42159,
+          "困难": 14406,
+          "中等": 10455
+        },
+        "requests_by_size": {
+          "5": 15675,
+          "9": 17478,
+          "13": 17298,
+          "17": 16569
+        }
+      },
+      "coverage": {
+        "independent_all_event_audit": "VALIDATION_BLOCK_DESIGN_AUDIT.json",
+        "cells": 726,
+        "candidate_patterns_in_capped_frame": 428471,
+        "attempted_patterns": 23858,
+        "accepted_events": 22340,
+        "failure_reasons": {
+          "cross_capacity": 1001,
+          "core_capacity_after_one_member_draw": 517
+        },
+        "all_capped_frame_patterns_attempted_cells": 61,
+        "quota_filled_cells": 665,
+        "zero_event_cells": 0,
+        "skipped_cells_with_fewer_than_k_plus_2_eligible_workers": 30,
+        "sample_scope": "Quota-based stratified pattern sampling; <=16 mixed count vectors, <=64 core vectors, one member draw per attempted pattern; not exhaustive teams."
+      }
+    },
+    {
+      "name": "DISCOVERY_CURVE_REQUESTS.json.gz",
+      "original_sha256": "c34247528d46e68e64cd7204d90ebfcda9a3b9c719087fe341319e55383b65d9",
+      "rebuilt_sha256": "c34247528d46e68e64cd7204d90ebfcda9a3b9c719087fe341319e55383b65d9",
+      "byte_identical": true,
+      "request_id_sets_identical": true,
+      "every_member_signature_identical": true,
+      "every_full_request_identical": true,
+      "member_signature_original_sha256": "747542dda0c8b4c3e6f198527a3f9618f33083f0401f19d3da76b54a479a3dd6",
+      "member_signature_rebuilt_sha256": "747542dda0c8b4c3e6f198527a3f9618f33083f0401f19d3da76b54a479a3dd6",
+      "mismatched_member_requests": 0,
+      "mismatched_full_requests": 0,
+      "first_mismatches": [],
+      "exact_generation_command": [
+        "/workspace/scratch/1d99618bd862/runtime_env/bin/python",
+        "analysis/composition/design_curves.py",
+        "--snapshot",
+        "restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz",
+        "--split",
+        "analysis/composition/SPLIT.json",
+        "--labels",
+        "analysis/forward/results/worker_labels.csv.gz",
+        "--labels",
+        "analysis/reverse/worker_labels.csv.gz",
+        "--spec",
+        "analysis/composition/CURVES_DISCOVERY_SPEC.json",
+        "--out",
+        "/workspace/scratch/1d99618bd862/analysis/independent/rebuilt_requests/DISCOVERY_CURVE_REQUESTS.json.gz"
+      ],
+      "generation_seconds": 12.395,
+      "bytes": 6690509,
+      "support": {
+        "requests": 123267,
+        "unique_teams": 122674,
+        "repeated_rows_beyond_unique_teams": 593,
+        "pools": 51,
+        "images": 51,
+        "buildings": 6,
+        "workers": 55,
+        "method_domains": [
+          [
+            "F_rule_Q2xDetail2",
+            "all"
+          ],
+          [
+            "F_rule_Q_threshold_K3",
+            "all"
+          ],
+          [
+            "R_geo9_source_signed_p2_K2",
+            "all"
+          ],
+          [
+            "R_role_ward_K5",
+            "all"
+          ],
+          [
+            "R_role_ward_difficulty_K2",
+            "hard"
+          ]
+        ],
+        "composition_cells": 20266,
+        "requests_by_phase": {
+          "discovery": 123267
+        },
+        "requests_by_layer": {
+          "ordinary_manual": 123267
+        },
+        "requests_by_difficulty": {
+          "中等": 20713,
+          "简单": 73716,
+          "困难": 28838
+        },
+        "requests_by_size": {
+          "3": 6636,
+          "4": 1758,
+          "5": 10096,
+          "6": 2094,
+          "7": 13080,
+          "8": 2185,
+          "9": 14838,
+          "10": 473,
+          "11": 15129,
+          "12": 431,
+          "13": 14438,
+          "14": 411,
+          "15": 12989,
+          "16": 410,
+          "17": 10977,
+          "18": 410,
+          "19": 410,
+          "20": 410,
+          "21": 7134,
+          "25": 5268,
+          "29": 2878,
+          "33": 812
+        }
+      },
+      "coverage": {
+        "ledger_cells": 20266,
+        "exhaustive_actual_member_cells": 495,
+        "sampled_member_teams_across_cells": 123267,
+        "possible_member_teams_across_selected_cells": "466280074364",
+        "method_pool_size_cells": 2222,
+        "selected_compositions": 20266,
+        "full_feasible_simplex_compositions": 222756,
+        "omitted_feasible_simplex_compositions": 202490,
+        "cells_covering_all_feasible_compositions": 759,
+        "curve_positions": 50163,
+        "infeasible_curve_positions": 29421,
+        "declared_population_feasible_method_pool_size_cells": 2304,
+        "declared_cells_with_no_feasible_selected_line": 82,
+        "represented_cell_full_feasible_simplex_compositions": 192449,
+        "no_feasible_line_cell_full_simplex_compositions": 30307,
+        "full_simplex_denominator": "All declared method/pool/size cells with enough known workers overall, including cells with no feasible selected line position",
+        "sample_scope": "All feasible integer positions on declared one-dimensional composition lines; remaining simplex compositions omitted, concrete teams sampled."
+      }
+    },
+    {
+      "name": "VALIDATION_CURVE_REQUESTS.json.gz",
+      "original_sha256": "b96212a008d09cdea6531cd1a1b0a10552aabef1b46063ce21d7df7d8bee360a",
+      "rebuilt_sha256": "b96212a008d09cdea6531cd1a1b0a10552aabef1b46063ce21d7df7d8bee360a",
+      "byte_identical": true,
+      "request_id_sets_identical": true,
+      "every_member_signature_identical": true,
+      "every_full_request_identical": true,
+      "member_signature_original_sha256": "e4bb3b05212d427840e9aece5518fc2510e096ed7d1dbcc9af498050cb571c5b",
+      "member_signature_rebuilt_sha256": "e4bb3b05212d427840e9aece5518fc2510e096ed7d1dbcc9af498050cb571c5b",
+      "mismatched_member_requests": 0,
+      "mismatched_full_requests": 0,
+      "first_mismatches": [],
+      "exact_generation_command": [
+        "/workspace/scratch/1d99618bd862/runtime_env/bin/python",
+        "analysis/composition/design_curves.py",
+        "--snapshot",
+        "restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz",
+        "--split",
+        "analysis/composition/SPLIT.json",
+        "--labels",
+        "analysis/forward/results/worker_labels.csv.gz",
+        "--labels",
+        "analysis/reverse/worker_labels.csv.gz",
+        "--spec",
+        "analysis/composition/CURVES_VALIDATION_SPEC.json",
+        "--out",
+        "/workspace/scratch/1d99618bd862/analysis/independent/rebuilt_requests/VALIDATION_CURVE_REQUESTS.json.gz"
+      ],
+      "generation_seconds": 12.655,
+      "bytes": 5465435,
+      "support": {
+        "requests": 100810,
+        "unique_teams": 100328,
+        "repeated_rows_beyond_unique_teams": 482,
+        "pools": 45,
+        "images": 45,
+        "buildings": 6,
+        "workers": 55,
+        "method_domains": [
+          [
+            "F_rule_Q2xDetail2",
+            "all"
+          ],
+          [
+            "F_rule_Q_threshold_K3",
+            "all"
+          ],
+          [
+            "R_geo9_source_signed_p2_K2",
+            "all"
+          ],
+          [
+            "R_role_ward_K5",
+            "all"
+          ],
+          [
+            "R_role_ward_difficulty_K2",
+            "hard"
+          ]
+        ],
+        "composition_cells": 16584,
+        "requests_by_phase": {
+          "validation": 100810
+        },
+        "requests_by_layer": {
+          "ordinary_manual": 100810
+        },
+        "requests_by_difficulty": {
+          "简单": 61457,
+          "困难": 23447,
+          "中等": 15906
+        },
+        "requests_by_size": {
+          "3": 5748,
+          "4": 1423,
+          "5": 8613,
+          "6": 1632,
+          "7": 11054,
+          "8": 1650,
+          "9": 12388,
+          "10": 401,
+          "11": 12468,
+          "12": 390,
+          "13": 11722,
+          "14": 373,
+          "15": 10464,
+          "16": 351,
+          "17": 8821,
+          "18": 350,
+          "19": 350,
+          "20": 350,
+          "21": 5616,
+          "25": 3968,
+          "29": 2071,
+          "33": 607
+        }
+      },
+      "coverage": {
+        "ledger_cells": 16584,
+        "exhaustive_actual_member_cells": 448,
+        "sampled_member_teams_across_cells": 100810,
+        "possible_member_teams_across_selected_cells": "346017549208",
+        "method_pool_size_cells": 1847,
+        "selected_compositions": 16584,
+        "full_feasible_simplex_compositions": 183451,
+        "omitted_feasible_simplex_compositions": 166867,
+        "cells_covering_all_feasible_compositions": 637,
+        "curve_positions": 41345,
+        "infeasible_curve_positions": 24342,
+        "declared_population_feasible_method_pool_size_cells": 1975,
+        "declared_cells_with_no_feasible_selected_line": 128,
+        "represented_cell_full_feasible_simplex_compositions": 141416,
+        "no_feasible_line_cell_full_simplex_compositions": 42035,
+        "full_simplex_denominator": "All declared method/pool/size cells with enough known workers overall, including cells with no feasible selected line position",
+        "sample_scope": "All feasible integer positions on declared one-dimensional composition lines; remaining simplex compositions omitted, concrete teams sampled."
+      }
+    },
+    {
+      "name": "DISCOVERY_CONFIRM_REQUESTS.json.gz",
+      "original_sha256": "2644052e0bbfb1e9b61fdb02358009d28a18bb5b78e3ca661605ce4d85acd811",
+      "rebuilt_sha256": "2644052e0bbfb1e9b61fdb02358009d28a18bb5b78e3ca661605ce4d85acd811",
+      "byte_identical": true,
+      "request_id_sets_identical": true,
+      "every_member_signature_identical": true,
+      "every_full_request_identical": true,
+      "member_signature_original_sha256": "af4893fc0ff6e80cea6a265880eefd4438ec70fd4f7eb041f345bff9a695f33f",
+      "member_signature_rebuilt_sha256": "af4893fc0ff6e80cea6a265880eefd4438ec70fd4f7eb041f345bff9a695f33f",
+      "mismatched_member_requests": 0,
+      "mismatched_full_requests": 0,
+      "first_mismatches": [],
+      "exact_generation_command": [
+        "/workspace/scratch/1d99618bd862/runtime_env/bin/python",
+        "analysis/composition/design_curves.py",
+        "--snapshot",
+        "restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz",
+        "--split",
+        "analysis/composition/SPLIT.json",
+        "--labels",
+        "analysis/forward/results/worker_labels.csv.gz",
+        "--labels",
+        "analysis/reverse/worker_labels.csv.gz",
+        "--spec",
+        "analysis/composition/CONFIRM_DISCOVERY_SPEC.json",
+        "--out",
+        "/workspace/scratch/1d99618bd862/analysis/independent/rebuilt_requests/DISCOVERY_CONFIRM_REQUESTS.json.gz"
+      ],
+      "generation_seconds": 4.673,
+      "bytes": 1195387,
+      "support": {
+        "requests": 25798,
+        "unique_teams": 25788,
+        "repeated_rows_beyond_unique_teams": 10,
+        "pools": 51,
+        "images": 51,
+        "buildings": 6,
+        "workers": 51,
+        "method_domains": [
+          [
+            "F_rule_Q_quantile_K3",
+            "all"
+          ],
+          [
+            "R_role_ward_K5",
+            "all"
+          ]
+        ],
+        "composition_cells": 2610,
+        "requests_by_phase": {
+          "discovery": 25798
+        },
+        "requests_by_layer": {
+          "ordinary_manual": 25798
+        },
+        "requests_by_difficulty": {
+          "中等": 4657,
+          "简单": 16389,
+          "困难": 4752
+        },
+        "requests_by_size": {
+          "5": 6020,
+          "9": 9692,
+          "13": 10086
+        }
+      },
+      "coverage": {
+        "ledger_cells": 2610,
+        "exhaustive_actual_member_cells": 96,
+        "sampled_member_teams_across_cells": 25798,
+        "possible_member_teams_across_selected_cells": "888053953",
+        "method_pool_size_cells": 302,
+        "selected_compositions": 2610,
+        "full_feasible_simplex_compositions": 41586,
+        "omitted_feasible_simplex_compositions": 38976,
+        "cells_covering_all_feasible_compositions": 0,
+        "curve_positions": 3032,
+        "infeasible_curve_positions": 422,
+        "declared_population_feasible_method_pool_size_cells": 304,
+        "declared_cells_with_no_feasible_selected_line": 2,
+        "represented_cell_full_feasible_simplex_compositions": 41584,
+        "no_feasible_line_cell_full_simplex_compositions": 2,
+        "full_simplex_denominator": "All declared method/pool/size cells with enough known workers overall, including cells with no feasible selected line position",
+        "sample_scope": "All feasible integer positions on declared one-dimensional composition lines; remaining simplex compositions omitted, concrete teams sampled."
+      }
+    },
+    {
+      "name": "VALIDATION_CONFIRM_REQUESTS.json.gz",
+      "original_sha256": "51548dcee2cb110279b0c59e027eeb0c71be106cc10264ad4c30e7aa1cd40a08",
+      "rebuilt_sha256": "51548dcee2cb110279b0c59e027eeb0c71be106cc10264ad4c30e7aa1cd40a08",
+      "byte_identical": true,
+      "request_id_sets_identical": true,
+      "every_member_signature_identical": true,
+      "every_full_request_identical": true,
+      "member_signature_original_sha256": "9769ade017e6cb419c5d087dc2e928695a25583e76217027aba630894b41cd35",
+      "member_signature_rebuilt_sha256": "9769ade017e6cb419c5d087dc2e928695a25583e76217027aba630894b41cd35",
+      "mismatched_member_requests": 0,
+      "mismatched_full_requests": 0,
+      "first_mismatches": [],
+      "exact_generation_command": [
+        "/workspace/scratch/1d99618bd862/runtime_env/bin/python",
+        "analysis/composition/design_curves.py",
+        "--snapshot",
+        "restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz",
+        "--split",
+        "analysis/composition/SPLIT.json",
+        "--labels",
+        "analysis/forward/results/worker_labels.csv.gz",
+        "--labels",
+        "analysis/reverse/worker_labels.csv.gz",
+        "--spec",
+        "analysis/composition/CONFIRM_VALIDATION_SPEC.json",
+        "--out",
+        "/workspace/scratch/1d99618bd862/analysis/independent/rebuilt_requests/VALIDATION_CONFIRM_REQUESTS.json.gz"
+      ],
+      "generation_seconds": 4.065,
+      "bytes": 984389,
+      "support": {
+        "requests": 21134,
+        "unique_teams": 21123,
+        "repeated_rows_beyond_unique_teams": 11,
+        "pools": 45,
+        "images": 45,
+        "buildings": 6,
+        "workers": 51,
+        "method_domains": [
+          [
+            "F_rule_Q_quantile_K3",
+            "all"
+          ],
+          [
+            "R_role_ward_K5",
+            "all"
+          ]
+        ],
+        "composition_cells": 2144,
+        "requests_by_phase": {
+          "validation": 21134
+        },
+        "requests_by_layer": {
+          "ordinary_manual": 21134
+        },
+        "requests_by_difficulty": {
+          "简单": 14018,
+          "困难": 3581,
+          "中等": 3535
+        },
+        "requests_by_size": {
+          "5": 5243,
+          "9": 7980,
+          "13": 7911
+        }
+      },
+      "coverage": {
+        "ledger_cells": 2144,
+        "exhaustive_actual_member_cells": 81,
+        "sampled_member_teams_across_cells": 21134,
+        "possible_member_teams_across_selected_cells": "785649298",
+        "method_pool_size_cells": 264,
+        "selected_compositions": 2144,
+        "full_feasible_simplex_compositions": 35222,
+        "omitted_feasible_simplex_compositions": 33078,
+        "cells_covering_all_feasible_compositions": 2,
+        "curve_positions": 2672,
+        "infeasible_curve_positions": 528,
+        "declared_population_feasible_method_pool_size_cells": 268,
+        "declared_cells_with_no_feasible_selected_line": 4,
+        "represented_cell_full_feasible_simplex_compositions": 34856,
+        "no_feasible_line_cell_full_simplex_compositions": 366,
+        "full_simplex_denominator": "All declared method/pool/size cells with enough known workers overall, including cells with no feasible selected line position",
+        "sample_scope": "All feasible integer positions on declared one-dimensional composition lines; remaining simplex compositions omitted, concrete teams sampled."
+      }
+    },
+    {
+      "name": "DISCOVERY_NESTED_REQUESTS.json.gz",
+      "original_sha256": "3190d2d0406eb2794ffe361978dd51612b67deb0af0abe5c82996ca486b76d3c",
+      "rebuilt_sha256": "3190d2d0406eb2794ffe361978dd51612b67deb0af0abe5c82996ca486b76d3c",
+      "byte_identical": true,
+      "request_id_sets_identical": true,
+      "every_member_signature_identical": true,
+      "every_full_request_identical": true,
+      "member_signature_original_sha256": "3f9780d238d75421eea6de6ef1fbd8d78ef83f4439d7405d7b275335f9988116",
+      "member_signature_rebuilt_sha256": "3f9780d238d75421eea6de6ef1fbd8d78ef83f4439d7405d7b275335f9988116",
+      "mismatched_member_requests": 0,
+      "mismatched_full_requests": 0,
+      "first_mismatches": [],
+      "exact_generation_command": [
+        "/workspace/scratch/1d99618bd862/runtime_env/bin/python",
+        "analysis/composition/design_nested.py",
+        "--snapshot",
+        "restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz",
+        "--split",
+        "analysis/composition/SPLIT.json",
+        "--labels",
+        "analysis/forward/results/worker_labels.csv.gz",
+        "--labels",
+        "analysis/reverse/worker_labels.csv.gz",
+        "--spec",
+        "analysis/composition/NESTED_DISCOVERY_SPEC.json",
+        "--out",
+        "/workspace/scratch/1d99618bd862/analysis/independent/rebuilt_requests/DISCOVERY_NESTED_REQUESTS.json.gz"
+      ],
+      "generation_seconds": 1.514,
+      "bytes": 360994,
+      "support": {
+        "requests": 5872,
+        "unique_teams": 5548,
+        "repeated_rows_beyond_unique_teams": 324,
+        "pools": 43,
+        "images": 43,
+        "buildings": 6,
+        "workers": 39,
+        "method_domains": [
+          [
+            "R_role_ward_K5",
+            "all"
+          ],
+          [
+            "R_role_ward_difficulty_K2",
+            "hard"
+          ]
+        ],
+        "composition_cells": 1371,
+        "requests_by_phase": {
+          "discovery": 5872
+        },
+        "requests_by_layer": {
+          "ordinary_manual": 5872
+        },
+        "requests_by_difficulty": {
+          "困难": 1780,
+          "中等": 908,
+          "简单": 3184
+        },
+        "requests_by_size": {
+          "3": 208,
+          "4": 416,
+          "5": 604,
+          "6": 710,
+          "7": 710,
+          "8": 710,
+          "9": 710,
+          "10": 502,
+          "11": 502,
+          "12": 294,
+          "13": 294,
+          "14": 106,
+          "15": 106
+        }
+      },
+      "coverage": {
+        "chains": 710,
+        "every_chain_exactly_nested": true,
+        "sample_scope": "Specified fixed classes, added classes and fixed-size nodes only; finite random chains, not all fixed-member sets or addition orders."
+      }
+    },
+    {
+      "name": "VALIDATION_NESTED_REQUESTS.json.gz",
+      "original_sha256": "651b0ad34e433cb6a0b4e8c65613c990547d5fd0666718b636c29ea8f38132c0",
+      "rebuilt_sha256": "651b0ad34e433cb6a0b4e8c65613c990547d5fd0666718b636c29ea8f38132c0",
+      "byte_identical": true,
+      "request_id_sets_identical": true,
+      "every_member_signature_identical": true,
+      "every_full_request_identical": true,
+      "member_signature_original_sha256": "84e09a38e5a9904832f23bec33181536f5072753a6362ad5784cc602b2700ecf",
+      "member_signature_rebuilt_sha256": "84e09a38e5a9904832f23bec33181536f5072753a6362ad5784cc602b2700ecf",
+      "mismatched_member_requests": 0,
+      "mismatched_full_requests": 0,
+      "first_mismatches": [],
+      "exact_generation_command": [
+        "/workspace/scratch/1d99618bd862/runtime_env/bin/python",
+        "analysis/composition/design_nested.py",
+        "--snapshot",
+        "restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz",
+        "--split",
+        "analysis/composition/SPLIT.json",
+        "--labels",
+        "analysis/forward/results/worker_labels.csv.gz",
+        "--labels",
+        "analysis/reverse/worker_labels.csv.gz",
+        "--spec",
+        "analysis/composition/NESTED_VALIDATION_SPEC.json",
+        "--out",
+        "/workspace/scratch/1d99618bd862/analysis/independent/rebuilt_requests/VALIDATION_NESTED_REQUESTS.json.gz"
+      ],
+      "generation_seconds": 1.391,
+      "bytes": 266010,
+      "support": {
+        "requests": 4290,
+        "unique_teams": 4053,
+        "repeated_rows_beyond_unique_teams": 237,
+        "pools": 30,
+        "images": 30,
+        "buildings": 6,
+        "workers": 39,
+        "method_domains": [
+          [
+            "R_role_ward_K5",
+            "all"
+          ],
+          [
+            "R_role_ward_difficulty_K2",
+            "hard"
+          ]
+        ],
+        "composition_cells": 984,
+        "requests_by_phase": {
+          "validation": 4290
+        },
+        "requests_by_layer": {
+          "ordinary_manual": 4290
+        },
+        "requests_by_difficulty": {
+          "困难": 1582,
+          "简单": 2052,
+          "中等": 656
+        },
+        "requests_by_size": {
+          "3": 152,
+          "4": 298,
+          "5": 440,
+          "6": 518,
+          "7": 518,
+          "8": 518,
+          "9": 518,
+          "10": 366,
+          "11": 366,
+          "12": 220,
+          "13": 220,
+          "14": 78,
+          "15": 78
+        }
+      },
+      "coverage": {
+        "chains": 518,
+        "every_chain_exactly_nested": true,
+        "sample_scope": "Specified fixed classes, added classes and fixed-size nodes only; finite random chains, not all fixed-member sets or addition orders."
+      }
+    },
+    {
+      "name": "DISCOVERY_CONDITION_REQUESTS.json.gz",
+      "original_sha256": "f6a6da3aa7c9910b92db1cfd96bcbb1706e045d163b002d22b9455afa296923b",
+      "rebuilt_sha256": "f6a6da3aa7c9910b92db1cfd96bcbb1706e045d163b002d22b9455afa296923b",
+      "byte_identical": true,
+      "request_id_sets_identical": true,
+      "every_member_signature_identical": true,
+      "every_full_request_identical": true,
+      "member_signature_original_sha256": "1ec26fd2afa662b8a6d6ab7344ec5790b84ee9f9a599ad948a238624f3e961a5",
+      "member_signature_rebuilt_sha256": "1ec26fd2afa662b8a6d6ab7344ec5790b84ee9f9a599ad948a238624f3e961a5",
+      "mismatched_member_requests": 0,
+      "mismatched_full_requests": 0,
+      "first_mismatches": [],
+      "exact_generation_command": [
+        "/workspace/scratch/1d99618bd862/runtime_env/bin/python",
+        "analysis/composition/design_condition_requests.py",
+        "--spec",
+        "analysis/forward/condition_experiment_spec.json",
+        "--phase",
+        "discovery",
+        "--out",
+        "/workspace/scratch/1d99618bd862/analysis/independent/rebuilt_requests/DISCOVERY_CONDITION_REQUESTS.json.gz"
+      ],
+      "generation_seconds": 1.367,
+      "bytes": 277634,
+      "support": {
+        "requests": 5758,
+        "unique_teams": 5738,
+        "repeated_rows_beyond_unique_teams": 20,
+        "pools": 13,
+        "images": 13,
+        "buildings": 4,
+        "workers": 58,
+        "method_domains": [
+          [
+            "F_doorway_finalQ_K2",
+            "doorway"
+          ],
+          [
+            "F_doorway_finalQ_K3",
+            "doorway"
+          ],
+          [
+            "F_semi_new_finalQ_K2",
+            "semi_new"
+          ],
+          [
+            "F_semi_new_nonedit_K2",
+            "semi_new"
+          ],
+          [
+            "F_semi_old_edit_K2",
+            "semi_v1"
+          ],
+          [
+            "F_semi_v1_finalQ_K2",
+            "semi_v1"
+          ]
+        ],
+        "composition_cells": 1462,
+        "requests_by_phase": {
+          "discovery": 5758
+        },
+        "requests_by_layer": {
+          "doorway_manual": 2717,
+          "ordinary_semi": 3041
+        },
+        "requests_by_difficulty": {
+          "单列": 2717,
+          "简单": 2511,
+          "中等": 520,
+          "困难": 10
+        },
+        "requests_by_size": {
+          "3": 632,
+          "4": 806,
+          "5": 1008,
+          "7": 1449,
+          "9": 1863
+        }
+      },
+      "coverage": {
+        "ledger_cells": 1462,
+        "exhaustive_actual_member_cells": 34,
+        "sampled_member_teams_across_cells": 5758,
+        "possible_member_teams_across_selected_cells": "373837759",
+        "method_pool_size_cells": 172,
+        "selected_compositions": 1462,
+        "full_feasible_simplex_compositions": 1462,
+        "omitted_feasible_simplex_compositions": 0,
+        "cells_covering_all_feasible_compositions": 172,
+        "sample_scope": "All feasible count vectors at declared sizes for supported own-condition classes and source-qualified pools; only specified candidates, concrete teams sampled."
+      }
+    },
+    {
+      "name": "VALIDATION_CONDITION_REQUESTS.json.gz",
+      "original_sha256": "d67683b894e28f9a6696ed78371592b78c45da391928b449130e0f7bebb15396",
+      "rebuilt_sha256": "d67683b894e28f9a6696ed78371592b78c45da391928b449130e0f7bebb15396",
+      "byte_identical": true,
+      "request_id_sets_identical": true,
+      "every_member_signature_identical": true,
+      "every_full_request_identical": true,
+      "member_signature_original_sha256": "09eaf27fefe1590f1321ae313668290341742c963d26dd9f43667987c4968dcc",
+      "member_signature_rebuilt_sha256": "09eaf27fefe1590f1321ae313668290341742c963d26dd9f43667987c4968dcc",
+      "mismatched_member_requests": 0,
+      "mismatched_full_requests": 0,
+      "first_mismatches": [],
+      "exact_generation_command": [
+        "/workspace/scratch/1d99618bd862/runtime_env/bin/python",
+        "analysis/composition/design_condition_requests.py",
+        "--spec",
+        "analysis/forward/condition_experiment_spec.json",
+        "--phase",
+        "validation",
+        "--out",
+        "/workspace/scratch/1d99618bd862/analysis/independent/rebuilt_requests/VALIDATION_CONDITION_REQUESTS.json.gz"
+      ],
+      "generation_seconds": 1.334,
+      "bytes": 246652,
+      "support": {
+        "requests": 5117,
+        "unique_teams": 5089,
+        "repeated_rows_beyond_unique_teams": 28,
+        "pools": 14,
+        "images": 14,
+        "buildings": 5,
+        "workers": 58,
+        "method_domains": [
+          [
+            "F_doorway_finalQ_K2",
+            "doorway"
+          ],
+          [
+            "F_doorway_finalQ_K3",
+            "doorway"
+          ],
+          [
+            "F_semi_new_finalQ_K2",
+            "semi_new"
+          ],
+          [
+            "F_semi_new_nonedit_K2",
+            "semi_new"
+          ],
+          [
+            "F_semi_old_edit_K2",
+            "semi_v1"
+          ],
+          [
+            "F_semi_v1_finalQ_K2",
+            "semi_v1"
+          ]
+        ],
+        "composition_cells": 1294,
+        "requests_by_phase": {
+          "validation": 5117
+        },
+        "requests_by_layer": {
+          "doorway_manual": 2590,
+          "ordinary_semi": 2527
+        },
+        "requests_by_difficulty": {
+          "单列": 2590,
+          "简单": 2300,
+          "中等": 227
+        },
+        "requests_by_size": {
+          "3": 557,
+          "4": 722,
+          "5": 909,
+          "7": 1298,
+          "9": 1631
+        }
+      },
+      "coverage": {
+        "ledger_cells": 1294,
+        "exhaustive_actual_member_cells": 21,
+        "sampled_member_teams_across_cells": 5117,
+        "possible_member_teams_across_selected_cells": "204672266",
+        "method_pool_size_cells": 149,
+        "selected_compositions": 1294,
+        "full_feasible_simplex_compositions": 1294,
+        "omitted_feasible_simplex_compositions": 0,
+        "cells_covering_all_feasible_compositions": 149,
+        "sample_scope": "All feasible count vectors at declared sizes for supported own-condition classes and source-qualified pools; only specified candidates, concrete teams sampled."
+      }
+    },
+    {
+      "name": "SPECIAL_REQUESTS.json.gz",
+      "original_sha256": "61fe555a6d783d6b60f978f62a2f3c18493e7b44dc5ddab318c469e6c009553e",
+      "rebuilt_sha256": "61fe555a6d783d6b60f978f62a2f3c18493e7b44dc5ddab318c469e6c009553e",
+      "byte_identical": true,
+      "request_id_sets_identical": true,
+      "every_member_signature_identical": true,
+      "every_full_request_identical": true,
+      "member_signature_original_sha256": "1e79bcee37f4cd44e0a077f4e8d1e0f56f77b250e41b05b72f807b47dbf3427d",
+      "member_signature_rebuilt_sha256": "1e79bcee37f4cd44e0a077f4e8d1e0f56f77b250e41b05b72f807b47dbf3427d",
+      "mismatched_member_requests": 0,
+      "mismatched_full_requests": 0,
+      "first_mismatches": [],
+      "exact_generation_command": [
+        "/workspace/scratch/1d99618bd862/runtime_env/bin/python",
+        "analysis/composition/design_special.py",
+        "--snapshot",
+        "restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz",
+        "--out",
+        "/workspace/scratch/1d99618bd862/analysis/independent/rebuilt_requests/SPECIAL_REQUESTS.json.gz"
+      ],
+      "generation_seconds": 0.944,
+      "bytes": 9313,
+      "support": {
+        "requests": 183,
+        "unique_teams": 183,
+        "repeated_rows_beyond_unique_teams": 0,
+        "pools": 3,
+        "images": 2,
+        "buildings": 2,
+        "workers": 59,
+        "method_domains": [],
+        "composition_cells": 0,
+        "requests_by_phase": {
+          "special_descriptive": 183
+        },
+        "requests_by_layer": {
+          "special_manual": 122,
+          "special_semi": 61
+        },
+        "requests_by_difficulty": {
+          "简单": 122,
+          "困难": 61
+        },
+        "requests_by_size": {
+          "3": 36,
+          "5": 36,
+          "9": 36,
+          "13": 36,
+          "17": 36,
+          "31": 1,
+          "35": 1,
+          "45": 1
+        }
+      },
+      "coverage": {
+        "ledger_cells": 18,
+        "exhaustive_actual_member_cells": 3,
+        "sampled_member_teams_across_cells": 183,
+        "possible_member_teams_across_selected_cells": "1183538826190",
+        "sample_scope": "Uniform class-independent team sampling at declared sizes plus complete pool; exhaustive only when the finite team count is no greater than the replicate cap."
+      }
+    }
+  ],
+  "failures": [],
+  "derived_final": {
+    "name": "FINAL_REQUESTS.json.gz",
+    "components_in_order": [
+      "DISCOVERY_CONFIRM_REQUESTS.json.gz",
+      "DISCOVERY_NESTED_REQUESTS.json.gz",
+      "VALIDATION_CURVE_REQUESTS.json.gz",
+      "VALIDATION_CONFIRM_REQUESTS.json.gz",
+      "VALIDATION_BLOCK_REQUESTS.json.gz",
+      "VALIDATION_NESTED_REQUESTS.json.gz",
+      "VALIDATION_CONDITION_REQUESTS.json.gz"
+    ],
+    "requests": 230041,
+    "unique_teams": 227519,
+    "every_request_and_order_identical": true,
+    "byte_identical": true,
+    "original_sha256": "b033cd6974be8eb6e3add5f266a0869baf8175849b80d933cd9dd1e3f9f82be9",
+    "rebuilt_sha256": "b033cd6974be8eb6e3add5f266a0869baf8175849b80d933cd9dd1e3f9f82be9",
+    "receipt_note": "Logical source destinations preserve the original recorded absolute paths; content hashes and rows are rebuilt independently."
+  },
+  "all_primary_support": {
+    "request_rows": 589990,
+    "unique_request_ids": 589990,
+    "unique_teams": 583261,
+    "images": 106,
+    "buildings": 12,
+    "workers": 59,
+    "pools": 126,
+    "repeated_rows_beyond_unique_teams": 6729,
+    "derived_final_not_added_again": true
+  },
+  "actual_coverage_and_omissions": [
+    "SCREEN and BREADTH are discovery-only selection panels; no validation-wide reranking or full breadth grid was planned. Frozen targeted blocks/curves/confirm/nested/condition have both phases.",
+    "Global labels were frozen from ten history buildings. All discovery and validation request buildings are disjoint. This check confirms request eligibility and frozen-file equality, not external blind data or new-worker generalization.",
+    "Complete finite count-vector coverage is distinguished from sampled concrete membership. Sum of possible member teams across selected cells is not a count of distinct teams or independent samples.",
+    "Curves cover every feasible integer position on declared lines, not all combinations of every class proportion. The full feasible simplex counts in each stage quantify the omitted count vectors.",
+    "Block ledger candidate counts are a capped design frame, not all feasible real teams. The recorded one-draw core failures do not establish mathematical infeasibility.",
+    "Nested additions cover specified class pairs, fixed sizes and sampled member orders only; they change total team size and supplement the same-n matched blocks.",
+    "Own-condition candidates require eligible historical labels and matching Semi source opportunities. Unsupported pool-candidate counts are retained; missing opportunity is not assigned low ability.",
+    "SPECIAL includes all qualified special pools descriptively without unsupported personnel categories; no ordinary, doorway or Semi category result is inferred from that branch.",
+    "Confirm-stage seed changes produce independently generated requests, but concrete teams can overlap previous stages; actual distinct teams are recounted across every primary manifest."
+  ],
+  "condition_unsupported_pool_candidates": 19,
+  "condition_unsupported_by_reason": {
+    "fewer_than_two_supported_classes_in_target_pool": 19
+  },
+  "all_sources_unchanged_during_audit": true,
+  "all_original_manifests_unchanged_during_audit": true,
+  "all_passed": true,
+  "rebuilt_scratch_total_bytes": 46821346,
+  "independent_generator_total_seconds": 86.0,
+  "delivery_exclusion": "Exclude rebuilt_requests and its generation receipts; retain this small audit JSON and the audit/generator source only.",
+  "elapsed_seconds": 40.334,
+  "audit_script_sha256": "223aacc4c813d9350424f5d0706269d7de660f21530244d5fc6d6fb76abf9cfe"
+}

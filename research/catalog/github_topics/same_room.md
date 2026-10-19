@@ -8,6 +8,9 @@
 
 ## 当前依据
 
+- [多视角历史与真实人员重放计划](../../../docs/thesis_main/topics/same_room/同房预测研究计划_多视角历史与人员重放_20261019.md)：平均质量、真实曲线和个人Q并列；新增实验尚待执行。
+- [v2同房首轮预测结果](../../same_room/same_room_v2_prediction_20261019/README.md)：个人Q与人数预测保留原分母，门洞/OOS边界分开。
+
 - [同房人员模式](../../same_room/same_room_personnel_patterns_20261015/README.md)
 - [同房质量曲线](../../same_room/same_room_quality_curves_20261015/README.md)
 
@@ -29,7 +32,7 @@
 
 ## 资料登记
 
-下列共 3 项沿用 CATALOG 的主题分类与原文标题；日期和排序不表示采用优先级。
+下列为历史精选条目；完整现行清单见[机器目录](../CATALOG.json)及[同房主题入口](../../../docs/thesis_main/topics/same_room/README.md)。日期和排序不表示采用优先级。
 
 - [双人排序接收与同房扩展复核](../../../analysis_results/order_same_room_review_20260928/README.md)。20260928；历史/待判断
 - [same_room_similarity_20261003](../../../analysis_results/same_room_similarity_20261003/REPORT.md)。20261003；历史/待判断

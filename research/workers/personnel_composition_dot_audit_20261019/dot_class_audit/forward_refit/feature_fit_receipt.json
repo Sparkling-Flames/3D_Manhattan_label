@@ -1,0 +1,176 @@
+{
+  "fit": {
+    "train_buildings": [
+      "2t7WUuJeko7",
+      "S9hNv5qa7GM",
+      "VFuaQ6m2Qom",
+      "Z6MFQCViBuw",
+      "b8cTxDM8gDG",
+      "jh4fc5c5qoQ",
+      "uNb9QFRL6hY",
+      "wc2JMjhGNzB",
+      "x8F5xyUWy9e",
+      "zsNo4HB9uLZ"
+    ],
+    "q_records": 2578,
+    "q_images": 81,
+    "q_fit": {
+      "nullity": 1,
+      "constraint_error": 1.580957587066223e-13,
+      "raw_rows": 2578,
+      "effective_person_tasks": 2578,
+      "duplicate_rows_collapsed": 0
+    },
+    "time_source_fits": {
+      "('new', 'user_processed_reported_not_raw_log_replayed')": {
+        "nullity": 1,
+        "constraint_error": 3.352873534367973e-14,
+        "raw_rows": 2379,
+        "effective_person_tasks": 2379,
+        "duplicate_rows_collapsed": 0
+      },
+      "('v1', 'inherited_v1_audited_source')": {
+        "nullity": 1,
+        "constraint_error": 1.1102230246251565e-14,
+        "raw_rows": 431,
+        "effective_person_tasks": 431,
+        "duplicate_rows_collapsed": 0
+      }
+    },
+    "scope_fit": {
+      "nullity": 2,
+      "constraint_error": 1.429412144204889e-15,
+      "raw_rows": 4570,
+      "effective_person_tasks": 4562,
+      "duplicate_rows_collapsed": 8
+    },
+    "semi_fits": {
+      "old_error_nonedit": {
+        "nullity": 1,
+        "constraint_error": 2.2898349882893854e-15,
+        "raw_rows": 26,
+        "effective_person_tasks": 26,
+        "duplicate_rows_collapsed": 0
+      },
+      "new_error_nonedit": {
+        "nullity": 1,
+        "constraint_error": 7.632783294297951e-17,
+        "raw_rows": 109,
+        "effective_person_tasks": 109,
+        "duplicate_rows_collapsed": 0
+      },
+      "old_edit": {
+        "nullity": 1,
+        "constraint_error": 1.3322676295501878e-15,
+        "raw_rows": 234,
+        "effective_person_tasks": 234,
+        "duplicate_rows_collapsed": 0
+      },
+      "new_edit": {
+        "nullity": 1,
+        "constraint_error": 9.124645483638005e-16,
+        "raw_rows": 219,
+        "effective_person_tasks": 219,
+        "duplicate_rows_collapsed": 0
+      }
+    },
+    "uses_target_outcomes": false,
+    "conditional_history": {
+      "doorway": {
+        "training_records": 308,
+        "training_images": 9,
+        "training_buildings": 5,
+        "supported_workers": 35,
+        "gate": {
+          "tasks": 4,
+          "buildings": 3
+        },
+        "q_fit": {
+          "nullity": 1,
+          "constraint_error": 1.0835776720341528e-13,
+          "raw_rows": 308,
+          "effective_person_tasks": 308,
+          "duplicate_rows_collapsed": 0
+        }
+      },
+      "semi_v1": {
+        "training_records": 186,
+        "training_images": 12,
+        "training_buildings": 4,
+        "supported_workers": 24,
+        "gate": {
+          "tasks": 4,
+          "buildings": 3
+        },
+        "q_fit": {
+          "nullity": 1,
+          "constraint_error": 0.0,
+          "raw_rows": 186,
+          "effective_person_tasks": 186,
+          "duplicate_rows_collapsed": 0
+        }
+      },
+      "semi_new": {
+        "training_records": 197,
+        "training_images": 9,
+        "training_buildings": 4,
+        "supported_workers": 27,
+        "gate": {
+          "tasks": 4,
+          "buildings": 3
+        },
+        "q_fit": {
+          "nullity": 1,
+          "constraint_error": 3.2862601528904634e-14,
+          "raw_rows": 197,
+          "effective_person_tasks": 197,
+          "duplicate_rows_collapsed": 0
+        }
+      },
+      "special_manual": {
+        "training_records": 0,
+        "training_images": 0,
+        "training_buildings": 0,
+        "supported_workers": 0,
+        "gate": {
+          "tasks": 4,
+          "buildings": 3
+        },
+        "q_fit": {
+          "raw_rows": 0,
+          "effective_person_tasks": 0,
+          "duplicate_rows_collapsed": 0
+        }
+      },
+      "special_semi": {
+        "training_records": 0,
+        "training_images": 0,
+        "training_buildings": 0,
+        "supported_workers": 0,
+        "gate": {
+          "tasks": 4,
+          "buildings": 3
+        },
+        "q_fit": {
+          "raw_rows": 0,
+          "effective_person_tasks": 0,
+          "duplicate_rows_collapsed": 0
+        }
+      }
+    }
+  },
+  "train_key": "history_d199d7b13dccfe7e",
+  "metric": "B8L2",
+  "source_hashes": {
+    "research/statistics/v2_evidence_audit_20261019/records.json.gz": "46ee9890a1a56264c8955538f47c650cbe893662e7cefc21e360a3e00eca9251",
+    "research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/profiles/run_profiles.py": "808deba4d7ae2e395175511fad0e566eb3aa24ba27cc71306f7ca3f373ac5bdc",
+    "research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/forward/build_features.py": "4b54ac047cf4853fcb4e26d6073437d42b0e37c1ad9c8316bafc9de207f1c6f7"
+  },
+  "split_sha256": "075125c748299b7829c179b9ac2b44706b360acaeefbdde0d3ce23076843752e",
+  "code_sha256": "06cdb011d874681c6940b405ec88a6e226fbc1d70780ea0b5c3154d4c543ce31",
+  "workers": 60,
+  "known_core": 55,
+  "candidate_count": 157,
+  "unique_partition_count": 150,
+  "reuse": "AST imports unchanged pure feature functions; only exact training buildings supplied"
+}

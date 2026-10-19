@@ -1,0 +1,764 @@
+{
+  "schema": "lean_package_dependency_audit_v1",
+  "checked_utc": "2026-10-19T11:15:30.695274+00:00",
+  "scope": "只读源码/JSON/文件依赖与已组装目录核验；没有调用融合、拟合、请求生成、绘图或PDF构建，没有写入 staging。",
+  "staging_logical_path": "delivery/personnel_composition_study_20261019",
+  "all_passed": true,
+  "scientific_or_render_execution_started": false,
+  "staging_written_by_this_audit": false,
+  "required_paths_by_mode": {
+    "quick_numeric": [
+      "analysis/composition/CASE_SELECTION.json",
+      "analysis/composition/fusion_runner.py",
+      "analysis/composition/geometry_diagnostics.py",
+      "analysis/composition/replay_saved_cases.py",
+      "analysis/composition/summarize_grid.py",
+      "analysis/representative_cases/cases/C01_member_sensitive_mixture.json",
+      "analysis/representative_cases/cases/C02_stable_wrong_same_score_shape.json",
+      "analysis/representative_cases/cases/C03_hard_vote_threshold.json",
+      "analysis/representative_cases/cases/C04_score_up_structure_down.json",
+      "analysis/representative_cases/cases/C05_matched_block_improvement.json",
+      "analysis/representative_cases/cases/C06_highQ_replacement_counterexample.json",
+      "analysis/representative_cases/cases/C07_local_complement_replicates.json",
+      "analysis/reproduce.py",
+      "analysis/requirements.txt"
+    ],
+    "requests_exact_rebuild": [
+      "analysis/composition/BLOCK_DISCOVERY_SPEC.json",
+      "analysis/composition/BLOCK_VALIDATION_SPEC.json",
+      "analysis/composition/BREADTH_SPEC.json",
+      "analysis/composition/CONFIRM_DISCOVERY_SPEC.json",
+      "analysis/composition/CONFIRM_VALIDATION_SPEC.json",
+      "analysis/composition/CURVES_DISCOVERY_SPEC.json",
+      "analysis/composition/CURVES_VALIDATION_SPEC.json",
+      "analysis/composition/NESTED_DISCOVERY_SPEC.json",
+      "analysis/composition/NESTED_VALIDATION_SPEC.json",
+      "analysis/composition/SPLIT.json",
+      "analysis/composition/VALIDATION_FREEZE.json",
+      "analysis/composition/design_blocks.py",
+      "analysis/composition/design_compositions.py",
+      "analysis/composition/design_condition_requests.py",
+      "analysis/composition/design_curves.py",
+      "analysis/composition/design_nested.py",
+      "analysis/composition/design_screen.py",
+      "analysis/composition/design_special.py",
+      "analysis/composition/fusion_runner.py",
+      "analysis/composition/geometry_diagnostics.py",
+      "analysis/composition/materialize_stages.py",
+      "analysis/forward/condition_experiment_spec.json",
+      "analysis/forward/results/method_manifest.json",
+      "analysis/forward/results/worker_labels.csv.gz",
+      "analysis/independent/BLOCK_DESIGN_AUDIT.json",
+      "analysis/independent/REPRODUCTION_AUDIT.json",
+      "analysis/independent/VALIDATION_BLOCK_DESIGN_AUDIT.json",
+      "analysis/independent/audit_reproduce_requests.py",
+      "analysis/reproduce.py",
+      "analysis/requirements.txt",
+      "analysis/reverse/CANDIDATE_MANIFEST.json",
+      "analysis/reverse/worker_labels.csv.gz"
+    ],
+    "full_frozen_replay_additional": [
+      "analysis/composition/FROZEN_GRID_STAGES.json",
+      "analysis/composition/block_specific_findings.py",
+      "analysis/composition/frozen_grid_comparisons.py",
+      "analysis/composition/plot_frozen_curves.py",
+      "analysis/composition/report_block_highlights.py",
+      "analysis/composition/scene_condition_analysis.py",
+      "analysis/composition/study_coverage.py",
+      "analysis/composition/summarize_blocks.py",
+      "analysis/composition/summarize_frozen_findings.py",
+      "analysis/composition/summarize_grid.py",
+      "analysis/composition/summarize_nested.py",
+      "analysis/composition/within_composition_report.py",
+      "analysis/forward/results/features_train.csv.gz",
+      "analysis/independent/POOL_IMAGE_CONDITIONS.csv"
+    ],
+    "redraw_summary_from_small_sources": [
+      "analysis/composition/fusion_runner.py",
+      "analysis/composition/plot_frozen_curves.py",
+      "analysis/figures_summary/01_candidate_coverage_source.csv",
+      "analysis/figures_summary/01_plot_source.csv",
+      "analysis/figures_summary/01_screen_manifest.json",
+      "analysis/figures_summary/02_building_points.csv",
+      "analysis/figures_summary/02_comparison_manifest.json",
+      "analysis/figures_summary/02_plot_source.csv",
+      "analysis/figures_summary/composition_ratio_plot_data.csv.gz",
+      "analysis/figures_summary/curve_common_support.csv",
+      "analysis/figures_summary/make_summary_figures.py",
+      "analysis/figures_summary/mixture_member_replication_plot_data.csv",
+      "analysis/figures_summary/threshold_transitions_plot_data.csv.gz",
+      "analysis/fonts/NotoSansSC-Regular.ttf",
+      "analysis/requirements.txt"
+    ],
+    "rebuild_chinese_report": [
+      "analysis/build_report.py",
+      "analysis/composition/block_fixed_highlights_compact.csv",
+      "analysis/composition/coverage/stage_coverage.csv",
+      "analysis/composition/frozen_grid_results/frozen_rule_compact.csv",
+      "analysis/figures_summary/01_candidate_utility_coverage.png",
+      "analysis/figures_summary/02_specific_replacements_discovery_validation.png",
+      "analysis/figures_summary/composition_ratio_curves.png",
+      "analysis/figures_summary/mixture_member_replication.png",
+      "analysis/figures_summary/vote_threshold_interaction.png",
+      "analysis/fonts/NotoSansSC-Bold.ttf",
+      "analysis/fonts/NotoSansSC-Regular.ttf",
+      "analysis/forward/results/features_train.csv.gz",
+      "analysis/forward/results/worker_labels.csv.gz",
+      "analysis/report_requirements.txt",
+      "analysis/representative_cases/cases/C01_member_sensitive_mixture.json",
+      "analysis/representative_cases/cases/C02_stable_wrong_same_score_shape.json",
+      "analysis/representative_cases/cases/C03_hard_vote_threshold.json",
+      "analysis/representative_cases/cases/C04_score_up_structure_down.json",
+      "analysis/representative_cases/cases/C05_matched_block_improvement.json",
+      "analysis/representative_cases/cases/C06_highQ_replacement_counterexample.json",
+      "analysis/representative_cases/cases/C07_local_complement_replicates.json",
+      "analysis/representative_cases/figures/C01_member_sensitive_mixture/comparison.png",
+      "analysis/representative_cases/figures/C02_stable_wrong_same_score_shape/comparison.png",
+      "analysis/representative_cases/figures/C03_hard_vote_threshold/comparison.png",
+      "analysis/representative_cases/figures/C03_hard_vote_threshold/local_zoom.png",
+      "analysis/representative_cases/figures/C04_score_up_structure_down/comparison.png",
+      "analysis/representative_cases/figures/C04_score_up_structure_down/local_zoom.png",
+      "analysis/representative_cases/figures/C05_matched_block_improvement/comparison.png",
+      "analysis/representative_cases/figures/C05_matched_block_improvement/member_overlays.png",
+      "analysis/representative_cases/figures/C06_highQ_replacement_counterexample/comparison.png",
+      "analysis/representative_cases/figures/C07_local_complement_replicates/comparison.png",
+      "analysis/reverse/worker_labels.csv.gz"
+    ],
+    "render_cases_and_restore_only_selected_images": [
+      "analysis/composition/case_visuals.py",
+      "analysis/fonts/NotoSansSC-Regular.ttf",
+      "analysis/visual_sources/SELECTED_ORIGINALS.json",
+      "analysis/visual_sources/coverage_checks.json",
+      "analysis/visual_sources/pro_personnel_v2_IMAGE_INDEX.csv",
+      "analysis/visual_sources/range_zip.py",
+      "analysis/visual_sources/release_IMAGE_INDEX.csv",
+      "analysis/visual_sources/release_metadata.json",
+      "analysis/visual_sources/zip_directories.json"
+    ],
+    "font_source_and_license": [
+      "analysis/fonts/CHARACTERS.txt",
+      "analysis/fonts/FONT_PROVENANCE.json",
+      "analysis/fonts/NotoSansSC-Bold.ttf",
+      "analysis/fonts/NotoSansSC-Regular.ttf",
+      "analysis/fonts/OFL.txt",
+      "analysis/prepare_fonts.py",
+      "analysis/report_requirements.txt"
+    ],
+    "independent_and_case_evidence": [
+      "analysis/independent/ENTRY_PORTABILITY_AUDIT.json",
+      "analysis/independent/GEOMETRY_DIAGNOSTICS_ZH.md",
+      "analysis/independent/GEOMETRY_DIAGNOSTIC_PROBES.json",
+      "analysis/independent/HISTORICAL_PARITY_SUMMARY.json",
+      "analysis/independent/PORTABLE_REPLAY_READ_AUDIT.json",
+      "analysis/independent/REPRESENTATIVE_CASE_PARITY.json",
+      "analysis/representative_cases/cases/CASE_REPLAY_RECEIPT.json"
+    ],
+    "core_conclusions_and_failure_evidence": [
+      "analysis/SEARCH_COVERAGE_NOTES.json",
+      "analysis/SEARCH_LEDGER.csv",
+      "analysis/composition/INPUT_AUDIT.json",
+      "analysis/composition/compact_block_evidence/01_highlight_events.csv.gz",
+      "analysis/composition/compact_block_evidence/02_all_exact_strata.csv.xz",
+      "analysis/composition/compact_block_evidence/03_loow_stratum_summary.csv.gz",
+      "analysis/composition/compact_block_evidence/04_highlight_loow_person.csv.gz",
+      "analysis/composition/compact_block_evidence/05_loow_support_ledger.csv.gz",
+      "analysis/composition/compact_block_evidence/COMPACT_RECEIPT.json",
+      "analysis/composition/compact_block_evidence/FIELD_DICTIONARY.json",
+      "analysis/composition/compact_block_evidence/README_ZH.md",
+      "analysis/composition/coverage/STUDY_COVERAGE_RECEIPT.json",
+      "analysis/composition/frozen_grid_results/CURVE_TRANSITIONS_RECEIPT.json",
+      "analysis/composition/frozen_grid_results/FINAL_GRID_TABLE_INVENTORY.json",
+      "analysis/composition/frozen_grid_results/FROZEN_COMPARISONS_RECEIPT.json",
+      "analysis/composition/frozen_grid_results/FROZEN_COMPOSITION_FINDINGS_ZH.md",
+      "analysis/composition/frozen_grid_results/FROZEN_FINDINGS_RECEIPT.json",
+      "analysis/composition/frozen_grid_results/WITHIN_FIXED_COMPOSITIONS_RECEIPT.json",
+      "analysis/composition/frozen_grid_results/frozen_contrast_coverage_gaps.csv.gz",
+      "analysis/composition/frozen_grid_results/frozen_contrasts_aggregate.csv.gz",
+      "analysis/composition/frozen_grid_results/frozen_contrasts_per_building.csv.gz",
+      "analysis/composition/frozen_grid_results/frozen_contrasts_per_image.csv.gz",
+      "analysis/composition/frozen_grid_results/frozen_mixture_best_pure_aggregate.csv.gz",
+      "analysis/composition/frozen_grid_results/frozen_mixture_best_pure_per_image.csv.gz",
+      "analysis/composition/frozen_grid_results/frozen_rule_compact.csv",
+      "analysis/composition/frozen_grid_results/integer_curve_aggregate.csv.gz",
+      "analysis/composition/frozen_grid_results/integer_curve_availability.csv.gz",
+      "analysis/composition/frozen_grid_results/member_replication_overlap.csv.gz",
+      "analysis/composition/frozen_grid_results/stable_low_quality_descriptive_cells.csv.gz",
+      "analysis/composition/frozen_grid_results/stable_low_quality_descriptive_support.csv",
+      "analysis/composition/frozen_grid_results/within_fixed_compositions_aggregate.csv.gz",
+      "analysis/composition/frozen_grid_results/within_fixed_compositions_per_image.csv.gz",
+      "analysis/composition/nested_discovery/NESTED_RECEIPT.json",
+      "analysis/composition/nested_discovery/nested_neighbor_contrasts.csv.gz",
+      "analysis/composition/nested_discovery/nested_points.csv.gz",
+      "analysis/composition/nested_discovery/nested_summary.csv",
+      "analysis/composition/nested_discovery/nested_transitions.csv.gz",
+      "analysis/composition/nested_validation/NESTED_RECEIPT.json",
+      "analysis/composition/nested_validation/nested_neighbor_contrasts.csv.gz",
+      "analysis/composition/nested_validation/nested_points.csv.gz",
+      "analysis/composition/nested_validation/nested_summary.csv",
+      "analysis/composition/nested_validation/nested_transitions.csv.gz",
+      "analysis/composition/scene_analysis/SCENE_ANALYSIS_RECEIPT.json",
+      "analysis/composition/scene_analysis/room_type_contrast_index.csv.gz",
+      "analysis/composition/scene_analysis/room_type_frozen_rule_strata.csv.gz",
+      "analysis/forward/results/candidate_ledger.csv",
+      "analysis/forward/results/feature_fit_receipt.json",
+      "analysis/forward/results/history_feature_support.csv",
+      "analysis/forward/results/verification_receipt.json",
+      "analysis/forward/screen_final/FINAL_SCREEN_RECEIPT.json",
+      "analysis/forward/screen_final/HARD_CONTROL_RECEIPT.json",
+      "analysis/forward/screen_final/candidate_search_ledger.csv.gz",
+      "analysis/forward/screen_final/hard_control_sensitivity.csv",
+      "analysis/forward/screen_final/screen_outcomes.csv.gz",
+      "analysis/independent/IMAGE_CONDITION_PROVENANCE_AUDIT.json",
+      "analysis/independent/POOL_IMAGE_CONDITIONS_PROVENANCE.json",
+      "analysis/reverse/AUDIT_RECEIPT.json",
+      "analysis/reverse/class_explanations.csv",
+      "analysis/reverse/history_stability_summary.csv"
+    ],
+    "documentation": [
+      "README_ZH.md",
+      "analysis/REPRODUCE_ZH.md",
+      "analysis/report_requirements.txt",
+      "analysis/requirements.txt"
+    ]
+  },
+  "mode_dependency_checks": {
+    "quick_numeric": {
+      "files": 14,
+      "bytes_at_read": 788679,
+      "missing": [],
+      "all_present": true
+    },
+    "requests_exact_rebuild": {
+      "files": 32,
+      "bytes_at_read": 3323157,
+      "missing": [],
+      "all_present": true
+    },
+    "full_frozen_replay_additional": {
+      "files": 14,
+      "bytes_at_read": 455373,
+      "missing": [],
+      "all_present": true
+    },
+    "redraw_summary_from_small_sources": {
+      "files": 15,
+      "bytes_at_read": 1348581,
+      "missing": [],
+      "all_present": true
+    },
+    "rebuild_chinese_report": {
+      "files": 32,
+      "bytes_at_read": 10834931,
+      "missing": [],
+      "all_present": true
+    },
+    "render_cases_and_restore_only_selected_images": {
+      "files": 9,
+      "bytes_at_read": 590010,
+      "missing": [],
+      "all_present": true
+    },
+    "font_source_and_license": {
+      "files": 7,
+      "bytes_at_read": 599952,
+      "missing": [],
+      "all_present": true
+    },
+    "independent_and_case_evidence": {
+      "files": 7,
+      "bytes_at_read": 259533,
+      "missing": [],
+      "all_present": true
+    },
+    "core_conclusions_and_failure_evidence": {
+      "files": 59,
+      "bytes_at_read": 17397628,
+      "missing": [],
+      "all_present": true
+    },
+    "documentation": {
+      "files": 4,
+      "bytes_at_read": 27202,
+      "missing": [],
+      "all_present": true
+    }
+  },
+  "frozen_dependency_checks": {
+    "local_files": 27,
+    "local_checks": {
+      "analysis/composition/BLOCK_DISCOVERY_SPEC.json": {
+        "sha256": "943cf00f9210ae86919ca158bee593fe1dbe3a5b6038d80409f0714f03aac1a3",
+        "matches": true,
+        "bytes": 1238
+      },
+      "analysis/composition/BLOCK_VALIDATION_SPEC.json": {
+        "sha256": "3c20de618717c81e971fe4006cf093f17bf4f23f784af1a1e6f90b69c220f7f4",
+        "matches": true,
+        "bytes": 1288
+      },
+      "analysis/composition/BREADTH_SPEC.json": {
+        "sha256": "782e586955b1c92421754015e51988df11556b05994cb614a005bb5ff353f4a6",
+        "matches": true,
+        "bytes": 2278
+      },
+      "analysis/composition/CONFIRM_DISCOVERY_SPEC.json": {
+        "sha256": "d6bb281a0464a83c231c968bee14106bb64a92d32f541d433e4341d90edfebab",
+        "matches": true,
+        "bytes": 1026
+      },
+      "analysis/composition/CONFIRM_VALIDATION_SPEC.json": {
+        "sha256": "977c3458c8aab0e6f5af85ca1466c12d1a0a694f3fc6c6d63c896ac38a00198b",
+        "matches": true,
+        "bytes": 1001
+      },
+      "analysis/composition/CURVES_DISCOVERY_SPEC.json": {
+        "sha256": "816f2cfbe37a8436edb7119b588eb1a9348b2dee724367f170cbd2088734ad5c",
+        "matches": true,
+        "bytes": 3144
+      },
+      "analysis/composition/CURVES_VALIDATION_SPEC.json": {
+        "sha256": "72ae04696b566f2f2698b7700b2d1567e571b29b3f1ab9280e5cbacc87e00a1e",
+        "matches": true,
+        "bytes": 3012
+      },
+      "analysis/composition/NESTED_DISCOVERY_SPEC.json": {
+        "sha256": "144512abc0364f074a644ed5e0d6ba0613f3b0162b170d39573629d71784bffb",
+        "matches": true,
+        "bytes": 727
+      },
+      "analysis/composition/NESTED_VALIDATION_SPEC.json": {
+        "sha256": "fefed537c7ff323d0111334d73468b3a5ad3ecf5fd323ca7e2c4eafadf334968",
+        "matches": true,
+        "bytes": 775
+      },
+      "analysis/composition/SPLIT.json": {
+        "sha256": "075125c748299b7829c179b9ac2b44706b360acaeefbdde0d3ce23076843752e",
+        "matches": true,
+        "bytes": 2035
+      },
+      "analysis/composition/VALIDATION_FREEZE.json": {
+        "sha256": "dfa0d80a6668e55fee58df9efbcaf43a76c062d1941db26c922c3f46f02893fd",
+        "matches": true,
+        "bytes": 10009
+      },
+      "analysis/composition/design_blocks.py": {
+        "sha256": "24f63028b4f9c2fdba068008b7f22440fd99725a3f85812fdca2ebefa59f2fc2",
+        "matches": true,
+        "bytes": 9038
+      },
+      "analysis/composition/design_compositions.py": {
+        "sha256": "c7cba492bded5b9d201c052228a046b258eef5ea26fd57b5d943dffddc249ebb",
+        "matches": true,
+        "bytes": 6840
+      },
+      "analysis/composition/design_condition_requests.py": {
+        "sha256": "5e54b5ace5956d562872ca5cd87d4fe969ae1301c918de1b17bf9b025894077b",
+        "matches": true,
+        "bytes": 2339
+      },
+      "analysis/composition/design_curves.py": {
+        "sha256": "9e64f8f192b573b4e4b5ca95549f005b2399df912f8fe1cd88dc02fc180a72ae",
+        "matches": true,
+        "bytes": 4000
+      },
+      "analysis/composition/design_nested.py": {
+        "sha256": "b9103d000ac741dcf3983d9459e5482b3457d597b362a476df5776ecb4637cbb",
+        "matches": true,
+        "bytes": 3147
+      },
+      "analysis/composition/design_screen.py": {
+        "sha256": "5efd10233fc3d2d58b56fb5da579fe969b5c677c355e792f8baec10df71027bd",
+        "matches": true,
+        "bytes": 2235
+      },
+      "analysis/composition/design_special.py": {
+        "sha256": "decfbafe1dcb7894bb6bdd68047acdb9ea812e421a5bd6f9145034997d02a9c3",
+        "matches": true,
+        "bytes": 1690
+      },
+      "analysis/composition/fusion_runner.py": {
+        "sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+        "matches": true,
+        "bytes": 8302
+      },
+      "analysis/composition/geometry_diagnostics.py": {
+        "sha256": "57a94b9987cd012d1be8d4c7e25f003ba5982c1c6c23be83ed8133243061a0ce",
+        "matches": true,
+        "bytes": 12714
+      },
+      "analysis/composition/materialize_stages.py": {
+        "sha256": "3dadb9b6ec95ada3bb59e9ed5f1396a35a4b6b03d2773eae8e83720de6a3146a",
+        "matches": true,
+        "bytes": 2592
+      },
+      "analysis/forward/condition_experiment_spec.json": {
+        "sha256": "d1693dd99f9c9089e09d5b4c18b9181da8ac13efbdde4e0601d18516ead8fd02",
+        "matches": true,
+        "bytes": 787761
+      },
+      "analysis/forward/results/method_manifest.json": {
+        "sha256": "ab9f734538c646751ac4dc071ce11506e83de27f361ae1f0870f41dba3890142",
+        "matches": true,
+        "bytes": 2087687
+      },
+      "analysis/forward/results/worker_labels.csv.gz": {
+        "sha256": "b5e52ba1aebe093d9555a8a0782c53a52c6d79778aded4f16de474b6ed804bfc",
+        "matches": true,
+        "bytes": 31890
+      },
+      "analysis/independent/audit_reproduce_requests.py": {
+        "sha256": "223aacc4c813d9350424f5d0706269d7de660f21530244d5fc6d6fb76abf9cfe",
+        "matches": true,
+        "bytes": 33672
+      },
+      "analysis/reverse/CANDIDATE_MANIFEST.json": {
+        "sha256": "e534ce40e1c14ffb655d7110ff71ece37a9990d44475da3e1cc328c363be2ec7",
+        "matches": true,
+        "bytes": 195218
+      },
+      "analysis/reverse/worker_labels.csv.gz": {
+        "sha256": "64aa9e9fff524d597f20ad94f6f0e7fd205bfdcb0af24c83f1f2f540f4172411",
+        "matches": true,
+        "bytes": 22166
+      }
+    },
+    "validation_freeze_entries": 17,
+    "validation_freeze_is_subset_of_local_checks": true,
+    "validation_freeze_all_sha_exact": true,
+    "source_receipt_sha256": "6085ff16635fffc0369421ac66a9f581581187055eb2ebc4446e044291566369",
+    "validation_freeze_sha256": "dfa0d80a6668e55fee58df9efbcaf43a76c062d1941db26c922c3f46f02893fd",
+    "external_snapshot_expected_sha256": {
+      "restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7"
+    }
+  },
+  "source_dependency_closure": {
+    "method": "AST import inspection only; dynamically imported native fusion/scoring is supplied by documented external bootstrap.",
+    "local_source_files": 27,
+    "source_sha256": {
+      "analysis/build_report.py": "02a888f774baf27a9ce7dde7fe9d01952a2c1f7f6aa4523f4e01e62092a6aa29",
+      "analysis/composition/block_specific_findings.py": "f1e16c8f447788bccf9e70c25159fa80bab7ceee67d3035e479e51489a4f2765",
+      "analysis/composition/case_visuals.py": "5bc6da16f8ea35177abc37f38f3a1da02512299f588b8bb2dfc726b4bf303fdb",
+      "analysis/composition/design_blocks.py": "24f63028b4f9c2fdba068008b7f22440fd99725a3f85812fdca2ebefa59f2fc2",
+      "analysis/composition/design_compositions.py": "c7cba492bded5b9d201c052228a046b258eef5ea26fd57b5d943dffddc249ebb",
+      "analysis/composition/design_condition_requests.py": "5e54b5ace5956d562872ca5cd87d4fe969ae1301c918de1b17bf9b025894077b",
+      "analysis/composition/design_curves.py": "9e64f8f192b573b4e4b5ca95549f005b2399df912f8fe1cd88dc02fc180a72ae",
+      "analysis/composition/design_nested.py": "b9103d000ac741dcf3983d9459e5482b3457d597b362a476df5776ecb4637cbb",
+      "analysis/composition/design_screen.py": "5efd10233fc3d2d58b56fb5da579fe969b5c677c355e792f8baec10df71027bd",
+      "analysis/composition/design_special.py": "decfbafe1dcb7894bb6bdd68047acdb9ea812e421a5bd6f9145034997d02a9c3",
+      "analysis/composition/frozen_grid_comparisons.py": "1a8e70a9a8e85095fff0079b72f7b6fde84e03b0bcc4a989db1b15b39403e14e",
+      "analysis/composition/fusion_runner.py": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+      "analysis/composition/geometry_diagnostics.py": "57a94b9987cd012d1be8d4c7e25f003ba5982c1c6c23be83ed8133243061a0ce",
+      "analysis/composition/materialize_stages.py": "3dadb9b6ec95ada3bb59e9ed5f1396a35a4b6b03d2773eae8e83720de6a3146a",
+      "analysis/composition/plot_frozen_curves.py": "6528247a2836db241fa10c4f2546fc9958825919b25d339d5f0c521a7e9c9cf8",
+      "analysis/composition/replay_saved_cases.py": "b9e0ac53206abc3321e30394baea3ca3b2767f784e2bf1928dc00ccbc95c604a",
+      "analysis/composition/report_block_highlights.py": "c94440caef58b23760c022ab3673ea2af18b9496326187989ae22aaf39635883",
+      "analysis/composition/scene_condition_analysis.py": "6eded38fa1f6bea2324922efe665926bb89fe32806bfc74c1a089593f103e100",
+      "analysis/composition/study_coverage.py": "42dcacfee18fb54907893548515d6b4a6fa1f668c6a162adc8a86ea4239245b4",
+      "analysis/composition/summarize_blocks.py": "8bd7516a5e356fda98efafb5936d1b2cea3c784d107d6d20a314ba6202818c45",
+      "analysis/composition/summarize_frozen_findings.py": "4a359aa6c01aa78adf660c143ea0cfb76e7144f91018b3aadc2ec305e45177c2",
+      "analysis/composition/summarize_grid.py": "276239aba4121c0992c88806efa2c3d8b1106fc66ad9c159636c8acb4ca3804f",
+      "analysis/composition/summarize_nested.py": "1e7a8230920753d55315286b6c25bc5db58f5c9643a8a06faa2ff4c23b5e2399",
+      "analysis/composition/within_composition_report.py": "66bf74c4c571c851db3156807c7e8ddef8db5ed63fa9241a30a657257fba492d",
+      "analysis/figures_summary/make_summary_figures.py": "5f0900c0d4884b687350f36fa9f62052e8736b19f5f422ee3cf50f3846e99fe1",
+      "analysis/independent/audit_reproduce_requests.py": "223aacc4c813d9350424f5d0706269d7de660f21530244d5fc6d6fb76abf9cfe",
+      "analysis/reproduce.py": "f6e9f8fbf9145b5946bcf02cab6d6049935f4fe7ca1e3375aeb64470321bf884"
+    },
+    "local_import_edges": [
+      [
+        "analysis/composition/block_specific_findings.py",
+        "analysis/composition/summarize_blocks.py"
+      ],
+      [
+        "analysis/composition/block_specific_findings.py",
+        "analysis/composition/summarize_grid.py"
+      ],
+      [
+        "analysis/composition/design_blocks.py",
+        "analysis/composition/design_compositions.py"
+      ],
+      [
+        "analysis/composition/design_blocks.py",
+        "analysis/composition/design_screen.py"
+      ],
+      [
+        "analysis/composition/design_blocks.py",
+        "analysis/composition/fusion_runner.py"
+      ],
+      [
+        "analysis/composition/design_compositions.py",
+        "analysis/composition/design_screen.py"
+      ],
+      [
+        "analysis/composition/design_compositions.py",
+        "analysis/composition/fusion_runner.py"
+      ],
+      [
+        "analysis/composition/design_condition_requests.py",
+        "analysis/composition/design_compositions.py"
+      ],
+      [
+        "analysis/composition/design_condition_requests.py",
+        "analysis/composition/fusion_runner.py"
+      ],
+      [
+        "analysis/composition/design_curves.py",
+        "analysis/composition/design_compositions.py"
+      ],
+      [
+        "analysis/composition/design_curves.py",
+        "analysis/composition/fusion_runner.py"
+      ],
+      [
+        "analysis/composition/design_nested.py",
+        "analysis/composition/design_compositions.py"
+      ],
+      [
+        "analysis/composition/design_nested.py",
+        "analysis/composition/design_screen.py"
+      ],
+      [
+        "analysis/composition/design_nested.py",
+        "analysis/composition/fusion_runner.py"
+      ],
+      [
+        "analysis/composition/design_screen.py",
+        "analysis/composition/fusion_runner.py"
+      ],
+      [
+        "analysis/composition/design_special.py",
+        "analysis/composition/design_screen.py"
+      ],
+      [
+        "analysis/composition/design_special.py",
+        "analysis/composition/fusion_runner.py"
+      ],
+      [
+        "analysis/composition/frozen_grid_comparisons.py",
+        "analysis/composition/design_compositions.py"
+      ],
+      [
+        "analysis/composition/frozen_grid_comparisons.py",
+        "analysis/composition/fusion_runner.py"
+      ],
+      [
+        "analysis/composition/frozen_grid_comparisons.py",
+        "analysis/composition/summarize_grid.py"
+      ],
+      [
+        "analysis/composition/materialize_stages.py",
+        "analysis/composition/fusion_runner.py"
+      ],
+      [
+        "analysis/composition/plot_frozen_curves.py",
+        "analysis/composition/fusion_runner.py"
+      ],
+      [
+        "analysis/composition/replay_saved_cases.py",
+        "analysis/composition/case_visuals.py"
+      ],
+      [
+        "analysis/composition/replay_saved_cases.py",
+        "analysis/composition/fusion_runner.py"
+      ],
+      [
+        "analysis/composition/replay_saved_cases.py",
+        "analysis/composition/geometry_diagnostics.py"
+      ],
+      [
+        "analysis/composition/replay_saved_cases.py",
+        "analysis/composition/summarize_grid.py"
+      ],
+      [
+        "analysis/composition/report_block_highlights.py",
+        "analysis/composition/summarize_grid.py"
+      ],
+      [
+        "analysis/composition/scene_condition_analysis.py",
+        "analysis/composition/fusion_runner.py"
+      ],
+      [
+        "analysis/composition/study_coverage.py",
+        "analysis/composition/fusion_runner.py"
+      ],
+      [
+        "analysis/composition/summarize_blocks.py",
+        "analysis/composition/fusion_runner.py"
+      ],
+      [
+        "analysis/composition/summarize_blocks.py",
+        "analysis/composition/summarize_grid.py"
+      ],
+      [
+        "analysis/composition/summarize_frozen_findings.py",
+        "analysis/composition/frozen_grid_comparisons.py"
+      ],
+      [
+        "analysis/composition/summarize_frozen_findings.py",
+        "analysis/composition/fusion_runner.py"
+      ],
+      [
+        "analysis/composition/summarize_frozen_findings.py",
+        "analysis/composition/summarize_grid.py"
+      ],
+      [
+        "analysis/composition/summarize_grid.py",
+        "analysis/composition/fusion_runner.py"
+      ],
+      [
+        "analysis/composition/summarize_grid.py",
+        "analysis/composition/geometry_diagnostics.py"
+      ],
+      [
+        "analysis/composition/summarize_nested.py",
+        "analysis/composition/fusion_runner.py"
+      ],
+      [
+        "analysis/composition/summarize_nested.py",
+        "analysis/composition/geometry_diagnostics.py"
+      ],
+      [
+        "analysis/composition/summarize_nested.py",
+        "analysis/composition/summarize_grid.py"
+      ],
+      [
+        "analysis/composition/within_composition_report.py",
+        "analysis/composition/frozen_grid_comparisons.py"
+      ],
+      [
+        "analysis/composition/within_composition_report.py",
+        "analysis/composition/fusion_runner.py"
+      ],
+      [
+        "analysis/composition/within_composition_report.py",
+        "analysis/composition/summarize_grid.py"
+      ],
+      [
+        "analysis/reproduce.py",
+        "analysis/independent/audit_reproduce_requests.py"
+      ]
+    ]
+  },
+  "small_evidence_integrity": {
+    "core_inventory_files": 19,
+    "all_core_inventory_file_sha_exact": true,
+    "all_7_case_sha_match_final_independent_parity": true,
+    "case_selection_sha_matches_export_receipt": true,
+    "case_export_all_exact": true,
+    "font_subset_bytes_match_provenance": true,
+    "licensed_font_subset_bytes": 584040
+  },
+  "package_allowlist": {
+    "declared_files": 285,
+    "missing_declared_files": [],
+    "forbidden_rebuildable_paths_declared": [],
+    "final_review_files_expected": [
+      "output/DELIVERY_QA.json",
+      "analysis/independent/PACKAGE_QUICK_REPLAY.json",
+      "analysis/independent/PACKAGE_DEPENDENCY_AUDIT.json"
+    ],
+    "mutable_outputs": "概要PNG、PDF与对应render/report receipt正在由root串行重绘/核验；本审查仅确认依赖在位，不对刷新中的文件固定内容SHA或声称最终视觉QA通过。ZIP内容与最终哈希由seal及DELIVERY_QA另核验。"
+  },
+  "critical_dependency_findings": [
+    {
+      "status": "satisfied",
+      "finding": "requests 会直接核对 27 个本地冻结文件的原始字节；17 个 validation freeze 项全包含其中。materialize_stages.py、两个 method manifest 即使没有在当前生成器中直接执行/读取，也不能从包中删去。不要重新压缩 worker_labels.csv.gz 或重排冻结 JSON。"
+    },
+    {
+      "status": "satisfied",
+      "finding": "REQUEST 重计覆盖还直接读取 BLOCK_DESIGN_AUDIT.json 和 VALIDATION_BLOCK_DESIGN_AUDIT.json；这两个小receipt以及 REPRODUCTION_AUDIT.json 都已在staging。"
+    },
+    {
+      "status": "satisfied",
+      "finding": "两个 --from-sources 绘图分支只需列出的 10 个 CSV/JSON 源文件与代码/字体；不需原网格cell表、全体team caches、nested全状态或 runs_final receipt。图2在该分支用02_comparison_manifest确认固定13条定义。"
+    },
+    {
+      "status": "satisfied",
+      "finding": "build_report.py 的6个表输入、7例JSON、15张引用图和两个字体在位；reportlab依赖已在独立 report_requirements.txt，科学pins没有改变。report_tables和SELECTED_WORKER_CLASSES是报告构建输出，不是替代原表输入。"
+    },
+    {
+      "status": "documented",
+      "finding": "full 输出到用户指定外部目录；其中 study_coverage/ 是重算目录名，而预制报告读 analysis/composition/coverage/stage_coverage.csv。包中保留了报告所读小表，故文档第9节重绘可直接执行。若未来让报告读取一次新的 full 输出，须显式映射该coverage路径及其他外部结果，不应把生成full计划等同自动重写报告。"
+    },
+    {
+      "status": "documented",
+      "finding": "portable requests 复用 audit_reproduce_requests.py 中的函数；直接运行旧独立audit脚本的main会要求原manifest作双份比较。推荐入口 analysis/reproduce.py requests 无此原manifest依赖，且已实际从任意cwd重建验证。"
+    },
+    {
+      "status": "satisfied",
+      "finding": "quick 数值模式只需case内frozen_record与固定参考、原生源码和测量引擎，不读整池快照；已随包保留读隔离与最终案例独立parity。其完整pool_digest是来源标识，非从子集假装重建。"
+    },
+    {
+      "status": "documented",
+      "finding": "字体子集用 --characters analysis/fonts/CHARACTERS.txt 可避免依赖原先扫描的全部文字文件；FONT_PROVENANCE中的corpus_sources只是历史来源。远程字体main URL可变化，重新生成前须核对 source_sha256；随包现成字体及字符集SHA已核验。"
+    }
+  ],
+  "omittable_rebuildable_inputs": [
+    {
+      "paths": [
+        "restored/",
+        "repo/"
+      ],
+      "restore": "按 REPRODUCE_ZH.md 第2节从 main e572eb73... 与科学源82c6164b...运行官方bootstrap。bootstrap只恢复输入/源码，非本轮科研重算。",
+      "required_for": "quick需要冻结native源码/测量引擎；requests/full还需已给SHA的INPUT_SNAPSHOT。"
+    },
+    {
+      "paths": [
+        "analysis/composition/*_REQUESTS.json.gz",
+        "analysis/independent/rebuilt_requests/",
+        "analysis/independent/portable_requests_entry/"
+      ],
+      "restore": "python analysis/reproduce.py requests --restored /path/restored --out /path/requests",
+      "detail": "13主manifest及派生FINAL全部从冻结规格/标签/种子重建；FINAL原绝对路径仅是需逐字保留的来源字符串。"
+    },
+    {
+      "paths": [
+        "analysis/composition/runs*/",
+        "analysis/composition/grid_*/cell_summary.csv.gz",
+        "完整距离矩阵、逐折模型缓存、全部身份分组状态"
+      ],
+      "restore": "python analysis/reproduce.py full --restored /path/restored --out /path/full；随后运行生成的 FULL_REPLAY_COMMANDS.sh。",
+      "detail": "新产生团队及汇总可重建；保留原始失败，不补零。已随包的核心表和小图源足够审阅/重画主报告。"
+    },
+    {
+      "paths": [
+        "analysis/selected_originals/",
+        "3个原图Release ZIP全集"
+      ],
+      "restore": "REPRODUCE_ZH.md 第5节的range_zip.py extract命令，仅下载6个精确图片ID；CRC/尺寸及case SHA校验。",
+      "detail": "没有原图仍可完成numeric quick；ERP缺图会明确跳过而非用合成图替代。"
+    },
+    {
+      "paths": [
+        "analysis/fonts/NotoSansSC-VF.ttf",
+        "两份未子集化的完整静态中文字体"
+      ],
+      "restore": "下载FONT_PROVENANCE.source_url并核对source_sha256，再运行prepare_fonts.py --subset --characters analysis/fonts/CHARACTERS.txt。",
+      "detail": "默认所需2个子集TTF、OFL和字符表已带入包。"
+    },
+    {
+      "paths": [
+        "analysis/reverse/input_cache/",
+        "analysis/reverse/historical_pair_relations*.csv.gz"
+      ],
+      "restore": "按REPRODUCE_ZH.md 第6节从bootstrap的clusters/records_geometry.csv.gz及assignments.csv.gz运行discover_reverse_composition.py到独立目录。",
+      "detail": "history拟合源码、参数/摘要与冻结worker labels保留；不覆盖验证冻结压缩标签。"
+    },
+    {
+      "paths": [
+        "runtime_env/",
+        "__pycache__/",
+        "mplconfig/",
+        "*.writing.*",
+        "原报告逐页渲染缓存",
+        "大量日志"
+      ],
+      "restore": "按requirements重装环境；运行渲染/报告命令按需再生成。",
+      "detail": "这些路径未在交付allowlist内。"
+    }
+  ],
+  "limitations": [
+    "本次为交付依赖与静态完整性审查，不重复科研实算；已有requests/quick实际可移植性见ENTRY_PORTABILITY_AUDIT.json。",
+    "不验证刷新中的图像/PDF最终视觉质量；root最终QA与ZIP逐文件SHA单独负责。",
+    "本清单区分强制运行依赖与解释证据；不可因某表不是build_report运行时输入就删掉其支撑主结论的证据。"
+  ]
+}

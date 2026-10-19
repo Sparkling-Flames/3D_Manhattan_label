@@ -1,0 +1,44 @@
+[
+  {
+    "name": "breadth_discovery",
+    "phase": "discovery",
+    "requests": "analysis/composition/DISCOVERY_GRID_REQUESTS.json.gz",
+    "grid": "analysis/composition/grid_discovery"
+  },
+  {
+    "name": "condition_discovery",
+    "phase": "discovery",
+    "requests": "analysis/composition/DISCOVERY_CONDITION_REQUESTS.json.gz",
+    "grid": "analysis/composition/grid_condition_discovery"
+  },
+  {
+    "name": "curves_discovery",
+    "phase": "discovery",
+    "requests": "analysis/composition/DISCOVERY_CURVE_REQUESTS.json.gz",
+    "grid": "analysis/composition/grid_curves_discovery"
+  },
+  {
+    "name": "confirm_discovery",
+    "phase": "discovery",
+    "requests": "analysis/composition/DISCOVERY_CONFIRM_REQUESTS.json.gz",
+    "grid": "analysis/composition/grid_confirm_discovery"
+  },
+  {
+    "name": "curves_validation",
+    "phase": "validation",
+    "requests": "analysis/composition/VALIDATION_CURVE_REQUESTS.json.gz",
+    "grid": "analysis/composition/grid_curves_validation"
+  },
+  {
+    "name": "confirm_validation",
+    "phase": "validation",
+    "requests": "analysis/composition/VALIDATION_CONFIRM_REQUESTS.json.gz",
+    "grid": "analysis/composition/grid_confirm_validation"
+  },
+  {
+    "name": "condition_validation",
+    "phase": "validation",
+    "requests": "analysis/composition/VALIDATION_CONDITION_REQUESTS.json.gz",
+    "grid": "analysis/composition/grid_condition_validation"
+  }
+]

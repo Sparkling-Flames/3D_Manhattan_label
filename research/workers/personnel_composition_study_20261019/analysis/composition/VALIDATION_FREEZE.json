@@ -1,0 +1,192 @@
+{
+  "schema": "post_discovery_validation_freeze_v1",
+  "created_utc": "2026-10-19T09:40:19.000377+00:00",
+  "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+  "scientific_commit": "82c6164b0d4630de5316199c92aa405930973168",
+  "validation_outcomes_computed_by_this_round_before_freeze": false,
+  "validation_interpretation": "Retrospective building holdout within multiply explored v2. Original data/prior work have been audited and reused. Not new external blind data; known workers recur.",
+  "label_learning": "Only10historybuildings; no target-building Q, reference, geometry or votes in features or labels",
+  "discovery_evidence": [
+    "uniform real-team screen (14187 teams)",
+    "breadth grid (138863 unique teams), independent direct cached-row mean extraction",
+    "own-condition discovery grid (5738 unique teams)"
+  ],
+  "pending_discovery_experiments_at_freeze": [
+    "matched block fusions",
+    "dense integer size/proportion curves",
+    "fresh-member confirm curves",
+    "nested vote-mechanism chains"
+  ],
+  "frozen_rules": [
+    {
+      "id": "H1_Q_quantile",
+      "method": "F_rule_Q_quantile_K3",
+      "domain": "all",
+      "primary_n": [
+        5,
+        9
+      ],
+      "contrast": "pure C03 minus pure C01; integer intermediate C01/C03 proportions; n13 descriptive where feasible",
+      "expected": "higher class proportion usually improves B8L2 and low tail; no claim every team is better"
+    },
+    {
+      "id": "H2_within_composition",
+      "methods": [
+        "F_rule_Q_quantile_K3",
+        "R_geo9_source_signed_p2_K2",
+        "R_role_ward_K5"
+      ],
+      "primary_n": [
+        5,
+        9
+      ],
+      "contrast": "within fixed count-vector member differences, pure versus mixed compositions; strict matched blocks A/B and A/C with same core and m",
+      "expected": "stability is composition- and condition-dependent; retain stable-but-wrong and unstable-high-Q outcomes"
+    },
+    {
+      "id": "H3_reverse_relation",
+      "method": "R_geo9_source_signed_p2_K2",
+      "domain": "all",
+      "primary_n": [
+        5,
+        9,
+        13
+      ],
+      "contrast": "pure C02 minus pure C01, full feasible integer C02 proportions",
+      "expected": "C02 usually improves quality; not claimed independent of Q or fully origin free"
+    },
+    {
+      "id": "H4_detail_role",
+      "method": "R_role_ward_K5",
+      "domain": "all",
+      "primary_n": [
+        5
+      ],
+      "contrast": "pure C05 minus pure C02; 3C05+2C02 and 4C05+1C02 versus each related pure; C05 is six fixed historically supported new-source workers",
+      "expected": "quality/structure improvement versus common role, diminishing benefit and finite available member capacity; mixture superiority remains a hypothesis"
+    },
+    {
+      "id": "H5_hard_structure",
+      "method": "R_role_ward_difficulty_K2",
+      "domain": "hard",
+      "primary_n": [
+        5,
+        7,
+        9
+      ],
+      "contrast": "higher C02 fraction (>=.6) versus lower (<=.4), exact integer vectors separately; pure comparisons when available",
+      "expected": "reference corner/wall diagnostics and node counts differ; evaluate added information beyond q_beta, theta_hard and source; raw adjacency is not necessary-structure truth"
+    },
+    {
+      "id": "H6_vote_threshold",
+      "methods": [
+        "R_role_ward_difficulty_K2",
+        "R_role_ward_K5"
+      ],
+      "contrast": "fixed detail-role m members, nested common-member additions; n=2m to n=2m+1, m3..7 hard and3..6 global; all individual chains retained",
+      "expected": "some detail supported only by fixed group disappears when ceil(n/2) increases; classify beneficial removal and harmful omission separately; final node votes used only for post-answer mechanism"
+    },
+    {
+      "id": "H7_conditional_complement",
+      "method": "R_geo9_source_signed_p2_K2",
+      "domain": "hard",
+      "primary_n": [
+        13
+      ],
+      "contrast": "3C01+10C02 against both pure C01 and pure C02; also neighboring ratios, all eligible hard pools",
+      "selection_evidence": "discovery breadth 3 comparable hard images/2 buildings, mean +5.759 versus best related pure, all3 positive; selected post hoc, must retain replication failures"
+    },
+    {
+      "id": "H8_role_mixture",
+      "method": "R_role_ward_K5",
+      "domain": "all",
+      "primary_n": [
+        9
+      ],
+      "contrast": "3C01+6C02 and 4C01+5C02 against both corresponding pure classes; report medium separately and all other difficulties as counterchecks",
+      "selection_evidence": "large individual discovery gain at yqstnuAEVhm-27; not yet an established building-wide rule; fresh discovery members and validation tested unchanged"
+    },
+    {
+      "id": "H9_semi_new",
+      "method": "F_semi_new_finalQ_K2",
+      "domain": "semi_new",
+      "primary_n": [
+        5
+      ],
+      "contrast": "pure C02 minus pure C01, plus all frozen proportions",
+      "selection_evidence": "discovery7images3buildings mean +7.326,6/7positive; final geometry quality only, no invented initial-to-final gain"
+    },
+    {
+      "id": "H10_semi_old_tendency",
+      "method": "F_semi_old_edit_K2",
+      "domain": "semi_v1",
+      "primary_n": [
+        5
+      ],
+      "contrast": "3C01+2C02 versus pure C01 and pure C02, including within-composition stability; C01 is higher editing tendency",
+      "selection_evidence": "discovery5images2buildings versus C01 mean +4.982; mixed within |deltaQ|2.002 vs pureC01 6.134; editing is not confirmed correction"
+    },
+    {
+      "id": "H11_doorway",
+      "method": "F_doorway_finalQ_K3",
+      "domain": "doorway",
+      "primary_n": [
+        9
+      ],
+      "contrast": "6C01+3C03 against both corresponding pure classes; retain every failed/no-score attempt and compare complete proportions first",
+      "selection_evidence": "discovery high conditional-scored gain with only3comparableimages2buildings and many pure failures; potentially survivor biased; not a winner claim"
+    }
+  ],
+  "analysis": {
+    "primary_scores": [
+      "B8L2",
+      "D10_sensitivity"
+    ],
+    "fusion_gap": 7.5,
+    "N1_applied": false,
+    "missing_quality": "keep missing and reasons; report score availability and complete status; conditional quality means never replace missing by zero",
+    "aggregation": "each real image first; primary building-equal average across supported buildings plus image-equal/median and all building effects; paired image support for each fixed contrast; no resampled-team pseudo-replication",
+    "uncertainty": "building-resampling descriptive interval and individual building effects; no post-selection p-value success gate",
+    "stability": {
+      "main_abs_Q": 2,
+      "main_floor_1_IoU": 0.05,
+      "main_bound_cyclic_deg": 3,
+      "same_nodes": true,
+      "both_complete": true,
+      "strict": [
+        1,
+        0.02,
+        2
+      ],
+      "wide": [
+        5,
+        0.1,
+        5
+      ]
+    },
+    "structure": "native reference node/direct adjacency diagnostics plus new collinearity-insensitive wall coverage and true-turn location recall; no semantic necessary-structure ground truth",
+    "block_primary": "m>=2; single-person m1 supplementary; same actual core, same actual m for A/B and A/C",
+    "controls": "total classification effect first; then exact new/old matched events; same incoming historical Q difference<=3 subset; controls q_beta+own-condition Q where supported; compare common new-source workers; never fit category counts jointly with a saturated worker indicator model",
+    "individual_sensitivity": "leave-one-worker-out recomputation of summaries from sampled teams when supported; report retained images and finite-member capacity",
+    "case_selection": "after all frozen-rule results: clear positive, conditional complement, stable wrong, quality-matched structural difference, strongest counterexamples; case selection descriptive, not validation denominator"
+  },
+  "file_sha256": {
+    "analysis/composition/SPLIT.json": "075125c748299b7829c179b9ac2b44706b360acaeefbdde0d3ce23076843752e",
+    "analysis/forward/results/worker_labels.csv.gz": "b5e52ba1aebe093d9555a8a0782c53a52c6d79778aded4f16de474b6ed804bfc",
+    "analysis/reverse/worker_labels.csv.gz": "64aa9e9fff524d597f20ad94f6f0e7fd205bfdcb0af24c83f1f2f540f4172411",
+    "analysis/forward/results/method_manifest.json": "ab9f734538c646751ac4dc071ce11506e83de27f361ae1f0870f41dba3890142",
+    "analysis/reverse/CANDIDATE_MANIFEST.json": "e534ce40e1c14ffb655d7110ff71ece37a9990d44475da3e1cc328c363be2ec7",
+    "analysis/composition/BLOCK_VALIDATION_SPEC.json": "3c20de618717c81e971fe4006cf093f17bf4f23f784af1a1e6f90b69c220f7f4",
+    "analysis/composition/CURVES_VALIDATION_SPEC.json": "72ae04696b566f2f2698b7700b2d1567e571b29b3f1ab9280e5cbacc87e00a1e",
+    "analysis/composition/CONFIRM_VALIDATION_SPEC.json": "977c3458c8aab0e6f5af85ca1466c12d1a0a694f3fc6c6d63c896ac38a00198b",
+    "analysis/composition/NESTED_VALIDATION_SPEC.json": "fefed537c7ff323d0111334d73468b3a5ad3ecf5fd323ca7e2c4eafadf334968",
+    "analysis/forward/condition_experiment_spec.json": "d1693dd99f9c9089e09d5b4c18b9181da8ac13efbdde4e0601d18516ead8fd02",
+    "analysis/composition/fusion_runner.py": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+    "analysis/composition/design_compositions.py": "c7cba492bded5b9d201c052228a046b258eef5ea26fd57b5d943dffddc249ebb",
+    "analysis/composition/design_blocks.py": "24f63028b4f9c2fdba068008b7f22440fd99725a3f85812fdca2ebefa59f2fc2",
+    "analysis/composition/design_curves.py": "9e64f8f192b573b4e4b5ca95549f005b2399df912f8fe1cd88dc02fc180a72ae",
+    "analysis/composition/design_nested.py": "b9103d000ac741dcf3983d9459e5482b3457d597b362a476df5776ecb4637cbb",
+    "analysis/composition/design_condition_requests.py": "5e54b5ace5956d562872ca5cd87d4fe969ae1301c918de1b17bf9b025894077b",
+    "analysis/composition/geometry_diagnostics.py": "57a94b9987cd012d1be8d4c7e25f003ba5982c1c6c23be83ed8133243061a0ce"
+  }
+}

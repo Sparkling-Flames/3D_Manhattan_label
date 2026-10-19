@@ -1,0 +1,116 @@
+{
+  "phase": "discovery",
+  "seed": 2026101903,
+  "created_utc": "2026-10-19T09:10:55.682674+00:00",
+  "selection": "Support and representation driven breadth panel, chosen before reading candidate outcome rankings. Covers Q strata, Q\u00d7detail, multi-domain profiles, historical geometric relations, source-residual relations, roles and K6/K8 stress. Full feasible integer count enumeration when <=cap; farthest L1 systematic selection otherwise. Each count vector real member resamples.",
+  "methods": [
+    {
+      "method_id": "F_rule_Q_quantile_K3",
+      "domains": [
+        "all"
+      ],
+      "sizes": [
+        5,
+        9,
+        13
+      ],
+      "max_vectors": 64,
+      "replicates": 4,
+      "panel": "all"
+    },
+    {
+      "method_id": "F_rule_Q2xDetail2",
+      "domains": [
+        "all"
+      ],
+      "sizes": [
+        5,
+        9
+      ],
+      "max_vectors": 64,
+      "replicates": 4,
+      "panel": "all"
+    },
+    {
+      "method_id": "F_medoids_QTDS_K3",
+      "domains": [
+        "all"
+      ],
+      "sizes": [
+        5,
+        9,
+        13
+      ],
+      "max_vectors": 64,
+      "replicates": 4,
+      "panel": "all"
+    },
+    {
+      "method_id": "R_geo9_source_signed_p2_K2",
+      "domains": [
+        "all"
+      ],
+      "sizes": [
+        5,
+        9,
+        13
+      ],
+      "max_vectors": 64,
+      "replicates": 4,
+      "panel": "all"
+    },
+    {
+      "method_id": "R_geo9_spectral_p2_K3",
+      "domains": [
+        "all"
+      ],
+      "sizes": [
+        5,
+        9,
+        13
+      ],
+      "max_vectors": 64,
+      "replicates": 4,
+      "panel": "all"
+    },
+    {
+      "method_id": "R_role_ward_K5",
+      "domains": [
+        "all"
+      ],
+      "sizes": [
+        5,
+        9
+      ],
+      "max_vectors": 64,
+      "replicates": 4,
+      "panel": "all"
+    },
+    {
+      "method_id": "F_rule_Q_quantile_K6",
+      "domains": [
+        "all"
+      ],
+      "sizes": [
+        5,
+        9
+      ],
+      "max_vectors": 32,
+      "replicates": 3,
+      "panel": "dense"
+    },
+    {
+      "method_id": "R_geo9_source_signed_p2_K8",
+      "domains": [
+        "all"
+      ],
+      "sizes": [
+        5,
+        9
+      ],
+      "max_vectors": 32,
+      "replicates": 3,
+      "panel": "dense"
+    }
+  ]
+}

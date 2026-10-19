@@ -1,0 +1,36 @@
+{
+  "phase": "validation",
+  "seed": 2026101957,
+  "created_utc": "2026-10-19T09:38:32.431047+00:00",
+  "selection": "Same frozen methods, integer proportions, sizes and comparison rules; no validation outcome adaptation.",
+  "methods": [
+    {
+      "method_id": "R_role_ward_difficulty_K2",
+      "domain": "hard",
+      "fixed_class": "C02",
+      "added_class": "C01",
+      "fixed_sizes": [
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "replicates": 6
+    },
+    {
+      "method_id": "R_role_ward_K5",
+      "domain": "all",
+      "fixed_class": "C05",
+      "added_class": "C02",
+      "fixed_sizes": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "replicates": 4
+    }
+  ],
+  "source_discovery_spec": "NESTED_DISCOVERY_SPEC.json"
+}

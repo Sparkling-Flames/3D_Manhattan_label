@@ -1,0 +1,51 @@
+{
+  "schema": "reverse_composition_history_candidates_v1",
+  "train_key": "history_d199d7b13dccfe7e",
+  "history_buildings": [
+    "2t7WUuJeko7",
+    "S9hNv5qa7GM",
+    "VFuaQ6m2Qom",
+    "Z6MFQCViBuw",
+    "b8cTxDM8gDG",
+    "jh4fc5c5qoQ",
+    "uNb9QFRL6hY",
+    "wc2JMjhGNzB",
+    "x8F5xyUWy9e",
+    "zsNo4HB9uLZ"
+  ],
+  "records": 2578,
+  "images": 81,
+  "buildings": 10,
+  "workers": 60,
+  "history_supported_workers": {
+    "global": 55,
+    "easy": 55,
+    "medium": 40,
+    "hard": 37
+  },
+  "pair_observations": 41616,
+  "supported_pairs": 1624,
+  "possible_pairs": 1770,
+  "n_methods": 62,
+  "n_global_methods": 54,
+  "n_conditional_methods": 8,
+  "label_rows": 4680,
+  "label_sha256": "64aa9e9fff524d597f20ad94f6f0e7fd205bfdcb0af24c83f1f2f540f4172411",
+  "label_content_sha256": "c09aa449586e474eef3f761b28a0803d42ffcd8bd026dd93e48616d7fb93349b",
+  "seed": 2026101903,
+  "inputs": {
+    "/workspace/shared/composition_audit_20261019/source_repository/research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/clusters/records_geometry.csv.gz": "0e42db7e55f9acded7d1dc94d4347c1278ac3835071235527b7e5fa1dcfae0bf",
+    "/workspace/shared/composition_audit_20261019/source_repository/research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/clusters/assignments.csv.gz": "461ac8aa9e136a5e897bc09ab690db7d8199500ae6da10d4cb2bd54ae7025652",
+    "/workspace/shared/composition_audit_20261019/extracted/personnel_composition_study_20261019/analysis/composition/SPLIT.json": "075125c748299b7829c179b9ac2b44706b360acaeefbdde0d3ce23076843752e"
+  },
+  "code_sha256": "937101fb46617ead8105ff1514a0e282f0dfac980fc797df66a28f20117ef0e5",
+  "classification_Q_used": false,
+  "target_geometries_used": false,
+  "target_Q_or_reference_used": false,
+  "new_fusion_calls": 0,
+  "known_imputation": "Unobserved relation is separately flagged; unsigned clustering alone uses training-global prior. Source-residual relation uses zero absence of edge; not an observed similarity.",
+  "source_residual": "Subtract within-history-image same-source-pair coassignment baseline, then image/building equal aggregation and two-building shrinkage to zero.",
+  "missing_roles": "Median imputation after preserving counts; missingness indicators do not enter roles.",
+  "classification_scope": "ordinary_manual only; unknown is not a class; target metadata only used for composition feasibility",
+  "comparisons_not_yet_run": "No fusion-outcome comparisons or discovery/validation quality scores read by this script."
+}

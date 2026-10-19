@@ -9,6 +9,10 @@ Q/T/S/B画像、分类、组合与换人实验；记录质量版本及训练/评
 ## 当前依据
 
 - [人员四轴更新](../../workers/worker_four_axis_update_20261015/README.md)
+- [类别块替换独立复核与额外背景重放](../../workers/personnel_composition_followup_20261019/README.md)：451对照、1353队；属于局部支持，未冻结正式人员类别。
+- [Pro人员组合研究原包](../../workers/personnel_composition_study_20261019/README_ZH.md)：保留原研究报告、方法、候选、反例和案例复现。
+- [Dot人员组合独立审查](../../workers/personnel_composition_dot_audit_20261019/README_复算说明.md)：与Pro原研究及此前人员曲线审查分别登记。
+- [当前人员分型任务与验收](../../../docs/thesis_main/人员多变量反向分型_双线任务与验收_20261019.md)：直接可互换性学习、条件细分与独立验收尚在推进。
 
 ## 历史对照
 
@@ -29,7 +33,7 @@ Q/T/S/B画像、分类、组合与换人实验；记录质量版本及训练/评
 
 ## 资料登记
 
-下列共 31 项沿用 CATALOG 的主题分类与原文标题；日期和排序不表示采用优先级。
+下列历史精选条目沿用 CATALOG 的主题分类与原文标题；完整现行清单见[机器目录](../CATALOG.json)及[人员主题入口](../../../docs/thesis_main/topics/workers/README.md)。日期和排序不表示采用优先级。
 
 - [同房人员模式与Q/T候选类型：计划审查后的实际分析](../../same_room/same_room_personnel_patterns_20261015/README.md)。20261015；历史/待判断
 - [Chat Pro 深度研究交接：图片、人数与人员构成](../../worker_consensus_handoff_20261003/README.md)。20261003；历史/待判断

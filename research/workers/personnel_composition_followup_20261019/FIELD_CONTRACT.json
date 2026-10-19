@@ -1,0 +1,22 @@
+{
+  "version": "personnel_composition_followup_20261020_v1",
+  "status": "exploratory_frozen_label_followup",
+  "identity": "event_id binds pool, reference, exact A/B/C workers, core, n and actual m; team_key identifies pool and actual member set",
+  "arms": {
+    "A": "original block plus common core",
+    "B": "same-class replacement block plus identical core",
+    "C": "other-class replacement block plus identical core"
+  },
+  "aggregation": "event means within pool, equal pools within building, equal buildings; denominators are not unique independent teams",
+  "failures": "quality and continuous unavailable values stay missing; joint stability requires complete geometry and retains incomplete attempts as false",
+  "main": "both complete, absolute B8L2 difference <=2, floor Jaccard difference <=0.05, same node count and bound cyclic distance <=3 degrees",
+  "strict": "1 / 0.02 / 2 degrees; same complete and node-count conditions",
+  "wide": "5 / 0.10 / 5 degrees; same complete and node-count conditions",
+  "net_Q": "C_B8L2 minus B_B8L2; signed effect, separate from A/B versus A/C interchangeability",
+  "geometry": "preserve original frozen ring and points, mean-height prism IoU is a proxy rather than ideal 3D solid IoU",
+  "subset_support": "high_Q_threshold uses original history-only threshold label; supported flags retain prior domain opportunities and missingness; no new types fitted",
+  "evaluation_boundary": "original discovery/validation phase labels describe previous split, all images already explored; additional cores are registered before computation but not external validation",
+  "human_review": "4 descriptive examples pending user review; not rate denominators and no post-hoc threshold adoption",
+  "scoring": "B8L2 main, D10 sensitivity, N1 unchanged",
+  "criterion_components": "geometry_main removes Q limit from main; quality_main retains completeness and Q difference only; descriptive decomposition, not new adopted threshold"
+}

@@ -1,0 +1,164 @@
+{
+  "schema": "composition_case_visuals_v1",
+  "case_id": "C03_hard_vote_threshold",
+  "case_sha256": "2b726cb10047e29ca255f67efafcdb112023451cd4b5cfd3a8e979328046ab6e",
+  "renderer_sha256": "5bc6da16f8ea35177abc37f38f3a1da02512299f588b8bb2dfc726b4bf303fdb",
+  "reference_id": "gt:UwV83HsGsw3_f9641b59487a4b0ca0fe41a82edc0980:data/mp3d_layout/test/label_cor/UwV83HsGsw3_f9641b59487a4b0ca0fe41a82edc0980.txt",
+  "reference_version": "gt_original",
+  "image": {
+    "status": "available",
+    "path": "/workspace/scratch/1d99618bd862/analysis/selected_originals/UwV83HsGsw3_f9641b59487a4b0ca0fe41a82edc0980.png",
+    "sha256": "58fd930f2c3239901efc9f166bf27221088f075b59006ce19fbfce5e633b7425",
+    "dimensions": [
+      2048,
+      1024
+    ]
+  },
+  "erp_coordinate_convention": "continuous x/W,y/H; W=1024,H=512; seam wrapped",
+  "3d_construction": "Retain final/reference floor; top ray takes paired bottom horizontal range; floor H=0,camera H=1",
+  "bev_bounds": [
+    -2.9811592907143005,
+    0.6207159083997351,
+    -3.644698457432985,
+    0.6761600139349258
+  ],
+  "height_bounds": [
+    0,
+    1.8865820645635927
+  ],
+  "view": {},
+  "reference_geometry": {
+    "status": "ok",
+    "reason": null,
+    "floor_reconstruction_max_abs_difference": 8.881784197001252e-16,
+    "footprint_valid": true,
+    "vertical_pair_mismatch": false
+  },
+  "team_geometry": {
+    "4 H1 + 4 H2：门槛4票": {
+      "status": "ok",
+      "reason": null,
+      "floor_reconstruction_max_abs_difference": 0.0,
+      "footprint_valid": true,
+      "vertical_pair_mismatch": false,
+      "team_key": "UwV83HsGsw3-22__manual__f3e5ed92db__6cf87586f94f5568bf77",
+      "member_workers": [
+        "W101",
+        "W102",
+        "W107",
+        "W112",
+        "W120",
+        "W122",
+        "W126",
+        "W133"
+      ],
+      "member_object_ids": [
+        "v2:new:101517",
+        "v2:new:101518",
+        "v2:new:101522",
+        "v2:new:101526",
+        "v2:new:101534",
+        "v2:new:101535",
+        "v2:new:101538",
+        "v2:new:101544"
+      ],
+      "counts": {
+        "C01": 4,
+        "C02": 4
+      }
+    },
+    "5 H1 + 4 H2：门槛5票": {
+      "status": "ok",
+      "reason": null,
+      "floor_reconstruction_max_abs_difference": 0.0,
+      "footprint_valid": true,
+      "vertical_pair_mismatch": false,
+      "team_key": "UwV83HsGsw3-22__manual__f3e5ed92db__54df2e708699d8ccbb43",
+      "member_workers": [
+        "W101",
+        "W102",
+        "W103",
+        "W107",
+        "W112",
+        "W120",
+        "W122",
+        "W126",
+        "W133"
+      ],
+      "member_object_ids": [
+        "v2:new:101517",
+        "v2:new:101518",
+        "v2:new:101519",
+        "v2:new:101522",
+        "v2:new:101526",
+        "v2:new:101534",
+        "v2:new:101535",
+        "v2:new:101538",
+        "v2:new:101544"
+      ],
+      "counts": {
+        "C01": 5,
+        "C02": 4
+      }
+    },
+    "6 H1 + 4 H2：仍为5票": {
+      "status": "ok",
+      "reason": null,
+      "floor_reconstruction_max_abs_difference": 0.0,
+      "footprint_valid": true,
+      "vertical_pair_mismatch": false,
+      "team_key": "UwV83HsGsw3-22__manual__f3e5ed92db__bd1f4893abdb7fb65a29",
+      "member_workers": [
+        "W101",
+        "W102",
+        "W103",
+        "W107",
+        "W112",
+        "W119",
+        "W120",
+        "W122",
+        "W126",
+        "W133"
+      ],
+      "member_object_ids": [
+        "v2:new:101517",
+        "v2:new:101518",
+        "v2:new:101519",
+        "v2:new:101522",
+        "v2:new:101526",
+        "v2:new:101533",
+        "v2:new:101534",
+        "v2:new:101535",
+        "v2:new:101538",
+        "v2:new:101544"
+      ],
+      "counts": {
+        "C01": 6,
+        "C02": 4
+      }
+    }
+  },
+  "supplied_members": 30,
+  "member_scope": "该冻结池内 H1、H2 的全部已知类别成员",
+  "member_geometry_status_counts": {
+    "ok": 30,
+    "unavailable": 0
+  },
+  "files": [
+    {
+      "path": "comparison.png",
+      "bytes": 834452,
+      "sha256": "f8fd405d6d3bc6a981963e225b94046f7dfc990ee9920d623e03bd781021e3d9"
+    },
+    {
+      "path": "member_overlays.png",
+      "bytes": 530800,
+      "sha256": "f38791ef1471656712d1aaebd03dade65093709bfde1a8c1e47745c5cb6ea7a2"
+    },
+    {
+      "path": "local_zoom.png",
+      "bytes": 401226,
+      "sha256": "76381cc43636b4c4fc6541f175a664304c05ff10d356718cfea85534f22f8b52"
+    }
+  ]
+}

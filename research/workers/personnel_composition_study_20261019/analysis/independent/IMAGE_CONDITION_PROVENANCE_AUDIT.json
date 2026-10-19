@@ -1,0 +1,544 @@
+{
+  "schema": "image_condition_provenance_audit_v1",
+  "scope": "Read frozen metadata and source code only; no label, geometry, reference, eligibility or scientific result changed",
+  "input_sha256": {
+    "restored/work_personnel_typing_A_20261019/recovered/repo_main_20261019/research/statistics/v2_evidence_audit_20261019/records.json.gz": "46ee9890a1a56264c8955538f47c650cbe893662e7cefc21e360a3e00eca9251",
+    "restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7"
+  },
+  "inventory_records": 10439,
+  "inventory_images": 261,
+  "quality_pools": 229,
+  "quality_images": 196,
+  "all_image_records_consistent": true,
+  "all_pool_condition_values_match_image_evidence": true,
+  "all_alignment_flags_recounted": true,
+  "by_layer": [
+    {
+      "layer": "doorway_manual",
+      "pools": 17,
+      "images": 17,
+      "records": 571,
+      "buildings": 9,
+      "pools_difficulty_reference_aligned": 17,
+      "difficulty_by_image": {
+        "单列": 17
+      },
+      "classification_basis_by_image": {
+        "geometry_and_codex_photo_review_not_blind": 16,
+        "user_review_adopted_20261016": 1
+      },
+      "user_grade_adopted_images": 1,
+      "scene_by_image": {
+        "doorway_difficult": 15,
+        "doorway_annotatable": 2
+      },
+      "coarse_room_type_by_image": {
+        "通行与连接": 6,
+        "卫浴": 5,
+        "卧室": 3,
+        "开放复合空间": 2,
+        "not_recorded": 1
+      }
+    },
+    {
+      "layer": "ordinary_manual",
+      "pools": 177,
+      "images": 177,
+      "records": 5719,
+      "buildings": 22,
+      "pools_difficulty_reference_aligned": 177,
+      "difficulty_by_image": {
+        "中等": 32,
+        "简单": 114,
+        "困难": 31
+      },
+      "classification_basis_by_image": {
+        "geometry_and_codex_photo_review_not_blind": 142,
+        "user_adjudicated_difficulty": 1,
+        "user_review_adopted_20261016": 17,
+        "user_followup_20261016": 13,
+        "user_direct_20261017": 2,
+        "user_scope_and_grade_adjudication_20261016": 1,
+        "user_corrected_gt_and_codex_photo_review": 1
+      },
+      "user_grade_adopted_images": 30,
+      "scene_by_image": {
+        "unflagged": 145,
+        "clear": 30,
+        "not_recorded": 2
+      },
+      "coarse_room_type_by_image": {
+        "卫浴": 36,
+        "卧室": 43,
+        "开放复合空间": 3,
+        "起居与休闲": 27,
+        "通行与连接": 24,
+        "厨房与用餐": 14,
+        "工作与学习": 11,
+        "not_recorded": 10,
+        "特殊用途": 2,
+        "储藏与家务辅助": 6,
+        "无法判断": 1
+      }
+    },
+    {
+      "layer": "ordinary_semi",
+      "pools": 32,
+      "images": 32,
+      "records": 901,
+      "buildings": 12,
+      "pools_difficulty_reference_aligned": 32,
+      "difficulty_by_image": {
+        "简单": 24,
+        "中等": 7,
+        "困难": 1
+      },
+      "classification_basis_by_image": {
+        "geometry_and_codex_photo_review_not_blind": 26,
+        "user_scope_and_grade_adjudication_20261016": 1,
+        "user_followup_20261016": 2,
+        "user_review_adopted_20261016": 3
+      },
+      "user_grade_adopted_images": 5,
+      "scene_by_image": {
+        "clear": 2,
+        "unflagged": 30
+      },
+      "coarse_room_type_by_image": {
+        "not_recorded": 4,
+        "开放复合空间": 1,
+        "通行与连接": 6,
+        "起居与休闲": 2,
+        "卧室": 11,
+        "无法判断": 1,
+        "卫浴": 2,
+        "厨房与用餐": 2,
+        "工作与学习": 2,
+        "储藏与家务辅助": 1
+      }
+    },
+    {
+      "layer": "special_manual",
+      "pools": 2,
+      "images": 2,
+      "records": 66,
+      "buildings": 2,
+      "pools_difficulty_reference_aligned": 2,
+      "difficulty_by_image": {
+        "困难": 1,
+        "简单": 1
+      },
+      "classification_basis_by_image": {
+        "user_review_adopted_20261016": 2
+      },
+      "user_grade_adopted_images": 2,
+      "scene_by_image": {
+        "unflagged": 1,
+        "clear": 1
+      },
+      "coarse_room_type_by_image": {
+        "储藏与家务辅助": 1,
+        "起居与休闲": 1
+      }
+    },
+    {
+      "layer": "special_semi",
+      "pools": 1,
+      "images": 1,
+      "records": 45,
+      "buildings": 1,
+      "pools_difficulty_reference_aligned": 1,
+      "difficulty_by_image": {
+        "简单": 1
+      },
+      "classification_basis_by_image": {
+        "user_review_adopted_20261016": 1
+      },
+      "user_grade_adopted_images": 1,
+      "scene_by_image": {
+        "clear": 1
+      },
+      "coarse_room_type_by_image": {
+        "起居与休闲": 1
+      }
+    }
+  ],
+  "inventory_difficulty_classification_basis_by_image": {
+    "user_review_adopted_20261016": 30,
+    "geometry_and_codex_photo_review_not_blind": 201,
+    "user_adjudicated_difficulty": 1,
+    "user_followup_20261016": 18,
+    "user_scope_and_grade_adjudication_20261016": 3,
+    "user_corrected_gt_and_codex_photo_review": 1,
+    "user_confirmed_floor_and_photo_review": 3,
+    "confirmed_vertical_space_and_photo_review": 2,
+    "user_direct_20261017": 2
+  },
+  "inventory_user_grade_adopted_images": 46,
+  "inventory_scene_by_image": {
+    "clear": 35,
+    "doorway_difficult": 15,
+    "unflagged": 179,
+    "oos": 23,
+    "doorway_annotatable": 2,
+    "oos_and_doorway": 2,
+    "oos_pending;oos_suspected": 1,
+    "unflagged;doorway_suspected": 1,
+    "unflagged;oos_suspected": 1,
+    "not_recorded": 2
+  },
+  "inventory_review_method_by_image": {
+    "Codex逐张全景总览复核，非盲法；新范围另有旧轮35图对照": 259,
+    "not_recorded": 2
+  },
+  "nonaligned_qualified_pools": [],
+  "classification_basis_examples": [
+    {
+      "image": "2t7WUuJeko7-02",
+      "image_id": "2t7WUuJeko7_1a0d730696cc4057b0037a75c8ef6b59",
+      "current_class": "中等",
+      "conditional_difficulty": "中等",
+      "target_version": "gt:2t7WUuJeko7_1a0d730696cc4057b0037a75c8ef6b59:data/mp3d_layout/valid/label_cor/2t7WUuJeko7_1a0d730696cc4057b0037a75c8ef6b59.txt",
+      "scene": "not_recorded",
+      "oos_subtype": "not_recorded",
+      "doorway_status": "not_recorded",
+      "classification_basis": "user_direct_20261017",
+      "basis_before_user_adoption": null,
+      "class_before_user_adoption": null,
+      "user_grade_adopted": null,
+      "review_method": null,
+      "reviewed": null,
+      "N_floor": null,
+      "N_turn": null,
+      "H": null,
+      "inference_burden": null,
+      "evidence": "用户直接裁定中等；偏简单仅备注。",
+      "difficulty_analysis_eligible": true,
+      "scope_semantics": null
+    },
+    {
+      "image": "2t7WUuJeko7-06",
+      "image_id": "2t7WUuJeko7_3be66dc4f0fb46449d63b07d92c74f3f",
+      "current_class": "简单",
+      "conditional_difficulty": "简单",
+      "target_version": "gt:2t7WUuJeko7_3be66dc4f0fb46449d63b07d92c74f3f:data/mp3d_layout/valid/label_cor/2t7WUuJeko7_3be66dc4f0fb46449d63b07d92c74f3f.txt",
+      "scene": "clear",
+      "oos_subtype": "not_oos",
+      "doorway_status": "none",
+      "classification_basis": "user_review_adopted_20261016",
+      "basis_before_user_adoption": "geometry_and_codex_photo_review_not_blind",
+      "class_before_user_adoption": "简单",
+      "user_grade_adopted": true,
+      "review_method": "Codex逐张全景总览复核，非盲法；新范围另有旧轮35图对照",
+      "reviewed": true,
+      "N_floor": 4,
+      "N_turn": 4,
+      "H": 0,
+      "inference_burden": "low",
+      "evidence": "按用户2026-10-16指示采用其复核等级；旧几何及视觉依据保留供解释，不据本次标签反推阈值。",
+      "difficulty_analysis_eligible": true,
+      "scope_semantics": "whole_space_vertical_boundary"
+    },
+    {
+      "image": "2t7WUuJeko7-09",
+      "image_id": "2t7WUuJeko7_7b017f053981438a9c075e599f2c5866",
+      "current_class": "简单",
+      "conditional_difficulty": "简单",
+      "target_version": "gt:2t7WUuJeko7_7b017f053981438a9c075e599f2c5866:data/mp3d_layout/valid/label_cor/2t7WUuJeko7_7b017f053981438a9c075e599f2c5866.txt",
+      "scene": "unflagged",
+      "oos_subtype": "not_recorded",
+      "doorway_status": "not_recorded",
+      "classification_basis": "geometry_and_codex_photo_review_not_blind",
+      "basis_before_user_adoption": "geometry_and_codex_photo_review_not_blind",
+      "class_before_user_adoption": "简单",
+      "user_grade_adopted": false,
+      "review_method": "Codex逐张全景总览复核，非盲法；新范围另有旧轮35图对照",
+      "reviewed": true,
+      "N_floor": 4,
+      "N_turn": 4,
+      "H": 0,
+      "inference_burden": "low",
+      "evidence": "床和小家具遮住部分底端，上角及竖向转折清楚。",
+      "difficulty_analysis_eligible": true,
+      "scope_semantics": "whole_space_vertical_boundary"
+    },
+    {
+      "image": "7y3sRwLe3Va-03",
+      "image_id": "7y3sRwLe3Va_112edb40f34e470da3a5b04599e71211",
+      "current_class": "中等",
+      "conditional_difficulty": "中等",
+      "target_version": "gt:7y3sRwLe3Va_112edb40f34e470da3a5b04599e71211:data/mp3d_layout/test/label_cor/7y3sRwLe3Va_112edb40f34e470da3a5b04599e71211.txt",
+      "scene": "unflagged",
+      "oos_subtype": "not_recorded",
+      "doorway_status": "not_recorded",
+      "classification_basis": "user_adjudicated_difficulty",
+      "basis_before_user_adoption": "user_adjudicated_difficulty",
+      "class_before_user_adoption": "中等",
+      "user_grade_adopted": false,
+      "review_method": "Codex逐张全景总览复核，非盲法；新范围另有旧轮35图对照",
+      "reviewed": true,
+      "N_floor": 6,
+      "N_turn": 6,
+      "H": 1,
+      "inference_burden": "moderate",
+      "evidence": "用户2026-10-15明确裁定中等；原目标不变。",
+      "difficulty_analysis_eligible": true,
+      "scope_semantics": "whole_space_vertical_boundary"
+    },
+    {
+      "image": "7y3sRwLe3Va-11",
+      "image_id": "7y3sRwLe3Va_606f9842b8af48daa28f10df8b69d861",
+      "current_class": "中等",
+      "conditional_difficulty": "中等",
+      "target_version": "gt:7y3sRwLe3Va_606f9842b8af48daa28f10df8b69d861:data/mp3d_layout/test/label_cor/7y3sRwLe3Va_606f9842b8af48daa28f10df8b69d861.txt",
+      "scene": "unflagged",
+      "oos_subtype": "not_recorded",
+      "doorway_status": "not_recorded",
+      "classification_basis": "user_followup_20261016",
+      "basis_before_user_adoption": "geometry_and_codex_photo_review_not_blind",
+      "class_before_user_adoption": "简单",
+      "user_grade_adopted": true,
+      "review_method": "Codex逐张全景总览复核，非盲法；新范围另有旧轮35图对照",
+      "reviewed": true,
+      "N_floor": 4,
+      "N_turn": 4,
+      "H": 0,
+      "inference_burden": "low",
+      "evidence": "用户补充裁定中等。壁炉可以标注",
+      "difficulty_analysis_eligible": true,
+      "scope_semantics": "whole_space_vertical_boundary"
+    },
+    {
+      "image": "7y3sRwLe3Va-19",
+      "image_id": "7y3sRwLe3Va_ad77d6eeca5b492b8fe3317177f4f03f",
+      "current_class": "中等",
+      "conditional_difficulty": "中等",
+      "target_version": "gt:7y3sRwLe3Va_ad77d6eeca5b492b8fe3317177f4f03f:data/mp3d_layout/test/label_cor/7y3sRwLe3Va_ad77d6eeca5b492b8fe3317177f4f03f.txt",
+      "scene": "unflagged",
+      "oos_subtype": "not_recorded",
+      "doorway_status": "not_recorded",
+      "classification_basis": "user_scope_and_grade_adjudication_20261016",
+      "basis_before_user_adoption": "geometry_and_codex_photo_review_not_blind",
+      "class_before_user_adoption": "困难",
+      "user_grade_adopted": false,
+      "review_method": "Codex逐张全景总览复核，非盲法；新范围另有旧轮35图对照",
+      "reviewed": true,
+      "N_floor": 8,
+      "N_turn": 8,
+      "H": 2,
+      "inference_burden": "high",
+      "evidence": "原空间不变。壁炉凸墙及两侧墙顶/竖线可辨，局部背向角仍需推断；H=2不能直接等同高难，按用户裁定为中等。",
+      "difficulty_analysis_eligible": true,
+      "scope_semantics": "whole_space_vertical_boundary"
+    },
+    {
+      "image": "7y3sRwLe3Va-26",
+      "image_id": "7y3sRwLe3Va_fdab6422162e49db822a37178ab70481",
+      "current_class": "简单",
+      "conditional_difficulty": "简单",
+      "target_version": "gt_user_revision_20261015:7y3sRwLe3Va_fdab6422162e49db822a37178ab70481:remove_pairs_5_6",
+      "scene": "clear",
+      "oos_subtype": "not_oos",
+      "doorway_status": "none",
+      "classification_basis": "user_corrected_gt_and_codex_photo_review",
+      "basis_before_user_adoption": "user_corrected_gt_and_codex_photo_review",
+      "class_before_user_adoption": "简单",
+      "user_grade_adopted": false,
+      "review_method": "Codex逐张全景总览复核，非盲法；新范围另有旧轮35图对照",
+      "reviewed": true,
+      "N_floor": 6,
+      "N_turn": 6,
+      "H": 0,
+      "inference_burden": "low",
+      "evidence": "用户删除原5/6对错误角后，六处必要转折无几何自遮挡；主要上下墙线可辨，杂物仅局部挡底边，按既有低遮挡六角规则归简单。",
+      "difficulty_analysis_eligible": true,
+      "scope_semantics": "whole_space_vertical_boundary"
+    },
+    {
+      "image": "B6ByNegPMKs-37",
+      "image_id": "B6ByNegPMKs_c946db5792df4f90bea20f06a0030c37",
+      "current_class": "简单",
+      "conditional_difficulty": "简单",
+      "target_version": "user_floor_20261015:B6ByNegPMKs-37",
+      "scene": "unflagged",
+      "oos_subtype": "not_recorded",
+      "doorway_status": "not_recorded",
+      "classification_basis": "user_confirmed_floor_and_photo_review",
+      "basis_before_user_adoption": "user_confirmed_floor_and_photo_review",
+      "class_before_user_adoption": "简单",
+      "user_grade_adopted": false,
+      "review_method": "Codex逐张全景总览复核，非盲法；新范围另有旧轮35图对照",
+      "reviewed": true,
+      "N_floor": 4,
+      "N_turn": 4,
+      "H": 0,
+      "inference_burden": "low",
+      "evidence": "确认范围只保留直走道，墙面延续与端部停止边可定位，不再要求恢复近墙背后分支。",
+      "difficulty_analysis_eligible": true,
+      "scope_semantics": "whole_space_vertical_boundary"
+    },
+    {
+      "image": "pa4otMbVnkk-11",
+      "image_id": "pa4otMbVnkk_4fbdfc08c934474ea9a04977f9081d0e",
+      "current_class": "简单",
+      "conditional_difficulty": "简单",
+      "target_version": "user_floor_20261015:pa4otMbVnkk-11",
+      "scene": "unflagged",
+      "oos_subtype": "not_recorded",
+      "doorway_status": "not_recorded",
+      "classification_basis": "confirmed_vertical_space_and_photo_review",
+      "basis_before_user_adoption": "confirmed_vertical_space_and_photo_review",
+      "class_before_user_adoption": "简单",
+      "user_grade_adopted": false,
+      "review_method": "Codex逐张全景总览复核，非盲法；新范围另有旧轮35图对照",
+      "reviewed": true,
+      "N_floor": 4,
+      "N_turn": 4,
+      "H": 0,
+      "inference_burden": "low",
+      "evidence": "采用本次确认的主体矩形空间，整空间竖向裁切后排除原入口分支；四处主要角位有墙线依据，H=0，局部家具不造成分支未知。",
+      "difficulty_analysis_eligible": true,
+      "scope_semantics": "whole_space_vertical_boundary"
+    }
+  ],
+  "source_chain": [
+    {
+      "repository_path": "tools/thesis_main/analysis/difficulty_scope_preferred_20261011.py",
+      "sha256": "17fead6750889828cbd5172d6ae18a935e7314b0222469315e9195cfd61c1bb5",
+      "excerpts": [
+        {
+          "line": 1,
+          "text": "\"\"\"重建固定候选范围下的259图粗分类；视觉编码为显式审查输入，不是自动识别。\"\"\""
+        },
+        {
+          "line": 60,
+          "text": "grade = classify(f['N_turn'], d['inference_burden'], special)"
+        },
+        {
+          "line": 79,
+          "text": "classification_basis='geometry_and_codex_photo_review_not_blind', **{k:v for k,v in d.items() if k not in ('image','image_id','target_version')}))"
+        },
+        {
+          "line": 103,
+          "text": "status='exploratory_target_conditioned; photo coding is not automatic; GT and eligibility unchanged'))"
+        }
+      ]
+    },
+    {
+      "repository_path": "tools/thesis_main/analysis/difficulty_user_adoption_20261016.py",
+      "sha256": "3a42ebd8e156dc5cbc1548a5a6f106830e863735914a8c2a17bce61713a0b381",
+      "excerpts": [
+        {
+          "line": 22,
+          "text": "if v['image_id']!=r['image_id'] or v['target_version']!=r['target_version']:"
+        },
+        {
+          "line": 30,
+          "text": "classification_basis='user_review_adopted_20261016',"
+        },
+        {
+          "line": 78,
+          "text": "page=page.replace('<nav id=\"filters\">','<p><b>v4：采用你的复核等级；GT错误、既有排除继续保留。原规则意见仅供对照，不代表新等级由机器自动产生。</b></p><nav id=\"filters\">')"
+        }
+      ]
+    },
+    {
+      "repository_path": "tools/thesis_main/analysis/difficulty_strata_20261009.py",
+      "sha256": "3c778d708d72a89900fd9ea1911cc55e36d37ab7dadaafe303d3fd2106e2ef2a",
+      "excerpts": [
+        {
+          "line": 21,
+          "text": "def merge_scene_reviews(original, payloads):"
+        },
+        {
+          "line": 43,
+          "text": "# “是门洞”本身没有声明困难或不可标；已有可标性判断保留。"
+        },
+        {
+          "line": 203,
+          "text": "axes='独立oos_status与doorway_status；旧scene只为历史分组。最新非空逐轴覆盖，空白不撤销；变化单列。是门洞不能新推困难。',"
+        },
+        {
+          "line": 58,
+          "text": "def classify_scene(row):"
+        },
+        {
+          "line": 73,
+          "text": "return 'clear' if (oos, door) == ('not_oos', 'none') else 'unflagged'"
+        },
+        {
+          "line": 83,
+          "text": "'unflagged_not_certified_normal' if stratum == 'unflagged' else"
+        }
+      ]
+    },
+    {
+      "repository_path": "tools/thesis_main/analysis/difficulty_review_update_20261015.py",
+      "sha256": "85331619b7a37e59f67e251b44706c093033e015a5c4d0b136768a44fb1bec37",
+      "excerpts": [
+        {
+          "line": 72,
+          "text": "r['scene']=r['scene']+';oos_suspected'"
+        },
+        {
+          "line": 79,
+          "text": "r['scene']=r['scene']+';doorway_suspected'"
+        }
+      ]
+    },
+    {
+      "repository_path": "tools/thesis_main/analysis/b8l2_usage_coverage_20261016.py",
+      "sha256": "5af2ec1ddc208650affdae85ca931c729dc8ced3acc999c319bea5181dd75f55",
+      "excerpts": [
+        {
+          "line": 11,
+          "text": "def scene_flags(row):"
+        },
+        {
+          "line": 12,
+          "text": "\"\"\"只读图片场景/门洞/OOS轴；来源condition=oos不代替场景事实。\"\"\""
+        },
+        {
+          "line": 20,
+          "text": "worker_unmarkable_choice='unknown_not_independently_recorded')"
+        }
+      ]
+    },
+    {
+      "repository_path": "tools/thesis_main/analysis/quality_workers_v2_20261019.py",
+      "sha256": "42b2dc6c2e3dae85d80734c5729e1fab1f1a01d17c6515953a22925f95e9bd55",
+      "excerpts": [
+        {
+          "line": 107,
+          "text": "r=dict(e,building_id=o['building_id'],current_class=d['current_class'],scene=d['scene'],"
+        }
+      ]
+    },
+    {
+      "repository_path": "tools/thesis_main/analysis/v2_evidence_audit_20261019.py",
+      "sha256": "1896cae001b11905b58a296372abc82c8972ed6d5be040401cf697b4a383fe7a",
+      "excerpts": [
+        {
+          "line": 324,
+          "text": "current_class=q['current_class'], scene=q['scene'], is_oos=q['is_oos'],"
+        },
+        {
+          "line": 365,
+          "text": "image_evidence=dict(room_spatial_classification=images[obj['image_id']].get('room_spatial_classification'),"
+        },
+        {
+          "line": 368,
+          "text": "difficulty_record=d),"
+        }
+      ]
+    }
+  ],
+  "interpretation": {
+    "difficulty": "Existing, target-conditioned working labels from reference geometry, qualitative panorama review and adopted user grades; not an automatic pre-collection image feature. Later user grades are authoritative labels, not evidence the earlier numeric rule predicts them.",
+    "prospective_rule": "A hard-condition personnel rule can be used only when a comparable difficulty assessment and target-scope definition are already available; these retrospective data do not demonstrate automatic difficulty inference before annotation.",
+    "alignment": "Target-version alignment is necessary to interpret a difficulty-conditioned comparison, but alignment alone does not make the difficulty label prospectively available or validate the reference.",
+    "scene": "pool.meta.scene is the operational OOS/doorway review status. clear requires explicit absence; unflagged means no special flag. Neither is a room-function class.",
+    "room_type": "Coarse room function is separately stored in image_evidence.room_spatial_classification.coarse_type, with qualitative main_visual_space and expected_annotation_extent. Do not substitute scene=unflagged for a room type.",
+    "unknown": "Suspected/pending and unrecorded scene evidence remain distinct from confirmed absence; source condition and worker response are separate axes."
+  }
+}

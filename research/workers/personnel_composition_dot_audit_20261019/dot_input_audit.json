@@ -1,0 +1,173 @@
+{
+  "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+  "scientific_source_commit": "82c6164b0d4630de5316199c92aa405930973168",
+  "inventory": 10439,
+  "quality_records": 7302,
+  "images": 196,
+  "workers": 60,
+  "pools": 229,
+  "layers": {
+    "ordinary_manual": 177,
+    "doorway_manual": 17,
+    "ordinary_semi": 32,
+    "special_manual": 2,
+    "special_semi": 1
+  },
+  "all_frozen_coordinates_equal": true,
+  "all_quality_values_equal": true,
+  "all_reference_geometry_equal": true,
+  "all_real_members_unique": true,
+  "N1_applied": false,
+  "sources": {
+    "current_public_input": {
+      "path": "research/statistics/v2_evidence_audit_20261019/INPUTS.json",
+      "bytes": 2280,
+      "sha256": "edee43237c9e5efe179c0276a2d1f2f25c27ce869291222824dfa4cce99e0ca7"
+    },
+    "record_evidence": {
+      "path": "research/statistics/v2_evidence_audit_20261019/records.json.gz",
+      "bytes": 14751756,
+      "sha256": "46ee9890a1a56264c8955538f47c650cbe893662e7cefc21e360a3e00eca9251"
+    },
+    "evidence_contract": {
+      "path": "research/statistics/v2_evidence_audit_20261019/field_contract.json",
+      "bytes": 3526,
+      "sha256": "5b03a4237aabe5c2c457acd9a003cba8047972a978829c638f0f21b3d2608138"
+    },
+    "statistics": {
+      "path": "research/statistics/v2_integrated_analysis_20261019/CONSUMER_INTERFACE.json",
+      "bytes": 94170,
+      "sha256": "7ffeadeb494866ef0633e7246d6f7874548a13a901eadb97c214f54b8c471561"
+    },
+    "quality": {
+      "path": "research/quality/quality_workers_v2_20261019/CROSS_MODULE_INPUTS.json",
+      "bytes": 884,
+      "sha256": "542157e18724e58afe4dd81d51104953b47df95791e9b4dd67be4a59633cef64"
+    },
+    "image_reference_context": {
+      "path": "research/workers/pro_personnel_v2_20261019/analysis_context.json.gz",
+      "bytes": 839683,
+      "sha256": "95455b81cc0de947d704ee2e0935ee795f9c8e0e9de33bd9d1b93e554a6742a2"
+    },
+    "image_release_index": {
+      "path": "research/workers/pro_personnel_v2_20261019/IMAGE_INDEX.csv",
+      "bytes": 68563,
+      "sha256": "7b5df7e0560541a1490130c03386a89ec556488176069eee67cfeb0e98de751e"
+    },
+    "frozen_pools": {
+      "path": "research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz",
+      "bytes": 1464097,
+      "sha256": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7"
+    },
+    "frozen_fusion": {
+      "path": "research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/fusion/fusion_engine.py",
+      "bytes": 16075,
+      "sha256": "56c2b45704ca61d1b88d8f185cdcc55e5fe2d0451892ca27dbb9ffa435a168ee"
+    },
+    "previous_restore": {
+      "path": "research/workers/pro_personnel_v2_archive_20261019/bootstrap.py",
+      "bytes": 8461,
+      "sha256": "a38ac73d0eff869e0ab1d04105ba76c4213b2cb3479c95e7d8b52d8669c60a19"
+    },
+    "part_a_restore": {
+      "path": "research/workers/personnel_type_discovery_next_20261019/bootstrap.py",
+      "bytes": 3654,
+      "sha256": "cd14c62709d867a0673f43a66265ced0a636fad948c8a02fb01e5f773593cc2c"
+    },
+    "part_a_requirements": {
+      "path": "research/workers/personnel_type_discovery_next_20261019/requirements.txt",
+      "bytes": 131,
+      "sha256": "28da4ac14b9b3263bdd1ae58e820ebd7e35bf2b1423e2c5f3801293b9b67208e"
+    },
+    "portraits_FULL_description_only": {
+      "path": "research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/assessment/WORKER_PORTRAITS_60.csv",
+      "bytes": 96271,
+      "sha256": "99d0a8bb75973f9c33dd2ad615a436e1aabaf31ba8d71e48c0541536e6a4112e"
+    },
+    "selected_and_baseline_labels": {
+      "path": "research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/assessment/ALL_SELECTED_AND_BASELINE_LABELS.csv.gz",
+      "bytes": 294860,
+      "sha256": "ef12600ecda1b1968d4f038f7756ba22533b259d712e01b01b3fc85a43093f91"
+    },
+    "all_forward_fold_candidates": {
+      "path": "research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/forward/candidate_classes_by_fold.csv.gz",
+      "bytes": 275233,
+      "sha256": "9d097079bcc8b60db17ff09f440c7533170a964f1511b19da5187e193d6a29ab"
+    },
+    "all_forward_fold_candidates_D10": {
+      "path": "research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/forward/candidate_classes_by_fold_D10.csv.gz",
+      "bytes": 275033,
+      "sha256": "84aafe2aa05e2953ed6bf96a3fec7017e5bb434b612b9967a86e50d045cd695e"
+    },
+    "fold_features": {
+      "path": "research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/forward/fold_features.csv.gz",
+      "bytes": 637728,
+      "sha256": "a851c8ddbf7fba285af58b1c960f1d36c4ad84f35073d1cdf531adc4495e5a3e"
+    },
+    "training_features": {
+      "path": "research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/forward/worker_features_by_training_set.csv.gz",
+      "bytes": 1866035,
+      "sha256": "d6ce1230a74cb9953eeba99bdce0bbd71ea52e38948d13eabcd1f50bb8f37239"
+    },
+    "feature_domains": {
+      "path": "research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/forward/FEATURE_DOMAINS.json",
+      "bytes": 595,
+      "sha256": "a73286fa1f698143dc7e5378fdd8d6f6e5f9bf555a3897aa73f0512e4efa1be4"
+    },
+    "feature_refit_code": {
+      "path": "research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/forward/build_features.py",
+      "bytes": 19955,
+      "sha256": "4b54ac047cf4853fcb4e26d6073437d42b0e37c1ad9c8316bafc9de207f1c6f7"
+    },
+    "reverse_design": {
+      "path": "research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/reverse/REGISTRATION.json",
+      "bytes": 4108,
+      "sha256": "0fd00796a9ed7edbf589b109096731fd1484ae11c9aa7f451ee0a658b7cf066a"
+    },
+    "reverse_code": {
+      "path": "research/workers/personnel_type_discovery_next_20261019/work_personnel_typing_A_20261019/reverse/discover_reverse_types_fast.py",
+      "bytes": 1556,
+      "sha256": "ac27502760be16cfc85b99fe7e74c30702ca23ea5aca4bec0a0efec72c509ef1"
+    },
+    "part_a_report": {
+      "path": "research/workers/personnel_type_discovery_next_20261019/REPORT_ZH.md",
+      "bytes": 51484,
+      "sha256": "9b2ff18760d0a9486b98ac52b6ac296c75be80734b948e2173b67cc73777b879"
+    },
+    "part_a_independent_review": {
+      "path": "research/workers/personnel_type_independent_review_20261019/REVIEW_ZH.md",
+      "bytes": 8596,
+      "sha256": "92be067091e430e09bd7003a784f30a3e10b578e37e30429c32caf05871793a6"
+    },
+    "part_b_acceptance": {
+      "path": "research/workers/personnel_type_validation_next_20261019/part_a_acceptance/README.md",
+      "bytes": 7899,
+      "sha256": "5eb1b1ecf416e08ae78bdd172354a20576e26d4c35d956cbc6d52c4abdcfb891"
+    },
+    "part_b_design": {
+      "path": "research/workers/personnel_type_validation_next_20261019/DESIGN.json.gz",
+      "bytes": 235168,
+      "sha256": "4c2add4479ef6e3e10508d7ccfc78e3cd2141814048ee4ef5a39cc76aa482bef"
+    },
+    "part_b_code": {
+      "path": "tools/thesis_main/analysis/personnel_type_validation_20261019.py",
+      "bytes": 33557,
+      "sha256": "fad40e4555be07f8174a1985bd83926fa4062e6e5ed20b83025369bbde37c845"
+    },
+    "local_cluster_composition": {
+      "path": "research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/clusters/fusion_analysis/composition_summary.csv",
+      "bytes": 20819,
+      "sha256": "07aab14385ebca3cedd815b2048ed6e43bd5eba5229e9545b6132f3fa847d489"
+    },
+    "local_cluster_report": {
+      "path": "research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/clusters/REPORT_ZH.md",
+      "bytes": 20369,
+      "sha256": "69d47640dc951634715270f2adb56df59a97fa4d79140bc08697ce454fe98271"
+    },
+    "same_room_separate_context": {
+      "path": "research/same_room/same_room_v2_prediction_20261019/CONSUMER_INTERFACE.json",
+      "bytes": 1778,
+      "sha256": "44c377c235d5f8bbe94a97c2560ea6e5f9684a5ea344e551087cc4d28ebd9eb4"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>类别块替换：额外背景核查</title>
+<link rel="stylesheet" href="../../statistics/research_explorer_v1_r2_20261017/workbench.css">
+<style>main{max-width:1500px;margin:auto;padding:24px}.panel{margin:20px 0;padding:18px}select{max-width:95%}p{line-height:1.7}#members{overflow-wrap:anywhere}button,select{margin:6px}.geom-photo{aspect-ratio:2}</style>
+<script src="../../statistics/research_explorer_v1_r2_20261017/workbench-core.js" defer></script><script src="../../statistics/research_explorer_v1_r2_20261017/geometry-view.js" defer></script><script src="view-data.js" defer></script><script src="view.js" defer></script></head>
+<body><main><a href="../../statistics/research_explorer_v1_r2_20261017/index.html">返回研究台</a><h1>换类别块后，差别是否确实有意义？</h1>
+<p>451个对照、1353支不同团队。原事件重放133个，额外背景318个。以下4例按固定规则从新背景中选取，供判断几何意义，不代表总体成功率。完整结果见<a href="README.md">核查报告</a>。</p>
+<section class="panel"><label>案例<select id="case" aria-label="选择核查案例"></select></label><p id="identity"></p><p id="metrics"></p><p id="members"></p>
+<label>叠加比较<select id="pair"><option value="B">A与B：保持类别构成，换同类成员</option><option value="C">A与C：改变类别构成，换另一类成员</option></select></label><div id="geometry"></div>
+<p>紫色为固定参考；青色为A；橙色为所选B或C。可切换俯视／3D及单层显隐。连线展示本轮评分使用的自动候选环，不表示人工确认。团队字母不是人员质量等级。</p>
+<details><summary>查看这几支团队成员的原标注</summary><label>人员<select id="worker"></select></label><div id="answer"></div></details>
+<p><strong>人工核对：</strong>分别看A/B与A/C：①你认为是否近似同一结果？②差异主要是缺角／范围、位置、底边y导致的3D，还是无实质影响的冗余点？只需回答4例，不需逐人审核。</p></section>
+<p>当前仍沿用原主判据：完整、分差≤2、底面Jaccard差≤0.05、同节点数、绑定角差≤3°。宽判据为5／0.10／5°。人工评论尚未收回，不修改阈值。原图沿用仓库资产，缺图时可看俯视和3D。</p>
+<a href="REGISTRATION.json">计算前登记</a> · <a href="CHECKS.json">原结果核对</a> · <a href="FIELD_CONTRACT.json">字段与评价说明</a></main></body></html>

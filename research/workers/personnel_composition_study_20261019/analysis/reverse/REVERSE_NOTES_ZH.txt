@@ -1,0 +1,90 @@
+反向人员类别：本轮历史训练结果与解释
+2026-10-19；仅供主报告整合，融合效果由主实验另行检验。
+
+一、已经实际做出的结果
+
+本轮已实际产生 62 个反向分类候选：54 个普通 Manual 全局候选，以及 8 个分别在 easy / medium / hard 训练的条件候选，共 78 个“方法×适用难度”分区、4,680 行人员标签。K 系统覆盖 2、3、4、5、6、8；条件角色候选覆盖 2、3、4、6。没有沿用上一轮最低 K=4 的限制，也没有把 K 当作天然人数种类的证明。
+
+全部类别固定使用 SPLIT.json 的 10 栋 history 建筑：81 张普通 Manual 图、2,578 份冻结标注。拟合时不读 Q、参考几何或融合结果，discovery / validation 建筑的几何在构造关系和角色特征前排除。已固定标签不因后续解释结果改变。unknown 不作为人员类别。
+
+全局有支持的 55 人为 20 名旧来源和 35 名新来源。5 名未知为 W014、W018、W021、W022、W027，原因是历史建筑不足 3 栋；不是低能力判定。easy / medium / hard 支持人数分别为 55 / 40 / 37。hard 的 37 人只有 2 名旧来源，不能把其缺失视为旧人不擅长困难图。
+
+人员对关系来自 41,616 个历史同图配对观测，先在图内、再在建筑内平均。60 人共 1,770 个可能人员对，其中 1,624 对达到至少 3 图、2 楼；进入全局分类的 55 人之间 1,485 对全部实际共现且达到该支持门。当前全局拟合没有真正使用“未观察人员对”的先验距离填补。41,616 个配对不是 41,616 个独立样本。
+
+二、新方法的准确含义
+
+1. 几何关系链接：使用同图 frozen affinity 9° / 12° 局部标法共簇概率，跨历史楼平均后做 average / complete linkage。9° 完整探索两个收缩强度 0、2 等效楼，12° 采用 2 楼收缩；每组均探索 K=2/3/4/5/6/8。
+   P_ij = (n_楼 × 观测共簇均值 + λ × 历史总体共簇均值) / (n_楼 + λ)。这是估计与聚类假设，不是新增观察。局部簇保持原先相同点对数、上下绑定、声明环序和共同循环位移等规则，没有重新处理坐标或删除点。
+
+2. 原始关系谱分型：对历史共簇矩阵按节点度归一化，取前 K 个特征向量，按行归一化后以固定种子 KMeans 分区。它能够利用整张人员关系矩阵，避免平均链接每增加 K 主要切出小孤立类的局限；没有强制等额分组。
+
+3. 来源残差谱分型：先在每张历史图内，分别对“旧旧 / 新新 / 新旧”人员对求共簇基线，从每个真实配对共簇值中扣除对应基线；再图内、楼内平均，向 0 收缩 2 个等效楼。保留正、负关系，以绝对边权求度、做谱嵌入与 KMeans。这是本轮自定义敏感性方法；消除了这类观测来源基线，不保证去掉全部来源混杂，更不表示其信息独立于 Q。
+
+4. 历史标法角色：只用历史实际行为构造 13 维画像，包括 9° / 12° 共簇份额、最大局部簇参与率、单例率、相对同图中位数的点对数差与波动、偏少 / 偏多比例、相对高度对数差与波动、最低底部俯角差与波动。每个人的历史建筑等权，特征以中位数和 IQR 标准化，极值截至 ±5，缺失保留计数后以训练中位数插补，不把缺失指示作为聚类变量。分别用 Ward 和 KMeans。
+   同图最大簇参与率是多数标法倾向，不是正确率。点数偏少也不能直接解释为必要结构遗漏；需要主实验相对固定参考的局部结构结果及代表案例支持。
+
+三、值得进入实际构成实验的已冻结候选
+
+SUPPORT_SHORTLIST.json 给出 14 个全局、2 个条件方法，覆盖方法表达、K 和真实成员可成队支持。该短名单是广覆盖启发式，不是已经按融合效果选出的赢家。其余全部候选继续保留在 worker_labels.csv.gz、CANDIDATE_MANIFEST.json 和 pre_outcome_search_ledger.csv。
+
+部分有清楚支持差异的结果：
+
+方法                             类人数                 来源 NMI     删一历史楼平均 ARI
+R_geo9_average_p0_K2             12 / 43                0.091        0.113
+R_geo9_complete_p2_K4            10 / 10 / 14 / 21       0.300        0.537
+R_geo9_spectral_p2_K3            14 / 20 / 21            0.314        0.841
+R_geo9_spectral_p2_K6            5 / 6 / 8 / 9 / 11 /16 0.307        0.731
+R_geo9_source_signed_p2_K2       27 / 28                 0.076        0.854
+R_geo9_source_signed_p2_K4       10 / 12 / 15 / 18       0.200        0.714
+R_geo9_source_signed_p2_K8       6 / 6 / 6 / 6 / 7 /7/8/9 0.204      0.518
+R_role_ward_K3                  5 / 25 / 25             0.219        0.397
+R_role_ward_K5                  5 / 6 / 7 / 18 / 19     0.232        0.579
+
+人数按大小排序，仅为描述；不能据此改变原始 C01、C02 等类号。原始谱 K2 与来源的 NMI 为 0.488，来源残差谱 K2 为 0.076，因此应同时报告原始分类整体效用与残差敏感性，不能只保留其中更好的一条。
+
+明确失败 / 风险候选也已保存。例如 12° 平均链接、2 楼收缩的 K2 结果为 1 / 54，发现侧没有任何图可供两个各至少 3 人的类比较。9° 平均链接无收缩 K2 虽有 12 / 43 人，删一历史楼的平均 ARI 只有 0.113、最差为 −0.070，显示学到的边界对历史楼选择敏感。它仍是合理的算法反例，不能以人数够用就说类别稳定。
+
+四、回接历史 Q / T 等的解释：未据此重分型
+
+class_explanations.csv 把所有 342 个类×适用域与正向代理独立重算的 history 特征相连，保留原类号、精确成员、来源人数、真实训练图 / 楼 / 记录支持、均值、人员间 10% / 90% 分位及每字段已知人数。附入历史角色特征，并保留 Semi / scope 的机会计数。相同人员会在多个候选重复出现；342 类行不是 342 个人群的独立证据。
+
+来源残差谱 K2 的例子：
+
+类别     人数 / 来源       历史任务调整 Q β均值   个人绝对 Q均值的均值   最大标法簇参与率
+C01      27 = 14旧+13新    −4.952                 65.368                  0.555
+C02      28 = 6旧+22新     +4.236                 74.275                  0.721
+
+该分类完全未使用 Q，但能解释历史 β 方差约 35.4%，在 35 名新人内部约 46.6%。这说明它从几何关系中重新发现了相当多质量信号。不能把较低来源关联写成“独立于 Q 的新能力”。另一方面，事先把 Q 完全匹配掉会改变研究目标，应先检验总体构成效用，再报告 Q / 来源控制后的增量。
+
+角色 Ward K5 的 C05 是 6 名新人员：W109、W112、W115、W122、W126、W130。其历史 β均值 +16.071，个人绝对 Q均值的均值 86.078，最大标法簇参与率 0.865，点数相对同图中位数平均 +0.578 对。该类是“高质量且较常保留较多节点”候选，不应直接称作困难专长或每次都好的人员。其困难减简单的相对效应均值约 −1.871；各难度水平和难度适应斜率需要分开说。
+
+同一方法 C04 是 5 名旧人员 W008、W029、W030、W033、W035。历史 β均值 +2.366，绝对均值 72.265，但相对同图中位数平均少 1.346 对点且波动较大。该类有独特的节点表达和来源机会，实际成队覆盖较薄。它与 C05 的配比可能涉及范围 / 结构变化，也可能混入来源因素，必须由冻结融合实算决定，不能只凭画像指定“互补”。
+
+机会限制：10 楼 history 内旧来源确认错误机会总量很少，没有人达到旧错误未修改效应的 3 机会 / 2 楼门槛；该字段整列未知。新 Semi 的报告错误与旧确认错误不同，新人缺逐份初始化几何，表中不能推断其净改善。scope_out_effect 表示回答倾向；没有一般 OOS 正负金标覆盖支持准确率分型。缺机会的人员没有被当成低能力或“盲信”。
+
+五、已运行的核验与其边界
+
+1. 冻结 78 个方法×适用域分区完整重建，人员标签全部一致。
+2. 将 history 外冻结几何记录的点数、高度、俯角及局部簇值大幅污染后重新拟合，78 分区零变化；源文件没有改变。确切受扰动行数见 AUDIT_RECEIPT.json。
+3. 独立逐对循环重算 15 个有支持人员对的图 / 楼分母及楼等权共簇概率，最大数值差约 2.78e−17。
+4. 全部 78 个分区做 10 次删一 history 建筑拟合，共 780 个敏感性记录。来源残差谱 K2 的平均 ARI 0.854、最低 0.663，共类关系变化平均 7.3%；原始谱 K3 平均 ARI 0.841、最低 0.621。它们比本次简单平均链接候选更稳，但不是成员永远不变。
+5. 条件分型的稳定性需同时看支持流失。删一楼时困难支持人数最低可降至 21，不能仅在剩余人员上的 ARI 很高就说困难分类可靠。
+
+以上删楼只改变历史训练材料，未使用其被删楼的融合结果作验收；十个折高度重叠，不是十次独立泛化试验。主报告仍需以发现后冻结的比较规则，在 6 个 validation 建筑的实际不同成员构成中检查结果，且本批 v2 已被历史工作反复探索，不是全新的外部盲测。
+
+六、文件与复现
+
+关键可运行文件：discover_reverse_composition.py、audit_reverse_composition.py、explain_reverse_composition.py。
+关键小表：worker_labels.csv.gz、candidate_support.csv、candidate_feasibility.csv、class_explanations.csv、class_roles.csv、label_trait_association.csv、history_stability_summary.csv、shortlist_support_stability.csv、prior_sensitivity.csv、pre_outcome_search_ledger.csv。
+完整精确分区与参数：CANDIDATE_MANIFEST.json、SUPPORT_SHORTLIST.json。
+输入和检查：RUN_RECEIPT.json、AUDIT_RECEIPT.json、EXPLANATION_RECEIPT.json。
+
+历史关系大表和逐楼敏感性表可由代码重建；最终包是否附带由主代理按主结论需要决定。input_cache 是克隆前下载的两个重复小输入，不应打进成果包。run_summary.txt 和 __pycache__ 也不需要交付。
+
+在任务工作目录中运行：
+
+python analysis/reverse/discover_reverse_composition.py --records repo/research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/clusters/records_geometry.csv.gz --assignments repo/research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/clusters/assignments.csv.gz --split analysis/composition/SPLIT.json --output analysis/reverse
+python analysis/reverse/audit_reverse_composition.py --records repo/research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/clusters/records_geometry.csv.gz --assignments repo/research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/clusters/assignments.csv.gz --split analysis/composition/SPLIT.json --output analysis/reverse --history-deletion
+python analysis/reverse/explain_reverse_composition.py --features analysis/forward/results/features_train.csv.gz --records repo/research/workers/pro_personnel_v2_archive_20261019/work_v2_20261019/clusters/records_geometry.csv.gz --output analysis/reverse
+
+NumPy、Pandas、SciPy、scikit-learn 为所需依赖；此次在 Python 3.12.14、NumPy 2.3.5、Pandas 2.2.3、SciPy 1.17.0、scikit-learn 1.8.0 执行。标签 gzip 已固定 mtime=0，同时保存规范 CSV 内容哈希以便身份重建检查。

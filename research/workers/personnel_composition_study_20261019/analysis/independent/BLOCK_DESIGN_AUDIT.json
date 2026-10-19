@@ -1,0 +1,208 @@
+{
+  "scope": "Every event and request in the confirmed discovery block design; no fusion outcome or new validation result read",
+  "all_identity_and_composition_invariants_passed": true,
+  "all_source_matched_branches_balanced": true,
+  "all_request_links_and_exact_team_keys_passed": true,
+  "all_ledger_accounting_and_eligible_cells_passed": true,
+  "source_hashes": {
+    "analysis/composition/DISCOVERY_BLOCK_REQUESTS.json.gz": "af2a6fa99bc45dba4d4241d669438b67cc2b01d5ba50e96032a24058d0d656b1",
+    "analysis/composition/design_blocks.py": "1318d39b2a58e6b4436c4964d6959b80322190359da780699261f5d917781580",
+    "restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7",
+    "analysis/composition/SPLIT.json": "075125c748299b7829c179b9ac2b44706b360acaeefbdde0d3ce23076843752e",
+    "analysis/forward/results/worker_labels.csv.gz": "b5e52ba1aebe093d9555a8a0782c53a52c6d79778aded4f16de474b6ed804bfc",
+    "analysis/reverse/worker_labels.csv.gz": "64aa9e9fff524d597f20ad94f6f0e7fd205bfdcb0af24c83f1f2f540f4172411"
+  },
+  "requests_n": 77232,
+  "events_n": 25744,
+  "pools_n": 51,
+  "images_n": 51,
+  "buildings_n": 6,
+  "workers_n": 55,
+  "teams_n": 76973,
+  "cores_n": 25654,
+  "ordered_triples_n": 25743,
+  "compositions_n": 3914,
+  "transitions_n": 13000,
+  "repeated_request_rows_beyond_unique_teams": 259,
+  "repeated_events_beyond_unique_ordered_triples": 1,
+  "by_method": [
+    {
+      "method_id": "F_rule_Q2xDetail2",
+      "domain": "all",
+      "events_n": 6432,
+      "pools_n": 51,
+      "images_n": 51,
+      "buildings_n": 6,
+      "workers_n": 55,
+      "teams_n": 19249,
+      "cores_n": 6416,
+      "ordered_triples_n": 6431,
+      "compositions_n": 1057,
+      "transitions_n": 4580
+    },
+    {
+      "method_id": "F_rule_Q_threshold_K3",
+      "domain": "all",
+      "events_n": 6432,
+      "pools_n": 51,
+      "images_n": 51,
+      "buildings_n": 6,
+      "workers_n": 55,
+      "teams_n": 19248,
+      "cores_n": 6424,
+      "ordered_triples_n": 6432,
+      "compositions_n": 291,
+      "transitions_n": 2838
+    },
+    {
+      "method_id": "R_geo9_source_signed_p2_K2",
+      "domain": "all",
+      "events_n": 5727,
+      "pools_n": 51,
+      "images_n": 51,
+      "buildings_n": 6,
+      "workers_n": 55,
+      "teams_n": 17170,
+      "cores_n": 5725,
+      "ordered_triples_n": 5727,
+      "compositions_n": 48,
+      "transitions_n": 343
+    },
+    {
+      "method_id": "R_role_ward_K5",
+      "domain": "all",
+      "events_n": 6424,
+      "pools_n": 51,
+      "images_n": 51,
+      "buildings_n": 6,
+      "workers_n": 55,
+      "teams_n": 19248,
+      "cores_n": 6409,
+      "ordered_triples_n": 6424,
+      "compositions_n": 2491,
+      "transitions_n": 5137
+    },
+    {
+      "method_id": "R_role_ward_difficulty_K2",
+      "domain": "hard",
+      "events_n": 729,
+      "pools_n": 10,
+      "images_n": 10,
+      "buildings_n": 4,
+      "workers_n": 37,
+      "teams_n": 2174,
+      "cores_n": 729,
+      "ordered_triples_n": 729,
+      "compositions_n": 27,
+      "transitions_n": 102
+    }
+  ],
+  "m_distribution": {
+    "2": 10586,
+    "1": 5477,
+    "4": 3571,
+    "3": 1856,
+    "6": 3323,
+    "8": 931
+  },
+  "changed_category_slots_distribution": {
+    "2": 8036,
+    "1": 11353,
+    "4": 2339,
+    "3": 2050,
+    "6": 1498,
+    "5": 315,
+    "7": 42,
+    "8": 111
+  },
+  "outgoing_to_incoming_block_shape": {
+    "pure_to_pure": 14358,
+    "pure_to_mixed": 2958,
+    "mixed_to_pure": 3236,
+    "mixed_to_mixed": 5192
+  },
+  "same_and_cross_incoming_shared_workers": {
+    "m2__shared0": 9364,
+    "m1__shared0": 5477,
+    "m4__shared0": 2522,
+    "m3__shared0": 1472,
+    "m2__shared1": 1222,
+    "m4__shared2": 286,
+    "m3__shared2": 67,
+    "m4__shared1": 698,
+    "m6__shared0": 1709,
+    "m6__shared1": 619,
+    "m6__shared2": 558,
+    "m8__shared2": 194,
+    "m8__shared5": 94,
+    "m6__shared5": 20,
+    "m3__shared1": 317,
+    "m6__shared4": 99,
+    "m4__shared3": 65,
+    "m6__shared3": 318,
+    "m8__shared1": 92,
+    "m8__shared3": 201,
+    "m8__shared4": 152,
+    "m8__shared6": 43,
+    "m8__shared0": 150,
+    "m8__shared7": 5
+  },
+  "new_worker_count_change": {
+    "source_matched_A_to_B": {
+      "0": 13714
+    },
+    "source_matched_A_to_C": {
+      "0": 13714
+    },
+    "unrestricted_A_to_B": {
+      "0": 8542,
+      "1": 1445,
+      "2": 231,
+      "-1": 1459,
+      "-2": 241,
+      "-3": 47,
+      "-4": 11,
+      "3": 46,
+      "4": 6,
+      "-5": 2
+    },
+    "unrestricted_A_to_C": {
+      "0": 8131,
+      "1": 1451,
+      "2": 277,
+      "-1": 1684,
+      "-2": 358,
+      "3": 47,
+      "-4": 11,
+      "-3": 61,
+      "4": 6,
+      "-5": 3,
+      "6": 1
+    }
+  },
+  "events_with_all_original_workers_of_a_category_outgoing": 9390,
+  "events_with_a_category_absent_in_C_after_present_in_A": 6596,
+  "ledger": {
+    "cells": 836,
+    "candidate_patterns_in_capped_frame": 513618,
+    "attempted_patterns": 26854,
+    "accepted_events": 25744,
+    "failure_reasons": {
+      "cross_capacity": 942,
+      "core_capacity_after_one_member_draw": 168
+    },
+    "all_capped_frame_patterns_attempted_cells": 66,
+    "quota_filled_cells": 770,
+    "zero_event_cells": 0,
+    "skipped_cells_with_fewer_than_k_plus_2_eligible_workers": 20
+  },
+  "interpretation_limits": [
+    "Stratified count-pattern sampling with a per-cell quota, not uniform population sampling or exhaustive real teams",
+    "Multiclass vectors and core vectors are systematically capped; only one actual member draw per selected pattern",
+    "core_capacity_after_one_member_draw is a sampled-member failure, not a proof that a count pattern is mathematically infeasible",
+    "m is the exact real-person turnover; changed_category_slots can be smaller than m",
+    "B and C may share incoming members; both share exactly the recorded core with A",
+    "Whole-category original-worker removal does not imply that category disappears from C",
+    "Known workers, repeated teams and many events do not create new independent images or buildings"
+  ]
+}

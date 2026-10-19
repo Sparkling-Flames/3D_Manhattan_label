@@ -1,0 +1,76 @@
+{
+  "utc": "2026-10-19T10:38:24.119695+00:00",
+  "checks": {
+    "compact_whitelist_exactly_expected_8_files": true,
+    "compact_directory_bytes": 1950363,
+    "selected_events_exact_request_members_checked": {
+      "discovery": {
+        "events_checked": 592,
+        "unique_teams_checked": 1773,
+        "workers": 55,
+        "member_digest_sha256": "fa8826c8595e7d5636378c162b70370ae3297783e308ab7850d28ab0c6321bac",
+        "all_events": 25744,
+        "primary_events": 20267,
+        "exact_rows_exported": 25703,
+        "exact_rows_source": 25703,
+        "loow_strata_exported": 615,
+        "highlight_loow_rows": 1188,
+        "selected_event_outcome_filter": false,
+        "exact_stratum_outcome_filter": false
+      },
+      "validation": {
+        "events_checked": 472,
+        "unique_teams_checked": 1415,
+        "workers": 55,
+        "member_digest_sha256": "e6416a9a2724878b3d0e52a7210c06047f4504fb9f3a948358ee5b1c40ebf099",
+        "all_events": 22340,
+        "primary_events": 17312,
+        "exact_rows_exported": 23516,
+        "exact_rows_source": 23516,
+        "loow_strata_exported": 542,
+        "highlight_loow_rows": 898,
+        "selected_event_outcome_filter": false,
+        "exact_stratum_outcome_filter": false
+      }
+    },
+    "all_1064_event_ids_unique": true,
+    "all_event_within_changed_turnover_equals_m": true,
+    "event_net_quality_equals_C_minus_B": true,
+    "independent_recomputed_26_phase_highlight_means_and_p10_match_atol": 1e-10,
+    "pngs_inspected_after_final_scope_and_source_residual_wording": true,
+    "compact_source_only_redraw_completed": true,
+    "figures": [
+      {
+        "figure": "01_candidate_utility_coverage.png",
+        "bytes": 526857,
+        "inputs": {
+          "analysis/figures_summary/01_plot_source.csv": "6f345108003cfd77de4fecb3f4bac10dadeaaf57e9dcc3df7f898e6f4a1401b6",
+          "analysis/figures_summary/01_candidate_coverage_source.csv": "5a3386318daf1f144ad318784fec23acabdd90534d5e163bb3c89e015d52739a",
+          "analysis/figures_summary/01_screen_manifest.json": "6ecf3bcf061d1fcba551fad077db47800cbf116e5e6342ba05f4d7c0f3928a7a"
+        },
+        "candidates": 245,
+        "validation_used": false,
+        "sha256": "a579759907c5d353618ae5bf7e0f67e5edeb2a8fd29c2289f425ceaa53185050"
+      },
+      {
+        "figure": "02_specific_replacements_discovery_validation.png",
+        "bytes": 587415,
+        "validation_used": true,
+        "comparison_count": 13,
+        "selection": "same 13 discovery strata; no validation selection",
+        "inputs": {
+          "analysis/figures_summary/02_plot_source.csv": "4c4e4110598196c29e5f899b309d304682d5d59b6be93b31c19e84a4da438dd5",
+          "analysis/figures_summary/02_building_points.csv": "72d76887d3f3f998e6c7d1b578df4f18edf248adb4e83f104742cd1eee2c56c8",
+          "analysis/figures_summary/02_comparison_manifest.json": "c22859c0caca86249eca21dec3a2a669a29f4fde8bda47157bda7cfce80d13c9"
+        },
+        "sha256": "c1c09fa3d5c71b888231041bb7d18670d523d62d9d1e71afdf76985947be6152"
+      }
+    ]
+  },
+  "limitations": [
+    "No new hypothesis/model/label/fusion/reference/score change in final export or graphics.",
+    "Aggregate compact ledger rounded to six decimals; event scores and LOOW retained original precision.",
+    "Figure1 B scene refers to scope OOS/doorway flags, not functional room type.",
+    "Block a156 A/B have close Q but do not meet joint geometry stability; report corrected."
+  ]
+}

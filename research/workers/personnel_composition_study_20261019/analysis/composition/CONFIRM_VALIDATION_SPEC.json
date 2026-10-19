@@ -1,0 +1,47 @@
+{
+  "phase": "validation",
+  "seed": 2026101956,
+  "created_utc": "2026-10-19T09:38:32.431047+00:00",
+  "selection": "Same frozen methods, integer proportions, sizes and comparison rules; no validation outcome adaptation.",
+  "methods": [
+    {
+      "method_id": "F_rule_Q_quantile_K3",
+      "domain": "all",
+      "sizes": [
+        5,
+        9,
+        13
+      ],
+      "replicates": 10,
+      "curves": [
+        {
+          "curve_id": "low_to_high_quantile",
+          "target_class": "C03",
+          "background_weights": {
+            "C01": 1
+          }
+        }
+      ]
+    },
+    {
+      "method_id": "R_role_ward_K5",
+      "domain": "all",
+      "sizes": [
+        5,
+        9,
+        13
+      ],
+      "replicates": 10,
+      "curves": [
+        {
+          "curve_id": "role_low_to_common",
+          "target_class": "C02",
+          "background_weights": {
+            "C01": 1
+          }
+        }
+      ]
+    }
+  ],
+  "source_discovery_spec": "CONFIRM_DISCOVERY_SPEC.json"
+}

@@ -1,0 +1,24 @@
+{
+  "phase": "validation",
+  "primary_events": 17312,
+  "directed_summary_rows": 23516,
+  "loow_person_stratum_rows": 27595,
+  "loow_analyzed_strata": 542,
+  "loow_candidate_strata": 7034,
+  "loow_gate": {
+    "minimum_attempted_buildings": 3,
+    "minimum_attempted_events": 12,
+    "effect_sign_or_outcome_value_used": false
+  },
+  "unit": "Exact method/domain outgoing/incoming class counts, k, and m. Overall and source-matched strata remain separate.",
+  "within": "A/B same counts and same m as A/C; net quality C-B, not a within-minus-changed magnitude",
+  "tails": "p10 of paired C-B differs from C p10 minus B p10; both provided with distinct names. Finite-only support/failures retained.",
+  "loow": "Delete every event whose A, B or C includes the omitted worker; never refit classes or alter fixed comparisons. Recompute equal-image/equal-building means.",
+  "retained3b": "LOOW effect ranges describe only removals retaining at least 3 buildings with finite paired B8; removed cases and their smaller support also remain in the detailed table.",
+  "input_hashes": {
+    "analysis/composition/block_validation/block_events.csv.gz": "ffd2b1bfb06f3d14fffb5ef8ac821dbebbdb16f8a5b1eae8a17c4cbc964535fb",
+    "analysis/forward/results/worker_labels.csv.gz": "b5e52ba1aebe093d9555a8a0782c53a52c6d79778aded4f16de474b6ed804bfc",
+    "analysis/reverse/worker_labels.csv.gz": "64aa9e9fff524d597f20ad94f6f0e7fd205bfdcb0af24c83f1f2f540f4172411"
+  },
+  "source_code_sha256": "f1e16c8f447788bccf9e70c25159fa80bab7ceee67d3035e479e51489a4f2765"
+}

@@ -1,0 +1,123 @@
+{
+  "definitions": [
+    {
+      "highlight_id": "Q_low_to_high_n5m2",
+      "method_id": "F_rule_Q_threshold_K3",
+      "domain": "all",
+      "outgoing_counts": "C01:2|C02:0|C03:0",
+      "incoming_counts": "C01:0|C02:0|C03:2",
+      "k": 5,
+      "m": 2
+    },
+    {
+      "highlight_id": "Q_mid_to_high_n9m4",
+      "method_id": "F_rule_Q_threshold_K3",
+      "domain": "all",
+      "outgoing_counts": "C01:0|C02:4|C03:0",
+      "incoming_counts": "C01:0|C02:0|C03:4",
+      "k": 9,
+      "m": 4
+    },
+    {
+      "highlight_id": "Q_high_to_low_n5m2",
+      "method_id": "F_rule_Q_threshold_K3",
+      "domain": "all",
+      "outgoing_counts": "C01:0|C02:0|C03:2",
+      "incoming_counts": "C01:2|C02:0|C03:0",
+      "k": 5,
+      "m": 2
+    },
+    {
+      "highlight_id": "Q_two_classes_to_high_n5m2",
+      "method_id": "F_rule_Q_threshold_K3",
+      "domain": "all",
+      "outgoing_counts": "C01:1|C02:1|C03:0",
+      "incoming_counts": "C01:0|C02:0|C03:2",
+      "k": 5,
+      "m": 2
+    },
+    {
+      "highlight_id": "Qdetail_low_sparse_to_two_high_n5m2",
+      "method_id": "F_rule_Q2xDetail2",
+      "domain": "all",
+      "outgoing_counts": "C01:0|C02:2|C03:0|C04:0",
+      "incoming_counts": "C01:0|C02:0|C03:1|C04:1",
+      "k": 5,
+      "m": 2
+    },
+    {
+      "highlight_id": "relation_low_to_high_n5m2",
+      "method_id": "R_geo9_source_signed_p2_K2",
+      "domain": "all",
+      "outgoing_counts": "C01:2|C02:0",
+      "incoming_counts": "C01:0|C02:2",
+      "k": 5,
+      "m": 2
+    },
+    {
+      "highlight_id": "role_common_to_detail_n5m2",
+      "method_id": "R_role_ward_K5",
+      "domain": "all",
+      "outgoing_counts": "C01:0|C02:2|C03:0|C04:0|C05:0",
+      "incoming_counts": "C01:0|C02:0|C03:0|C04:0|C05:2",
+      "k": 5,
+      "m": 2
+    },
+    {
+      "highlight_id": "role_lower_to_detail_n9m4",
+      "method_id": "R_role_ward_K5",
+      "domain": "all",
+      "outgoing_counts": "C01:4|C02:0|C03:0|C04:0|C05:0",
+      "incoming_counts": "C01:0|C02:0|C03:0|C04:0|C05:4",
+      "k": 9,
+      "m": 4
+    },
+    {
+      "highlight_id": "role_detail_to_common_n5m2",
+      "method_id": "R_role_ward_K5",
+      "domain": "all",
+      "outgoing_counts": "C01:0|C02:0|C03:0|C04:0|C05:2",
+      "incoming_counts": "C01:0|C02:2|C03:0|C04:0|C05:0",
+      "k": 5,
+      "m": 2
+    },
+    {
+      "highlight_id": "hard_low_to_detail_n5m2",
+      "method_id": "R_role_ward_difficulty_K2",
+      "domain": "hard",
+      "outgoing_counts": "C01:2|C02:0",
+      "incoming_counts": "C01:0|C02:2",
+      "k": 5,
+      "m": 2
+    },
+    {
+      "highlight_id": "hard_low_to_detail_n9m4",
+      "method_id": "R_role_ward_difficulty_K2",
+      "domain": "hard",
+      "outgoing_counts": "C01:4|C02:0",
+      "incoming_counts": "C01:0|C02:4",
+      "k": 9,
+      "m": 4
+    },
+    {
+      "highlight_id": "hard_two_classes_to_detail_n5m2",
+      "method_id": "R_role_ward_difficulty_K2",
+      "domain": "hard",
+      "outgoing_counts": "C01:1|C02:1",
+      "incoming_counts": "C01:0|C02:2",
+      "k": 5,
+      "m": 2
+    },
+    {
+      "highlight_id": "hard_detail_to_mixed_counterexample_n13m2",
+      "method_id": "R_role_ward_difficulty_K2",
+      "domain": "hard",
+      "outgoing_counts": "C01:0|C02:2",
+      "incoming_counts": "C01:1|C02:1",
+      "k": 13,
+      "m": 2
+    }
+  ],
+  "validation_used": true,
+  "selection": "Fixed discovery definitions; no validation selection"
+}

@@ -1,0 +1,138 @@
+{
+  "schema": "composition_case_visuals_v1",
+  "case_id": "C06_highQ_replacement_counterexample",
+  "case_sha256": "8bf0262d49ef09d2c09b7be2cb45c0237ebb5a6c16b5455e6e8b3da4f1512f97",
+  "renderer_sha256": "5bc6da16f8ea35177abc37f38f3a1da02512299f588b8bb2dfc726b4bf303fdb",
+  "reference_id": "gt:q9vSo1VnCiC_3e5aacbc10904d4b88660a3cb91efcb9:export_label/groudTruth.json",
+  "reference_version": "gt_manual_revision",
+  "image": {
+    "status": "available",
+    "path": "/workspace/scratch/1d99618bd862/analysis/selected_originals/q9vSo1VnCiC_3e5aacbc10904d4b88660a3cb91efcb9.png",
+    "sha256": "9d6c7e36c5d7f4c0628a57a9133ca6b6932e51a164e954639e7700518ea0032b",
+    "dimensions": [
+      2048,
+      1024
+    ]
+  },
+  "erp_coordinate_convention": "continuous x/W,y/H; W=1024,H=512; seam wrapped",
+  "3d_construction": "Retain final/reference floor; top ray takes paired bottom horizontal range; floor H=0,camera H=1",
+  "bev_bounds": [
+    -0.27646405814212077,
+    2.276736385021491,
+    -1.033241443465653,
+    1.1398787178955274
+  ],
+  "height_bounds": [
+    0,
+    2.1042705760084366
+  ],
+  "view": {},
+  "reference_geometry": {
+    "status": "ok",
+    "reason": null,
+    "floor_reconstruction_max_abs_difference": 1.1102230246251565e-16,
+    "footprint_valid": true,
+    "vertical_pair_mismatch": false
+  },
+  "team_geometry": {
+    "原队A": {
+      "status": "ok",
+      "reason": null,
+      "floor_reconstruction_max_abs_difference": 0.0,
+      "footprint_valid": true,
+      "vertical_pair_mismatch": false,
+      "team_key": "q9vSo1VnCiC-03__manual__2bff6c4167__9862771d92738f043b66",
+      "member_workers": [
+        "W102",
+        "W103",
+        "W105",
+        "W113",
+        "W117"
+      ],
+      "member_object_ids": [
+        "v2:new:103986",
+        "v2:new:103987",
+        "v2:new:103989",
+        "v2:new:103995",
+        "v2:new:103999"
+      ],
+      "counts": {
+        "C01": 4,
+        "C02": 0,
+        "C03": 1
+      }
+    },
+    "同类换2人B": {
+      "status": "ok",
+      "reason": null,
+      "floor_reconstruction_max_abs_difference": 0.0,
+      "footprint_valid": true,
+      "vertical_pair_mismatch": false,
+      "team_key": "q9vSo1VnCiC-03__manual__2bff6c4167__96c205138324a67a2d9f",
+      "member_workers": [
+        "W102",
+        "W103",
+        "W105",
+        "W111",
+        "W128"
+      ],
+      "member_object_ids": [
+        "v2:new:103986",
+        "v2:new:103987",
+        "v2:new:103989",
+        "v2:new:103993",
+        "v2:new:104007"
+      ],
+      "counts": {
+        "C01": 4,
+        "C02": 0,
+        "C03": 1
+      }
+    },
+    "改类换2人C": {
+      "status": "ok",
+      "reason": null,
+      "floor_reconstruction_max_abs_difference": 0.0,
+      "footprint_valid": true,
+      "vertical_pair_mismatch": false,
+      "team_key": "q9vSo1VnCiC-03__manual__2bff6c4167__57b1709e575ce2d1a151",
+      "member_workers": [
+        "W102",
+        "W103",
+        "W104",
+        "W105",
+        "W112"
+      ],
+      "member_object_ids": [
+        "v2:new:103986",
+        "v2:new:103987",
+        "v2:new:103988",
+        "v2:new:103989",
+        "v2:new:103994"
+      ],
+      "counts": {
+        "C01": 2,
+        "C02": 0,
+        "C03": 3
+      }
+    }
+  },
+  "supplied_members": 18,
+  "member_scope": "该冻结池内所展示类别的全部已知人员",
+  "member_geometry_status_counts": {
+    "ok": 18,
+    "unavailable": 0
+  },
+  "files": [
+    {
+      "path": "comparison.png",
+      "bytes": 882010,
+      "sha256": "dcb93eebcc5dad5a144affd22df0c351a09c2604c11d54bf5944d2f7f10757ea"
+    },
+    {
+      "path": "member_overlays.png",
+      "bytes": 553511,
+      "sha256": "682a1468d0143c0f939a326c55dc4df55d5b01b681629b0e4c8465396c6a2306"
+    }
+  ]
+}

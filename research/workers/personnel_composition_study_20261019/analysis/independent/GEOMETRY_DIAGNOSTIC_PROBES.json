@@ -1,0 +1,2533 @@
+{
+  "scope": "12 deterministic synthetic geometry specification probes plus one isolated assignment counterexample; no real new validation output read",
+  "module_sha256": "57a94b9987cd012d1be8d4c7e25f003ba5982c1c6c23be83ed8133243061a0ce",
+  "all_probes_passed": true,
+  "geometry_probes": {
+    "identical_square": {
+      "candidate_floor": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "reference_floor": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "result": {
+        "diag_schema": "fixed_reference_geometry_diagnostics_v1",
+        "diag_status": "ok",
+        "diag_candidate_status": "ok",
+        "diag_candidate_reason": null,
+        "diag_reference_status": "ok",
+        "diag_reference_reason": null,
+        "diag_wall_direction_tolerance_deg": 10.0,
+        "diag_corner_turn_min_deg": 10.0,
+        "diag_reference_area": 16.0,
+        "diag_reference_perimeter": 16.0,
+        "diag_reference_scale": 4.0,
+        "diag_reference_corner_n": 4,
+        "diag_candidate_corner_n": 4,
+        "diag_matched_corner_n": 4,
+        "diag_corner_recall_05": 1.0,
+        "diag_corner_tolerance_05": 0.2,
+        "diag_corner_matches": [
+          {
+            "reference_input_index": 0,
+            "candidate_input_index": 0,
+            "reference_ring_index": 0,
+            "candidate_ring_index": 0,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          },
+          {
+            "reference_input_index": 1,
+            "candidate_input_index": 1,
+            "reference_ring_index": 1,
+            "candidate_ring_index": 1,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          },
+          {
+            "reference_input_index": 2,
+            "candidate_input_index": 2,
+            "reference_ring_index": 2,
+            "candidate_ring_index": 2,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          },
+          {
+            "reference_input_index": 3,
+            "candidate_input_index": 3,
+            "reference_ring_index": 3,
+            "candidate_ring_index": 3,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          }
+        ],
+        "diag_wall_coverage_03": 1.0,
+        "diag_wall_covered_length_03": 16.0,
+        "diag_wall_tolerance_03": 0.12,
+        "diag_wall_details_03": [
+          {
+            "reference_ring_edge_index": 0,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 0,
+            "reference_input_end_index": 1
+          },
+          {
+            "reference_ring_edge_index": 1,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 1,
+            "reference_input_end_index": 2
+          },
+          {
+            "reference_ring_edge_index": 2,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 2,
+            "reference_input_end_index": 3
+          },
+          {
+            "reference_ring_edge_index": 3,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 3,
+            "reference_input_end_index": 0
+          }
+        ],
+        "diag_wall_coverage_05": 1.0,
+        "diag_wall_covered_length_05": 16.0,
+        "diag_wall_tolerance_05": 0.2,
+        "diag_wall_details_05": [
+          {
+            "reference_ring_edge_index": 0,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 0,
+            "reference_input_end_index": 1
+          },
+          {
+            "reference_ring_edge_index": 1,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 1,
+            "reference_input_end_index": 2
+          },
+          {
+            "reference_ring_edge_index": 2,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 2,
+            "reference_input_end_index": 3
+          },
+          {
+            "reference_ring_edge_index": 3,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 3,
+            "reference_input_end_index": 0
+          }
+        ],
+        "diag_reference_removed_exact_duplicate_n": 0,
+        "diag_reference_input_vertex_n": 4,
+        "diag_candidate_removed_exact_duplicate_n": 0,
+        "diag_candidate_input_vertex_n": 4,
+        "diag_corner_status": "ok"
+      }
+    },
+    "candidate_collinear_subdivision": {
+      "candidate_floor": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          0.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          0.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          0.0
+        ]
+      ],
+      "reference_floor": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "result": {
+        "diag_schema": "fixed_reference_geometry_diagnostics_v1",
+        "diag_status": "ok",
+        "diag_candidate_status": "ok",
+        "diag_candidate_reason": null,
+        "diag_reference_status": "ok",
+        "diag_reference_reason": null,
+        "diag_wall_direction_tolerance_deg": 10.0,
+        "diag_corner_turn_min_deg": 10.0,
+        "diag_reference_area": 16.0,
+        "diag_reference_perimeter": 16.0,
+        "diag_reference_scale": 4.0,
+        "diag_reference_corner_n": 4,
+        "diag_candidate_corner_n": 4,
+        "diag_matched_corner_n": 4,
+        "diag_corner_recall_05": 1.0,
+        "diag_corner_tolerance_05": 0.2,
+        "diag_corner_matches": [
+          {
+            "reference_input_index": 0,
+            "candidate_input_index": 0,
+            "reference_ring_index": 0,
+            "candidate_ring_index": 0,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          },
+          {
+            "reference_input_index": 1,
+            "candidate_input_index": 2,
+            "reference_ring_index": 1,
+            "candidate_ring_index": 2,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          },
+          {
+            "reference_input_index": 2,
+            "candidate_input_index": 4,
+            "reference_ring_index": 2,
+            "candidate_ring_index": 4,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          },
+          {
+            "reference_input_index": 3,
+            "candidate_input_index": 6,
+            "reference_ring_index": 3,
+            "candidate_ring_index": 6,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          }
+        ],
+        "diag_wall_coverage_03": 1.0,
+        "diag_wall_covered_length_03": 16.0,
+        "diag_wall_tolerance_03": 0.12,
+        "diag_wall_details_03": [
+          {
+            "reference_ring_edge_index": 0,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 0,
+            "reference_input_end_index": 1
+          },
+          {
+            "reference_ring_edge_index": 1,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 1,
+            "reference_input_end_index": 2
+          },
+          {
+            "reference_ring_edge_index": 2,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 2,
+            "reference_input_end_index": 3
+          },
+          {
+            "reference_ring_edge_index": 3,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 3,
+            "reference_input_end_index": 0
+          }
+        ],
+        "diag_wall_coverage_05": 1.0,
+        "diag_wall_covered_length_05": 16.0,
+        "diag_wall_tolerance_05": 0.2,
+        "diag_wall_details_05": [
+          {
+            "reference_ring_edge_index": 0,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 0,
+            "reference_input_end_index": 1
+          },
+          {
+            "reference_ring_edge_index": 1,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 1,
+            "reference_input_end_index": 2
+          },
+          {
+            "reference_ring_edge_index": 2,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 2,
+            "reference_input_end_index": 3
+          },
+          {
+            "reference_ring_edge_index": 3,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 3,
+            "reference_input_end_index": 0
+          }
+        ],
+        "diag_reference_removed_exact_duplicate_n": 0,
+        "diag_reference_input_vertex_n": 4,
+        "diag_candidate_removed_exact_duplicate_n": 0,
+        "diag_candidate_input_vertex_n": 8,
+        "diag_corner_status": "ok"
+      }
+    },
+    "reference_collinear_subdivision": {
+      "candidate_floor": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "reference_floor": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          0.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          0.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          0.0
+        ]
+      ],
+      "result": {
+        "diag_schema": "fixed_reference_geometry_diagnostics_v1",
+        "diag_status": "ok",
+        "diag_candidate_status": "ok",
+        "diag_candidate_reason": null,
+        "diag_reference_status": "ok",
+        "diag_reference_reason": null,
+        "diag_wall_direction_tolerance_deg": 10.0,
+        "diag_corner_turn_min_deg": 10.0,
+        "diag_reference_area": 16.0,
+        "diag_reference_perimeter": 16.0,
+        "diag_reference_scale": 4.0,
+        "diag_reference_corner_n": 4,
+        "diag_candidate_corner_n": 4,
+        "diag_matched_corner_n": 4,
+        "diag_corner_recall_05": 1.0,
+        "diag_corner_tolerance_05": 0.2,
+        "diag_corner_matches": [
+          {
+            "reference_input_index": 0,
+            "candidate_input_index": 0,
+            "reference_ring_index": 0,
+            "candidate_ring_index": 0,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          },
+          {
+            "reference_input_index": 2,
+            "candidate_input_index": 1,
+            "reference_ring_index": 2,
+            "candidate_ring_index": 1,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          },
+          {
+            "reference_input_index": 4,
+            "candidate_input_index": 2,
+            "reference_ring_index": 4,
+            "candidate_ring_index": 2,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          },
+          {
+            "reference_input_index": 6,
+            "candidate_input_index": 3,
+            "reference_ring_index": 6,
+            "candidate_ring_index": 3,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          }
+        ],
+        "diag_wall_coverage_03": 1.0,
+        "diag_wall_covered_length_03": 16.0,
+        "diag_wall_tolerance_03": 0.12,
+        "diag_wall_details_03": [
+          {
+            "reference_ring_edge_index": 0,
+            "length": 2.0,
+            "covered_length": 2.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                2.0
+              ]
+            ],
+            "reference_input_start_index": 0,
+            "reference_input_end_index": 1
+          },
+          {
+            "reference_ring_edge_index": 1,
+            "length": 2.0,
+            "covered_length": 2.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                2.0
+              ]
+            ],
+            "reference_input_start_index": 1,
+            "reference_input_end_index": 2
+          },
+          {
+            "reference_ring_edge_index": 2,
+            "length": 2.0,
+            "covered_length": 2.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                2.0
+              ]
+            ],
+            "reference_input_start_index": 2,
+            "reference_input_end_index": 3
+          },
+          {
+            "reference_ring_edge_index": 3,
+            "length": 2.0,
+            "covered_length": 2.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                2.0
+              ]
+            ],
+            "reference_input_start_index": 3,
+            "reference_input_end_index": 4
+          },
+          {
+            "reference_ring_edge_index": 4,
+            "length": 2.0,
+            "covered_length": 2.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                2.0
+              ]
+            ],
+            "reference_input_start_index": 4,
+            "reference_input_end_index": 5
+          },
+          {
+            "reference_ring_edge_index": 5,
+            "length": 2.0,
+            "covered_length": 2.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                2.0
+              ]
+            ],
+            "reference_input_start_index": 5,
+            "reference_input_end_index": 6
+          },
+          {
+            "reference_ring_edge_index": 6,
+            "length": 2.0,
+            "covered_length": 2.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                2.0
+              ]
+            ],
+            "reference_input_start_index": 6,
+            "reference_input_end_index": 7
+          },
+          {
+            "reference_ring_edge_index": 7,
+            "length": 2.0,
+            "covered_length": 2.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                2.0
+              ]
+            ],
+            "reference_input_start_index": 7,
+            "reference_input_end_index": 0
+          }
+        ],
+        "diag_wall_coverage_05": 1.0,
+        "diag_wall_covered_length_05": 16.0,
+        "diag_wall_tolerance_05": 0.2,
+        "diag_wall_details_05": [
+          {
+            "reference_ring_edge_index": 0,
+            "length": 2.0,
+            "covered_length": 2.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                2.0
+              ]
+            ],
+            "reference_input_start_index": 0,
+            "reference_input_end_index": 1
+          },
+          {
+            "reference_ring_edge_index": 1,
+            "length": 2.0,
+            "covered_length": 2.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                2.0
+              ]
+            ],
+            "reference_input_start_index": 1,
+            "reference_input_end_index": 2
+          },
+          {
+            "reference_ring_edge_index": 2,
+            "length": 2.0,
+            "covered_length": 2.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                2.0
+              ]
+            ],
+            "reference_input_start_index": 2,
+            "reference_input_end_index": 3
+          },
+          {
+            "reference_ring_edge_index": 3,
+            "length": 2.0,
+            "covered_length": 2.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                2.0
+              ]
+            ],
+            "reference_input_start_index": 3,
+            "reference_input_end_index": 4
+          },
+          {
+            "reference_ring_edge_index": 4,
+            "length": 2.0,
+            "covered_length": 2.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                2.0
+              ]
+            ],
+            "reference_input_start_index": 4,
+            "reference_input_end_index": 5
+          },
+          {
+            "reference_ring_edge_index": 5,
+            "length": 2.0,
+            "covered_length": 2.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                2.0
+              ]
+            ],
+            "reference_input_start_index": 5,
+            "reference_input_end_index": 6
+          },
+          {
+            "reference_ring_edge_index": 6,
+            "length": 2.0,
+            "covered_length": 2.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                2.0
+              ]
+            ],
+            "reference_input_start_index": 6,
+            "reference_input_end_index": 7
+          },
+          {
+            "reference_ring_edge_index": 7,
+            "length": 2.0,
+            "covered_length": 2.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                2.0
+              ]
+            ],
+            "reference_input_start_index": 7,
+            "reference_input_end_index": 0
+          }
+        ],
+        "diag_reference_removed_exact_duplicate_n": 0,
+        "diag_reference_input_vertex_n": 8,
+        "diag_candidate_removed_exact_duplicate_n": 0,
+        "diag_candidate_input_vertex_n": 4,
+        "diag_corner_status": "ok"
+      }
+    },
+    "winding_cycle_closing_duplicate": {
+      "candidate_floor": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          -2.0,
+          -2.0
+        ]
+      ],
+      "reference_floor": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "result": {
+        "diag_schema": "fixed_reference_geometry_diagnostics_v1",
+        "diag_status": "ok",
+        "diag_candidate_status": "ok",
+        "diag_candidate_reason": null,
+        "diag_reference_status": "ok",
+        "diag_reference_reason": null,
+        "diag_wall_direction_tolerance_deg": 10.0,
+        "diag_corner_turn_min_deg": 10.0,
+        "diag_reference_area": 16.0,
+        "diag_reference_perimeter": 16.0,
+        "diag_reference_scale": 4.0,
+        "diag_reference_corner_n": 4,
+        "diag_candidate_corner_n": 4,
+        "diag_matched_corner_n": 4,
+        "diag_corner_recall_05": 1.0,
+        "diag_corner_tolerance_05": 0.2,
+        "diag_corner_matches": [
+          {
+            "reference_input_index": 0,
+            "candidate_input_index": 0,
+            "reference_ring_index": 0,
+            "candidate_ring_index": 0,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          },
+          {
+            "reference_input_index": 1,
+            "candidate_input_index": 3,
+            "reference_ring_index": 1,
+            "candidate_ring_index": 3,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          },
+          {
+            "reference_input_index": 2,
+            "candidate_input_index": 2,
+            "reference_ring_index": 2,
+            "candidate_ring_index": 2,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          },
+          {
+            "reference_input_index": 3,
+            "candidate_input_index": 1,
+            "reference_ring_index": 3,
+            "candidate_ring_index": 1,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          }
+        ],
+        "diag_wall_coverage_03": 1.0,
+        "diag_wall_covered_length_03": 16.0,
+        "diag_wall_tolerance_03": 0.12,
+        "diag_wall_details_03": [
+          {
+            "reference_ring_edge_index": 0,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 0,
+            "reference_input_end_index": 1
+          },
+          {
+            "reference_ring_edge_index": 1,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 1,
+            "reference_input_end_index": 2
+          },
+          {
+            "reference_ring_edge_index": 2,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 2,
+            "reference_input_end_index": 3
+          },
+          {
+            "reference_ring_edge_index": 3,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 3,
+            "reference_input_end_index": 0
+          }
+        ],
+        "diag_wall_coverage_05": 1.0,
+        "diag_wall_covered_length_05": 16.0,
+        "diag_wall_tolerance_05": 0.2,
+        "diag_wall_details_05": [
+          {
+            "reference_ring_edge_index": 0,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 0,
+            "reference_input_end_index": 1
+          },
+          {
+            "reference_ring_edge_index": 1,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 1,
+            "reference_input_end_index": 2
+          },
+          {
+            "reference_ring_edge_index": 2,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 2,
+            "reference_input_end_index": 3
+          },
+          {
+            "reference_ring_edge_index": 3,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 3,
+            "reference_input_end_index": 0
+          }
+        ],
+        "diag_reference_removed_exact_duplicate_n": 0,
+        "diag_reference_input_vertex_n": 4,
+        "diag_candidate_removed_exact_duplicate_n": 1,
+        "diag_candidate_input_vertex_n": 5,
+        "diag_corner_status": "ok"
+      }
+    },
+    "convex_bump_missing": {
+      "candidate_floor": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "reference_floor": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -1.0
+        ],
+        [
+          3.0,
+          -1.0
+        ],
+        [
+          3.0,
+          1.0
+        ],
+        [
+          2.0,
+          1.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "result": {
+        "diag_schema": "fixed_reference_geometry_diagnostics_v1",
+        "diag_status": "ok",
+        "diag_candidate_status": "ok",
+        "diag_candidate_reason": null,
+        "diag_reference_status": "ok",
+        "diag_reference_reason": null,
+        "diag_wall_direction_tolerance_deg": 10.0,
+        "diag_corner_turn_min_deg": 10.0,
+        "diag_reference_area": 18.0,
+        "diag_reference_perimeter": 18.0,
+        "diag_reference_scale": 4.242640687119285,
+        "diag_reference_corner_n": 8,
+        "diag_candidate_corner_n": 4,
+        "diag_matched_corner_n": 4,
+        "diag_corner_recall_05": 0.5,
+        "diag_corner_tolerance_05": 0.21213203435596426,
+        "diag_corner_matches": [
+          {
+            "reference_input_index": 0,
+            "candidate_input_index": 0,
+            "reference_ring_index": 0,
+            "candidate_ring_index": 0,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          },
+          {
+            "reference_input_index": 1,
+            "candidate_input_index": 1,
+            "reference_ring_index": 1,
+            "candidate_ring_index": 1,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          },
+          {
+            "reference_input_index": 6,
+            "candidate_input_index": 2,
+            "reference_ring_index": 6,
+            "candidate_ring_index": 2,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          },
+          {
+            "reference_input_index": 7,
+            "candidate_input_index": 3,
+            "reference_ring_index": 7,
+            "candidate_ring_index": 3,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          }
+        ],
+        "diag_wall_coverage_03": 0.7777777777777778,
+        "diag_wall_covered_length_03": 14.0,
+        "diag_wall_tolerance_03": 0.12727922061357855,
+        "diag_wall_details_03": [
+          {
+            "reference_ring_edge_index": 0,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 0,
+            "reference_input_end_index": 1
+          },
+          {
+            "reference_ring_edge_index": 1,
+            "length": 1.0,
+            "covered_length": 1.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                1.0
+              ]
+            ],
+            "reference_input_start_index": 1,
+            "reference_input_end_index": 2
+          },
+          {
+            "reference_ring_edge_index": 2,
+            "length": 1.0,
+            "covered_length": 0,
+            "coverage": 0.0,
+            "covered_intervals": [],
+            "reference_input_start_index": 2,
+            "reference_input_end_index": 3
+          },
+          {
+            "reference_ring_edge_index": 3,
+            "length": 2.0,
+            "covered_length": 0,
+            "coverage": 0.0,
+            "covered_intervals": [],
+            "reference_input_start_index": 3,
+            "reference_input_end_index": 4
+          },
+          {
+            "reference_ring_edge_index": 4,
+            "length": 1.0,
+            "covered_length": 0,
+            "coverage": 0.0,
+            "covered_intervals": [],
+            "reference_input_start_index": 4,
+            "reference_input_end_index": 5
+          },
+          {
+            "reference_ring_edge_index": 5,
+            "length": 1.0,
+            "covered_length": 1.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                1.0
+              ]
+            ],
+            "reference_input_start_index": 5,
+            "reference_input_end_index": 6
+          },
+          {
+            "reference_ring_edge_index": 6,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 6,
+            "reference_input_end_index": 7
+          },
+          {
+            "reference_ring_edge_index": 7,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 7,
+            "reference_input_end_index": 0
+          }
+        ],
+        "diag_wall_coverage_05": 0.7777777777777778,
+        "diag_wall_covered_length_05": 14.0,
+        "diag_wall_tolerance_05": 0.21213203435596426,
+        "diag_wall_details_05": [
+          {
+            "reference_ring_edge_index": 0,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 0,
+            "reference_input_end_index": 1
+          },
+          {
+            "reference_ring_edge_index": 1,
+            "length": 1.0,
+            "covered_length": 1.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                1.0
+              ]
+            ],
+            "reference_input_start_index": 1,
+            "reference_input_end_index": 2
+          },
+          {
+            "reference_ring_edge_index": 2,
+            "length": 1.0,
+            "covered_length": 0,
+            "coverage": 0.0,
+            "covered_intervals": [],
+            "reference_input_start_index": 2,
+            "reference_input_end_index": 3
+          },
+          {
+            "reference_ring_edge_index": 3,
+            "length": 2.0,
+            "covered_length": 0,
+            "coverage": 0.0,
+            "covered_intervals": [],
+            "reference_input_start_index": 3,
+            "reference_input_end_index": 4
+          },
+          {
+            "reference_ring_edge_index": 4,
+            "length": 1.0,
+            "covered_length": 0,
+            "coverage": 0.0,
+            "covered_intervals": [],
+            "reference_input_start_index": 4,
+            "reference_input_end_index": 5
+          },
+          {
+            "reference_ring_edge_index": 5,
+            "length": 1.0,
+            "covered_length": 1.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                1.0
+              ]
+            ],
+            "reference_input_start_index": 5,
+            "reference_input_end_index": 6
+          },
+          {
+            "reference_ring_edge_index": 6,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 6,
+            "reference_input_end_index": 7
+          },
+          {
+            "reference_ring_edge_index": 7,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 7,
+            "reference_input_end_index": 0
+          }
+        ],
+        "diag_reference_removed_exact_duplicate_n": 0,
+        "diag_reference_input_vertex_n": 8,
+        "diag_candidate_removed_exact_duplicate_n": 0,
+        "diag_candidate_input_vertex_n": 4,
+        "diag_corner_status": "ok"
+      }
+    },
+    "concave_notch_filled": {
+      "candidate_floor": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "reference_floor": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          1.0,
+          2.0
+        ],
+        [
+          1.0,
+          1.0
+        ],
+        [
+          -1.0,
+          1.0
+        ],
+        [
+          -1.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "result": {
+        "diag_schema": "fixed_reference_geometry_diagnostics_v1",
+        "diag_status": "ok",
+        "diag_candidate_status": "ok",
+        "diag_candidate_reason": null,
+        "diag_reference_status": "ok",
+        "diag_reference_reason": null,
+        "diag_wall_direction_tolerance_deg": 10.0,
+        "diag_corner_turn_min_deg": 10.0,
+        "diag_reference_area": 14.0,
+        "diag_reference_perimeter": 18.0,
+        "diag_reference_scale": 3.7416573867739413,
+        "diag_reference_corner_n": 8,
+        "diag_candidate_corner_n": 4,
+        "diag_matched_corner_n": 4,
+        "diag_corner_recall_05": 0.5,
+        "diag_corner_tolerance_05": 0.18708286933869708,
+        "diag_corner_matches": [
+          {
+            "reference_input_index": 0,
+            "candidate_input_index": 0,
+            "reference_ring_index": 0,
+            "candidate_ring_index": 0,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          },
+          {
+            "reference_input_index": 1,
+            "candidate_input_index": 1,
+            "reference_ring_index": 1,
+            "candidate_ring_index": 1,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          },
+          {
+            "reference_input_index": 2,
+            "candidate_input_index": 2,
+            "reference_ring_index": 2,
+            "candidate_ring_index": 2,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          },
+          {
+            "reference_input_index": 7,
+            "candidate_input_index": 3,
+            "reference_ring_index": 7,
+            "candidate_ring_index": 3,
+            "distance": 0.0,
+            "distance_over_reference_scale": 0.0,
+            "reference_turn_deg": 90.0,
+            "candidate_turn_deg": 90.0
+          }
+        ],
+        "diag_wall_coverage_03": 0.7777777777777778,
+        "diag_wall_covered_length_03": 14.0,
+        "diag_wall_tolerance_03": 0.11224972160321824,
+        "diag_wall_details_03": [
+          {
+            "reference_ring_edge_index": 0,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 0,
+            "reference_input_end_index": 1
+          },
+          {
+            "reference_ring_edge_index": 1,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 1,
+            "reference_input_end_index": 2
+          },
+          {
+            "reference_ring_edge_index": 2,
+            "length": 1.0,
+            "covered_length": 1.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                1.0
+              ]
+            ],
+            "reference_input_start_index": 2,
+            "reference_input_end_index": 3
+          },
+          {
+            "reference_ring_edge_index": 3,
+            "length": 1.0,
+            "covered_length": 0,
+            "coverage": 0.0,
+            "covered_intervals": [],
+            "reference_input_start_index": 3,
+            "reference_input_end_index": 4
+          },
+          {
+            "reference_ring_edge_index": 4,
+            "length": 2.0,
+            "covered_length": 0,
+            "coverage": 0.0,
+            "covered_intervals": [],
+            "reference_input_start_index": 4,
+            "reference_input_end_index": 5
+          },
+          {
+            "reference_ring_edge_index": 5,
+            "length": 1.0,
+            "covered_length": 0,
+            "coverage": 0.0,
+            "covered_intervals": [],
+            "reference_input_start_index": 5,
+            "reference_input_end_index": 6
+          },
+          {
+            "reference_ring_edge_index": 6,
+            "length": 1.0,
+            "covered_length": 1.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                1.0
+              ]
+            ],
+            "reference_input_start_index": 6,
+            "reference_input_end_index": 7
+          },
+          {
+            "reference_ring_edge_index": 7,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 7,
+            "reference_input_end_index": 0
+          }
+        ],
+        "diag_wall_coverage_05": 0.7777777777777778,
+        "diag_wall_covered_length_05": 14.0,
+        "diag_wall_tolerance_05": 0.18708286933869708,
+        "diag_wall_details_05": [
+          {
+            "reference_ring_edge_index": 0,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 0,
+            "reference_input_end_index": 1
+          },
+          {
+            "reference_ring_edge_index": 1,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 1,
+            "reference_input_end_index": 2
+          },
+          {
+            "reference_ring_edge_index": 2,
+            "length": 1.0,
+            "covered_length": 1.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                1.0
+              ]
+            ],
+            "reference_input_start_index": 2,
+            "reference_input_end_index": 3
+          },
+          {
+            "reference_ring_edge_index": 3,
+            "length": 1.0,
+            "covered_length": 0,
+            "coverage": 0.0,
+            "covered_intervals": [],
+            "reference_input_start_index": 3,
+            "reference_input_end_index": 4
+          },
+          {
+            "reference_ring_edge_index": 4,
+            "length": 2.0,
+            "covered_length": 0,
+            "coverage": 0.0,
+            "covered_intervals": [],
+            "reference_input_start_index": 4,
+            "reference_input_end_index": 5
+          },
+          {
+            "reference_ring_edge_index": 5,
+            "length": 1.0,
+            "covered_length": 0,
+            "coverage": 0.0,
+            "covered_intervals": [],
+            "reference_input_start_index": 5,
+            "reference_input_end_index": 6
+          },
+          {
+            "reference_ring_edge_index": 6,
+            "length": 1.0,
+            "covered_length": 1.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                1.0
+              ]
+            ],
+            "reference_input_start_index": 6,
+            "reference_input_end_index": 7
+          },
+          {
+            "reference_ring_edge_index": 7,
+            "length": 4.0,
+            "covered_length": 4.0,
+            "coverage": 1.0,
+            "covered_intervals": [
+              [
+                0.0,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 7,
+            "reference_input_end_index": 0
+          }
+        ],
+        "diag_reference_removed_exact_duplicate_n": 0,
+        "diag_reference_input_vertex_n": 8,
+        "diag_candidate_removed_exact_duplicate_n": 0,
+        "diag_candidate_input_vertex_n": 4,
+        "diag_corner_status": "ok"
+      }
+    },
+    "near_parallel_rotated": {
+      "candidate_floor": [
+        [
+          -1.8180779106881748,
+          -2.1667008816788074
+        ],
+        [
+          2.1667008816788074,
+          -1.8180779106881748
+        ],
+        [
+          1.8180779106881748,
+          2.1667008816788074
+        ],
+        [
+          -2.1667008816788074,
+          1.8180779106881748
+        ]
+      ],
+      "reference_floor": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "result": {
+        "diag_schema": "fixed_reference_geometry_diagnostics_v1",
+        "diag_status": "ok",
+        "diag_candidate_status": "ok",
+        "diag_candidate_reason": null,
+        "diag_reference_status": "ok",
+        "diag_reference_reason": null,
+        "diag_wall_direction_tolerance_deg": 10.0,
+        "diag_corner_turn_min_deg": 10.0,
+        "diag_reference_area": 16.0,
+        "diag_reference_perimeter": 16.0,
+        "diag_reference_scale": 4.0,
+        "diag_reference_corner_n": 4,
+        "diag_candidate_corner_n": 4,
+        "diag_matched_corner_n": 0,
+        "diag_corner_recall_05": 0.0,
+        "diag_corner_tolerance_05": 0.2,
+        "diag_corner_matches": [],
+        "diag_wall_coverage_03": 0.6858031381656808,
+        "diag_wall_covered_length_03": 10.972850210650893,
+        "diag_wall_tolerance_03": 0.12,
+        "diag_wall_details_03": [
+          {
+            "reference_ring_edge_index": 0,
+            "length": 4.0,
+            "covered_length": 2.7432125526627233,
+            "coverage": 0.6858031381656808,
+            "covered_intervals": [
+              [
+                0.7157156094856627,
+                3.458928162148386
+              ]
+            ],
+            "reference_input_start_index": 0,
+            "reference_input_end_index": 1
+          },
+          {
+            "reference_ring_edge_index": 1,
+            "length": 4.0,
+            "covered_length": 2.7432125526627233,
+            "coverage": 0.6858031381656808,
+            "covered_intervals": [
+              [
+                0.7157156094856627,
+                3.458928162148386
+              ]
+            ],
+            "reference_input_start_index": 1,
+            "reference_input_end_index": 2
+          },
+          {
+            "reference_ring_edge_index": 2,
+            "length": 4.0,
+            "covered_length": 2.7432125526627233,
+            "coverage": 0.6858031381656808,
+            "covered_intervals": [
+              [
+                0.7157156094856627,
+                3.458928162148386
+              ]
+            ],
+            "reference_input_start_index": 2,
+            "reference_input_end_index": 3
+          },
+          {
+            "reference_ring_edge_index": 3,
+            "length": 4.0,
+            "covered_length": 2.7432125526627233,
+            "coverage": 0.6858031381656808,
+            "covered_intervals": [
+              [
+                0.7157156094856627,
+                3.458928162148386
+              ]
+            ],
+            "reference_input_start_index": 3,
+            "reference_input_end_index": 0
+          }
+        ],
+        "diag_wall_coverage_05": 0.9545194776720437,
+        "diag_wall_covered_length_05": 15.2723116427527,
+        "diag_wall_tolerance_05": 0.2,
+        "diag_wall_details_05": [
+          {
+            "reference_ring_edge_index": 0,
+            "length": 4.0,
+            "covered_length": 3.818077910688175,
+            "coverage": 0.9545194776720437,
+            "covered_intervals": [
+              [
+                0.18192208931182519,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 0,
+            "reference_input_end_index": 1
+          },
+          {
+            "reference_ring_edge_index": 1,
+            "length": 4.0,
+            "covered_length": 3.818077910688175,
+            "coverage": 0.9545194776720437,
+            "covered_intervals": [
+              [
+                0.18192208931182519,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 1,
+            "reference_input_end_index": 2
+          },
+          {
+            "reference_ring_edge_index": 2,
+            "length": 4.0,
+            "covered_length": 3.818077910688175,
+            "coverage": 0.9545194776720437,
+            "covered_intervals": [
+              [
+                0.18192208931182519,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 2,
+            "reference_input_end_index": 3
+          },
+          {
+            "reference_ring_edge_index": 3,
+            "length": 4.0,
+            "covered_length": 3.818077910688175,
+            "coverage": 0.9545194776720437,
+            "covered_intervals": [
+              [
+                0.18192208931182519,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 3,
+            "reference_input_end_index": 0
+          }
+        ],
+        "diag_reference_removed_exact_duplicate_n": 0,
+        "diag_reference_input_vertex_n": 4,
+        "diag_candidate_removed_exact_duplicate_n": 0,
+        "diag_candidate_input_vertex_n": 4,
+        "diag_corner_status": "ok"
+      }
+    },
+    "near_parallel_rotated_subdivided": {
+      "candidate_floor": [
+        [
+          -1.8180779106881748,
+          -2.1667008816788074
+        ],
+        [
+          0.17431148549531628,
+          -1.992389396183491
+        ],
+        [
+          2.1667008816788074,
+          -1.8180779106881748
+        ],
+        [
+          1.992389396183491,
+          0.17431148549531628
+        ],
+        [
+          1.8180779106881748,
+          2.1667008816788074
+        ],
+        [
+          -0.17431148549531628,
+          1.992389396183491
+        ],
+        [
+          -2.1667008816788074,
+          1.8180779106881748
+        ],
+        [
+          -1.992389396183491,
+          -0.17431148549531628
+        ]
+      ],
+      "reference_floor": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "result": {
+        "diag_schema": "fixed_reference_geometry_diagnostics_v1",
+        "diag_status": "ok",
+        "diag_candidate_status": "ok",
+        "diag_candidate_reason": null,
+        "diag_reference_status": "ok",
+        "diag_reference_reason": null,
+        "diag_wall_direction_tolerance_deg": 10.0,
+        "diag_corner_turn_min_deg": 10.0,
+        "diag_reference_area": 16.0,
+        "diag_reference_perimeter": 16.0,
+        "diag_reference_scale": 4.0,
+        "diag_reference_corner_n": 4,
+        "diag_candidate_corner_n": 4,
+        "diag_matched_corner_n": 0,
+        "diag_corner_recall_05": 0.0,
+        "diag_corner_tolerance_05": 0.2,
+        "diag_corner_matches": [],
+        "diag_wall_coverage_03": 0.6858031381656808,
+        "diag_wall_covered_length_03": 10.972850210650893,
+        "diag_wall_tolerance_03": 0.12,
+        "diag_wall_details_03": [
+          {
+            "reference_ring_edge_index": 0,
+            "length": 4.0,
+            "covered_length": 2.7432125526627233,
+            "coverage": 0.6858031381656808,
+            "covered_intervals": [
+              [
+                0.7157156094856627,
+                3.458928162148386
+              ]
+            ],
+            "reference_input_start_index": 0,
+            "reference_input_end_index": 1
+          },
+          {
+            "reference_ring_edge_index": 1,
+            "length": 4.0,
+            "covered_length": 2.7432125526627233,
+            "coverage": 0.6858031381656808,
+            "covered_intervals": [
+              [
+                0.7157156094856627,
+                3.458928162148386
+              ]
+            ],
+            "reference_input_start_index": 1,
+            "reference_input_end_index": 2
+          },
+          {
+            "reference_ring_edge_index": 2,
+            "length": 4.0,
+            "covered_length": 2.7432125526627233,
+            "coverage": 0.6858031381656808,
+            "covered_intervals": [
+              [
+                0.7157156094856627,
+                3.458928162148386
+              ]
+            ],
+            "reference_input_start_index": 2,
+            "reference_input_end_index": 3
+          },
+          {
+            "reference_ring_edge_index": 3,
+            "length": 4.0,
+            "covered_length": 2.7432125526627233,
+            "coverage": 0.6858031381656808,
+            "covered_intervals": [
+              [
+                0.7157156094856627,
+                3.458928162148386
+              ]
+            ],
+            "reference_input_start_index": 3,
+            "reference_input_end_index": 0
+          }
+        ],
+        "diag_wall_coverage_05": 0.9545194776720437,
+        "diag_wall_covered_length_05": 15.2723116427527,
+        "diag_wall_tolerance_05": 0.2,
+        "diag_wall_details_05": [
+          {
+            "reference_ring_edge_index": 0,
+            "length": 4.0,
+            "covered_length": 3.818077910688175,
+            "coverage": 0.9545194776720437,
+            "covered_intervals": [
+              [
+                0.18192208931182519,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 0,
+            "reference_input_end_index": 1
+          },
+          {
+            "reference_ring_edge_index": 1,
+            "length": 4.0,
+            "covered_length": 3.818077910688175,
+            "coverage": 0.9545194776720437,
+            "covered_intervals": [
+              [
+                0.18192208931182519,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 1,
+            "reference_input_end_index": 2
+          },
+          {
+            "reference_ring_edge_index": 2,
+            "length": 4.0,
+            "covered_length": 3.818077910688175,
+            "coverage": 0.9545194776720437,
+            "covered_intervals": [
+              [
+                0.18192208931182519,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 2,
+            "reference_input_end_index": 3
+          },
+          {
+            "reference_ring_edge_index": 3,
+            "length": 4.0,
+            "covered_length": 3.818077910688175,
+            "coverage": 0.9545194776720437,
+            "covered_intervals": [
+              [
+                0.18192208931182519,
+                4.0
+              ]
+            ],
+            "reference_input_start_index": 3,
+            "reference_input_end_index": 0
+          }
+        ],
+        "diag_reference_removed_exact_duplicate_n": 0,
+        "diag_reference_input_vertex_n": 4,
+        "diag_candidate_removed_exact_duplicate_n": 0,
+        "diag_candidate_input_vertex_n": 8,
+        "diag_corner_status": "ok"
+      }
+    },
+    "same_geometry_scaled_translated": {
+      "candidate_floor": [
+        [
+          -1.3355843301613106,
+          -21.950256612591055
+        ],
+        [
+          28.550256612591056,
+          -19.33558433016131
+        ],
+        [
+          25.935584330161312,
+          10.550256612591056
+        ],
+        [
+          -3.9502566125910548,
+          7.935584330161311
+        ]
+      ],
+      "reference_floor": [
+        [
+          -2.6999999999999993,
+          -20.7
+        ],
+        [
+          27.3,
+          -20.7
+        ],
+        [
+          27.3,
+          9.3
+        ],
+        [
+          -2.6999999999999993,
+          9.3
+        ]
+      ],
+      "result": {
+        "diag_schema": "fixed_reference_geometry_diagnostics_v1",
+        "diag_status": "ok",
+        "diag_candidate_status": "ok",
+        "diag_candidate_reason": null,
+        "diag_reference_status": "ok",
+        "diag_reference_reason": null,
+        "diag_wall_direction_tolerance_deg": 10.0,
+        "diag_corner_turn_min_deg": 10.0,
+        "diag_reference_area": 900.0,
+        "diag_reference_perimeter": 120.0,
+        "diag_reference_scale": 30.0,
+        "diag_reference_corner_n": 4,
+        "diag_candidate_corner_n": 4,
+        "diag_matched_corner_n": 0,
+        "diag_corner_recall_05": 0.0,
+        "diag_corner_tolerance_05": 1.5,
+        "diag_corner_matches": [],
+        "diag_wall_coverage_03": 0.6858031381656808,
+        "diag_wall_covered_length_03": 82.2963765798817,
+        "diag_wall_tolerance_03": 0.8999999999999999,
+        "diag_wall_details_03": [
+          {
+            "reference_ring_edge_index": 0,
+            "length": 30.0,
+            "covered_length": 20.574094144970424,
+            "coverage": 0.6858031381656808,
+            "covered_intervals": [
+              [
+                5.367867071142473,
+                25.941961216112897
+              ]
+            ],
+            "reference_input_start_index": 0,
+            "reference_input_end_index": 1
+          },
+          {
+            "reference_ring_edge_index": 1,
+            "length": 30.0,
+            "covered_length": 20.574094144970424,
+            "coverage": 0.6858031381656808,
+            "covered_intervals": [
+              [
+                5.367867071142474,
+                25.941961216112897
+              ]
+            ],
+            "reference_input_start_index": 1,
+            "reference_input_end_index": 2
+          },
+          {
+            "reference_ring_edge_index": 2,
+            "length": 30.0,
+            "covered_length": 20.574094144970417,
+            "coverage": 0.6858031381656805,
+            "covered_intervals": [
+              [
+                5.36786707114247,
+                25.941961216112887
+              ]
+            ],
+            "reference_input_start_index": 2,
+            "reference_input_end_index": 3
+          },
+          {
+            "reference_ring_edge_index": 3,
+            "length": 30.0,
+            "covered_length": 20.574094144970424,
+            "coverage": 0.6858031381656808,
+            "covered_intervals": [
+              [
+                5.367867071142474,
+                25.941961216112897
+              ]
+            ],
+            "reference_input_start_index": 3,
+            "reference_input_end_index": 0
+          }
+        ],
+        "diag_wall_coverage_05": 0.9545194776720437,
+        "diag_wall_covered_length_05": 114.54233732064525,
+        "diag_wall_tolerance_05": 1.5,
+        "diag_wall_details_05": [
+          {
+            "reference_ring_edge_index": 0,
+            "length": 30.0,
+            "covered_length": 28.63558433016131,
+            "coverage": 0.9545194776720437,
+            "covered_intervals": [
+              [
+                1.3644156698386887,
+                30.0
+              ]
+            ],
+            "reference_input_start_index": 0,
+            "reference_input_end_index": 1
+          },
+          {
+            "reference_ring_edge_index": 1,
+            "length": 30.0,
+            "covered_length": 28.63558433016131,
+            "coverage": 0.9545194776720437,
+            "covered_intervals": [
+              [
+                1.3644156698386887,
+                30.0
+              ]
+            ],
+            "reference_input_start_index": 1,
+            "reference_input_end_index": 2
+          },
+          {
+            "reference_ring_edge_index": 2,
+            "length": 30.0,
+            "covered_length": 28.63558433016131,
+            "coverage": 0.9545194776720437,
+            "covered_intervals": [
+              [
+                1.3644156698386887,
+                30.0
+              ]
+            ],
+            "reference_input_start_index": 2,
+            "reference_input_end_index": 3
+          },
+          {
+            "reference_ring_edge_index": 3,
+            "length": 30.0,
+            "covered_length": 28.63558433016131,
+            "coverage": 0.9545194776720437,
+            "covered_intervals": [
+              [
+                1.3644156698386896,
+                30.0
+              ]
+            ],
+            "reference_input_start_index": 3,
+            "reference_input_end_index": 0
+          }
+        ],
+        "diag_reference_removed_exact_duplicate_n": 0,
+        "diag_reference_input_vertex_n": 4,
+        "diag_candidate_removed_exact_duplicate_n": 0,
+        "diag_candidate_input_vertex_n": 4,
+        "diag_corner_status": "ok"
+      }
+    },
+    "self_intersection_candidate": {
+      "candidate_floor": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ]
+      ],
+      "reference_floor": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "result": {
+        "diag_schema": "fixed_reference_geometry_diagnostics_v1",
+        "diag_status": "invalid_candidate",
+        "diag_candidate_status": "invalid",
+        "diag_candidate_reason": "Self-intersection[0 0]",
+        "diag_reference_status": "ok",
+        "diag_reference_reason": null,
+        "diag_wall_direction_tolerance_deg": 10.0,
+        "diag_corner_turn_min_deg": 10.0,
+        "diag_reference_area": 16.0,
+        "diag_reference_perimeter": 16.0,
+        "diag_reference_scale": 4.0,
+        "diag_reference_corner_n": null,
+        "diag_candidate_corner_n": null,
+        "diag_matched_corner_n": null,
+        "diag_corner_recall_05": null,
+        "diag_corner_tolerance_05": 0.2,
+        "diag_corner_matches": null,
+        "diag_wall_coverage_03": null,
+        "diag_wall_covered_length_03": null,
+        "diag_wall_tolerance_03": 0.12,
+        "diag_wall_details_03": null,
+        "diag_wall_coverage_05": null,
+        "diag_wall_covered_length_05": null,
+        "diag_wall_tolerance_05": 0.2,
+        "diag_wall_details_05": null,
+        "diag_reference_removed_exact_duplicate_n": 0,
+        "diag_reference_input_vertex_n": 4
+      }
+    },
+    "missing_candidate": {
+      "candidate_floor": null,
+      "reference_floor": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "result": {
+        "diag_schema": "fixed_reference_geometry_diagnostics_v1",
+        "diag_status": "missing_candidate",
+        "diag_candidate_status": "missing",
+        "diag_candidate_reason": "no_floor",
+        "diag_reference_status": "ok",
+        "diag_reference_reason": null,
+        "diag_wall_direction_tolerance_deg": 10.0,
+        "diag_corner_turn_min_deg": 10.0,
+        "diag_reference_area": 16.0,
+        "diag_reference_perimeter": 16.0,
+        "diag_reference_scale": 4.0,
+        "diag_reference_corner_n": null,
+        "diag_candidate_corner_n": null,
+        "diag_matched_corner_n": null,
+        "diag_corner_recall_05": null,
+        "diag_corner_tolerance_05": 0.2,
+        "diag_corner_matches": null,
+        "diag_wall_coverage_03": null,
+        "diag_wall_covered_length_03": null,
+        "diag_wall_tolerance_03": 0.12,
+        "diag_wall_details_03": null,
+        "diag_wall_coverage_05": null,
+        "diag_wall_covered_length_05": null,
+        "diag_wall_tolerance_05": 0.2,
+        "diag_wall_details_05": null,
+        "diag_reference_removed_exact_duplicate_n": 0,
+        "diag_reference_input_vertex_n": 4
+      }
+    },
+    "self_intersection_reference": {
+      "candidate_floor": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "reference_floor": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ]
+      ],
+      "result": {
+        "diag_schema": "fixed_reference_geometry_diagnostics_v1",
+        "diag_status": "invalid_reference",
+        "diag_candidate_status": "ok",
+        "diag_candidate_reason": null,
+        "diag_reference_status": "invalid",
+        "diag_reference_reason": "Self-intersection[0 0]",
+        "diag_wall_direction_tolerance_deg": 10.0,
+        "diag_corner_turn_min_deg": 10.0,
+        "diag_reference_area": null,
+        "diag_reference_perimeter": null,
+        "diag_reference_scale": null,
+        "diag_reference_corner_n": null,
+        "diag_candidate_corner_n": null,
+        "diag_matched_corner_n": null,
+        "diag_corner_recall_05": null,
+        "diag_corner_tolerance_05": null,
+        "diag_corner_matches": null,
+        "diag_wall_coverage_03": null,
+        "diag_wall_covered_length_03": null,
+        "diag_wall_tolerance_03": null,
+        "diag_wall_details_03": null,
+        "diag_wall_coverage_05": null,
+        "diag_wall_covered_length_05": null,
+        "diag_wall_tolerance_05": null,
+        "diag_wall_details_05": null
+      }
+    }
+  },
+  "maximum_cardinality_probe": {
+    "reference": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        5.0,
+        0.0
+      ],
+      [
+        50.0,
+        50.0
+      ]
+    ],
+    "candidate": [
+      [
+        0.5,
+        3.968626966596886
+      ],
+      [
+        1.0,
+        0.0
+      ],
+      [
+        50.0,
+        50.0
+      ]
+    ],
+    "tolerance": 5.0,
+    "distance_matrix": [
+      [
+        4.0,
+        1.0,
+        70.71067811865476
+      ],
+      [
+        6.0,
+        4.0,
+        67.26812023536856
+      ],
+      [
+        67.59539409856497,
+        70.00714249274856,
+        0.0
+      ]
+    ],
+    "minimum_sum_pairs": [
+      [
+        0,
+        1,
+        1.0
+      ],
+      [
+        1,
+        0,
+        6.0
+      ],
+      [
+        2,
+        2,
+        0.0
+      ]
+    ],
+    "requested_lexicographic_pairs": [
+      [
+        0,
+        0,
+        4.0
+      ],
+      [
+        1,
+        1,
+        4.0
+      ],
+      [
+        2,
+        2,
+        0.0
+      ]
+    ]
+  }
+}

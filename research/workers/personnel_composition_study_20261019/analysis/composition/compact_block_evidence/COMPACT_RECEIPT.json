@@ -1,0 +1,93 @@
+{
+  "schema": "compact_block_evidence_v1",
+  "utc": "2026-10-19T10:30:36.372529+00:00",
+  "source_code_sha256": "6b4f955fa25c5aec63f62d342eba13106b5acebc7ac2c55ef5f913bc284065b9",
+  "fixed_highlights": 13,
+  "checks": {
+    "discovery": {
+      "events_checked": 592,
+      "unique_teams_checked": 1773,
+      "workers": 55,
+      "member_digest_sha256": "fa8826c8595e7d5636378c162b70370ae3297783e308ab7850d28ab0c6321bac",
+      "all_events": 25744,
+      "primary_events": 20267,
+      "exact_rows_exported": 25703,
+      "exact_rows_source": 25703,
+      "loow_strata_exported": 615,
+      "highlight_loow_rows": 1188,
+      "selected_event_outcome_filter": false,
+      "exact_stratum_outcome_filter": false
+    },
+    "validation": {
+      "events_checked": 472,
+      "unique_teams_checked": 1415,
+      "workers": 55,
+      "member_digest_sha256": "e6416a9a2724878b3d0e52a7210c06047f4504fb9f3a948358ee5b1c40ebf099",
+      "all_events": 22340,
+      "primary_events": 17312,
+      "exact_rows_exported": 23516,
+      "exact_rows_source": 23516,
+      "loow_strata_exported": 542,
+      "highlight_loow_rows": 898,
+      "selected_event_outcome_filter": false,
+      "exact_stratum_outcome_filter": false
+    }
+  },
+  "source_hashes": {
+    "/workspace/scratch/1d99618bd862/analysis/composition/block_discovery_specific/HIGHLIGHT_DEFINITIONS.json": "04f61615849fee197ee48090489115391d819861906b1acee36affa0022b2036",
+    "/workspace/scratch/1d99618bd862/analysis/composition/block_discovery/block_events.csv.gz": "a099d175a9122b861af1b13698c44afd51a6bf56b461fb4a717bfb8c5bd47c62",
+    "/workspace/scratch/1d99618bd862/analysis/composition/block_discovery/BLOCK_SUMMARY_RECEIPT.json": "3a2d36b395dd5c34e1f8c93c652abdfbe89d255ce2826390416509d8e89c3844",
+    "/workspace/scratch/1d99618bd862/analysis/composition/block_discovery_specific/directed_exact_summary.csv.gz": "0fbb26638b5a31a81b8e357dcb56eb5661beaf5ec3bf48157b42da809460e809",
+    "/workspace/scratch/1d99618bd862/analysis/composition/block_discovery_specific/leave_one_worker_summary.csv.gz": "69b874181452918261aa88c82597329ef8fdf2803464d421bc83febbbeb38e6e",
+    "/workspace/scratch/1d99618bd862/analysis/composition/block_discovery_specific/leave_one_worker_out.csv.gz": "1a31c063e27ea59a60c5ef905c8a49e9676c43b8f4c5ebca10880e2474ca8eba",
+    "/workspace/scratch/1d99618bd862/analysis/composition/block_discovery_specific/leave_one_worker_support_ledger.csv.gz": "9840ed141ff4bb992a84e89aa3c65989d604c6dcfd4120549b30919aef51bf53",
+    "/workspace/scratch/1d99618bd862/analysis/composition/DISCOVERY_BLOCK_REQUESTS.json.gz": "af2a6fa99bc45dba4d4241d669438b67cc2b01d5ba50e96032a24058d0d656b1",
+    "/workspace/scratch/1d99618bd862/analysis/composition/block_validation/block_events.csv.gz": "ffd2b1bfb06f3d14fffb5ef8ac821dbebbdb16f8a5b1eae8a17c4cbc964535fb",
+    "/workspace/scratch/1d99618bd862/analysis/composition/block_validation/BLOCK_SUMMARY_RECEIPT.json": "a3f5d690c5f846f632ed62f6704f6f1901496d4e45deffda1fd47b2adbc3b1da",
+    "/workspace/scratch/1d99618bd862/analysis/composition/block_validation_specific/directed_exact_summary.csv.gz": "4536b7845fd12cceca3d768f28d20adde552cd9704fb7979631bddf086abd5a9",
+    "/workspace/scratch/1d99618bd862/analysis/composition/block_validation_specific/leave_one_worker_summary.csv.gz": "bb1534f9da767498e3dbcf81e2fe814c234cba957c60551183908e6440cc30fd",
+    "/workspace/scratch/1d99618bd862/analysis/composition/block_validation_specific/leave_one_worker_out.csv.gz": "fe07e4dcce69db5ce81721c4d03d3ddf70b18ff7679c7a2e3b63041bca000e00",
+    "/workspace/scratch/1d99618bd862/analysis/composition/block_validation_specific/leave_one_worker_support_ledger.csv.gz": "2648da89dccbe889b7e8745926ca7163ec6005ea5bfb09157ebe4a31edaca8f7",
+    "/workspace/scratch/1d99618bd862/analysis/composition/VALIDATION_BLOCK_REQUESTS.json.gz": "202814a68491129ff332205c1392cc98217ff9ce672fb7c0227a9f3e01ef38aa"
+  },
+  "outputs": [
+    {
+      "file": "01_highlight_events.csv.gz",
+      "rows": 1064,
+      "columns": 98,
+      "bytes": 418924,
+      "sha256": "85605e911806bbd95fe78ee59e3e12e41f7f52c78a81ecf93a3cbeb5415bb182"
+    },
+    {
+      "file": "02_all_exact_strata.csv.xz",
+      "rows": 49219,
+      "columns": 37,
+      "bytes": 1137512,
+      "sha256": "82c526bc7170e5023789bcee8ea54169efe257ca09ce171ff8217d61b3098a67"
+    },
+    {
+      "file": "03_loow_stratum_summary.csv.gz",
+      "rows": 1157,
+      "columns": 38,
+      "bytes": 174902,
+      "sha256": "80235e9660fb0149089f292c794cd85299ed1ef9eef1edf9038ec44c160ccf55"
+    },
+    {
+      "file": "04_highlight_loow_person.csv.gz",
+      "rows": 2086,
+      "columns": 37,
+      "bytes": 114827,
+      "sha256": "a0361a2645356ce422fb349adee815b900749341500bd70e54b870185c11d272"
+    },
+    {
+      "file": "05_loow_support_ledger.csv.gz",
+      "rows": 14664,
+      "columns": 13,
+      "bytes": 84436,
+      "sha256": "cd5919449a9778f9672a4e0c2da58ff23350124e144bb8bb35e1737417ac91d1"
+    }
+  ],
+  "total_compressed_table_bytes": 1930601,
+  "precision": "Only all-exact aggregate floating values rounded to6 decimals; event/LOOW numeric values retain original exported precision.",
+  "exclusions": "Full flow states, geometries, all-distance matrices and non-highlight per-person LOOW rows excluded; all exact stratum and LOOW support decisions retained."
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "composition_building_split_v1",
+  "seed": 2026101901,
+  "main_commit": "e572eb73bedc4fe9056df838e458bab83c3fa423",
+  "selection": "20,000 deterministic random 10/6/6 partitions; minimize relative squared imbalance of metadata-only ordinary pool count, members, difficulty counts, doorway and semi pools; no scores or geometry read",
+  "metadata_sha256": "325ddeb6a2370ff6fc0af520aabc1c838febd429380f008c88a5709ec4f9316a",
+  "candidate_index": 12846,
+  "balance_loss": 0.011206785604633942,
+  "history_buildings": [
+    "2t7WUuJeko7",
+    "S9hNv5qa7GM",
+    "VFuaQ6m2Qom",
+    "Z6MFQCViBuw",
+    "b8cTxDM8gDG",
+    "jh4fc5c5qoQ",
+    "uNb9QFRL6hY",
+    "wc2JMjhGNzB",
+    "x8F5xyUWy9e",
+    "zsNo4HB9uLZ"
+  ],
+  "discovery_buildings": [
+    "7y3sRwLe3Va",
+    "VLzqgDo317F",
+    "e9zR4mvMWw7",
+    "jtcxE69GiFV",
+    "pRbA3pwrgk9",
+    "yqstnuAEVhm"
+  ],
+  "validation_buildings": [
+    "B6ByNegPMKs",
+    "UwV83HsGsw3",
+    "X7HyMhZNoso",
+    "pa4otMbVnkk",
+    "q9vSo1VnCiC",
+    "rPc6DW4iMge"
+  ],
+  "balance_columns": [
+    "ordinary_pools",
+    "ordinary_members",
+    "easy",
+    "medium",
+    "hard",
+    "doorway_manual",
+    "ordinary_semi"
+  ],
+  "balance": {
+    "history": {
+      "ordinary_pools": 81,
+      "ordinary_members": 2578,
+      "easy": 53,
+      "medium": 16,
+      "hard": 12,
+      "doorway_manual": 9,
+      "ordinary_semi": 13
+    },
+    "discovery": {
+      "ordinary_pools": 51,
+      "ordinary_members": 1698,
+      "easy": 32,
+      "medium": 9,
+      "hard": 10,
+      "doorway_manual": 4,
+      "ordinary_semi": 9
+    },
+    "validation": {
+      "ordinary_pools": 45,
+      "ordinary_members": 1443,
+      "easy": 29,
+      "medium": 7,
+      "hard": 9,
+      "doorway_manual": 4,
+      "ordinary_semi": 10
+    }
+  },
+  "interpretation": "Within-v2 retrospective historical train / discovery / post-freeze validation. Validation buildings are excluded from all feature/category learning and discovery selection. Not externally blind data. Same known workers recur across buildings."
+}

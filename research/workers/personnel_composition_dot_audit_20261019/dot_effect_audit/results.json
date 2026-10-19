@@ -1,0 +1,203 @@
+{
+  "headlines": [
+    {
+      "rule": "H1_Q_quantile",
+      "k": 5,
+      "stage": "confirm_validation",
+      "comparison": "higher_class_pure_minus_lower_class_pure",
+      "images": 43,
+      "buildings": 6,
+      "effect": 9.871632478981482,
+      "reported": 9.871632479,
+      "error": -1.851852005074761e-11,
+      "exact_bootstrap_95": [
+        4.018486961314815,
+        15.158181998999998
+      ],
+      "building_effects": {
+        "B6ByNegPMKs": 12.086492930999999,
+        "UwV83HsGsw3": 17.336777835,
+        "X7HyMhZNoso": -2.8478011700000003,
+        "pa4otMbVnkk": 17.050044074000002,
+        "q9vSo1VnCiC": 10.088955245,
+        "rPc6DW4iMge": 5.515325958888887
+      },
+      "complete_image_effect": 10.105832764009259,
+      "complete_images": 39,
+      "missing_score_0_100_bounds": {
+        "low": 8.032817974031483,
+        "high": 10.699484640698147
+      },
+      "positive_images": 37,
+      "negative_images": 6
+    },
+    {
+      "rule": "H1_Q_quantile",
+      "k": 9,
+      "stage": "confirm_validation",
+      "comparison": "higher_class_pure_minus_lower_class_pure",
+      "images": 35,
+      "buildings": 6,
+      "effect": 7.98003109259722,
+      "reported": 7.980031093,
+      "error": -4.027800315498098e-10,
+      "exact_bootstrap_95": [
+        0.9461635991944443,
+        13.420541206763886
+      ],
+      "building_effects": {
+        "B6ByNegPMKs": 14.868007653749999,
+        "UwV83HsGsw3": 9.691162026666662,
+        "X7HyMhZNoso": -8.147940714999999,
+        "pa4otMbVnkk": 15.188746375999997,
+        "q9vSo1VnCiC": 11.039315876666665,
+        "rPc6DW4iMge": 5.240895337500003
+      },
+      "complete_image_effect": 9.056641723237938,
+      "complete_images": 33,
+      "missing_score_0_100_bounds": {
+        "low": 5.708599512125001,
+        "high": 8.903043956569443
+      },
+      "positive_images": 30,
+      "negative_images": 5
+    },
+    {
+      "rule": "H3_reverse_relation",
+      "k": 9,
+      "stage": "curves_validation",
+      "comparison": "higher_class_pure_minus_lower_class_pure",
+      "images": 42,
+      "buildings": 6,
+      "effect": 6.404983540847222,
+      "reported": 6.404983541,
+      "error": -1.5277823450787764e-10,
+      "exact_bootstrap_95": [
+        3.3527465528750007,
+        9.753782731041666
+      ],
+      "building_effects": {
+        "B6ByNegPMKs": 8.266516615999999,
+        "UwV83HsGsw3": 13.539634267499999,
+        "X7HyMhZNoso": 1.2425152475000019,
+        "pa4otMbVnkk": 4.7525597469999985,
+        "q9vSo1VnCiC": 7.5070312983333345,
+        "rPc6DW4iMge": 3.1216440687499993
+      },
+      "complete_image_effect": 7.081597811240371,
+      "complete_images": 38,
+      "missing_score_0_100_bounds": {
+        "low": 4.448232634958333,
+        "high": 7.920454857180554
+      },
+      "positive_images": 37,
+      "negative_images": 5
+    },
+    {
+      "rule": "H4_detail_role",
+      "k": 5,
+      "stage": "curves_validation",
+      "comparison": "detail_pure_minus_common_pure",
+      "images": 28,
+      "buildings": 6,
+      "effect": 10.114092004309525,
+      "reported": 10.114092,
+      "error": 4.3095251811564594e-09,
+      "exact_bootstrap_95": [
+        5.858001300952381,
+        15.87338282014286
+      ],
+      "building_effects": {
+        "B6ByNegPMKs": 7.499358072857143,
+        "UwV83HsGsw3": 23.633165990000006,
+        "X7HyMhZNoso": 5.383977960000003,
+        "pa4otMbVnkk": 11.457462918000001,
+        "q9vSo1VnCiC": 8.713229304999999,
+        "rPc6DW4iMge": 3.9973577799999944
+      },
+      "complete_image_effect": 10.298197019569445,
+      "complete_images": 27,
+      "missing_score_0_100_bounds": {
+        "low": 9.686624424706348,
+        "high": 10.480275218357145
+      },
+      "positive_images": 26,
+      "negative_images": 2
+    },
+    {
+      "rule": "H5_hard_structure",
+      "k": 5,
+      "stage": "curves_validation",
+      "comparison": "detail_count_2_to_3",
+      "images": 6,
+      "buildings": 5,
+      "effect": 12.69100013,
+      "reported": 12.69100013,
+      "error": 0.0,
+      "exact_bootstrap_95": [
+        5.260525404000001,
+        25.749902421999998
+      ],
+      "building_effects": {
+        "B6ByNegPMKs": 5.7769100200000025,
+        "UwV83HsGsw3": 5.077984479999998,
+        "X7HyMhZNoso": 5.184874020000002,
+        "pa4otMbVnkk": 9.28708438,
+        "rPc6DW4iMge": 38.12814775
+      },
+      "complete_image_effect": 17.49773886783333,
+      "complete_images": 4,
+      "missing_score_0_100_bounds": {
+        "low": 9.794808787200001,
+        "high": 15.794808787200001
+      },
+      "positive_images": 6,
+      "negative_images": 0
+    },
+    {
+      "rule": "H5_hard_structure",
+      "k": 9,
+      "stage": "curves_validation",
+      "comparison": "detail_count_3_to_6",
+      "images": 5,
+      "buildings": 4,
+      "effect": 13.708526883749997,
+      "reported": 13.70852689,
+      "error": -6.250003181662578e-09,
+      "exact_bootstrap_95": [
+        1.759542419999999,
+        25.657511347499995
+      ],
+      "building_effects": {
+        "B6ByNegPMKs": 3.520125010000001,
+        "UwV83HsGsw3": 28.697982999999994,
+        "X7HyMhZNoso": -0.0010401700000031155,
+        "pa4otMbVnkk": 22.617039694999995
+      },
+      "complete_image_effect": 13.7085268854105,
+      "complete_images": 5,
+      "missing_score_0_100_bounds": {
+        "low": 13.708526883749993,
+        "high": 13.708526883749993
+      },
+      "positive_images": 4,
+      "negative_images": 1
+    }
+  ],
+  "event_checks": {
+    "AB_m_mismatch": 0,
+    "AC_m_mismatch": 0,
+    "BC_less_than_m": 24,
+    "net_B8L2_change_max_abs_error": 2.85119150511548e-14,
+    "within_abs_B8L2_change_max_abs_error": 2.846334279382745e-14,
+    "changed_abs_B8L2_change_max_abs_error": 2.8477220581635265e-14,
+    "within_stability_mismatches": 0,
+    "changed_stability_mismatches": 0
+  },
+  "block_control_errors": [],
+  "mixture_arithmetic_errors": [],
+  "single_team_cell_rows": 131,
+  "single_team_nonmissing_variation": 0,
+  "loow_reversals": 39,
+  "loow_member_deletion_verification": "Performed separately by recompute_loow.py; 2086 rows and 1064 actual event member sets checked; see loow_checks.json"
+}

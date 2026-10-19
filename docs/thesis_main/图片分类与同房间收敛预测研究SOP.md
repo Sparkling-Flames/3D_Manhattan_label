@@ -1,5 +1,7 @@
 # 图片难度、同房预测与共识曲线研究 SOP
 
+**2026-10-19同房部分已独立整理：** 当前执行读[多视角历史与人员重放计划](topics/same_room/同房预测研究计划_多视角历史与人员重放_20261019.md)。平均质量、多图历史留出、真实重放与个人Q并列；历史图片严格超过50%，OOS排除、门洞单列。下文第4节及“同房后置／暂不启动”保留历史身份，不代表当前安排。
+
 合同版本：`consensus_research_20260923_v1`。
 
 更新：2026-10-02。当前先运行固定方法的tile人数小实验；难度只要求粗略对应，人员类型组合和同房预测后置。模型信号可以先准备，但不与所有人员及三维变量一起建模。当前规范见 [方法合同](PAPER_A_METHOD_CONTRACT_CURRENT.json)、[统计计划](STATISTICAL_ANALYSIS_PLAN_v1.md)及 [区域共识SOP](topics/same_room/相似场景标注稳定性分析SOP.md)。[修订前工作副本](../legacy/paper_a_before_consensus_20260928/source_snapshots/history/research_before_20260923/图片分类与同房间收敛预测研究SOP.md)保留早期判断和采集历史。

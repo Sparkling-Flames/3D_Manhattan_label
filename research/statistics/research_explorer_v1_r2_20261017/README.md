@@ -90,3 +90,5 @@ python -m tools.thesis_main.analysis.v1_statistics_revision_20261017 --local-dat
 2026-10-19接续：[51图人员换人与人数机制](../../workers/personnel_type_validation_next_20261019/index.html)已接侧栏；独立页可离线运行，含全部3672团队的保存几何、原答叠加和12个人数节点。此接入未将旧模块表格伪装成新实验全量消费者。
 
 2026-10-19：人员替换独立叠图页现支持普通Manual／门洞Manual／普通Semi三层选择；扩展各9图，特殊层不套用普通Manual类别。细节见[机制续报](../../workers/personnel_type_validation_next_20261019/README.md#2026-10-19-机制追踪与条件扩展续报)。
+
+2026-10-20：[类别块额外背景与4例复核](../../workers/personnel_composition_followup_20261019/index.html)已接入独立入口。451对照／1353队、66图／12栋；不代表此台全库快照重算。

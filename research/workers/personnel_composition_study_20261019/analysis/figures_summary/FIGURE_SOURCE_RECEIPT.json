@@ -1,0 +1,36 @@
+{
+  "code_sha256": "7603bbb81dec4666c8dc905a73a37ffd7941865aaac0400f8e41861352e1302e",
+  "font": "NotoSansSC-Regular.ttf",
+  "font_sha256": "74ed603e50b720b3a6b964e5614baab836c74398fa65f3108b3869159595cd86",
+  "from_compact_sources": false,
+  "dpi": 160,
+  "figures": [
+    {
+      "figure": "01_candidate_utility_coverage.png",
+      "bytes": 500588,
+      "inputs": {
+        "analysis/forward/screen_final/screen_outcomes.csv.gz": "9eb4e0cd6bb7a1f4dd7261e155d132284ffe0206e204dbb17af7775c87195fb6",
+        "analysis/forward/screen_final/screen_coverage.csv": "582301883cba23bf28cdc8c6cce98f350b8ddaab9c81d2be10721dbb5e95ae40",
+        "analysis/forward/screen_final/hard_control_sensitivity.csv": "1d2cd1a27281e45b4d3f63e9bc385b875b7252b6413e217d38d42e55104711e0"
+      },
+      "candidates": 245,
+      "validation_used": false
+    },
+    {
+      "figure": "02_specific_replacements_discovery_validation.png",
+      "bytes": 586058,
+      "validation_used": true,
+      "comparison_count": 13,
+      "selection": "same 13 discovery strata; no validation selection",
+      "inputs": {
+        "analysis/composition/block_discovery_specific/HIGHLIGHT_DEFINITIONS.json": "04f61615849fee197ee48090489115391d819861906b1acee36affa0022b2036",
+        "analysis/composition/block_discovery_specific/highlight_summary.csv": "5b21e8104fc6cbca806ed6c97779d780ab7ac7e2157c6fd2a9b89853dc8a2eb0",
+        "analysis/composition/block_discovery_specific/directed_exact_by_building.csv.gz": "61fb079b328225ef426958cd4668cd1f8ed153c35854601b527641d149af2558",
+        "analysis/composition/block_validation_specific/highlight_summary.csv": "3b62b7803256cb26141b7e211ed0712522b07787d182b2191096293ac7ca47d9",
+        "analysis/composition/block_validation_specific/directed_exact_by_building.csv.gz": "b72a234197086bfa983971242fbfc4f40594396200cf434f546e605ff58378c2"
+      }
+    }
+  ],
+  "inference": "descriptive figures only; no new fit or hypothesis",
+  "reproduction": "python analysis/figures_summary/make_summary_figures.py --root /path/to/project --from-sources"
+}

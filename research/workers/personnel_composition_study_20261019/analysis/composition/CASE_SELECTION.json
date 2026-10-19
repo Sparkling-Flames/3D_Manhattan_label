@@ -1,0 +1,300 @@
+{
+  "cases": [
+    {
+      "case_id": "C01_member_sensitive_mixture",
+      "title": "混类优势会随具体成员消失",
+      "subtitle": "yqst-27／中等／Manual／历史角色五类／n=9；展示初筛中位、复查低尾及纯类中位，整体结论使用全部团队。",
+      "pool_id": "yqstnuAEVhm-27__manual__36afe2b79d",
+      "method_id": "R_role_ward_K5",
+      "domain": "all",
+      "class_names": {
+        "C01": "R1 较低Q／分歧角色",
+        "C02": "R2 常见几何角色"
+      },
+      "member_scope": "该冻结池内 C01、C02 的全部已知类别成员",
+      "selection_reason": "H8反例：固定3:6构成，初筛4队较相关最佳纯类均值+13.369，十组新成员复查−2.707；图中初筛下中位、复查第2低队和纯C02下中位为描述性展示。",
+      "arms": [
+        {
+          "runs": "analysis/composition/runs",
+          "requests": "analysis/composition/DISCOVERY_GRID_REQUESTS.json.gz",
+          "team_key": "yqstnuAEVhm-27__manual__36afe2b79d__865773ba902a16fed12c",
+          "label": "初筛混类中位：3 R1 + 6 R2"
+        },
+        {
+          "runs": "analysis/composition/runs_final",
+          "requests": "analysis/composition/DISCOVERY_CONFIRM_REQUESTS.json.gz",
+          "team_key": "yqstnuAEVhm-27__manual__36afe2b79d__4b5dbd5c1451c15415d1",
+          "label": "复查混类低尾：3 R1 + 6 R2"
+        },
+        {
+          "runs": "analysis/composition/runs_final",
+          "requests": "analysis/composition/DISCOVERY_CONFIRM_REQUESTS.json.gz",
+          "team_key": "yqstnuAEVhm-27__manual__36afe2b79d__422e7c9f5e9e4a70dfe9",
+          "label": "复查纯类中位：9 R2"
+        }
+      ],
+      "highlight_reference_edges": [
+        0
+      ],
+      "zoom_bev": [
+        1.1,
+        1.95,
+        -0.6,
+        0.55
+      ],
+      "zoom_erp": [
+        695,
+        830,
+        190,
+        390
+      ],
+      "focus_title": "右侧墙边的偏移与方向变化：参考边 r0"
+    },
+    {
+      "case_id": "C02_stable_wrong_same_score_shape",
+      "title": "同一纯类中，稳定错误与近分异形并存",
+      "subtitle": "yqst-27／Manual／n=9／均为9名R1：前两队换2人，第三队相对第一队换3人；均相对同一冻结参考。",
+      "pool_id": "yqstnuAEVhm-27__manual__36afe2b79d",
+      "method_id": "R_role_ward_K5",
+      "domain": "all",
+      "class_names": {
+        "C01": "R1 较低Q／分歧角色"
+      },
+      "member_scope": "该冻结池内 C01 的全部12名已知类别成员",
+      "selection_reason": "描述性H2反例：先在固定H8反例图的复查纯C01所有45对中，找到实际换2人的联合稳定低Q对；第三队与首队换3人、Q差0.458但floor1-IoU=.2704、绑定循环距离41.58度。所有同构成对仍保留在重建规则中。",
+      "arms": [
+        {
+          "runs": "analysis/composition/runs_final",
+          "requests": "analysis/composition/DISCOVERY_CONFIRM_REQUESTS.json.gz",
+          "team_key": "yqstnuAEVhm-27__manual__36afe2b79d__a4fb4cce7f6cc15c7c2a",
+          "label": "纯R1：第一组成员"
+        },
+        {
+          "runs": "analysis/composition/runs_final",
+          "requests": "analysis/composition/DISCOVERY_CONFIRM_REQUESTS.json.gz",
+          "team_key": "yqstnuAEVhm-27__manual__36afe2b79d__149942a57b71ffd4f595",
+          "label": "同类换2人：几何仍相近"
+        },
+        {
+          "runs": "analysis/composition/runs_final",
+          "requests": "analysis/composition/DISCOVERY_CONFIRM_REQUESTS.json.gz",
+          "team_key": "yqstnuAEVhm-27__manual__36afe2b79d__6eccc6506f5fcae6e041",
+          "label": "同类换3人：近分却异形"
+        }
+      ]
+    },
+    {
+      "case_id": "C03_hard_vote_threshold",
+      "title": "多加一人，细节节点却失去入选票数",
+      "subtitle": "建筑留出 UwV-22／现有困难标签／固定4名细节类H2，依次加入常见类H1；同一参考、同一原始成员链。",
+      "pool_id": "UwV83HsGsw3-22__manual__f3e5ed92db",
+      "method_id": "R_role_ward_difficulty_K2",
+      "domain": "hard",
+      "class_names": {
+        "C01": "H1 困难图常见角色",
+        "C02": "H2 困难图细节较多角色"
+      },
+      "member_scope": "该冻结池内 H1、H2 的全部已知类别成员",
+      "mechanism_chain_id": "nested__aaa48d5a2ca0dbd72fd7f606",
+      "selection_reason": "H6验证侧全部critical链中Q下降最大的一例，描述性极端案例；总体频率与楼均效应另表报告。m4固定成员W102/W112/W122/W126，n8→9增加W103。",
+      "arms": [
+        {
+          "runs": "analysis/composition/runs_final",
+          "requests": "analysis/composition/VALIDATION_NESTED_REQUESTS.json.gz",
+          "team_key": "UwV83HsGsw3-22__manual__f3e5ed92db__6cf87586f94f5568bf77",
+          "label": "4 H1 + 4 H2：门槛4票"
+        },
+        {
+          "runs": "analysis/composition/runs_final",
+          "requests": "analysis/composition/VALIDATION_NESTED_REQUESTS.json.gz",
+          "team_key": "UwV83HsGsw3-22__manual__f3e5ed92db__54df2e708699d8ccbb43",
+          "label": "5 H1 + 4 H2：门槛5票"
+        },
+        {
+          "runs": "analysis/composition/runs_final",
+          "requests": "analysis/composition/VALIDATION_NESTED_REQUESTS.json.gz",
+          "team_key": "UwV83HsGsw3-22__manual__f3e5ed92db__bd1f4893abdb7fb65a29",
+          "label": "6 H1 + 4 H2：仍为5票"
+        }
+      ],
+      "highlight_reference_edges": [
+        1,
+        2
+      ],
+      "zoom_bev": [
+        -0.55,
+        0.7,
+        -1.2,
+        0.55
+      ],
+      "zoom_erp": [
+        440,
+        615,
+        120,
+        410
+      ],
+      "focus_title": "旧身份组不变：4票节点在5票门槛下失选"
+    },
+    {
+      "case_id": "C04_score_up_structure_down",
+      "title": "总分上升，部分结构诊断却继续下降",
+      "subtitle": "建筑留出 X7H-07／Manual／固定6名R5；n12→13多加一名R2，节点7→4，质量分与转角覆盖走向不同。",
+      "pool_id": "X7HyMhZNoso-07__manual__dd2275185f",
+      "method_id": "R_role_ward_K5",
+      "domain": "all",
+      "class_names": {
+        "C02": "R2 常见几何角色",
+        "C05": "R5 高Q且较多细节角色"
+      },
+      "member_scope": "该冻结池内 R2、R5 的全部已知类别成员",
+      "mechanism_chain_id": "nested__daa71ba6d32a2f9a294487b1",
+      "selection_reason": "H6验证侧增票门槛伴随node下降但Q明显上升的反例，所有连续加人链仍保留。该例不能称为结构已正确，保留其低转角覆盖。",
+      "arms": [
+        {
+          "runs": "analysis/composition/runs_final",
+          "requests": "analysis/composition/VALIDATION_NESTED_REQUESTS.json.gz",
+          "team_key": "X7HyMhZNoso-07__manual__dd2275185f__40e8e83f10b733b30ecd",
+          "label": "纯细节角色：6 R5"
+        },
+        {
+          "runs": "analysis/composition/runs_final",
+          "requests": "analysis/composition/VALIDATION_NESTED_REQUESTS.json.gz",
+          "team_key": "X7HyMhZNoso-07__manual__dd2275185f__b124e2d4dcddec411b86",
+          "label": "6 R2 + 6 R5：7个节点"
+        },
+        {
+          "runs": "analysis/composition/runs_final",
+          "requests": "analysis/composition/VALIDATION_NESTED_REQUESTS.json.gz",
+          "team_key": "X7HyMhZNoso-07__manual__dd2275185f__cc7f13fb7aec30cce480",
+          "label": "7 R2 + 6 R5：4个节点"
+        }
+      ],
+      "highlight_reference_edges": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "zoom_bev": [
+        -4.5,
+        0.75,
+        2.4,
+        6.0
+      ],
+      "zoom_erp": [
+        990,
+        1185,
+        185,
+        330
+      ],
+      "focus_title": "同一三组6票节点被删除：请核对参考锯齿墙段的目标范围"
+    },
+    {
+      "case_id": "C05_matched_block_improvement",
+      "title": "同样换2人，改类后遗漏明显减少",
+      "subtitle": "建筑留出 UwV-09／现有困难标签／n=5、m=2；共同3人完全相同，新旧来源比例相同。",
+      "pool_id": "UwV83HsGsw3-09__manual__1a2b0afff3",
+      "method_id": "R_role_ward_difficulty_K2",
+      "domain": "hard",
+      "class_names": {
+        "C01": "H1 困难图常见角色",
+        "C02": "H2 困难图细节较多角色"
+      },
+      "member_scope": "该冻结池内所展示类别的全部已知人员",
+      "block_event_id": "block__a156aafbe51ca0288a193d07",
+      "selection_reason": "在已冻结具体n/m/out/in比较的建筑留出全部事件中，描述性选择清楚正例或反例；总体均值、负尾与反向事件全部保留。A→B与A→C共同core相同、真实换人数相同。",
+      "arms": [
+        {
+          "runs": "analysis/composition/runs_final",
+          "requests": "analysis/composition/VALIDATION_BLOCK_REQUESTS.json.gz",
+          "team_key": "UwV83HsGsw3-09__manual__1a2b0afff3__0fb4ae773cabb66670b7",
+          "label": "原队A"
+        },
+        {
+          "runs": "analysis/composition/runs_final",
+          "requests": "analysis/composition/VALIDATION_BLOCK_REQUESTS.json.gz",
+          "team_key": "UwV83HsGsw3-09__manual__1a2b0afff3__5f98479d31a1c4269253",
+          "label": "同类换2人B"
+        },
+        {
+          "runs": "analysis/composition/runs_final",
+          "requests": "analysis/composition/VALIDATION_BLOCK_REQUESTS.json.gz",
+          "team_key": "UwV83HsGsw3-09__manual__1a2b0afff3__8f20ff45f9a932e81657",
+          "label": "改类换2人C"
+        }
+      ]
+    },
+    {
+      "case_id": "C06_highQ_replacement_counterexample",
+      "title": "高历史Q类替换，也会令这一次结果变差",
+      "subtitle": "建筑留出 q9v-03／n=5、m=2；共同3人完全相同，所有人均为新批；历史Q阈值类固定。",
+      "pool_id": "q9vSo1VnCiC-03__manual__2bff6c4167",
+      "method_id": "F_rule_Q_threshold_K3",
+      "domain": "all",
+      "class_names": {
+        "C01": "Q− 相对Q≤−3",
+        "C02": "Q0 中间质量类",
+        "C03": "Q+ 相对Q≥3"
+      },
+      "member_scope": "该冻结池内所展示类别的全部已知人员",
+      "block_event_id": "block__29ff28657072581ba4a60480",
+      "selection_reason": "在已冻结具体n/m/out/in比较的建筑留出全部事件中，描述性选择清楚正例或反例；总体均值、负尾与反向事件全部保留。A→B与A→C共同core相同、真实换人数相同。",
+      "arms": [
+        {
+          "runs": "analysis/composition/runs_final",
+          "requests": "analysis/composition/VALIDATION_BLOCK_REQUESTS.json.gz",
+          "team_key": "q9vSo1VnCiC-03__manual__2bff6c4167__9862771d92738f043b66",
+          "label": "原队A"
+        },
+        {
+          "runs": "analysis/composition/runs_final",
+          "requests": "analysis/composition/VALIDATION_BLOCK_REQUESTS.json.gz",
+          "team_key": "q9vSo1VnCiC-03__manual__2bff6c4167__96c205138324a67a2d9f",
+          "label": "同类换2人B"
+        },
+        {
+          "runs": "analysis/composition/runs_final",
+          "requests": "analysis/composition/VALIDATION_BLOCK_REQUESTS.json.gz",
+          "team_key": "q9vSo1VnCiC-03__manual__2bff6c4167__57b1709e575ce2d1a151",
+          "label": "改类换2人C"
+        }
+      ]
+    },
+    {
+      "case_id": "C07_local_complement_replicates",
+      "title": "这张图的混类均值增益重现，但构成仍不稳定",
+      "subtitle": "yqst-25／n=13／反向历史关系二类；显示新成员批次三种构成的下中位代表队，均值结论使用每构成全部6队。",
+      "pool_id": "yqstnuAEVhm-25__manual__72b3cd9b76",
+      "method_id": "R_geo9_source_signed_p2_K2",
+      "domain": "all",
+      "class_names": {
+        "C01": "G1 较低历史Q的关系群",
+        "C02": "G2 较高历史Q的关系群"
+      },
+      "member_scope": "该冻结池内G1、G2全部已知类别成员",
+      "selection_reason": "冻结H7原发现案例的同图新成员复查。3G1+10G2对较好纯类均值+13.522→+11.506；新批三端均6/6评分。但混合范围38.875–78.666、joint稳定率.0667，不能称稳定或跨图普遍互补。",
+      "arms": [
+        {
+          "runs": "analysis/composition/runs_curves",
+          "requests": "analysis/composition/DISCOVERY_CURVE_REQUESTS.json.gz",
+          "team_key": "yqstnuAEVhm-25__manual__72b3cd9b76__f17d9ad1bdc7d9ad48cc",
+          "label": "13 G1：下中位代表"
+        },
+        {
+          "runs": "analysis/composition/runs_curves",
+          "requests": "analysis/composition/DISCOVERY_CURVE_REQUESTS.json.gz",
+          "team_key": "yqstnuAEVhm-25__manual__72b3cd9b76__af59c9a77572206964e8",
+          "label": "13 G2：下中位代表"
+        },
+        {
+          "runs": "analysis/composition/runs_curves",
+          "requests": "analysis/composition/DISCOVERY_CURVE_REQUESTS.json.gz",
+          "team_key": "yqstnuAEVhm-25__manual__72b3cd9b76__df40b48a6319c30da002",
+          "label": "3 G1 + 10 G2：下中位代表"
+        }
+      ]
+    }
+  ]
+}

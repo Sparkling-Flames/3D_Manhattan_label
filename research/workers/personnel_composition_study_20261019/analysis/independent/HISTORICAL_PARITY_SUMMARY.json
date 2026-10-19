@@ -1,0 +1,110 @@
+{
+  "purpose": "Independent implementation parity only; no new scientific validation results read",
+  "selected_teams": 26,
+  "pools": 24,
+  "images": 24,
+  "buildings": 14,
+  "workers": 58,
+  "sizes": {
+    "16": 6,
+    "12": 8,
+    "8": 7,
+    "24": 5
+  },
+  "statuses": {
+    "complete_conditional": 20,
+    "invalid_floor": 2,
+    "no_connection": 2,
+    "below_four": 2
+  },
+  "all_members_exact": true,
+  "all_states_exact": true,
+  "all_geometries_exact": true,
+  "mismatches": [],
+  "numeric_tolerance": 1e-09,
+  "max_abs_differences": {
+    "B8L2": 0.0,
+    "D10": 0.0,
+    "IoU3D100": 0.0,
+    "iou_2d": 0.0,
+    "S_bottom_deg": 0.0,
+    "dir": 0.0,
+    "Hmean": 0.0,
+    "Hcenter": 0.0,
+    "omission": 0.0,
+    "extension": 0.0,
+    "height_mean_ratio": 0.0
+  },
+  "gap": 7.5,
+  "B8L2_parameters": {
+    "version": "WQ-B8L2-20261015",
+    "direction_scale_deg": 8.0,
+    "direction_cap": 1.5,
+    "bottom_scale_squared_deg2": 32.0,
+    "global_height_scale": 0.8,
+    "local_height_scale": 0.25,
+    "pooling_order": 2.0
+  },
+  "D10_only_change": "direction_scale_deg=10.0 (verified source)",
+  "N1_applied": false,
+  "score_cache_reuse_hits": 0,
+  "runner_unchanged_during_audit": true,
+  "file_provenance": {
+    "runner": {
+      "path": "/workspace/scratch/1d99618bd862/analysis/independent/fusion_runner_audited_snapshot.py",
+      "sha256": "df642d307f2bd0dd78b0b77d711557cd77e4718505af84ea2d706bba5e03dd29",
+      "bytes": 8302
+    },
+    "fusion_engine": {
+      "path": "/workspace/scratch/1d99618bd862/restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/fusion_engine.py",
+      "sha256": "56c2b45704ca61d1b88d8f185cdcc55e5fe2d0451892ca27dbb9ffa435a168ee",
+      "bytes": 16075
+    },
+    "input_snapshot": {
+      "path": "/workspace/scratch/1d99618bd862/restored/work_personnel_typing_A_20261019/recovered/work_v2_20261019/fusion/INPUT_SNAPSHOT.json.gz",
+      "sha256": "83179b9842d06916b105d80ff181918c223e4fee2073f425f9825db124ec11d7",
+      "bytes": 1464097
+    },
+    "fusion_entry": {
+      "path": "/workspace/scratch/1d99618bd862/restored/work_personnel_typing_A_20261019/recovered/repo_main_20261019/tools/thesis_main/analysis/consensus_delivery_20261008.py",
+      "sha256": "fb2b7c3b5c95a24151101e44b96b30b1bbdc09b2bb8d637293ceacd8a503de75",
+      "bytes": 17642
+    },
+    "ring_engine": {
+      "path": "/workspace/scratch/1d99618bd862/restored/work_personnel_typing_A_20261019/recovered/repo_main_20261019/tools/thesis_main/analysis/ring_correspondence_20261007.py",
+      "sha256": "c4fb3f6b3d50e310d7ef8a1e39a933f3f381eb6c9c00ed5727c5250366d97cfe",
+      "bytes": 21690
+    },
+    "measurement_wrapper": {
+      "path": "/workspace/scratch/1d99618bd862/restored/work_personnel_typing_A_20261019/recovered/repo_main_20261019/tools/thesis_main/analysis/wall_consensus_quality_20261015.py",
+      "sha256": "80c5df1a5204b775b7c564d8e21e08fe0c2de87cfe778985dfe984a304a8eb25",
+      "bytes": 15973
+    },
+    "dual_scores": {
+      "path": "/workspace/scratch/1d99618bd862/restored/work_personnel_typing_A_20261019/recovered/repo_main_20261019/tools/thesis_main/analysis/quality_b8l2_d10_20261017.py",
+      "sha256": "027f78f4bb6d1ca6914ddabd86d4f5521350ea45e48fe82825e4f319b09ea818",
+      "bytes": 18089
+    },
+    "measurement_engine": {
+      "path": "/workspace/scratch/1d99618bd862/restored/work_personnel_typing_A_20261019/recovered/repo_main_20261019/research/statistics/b8l2_shared_v6_20261016/inputs/measurement_engine.zip",
+      "sha256": "509bd2503f78b2fc7efdfad21b7f3ed6ff020b15c7b3cc16c605ba90c65df41a",
+      "bytes": 42773
+    },
+    "working_models": {
+      "path": "/workspace/scratch/1d99618bd862/restored/work_personnel_typing_A_20261019/recovered/repo_main_20261019/research/statistics/b8l2_shared_v6_20261016/inputs/working_models.py",
+      "sha256": "f045eca7220747bed03e716d9250f7cc7e09741b223bcbb66ca0e16783948165",
+      "bytes": 4505
+    }
+  },
+  "elapsed_seconds": 7.612531568000122,
+  "jobs": 1,
+  "blas_threads": 1,
+  "python_executable": "/workspace/scratch/1d99618bd862/runtime_env/bin/python",
+  "packages": {
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scipy": "1.17.0",
+    "scikit-learn": "1.8.0",
+    "shapely": "2.1.2"
+  }
+}

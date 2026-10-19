@@ -1,0 +1,292 @@
+{
+  "scope": "Two synthetic mathematical counterexamples, not research-image evidence; the frozen B8L2 scorer is unchanged",
+  "collinear_subdivision": {
+    "reference_floor": [
+      [
+        -2,
+        -2
+      ],
+      [
+        2,
+        -2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        -2,
+        2
+      ]
+    ],
+    "candidate_floor": [
+      [
+        -2,
+        -2
+      ],
+      [
+        0,
+        -2
+      ],
+      [
+        2,
+        -2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        -2,
+        2
+      ]
+    ],
+    "reference_points": [
+      [
+        128.0,
+        200.1151946396709
+      ],
+      [
+        128.0,
+        310.8848053603291
+      ],
+      [
+        896.0,
+        200.1151946396709
+      ],
+      [
+        896.0,
+        310.8848053603291
+      ],
+      [
+        640.0,
+        200.1151946396709
+      ],
+      [
+        640.0,
+        310.8848053603291
+      ],
+      [
+        384.0,
+        200.1151946396709
+      ],
+      [
+        384.0,
+        310.8848053603291
+      ]
+    ],
+    "candidate_points": [
+      [
+        128.0,
+        200.1151946396709
+      ],
+      [
+        128.0,
+        310.8848053603291
+      ],
+      [
+        0.0,
+        179.93718776297817
+      ],
+      [
+        0.0,
+        331.06281223702183
+      ],
+      [
+        896.0,
+        200.1151946396709
+      ],
+      [
+        896.0,
+        310.8848053603291
+      ],
+      [
+        640.0,
+        200.1151946396709
+      ],
+      [
+        640.0,
+        310.8848053603291
+      ],
+      [
+        384.0,
+        200.1151946396709
+      ],
+      [
+        384.0,
+        310.8848053603291
+      ]
+    ],
+    "geometry_identical": true,
+    "identical_result": {
+      "ref_node_recall_5": 1.0,
+      "ref_edge_recall_5": 1.0,
+      "ref_matched_nodes_5": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "ref_matched_edges_5": [
+        1,
+        3,
+        6,
+        11
+      ],
+      "ref_node_recall_9": 1.0,
+      "ref_edge_recall_9": 1.0,
+      "ref_matched_nodes_9": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "ref_matched_edges_9": [
+        1,
+        3,
+        6,
+        11
+      ]
+    },
+    "subdivision_result": {
+      "ref_node_recall_5": 1.0,
+      "ref_edge_recall_5": 0.75,
+      "ref_matched_nodes_5": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "ref_matched_edges_5": [
+        3,
+        6,
+        11
+      ],
+      "ref_node_recall_9": 1.0,
+      "ref_edge_recall_9": 0.75,
+      "ref_matched_nodes_9": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "ref_matched_edges_9": [
+        3,
+        6,
+        11
+      ]
+    },
+    "interpretation": "Same square wall geometry with one redundant collinear corner: node recall stays 1, direct adjacency recall falls to 0.75. Thus adjacency recall is not necessary-wall completeness."
+  },
+  "thresholded_sum_assignment": {
+    "reference_points": [
+      [
+        512.0,
+        170.16666666666669
+      ],
+      [
+        512.0,
+        340.8333333333333
+      ],
+      [
+        528.4224,
+        170.16666666666669
+      ],
+      [
+        528.4224,
+        340.8333333333333
+      ],
+      [
+        853.3333333333333,
+        170.16666666666669
+      ],
+      [
+        853.3333333333333,
+        340.8333333333333
+      ]
+    ],
+    "candidate_points": [
+      [
+        513.64224,
+        181.4552056888889
+      ],
+      [
+        513.64224,
+        329.5447943111111
+      ],
+      [
+        515.28448,
+        170.16666666666669
+      ],
+      [
+        515.28448,
+        340.8333333333333
+      ],
+      [
+        853.3333333333333,
+        170.16666666666669
+      ],
+      [
+        853.3333333333333,
+        340.8333333333333
+      ]
+    ],
+    "angular_cost_deg": [
+      [
+        4.001199473749426,
+        6.064174086803795,
+        99.37196293749484
+      ],
+      [
+        0.9999953028348111,
+        3.999727237815928,
+        96.42109290963612
+      ],
+      [
+        97.18075578145826,
+        93.31116923435472,
+        0.0
+      ]
+    ],
+    "chosen_mapping": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        2
+      ]
+    ],
+    "all_diagonal_pairs_within_5_deg": true,
+    "result": {
+      "ref_node_recall_5": 0.6666666666666666,
+      "ref_edge_recall_5": 0.3333333333333333,
+      "ref_matched_nodes_5": [
+        0,
+        2
+      ],
+      "ref_matched_edges_5": [
+        2
+      ],
+      "ref_node_recall_9": 1.0,
+      "ref_edge_recall_9": 1.0,
+      "ref_matched_nodes_9": [
+        0,
+        1,
+        2
+      ],
+      "ref_matched_edges_9": [
+        1,
+        2,
+        5
+      ]
+    },
+    "maximum_feasible_node_recall_5": 1.0,
+    "interpretation": "Min-sum assignment followed by thresholding can retain fewer within-threshold pairs than maximum-cardinality matching. This diagnostic is not a maximum-recall measure."
+  }
+}
