@@ -259,3 +259,5 @@ Pro本地独立交接：[人员分类QT难度与反向分簇包](../research/wor
 - [v2质量、34份绑定复核与人员细类](thesis_main/v2质量与人员细类接续_20261019.md)：新工具在 tools/thesis_main/analysis/，本轮结果在 research/quality/quality_workers_v2_20261019 与 research/workers/personnel_v2_20261019。
 
 - [v2完整研究台、数据与Pro推进](thesis_main/v2数据研究台与Pro推进_20261019.md)：统计/逐份证据在 research/statistics/v2_*_20261019；[Pro提示词](thesis_main/Pro_v2人员细类与反向分簇研究提示词_20261019.md)保留难度细类与反向分簇两线。
+
+- 2026-10-19 Pro/Dot返回后：[人员多变量反向分型双线任务与验收](thesis_main/人员多变量反向分型_双线任务与验收_20261019.md)；[下一轮Pro提示词](thesis_main/Pro下一轮_多变量反向人员分型提示词_20261019.md)。Pro负责发现/解释类别，Codex负责独立评价与机制；[Pro归档](../research/workers/pro_personnel_v2_archive_20261019/README.md)和[Dot补充](../research/workers/personnel_independent_curve_audit_20261019/README.md)纳入研究目录。两线新实验待执行。
